@@ -10,13 +10,11 @@ import {
 
 import React from 'react'
 import TestComponent from '../../views/blank/TestComponent'
-import OCard from '../../components/reusable-component/OCard'
+import OCard from '../../components/ReusableComponent/OCard'
 
 const Dashboard = (): JSX.Element => {
-  
   return (
     <>
-      
       <OCard
         className=""
         CHeaderClassName="Basheer"

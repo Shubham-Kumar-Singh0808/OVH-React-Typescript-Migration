@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
-import OCard from '../../../components/reusable-component/OCard'
+import OCard from '../../../components/ReusableComponent/OCard'
 import TestComponent from '../../../views/blank/TestComponent'
 const UserRolesPermission = () => {
   return (
