@@ -9,11 +9,15 @@ export type route = {
 }
 
 // examples
-const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
+const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'))
 const UserRolesPermission = React.lazy(
-  () => import('./pages/Settings/UserRolesConfiguration/UserRolesPermission'),
+  () => import('./pages/settings/userrolesconfiguration/UserRolesPermission'),
 )
 const Blank = React.lazy(() => import('./views/blank/Blank'))
+
+const GeneralInformation = React.lazy(
+  () => import('./pages/generaltab/GeneralInformation'),
+)
 
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -27,6 +31,7 @@ const routes = [
     component: UserRolesPermission,
   },
   { path: '/blank', name: 'Blank', component: Blank },
+  { path: '/generaltab', name: 'GeneralTab', component: GeneralInformation },
 ]
 
 export default routes

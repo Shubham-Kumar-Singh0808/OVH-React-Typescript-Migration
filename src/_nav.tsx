@@ -44,6 +44,12 @@ const _nav = [
       },
     ],
   },
+  {
+    component: CNavItem,
+    name: 'GeneralTab',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    to: '/generaltab',
+  },
 ]
 
 export default _nav
