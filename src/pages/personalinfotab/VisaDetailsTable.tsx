@@ -26,10 +26,10 @@ const VisaDetailsTable = (): JSX.Element  => {
     <CTableBody>
       <CTableRow>
         <CTableHeaderCell scope="row">1</CTableHeaderCell>
-        <CTableDataCell>Ravi</CTableDataCell>
-        <CTableDataCell>Brother</CTableDataCell>
-        <CTableDataCell>9987678876</CTableDataCell>
-        <CTableDataCell>17/05/1996</CTableDataCell>  
+        <CTableDataCell>AUSTRALIA</CTableDataCell>
+        <CTableDataCell>Permanent Resident</CTableDataCell>
+        <CTableDataCell>30/03/2022</CTableDataCell>
+        <CTableDataCell>06/05/2022</CTableDataCell>  
         <CTableDataCell scope="row">
         <CButton
         color="info"
