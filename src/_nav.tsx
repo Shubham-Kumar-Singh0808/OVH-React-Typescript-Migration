@@ -32,6 +32,12 @@ const _nav = [
     to: '/blank',
   },
   {
+    component: CNavItem,
+    name: 'PersonalInfoTab',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    to: '/personalinfotab',
+  },
+  {
     component: CNavGroup,
     name: 'Settings',
     to: '/settings',
