@@ -1,34 +1,29 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { useTypedSelector } from '../store'
 import {
+  CButton,
   CContainer,
+  CDropdown,
+  CDropdownItem,
+  CDropdownMenu,
+  CDropdownToggle,
+  CFormInput,
   CHeader,
   CHeaderBrand,
-  CHeaderDivider,
   CHeaderNav,
   CHeaderToggler,
-  CNavLink,
-  CNavItem,
   CInputGroup,
-  CFormInput,
-  CButton,
-  CDropdown,
-  CDropdownToggle,
-  CDropdownMenu,
-  CDropdownItem,
+  CNavItem,
 } from '@coreui/react-pro'
-import { cilApplicationsSettings, cilMenu } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
 
-import { AppBreadcrumb } from './index'
+import CIcon from '@coreui/icons-react'
+import React from 'react'
+import { cilMenu } from '@coreui/icons'
 import { logo } from '../assets/brand/logo'
+import { useDispatch } from 'react-redux'
+import { useTypedSelector } from '../stateStore'
 
 const AppHeader = (): JSX.Element => {
   const dispatch = useDispatch()
-  const sidebarShow = useTypedSelector((state) => state.sidebarShow)
-  const asideShow = useTypedSelector((state) => state.asideShow)
+  const sidebarShow = useTypedSelector((state) => state.app.sidebarShow)
 
   return (
     <CHeader className="main-header mb-3">
