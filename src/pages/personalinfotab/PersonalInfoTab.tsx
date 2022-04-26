@@ -16,7 +16,7 @@ import OAddButton from '../../components/ReusableComponent/OAddButton'
       </CCardHeader>
       <CCardBody>
       <OAddButton />
-        <FamilyDetailsTable />
+        <FamilyDetailsTable isFieldDisabled={true}/>
       </CCardBody>
       <CCardHeader >
         <h4 className="h4">Visa Details</h4>

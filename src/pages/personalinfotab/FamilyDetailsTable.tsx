@@ -10,27 +10,40 @@ import {
     CTableRow,
 } from '@coreui/react-pro'
 
-const FamilyDetailsTable = (): JSX.Element => {
+interface FamilyInfo{
+  isFieldDisabled:boolean;
+}
+// const FamilyInformation:React.FC<FamilyInfo>=({
+//   isFieldDisabled = false,
+// })
+const FamilyDetailsTable = (props:FamilyInfo): JSX.Element => {
+  
   return (
       <>
     <CTable striped>
-    <CTableHead>
+    <CTableHead >
+    {/* <CTableRow >
+          <CTableDataCell className="fw-semibold " >
+            Family Details
+          </CTableDataCell>
+        </CTableRow> */}
       <CTableRow>
-        <CTableHeaderCell scope="col">#</CTableHeaderCell>
+      {props.isFieldDisabled ?(<CTableHeaderCell scope="col">#</CTableHeaderCell>):(<></>)}
         <CTableHeaderCell scope="col">Name</CTableHeaderCell>
         <CTableHeaderCell scope="col">Relationship</CTableHeaderCell>
         <CTableHeaderCell scope="col">Contact Number</CTableHeaderCell>
         <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>
-        <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+        {props.isFieldDisabled ?(<CTableHeaderCell scope="col">Actions</CTableHeaderCell>):(<></>)}
       </CTableRow>
     </CTableHead>
     <CTableBody>
       <CTableRow>
-        <CTableHeaderCell scope="row">1</CTableHeaderCell>
+      {props.isFieldDisabled ?(<CTableHeaderCell scope="row">1</CTableHeaderCell>):(<></>)}
         <CTableDataCell>Ravi</CTableDataCell>
         <CTableDataCell>Brother</CTableDataCell>
         <CTableDataCell>9987678876</CTableDataCell>
-        <CTableDataCell>17/05/1996</CTableDataCell>  
+        <CTableDataCell>17/05/1996</CTableDataCell> 
+        {props.isFieldDisabled ? ( 
         <CTableDataCell scope="row">
         <CButton
         color="info"
@@ -46,7 +59,8 @@ const FamilyDetailsTable = (): JSX.Element => {
         >
         <i className="fa fa-trash-o" aria-hidden="true"></i>
         </CButton>
-        </CTableDataCell>     
+        </CTableDataCell>
+        ):(<></>)}     
       </CTableRow>         
     </CTableBody>
   </CTable>
