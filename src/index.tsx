@@ -1,12 +1,12 @@
+import App from './App'
+import { Provider } from 'react-redux'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { Provider } from 'react-redux'
-import store from './store'
+import stateStore from './stateStore'
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={stateStore}>
     <App />
   </Provider>,
   document.getElementById('root'),
