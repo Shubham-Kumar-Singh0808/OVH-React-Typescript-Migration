@@ -1,31 +1,14 @@
-import { authenticationLogin, methodGet } from '../../middleware/api/apiList'
-import axios, { AxiosError } from 'axios'
+import { AppDispatch, RootState } from '../../stateStore'
+import {
+  AuthenticationStateType,
+  UserCredentials,
+  UserDataType,
+  ValidationError,
+} from './authenticationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { RootState } from '../../stateStore'
-import { encode } from 'base-64'
-import { getUnauthenticatedRequestConfig } from '../../utils/apiUtils'
-
-export type ReturnType = {
-  employeeName: string
-  employeeId: string
-  userName: string
-  role: string
-  tenantKey: string
-  token: string
-}
-
-export type UserCredentials = {
-  username: string
-  password: string
-  tenantKey: string
-}
-export type ValidationError = { status: number; data: any }
-
-interface AuthenticationStateType extends ReturnType {
-  error: ValidationError
-  isLoading: boolean
-}
+import { AxiosError } from 'axios'
+import { postLoginUser } from './authenticationApi'
 
 const initialAuthenticationState: AuthenticationStateType = {
   employeeName: '',
@@ -34,78 +17,32 @@ const initialAuthenticationState: AuthenticationStateType = {
   role: '',
   tenantKey: '',
   token: '',
-  error: { status: 0, data: '' },
+  designation: '',
+  error: null,
   isLoading: false,
 }
 
 export const doLoginUser = createAsyncThunk<
-  ReturnType,
+  UserDataType | undefined,
   UserCredentials,
   {
+    dispatch: AppDispatch
+    state: RootState
     rejectValue: ValidationError
   }
 >(
   'authentication/doLoginUser',
   async ({ username, password, tenantKey }: UserCredentials, thunkApi) => {
-    console.log(thunkApi)
-    const encodedCredentials = encode(`${username}:${password}`)
-
-    const requestConfig = getUnauthenticatedRequestConfig({
-      url: authenticationLogin,
-      method: methodGet,
-      additionalHeaders: {
-        Authorization: `Basic ${encodedCredentials}`,
-      },
-      tenantKey,
-    })
-
-    let userAuthenticationData: ReturnType = {
-      employeeName: '',
-      employeeId: '',
-      userName: '',
-      role: '',
-      tenantKey: '',
-      token: '',
-    }
-
     try {
-      const response = await axios(requestConfig)
-
-      if (response.status === 200) {
-        const employeeName = `${response.data.employeeDto.firstName} ${response.data.employeeDto.lastName}`
-        const employeeId = response.data.employeeDto.id
-        const userName = response.data.employeeDto.userName
-        const role = response.data.employeeDto.role
-        const tenantKeyFromResponse = response.data.tenantKey
-        const token = response.data.employeeDto.token
-        const designation = response.data.employeeDto.designation
-
-        localStorage.setItem('employeeName', employeeName)
-        localStorage.setItem('employeeId', employeeId)
-        localStorage.setItem('userName', userName)
-        localStorage.setItem('role', role)
-        localStorage.setItem('tenantKey', tenantKeyFromResponse)
-        localStorage.setItem('token', token)
-        localStorage.setItem('designation', designation)
-
-        userAuthenticationData = {
-          employeeName,
-          employeeId,
-          userName,
-          role,
-          tenantKey,
-          token,
-        }
-      }
+      return await postLoginUser({
+        username,
+        password,
+        tenantKey,
+      })
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue({
-        status: err.response?.status,
-        data: err.response?.data,
-      } as ValidationError)
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
-
-    return userAuthenticationData
   },
 )
 
@@ -117,7 +54,7 @@ const authenticationSlice = createSlice({
       return { ...state, ...action.payload }
     },
     clearError: (state) => {
-      state.error = { status: 0, data: '' }
+      state.error = null
     },
   },
   extraReducers: (builder) => {
@@ -130,6 +67,7 @@ const authenticationSlice = createSlice({
       })
       .addCase(doLoginUser.rejected, (state, action) => {
         state.isLoading = false
+        console.log(action.payload)
         state.error = action.payload as ValidationError
       })
   },

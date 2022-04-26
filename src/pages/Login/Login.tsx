@@ -14,13 +14,12 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { clearError, doLoginUser } from './authenticationSlice'
+import { clearError, doLoginUser, selectError } from './authenticationSlice'
+import { useAppDispatch, useTypedSelector } from '../../stateStore'
 
 import AIMLBridgeLogo from '../../assets/images/logo/ai_bridge_logo_207X65.png'
 import RayBizTechLogo from '../../assets/images/logo/raybiztech-logo.png'
-import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { useTypedSelector } from '../../stateStore'
 
 const Login = (): JSX.Element => {
   const rbtTenantKey = 'RAYBIZTECH'
@@ -31,9 +30,9 @@ const Login = (): JSX.Element => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const error = useTypedSelector((state) => state.authentication.error)
+  const error = useTypedSelector(selectError)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const history = useHistory()
 
   useEffect(() => {
@@ -66,14 +65,14 @@ const Login = (): JSX.Element => {
     event: React.MouseEvent<HTMLButtonElement>,
   ): Promise<void> => {
     event.preventDefault()
-    dispatch(doLoginUser({ username, password, tenantKey }))
+    const resultAction = await dispatch(
+      doLoginUser({ username, password, tenantKey }),
+    )
 
-    if (error.status !== 0) {
-      console.log('login failed')
-      setPassword('')
-    } else {
-      console.log('login success')
+    if (doLoginUser.fulfilled.match(resultAction)) {
       history.push('/dashboard')
+    } else {
+      setPassword('')
     }
   }
 
@@ -157,7 +156,7 @@ const Login = (): JSX.Element => {
                           Login
                         </CButton>
 
-                        {error.status !== 0 && (
+                        {error && (
                           <p className="login-error">
                             Incorrect username or password
                           </p>
