@@ -5,7 +5,6 @@ stages:
   - deployqa
 
 build project:
-  image: node:16
   stage: build
   script:
     - echo "building react project"
@@ -21,11 +20,6 @@ build project:
       - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
 
 test project:
-  image: node:16
-  cache:
-    key: ovh-react-migration
-    paths:
-      - node_modules/
   before_script:
     - npm ci
   stage: test
