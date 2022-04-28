@@ -4,11 +4,11 @@ import {
   UserCredentials,
   UserDataType,
   ValidationError,
-} from './authenticationTypes'
+} from '../../types/Login/authenticationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { postLoginUser } from './authenticationApi'
+import { postLoginUser } from '../../middleware/api/Login/authenticationApi'
 
 const initialAuthenticationState: AuthenticationStateType = {
   employeeName: '',

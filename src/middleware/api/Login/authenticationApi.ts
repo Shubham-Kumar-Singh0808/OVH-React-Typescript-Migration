@@ -1,9 +1,9 @@
-import { authenticationLogin, methodGet } from '../../middleware/api/apiList'
+import { authenticationLogin, methodGet } from '../apiList'
 
-import { UserDataType } from './authenticationTypes'
+import { UserDataType } from '../../../types/Login/authenticationTypes'
 import axios from 'axios'
 import { encode } from 'base-64'
-import { getUnauthenticatedRequestConfig } from '../../utils/apiUtils'
+import { getUnauthenticatedRequestConfig } from '../../../utils/apiUtils'
 
 export const postLoginUser = async ({
   username,
@@ -63,6 +63,8 @@ export const postLoginUser = async ({
       token,
       designation,
     }
+
+    console.log(userCredentials)
 
     return userCredentials
   }

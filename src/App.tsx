@@ -5,7 +5,7 @@ import React, { Suspense, useCallback, useEffect } from 'react'
 
 import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
-import { setAuthentication } from './pages/Login/authenticationSlice'
+import { setAuthentication } from './reducers/Login/authenticationSlice'
 import { useDispatch } from 'react-redux'
 
 // Containers

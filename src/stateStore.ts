@@ -1,7 +1,7 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import appReducer from './appSlice'
-import authenticationReducer from './pages/Login/authenticationSlice'
+import appReducer from './reducers/appSlice'
+import authenticationReducer from './reducers/Login/authenticationSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 

@@ -14,7 +14,11 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { clearError, doLoginUser, selectError } from './authenticationSlice'
+import {
+  clearError,
+  doLoginUser,
+  selectError,
+} from '../../reducers/Login/authenticationSlice'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 
 import AIMLBridgeLogo from '../../assets/images/logo/ai_bridge_logo_207X65.png'
