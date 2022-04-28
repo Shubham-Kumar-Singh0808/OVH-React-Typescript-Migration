@@ -53,6 +53,9 @@ const authenticationSlice = createSlice({
     setAuthentication: (state, action) => {
       return { ...state, ...action.payload }
     },
+    clearAuthentication: (state) => {
+      return { ...state, ...initialAuthenticationState }
+    },
     clearError: (state) => {
       state.error = null
     },
@@ -73,7 +76,8 @@ const authenticationSlice = createSlice({
   },
 })
 
-export const { setAuthentication, clearError } = authenticationSlice.actions
+export const { setAuthentication, clearAuthentication, clearError } =
+  authenticationSlice.actions
 
 export const selectError = (state: RootState): ValidationError =>
   state.authentication.error
