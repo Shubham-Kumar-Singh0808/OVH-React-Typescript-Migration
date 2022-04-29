@@ -1,4 +1,4 @@
-export type UserDataType = {
+export type AuthenticatedUserType = {
   employeeName: string
   employeeId: string
   userName: string
@@ -8,7 +8,7 @@ export type UserDataType = {
   designation: string
 }
 
-export type UserCredentials = {
+export type LoginCredentials = {
   username: string
   password: string
   tenantKey: string
@@ -16,7 +16,8 @@ export type UserCredentials = {
 
 export type ValidationError = number | null
 
-export interface AuthenticationStateType extends UserDataType {
+export type AuthenticationStateType = {
+  authenticatedUser: AuthenticatedUserType
   error: ValidationError
   isLoading: boolean
 }

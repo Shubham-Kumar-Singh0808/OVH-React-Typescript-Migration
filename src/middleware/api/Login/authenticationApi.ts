@@ -1,19 +1,15 @@
 import { authenticationLogin, methodGet } from '../apiList'
 
-import { UserDataType } from '../../../types/Login/authenticationTypes'
+import { AuthenticatedUserType } from '../../../types/Login/authenticationTypes'
 import axios from 'axios'
 import { encode } from 'base-64'
 import { getUnauthenticatedRequestConfig } from '../../../utils/apiUtils'
 
-export const postLoginUser = async ({
-  username,
-  password,
-  tenantKey,
-}: {
-  username: string
-  password: string
-  tenantKey: string
-}): Promise<UserDataType | undefined> => {
+export const postLoginUser = async (
+  username: string,
+  password: string,
+  tenantKey: string,
+): Promise<{ authenticatedUser: AuthenticatedUserType } | undefined> => {
   const encodedCredentials = encode(`${username}:${password}`)
 
   const requestConfig = getUnauthenticatedRequestConfig({
@@ -25,47 +21,29 @@ export const postLoginUser = async ({
     tenantKey,
   })
 
-  let userCredentials: UserDataType = {
-    employeeName: '',
-    employeeId: '',
-    userName: '',
-    role: '',
-    tenantKey: '',
-    token: '',
-    designation: '',
-  }
-
   const response = await axios(requestConfig)
 
   if (response.status === 200) {
-    const employeeName = `${response.data.employeeDto.firstName} ${response.data.employeeDto.lastName}`
-    const employeeId = response.data.employeeDto.id
-    const userName = response.data.employeeDto.userName
-    const role = response.data.employeeDto.role
-    const tenantKeyFromResponse = response.data.tenantKey
-    const token = response.data.employeeDto.token
-    const designation = response.data.employeeDto.designation
-
-    localStorage.setItem('employeeName', employeeName)
-    localStorage.setItem('employeeId', employeeId)
-    localStorage.setItem('userName', userName)
-    localStorage.setItem('role', role)
-    localStorage.setItem('tenantKey', tenantKeyFromResponse)
-    localStorage.setItem('token', token)
-    localStorage.setItem('designation', designation)
-
-    userCredentials = {
-      employeeName,
-      employeeId,
-      userName,
-      role,
-      tenantKey,
-      token,
-      designation,
+    const data = {
+      authenticatedUser: {
+        employeeName: `${response.data.employeeDto.firstName} ${response.data.employeeDto.lastName}`,
+        employeeId: response.data.employeeDto.id,
+        userName: response.data.employeeDto.userName,
+        role: response.data.employeeDto.role,
+        tenantKey: response.data.tenantKey,
+        token: response.data.employeeDto.token,
+        designation: response.data.employeeDto.designation,
+      },
     }
 
-    console.log(userCredentials)
+    localStorage.setItem('employeeName', data.authenticatedUser.employeeName)
+    localStorage.setItem('employeeId', data.authenticatedUser.employeeId)
+    localStorage.setItem('userName', data.authenticatedUser.userName)
+    localStorage.setItem('role', data.authenticatedUser.role)
+    localStorage.setItem('tenantKey', data.authenticatedUser.tenantKey)
+    localStorage.setItem('token', data.authenticatedUser.token)
+    localStorage.setItem('designation', data.authenticatedUser.designation)
 
-    return userCredentials
+    return data
   }
 }

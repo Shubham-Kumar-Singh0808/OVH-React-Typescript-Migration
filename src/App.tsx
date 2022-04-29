@@ -24,12 +24,14 @@ const App = (): JSX.Element => {
     const tokenFromStorage = localStorage.getItem('token')
 
     return {
-      employeeName: employeeNameFromStorage,
-      employeeId: employeeIdFromStorage,
-      userName: userNameFromStorage,
-      role: roleFromStorage,
-      tenantKey: tenantKeyFromStorage,
-      token: tokenFromStorage,
+      authenticatedUser: {
+        employeeName: employeeNameFromStorage,
+        employeeId: employeeIdFromStorage,
+        userName: userNameFromStorage,
+        role: roleFromStorage,
+        tenantKey: tenantKeyFromStorage,
+        token: tokenFromStorage,
+      },
     }
   }, [])
 

@@ -1,8 +1,8 @@
 import { AppDispatch, RootState } from '../../stateStore'
 import {
+  AuthenticatedUserType,
   AuthenticationStateType,
-  UserCredentials,
-  UserDataType,
+  LoginCredentials,
   ValidationError,
 } from '../../types/Login/authenticationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
@@ -10,21 +10,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { postLoginUser } from '../../middleware/api/Login/authenticationApi'
 
-const initialAuthenticationState: AuthenticationStateType = {
-  employeeName: '',
-  employeeId: '',
-  userName: '',
-  role: '',
-  tenantKey: '',
-  token: '',
-  designation: '',
-  error: null,
-  isLoading: false,
-}
+const initialAuthenticationState = {} as AuthenticationStateType
 
 export const doLoginUser = createAsyncThunk<
-  UserDataType | undefined,
-  UserCredentials,
+  { authenticatedUser: AuthenticatedUserType } | undefined,
+  LoginCredentials,
   {
     dispatch: AppDispatch
     state: RootState
@@ -32,13 +22,13 @@ export const doLoginUser = createAsyncThunk<
   }
 >(
   'authentication/doLoginUser',
-  async ({ username, password, tenantKey }: UserCredentials, thunkApi) => {
+  async (userCredentials: LoginCredentials, thunkApi) => {
     try {
-      return await postLoginUser({
-        username,
-        password,
-        tenantKey,
-      })
+      return await postLoginUser(
+        userCredentials.username,
+        userCredentials.password,
+        userCredentials.tenantKey,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -70,7 +60,6 @@ const authenticationSlice = createSlice({
       })
       .addCase(doLoginUser.rejected, (state, action) => {
         state.isLoading = false
-        console.log(action.payload)
         state.error = action.payload as ValidationError
       })
   },
@@ -82,6 +71,6 @@ export const { setAuthentication, clearAuthentication, clearError } =
 export const selectError = (state: RootState): ValidationError =>
   state.authentication.error
 export const selectToken = (state: RootState): string =>
-  state.authentication.token
+  state.authentication.authenticatedUser.token
 
 export default authenticationSlice.reducer
