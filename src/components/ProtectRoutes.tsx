@@ -11,7 +11,6 @@ const ProtectRoute = ({
   redirectTo: string
 }): JSX.Element => {
   const token = localStorage.getItem('token')
-  console.log(token)
 
   return callback(token) ? children : <Redirect to={redirectTo} />
 }

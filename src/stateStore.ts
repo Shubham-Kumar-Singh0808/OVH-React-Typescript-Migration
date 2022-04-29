@@ -1,8 +1,9 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import appReducer from './appSlice'
-import authenticationReducer from './pages/Login/authenticationSlice'
+import appReducer from './reducers/appSlice'
+import authenticationReducer from './reducers/Login/authenticationSlice'
 import { configureStore } from '@reduxjs/toolkit'
+import thunkMiddleware from 'redux-thunk'
 
 export const allReducers = {
   app: appReducer,
@@ -17,7 +18,7 @@ const stateStore = configureStore({
       serializableCheck: {
         ignoredActions: ['app/addToast'],
       },
-    }),
+    }).concat(thunkMiddleware),
 })
 
 export type RootState = ReturnType<typeof stateStore.getState>

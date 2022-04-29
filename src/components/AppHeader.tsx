@@ -1,19 +1,15 @@
 import {
   CButton,
   CContainer,
-  CDropdown,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
   CFormInput,
   CHeader,
   CHeaderBrand,
   CHeaderNav,
   CHeaderToggler,
   CInputGroup,
-  CNavItem,
 } from '@coreui/react-pro'
 
+import AppHeaderDropdown from './AppHeaderDropdown'
 import CIcon from '@coreui/icons-react'
 import React from 'react'
 import { cilMenu } from '@coreui/icons'
@@ -50,35 +46,9 @@ const AppHeader = (): JSX.Element => {
           </CInputGroup>
         </CHeaderNav>
         <CHeaderNav>
-          <CNavItem>
-            <CDropdown variant="nav-item">
-              <CDropdownToggle caret={false}>
-                <i className="fa fa-bell-o fa-lg"></i>
-              </CDropdownToggle>
-              <CDropdownMenu className="p-0" placement="bottom-end">
-                <CDropdownItem className="cursor-pointer">N/A</CDropdownItem>
-              </CDropdownMenu>
-            </CDropdown>
-          </CNavItem>
+          <AppHeaderDropdown />
         </CHeaderNav>
-        {/* <CHeaderNav className="d-none d-md-flex me-auto">
-          <CNavItem>
-            <CNavLink to="/dashboard" component={NavLink}>
-              Dashboard
-            </CNavLink>
-          </CNavItem>
-        </CHeaderNav> */}
-        {/* <CHeaderToggler
-          className="px-md-0 me-md-3"
-          onClick={() => dispatch({ type: 'set', asideShow: !asideShow })}
-        >
-          <CIcon icon={cilApplicationsSettings} size="lg" />
-        </CHeaderToggler> */}
       </CContainer>
-      {/* <CHeaderDivider />
-      <CContainer fluid>
-        <AppBreadcrumb />
-      </CContainer> */}
     </CHeader>
   )
 }
