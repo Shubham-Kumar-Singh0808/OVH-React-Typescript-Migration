@@ -46,6 +46,13 @@ test project:
       - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
 
 sonarqube check:
+  image: node:16
+  cache:
+    key: ovh-react-typescript-migration
+    paths:
+      - node_modules/
+  before_script:
+    - npm ci
   stage: sonarqube
   script:
     - dir
