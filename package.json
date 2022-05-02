@@ -76,6 +76,14 @@
           "skipFull": true
         }
       ]
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "src/pages/**/*.{ts,tsx}",
+      "!**/*index.ts",
+      "!src/serviceWorker.ts",
+      "!src/polyfill.ts",
+      "!src/assets/**/*"
     ]
   }
 }
