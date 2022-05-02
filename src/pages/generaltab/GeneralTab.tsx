@@ -10,10 +10,10 @@ const GeneralTab = () => {
       <GeneralInformation />
       <CCardHeader className="fw-semibold">Other Information</CCardHeader>
       <FamilyDetailsTable
-      // striped={true}
-      // bordered={true}
+      striped={true}
+      bordered={true}
       isFieldDisabled={false}
-      // tableClassName="mt-4"
+      tableClassName="mt-4"
       />
     </>
   )

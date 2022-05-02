@@ -1,8 +1,19 @@
 /* eslint-disable prettier/prettier */
 import { CCardHeader, CRow, CCol } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useAppDispatch, useTypedSelector } from '../.././stateStore'
+import {doFetchEmployeeGeneralInformation} from './employeeGeneralInformationSlice'
+
 
 const GeneralInformation = (): JSX.Element => {
+  const employeeId = useTypedSelector((state) => state.authentication.authenticatedUser.employeeId)
+  const generalInformation = useTypedSelector((state) => state.getLoggedInEmployeeData)
+  const dispatch = useAppDispatch()
+  
+  useEffect(() => {
+    dispatch(doFetchEmployeeGeneralInformation(employeeId as number))
+  }, [dispatch, employeeId])
+  console.log(generalInformation)
   return (
     <>
       <CCardHeader className="mt-10 fw-semibold">
@@ -14,24 +25,52 @@ const GeneralInformation = (): JSX.Element => {
         </CCol>
         <CCol md={4}>
           <dl>
-            <dt>Base Location</dt>
+            {generalInformation.baseLocation && (
+              <>
+                <dt>Base Location</dt>
+                <dd>{generalInformation.baseLocation}</dd>
+              </>
+            )}
+            {generalInformation.curentLocation && (
+              <>
+                <dt>Current Location</dt>
+                <dd>{generalInformation.curentLocation}</dd>
+              </>
+            )}
 
-            <dt>Current Location</dt>
-
-            <dt>Current Address</dt>
+            {generalInformation.address && (
+              <>
+                <dt>Current Address</dt>
+                <dd>{generalInformation.address}</dd>
+              </>
+            )}
           </dl>
         </CCol>
 
         <CCol md={5}>
           <dl>
             <dt>Gender</dt>
-            <dt>Blood Group</dt>
-
+            <dd>{generalInformation.gender}</dd>
+            {generalInformation.bloodgroup && (
+              <>
+                <dt>Blood Group</dt>
+                <dd>{generalInformation.bloodgroup}</dd>
+              </>
+            )}
             <dt>Date of Birth</dt>
-
-            <dt>Marital Status</dt>
-
-            <dt>Emergency Contact</dt>
+            <dd>{generalInformation.realBirthday}</dd>
+            {generalInformation.maritalStatus && (
+              <>
+                <dt>Marital Status</dt>
+                <dd>{generalInformation.maritalStatus}</dd>
+              </>
+            )}
+            {generalInformation.emergencyContact && (
+              <>
+                <dt>Emergency Contact</dt>
+                <dd>{generalInformation.emergencyContact}</dd>
+              </>
+            )}
           </dl>
         </CCol>
       </CRow>

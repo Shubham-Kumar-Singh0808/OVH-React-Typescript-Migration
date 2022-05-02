@@ -8,3 +8,6 @@ export const methodPut = 'put'
 
 export const authenticationLogin = apiPrefix + '/auth/login'
 export const authenticationLogout = apiPrefix + '/user/logoutUser'
+export const getLoggedInEmployeeData =
+  apiPrefix + '/jobapplicant/loggedInEmployee'
+export const getFamilyDetails = apiPrefix + '/Employee/familyInformation'

@@ -4,10 +4,14 @@ import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
+import employeeGeneralInformationReducer from './pages/generaltab/employeeGeneralInformationSlice'
+import familyDetailsReducer from './pages/personalinfotab/familyDetailsTableSlice'
 
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
+  getLoggedInEmployeeData: employeeGeneralInformationReducer,
+  familyDetails: familyDetailsReducer,
   // add your slice reducers here
 }
 
