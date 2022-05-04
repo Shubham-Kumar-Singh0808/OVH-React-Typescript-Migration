@@ -11,3 +11,5 @@ export const authenticationLogout = apiPrefix + '/user/logoutUser'
 export const getLoggedInEmployeeData =
   apiPrefix + '/jobapplicant/loggedInEmployee'
 export const getFamilyDetails = apiPrefix + '/Employee/familyInformation'
+export const getEmployeeSkillsList =
+  apiPrefix + '/jobapplicant/getEmployeeskillList'

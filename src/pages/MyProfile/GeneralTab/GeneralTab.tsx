@@ -3,7 +3,8 @@ import React from 'react'
 import { CCardHeader } from '@coreui/react-pro'
 
 import GeneralInformation from './GeneralInformation'
-import FamilyDetailsTable from '../personalinfotab/FamilyDetailsTable'
+import FamilyDetailsTable from '../PersonalInfoTab/FamilyDetailsTable'
+import SkillsTable from '../../qualificationstab/skills/SkillsTable'
 const GeneralTab = () => {
   return (
     <>
@@ -15,7 +16,8 @@ const GeneralTab = () => {
       isFieldDisabled={false}
       tableClassName="mt-4"
       />
-    </>
+    <SkillsTable striped={true} bordered={true} isFieldDisabled={false} tableClassName={''} />
+      </>
   )
 }
 export default GeneralTab

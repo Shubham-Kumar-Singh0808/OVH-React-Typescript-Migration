@@ -1,18 +1,12 @@
 import {
   GeneralInformationDataModel,
-  UserHeaders,
   ValidationError,
   GeneralInformationStateType,
-} from './generalInformationTypes'
+} from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-// import {
-//   methodGet,
-//   getLoggedInEmployeeData,
-// } from '../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import {} from 'axios'
-// import { getAuthenticatedRequestConfig } from '../../utils/apiUtils'
-import { postGeneralInformation } from './generalInformationApi'
+import { postGeneralInformation } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
 
 const initialGeneralInformationState = {} as GeneralInformationStateType
 

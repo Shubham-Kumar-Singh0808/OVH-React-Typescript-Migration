@@ -4,14 +4,16 @@ import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
-import employeeGeneralInformationReducer from './pages/generaltab/employeeGeneralInformationSlice'
-import familyDetailsReducer from './pages/personalinfotab/familyDetailsTableSlice'
+import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/employeeGeneralInformationSlice'
+import familyDetailsReducer from './reducers/MyProfile/PersonalInfoTab/FamilyDetails/familyDetailsTableSlice'
+import employeeSkillsReducer from './reducers/MyProfile/QualificationTab/EmployeeSkill/skillTableSlice'
 
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
   getLoggedInEmployeeData: employeeGeneralInformationReducer,
   familyDetails: familyDetailsReducer,
+  employeeSkills: employeeSkillsReducer,
   // add your slice reducers here
 }
 

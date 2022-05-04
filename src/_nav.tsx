@@ -56,6 +56,12 @@ const _nav = [
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     to: '/generaltab',
   },
+  {
+    component: CNavItem,
+    name: 'QualificationTab',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    to: '/qualificationtab',
+  },
 ]
 
 export default _nav

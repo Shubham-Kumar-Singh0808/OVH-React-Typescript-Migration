@@ -9,8 +9,8 @@ import {
     CTableHeaderCell,
     CTableRow,
 } from '@coreui/react-pro'
-import { doFetchFamilyDetails } from './familyDetailsTableSlice'
-import { useAppDispatch, useTypedSelector } from './../../stateStore'
+import { doFetchFamilyDetails } from '../../../reducers/MyProfile/PersonalInfoTab/FamilyDetails/familyDetailsTableSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 interface FamilyInfo{
   isFieldDisabled:boolean;
   striped:boolean;

@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { CCardHeader, CRow, CCol } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../.././stateStore'
-import {doFetchEmployeeGeneralInformation} from './employeeGeneralInformationSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import {doFetchEmployeeGeneralInformation} from '../../../reducers/MyProfile/GeneralTab/employeeGeneralInformationSlice'
 
 
 const GeneralInformation = (): JSX.Element => {

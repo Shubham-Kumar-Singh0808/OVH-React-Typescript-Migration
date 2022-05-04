@@ -1,10 +1,7 @@
-import {
-  methodGet,
-  getLoggedInEmployeeData,
-} from '../../middleware/api/apiList'
-import { GeneralInformationDataModel } from './generalInformationTypes'
+import { methodGet, getLoggedInEmployeeData } from '../../apiList'
+import { GeneralInformationDataModel } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import axios from 'axios'
-import { getAuthenticatedRequestConfig } from '../../utils/apiUtils'
+import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 export const postGeneralInformation = async (
   employeeId: number,

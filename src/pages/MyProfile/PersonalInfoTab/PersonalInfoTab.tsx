@@ -4,8 +4,8 @@ import {
   CCardHeader,CCardBody, CCard, CRow,CCol,CButton,
 } from '@coreui/react-pro'
 import FamilyDetailsTable from './FamilyDetailsTable'
-import OCard from '../../components/ReusableComponent/OCard'
-import OAddButton from '../../components/ReusableComponent/OAddButton'
+import OCard from '../../../components/ReusableComponent/OCard'
+import OAddButton from '../../../components/ReusableComponent/OAddButton'
  import VisaDetailsTable from './VisaDetailsTable'
  const PersonalInfoTab = (): JSX.Element  => {
   return (

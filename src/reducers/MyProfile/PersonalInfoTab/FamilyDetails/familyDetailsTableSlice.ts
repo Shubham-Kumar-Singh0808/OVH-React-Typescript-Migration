@@ -1,12 +1,12 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getFamilyDetails, methodGet } from './../../middleware/api/apiList'
+import { getFamilyDetails, methodGet } from '../../../../middleware/api/apiList'
 import {
   UserHeaders,
   FamilyDetailsModal,
   FamilyDetailsArrayModal,
-} from './familyDetailsTableTypes'
+} from '../../../../types/MyProfile/PersonalInfoTab/FamilyDetails/familyDetailsTableTypes'
 import axios from 'axios'
-import { getAuthenticatedRequestConfig } from './../../utils/apiUtils'
+import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 const initialFamilyDetailsState: FamilyDetailsArrayModal = {
   familyDetails: [],
   isLoading: false,
