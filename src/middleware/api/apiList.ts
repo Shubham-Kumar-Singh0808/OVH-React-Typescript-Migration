@@ -19,3 +19,13 @@ export const authenticationApi: ApiObjectType = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
+
+export const userRolesConfigurationApi: ApiObjectType = {
+  getUserRoles: apiPrefix + '/roleFeature/roles',
+  isUserRoleExists: apiPrefix + '/roleFeature/isRoleExits',
+  addNewUserRole: apiPrefix + '/roleFeature/role',
+  deleteUserRole: apiPrefix + '/roleFeature/deleterole',
+  getSubFeatures: apiPrefix + '/roleFeature/SubFeatures',
+  featuresUnderRole: apiPrefix + '/roleFeature/features_UnderRole',
+  assignPermission: apiPrefix + '/roleFeature/assignPermission',
+}

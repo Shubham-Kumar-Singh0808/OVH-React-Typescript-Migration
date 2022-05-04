@@ -1,8 +1,8 @@
-import React from 'react'
-import { cilSpeedometer } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
 import { CNavGroup, CNavItem } from '@coreui/react-pro'
-import { ElementType } from 'react'
+import React, { ElementType } from 'react'
+
+import CIcon from '@coreui/icons-react'
+import { cilSpeedometer } from '@coreui/icons'
 
 export type Badge = {
   color: string
@@ -40,7 +40,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'User Roles Configuration',
-        to: '/roleslist',
+        to: '/rolesList',
       },
     ],
   },

@@ -19,3 +19,5 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/card';
 @import './components/global-search';
 @import './pages/login';
+@import './components/omodal';
+@import './components/user-role-features-expandable-table';

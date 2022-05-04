@@ -1,11 +1,12 @@
-import React from 'react'
 import {
-  AppContent,
   AppAside,
-  AppSidebar,
+  AppContent,
   AppFooter,
   AppHeader,
+  AppSidebar,
 } from '../components/index'
+
+import React from 'react'
 
 const DefaultLayout = (): JSX.Element => {
   return (

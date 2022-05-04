@@ -4,10 +4,12 @@ import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
+import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
+  userRolesAndPermissions: userRolesAndPermissionsReducer,
   // add your slice reducers here
 }
 
