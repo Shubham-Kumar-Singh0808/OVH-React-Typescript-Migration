@@ -3,6 +3,7 @@
   "version": "4.0.0",
   "description": "CoreUI PRO React Admin Template Typescript Starter",
   "homepage": ".",
+  "proxy": "https://ovh2.raybiztech.com",
   "bugs": {
     "url": "https://github.com/coreui/coreui-pro-react-admin-template/issues"
   },
@@ -17,7 +18,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint \"src/components/**/*.{js,ts,tsx}\"",
     "start": "react-scripts start",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "test:cov": "npm test -- --coverage --watchAll=false"
   },
   "dependencies": {
     "@coreui/chartjs": "^3.0.0",
@@ -26,19 +28,25 @@
     "@coreui/icons-react": "2.0.0",
     "@coreui/react-chartjs": "2.0.0",
     "@coreui/react-pro": "4.0.0",
+    "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/base-64": "^1.0.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "axios": "^0.26.1",
+    "base-64": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
-    "redux": "4.1.1",
+    "redux": "^4.2.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.1",
     "simplebar-react": "^2.3.5",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
@@ -49,12 +57,33 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "msw": "^0.39.2",
     "prettier": "2.3.2",
     "sass": "^1.37.5"
   },
   "jest": {
     "transformIgnorePatterns": [
       "node_modules/(?!(@coreui/react-pro|tippy.js|perfect-scrollbar)/)"
+    ],
+    "coverageReporters": [
+      "cobertura",
+      "clover",
+      "json",
+      "lcov",
+      [
+        "text",
+        {
+          "skipFull": true
+        }
+      ]
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "src/pages/**/*.{ts,tsx}",
+      "!**/*index.ts",
+      "!src/serviceWorker.ts",
+      "!src/polyfill.ts",
+      "!src/assets/**/*"
     ]
   }
 }

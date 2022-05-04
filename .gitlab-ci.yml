@@ -23,7 +23,7 @@ build project:
 test project:
   image: node:16
   cache:
-    key: ovh-react-migration
+    key: ovh-react-typescript-migration
     paths:
       - node_modules/
   before_script:
@@ -46,11 +46,18 @@ test project:
       - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
 
 sonarqube check:
+  image: node:16
+  cache:
+    key: ovh-react-typescript-migration
+    paths:
+      - node_modules/
+  before_script:
+    - npm ci
   stage: sonarqube
   script:
     - dir
     - echo "Starting sonar analysis"
-    - cmd.exe /C "sonar-scanner -Dsonar.projectKey=ovh-typescript-react-migration -Dsonar.projectName=OVHTypeScriptReactMigration -Dsonar.sources=src -Dsonar.qualitygate.wait=true -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
+    - cmd.exe /C "sonar-scanner -X -Dsonar.projectKey=ovh-typescript-react-migration -Dsonar.projectName=OVHTypeScriptReactMigration -Dsonar.sources=src -Dsonar.qualitygate.wait=true -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
   allow_failure: false
   only:
     refs:

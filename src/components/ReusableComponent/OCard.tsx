@@ -7,9 +7,7 @@ import {
   CLink,
 } from '@coreui/react-pro'
 
-import CIcon from '@coreui/icons-react'
 import React from 'react'
-import { cilArrowRight } from '@coreui/icons'
 
 const OCard = (props: {
   className?: string

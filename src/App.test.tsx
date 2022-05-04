@@ -1,9 +1,10 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
-import App from './App'
+
+import Dashboard from './pages/Dashboard/Dashboard'
+import React from 'react'
 
 test('App should render without crashing', async () => {
-  render(<App />)
-  const linkElement = screen.getByText(/Loading.../i)
-  expect(await linkElement).toBeInTheDocument()
+  render(<Dashboard />)
+
+  expect(screen.getByText('Dashboard')).toBeInTheDocument()
 })

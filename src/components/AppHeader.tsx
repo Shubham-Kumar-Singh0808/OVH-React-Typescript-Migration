@@ -1,34 +1,25 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { useTypedSelector } from '../store'
 import {
+  CButton,
   CContainer,
+  CFormInput,
   CHeader,
   CHeaderBrand,
-  CHeaderDivider,
   CHeaderNav,
   CHeaderToggler,
-  CNavLink,
-  CNavItem,
   CInputGroup,
-  CFormInput,
-  CButton,
-  CDropdown,
-  CDropdownToggle,
-  CDropdownMenu,
-  CDropdownItem,
 } from '@coreui/react-pro'
-import { cilApplicationsSettings, cilMenu } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
 
-import { AppBreadcrumb } from './index'
+import AppHeaderDropdown from './AppHeaderDropdown'
+import CIcon from '@coreui/icons-react'
+import React from 'react'
+import { cilMenu } from '@coreui/icons'
 import { logo } from '../assets/brand/logo'
+import { useDispatch } from 'react-redux'
+import { useTypedSelector } from '../stateStore'
 
 const AppHeader = (): JSX.Element => {
   const dispatch = useDispatch()
-  const sidebarShow = useTypedSelector((state) => state.sidebarShow)
-  const asideShow = useTypedSelector((state) => state.asideShow)
+  const sidebarShow = useTypedSelector((state) => state.app.sidebarShow)
 
   return (
     <CHeader className="main-header mb-3">
@@ -55,35 +46,9 @@ const AppHeader = (): JSX.Element => {
           </CInputGroup>
         </CHeaderNav>
         <CHeaderNav>
-          <CNavItem>
-            <CDropdown variant="nav-item">
-              <CDropdownToggle caret={false}>
-                <i className="fa fa-bell-o fa-lg"></i>
-              </CDropdownToggle>
-              <CDropdownMenu className="p-0" placement="bottom-end">
-                <CDropdownItem className="cursor-pointer">N/A</CDropdownItem>
-              </CDropdownMenu>
-            </CDropdown>
-          </CNavItem>
+          <AppHeaderDropdown />
         </CHeaderNav>
-        {/* <CHeaderNav className="d-none d-md-flex me-auto">
-          <CNavItem>
-            <CNavLink to="/dashboard" component={NavLink}>
-              Dashboard
-            </CNavLink>
-          </CNavItem>
-        </CHeaderNav> */}
-        {/* <CHeaderToggler
-          className="px-md-0 me-md-3"
-          onClick={() => dispatch({ type: 'set', asideShow: !asideShow })}
-        >
-          <CIcon icon={cilApplicationsSettings} size="lg" />
-        </CHeaderToggler> */}
       </CContainer>
-      {/* <CHeaderDivider />
-      <CContainer fluid>
-        <AppBreadcrumb />
-      </CContainer> */}
     </CHeader>
   )
 }

@@ -10,9 +10,6 @@ export type route = {
 
 // examples
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
-const UserRolesPermission = React.lazy(
-  () => import('./pages/Settings/UserRolesConfiguration/UserRolesPermission'),
-)
 const Blank = React.lazy(() => import('./views/blank/Blank'))
 
 /**
@@ -21,11 +18,6 @@ const Blank = React.lazy(() => import('./views/blank/Blank'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  {
-    path: '/roleslist',
-    name: 'User Roles Permission',
-    component: UserRolesPermission,
-  },
   { path: '/blank', name: 'Blank', component: Blank },
 ]
 
