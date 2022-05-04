@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import OCard from '../../../components/ReusableComponent/OCard'
 // import CertificationsTable from '../certifications/CertificationsTable'
 // import EmployeeQualifications from './EmployeeQualification'
-import SkillsTable from '../skills/SkillsTable'
+import SkillsTable from './EmployeeSkill/SkillsTable'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 // import AddUpdateEmployeeQualifications from './AddUpdateEmployeeQualifications'
 const QualificationDetails = (): JSX.Element => {

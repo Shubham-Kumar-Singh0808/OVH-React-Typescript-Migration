@@ -21,7 +21,7 @@ const GeneralTab = React.lazy(
 )
 
 const QualificationTab = React.lazy(
-  () => import('./pages/qualificationstab/skills/QualificationTab'),
+  () => import('./pages/MyProfile/QualificationTab/QualificationTab'),
 )
 
 /**

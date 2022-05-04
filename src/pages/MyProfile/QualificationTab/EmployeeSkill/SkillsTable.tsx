@@ -8,8 +8,8 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { doFetchEmployeeSkills } from '../../../reducers/MyProfile/QualificationTab/EmployeeSkill/skillTableSlice'
-import { useTypedSelector, useAppDispatch } from '../../../stateStore'
+import { doFetchEmployeeSkills } from '../../../../reducers/MyProfile/QualificationTab/EmployeeSkill/skillTableSlice'
+import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 interface EmployeeSkillInfo {
   striped: boolean
   bordered: boolean

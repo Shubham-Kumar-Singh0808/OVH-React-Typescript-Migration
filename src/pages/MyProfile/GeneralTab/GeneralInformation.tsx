@@ -4,7 +4,6 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {doFetchEmployeeGeneralInformation} from '../../../reducers/MyProfile/GeneralTab/employeeGeneralInformationSlice'
 
-
 const GeneralInformation = (): JSX.Element => {
   const employeeId = useTypedSelector((state) => state.authentication.authenticatedUser.employeeId)
   const generalInformation = useTypedSelector((state) => state.getLoggedInEmployeeData)
