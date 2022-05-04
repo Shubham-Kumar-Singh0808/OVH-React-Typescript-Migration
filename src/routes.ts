@@ -9,7 +9,7 @@ export type route = {
 }
 
 // examples
-const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'))
+const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
 
 const PersonalInfoTab = React.lazy(
   () => import('./pages/MyProfile/PersonalInfoTab/PersonalInfoTab'),
