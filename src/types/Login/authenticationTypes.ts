@@ -1,3 +1,5 @@
+import { ValidationErrorType } from '../commonTypes'
+
 export type AuthenticatedUserType = {
   employeeName: string
   employeeId: string | number
@@ -14,10 +16,8 @@ export type LoginCredentials = {
   tenantKey: string
 }
 
-export type ValidationError = number | null
-
 export type AuthenticationStateType = {
   authenticatedUser: AuthenticatedUserType
-  error: ValidationError
+  error: ValidationErrorType
   isLoading: boolean
 }

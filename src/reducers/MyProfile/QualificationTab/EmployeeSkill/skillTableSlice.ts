@@ -1,8 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import {
-  getEmployeeSkillsList,
-  methodGet,
-} from '../../../../middleware/api/apiList'
+import { employeeSkillList, methods } from '../../../../middleware/api/apiList'
 import {
   SkillDetailsModal,
   SkillDetailsArrayModal,
@@ -18,8 +15,8 @@ export const doFetchEmployeeSkills = createAsyncThunk<SkillDetailsModal[]>(
   'employeeSkillSlice/doFetchEmployeeSkills',
   async () => {
     const requestConfig = getAuthenticatedRequestConfig({
-      url: getEmployeeSkillsList,
-      method: methodGet,
+      url: employeeSkillList.getEmployeeSkillsList,
+      method: methods.get,
     })
 
     const response = await axios(requestConfig)

@@ -3,11 +3,11 @@ import {
   AuthenticatedUserType,
   AuthenticationStateType,
   LoginCredentials,
-  ValidationError,
 } from '../../types/Login/authenticationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
+import { ValidationErrorType } from '../../types/commonTypes'
 import { postLoginUser } from '../../middleware/api/Login/authenticationApi'
 
 const initialAuthenticationState = {} as AuthenticationStateType
@@ -18,7 +18,7 @@ export const doLoginUser = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationError
+    rejectValue: ValidationErrorType
   }
 >(
   'authentication/doLoginUser',
@@ -31,7 +31,9 @@ export const doLoginUser = createAsyncThunk<
       )
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+      return thunkApi.rejectWithValue(
+        err.response?.status as ValidationErrorType,
+      )
     }
   },
 )
@@ -60,7 +62,7 @@ const authenticationSlice = createSlice({
       })
       .addCase(doLoginUser.rejected, (state, action) => {
         state.isLoading = false
-        state.error = action.payload as ValidationError
+        state.error = action.payload as ValidationErrorType
       })
   },
 })
@@ -68,7 +70,7 @@ const authenticationSlice = createSlice({
 export const { setAuthentication, clearAuthentication, clearError } =
   authenticationSlice.actions
 
-export const selectError = (state: RootState): ValidationError =>
+export const selectError = (state: RootState): ValidationErrorType =>
   state.authentication.error
 export const selectToken = (state: RootState): string =>
   state.authentication.authenticatedUser.token

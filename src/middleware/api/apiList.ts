@@ -1,3 +1,5 @@
+import { ApiMethodsType, ApiObjectType } from '../../types/commonTypes'
+
 const baseUrl = process.env.REACT_APP_API_BASE || ''
 const apiPrefix = baseUrl + '/hrm-ws'
 
@@ -6,10 +8,23 @@ export const methodPost = 'post'
 export const methodDelete = 'delete'
 export const methodPut = 'put'
 
-export const authenticationLogin = apiPrefix + '/auth/login'
-export const authenticationLogout = apiPrefix + '/user/logoutUser'
-export const getLoggedInEmployeeData =
-  apiPrefix + '/jobapplicant/loggedInEmployee'
-export const getFamilyDetails = apiPrefix + '/Employee/familyInformation'
-export const getEmployeeSkillsList =
-  apiPrefix + '/jobapplicant/getEmployeeskillList'
+export const methods: ApiMethodsType = {
+  get: 'get',
+  post: 'post',
+  delete: 'delete',
+  put: 'put',
+}
+
+export const authenticationApi: ApiObjectType = {
+  login: apiPrefix + '/auth/login',
+  logout: apiPrefix + '/user/logoutUser',
+}
+export const loggedInEmployeeData: ApiObjectType = {
+  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+}
+export const employeeFamilyDetails: ApiObjectType = {
+  getFamilyDetails: apiPrefix + '/Employee/familyInformation',
+}
+export const employeeSkillList: ApiObjectType = {
+  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
+}

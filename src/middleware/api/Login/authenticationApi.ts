@@ -1,4 +1,4 @@
-import { authenticationLogin, methodGet } from '../apiList'
+import { authenticationApi, methods } from '../apiList'
 
 import { AuthenticatedUserType } from '../../../types/Login/authenticationTypes'
 import axios from 'axios'
@@ -13,8 +13,8 @@ export const postLoginUser = async (
   const encodedCredentials = encode(`${username}:${password}`)
 
   const requestConfig = getUnauthenticatedRequestConfig({
-    url: authenticationLogin,
-    method: methodGet,
+    url: authenticationApi.login,
+    method: methods.get,
     additionalHeaders: {
       Authorization: `Basic ${encodedCredentials}`,
     },

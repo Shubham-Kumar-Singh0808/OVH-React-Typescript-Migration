@@ -1,5 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getFamilyDetails, methodGet } from '../../../../middleware/api/apiList'
+import {
+  employeeFamilyDetails,
+  methods,
+} from '../../../../middleware/api/apiList'
 import {
   UserHeaders,
   FamilyDetailsModal,
@@ -18,8 +21,8 @@ export const doFetchFamilyDetails = createAsyncThunk<
   'familyDetailsTable/doFetchFamilyDetails',
   async ({ employeeId }: UserHeaders) => {
     const requestConfig = getAuthenticatedRequestConfig({
-      url: getFamilyDetails,
-      method: methodGet,
+      url: employeeFamilyDetails.getFamilyDetails,
+      method: methods.get,
       params: {
         loggedInEmpId: employeeId,
       },
