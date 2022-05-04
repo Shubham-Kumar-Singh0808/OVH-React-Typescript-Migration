@@ -1,5 +1,7 @@
 import { Method } from 'axios'
 
-export type apiMethodsType = { [key: string]: Method }
+export type ApiMethodsType = { [key: string]: Method }
 
-export type apiObjectType = { [key: string]: string }
+export type ApiObjectType = { [key: string]: string }
+
+export type ValidationErrorType = number | null
