@@ -1,5 +1,5 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import 'simplebar/dist/simplebar.min.css'
+
 import {
   CSidebar,
   CSidebarBrand,
@@ -7,24 +7,21 @@ import {
   CSidebarToggler,
 } from '@coreui/react-pro'
 
-import { useTypedSelector } from '../store'
-
 import { AppSidebarNav } from './AppSidebarNav'
-
 import CIcon from '@coreui/icons-react'
-
+import React from 'react'
 import SimpleBar from 'simplebar-react'
-import 'simplebar/dist/simplebar.min.css'
-
 import { logoNegative } from '../assets/brand/logo-negative'
-import { sygnet } from '../assets/brand/sygnet'
 // sidebar nav config
 import navigation from '../_nav'
+import { sygnet } from '../assets/brand/sygnet'
+import { useDispatch } from 'react-redux'
+import { useTypedSelector } from '../stateStore'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
-  const unfoldable = useTypedSelector((state) => state.sidebarUnfoldable)
-  const sidebarShow = useTypedSelector((state) => state.sidebarShow)
+  const unfoldable = useTypedSelector((state) => state.app.sidebarUnfoldable)
+  const sidebarShow = useTypedSelector((state) => state.app.sidebarShow)
 
   return (
     <CSidebar
