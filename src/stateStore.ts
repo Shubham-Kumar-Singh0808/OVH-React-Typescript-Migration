@@ -2,16 +2,26 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
+<<<<<<< HEAD
 import employeeQualificationsReducer from './reducers/Qualifications/qualificationSlice'
+=======
+import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
+>>>>>>> develop
 import { configureStore } from '@reduxjs/toolkit'
+import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
+<<<<<<< HEAD
   employeeQualifications: employeeQualificationsReducer,
   employeeCertifications: employeeQualificationsReducer,
   employeeSkills: employeeQualificationsReducer,
+=======
+  category: categoryReducer,
+  skill: skillReducer,
+>>>>>>> develop
   // add your slice reducers here
 }
 
