@@ -12,13 +12,10 @@ const range = (start: number, end: number) => {
   const length = end - start + 1
   return Array.from({ length }, (_, idx) => idx + start)
 }
-export const usePagination = ({
-  totalItemCount,
+export const usePagination = (
+  totalItemCount: number,
   customPageSize = 20,
-}: {
-  totalItemCount: number
-  customPageSize: number
-}): UsePaginationType => {
+): UsePaginationType => {
   const [pageSize, setPageSize] = useState(customPageSize)
   const [currentPage, setCurrentPage] = useState(1)
 
