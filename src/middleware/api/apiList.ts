@@ -25,3 +25,10 @@ export const categoriesApi: ApiObjectType = {
   addCategory: apiPrefix + '/jobapplicant/addCategory',
   deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
 }
+
+export const skillsApi: ApiObjectType = {
+  getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',
+  addNewSkillForCategory:
+    apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
+  deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
+}

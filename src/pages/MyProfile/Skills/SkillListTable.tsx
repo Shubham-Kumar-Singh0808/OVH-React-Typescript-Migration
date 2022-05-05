@@ -11,9 +11,9 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import {
-  removeCategoryById,
-  selectCategoryList,
-} from '../../../reducers/MyProfile/Categories/categorySlice'
+  removeSkillById,
+  selectSkillList,
+} from '../../../reducers/MyProfile/Skills/skillSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
@@ -24,9 +24,9 @@ import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
-const CategoryListTable = (): JSX.Element => {
-  const categories = useTypedSelector(selectCategoryList)
+const SkillListTable = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const skills = useTypedSelector(selectSkillList)
 
   const {
     paginationRange,
@@ -34,15 +34,16 @@ const CategoryListTable = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(categories.length, 20)
+  } = usePagination(skills.length, 20)
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [toDeleteCategoryName, setToDeleteCategoryName] = useState('')
-  const [toDeleteCategoryId, setToDeleteCategoryId] = useState(0)
+  const [toDeleteSkillName, setToDeleteSkillName] = useState('')
+  const [toDeleteSkillId, setToDeleteSkillId] = useState(0)
 
   useEffect(() => {
     setPageSize(20)
-  }, [categories, setPageSize, setCurrentPage])
+    setCurrentPage(1)
+  }, [skills, setPageSize, setCurrentPage])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -55,26 +56,28 @@ const CategoryListTable = (): JSX.Element => {
     return (currentPage - 1) * pageSize + index + 1
   }
 
-  const handleShowDeleteModal = (categoryName: string, categoryId: number) => {
-    setToDeleteCategoryName(categoryName)
-    setToDeleteCategoryId(categoryId)
+  const handleShowDeleteModal = (skillName: string, skillId: number) => {
+    setToDeleteSkillName(skillName)
+    setToDeleteSkillId(skillId)
     setIsDeleteModalVisible(true)
   }
 
-  const handleConfirmDelete = async (categoryId: number) => {
+  const handleConfirmDelete = async (skillId: number) => {
     setIsDeleteModalVisible(false)
 
-    dispatch(removeCategoryById(categoryId))
+    dispatch(removeSkillById(skillId))
   }
 
-  const currentPageItems = useMemo(
-    () => currentPageData(categories, currentPage, pageSize),
-    [categories, currentPage, pageSize],
-  )
+  const currentPageItems = useMemo(() => {
+    const sortedSkills = skills
+      .slice()
+      .sort((a, b) => a.skill.localeCompare(b.skill))
+    return currentPageData(sortedSkills, currentPage, pageSize)
+  }, [skills, currentPage, pageSize])
 
   return (
     <>
-      {categories.length ? (
+      {skills.length ? (
         <>
           <CTable striped>
             <CTableHead>
@@ -91,21 +94,21 @@ const CategoryListTable = (): JSX.Element => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {currentPageItems.map((category, index) => {
+              {currentPageItems.map((skillItem, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row">
                       {getItemNumber(index)}
                     </CTableHeaderCell>
-                    <CTableDataCell>{category.categoryType}</CTableDataCell>
+                    <CTableDataCell>{skillItem.skill}</CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         color="danger"
                         size="sm"
                         onClick={() =>
                           handleShowDeleteModal(
-                            category.categoryType,
-                            category.categoryId,
+                            skillItem.skill,
+                            skillItem.skillId,
                           )
                         }
                       >
@@ -120,20 +123,20 @@ const CategoryListTable = (): JSX.Element => {
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {categories.length}</strong>
+                <strong>Total Records: {skills.length}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {categories.length > 20 && (
+              {skills.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                 />
               )}
             </CCol>
-            {categories.length > 20 && (
+            {skills.length > 20 && (
               <CCol
                 xs={5}
-                className="d-grid gap-1 d-md-flex justify-content-md-end"
+                className="d-grid gap-2 d-md-flex justify-content-md-end"
               >
                 <OPagination
                   currentPage={currentPage}
@@ -154,14 +157,14 @@ const CategoryListTable = (): JSX.Element => {
       <OModal
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalTitle="Delete Category"
+        modalTitle="Delete Skill"
         confirmButtonText="Delete"
-        confirmButtonAction={() => handleConfirmDelete(toDeleteCategoryId)}
+        confirmButtonAction={() => handleConfirmDelete(toDeleteSkillId)}
       >
-        {`Are you sure you want to delete this ${toDeleteCategoryName} category item?`}
+        {`Are you sure you want to delete this ${toDeleteSkillName} skill item?`}
       </OModal>
     </>
   )
 }
 
-export default CategoryListTable
+export default SkillListTable
