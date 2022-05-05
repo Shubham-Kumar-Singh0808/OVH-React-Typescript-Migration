@@ -38,27 +38,30 @@ const FamilyDetailsTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {fetchFamilyDetails?.map((family, index) => (
-            <CTableRow key={index}>
-              <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-              <CTableDataCell scope="row">{family.personName}</CTableDataCell>
-              <CTableDataCell scope="row">{family.relationShip}</CTableDataCell>
-              <CTableDataCell scope="row">
-                {family.contactNumber || 'N/A'}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {family.dateOfBirth || 'N/A'}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CButton color="info" className="btn-ovh me-2">
-                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </CButton>
-                <CButton color="danger" className="btn-ovh me-2">
-                  <i className="fa fa-trash-o" aria-hidden="true"></i>
-                </CButton>
-              </CTableDataCell>
-            </CTableRow>
-          ))}
+          {fetchFamilyDetails?.length > 0 &&
+            fetchFamilyDetails?.map((family, index) => (
+              <CTableRow key={index}>
+                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                <CTableDataCell scope="row">{family.personName}</CTableDataCell>
+                <CTableDataCell scope="row">
+                  {family.relationShip}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {family.contactNumber || 'N/A'}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {family.dateOfBirth || 'N/A'}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  <CButton color="info" className="btn-ovh me-2">
+                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </CButton>
+                  <CButton color="danger" className="btn-ovh me-2">
+                    <i className="fa fa-trash-o" aria-hidden="true"></i>
+                  </CButton>
+                </CTableDataCell>
+              </CTableRow>
+            ))}
         </CTableBody>
       </CTable>
       <strong>

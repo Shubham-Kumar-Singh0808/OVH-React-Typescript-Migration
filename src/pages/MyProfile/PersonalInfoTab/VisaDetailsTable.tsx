@@ -37,29 +37,32 @@ const VisaDetailsTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {fetchVisaDetails?.map((visasItem, index) => (
-            <CTableRow key={index}>
-              <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-              <CTableDataCell scope="row">
-                {visasItem.countryName}
-              </CTableDataCell>
-              <CTableDataCell scope="row">{visasItem.visaType}</CTableDataCell>
-              <CTableDataCell scope="row">
-                {visasItem.dateOfIssue}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {visasItem.dateOfExpire}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CButton color="info btn-ovh me-2">
-                  <i className="fa fa-pencil-square-o"></i>
-                </CButton>
-                <CButton color="danger btn-ovh me-2">
-                  <i className="fa fa-trash-o" aria-hidden="true"></i>
-                </CButton>
-              </CTableDataCell>
-            </CTableRow>
-          ))}
+          {fetchVisaDetails?.length > 0 &&
+            fetchVisaDetails?.map((visasItem, index) => (
+              <CTableRow key={index}>
+                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                <CTableDataCell scope="row">
+                  {visasItem.countryName}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {visasItem.visaType}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {visasItem.dateOfIssue}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {visasItem.dateOfExpire}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  <CButton color="info btn-ovh me-2">
+                    <i className="fa fa-pencil-square-o"></i>
+                  </CButton>
+                  <CButton color="danger btn-ovh me-2">
+                    <i className="fa fa-trash-o" aria-hidden="true"></i>
+                  </CButton>
+                </CTableDataCell>
+              </CTableRow>
+            ))}
         </CTableBody>
       </CTable>
       <strong>
