@@ -7,17 +7,11 @@ export type FamilyDetailsModal = {
   dateOfBirth: string
   employeeId: number | string
 }
-
-// export type FamilyDetailsArrayModal = {
-//   familyDetails: FamilyDetailsModal[]
-//   isLoading: boolean
-// }
-
 export type UserHeaders = {
   employeeId: number | string
 }
 export type PersonalInfoTabStateType = {
-  roles: FamilyDetailsModal[]
+  getFamilyDetails: FamilyDetailsModal[]
   isLoading: boolean
   error: ValidationErrorType
 }

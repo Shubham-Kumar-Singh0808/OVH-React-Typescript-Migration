@@ -42,7 +42,7 @@ const familyDetailsTableSlice = createSlice({
       })
       .addCase(doFetchFamilyDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.roles = action.payload as FamilyDetailsModal[]
+        state.getFamilyDetails = action.payload as FamilyDetailsModal[]
       })
       .addCase(doFetchFamilyDetails.rejected, (state, action) => {
         state.isLoading = false

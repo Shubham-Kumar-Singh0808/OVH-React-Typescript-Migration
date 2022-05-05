@@ -16,14 +16,14 @@ const FamilyDetailsTable = (): JSX.Element => {
     (state) => state.authentication.authenticatedUser.employeeId,
   )
 
-  const getFamilyDetails = useTypedSelector(
-    (state) => state.familyDetails.roles,
+  const fetchFamilyDetails = useTypedSelector(
+    (state) => state.familyDetails.getFamilyDetails,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(doFetchFamilyDetails(employeeId))
   }, [dispatch, employeeId])
-  console.log(getFamilyDetails)
+  console.log(fetchFamilyDetails)
   return (
     <>
       <CTable striped>
@@ -38,8 +38,8 @@ const FamilyDetailsTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {getFamilyDetails.length > 0 &&
-            getFamilyDetails.map((family, index) => (
+          {fetchFamilyDetails.length > 0 &&
+            fetchFamilyDetails.map((family, index) => (
               <CTableRow key={index}>
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>
                 <CTableDataCell scope="row">{family.personName}</CTableDataCell>
@@ -65,8 +65,8 @@ const FamilyDetailsTable = (): JSX.Element => {
         </CTableBody>
       </CTable>
       <strong>
-        {getFamilyDetails.length
-          ? `Total Records: ${getFamilyDetails.length}`
+        {fetchFamilyDetails.length
+          ? `Total Records: ${fetchFamilyDetails.length}`
           : `No Records found`}
       </strong>
     </>
