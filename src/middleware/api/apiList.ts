@@ -19,3 +19,9 @@ export const authenticationApi: ApiObjectType = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
+
+export const qualificationsApi: ApiObjectType = {
+  employeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
+  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
+  getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',
+}
