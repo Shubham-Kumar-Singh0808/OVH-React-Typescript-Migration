@@ -10,12 +10,7 @@ import {
 } from '@coreui/react-pro'
 import { doFetchEmployeeSkills } from '../../../../reducers/MyProfile/QualificationTab/EmployeeSkill/skillTableSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
-interface EmployeeSkillInfo {
-  striped: boolean
-  bordered: boolean
-  tableClassName: string
-  isFieldDisabled: boolean
-}
+import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationTab/EmployeeSkill/employeeSkillTypes'
 const SkillsTable: React.FC<EmployeeSkillInfo> = ({
   striped = false,
   bordered = false,

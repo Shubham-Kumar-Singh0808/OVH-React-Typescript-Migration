@@ -15,3 +15,9 @@ export type FamilyDetailsArrayModal = {
 export type UserHeaders = {
   employeeId: number | string
 }
+export interface FamilyInfo {
+  isFieldDisabled: boolean
+  striped: boolean
+  bordered: boolean
+  tableClassName: string
+}

@@ -14,3 +14,9 @@ export type SkillDetailsArrayModal = {
 export type UserHeaders = {
   employeeId: number | string
 }
+export interface EmployeeSkillInfo {
+  striped: boolean
+  bordered: boolean
+  tableClassName: string
+  isFieldDisabled: boolean
+}

@@ -1,3 +1,5 @@
+import { ValidationErrorType } from '../../commonTypes'
+
 export type GeneralInformationDataModel = {
   baseLocation: string
   curentLocation: string
@@ -9,14 +11,14 @@ export type GeneralInformationDataModel = {
   emergencyContact: string
   officialBirthday: string
 }
-export type UserHeaders = {
-  employeeId: string | number
-}
-export type ValidationError = number | null
+// export type UserHeaders = {
+//   employeeId: string | number
+// }
+// export type ValidationError = number | null
 
 export interface GeneralInformationStateType
   extends GeneralInformationDataModel {
   generalInformation: GeneralInformationDataModel
-  error: ValidationError
+  error: ValidationErrorType
   isLoading: boolean
 }

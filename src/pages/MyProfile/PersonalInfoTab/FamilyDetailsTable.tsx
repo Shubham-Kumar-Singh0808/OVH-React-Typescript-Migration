@@ -10,12 +10,7 @@ import {
 } from '@coreui/react-pro'
 import { doFetchFamilyDetails } from '../../../reducers/MyProfile/PersonalInfoTab/FamilyDetails/familyDetailsTableSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-interface FamilyInfo {
-  isFieldDisabled: boolean
-  striped: boolean
-  bordered: boolean
-  tableClassName: string
-}
+import { FamilyInfo } from '../../../types/MyProfile/PersonalInfoTab/FamilyDetails/familyDetailsTableTypes'
 const FamilyDetailsTable: React.FC<FamilyInfo> = ({
   isFieldDisabled = false,
   striped = true,
