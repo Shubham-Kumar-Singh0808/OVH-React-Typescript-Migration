@@ -10,18 +10,8 @@ export type route = {
 
 // examples
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
-
-const PersonalInfoTab = React.lazy(
-  () => import('./pages/MyProfile/PersonalInfoTab/PersonalInfoTab'),
-)
-const Blank = React.lazy(() => import('./views/blank/Blank'))
-
-const GeneralTab = React.lazy(
-  () => import('./pages/MyProfile/GeneralTab/GeneralTab'),
-)
-
-const QualificationTab = React.lazy(
-  () => import('./pages/MyProfile/QualificationTab/QualificationTab'),
+const MyProfile = React.lazy(
+  () => import('./pages/MyProfile/ProfileLandingPage/MyProfile'),
 )
 
 /**
@@ -30,18 +20,7 @@ const QualificationTab = React.lazy(
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  {
-    path: '/personalinfotab',
-    name: 'PersonalInfoTab',
-    component: PersonalInfoTab,
-  },
-  { path: '/blank', name: 'Blank', component: Blank },
-  { path: '/generaltab', name: 'GeneralTab', component: GeneralTab },
-  {
-    path: '/qualificationtab',
-    name: 'QualificationTab',
-    component: QualificationTab,
-  },
+  { path: '/profile', name: 'My Profile', component: MyProfile },
 ]
 
 export default routes

@@ -27,15 +27,9 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Blank',
+    name: 'My Profile',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    to: '/blank',
-  },
-  {
-    component: CNavItem,
-    name: 'PersonalInfoTab',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    to: '/personalinfotab',
+    to: '/profile',
   },
   {
     component: CNavGroup,
@@ -49,18 +43,6 @@ const _nav = [
         to: '/roleslist',
       },
     ],
-  },
-  {
-    component: CNavItem,
-    name: 'GeneralTab',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    to: '/generaltab',
-  },
-  {
-    component: CNavItem,
-    name: 'QualificationTab',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    to: '/qualificationtab',
   },
 ]
 
