@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react'
 
 import OCard from '../../../components/ReusableComponent/OCard'
 import TabsLabels from '../../../middleware/TabsLabels'
-import QualificationDetails from './qualificationstab/qualifications/QualificationDetails'
+import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue

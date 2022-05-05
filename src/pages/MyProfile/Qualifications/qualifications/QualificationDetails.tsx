@@ -2,7 +2,7 @@ import { CCardBody, CCardHeader } from '@coreui/react-pro'
 import React from 'react'
 import CertificationsTable from '../certifications/CertificationsTable'
 import EmployeeQualifications from './EmployeeQualification'
-import OAddButton from '../../../../../components/ReusableComponent/OAddButton'
+import OAddButton from '../../../../components/ReusableComponent/OAddButton'
 import SkillsTable from '../skills/SkillsTable'
 const QualificationDetails = (): JSX.Element => {
   return (

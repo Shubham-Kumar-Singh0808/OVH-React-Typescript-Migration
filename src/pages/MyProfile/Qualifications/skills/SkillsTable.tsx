@@ -8,8 +8,8 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { doFetchSkills } from '../../../../../reducers/Qualifications/qualificationSlice'
-import { useTypedSelector, useAppDispatch } from '../../../../../stateStore'
+import { doFetchSkills } from '../../../../reducers/Qualifications/qualificationSlice'
+import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 const SkillsTable = (): JSX.Element => {
   const employeeSkillsData = useTypedSelector(
     (state) => state.employeeSkills.SkillDetails,

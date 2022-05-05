@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { CCol, CForm, CRow } from '@coreui/react-pro'
-import { useAppDispatch, useTypedSelector } from './../../../../../stateStore'
-import { doFetchQualifications } from '../../../../../reducers/Qualifications/qualificationSlice'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { doFetchQualifications } from '../../../../reducers/Qualifications/qualificationSlice'
 
 const EmployeeQualifications = (): JSX.Element => {
   const employeeQualification = useTypedSelector(

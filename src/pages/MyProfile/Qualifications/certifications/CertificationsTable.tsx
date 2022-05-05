@@ -8,8 +8,8 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { doFetchCertifications } from '../../../../../reducers/Qualifications/qualificationSlice'
-import { useTypedSelector, useAppDispatch } from '../../../../../stateStore'
+import { doFetchCertifications } from '../../../../reducers/Qualifications/qualificationSlice'
+import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 const CertificationsTable = (): JSX.Element => {
   const employeeCertificateData = useTypedSelector(
     (state) => state.employeeCertifications.certificationDetails,
