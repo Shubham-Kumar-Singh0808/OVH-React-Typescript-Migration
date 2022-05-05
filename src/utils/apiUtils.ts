@@ -33,14 +33,14 @@ export const getAuthenticatedRequestConfig = ({
 }: {
   url: string
   method: Method
-  params?: { [key: string]: string | number }
+  params?: { [key: string]: string | number | boolean }
   data?: { [key: string]: string | number }
   additionalHeaders?: { [key: string]: string | number }
 }): {
   url: string
   method: Method
   headers: { tenantKey: string; [key: string]: string | number }
-  params?: { [key: string]: string | number }
+  params?: { [key: string]: string | number | boolean }
   data?: { [key: string]: string | number }
 } => {
   const token = localStorage.getItem('token') as string

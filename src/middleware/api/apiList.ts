@@ -28,3 +28,8 @@ export const employeeFamilyDetails: ApiObjectType = {
 export const employeeSkillList: ApiObjectType = {
   getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
 }
+export const categoriesApi: ApiObjectType = {
+  getAllCategories: apiPrefix + '/jobapplicant/getAllCategories',
+  addCategory: apiPrefix + '/jobapplicant/addCategory',
+  deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
+}
