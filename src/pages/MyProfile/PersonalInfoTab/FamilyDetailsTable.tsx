@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { doFetchFamilyDetails } from '../../../reducers/MyProfile/Categories/PersonalInfoTabSlice'
+import { doFetchFamilyDetails } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 
 import {
   CButton,
