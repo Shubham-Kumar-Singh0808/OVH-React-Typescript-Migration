@@ -19,3 +19,9 @@ export const authenticationApi: ApiObjectType = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
+
+export const categoriesApi: ApiObjectType = {
+  getAllCategories: apiPrefix + '/jobapplicant/getAllCategories',
+  addCategory: apiPrefix + '/jobapplicant/addCategory',
+  deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
+}
