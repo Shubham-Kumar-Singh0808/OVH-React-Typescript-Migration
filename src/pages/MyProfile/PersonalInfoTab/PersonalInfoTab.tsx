@@ -1,16 +1,10 @@
-import React from 'react'
-import {
-  CCardHeader,
-  CCardBody,
-  CCard,
-  CRow,
-  CCol,
-  CButton,
-} from '@coreui/react-pro'
+import React, { useState } from 'react'
+import { CCardHeader, CCardBody, CCard } from '@coreui/react-pro'
 import FamilyDetailsTable from './FamilyDetailsTable'
 import VisaDetailsTable from './VisaDetailsTable'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 const PersonalInfoTab = (): JSX.Element => {
+  const [toggle, setToggle] = useState('')
   return (
     <>
       <CCard>

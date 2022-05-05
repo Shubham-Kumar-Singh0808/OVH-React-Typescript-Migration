@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { doFetchFamilyDetails } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 
@@ -38,35 +38,32 @@ const FamilyDetailsTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {fetchFamilyDetails.length > 0 &&
-            fetchFamilyDetails.map((family, index) => (
-              <CTableRow key={index}>
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                <CTableDataCell scope="row">{family.personName}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  {family.relationShip}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {family.contactNumber || 'N/A'}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {family.dateOfBirth || 'N/A'}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  <CButton color="info" className="btn-ovh me-2">
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </CButton>
-                  <CButton color="danger" className="btn-ovh me-2">
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            ))}
+          {fetchFamilyDetails?.map((family, index) => (
+            <CTableRow key={index}>
+              <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+              <CTableDataCell scope="row">{family.personName}</CTableDataCell>
+              <CTableDataCell scope="row">{family.relationShip}</CTableDataCell>
+              <CTableDataCell scope="row">
+                {family.contactNumber || 'N/A'}
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                {family.dateOfBirth || 'N/A'}
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CButton color="info" className="btn-ovh me-2">
+                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </CButton>
+                <CButton color="danger" className="btn-ovh me-2">
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </CButton>
+              </CTableDataCell>
+            </CTableRow>
+          ))}
         </CTableBody>
       </CTable>
       <strong>
-        {fetchFamilyDetails.length
-          ? `Total Records: ${fetchFamilyDetails.length}`
+        {fetchFamilyDetails?.length
+          ? `Total Records: ${fetchFamilyDetails?.length}`
           : `No Records found`}
       </strong>
     </>

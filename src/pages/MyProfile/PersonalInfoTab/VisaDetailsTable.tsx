@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { doFetchVisaDetails } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import {
@@ -37,37 +37,34 @@ const VisaDetailsTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {fetchVisaDetails.length > 0 &&
-            fetchVisaDetails.map((visasItem, index) => (
-              <CTableRow key={index}>
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  {visasItem.countryName}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {visasItem.visaType}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {visasItem.dateOfIssue}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {visasItem.dateOfExpire}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  <CButton color="info btn-ovh me-2">
-                    <i className="fa fa-pencil-square-o"></i>
-                  </CButton>
-                  <CButton color="danger btn-ovh me-2">
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            ))}
+          {fetchVisaDetails?.map((visasItem, index) => (
+            <CTableRow key={index}>
+              <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+              <CTableDataCell scope="row">
+                {visasItem.countryName}
+              </CTableDataCell>
+              <CTableDataCell scope="row">{visasItem.visaType}</CTableDataCell>
+              <CTableDataCell scope="row">
+                {visasItem.dateOfIssue}
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                {visasItem.dateOfExpire}
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CButton color="info btn-ovh me-2">
+                  <i className="fa fa-pencil-square-o"></i>
+                </CButton>
+                <CButton color="danger btn-ovh me-2">
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </CButton>
+              </CTableDataCell>
+            </CTableRow>
+          ))}
         </CTableBody>
       </CTable>
       <strong>
-        {fetchVisaDetails.length
-          ? `Total Records: ${fetchVisaDetails.length}`
+        {fetchVisaDetails?.length
+          ? `Total Records: ${fetchVisaDetails?.length}`
           : `No Records found`}
       </strong>
     </>

@@ -4,7 +4,7 @@ import {
   VisaDetailsModal,
   PersonalInfoTabStateType,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationErrorType } from '../../../types/commonTypes'
 import {
@@ -42,7 +42,7 @@ export const doFetchVisaDetails = createAsyncThunk<
     rejectValue: ValidationErrorType
   }
 >(
-  'familyDetailsTable/doFetchFamilyDetails',
+  'familyDetailsTable/doFetchVisaDetails',
   async (employeeId: string | number, thunkApi) => {
     try {
       return await fetchVisaDetailsApiCall(employeeId)
@@ -61,29 +61,28 @@ const familyDetailsTableSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-
-      .addCase(doFetchFamilyDetails.pending, (state) => {
-        state.isLoading = true
-      })
       .addCase(doFetchFamilyDetails.fulfilled, (state, action) => {
         state.isLoading = false
         state.getFamilyDetails = action.payload as FamilyDetailsModal[]
-      })
-      .addCase(doFetchFamilyDetails.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload as ValidationErrorType
-      })
-      .addCase(doFetchVisaDetails.pending, (state) => {
-        state.isLoading = true
       })
       .addCase(doFetchVisaDetails.fulfilled, (state, action) => {
         state.isLoading = false
         state.getVisaDetails = action.payload as VisaDetailsModal[]
       })
-      .addCase(doFetchVisaDetails.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload as ValidationErrorType
-      })
+
+      .addMatcher(
+        isAnyOf(doFetchFamilyDetails.pending, doFetchVisaDetails.pending),
+        (state) => {
+          state.isLoading = true
+        },
+      )
+      .addMatcher(
+        isAnyOf(doFetchFamilyDetails.rejected, doFetchVisaDetails.rejected),
+        (state, action) => {
+          state.isLoading = false
+          state.error = action.payload as ValidationErrorType
+        },
+      )
   },
 })
 export default familyDetailsTableSlice.reducer
