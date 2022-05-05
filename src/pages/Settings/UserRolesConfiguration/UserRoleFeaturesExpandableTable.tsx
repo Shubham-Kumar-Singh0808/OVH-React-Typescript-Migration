@@ -14,6 +14,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import {
+  UserRoleFeaturesExpandableTablePropsType,
   UtilsChildFeaturesType,
   UtilsSubFeaturesType,
   childFeaturesArrayPropsType,
@@ -25,14 +26,10 @@ import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
 import { doFetchFeaturesUnderRole } from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { mapFeaturesToSubFeatures } from '../../../utils/rolesAndPermissionsUtils'
 
-interface UserRoleFeaturesExpandableTablePropsTypes {
-  selectedRoleId: string | number
-}
-
-const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTablePropsTypes> =
+const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTablePropsType> =
   ({
     selectedRoleId,
-  }: UserRoleFeaturesExpandableTablePropsTypes): JSX.Element => {
+  }: UserRoleFeaturesExpandableTablePropsType): JSX.Element => {
     const [mappedFeatures, setMappedFeatures] = useState<
       UtilsSubFeaturesType[]
     >([])

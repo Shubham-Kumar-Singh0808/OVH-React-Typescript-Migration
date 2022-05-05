@@ -8,7 +8,7 @@ import {
 const mapFeaturesToChildFeatures = (
   features: FeaturesUnderRoleType[],
   childFeatures: UserRoleChildFeaturesType[],
-) => {
+): unknown => {
   return childFeatures.map((subFeatureItem) => {
     const filteredFeature = features.find(
       (featureItem) => featureItem.featureId === subFeatureItem.featureId,
@@ -30,7 +30,7 @@ const mapFeaturesToChildFeatures = (
 export const mapFeaturesToSubFeatures = (
   features: FeaturesUnderRoleType[],
   subFeatures: UserRoleSubFeaturesType[],
-) => {
+): unknown => {
   return subFeatures.map((item) => {
     const mappedFeatures = item.features.map((subFeatureItem) => {
       const filteredFeature = features.find(

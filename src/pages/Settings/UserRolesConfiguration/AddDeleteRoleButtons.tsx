@@ -1,4 +1,8 @@
 import {
+  ActionMappingType,
+  AddDeleteRolePropsType,
+} from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import {
   CButton,
   CCol,
   CForm,
@@ -17,17 +21,14 @@ import {
 } from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
 import OModal from '../../../components/ReusableComponent/OModal'
-import { selectedRoleType } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { addToast } from '../../../reducers/appSlice'
 import { useAppDispatch } from '../../../stateStore'
 
-interface AddDeleteRolePropsTypes {
-  selectedRole: selectedRoleType
-  setSelectedRole: (role: selectedRoleType) => void
-}
-const AddDeleteRole: React.FC<AddDeleteRolePropsTypes> = ({
+const AddDeleteRole: React.FC<AddDeleteRolePropsType> = ({
   selectedRole,
   setSelectedRole,
-}: AddDeleteRolePropsTypes): JSX.Element => {
+}: AddDeleteRolePropsType): JSX.Element => {
   const [addRoleModalVisibility, setAddRoleModalVisibility] = useState(false)
   const [deleteRoleModalVisibility, setDeleteRoleModalVisibility] =
     useState(false)
@@ -37,6 +38,29 @@ const AddDeleteRole: React.FC<AddDeleteRolePropsTypes> = ({
 
   const dispatch = useAppDispatch()
 
+  const actionMapping: ActionMappingType = {
+    added: 'added',
+    deleted: 'deleted',
+  }
+
+  const getToastMessage = (action: string) => {
+    return (
+      <OToast
+        toastColor="success"
+        toastMessage={`Role ${action} successfully`}
+      />
+    )
+  }
+
+  const isExistsToastElement = (
+    <OToast toastColor="danger" toastMessage="Role already exists!" />
+  )
+  const defaultToastElement = (
+    <OToast
+      toastColor="danger"
+      toastMessage="You Can't Delete default 'Employee' Role."
+    />
+  )
   const handleConfirmAddRole = async () => {
     setAddRoleModalVisibility(false)
     const rolesExistsResultAction = await dispatch(doIsRoleExists(roleInput))
@@ -50,17 +74,19 @@ const AddDeleteRole: React.FC<AddDeleteRolePropsTypes> = ({
       if (doAddNewUserRole.fulfilled.match(addRoleResultAction)) {
         dispatch(doFetchUserRoles())
         setRoleInput('')
+        dispatch(addToast(getToastMessage(actionMapping.added)))
         dispatch(clearIsRoleExists())
       }
     } else {
       dispatch(clearIsRoleExists())
+      dispatch(addToast(isExistsToastElement))
       setRoleInput('')
     }
   }
 
   const isEmployee = () => {
     if (selectedRole.roleName.toLowerCase() === 'employee') {
-      return alert(`You Can't Delete default 'Employee' Role.`)
+      return dispatch(addToast(defaultToastElement))
     }
   }
 
@@ -81,6 +107,7 @@ const AddDeleteRole: React.FC<AddDeleteRolePropsTypes> = ({
     )
     if (doDeleteUserRole.fulfilled.match(deleteRoleResultAction)) {
       dispatch(doFetchUserRoles())
+      dispatch(addToast(getToastMessage(actionMapping.deleted)))
       setSelectedRole({
         roleId: '',
         roleName: '',

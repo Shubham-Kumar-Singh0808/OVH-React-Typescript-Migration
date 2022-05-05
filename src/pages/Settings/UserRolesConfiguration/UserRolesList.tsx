@@ -1,17 +1,13 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
 import React from 'react'
-import { selectedRoleType } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import { UserRolesListPropsType } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { useTypedSelector } from '../../../stateStore'
 
-interface UserRolesListPropsTypes {
-  selectedRole: selectedRoleType
-  setSelectedRole: (role: selectedRoleType) => void
-}
-const UserRolesList: React.FC<UserRolesListPropsTypes> = ({
+const UserRolesList: React.FC<UserRolesListPropsType> = ({
   selectedRole,
   setSelectedRole,
-}: UserRolesListPropsTypes): JSX.Element => {
+}: UserRolesListPropsType): JSX.Element => {
   const userRoles = useTypedSelector(
     (state) => state.userRolesAndPermissions.roles,
   )

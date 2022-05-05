@@ -89,13 +89,43 @@ export type UtilsFeaturesType = {
 }
 
 export type UtilsSubFeaturesType = {
+  features: UtilsFeaturesType[]
   id: number
   name: string
-  features: UtilsFeaturesType[]
 }
 
 export type childFeaturesArrayPropsType = {
   childFeatures: UtilsChildFeaturesType[]
   index: number
   subFeatureItemIndex: number
+}
+
+export type AddDeleteRolePropsType = {
+  selectedRole: selectedRoleType
+  setSelectedRole: (role: selectedRoleType) => void
+}
+
+export type UserRoleFeaturesExpandableTablePropsType = {
+  selectedRoleId: string | number
+}
+
+export type UserRolesListPropsType = {
+  selectedRole: selectedRoleType
+  setSelectedRole: (role: selectedRoleType) => void
+}
+export type UserRoleSubFeaturesTablePropsType = {
+  childFeaturesArray: childFeaturesArrayPropsType
+  checkBoxHandleChange?: (
+    target: boolean,
+    subFeatureItemIndex: number,
+    index: number,
+    accessModifier: string,
+    childFeatureItemIndex: number,
+    isChildFeature: boolean,
+  ) => void
+}
+
+export type ActionMappingType = {
+  added: string
+  deleted: string
 }
