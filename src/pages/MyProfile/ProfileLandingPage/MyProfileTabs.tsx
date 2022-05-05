@@ -6,8 +6,6 @@ import {
   CTabPane,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-
-import OCard from '../../../components/ReusableComponent/OCard'
 import TabsLabels from '../../../middleware/TabsLabels'
 import GeneralTab from '../GeneralTab/GeneralTab'
 

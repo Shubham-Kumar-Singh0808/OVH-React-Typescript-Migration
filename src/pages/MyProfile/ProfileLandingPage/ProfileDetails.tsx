@@ -18,16 +18,16 @@ const ProfileDetails = (): JSX.Element => {
         </CCol>
         <CCol sm={2}>
           <div className="profile-name">
-            <h4>'generalInformation. fullName'</h4>
-            <p className="job-title">'generalInformation. designation'</p>
+            <h4>{'generalInformation. fullName'}</h4>
+            <p className="job-title">{'generalInformation. designation'}</p>
           </div>
         </CCol>
         <CCol sm={2}>
           <dl>
             <dt>Employee Id</dt>
-            <dd className="mb-0">'generalInformation. id'</dd>
+            <dd className="mb-0">{'generalInformation. id'}</dd>
             <dt>Blood Group</dt>
-            <dd className="mb-0">'generalInformation. bloodgroup'</dd>
+            <dd className="mb-0">{'generalInformation. bloodgroup'}</dd>
           </dl>
         </CCol>
         {/* <CCol sm={2}>

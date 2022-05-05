@@ -4,7 +4,7 @@ import { CCardHeader } from '@coreui/react-pro'
 import GeneralInformation from './GeneralInformation'
 import FamilyDetailsTable from '../PersonalInfoTab/FamilyDetailsTable'
 import SkillsTable from '../QualificationTab/EmployeeSkill/SkillsTable'
-const GeneralTab = () => {
+const GeneralTab = (): JSX.Element => {
   return (
     <>
       <GeneralInformation />
