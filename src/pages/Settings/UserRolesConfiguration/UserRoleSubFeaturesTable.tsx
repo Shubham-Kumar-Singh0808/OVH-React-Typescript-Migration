@@ -13,8 +13,9 @@ import { UserRoleSubFeaturesTablePropsType } from '../../../types/Settings/UserR
 
 const UserRoleSubFeaturesTable: React.FC<UserRoleSubFeaturesTablePropsType> = ({
   childFeaturesArray,
+  checkBoxHandleChange,
 }: UserRoleSubFeaturesTablePropsType): JSX.Element => {
-  const { childFeatures } = childFeaturesArray
+  const { childFeatures, index, subFeatureItemIndex } = childFeaturesArray
   return (
     <>
       <CTable striped responsive>
@@ -35,6 +36,16 @@ const UserRoleSubFeaturesTable: React.FC<UserRoleSubFeaturesTablePropsType> = ({
                     className="infocheckbox"
                     name={childFeatureItem.name}
                     checked={childFeatureItem.viewaccessChecked}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      checkBoxHandleChange(
+                        e.target.checked,
+                        subFeatureItemIndex,
+                        index,
+                        'viewaccessChecked',
+                        childFeatureItemIndex,
+                        true,
+                      )
+                    }
                   />
                 )}
               </CTableDataCell>

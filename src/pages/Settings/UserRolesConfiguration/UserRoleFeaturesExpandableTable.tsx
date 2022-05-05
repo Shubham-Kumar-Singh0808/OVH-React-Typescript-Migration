@@ -76,6 +76,31 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
       })
     }
 
+    // post assign permission object to database
+    const checkBoxHandleChange = async (
+      target: boolean,
+      subFeatureItemIndex: number,
+      index: number,
+      accessModifier: string,
+      childFeatureItemIndex?: number,
+      isChildFeature = false,
+    ) => {
+      const mappedFeaturesCopy = [...mappedFeatures]
+      let toEdit = null
+      if (isChildFeature) {
+        toEdit =
+          mappedFeaturesCopy[index].features[subFeatureItemIndex].childFeatures[
+            childFeatureItemIndex as number
+          ]
+        console.log(toEdit)
+        // toEdit[accessModifier] = target
+      } else {
+        toEdit = mappedFeaturesCopy[index].features[subFeatureItemIndex]
+        // toEdit.accessModifier = target
+        console.log(toEdit)
+      }
+      setMappedFeatures(mappedFeaturesCopy)
+    }
     return (
       <>
         <div className="expandable-table-headwrap mt-4">
@@ -142,6 +167,16 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                           checked={
                                             subFeatureItem.viewaccessChecked
                                           }
+                                          onChange={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
+                                          ) =>
+                                            checkBoxHandleChange(
+                                              e.target.checked,
+                                              subFeatureItemIndex,
+                                              index,
+                                              'viewaccessChecked',
+                                            )
+                                          }
                                         />
                                       )}
                                     </CTableDataCell>
@@ -152,6 +187,16 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                           name={subFeatureItem.name}
                                           checked={
                                             subFeatureItem.createaccessChecked
+                                          }
+                                          onChange={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
+                                          ) =>
+                                            checkBoxHandleChange(
+                                              e.target.checked,
+                                              subFeatureItemIndex,
+                                              index,
+                                              'createaccessChecked',
+                                            )
                                           }
                                         />
                                       )}
@@ -164,6 +209,16 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                           checked={
                                             subFeatureItem.updateaccessChecked
                                           }
+                                          onChange={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
+                                          ) =>
+                                            checkBoxHandleChange(
+                                              e.target.checked,
+                                              subFeatureItemIndex,
+                                              index,
+                                              'updateaccessChecked',
+                                            )
+                                          }
                                         />
                                       )}
                                     </CTableDataCell>
@@ -174,6 +229,16 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                           name={subFeatureItem.name}
                                           checked={
                                             subFeatureItem.deleteaccessChecked
+                                          }
+                                          onChange={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
+                                          ) =>
+                                            checkBoxHandleChange(
+                                              e.target.checked,
+                                              subFeatureItemIndex,
+                                              index,
+                                              'deleteaccessChecked',
+                                            )
                                           }
                                         />
                                       )}
@@ -203,7 +268,10 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
           modalFooterClass="d-none"
           modalHeaderClass="d-none"
         >
-          <UserRoleSubFeaturesTable childFeaturesArray={childFeaturesArray} />
+          <UserRoleSubFeaturesTable
+            childFeaturesArray={childFeaturesArray}
+            checkBoxHandleChange={checkBoxHandleChange}
+          />
         </OModal>
       </>
     )

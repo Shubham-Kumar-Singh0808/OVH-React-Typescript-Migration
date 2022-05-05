@@ -75,17 +75,17 @@ export type UtilsChildFeaturesType = {
 }
 
 export type UtilsFeaturesType = {
-  childFeatures?: UtilsChildFeaturesType[]
-  createaccess?: boolean
-  createaccessChecked?: boolean
-  deleteaccess?: boolean
+  childFeatures: UtilsChildFeaturesType[]
+  createaccess: boolean
+  createaccessChecked: boolean
+  deleteaccess: boolean
   deleteaccessChecked?: boolean
-  featureId?: number
-  name?: string
-  updateaccess?: boolean
-  updateaccessChecked?: boolean
-  viewaccess?: boolean
-  viewaccessChecked?: boolean
+  featureId: number
+  name: string
+  updateaccess: boolean
+  updateaccessChecked: boolean
+  viewaccess: boolean
+  viewaccessChecked: boolean
 }
 
 export type UtilsSubFeaturesType = {
@@ -115,14 +115,14 @@ export type UserRolesListPropsType = {
 }
 export type UserRoleSubFeaturesTablePropsType = {
   childFeaturesArray: ChildFeaturesArrayPropsType
-  checkBoxHandleChange?: (
+  checkBoxHandleChange: (
     target: boolean,
     subFeatureItemIndex: number,
     index: number,
     accessModifier: string,
     childFeatureItemIndex: number,
     isChildFeature: boolean,
-  ) => void
+  ) => Promise<void>
 }
 
 export type ActionMappingType = {
