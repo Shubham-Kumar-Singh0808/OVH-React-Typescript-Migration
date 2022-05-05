@@ -141,6 +141,11 @@ const familyDetailsTableSlice = createSlice({
         state.isLoading = false
         state.SubVisa = action.payload as VisaCountryDetailsModal[]
       })
+      .addCase(doAddNewVisaDetails.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.addVisaDetails =
+          action.payload as unknown as VisaDetailsStateModal
+      })
 
       .addMatcher(
         isAnyOf(doFetchFamilyDetails.pending, doFetchVisaDetails.pending),
