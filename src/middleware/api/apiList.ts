@@ -29,3 +29,9 @@ export const userRolesConfigurationApi: ApiObjectType = {
   featuresUnderRole: apiPrefix + '/roleFeature/features_UnderRole',
   assignPermission: apiPrefix + '/roleFeature/assignPermission',
 }
+
+export const categoriesApi: ApiObjectType = {
+  getAllCategories: apiPrefix + '/jobapplicant/getAllCategories',
+  addCategory: apiPrefix + '/jobapplicant/addCategory',
+  deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
+}

@@ -5,10 +5,15 @@ import {
   AppHeader,
   AppSidebar,
 } from '../components/index'
+import React, { useRef } from 'react'
 
-import React from 'react'
+import { CToaster } from '@coreui/react-pro'
+import { useTypedSelector } from '../stateStore'
 
 const DefaultLayout = (): JSX.Element => {
+  const toastState = useTypedSelector((state) => state.app.toast)
+  const toasterReference = useRef<HTMLDivElement>(null)
+
   return (
     <>
       <div className="d-flex flex-row">
@@ -17,6 +22,12 @@ const DefaultLayout = (): JSX.Element => {
           <AppHeader />
           <div className="body flex-grow-1 px-1">
             <AppContent />
+
+            <CToaster
+              ref={toasterReference}
+              push={toastState}
+              placement="top-end"
+            />
           </div>
         </div>
         <AppAside />
