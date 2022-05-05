@@ -20,12 +20,11 @@ export const authenticationApi: ApiObjectType = {
   logout: apiPrefix + '/user/logoutUser',
 }
 
-<<<<<<< HEAD
 export const qualificationsApi: ApiObjectType = {
   employeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
   getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
   getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',
-=======
+}
 export const categoriesApi: ApiObjectType = {
   getAllCategories: apiPrefix + '/jobapplicant/getAllCategories',
   addCategory: apiPrefix + '/jobapplicant/addCategory',
@@ -37,5 +36,4 @@ export const skillsApi: ApiObjectType = {
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
->>>>>>> develop
 }
