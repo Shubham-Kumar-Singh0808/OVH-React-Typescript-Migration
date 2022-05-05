@@ -25,3 +25,7 @@ export const categoriesApi: ApiObjectType = {
   addCategory: apiPrefix + '/jobapplicant/addCategory',
   deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
 }
+export const personalInfoApi: ApiObjectType = {
+  getFamilyDetails: apiPrefix + '/Employee/familyInformation',
+  getVisaDetails: apiPrefix + '/Employee/getEmployeeVisaDetailsList',
+}
