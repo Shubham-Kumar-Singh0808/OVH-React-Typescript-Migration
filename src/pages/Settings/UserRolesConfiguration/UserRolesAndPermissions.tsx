@@ -6,12 +6,12 @@ import {
 
 import AddDeleteRoleButtons from './AddDeleteRoleButtons'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { SelectedRoleType } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import UserRoleFeaturesExpandableTable from './UserRoleFeaturesExpandableTable'
 import UserRolesList from './UserRolesList'
-import { selectedRoleType } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { useAppDispatch } from '../../../stateStore'
 
-const initialSelectedState = {} as selectedRoleType
+const initialSelectedState = {} as SelectedRoleType
 const UserRolesAndPermission: React.FC = (): JSX.Element => {
   const [selectedRole, setSelectedRole] = useState(initialSelectedState)
   const dispatch = useAppDispatch()

@@ -1,8 +1,8 @@
 import {
+  AddUserRoleType,
   FeaturesUnderRoleType,
   UserRoleSubFeaturesType,
   UserRoleType,
-  addUserRoleType,
 } from '../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { methods, userRolesConfigurationApi } from '../../apiList'
 
@@ -38,7 +38,7 @@ export const isRoleExitsApiCall = async (
 export const addUserRoleApiCall = async ({
   roleInput,
   reportingManagerFlag,
-}: addUserRoleType): Promise<number | undefined> => {
+}: AddUserRoleType): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.addNewUserRole,
     method: methods.post,

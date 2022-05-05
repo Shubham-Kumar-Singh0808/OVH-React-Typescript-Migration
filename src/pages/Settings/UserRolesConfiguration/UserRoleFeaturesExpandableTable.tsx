@@ -12,13 +12,13 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
 import {
+  ChildFeaturesArrayPropsType,
   UserRoleFeaturesExpandableTablePropsType,
   UtilsChildFeaturesType,
   UtilsSubFeaturesType,
-  childFeaturesArrayPropsType,
 } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -36,7 +36,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
     const [childFeaturesModalVisibility, setChildFeaturesModalVisibility] =
       useState(false)
     const [childFeaturesArray, setChildFeaturesArray] =
-      useState<childFeaturesArrayPropsType>({
+      useState<ChildFeaturesArrayPropsType>({
         childFeatures: [],
         index: 0,
         subFeatureItemIndex: 0,

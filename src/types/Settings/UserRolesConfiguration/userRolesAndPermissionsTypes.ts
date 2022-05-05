@@ -6,12 +6,12 @@ export type UserRoleType = {
   features: null
 }
 
-export type addUserRoleType = {
+export type AddUserRoleType = {
   roleInput: string
   reportingManagerFlag: boolean
 }
 
-export type selectedRoleType = {
+export type SelectedRoleType = {
   roleId: number | string
   roleName: string
 }
@@ -94,15 +94,15 @@ export type UtilsSubFeaturesType = {
   name: string
 }
 
-export type childFeaturesArrayPropsType = {
+export type ChildFeaturesArrayPropsType = {
   childFeatures: UtilsChildFeaturesType[]
   index: number
   subFeatureItemIndex: number
 }
 
 export type AddDeleteRolePropsType = {
-  selectedRole: selectedRoleType
-  setSelectedRole: (role: selectedRoleType) => void
+  selectedRole: SelectedRoleType
+  setSelectedRole: (role: SelectedRoleType) => void
 }
 
 export type UserRoleFeaturesExpandableTablePropsType = {
@@ -110,11 +110,11 @@ export type UserRoleFeaturesExpandableTablePropsType = {
 }
 
 export type UserRolesListPropsType = {
-  selectedRole: selectedRoleType
-  setSelectedRole: (role: selectedRoleType) => void
+  selectedRole: SelectedRoleType
+  setSelectedRole: (role: SelectedRoleType) => void
 }
 export type UserRoleSubFeaturesTablePropsType = {
-  childFeaturesArray: childFeaturesArrayPropsType
+  childFeaturesArray: ChildFeaturesArrayPropsType
   checkBoxHandleChange?: (
     target: boolean,
     subFeatureItemIndex: number,
