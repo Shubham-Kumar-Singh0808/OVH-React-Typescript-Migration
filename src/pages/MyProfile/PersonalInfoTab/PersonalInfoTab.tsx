@@ -9,6 +9,7 @@ import {
 } from '@coreui/react-pro'
 import FamilyDetailsTable from './FamilyDetailsTable'
 import VisaDetailsTable from './VisaDetailsTable'
+import OAddButton from '../../../components/ReusableComponent/OAddButton'
 const PersonalInfoTab = (): JSX.Element => {
   return (
     <>
@@ -17,14 +18,14 @@ const PersonalInfoTab = (): JSX.Element => {
           <h4 className="h4">Family Details</h4>
         </CCardHeader>
         <CCardBody>
-          {/* <OAddButton /> */}
+          <OAddButton />
           <FamilyDetailsTable />
         </CCardBody>
         <CCardHeader>
           <h4 className="h4">Visa Details</h4>
         </CCardHeader>
         <CCardBody>
-          {/* <OAddButton /> */}
+          <OAddButton />
           <VisaDetailsTable />
         </CCardBody>
       </CCard>
