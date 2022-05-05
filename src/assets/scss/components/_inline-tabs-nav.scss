@@ -1,0 +1,30 @@
+.inline-tabs {
+  &-nav {
+    &.nav {
+      align-items: flex-end;
+    }
+    &.nav-tabs {
+      border-bottom-color: $primary-75;
+    }
+    .nav-link {
+      background-color: $primary-75;
+      color: $white;
+      margin-right: 1px;
+      margin-top: 0.75rem;
+      font-weight: 700;
+      padding: 5px 8px;
+      &.active {
+        border-color: #428bca;
+        border-bottom-color: $white;
+        height: 33px;
+        color: $black;
+        line-height: 24px;
+      }
+    }
+  }
+  &-content {
+    .tab-pane {
+      padding: 1rem;
+    }
+  }
+}
