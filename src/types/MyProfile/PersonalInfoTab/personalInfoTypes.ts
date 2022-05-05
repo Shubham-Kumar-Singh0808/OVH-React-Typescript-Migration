@@ -12,6 +12,19 @@ export type UserHeaders = {
 }
 export type PersonalInfoTabStateType = {
   getFamilyDetails: FamilyDetailsModal[]
+  getVisaDetails: VisaDetailsModal[]
   isLoading: boolean
   error: ValidationErrorType
+}
+export type VisaDetailsModal = {
+  id: number | string
+  empId: number | string
+  empName: string
+  visaTypeId: number
+  visaType: string
+  countryId: number
+  countryName: string
+  dateOfIssue: string
+  dateOfExpire: string
+  //   employeeId: number | string
 }

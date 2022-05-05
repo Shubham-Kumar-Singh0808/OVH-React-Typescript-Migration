@@ -1,6 +1,9 @@
 import { personalInfoApi, methods } from '../../apiList'
 
-import { FamilyDetailsModal } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import {
+  FamilyDetailsModal,
+  VisaDetailsModal,
+} from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 export const fetchFamilyDetailsApiCall = async (
@@ -8,6 +11,19 @@ export const fetchFamilyDetailsApiCall = async (
 ): Promise<FamilyDetailsModal[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.getFamilyDetails,
+    method: methods.get,
+    params: {
+      loggedInEmpId: employeeId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const fetchVisaDetailsApiCall = async (
+  employeeId: number | string,
+): Promise<VisaDetailsModal[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.getVisaDetails,
     method: methods.get,
     params: {
       loggedInEmpId: employeeId,

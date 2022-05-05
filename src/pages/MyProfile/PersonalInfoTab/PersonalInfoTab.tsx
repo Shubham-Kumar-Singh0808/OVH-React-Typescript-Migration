@@ -8,6 +8,7 @@ import {
   CButton,
 } from '@coreui/react-pro'
 import FamilyDetailsTable from './FamilyDetailsTable'
+import VisaDetailsTable from './VisaDetailsTable'
 const PersonalInfoTab = (): JSX.Element => {
   return (
     <>
@@ -18,6 +19,13 @@ const PersonalInfoTab = (): JSX.Element => {
         <CCardBody>
           {/* <OAddButton /> */}
           <FamilyDetailsTable />
+        </CCardBody>
+        <CCardHeader>
+          <h4 className="h4">Visa Details</h4>
+        </CCardHeader>
+        <CCardBody>
+          {/* <OAddButton /> */}
+          <VisaDetailsTable />
         </CCardBody>
       </CCard>
     </>
