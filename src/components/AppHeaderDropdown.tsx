@@ -30,7 +30,7 @@ const AppHeaderDropdown = (): JSX.Element => {
       <CDropdownToggle {...dropdownToggleProps}>
         <i className="fa fa-power-off fa-lg"></i>
       </CDropdownToggle>
-      <CDropdownMenu className="p-0" placement="bottom-end">
+      <CDropdownMenu className="p-0">
         <CDropdownItem className="cursor-pointer" onClick={handleLogout}>
           Logout
         </CDropdownItem>

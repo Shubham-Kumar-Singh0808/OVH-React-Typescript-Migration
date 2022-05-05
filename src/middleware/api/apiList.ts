@@ -28,4 +28,7 @@ export const categoriesApi: ApiObjectType = {
 export const personalInfoApi: ApiObjectType = {
   getFamilyDetails: apiPrefix + '/Employee/familyInformation',
   getVisaDetails: apiPrefix + '/Employee/getEmployeeVisaDetailsList',
+  getCountryDetails: apiPrefix + '/Employee/getCountryLookUps',
+  getVisaTypeDetails: apiPrefix + '/Employee/getCountryChangeList',
+  addNewVisaMember: apiPrefix + '/Employee/saveVisaDetails',
 }
