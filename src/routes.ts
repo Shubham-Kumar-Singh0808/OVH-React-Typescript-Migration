@@ -14,7 +14,9 @@ const UserRolesAndPermissions = React.lazy(
   () =>
     import('./pages/Settings/UserRolesConfiguration/UserRolesAndPermissions'),
 )
-const Blank = React.lazy(() => import('./views/blank/Blank'))
+const MyProfile = React.lazy(
+  () => import('./pages/MyProfile/ProfileLandingPage/MyProfile'),
+)
 
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -27,7 +29,7 @@ const routes = [
     name: 'User Roles And Permission',
     component: UserRolesAndPermissions,
   },
-  { path: '/blank', name: 'Blank', component: Blank },
+  { path: '/profile', name: 'My Profile', component: MyProfile },
 ]
 
 export default routes
