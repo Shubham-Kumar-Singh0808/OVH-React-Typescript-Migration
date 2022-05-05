@@ -161,12 +161,6 @@ const userRolesAndPermissionsSlice = createSlice({
         state.isLoading = false
         state.isRoleExits = action.payload as boolean
       })
-      .addCase(doAddNewUserRole.fulfilled, (state) => {
-        state.isLoading = false
-      })
-      .addCase(doDeleteUserRole.fulfilled, (state) => {
-        state.isLoading = false
-      })
       .addCase(doFetchUserRoleSubFeatures.fulfilled, (state, action) => {
         state.isLoading = false
         state.subFeatures = action.payload as UserRoleSubFeaturesType[]
@@ -175,6 +169,12 @@ const userRolesAndPermissionsSlice = createSlice({
         state.isLoading = false
         state.featuresUnderRole = action.payload as FeaturesUnderRoleType[]
       })
+      .addMatcher(
+        isAnyOf(doAddNewUserRole.fulfilled, doDeleteUserRole.fulfilled),
+        (state) => {
+          state.isLoading = false
+        },
+      )
       .addMatcher(
         isAnyOf(
           doFetchUserRoles.pending,
