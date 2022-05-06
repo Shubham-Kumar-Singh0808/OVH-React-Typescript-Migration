@@ -1,18 +1,18 @@
 import { ValidationErrorType } from '../../types/commonTypes'
 
-export type PgAndGraduationLookUpType = {
+export type PostGraduationAndGraduationLookUp = {
   id: number
   label: string
 }
-export type EmployeeQualificationsType = {
-  pgLookUp: PgAndGraduationLookUpType[]
-  graduationLookUp: PgAndGraduationLookUpType[]
+export type EmployeeQualifications = {
+  pgLookUp: PostGraduationAndGraduationLookUp[]
+  graduationLookUp: PostGraduationAndGraduationLookUp[]
   hscName: string
   sscName: string
   others: string
 }
 
-export type CertificationDetailsType = {
+export type EmployeeCertifications = {
   certificateType: string
   technology: string
   code: string
@@ -23,7 +23,7 @@ export type CertificationDetailsType = {
   name: string
 }
 
-export type SkillDetailsType = {
+export type EmployeeSkills = {
   categoryType: string
   skillType: string
   competency: string
@@ -31,10 +31,10 @@ export type SkillDetailsType = {
   expYear: string
 }
 
-export type EmployeeQualificationStateType = {
-  qualificationDetails: EmployeeQualificationsType
-  certificationDetails: CertificationDetailsType[]
-  SkillDetails: SkillDetailsType[]
+export type EmployeeQualificationModel = {
+  qualificationDetails: EmployeeQualifications
+  certificationDetails: EmployeeCertifications[]
+  SkillDetails: EmployeeSkills[]
   isLoading: boolean
   error: ValidationErrorType
 }

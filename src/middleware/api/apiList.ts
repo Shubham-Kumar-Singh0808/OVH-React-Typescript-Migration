@@ -21,7 +21,7 @@ export const authenticationApi: ApiObjectType = {
 }
 
 export const qualificationsApi: ApiObjectType = {
-  employeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
+  getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
   getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
   getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',
 }

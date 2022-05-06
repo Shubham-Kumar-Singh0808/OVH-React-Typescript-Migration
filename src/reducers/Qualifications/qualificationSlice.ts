@@ -1,9 +1,9 @@
 import { AppDispatch, RootState } from '../../stateStore'
 import {
-  CertificationDetailsType,
-  EmployeeQualificationStateType,
-  EmployeeQualificationsType,
-  SkillDetailsType,
+  EmployeeCertifications,
+  EmployeeQualificationModel,
+  EmployeeQualifications,
+  EmployeeSkills,
 } from '../../../src/types/Qualifications/qualificationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
@@ -15,10 +15,10 @@ import {
   fetchEmployeeSkills,
 } from '../../middleware/api/Qualifications/qualificationsApi'
 
-const initialQualificationState = {} as EmployeeQualificationStateType
+const initialQualificationState = {} as EmployeeQualificationModel
 
 export const doFetchQualifications = createAsyncThunk<
-  EmployeeQualificationsType | undefined,
+  EmployeeQualifications | undefined,
   string | number,
   {
     dispatch: AppDispatch
@@ -40,7 +40,7 @@ export const doFetchQualifications = createAsyncThunk<
 )
 
 export const doFetchCertifications = createAsyncThunk<
-  CertificationDetailsType[] | undefined,
+  EmployeeCertifications[] | undefined,
   void,
   {
     dispatch: AppDispatch
@@ -57,7 +57,7 @@ export const doFetchCertifications = createAsyncThunk<
 })
 
 export const doFetchSkills = createAsyncThunk<
-  SkillDetailsType[] | undefined,
+  EmployeeSkills[] | undefined,
   void,
   {
     dispatch: AppDispatch
@@ -83,23 +83,21 @@ const employeeQualificationsSlice = createSlice({
       })
       .addCase(doFetchQualifications.fulfilled, (state, action) => {
         state.isLoading = false
-        state.qualificationDetails =
-          action.payload as EmployeeQualificationsType
+        state.qualificationDetails = action.payload as EmployeeQualifications
       })
       .addCase(doFetchCertifications.pending, (state) => {
         state.isLoading = true
       })
       .addCase(doFetchCertifications.fulfilled, (state, action) => {
         state.isLoading = false
-        state.certificationDetails =
-          action.payload as CertificationDetailsType[]
+        state.certificationDetails = action.payload as EmployeeCertifications[]
       })
       .addCase(doFetchSkills.pending, (state) => {
         state.isLoading = true
       })
       .addCase(doFetchSkills.fulfilled, (state, action) => {
         state.isLoading = false
-        state.SkillDetails = action.payload as SkillDetailsType[]
+        state.SkillDetails = action.payload as EmployeeSkills[]
       })
   },
 })

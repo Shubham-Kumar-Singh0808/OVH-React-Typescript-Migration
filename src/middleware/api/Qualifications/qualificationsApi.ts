@@ -1,7 +1,7 @@
 import {
-  EmployeeQualificationsType,
-  CertificationDetailsType,
-  SkillDetailsType,
+  EmployeeQualifications,
+  EmployeeCertifications,
+  EmployeeSkills,
 } from '../../../types/Qualifications/qualificationTypes'
 
 import { methods, qualificationsApi } from '../apiList'
@@ -10,9 +10,9 @@ import { getAuthenticatedRequestConfig } from '../../../utils/apiUtils'
 
 export const fetchEmployeeQualifications = async (
   employeeId: string | number,
-): Promise<EmployeeQualificationsType> => {
+): Promise<EmployeeQualifications> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApi.employeeQualifications,
+    url: qualificationsApi.getEmployeeQualifications,
     method: methods.get,
     params: {
       empID: employeeId,
@@ -23,7 +23,7 @@ export const fetchEmployeeQualifications = async (
 }
 
 export const fetchEmployeeCertifications = async (): Promise<
-  CertificationDetailsType[]
+  EmployeeCertifications[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApi.getEmployeeCertificatesList,
@@ -33,7 +33,7 @@ export const fetchEmployeeCertifications = async (): Promise<
   return response.data
 }
 
-export const fetchEmployeeSkills = async (): Promise<SkillDetailsType[]> => {
+export const fetchEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApi.getEmployeeSkillsList,
     method: methods.get,
