@@ -11,11 +11,10 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-const FamilyDetailsTable = (): JSX.Element => {
+const FamilyDetailsTable = ({ editButtonHandler }: any): JSX.Element => {
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-
   const fetchFamilyDetails = useTypedSelector(
     (state) => state.familyDetails.getFamilyDetails,
   )
@@ -23,7 +22,6 @@ const FamilyDetailsTable = (): JSX.Element => {
   useEffect(() => {
     dispatch(doFetchFamilyDetails(employeeId))
   }, [dispatch, employeeId])
-  console.log(fetchFamilyDetails)
   return (
     <>
       <CTable striped>
@@ -53,7 +51,11 @@ const FamilyDetailsTable = (): JSX.Element => {
                   {family.dateOfBirth || 'N/A'}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
-                  <CButton color="info" className="btn-ovh me-2">
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-2"
+                    onClick={() => editButtonHandler(family.familyId)}
+                  >
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </CButton>
                   <CButton color="danger" className="btn-ovh me-2">

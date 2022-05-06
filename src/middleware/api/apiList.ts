@@ -31,4 +31,7 @@ export const personalInfoApi: ApiObjectType = {
   getCountryDetails: apiPrefix + '/Employee/getCountryLookUps',
   getVisaTypeDetails: apiPrefix + '/Employee/getCountryChangeList',
   addNewVisaMember: apiPrefix + '/Employee/saveVisaDetails',
+  getFamilyInformation: apiPrefix + '/Employee/getFamilyInformation',
+  updateFamilyInformation: apiPrefix + '/Employee/updateFamilyInformation',
+  addNewFamilyMember: apiPrefix + '/Employee/saveFamilyInformation',
 }

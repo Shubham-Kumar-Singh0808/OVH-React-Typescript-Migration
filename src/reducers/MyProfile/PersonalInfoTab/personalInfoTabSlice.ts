@@ -6,6 +6,8 @@ import {
   GetCountryDetailsType,
   VisaCountryDetailsModal,
   VisaDetailsStateModal,
+  EditFamilyDetailsStateModal,
+  FamilyDetailsStateModal,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -16,6 +18,9 @@ import {
   fetchCountryDetailsApiCall,
   fetchVisaCountryDetailsApiCall,
   getAddNewFamilyMemberApiCall,
+  getFamilyInformationByFamilyIdApiCall,
+  getUpdateNewFamilyMemberApiCall,
+  getAddNewFamilyMember,
 } from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
 const initialPersonalInfoTabState = {} as PersonalInfoTabStateType
 export const doFetchFamilyDetails = createAsyncThunk<
@@ -118,6 +123,70 @@ export const doAddNewVisaDetails = createAsyncThunk<
     }
   },
 )
+export const doEditNewFamilyMember = createAsyncThunk<
+  EditFamilyDetailsStateModal | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationErrorType
+  }
+>(
+  'addEditFamilyDetails/doEditNewFamilyMember',
+  async (familyId: number, thunkApi) => {
+    try {
+      return await getFamilyInformationByFamilyIdApiCall(familyId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(
+        err.response?.status as ValidationErrorType,
+      )
+    }
+  },
+)
+export const doUpdateFamilyDetails = createAsyncThunk<
+  number | undefined,
+  FamilyDetailsStateModal,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationErrorType
+  }
+>(
+  'addEditFamilyDetails/doUpdateFamilyDetails',
+  async (employeeFamily: FamilyDetailsStateModal, thunkApi) => {
+    try {
+      return await getUpdateNewFamilyMemberApiCall(employeeFamily)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(
+        err.response?.status as ValidationErrorType,
+      )
+    }
+  },
+)
+export const doAddNewFamilyMember = createAsyncThunk<
+  number | undefined,
+  FamilyDetailsStateModal,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationErrorType
+  }
+>(
+  'addEditFamilyDetails/doAddNewFamilyMember',
+  async (employeeFamily: FamilyDetailsStateModal, thunkApi) => {
+    try {
+      return await getAddNewFamilyMember(employeeFamily)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(
+        err.response?.status as ValidationErrorType,
+      )
+    }
+  },
+)
+
 const familyDetailsTableSlice = createSlice({
   name: 'familyDetailsTable',
   initialState: initialPersonalInfoTabState,
@@ -146,7 +215,21 @@ const familyDetailsTableSlice = createSlice({
         state.addVisaDetails =
           action.payload as unknown as VisaDetailsStateModal
       })
-
+      .addCase(doEditNewFamilyMember.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.editFamilyDetails =
+          action.payload as unknown as EditFamilyDetailsStateModal
+      })
+      .addCase(doUpdateFamilyDetails.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.addFamilyState =
+          action.payload as unknown as FamilyDetailsStateModal
+      })
+      .addCase(doAddNewFamilyMember.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.addFamilyState =
+          action.payload as unknown as FamilyDetailsStateModal
+      })
       .addMatcher(
         isAnyOf(doFetchFamilyDetails.pending, doFetchVisaDetails.pending),
         (state) => {

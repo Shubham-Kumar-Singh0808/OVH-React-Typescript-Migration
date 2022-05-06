@@ -6,6 +6,8 @@ import {
   GetCountryDetailsType,
   VisaCountryDetailsModal,
   VisaDetailsStateModal,
+  EditFamilyDetailsStateModal,
+  FamilyDetailsStateModal,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
@@ -65,6 +67,41 @@ export const getAddNewFamilyMemberApiCall = async (
     url: personalInfoApi.addNewVisaMember,
     method: methods.post,
     data: employeeVisaDetails,
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const getFamilyInformationByFamilyIdApiCall = async (
+  familyId: number,
+): Promise<EditFamilyDetailsStateModal> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.getFamilyInformation,
+    method: methods.get,
+    params: {
+      familyId: familyId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const getUpdateNewFamilyMemberApiCall = async (
+  employeeFamily: FamilyDetailsStateModal,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.updateFamilyInformation,
+    method: methods.post,
+    data: employeeFamily,
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const getAddNewFamilyMember = async (
+  employeeFamily: FamilyDetailsStateModal,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.addNewFamilyMember,
+    method: methods.post,
+    data: employeeFamily,
   })
   const response = await axios(requestConfig)
   return response.data

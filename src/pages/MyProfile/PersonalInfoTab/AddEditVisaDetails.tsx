@@ -18,8 +18,6 @@ import {
   doFetchCountryVisaDetails,
   doAddNewVisaDetails,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
-
-// import { useDispatch, useSelector } from 'react-redux'
 import DatePicker from 'react-datepicker'
 
 import 'react-datepicker/dist/react-datepicker.css'

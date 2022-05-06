@@ -22,7 +22,6 @@ const VisaDetailsTable = (): JSX.Element => {
   useEffect(() => {
     dispatch(doFetchVisaDetails(employeeId))
   }, [dispatch, employeeId])
-  console.log(fetchVisaDetails)
   return (
     <>
       <CTable striped>
