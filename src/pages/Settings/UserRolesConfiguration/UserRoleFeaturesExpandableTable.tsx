@@ -1,4 +1,11 @@
 import {
+  AccessModifier,
+  ChildFeaturesArrayProps,
+  UserRoleFeaturesExpandableTableProps,
+  UtilsChildFeatures,
+  UtilsSubFeatures,
+} from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import {
   CAccordion,
   CAccordionBody,
   CAccordionHeader,
@@ -12,31 +19,29 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import {
-  ChildFeaturesArrayPropsType,
-  UserRoleFeaturesExpandableTablePropsType,
-  UtilsChildFeaturesType,
-  UtilsSubFeaturesType,
-} from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import React, { useEffect, useState } from 'react'
+import {
+  doAssignRolePermission,
+  doFetchFeaturesUnderRole,
+} from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import {
+  mapFeaturesToSubFeatures,
+  renderPermissionSwitch,
+} from '../../../utils/rolesAndPermissionsUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
-import { doFetchFeaturesUnderRole } from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import { mapFeaturesToSubFeatures } from '../../../utils/rolesAndPermissionsUtils'
+import { addToast } from '../../../reducers/appSlice'
 
-const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTablePropsType> =
-  ({
-    selectedRoleId,
-  }: UserRoleFeaturesExpandableTablePropsType): JSX.Element => {
-    const [mappedFeatures, setMappedFeatures] = useState<
-      UtilsSubFeaturesType[]
-    >([])
+const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableProps> =
+  ({ selectedRoleId }: UserRoleFeaturesExpandableTableProps): JSX.Element => {
+    const [mappedFeatures, setMappedFeatures] = useState<UtilsSubFeatures[]>([])
     const [childFeaturesModalVisibility, setChildFeaturesModalVisibility] =
       useState(false)
     const [childFeaturesArray, setChildFeaturesArray] =
-      useState<ChildFeaturesArrayPropsType>({
+      useState<ChildFeaturesArrayProps>({
         childFeatures: [],
         index: 0,
         subFeatureItemIndex: 0,
@@ -58,7 +63,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
     useEffect(() => {
       if (features) {
         const mappedResult = mapFeaturesToSubFeatures(features, subFeatures)
-        setMappedFeatures(mappedResult as UtilsSubFeaturesType[])
+        setMappedFeatures(mappedResult as UtilsSubFeatures[])
       }
     }, [features, subFeatures])
 
@@ -66,7 +71,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
     const handleChildModal = (
       index: number,
       subFeatureItemIndex: number,
-      childFeatures: UtilsChildFeaturesType[],
+      childFeatures: UtilsChildFeatures[],
     ) => {
       setChildFeaturesModalVisibility(true)
       setChildFeaturesArray({
@@ -78,10 +83,10 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
 
     // post assign permission object to database
     const checkBoxHandleChange = async (
-      target: boolean,
+      target: EventTarget & HTMLInputElement,
       subFeatureItemIndex: number,
       index: number,
-      accessModifier: string,
+      accessModifier: AccessModifier,
       childFeatureItemIndex?: number,
       isChildFeature = false,
     ) => {
@@ -92,14 +97,38 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
           mappedFeaturesCopy[index].features[subFeatureItemIndex].childFeatures[
             childFeatureItemIndex as number
           ]
+        toEdit[accessModifier] = target.checked
         console.log(toEdit)
-        // toEdit[accessModifier] = target
       } else {
         toEdit = mappedFeaturesCopy[index].features[subFeatureItemIndex]
-        // toEdit.accessModifier = target
+        toEdit[accessModifier] = target.checked
         console.log(toEdit)
       }
       setMappedFeatures(mappedFeaturesCopy)
+      const prepareObject = renderPermissionSwitch(
+        accessModifier,
+        toEdit,
+        selectedRoleId as number,
+      )
+      const assignPermissionResultAction = await dispatch(
+        doAssignRolePermission(prepareObject),
+      )
+      if (
+        doAssignRolePermission.fulfilled.match(assignPermissionResultAction)
+      ) {
+        let oToastMessage
+        if (prepareObject.permission) {
+          oToastMessage = `Successfully you have assigned '${prepareObject.type}' permission to '${target.name}'`
+        } else {
+          oToastMessage = `Successfully you have removed '${prepareObject.type}' permission to '${target.name}'`
+        }
+        dispatch(
+          addToast(
+            <OToast toastColor="success" toastMessage={oToastMessage} />,
+          ),
+        )
+        dispatch(doFetchFeaturesUnderRole(selectedRoleId as string))
+      }
     }
     return (
       <>
@@ -147,7 +176,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                             handleChildModal(
                                               index,
                                               subFeatureItemIndex,
-                                              subFeatureItem.childFeatures as UtilsChildFeaturesType[],
+                                              subFeatureItem.childFeatures,
                                             )
                                           }
                                         >
@@ -171,7 +200,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                             e: React.ChangeEvent<HTMLInputElement>,
                                           ) =>
                                             checkBoxHandleChange(
-                                              e.target.checked,
+                                              e.target,
                                               subFeatureItemIndex,
                                               index,
                                               'viewaccessChecked',
@@ -192,7 +221,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                             e: React.ChangeEvent<HTMLInputElement>,
                                           ) =>
                                             checkBoxHandleChange(
-                                              e.target.checked,
+                                              e.target,
                                               subFeatureItemIndex,
                                               index,
                                               'createaccessChecked',
@@ -213,7 +242,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                             e: React.ChangeEvent<HTMLInputElement>,
                                           ) =>
                                             checkBoxHandleChange(
-                                              e.target.checked,
+                                              e.target,
                                               subFeatureItemIndex,
                                               index,
                                               'updateaccessChecked',
@@ -234,7 +263,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                             e: React.ChangeEvent<HTMLInputElement>,
                                           ) =>
                                             checkBoxHandleChange(
-                                              e.target.checked,
+                                              e.target,
                                               subFeatureItemIndex,
                                               index,
                                               'deleteaccessChecked',

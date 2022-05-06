@@ -1,6 +1,6 @@
 import {
-  ActionMappingType,
-  AddDeleteRolePropsType,
+  ActionMapping,
+  AddDeleteRoleProps,
 } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import {
   CButton,
@@ -25,10 +25,10 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import { addToast } from '../../../reducers/appSlice'
 import { useAppDispatch } from '../../../stateStore'
 
-const AddDeleteRole: React.FC<AddDeleteRolePropsType> = ({
+const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   selectedRole,
   setSelectedRole,
-}: AddDeleteRolePropsType): JSX.Element => {
+}: AddDeleteRoleProps): JSX.Element => {
   const [addRoleModalVisibility, setAddRoleModalVisibility] = useState(false)
   const [deleteRoleModalVisibility, setDeleteRoleModalVisibility] =
     useState(false)
@@ -38,7 +38,7 @@ const AddDeleteRole: React.FC<AddDeleteRolePropsType> = ({
 
   const dispatch = useAppDispatch()
 
-  const actionMapping: ActionMappingType = {
+  const actionMapping: ActionMapping = {
     added: 'added',
     deleted: 'deleted',
   }

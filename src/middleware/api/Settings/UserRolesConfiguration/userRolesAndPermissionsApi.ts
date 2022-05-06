@@ -1,17 +1,16 @@
 import {
-  AddUserRoleType,
-  FeaturesUnderRoleType,
-  UserRoleSubFeaturesType,
-  UserRoleType,
+  AddUserRole,
+  FeaturesUnderRole,
+  UserRole,
+  UserRoleSubFeatures,
+  UtilsRenderPermissionSwitchReturn,
 } from '../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { methods, userRolesConfigurationApi } from '../../apiList'
 
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-export const fetchUserRolesApiCall = async (): Promise<
-  UserRoleType[] | undefined
-> => {
+export const getUserRoles = async (): Promise<UserRole[] | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.getUserRoles,
     method: methods.get,
@@ -21,7 +20,7 @@ export const fetchUserRolesApiCall = async (): Promise<
   return response.data
 }
 
-export const isRoleExitsApiCall = async (
+export const checkIsRoleExits = async (
   roleInput: string,
 ): Promise<boolean | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -35,10 +34,10 @@ export const isRoleExitsApiCall = async (
   return response.data
 }
 
-export const addUserRoleApiCall = async ({
+export const createUserRole = async ({
   roleInput,
   reportingManagerFlag,
-}: AddUserRoleType): Promise<number | undefined> => {
+}: AddUserRole): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.addNewUserRole,
     method: methods.post,
@@ -51,7 +50,7 @@ export const addUserRoleApiCall = async ({
   return response.data
 }
 
-export const deleteUserRoleApiCall = async (
+export const deleteUserRole = async (
   roleId: number,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -65,8 +64,8 @@ export const deleteUserRoleApiCall = async (
   return response.data
 }
 
-export const fetchSubFeaturesApiCall = async (): Promise<
-  UserRoleSubFeaturesType[] | undefined
+export const getUserRoleSubFeatures = async (): Promise<
+  UserRoleSubFeatures[] | undefined
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.getSubFeatures,
@@ -76,15 +75,26 @@ export const fetchSubFeaturesApiCall = async (): Promise<
   return response.data
 }
 
-export const fetchFeaturesUnderApiCall = async (
+export const getUserFeaturesUnderRole = async (
   selectedRoleId: string,
-): Promise<FeaturesUnderRoleType[] | undefined> => {
+): Promise<FeaturesUnderRole[] | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.featuresUnderRole,
     method: methods.get,
     params: {
       roleId: selectedRoleId,
     },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const updateAssignPermissions = async (
+  prepareObject: UtilsRenderPermissionSwitchReturn,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: userRolesConfigurationApi.assignPermission,
+    method: methods.post,
+    data: prepareObject,
   })
   const response = await axios(requestConfig)
   return response.data

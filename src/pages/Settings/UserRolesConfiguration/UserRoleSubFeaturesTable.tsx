@@ -9,12 +9,12 @@ import {
 } from '@coreui/react-pro'
 
 import React from 'react'
-import { UserRoleSubFeaturesTablePropsType } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import { UserRoleSubFeaturesTableProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 
-const UserRoleSubFeaturesTable: React.FC<UserRoleSubFeaturesTablePropsType> = ({
+const UserRoleSubFeaturesTable: React.FC<UserRoleSubFeaturesTableProps> = ({
   childFeaturesArray,
   checkBoxHandleChange,
-}: UserRoleSubFeaturesTablePropsType): JSX.Element => {
+}: UserRoleSubFeaturesTableProps): JSX.Element => {
   const { childFeatures, index, subFeatureItemIndex } = childFeaturesArray
   return (
     <>
@@ -38,7 +38,7 @@ const UserRoleSubFeaturesTable: React.FC<UserRoleSubFeaturesTablePropsType> = ({
                     checked={childFeatureItem.viewaccessChecked}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       checkBoxHandleChange(
-                        e.target.checked,
+                        e.target,
                         subFeatureItemIndex,
                         index,
                         'viewaccessChecked',

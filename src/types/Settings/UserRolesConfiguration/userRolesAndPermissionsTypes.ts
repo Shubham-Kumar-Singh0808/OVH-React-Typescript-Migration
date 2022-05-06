@@ -1,22 +1,22 @@
 import { ValidationErrorType } from '../../commonTypes'
 
-export type UserRoleType = {
+export type UserRole = {
   roleId: number
   name: string
   features: null
 }
 
-export type AddUserRoleType = {
+export type AddUserRole = {
   roleInput: string
   reportingManagerFlag: boolean
 }
 
-export type SelectedRoleType = {
+export type SelectedRole = {
   roleId: number | string
   roleName: string
 }
 
-export type UserRoleChildFeaturesType = {
+export type UserRoleChildFeatures = {
   featureId: number
   name: string
   viewaccess: boolean
@@ -26,23 +26,23 @@ export type UserRoleChildFeaturesType = {
   childFeatures: null
 }
 
-export type UserRoleFeaturesType = {
+export type UserRoleFeatures = {
   featureId: number
   name: string
   viewaccess: boolean
   createaccess: boolean
   updateaccess: boolean
   deleteaccess: boolean
-  childFeatures: UserRoleChildFeaturesType[]
+  childFeatures: UserRoleChildFeatures[]
 }
 
-export type UserRoleSubFeaturesType = {
+export type UserRoleSubFeatures = {
   id: number
   name: string
-  features: UserRoleFeaturesType[]
+  features: UserRoleFeatures[]
 }
 
-export type FeaturesUnderRoleType = {
+export type FeaturesUnderRole = {
   featureId: number
   name: string
   viewaccess: boolean
@@ -51,81 +51,94 @@ export type FeaturesUnderRoleType = {
   deleteaccess: boolean
   childFeatures: null
 }
-export type UserRolesAndPermissionsStateType = {
-  roles: UserRoleType[]
-  subFeatures: UserRoleSubFeaturesType[]
-  featuresUnderRole: FeaturesUnderRoleType[]
+export type UserRolesAndPermissionsState = {
+  roles: UserRole[]
+  subFeatures: UserRoleSubFeatures[]
+  featuresUnderRole: FeaturesUnderRole[]
   isRoleExits: boolean | null
   isLoading: boolean
   error: ValidationErrorType
 }
 
-export type UtilsChildFeaturesType = {
+export type UtilsChildFeatures = {
   childFeatures: null
   createaccess: boolean
-  createaccessChecked: boolean
-  deleteaccess: boolean
-  deleteaccessChecked: boolean
-  featureId: number
-  name: string
-  updateaccess: boolean
-  updateaccessChecked: boolean
-  viewaccess: boolean
-  viewaccessChecked: boolean
-}
-
-export type UtilsFeaturesType = {
-  childFeatures: UtilsChildFeaturesType[]
-  createaccess: boolean
-  createaccessChecked: boolean
+  createaccessChecked?: boolean
   deleteaccess: boolean
   deleteaccessChecked?: boolean
   featureId: number
   name: string
   updateaccess: boolean
-  updateaccessChecked: boolean
+  updateaccessChecked?: boolean
   viewaccess: boolean
-  viewaccessChecked: boolean
+  viewaccessChecked?: boolean
 }
 
-export type UtilsSubFeaturesType = {
-  features: UtilsFeaturesType[]
+export type UtilsFeatures = {
+  childFeatures: UtilsChildFeatures[]
+  createaccess: boolean
+  createaccessChecked?: boolean
+  deleteaccess: boolean
+  deleteaccessChecked?: boolean
+  featureId: number
+  name: string
+  updateaccess: boolean
+  updateaccessChecked?: boolean
+  viewaccess: boolean
+  viewaccessChecked?: boolean
+}
+
+export type UtilsSubFeatures = {
+  features: UtilsFeatures[]
   id: number
   name: string
 }
 
-export type ChildFeaturesArrayPropsType = {
-  childFeatures: UtilsChildFeaturesType[]
+export type ChildFeaturesArrayProps = {
+  childFeatures: UtilsChildFeatures[]
   index: number
   subFeatureItemIndex: number
 }
 
-export type AddDeleteRolePropsType = {
-  selectedRole: SelectedRoleType
-  setSelectedRole: (role: SelectedRoleType) => void
+export type AddDeleteRoleProps = {
+  selectedRole: SelectedRole
+  setSelectedRole: (role: SelectedRole) => void
 }
 
-export type UserRoleFeaturesExpandableTablePropsType = {
+export type UserRoleFeaturesExpandableTableProps = {
   selectedRoleId: string | number
 }
 
-export type UserRolesListPropsType = {
-  selectedRole: SelectedRoleType
-  setSelectedRole: (role: SelectedRoleType) => void
+export type UserRolesListProps = {
+  selectedRole: SelectedRole
+  setSelectedRole: (role: SelectedRole) => void
 }
-export type UserRoleSubFeaturesTablePropsType = {
-  childFeaturesArray: ChildFeaturesArrayPropsType
+export type UserRoleSubFeaturesTableProps = {
+  childFeaturesArray: ChildFeaturesArrayProps
   checkBoxHandleChange: (
-    target: boolean,
+    target: EventTarget & HTMLInputElement,
     subFeatureItemIndex: number,
     index: number,
-    accessModifier: string,
+    accessModifier: AccessModifier,
     childFeatureItemIndex: number,
     isChildFeature: boolean,
   ) => Promise<void>
 }
 
-export type ActionMappingType = {
+export type ActionMapping = {
   added: string
   deleted: string
+}
+
+export type AccessModifier =
+  | 'viewaccessChecked'
+  | 'updateaccessChecked'
+  | 'createaccessChecked'
+  | 'deleteaccessChecked'
+
+export type UtilsRenderPermissionSwitchReturn = {
+  featureId: number
+  roleId: number
+  permission: boolean | undefined
+  type: string
 }

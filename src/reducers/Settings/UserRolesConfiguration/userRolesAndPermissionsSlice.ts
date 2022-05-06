@@ -1,29 +1,31 @@
 import {
-  AddUserRoleType,
-  FeaturesUnderRoleType,
-  UserRoleSubFeaturesType,
-  UserRoleType,
-  UserRolesAndPermissionsStateType,
+  AddUserRole,
+  FeaturesUnderRole,
+  UserRole,
+  UserRoleSubFeatures,
+  UserRolesAndPermissionsState,
+  UtilsRenderPermissionSwitchReturn,
 } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  addUserRoleApiCall,
-  deleteUserRoleApiCall,
-  fetchFeaturesUnderApiCall,
-  fetchSubFeaturesApiCall,
-  fetchUserRolesApiCall,
-  isRoleExitsApiCall,
+  checkIsRoleExits,
+  createUserRole,
+  deleteUserRole,
+  getUserFeaturesUnderRole,
+  getUserRoleSubFeatures,
+  getUserRoles,
+  updateAssignPermissions,
 } from '../../../middleware/api/Settings/UserRolesConfiguration/userRolesAndPermissionsApi'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
 import { ValidationErrorType } from '../../../types/commonTypes'
 
-const initialUserRolesPermissionsState = {} as UserRolesAndPermissionsStateType
+const initialUserRolesPermissionsState = {} as UserRolesAndPermissionsState
 
 // fetch user roles action creator
 export const doFetchUserRoles = createAsyncThunk<
-  UserRoleType[] | undefined,
+  UserRole[] | undefined,
   void,
   {
     dispatch: AppDispatch
@@ -32,7 +34,7 @@ export const doFetchUserRoles = createAsyncThunk<
   }
 >('userRolesAndPermissions/doFetchUserRoles', async (_, thunkApi) => {
   try {
-    return await fetchUserRolesApiCall()
+    return await getUserRoles()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
@@ -52,7 +54,7 @@ export const doIsRoleExists = createAsyncThunk<
   'userRolesAndPermissions/doIsRoleExists',
   async (roleInput: string, thunkApi) => {
     try {
-      return await isRoleExitsApiCall(roleInput)
+      return await checkIsRoleExits(roleInput)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(
@@ -65,7 +67,7 @@ export const doIsRoleExists = createAsyncThunk<
 // add new user role action creator
 export const doAddNewUserRole = createAsyncThunk<
   number | undefined,
-  AddUserRoleType,
+  AddUserRole,
   {
     dispatch: AppDispatch
     state: RootState
@@ -73,9 +75,9 @@ export const doAddNewUserRole = createAsyncThunk<
   }
 >(
   'userRolesAndPermissions/doAddNewUserRole',
-  async ({ roleInput, reportingManagerFlag }: AddUserRoleType, thunkApi) => {
+  async ({ roleInput, reportingManagerFlag }: AddUserRole, thunkApi) => {
     try {
-      return await addUserRoleApiCall({ roleInput, reportingManagerFlag })
+      return await createUserRole({ roleInput, reportingManagerFlag })
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(
@@ -95,7 +97,7 @@ export const doDeleteUserRole = createAsyncThunk<
   }
 >('userRolesAndPermissions/doDeleteUserRole', async (id: number, thunkApi) => {
   try {
-    return await deleteUserRoleApiCall(id)
+    return await deleteUserRole(id)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
@@ -104,7 +106,7 @@ export const doDeleteUserRole = createAsyncThunk<
 
 // fetch user role sub features action creator
 export const doFetchUserRoleSubFeatures = createAsyncThunk<
-  UserRoleSubFeaturesType[] | undefined,
+  UserRoleSubFeatures[] | undefined,
   void,
   {
     dispatch: AppDispatch
@@ -113,7 +115,7 @@ export const doFetchUserRoleSubFeatures = createAsyncThunk<
   }
 >('userRolesAndPermissions/doFetchUserRoleSubFeatures', async (_, thunkApi) => {
   try {
-    return await fetchSubFeaturesApiCall()
+    return await getUserRoleSubFeatures()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
@@ -122,7 +124,7 @@ export const doFetchUserRoleSubFeatures = createAsyncThunk<
 
 // fetch features under role action creator
 export const doFetchFeaturesUnderRole = createAsyncThunk<
-  FeaturesUnderRoleType[] | undefined,
+  FeaturesUnderRole[] | undefined,
   string,
   {
     dispatch: AppDispatch
@@ -133,7 +135,29 @@ export const doFetchFeaturesUnderRole = createAsyncThunk<
   'userRolesAndPermissions/doFetchFeaturesUnderRole',
   async (selectedRoleId: string, thunkApi) => {
     try {
-      return await fetchFeaturesUnderApiCall(selectedRoleId)
+      return await getUserFeaturesUnderRole(selectedRoleId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(
+        err.response?.status as ValidationErrorType,
+      )
+    }
+  },
+)
+
+export const doAssignRolePermission = createAsyncThunk<
+  number | undefined,
+  UtilsRenderPermissionSwitchReturn,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationErrorType
+  }
+>(
+  'userRolesAndPermissions/doAssignRolePermission',
+  async (prepareObject: UtilsRenderPermissionSwitchReturn, thunkApi) => {
+    try {
+      return await updateAssignPermissions(prepareObject)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(
@@ -155,7 +179,7 @@ const userRolesAndPermissionsSlice = createSlice({
     builder
       .addCase(doFetchUserRoles.fulfilled, (state, action) => {
         state.isLoading = false
-        state.roles = action.payload as UserRoleType[]
+        state.roles = action.payload as UserRole[]
       })
       .addCase(doIsRoleExists.fulfilled, (state, action) => {
         state.isLoading = false
@@ -163,14 +187,18 @@ const userRolesAndPermissionsSlice = createSlice({
       })
       .addCase(doFetchUserRoleSubFeatures.fulfilled, (state, action) => {
         state.isLoading = false
-        state.subFeatures = action.payload as UserRoleSubFeaturesType[]
+        state.subFeatures = action.payload as UserRoleSubFeatures[]
       })
       .addCase(doFetchFeaturesUnderRole.fulfilled, (state, action) => {
         state.isLoading = false
-        state.featuresUnderRole = action.payload as FeaturesUnderRoleType[]
+        state.featuresUnderRole = action.payload as FeaturesUnderRole[]
       })
       .addMatcher(
-        isAnyOf(doAddNewUserRole.fulfilled, doDeleteUserRole.fulfilled),
+        isAnyOf(
+          doAddNewUserRole.fulfilled,
+          doDeleteUserRole.fulfilled,
+          doAssignRolePermission.fulfilled,
+        ),
         (state) => {
           state.isLoading = false
         },
@@ -183,6 +211,7 @@ const userRolesAndPermissionsSlice = createSlice({
           doDeleteUserRole.pending,
           doFetchUserRoleSubFeatures.pending,
           doFetchFeaturesUnderRole.pending,
+          doAssignRolePermission.pending,
         ),
         (state) => {
           state.isLoading = true
@@ -196,6 +225,7 @@ const userRolesAndPermissionsSlice = createSlice({
           doDeleteUserRole.rejected,
           doFetchUserRoleSubFeatures.rejected,
           doFetchFeaturesUnderRole.rejected,
+          doAssignRolePermission.rejected,
         ),
         (state, action) => {
           state.isLoading = false

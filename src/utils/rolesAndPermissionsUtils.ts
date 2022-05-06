@@ -1,13 +1,17 @@
 import {
-  FeaturesUnderRoleType,
-  UserRoleChildFeaturesType,
-  UserRoleSubFeaturesType,
+  AccessModifier,
+  FeaturesUnderRole,
+  UserRoleChildFeatures,
+  UserRoleSubFeatures,
+  UtilsChildFeatures,
+  UtilsFeatures,
+  UtilsRenderPermissionSwitchReturn,
 } from '../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 
 // map features with child features and return a single array
 const mapFeaturesToChildFeatures = (
-  features: FeaturesUnderRoleType[],
-  childFeatures: UserRoleChildFeaturesType[],
+  features: FeaturesUnderRole[],
+  childFeatures: UserRoleChildFeatures[],
 ): unknown => {
   return childFeatures.map((subFeatureItem) => {
     const filteredFeature = features.find(
@@ -28,8 +32,8 @@ const mapFeaturesToChildFeatures = (
 
 // map features with sub features and return a single array
 export const mapFeaturesToSubFeatures = (
-  features: FeaturesUnderRoleType[],
-  subFeatures: UserRoleSubFeaturesType[],
+  features: FeaturesUnderRole[],
+  subFeatures: UserRoleSubFeatures[],
 ): unknown => {
   return subFeatures.map((item) => {
     const mappedFeatures = item.features.map((subFeatureItem) => {
@@ -58,4 +62,38 @@ export const mapFeaturesToSubFeatures = (
 
     return { ...item, features: mappedFeatures }
   })
+}
+
+export const renderPermissionSwitch = (
+  params: AccessModifier,
+  changedObject: UtilsChildFeatures | UtilsFeatures,
+  selectedRole: number,
+): UtilsRenderPermissionSwitchReturn => {
+  const prepareObject = {
+    featureId: changedObject.featureId,
+    roleId: selectedRole,
+    permission: changedObject[params],
+  }
+  switch (params) {
+    case 'viewaccessChecked':
+      return {
+        ...prepareObject,
+        type: 'View',
+      }
+    case 'createaccessChecked':
+      return {
+        ...prepareObject,
+        type: 'Create',
+      }
+    case 'updateaccessChecked':
+      return {
+        ...prepareObject,
+        type: 'Edit',
+      }
+    case 'deleteaccessChecked':
+      return {
+        ...prepareObject,
+        type: 'Delete',
+      }
+  }
 }
