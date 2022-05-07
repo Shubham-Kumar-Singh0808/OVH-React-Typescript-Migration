@@ -19,9 +19,18 @@ import {
   doAddNewVisaDetails,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import DatePicker from 'react-datepicker'
+import {
+  AddEditEmployeeVisaDetails,
+  EmployeeVisaDetails,
+} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 
 import 'react-datepicker/dist/react-datepicker.css'
-const AddEditVisaDetails = ({ backButtonHandler }: any) => {
+function AddEditVisaDetails({
+  isEditVisaDetails = false,
+  headerTitle,
+  confirmButtonText,
+  backButtonHandler,
+}: AddEditEmployeeVisaDetails): JSX.Element {
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -36,18 +45,25 @@ const AddEditVisaDetails = ({ backButtonHandler }: any) => {
     dispatch(doFetchCountryDetails())
   }, [dispatch])
   console.log(fetchCountryDetails)
-  const [employeeVisaDetails, setEmployeeVisaDetails] = useState({
-    countryId: 0,
-    visaTypeId: 0,
-    empId: employeeId,
-  })
-
+  const initialEmployeeVisaDetails = {} as EmployeeVisaDetails
+  const [employeeVisaDetails, setEmployeeVisaDetails] = useState(
+    initialEmployeeVisaDetails,
+  )
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [dateOfIssue, setDateOfIssue] = useState<Date>()
   const [dateOfExpire, setDateOfExpire] = useState<Date>()
   useEffect(() => {
-    dispatch(doFetchCountryVisaDetails(employeeVisaDetails.countryId))
-  }, [dispatch, employeeVisaDetails.countryId])
+    dispatch(doFetchCountryVisaDetails(initialEmployeeVisaDetails.countryId))
+  }, [dispatch, initialEmployeeVisaDetails.countryId])
+  const fetchEditVisaDetails = useTypedSelector(
+    (state) => state.familyDetails.editVisaDetails,
+  )
+  console.log(fetchEditVisaDetails)
+  useEffect(() => {
+    if (isEditVisaDetails) {
+      setEmployeeVisaDetails(fetchEditVisaDetails)
+    }
+  }, [isEditVisaDetails, fetchEditVisaDetails])
   useEffect(() => {
     if (
       employeeVisaDetails.countryId &&
@@ -94,7 +110,7 @@ const AddEditVisaDetails = ({ backButtonHandler }: any) => {
   return (
     <>
       <CCardHeader>
-        <h4 className="h4">Add Visa Member</h4>
+        <h4 className="h4">{headerTitle}</h4>
       </CCardHeader>
       <CCardBody>
         <CRow className="justify-content-end">
@@ -206,19 +222,48 @@ const AddEditVisaDetails = ({ backButtonHandler }: any) => {
               />
             </CCol>
           </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-3 col-form-label text-end">
+              Upload VISA copy:
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                className="form-control form-control-sm"
+                type="file"
+                name="file"
+              />
+            </CCol>
+          </CRow>
+
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
-              <CButton
-                className="btn-ovh me-1"
-                color="success"
-                disabled={!isAddButtonEnabled}
-                onClick={handleAddVisaDetails}
-              >
-                Add
-              </CButton>
-              <CButton color="warning " className="btn-ovh">
-                Clear
-              </CButton>
+              {isEditVisaDetails ? (
+                <CButton
+                  className="btn-ovh me-2"
+                  color="success"
+                  // onClick={handleUpdateVisaDetails}
+                >
+                  {confirmButtonText}
+                </CButton>
+              ) : (
+                <>
+                  <CButton
+                    className="btn-ovh me-1"
+                    color="success"
+                    disabled={!isAddButtonEnabled}
+                    onClick={handleAddVisaDetails}
+                  >
+                    {confirmButtonText}
+                  </CButton>
+                  <CButton
+                    color="warning "
+                    className="btn-ovh"
+                    // onClick={handleClearDetails}
+                  >
+                    Clear
+                  </CButton>
+                </>
+              )}
             </CCol>
           </CRow>
         </CForm>

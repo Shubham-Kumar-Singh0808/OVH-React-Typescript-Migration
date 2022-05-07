@@ -15,8 +15,9 @@ export type PersonalInfoTabStateType = {
   getVisaDetails: VisaDetailsModal[]
   SubCountries: GetCountryDetailsType
   SubVisa: VisaCountryDetailsModal[]
-  addVisaDetails: VisaDetailsStateModal
+  addVisaDetails: EmployeeVisaDetails
   editFamilyDetails: EditFamilyDetailsStateModal
+  editVisaDetails: EditVisaDetailsStateModal
   addFamilyState: EmployeeFamilyDetails
   isLoading: boolean
   error: ValidationErrorType
@@ -46,16 +47,23 @@ export type VisaCountryDetailsModal = {
   countryId: number
   countryName: string
 }
-// export type VisaCountryDetailsArrayModal = {
-//   visaDetails: VisaCountryDetailsModal[]
-//   isLoading: boolean
-// }
-export type VisaDetailsStateModal = {
-  countryId: number
+export type EmployeeVisaDetails = {
+  id?: number
+  empId: number
+  empName: string
   visaTypeId: number
+  visaType?: string
+  countryId: number
+  countryName?: string
   dateOfIssue?: string | number
   dateOfExpire?: string | number
-  empId: string
+  createdBy?: string
+  updatedBy?: string
+  createdDate?: string | number
+  updatedDate?: string
+  visaDetailsPath?: string
+  visaDetailsData?: string
+  visaThumbPicture?: string | number
 }
 
 export type VisaDetailsButton = {
@@ -82,4 +90,28 @@ export type AddEditEmployeeFamilyDetails = {
   headerTitle: string
   confirmButtonText: string
   backButtonHandler: () => void
+}
+export type AddEditEmployeeVisaDetails = {
+  isEditVisaDetails?: boolean
+  headerTitle: string
+  confirmButtonText: string
+  backButtonHandler: () => void
+}
+export type EditVisaDetailsStateModal = {
+  id: number
+  empId: number
+  empName: string
+  visaTypeId: number
+  visaType: string
+  countryId: number
+  countryName: string
+  dateOfIssue?: string | number
+  dateOfExpire?: string | number
+  createdBy: string
+  updatedBy: string
+  createdDate?: string | number
+  updatedDate: string
+  visaDetailsPath: string
+  visaDetailsData: string
+  visaThumbPicture?: string | number
 }

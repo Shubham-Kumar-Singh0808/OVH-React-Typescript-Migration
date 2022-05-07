@@ -37,7 +37,7 @@ function AddEditFamilyDetails({
   const [employeeFamily, setEmployeeFamily] = useState(
     initialEmployeeFamilyDetails,
   )
-  const [dateOfBirth, setDateOfBirth] = useState<Date>()
+  const [dateOfBirth, setDateOfBirth] = useState<Date | string>()
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const fetchEditFamilyDetails = useTypedSelector(
@@ -96,7 +96,7 @@ function AddEditFamilyDetails({
     const addFamilyMemberResultAction = await dispatch(
       doUpdateFamilyDetails(prepareObject),
     )
-    if (doEditNewFamilyMember.fulfilled.match(addFamilyMemberResultAction)) {
+    if (doUpdateFamilyDetails.fulfilled.match(addFamilyMemberResultAction)) {
       backButtonHandler()
     }
   }
@@ -115,6 +115,7 @@ function AddEditFamilyDetails({
       backButtonHandler()
     }
   }
+  console.log(dateOfBirth)
   return (
     <>
       <CCardHeader>
@@ -203,10 +204,13 @@ function AddEditFamilyDetails({
                 className="form-control form-control-sm"
                 name="dateOfBirth"
                 maxDate={new Date()}
-                selected={dateOfBirth}
+                // selected={dateOfBirth as Date}
                 onChange={onDateChangeHandler}
                 id="dateOfBirth"
-                value={employeeFamily?.dateOfBirth as string}
+                value={
+                  (dateOfBirth as string) ||
+                  (employeeFamily?.dateOfBirth as string)
+                }
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown

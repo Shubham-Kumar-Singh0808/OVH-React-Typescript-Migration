@@ -5,9 +5,10 @@ import {
   VisaDetailsModal,
   GetCountryDetailsType,
   VisaCountryDetailsModal,
-  VisaDetailsStateModal,
+  EmployeeVisaDetails,
   EditFamilyDetailsStateModal,
   EmployeeFamilyDetails,
+  EditVisaDetailsStateModal,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
@@ -61,7 +62,7 @@ export const fetchVisaCountryDetailsApiCall = async (
   return response.data
 }
 export const getAddNewFamilyMemberApiCall = async (
-  employeeVisaDetails: VisaDetailsStateModal,
+  employeeVisaDetails: EmployeeVisaDetails,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.addNewVisaMember,
@@ -102,6 +103,19 @@ export const getAddNewFamilyMember = async (
     url: personalInfoApi.addNewFamilyMember,
     method: methods.post,
     data: employeeFamily,
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const getVisaInformationByVisaIdApiCall = async (
+  id: number,
+): Promise<EditVisaDetailsStateModal> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.getVisaInformation,
+    method: methods.get,
+    params: {
+      id: id,
+    },
   })
   const response = await axios(requestConfig)
   return response.data

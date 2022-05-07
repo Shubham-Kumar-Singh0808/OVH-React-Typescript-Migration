@@ -6,7 +6,10 @@ import AddEditVisaDetails from './AddEditVisaDetails'
 import AddEditFamilyDetails from './AddEditFamilyDetails'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import { useAppDispatch } from '../../../stateStore'
-import { doEditNewFamilyMember } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import {
+  doEditNewFamilyMember,
+  doEditNewVisaMember,
+} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 const PersonalInfoTab = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
@@ -14,6 +17,10 @@ const PersonalInfoTab = (): JSX.Element => {
   const editButtonHandler = (familyId: number) => {
     setToggle('EditFamily')
     dispatch(doEditNewFamilyMember(familyId))
+  }
+  const editVisaButtonHandler = (id: number) => {
+    setToggle('EditVisa')
+    dispatch(doEditNewVisaMember(id))
   }
 
   return (
@@ -34,7 +41,7 @@ const PersonalInfoTab = (): JSX.Element => {
             </CCardHeader>
             <CCardBody>
               <OAddButton addButtonHandler={() => setToggle('AddVisa')} />
-              <VisaDetailsTable />
+              <VisaDetailsTable editVisaButtonHandler={editVisaButtonHandler} />
             </CCardBody>
           </>
         )}
@@ -55,7 +62,19 @@ const PersonalInfoTab = (): JSX.Element => {
         )}
 
         {toggle === 'AddVisa' && (
-          <AddEditVisaDetails backButtonHandler={() => setToggle('')} />
+          <AddEditVisaDetails
+            backButtonHandler={() => setToggle('')}
+            headerTitle="Add Family Member"
+            confirmButtonText="Add"
+          />
+        )}
+        {toggle === 'EditVisa' && (
+          <AddEditVisaDetails
+            headerTitle="Edit Visa Details"
+            confirmButtonText="Update"
+            backButtonHandler={() => setToggle('')}
+            isEditVisaDetails={true}
+          />
         )}
       </>
     </>

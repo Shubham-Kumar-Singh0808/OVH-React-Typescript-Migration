@@ -5,9 +5,10 @@ import {
   PersonalInfoTabStateType,
   GetCountryDetailsType,
   VisaCountryDetailsModal,
-  VisaDetailsStateModal,
+  EmployeeVisaDetails,
   EditFamilyDetailsStateModal,
   EmployeeFamilyDetails,
+  EditVisaDetailsStateModal,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -21,6 +22,7 @@ import {
   getFamilyInformationByFamilyIdApiCall,
   getUpdateNewFamilyMemberApiCall,
   getAddNewFamilyMember,
+  getVisaInformationByVisaIdApiCall,
 } from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
 const initialPersonalInfoTabState = {} as PersonalInfoTabStateType
 export const doFetchFamilyDetails = createAsyncThunk<
@@ -104,7 +106,7 @@ export const doFetchCountryVisaDetails = createAsyncThunk<
 )
 export const doAddNewVisaDetails = createAsyncThunk<
   number | undefined,
-  VisaDetailsStateModal,
+  EmployeeVisaDetails,
   {
     dispatch: AppDispatch
     state: RootState
@@ -112,7 +114,7 @@ export const doAddNewVisaDetails = createAsyncThunk<
   }
 >(
   'addEditFamilyDetails/doAddNewVisaDetails',
-  async (employeeVisaDetails: VisaDetailsStateModal, thunkApi) => {
+  async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
       return await getAddNewFamilyMemberApiCall(employeeVisaDetails)
     } catch (error) {
@@ -186,6 +188,22 @@ export const doAddNewFamilyMember = createAsyncThunk<
     }
   },
 )
+export const doEditNewVisaMember = createAsyncThunk<
+  EditVisaDetailsStateModal | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationErrorType
+  }
+>('addEditFamilyDetails/doEditNewVisaMember', async (id: number, thunkApi) => {
+  try {
+    return await getVisaInformationByVisaIdApiCall(id)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+  }
+})
 
 const familyDetailsTableSlice = createSlice({
   name: 'familyDetailsTable',
@@ -212,8 +230,7 @@ const familyDetailsTableSlice = createSlice({
       })
       .addCase(doAddNewVisaDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.addVisaDetails =
-          action.payload as unknown as VisaDetailsStateModal
+        state.addVisaDetails = action.payload as unknown as EmployeeVisaDetails
       })
       .addCase(doEditNewFamilyMember.fulfilled, (state, action) => {
         state.isLoading = false
@@ -229,6 +246,11 @@ const familyDetailsTableSlice = createSlice({
         state.isLoading = false
         state.addFamilyState =
           action.payload as unknown as EmployeeFamilyDetails
+      })
+      .addCase(doEditNewVisaMember.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.editVisaDetails =
+          action.payload as unknown as EditVisaDetailsStateModal
       })
       .addMatcher(
         isAnyOf(doFetchFamilyDetails.pending, doFetchVisaDetails.pending),

@@ -10,7 +10,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-const VisaDetailsTable = (): JSX.Element => {
+const VisaDetailsTable = ({ editVisaButtonHandler }: any): JSX.Element => {
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -53,7 +53,10 @@ const VisaDetailsTable = (): JSX.Element => {
                   {visasItem.dateOfExpire}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
-                  <CButton color="info btn-ovh me-2">
+                  <CButton
+                    color="info btn-ovh me-2"
+                    onClick={() => editVisaButtonHandler(visasItem.id)}
+                  >
                     <i className="fa fa-pencil-square-o"></i>
                   </CButton>
                   <CButton color="danger btn-ovh me-2">
