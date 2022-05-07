@@ -1,10 +1,10 @@
-export type SkillListItemType = {
+export type SkillListItem = {
   skillId: number
   skill: string
 }
 
-export type SkillStateType = {
-  skillList: SkillListItemType[]
+export type SkillState = {
+  skillList: SkillListItem[]
   refreshList: boolean
   isLoading: boolean
 }
