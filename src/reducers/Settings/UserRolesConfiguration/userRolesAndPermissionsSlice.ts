@@ -236,7 +236,7 @@ const userRolesAndPermissionsSlice = createSlice({
 })
 export const { clearIsRoleExists } = userRolesAndPermissionsSlice.actions
 
-export const selectIsRoleExists = (state: RootState): boolean =>
-  state.userRolesAndPermissions.isRoleExits as boolean
+export const selectUserRolesList = (state: RootState): UserRole[] =>
+  state.userRolesAndPermissions.roles
 
 export default userRolesAndPermissionsSlice.reducer

@@ -85,7 +85,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   }
 
   const isEmployee = () => {
-    if (selectedRole.roleName.toLowerCase() === 'employee') {
+    if (selectedRole.name.toLowerCase() === 'employee') {
       return dispatch(addToast(defaultToastElement))
     }
   }
@@ -94,7 +94,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   const handleDeleteButton = () => {
     return (
       setDeleteRoleModalVisibility(
-        selectedRole.roleName.toLowerCase() !== 'employee' ? true : false,
+        selectedRole.name.toLowerCase() !== 'employee' ? true : false,
       ),
       isEmployee()
     )
@@ -110,7 +110,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
       dispatch(addToast(getToastMessage(actionMapping.deleted)))
       setSelectedRole({
         roleId: '',
-        roleName: '',
+        name: '',
       })
     }
   }
@@ -194,7 +194,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
           cancelButtonText="No"
           confirmButtonAction={handleConfirmDeleteRole}
         >
-          <p>{`Are you sure you want to delete this ${selectedRole.roleName} Role ?`}</p>
+          <p>{`Are you sure you want to delete this ${selectedRole.name} Role ?`}</p>
         </OModal>
       </>
     </>

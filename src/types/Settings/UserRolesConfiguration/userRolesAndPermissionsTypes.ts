@@ -13,7 +13,7 @@ export type AddUserRole = {
 
 export type SelectedRole = {
   roleId: number | string
-  roleName: string
+  name: string
 }
 
 export type UserRoleChildFeatures = {

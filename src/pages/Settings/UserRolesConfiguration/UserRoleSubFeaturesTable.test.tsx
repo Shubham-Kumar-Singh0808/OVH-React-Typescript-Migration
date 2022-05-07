@@ -1,13 +1,15 @@
 import '@testing-library/jest-dom'
 
+import { render, screen } from '@testing-library/react'
+
+import { ChildFeaturesArrayProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
-import { render } from '@testing-library/react'
 import stateStore from '../../../stateStore'
 
-const childFeaturesArray = {
+const mockChildFeaturesArray: ChildFeaturesArrayProps = {
   childFeatures: [
     {
       childFeatures: null,
@@ -91,10 +93,17 @@ describe('User Role SubFeatures Table Component Testing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <UserRoleSubFeaturesTable
-          childFeaturesArray={childFeaturesArray}
+          childFeaturesArray={mockChildFeaturesArray}
           checkBoxHandleChange={jest.fn()}
         />
       </ReduxProvider>,
     )
+    mockChildFeaturesArray.childFeatures.forEach((childFeature) => {
+      const formCheck = screen.getAllByTestId('form-checkbox')
+      expect(screen.getByText(childFeature.name)).toBeInTheDocument()
+      expect(formCheck).toHaveLength(
+        mockChildFeaturesArray.childFeatures.length,
+      )
+    })
   })
 })

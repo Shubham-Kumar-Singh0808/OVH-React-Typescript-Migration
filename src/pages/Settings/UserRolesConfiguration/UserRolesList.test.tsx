@@ -5,8 +5,11 @@ import { render, screen } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import { UserRole } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import UserRolesList from './UserRolesList'
+import { mockUserRoles } from '../../../test/data/userRolesData'
 import stateStore from '../../../stateStore'
+import userEvent from '@testing-library/user-event'
 
 const ReduxProvider = ({
   children,
@@ -18,14 +21,14 @@ const ReduxProvider = ({
 
 const mockSelectedRole = {
   roleId: 1,
-  roleName: 'admin',
+  name: 'admin',
   features: null,
 }
 
-// const selectOption = (role: mockRole) => {
+// const selectOption = (role: UserRole) => {
 //   const selectElement = screen.getByTestId('form-select')
-//     const optionElement = screen.queryAllByText('option', { role })
-//   userEvent.selectOptions(selectElement, [role.roleId as string])
+//   const optionElement = screen.queryAllByText('option',  {role.name} )
+//   userEvent.selectOptions(selectElement, optionElement)
 // }
 describe('User Roles List Testing', () => {
   test('should render select element', async () => {
@@ -51,12 +54,10 @@ describe('User Roles List Testing', () => {
   //   )
   //   mockUserRoles.forEach((mockRole) => {
   //     selectOption(mockRole)
+  //     expect(screen.getByRole('option', { name: mockRole.name })).toBeVisible()
   //     expect(
-  //       screen.getByRole('option', { name: mockRole.roleName }),
-  //     ).toBeVisible()
-  //     expect(
-  //       screen.getByRole('option', { name: mockRole.roleName }),
-  //     ).toHaveTextContent(mockRole.roleName)
+  //       screen.getByRole('option', { name: mockRole.name }),
+  //     ).toHaveTextContent(mockRole.name)
   //   })
   // })
 })
