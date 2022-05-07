@@ -16,6 +16,14 @@ const ReduxProvider = ({
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
 
+const mockUseDispatchValue = 1984
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn().mockImplementation(() => {
+    return mockUseDispatchValue
+  }),
+}))
+
 const expectComponentToBeRendered = () => {
   expect(screen.getByLabelText('Base Location')).toBeInTheDocument()
   expect(screen.getByLabelText('Current Location')).toBeInTheDocument()
