@@ -90,7 +90,6 @@ function AddEditFamilyDetails({
       ...employeeFamily,
       ...{
         employeeId: employeeId,
-        dateOfBirth: moment(dateOfBirth).format('DD/MM/YYYY'),
       },
     }
     const addFamilyMemberResultAction = await dispatch(
@@ -204,13 +203,15 @@ function AddEditFamilyDetails({
                 className="form-control form-control-sm"
                 name="dateOfBirth"
                 maxDate={new Date()}
-                // selected={dateOfBirth as Date}
-                onChange={onDateChangeHandler}
+                selected={dateOfBirth as Date}
+                // onChange={onDateChangeHandler}
+                onChange={(date: Date) => onDateChangeHandler(date)}
                 id="dateOfBirth"
                 value={
                   (dateOfBirth as string) ||
                   (employeeFamily?.dateOfBirth as string)
                 }
+                // value={dateOfBirth as string}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
