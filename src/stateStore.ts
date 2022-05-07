@@ -6,15 +6,17 @@ import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import { configureStore } from '@reduxjs/toolkit'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
-import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/employeeGeneralInformationSlice'
-import familyDetailsReducer from './reducers/MyProfile/PersonalInfoTab/FamilyDetails/familyDetailsTableSlice'
+import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
+// import familyDetailsReducer from './reducers/MyProfile/PersonalInfoTab/FamilyDetails/familyDetailsTableSlice'
 import employeeSkillsReducer from './reducers/MyProfile/QualificationTab/EmployeeSkill/skillTableSlice'
+import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
   getLoggedInEmployeeData: employeeGeneralInformationReducer,
-  familyDetails: familyDetailsReducer,
+  // familyDetails: familyDetailsReducer,
+  familyDetails: personalInfoReducer,
   employeeSkills: employeeSkillsReducer,
   category: categoryReducer,
   skill: skillReducer,

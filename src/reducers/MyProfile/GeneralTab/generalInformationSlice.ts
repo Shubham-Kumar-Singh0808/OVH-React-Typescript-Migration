@@ -1,28 +1,26 @@
 import {
-  GeneralInformationDataModel,
-  GeneralInformationStateType,
+  EmployeeGeneralInformationDataModel,
+  EmployeeGeneralInformationStateType,
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { postGeneralInformation } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
-import { ValidationErrorType } from '../../../types/commonTypes'
+import { postEmployeeGeneralInformation } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
+import { ValidationError } from '../../../types/commonTypes'
 
-const initialGeneralInformationState = {} as GeneralInformationStateType
+const initialGeneralInformationState = {} as EmployeeGeneralInformationStateType
 
 export const doFetchEmployeeGeneralInformation = createAsyncThunk<
-  { generalInformation: GeneralInformationDataModel } | undefined,
+  { generalInformation: EmployeeGeneralInformationDataModel } | undefined,
   number,
-  { rejectValue: ValidationErrorType }
+  { rejectValue: ValidationError }
 >(
   'getLoggedInEmployeeData/doFetchEmployeeGeneralInformation',
   async (employeeId: number, thunkApi) => {
     try {
-      return await postGeneralInformation(employeeId)
+      return await postEmployeeGeneralInformation(employeeId)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -48,7 +46,7 @@ const employeeGeneralInformationSlice = createSlice({
       })
       .addCase(doFetchEmployeeGeneralInformation.rejected, (state, action) => {
         state.isLoading = false
-        state.error = action.payload as ValidationErrorType
+        state.error = action.payload as ValidationError
       })
   },
 })

@@ -1,42 +1,48 @@
-import { ApiMethodsType, ApiObjectType } from '../../types/commonTypes'
+import {
+  AuthenticationApi,
+  CategoryApi,
+  SkillApi,
+  EmployeeGeneralInformationApi,
+  PersonalInfoApi,
+  EmployeeSkillList,
+} from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
 const apiPrefix = baseUrl + '/hrm-ws'
 
-export const methodGet = 'get'
-export const methodPost = 'post'
-export const methodDelete = 'delete'
-export const methodPut = 'put'
-
-export const methods: ApiMethodsType = {
-  get: 'get',
-  post: 'post',
-  delete: 'delete',
-  put: 'put',
+export enum AllowedHttpMethods {
+  get = 'get',
+  post = 'post',
+  update = 'update',
+  delete = 'delete',
 }
 
-export const authenticationApi: ApiObjectType = {
+export const authenticationApi: AuthenticationApi = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
-export const loggedInEmployeeData: ApiObjectType = {
-  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
-}
-export const employeeFamilyDetails: ApiObjectType = {
-  getFamilyDetails: apiPrefix + '/Employee/familyInformation',
-}
-export const employeeSkillList: ApiObjectType = {
-  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
-}
-export const categoriesApi: ApiObjectType = {
+
+export const categoriesApi: CategoryApi = {
   getAllCategories: apiPrefix + '/jobapplicant/getAllCategories',
   addCategory: apiPrefix + '/jobapplicant/addCategory',
   deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
 }
 
-export const skillsApi: ApiObjectType = {
+export const skillsApi: SkillApi = {
   getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
+}
+
+export const employeeSkillList: EmployeeSkillList = {
+  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
+}
+
+export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
+  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+}
+
+export const personalInfoApi: PersonalInfoApi = {
+  getFamilyDetails: apiPrefix + '/Employee/familyInformation',
 }

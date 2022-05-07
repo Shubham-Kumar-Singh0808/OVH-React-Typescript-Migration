@@ -1,7 +1,7 @@
 import { CCardHeader, CRow, CCol } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { doFetchEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/employeeGeneralInformationSlice'
+import { doFetchEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 
 const GeneralInformation = (): JSX.Element => {
   const employeeId = useTypedSelector(

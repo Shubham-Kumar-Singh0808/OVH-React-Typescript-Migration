@@ -8,9 +8,9 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { doFetchFamilyDetails } from '../../../reducers/MyProfile/PersonalInfoTab/FamilyDetails/familyDetailsTableSlice'
+import { doFetchFamilyDetails } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { FamilyInfo } from '../../../types/MyProfile/PersonalInfoTab/FamilyDetails/familyDetailsTableTypes'
+import { FamilyInfo } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 const FamilyDetailsTable: React.FC<FamilyInfo> = ({
   isFieldDisabled = false,
   striped = true,
@@ -21,12 +21,12 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
     (state) => state.authentication.authenticatedUser.employeeId,
   )
   const familyDetails = useTypedSelector(
-    (state) => state.familyDetails.familyDetails,
+    (state) => state.familyDetails.getFamilyDetails,
   )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchFamilyDetails({ employeeId }))
+    dispatch(doFetchFamilyDetails(employeeId))
   }, [dispatch, employeeId])
   console.log(familyDetails)
   const tableHeaderCellProps = {
@@ -86,7 +86,7 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
           </>
         )}
         <CTableBody>
-          {familyDetails.map((family, index) => (
+          {familyDetails?.map((family, index) => (
             <CTableRow key={index}>
               {isFieldDisabled ? (
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>
@@ -120,8 +120,8 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
       {isFieldDisabled && (
         <>
           <strong>
-            {familyDetails.length
-              ? `Total Records: ${familyDetails.length}`
+            {familyDetails?.length
+              ? `Total Records: ${familyDetails?.length}`
               : `No Records found`}
           </strong>
         </>

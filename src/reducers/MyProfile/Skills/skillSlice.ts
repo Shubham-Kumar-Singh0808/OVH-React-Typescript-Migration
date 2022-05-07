@@ -1,6 +1,6 @@
 import {
-  SkillListItemType,
-  SkillStateType,
+  SkillListItem,
+  SkillState,
 } from '../../../types/MyProfile/Skills/skillTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import {
@@ -11,7 +11,7 @@ import {
 
 import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
-import { ValidationErrorType } from '../../../types/commonTypes'
+import { ValidationError } from '../../../types/commonTypes'
 
 export const fetchAllSkillById = createAsyncThunk(
   'skill/fetchAllSkillById',
@@ -20,9 +20,7 @@ export const fetchAllSkillById = createAsyncThunk(
       return await getAllSkillListById(categoryId)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -39,9 +37,7 @@ export const addNewSkillByName = createAsyncThunk(
       return await postNewSkillByName(categoryId, toAddSkillName)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -52,14 +48,12 @@ export const removeSkillById = createAsyncThunk(
       return await deleteSkillById(skillId)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
 
-const initialSkillState: SkillStateType = {
+const initialSkillState: SkillState = {
   skillList: [],
   refreshList: false,
   isLoading: false,
@@ -112,7 +106,7 @@ export const selectIsSkillListLoading = (state: RootState): boolean =>
   state.skill.isLoading
 export const selectRefreshList = (state: RootState): boolean =>
   state.skill.refreshList
-export const selectSkillList = (state: RootState): SkillListItemType[] =>
+export const selectSkillList = (state: RootState): SkillListItem[] =>
   state.skill.skillList
 
 export default skillSlice.reducer
