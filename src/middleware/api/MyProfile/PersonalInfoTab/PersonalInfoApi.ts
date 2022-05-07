@@ -7,7 +7,7 @@ import {
   VisaCountryDetailsModal,
   VisaDetailsStateModal,
   EditFamilyDetailsStateModal,
-  FamilyDetailsStateModal,
+  EmployeeFamilyDetails,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
@@ -85,7 +85,7 @@ export const getFamilyInformationByFamilyIdApiCall = async (
   return response.data
 }
 export const getUpdateNewFamilyMemberApiCall = async (
-  employeeFamily: FamilyDetailsStateModal,
+  employeeFamily: EmployeeFamilyDetails,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.updateFamilyInformation,
@@ -96,7 +96,7 @@ export const getUpdateNewFamilyMemberApiCall = async (
   return response.data
 }
 export const getAddNewFamilyMember = async (
-  employeeFamily: FamilyDetailsStateModal,
+  employeeFamily: EmployeeFamilyDetails,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.addNewFamilyMember,

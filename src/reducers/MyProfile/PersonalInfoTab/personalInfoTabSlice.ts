@@ -7,7 +7,7 @@ import {
   VisaCountryDetailsModal,
   VisaDetailsStateModal,
   EditFamilyDetailsStateModal,
-  FamilyDetailsStateModal,
+  EmployeeFamilyDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -146,7 +146,7 @@ export const doEditNewFamilyMember = createAsyncThunk<
 )
 export const doUpdateFamilyDetails = createAsyncThunk<
   number | undefined,
-  FamilyDetailsStateModal,
+  EmployeeFamilyDetails,
   {
     dispatch: AppDispatch
     state: RootState
@@ -154,7 +154,7 @@ export const doUpdateFamilyDetails = createAsyncThunk<
   }
 >(
   'addEditFamilyDetails/doUpdateFamilyDetails',
-  async (employeeFamily: FamilyDetailsStateModal, thunkApi) => {
+  async (employeeFamily: EmployeeFamilyDetails, thunkApi) => {
     try {
       return await getUpdateNewFamilyMemberApiCall(employeeFamily)
     } catch (error) {
@@ -167,7 +167,7 @@ export const doUpdateFamilyDetails = createAsyncThunk<
 )
 export const doAddNewFamilyMember = createAsyncThunk<
   number | undefined,
-  FamilyDetailsStateModal,
+  EmployeeFamilyDetails,
   {
     dispatch: AppDispatch
     state: RootState
@@ -175,7 +175,7 @@ export const doAddNewFamilyMember = createAsyncThunk<
   }
 >(
   'addEditFamilyDetails/doAddNewFamilyMember',
-  async (employeeFamily: FamilyDetailsStateModal, thunkApi) => {
+  async (employeeFamily: EmployeeFamilyDetails, thunkApi) => {
     try {
       return await getAddNewFamilyMember(employeeFamily)
     } catch (error) {
@@ -223,12 +223,12 @@ const familyDetailsTableSlice = createSlice({
       .addCase(doUpdateFamilyDetails.fulfilled, (state, action) => {
         state.isLoading = false
         state.addFamilyState =
-          action.payload as unknown as FamilyDetailsStateModal
+          action.payload as unknown as EmployeeFamilyDetails
       })
       .addCase(doAddNewFamilyMember.fulfilled, (state, action) => {
         state.isLoading = false
         state.addFamilyState =
-          action.payload as unknown as FamilyDetailsStateModal
+          action.payload as unknown as EmployeeFamilyDetails
       })
       .addMatcher(
         isAnyOf(doFetchFamilyDetails.pending, doFetchVisaDetails.pending),
