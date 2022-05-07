@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-const OAddButton = ({ addButtonHandler }: any): JSX.Element => {
+const OAddButton = (  {addButtonHandler}:any): JSX.Element => {
   return (
     <>
       <CRow className="justify-content-end">

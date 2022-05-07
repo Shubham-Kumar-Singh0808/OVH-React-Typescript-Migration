@@ -1,7 +1,6 @@
 import {
   CCardHeader,
   CCardBody,
-  CCard,
   CRow,
   CCol,
   CForm,
@@ -20,18 +19,21 @@ import {
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { FamilyDetailsStateModal } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-function AddEditFamilyDetails(
-  { backButtonHandler }: any,
+import {
+  EmployeeFamilyDetails,
+  AddEditEmployeeFamilyDetails,
+} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+function AddEditFamilyDetails({
   isEditFamilyDetails = false,
-  headerTitle: string,
-  confirmButtonText: string,
-): JSX.Element {
+  headerTitle,
+  confirmButtonText,
+  backButtonHandler,
+}: AddEditEmployeeFamilyDetails): JSX.Element {
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
   const dispatch = useAppDispatch()
-  const initialEmployeeFamilyDetails = {} as FamilyDetailsStateModal
+  const initialEmployeeFamilyDetails = {} as EmployeeFamilyDetails
   const [employeeFamily, setEmployeeFamily] = useState(
     initialEmployeeFamilyDetails,
   )
@@ -66,9 +68,16 @@ function AddEditFamilyDetails(
     }
   }
   const onDateChangeHandler = (date: Date) => {
-    setDateOfBirth(date)
+    if (isEditFamilyDetails) {
+      const formatDate = moment(date).format('DD/MM/YYYY')
+      const name = 'dateOfBirth'
+      setEmployeeFamily((prevState) => {
+        return { ...prevState, ...{ [name]: formatDate } }
+      })
+    } else {
+      setDateOfBirth(date)
+    }
   }
-
   useEffect(() => {
     if (employeeFamily?.personName && employeeFamily?.relationShip) {
       setIsAddButtonEnabled(true)
@@ -106,7 +115,6 @@ function AddEditFamilyDetails(
       backButtonHandler()
     }
   }
-
   return (
     <>
       <CCardHeader>
@@ -198,7 +206,7 @@ function AddEditFamilyDetails(
                 selected={dateOfBirth}
                 onChange={onDateChangeHandler}
                 id="dateOfBirth"
-                // value={dateOfBirth}
+                value={employeeFamily?.dateOfBirth as string}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown

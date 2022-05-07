@@ -17,7 +17,7 @@ export type PersonalInfoTabStateType = {
   SubVisa: VisaCountryDetailsModal[]
   addVisaDetails: VisaDetailsStateModal
   editFamilyDetails: EditFamilyDetailsStateModal
-  addFamilyState: FamilyDetailsStateModal
+  addFamilyState: EmployeeFamilyDetails
   isLoading: boolean
   error: ValidationErrorType
 }
@@ -69,11 +69,17 @@ export type EditFamilyDetailsStateModal = {
   dateOfBirth?: string | number
   employeeId: number | string
 }
-export type FamilyDetailsStateModal = {
+export type EmployeeFamilyDetails = {
   personName: string
   relationShip: string
   contactNumber: string
   dateOfBirth?: string | number
   employeeId: number | string
   familyId?: number
+}
+export type AddEditEmployeeFamilyDetails = {
+  isEditFamilyDetails?: boolean
+  headerTitle: string
+  confirmButtonText: string
+  backButtonHandler: () => void
 }

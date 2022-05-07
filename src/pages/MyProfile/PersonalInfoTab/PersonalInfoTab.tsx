@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { CCardHeader, CCardBody, CCard } from '@coreui/react-pro'
+import React, { useState } from 'react'
+import { CCardHeader, CCardBody } from '@coreui/react-pro'
 import FamilyDetailsTable from './FamilyDetailsTable'
 import VisaDetailsTable from './VisaDetailsTable'
 import AddEditVisaDetails from './AddEditVisaDetails'
 import AddEditFamilyDetails from './AddEditFamilyDetails'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useAppDispatch } from '../../../stateStore'
 import { doEditNewFamilyMember } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 const PersonalInfoTab = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
 
-  const editButtonHandler: any = (familyId: number) => {
+  const editButtonHandler = (familyId: number) => {
     setToggle('EditFamily')
     dispatch(doEditNewFamilyMember(familyId))
   }
-
-  // useEffect(() => {
-  //   dispatch(doEditNewFamilyMember())
-  // }, [dispatch, familyId])
 
   return (
     <>
