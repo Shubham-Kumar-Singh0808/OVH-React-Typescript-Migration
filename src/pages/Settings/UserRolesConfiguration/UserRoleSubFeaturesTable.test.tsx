@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 
 import { ChildFeaturesArrayProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { EnhancedStore } from '@reduxjs/toolkit'
@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
 import stateStore from '../../../stateStore'
+import userEvent from '@testing-library/user-event'
 
 const mockChildFeaturesArray: ChildFeaturesArrayProps = {
   childFeatures: [
@@ -98,12 +99,43 @@ describe('User Role SubFeatures Table Component Testing', () => {
         />
       </ReduxProvider>,
     )
-    mockChildFeaturesArray.childFeatures.forEach((childFeature) => {
+    const sortedChildFeatures = mockChildFeaturesArray.childFeatures.sort(
+      (childFeatureItem1, childFeatureItem2) =>
+        childFeatureItem1.name.localeCompare(childFeatureItem2.name),
+    )
+    sortedChildFeatures.forEach((childFeature) => {
       const formCheck = screen.getAllByTestId('form-checkbox')
       expect(screen.getByText(childFeature.name)).toBeInTheDocument()
       expect(formCheck).toHaveLength(
         mockChildFeaturesArray.childFeatures.length,
       )
+    })
+    expect(screen.getAllByRole('columnheader')).toHaveLength(2)
+    // 6 including the heading row
+    expect(screen.getAllByRole('row')).toHaveLength(
+      sortedChildFeatures.length + 1,
+    )
+  })
+  it('should check and uncheck upon clicking the check-box', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <UserRoleSubFeaturesTable
+          childFeaturesArray={mockChildFeaturesArray}
+          checkBoxHandleChange={jest.fn()}
+        />
+      </ReduxProvider>,
+    )
+    const sortedChildFeatures = mockChildFeaturesArray.childFeatures.sort(
+      (sortNode1, sortNode2) => sortNode1.name.localeCompare(sortNode2.name),
+    )
+    sortedChildFeatures.forEach(async () => {
+      await waitFor(() => {
+        const checkbox = screen.getByTestId('form-checkbox')
+        userEvent.click(checkbox)
+        expect(screen.getByTestId('form-checkbox')).toBeChecked()
+        userEvent.click(checkbox)
+        expect(screen.getByTestId('form-checkbox')).not.toBeChecked()
+      })
     })
   })
 })

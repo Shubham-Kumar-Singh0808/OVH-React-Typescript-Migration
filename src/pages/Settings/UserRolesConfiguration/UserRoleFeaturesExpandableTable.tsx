@@ -140,6 +140,10 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
           <>
             <CAccordion flush className="expandable-table mb-3">
               {mappedFeatures.map((featureItem, index) => {
+                const sortedSubFeatures = featureItem.features.sort(
+                  (featureTeam1, featureTeam2) =>
+                    featureTeam1.name.localeCompare(featureTeam2.name),
+                )
                 return (
                   <React.Fragment key={index}>
                     <CAccordionItem>
@@ -163,7 +167,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                             </CTableRow>
                           </CTableHead>
                           <CTableBody>
-                            {featureItem.features.map(
+                            {sortedSubFeatures.map(
                               (subFeatureItem, subFeatureItemIndex) => {
                                 return (
                                   <CTableRow key={subFeatureItemIndex}>
