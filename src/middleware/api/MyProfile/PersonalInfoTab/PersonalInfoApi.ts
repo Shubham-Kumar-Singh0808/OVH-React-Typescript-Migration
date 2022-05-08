@@ -61,7 +61,7 @@ export const fetchVisaCountryDetailsApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
-export const getAddNewFamilyMemberApiCall = async (
+export const getAddNewVisaMemberApiCall = async (
   employeeVisaDetails: EmployeeVisaDetails,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -116,6 +116,17 @@ export const getVisaInformationByVisaIdApiCall = async (
     params: {
       id: id,
     },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const getUpdateNewVisaMemberApiCall = async (
+  employeeVisaDetails: EmployeeVisaDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.updateVisaInformation,
+    method: methods.put,
+    data: employeeVisaDetails,
   })
   const response = await axios(requestConfig)
   return response.data

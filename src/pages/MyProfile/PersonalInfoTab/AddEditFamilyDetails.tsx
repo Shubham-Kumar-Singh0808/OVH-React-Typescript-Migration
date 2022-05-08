@@ -23,6 +23,9 @@ import {
   EmployeeFamilyDetails,
   AddEditEmployeeFamilyDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { addToast } from '../../../reducers/appSlice'
+
 function AddEditFamilyDetails({
   isEditFamilyDetails = false,
   headerTitle,
@@ -85,6 +88,18 @@ function AddEditFamilyDetails({
       setIsAddButtonEnabled(false)
     }
   }, [employeeFamily?.personName, employeeFamily?.relationShip])
+  const actionMapping = {
+    added: 'added',
+    updated: 'updated',
+  }
+  const getToastMessage = (action: string) => {
+    return (
+      <OToast
+        toastColor="success"
+        toastMessage={`Your family member have been ${action} successfully.`}
+      />
+    )
+  }
   const handleUpdateFamilyMember = async () => {
     const prepareObject = {
       ...employeeFamily,
@@ -97,6 +112,7 @@ function AddEditFamilyDetails({
     )
     if (doUpdateFamilyDetails.fulfilled.match(addFamilyMemberResultAction)) {
       backButtonHandler()
+      dispatch(addToast(getToastMessage(actionMapping.updated)))
     }
   }
   const handleAddFamilyMember = async () => {
@@ -112,6 +128,7 @@ function AddEditFamilyDetails({
     )
     if (doAddNewFamilyMember.fulfilled.match(addFamilyMemberResultAction)) {
       backButtonHandler()
+      dispatch(addToast(getToastMessage(actionMapping.added)))
     }
   }
   console.log(dateOfBirth)
@@ -135,7 +152,14 @@ function AddEditFamilyDetails({
         <CForm>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Name: <span className="text-danger">*</span>
+              Name:
+              <span
+                className={
+                  employeeFamily?.personName ? 'text-white' : 'text-danger'
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -152,7 +176,13 @@ function AddEditFamilyDetails({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Relationship:
-              <span className="text-danger">*</span>
+              <span
+                className={
+                  employeeFamily?.relationShip ? 'text-white' : 'text-danger'
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -204,14 +234,12 @@ function AddEditFamilyDetails({
                 name="dateOfBirth"
                 maxDate={new Date()}
                 selected={dateOfBirth as Date}
-                // onChange={onDateChangeHandler}
                 onChange={(date: Date) => onDateChangeHandler(date)}
                 id="dateOfBirth"
                 value={
                   (dateOfBirth as string) ||
                   (employeeFamily?.dateOfBirth as string)
                 }
-                // value={dateOfBirth as string}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown

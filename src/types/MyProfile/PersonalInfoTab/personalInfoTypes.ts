@@ -49,11 +49,11 @@ export type VisaCountryDetailsModal = {
 }
 export type EmployeeVisaDetails = {
   id?: number
-  empId: number
-  empName: string
-  visaTypeId: number
+  empId: number | string
+  empName: string | number
+  visaTypeId: number | string
   visaType?: string
-  countryId: number
+  countryId: number | string
   countryName?: string
   dateOfIssue?: string | number
   dateOfExpire?: string | number

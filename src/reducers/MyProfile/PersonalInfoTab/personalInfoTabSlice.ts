@@ -18,11 +18,12 @@ import {
   fetchVisaDetailsApiCall,
   fetchCountryDetailsApiCall,
   fetchVisaCountryDetailsApiCall,
-  getAddNewFamilyMemberApiCall,
+  getAddNewVisaMemberApiCall,
   getFamilyInformationByFamilyIdApiCall,
   getUpdateNewFamilyMemberApiCall,
   getAddNewFamilyMember,
   getVisaInformationByVisaIdApiCall,
+  getUpdateNewVisaMemberApiCall,
 } from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
 const initialPersonalInfoTabState = {} as PersonalInfoTabStateType
 export const doFetchFamilyDetails = createAsyncThunk<
@@ -116,7 +117,7 @@ export const doAddNewVisaDetails = createAsyncThunk<
   'addEditFamilyDetails/doAddNewVisaDetails',
   async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
-      return await getAddNewFamilyMemberApiCall(employeeVisaDetails)
+      return await getAddNewVisaMemberApiCall(employeeVisaDetails)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(
@@ -204,6 +205,27 @@ export const doEditNewVisaMember = createAsyncThunk<
     return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
   }
 })
+export const doUpdateVisaDetails = createAsyncThunk<
+  number | undefined,
+  EmployeeVisaDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationErrorType
+  }
+>(
+  'addEditFamilyDetails/doUpdateVisaDetails',
+  async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
+    try {
+      return await getUpdateNewVisaMemberApiCall(employeeVisaDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(
+        err.response?.status as ValidationErrorType,
+      )
+    }
+  },
+)
 
 const familyDetailsTableSlice = createSlice({
   name: 'familyDetailsTable',
@@ -241,6 +263,10 @@ const familyDetailsTableSlice = createSlice({
         state.isLoading = false
         state.addFamilyState =
           action.payload as unknown as EmployeeFamilyDetails
+      })
+      .addCase(doUpdateVisaDetails.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.addVisaDetails = action.payload as unknown as EmployeeVisaDetails
       })
       .addCase(doAddNewFamilyMember.fulfilled, (state, action) => {
         state.isLoading = false

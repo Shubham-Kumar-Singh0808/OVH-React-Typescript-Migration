@@ -64,7 +64,7 @@ const PersonalInfoTab = (): JSX.Element => {
         {toggle === 'AddVisa' && (
           <AddEditVisaDetails
             backButtonHandler={() => setToggle('')}
-            headerTitle="Add Family Member"
+            headerTitle="Add Visa Details"
             confirmButtonText="Add"
           />
         )}
