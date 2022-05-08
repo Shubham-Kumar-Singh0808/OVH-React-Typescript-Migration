@@ -5,7 +5,7 @@ import {
   UserRoleSubFeatures,
   UtilsRenderPermissionSwitchReturn,
 } from '../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
-import { methods, userRolesConfigurationApi } from '../../apiList'
+import { AllowedHttpMethods, userRolesConfigurationApi } from '../../apiList'
 
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
@@ -13,7 +13,7 @@ import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 export const getUserRoles = async (): Promise<UserRole[] | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.getUserRoles,
-    method: methods.get,
+    method: AllowedHttpMethods.get,
   })
 
   const response = await axios(requestConfig)
@@ -25,7 +25,7 @@ export const checkIsRoleExits = async (
 ): Promise<boolean | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.isUserRoleExists,
-    method: methods.get,
+    method: AllowedHttpMethods.get,
     params: {
       roleName: roleInput,
     },
@@ -40,7 +40,7 @@ export const createUserRole = async ({
 }: AddUserRole): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.addNewUserRole,
-    method: methods.post,
+    method: AllowedHttpMethods.post,
     params: {
       roleName: roleInput,
       reportingManagerFlag: reportingManagerFlag,
@@ -55,7 +55,7 @@ export const deleteUserRole = async (
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.deleteUserRole,
-    method: methods.post,
+    method: AllowedHttpMethods.post,
     params: {
       roleId: roleId,
     },
@@ -69,7 +69,7 @@ export const getUserRoleSubFeatures = async (): Promise<
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.getSubFeatures,
-    method: methods.get,
+    method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
   return response.data
@@ -80,7 +80,7 @@ export const getUserFeaturesUnderRole = async (
 ): Promise<FeaturesUnderRole[] | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.featuresUnderRole,
-    method: methods.get,
+    method: AllowedHttpMethods.get,
     params: {
       roleId: selectedRoleId,
     },
@@ -93,7 +93,7 @@ export const updateAssignPermissions = async (
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: userRolesConfigurationApi.assignPermission,
-    method: methods.post,
+    method: AllowedHttpMethods.post,
     data: prepareObject,
   })
   const response = await axios(requestConfig)

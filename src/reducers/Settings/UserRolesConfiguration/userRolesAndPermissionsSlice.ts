@@ -19,7 +19,7 @@ import {
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { ValidationErrorType } from '../../../types/commonTypes'
+import { ValidationError } from '../../../types/commonTypes'
 
 const initialUserRolesPermissionsState = {} as UserRolesAndPermissionsState
 
@@ -30,14 +30,14 @@ export const doFetchUserRoles = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >('userRolesAndPermissions/doFetchUserRoles', async (_, thunkApi) => {
   try {
     return await getUserRoles()
   } catch (error) {
     const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
 
@@ -48,7 +48,7 @@ export const doIsRoleExists = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'userRolesAndPermissions/doIsRoleExists',
@@ -57,9 +57,7 @@ export const doIsRoleExists = createAsyncThunk<
       return await checkIsRoleExits(roleInput)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -71,7 +69,7 @@ export const doAddNewUserRole = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'userRolesAndPermissions/doAddNewUserRole',
@@ -80,9 +78,7 @@ export const doAddNewUserRole = createAsyncThunk<
       return await createUserRole({ roleInput, reportingManagerFlag })
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -93,14 +89,14 @@ export const doDeleteUserRole = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >('userRolesAndPermissions/doDeleteUserRole', async (id: number, thunkApi) => {
   try {
     return await deleteUserRole(id)
   } catch (error) {
     const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
 
@@ -111,14 +107,14 @@ export const doFetchUserRoleSubFeatures = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >('userRolesAndPermissions/doFetchUserRoleSubFeatures', async (_, thunkApi) => {
   try {
     return await getUserRoleSubFeatures()
   } catch (error) {
     const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
 
@@ -129,7 +125,7 @@ export const doFetchFeaturesUnderRole = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'userRolesAndPermissions/doFetchFeaturesUnderRole',
@@ -138,9 +134,7 @@ export const doFetchFeaturesUnderRole = createAsyncThunk<
       return await getUserFeaturesUnderRole(selectedRoleId)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -151,7 +145,7 @@ export const doAssignRolePermission = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'userRolesAndPermissions/doAssignRolePermission',
@@ -160,9 +154,7 @@ export const doAssignRolePermission = createAsyncThunk<
       return await updateAssignPermissions(prepareObject)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -229,7 +221,7 @@ const userRolesAndPermissionsSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload as ValidationErrorType
+          state.error = action.payload as ValidationError
         },
       )
   },

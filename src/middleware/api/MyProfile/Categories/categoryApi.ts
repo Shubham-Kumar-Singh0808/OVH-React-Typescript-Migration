@@ -1,13 +1,13 @@
-import { categoriesApi, methods } from '../../apiList'
+import { AllowedHttpMethods, categoriesApi } from '../../apiList'
 
-import { CategoryListItemType } from '../../../../types/MyProfile/Categories/categoryTypes'
+import { CategoryListItem } from '../../../../types/MyProfile/Categories/categoryTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-export const getAllCategoryList = async (): Promise<CategoryListItemType[]> => {
+export const getAllCategoryList = async (): Promise<CategoryListItem[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: categoriesApi.getAllCategories,
-    method: methods.get,
+    method: AllowedHttpMethods.get,
   })
 
   const response = await axios(requestConfig)
@@ -16,10 +16,10 @@ export const getAllCategoryList = async (): Promise<CategoryListItemType[]> => {
 
 export const postNewCategoryByName = async (
   toAddCategoryName: string,
-): Promise<CategoryListItemType[]> => {
+): Promise<CategoryListItem[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: categoriesApi.addCategory,
-    method: methods.get,
+    method: AllowedHttpMethods.get,
     params: {
       categoryName: toAddCategoryName,
     },
@@ -34,10 +34,10 @@ export const postNewCategoryByName = async (
 
 export const deleteCategoryById = async (
   categoryId: number,
-): Promise<CategoryListItemType[]> => {
+): Promise<CategoryListItem[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: categoriesApi.deleteCategory,
-    method: methods.get,
+    method: AllowedHttpMethods.get,
     params: {
       categoryId: categoryId,
     },

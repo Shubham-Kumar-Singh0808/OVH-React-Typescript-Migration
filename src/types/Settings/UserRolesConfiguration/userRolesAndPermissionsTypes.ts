@@ -1,4 +1,4 @@
-import { ValidationErrorType } from '../../commonTypes'
+import { ValidationError } from '../../commonTypes'
 
 export type UserRole = {
   roleId: number
@@ -57,7 +57,7 @@ export type UserRolesAndPermissionsState = {
   featuresUnderRole: FeaturesUnderRole[]
   isRoleExits: boolean | null
   isLoading: boolean
-  error: ValidationErrorType
+  error: ValidationError
 }
 
 export type UtilsChildFeatures = {
