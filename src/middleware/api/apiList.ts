@@ -1,4 +1,9 @@
-import { AuthenticationApi, CategoryApi, SkillApi } from '../../types/apiTypes'
+import {
+  AuthenticationApi,
+  CategoryApi,
+  QualificationCategoryApi,
+  SkillApi,
+} from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
 const apiPrefix = baseUrl + '/hrm-ws'
@@ -26,4 +31,11 @@ export const skillsApi: SkillApi = {
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
+}
+
+export const qualificationCategoryApi: QualificationCategoryApi = {
+  getAllQualificationCategories:
+    apiPrefix + '/Employee/getQualiactionCategoryList',
+  addNewQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
+  deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
 }

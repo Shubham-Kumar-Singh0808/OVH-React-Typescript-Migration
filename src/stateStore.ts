@@ -6,12 +6,13 @@ import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import { configureStore } from '@reduxjs/toolkit'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
-
+import qualificationCategoryReducer from './reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
   category: categoryReducer,
   skill: skillReducer,
+  qualificationCategory: qualificationCategoryReducer,
   // add your slice reducers here
 }
 
