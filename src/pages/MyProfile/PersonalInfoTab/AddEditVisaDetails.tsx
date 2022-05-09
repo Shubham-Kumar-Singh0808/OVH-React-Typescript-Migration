@@ -52,8 +52,10 @@ function AddEditVisaDetails({
     initialEmployeeVisaDetails,
   )
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  const [dateOfIssue, setDateOfIssue] = useState<Date>()
-  const [dateOfExpire, setDateOfExpire] = useState<Date>()
+  const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
+  const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
+  const [selectedFile, setSelectedFile] = useState<File | string>()
+  const [imageUrl, setImageUrl] = useState()
   useEffect(() => {
     dispatch(doFetchCountryVisaDetails(employeeVisaDetails.countryId))
   }, [dispatch, employeeVisaDetails.countryId])
@@ -83,6 +85,18 @@ function AddEditVisaDetails({
     dateOfIssue,
     dateOfExpire,
   ])
+  // useEffect(() => {
+  //   if (selectedFile as File | string) {
+  //     setImageUrl(URL.createObjectURL(selectedFile))
+  //   }
+  // }, [selectedFile])
+
+  const onChangeFieEventHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    debugger
+    setSelectedFile('vinesh')
+  }
 
   const eventHandler = (e: any) => {
     const { name, value } = e.target
@@ -250,9 +264,12 @@ function AddEditVisaDetails({
                 className="form-control form-control-sm"
                 name="dateOfIssue"
                 maxDate={new Date()}
-                selected={dateOfIssue}
+                value={
+                  (dateOfIssue as string) ||
+                  (employeeVisaDetails?.dateOfIssue as string)
+                }
+                selected={dateOfIssue as Date}
                 onChange={onChangeDateOfIssueHandler}
-                // value={dateOfIssue}
                 id="dateOfIssue"
                 peekNextMonth
                 showMonthDropdown
@@ -275,8 +292,11 @@ function AddEditVisaDetails({
                 className="form-control form-control-sm"
                 name="dateOfExpire"
                 maxDate={new Date()}
-                // value={dateOfExpire}
-                selected={dateOfExpire}
+                value={
+                  (dateOfExpire as string) ||
+                  (employeeVisaDetails?.dateOfExpire as string)
+                }
+                selected={dateOfExpire as Date}
                 onChange={onChangeDateOfExpireHandler}
                 id="dateOfExpire"
                 peekNextMonth
@@ -289,7 +309,11 @@ function AddEditVisaDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel
+              className="col-sm-3 col-form-label text-end"
+              // size="sm"
+              // value={selectedFile as string | File}
+            >
               Upload VISA copy:
             </CFormLabel>
             <CCol sm={3}>
@@ -297,8 +321,32 @@ function AddEditVisaDetails({
                 className="form-control form-control-sm"
                 type="file"
                 name="file"
+                onChange={onChangeFieEventHandler}
               />
             </CCol>
+            {selectedFile || fetchEditVisaDetails.visaDetailsData ? (
+              <CCol sm={{ span: 6, offset: 3 }}>
+                <img
+                  src={
+                    selectedFile
+                      ? imageUrl
+                      : 'data:image/jpeg;base64,' +
+                        fetchEditVisaDetails.visaDetailsData
+                  }
+                  // alt={selectedFile}
+                  style={{ width: '100px', margin: '10px 0' }}
+                />
+              </CCol>
+            ) : (
+              <>
+                <div className="w-100"></div>
+                <CCol sm={{ span: 6, offset: 3 }}>
+                  <p className=" text-info ">
+                    Note: Please upload less than 400KB size image.
+                  </p>
+                </CCol>
+              </>
+            )}
           </CRow>
 
           <CRow>

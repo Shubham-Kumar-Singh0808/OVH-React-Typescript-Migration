@@ -55,8 +55,8 @@ export type EmployeeVisaDetails = {
   visaType?: string
   countryId: number | string
   countryName?: string
-  dateOfIssue?: string | number
-  dateOfExpire?: string | number
+  dateOfIssue?: string | number | undefined
+  dateOfExpire?: string | number | undefined
   createdBy?: string
   updatedBy?: string
   createdDate?: string | number
