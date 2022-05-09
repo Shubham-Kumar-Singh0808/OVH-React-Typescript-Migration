@@ -16,23 +16,22 @@ export const getAllQualificationCategoryList = async (): Promise<
   return response.data
 }
 
-// export const postNewCategoryByName = async (
-//   toAddCategoryName: string,
-// ): Promise<QualificationCategoryListItem[]> => {
-//   const requestConfig = getAuthenticatedRequestConfig({
-//     url: qualificationCategoryApi.addNewQualificationCategory,
-//     method: AllowedHttpMethods.get,
-//     params: {
-//       categoryName: toAddCategoryName,
-//     },
-//     data: {
-//       categoryName: toAddCategoryName,
-//     },
-//   })
+export const postNewQualificationCategoryByName = async ({
+  qualificationCategory,
+  qualificationName,
+}: QualificationCategoryListItem): Promise<QualificationCategoryListItem[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: qualificationCategoryApi.addNewQualificationCategory,
+    method: AllowedHttpMethods.post,
+    data: {
+      qualificationCategory: qualificationCategory,
+      qualificationName: qualificationName,
+    },
+  })
 
-//   const response = await axios(requestConfig)
-//   return response.data
-// }
+  const response = await axios(requestConfig)
+  return response.data
+}
 
 export const deleteQualificationCategoryById = async (
   id: number,

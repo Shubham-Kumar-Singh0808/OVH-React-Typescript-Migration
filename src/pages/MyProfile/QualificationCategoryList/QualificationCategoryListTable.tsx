@@ -19,9 +19,12 @@ import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import {
+  fetchAllQualificationCategories,
   removeQualificationCategoryById,
   selectQualificationCategoryList,
 } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { addToast } from '../../../reducers/appSlice'
 
 const QualificationCategoryListTable = (): JSX.Element => {
   const qualificationCategories = useTypedSelector(
@@ -69,10 +72,26 @@ const QualificationCategoryListTable = (): JSX.Element => {
     setIsDeleteModalVisible(true)
   }
 
+  const deleteToastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="Qualification details deleted successfully."
+    />
+  )
   const handleConfirmDelete = async (id: number) => {
     setIsDeleteModalVisible(false)
 
-    dispatch(removeQualificationCategoryById(id))
+    const delQualificationCategoryResultAction = await dispatch(
+      removeQualificationCategoryById(id),
+    )
+    if (
+      removeQualificationCategoryById.fulfilled.match(
+        delQualificationCategoryResultAction,
+      )
+    ) {
+      dispatch(fetchAllQualificationCategories())
+      dispatch(addToast(deleteToastElement))
+    }
   }
   const currentPageItems = useMemo(
     () => currentPageData(qualificationCategories, currentPage, pageSize),
@@ -85,33 +104,29 @@ const QualificationCategoryListTable = (): JSX.Element => {
         <>
           <CTable striped>
             <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col" className="w-25">
-                  #
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="w-50">
+              <CTableRow className="align-items-start">
+                <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
                   Qualification Category
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="w-25">
+                <CTableHeaderCell scope="col">
                   Qualification Name
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="w-25">
-                  Action
-                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {currentPageItems.map((category, index) => {
+              {currentPageItems.map((qualificationCategory, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row">
                       {getItemNumber(index)}
                     </CTableHeaderCell>
                     <CTableDataCell>
-                      {category.qualificationCategory}
+                      {qualificationCategory.qualificationCategory}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {category.qualificationName}
+                      {qualificationCategory.qualificationName}
                     </CTableDataCell>
                     <CTableDataCell>
                       <CButton
@@ -119,8 +134,8 @@ const QualificationCategoryListTable = (): JSX.Element => {
                         size="sm"
                         onClick={() =>
                           handleShowDeleteModal(
-                            category.qualificationCategory,
-                            category.id,
+                            qualificationCategory.qualificationCategory,
+                            qualificationCategory.id as number,
                           )
                         }
                       >
@@ -169,13 +184,14 @@ const QualificationCategoryListTable = (): JSX.Element => {
       <OModal
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalTitle="Delete Category"
-        confirmButtonText="Delete"
+        modalTitle="Delete Qualification Category"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
         confirmButtonAction={() =>
           handleConfirmDelete(toDeleteQualificationCategoryId)
         }
       >
-        {`Are you sure you want to delete this ${toDeleteQualificationCategoryName} category item?`}
+        {`Are you sure you want to delete this ${toDeleteQualificationCategoryName} Category item?`}
       </OModal>
     </>
   )

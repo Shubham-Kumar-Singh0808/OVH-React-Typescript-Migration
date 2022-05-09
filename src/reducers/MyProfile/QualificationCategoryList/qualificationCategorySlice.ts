@@ -7,6 +7,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import {
   deleteQualificationCategoryById,
   getAllQualificationCategoryList,
+  postNewQualificationCategoryByName,
 } from '../../../middleware/api/MyProfile/QualificationCategoryList/qualificationCategoryApi'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
@@ -22,27 +23,31 @@ export const fetchAllQualificationCategories = createAsyncThunk(
     }
   },
 )
-// export const addNewQualificationCategoryByName = createAsyncThunk<
-//   QualificationCategoryListItem[] | undefined,
-//   string,
-//   {
-//     dispatch: AppDispatch
-//     state: RootState
-//     rejectValue: ValidationError
-//   }
-// >(
-//   'qualificationCategory/addNewQualificationCategoryByName',
-//   async (toAddQualificationCategoryName, thunkApi) => {
-//     try {
-//       return await postNewQualificationCategoryByName(
-//         toAddQualificationCategoryName,
-//       )
-//     } catch (error) {
-//       const err = error as AxiosError
-//       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-//     }
-//   },
-// )
+export const addNewQualificationCategoryByName = createAsyncThunk<
+  QualificationCategoryListItem[] | undefined,
+  QualificationCategoryListItem,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'qualificationCategory/addNewQualificationCategoryByName',
+  async (
+    { qualificationCategory, qualificationName }: QualificationCategoryListItem,
+    thunkApi,
+  ) => {
+    try {
+      return await postNewQualificationCategoryByName({
+        qualificationCategory,
+        qualificationName,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 export const removeQualificationCategoryById = createAsyncThunk<
   QualificationCategoryListItem[] | undefined,
   number,
@@ -82,6 +87,7 @@ const qualificationCategorySlice = createSlice({
         isAnyOf(
           fetchAllQualificationCategories.pending,
           removeQualificationCategoryById.pending,
+          addNewQualificationCategoryByName.pending,
         ),
         (state) => {
           state.isLoading = true
@@ -91,6 +97,7 @@ const qualificationCategorySlice = createSlice({
         isAnyOf(
           fetchAllQualificationCategories.fulfilled,
           removeQualificationCategoryById.fulfilled,
+          addNewQualificationCategoryByName.fulfilled,
         ),
         (state, action) => {
           state.isLoading = false

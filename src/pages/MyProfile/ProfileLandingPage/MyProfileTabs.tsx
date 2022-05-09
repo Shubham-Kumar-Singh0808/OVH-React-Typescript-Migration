@@ -30,7 +30,7 @@ const MyProfileTabs = (): JSX.Element => {
       1: <OCard />,
       2: <h1>Basic Info</h1>,
       3: <h1>Personal Info</h1>,
-      4: <QualificationCategoryList />,
+      4: <h1>Qualifications</h1>,
       5: <h1>Review</h1>,
       6: <h1>Projects</h1>,
     }

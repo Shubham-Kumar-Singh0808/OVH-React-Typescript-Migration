@@ -1,59 +1,98 @@
 import {
   CButton,
   CCol,
+  CForm,
   CFormInput,
   CFormLabel,
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { selectQualificationCategoryList } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
+import {
+  addNewQualificationCategoryByName,
+  fetchAllQualificationCategories,
+  selectQualificationCategoryList,
+} from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import OToast from '../../../components/ReusableComponent/OToast'
 import { addToast } from '../../../reducers/appSlice'
+import { NewQualificationCategory } from '../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
 
 const AddNewQualificationCategory = (): JSX.Element => {
   const employeeQualificationCategories = useTypedSelector(
     selectQualificationCategoryList,
   )
   const dispatch = useAppDispatch()
-
-  const [newQualificationCategoryName, setNewQualificationCategoryName] =
-    useState('')
+  const initialNewQualificationCategory = {} as NewQualificationCategory
+  const [newQualificationCategory, setNewQualificationCategory] = useState(
+    initialNewQualificationCategory,
+  )
   const [
     isAddQualificationCategoryBtnEnabled,
     setIsAddQualificationCategoryBtnEnabled,
   ] = useState(false)
 
-  const toastElement = (
-    <OToast toastMessage="Category already exists!" toastColor="danger" />
+  const alreadyExistToastMessage = (
+    <OToast
+      toastMessage="This qualification details are already added"
+      toastColor="danger"
+    />
+  )
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="Qualification details added successfully."
+      toastColor="success"
+    />
   )
 
   useEffect(() => {
-    if (newQualificationCategoryName) {
+    if (
+      newQualificationCategory.qualificationCategory &&
+      newQualificationCategory.qualificationName
+    ) {
       setIsAddQualificationCategoryBtnEnabled(true)
     } else {
       setIsAddQualificationCategoryBtnEnabled(false)
     }
-  }, [newQualificationCategoryName])
+  }, [
+    newQualificationCategory.qualificationCategory,
+    newQualificationCategory.qualificationName,
+  ])
+  const handleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+
+    setNewQualificationCategory((values) => {
+      return { ...values, ...{ [name]: value } }
+    })
+  }
 
   const handleAddQualificationCategory = async () => {
-    const toAddQualificationCategoryName = newQualificationCategoryName
+    const toAddQualificationName = newQualificationCategory
     if (
       employeeQualificationCategories.filter(
         (category) =>
-          category.qualificationCategory.toLowerCase() ===
-          newQualificationCategoryName.toLowerCase(),
+          category.qualificationName.toLowerCase() ===
+          newQualificationCategory.qualificationName.toLowerCase(),
       ).length > 0
     ) {
-      dispatch(addToast(toastElement))
+      dispatch(addToast(alreadyExistToastMessage))
       return
     }
 
-    setNewQualificationCategoryName('')
+    setNewQualificationCategory({
+      qualificationCategory: '',
+      qualificationName: '',
+    })
 
-    //dispatch(addNewQualificationCategoryByName(toAddQualificationCategoryName))
+    dispatch(addNewQualificationCategoryByName(toAddQualificationName))
+    dispatch(fetchAllQualificationCategories())
+    dispatch(addToast(successToastMessage))
   }
 
   const formLabelProps = {
@@ -63,41 +102,89 @@ const AddNewQualificationCategory = (): JSX.Element => {
 
   return (
     <>
-      <CRow>
-        <CCol sm={4} className="new-category-col">
-          <CFormLabel {...formLabelProps}>Category:</CFormLabel>
-        </CCol>
-        <CCol sm={4} className="new-category-col">
-          <CFormSelect aria-label="Default select example">
-            <option>Select Category</option>
-            <option value="1">Post Graduation</option>
-            <option value="2">Graduation</option>
-          </CFormSelect>
-        </CCol>
-        <CCol sm={4} className="new-category-col">
-          <CFormLabel {...formLabelProps}>Name:</CFormLabel>
-        </CCol>
-        <CCol sm={4} className="new-category-col">
-          <CFormInput
-            type="text"
-            id="inputNewCategory"
-            value={newQualificationCategoryName}
-            onChange={(e) => setNewQualificationCategoryName(e.target.value)}
-          />
-        </CCol>
-        <CCol sm={4} className="d-flex align-items-center new-category-col">
-          <CButton
-            color="warning"
-            className="px-4 text-white"
-            size="sm"
-            disabled={!isAddQualificationCategoryBtnEnabled}
-            onClick={handleAddQualificationCategory}
+      <CForm>
+        <CRow className="mt-3 mb-3">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
           >
-            Add
-          </CButton>
-          <CButton>Clear</CButton>
-        </CCol>
-      </CRow>
+            Category:{' '}
+            <span
+              className={
+                newQualificationCategory.qualificationCategory
+                  ? 'text-white'
+                  : 'text-danger'
+              }
+            >
+              *
+            </span>
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormSelect
+              aria-label="Default select example"
+              size="sm"
+              name="qualificationCategory"
+              onChange={handleInputChange}
+            >
+              <option value={''}>Select Category</option>
+              <option value="Post Graduation">Post Graduation</option>
+              <option value="Graduation">Graduation</option>
+            </CFormSelect>
+          </CCol>
+        </CRow>
+        <CRow className="mt-3 mb-3">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
+            Name:
+            <span
+              className={
+                newQualificationCategory.qualificationName
+                  ? 'text-white'
+                  : 'text-danger'
+              }
+            >
+              *
+            </span>
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormInput
+              type="text"
+              id="Name"
+              size="sm"
+              name="qualificationName"
+              value={newQualificationCategory.qualificationName}
+              onChange={handleInputChange}
+            />
+          </CCol>
+        </CRow>
+        <CRow className="mt-3 mb-3">
+          <CCol className="col-md-3 offset-md-3">
+            <CButton
+              color="success"
+              className="btn-ovh me-1"
+              size="sm"
+              disabled={!isAddQualificationCategoryBtnEnabled}
+              onClick={handleAddQualificationCategory}
+            >
+              Add
+            </CButton>
+            <CButton
+              color="warning "
+              className="btn-ovh"
+              onClick={() => {
+                setNewQualificationCategory({
+                  qualificationCategory: '',
+                  qualificationName: '',
+                })
+              }}
+            >
+              Clear
+            </CButton>
+          </CCol>
+        </CRow>
+      </CForm>
     </>
   )
 }
