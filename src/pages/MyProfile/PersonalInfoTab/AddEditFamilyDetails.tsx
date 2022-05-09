@@ -13,7 +13,6 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
-  doEditNewFamilyMember,
   doUpdateFamilyDetails,
   doAddNewFamilyMember,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'

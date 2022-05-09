@@ -10,7 +10,10 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-const FamilyDetailsTable = ({ editButtonHandler }: any): JSX.Element => {
+import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+const FamilyDetailsTable = ({
+  editButtonHandler,
+}: EmployeeFamilyDetailsTableProps): JSX.Element => {
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )

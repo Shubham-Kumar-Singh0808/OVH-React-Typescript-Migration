@@ -10,7 +10,10 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-const VisaDetailsTable = ({ editVisaButtonHandler }: any): JSX.Element => {
+import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+const VisaDetailsTable = ({
+  editVisaButtonHandler,
+}: EmployeeVisaDetailsTableProps): JSX.Element => {
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )

@@ -55,7 +55,7 @@ function AddEditVisaDetails({
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
   const [selectedFile, setSelectedFile] = useState<File | string>()
-  const [imageUrl, setImageUrl] = useState()
+  const [imageUrl, setImageUrl] = useState<string>()
   useEffect(() => {
     dispatch(doFetchCountryVisaDetails(employeeVisaDetails.countryId))
   }, [dispatch, employeeVisaDetails.countryId])
@@ -85,20 +85,19 @@ function AddEditVisaDetails({
     dateOfIssue,
     dateOfExpire,
   ])
-  // useEffect(() => {
-  //   if (selectedFile as File | string) {
-  //     setImageUrl(URL.createObjectURL(selectedFile))
-  //   }
-  // }, [selectedFile])
+  useEffect(() => {
+    if (selectedFile as File | string) {
+      setImageUrl(URL.createObjectURL(selectedFile as File))
+    }
+  }, [selectedFile])
 
-  const onChangeFieEventHandler = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    debugger
-    setSelectedFile('vinesh')
+  const onChangeFieEventHandler = (e: any) => {
+    setSelectedFile(e.target.File[0])
   }
-
-  const eventHandler = (e: any) => {
+  const selectImageFile = selectedFile
+    ? imageUrl
+    : 'data:image/jpeg;base64,' + fetchEditVisaDetails.visaDetailsData
+  const eventHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
@@ -139,16 +138,6 @@ function AddEditVisaDetails({
       />
     )
   }
-  // const handleClearDetails = () => {
-  //   setEmployeeVisaDetails({
-  //     countryId: '',
-  //     visaTypeId: '',
-  //     empId: '',
-  //     empName: '',
-  //   })
-  //    setDateOfIssue('')
-  //    setDateOfExpire('')
-  // }
   const handleAddVisaDetails = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
@@ -321,19 +310,15 @@ function AddEditVisaDetails({
                 className="form-control form-control-sm"
                 type="file"
                 name="file"
+                value={selectedFile as string}
                 onChange={onChangeFieEventHandler}
               />
             </CCol>
             {selectedFile || fetchEditVisaDetails.visaDetailsData ? (
               <CCol sm={{ span: 6, offset: 3 }}>
                 <img
-                  src={
-                    selectedFile
-                      ? imageUrl
-                      : 'data:image/jpeg;base64,' +
-                        fetchEditVisaDetails.visaDetailsData
-                  }
-                  // alt={selectedFile}
+                  src={selectImageFile}
+                  alt=""
                   style={{ width: '100px', margin: '10px 0' }}
                 />
               </CCol>

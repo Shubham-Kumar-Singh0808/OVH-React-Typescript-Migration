@@ -23,7 +23,7 @@ export type PersonalInfoTabStateType = {
   error: ValidationErrorType
 }
 export type VisaDetailsModal = {
-  id: number | string
+  id: number
   empId: number | string
   empName: string
   visaTypeId: number
@@ -42,9 +42,9 @@ export type GetCountryDetailsType = {
   countries: CountryDetailsType[]
 }
 export type VisaCountryDetailsModal = {
-  visaTypeId: number
+  visaTypeId: number | string
   visaType: string
-  countryId: number
+  countryId: number | string
   countryName: string
 }
 export type EmployeeVisaDetails = {
@@ -114,4 +114,14 @@ export type EditVisaDetailsStateModal = {
   visaDetailsPath: string
   visaDetailsData: string
   visaThumbPicture?: string | number
+}
+
+export type AddButtonProps = {
+  addButtonHandler: () => void
+}
+export type EmployeeFamilyDetailsTableProps = {
+  editButtonHandler: (familyId: number) => void
+}
+export type EmployeeVisaDetailsTableProps = {
+  editVisaButtonHandler: (id: number) => void
 }
