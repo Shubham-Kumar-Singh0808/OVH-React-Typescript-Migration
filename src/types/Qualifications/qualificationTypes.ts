@@ -1,7 +1,7 @@
 import { ValidationErrorType } from '../../types/commonTypes'
 
 export type PostGraduationAndGraduationLookUp = {
-  id: number
+  id: string
   label: string
 }
 export type EmployeeQualifications = {

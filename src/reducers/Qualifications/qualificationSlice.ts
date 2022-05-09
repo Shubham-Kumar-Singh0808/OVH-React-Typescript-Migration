@@ -101,4 +101,10 @@ const employeeQualificationsSlice = createSlice({
       })
   },
 })
+export const selectEmployeeQualification = (
+  state: RootState,
+): EmployeeQualifications => state.employeeQualifications.qualificationDetails
+
+export const selectEmployeeId = (state: RootState): string | number =>
+  state.authentication.authenticatedUser.employeeId
 export default employeeQualificationsSlice.reducer

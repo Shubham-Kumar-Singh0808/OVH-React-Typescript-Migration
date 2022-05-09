@@ -78,7 +78,7 @@ const CertificationsTable = (): JSX.Element => {
       <strong>
         {employeeCertificateData?.length
           ? `Total Records: ${employeeCertificateData.length}`
-          : `No Records found`}
+          : `No Records Found`}
       </strong>
     </>
   )
