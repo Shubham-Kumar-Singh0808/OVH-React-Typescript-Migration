@@ -131,3 +131,52 @@ export const getUpdateNewVisaMemberApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
+export const getDeleteNewFamilyMember = async (
+  familyId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.deleteFamilyMember,
+    method: methods.methodGet,
+    params: {
+      familyId: familyId,
+    },
+    data: {
+      familyId: familyId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const getDeleteVisaDetailsApiCall = async (
+  visaId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.deleteVisaDetail,
+    method: methods.methodGet,
+    params: {
+      visaID: visaId,
+    },
+    data: {
+      visaID: visaId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+// export const fileUploadVisaImageApiCall = async (
+//   visaId: number,
+// ): Promise<number | undefined> => {
+//   const requestConfig = getAuthenticatedRequestConfig({
+//     url: personalInfoApi.fileUploadVisaImage,
+//     method: methods.post,
+//     params: {
+//       visaId: responseData,
+//     },
+
+//     data: {
+//       visaID: visaId,
+//     },
+//   })
+//   const response = await axios(requestConfig)
+//   return response.data
+// }

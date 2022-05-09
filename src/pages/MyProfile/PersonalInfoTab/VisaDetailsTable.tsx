@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { doFetchVisaDetails } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import {
+  doFetchVisaDetails,
+  doDeleteVisaDetails,
+} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import {
   CButton,
   CTable,
@@ -11,9 +14,12 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import OModal from '../../../components/ReusableComponent/OModal'
 const VisaDetailsTable = ({
   editVisaButtonHandler,
 }: EmployeeVisaDetailsTableProps): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -25,6 +31,20 @@ const VisaDetailsTable = ({
   useEffect(() => {
     dispatch(doFetchVisaDetails(employeeId))
   }, [dispatch, employeeId])
+  const handleShowDeleteModal = (visaId: number) => {
+    setToDeleteVisaId(visaId)
+    setIsDeleteModalVisible(true)
+  }
+  const handleConfirmDeleteRole = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteFamilyMemberResultAction = await dispatch(
+      doDeleteVisaDetails(toDeleteVisaId),
+    )
+    if (doDeleteVisaDetails.fulfilled.match(deleteFamilyMemberResultAction)) {
+      dispatch(doFetchVisaDetails(employeeId))
+    }
+  }
+
   return (
     <>
       <CTable striped>
@@ -62,7 +82,10 @@ const VisaDetailsTable = ({
                   >
                     <i className="fa fa-pencil-square-o"></i>
                   </CButton>
-                  <CButton color="danger btn-ovh me-2">
+                  <CButton
+                    color="danger btn-ovh me-2"
+                    onClick={() => handleShowDeleteModal(visasItem.id)}
+                  >
                     <i className="fa fa-trash-o" aria-hidden="true"></i>
                   </CButton>
                 </CTableDataCell>
@@ -75,6 +98,17 @@ const VisaDetailsTable = ({
           ? `Total Records: ${fetchVisaDetails?.length}`
           : `No Records found`}
       </strong>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteRole}
+      >
+        {`Do you really want to delete this ?`}
+      </OModal>
     </>
   )
 }

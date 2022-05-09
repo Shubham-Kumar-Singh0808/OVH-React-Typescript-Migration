@@ -5,10 +5,10 @@ export type FamilyDetailsModal = {
   relationShip: string
   contactNumber: string
   dateOfBirth: string
-  employeeId: number | string
+  employeeId: string | number
 }
 export type UserHeaders = {
-  employeeId: number | string
+  employeeId: string | number
 }
 export type PersonalInfoTabStateType = {
   getFamilyDetails: FamilyDetailsModal[]

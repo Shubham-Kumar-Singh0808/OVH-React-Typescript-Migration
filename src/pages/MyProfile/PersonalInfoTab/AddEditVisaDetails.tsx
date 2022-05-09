@@ -94,9 +94,9 @@ function AddEditVisaDetails({
   const onChangeFieEventHandler = (e: any) => {
     setSelectedFile(e.target.File[0])
   }
-  const selectImageFile = selectedFile
-    ? imageUrl
-    : 'data:image/jpeg;base64,' + fetchEditVisaDetails.visaDetailsData
+  // const selectImageFile = selectedFile
+  //   ? imageUrl
+  //   : 'data:image/jpeg;base64,' + fetchEditVisaDetails.visaDetailsData
   const eventHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
@@ -311,10 +311,10 @@ function AddEditVisaDetails({
                 type="file"
                 name="file"
                 value={selectedFile as string}
-                onChange={onChangeFieEventHandler}
+                // onChange={onChangeFieEventHandler}
               />
             </CCol>
-            {selectedFile || fetchEditVisaDetails.visaDetailsData ? (
+            {/* {selectedFile || fetchEditVisaDetails.visaDetailsData ? (
               <CCol sm={{ span: 6, offset: 3 }}>
                 <img
                   src={selectImageFile}
@@ -331,7 +331,7 @@ function AddEditVisaDetails({
                   </p>
                 </CCol>
               </>
-            )}
+            )} */}
           </CRow>
 
           <CRow>

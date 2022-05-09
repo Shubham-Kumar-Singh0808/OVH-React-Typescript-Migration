@@ -24,6 +24,8 @@ import {
   getAddNewFamilyMember,
   getVisaInformationByVisaIdApiCall,
   getUpdateNewVisaMemberApiCall,
+  getDeleteNewFamilyMember,
+  getDeleteVisaDetailsApiCall,
 } from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
 const initialPersonalInfoTabState = {} as PersonalInfoTabStateType
 export const doFetchFamilyDetails = createAsyncThunk<
@@ -226,6 +228,38 @@ export const doUpdateVisaDetails = createAsyncThunk<
     }
   },
 )
+export const doDeleteFamilyMember = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationErrorType
+  }
+>('addEditFamilyDetails/doDeleteFamilyMember', async (familyId, thunkApi) => {
+  try {
+    return await getDeleteNewFamilyMember(familyId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+  }
+})
+export const doDeleteVisaDetails = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationErrorType
+  }
+>('addEditFamilyDetails/doDeleteVisaDetails', async (visaId, thunkApi) => {
+  try {
+    return await getDeleteVisaDetailsApiCall(visaId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+  }
+})
 
 const familyDetailsTableSlice = createSlice({
   name: 'familyDetailsTable',
@@ -277,6 +311,12 @@ const familyDetailsTableSlice = createSlice({
         state.isLoading = false
         state.editVisaDetails =
           action.payload as unknown as EditVisaDetailsStateModal
+      })
+      .addCase(doDeleteFamilyMember.fulfilled, (state) => {
+        state.isLoading = false
+      })
+      .addCase(doDeleteVisaDetails.fulfilled, (state) => {
+        state.isLoading = false
       })
       .addMatcher(
         isAnyOf(doFetchFamilyDetails.pending, doFetchVisaDetails.pending),

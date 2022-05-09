@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { doFetchFamilyDetails } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import {
+  doFetchFamilyDetails,
+  doDeleteFamilyMember,
+} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import {
   CButton,
   CTable,
@@ -11,9 +14,12 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import OModal from '../../../components/ReusableComponent/OModal'
 const FamilyDetailsTable = ({
   editButtonHandler,
 }: EmployeeFamilyDetailsTableProps): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeletefamilyId, setToDeletefamilyId] = useState(0)
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -24,6 +30,19 @@ const FamilyDetailsTable = ({
   useEffect(() => {
     dispatch(doFetchFamilyDetails(employeeId))
   }, [dispatch, employeeId])
+  const handleShowDeleteModal = (familyId: number) => {
+    setIsDeleteModalVisible(true)
+    setToDeletefamilyId(familyId)
+  }
+  const handleConfirmDeleteRole = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteFamilyMemberResultAction = await dispatch(
+      doDeleteFamilyMember(toDeletefamilyId),
+    )
+    if (doDeleteFamilyMember.fulfilled.match(deleteFamilyMemberResultAction)) {
+      dispatch(doFetchFamilyDetails(employeeId))
+    }
+  }
   return (
     <>
       <CTable striped>
@@ -60,7 +79,11 @@ const FamilyDetailsTable = ({
                   >
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </CButton>
-                  <CButton color="danger" className="btn-ovh me-2">
+                  <CButton
+                    color="danger"
+                    className="btn-ovh me-2"
+                    onClick={() => handleShowDeleteModal(family.familyId)}
+                  >
                     <i className="fa fa-trash-o" aria-hidden="true"></i>
                   </CButton>
                 </CTableDataCell>
@@ -73,6 +96,17 @@ const FamilyDetailsTable = ({
           ? `Total Records: ${fetchFamilyDetails?.length}`
           : `No Records found`}
       </strong>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteRole}
+      >
+        {`Do you really want to delete this ?`}
+      </OModal>
     </>
   )
 }
