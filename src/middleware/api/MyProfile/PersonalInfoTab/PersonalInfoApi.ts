@@ -25,6 +25,57 @@ export const fetchFamilyDetailsApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
+export const getAddNewFamilyMember = async (
+  employeeFamily: EmployeeFamilyDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.addNewFamilyMember,
+    method: methods.post,
+    data: employeeFamily,
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const getFamilyInformationByFamilyIdApiCall = async (
+  familyId: number,
+): Promise<EditFamilyDetailsStateModal> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.getFamilyInformation,
+    method: methods.get,
+    params: {
+      familyId: familyId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const getUpdateNewFamilyMemberApiCall = async (
+  employeeFamily: EmployeeFamilyDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.updateFamilyInformation,
+    method: methods.post,
+    data: employeeFamily,
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const getDeleteNewFamilyMember = async (
+  familyId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.deleteFamilyMember,
+    method: methods.methodGet,
+    params: {
+      familyId: familyId,
+    },
+    data: {
+      familyId: familyId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
 export const fetchVisaDetailsApiCall = async (
   employeeId: number | string,
 ): Promise<VisaDetailsModal[]> => {
@@ -69,43 +120,8 @@ export const getAddNewVisaMemberApiCall = async (
     method: methods.post,
     data: employeeVisaDetails,
   })
-  const response = await axios(requestConfig)
-  return response.data
-}
-export const getFamilyInformationByFamilyIdApiCall = async (
-  familyId: number,
-): Promise<EditFamilyDetailsStateModal> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: personalInfoApi.getFamilyInformation,
-    method: methods.get,
-    params: {
-      familyId: familyId,
-    },
-  })
-  const response = await axios(requestConfig)
-  return response.data
-}
-export const getUpdateNewFamilyMemberApiCall = async (
-  employeeFamily: EmployeeFamilyDetails,
-): Promise<number | undefined> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: personalInfoApi.updateFamilyInformation,
-    method: methods.post,
-    data: employeeFamily,
-  })
-  const response = await axios(requestConfig)
-  return response.data
-}
-export const getAddNewFamilyMember = async (
-  employeeFamily: EmployeeFamilyDetails,
-): Promise<number | undefined> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: personalInfoApi.addNewFamilyMember,
-    method: methods.post,
-    data: employeeFamily,
-  })
-  const response = await axios(requestConfig)
-  return response.data
+  const responseVisa = await axios(requestConfig)
+  return responseVisa.data
 }
 export const getVisaInformationByVisaIdApiCall = async (
   id: number,
@@ -131,22 +147,6 @@ export const getUpdateNewVisaMemberApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
-export const getDeleteNewFamilyMember = async (
-  familyId: number,
-): Promise<number | undefined> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: personalInfoApi.deleteFamilyMember,
-    method: methods.methodGet,
-    params: {
-      familyId: familyId,
-    },
-    data: {
-      familyId: familyId,
-    },
-  })
-  const response = await axios(requestConfig)
-  return response.data
-}
 export const getDeleteVisaDetailsApiCall = async (
   visaId: number,
 ): Promise<number | undefined> => {
@@ -163,20 +163,20 @@ export const getDeleteVisaDetailsApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
-// export const fileUploadVisaImageApiCall = async (
-//   visaId: number,
-// ): Promise<number | undefined> => {
-//   const requestConfig = getAuthenticatedRequestConfig({
-//     url: personalInfoApi.fileUploadVisaImage,
-//     method: methods.post,
-//     params: {
-//       visaId: responseData,
-//     },
+export const fileUploadVisaImageApiCall = async (
+  visaId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApi.fileUploadVisaImage,
+    method: methods.post,
+    // params: {
+    //   visaId: responseVisa,
+    // },
 
-//     data: {
-//       visaID: visaId,
-//     },
-//   })
-//   const response = await axios(requestConfig)
-//   return response.data
-// }
+    data: {
+      visaID: visaId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}

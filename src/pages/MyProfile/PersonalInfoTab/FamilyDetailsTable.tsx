@@ -15,6 +15,8 @@ import {
 } from '@coreui/react-pro'
 import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { addToast } from '../../../reducers/appSlice'
 const FamilyDetailsTable = ({
   editButtonHandler,
 }: EmployeeFamilyDetailsTableProps): JSX.Element => {
@@ -41,6 +43,14 @@ const FamilyDetailsTable = ({
     )
     if (doDeleteFamilyMember.fulfilled.match(deleteFamilyMemberResultAction)) {
       dispatch(doFetchFamilyDetails(employeeId))
+      dispatch(
+        addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Family Detail deleted successfully"
+          />,
+        ),
+      )
     }
   }
   return (

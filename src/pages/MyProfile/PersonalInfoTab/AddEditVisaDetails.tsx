@@ -33,6 +33,15 @@ function AddEditVisaDetails({
   confirmButtonText,
   backButtonHandler,
 }: AddEditEmployeeVisaDetails): JSX.Element {
+  const initialEmployeeVisaDetails = {} as EmployeeVisaDetails
+  const [employeeVisaDetails, setEmployeeVisaDetails] = useState(
+    initialEmployeeVisaDetails,
+  )
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
+  const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
+  // const [selectedFile, setSelectedFile] = useState<File | string>()
+  // const [imageUrl, setImageUrl] = useState<string>()
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -42,32 +51,14 @@ function AddEditVisaDetails({
   const fetchVisaCountryDetails = useTypedSelector(
     (state) => state.familyDetails.SubVisa,
   )
+  const fetchEditVisaDetails = useTypedSelector(
+    (state) => state.familyDetails.editVisaDetails,
+  )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(doFetchCountryDetails())
   }, [dispatch])
-  console.log(fetchCountryDetails)
-  const initialEmployeeVisaDetails = {} as EmployeeVisaDetails
-  const [employeeVisaDetails, setEmployeeVisaDetails] = useState(
-    initialEmployeeVisaDetails,
-  )
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
-  const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
-  const [selectedFile, setSelectedFile] = useState<File | string>()
-  const [imageUrl, setImageUrl] = useState<string>()
-  useEffect(() => {
-    dispatch(doFetchCountryVisaDetails(employeeVisaDetails.countryId))
-  }, [dispatch, employeeVisaDetails.countryId])
-  const fetchEditVisaDetails = useTypedSelector(
-    (state) => state.familyDetails.editVisaDetails,
-  )
-  console.log(fetchEditVisaDetails)
-  useEffect(() => {
-    if (isEditVisaDetails) {
-      setEmployeeVisaDetails(fetchEditVisaDetails)
-    }
-  }, [isEditVisaDetails, fetchEditVisaDetails])
   useEffect(() => {
     if (
       employeeVisaDetails.countryId &&
@@ -86,17 +77,19 @@ function AddEditVisaDetails({
     dateOfExpire,
   ])
   useEffect(() => {
-    if (selectedFile as File | string) {
-      setImageUrl(URL.createObjectURL(selectedFile as File))
+    doFetchCountryDetails()
+    if (employeeVisaDetails.countryId) {
+      dispatch(doFetchCountryVisaDetails(employeeVisaDetails.countryId))
     }
-  }, [selectedFile])
+  }, [dispatch, employeeVisaDetails.countryId])
 
-  const onChangeFieEventHandler = (e: any) => {
-    setSelectedFile(e.target.File[0])
-  }
-  // const selectImageFile = selectedFile
-  //   ? imageUrl
-  //   : 'data:image/jpeg;base64,' + fetchEditVisaDetails.visaDetailsData
+  console.log(fetchEditVisaDetails)
+
+  useEffect(() => {
+    if (isEditVisaDetails) {
+      setEmployeeVisaDetails(fetchEditVisaDetails)
+    }
+  }, [isEditVisaDetails, fetchEditVisaDetails])
   const eventHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
@@ -125,6 +118,14 @@ function AddEditVisaDetails({
     } else {
       setDateOfExpire(date)
     }
+  }
+  const handleClearDetails = () => {
+    // setEmployeeVisaDetails({
+    //   countryId: '',
+    //   visaTypeId: '',
+    // })
+    setDateOfIssue('')
+    setDateOfExpire('')
   }
   const actionMapping = {
     added: 'added',
@@ -310,28 +311,10 @@ function AddEditVisaDetails({
                 className="form-control form-control-sm"
                 type="file"
                 name="file"
-                value={selectedFile as string}
+                // value={selectedFile as string}
                 // onChange={onChangeFieEventHandler}
               />
             </CCol>
-            {/* {selectedFile || fetchEditVisaDetails.visaDetailsData ? (
-              <CCol sm={{ span: 6, offset: 3 }}>
-                <img
-                  src={selectImageFile}
-                  alt=""
-                  style={{ width: '100px', margin: '10px 0' }}
-                />
-              </CCol>
-            ) : (
-              <>
-                <div className="w-100"></div>
-                <CCol sm={{ span: 6, offset: 3 }}>
-                  <p className=" text-info ">
-                    Note: Please upload less than 400KB size image.
-                  </p>
-                </CCol>
-              </>
-            )} */}
           </CRow>
 
           <CRow>
@@ -357,7 +340,7 @@ function AddEditVisaDetails({
                   <CButton
                     color="warning "
                     className="btn-ovh"
-                    // onClick={handleClearDetails}
+                    onClick={handleClearDetails}
                   >
                     Clear
                   </CButton>

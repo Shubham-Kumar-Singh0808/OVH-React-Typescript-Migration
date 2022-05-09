@@ -51,7 +51,11 @@ function AddEditFamilyDetails({
     }
   }, [isEditFamilyDetails, fetchEditFamilyDetails])
   console.log(fetchEditFamilyDetails)
-  const onChangeHandler = (e: any) => {
+  const onChangeHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { name, value } = e.target
     if (name === 'contactNumber') {
       const contactValue = value.replace(/[^0-9]/gi, '')
@@ -99,21 +103,6 @@ function AddEditFamilyDetails({
       />
     )
   }
-  const handleUpdateFamilyMember = async () => {
-    const prepareObject = {
-      ...employeeFamily,
-      ...{
-        employeeId: employeeId,
-      },
-    }
-    const addFamilyMemberResultAction = await dispatch(
-      doUpdateFamilyDetails(prepareObject),
-    )
-    if (doUpdateFamilyDetails.fulfilled.match(addFamilyMemberResultAction)) {
-      backButtonHandler()
-      dispatch(addToast(getToastMessage(actionMapping.updated)))
-    }
-  }
   const handleAddFamilyMember = async () => {
     const prepareObject = {
       ...employeeFamily,
@@ -130,7 +119,21 @@ function AddEditFamilyDetails({
       dispatch(addToast(getToastMessage(actionMapping.added)))
     }
   }
-  console.log(dateOfBirth)
+  const handleUpdateFamilyMember = async () => {
+    const prepareObject = {
+      ...employeeFamily,
+      ...{
+        employeeId: employeeId,
+      },
+    }
+    const addFamilyMemberResultAction = await dispatch(
+      doUpdateFamilyDetails(prepareObject),
+    )
+    if (doUpdateFamilyDetails.fulfilled.match(addFamilyMemberResultAction)) {
+      backButtonHandler()
+      dispatch(addToast(getToastMessage(actionMapping.updated)))
+    }
+  }
   return (
     <>
       <CCardHeader>

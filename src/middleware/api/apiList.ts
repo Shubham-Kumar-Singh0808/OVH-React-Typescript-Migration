@@ -38,4 +38,5 @@ export const personalInfoApi: ApiObjectType = {
   updateVisaInformation: apiPrefix + '/Employee/updateVisaDetailsToEmployee',
   deleteFamilyMember: apiPrefix + '/Employee/deleteFamilymember',
   deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
+  fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
 }

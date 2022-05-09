@@ -15,6 +15,8 @@ import {
 } from '@coreui/react-pro'
 import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { addToast } from '../../../reducers/appSlice'
 const VisaDetailsTable = ({
   editVisaButtonHandler,
 }: EmployeeVisaDetailsTableProps): JSX.Element => {
@@ -42,6 +44,14 @@ const VisaDetailsTable = ({
     )
     if (doDeleteVisaDetails.fulfilled.match(deleteFamilyMemberResultAction)) {
       dispatch(doFetchVisaDetails(employeeId))
+      dispatch(
+        addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Visa Detail deleted successfully"
+          />,
+        ),
+      )
     }
   }
 
