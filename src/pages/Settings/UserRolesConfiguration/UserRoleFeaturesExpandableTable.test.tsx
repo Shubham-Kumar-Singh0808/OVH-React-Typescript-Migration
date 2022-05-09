@@ -20,6 +20,7 @@ const mockSelectedRole = {
   roleName: 'admin',
   features: null,
 }
+
 describe('User Role Features Expandable Table Component Testing', () => {
   test('should render user role features expandable table component', async () => {
     render(

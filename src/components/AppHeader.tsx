@@ -14,19 +14,18 @@ import CIcon from '@coreui/icons-react'
 import React from 'react'
 import { cilMenu } from '@coreui/icons'
 import { logo } from '../assets/brand/logo'
-import { useDispatch } from 'react-redux'
-import { useTypedSelector } from '../stateStore'
+import { toggleSidebar } from '../reducers/appSlice'
+import { useAppDispatch } from '../stateStore'
 
 const AppHeader = (): JSX.Element => {
-  const dispatch = useDispatch()
-  const sidebarShow = useTypedSelector((state) => state.app.sidebarShow)
+  const dispatch = useAppDispatch()
 
   return (
     <CHeader className="main-header mb-3">
       <CContainer fluid>
         <CHeaderToggler
           className="ps-1 me-auto"
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
+          onClick={() => dispatch(toggleSidebar())}
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
