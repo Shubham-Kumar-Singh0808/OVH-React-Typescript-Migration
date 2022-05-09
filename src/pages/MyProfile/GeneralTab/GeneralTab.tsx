@@ -1,13 +1,13 @@
 import React from 'react'
 import { CCardHeader } from '@coreui/react-pro'
 
-import GeneralInformation from './GeneralInformation'
+import EmployeeGeneralInformation from './GeneralInformation'
 import FamilyDetailsTable from '../PersonalInfoTab/FamilyDetailsTable'
 import SkillsTable from '../QualificationTab/EmployeeSkill/SkillsTable'
 const GeneralTab = (): JSX.Element => {
   return (
     <>
-      <GeneralInformation />
+      <EmployeeGeneralInformation />
       <CCardHeader className="fw-semibold">Other Information</CCardHeader>
       <FamilyDetailsTable
         striped={true}

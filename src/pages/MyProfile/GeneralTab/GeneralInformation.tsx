@@ -3,11 +3,11 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { doFetchEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 
-const GeneralInformation = (): JSX.Element => {
+const EmployeeGeneralInformation = (): JSX.Element => {
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-  const generalInformation = useTypedSelector(
+  const employeeGeneralInformation = useTypedSelector(
     (state) => state.getLoggedInEmployeeData,
   )
   const dispatch = useAppDispatch()
@@ -15,7 +15,7 @@ const GeneralInformation = (): JSX.Element => {
   useEffect(() => {
     dispatch(doFetchEmployeeGeneralInformation(employeeId as number))
   }, [dispatch, employeeId])
-  console.log(generalInformation)
+  console.log(employeeGeneralInformation)
   return (
     <>
       <CCardHeader className="mt-10 fw-semibold">
@@ -27,23 +27,23 @@ const GeneralInformation = (): JSX.Element => {
         </CCol>
         <CCol md={4}>
           <dl>
-            {generalInformation.baseLocation && (
+            {employeeGeneralInformation.baseLocation && (
               <>
                 <dt>Base Location</dt>
-                <dd>{generalInformation.baseLocation}</dd>
+                <dd>{employeeGeneralInformation.baseLocation}</dd>
               </>
             )}
-            {generalInformation.curentLocation && (
+            {employeeGeneralInformation.curentLocation && (
               <>
                 <dt>Current Location</dt>
-                <dd>{generalInformation.curentLocation}</dd>
+                <dd>{employeeGeneralInformation.curentLocation}</dd>
               </>
             )}
 
-            {generalInformation.address && (
+            {employeeGeneralInformation.address && (
               <>
                 <dt>Current Address</dt>
-                <dd>{generalInformation.address}</dd>
+                <dd>{employeeGeneralInformation.address}</dd>
               </>
             )}
           </dl>
@@ -52,25 +52,25 @@ const GeneralInformation = (): JSX.Element => {
         <CCol md={5}>
           <dl>
             <dt>Gender</dt>
-            <dd>{generalInformation.gender}</dd>
-            {generalInformation.bloodgroup && (
+            <dd>{employeeGeneralInformation.gender}</dd>
+            {employeeGeneralInformation.bloodgroup && (
               <>
                 <dt>Blood Group</dt>
-                <dd>{generalInformation.bloodgroup}</dd>
+                <dd>{employeeGeneralInformation.bloodgroup}</dd>
               </>
             )}
             <dt>Date of Birth</dt>
-            <dd>{generalInformation.realBirthday}</dd>
-            {generalInformation.maritalStatus && (
+            <dd>{employeeGeneralInformation.realBirthday}</dd>
+            {employeeGeneralInformation.maritalStatus && (
               <>
                 <dt>Marital Status</dt>
-                <dd>{generalInformation.maritalStatus}</dd>
+                <dd>{employeeGeneralInformation.maritalStatus}</dd>
               </>
             )}
-            {generalInformation.emergencyContact && (
+            {employeeGeneralInformation.emergencyContact && (
               <>
                 <dt>Emergency Contact</dt>
-                <dd>{generalInformation.emergencyContact}</dd>
+                <dd>{employeeGeneralInformation.emergencyContact}</dd>
               </>
             )}
           </dl>
@@ -80,4 +80,4 @@ const GeneralInformation = (): JSX.Element => {
   )
 }
 
-export default GeneralInformation
+export default EmployeeGeneralInformation
