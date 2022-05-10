@@ -5,7 +5,8 @@ import GeneralInformation from './GeneralInformation'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../stateStore'
+import stateStore, { useTypedSelector } from '../../../stateStore'
+import { EmployeeGeneralInformationStateType } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 
 const ReduxProvider = ({
   children,
@@ -15,12 +16,19 @@ const ReduxProvider = ({
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
 
+const initialGeneralInformationState = {} as EmployeeGeneralInformationStateType
+
 const mockUseDispatchValue = 1984
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn().mockImplementation(() => {
     return mockUseDispatchValue
   }),
+}))
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
 }))
 
 const expectComponentToBeRendered = () => {
@@ -35,6 +43,11 @@ const expectComponentToBeRendered = () => {
 }
 
 describe('Employee General Information Testing', () => {
+  beforeEach(() => {
+    useTypedSelector.arguments((callback: (arg0: any) => any) => {
+      return callback(initialGeneralInformationState)
+    })
+  })
   test('should render General Information data without crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -44,3 +57,6 @@ describe('Employee General Information Testing', () => {
     expectComponentToBeRendered()
   })
 })
+// function getLoggedInEmployeeData(getLoggedInEmployeeData: any) {
+//   throw new Error('Function not implemented.')
+// }
