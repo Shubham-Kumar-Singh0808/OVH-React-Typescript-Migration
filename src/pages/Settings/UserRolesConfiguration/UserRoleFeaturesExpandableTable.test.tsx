@@ -17,7 +17,7 @@ const ReduxProvider = ({
 
 const mockSelectedRole = {
   roleId: 1,
-  roleName: 'admin',
+  name: 'admin',
   features: null,
 }
 

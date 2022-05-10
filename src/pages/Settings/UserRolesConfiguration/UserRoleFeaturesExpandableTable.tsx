@@ -98,11 +98,9 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
             childFeatureItemIndex as number
           ]
         toEdit[accessModifier] = target.checked
-        console.log(toEdit)
       } else {
         toEdit = mappedFeaturesCopy[index].features[subFeatureItemIndex]
         toEdit[accessModifier] = target.checked
-        console.log(toEdit)
       }
       setMappedFeatures(mappedFeaturesCopy)
       const prepareObject = renderPermissionSwitch(
@@ -150,7 +148,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                       <CAccordionHeader>
                         <span
                           className="title-sm expandable-table-title"
-                          data-testid="CAccordionHeader-span"
+                          data-testid="CAccofeatures-rdionHeader-span"
                         >
                           {featureItem.name}
                         </span>
@@ -195,6 +193,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                     <CTableDataCell>
                                       {subFeatureItem.viewaccess && (
                                         <CFormCheck
+                                          data-testid="form-features-checkbox"
                                           className="infocheckbox"
                                           name={subFeatureItem.name}
                                           checked={
@@ -216,6 +215,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                     <CTableDataCell>
                                       {subFeatureItem.createaccess && (
                                         <CFormCheck
+                                          data-testid="form-features-checkbox"
                                           className="infocheckbox"
                                           name={subFeatureItem.name}
                                           checked={
@@ -237,6 +237,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                     <CTableDataCell>
                                       {subFeatureItem.updateaccess && (
                                         <CFormCheck
+                                          data-testid="form-features-checkbox"
                                           className="infocheckbox"
                                           name={subFeatureItem.name}
                                           checked={
@@ -258,6 +259,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                                     <CTableDataCell>
                                       {subFeatureItem.deleteaccess && (
                                         <CFormCheck
+                                          data-testid="form-features-checkbox"
                                           className="infocheckbox"
                                           name={subFeatureItem.name}
                                           checked={

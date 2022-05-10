@@ -6,6 +6,7 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import UserRolesAndPermissions from './UserRolesAndPermissions'
+import { mockUserRoleSubFeatures } from '../../../test/data/UserRoleSubFeaturesData'
 import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
 
@@ -77,20 +78,54 @@ describe('User Roles And Permissions Testing', () => {
       expect(screen.getAllByRole('option')).toHaveLength(4)
     })
   })
-  it('should render menu items on role select', async () => {
+  it('should enable delete role button upon role select', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <UserRolesAndPermissions />
       </ReduxProvider>,
     )
-    userEvent.selectOptions(
-      screen.getByRole('combobox'),
-      screen.queryAllByText('option'),
-    )
+    userEvent.selectOptions(screen.getByTestId('form-select'), ['1'])
     await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: /Delete Role/i }),
-      ).toBeDisabled()
+      expect(screen.getByRole('button', { name: /Delete Role/i })).toBeEnabled()
+    })
+  })
+})
+
+describe('User Role Features Expandable Table Component Testing', () => {
+  it('should render user role features expandable table component', async () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <UserRolesAndPermissions />
+      </ReduxProvider>,
+    )
+    userEvent.selectOptions(screen.getByTestId('form-select'), ['1'])
+    const tableItem = await screen.findByText('Dashboard-Birthdays')
+    expect(tableItem).toBeInTheDocument()
+    mockUserRoleSubFeatures.forEach(async (subFeatureItem) => {
+      await waitFor(async () => {
+        expect(await screen.findByText(subFeatureItem.name)).toHaveTextContent(
+          subFeatureItem.name,
+        )
+      })
+    })
+  })
+  it('should render user role features expandable', async () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <UserRolesAndPermissions />
+      </ReduxProvider>,
+    )
+    userEvent.selectOptions(screen.getByTestId('form-select'), ['1'])
+    mockUserRoleSubFeatures.forEach((subFeatures) => {
+      subFeatures.features.forEach(async () => {
+        await waitFor(() => {
+          const checkbox = screen.getByTestId('form-features-checkbox')
+          userEvent.click(checkbox)
+          expect(screen.getByTestId('form-features-checkbox')).toBeChecked()
+          userEvent.click(checkbox)
+          expect(screen.getByTestId('form-features-checkbox')).not.toBeChecked()
+        })
+      })
     })
   })
 })
