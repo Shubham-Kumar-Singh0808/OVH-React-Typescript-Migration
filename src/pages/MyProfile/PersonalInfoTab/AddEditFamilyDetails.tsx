@@ -17,7 +17,7 @@ import {
   doAddNewFamilyMember,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+// import 'react-datepicker/dist/react-datepicker.css'
 import {
   EmployeeFamilyDetails,
   AddEditEmployeeFamilyDetails,
@@ -134,6 +134,10 @@ function AddEditFamilyDetails({
       dispatch(addToast(getToastMessage(actionMapping.updated)))
     }
   }
+  const formLabelProps = {
+    htmlFor: 'Name',
+    className: 'col-sm-3 col-form-label text-end',
+  }
   return (
     <>
       <CCardHeader>
@@ -153,7 +157,10 @@ function AddEditFamilyDetails({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
               Name:
               <span
                 className={

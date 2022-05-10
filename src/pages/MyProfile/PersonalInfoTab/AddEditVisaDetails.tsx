@@ -42,6 +42,7 @@ function AddEditVisaDetails({
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
   // const [selectedFile, setSelectedFile] = useState<File | string>()
   // const [imageUrl, setImageUrl] = useState<string>()
+  const [error, setError] = useState(null)
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -59,6 +60,11 @@ function AddEditVisaDetails({
   useEffect(() => {
     dispatch(doFetchCountryDetails())
   }, [dispatch])
+  useEffect(() => {
+    if ((dateOfIssue as string) <= (dateOfExpire as string)) {
+      setError(null)
+    }
+  }, [dateOfIssue, dateOfExpire])
   useEffect(() => {
     if (
       employeeVisaDetails.countryId &&
@@ -118,6 +124,7 @@ function AddEditVisaDetails({
     } else {
       setDateOfExpire(date)
     }
+    // setError(date)
   }
   const handleClearDetails = () => {
     setEmployeeVisaDetails({
@@ -300,6 +307,11 @@ function AddEditVisaDetails({
                 placeholderText="dd/mm/yyyy"
                 dateFormat="dd/MM/yyyy"
               />
+              {error && (
+                <p className="text-danger">
+                  Date of Expire should be greater than Date of Issue
+                </p>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
