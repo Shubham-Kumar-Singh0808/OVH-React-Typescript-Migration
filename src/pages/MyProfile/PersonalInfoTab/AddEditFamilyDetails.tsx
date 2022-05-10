@@ -157,10 +157,7 @@ function AddEditFamilyDetails({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-            >
+            <CFormLabel {...formLabelProps}>
               Name:
               <span
                 className={

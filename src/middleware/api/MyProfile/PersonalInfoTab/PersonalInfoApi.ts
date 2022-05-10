@@ -169,13 +169,10 @@ export const fileUploadVisaImageApiCall = async (
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.fileUploadVisaImage,
     method: methods.post,
+    // data: formData,
     // params: {
     //   visaId: responseVisa,
     // },
-
-    data: {
-      visaID: visaId,
-    },
   })
   const response = await axios(requestConfig)
   return response.data

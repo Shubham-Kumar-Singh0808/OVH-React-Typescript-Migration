@@ -40,8 +40,8 @@ function AddEditVisaDetails({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
-  // const [selectedFile, setSelectedFile] = useState<File | string>()
-  // const [imageUrl, setImageUrl] = useState<string>()
+  const [selectedFile, setSelectedFile] = useState<File | string>()
+  const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState(null)
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
@@ -59,7 +59,11 @@ function AddEditVisaDetails({
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(doFetchCountryDetails())
-  }, [dispatch])
+    if (employeeVisaDetails?.countryId) {
+      dispatch(doFetchCountryVisaDetails(employeeVisaDetails?.countryId))
+    }
+  }, [dispatch, employeeVisaDetails?.countryId])
+
   useEffect(() => {
     if ((dateOfIssue as string) <= (dateOfExpire as string)) {
       setError(null)
@@ -67,8 +71,8 @@ function AddEditVisaDetails({
   }, [dateOfIssue, dateOfExpire])
   useEffect(() => {
     if (
-      employeeVisaDetails.countryId &&
-      employeeVisaDetails.visaTypeId &&
+      employeeVisaDetails?.countryId &&
+      employeeVisaDetails?.visaTypeId &&
       dateOfIssue &&
       dateOfExpire
     ) {
@@ -77,17 +81,11 @@ function AddEditVisaDetails({
       setIsAddButtonEnabled(false)
     }
   }, [
-    employeeVisaDetails.countryId,
-    employeeVisaDetails.visaTypeId,
+    employeeVisaDetails?.countryId,
+    employeeVisaDetails?.visaTypeId,
     dateOfIssue,
     dateOfExpire,
   ])
-  useEffect(() => {
-    doFetchCountryDetails()
-    if (employeeVisaDetails.countryId) {
-      dispatch(doFetchCountryVisaDetails(employeeVisaDetails.countryId))
-    }
-  }, [dispatch, employeeVisaDetails.countryId])
 
   console.log(employeeVisaDetails)
 
@@ -126,6 +124,12 @@ function AddEditVisaDetails({
     }
     // setError(date)
   }
+
+  const onChangeFileEventHandler = (event: any) => {
+    setSelectedFile(event.target.files[0])
+    console.log(event)
+  }
+
   const handleClearDetails = () => {
     setEmployeeVisaDetails({
       id: '',
@@ -151,6 +155,8 @@ function AddEditVisaDetails({
     )
   }
   const handleAddVisaDetails = async () => {
+    const formData = new FormData()
+    // formData.append('File', selectedFile)
     const prepareObject = {
       ...employeeVisaDetails,
       dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),
@@ -179,6 +185,10 @@ function AddEditVisaDetails({
       dispatch(dispatch(addToast(getToastMessage(actionMapping.updated))))
     }
   }
+  const formLabelProps = {
+    htmlFor: 'Country',
+    className: 'col-sm-3 col-form-label text-end',
+  }
   return (
     <>
       <CCardHeader>
@@ -198,11 +208,11 @@ function AddEditVisaDetails({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel {...formLabelProps}>
               Country:
               <span
                 className={
-                  employeeVisaDetails.countryId ? 'text-white' : 'text-danger'
+                  employeeVisaDetails?.countryId ? 'text-white' : 'text-danger'
                 }
               >
                 *
@@ -213,7 +223,7 @@ function AddEditVisaDetails({
                 aria-label="Default select example"
                 size="sm"
                 name="countryId"
-                value={employeeVisaDetails.countryId}
+                value={employeeVisaDetails?.countryId}
                 onChange={eventHandler}
               >
                 <option value={''}>Select Country</option>
@@ -230,7 +240,7 @@ function AddEditVisaDetails({
               Visa Type:{' '}
               <span
                 className={
-                  employeeVisaDetails.visaTypeId ? 'text-white' : 'text-danger'
+                  employeeVisaDetails?.visaTypeId ? 'text-white' : 'text-danger'
                 }
               >
                 *
@@ -240,7 +250,7 @@ function AddEditVisaDetails({
               <CFormSelect
                 aria-label="Default select example"
                 name="visaTypeId"
-                value={employeeVisaDetails.visaTypeId}
+                value={employeeVisaDetails?.visaTypeId}
                 size="sm"
                 onChange={eventHandler}
               >
@@ -327,8 +337,9 @@ function AddEditVisaDetails({
                 className="form-control form-control-sm"
                 type="file"
                 name="file"
-                // value={selectedFile as string}
-                // onChange={onChangeFieEventHandler}
+                value={selectedFile as string}
+                accept="image/*,"
+                onChange={onChangeFileEventHandler}
               />
             </CCol>
           </CRow>
