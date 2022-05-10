@@ -1,4 +1,4 @@
-import { EmployeeQualifications } from '../../types/Qualifications/qualificationTypes'
+import { EmployeeQualifications } from '../../types/MyProfile/Qualifications/qualificationTypes'
 
 export const mockQualifications: EmployeeQualifications[] = [
   {

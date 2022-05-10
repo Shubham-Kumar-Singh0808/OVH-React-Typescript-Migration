@@ -1,4 +1,4 @@
-import { ValidationErrorType } from '../../types/commonTypes'
+import { ValidationError } from '../../commonTypes'
 
 export type PostGraduationAndGraduationLookUp = {
   id: string
@@ -30,11 +30,15 @@ export type EmployeeSkills = {
   expMonth: string
   expYear: string
 }
-
+export type PostGraduationAndGraduationList = {
+  graduationDetails: PostGraduationAndGraduationLookUp[]
+  pgDetails: PostGraduationAndGraduationLookUp[]
+}
 export type EmployeeQualificationModel = {
   qualificationDetails: EmployeeQualifications
   certificationDetails: EmployeeCertifications[]
-  SkillDetails: EmployeeSkills[]
+  skillDetails: EmployeeSkills[]
+  pgLookUpAndGraduationLookUpDetails: PostGraduationAndGraduationList
   isLoading: boolean
-  error: ValidationErrorType
+  error: ValidationError
 }

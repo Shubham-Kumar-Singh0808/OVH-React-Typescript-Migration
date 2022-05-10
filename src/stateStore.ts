@@ -14,6 +14,7 @@ export const allReducers = {
   employeeQualifications: employeeQualificationsReducer,
   employeeCertifications: employeeQualificationsReducer,
   employeeSkills: employeeQualificationsReducer,
+  postGraduationAndGraduationList: employeeQualificationsReducer,
   category: categoryReducer,
   skill: skillReducer,
   // add your slice reducers here

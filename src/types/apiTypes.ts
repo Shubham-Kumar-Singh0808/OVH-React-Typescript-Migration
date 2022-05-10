@@ -21,3 +21,12 @@ export interface SkillApi extends ApiBase {
   addNewSkillForCategory: string
   deleteSkillForCategory: string
 }
+
+export interface QualificationsApi extends ApiBase {
+  getEmployeeQualifications: string
+  getEmployeeSkillsList: string
+  getEmployeeCertificatesList: string
+  getPostGraduationAndGraduationList: string
+  addEmployeeQualifications: string
+  updateEmployeeQualifications: string
+}

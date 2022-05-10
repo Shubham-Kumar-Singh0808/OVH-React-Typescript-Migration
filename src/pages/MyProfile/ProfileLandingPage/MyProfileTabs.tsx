@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react'
 
 import OCard from '../../../components/ReusableComponent/OCard'
 import TabsLabels from '../../../middleware/TabsLabels'
+import AddUpdateEmployeeQualification from '../Qualifications/qualifications/AddUpdateEmployeeQualification'
 import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
 
 interface ShowTabContentType<TValue> {
@@ -31,7 +32,6 @@ const MyProfileTabs = (): JSX.Element => {
       2: <h1>Basic Info</h1>,
       3: <h1>Personal Info</h1>,
       4: <QualificationDetails />,
-      5: <h1>Review</h1>,
       6: <h1>Projects</h1>,
     }
     return showTabContent[tabKey] || 'Tab Content not available'

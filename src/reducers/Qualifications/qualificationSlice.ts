@@ -4,16 +4,20 @@ import {
   EmployeeQualificationModel,
   EmployeeQualifications,
   EmployeeSkills,
-} from '../../../src/types/Qualifications/qualificationTypes'
+  PostGraduationAndGraduationList,
+} from '../../types/MyProfile/Qualifications/qualificationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { ValidationErrorType } from '../../types/commonTypes'
+import { ValidationError } from '../../types/commonTypes'
 import {
   fetchEmployeeCertifications,
   fetchEmployeeQualifications,
   fetchEmployeeSkills,
-} from '../../middleware/api/Qualifications/qualificationsApi'
+  fetchPgLookUpAndGraduationLookUpListItems,
+  saveEmployeeQualifications,
+  updateEmployeeQualifications,
+} from '../../middleware/api/MyProfile/Qualifications/qualificationsApi'
 
 const initialQualificationState = {} as EmployeeQualificationModel
 
@@ -23,7 +27,7 @@ export const doFetchQualifications = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'employeeQualifications/doFetchQualifications',
@@ -32,9 +36,7 @@ export const doFetchQualifications = createAsyncThunk<
       return await fetchEmployeeQualifications(employeeId)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -45,14 +47,14 @@ export const doFetchCertifications = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >('employeeQualifications/doFetchCertifications', async (_, thunkApi) => {
   try {
     return await fetchEmployeeCertifications()
   } catch (error) {
     const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
 
@@ -62,16 +64,68 @@ export const doFetchSkills = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >('employeeQualifications/doFetchSkills', async (_, thunkApi) => {
   try {
     return await fetchEmployeeSkills()
   } catch (error) {
     const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
+
+export const postQualificationDetails = createAsyncThunk<
+  EmployeeQualifications | undefined,
+  void,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('employeeQualifications/postQualificationDetails', async (_, thunkApi) => {
+  try {
+    return await saveEmployeeQualifications()
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+export const updateQualificationDetails = createAsyncThunk<
+  EmployeeQualifications | undefined,
+  void,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('employeeQualifications/updateQualificationDetails', async (_, thunkApi) => {
+  try {
+    return await updateEmployeeQualifications()
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+export const doFetchPgAndGraduationItems = createAsyncThunk<
+  PostGraduationAndGraduationList | undefined,
+  void,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('employeeQualifications/doFetchPgAndGraduationItems', async (_, thunkApi) => {
+  try {
+    return await fetchPgLookUpAndGraduationLookUpListItems()
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const employeeQualificationsSlice = createSlice({
   name: 'employeeQualifications',
   initialState: initialQualificationState,
@@ -97,7 +151,29 @@ const employeeQualificationsSlice = createSlice({
       })
       .addCase(doFetchSkills.fulfilled, (state, action) => {
         state.isLoading = false
-        state.SkillDetails = action.payload as EmployeeSkills[]
+        state.skillDetails = action.payload as EmployeeSkills[]
+      })
+      .addCase(doFetchPgAndGraduationItems.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(doFetchPgAndGraduationItems.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.pgLookUpAndGraduationLookUpDetails =
+          action.payload as PostGraduationAndGraduationList
+      })
+      .addCase(postQualificationDetails.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(postQualificationDetails.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.qualificationDetails = action.payload as EmployeeQualifications
+      })
+      .addCase(updateQualificationDetails.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateQualificationDetails.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.qualificationDetails = action.payload as EmployeeQualifications
       })
   },
 })
