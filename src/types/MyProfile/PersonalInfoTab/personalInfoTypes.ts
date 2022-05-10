@@ -48,7 +48,7 @@ export type VisaCountryDetailsModal = {
   countryName: string
 }
 export type EmployeeVisaDetails = {
-  id?: number
+  id?: number | string
   empId: number | string
   empName: string | number
   visaTypeId: number | string

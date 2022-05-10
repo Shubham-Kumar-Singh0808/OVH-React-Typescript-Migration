@@ -70,31 +70,29 @@ const VisaDetailsTable = ({
         </CTableHead>
         <CTableBody>
           {fetchVisaDetails?.length > 0 &&
-            fetchVisaDetails?.map((visasItem, index) => (
+            fetchVisaDetails?.map((visaItem, index) => (
               <CTableRow key={index}>
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>
                 <CTableDataCell scope="row">
-                  {visasItem.countryName}
+                  {visaItem.countryName}
+                </CTableDataCell>
+                <CTableDataCell scope="row">{visaItem.visaType}</CTableDataCell>
+                <CTableDataCell scope="row">
+                  {visaItem.dateOfIssue}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
-                  {visasItem.visaType}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {visasItem.dateOfIssue}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {visasItem.dateOfExpire}
+                  {visaItem.dateOfExpire}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
                   <CButton
                     color="info btn-ovh me-2"
-                    onClick={() => editVisaButtonHandler(visasItem.id)}
+                    onClick={() => editVisaButtonHandler(visaItem.id)}
                   >
                     <i className="fa fa-pencil-square-o"></i>
                   </CButton>
                   <CButton
                     color="danger btn-ovh me-2"
-                    onClick={() => handleShowDeleteModal(visasItem.id)}
+                    onClick={() => handleShowDeleteModal(visaItem.id)}
                   >
                     <i className="fa fa-trash-o" aria-hidden="true"></i>
                   </CButton>

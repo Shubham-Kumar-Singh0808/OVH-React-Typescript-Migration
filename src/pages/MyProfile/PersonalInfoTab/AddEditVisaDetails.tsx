@@ -83,7 +83,7 @@ function AddEditVisaDetails({
     }
   }, [dispatch, employeeVisaDetails.countryId])
 
-  console.log(fetchEditVisaDetails)
+  console.log(employeeVisaDetails)
 
   useEffect(() => {
     if (isEditVisaDetails) {
@@ -120,10 +120,14 @@ function AddEditVisaDetails({
     }
   }
   const handleClearDetails = () => {
-    // setEmployeeVisaDetails({
-    //   countryId: '',
-    //   visaTypeId: '',
-    // })
+    setEmployeeVisaDetails({
+      id: '',
+      empId: '',
+      empName: '',
+      visaTypeId: '',
+      visaType: '',
+      countryId: '',
+    })
     setDateOfIssue('')
     setDateOfExpire('')
   }

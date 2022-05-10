@@ -325,7 +325,11 @@ const familyDetailsTableSlice = createSlice({
         },
       )
       .addMatcher(
-        isAnyOf(doFetchCountryDetails.pending, doFetchCountryDetails.pending),
+        isAnyOf(
+          doFetchCountryDetails.pending,
+          doFetchCountryDetails.pending,
+          doFetchCountryVisaDetails.pending,
+        ),
         (state) => {
           state.isLoading = true
         },
