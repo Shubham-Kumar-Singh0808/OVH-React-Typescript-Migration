@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  CCardHeader,
-  CCardBody,
-  CCard,
-  CRow,
-  CCol,
-  CButton,
-} from '@coreui/react-pro'
+import { CCardHeader, CCardBody, CCard } from '@coreui/react-pro'
 import FamilyDetailsTable from './FamilyDetailsTable'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 const PersonalInfoTab = (): JSX.Element => {

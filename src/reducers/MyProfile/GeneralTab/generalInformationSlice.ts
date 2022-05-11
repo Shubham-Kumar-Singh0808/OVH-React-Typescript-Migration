@@ -6,6 +6,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { postEmployeeGeneralInformation } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
 import { ValidationError } from '../../../types/commonTypes'
+import { RootState } from '../../../stateStore'
 
 const initialGeneralInformationState = {} as EmployeeGeneralInformationStateType
 
@@ -52,4 +53,9 @@ const employeeGeneralInformationSlice = createSlice({
 })
 export const { setEmployeeGeneralInformation, clearError } =
   employeeGeneralInformationSlice.actions
+
+export const selectLoggedInData = (
+  state: RootState,
+): EmployeeGeneralInformationStateType => state.getLoggedInEmployeeData
+
 export default employeeGeneralInformationSlice.reducer

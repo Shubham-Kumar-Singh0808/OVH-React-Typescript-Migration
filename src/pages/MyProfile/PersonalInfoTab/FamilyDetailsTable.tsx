@@ -23,12 +23,11 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
   const familyDetails = useTypedSelector(
     (state) => state.familyDetails.getFamilyDetails,
   )
-
+  console.log(familyDetails)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(doFetchFamilyDetails(employeeId))
   }, [dispatch, employeeId])
-  console.log(familyDetails)
   const tableHeaderCellProps = {
     width: '25%',
     scope: 'col',
@@ -37,6 +36,10 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
     colSpan: 4,
     className: 'fw-semibold',
   }
+  const sortedFamilyDetails = familyDetails?.sort((sortNode1, sortNode2) =>
+    sortNode1.personName.localeCompare(sortNode2.personName),
+  )
+  console.log(sortedFamilyDetails)
   return (
     <>
       <CTable
@@ -86,7 +89,7 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
           </>
         )}
         <CTableBody>
-          {familyDetails?.map((family, index) => (
+          {sortedFamilyDetails?.map((family, index) => (
             <CTableRow key={index}>
               {isFieldDisabled ? (
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>

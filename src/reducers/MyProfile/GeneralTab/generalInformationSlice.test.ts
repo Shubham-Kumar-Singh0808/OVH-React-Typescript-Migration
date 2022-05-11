@@ -1,9 +1,4 @@
-import employeeGeneralInformationSlice, {
-  setEmployeeGeneralInformation,
-} from './generalInformationSlice'
-
-import { forEachChild } from 'typescript'
-import { waitFor } from '@testing-library/react'
+import employeeGeneralInformationSlice from './generalInformationSlice'
 
 describe('General Information Reducer Test', () => {
   it('should return the initial state when passed an empty action', () => {

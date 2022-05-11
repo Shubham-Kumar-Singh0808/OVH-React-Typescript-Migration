@@ -1,15 +1,15 @@
 import { CCardHeader, CRow, CCol } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { doFetchEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import {
+  doFetchEmployeeGeneralInformation,
+  selectLoggedInData,
+} from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { selectEmployeeId } from '../../../reducers/Login/authenticationSlice'
 
 const EmployeeGeneralInformation = (): JSX.Element => {
-  const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
-  )
-  const employeeGeneralInformation = useTypedSelector(
-    (state) => state.getLoggedInEmployeeData,
-  )
+  const employeeId = useTypedSelector(selectEmployeeId)
+  const employeeGeneralInformation = useTypedSelector(selectLoggedInData)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
