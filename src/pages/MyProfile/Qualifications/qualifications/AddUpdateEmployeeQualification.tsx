@@ -7,19 +7,22 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
+import {
+  EmployeeQualifications,
+  PostGraduationAndGraduationLookUp,
+  QualificationProps,
+} from '../../../../types/MyProfile/Qualifications/qualificationTypes'
 import React, { useEffect, useState } from 'react'
-import Multiselect from 'multiselect-react-dropdown'
-import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
-import { useFormik } from 'formik'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   doFetchPgAndGraduationItems,
   doFetchQualifications,
 } from '../../../../reducers/Qualifications/qualificationSlice'
-import {
-  EmployeeQualifications,
-  QualificationProps,
-} from '../../../../types/MyProfile/Qualifications/qualificationTypes'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
+import Multiselect from 'multiselect-react-dropdown'
+import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
+import { useFormik } from 'formik'
+
 const AddUpdateEmployeeQualification = ({
   backButtonHandler,
   addButtonHandler,
@@ -29,6 +32,7 @@ const AddUpdateEmployeeQualification = ({
   const [addQualification, setAddQualification] = useState(
     initialQualificationData,
   )
+  console.log(addQualification)
 
   const getPgAndGraduationLookUpItems = useTypedSelector(
     (state) =>
@@ -67,6 +71,24 @@ const AddUpdateEmployeeQualification = ({
       return { ...prevState, ...{ [name]: value } }
     })
   }
+  const handleMultiSelect = (
+    list: PostGraduationAndGraduationLookUp[],
+    name: string,
+  ) => {
+    setAddQualification((prevState) => {
+      return { ...prevState, ...{ [name]: list } }
+    })
+  }
+
+  const handleOnRemoveSelectedOption = (
+    selectedList: PostGraduationAndGraduationLookUp[],
+    name: string,
+  ) => {
+    setAddQualification((prevState) => {
+      return { ...prevState, ...{ [name]: selectedList } }
+    })
+  }
+
   return (
     <>
       <CCardHeader>
@@ -93,6 +115,10 @@ const AddUpdateEmployeeQualification = ({
               options={getPgAndGraduationLookUpItems?.pgDetails || []}
               displayValue="label"
               selectedValues={addQualification.pgLookUp}
+              onSelect={(list) => handleMultiSelect(list, 'pgLookUp')}
+              onRemove={(selectedList) =>
+                handleOnRemoveSelectedOption(selectedList, 'pgLookUp')
+              }
             />
           </CCol>
         </CRow>
@@ -106,6 +132,10 @@ const AddUpdateEmployeeQualification = ({
               options={getPgAndGraduationLookUpItems?.graduationDetails || []}
               displayValue="label"
               selectedValues={addQualification.graduationLookUp}
+              onSelect={(list) => handleMultiSelect(list, 'graduationLookUp')}
+              onRemove={(selectedList) =>
+                handleOnRemoveSelectedOption(selectedList, 'graduationLookUp')
+              }
             />
           </CCol>
         </CRow>
@@ -116,6 +146,8 @@ const AddUpdateEmployeeQualification = ({
           <CCol sm={3}>
             <CFormInput
               type="text"
+              size="sm"
+              name="hscName"
               value={addQualification.hscName || ''}
               onChange={handleInputChange}
             />
@@ -128,6 +160,8 @@ const AddUpdateEmployeeQualification = ({
           <CCol sm={3}>
             <CFormInput
               type="text"
+              size="sm"
+              name="sscName"
               value={addQualification.sscName || ''}
               onChange={handleInputChange}
             />
