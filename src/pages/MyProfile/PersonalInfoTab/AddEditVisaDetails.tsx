@@ -42,7 +42,7 @@ function AddEditVisaDetails({
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
   const [selectedFile, setSelectedFile] = useState<File | string>()
   const [imageUrl, setImageUrl] = useState<string>()
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<Date | null>(null)
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -69,6 +69,10 @@ function AddEditVisaDetails({
       setError(null)
     }
   }, [dateOfIssue, dateOfExpire])
+  const selectImageFile = selectedFile
+    ? imageUrl
+    : 'data:image/jpeg;base64,' + fetchEditVisaDetails?.visaDetailsData
+
   useEffect(() => {
     if (
       employeeVisaDetails?.countryId &&
@@ -94,11 +98,17 @@ function AddEditVisaDetails({
       setEmployeeVisaDetails(fetchEditVisaDetails)
     }
   }, [isEditVisaDetails, fetchEditVisaDetails])
-  const eventHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeNameHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
+  }
+  const onChangeFileEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const target = e.currentTarget as HTMLInputElement
+    const file = target.files?.[0]
+    console.log(file)
   }
 
   const onChangeDateOfIssueHandler = (date: Date) => {
@@ -122,14 +132,8 @@ function AddEditVisaDetails({
     } else {
       setDateOfExpire(date)
     }
-    // setError(date)
+    setError(date)
   }
-
-  const onChangeFileEventHandler = (event: any) => {
-    setSelectedFile(event.target.files[0])
-    console.log(event)
-  }
-
   const handleClearDetails = () => {
     setEmployeeVisaDetails({
       id: '',
@@ -155,8 +159,6 @@ function AddEditVisaDetails({
     )
   }
   const handleAddVisaDetails = async () => {
-    const formData = new FormData()
-    // formData.append('File', selectedFile)
     const prepareObject = {
       ...employeeVisaDetails,
       dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),
@@ -173,9 +175,6 @@ function AddEditVisaDetails({
   const handleUpdateVisaMember = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
-      ...{
-        employeeId: employeeId,
-      },
     }
     const addVisaMemberResultAction = await dispatch(
       doUpdateVisaDetails(prepareObject),
@@ -224,7 +223,7 @@ function AddEditVisaDetails({
                 size="sm"
                 name="countryId"
                 value={employeeVisaDetails?.countryId}
-                onChange={eventHandler}
+                onChange={onChangeNameHandler}
               >
                 <option value={''}>Select Country</option>
                 {fetchCountryDetails?.countries.map((countriesItem, index) => (
@@ -252,7 +251,7 @@ function AddEditVisaDetails({
                 name="visaTypeId"
                 value={employeeVisaDetails?.visaTypeId}
                 size="sm"
-                onChange={eventHandler}
+                onChange={onChangeNameHandler}
               >
                 <option value={''}>Select Visa</option>
                 {fetchVisaCountryDetails?.map((visaTypeItem, index) => (
@@ -325,11 +324,7 @@ function AddEditVisaDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel
-              className="col-sm-3 col-form-label text-end"
-              // size="sm"
-              // value={selectedFile as string | File}
-            >
+            <CFormLabel className="col-sm-3 col-form-label text-end">
               Upload VISA copy:
             </CFormLabel>
             <CCol sm={3}>
@@ -342,6 +337,24 @@ function AddEditVisaDetails({
                 onChange={onChangeFileEventHandler}
               />
             </CCol>
+            {selectedFile || fetchEditVisaDetails?.visaDetailsData ? (
+              <CCol sm={{ span: 6, offset: 3 }}>
+                <img
+                  src={selectImageFile}
+                  alt=""
+                  style={{ width: '100px', margin: '10px 0' }}
+                />
+              </CCol>
+            ) : (
+              <>
+                <div className="w-100"></div>
+                <CCol sm={{ span: 6, offset: 3 }}>
+                  <p className=" text-info ">
+                    Note: Please upload less than 400KB size image.
+                  </p>
+                </CCol>
+              </>
+            )}
           </CRow>
 
           <CRow>

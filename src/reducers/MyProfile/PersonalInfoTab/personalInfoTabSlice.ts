@@ -37,7 +37,7 @@ export const doFetchFamilyDetails = createAsyncThunk<
     rejectValue: ValidationErrorType
   }
 >(
-  'familyDetailsTable/doFetchFamilyDetails',
+  'personalInfoTab/doFetchFamilyDetails',
   async (employeeId: number | string, thunkApi) => {
     try {
       return await fetchFamilyDetailsApiCall(employeeId)
@@ -58,7 +58,7 @@ export const doFetchVisaDetails = createAsyncThunk<
     rejectValue: ValidationErrorType
   }
 >(
-  'familyDetailsTable/doFetchVisaDetails',
+  'personalInfoTab/doFetchVisaDetails',
   async (employeeId: string | number, thunkApi) => {
     try {
       return await fetchVisaDetailsApiCall(employeeId)
@@ -78,7 +78,7 @@ export const doFetchCountryDetails = createAsyncThunk<
     state: RootState
     rejectValue: ValidationErrorType
   }
->('familyDetailsTable/doFetchCountryDetails', async (_, thunkApi) => {
+>('personalInfoTab/doFetchCountryDetails', async (_, thunkApi) => {
   try {
     return await fetchCountryDetailsApiCall()
   } catch (error) {
@@ -95,7 +95,7 @@ export const doFetchCountryVisaDetails = createAsyncThunk<
     rejectValue: ValidationErrorType
   }
 >(
-  'familyDetailsTable/doFetchCountryVisaDetails',
+  'personalInfoTab/doFetchCountryVisaDetails',
   async (countryId: string | number, thunkApi) => {
     try {
       return await fetchVisaCountryDetailsApiCall(countryId)
@@ -116,7 +116,7 @@ export const doAddNewVisaDetails = createAsyncThunk<
     rejectValue: ValidationErrorType
   }
 >(
-  'addEditFamilyDetails/doAddNewVisaDetails',
+  'personalInfoTab/doAddNewVisaDetails',
   async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
       return await getAddNewVisaMemberApiCall(employeeVisaDetails)
@@ -137,7 +137,7 @@ export const doEditNewFamilyMember = createAsyncThunk<
     rejectValue: ValidationErrorType
   }
 >(
-  'addEditFamilyDetails/doEditNewFamilyMember',
+  'personalInfoTab/doEditNewFamilyMember',
   async (familyId: number, thunkApi) => {
     try {
       return await getFamilyInformationByFamilyIdApiCall(familyId)
@@ -158,7 +158,7 @@ export const doUpdateFamilyDetails = createAsyncThunk<
     rejectValue: ValidationErrorType
   }
 >(
-  'addEditFamilyDetails/doUpdateFamilyDetails',
+  'personalInfoTab/doUpdateFamilyDetails',
   async (employeeFamily: EmployeeFamilyDetails, thunkApi) => {
     try {
       return await getUpdateNewFamilyMemberApiCall(employeeFamily)
@@ -179,7 +179,7 @@ export const doAddNewFamilyMember = createAsyncThunk<
     rejectValue: ValidationErrorType
   }
 >(
-  'addEditFamilyDetails/doAddNewFamilyMember',
+  'personalInfoTab/doAddNewFamilyMember',
   async (employeeFamily: EmployeeFamilyDetails, thunkApi) => {
     try {
       return await getAddNewFamilyMember(employeeFamily)
@@ -199,7 +199,7 @@ export const doEditNewVisaMember = createAsyncThunk<
     state: RootState
     rejectValue: ValidationErrorType
   }
->('addEditFamilyDetails/doEditNewVisaMember', async (id: number, thunkApi) => {
+>('personalInfoTab/doEditNewVisaMember', async (id: number, thunkApi) => {
   try {
     return await getVisaInformationByVisaIdApiCall(id)
   } catch (error) {
@@ -216,7 +216,7 @@ export const doUpdateVisaDetails = createAsyncThunk<
     rejectValue: ValidationErrorType
   }
 >(
-  'addEditFamilyDetails/doUpdateVisaDetails',
+  'personalInfoTab/doUpdateVisaDetails',
   async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
       return await getUpdateNewVisaMemberApiCall(employeeVisaDetails)
@@ -236,7 +236,7 @@ export const doDeleteFamilyMember = createAsyncThunk<
     state: RootState
     rejectValue: ValidationErrorType
   }
->('addEditFamilyDetails/doDeleteFamilyMember', async (familyId, thunkApi) => {
+>('personalInfoTab/doDeleteFamilyMember', async (familyId, thunkApi) => {
   try {
     return await getDeleteNewFamilyMember(familyId)
   } catch (error) {
@@ -252,7 +252,7 @@ export const doDeleteVisaDetails = createAsyncThunk<
     state: RootState
     rejectValue: ValidationErrorType
   }
->('addEditFamilyDetails/doDeleteVisaDetails', async (visaId, thunkApi) => {
+>('personalInfoTab/doDeleteVisaDetails', async (visaId, thunkApi) => {
   try {
     return await getDeleteVisaDetailsApiCall(visaId)
   } catch (error) {
@@ -261,8 +261,8 @@ export const doDeleteVisaDetails = createAsyncThunk<
   }
 })
 
-const familyDetailsTableSlice = createSlice({
-  name: 'familyDetailsTable',
+const personalInfoTabSlice = createSlice({
+  name: 'personalInfoTab',
   initialState: initialPersonalInfoTabState,
   reducers: {},
 
@@ -350,4 +350,4 @@ const familyDetailsTableSlice = createSlice({
       )
   },
 })
-export default familyDetailsTableSlice.reducer
+export default personalInfoTabSlice.reducer

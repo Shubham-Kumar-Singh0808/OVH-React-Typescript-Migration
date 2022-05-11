@@ -21,7 +21,7 @@ const FamilyDetailsTable = ({
   editButtonHandler,
 }: EmployeeFamilyDetailsTableProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [toDeletefamilyId, setToDeletefamilyId] = useState(0)
+  const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -34,12 +34,12 @@ const FamilyDetailsTable = ({
   }, [dispatch, employeeId])
   const handleShowDeleteModal = (familyId: number) => {
     setIsDeleteModalVisible(true)
-    setToDeletefamilyId(familyId)
+    setToDeleteFamilyId(familyId)
   }
-  const handleConfirmDeleteRole = async () => {
+  const handleConfirmDeleteFamilyDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(
-      doDeleteFamilyMember(toDeletefamilyId),
+      doDeleteFamilyMember(toDeleteFamilyId),
     )
     if (doDeleteFamilyMember.fulfilled.match(deleteFamilyMemberResultAction)) {
       dispatch(doFetchFamilyDetails(employeeId))
@@ -113,7 +113,7 @@ const FamilyDetailsTable = ({
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
-        confirmButtonAction={handleConfirmDeleteRole}
+        confirmButtonAction={handleConfirmDeleteFamilyDetails}
       >
         {`Do you really want to delete this ?`}
       </OModal>

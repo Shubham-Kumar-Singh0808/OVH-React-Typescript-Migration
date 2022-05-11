@@ -37,7 +37,7 @@ const VisaDetailsTable = ({
     setToDeleteVisaId(visaId)
     setIsDeleteModalVisible(true)
   }
-  const handleConfirmDeleteRole = async () => {
+  const handleConfirmDeleteVisaDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(
       doDeleteVisaDetails(toDeleteVisaId),
@@ -113,7 +113,7 @@ const VisaDetailsTable = ({
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
-        confirmButtonAction={handleConfirmDeleteRole}
+        confirmButtonAction={handleConfirmDeleteVisaDetails}
       >
         {`Do you really want to delete this ?`}
       </OModal>
