@@ -30,6 +30,10 @@ export type EmployeeSkills = {
   expMonth: string
   expYear: string
 }
+export type AddBackButtons = {
+  addButtonHandler?: () => void
+  backButtonHandler?: () => void
+}
 export type PostGraduationAndGraduationList = {
   graduationDetails: PostGraduationAndGraduationLookUp[]
   pgDetails: PostGraduationAndGraduationLookUp[]

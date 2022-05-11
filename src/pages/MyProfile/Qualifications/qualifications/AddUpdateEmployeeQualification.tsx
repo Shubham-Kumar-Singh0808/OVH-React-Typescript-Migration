@@ -13,13 +13,11 @@ import { OTextEditor } from '../../../../components/ReusableComponent/OTextEdito
 import { useFormik } from 'formik'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { doFetchPgAndGraduationItems } from '../../../../reducers/Qualifications/qualificationSlice'
+import { AddBackButtons } from '../../../../types/MyProfile/Qualifications/qualificationTypes'
 const AddUpdateEmployeeQualification = ({
   backButtonHandler,
   addButtonHandler,
-}: any): JSX.Element => {
-  const [addQualification, setAddQualification] = useState({})
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-
+}: AddBackButtons): JSX.Element => {
   const getPgAndGraduationLookUpItems = useTypedSelector(
     (state) =>
       state.postGraduationAndGraduationList.pgLookUpAndGraduationLookUpDetails,
