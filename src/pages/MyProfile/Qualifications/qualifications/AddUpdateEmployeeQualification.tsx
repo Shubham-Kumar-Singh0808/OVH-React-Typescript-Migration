@@ -60,6 +60,13 @@ const AddUpdateEmployeeQualification = ({
       console.log('Logging in ', values)
     },
   })
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setAddQualification((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
+  }
   return (
     <>
       <CCardHeader>
@@ -107,7 +114,11 @@ const AddUpdateEmployeeQualification = ({
             Higher Secondary Certificate:
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput type="text" value={addQualification.hscName} />
+            <CFormInput
+              type="text"
+              value={addQualification.hscName || ''}
+              onChange={handleInputChange}
+            />
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -115,7 +126,11 @@ const AddUpdateEmployeeQualification = ({
             Secondary School Certificate:
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput type="text" value={addQualification.sscName} />
+            <CFormInput
+              type="text"
+              value={addQualification.sscName || ''}
+              onChange={handleInputChange}
+            />
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -125,7 +140,7 @@ const AddUpdateEmployeeQualification = ({
           <CCol sm={8}>
             <OTextEditor
               setFieldValue={(val) => formik.setFieldValue('', val)}
-              value={formik.values.message}
+              value={addQualification.others}
             />
           </CCol>
         </CRow>
