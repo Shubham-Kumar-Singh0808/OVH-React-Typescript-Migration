@@ -9,7 +9,6 @@ import React, { useEffect, useState } from 'react'
 
 import OCard from '../../../components/ReusableComponent/OCard'
 import TabsLabels from '../../../middleware/TabsLabels'
-import AddUpdateEmployeeQualification from '../Qualifications/qualifications/AddUpdateEmployeeQualification'
 import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
 
 interface ShowTabContentType<TValue> {

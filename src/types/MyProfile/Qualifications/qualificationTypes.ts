@@ -30,9 +30,10 @@ export type EmployeeSkills = {
   expMonth: string
   expYear: string
 }
-export type AddBackButtons = {
+export type QualificationProps = {
   addButtonHandler?: () => void
   backButtonHandler?: () => void
+  isEmployeeQualificationExist?: boolean
 }
 export type PostGraduationAndGraduationList = {
   graduationDetails: PostGraduationAndGraduationLookUp[]

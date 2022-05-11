@@ -12,12 +12,24 @@ import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import { useFormik } from 'formik'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { doFetchPgAndGraduationItems } from '../../../../reducers/Qualifications/qualificationSlice'
-import { AddBackButtons } from '../../../../types/MyProfile/Qualifications/qualificationTypes'
+import {
+  doFetchPgAndGraduationItems,
+  doFetchQualifications,
+} from '../../../../reducers/Qualifications/qualificationSlice'
+import {
+  EmployeeQualifications,
+  QualificationProps,
+} from '../../../../types/MyProfile/Qualifications/qualificationTypes'
 const AddUpdateEmployeeQualification = ({
   backButtonHandler,
   addButtonHandler,
-}: AddBackButtons): JSX.Element => {
+  isEmployeeQualificationExist = false,
+}: QualificationProps): JSX.Element => {
+  const initialQualificationData = {} as EmployeeQualifications
+  const [addQualification, setAddQualification] = useState(
+    initialQualificationData,
+  )
+
   const getPgAndGraduationLookUpItems = useTypedSelector(
     (state) =>
       state.postGraduationAndGraduationList.pgLookUpAndGraduationLookUpDetails,
@@ -25,18 +37,29 @@ const AddUpdateEmployeeQualification = ({
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
+  const getEmployeeQualificationDetails = useTypedSelector(
+    (state) => state.employeeQualifications.qualificationDetails,
+  )
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(doFetchPgAndGraduationItems())
   }, [dispatch])
 
+  useEffect(() => {
+    dispatch(doFetchQualifications(employeeId))
+  }, [dispatch, employeeId])
+  useEffect(() => {
+    if (isEmployeeQualificationExist) {
+      setAddQualification(getEmployeeQualificationDetails)
+    }
+  }, [isEmployeeQualificationExist, getEmployeeQualificationDetails])
+
   const formik = useFormik({
-    initialValues: { name: '', message: '<p>Testing</p>' },
+    initialValues: { name: '', message: '' },
     onSubmit: (values) => {
       console.log('Logging in ', values)
     },
   })
-
   return (
     <>
       <CCardHeader>
@@ -62,6 +85,7 @@ const AddUpdateEmployeeQualification = ({
               className="ovh-multiselect"
               options={getPgAndGraduationLookUpItems?.pgDetails || []}
               displayValue="label"
+              selectedValues={addQualification.pgLookUp}
             />
           </CCol>
         </CRow>
@@ -74,6 +98,7 @@ const AddUpdateEmployeeQualification = ({
               className="ovh-multiselect"
               options={getPgAndGraduationLookUpItems?.graduationDetails || []}
               displayValue="label"
+              selectedValues={addQualification.graduationLookUp}
             />
           </CCol>
         </CRow>
@@ -82,7 +107,7 @@ const AddUpdateEmployeeQualification = ({
             Higher Secondary Certificate:
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput />
+            <CFormInput type="text" value={addQualification.hscName} />
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -90,7 +115,7 @@ const AddUpdateEmployeeQualification = ({
             Secondary School Certificate:
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput />
+            <CFormInput type="text" value={addQualification.sscName} />
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -99,23 +124,33 @@ const AddUpdateEmployeeQualification = ({
           </CFormLabel>
           <CCol sm={8}>
             <OTextEditor
-              setFieldValue={(val) => formik.setFieldValue('message', val)}
+              setFieldValue={(val) => formik.setFieldValue('', val)}
               value={formik.values.message}
             />
           </CCol>
         </CRow>
-        <CRow>
-          <CCol className="col-md-3 offset-md-3">
-            <CButton className="btn-ovh me-1" color="success">
-              Add
-            </CButton>
-            <span>
-              <CButton color="warning " className="btn-ovh">
-                Clear
+        {isEmployeeQualificationExist ? (
+          <CRow>
+            <CCol className="col-md-3 offset-md-3">
+              <CButton className="btn-ovh" color="success">
+                Update
               </CButton>
-            </span>
-          </CCol>
-        </CRow>
+            </CCol>
+          </CRow>
+        ) : (
+          <CRow>
+            <CCol className="col-md-3 offset-md-3">
+              <CButton className="btn-ovh me-1" color="success">
+                Add
+              </CButton>
+              <span>
+                <CButton color="warning " className="btn-ovh">
+                  Clear
+                </CButton>
+              </span>
+            </CCol>
+          </CRow>
+        )}
       </CCardBody>
     </>
   )

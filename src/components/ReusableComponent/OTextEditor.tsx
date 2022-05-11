@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Editor } from 'react-draft-wysiwyg'
 import { convertToRaw, ContentState, EditorState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
@@ -11,7 +11,10 @@ interface ITextEditorProps {
   setFieldValue: (val: string) => void
 }
 
-export const OTextEditor = ({ value, setFieldValue }: ITextEditorProps) => {
+export const OTextEditor = ({
+  value,
+  setFieldValue,
+}: ITextEditorProps): JSX.Element => {
   const prepareDraft = (value: string) => {
     const draft = htmlToDraft(value)
     const contentState = ContentState.createFromBlockArray(draft.contentBlocks)

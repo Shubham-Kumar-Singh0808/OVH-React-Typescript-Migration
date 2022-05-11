@@ -38,6 +38,7 @@ const QualificationDetails = (): JSX.Element => {
       )}
       {toggle === 'addQualificationSection' && (
         <AddUpdateEmployeeQualification
+          isEmployeeQualificationExist={true}
           backButtonHandler={() => setToggle('')}
         />
       )}
