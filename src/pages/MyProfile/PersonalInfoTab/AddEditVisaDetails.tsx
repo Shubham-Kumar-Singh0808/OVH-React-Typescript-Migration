@@ -169,19 +169,19 @@ function AddEditVisaDetails({
     )
     if (doAddNewVisaDetails.fulfilled.match(addVisaMemberResultAction)) {
       backButtonHandler()
-      dispatch(dispatch(addToast(getToastMessage(actionMapping.added))))
+      dispatch(addToast(getToastMessage(actionMapping.added)))
     }
   }
   const handleUpdateVisaMember = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
     }
-    const addVisaMemberResultAction = await dispatch(
+    const updateVisaMemberResultAction = await dispatch(
       doUpdateVisaDetails(prepareObject),
     )
-    if (doUpdateVisaDetails.fulfilled.match(addVisaMemberResultAction)) {
+    if (doUpdateVisaDetails.fulfilled.match(updateVisaMemberResultAction)) {
       backButtonHandler()
-      dispatch(dispatch(addToast(getToastMessage(actionMapping.updated))))
+      dispatch(addToast(getToastMessage(actionMapping.updated)))
     }
   }
   const formLabelProps = {

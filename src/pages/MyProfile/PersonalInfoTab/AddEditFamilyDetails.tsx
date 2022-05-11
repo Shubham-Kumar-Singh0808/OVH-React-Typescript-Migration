@@ -126,10 +126,10 @@ function AddEditFamilyDetails({
         employeeId: employeeId,
       },
     }
-    const addFamilyMemberResultAction = await dispatch(
+    const updateFamilyMemberResultAction = await dispatch(
       doUpdateFamilyDetails(prepareObject),
     )
-    if (doUpdateFamilyDetails.fulfilled.match(addFamilyMemberResultAction)) {
+    if (doUpdateFamilyDetails.fulfilled.match(updateFamilyMemberResultAction)) {
       backButtonHandler()
       dispatch(addToast(getToastMessage(actionMapping.updated)))
     }
