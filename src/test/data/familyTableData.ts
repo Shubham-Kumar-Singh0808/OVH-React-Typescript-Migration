@@ -1,5 +1,5 @@
-import { FamilyDetailsModal } from '../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-export const mockFamilyTableDetails: FamilyDetailsModal[] = [
+import { FamilyDetails } from '../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+export const mockFamilyTableDetails: FamilyDetails[] = [
   {
     familyId: 21,
     personName: 'vinesh',

@@ -1,20 +1,20 @@
 import { personalInfoApi, methods } from '../../apiList'
 
 import {
-  FamilyDetailsModal,
-  VisaDetailsModal,
-  GetCountryDetailsType,
-  VisaCountryDetailsModal,
+  FamilyDetails,
+  VisaDetails,
+  GetCountryDetails,
+  VisaCountryDetails,
   EmployeeVisaDetails,
-  EditFamilyDetailsStateModal,
+  EditFamilyDetailsState,
   EmployeeFamilyDetails,
-  EditVisaDetailsStateModal,
+  EditVisaDetailsState,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 export const fetchFamilyDetailsApiCall = async (
   employeeId: number | string,
-): Promise<FamilyDetailsModal[]> => {
+): Promise<FamilyDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.getFamilyDetails,
     method: methods.get,
@@ -38,7 +38,7 @@ export const getAddNewFamilyMember = async (
 }
 export const getFamilyInformationByFamilyIdApiCall = async (
   familyId: number,
-): Promise<EditFamilyDetailsStateModal> => {
+): Promise<EditFamilyDetailsState> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.getFamilyInformation,
     method: methods.get,
@@ -78,7 +78,7 @@ export const getDeleteNewFamilyMember = async (
 }
 export const fetchVisaDetailsApiCall = async (
   employeeId: number | string,
-): Promise<VisaDetailsModal[]> => {
+): Promise<VisaDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.getVisaDetails,
     method: methods.get,
@@ -90,7 +90,7 @@ export const fetchVisaDetailsApiCall = async (
   return response.data
 }
 export const fetchCountryDetailsApiCall = async (): Promise<
-  GetCountryDetailsType | undefined
+  GetCountryDetails | undefined
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.getCountryDetails,
@@ -101,7 +101,7 @@ export const fetchCountryDetailsApiCall = async (): Promise<
 }
 export const fetchVisaCountryDetailsApiCall = async (
   countryId: number | string,
-): Promise<VisaCountryDetailsModal[]> => {
+): Promise<VisaCountryDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.getVisaTypeDetails,
     method: methods.get,
@@ -125,7 +125,7 @@ export const getAddNewVisaMemberApiCall = async (
 }
 export const getVisaInformationByVisaIdApiCall = async (
   id: number,
-): Promise<EditVisaDetailsStateModal> => {
+): Promise<EditVisaDetailsState> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.getVisaInformation,
     method: methods.get,

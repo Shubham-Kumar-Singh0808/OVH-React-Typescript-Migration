@@ -1,14 +1,14 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  FamilyDetailsModal,
-  VisaDetailsModal,
-  PersonalInfoTabStateType,
-  GetCountryDetailsType,
-  VisaCountryDetailsModal,
+  FamilyDetails,
+  VisaDetails,
+  PersonalInfoTabState,
+  GetCountryDetails,
+  VisaCountryDetails,
   EmployeeVisaDetails,
-  EditFamilyDetailsStateModal,
+  EditFamilyDetailsState,
   EmployeeFamilyDetails,
-  EditVisaDetailsStateModal,
+  EditVisaDetailsState,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -27,9 +27,9 @@ import {
   getDeleteNewFamilyMember,
   getDeleteVisaDetailsApiCall,
 } from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
-const initialPersonalInfoTabState = {} as PersonalInfoTabStateType
+const initialPersonalInfoTabState = {} as PersonalInfoTabState
 export const doFetchFamilyDetails = createAsyncThunk<
-  FamilyDetailsModal[] | undefined,
+  FamilyDetails[] | undefined,
   number | string,
   {
     dispatch: AppDispatch
@@ -50,7 +50,7 @@ export const doFetchFamilyDetails = createAsyncThunk<
   },
 )
 export const doFetchVisaDetails = createAsyncThunk<
-  VisaDetailsModal[] | undefined,
+  VisaDetails[] | undefined,
   string | number,
   {
     dispatch: AppDispatch
@@ -71,7 +71,7 @@ export const doFetchVisaDetails = createAsyncThunk<
   },
 )
 export const doFetchCountryDetails = createAsyncThunk<
-  GetCountryDetailsType | undefined,
+  GetCountryDetails | undefined,
   void,
   {
     dispatch: AppDispatch
@@ -87,7 +87,7 @@ export const doFetchCountryDetails = createAsyncThunk<
   }
 })
 export const doFetchCountryVisaDetails = createAsyncThunk<
-  VisaCountryDetailsModal[] | undefined,
+  VisaCountryDetails[] | undefined,
   string | number,
   {
     dispatch: AppDispatch
@@ -129,7 +129,7 @@ export const doAddNewVisaDetails = createAsyncThunk<
   },
 )
 export const doEditNewFamilyMember = createAsyncThunk<
-  EditFamilyDetailsStateModal | undefined,
+  EditFamilyDetailsState | undefined,
   number,
   {
     dispatch: AppDispatch
@@ -192,7 +192,7 @@ export const doAddNewFamilyMember = createAsyncThunk<
   },
 )
 export const doEditNewVisaMember = createAsyncThunk<
-  EditVisaDetailsStateModal | undefined,
+  EditVisaDetailsState | undefined,
   number,
   {
     dispatch: AppDispatch
@@ -270,19 +270,19 @@ const personalInfoTabSlice = createSlice({
     builder
       .addCase(doFetchFamilyDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.getFamilyDetails = action.payload as FamilyDetailsModal[]
+        state.getFamilyDetails = action.payload as FamilyDetails[]
       })
       .addCase(doFetchVisaDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.getVisaDetails = action.payload as VisaDetailsModal[]
+        state.getVisaDetails = action.payload as VisaDetails[]
       })
       .addCase(doFetchCountryDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.SubCountries = action.payload as GetCountryDetailsType
+        state.SubCountries = action.payload as GetCountryDetails
       })
       .addCase(doFetchCountryVisaDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.SubVisa = action.payload as VisaCountryDetailsModal[]
+        state.SubVisa = action.payload as VisaCountryDetails[]
       })
       .addCase(doAddNewVisaDetails.fulfilled, (state, action) => {
         state.isLoading = false
@@ -291,7 +291,7 @@ const personalInfoTabSlice = createSlice({
       .addCase(doEditNewFamilyMember.fulfilled, (state, action) => {
         state.isLoading = false
         state.editFamilyDetails =
-          action.payload as unknown as EditFamilyDetailsStateModal
+          action.payload as unknown as EditFamilyDetailsState
       })
       .addCase(doUpdateFamilyDetails.fulfilled, (state, action) => {
         state.isLoading = false
@@ -310,7 +310,7 @@ const personalInfoTabSlice = createSlice({
       .addCase(doEditNewVisaMember.fulfilled, (state, action) => {
         state.isLoading = false
         state.editVisaDetails =
-          action.payload as unknown as EditVisaDetailsStateModal
+          action.payload as unknown as EditVisaDetailsState
       })
       .addCase(doDeleteFamilyMember.fulfilled, (state) => {
         state.isLoading = false

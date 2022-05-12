@@ -1,5 +1,5 @@
 import { ValidationErrorType } from '../../commonTypes'
-export type FamilyDetailsModal = {
+export type FamilyDetails = {
   familyId: number
   personName: string
   relationShip: string
@@ -7,19 +7,20 @@ export type FamilyDetailsModal = {
   dateOfBirth: string
   employeeId: string | number
 }
-export type PersonalInfoTabStateType = {
-  getFamilyDetails: FamilyDetailsModal[]
-  getVisaDetails: VisaDetailsModal[]
-  SubCountries: GetCountryDetailsType
-  SubVisa: VisaCountryDetailsModal[]
+
+export type PersonalInfoTabState = {
+  getFamilyDetails: FamilyDetails[]
+  getVisaDetails: VisaDetails[]
+  SubCountries: GetCountryDetails
+  SubVisa: VisaCountryDetails[]
   addVisaDetails: EmployeeVisaDetails
-  editFamilyDetails: EditFamilyDetailsStateModal
-  editVisaDetails: EditVisaDetailsStateModal
+  editFamilyDetails: EditFamilyDetailsState
+  editVisaDetails: EditVisaDetailsState
   addFamilyState: EmployeeFamilyDetails
   isLoading: boolean
   error: ValidationErrorType
 }
-export type VisaDetailsModal = {
+export type VisaDetails = {
   id: number
   empId: number | string
   empName: string
@@ -35,10 +36,10 @@ export type EmployeeCountryDetails = {
   name: string
 }
 
-export type GetCountryDetailsType = {
+export type GetCountryDetails = {
   countries: EmployeeCountryDetails[]
 }
-export type VisaCountryDetailsModal = {
+export type VisaCountryDetails = {
   visaTypeId: number | string
   visaType: string
   countryId: number | string
@@ -63,10 +64,10 @@ export type EmployeeVisaDetails = {
   visaThumbPicture?: string | number
 }
 
-export type VisaDetailsButton = {
+export type EmployeeVisaDetailsButton = {
   isAddButtonEnabled: boolean
 }
-export type EditFamilyDetailsStateModal = {
+export type EditFamilyDetailsState = {
   familyId: number
   personName: string
   relationShip: string
@@ -74,6 +75,7 @@ export type EditFamilyDetailsStateModal = {
   dateOfBirth?: string | number
   employeeId: number | string
 }
+
 export type EmployeeFamilyDetails = {
   personName: string
   relationShip: string
@@ -94,7 +96,7 @@ export type AddEditEmployeeVisaDetails = {
   confirmButtonText: string
   backButtonHandler: () => void
 }
-export type EditVisaDetailsStateModal = {
+export type EditVisaDetailsState = {
   id: number
   empId: number
   empName: string

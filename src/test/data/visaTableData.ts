@@ -1,5 +1,5 @@
-import { VisaDetailsModal } from '../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-export const mockVisaTableDetails: VisaDetailsModal[] = [
+import { VisaDetails } from '../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+export const mockVisaTableDetails: VisaDetails[] = [
   {
     id: 20,
     empId: 98,
