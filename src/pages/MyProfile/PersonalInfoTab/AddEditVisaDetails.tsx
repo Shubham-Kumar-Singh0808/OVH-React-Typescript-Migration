@@ -101,10 +101,6 @@ function AddEditVisaDetails({
   const onChangeFileEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget as HTMLInputElement
     const file = target.files?.[0]
-    const formData = new FormData()
-    if (file) {
-      formData.append('File', file)
-    }
     setSelectedFile(file)
   }
   const onChangeDateOfIssueHandler = (date: Date) => {

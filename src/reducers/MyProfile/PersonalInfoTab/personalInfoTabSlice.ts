@@ -281,7 +281,7 @@ const personalInfoTabSlice = createSlice({
       })
       .addCase(doUpdateFamilyDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.addFamilyState =
+        state.addFamilyDetails =
           action.payload as unknown as EmployeeFamilyDetails
       })
       .addCase(doUpdateVisaDetails.fulfilled, (state, action) => {
@@ -290,7 +290,7 @@ const personalInfoTabSlice = createSlice({
       })
       .addCase(doAddNewFamilyMember.fulfilled, (state, action) => {
         state.isLoading = false
-        state.addFamilyState =
+        state.addFamilyDetails =
           action.payload as unknown as EmployeeFamilyDetails
       })
       .addCase(doEditNewVisaMember.fulfilled, (state, action) => {
