@@ -8,7 +8,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { doFetchCertifications } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { getEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 const CertificationsTable = (): JSX.Element => {
   const employeeCertificateData = useTypedSelector(
@@ -16,7 +16,7 @@ const CertificationsTable = (): JSX.Element => {
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchCertifications())
+    dispatch(getEmployeeCertifications())
   }, [dispatch])
   return (
     <>

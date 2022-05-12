@@ -8,7 +8,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { doFetchSkills } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { getEmployeeSkills } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 const SkillsTable = (): JSX.Element => {
   const employeeSkillsData = useTypedSelector(
@@ -17,7 +17,7 @@ const SkillsTable = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchSkills())
+    dispatch(getEmployeeSkills())
   }, [dispatch])
   return (
     <>

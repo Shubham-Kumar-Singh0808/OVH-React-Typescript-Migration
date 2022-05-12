@@ -56,12 +56,11 @@ export const fetchPgLookUpAndGraduationLookUpListItems =
 export const saveEmployeeQualifications = async (
   addQualification: EmployeeQualifications,
 ): Promise<EmployeeQualifications> => {
+  const { id, ...addQualificationRest } = addQualification
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApi.addEmployeeQualifications,
     method: AllowedHttpMethods.post,
-    params: {
-      empId: addQualification.empId,
-    },
+    data: { ...addQualificationRest },
   })
   const response = await axios(requestConfig)
   return response.data

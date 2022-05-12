@@ -14,8 +14,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import {
-  doFetchPgAndGraduationItems,
-  doFetchQualifications,
+  getEmployeePgAndGraduationItems,
+  getEmployeeQualifications,
   postQualificationDetails,
   updateQualificationDetails,
 } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
@@ -37,18 +37,7 @@ const AddUpdateEmployeeQualification = ({
     initialQualificationData,
   )
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
-  useEffect(() => {
-    if (
-      addQualification.graduationLookUp &&
-      addQualification.graduationLookUp.length > 0 &&
-      addQualification.hscName &&
-      addQualification.sscName
-    ) {
-      setIsButtonEnabled(true)
-    } else {
-      setIsButtonEnabled(false)
-    }
-  }, [addQualification])
+
   const actionMapping = {
     added: 'added',
     updated: 'updated',
@@ -72,10 +61,22 @@ const AddUpdateEmployeeQualification = ({
   const getEmployeeQualificationDetails = useTypedSelector(
     (state) => state.employeeQualificationsDetails.qualificationDetails,
   )
+  useEffect(() => {
+    if (
+      addQualification.graduationLookUp &&
+      addQualification.graduationLookUp.length > 0 &&
+      addQualification.hscName &&
+      addQualification.sscName
+    ) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [addQualification])
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchPgAndGraduationItems())
-    dispatch(doFetchQualifications(employeeId))
+    dispatch(getEmployeePgAndGraduationItems())
+    dispatch(getEmployeeQualifications(employeeId))
   }, [dispatch, employeeId])
 
   useEffect(() => {
@@ -122,11 +123,15 @@ const AddUpdateEmployeeQualification = ({
       )
       if (updateQualificationDetails.fulfilled.match(updateResultAction)) {
         dispatch(addToast(getToastMessage(actionMapping.updated)))
+
         backButtonHandler()
       }
     } else {
       const postResultAction = await dispatch(
-        postQualificationDetails(addQualification),
+        postQualificationDetails({
+          ...addQualification,
+          ...{ empId: employeeId as number },
+        }),
       )
       if (postQualificationDetails.fulfilled.match(postResultAction)) {
         dispatch(addToast(getToastMessage(actionMapping.added)))
@@ -135,17 +140,6 @@ const AddUpdateEmployeeQualification = ({
     }
   }
 
-  const handleClearInputFileds = () => {
-    setAddQualification({
-      id: '',
-      empId: '',
-      pgLookUp: [],
-      graduationLookUp: [],
-      hscName: '',
-      sscName: '',
-      others: '',
-    })
-  }
   return (
     <>
       <CCardHeader>
@@ -291,11 +285,7 @@ const AddUpdateEmployeeQualification = ({
                 Add
               </CButton>
               <span>
-                <CButton
-                  color="warning "
-                  className="btn-ovh"
-                  onClick={handleClearInputFileds}
-                >
+                <CButton color="warning " className="btn-ovh">
                   Clear
                 </CButton>
               </span>
