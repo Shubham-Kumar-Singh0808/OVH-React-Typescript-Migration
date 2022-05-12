@@ -17,14 +17,14 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import OToast from '../../../components/ReusableComponent/OToast'
 import { addToast } from '../../../reducers/appSlice'
-import { NewQualificationCategory } from '../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
+import { QualificationCategoryList } from '../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
 
 const AddNewQualificationCategory = (): JSX.Element => {
   const employeeQualificationCategories = useTypedSelector(
     selectQualificationCategoryList,
   )
   const dispatch = useAppDispatch()
-  const initialNewQualificationCategory = {} as NewQualificationCategory
+  const initialNewQualificationCategory = {} as QualificationCategoryList
   const [newQualificationCategory, setNewQualificationCategory] = useState(
     initialNewQualificationCategory,
   )

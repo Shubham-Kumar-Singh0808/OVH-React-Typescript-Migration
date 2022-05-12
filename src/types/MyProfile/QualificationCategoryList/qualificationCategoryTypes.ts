@@ -1,15 +1,10 @@
-export type QualificationCategoryListItem = {
+export type QualificationCategoryList = {
   id?: number
   qualificationCategory: string
   qualificationName: string
 }
 
 export type QualificationCategoryState = {
-  qualificationCategoryList: QualificationCategoryListItem[]
+  qualificationCategoryList: QualificationCategoryList[]
   isLoading: boolean
-}
-
-export type NewQualificationCategory = {
-  qualificationCategory: string
-  qualificationName: string
 }

@@ -2,10 +2,10 @@ import { AllowedHttpMethods, qualificationCategoryApi } from '../../apiList'
 
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
-import { QualificationCategoryListItem } from '../../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
+import { QualificationCategoryList } from '../../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
 
 export const getAllQualificationCategoryList = async (): Promise<
-  QualificationCategoryListItem[]
+  QualificationCategoryList[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationCategoryApi.getAllQualificationCategories,
@@ -19,7 +19,7 @@ export const getAllQualificationCategoryList = async (): Promise<
 export const postNewQualificationCategoryByName = async ({
   qualificationCategory,
   qualificationName,
-}: QualificationCategoryListItem): Promise<QualificationCategoryListItem[]> => {
+}: QualificationCategoryList): Promise<QualificationCategoryList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationCategoryApi.addNewQualificationCategory,
     method: AllowedHttpMethods.post,
@@ -35,7 +35,7 @@ export const postNewQualificationCategoryByName = async ({
 
 export const deleteQualificationCategoryById = async (
   id: number,
-): Promise<QualificationCategoryListItem[]> => {
+): Promise<QualificationCategoryList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationCategoryApi.deleteQualificationCategory,
     method: AllowedHttpMethods.delete,

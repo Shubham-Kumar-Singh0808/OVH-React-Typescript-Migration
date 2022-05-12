@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  QualificationCategoryListItem,
+  QualificationCategoryList,
   QualificationCategoryState,
 } from '../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
@@ -24,8 +24,8 @@ export const fetchAllQualificationCategories = createAsyncThunk(
   },
 )
 export const addNewQualificationCategoryByName = createAsyncThunk<
-  QualificationCategoryListItem[] | undefined,
-  QualificationCategoryListItem,
+  QualificationCategoryList[] | undefined,
+  QualificationCategoryList,
   {
     dispatch: AppDispatch
     state: RootState
@@ -34,7 +34,7 @@ export const addNewQualificationCategoryByName = createAsyncThunk<
 >(
   'qualificationCategory/addNewQualificationCategoryByName',
   async (
-    { qualificationCategory, qualificationName }: QualificationCategoryListItem,
+    { qualificationCategory, qualificationName }: QualificationCategoryList,
     thunkApi,
   ) => {
     try {
@@ -49,7 +49,7 @@ export const addNewQualificationCategoryByName = createAsyncThunk<
   },
 )
 export const removeQualificationCategoryById = createAsyncThunk<
-  QualificationCategoryListItem[] | undefined,
+  QualificationCategoryList[] | undefined,
   number,
   {
     dispatch: AppDispatch
@@ -102,7 +102,7 @@ const qualificationCategorySlice = createSlice({
         (state, action) => {
           state.isLoading = false
           state.qualificationCategoryList =
-            action.payload as QualificationCategoryListItem[]
+            action.payload as QualificationCategoryList[]
         },
       )
   },
@@ -113,7 +113,7 @@ export const selectIsQualificationCategoryListLoading = (
 ): boolean => state.qualificationCategory.isLoading
 export const selectQualificationCategoryList = (
   state: RootState,
-): QualificationCategoryListItem[] =>
+): QualificationCategoryList[] =>
   state.qualificationCategory.qualificationCategoryList
 
 export default qualificationCategorySlice.reducer
