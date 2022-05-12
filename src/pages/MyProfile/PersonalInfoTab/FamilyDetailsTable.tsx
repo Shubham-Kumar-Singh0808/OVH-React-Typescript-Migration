@@ -8,7 +8,10 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { doFetchFamilyDetails } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import {
+  doFetchFamilyDetails,
+  selectGetFamilyDetails,
+} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { FamilyInfo } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 const FamilyDetailsTable: React.FC<FamilyInfo> = ({
@@ -20,9 +23,7 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-  const familyDetails = useTypedSelector(
-    (state) => state.familyDetails.getFamilyDetails,
-  )
+  const familyDetails = useTypedSelector(selectGetFamilyDetails)
   console.log(familyDetails)
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -36,10 +37,10 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
     colSpan: 4,
     className: 'fw-semibold',
   }
-  const sortedFamilyDetails = familyDetails?.sort((sortNode1, sortNode2) =>
-    sortNode1.personName.localeCompare(sortNode2.personName),
-  )
-  console.log(sortedFamilyDetails)
+  // const sortedFamilyDetails = familyDetails?.sort((sortNode1, sortNode2) =>
+  //   sortNode1.personName.localeCompare(sortNode2.personName),
+  // )
+  // console.log(sortedFamilyDetails)
   return (
     <>
       <CTable
@@ -89,7 +90,7 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
           </>
         )}
         <CTableBody>
-          {sortedFamilyDetails?.map((family, index) => (
+          {familyDetails?.map((family, index) => (
             <CTableRow key={index}>
               {isFieldDisabled ? (
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>

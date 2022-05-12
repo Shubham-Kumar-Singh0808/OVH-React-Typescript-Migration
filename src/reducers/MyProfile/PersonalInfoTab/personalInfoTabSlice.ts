@@ -39,4 +39,9 @@ const familyDetailsTableSlice = createSlice({
     })
   },
 })
+
+export const selectGetFamilyDetails = (
+  state: RootState,
+): FamilyDetailsModal[] => state.familyDetails.getFamilyDetails
+
 export default familyDetailsTableSlice.reducer
