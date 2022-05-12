@@ -9,6 +9,7 @@ import {
   EditFamilyDetailsState,
   EmployeeFamilyDetails,
   EditVisaDetailsState,
+  AddNewEmployeeVisaDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -18,13 +19,13 @@ import {
   fetchVisaDetailsApiCall,
   fetchCountryDetailsApiCall,
   fetchVisaCountryDetailsApiCall,
-  getAddNewVisaMemberApiCall,
+  addNewVisaMemberApiCall,
   getFamilyInformationByFamilyIdApiCall,
   getUpdateNewFamilyMemberApiCall,
-  getAddNewFamilyMember,
+  getAddNewFamilyMemberApiCall,
   getVisaInformationByVisaIdApiCall,
   getUpdateNewVisaMemberApiCall,
-  getDeleteNewFamilyMember,
+  getDeleteNewFamilyMemberApiCall,
   getDeleteVisaDetailsApiCall,
 } from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
 const initialPersonalInfoTabState = {} as PersonalInfoTabState
@@ -103,23 +104,24 @@ export const doFetchCountryVisaDetails = createAsyncThunk<
 )
 export const doAddNewVisaDetails = createAsyncThunk<
   number | undefined,
-  EmployeeVisaDetails,
+  AddNewEmployeeVisaDetails,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
 >(
-  'personalInfoTab/doAddNewVisaDetails',
-  async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
+  'addEditFamilyDetails/doAddNewVisaDetails',
+  async (addNewEmployeeVisaDetails: AddNewEmployeeVisaDetails, thunkApi) => {
     try {
-      return await getAddNewVisaMemberApiCall(employeeVisaDetails)
+      return await addNewVisaMemberApiCall(addNewEmployeeVisaDetails)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
+
 export const doEditNewFamilyMember = createAsyncThunk<
   EditFamilyDetailsState | undefined,
   number,
@@ -170,7 +172,7 @@ export const doAddNewFamilyMember = createAsyncThunk<
   'personalInfoTab/doAddNewFamilyMember',
   async (employeeFamily: EmployeeFamilyDetails, thunkApi) => {
     try {
-      return await getAddNewFamilyMember(employeeFamily)
+      return await getAddNewFamilyMemberApiCall(employeeFamily)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -222,7 +224,7 @@ export const doDeleteFamilyMember = createAsyncThunk<
   }
 >('personalInfoTab/doDeleteFamilyMember', async (familyId, thunkApi) => {
   try {
-    return await getDeleteNewFamilyMember(familyId)
+    return await getDeleteNewFamilyMemberApiCall(familyId)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)

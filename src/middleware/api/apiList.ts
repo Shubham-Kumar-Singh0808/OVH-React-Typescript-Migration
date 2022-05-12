@@ -50,6 +50,7 @@ export const personalInfoApi: PersonalInfoApi = {
   updateVisaInformation: apiPrefix + '/Employee/updateVisaDetailsToEmployee',
   deleteFamilyMember: apiPrefix + '/Employee/deleteFamilymember',
   deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
+  fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
 }
 export const skillsApi: SkillApi = {
   getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',

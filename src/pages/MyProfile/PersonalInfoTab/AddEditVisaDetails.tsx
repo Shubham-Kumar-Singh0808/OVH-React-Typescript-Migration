@@ -22,8 +22,8 @@ import DatePicker from 'react-datepicker'
 import {
   AddEditEmployeeVisaDetails,
   EmployeeVisaDetails,
+  AddNewEmployeeVisaDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-
 import 'react-datepicker/dist/react-datepicker.css'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { addToast } from '../../../reducers/appSlice'
@@ -87,9 +87,6 @@ function AddEditVisaDetails({
     dateOfIssue,
     dateOfExpire,
   ])
-
-  console.log(employeeVisaDetails)
-
   useEffect(() => {
     if (isEditVisaDetails) {
       setEmployeeVisaDetails(fetchEditVisaDetails)
@@ -104,11 +101,10 @@ function AddEditVisaDetails({
   const onChangeFileEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget as HTMLInputElement
     const file = target.files?.[0]
-    const foData = new FormData()
+    const formData = new FormData()
     if (file) {
-      foData.append('File', file)
+      formData.append('File', file)
     }
-    console.log(foData)
     setSelectedFile(file)
   }
   const onChangeDateOfIssueHandler = (date: Date) => {
@@ -164,19 +160,29 @@ function AddEditVisaDetails({
     )
   }
   const handleAddVisaDetails = async () => {
-    const prepareObject = {
+    const formData = new FormData()
+    if (selectedFile) {
+      formData.append('File', selectedFile)
+    }
+    console.log(formData)
+    const employeeVisaDetailsObject = {
       ...employeeVisaDetails,
       dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),
       dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
+    }
+    const prepareObject: AddNewEmployeeVisaDetails = {
+      employeeVisaDetailsObject,
+      file: formData,
     }
     const addVisaMemberResultAction = await dispatch(
       doAddNewVisaDetails(prepareObject),
     )
     if (doAddNewVisaDetails.fulfilled.match(addVisaMemberResultAction)) {
       backButtonHandler()
-      dispatch(addToast(getToastMessage(actionMapping.added)))
+      dispatch(dispatch(addToast(getToastMessage(actionMapping.added))))
     }
   }
+
   const handleUpdateVisaMember = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
@@ -306,7 +312,7 @@ function AddEditVisaDetails({
               <DatePicker
                 className="form-control form-control-sm"
                 name="dateOfExpire"
-                maxDate={new Date()}
+                minDate={new Date()}
                 value={
                   (dateOfExpire as string) ||
                   (employeeVisaDetails?.dateOfExpire as string)
@@ -337,7 +343,6 @@ function AddEditVisaDetails({
                 className="form-control form-control-sm"
                 type="file"
                 name="file"
-                // value={selectedFile as string}
                 accept="image/*,"
                 onChange={onChangeFileEventHandler}
               />

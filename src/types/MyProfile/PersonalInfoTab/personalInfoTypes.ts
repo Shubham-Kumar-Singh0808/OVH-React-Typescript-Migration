@@ -124,3 +124,7 @@ export type EmployeeFamilyDetailsTableProps = {
 export type EmployeeVisaDetailsTableProps = {
   editVisaButtonHandler: (id: number) => void
 }
+export type AddNewEmployeeVisaDetails = {
+  employeeVisaDetailsObject: EmployeeVisaDetails
+  file: FormData
+}

@@ -9,6 +9,7 @@ import {
   EditFamilyDetailsState,
   EmployeeFamilyDetails,
   EditVisaDetailsState,
+  AddNewEmployeeVisaDetails,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
@@ -25,7 +26,7 @@ export const fetchFamilyDetailsApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
-export const getAddNewFamilyMember = async (
+export const getAddNewFamilyMemberApiCall = async (
   employeeFamily: EmployeeFamilyDetails,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -60,7 +61,7 @@ export const getUpdateNewFamilyMemberApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
-export const getDeleteNewFamilyMember = async (
+export const getDeleteNewFamilyMemberApiCall = async (
   familyId: number,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -112,17 +113,29 @@ export const fetchVisaCountryDetailsApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
-export const getAddNewVisaMemberApiCall = async (
-  employeeVisaDetails: EmployeeVisaDetails,
+export const addNewVisaMemberApiCall = async (
+  addNewEmployeeVisaDetails: AddNewEmployeeVisaDetails,
 ): Promise<number | undefined> => {
-  const requestConfig = getAuthenticatedRequestConfig({
+  const requestConfigVisaDetails = getAuthenticatedRequestConfig({
     url: personalInfoApi.addNewVisaMember,
     method: AllowedHttpMethods.post,
-    data: employeeVisaDetails,
+    data: addNewEmployeeVisaDetails.employeeVisaDetailsObject,
   })
-  const responseVisa = await axios(requestConfig)
-  return responseVisa.data
+  const responseVisa = await axios(requestConfigVisaDetails)
+  if (responseVisa && addNewEmployeeVisaDetails.file) {
+    const requestConfig = getAuthenticatedRequestConfig({
+      url: personalInfoApi.fileUploadVisaImage,
+      method: AllowedHttpMethods.post,
+      data: { ...addNewEmployeeVisaDetails.file },
+      params: {
+        visaId: responseVisa.data,
+      },
+    })
+    const response = await axios(requestConfig)
+    return response.data
+  }
 }
+
 export const getVisaInformationByVisaIdApiCall = async (
   id: number,
 ): Promise<EditVisaDetailsState> => {

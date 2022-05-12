@@ -43,4 +43,5 @@ export interface PersonalInfoApi extends ApiBase {
   updateVisaInformation: string
   deleteFamilyMember: string
   deleteVisaDetail: string
+  fileUploadVisaImage: string
 }
