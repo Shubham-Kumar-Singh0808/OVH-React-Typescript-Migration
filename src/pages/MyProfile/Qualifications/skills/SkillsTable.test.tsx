@@ -5,7 +5,7 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import stateStore from '../../../../stateStore'
-import employeeQualificationsSlice from '../../../../reducers/Qualifications/qualificationSlice'
+import employeeQualificationsSlice from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 
 const ReduxProvider = ({
   children,

@@ -5,7 +5,7 @@ import {
   doFetchQualifications,
   selectEmployeeId,
   selectEmployeeQualification,
-} from '../../../../reducers/Qualifications/qualificationSlice'
+} from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import parse from 'html-react-parser'
 
 const EmployeeQualifications = (): JSX.Element => {

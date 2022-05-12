@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import { mockCertificates } from '../../../../test/data/certificationListData'
 import stateStore from '../../../../stateStore'
-import employeeQualificationsSlice from '../../../../reducers/Qualifications/qualificationSlice'
+import employeeQualificationsSlice from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 
 const ReduxProvider = ({
   children,

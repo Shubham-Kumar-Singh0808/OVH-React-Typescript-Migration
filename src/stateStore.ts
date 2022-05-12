@@ -2,7 +2,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
-import employeeQualificationsReducer from './reducers/Qualifications/qualificationSlice'
+import employeeQualificationsReducer from './reducers/MyProfile/Qualifications/qualificationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import { configureStore } from '@reduxjs/toolkit'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'

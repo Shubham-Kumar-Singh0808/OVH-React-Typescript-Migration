@@ -5,8 +5,8 @@ export type PostGraduationAndGraduationLookUp = {
   label: string
 }
 export type EmployeeQualifications = {
-  id: number
-  empId: number
+  id: number | string
+  empId: number | string
   pgLookUp: PostGraduationAndGraduationLookUp[]
   graduationLookUp: PostGraduationAndGraduationLookUp[]
   hscName: string

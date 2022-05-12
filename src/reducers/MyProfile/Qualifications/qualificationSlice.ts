@@ -1,11 +1,11 @@
-import { AppDispatch, RootState } from '../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeCertifications,
   EmployeeQualificationDetails,
   EmployeeQualifications,
   EmployeeSkills,
   PostGraduationAndGraduationList,
-} from '../../types/MyProfile/Qualifications/qualificationTypes'
+} from '../../../types/MyProfile/Qualifications/qualificationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   fetchEmployeeCertifications,
@@ -14,10 +14,10 @@ import {
   fetchPgLookUpAndGraduationLookUpListItems,
   saveEmployeeQualifications,
   updateEmployeeQualifications,
-} from '../../middleware/api/MyProfile/Qualifications/qualificationsApi'
+} from '../../../middleware/api/MyProfile/Qualifications/qualificationsApi'
 
 import { AxiosError } from 'axios'
-import { ValidationError } from '../../types/commonTypes'
+import { ValidationError } from '../../../types/commonTypes'
 
 const initialQualificationState = {} as EmployeeQualificationDetails
 
