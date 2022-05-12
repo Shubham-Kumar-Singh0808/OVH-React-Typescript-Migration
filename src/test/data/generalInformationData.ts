@@ -1,6 +1,6 @@
-import { EmployeeGeneralInformationDataModel } from '../../types/MyProfile/GeneralTab/generalInformationTypes'
+import { EmployeeGeneralInformation } from '../../types/MyProfile/GeneralTab/generalInformationTypes'
 
-export const mockGeneralInformationData: EmployeeGeneralInformationDataModel = {
+export const mockGeneralInformationData: EmployeeGeneralInformation = {
   gender: 'Female',
   curentLocation: 'Baghlingampally ',
   baseLocation: 'Khammam',

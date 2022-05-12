@@ -1,6 +1,6 @@
 import { ValidationError } from '../../commonTypes'
 
-export type EmployeeGeneralInformationDataModel = {
+export type EmployeeGeneralInformation = {
   baseLocation: string
   curentLocation: string
   address: string
@@ -12,9 +12,9 @@ export type EmployeeGeneralInformationDataModel = {
   officialBirthday: string
 }
 
-export interface EmployeeGeneralInformationStateType
-  extends EmployeeGeneralInformationDataModel {
-  generalInformation: EmployeeGeneralInformationDataModel
+export interface EmployeeGeneralInformationState
+  extends EmployeeGeneralInformation {
+  generalInformation: EmployeeGeneralInformation
   error: ValidationError
   isLoading: boolean
 }

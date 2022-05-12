@@ -2,13 +2,10 @@ import {
   AuthenticationApi,
   CategoryApi,
   SkillApi,
-<<<<<<< HEAD
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
   EmployeeSkillList,
-=======
   UserRolesConfigurationApi,
->>>>>>> develop
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''

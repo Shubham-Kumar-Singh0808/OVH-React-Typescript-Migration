@@ -2,15 +2,13 @@ import {
   AllowedHttpMethods,
   employeeGeneralInformationApi,
 } from '../../apiList'
-import { EmployeeGeneralInformationDataModel } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
+import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 export const postEmployeeGeneralInformation = async (
   employeeId: number,
-): Promise<
-  { generalInformation: EmployeeGeneralInformationDataModel } | undefined
-> => {
+): Promise<{ generalInformation: EmployeeGeneralInformation } | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeGeneralInformationApi.getLoggedInEmployeeData,
     method: AllowedHttpMethods.get,

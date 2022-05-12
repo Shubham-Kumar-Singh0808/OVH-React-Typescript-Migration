@@ -21,7 +21,6 @@ export interface SkillApi extends ApiBase {
   addNewSkillForCategory: string
   deleteSkillForCategory: string
 }
-<<<<<<< HEAD
 
 export interface EmployeeGeneralInformationApi extends ApiBase {
   getLoggedInEmployeeData: string
@@ -32,7 +31,7 @@ export interface PersonalInfoApi extends ApiBase {
 }
 export interface EmployeeSkillList extends ApiBase {
   getEmployeeSkillsList: string
-=======
+}
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string
   isUserRoleExists: string
@@ -41,5 +40,4 @@ export interface UserRolesConfigurationApi extends ApiBase {
   getSubFeatures: string
   featuresUnderRole: string
   assignPermission: string
->>>>>>> develop
 }

@@ -1,6 +1,6 @@
 import {
-  EmployeeGeneralInformationDataModel,
-  EmployeeGeneralInformationStateType,
+  EmployeeGeneralInformation,
+  EmployeeGeneralInformationState,
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -8,10 +8,10 @@ import { postEmployeeGeneralInformation } from '../../../middleware/api/MyProfil
 import { ValidationError } from '../../../types/commonTypes'
 import { RootState } from '../../../stateStore'
 
-const initialGeneralInformationState = {} as EmployeeGeneralInformationStateType
+const initialGeneralInformationState = {} as EmployeeGeneralInformationState
 
 export const doFetchEmployeeGeneralInformation = createAsyncThunk<
-  { generalInformation: EmployeeGeneralInformationDataModel } | undefined,
+  { generalInformation: EmployeeGeneralInformation } | undefined,
   number,
   { rejectValue: ValidationError }
 >(
@@ -56,6 +56,6 @@ export const { setEmployeeGeneralInformation, clearError } =
 
 export const selectLoggedInData = (
   state: RootState,
-): EmployeeGeneralInformationStateType => state.getLoggedInEmployeeData
+): EmployeeGeneralInformationState => state.getLoggedInEmployeeData
 
 export default employeeGeneralInformationSlice.reducer
