@@ -5,6 +5,7 @@ import authenticationReducer from './reducers/Login/authenticationSlice'
 import employeeQualificationsReducer from './reducers/MyProfile/Qualifications/qualificationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import { configureStore } from '@reduxjs/toolkit'
+import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
@@ -16,6 +17,7 @@ export const allReducers = {
   authentication: authenticationReducer,
   getLoggedInEmployeeData: employeeGeneralInformationReducer,
   familyDetails: personalInfoReducer,
+  sidebarMenu: sidebarMenuSliceReducer,
   userRolesAndPermissions: userRolesAndPermissionsReducer,
   employeeQualifications: employeeQualificationsReducer,
   employeeCertifications: employeeQualificationsReducer,

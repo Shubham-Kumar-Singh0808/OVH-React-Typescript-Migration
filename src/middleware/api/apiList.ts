@@ -1,6 +1,7 @@
 import {
   AuthenticationApi,
   CategoryApi,
+  SideMenuApi,
   SkillApi,
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
@@ -22,7 +23,9 @@ export const authenticationApi: AuthenticationApi = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
-
+export const sideMenuApi: SideMenuApi = {
+  getMenuData: apiPrefix + '/roleFeature/menuItems',
+}
 export const userRolesConfigurationApi: UserRolesConfigurationApi = {
   getUserRoles: apiPrefix + '/roleFeature/roles',
   isUserRoleExists: apiPrefix + '/roleFeature/isRoleExits',
