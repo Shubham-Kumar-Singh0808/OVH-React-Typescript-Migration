@@ -36,13 +36,13 @@ const AddUpdateEmployeeQualification = ({
 
   const getPgAndGraduationLookUpItems = useTypedSelector(
     (state) =>
-      state.postGraduationAndGraduationList.pgLookUpAndGraduationLookUpDetails,
+      state.employeeQualificationsDetails.pgLookUpAndGraduationLookUpDetails,
   )
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
   const getEmployeeQualificationDetails = useTypedSelector(
-    (state) => state.employeeQualifications.qualificationDetails,
+    (state) => state.employeeQualificationsDetails.qualificationDetails,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -124,7 +124,16 @@ const AddUpdateEmployeeQualification = ({
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">
-            Graduation:<span className="text-danger">*</span>
+            Graduation:
+            <span
+              className={
+                addQualification.graduationLookUp?.length === 0
+                  ? 'text-danger'
+                  : 'text-white'
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <Multiselect
@@ -142,6 +151,15 @@ const AddUpdateEmployeeQualification = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Higher Secondary Certificate:
+            <span
+              className={
+                addQualification.hscName?.length === 0
+                  ? 'text-danger'
+                  : 'text-white'
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -156,6 +174,15 @@ const AddUpdateEmployeeQualification = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Secondary School Certificate:
+            <span
+              className={
+                addQualification.sscName?.length === 0
+                  ? 'text-danger'
+                  : 'text-white'
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput

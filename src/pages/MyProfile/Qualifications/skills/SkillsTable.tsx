@@ -12,7 +12,7 @@ import { doFetchSkills } from '../../../../reducers/Qualifications/qualification
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 const SkillsTable = (): JSX.Element => {
   const employeeSkillsData = useTypedSelector(
-    (state) => state.employeeSkills.skillDetails,
+    (state) => state.employeeQualificationsDetails.skillDetails,
   )
 
   const dispatch = useAppDispatch()

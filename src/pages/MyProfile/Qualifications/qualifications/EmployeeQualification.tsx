@@ -6,6 +6,7 @@ import {
   selectEmployeeId,
   selectEmployeeQualification,
 } from '../../../../reducers/Qualifications/qualificationSlice'
+import parse from 'html-react-parser'
 
 const EmployeeQualifications = (): JSX.Element => {
   const employeeQualification = useTypedSelector(selectEmployeeQualification)
@@ -62,7 +63,9 @@ const EmployeeQualifications = (): JSX.Element => {
             Others :
           </CCol>
           <CCol sm={6} className="ps-0 text-dark" data-testid="others">
-            {employeeQualification?.others || 'N/A'}
+            {(employeeQualification?.others &&
+              parse(employeeQualification?.others)) ||
+              'N/A'}
           </CCol>
         </CRow>
       </CForm>

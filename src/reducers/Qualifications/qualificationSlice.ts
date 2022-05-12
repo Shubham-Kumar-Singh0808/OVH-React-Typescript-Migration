@@ -1,7 +1,7 @@
 import { AppDispatch, RootState } from '../../stateStore'
 import {
   EmployeeCertifications,
-  EmployeeQualificationModel,
+  EmployeeQualificationDetails,
   EmployeeQualifications,
   EmployeeSkills,
   PostGraduationAndGraduationList,
@@ -19,7 +19,7 @@ import {
   updateEmployeeQualifications,
 } from '../../middleware/api/MyProfile/Qualifications/qualificationsApi'
 
-const initialQualificationState = {} as EmployeeQualificationModel
+const initialQualificationState = {} as EmployeeQualificationDetails
 
 export const doFetchQualifications = createAsyncThunk<
   EmployeeQualifications | undefined,
@@ -179,7 +179,8 @@ const employeeQualificationsSlice = createSlice({
 })
 export const selectEmployeeQualification = (
   state: RootState,
-): EmployeeQualifications => state.employeeQualifications.qualificationDetails
+): EmployeeQualifications =>
+  state.employeeQualificationsDetails.qualificationDetails
 
 export const selectEmployeeId = (state: RootState): string | number =>
   state.authentication.authenticatedUser.employeeId

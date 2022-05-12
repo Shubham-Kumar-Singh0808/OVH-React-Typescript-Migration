@@ -11,10 +11,7 @@ import thunkMiddleware from 'redux-thunk'
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
-  employeeQualifications: employeeQualificationsReducer,
-  employeeCertifications: employeeQualificationsReducer,
-  employeeSkills: employeeQualificationsReducer,
-  postGraduationAndGraduationList: employeeQualificationsReducer,
+  employeeQualificationsDetails: employeeQualificationsReducer,
   category: categoryReducer,
   skill: skillReducer,
   // add your slice reducers here

@@ -12,7 +12,7 @@ import { doFetchCertifications } from '../../../../reducers/Qualifications/quali
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 const CertificationsTable = (): JSX.Element => {
   const employeeCertificateData = useTypedSelector(
-    (state) => state.employeeCertifications.certificationDetails,
+    (state) => state.employeeQualificationsDetails.certificationDetails,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
