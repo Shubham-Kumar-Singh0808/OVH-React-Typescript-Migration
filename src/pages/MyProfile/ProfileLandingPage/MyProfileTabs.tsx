@@ -7,6 +7,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 
+import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import OCard from '../../../components/ReusableComponent/OCard'
 import TabsLabels from '../../../middleware/TabsLabels'
 
@@ -32,6 +33,7 @@ const MyProfileTabs = (): JSX.Element => {
       4: <h1>Qualification Details</h1>,
       5: <h1>Review</h1>,
       6: <h1>Projects</h1>,
+      9: <EmployeeProfileHistory />,
     }
     return showTabContent[tabKey] || 'Tab Content not available'
   }
