@@ -1,13 +1,9 @@
 import {
   AuthenticationApi,
   CategoryApi,
-<<<<<<< HEAD
   QualificationsApi,
   SkillApi,
-=======
-  SkillApi,
   UserRolesConfigurationApi,
->>>>>>> develop
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''

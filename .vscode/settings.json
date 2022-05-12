@@ -1,9 +1,7 @@
 {
     "cSpell.words": [
-<<<<<<< HEAD
         "formik",
-        "testid"
-=======
+        "testid",
         "coreui",
         "createaccess",
         "deleteaccess",
@@ -12,6 +10,5 @@
         "reduxjs",
         "updateaccess",
         "viewaccess"
->>>>>>> develop
     ]
 }

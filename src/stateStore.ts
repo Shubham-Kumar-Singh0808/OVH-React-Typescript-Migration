@@ -12,11 +12,8 @@ import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfigu
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
-<<<<<<< HEAD
   employeeQualificationsDetails: employeeQualificationsReducer,
-=======
   userRolesAndPermissions: userRolesAndPermissionsReducer,
->>>>>>> develop
   category: categoryReducer,
   skill: skillReducer,
   // add your slice reducers here
