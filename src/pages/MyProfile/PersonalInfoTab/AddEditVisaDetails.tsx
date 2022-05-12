@@ -164,7 +164,7 @@ function AddEditVisaDetails({
     if (selectedFile) {
       formData.append('File', selectedFile)
     }
-    console.log(formData)
+    console.log(selectedFile)
     const employeeVisaDetailsObject = {
       ...employeeVisaDetails,
       dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),

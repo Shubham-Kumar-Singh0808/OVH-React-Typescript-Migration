@@ -127,6 +127,9 @@ export const addNewVisaMemberApiCall = async (
       url: personalInfoApi.fileUploadVisaImage,
       method: AllowedHttpMethods.post,
       data: { ...addNewEmployeeVisaDetails.file },
+      additionalHeaders: {
+        'Content-Type': 'multipart/form-data',
+      },
       params: {
         visaId: responseVisa.data,
       },
