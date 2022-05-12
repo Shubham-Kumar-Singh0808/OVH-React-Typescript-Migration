@@ -23,7 +23,6 @@ import {
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { addToast } from '../../../reducers/appSlice'
-
 function AddEditFamilyDetails({
   isEditFamilyDetails = false,
   headerTitle,
@@ -50,7 +49,7 @@ function AddEditFamilyDetails({
     }
   }, [isEditFamilyDetails, fetchEditFamilyDetails])
   console.log(fetchEditFamilyDetails)
-  const onChangeHandler = (
+  const onChangePersonNameHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>,
@@ -174,7 +173,7 @@ function AddEditFamilyDetails({
                 size="sm"
                 placeholder="Name"
                 value={employeeFamily?.personName}
-                onChange={onChangeHandler}
+                onChange={onChangePersonNameHandler}
               />
             </CCol>
           </CRow>
@@ -196,7 +195,7 @@ function AddEditFamilyDetails({
                 id="Relationship"
                 size="sm"
                 value={employeeFamily?.relationShip}
-                onChange={onChangeHandler}
+                onChange={onChangePersonNameHandler}
               >
                 <option value={''}>Relationship</option>
                 <option value="Brother">Brother</option>
@@ -224,7 +223,7 @@ function AddEditFamilyDetails({
                 name="contactNumber"
                 placeholder="Contact Number"
                 value={employeeFamily?.contactNumber}
-                onChange={onChangeHandler}
+                onChange={onChangePersonNameHandler}
                 maxLength={10}
               />
             </CCol>

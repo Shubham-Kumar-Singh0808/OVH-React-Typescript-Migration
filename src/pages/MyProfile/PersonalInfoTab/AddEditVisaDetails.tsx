@@ -43,9 +43,6 @@ function AddEditVisaDetails({
   const [selectedFile, setSelectedFile] = useState<File | string>()
   const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState<Date | null>(null)
-  const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
-  )
   const fetchCountryDetails = useTypedSelector(
     (state) => state.familyDetails.SubCountries,
   )
@@ -98,7 +95,7 @@ function AddEditVisaDetails({
       setEmployeeVisaDetails(fetchEditVisaDetails)
     }
   }, [isEditVisaDetails, fetchEditVisaDetails])
-  const onChangeNameHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
@@ -137,6 +134,11 @@ function AddEditVisaDetails({
     }
     setError(date)
   }
+  useEffect(() => {
+    if (selectedFile) {
+      setImageUrl(URL.createObjectURL(selectedFile as File))
+    }
+  }, [selectedFile])
   const handleClearDetails = () => {
     setEmployeeVisaDetails({
       id: '',
@@ -226,7 +228,7 @@ function AddEditVisaDetails({
                 size="sm"
                 name="countryId"
                 value={employeeVisaDetails?.countryId}
-                onChange={onChangeNameHandler}
+                onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Country</option>
                 {fetchCountryDetails?.countries.map((countriesItem, index) => (
@@ -254,7 +256,7 @@ function AddEditVisaDetails({
                 name="visaTypeId"
                 value={employeeVisaDetails?.visaTypeId}
                 size="sm"
-                onChange={onChangeNameHandler}
+                onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Visa</option>
                 {fetchVisaCountryDetails?.map((visaTypeItem, index) => (

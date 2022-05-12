@@ -30,13 +30,13 @@ export type VisaDetailsModal = {
   dateOfIssue: string
   dateOfExpire: string
 }
-export type CountryDetailsType = {
+export type EmployeeCountryDetails = {
   id: number
   name: string
 }
 
 export type GetCountryDetailsType = {
-  countries: CountryDetailsType[]
+  countries: EmployeeCountryDetails[]
 }
 export type VisaCountryDetailsModal = {
   visaTypeId: number | string
