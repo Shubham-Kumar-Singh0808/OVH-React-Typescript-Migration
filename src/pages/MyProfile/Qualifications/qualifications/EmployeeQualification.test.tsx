@@ -6,8 +6,6 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import stateStore from '../../../../stateStore'
-import axiosMock from 'axios'
-import { qualificationsApi } from '../../../../middleware/api/apiList'
 
 const ReduxProvider = ({
   children,
