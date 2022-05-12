@@ -1,6 +1,6 @@
-import { ValidationErrorType } from '../commonTypes'
+import { ValidationError } from '../commonTypes'
 
-export type AuthenticatedUserType = {
+export type AuthenticatedUser = {
   employeeName: string
   employeeId: string
   userName: string
@@ -16,8 +16,8 @@ export type LoginCredentials = {
   tenantKey: string
 }
 
-export type AuthenticationStateType = {
-  authenticatedUser: AuthenticatedUserType
-  error: ValidationErrorType
+export type AuthenticationState = {
+  authenticatedUser: AuthenticatedUser
+  error: ValidationError
   isLoading: boolean
 }

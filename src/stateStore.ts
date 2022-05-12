@@ -4,13 +4,18 @@ import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { configureStore } from '@reduxjs/toolkit'
+import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
+import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
+  userRolesAndPermissions: userRolesAndPermissionsReducer,
   category: categoryReducer,
   familyDetails: personalInfoReducer,
+  skill: skillReducer,
   // add your slice reducers here
 }
 

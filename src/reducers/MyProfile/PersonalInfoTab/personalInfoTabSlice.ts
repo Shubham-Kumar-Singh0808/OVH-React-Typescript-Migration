@@ -12,7 +12,7 @@ import {
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { ValidationErrorType } from '../../../types/commonTypes'
+import { ValidationError } from '../../../types/commonTypes'
 import {
   fetchFamilyDetailsApiCall,
   fetchVisaDetailsApiCall,
@@ -34,7 +34,7 @@ export const doFetchFamilyDetails = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'personalInfoTab/doFetchFamilyDetails',
@@ -43,9 +43,7 @@ export const doFetchFamilyDetails = createAsyncThunk<
       return await fetchFamilyDetailsApiCall(employeeId)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -55,7 +53,7 @@ export const doFetchVisaDetails = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'personalInfoTab/doFetchVisaDetails',
@@ -64,9 +62,7 @@ export const doFetchVisaDetails = createAsyncThunk<
       return await fetchVisaDetailsApiCall(employeeId)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -76,14 +72,14 @@ export const doFetchCountryDetails = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >('personalInfoTab/doFetchCountryDetails', async (_, thunkApi) => {
   try {
     return await fetchCountryDetailsApiCall()
   } catch (error) {
     const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
 export const doFetchCountryVisaDetails = createAsyncThunk<
@@ -92,7 +88,7 @@ export const doFetchCountryVisaDetails = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'personalInfoTab/doFetchCountryVisaDetails',
@@ -101,9 +97,7 @@ export const doFetchCountryVisaDetails = createAsyncThunk<
       return await fetchVisaCountryDetailsApiCall(countryId)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -113,7 +107,7 @@ export const doAddNewVisaDetails = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'personalInfoTab/doAddNewVisaDetails',
@@ -122,9 +116,7 @@ export const doAddNewVisaDetails = createAsyncThunk<
       return await getAddNewVisaMemberApiCall(employeeVisaDetails)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -134,7 +126,7 @@ export const doEditNewFamilyMember = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'personalInfoTab/doEditNewFamilyMember',
@@ -143,9 +135,7 @@ export const doEditNewFamilyMember = createAsyncThunk<
       return await getFamilyInformationByFamilyIdApiCall(familyId)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -155,7 +145,7 @@ export const doUpdateFamilyDetails = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'personalInfoTab/doUpdateFamilyDetails',
@@ -164,9 +154,7 @@ export const doUpdateFamilyDetails = createAsyncThunk<
       return await getUpdateNewFamilyMemberApiCall(employeeFamily)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -176,7 +164,7 @@ export const doAddNewFamilyMember = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'personalInfoTab/doAddNewFamilyMember',
@@ -185,9 +173,7 @@ export const doAddNewFamilyMember = createAsyncThunk<
       return await getAddNewFamilyMember(employeeFamily)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -197,14 +183,14 @@ export const doEditNewVisaMember = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >('personalInfoTab/doEditNewVisaMember', async (id: number, thunkApi) => {
   try {
     return await getVisaInformationByVisaIdApiCall(id)
   } catch (error) {
     const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
 export const doUpdateVisaDetails = createAsyncThunk<
@@ -213,7 +199,7 @@ export const doUpdateVisaDetails = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >(
   'personalInfoTab/doUpdateVisaDetails',
@@ -222,9 +208,7 @@ export const doUpdateVisaDetails = createAsyncThunk<
       return await getUpdateNewVisaMemberApiCall(employeeVisaDetails)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(
-        err.response?.status as ValidationErrorType,
-      )
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -234,14 +218,14 @@ export const doDeleteFamilyMember = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >('personalInfoTab/doDeleteFamilyMember', async (familyId, thunkApi) => {
   try {
     return await getDeleteNewFamilyMember(familyId)
   } catch (error) {
     const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
 export const doDeleteVisaDetails = createAsyncThunk<
@@ -250,14 +234,14 @@ export const doDeleteVisaDetails = createAsyncThunk<
   {
     dispatch: AppDispatch
     state: RootState
-    rejectValue: ValidationErrorType
+    rejectValue: ValidationError
   }
 >('personalInfoTab/doDeleteVisaDetails', async (visaId, thunkApi) => {
   try {
     return await getDeleteVisaDetailsApiCall(visaId)
   } catch (error) {
     const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationErrorType)
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
 
@@ -338,14 +322,14 @@ const personalInfoTabSlice = createSlice({
         isAnyOf(doFetchFamilyDetails.rejected, doFetchVisaDetails.rejected),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload as ValidationErrorType
+          state.error = action.payload as ValidationError
         },
       )
       .addMatcher(
         isAnyOf(doFetchCountryDetails.rejected, doFetchCountryDetails.rejected),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload as ValidationErrorType
+          state.error = action.payload as ValidationError
         },
       )
   },

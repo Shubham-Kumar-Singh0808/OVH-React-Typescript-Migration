@@ -1,4 +1,4 @@
-import { ValidationErrorType } from '../../commonTypes'
+import { ValidationError } from '../../commonTypes'
 export type FamilyDetails = {
   familyId: number
   personName: string
@@ -18,7 +18,7 @@ export type PersonalInfoTabState = {
   editVisaDetails: EditVisaDetailsState
   addFamilyState: EmployeeFamilyDetails
   isLoading: boolean
-  error: ValidationErrorType
+  error: ValidationError
 }
 export type VisaDetails = {
   id: number

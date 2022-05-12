@@ -34,10 +34,7 @@ const CategoryListTable = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination({
-    totalItemCount: categories.length,
-    customPageSize: 20,
-  })
+  } = usePagination(categories.length, 20)
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteCategoryName, setToDeleteCategoryName] = useState('')

@@ -7,6 +7,7 @@ export type ModalPropsType = {
   modalHeaderClass?: string
   modalFooterClass?: string
   modalBodyClass?: string
+  closeButtonClass?: string
   isConfirmButtonDisabled?: boolean
   isCancelButtonDisabled?: boolean
   confirmButtonText?: string

@@ -40,7 +40,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'User Roles Configuration',
-        to: '/roleslist',
+        to: '/rolesList',
       },
     ],
   },

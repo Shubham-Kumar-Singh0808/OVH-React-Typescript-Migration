@@ -1,31 +1,43 @@
-import { ApiMethodsType, ApiObjectType } from '../../types/commonTypes'
+import {
+  AuthenticationApi,
+  CategoryApi,
+  SkillApi,
+  PersonalInfoApi,
+  UserRolesConfigurationApi,
+} from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
 const apiPrefix = baseUrl + '/hrm-ws'
 
-export const methodGet = 'get'
-export const methodPost = 'post'
-export const methodDelete = 'delete'
-export const methodPut = 'put'
-
-export const methods: ApiMethodsType = {
-  get: 'get',
-  post: 'post',
-  delete: 'delete',
-  put: 'put',
+export enum AllowedHttpMethods {
+  get = 'get',
+  post = 'post',
+  update = 'update',
+  delete = 'delete',
+  put = 'put',
 }
 
-export const authenticationApi: ApiObjectType = {
+export const authenticationApi: AuthenticationApi = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
 
-export const categoriesApi: ApiObjectType = {
+export const userRolesConfigurationApi: UserRolesConfigurationApi = {
+  getUserRoles: apiPrefix + '/roleFeature/roles',
+  isUserRoleExists: apiPrefix + '/roleFeature/isRoleExits',
+  addNewUserRole: apiPrefix + '/roleFeature/role',
+  deleteUserRole: apiPrefix + '/roleFeature/deleterole',
+  getSubFeatures: apiPrefix + '/roleFeature/SubFeatures',
+  featuresUnderRole: apiPrefix + '/roleFeature/features_UnderRole',
+  assignPermission: apiPrefix + '/roleFeature/assignPermission',
+}
+
+export const categoriesApi: CategoryApi = {
   getAllCategories: apiPrefix + '/jobapplicant/getAllCategories',
   addCategory: apiPrefix + '/jobapplicant/addCategory',
   deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
 }
-export const personalInfoApi: ApiObjectType = {
+export const personalInfoApi: PersonalInfoApi = {
   getFamilyDetails: apiPrefix + '/Employee/familyInformation',
   getVisaDetails: apiPrefix + '/Employee/getEmployeeVisaDetailsList',
   getCountryDetails: apiPrefix + '/Employee/getCountryLookUps',
@@ -38,5 +50,10 @@ export const personalInfoApi: ApiObjectType = {
   updateVisaInformation: apiPrefix + '/Employee/updateVisaDetailsToEmployee',
   deleteFamilyMember: apiPrefix + '/Employee/deleteFamilymember',
   deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
-  fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
+}
+export const skillsApi: SkillApi = {
+  getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',
+  addNewSkillForCategory:
+    apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
+  deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
 }
