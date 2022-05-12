@@ -10,6 +10,10 @@ export type route = {
 
 // examples
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
+const UserRolesAndPermissions = React.lazy(
+  () =>
+    import('./pages/Settings/UserRolesConfiguration/UserRolesAndPermissions'),
+)
 const MyProfile = React.lazy(
   () => import('./pages/MyProfile/ProfileLandingPage/MyProfile'),
 )
@@ -20,6 +24,11 @@ const MyProfile = React.lazy(
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  {
+    path: '/roleslist',
+    name: 'User Roles And Permission',
+    component: UserRolesAndPermissions,
+  },
   { path: '/profile', name: 'My Profile', component: MyProfile },
 ]
 

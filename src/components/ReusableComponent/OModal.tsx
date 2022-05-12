@@ -1,5 +1,6 @@
 import {
   CButton,
+  CCloseButton,
   CModal,
   CModalBody,
   CModalFooter,
@@ -18,6 +19,7 @@ const OModal = ({
   modalHeaderClass,
   modalFooterClass,
   modalBodyClass,
+  closeButtonClass,
   isConfirmButtonDisabled = false,
   isCancelButtonDisabled = false,
   confirmButtonText = 'Confirm',
@@ -36,7 +38,12 @@ const OModal = ({
         <CModalHeader className={modalHeaderClass}>
           {modalTitle && <strong>{modalTitle}</strong>}
         </CModalHeader>
-
+        <CCloseButton
+          className={`cursor-pointer ${closeButtonClass}`}
+          onClick={() => {
+            setVisible(false)
+          }}
+        />
         <CModalBody className={modalBodyClass}>{children}</CModalBody>
         <CModalFooter className={modalFooterClass}>
           <CButton

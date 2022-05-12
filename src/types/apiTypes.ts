@@ -21,3 +21,12 @@ export interface SkillApi extends ApiBase {
   addNewSkillForCategory: string
   deleteSkillForCategory: string
 }
+export interface UserRolesConfigurationApi extends ApiBase {
+  getUserRoles: string
+  isUserRoleExists: string
+  addNewUserRole: string
+  deleteUserRole: string
+  getSubFeatures: string
+  featuresUnderRole: string
+  assignPermission: string
+}
