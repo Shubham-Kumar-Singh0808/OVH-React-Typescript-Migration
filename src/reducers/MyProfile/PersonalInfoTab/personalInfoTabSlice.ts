@@ -1,5 +1,6 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
+  EmployeeFamilyDetails,
   FamilyDetailsModal,
   PersonalInfoTabStateType,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
@@ -7,7 +8,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import { fetchFamilyDetailsApiCall } from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
-const initialPersonalInfoTabState = {} as PersonalInfoTabStateType
+const initialPersonalInfoTabState: PersonalInfoTabStateType = {
+  getFamilyDetails: [],
+  addFamilyState: {} as EmployeeFamilyDetails,
+  error: 0,
+  isLoading: false,
+}
 export const doFetchFamilyDetails = createAsyncThunk<
   FamilyDetailsModal[] | undefined,
   number | string,

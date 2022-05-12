@@ -8,7 +8,6 @@ import {
 import React, { useEffect, useState } from 'react'
 import TabsLabels from '../../../middleware/TabsLabels'
 import GeneralTab from '../GeneralTab/GeneralTab'
-
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }

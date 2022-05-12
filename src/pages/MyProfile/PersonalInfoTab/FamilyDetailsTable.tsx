@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import {
   CButton,
   CTable,
@@ -37,10 +37,13 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
     colSpan: 4,
     className: 'fw-semibold',
   }
-  // const sortedFamilyDetails = familyDetails?.sort((sortNode1, sortNode2) =>
-  //   sortNode1.personName.localeCompare(sortNode2.personName),
-  // )
-  // console.log(sortedFamilyDetails)
+  const sortedFamilyDetails = useMemo(() => {
+    return familyDetails
+      .slice()
+      .sort((sortNode1, sortNode2) =>
+        sortNode1.personName.localeCompare(sortNode2.personName),
+      )
+  }, [familyDetails])
   return (
     <>
       <CTable
@@ -90,7 +93,7 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
           </>
         )}
         <CTableBody>
-          {familyDetails?.map((family, index) => (
+          {sortedFamilyDetails.map((family, index) => (
             <CTableRow key={index}>
               {isFieldDisabled ? (
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>
