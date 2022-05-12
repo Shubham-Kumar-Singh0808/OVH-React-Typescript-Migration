@@ -17,7 +17,6 @@ import {
   doAddNewFamilyMember,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import DatePicker from 'react-datepicker'
-// import 'react-datepicker/dist/react-datepicker.css'
 import {
   EmployeeFamilyDetails,
   AddEditEmployeeFamilyDetails,

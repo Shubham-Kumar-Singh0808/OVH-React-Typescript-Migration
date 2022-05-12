@@ -4,11 +4,8 @@ import FamilyDetailsTable from './FamilyDetailsTable'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import { mockFamilyTableDetails } from '../../../test/data/familyTableData'
-
 import stateStore from '../../../stateStore'
 import personalInfoTabSlice from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
-
 const ReduxProvider = ({
   children,
   reduxStore,

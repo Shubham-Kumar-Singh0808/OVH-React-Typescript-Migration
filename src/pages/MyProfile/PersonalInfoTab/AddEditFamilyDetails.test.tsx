@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import AddEditFamilyDetails from './AddEditFamilyDetails'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
