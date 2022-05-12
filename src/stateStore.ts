@@ -2,12 +2,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
+import employeeQualificationsReducer from './reducers/MyProfile/Qualifications/qualificationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import { configureStore } from '@reduxjs/toolkit'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
-import employeeSkillsReducer from './reducers/MyProfile/QualificationTab/EmployeeSkill/skillTableSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
@@ -16,8 +16,10 @@ export const allReducers = {
   authentication: authenticationReducer,
   getLoggedInEmployeeData: employeeGeneralInformationReducer,
   familyDetails: personalInfoReducer,
-  employeeSkills: employeeSkillsReducer,
   userRolesAndPermissions: userRolesAndPermissionsReducer,
+  employeeQualifications: employeeQualificationsReducer,
+  employeeCertifications: employeeQualificationsReducer,
+  employeeSkills: employeeQualificationsReducer,
   category: categoryReducer,
   skill: skillReducer,
   // add your slice reducers here

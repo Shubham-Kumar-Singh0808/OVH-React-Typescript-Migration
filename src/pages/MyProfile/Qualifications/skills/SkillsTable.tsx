@@ -8,9 +8,9 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { doFetchEmployeeSkills } from '../../../../reducers/MyProfile/QualificationTab/EmployeeSkill/skillTableSlice'
+import { doFetchSkills } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
-import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationTab/EmployeeSkill/employeeSkillTypes'
+import { EmployeeSkillInfo } from '../../../../types/MyProfile/Qualifications/qualificationTypes'
 const SkillsTable: React.FC<EmployeeSkillInfo> = ({
   striped = false,
   bordered = false,
@@ -23,7 +23,7 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchEmployeeSkills())
+    dispatch(doFetchSkills())
   }, [dispatch])
   const tableHeaderCellProps = {
     width: '25%',
@@ -79,7 +79,7 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
         )}
 
         <CTableBody>
-          {employeeSkillsData.map((skillItem, index) => (
+          {employeeSkillsData?.map((skillItem, index) => (
             <CTableRow key={index}>
               {isFieldDisabled ? (
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>

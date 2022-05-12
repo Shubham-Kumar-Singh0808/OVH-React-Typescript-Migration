@@ -41,3 +41,9 @@ export interface UserRolesConfigurationApi extends ApiBase {
   featuresUnderRole: string
   assignPermission: string
 }
+
+export interface QualificationsApi extends ApiBase {
+  employeeQualifications: string
+  getEmployeeSkillsList: string
+  getEmployeeCertificatesList: string
+}
