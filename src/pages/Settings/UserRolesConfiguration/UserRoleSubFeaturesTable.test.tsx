@@ -99,11 +99,7 @@ describe('User Role SubFeatures Table Component Testing', () => {
         />
       </ReduxProvider>,
     )
-    const sortedChildFeatures = mockChildFeaturesArray.childFeatures.sort(
-      (childFeatureItem1, childFeatureItem2) =>
-        childFeatureItem1.name.localeCompare(childFeatureItem2.name),
-    )
-    sortedChildFeatures.forEach((childFeature) => {
+    mockChildFeaturesArray.childFeatures.forEach((childFeature) => {
       const formCheck = screen.getAllByTestId('form-checkbox')
       expect(screen.getByText(childFeature.name)).toBeInTheDocument()
       expect(formCheck).toHaveLength(
@@ -113,7 +109,7 @@ describe('User Role SubFeatures Table Component Testing', () => {
     expect(screen.getAllByRole('columnheader')).toHaveLength(2)
     // 6 including the heading row
     expect(screen.getAllByRole('row')).toHaveLength(
-      sortedChildFeatures.length + 1,
+      mockChildFeaturesArray.childFeatures.length + 1,
     )
   })
   it('should check and uncheck upon clicking the check-box', () => {
@@ -125,10 +121,7 @@ describe('User Role SubFeatures Table Component Testing', () => {
         />
       </ReduxProvider>,
     )
-    const sortedChildFeatures = mockChildFeaturesArray.childFeatures.sort(
-      (sortNode1, sortNode2) => sortNode1.name.localeCompare(sortNode2.name),
-    )
-    sortedChildFeatures.forEach(async () => {
+    mockChildFeaturesArray.childFeatures.forEach(async () => {
       await waitFor(() => {
         const checkbox = screen.getByTestId('form-checkbox')
         userEvent.click(checkbox)

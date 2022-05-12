@@ -114,12 +114,9 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
       if (
         doAssignRolePermission.fulfilled.match(assignPermissionResultAction)
       ) {
-        let oToastMessage
-        if (prepareObject.permission) {
-          oToastMessage = `Successfully you have assigned '${prepareObject.type}' permission to '${target.name}'`
-        } else {
-          oToastMessage = `Successfully you have removed '${prepareObject.type}' permission to '${target.name}'`
-        }
+        const oToastMessage = `Successfully you have ${
+          prepareObject.permission ? 'assigned' : 'removed'
+        } '${prepareObject.type}' permission to '${target.name}'`
         dispatch(
           addToast(
             <OToast toastColor="success" toastMessage={oToastMessage} />,
@@ -138,9 +135,8 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
           <>
             <CAccordion flush className="expandable-table mb-3">
               {mappedFeatures.map((featureItem, index) => {
-                const sortedSubFeatures = featureItem.features.sort(
-                  (featureTeam1, featureTeam2) =>
-                    featureTeam1.name.localeCompare(featureTeam2.name),
+                featureItem.features.sort((featureTeam1, featureTeam2) =>
+                  featureTeam1.name.localeCompare(featureTeam2.name),
                 )
                 return (
                   <React.Fragment key={index}>
@@ -148,7 +144,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                       <CAccordionHeader>
                         <span
                           className="title-sm expandable-table-title"
-                          data-testid="CAccofeatures-rdionHeader-span"
+                          data-testid="accordion-header-span"
                         >
                           {featureItem.name}
                         </span>
@@ -165,7 +161,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                             </CTableRow>
                           </CTableHead>
                           <CTableBody>
-                            {sortedSubFeatures.map(
+                            {featureItem.features.map(
                               (subFeatureItem, subFeatureItemIndex) => {
                                 return (
                                   <CTableRow key={subFeatureItemIndex}>

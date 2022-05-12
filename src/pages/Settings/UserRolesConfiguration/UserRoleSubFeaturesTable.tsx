@@ -16,9 +16,8 @@ const UserRoleSubFeaturesTable: React.FC<UserRoleSubFeaturesTableProps> = ({
   checkBoxHandleChange,
 }: UserRoleSubFeaturesTableProps): JSX.Element => {
   const { childFeatures, index, subFeatureItemIndex } = childFeaturesArray
-  const sortedChildFeatures = childFeatures.sort(
-    (childFeatureItem1, childFeatureItem2) =>
-      childFeatureItem1.name.localeCompare(childFeatureItem2.name),
+  childFeatures.sort((childFeatureItem1, childFeatureItem2) =>
+    childFeatureItem1.name.localeCompare(childFeatureItem2.name),
   )
   return (
     <>
@@ -30,33 +29,31 @@ const UserRoleSubFeaturesTable: React.FC<UserRoleSubFeaturesTableProps> = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {sortedChildFeatures?.map(
-            (childFeatureItem, childFeatureItemIndex) => (
-              <CTableRow key={childFeatureItemIndex}>
-                <CTableDataCell>{childFeatureItem.name}</CTableDataCell>
-                <CTableDataCell>
-                  {childFeatureItem.viewaccess && (
-                    <CFormCheck
-                      data-testid="form-checkbox"
-                      className="infocheckbox"
-                      name={childFeatureItem.name}
-                      checked={childFeatureItem.viewaccessChecked}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        checkBoxHandleChange(
-                          e.target,
-                          subFeatureItemIndex,
-                          index,
-                          'viewaccessChecked',
-                          childFeatureItemIndex,
-                          true,
-                        )
-                      }
-                    />
-                  )}
-                </CTableDataCell>
-              </CTableRow>
-            ),
-          )}
+          {childFeatures?.map((childFeatureItem, childFeatureItemIndex) => (
+            <CTableRow key={childFeatureItemIndex}>
+              <CTableDataCell>{childFeatureItem.name}</CTableDataCell>
+              <CTableDataCell>
+                {childFeatureItem.viewaccess && (
+                  <CFormCheck
+                    data-testid="form-checkbox"
+                    className="infocheckbox"
+                    name={childFeatureItem.name}
+                    checked={childFeatureItem.viewaccessChecked}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      checkBoxHandleChange(
+                        e.target,
+                        subFeatureItemIndex,
+                        index,
+                        'viewaccessChecked',
+                        childFeatureItemIndex,
+                        true,
+                      )
+                    }
+                  />
+                )}
+              </CTableDataCell>
+            </CTableRow>
+          ))}
         </CTableBody>
       </CTable>
     </>

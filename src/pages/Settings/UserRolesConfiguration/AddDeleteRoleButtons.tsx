@@ -94,7 +94,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   const handleDeleteButton = () => {
     return (
       setDeleteRoleModalVisibility(
-        selectedRole.name.toLowerCase() !== 'employee' ? true : false,
+        selectedRole.name.toLowerCase() !== 'employee',
       ),
       isEmployee()
     )
