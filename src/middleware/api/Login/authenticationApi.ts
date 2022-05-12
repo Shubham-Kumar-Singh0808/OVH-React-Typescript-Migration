@@ -22,7 +22,6 @@ export const postLoginUser = async (
   })
 
   const response = await axios(requestConfig)
-
   if (response.status === 200) {
     const data = {
       authenticatedUser: {
