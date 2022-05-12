@@ -5,7 +5,6 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import stateStore from '../../../stateStore'
-import personalInfoTabSlice from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 const ReduxProvider = ({
   children,
   reduxStore,

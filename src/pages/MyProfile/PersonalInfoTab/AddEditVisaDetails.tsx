@@ -105,12 +105,15 @@ function AddEditVisaDetails({
     })
   }
   const onChangeFileEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
     const target = e.currentTarget as HTMLInputElement
     const file = target.files?.[0]
-    console.log(file)
+    const foData = new FormData()
+    if (file) {
+      foData.append('File', file)
+    }
+    console.log(foData)
+    setSelectedFile(file)
   }
-
   const onChangeDateOfIssueHandler = (date: Date) => {
     if (isEditVisaDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
@@ -332,7 +335,7 @@ function AddEditVisaDetails({
                 className="form-control form-control-sm"
                 type="file"
                 name="file"
-                value={selectedFile as string}
+                // value={selectedFile as string}
                 accept="image/*,"
                 onChange={onChangeFileEventHandler}
               />

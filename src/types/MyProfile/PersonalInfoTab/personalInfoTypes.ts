@@ -7,9 +7,6 @@ export type FamilyDetailsModal = {
   dateOfBirth: string
   employeeId: string | number
 }
-export type UserHeaders = {
-  employeeId: string | number
-}
 export type PersonalInfoTabStateType = {
   getFamilyDetails: FamilyDetailsModal[]
   getVisaDetails: VisaDetailsModal[]
