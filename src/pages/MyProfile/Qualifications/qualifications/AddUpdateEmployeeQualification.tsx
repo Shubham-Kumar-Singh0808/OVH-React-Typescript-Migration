@@ -24,8 +24,6 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import { useFormik } from 'formik'
-import OToast from '../../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../../reducers/appSlice'
 
 const AddUpdateEmployeeQualification = ({
   backButtonHandler,
@@ -36,7 +34,7 @@ const AddUpdateEmployeeQualification = ({
   const [addQualification, setAddQualification] = useState(
     initialQualificationData,
   )
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false)
+  console.log(addQualification)
 
   const getPgAndGraduationLookUpItems = useTypedSelector(
     (state) =>
@@ -54,24 +52,15 @@ const AddUpdateEmployeeQualification = ({
     dispatch(doFetchQualifications(employeeId))
   }, [dispatch, employeeId])
 
+  // useEffect(() => {
+  // }, [dispatch, employeeId])
+
   useEffect(() => {
     if (isEmployeeQualificationExist) {
       setAddQualification(getEmployeeQualificationDetails)
     }
   }, [isEmployeeQualificationExist, getEmployeeQualificationDetails])
 
-  const actionMapping = {
-    added: 'added',
-    updated: 'updated',
-  }
-  const getToastMessage = (action: string) => {
-    return (
-      <OToast
-        toastColor="success"
-        toastMessage={`Qualification ${action} successfully`}
-      />
-    )
-  }
   const formik = useFormik({
     initialValues: { name: '', message: '' },
     onSubmit: (values) => {
@@ -85,19 +74,6 @@ const AddUpdateEmployeeQualification = ({
       return { ...prevState, ...{ [name]: value } }
     })
   }
-
-  useEffect(() => {
-    if (
-      addQualification.graduationLookUp &&
-      addQualification.graduationLookUp.length > 0 &&
-      addQualification.hscName &&
-      addQualification.sscName
-    ) {
-      setIsButtonEnabled(true)
-    } else {
-      setIsButtonEnabled(false)
-    }
-  }, [addQualification])
   const handleMultiSelect = (
     list: PostGraduationAndGraduationLookUp[],
     name: string,
@@ -122,7 +98,6 @@ const AddUpdateEmployeeQualification = ({
         updateQualificationDetails(addQualification),
       )
       if (updateQualificationDetails.fulfilled.match(updateResultAction)) {
-        dispatch(addToast(getToastMessage(actionMapping.updated)))
         backButtonHandler()
       }
     } else {
@@ -130,7 +105,6 @@ const AddUpdateEmployeeQualification = ({
         postQualificationDetails(addQualification),
       )
       if (postQualificationDetails.fulfilled.match(postResultAction)) {
-        dispatch(addToast(getToastMessage(actionMapping.updated)))
         backButtonHandler()
       }
     }
@@ -262,7 +236,6 @@ const AddUpdateEmployeeQualification = ({
               <CButton
                 className="btn-ovh"
                 color="success"
-                disabled={!isButtonEnabled}
                 onClick={handleAddUpdateQualification}
               >
                 Update
@@ -275,7 +248,6 @@ const AddUpdateEmployeeQualification = ({
               <CButton
                 className="btn-ovh me-1"
                 color="success"
-                disabled={!isButtonEnabled}
                 onClick={handleAddUpdateQualification}
               >
                 Add

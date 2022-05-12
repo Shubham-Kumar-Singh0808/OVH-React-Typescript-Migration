@@ -24,8 +24,9 @@ const EmployeeQualifications = (): JSX.Element => {
             Post Graduation :
           </CCol>
           <CCol sm={6} className="ps-0 text-dark" data-testid="post-graduation">
-            {employeeQualification?.pgLookUp?.map((pgItem) => pgItem.label) ||
-              'N/A'}
+            {employeeQualification?.pgLookUp
+              ?.map((pgItem) => pgItem.label)
+              .join(', ') || 'N/A'}
           </CCol>
         </CRow>
         <CRow className="mt-2 mb-2">
@@ -37,9 +38,9 @@ const EmployeeQualifications = (): JSX.Element => {
             Graduation :
           </CCol>
           <CCol sm={6} className="ps-0 text-dark">
-            {employeeQualification?.graduationLookUp?.map(
-              (graduationItem) => graduationItem.label,
-            ) || 'N/A'}
+            {employeeQualification?.graduationLookUp
+              ?.map((graduationItem) => graduationItem.label)
+              .join(', ') || 'N/A'}
           </CCol>
         </CRow>
         <CRow className="mt-2 mb-2">
