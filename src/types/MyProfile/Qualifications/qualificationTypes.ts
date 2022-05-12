@@ -37,6 +37,11 @@ export type QualificationProps = {
   backButtonHandler?: () => void
   isEmployeeQualificationExist?: boolean
 }
+export type AddUpdateEmployeeQualificationProps = {
+  addButtonHandler?: () => void
+  backButtonHandler: () => void
+  isEmployeeQualificationExist?: boolean
+}
 export type PostGraduationAndGraduationList = {
   graduationDetails: PostGraduationAndGraduationLookUp[]
   pgDetails: PostGraduationAndGraduationLookUp[]

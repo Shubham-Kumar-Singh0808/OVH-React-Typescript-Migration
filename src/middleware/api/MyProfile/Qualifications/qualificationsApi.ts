@@ -1,11 +1,11 @@
+import { AllowedHttpMethods, qualificationsApi } from '../../apiList'
 import {
-  EmployeeQualifications,
   EmployeeCertifications,
+  EmployeeQualifications,
   EmployeeSkills,
   PostGraduationAndGraduationList,
 } from '../../../../types/MyProfile/Qualifications/qualificationTypes'
 
-import { AllowedHttpMethods, qualificationsApi } from '../../apiList'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
@@ -53,21 +53,30 @@ export const fetchPgLookUpAndGraduationLookUpListItems =
     return response.data
   }
 
-export const saveEmployeeQualifications =
-  async (): Promise<EmployeeQualifications> => {
-    const requestConfig = getAuthenticatedRequestConfig({
-      url: qualificationsApi.addEmployeeQualifications,
-      method: AllowedHttpMethods.post,
-    })
-    const response = await axios(requestConfig)
-    return response.data
-  }
-export const updateEmployeeQualifications =
-  async (): Promise<EmployeeQualifications> => {
-    const requestConfig = getAuthenticatedRequestConfig({
-      url: qualificationsApi.updateEmployeeQualifications,
-      method: AllowedHttpMethods.put,
-    })
-    const response = await axios(requestConfig)
-    return response.data
-  }
+export const saveEmployeeQualifications = async (
+  addQualification: EmployeeQualifications,
+): Promise<EmployeeQualifications> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: qualificationsApi.addEmployeeQualifications,
+    method: AllowedHttpMethods.post,
+    params: {
+      empId: addQualification.empId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+export const updateEmployeeQualifications = async (
+  addQualification: EmployeeQualifications,
+): Promise<EmployeeQualifications> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: qualificationsApi.updateEmployeeQualifications,
+    method: AllowedHttpMethods.put,
+    params: {
+      empId: addQualification.empId,
+    },
+    data: addQualification,
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}

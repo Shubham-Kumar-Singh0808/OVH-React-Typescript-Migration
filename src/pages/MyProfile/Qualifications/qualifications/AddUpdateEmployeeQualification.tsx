@@ -1,4 +1,9 @@
 import {
+  AddUpdateEmployeeQualificationProps,
+  EmployeeQualifications,
+  PostGraduationAndGraduationLookUp,
+} from '../../../../types/MyProfile/Qualifications/qualificationTypes'
+import {
   CButton,
   CCardBody,
   CCardHeader,
@@ -7,32 +12,31 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
-import {
-  EmployeeQualifications,
-  PostGraduationAndGraduationLookUp,
-  QualificationProps,
-} from '../../../../types/MyProfile/Qualifications/qualificationTypes'
 import React, { useEffect, useState } from 'react'
 import {
   doFetchPgAndGraduationItems,
   doFetchQualifications,
+  postQualificationDetails,
+  updateQualificationDetails,
 } from '../../../../reducers/Qualifications/qualificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import { useFormik } from 'formik'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { addToast } from '../../../../reducers/appSlice'
 
 const AddUpdateEmployeeQualification = ({
   backButtonHandler,
   addButtonHandler,
   isEmployeeQualificationExist = false,
-}: QualificationProps): JSX.Element => {
+}: AddUpdateEmployeeQualificationProps): JSX.Element => {
   const initialQualificationData = {} as EmployeeQualifications
   const [addQualification, setAddQualification] = useState(
     initialQualificationData,
   )
-  console.log(addQualification)
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false)
 
   const getPgAndGraduationLookUpItems = useTypedSelector(
     (state) =>
@@ -47,17 +51,27 @@ const AddUpdateEmployeeQualification = ({
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(doFetchPgAndGraduationItems())
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(doFetchQualifications(employeeId))
   }, [dispatch, employeeId])
+
   useEffect(() => {
     if (isEmployeeQualificationExist) {
       setAddQualification(getEmployeeQualificationDetails)
     }
   }, [isEmployeeQualificationExist, getEmployeeQualificationDetails])
 
+  const actionMapping = {
+    added: 'added',
+    updated: 'updated',
+  }
+  const getToastMessage = (action: string) => {
+    return (
+      <OToast
+        toastColor="success"
+        toastMessage={`Qualification ${action} successfully`}
+      />
+    )
+  }
   const formik = useFormik({
     initialValues: { name: '', message: '' },
     onSubmit: (values) => {
@@ -71,6 +85,19 @@ const AddUpdateEmployeeQualification = ({
       return { ...prevState, ...{ [name]: value } }
     })
   }
+
+  useEffect(() => {
+    if (
+      addQualification.graduationLookUp &&
+      addQualification.graduationLookUp.length > 0 &&
+      addQualification.hscName &&
+      addQualification.sscName
+    ) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [addQualification])
   const handleMultiSelect = (
     list: PostGraduationAndGraduationLookUp[],
     name: string,
@@ -87,6 +114,26 @@ const AddUpdateEmployeeQualification = ({
     setAddQualification((prevState) => {
       return { ...prevState, ...{ [name]: selectedList } }
     })
+  }
+
+  const handleAddUpdateQualification = async () => {
+    if (addQualification.id) {
+      const updateResultAction = await dispatch(
+        updateQualificationDetails(addQualification),
+      )
+      if (updateQualificationDetails.fulfilled.match(updateResultAction)) {
+        dispatch(addToast(getToastMessage(actionMapping.updated)))
+        backButtonHandler()
+      }
+    } else {
+      const postResultAction = await dispatch(
+        postQualificationDetails(addQualification),
+      )
+      if (postQualificationDetails.fulfilled.match(postResultAction)) {
+        dispatch(addToast(getToastMessage(actionMapping.updated)))
+        backButtonHandler()
+      }
+    }
   }
 
   return (
@@ -115,8 +162,10 @@ const AddUpdateEmployeeQualification = ({
               options={getPgAndGraduationLookUpItems?.pgDetails || []}
               displayValue="label"
               selectedValues={addQualification.pgLookUp}
-              onSelect={(list) => handleMultiSelect(list, 'pgLookUp')}
-              onRemove={(selectedList) =>
+              onSelect={(list: PostGraduationAndGraduationLookUp[]) =>
+                handleMultiSelect(list, 'pgLookUp')
+              }
+              onRemove={(selectedList: PostGraduationAndGraduationLookUp[]) =>
                 handleOnRemoveSelectedOption(selectedList, 'pgLookUp')
               }
             />
@@ -141,8 +190,10 @@ const AddUpdateEmployeeQualification = ({
               options={getPgAndGraduationLookUpItems?.graduationDetails || []}
               displayValue="label"
               selectedValues={addQualification.graduationLookUp}
-              onSelect={(list) => handleMultiSelect(list, 'graduationLookUp')}
-              onRemove={(selectedList) =>
+              onSelect={(list: PostGraduationAndGraduationLookUp[]) =>
+                handleMultiSelect(list, 'graduationLookUp')
+              }
+              onRemove={(selectedList: PostGraduationAndGraduationLookUp[]) =>
                 handleOnRemoveSelectedOption(selectedList, 'graduationLookUp')
               }
             />
@@ -208,7 +259,12 @@ const AddUpdateEmployeeQualification = ({
         {isEmployeeQualificationExist ? (
           <CRow>
             <CCol className="col-md-3 offset-md-3">
-              <CButton className="btn-ovh" color="success">
+              <CButton
+                className="btn-ovh"
+                color="success"
+                disabled={!isButtonEnabled}
+                onClick={handleAddUpdateQualification}
+              >
                 Update
               </CButton>
             </CCol>
@@ -216,7 +272,12 @@ const AddUpdateEmployeeQualification = ({
         ) : (
           <CRow>
             <CCol className="col-md-3 offset-md-3">
-              <CButton className="btn-ovh me-1" color="success">
+              <CButton
+                className="btn-ovh me-1"
+                color="success"
+                disabled={!isButtonEnabled}
+                onClick={handleAddUpdateQualification}
+              >
                 Add
               </CButton>
               <span>
