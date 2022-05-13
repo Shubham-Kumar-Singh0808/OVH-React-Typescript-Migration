@@ -12,10 +12,6 @@ const ReduxProvider = ({
   children: JSX.Element
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
-const expectComponentToBeRendered = () => {
-  expect(screen.getByLabelText('Name:*')).toBeInTheDocument()
-}
-
 const mockUseDispatchValue = 1984
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -24,20 +20,6 @@ jest.mock('react-redux', () => ({
   }),
 }))
 describe('Add New Family member Testing', () => {
-  test('should render add new Family Member form without crashing', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddEditFamilyDetails
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    expectComponentToBeRendered()
-  })
   test('should render add Family Member button as disabled initially', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>

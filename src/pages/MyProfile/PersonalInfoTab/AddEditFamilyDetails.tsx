@@ -131,9 +131,7 @@ function AddEditFamilyDetails({
       dispatch(addToast(getToastMessage(actionMapping.updated)))
     }
   }
-  const formLabelProps = {
-    htmlFor: 'Name',
-  }
+
   return (
     <>
       <CCardHeader>
@@ -153,10 +151,7 @@ function AddEditFamilyDetails({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel
-              className="col-sm-3 col-form-label text-end"
-              {...formLabelProps}
-            >
+            <CFormLabel className="col-sm-3 col-form-label text-end">
               Name:
               <span
                 className={
