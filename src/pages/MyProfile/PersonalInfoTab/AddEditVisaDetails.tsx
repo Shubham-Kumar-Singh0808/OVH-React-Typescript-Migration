@@ -295,12 +295,12 @@ function AddEditVisaDetails({
                 placeholderText="dd/mm/yyyy"
                 dateFormat="dd/MM/yyyy"
               />
+              {error && (
+                <p className="text-danger">
+                  Date of Expire should be greater than Date of Issue
+                </p>
+              )}
             </CCol>
-            {error && (
-              <p className="text-danger">
-                Date of Expire should be greater than Date of Issue
-              </p>
-            )}
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
