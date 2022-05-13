@@ -20,6 +20,8 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/sidebar-nav';
 @import './components/card';
 @import './components/global-search';
+@import './components/idle-modal';
+@import './components/session-timeout';
 @import './components/inline-tabs-nav';
 @import './pages/login';
 @import './components/omodal';

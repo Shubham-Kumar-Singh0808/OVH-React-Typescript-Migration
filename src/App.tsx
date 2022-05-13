@@ -1,18 +1,22 @@
 import './assets/scss/style.scss'
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import React, { Suspense, useCallback, useEffect } from 'react'
 
 import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
+import SessionTimeout from './components/SessionTimeout'
+import { selectIsSessionExpired } from './reducers/appSlice'
 import { setAuthentication } from './reducers/Login/authenticationSlice'
 import { useDispatch } from 'react-redux'
+import { useTypedSelector } from './stateStore'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 const Login = React.lazy(() => import('./pages/Login/Login'))
 
 const App = (): JSX.Element => {
+  const setIsSessionExpired = useTypedSelector(selectIsSessionExpired)
   const dispatch = useDispatch()
 
   const loadState = useCallback(() => {
@@ -45,6 +49,12 @@ const App = (): JSX.Element => {
     <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>
       <Suspense fallback={<CSpinner color="primary" />}>
         <Switch>
+          <Route
+            path="/sessionExpire"
+            render={() =>
+              setIsSessionExpired ? <SessionTimeout /> : <Redirect to={'/'} />
+            }
+          />
           <Route
             path="/login"
             render={() => (

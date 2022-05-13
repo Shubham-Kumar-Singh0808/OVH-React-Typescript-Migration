@@ -8,6 +8,7 @@ import {
 import React, { useRef } from 'react'
 
 import { CToaster } from '@coreui/react-pro'
+import IdleModal from '../components/IdleModal'
 import { useTypedSelector } from '../stateStore'
 
 const DefaultLayout = (): JSX.Element => {
@@ -28,6 +29,8 @@ const DefaultLayout = (): JSX.Element => {
               push={toastState}
               placement="top-end"
             />
+
+            <IdleModal />
           </div>
         </div>
         <AppAside />
