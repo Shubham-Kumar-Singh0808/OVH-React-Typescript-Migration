@@ -1,11 +1,10 @@
-import React, { FC, ReactNode } from 'react'
+import { Badge, NavItem } from '../_nav'
 import { NavLink, useLocation } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import React, { FC, ReactNode } from 'react'
 
 import { CBadge } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
-
-import { Badge, NavItem } from '../_nav'
+import PropTypes from 'prop-types'
 
 interface AppSidebarNavProps {
   items: NavItem[]
@@ -63,8 +62,10 @@ export const AppSidebarNav: FC<AppSidebarNavProps> = ({ items }) => {
         visible={location.pathname.startsWith(to)}
         {...rest}
       >
-        {item.items?.map((item: NavItem, index: number) =>
-          item.items ? navGroup(item, index) : navItem(item, index),
+        {item.items?.map((currentItem: NavItem, itemIndex: number) =>
+          currentItem.items
+            ? navGroup(currentItem, itemIndex)
+            : navItem(currentItem, itemIndex),
         )}
       </Component>
     )

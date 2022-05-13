@@ -1,10 +1,29 @@
 import { CNavGroup, CNavItem } from '@coreui/react-pro'
 import { NavLink, useLocation } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../stateStore'
 
-import React from 'react'
-import menuItems from '../../middleware/MenuLinks'
+import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
+import { setReRenderMenu } from '../../reducers/appSlice'
+
 const AppSidebarNavItems = (): JSX.Element => {
   const location = useLocation()
+  const employeeId: string | number = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.employeeId,
+  )
+  const reRenderMenu: boolean = useTypedSelector(
+    (state) => state.app.reRenderMenu,
+  )
+  const dispatch = useAppDispatch()
+  const getSidebarMenuItems = useTypedSelector(
+    (state) => state.sidebarMenu.menuItems,
+  )
+  useEffect(() => {
+    if (reRenderMenu) {
+      dispatch(getSidebarMenu(employeeId))
+      dispatch(setReRenderMenu(false))
+    }
+  }, [dispatch, employeeId, reRenderMenu])
   function navLink(name: string, iconClass: string) {
     return (
       <>
@@ -19,7 +38,7 @@ const AppSidebarNavItems = (): JSX.Element => {
   }
   return (
     <>
-      {menuItems.map((curNavItem, index) =>
+      {getSidebarMenuItems?.map((curNavItem, index) =>
         curNavItem.childmenuItems.length ? (
           <CNavGroup
             idx={String(index)}

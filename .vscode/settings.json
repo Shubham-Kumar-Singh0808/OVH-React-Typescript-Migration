@@ -1,3 +1,14 @@
 {
-  "cSpell.words": ["Quali", "Qualiaction"]
+    "cSpell.words": [
+        "formik",
+        "testid",
+        "coreui",
+        "createaccess",
+        "deleteaccess",
+        "headwrap",
+        "infocheckbox",
+        "reduxjs",
+        "updateaccess",
+        "viewaccess"
+    ]
 }

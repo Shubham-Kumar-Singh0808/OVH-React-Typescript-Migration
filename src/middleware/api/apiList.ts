@@ -3,6 +3,9 @@ import {
   CategoryApi,
   QualificationCategoryApi,
   SkillApi,
+  QualificationsApi,
+  SideMenuApi,
+  UserRolesConfigurationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -13,11 +16,24 @@ export enum AllowedHttpMethods {
   post = 'post',
   update = 'update',
   delete = 'delete',
+  put = 'put',
 }
 
 export const authenticationApi: AuthenticationApi = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
+}
+export const sideMenuApi: SideMenuApi = {
+  getMenuData: apiPrefix + '/roleFeature/menuItems',
+}
+export const userRolesConfigurationApi: UserRolesConfigurationApi = {
+  getUserRoles: apiPrefix + '/roleFeature/roles',
+  isUserRoleExists: apiPrefix + '/roleFeature/isRoleExits',
+  addNewUserRole: apiPrefix + '/roleFeature/role',
+  deleteUserRole: apiPrefix + '/roleFeature/deleterole',
+  getSubFeatures: apiPrefix + '/roleFeature/SubFeatures',
+  featuresUnderRole: apiPrefix + '/roleFeature/features_UnderRole',
+  assignPermission: apiPrefix + '/roleFeature/assignPermission',
 }
 
 export const categoriesApi: CategoryApi = {
@@ -38,4 +54,12 @@ export const qualificationCategoryApi: QualificationCategoryApi = {
     apiPrefix + '/Employee/getQualiactionCategoryList',
   addNewQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
   deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
+}
+export const qualificationsApi: QualificationsApi = {
+  getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
+  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
+  getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',
+  addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
+  getPostGraduationAndGraduationList: apiPrefix + '/Employee/multipleSelection',
+  updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
 }
