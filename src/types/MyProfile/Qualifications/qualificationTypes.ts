@@ -38,7 +38,7 @@ export interface EmployeeSkillInfo {
   tableClassName: string
   isFieldDisabled: boolean
 }
-export type QualificationProps = {
+export type AddBackButtonsProps = {
   addButtonHandler?: () => void
   backButtonHandler?: () => void
   isEmployeeQualificationExist?: boolean

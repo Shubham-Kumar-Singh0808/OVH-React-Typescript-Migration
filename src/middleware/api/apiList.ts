@@ -1,8 +1,9 @@
 import {
   AuthenticationApi,
   CategoryApi,
-  SideMenuApi,
+  QualificationCategoryApi,
   SkillApi,
+  SideMenuApi,
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
   UserRolesConfigurationApi,
@@ -50,6 +51,12 @@ export const skillsApi: SkillApi = {
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
 }
 
+export const qualificationCategoryApi: QualificationCategoryApi = {
+  getAllQualificationCategories:
+    apiPrefix + '/Employee/getQualiactionCategoryList',
+  addNewQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
+  deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
+}
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
   getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
 }
