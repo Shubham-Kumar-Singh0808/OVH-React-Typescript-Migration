@@ -30,6 +30,13 @@ export interface QualificationCategoryApi extends ApiBase {
   addNewQualificationCategory: string
   deleteQualificationCategory: string
 }
+export interface EmployeeGeneralInformationApi extends ApiBase {
+  getLoggedInEmployeeData: string
+}
+
+export interface PersonalInfoApi extends ApiBase {
+  getFamilyDetails: string
+}
 export interface QualificationsApi extends ApiBase {
   getEmployeeQualifications: string
   getEmployeeSkillsList: string
