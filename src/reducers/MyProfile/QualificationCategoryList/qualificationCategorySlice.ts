@@ -12,7 +12,7 @@ import {
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 
-export const fetchAllQualificationCategories = createAsyncThunk(
+export const getQualificationCategories = createAsyncThunk(
   'qualificationCategory/fetchAllQualificationCategories',
   async (_, thunkApi) => {
     try {
@@ -85,7 +85,7 @@ const qualificationCategorySlice = createSlice({
     builder
       .addMatcher(
         isAnyOf(
-          fetchAllQualificationCategories.pending,
+          getQualificationCategories.pending,
           removeQualificationCategoryById.pending,
           addNewQualificationCategoryByName.pending,
         ),
@@ -95,7 +95,7 @@ const qualificationCategorySlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          fetchAllQualificationCategories.fulfilled,
+          getQualificationCategories.fulfilled,
           removeQualificationCategoryById.fulfilled,
           addNewQualificationCategoryByName.fulfilled,
         ),

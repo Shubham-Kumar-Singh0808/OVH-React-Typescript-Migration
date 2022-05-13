@@ -8,7 +8,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import {
-  fetchAllQualificationCategories,
+  getQualificationCategories,
   selectIsQualificationCategoryListLoading,
 } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -23,7 +23,7 @@ const QualificationCategoryList = ({
   const isLoading = useTypedSelector(selectIsQualificationCategoryListLoading)
 
   useEffect(() => {
-    dispatch(fetchAllQualificationCategories())
+    dispatch(getQualificationCategories())
   }, [dispatch])
 
   return (

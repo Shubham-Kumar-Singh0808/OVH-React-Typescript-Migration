@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import {
   addNewQualificationCategoryByName,
-  fetchAllQualificationCategories,
+  getQualificationCategories,
   selectQualificationCategoryList,
 } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -91,7 +91,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
     })
 
     dispatch(addNewQualificationCategoryByName(toAddQualificationName))
-    dispatch(fetchAllQualificationCategories())
+    dispatch(getQualificationCategories())
     dispatch(addToast(successToastMessage))
   }
 

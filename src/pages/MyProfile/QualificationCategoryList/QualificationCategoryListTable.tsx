@@ -19,7 +19,7 @@ import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import {
-  fetchAllQualificationCategories,
+  getQualificationCategories,
   removeQualificationCategoryById,
   selectQualificationCategoryList,
 } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
@@ -81,15 +81,15 @@ const QualificationCategoryListTable = (): JSX.Element => {
   const handleConfirmDelete = async (id: number) => {
     setIsDeleteModalVisible(false)
 
-    const delQualificationCategoryResultAction = await dispatch(
+    const deleteQualificationCategoryResultAction = await dispatch(
       removeQualificationCategoryById(id),
     )
     if (
       removeQualificationCategoryById.fulfilled.match(
-        delQualificationCategoryResultAction,
+        deleteQualificationCategoryResultAction,
       )
     ) {
-      dispatch(fetchAllQualificationCategories())
+      dispatch(getQualificationCategories())
       dispatch(addToast(deleteToastElement))
     }
   }
