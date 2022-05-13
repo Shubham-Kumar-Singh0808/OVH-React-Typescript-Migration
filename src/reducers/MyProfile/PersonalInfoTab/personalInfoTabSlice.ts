@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  FamilyDetails,
+  EmployeeFamilyData,
   VisaDetails,
   PersonalInfoTabState,
   GetCountryDetails,
@@ -39,7 +39,7 @@ const initialPersonalInfoTabState: PersonalInfoTabState = {
 }
 
 export const doFetchFamilyDetails = createAsyncThunk<
-  FamilyDetails[] | undefined,
+  EmployeeFamilyData[] | undefined,
   number | string,
   {
     dispatch: AppDispatch
@@ -265,7 +265,7 @@ const personalInfoTabSlice = createSlice({
     builder
       .addCase(doFetchFamilyDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.getFamilyDetails = action.payload as FamilyDetails[]
+        state.getFamilyDetails = action.payload as EmployeeFamilyData[]
       })
       .addCase(doFetchVisaDetails.fulfilled, (state, action) => {
         state.isLoading = false
@@ -346,8 +346,9 @@ const personalInfoTabSlice = createSlice({
       )
   },
 })
-export const selectGetFamilyDetails = (state: RootState): FamilyDetails[] =>
-  state.personalInfoDetails.getFamilyDetails
+export const selectGetFamilyDetails = (
+  state: RootState,
+): EmployeeFamilyData[] => state.personalInfoDetails.getFamilyDetails
 export const selectGetVisaDetails = (state: RootState): VisaDetails[] =>
   state.personalInfoDetails.getVisaDetails
 export default personalInfoTabSlice.reducer

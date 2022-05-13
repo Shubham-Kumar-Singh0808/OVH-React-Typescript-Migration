@@ -88,6 +88,15 @@ function AddEditFamilyDetails({
       setIsAddButtonEnabled(false)
     }
   }, [employeeFamily?.personName, employeeFamily?.relationShip])
+  const handleClearDetails = () => {
+    setEmployeeFamily({
+      personName: '',
+      relationShip: '',
+      contactNumber: '',
+      employeeId: '',
+    })
+    setDateOfBirth('')
+  }
   const actionMapping = {
     added: 'added',
     updated: 'updated',
@@ -252,7 +261,8 @@ function AddEditFamilyDetails({
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
-                className="btn-ovh btn btn-success m-1 mt-4"
+                className="btn-ovh me-2"
+                color="success"
                 type="button"
                 disabled={!isAddButtonEnabled}
                 onClick={
@@ -262,6 +272,13 @@ function AddEditFamilyDetails({
                 }
               >
                 {confirmButtonText}
+              </CButton>
+              <CButton
+                color="warning "
+                className="btn-ovh"
+                onClick={handleClearDetails}
+              >
+                Clear
               </CButton>
             </CCol>
           </CRow>

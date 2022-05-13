@@ -1,7 +1,7 @@
 import { personalInfoApi, AllowedHttpMethods } from '../../apiList'
 
 import {
-  FamilyDetails,
+  EmployeeFamilyData,
   VisaDetails,
   GetCountryDetails,
   VisaCountryDetails,
@@ -14,7 +14,7 @@ import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 export const getFamilyDetailsApiCall = async (
   employeeId: number | string,
-): Promise<FamilyDetails[]> => {
+): Promise<EmployeeFamilyData[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.getFamilyDetails,
     method: AllowedHttpMethods.get,

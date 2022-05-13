@@ -1,5 +1,5 @@
 import { ValidationError } from '../../commonTypes'
-export type FamilyDetails = {
+export type EmployeeFamilyData = {
   familyId: number
   personName: string
   relationShip: string
@@ -9,7 +9,7 @@ export type FamilyDetails = {
 }
 
 export type PersonalInfoTabState = {
-  getFamilyDetails: FamilyDetails[]
+  getFamilyDetails: EmployeeFamilyData[]
   getVisaDetails: VisaDetails[]
   SubCountries: GetCountryDetails
   SubVisa: VisaCountryDetails[]
