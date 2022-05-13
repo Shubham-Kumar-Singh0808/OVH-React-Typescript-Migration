@@ -1,4 +1,6 @@
-const menuItems = [
+import { SidebarMenuReturnApi } from '../../types/SidebarMenu/sidebarMenuType'
+
+export const mockSidebarData: SidebarMenuReturnApi[] = [
   {
     id: 1,
     menuurl: 'dashboard',
@@ -637,7 +639,7 @@ const menuItems = [
     menuurl: 'settings',
     menuName: 'Settings',
     orderNum: 25,
-    menuclass: 'fa fa-cogs  fa-lg',
+    menuclass: 'fa fa-cogs  fa-lg',
     childmenuItems: [
       {
         id: 53,
@@ -705,4 +707,3 @@ const menuItems = [
     ],
   },
 ]
-export default menuItems

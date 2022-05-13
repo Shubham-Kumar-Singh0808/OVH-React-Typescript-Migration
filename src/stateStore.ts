@@ -4,6 +4,7 @@ import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { configureStore } from '@reduxjs/toolkit'
+import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
@@ -12,6 +13,7 @@ import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfigu
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
+  sidebarMenu: sidebarMenuSliceReducer,
   userRolesAndPermissions: userRolesAndPermissionsReducer,
   category: categoryReducer,
   familyDetails: personalInfoReducer,

@@ -9,6 +9,9 @@ export interface AuthenticationApi extends ApiBase {
   login: string
   logout: string
 }
+export interface SideMenuApi extends ApiBase {
+  getMenuData: string
+}
 
 export interface CategoryApi extends ApiBase {
   getAllCategories: string
