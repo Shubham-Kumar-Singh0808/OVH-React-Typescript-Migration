@@ -168,6 +168,10 @@ function AddEditVisaDetails({
     htmlFor: 'Country',
     className: 'col-sm-3 col-form-label text-end',
   }
+  const visaTypeProps = {
+    className: 'col-sm-3 col-form-label text-end',
+    htmlFor: 'Visa Type',
+  }
   return (
     <>
       <CCardHeader>
@@ -200,8 +204,8 @@ function AddEditVisaDetails({
             <CCol sm={3}>
               <CFormSelect
                 aria-label="Default select example"
-                size="sm"
                 name="countryId"
+                id="Country"
                 value={employeeVisaDetails?.countryId}
                 onChange={onChangeCountryHandler}
               >
@@ -215,7 +219,7 @@ function AddEditVisaDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel {...visaTypeProps}>
               Visa Type:{' '}
               <span
                 className={
@@ -229,8 +233,8 @@ function AddEditVisaDetails({
               <CFormSelect
                 aria-label="Default select example"
                 name="visaTypeId"
+                id="Visa Type"
                 value={employeeVisaDetails?.visaTypeId}
-                size="sm"
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Visa</option>
@@ -251,7 +255,7 @@ function AddEditVisaDetails({
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
-                className="form-control form-control-sm"
+                className="form-control"
                 name="dateOfIssue"
                 maxDate={new Date()}
                 value={
@@ -279,7 +283,7 @@ function AddEditVisaDetails({
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
-                className="form-control form-control-sm"
+                className="form-control"
                 name="dateOfExpire"
                 value={
                   (dateOfExpire as string) ||
@@ -308,7 +312,7 @@ function AddEditVisaDetails({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                className="form-control form-control-sm"
+                className="form-control"
                 type="file"
                 name="file"
                 accept="image/*,"

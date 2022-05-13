@@ -140,6 +140,18 @@ function AddEditFamilyDetails({
       dispatch(addToast(getToastMessage(actionMapping.updated)))
     }
   }
+  const nameProps = {
+    className: 'col-sm-3 col-form-label text-end',
+    htmlFor: 'Name',
+  }
+  const relationShipProps = {
+    className: 'col-sm-3 col-form-label text-end',
+    htmlFor: 'Relationship',
+  }
+  const contactNumberProps = {
+    className: 'col-sm-3 col-form-label text-end',
+    htmlFor: 'ContactNumber',
+  }
 
   return (
     <>
@@ -160,7 +172,7 @@ function AddEditFamilyDetails({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel {...nameProps}>
               Name:
               <span
                 className={
@@ -175,7 +187,6 @@ function AddEditFamilyDetails({
                 type="text"
                 id="Name"
                 name="personName"
-                size="sm"
                 placeholder="Name"
                 value={employeeFamily?.personName}
                 onChange={onChangePersonNameHandler}
@@ -183,7 +194,7 @@ function AddEditFamilyDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel {...relationShipProps}>
               Relationship:
               <span
                 className={
@@ -198,7 +209,6 @@ function AddEditFamilyDetails({
                 aria-label="Relationship"
                 name="relationShip"
                 id="Relationship"
-                size="sm"
                 value={employeeFamily?.relationShip}
                 onChange={onChangePersonNameHandler}
               >
@@ -217,14 +227,11 @@ function AddEditFamilyDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Contact Number:
-            </CFormLabel>
+            <CFormLabel {...contactNumberProps}>Contact Number:</CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
                 id="ContactNumber"
-                size="sm"
                 name="contactNumber"
                 placeholder="Contact Number"
                 value={employeeFamily?.contactNumber}
@@ -239,7 +246,7 @@ function AddEditFamilyDetails({
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
-                className="form-control form-control-sm"
+                className="form-control"
                 name="dateOfBirth"
                 maxDate={new Date()}
                 selected={dateOfBirth as Date}
@@ -260,26 +267,33 @@ function AddEditFamilyDetails({
           </CRow>
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
-              <CButton
-                className="btn-ovh me-2"
-                color="success"
-                type="button"
-                disabled={!isAddButtonEnabled}
-                onClick={
-                  isEditFamilyDetails
-                    ? handleUpdateFamilyMember
-                    : handleAddFamilyMember
-                }
-              >
-                {confirmButtonText}
-              </CButton>
-              <CButton
-                color="warning "
-                className="btn-ovh"
-                onClick={handleClearDetails}
-              >
-                Clear
-              </CButton>
+              {isEditFamilyDetails ? (
+                <CButton
+                  className="btn-ovh me-2"
+                  color="success"
+                  onClick={handleUpdateFamilyMember}
+                >
+                  {confirmButtonText}
+                </CButton>
+              ) : (
+                <>
+                  <CButton
+                    className="btn-ovh me-1"
+                    color="success"
+                    disabled={!isAddButtonEnabled}
+                    onClick={handleAddFamilyMember}
+                  >
+                    {confirmButtonText}
+                  </CButton>
+                  <CButton
+                    color="warning "
+                    className="btn-ovh"
+                    onClick={handleClearDetails}
+                  >
+                    Clear
+                  </CButton>
+                </>
+              )}
             </CCol>
           </CRow>
         </CForm>

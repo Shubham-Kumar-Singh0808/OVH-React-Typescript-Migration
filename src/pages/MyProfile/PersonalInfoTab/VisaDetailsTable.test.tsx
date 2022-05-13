@@ -44,10 +44,4 @@ describe('VisaDetails Table Testing', () => {
       expect(screen.getByText('No Records found')).toBeInTheDocument()
     })
   })
-  test('should return the initial state when passed an empty action', () => {
-    const initialState = undefined
-    const action = { type: '' }
-    const result = personalInfoTabSlice(initialState, action)
-    expect(result).toEqual({})
-  })
 })
