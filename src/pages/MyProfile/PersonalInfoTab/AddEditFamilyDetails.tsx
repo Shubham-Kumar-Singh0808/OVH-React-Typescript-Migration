@@ -133,7 +133,6 @@ function AddEditFamilyDetails({
   }
   const formLabelProps = {
     htmlFor: 'Name',
-    className: 'col-sm-3 col-form-label text-end',
   }
   return (
     <>
@@ -154,7 +153,10 @@ function AddEditFamilyDetails({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...formLabelProps}>
+            <CFormLabel
+              className="col-sm-3 col-form-label text-end"
+              {...formLabelProps}
+            >
               Name:
               <span
                 className={
