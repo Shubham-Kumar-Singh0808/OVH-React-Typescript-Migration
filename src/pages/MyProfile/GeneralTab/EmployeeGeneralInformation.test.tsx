@@ -10,7 +10,7 @@ import { setupServer } from 'msw/node'
 import stateStore from '../../../stateStore'
 import { employeeGeneralInformationApi } from '../../../middleware/api/apiList'
 import { mockGeneralInformationData } from '../../../test/data/generalInformationData'
-import { doFetchEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { fetchEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import GeneralTab from './GeneralTab'
 
 const ReduxProvider = ({
@@ -21,7 +21,7 @@ const ReduxProvider = ({
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
 
-const mockUseDispatchValue = 1984
+const mockUseDispatchValue = '1984'
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn().mockImplementation(() => {
@@ -47,14 +47,14 @@ const server = setupServer(
 beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
-const employeeId = 1997
+const employeeId = '1997'
 const employeeGeneralInformationSlice = () =>
   stateStore.getState().getLoggedInEmployeeData
 
 describe('Employee General Information Testing', () => {
   it('should be fetched from the server and put in the store', async () => {
     await stateStore.dispatch(
-      doFetchEmployeeGeneralInformation(employeeId as number),
+      fetchEmployeeGeneralInformation(employeeId as string),
     )
     expect(employeeGeneralInformationSlice()).toMatchObject(
       mockGeneralInformationData,
