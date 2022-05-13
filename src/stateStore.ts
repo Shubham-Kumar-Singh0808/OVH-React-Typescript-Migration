@@ -16,7 +16,7 @@ export const allReducers = {
   sidebarMenu: sidebarMenuSliceReducer,
   userRolesAndPermissions: userRolesAndPermissionsReducer,
   category: categoryReducer,
-  familyDetails: personalInfoReducer,
+  personalInfoDetails: personalInfoReducer,
   skill: skillReducer,
   // add your slice reducers here
 }

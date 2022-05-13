@@ -32,10 +32,8 @@ const initialPersonalInfoTabState: PersonalInfoTabState = {
   getVisaDetails: [],
   SubCountries: {} as GetCountryDetails,
   SubVisa: [],
-  addVisaDetails: {} as EmployeeVisaDetails,
   editFamilyDetails: {} as EditFamilyDetailsState,
   editVisaDetails: {} as EditVisaDetailsState,
-  addFamilyDetails: {} as EmployeeFamilyDetails,
   isLoading: false,
   error: 0,
 }
@@ -281,28 +279,22 @@ const personalInfoTabSlice = createSlice({
         state.isLoading = false
         state.SubVisa = action.payload as VisaCountryDetails[]
       })
-      .addCase(doAddNewVisaDetails.fulfilled, (state, action) => {
+      .addCase(doAddNewVisaDetails.fulfilled, (state) => {
         state.isLoading = false
-        state.addVisaDetails = action.payload as unknown as EmployeeVisaDetails
       })
       .addCase(doEditNewFamilyMember.fulfilled, (state, action) => {
         state.isLoading = false
         state.editFamilyDetails =
           action.payload as unknown as EditFamilyDetailsState
       })
-      .addCase(doUpdateFamilyDetails.fulfilled, (state, action) => {
+      .addCase(doUpdateFamilyDetails.fulfilled, (state) => {
         state.isLoading = false
-        state.addFamilyDetails =
-          action.payload as unknown as EmployeeFamilyDetails
       })
-      .addCase(doUpdateVisaDetails.fulfilled, (state, action) => {
+      .addCase(doUpdateVisaDetails.fulfilled, (state) => {
         state.isLoading = false
-        state.addVisaDetails = action.payload as unknown as EmployeeVisaDetails
       })
-      .addCase(doAddNewFamilyMember.fulfilled, (state, action) => {
+      .addCase(doAddNewFamilyMember.fulfilled, (state) => {
         state.isLoading = false
-        state.addFamilyDetails =
-          action.payload as unknown as EmployeeFamilyDetails
       })
       .addCase(doEditNewVisaMember.fulfilled, (state, action) => {
         state.isLoading = false
@@ -355,6 +347,7 @@ const personalInfoTabSlice = createSlice({
   },
 })
 export const selectGetFamilyDetails = (state: RootState): FamilyDetails[] =>
-  state.familyDetails.getFamilyDetails
-
+  state.personalInfoDetails.getFamilyDetails
+export const selectGetVisaDetails = (state: RootState): VisaDetails[] =>
+  state.personalInfoDetails.getVisaDetails
 export default personalInfoTabSlice.reducer

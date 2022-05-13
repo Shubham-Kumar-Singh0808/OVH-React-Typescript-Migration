@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
   doFetchVisaDetails,
   doDeleteVisaDetails,
+  selectGetVisaDetails,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import {
   CButton,
@@ -25,10 +26,7 @@ const VisaDetailsTable = ({
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-
-  const fetchVisaDetails = useTypedSelector(
-    (state) => state.familyDetails.getVisaDetails,
-  )
+  const getVisaDetails = useTypedSelector(selectGetVisaDetails)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(doFetchVisaDetails(employeeId))
@@ -54,6 +52,15 @@ const VisaDetailsTable = ({
       )
     }
   }
+  const sortedVisaDetails = useMemo(() => {
+    if (getVisaDetails) {
+      return getVisaDetails
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.countryName.localeCompare(sortNode2.countryName),
+        )
+    }
+  }, [getVisaDetails])
 
   return (
     <>
@@ -69,41 +76,40 @@ const VisaDetailsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {fetchVisaDetails?.length > 0 &&
-            fetchVisaDetails?.map((visaItem, index) => (
-              <CTableRow key={index}>
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  {visaItem.countryName}
-                </CTableDataCell>
-                <CTableDataCell scope="row">{visaItem.visaType}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  {visaItem.dateOfIssue}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {visaItem.dateOfExpire}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  <CButton
-                    color="info btn-ovh me-2"
-                    onClick={() => editVisaButtonHandler(visaItem.id)}
-                  >
-                    <i className="fa fa-pencil-square-o"></i>
-                  </CButton>
-                  <CButton
-                    color="danger btn-ovh me-2"
-                    onClick={() => handleShowDeleteModal(visaItem.id)}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            ))}
+          {sortedVisaDetails?.map((visaItem, index) => (
+            <CTableRow key={index}>
+              <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+              <CTableDataCell scope="row">
+                {visaItem.countryName}
+              </CTableDataCell>
+              <CTableDataCell scope="row">{visaItem.visaType}</CTableDataCell>
+              <CTableDataCell scope="row">
+                {visaItem.dateOfIssue}
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                {visaItem.dateOfExpire}
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CButton
+                  color="info btn-ovh me-2"
+                  onClick={() => editVisaButtonHandler(visaItem.id)}
+                >
+                  <i className="fa fa-pencil-square-o"></i>
+                </CButton>
+                <CButton
+                  color="danger btn-ovh me-2"
+                  onClick={() => handleShowDeleteModal(visaItem.id)}
+                >
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </CButton>
+              </CTableDataCell>
+            </CTableRow>
+          ))}
         </CTableBody>
       </CTable>
       <strong>
-        {fetchVisaDetails?.length
-          ? `Total Records: ${fetchVisaDetails?.length}`
+        {getVisaDetails?.length
+          ? `Total Records: ${getVisaDetails?.length}`
           : `No Records found`}
       </strong>
       <OModal

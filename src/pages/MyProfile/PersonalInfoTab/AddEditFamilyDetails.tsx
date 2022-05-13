@@ -41,14 +41,13 @@ function AddEditFamilyDetails({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const fetchEditFamilyDetails = useTypedSelector(
-    (state) => state.familyDetails.editFamilyDetails,
+    (state) => state.personalInfoDetails.editFamilyDetails,
   )
   useEffect(() => {
     if (isEditFamilyDetails) {
       setEmployeeFamily(fetchEditFamilyDetails)
     }
   }, [isEditFamilyDetails, fetchEditFamilyDetails])
-  console.log(fetchEditFamilyDetails)
   const onChangePersonNameHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>

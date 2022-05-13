@@ -13,10 +13,10 @@ export type PersonalInfoTabState = {
   getVisaDetails: VisaDetails[]
   SubCountries: GetCountryDetails
   SubVisa: VisaCountryDetails[]
-  addVisaDetails: EmployeeVisaDetails
+  // addVisaDetails: EmployeeVisaDetails
   editFamilyDetails: EditFamilyDetailsState
   editVisaDetails: EditVisaDetailsState
-  addFamilyDetails: EmployeeFamilyDetails
+  // addFamilyDetails: EmployeeFamilyDetails
   isLoading: boolean
   error: ValidationError
 }

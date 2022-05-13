@@ -41,13 +41,13 @@ function AddEditVisaDetails({
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
   const [error, setError] = useState<Date | null>(null)
   const fetchCountryDetails = useTypedSelector(
-    (state) => state.familyDetails.SubCountries,
+    (state) => state.personalInfoDetails.SubCountries,
   )
   const fetchVisaCountryDetails = useTypedSelector(
-    (state) => state.familyDetails.SubVisa,
+    (state) => state.personalInfoDetails.SubVisa,
   )
   const fetchEditVisaDetails = useTypedSelector(
-    (state) => state.familyDetails.editVisaDetails,
+    (state) => state.personalInfoDetails.editVisaDetails,
   )
 
   const dispatch = useAppDispatch()
