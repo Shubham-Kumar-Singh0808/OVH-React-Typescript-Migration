@@ -14,9 +14,9 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import {
-  fetchFamilyDetailsApiCall,
-  fetchVisaDetailsApiCall,
-  fetchCountryDetailsApiCall,
+  getFamilyDetailsApiCall,
+  getVisaDetailsApiCall,
+  getCountryDetailsApiCall,
   fetchVisaCountryDetailsApiCall,
   getAddNewVisaMemberApiCall,
   getFamilyInformationByFamilyIdApiCall,
@@ -41,7 +41,7 @@ export const doFetchFamilyDetails = createAsyncThunk<
   'personalInfoTab/doFetchFamilyDetails',
   async (employeeId: number | string, thunkApi) => {
     try {
-      return await fetchFamilyDetailsApiCall(employeeId)
+      return await getFamilyDetailsApiCall(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -60,7 +60,7 @@ export const doFetchVisaDetails = createAsyncThunk<
   'personalInfoTab/doFetchVisaDetails',
   async (employeeId: string | number, thunkApi) => {
     try {
-      return await fetchVisaDetailsApiCall(employeeId)
+      return await getVisaDetailsApiCall(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -77,7 +77,7 @@ export const doFetchCountryDetails = createAsyncThunk<
   }
 >('personalInfoTab/doFetchCountryDetails', async (_, thunkApi) => {
   try {
-    return await fetchCountryDetailsApiCall()
+    return await getCountryDetailsApiCall()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)

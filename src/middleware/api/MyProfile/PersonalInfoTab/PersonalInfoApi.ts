@@ -12,7 +12,7 @@ import {
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
-export const fetchFamilyDetailsApiCall = async (
+export const getFamilyDetailsApiCall = async (
   employeeId: number | string,
 ): Promise<FamilyDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -76,7 +76,7 @@ export const getDeleteNewFamilyMemberApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
-export const fetchVisaDetailsApiCall = async (
+export const getVisaDetailsApiCall = async (
   employeeId: number | string,
 ): Promise<VisaDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -89,7 +89,7 @@ export const fetchVisaDetailsApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
-export const fetchCountryDetailsApiCall = async (): Promise<
+export const getCountryDetailsApiCall = async (): Promise<
   GetCountryDetails | undefined
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
