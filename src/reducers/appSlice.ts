@@ -10,6 +10,7 @@ type AppStateType = {
   toast:
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>
     | undefined
+  reRenderMenu: boolean
 }
 
 const initialState: AppStateType = {
@@ -18,6 +19,7 @@ const initialState: AppStateType = {
   asideShow: false,
   theme: 'default',
   toast: undefined,
+  reRenderMenu: true,
 }
 
 const appSlice = createSlice({
@@ -30,9 +32,12 @@ const appSlice = createSlice({
     toggleSidebar: (state) => {
       state.sidebarShow = !state.sidebarShow
     },
+    setReRenderMenu: (state, action) => {
+      return { ...state, reRenderMenu: action.payload }
+    },
   },
 })
 
-export const { addToast, toggleSidebar } = appSlice.actions
+export const { addToast, toggleSidebar, setReRenderMenu } = appSlice.actions
 
 export default appSlice.reducer
