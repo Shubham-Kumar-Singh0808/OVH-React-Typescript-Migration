@@ -26,7 +26,7 @@ import {
   getUpdateNewVisaMemberApiCall,
   getDeleteNewFamilyMemberApiCall,
   getDeleteVisaDetailsApiCall,
-} from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
+} from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
 const initialPersonalInfoTabState: PersonalInfoTabState = {
   getFamilyDetails: [],
   getVisaDetails: [],
