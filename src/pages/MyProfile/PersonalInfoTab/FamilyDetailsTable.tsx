@@ -24,7 +24,6 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
     (state) => state.authentication.authenticatedUser.employeeId,
   )
   const familyDetails = useTypedSelector(selectGetFamilyDetails)
-  console.log(familyDetails)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(fetchFamilyDetails(employeeId as string))

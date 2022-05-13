@@ -15,7 +15,7 @@ const EmployeeGeneralInformation = (): JSX.Element => {
   useEffect(() => {
     dispatch(fetchEmployeeGeneralInformation(employeeId as string))
   }, [dispatch, employeeId])
-  console.log(employeeGeneralInformation)
+
   return (
     <>
       <CCardHeader className="mt-10 fw-semibold">

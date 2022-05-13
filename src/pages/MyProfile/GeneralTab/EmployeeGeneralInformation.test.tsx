@@ -60,14 +60,4 @@ describe('Employee General Information Testing', () => {
       mockGeneralInformationData,
     )
   })
-  // test('should render General Information Tab', async () => {
-  //   render(
-  //     <ReduxProvider reduxStore={stateStore}>
-  //       <GeneralTab />
-  //     </ReduxProvider>,
-  //   )
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Base Location')).toBeInTheDocument()
-  //   })
-  // })
 })
