@@ -33,7 +33,13 @@ const PersonalInfoTab = (): JSX.Element => {
             </CCardHeader>
             <CCardBody>
               <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
-              <FamilyDetailsTable editButtonHandler={editButtonHandler} />
+              <FamilyDetailsTable
+                editButtonHandler={editButtonHandler}
+                isFieldDisabled={true}
+                striped={true}
+                bordered={false}
+                tableClassName=""
+              />
             </CCardBody>
 
             <CCardHeader>

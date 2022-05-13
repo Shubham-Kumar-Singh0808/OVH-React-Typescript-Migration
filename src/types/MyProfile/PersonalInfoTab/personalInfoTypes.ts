@@ -117,7 +117,11 @@ export type AddButtonProps = {
   addButtonHandler: () => void
 }
 export type EmployeeFamilyDetailsTableProps = {
-  editButtonHandler: (familyId: number) => void
+  editButtonHandler?: (familyId: number) => void
+  isFieldDisabled: boolean
+  striped: boolean
+  bordered: boolean
+  tableClassName: string
 }
 export type EmployeeVisaDetailsTableProps = {
   editVisaButtonHandler: (id: number) => void

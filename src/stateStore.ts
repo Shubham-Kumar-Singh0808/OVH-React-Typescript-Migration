@@ -9,14 +9,16 @@ import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
+import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
-  employeeQualificationsDetails: employeeQualificationsReducer,
+  getLoggedInEmployeeData: employeeGeneralInformationReducer,
   sidebarMenu: sidebarMenuSliceReducer,
   userRolesAndPermissions: userRolesAndPermissionsReducer,
+  employeeQualificationsDetails: employeeQualificationsReducer,
   category: categoryReducer,
   personalInfoDetails: personalInfoReducer,
   skill: skillReducer,

@@ -6,12 +6,10 @@ import {
   CTabPane,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-
-import OCard from '../../../components/ReusableComponent/OCard'
 import TabsLabels from '../../../middleware/TabsLabels'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
+import GeneralTab from '../GeneralTab/GeneralTab'
 import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
-
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
@@ -28,7 +26,7 @@ const MyProfileTabs = (): JSX.Element => {
 
   const changeTabContent = (tabKey: number): JSX.Element => {
     const showTabContent: ShowTabContentType<JSX.Element> = {
-      1: <OCard />,
+      1: <GeneralTab />,
       2: <h1>Basic Info</h1>,
       3: <PersonalInfoTab />,
       4: <QualificationDetails />,
