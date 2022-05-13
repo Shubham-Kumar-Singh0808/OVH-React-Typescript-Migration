@@ -1,3 +1,5 @@
+import 'react-datepicker/dist/react-datepicker.css'
+
 import {
   CButton,
   CCol,
@@ -9,20 +11,32 @@ import {
   CRow,
 } from '@coreui/react-pro'
 
+import DatePicker from 'react-datepicker'
+import DownloadSampleFileButton from './DownloadSampleFileButton'
 import React from 'react'
 
 const BasicInfoTab = (): JSX.Element => {
+  // onchange handler for date pickers
+  const onDateChangeHandler = (date: Date, e: { name: string }) => {
+    // if (employeeData) {
+    //   let formatDate = moment(date).format('DD/MM/YYYY')
+    //   let name = e.name
+    //   setEmployeeData((prevState) => {
+    //     return { ...prevState, ...{ [name]: formatDate } }
+    //   })
+    // }
+  }
+
   return (
     <>
       <CForm className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required">
+        <DownloadSampleFileButton />
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Employee ID:
           </CFormLabel>
           <CCol sm={2}>
-            <CFormLabel className="col-sm-15 col-form-label text-end">
-              basicInformationid
-            </CFormLabel>
+            <CFormLabel className="col-sm-15 col-form-label text-end"></CFormLabel>
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
@@ -30,9 +44,7 @@ const BasicInfoTab = (): JSX.Element => {
             Email ID:
           </CFormLabel>
           <CCol sm={2}>
-            <CFormLabel className="col-sm-15 col-form-label text-end">
-              basicInformationemailId
-            </CFormLabel>
+            <CFormLabel className="col-sm-15 col-form-label text-end"></CFormLabel>
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
@@ -40,21 +52,13 @@ const BasicInfoTab = (): JSX.Element => {
             Full Name:
           </CFormLabel>
           <CCol sm={2}>
-            <CFormLabel className="col-sm-15 col-form-label text-end">
-              basicInformationfullName
-            </CFormLabel>
+            <CFormLabel className="col-sm-15 col-form-label text-end"></CFormLabel>
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Current Location:
-            {/* <span
-              className={
-                employeeData.curentLocation ? 'text-white' : 'text-danger'
-              }
-            >
-              *
-            </span> */}
+            <span className="text-danger">*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -73,13 +77,7 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Base Location:
-            {/* <span
-                className={
-                  employeeData.baseLocation ? 'text-white' : 'text-danger'
-                }
-              >
-                *
-              </span> */}
+            <span className="text-danger">*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -104,11 +102,7 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Blood group:
-            {/* <span
-              className={employeeData.bloodgroup ? 'text-white' : 'text-danger'}
-            >
-              *
-            </span> */}
+            <span className="text-danger">*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect size="sm" aria-label="bloodGroup" name="bloodgroup">
@@ -127,16 +121,11 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Official Birthday:
-            {/* <span
-              className={
-                employeeData.officialBirthday ? 'text-white' : 'text-danger'
-              }
-            >
-              *
-            </span> */}
+            <span className="text-danger">*</span>
           </CFormLabel>
           <CCol sm={3}>
-            {/* <DatePicker
+            <DatePicker
+              className="form-control form-control-sm"
               maxDate={new Date()}
               peekNextMonth
               showMonthDropdown
@@ -144,7 +133,11 @@ const BasicInfoTab = (): JSX.Element => {
               dropdownMode="select"
               placeholderText="dd/mm/yyyy"
               name="officialBirthday"
-            /> */}
+              // value={employeeData.officialBirthday}
+              onChange={(date: Date) =>
+                onDateChangeHandler(date, { name: 'officialBirthday' })
+              }
+            />
             <CFormCheck
               className="mt-2"
               id="trigger"
@@ -157,16 +150,11 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Real Birthday:
-            {/* <span
-                className={
-                  employeeData.realBirthday ? 'text-white' : 'text-danger'
-                }
-              >
-                *
-              </span> */}
+            <span className="text-danger">*</span>
           </CFormLabel>
           <CCol sm={3}>
-            {/* <DatePicker
+            <DatePicker
+              className="form-control form-control-sm"
               maxDate={new Date()}
               peekNextMonth
               showMonthDropdown
@@ -174,20 +162,18 @@ const BasicInfoTab = (): JSX.Element => {
               dropdownMode="select"
               placeholderText="dd/mm/yyyy"
               name="realBirthday"
-            /> */}
+              // value={employeeData.realBirthday}
+              onChange={(date: Date) =>
+                onDateChangeHandler(date, { name: 'realBirthday' })
+              }
+            />
           </CCol>
         </CRow>
 
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Marital Status:
-            {/* <span
-              className={
-                employeeData.maritalStatus ? 'text-white' : 'text-danger'
-              }
-            >
-              *
-            </span> */}
+            <span className="text-danger">*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -205,16 +191,11 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Anniversary:
-            {/* <span
-                className={
-                  employeeData.anniversary ? 'text-white' : 'text-danger'
-                }
-              >
-                *
-              </span> */}
+            <span className="text-danger">*</span>
           </CFormLabel>
           <CCol sm={3}>
-            {/* <DatePicker
+            <DatePicker
+              className="form-control form-control-sm"
               maxDate={new Date()}
               peekNextMonth
               showMonthDropdown
@@ -222,7 +203,11 @@ const BasicInfoTab = (): JSX.Element => {
               dropdownMode="select"
               placeholderText="dd/mm/yyyy"
               name="realBirthday"
-            /> */}
+              // value={employeeData.anniversary}
+              onChange={(date: Date) =>
+                onDateChangeHandler(date, { name: 'anniversary' })
+              }
+            />
           </CCol>
         </CRow>
 
@@ -269,13 +254,7 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Personal Email:
-            {/* <span
-              className={
-                employeeData.personalEmail ? 'text-white' : 'text-danger'
-              }
-            >
-              *
-            </span> */}
+            <span className="text-danger">*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
