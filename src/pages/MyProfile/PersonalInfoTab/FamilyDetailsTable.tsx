@@ -9,7 +9,7 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import {
-  fetchFamilyDetails,
+  getFamilyDetails,
   selectGetFamilyDetails,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -26,7 +26,7 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
   const familyDetails = useTypedSelector(selectGetFamilyDetails)
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(fetchFamilyDetails(employeeId as string))
+    dispatch(getFamilyDetails(employeeId as string))
   }, [dispatch, employeeId])
   const tableHeaderCellProps = {
     width: '25%',

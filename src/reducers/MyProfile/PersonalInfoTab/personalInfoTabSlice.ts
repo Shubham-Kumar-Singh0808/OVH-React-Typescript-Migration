@@ -14,7 +14,7 @@ const initialPersonalInfoTabState: PersonalInfoTabStateType = {
   error: 0,
   isLoading: false,
 }
-export const fetchFamilyDetails = createAsyncThunk<
+export const getFamilyDetails = createAsyncThunk<
   FamilyDetailsModal[] | undefined,
   string,
   {
@@ -23,7 +23,7 @@ export const fetchFamilyDetails = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'familyDetailsTable/fetchFamilyDetails',
+  'familyDetailsTable/getFamilyDetails',
   async (employeeId: string, thunkApi) => {
     try {
       return await getEmployeeFamilyDetails(employeeId)
@@ -39,7 +39,7 @@ const familyDetailsTableSlice = createSlice({
   initialState: initialPersonalInfoTabState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchFamilyDetails.fulfilled, (state, action) => {
+    builder.addCase(getFamilyDetails.fulfilled, (state, action) => {
       state.isLoading = false
       state.getFamilyDetails = action.payload as FamilyDetailsModal[]
     })
