@@ -1,10 +1,12 @@
 import {
   AuthenticationApi,
   CategoryApi,
-  QualificationsApi,
   SideMenuApi,
   SkillApi,
+  EmployeeGeneralInformationApi,
+  PersonalInfoApi,
   UserRolesConfigurationApi,
+  QualificationsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -46,6 +48,14 @@ export const skillsApi: SkillApi = {
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
+}
+
+export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
+  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+}
+
+export const personalInfoApi: PersonalInfoApi = {
+  getFamilyDetails: apiPrefix + '/Employee/familyInformation',
 }
 
 export const qualificationsApi: QualificationsApi = {

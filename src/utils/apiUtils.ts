@@ -24,7 +24,6 @@ export const getUnauthenticatedRequestConfig = ({
     },
   }
 }
-
 export const getAuthenticatedRequestConfig = ({
   url,
   method,

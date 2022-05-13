@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { CCol, CRow } from '@coreui/react-pro'
 
 import React from 'react'

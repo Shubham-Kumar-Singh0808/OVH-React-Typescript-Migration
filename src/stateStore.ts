@@ -8,14 +8,18 @@ import { configureStore } from '@reduxjs/toolkit'
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
+import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
+import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
-  employeeQualificationsDetails: employeeQualificationsReducer,
+  getLoggedInEmployeeData: employeeGeneralInformationReducer,
+  familyDetails: personalInfoReducer,
   sidebarMenu: sidebarMenuSliceReducer,
   userRolesAndPermissions: userRolesAndPermissionsReducer,
+  employeeQualificationsDetails: employeeQualificationsReducer,
   category: categoryReducer,
   skill: skillReducer,
   // add your slice reducers here

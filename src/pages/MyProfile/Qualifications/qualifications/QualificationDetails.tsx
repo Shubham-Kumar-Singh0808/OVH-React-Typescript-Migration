@@ -32,7 +32,12 @@ const QualificationDetails = (): JSX.Element => {
           </CCardHeader>
           <CCardBody>
             <OAddButton />
-            <SkillsTable />
+            <SkillsTable
+              isFieldDisabled={true}
+              striped={true}
+              bordered={false}
+              tableClassName={''}
+            />
           </CCardBody>
         </>
       )}
