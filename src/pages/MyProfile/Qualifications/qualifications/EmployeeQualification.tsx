@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { CCol, CForm, CRow } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
-  getEmployeeQualifications,
+  getAllEmployeeQualifications,
   selectEmployeeId,
   selectEmployeeQualification,
 } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
@@ -14,7 +14,7 @@ const EmployeeQualifications = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(getEmployeeQualifications(employeeId))
+    dispatch(getAllEmployeeQualifications(employeeId))
   }, [dispatch, employeeId])
   return (
     <>

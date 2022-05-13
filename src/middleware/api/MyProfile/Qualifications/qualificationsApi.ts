@@ -9,7 +9,7 @@ import {
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-export const fetchEmployeeQualifications = async (
+export const getEmployeeQualifications = async (
   employeeId: string | number,
 ): Promise<EmployeeQualifications> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -23,7 +23,7 @@ export const fetchEmployeeQualifications = async (
   return response.data
 }
 
-export const fetchEmployeeCertifications = async (): Promise<
+export const getEmployeeCertifications = async (): Promise<
   EmployeeCertifications[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -34,7 +34,7 @@ export const fetchEmployeeCertifications = async (): Promise<
   return response.data
 }
 
-export const fetchEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
+export const getEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApi.getEmployeeSkillsList,
     method: AllowedHttpMethods.get,
@@ -43,7 +43,7 @@ export const fetchEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
   return response.data
 }
 
-export const fetchPgLookUpAndGraduationLookUpListItems =
+export const getPgLookUpAndGraduationLookUpListItems =
   async (): Promise<PostGraduationAndGraduationList> => {
     const requestConfig = getAuthenticatedRequestConfig({
       url: qualificationsApi.getPostGraduationAndGraduationList,
@@ -53,7 +53,7 @@ export const fetchPgLookUpAndGraduationLookUpListItems =
     return response.data
   }
 
-export const saveEmployeeQualifications = async (
+export const saveInitialEmployeeQualifications = async (
   addQualification: EmployeeQualifications,
 ): Promise<EmployeeQualifications> => {
   const { id, ...addQualificationRest } = addQualification

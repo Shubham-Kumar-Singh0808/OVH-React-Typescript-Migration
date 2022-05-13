@@ -6,13 +6,13 @@ import {
   EmployeeSkills,
   PostGraduationAndGraduationList,
 } from '../../../types/MyProfile/Qualifications/qualificationTypes'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import {
-  fetchEmployeeCertifications,
-  fetchEmployeeQualifications,
-  fetchEmployeeSkills,
-  fetchPgLookUpAndGraduationLookUpListItems,
-  saveEmployeeQualifications,
+  getEmployeeCertifications,
+  getEmployeeQualifications,
+  getPgLookUpAndGraduationLookUpListItems,
+  getEmployeeSkills,
+  saveInitialEmployeeQualifications,
   updateEmployeeQualifications,
 } from '../../../middleware/api/MyProfile/Qualifications/qualificationsApi'
 
@@ -21,7 +21,7 @@ import { ValidationError } from '../../../types/commonTypes'
 
 const initialQualificationState = {} as EmployeeQualificationDetails
 
-export const getEmployeeQualifications = createAsyncThunk<
+export const getAllEmployeeQualifications = createAsyncThunk<
   EmployeeQualifications | undefined,
   string | number,
   {
@@ -30,10 +30,10 @@ export const getEmployeeQualifications = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'employeeQualifications/getEmployeeQualifications',
+  'employeeQualifications/getAllEmployeeQualifications',
   async (employeeId: string | number, thunkApi) => {
     try {
-      return await fetchEmployeeQualifications(employeeId)
+      return await getEmployeeQualifications(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -41,7 +41,7 @@ export const getEmployeeQualifications = createAsyncThunk<
   },
 )
 
-export const getEmployeeCertifications = createAsyncThunk<
+export const getAllEmployeeCertifications = createAsyncThunk<
   EmployeeCertifications[] | undefined,
   void,
   {
@@ -49,16 +49,19 @@ export const getEmployeeCertifications = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('employeeQualifications/getEmployeeCertifications', async (_, thunkApi) => {
-  try {
-    return await fetchEmployeeCertifications()
-  } catch (error) {
-    const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-  }
-})
+>(
+  'employeeQualifications/getAllEmployeeCertifications',
+  async (_, thunkApi) => {
+    try {
+      return await getEmployeeCertifications()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 
-export const getEmployeeSkills = createAsyncThunk<
+export const getAllEmployeeSkills = createAsyncThunk<
   EmployeeSkills[] | undefined,
   void,
   {
@@ -68,7 +71,7 @@ export const getEmployeeSkills = createAsyncThunk<
   }
 >('employeeQualifications/getEmployeeSkills', async (_, thunkApi) => {
   try {
-    return await fetchEmployeeSkills()
+    return await getEmployeeSkills()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -87,7 +90,7 @@ export const postQualificationDetails = createAsyncThunk<
   'employeeQualifications/postQualificationDetails',
   async (addQualification: EmployeeQualifications, thunkApi) => {
     try {
-      return await saveEmployeeQualifications(addQualification)
+      return await saveInitialEmployeeQualifications(addQualification)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -115,7 +118,7 @@ export const updateQualificationDetails = createAsyncThunk<
   },
 )
 
-export const getEmployeePgAndGraduationItems = createAsyncThunk<
+export const getAllEmployeePgAndGraduationItems = createAsyncThunk<
   PostGraduationAndGraduationList | undefined,
   void,
   {
@@ -124,10 +127,10 @@ export const getEmployeePgAndGraduationItems = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'employeeQualifications/getEmployeePgAndGraduationItems',
+  'employeeQualifications/getAllEmployeePgAndGraduationItems',
   async (_, thunkApi) => {
     try {
-      return await fetchPgLookUpAndGraduationLookUpListItems()
+      return await getPgLookUpAndGraduationLookUpListItems()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -141,49 +144,57 @@ const employeeQualificationsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getEmployeeQualifications.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(getEmployeeQualifications.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.qualificationDetails = action.payload as EmployeeQualifications
-      })
-      .addCase(getEmployeeCertifications.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(getEmployeeCertifications.fulfilled, (state, action) => {
+      .addCase(getAllEmployeeCertifications.fulfilled, (state, action) => {
         state.isLoading = false
         state.certificationDetails = action.payload as EmployeeCertifications[]
       })
-      .addCase(getEmployeeSkills.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(getEmployeeSkills.fulfilled, (state, action) => {
+      .addCase(getAllEmployeeSkills.fulfilled, (state, action) => {
         state.isLoading = false
         state.skillDetails = action.payload as EmployeeSkills[]
       })
-      .addCase(getEmployeePgAndGraduationItems.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(getEmployeePgAndGraduationItems.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.pgLookUpAndGraduationLookUpDetails =
-          action.payload as PostGraduationAndGraduationList
-      })
-      .addCase(postQualificationDetails.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(postQualificationDetails.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.qualificationDetails = action.payload as EmployeeQualifications
-      })
-      .addCase(updateQualificationDetails.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(updateQualificationDetails.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.qualificationDetails = action.payload as EmployeeQualifications
-      })
+      .addCase(
+        getAllEmployeePgAndGraduationItems.fulfilled,
+        (state, action) => {
+          state.isLoading = false
+          state.pgLookUpAndGraduationLookUpDetails =
+            action.payload as PostGraduationAndGraduationList
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getAllEmployeeQualifications.pending,
+          updateQualificationDetails.pending,
+          postQualificationDetails.pending,
+        ),
+        (state) => {
+          state.isLoading = true
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getAllEmployeeQualifications.fulfilled,
+          updateQualificationDetails.fulfilled,
+          postQualificationDetails.fulfilled,
+        ),
+        (state, action) => {
+          state.isLoading = false
+          state.qualificationDetails = action.payload as EmployeeQualifications
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getAllEmployeePgAndGraduationItems.rejected,
+          getAllEmployeeQualifications.rejected,
+          getAllEmployeeCertifications.rejected,
+          getAllEmployeeSkills.rejected,
+          updateQualificationDetails.rejected,
+          postQualificationDetails.rejected,
+        ),
+        (state, action) => {
+          state.isLoading = false
+          state.error = action.payload as ValidationError
+        },
+      )
   },
 })
 export const selectEmployeeQualification = (

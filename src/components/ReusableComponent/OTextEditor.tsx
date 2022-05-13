@@ -5,16 +5,12 @@ import draftToHtml from 'draftjs-to-html'
 import htmlToDraft from 'html-to-draftjs'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-
-interface ITextEditorProps {
-  value: string
-  setFieldValue: (val: string) => void
-}
+import { TextEditorProps } from '../../types/commonTypes'
 
 export const OTextEditor = ({
   value,
   setFieldValue,
-}: ITextEditorProps): JSX.Element => {
+}: TextEditorProps): JSX.Element => {
   const prepareDraft = (value: string) => {
     const draft = htmlToDraft(value)
     const contentState = ContentState.createFromBlockArray(draft.contentBlocks)

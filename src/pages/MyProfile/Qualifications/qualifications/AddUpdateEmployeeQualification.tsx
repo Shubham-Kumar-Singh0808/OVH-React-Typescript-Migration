@@ -14,8 +14,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import {
-  getEmployeePgAndGraduationItems,
-  getEmployeeQualifications,
+  getAllEmployeePgAndGraduationItems,
+  getAllEmployeeQualifications,
   postQualificationDetails,
   updateQualificationDetails,
 } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
@@ -75,8 +75,8 @@ const AddUpdateEmployeeQualification = ({
   }, [addQualification])
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(getEmployeePgAndGraduationItems())
-    dispatch(getEmployeeQualifications(employeeId))
+    dispatch(getAllEmployeePgAndGraduationItems())
+    dispatch(getAllEmployeeQualifications(employeeId))
   }, [dispatch, employeeId])
 
   useEffect(() => {
