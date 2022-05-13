@@ -9,7 +9,6 @@ import {
   EditFamilyDetailsState,
   EmployeeFamilyDetails,
   EditVisaDetailsState,
-  AddNewEmployeeVisaDetails,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
@@ -113,32 +112,17 @@ export const fetchVisaCountryDetailsApiCall = async (
   const response = await axios(requestConfig)
   return response.data
 }
-export const addNewVisaMemberApiCall = async (
-  addNewEmployeeVisaDetails: AddNewEmployeeVisaDetails,
+export const getAddNewVisaMemberApiCall = async (
+  employeeVisaDetails: EmployeeVisaDetails,
 ): Promise<number | undefined> => {
-  const requestConfigVisaDetails = getAuthenticatedRequestConfig({
+  const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApi.addNewVisaMember,
     method: AllowedHttpMethods.post,
-    data: addNewEmployeeVisaDetails.employeeVisaDetailsObject,
+    data: employeeVisaDetails,
   })
-  const responseVisa = await axios(requestConfigVisaDetails)
-  if (responseVisa && addNewEmployeeVisaDetails.file) {
-    const requestConfig = getAuthenticatedRequestConfig({
-      url: personalInfoApi.fileUploadVisaImage,
-      method: AllowedHttpMethods.post,
-      data: { ...addNewEmployeeVisaDetails.file },
-      additionalHeaders: {
-        'Content-Type': 'multipart/form-data',
-      },
-      params: {
-        visaId: responseVisa.data,
-      },
-    })
-    const response = await axios(requestConfig)
-    return response.data
-  }
+  const responseVisa = await axios(requestConfig)
+  return responseVisa.data
 }
-
 export const getVisaInformationByVisaIdApiCall = async (
   id: number,
 ): Promise<EditVisaDetailsState> => {

@@ -53,8 +53,8 @@ export type EmployeeVisaDetails = {
   visaType?: string
   countryId: number | string
   countryName?: string
-  dateOfIssue?: string | number | undefined
-  dateOfExpire?: string | number | undefined
+  dateOfIssue?: string | number
+  dateOfExpire?: string | number
   createdBy?: string
   updatedBy?: string
   createdDate?: string | number
@@ -123,8 +123,4 @@ export type EmployeeFamilyDetailsTableProps = {
 }
 export type EmployeeVisaDetailsTableProps = {
   editVisaButtonHandler: (id: number) => void
-}
-export type AddNewEmployeeVisaDetails = {
-  employeeVisaDetailsObject: EmployeeVisaDetails
-  file: FormData
 }

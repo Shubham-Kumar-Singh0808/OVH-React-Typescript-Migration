@@ -22,7 +22,6 @@ import DatePicker from 'react-datepicker'
 import {
   AddEditEmployeeVisaDetails,
   EmployeeVisaDetails,
-  AddNewEmployeeVisaDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import 'react-datepicker/dist/react-datepicker.css'
 import OToast from '../../../components/ReusableComponent/OToast'
@@ -40,8 +39,6 @@ function AddEditVisaDetails({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
-  const [selectedFile, setSelectedFile] = useState<File | string>()
-  const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState<Date | null>(null)
   const fetchCountryDetails = useTypedSelector(
     (state) => state.familyDetails.SubCountries,
@@ -66,10 +63,6 @@ function AddEditVisaDetails({
       setError(null)
     }
   }, [dateOfIssue, dateOfExpire])
-  const selectImageFile = selectedFile
-    ? imageUrl
-    : 'data:image/jpeg;base64,' + fetchEditVisaDetails?.visaDetailsData
-
   useEffect(() => {
     if (
       employeeVisaDetails?.countryId &&
@@ -98,11 +91,6 @@ function AddEditVisaDetails({
       return { ...prevState, ...{ [name]: value } }
     })
   }
-  const onChangeFileEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.currentTarget as HTMLInputElement
-    const file = target.files?.[0]
-    setSelectedFile(file)
-  }
   const onChangeDateOfIssueHandler = (date: Date) => {
     if (isEditVisaDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
@@ -126,11 +114,6 @@ function AddEditVisaDetails({
     }
     setError(date)
   }
-  useEffect(() => {
-    if (selectedFile) {
-      setImageUrl(URL.createObjectURL(selectedFile as File))
-    }
-  }, [selectedFile])
   const handleClearDetails = () => {
     setEmployeeVisaDetails({
       id: '',
@@ -156,19 +139,10 @@ function AddEditVisaDetails({
     )
   }
   const handleAddVisaDetails = async () => {
-    const formData = new FormData()
-    if (selectedFile) {
-      formData.append('File', selectedFile)
-    }
-    console.log(selectedFile)
-    const employeeVisaDetailsObject = {
+    const prepareObject = {
       ...employeeVisaDetails,
       dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),
       dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
-    }
-    const prepareObject: AddNewEmployeeVisaDetails = {
-      employeeVisaDetailsObject,
-      file: formData,
     }
     const addVisaMemberResultAction = await dispatch(
       doAddNewVisaDetails(prepareObject),
@@ -178,7 +152,6 @@ function AddEditVisaDetails({
       dispatch(dispatch(addToast(getToastMessage(actionMapping.added))))
     }
   }
-
   const handleUpdateVisaMember = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
@@ -308,7 +281,6 @@ function AddEditVisaDetails({
               <DatePicker
                 className="form-control form-control-sm"
                 name="dateOfExpire"
-                minDate={new Date()}
                 value={
                   (dateOfExpire as string) ||
                   (employeeVisaDetails?.dateOfExpire as string)
@@ -323,12 +295,12 @@ function AddEditVisaDetails({
                 placeholderText="dd/mm/yyyy"
                 dateFormat="dd/MM/yyyy"
               />
-              {error && (
-                <p className="text-danger">
-                  Date of Expire should be greater than Date of Issue
-                </p>
-              )}
             </CCol>
+            {error && (
+              <p className="text-danger">
+                Date of Expire should be greater than Date of Issue
+              </p>
+            )}
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
@@ -340,29 +312,14 @@ function AddEditVisaDetails({
                 type="file"
                 name="file"
                 accept="image/*,"
-                onChange={onChangeFileEventHandler}
               />
             </CCol>
-            {selectedFile || fetchEditVisaDetails?.visaDetailsData ? (
-              <CCol sm={{ span: 6, offset: 3 }}>
-                <img
-                  src={selectImageFile}
-                  alt=""
-                  style={{ width: '100px', margin: '10px 0' }}
-                />
-              </CCol>
-            ) : (
-              <>
-                <div className="w-100"></div>
-                <CCol sm={{ span: 6, offset: 3 }}>
-                  <p className=" text-info ">
-                    Note: Please upload less than 400KB size image.
-                  </p>
-                </CCol>
-              </>
-            )}
+            <CCol sm={{ span: 6, offset: 3 }}>
+              <p className=" text-info ">
+                Note: Please upload less than 400KB size image.
+              </p>
+            </CCol>
           </CRow>
-
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               {isEditVisaDetails ? (

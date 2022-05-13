@@ -9,7 +9,6 @@ import {
   EditFamilyDetailsState,
   EmployeeFamilyDetails,
   EditVisaDetailsState,
-  AddNewEmployeeVisaDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -19,7 +18,7 @@ import {
   fetchVisaDetailsApiCall,
   fetchCountryDetailsApiCall,
   fetchVisaCountryDetailsApiCall,
-  addNewVisaMemberApiCall,
+  getAddNewVisaMemberApiCall,
   getFamilyInformationByFamilyIdApiCall,
   getUpdateNewFamilyMemberApiCall,
   getAddNewFamilyMemberApiCall,
@@ -29,6 +28,7 @@ import {
   getDeleteVisaDetailsApiCall,
 } from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
 const initialPersonalInfoTabState = {} as PersonalInfoTabState
+
 export const doFetchFamilyDetails = createAsyncThunk<
   FamilyDetails[] | undefined,
   number | string,
@@ -104,7 +104,7 @@ export const doFetchCountryVisaDetails = createAsyncThunk<
 )
 export const doAddNewVisaDetails = createAsyncThunk<
   number | undefined,
-  AddNewEmployeeVisaDetails,
+  EmployeeVisaDetails,
   {
     dispatch: AppDispatch
     state: RootState
@@ -112,9 +112,9 @@ export const doAddNewVisaDetails = createAsyncThunk<
   }
 >(
   'addEditFamilyDetails/doAddNewVisaDetails',
-  async (addNewEmployeeVisaDetails: AddNewEmployeeVisaDetails, thunkApi) => {
+  async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
-      return await addNewVisaMemberApiCall(addNewEmployeeVisaDetails)
+      return await getAddNewVisaMemberApiCall(employeeVisaDetails)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -298,12 +298,19 @@ const personalInfoTabSlice = createSlice({
         state.editVisaDetails =
           action.payload as unknown as EditVisaDetailsState
       })
+
       .addCase(doDeleteFamilyMember.fulfilled, (state) => {
         state.isLoading = false
       })
       .addCase(doDeleteVisaDetails.fulfilled, (state) => {
         state.isLoading = false
       })
+      .addMatcher(
+        isAnyOf(doUpdateVisaDetails.fulfilled, doUpdateVisaDetails.fulfilled),
+        (state) => {
+          state.isLoading = false
+        },
+      )
       .addMatcher(
         isAnyOf(doFetchFamilyDetails.pending, doFetchVisaDetails.pending),
         (state) => {
