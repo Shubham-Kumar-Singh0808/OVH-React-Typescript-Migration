@@ -8,15 +8,15 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { doFetchCertifications } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 const CertificationsTable = (): JSX.Element => {
   const employeeCertificateData = useTypedSelector(
-    (state) => state.employeeCertifications.certificationDetails,
+    (state) => state.employeeQualificationsDetails.certificationDetails,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchCertifications())
+    dispatch(getAllEmployeeCertifications())
   }, [dispatch])
   return (
     <>
@@ -78,7 +78,7 @@ const CertificationsTable = (): JSX.Element => {
       <strong>
         {employeeCertificateData?.length
           ? `Total Records: ${employeeCertificateData.length}`
-          : `No Records found`}
+          : `No Records Found`}
       </strong>
     </>
   )

@@ -8,7 +8,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { fetchSkills } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { getAllEmployeeSkills } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 import { EmployeeSkillInfo } from '../../../../types/MyProfile/Qualifications/qualificationTypes'
 const SkillsTable: React.FC<EmployeeSkillInfo> = ({
@@ -18,12 +18,12 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
   tableClassName = '',
 }: EmployeeSkillInfo): JSX.Element => {
   const employeeSkillsData = useTypedSelector(
-    (state) => state.employeeSkills.SkillDetails,
+    (state) => state.employeeQualificationsDetails.skillDetails,
   )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(fetchSkills())
+    dispatch(getAllEmployeeSkills())
   }, [dispatch])
   const tableHeaderCellProps = {
     width: '25%',

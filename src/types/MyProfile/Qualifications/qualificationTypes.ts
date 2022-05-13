@@ -1,18 +1,20 @@
 import { ValidationError } from '../../commonTypes'
 
-export type PgAndGraduationLookUpType = {
-  id: number
+export type PostGraduationAndGraduationLookUp = {
+  id: string
   label: string
 }
-export type EmployeeQualificationsType = {
-  pgLookUp: PgAndGraduationLookUpType[]
-  graduationLookUp: PgAndGraduationLookUpType[]
+export type EmployeeQualifications = {
+  id: number | string
+  empId: number | string
+  pgLookUp: PostGraduationAndGraduationLookUp[]
+  graduationLookUp: PostGraduationAndGraduationLookUp[]
   hscName: string
   sscName: string
   others: string
 }
 
-export type CertificationDetailsType = {
+export type EmployeeCertifications = {
   certificateType: string
   technology: string
   code: string
@@ -23,25 +25,38 @@ export type CertificationDetailsType = {
   name: string
 }
 
-export type SkillDetailsType = {
+export type EmployeeSkills = {
   categoryType: string
   skillType: string
   competency: string
   expMonth: string
   expYear: string
 }
-
-export type EmployeeQualificationStateType = {
-  qualificationDetails: EmployeeQualificationsType
-  certificationDetails: CertificationDetailsType[]
-  SkillDetails: SkillDetailsType[]
-  isLoading: boolean
-  error: ValidationError
-}
-
 export interface EmployeeSkillInfo {
   striped: boolean
   bordered: boolean
   tableClassName: string
   isFieldDisabled: boolean
+}
+export type QualificationProps = {
+  addButtonHandler?: () => void
+  backButtonHandler?: () => void
+  isEmployeeQualificationExist?: boolean
+}
+export type AddUpdateEmployeeQualificationProps = {
+  addButtonHandler?: () => void
+  backButtonHandler: () => void
+  isEmployeeQualificationExist?: boolean
+}
+export type PostGraduationAndGraduationList = {
+  graduationDetails: PostGraduationAndGraduationLookUp[]
+  pgDetails: PostGraduationAndGraduationLookUp[]
+}
+export type EmployeeQualificationDetails = {
+  qualificationDetails: EmployeeQualifications
+  certificationDetails: EmployeeCertifications[]
+  skillDetails: EmployeeSkills[]
+  pgLookUpAndGraduationLookUpDetails: PostGraduationAndGraduationList
+  isLoading: boolean
+  error: ValidationError
 }

@@ -17,6 +17,7 @@ export enum AllowedHttpMethods {
   post = 'post',
   update = 'update',
   delete = 'delete',
+  put = 'put',
 }
 
 export const authenticationApi: AuthenticationApi = {
@@ -36,11 +37,6 @@ export const userRolesConfigurationApi: UserRolesConfigurationApi = {
   assignPermission: apiPrefix + '/roleFeature/assignPermission',
 }
 
-export const qualificationsApi: QualificationsApi = {
-  employeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
-  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
-  getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',
-}
 export const categoriesApi: CategoryApi = {
   getAllCategories: apiPrefix + '/jobapplicant/getAllCategories',
   addCategory: apiPrefix + '/jobapplicant/addCategory',
@@ -60,4 +56,13 @@ export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
 
 export const personalInfoApi: PersonalInfoApi = {
   getFamilyDetails: apiPrefix + '/Employee/familyInformation',
+}
+
+export const qualificationsApi: QualificationsApi = {
+  getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
+  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
+  getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',
+  addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
+  getPostGraduationAndGraduationList: apiPrefix + '/Employee/multipleSelection',
+  updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
 }

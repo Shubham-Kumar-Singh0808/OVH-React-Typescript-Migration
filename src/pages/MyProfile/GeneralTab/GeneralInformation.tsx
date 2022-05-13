@@ -2,7 +2,7 @@ import { CCardHeader, CRow, CCol } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
-  fetchEmployeeGeneralInformation,
+  getEmployeeGeneralInformation,
   selectLoggedInData,
 } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { selectEmployeeId } from '../../../reducers/Login/authenticationSlice'
@@ -13,7 +13,7 @@ const EmployeeGeneralInformation = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchEmployeeGeneralInformation(employeeId as string))
+    dispatch(getEmployeeGeneralInformation(employeeId as string))
   }, [dispatch, employeeId])
 
   return (

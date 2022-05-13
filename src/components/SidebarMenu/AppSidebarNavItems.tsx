@@ -8,7 +8,7 @@ import { setReRenderMenu } from '../../reducers/appSlice'
 
 const AppSidebarNavItems = (): JSX.Element => {
   const location = useLocation()
-  const employeeId = useTypedSelector(
+  const employeeId: string | number = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
   const reRenderMenu: boolean = useTypedSelector(

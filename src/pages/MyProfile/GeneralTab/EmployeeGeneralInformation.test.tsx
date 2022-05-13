@@ -10,7 +10,7 @@ import { setupServer } from 'msw/node'
 import stateStore from '../../../stateStore'
 import { employeeGeneralInformationApi } from '../../../middleware/api/apiList'
 import { mockGeneralInformationData } from '../../../test/data/generalInformationData'
-import { fetchEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { getEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import GeneralTab from './GeneralTab'
 
 const ReduxProvider = ({
@@ -54,7 +54,7 @@ const employeeGeneralInformationSlice = () =>
 describe('Employee General Information Testing', () => {
   it('should be fetched from the server and put in the store', async () => {
     await stateStore.dispatch(
-      fetchEmployeeGeneralInformation(employeeId as string),
+      getEmployeeGeneralInformation(employeeId as string),
     )
     expect(employeeGeneralInformationSlice()).toMatchObject(
       mockGeneralInformationData,

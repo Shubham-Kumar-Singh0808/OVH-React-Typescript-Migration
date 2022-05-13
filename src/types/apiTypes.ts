@@ -32,8 +32,13 @@ export interface EmployeeGeneralInformationApi extends ApiBase {
 export interface PersonalInfoApi extends ApiBase {
   getFamilyDetails: string
 }
-export interface EmployeeSkillList extends ApiBase {
+export interface QualificationsApi extends ApiBase {
+  getEmployeeQualifications: string
   getEmployeeSkillsList: string
+  getEmployeeCertificatesList: string
+  getPostGraduationAndGraduationList: string
+  addEmployeeQualifications: string
+  updateEmployeeQualifications: string
 }
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string
@@ -43,10 +48,4 @@ export interface UserRolesConfigurationApi extends ApiBase {
   getSubFeatures: string
   featuresUnderRole: string
   assignPermission: string
-}
-
-export interface QualificationsApi extends ApiBase {
-  employeeQualifications: string
-  getEmployeeSkillsList: string
-  getEmployeeCertificatesList: string
 }

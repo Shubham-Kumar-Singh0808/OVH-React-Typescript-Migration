@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import TabsLabels from '../../../middleware/TabsLabels'
 import GeneralTab from '../GeneralTab/GeneralTab'
+import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
@@ -27,11 +28,8 @@ const MyProfileTabs = (): JSX.Element => {
       1: <GeneralTab />,
       2: <h1>Basic Info</h1>,
       3: <h1>Personal Info</h1>,
-      4: <h1>Qualification</h1>,
-      5: <h1>Reviews</h1>,
-      6: <h1>projects</h1>,
-      7: <h1>Reportees</h1>,
-      8: <h1>Assets</h1>,
+      4: <QualificationDetails />,
+      6: <h1>Projects</h1>,
     }
     return showTabContent[tabKey] || 'Tab Content not available'
   }

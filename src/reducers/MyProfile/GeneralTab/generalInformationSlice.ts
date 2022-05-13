@@ -4,21 +4,21 @@ import {
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { getEmployeeGeneralInformation } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
+import { getEmployeeGeneralInformationApi } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
 import { ValidationError } from '../../../types/commonTypes'
 import { RootState } from '../../../stateStore'
 
 const initialGeneralInformationState = {} as EmployeeGeneralInformationState
 
-export const fetchEmployeeGeneralInformation = createAsyncThunk<
+export const getEmployeeGeneralInformation = createAsyncThunk<
   { generalInformation: EmployeeGeneralInformation } | undefined,
   string,
   { rejectValue: ValidationError }
 >(
-  'getLoggedInEmployeeData/fetchEmployeeGeneralInformation',
+  'getLoggedInEmployeeData/getEmployeeGeneralInformation',
   async (employeeId: string, thunkApi) => {
     try {
-      return await getEmployeeGeneralInformation(employeeId)
+      return await getEmployeeGeneralInformationApi(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -39,13 +39,13 @@ const employeeGeneralInformationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEmployeeGeneralInformation.pending, (state) => {
+      .addCase(getEmployeeGeneralInformation.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(fetchEmployeeGeneralInformation.fulfilled, (state, action) => {
+      .addCase(getEmployeeGeneralInformation.fulfilled, (state, action) => {
         return { ...state, ...action.payload, isLoading: false }
       })
-      .addCase(fetchEmployeeGeneralInformation.rejected, (state, action) => {
+      .addCase(getEmployeeGeneralInformation.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as ValidationError
       })

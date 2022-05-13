@@ -1,16 +1,15 @@
 {
-    "cSpell.words": [
-<<<<<<< HEAD
-        "personalinfotab"
-=======
-        "coreui",
-        "createaccess",
-        "deleteaccess",
-        "headwrap",
-        "infocheckbox",
-        "reduxjs",
-        "updateaccess",
-        "viewaccess"
->>>>>>> develop
-    ]
-}
+        "cSpell.words": [
+            "formik",
+            "testid",
+            "coreui",
+            "createaccess",
+            "deleteaccess",
+            "headwrap",
+            "infocheckbox",
+            "reduxjs",
+            "updateaccess",
+            "viewaccess"
+        ]
+    }
+    
