@@ -2,6 +2,7 @@ import {
   AuthenticationApi,
   CategoryApi,
   QualificationsApi,
+  SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
 } from '../../types/apiTypes'
@@ -21,7 +22,9 @@ export const authenticationApi: AuthenticationApi = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
-
+export const sideMenuApi: SideMenuApi = {
+  getMenuData: apiPrefix + '/roleFeature/menuItems',
+}
 export const userRolesConfigurationApi: UserRolesConfigurationApi = {
   getUserRoles: apiPrefix + '/roleFeature/roles',
   isUserRoleExists: apiPrefix + '/roleFeature/isRoleExits',
