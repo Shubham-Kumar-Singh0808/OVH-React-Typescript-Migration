@@ -26,8 +26,19 @@ import {
   getUpdateNewVisaMemberApiCall,
   getDeleteNewFamilyMemberApiCall,
   getDeleteVisaDetailsApiCall,
-} from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
-const initialPersonalInfoTabState = {} as PersonalInfoTabState
+} from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
+const initialPersonalInfoTabState: PersonalInfoTabState = {
+  getFamilyDetails: [],
+  getVisaDetails: [],
+  SubCountries: {} as GetCountryDetails,
+  SubVisa: [],
+  addVisaDetails: {} as EmployeeVisaDetails,
+  editFamilyDetails: {} as EditFamilyDetailsState,
+  editVisaDetails: {} as EditVisaDetailsState,
+  addFamilyDetails: {} as EmployeeFamilyDetails,
+  isLoading: false,
+  error: 0,
+}
 
 export const doFetchFamilyDetails = createAsyncThunk<
   FamilyDetails[] | undefined,
@@ -343,4 +354,7 @@ const personalInfoTabSlice = createSlice({
       )
   },
 })
+export const selectGetFamilyDetails = (state: RootState): FamilyDetails[] =>
+  state.familyDetails.getFamilyDetails
+
 export default personalInfoTabSlice.reducer

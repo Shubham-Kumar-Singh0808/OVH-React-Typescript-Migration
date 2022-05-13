@@ -206,7 +206,7 @@ function AddEditVisaDetails({
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Country</option>
-                {fetchCountryDetails?.countries.map((countriesItem, index) => (
+                {fetchCountryDetails?.countries?.map((countriesItem, index) => (
                   <option key={index} value={countriesItem.id}>
                     {countriesItem.name}
                   </option>

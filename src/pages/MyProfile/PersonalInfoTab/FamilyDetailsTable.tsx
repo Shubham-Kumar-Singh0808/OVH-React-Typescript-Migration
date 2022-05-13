@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
   doFetchFamilyDetails,
   doDeleteFamilyMember,
+  selectGetFamilyDetails,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import {
   CButton,
@@ -25,9 +26,7 @@ const FamilyDetailsTable = ({
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-  const fetchFamilyDetails = useTypedSelector(
-    (state) => state.familyDetails.getFamilyDetails,
-  )
+  const getFamilyDetails = useTypedSelector(selectGetFamilyDetails)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(doFetchFamilyDetails(employeeId))
@@ -53,6 +52,15 @@ const FamilyDetailsTable = ({
       )
     }
   }
+  const sortedFamilyDetails = useMemo(() => {
+    if (getFamilyDetails) {
+      return getFamilyDetails
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.personName.localeCompare(sortNode2.personName),
+        )
+    }
+  }, [getFamilyDetails])
   return (
     <>
       <CTable striped>
@@ -67,43 +75,40 @@ const FamilyDetailsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {fetchFamilyDetails?.length > 0 &&
-            fetchFamilyDetails?.map((family, index) => (
-              <CTableRow key={index}>
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                <CTableDataCell scope="row">{family.personName}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  {family.relationShip}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {family.contactNumber || 'N/A'}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {family.dateOfBirth || 'N/A'}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  <CButton
-                    color="info"
-                    className="btn-ovh me-2"
-                    onClick={() => editButtonHandler(family.familyId)}
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    className="btn-ovh me-2"
-                    onClick={() => handleShowDeleteModal(family.familyId)}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            ))}
+          {sortedFamilyDetails?.map((family, index) => (
+            <CTableRow key={index}>
+              <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+              <CTableDataCell scope="row">{family.personName}</CTableDataCell>
+              <CTableDataCell scope="row">{family.relationShip}</CTableDataCell>
+              <CTableDataCell scope="row">
+                {family.contactNumber || 'N/A'}
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                {family.dateOfBirth || 'N/A'}
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CButton
+                  color="info"
+                  className="btn-ovh me-2"
+                  onClick={() => editButtonHandler(family.familyId)}
+                >
+                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </CButton>
+                <CButton
+                  color="danger"
+                  className="btn-ovh me-2"
+                  onClick={() => handleShowDeleteModal(family.familyId)}
+                >
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </CButton>
+              </CTableDataCell>
+            </CTableRow>
+          ))}
         </CTableBody>
       </CTable>
       <strong>
-        {fetchFamilyDetails?.length
-          ? `Total Records: ${fetchFamilyDetails?.length}`
+        {getFamilyDetails?.length
+          ? `Total Records: ${getFamilyDetails?.length}`
           : `No Records found`}
       </strong>
       <OModal
