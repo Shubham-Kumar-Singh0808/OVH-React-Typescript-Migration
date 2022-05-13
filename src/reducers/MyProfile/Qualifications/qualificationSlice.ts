@@ -197,6 +197,8 @@ const employeeQualificationsSlice = createSlice({
       )
   },
 })
+export const selectIsQualificationListLoading = (state: RootState): boolean =>
+  state.qualificationCategory.isLoading
 export const selectEmployeeQualification = (
   state: RootState,
 ): EmployeeQualifications =>
