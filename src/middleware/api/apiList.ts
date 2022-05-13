@@ -43,7 +43,21 @@ export const categoriesApi: CategoryApi = {
   addCategory: apiPrefix + '/jobapplicant/addCategory',
   deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
 }
-
+export const personalInfoApi: PersonalInfoApi = {
+  getFamilyDetails: apiPrefix + '/Employee/familyInformation',
+  getVisaDetails: apiPrefix + '/Employee/getEmployeeVisaDetailsList',
+  getCountryDetails: apiPrefix + '/Employee/getCountryLookUps',
+  getVisaTypeDetails: apiPrefix + '/Employee/getCountryChangeList',
+  addNewVisaMember: apiPrefix + '/Employee/saveVisaDetails',
+  getFamilyInformation: apiPrefix + '/Employee/getFamilyInformation',
+  updateFamilyInformation: apiPrefix + '/Employee/updateFamilyInformation',
+  addNewFamilyMember: apiPrefix + '/Employee/saveFamilyInformation',
+  getVisaInformation: apiPrefix + '/Employee/getVisaDetails',
+  updateVisaInformation: apiPrefix + '/Employee/updateVisaDetailsToEmployee',
+  deleteFamilyMember: apiPrefix + '/Employee/deleteFamilymember',
+  deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
+  fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
+}
 export const skillsApi: SkillApi = {
   getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',
   addNewSkillForCategory:
@@ -60,11 +74,6 @@ export const qualificationCategoryApi: QualificationCategoryApi = {
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
   getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
 }
-
-export const personalInfoApi: PersonalInfoApi = {
-  getFamilyDetails: apiPrefix + '/Employee/familyInformation',
-}
-
 export const qualificationsApi: QualificationsApi = {
   getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
   getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',

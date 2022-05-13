@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import {
+  doFetchFamilyDetails,
+  doDeleteFamilyMember,
+  selectGetFamilyDetails,
+} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import {
   CButton,
   CTable,
@@ -8,26 +14,50 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import {
-  getFamilyDetails,
-  selectGetFamilyDetails,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { FamilyInfo } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-const FamilyDetailsTable: React.FC<FamilyInfo> = ({
+import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { addToast } from '../../../reducers/appSlice'
+const FamilyDetailsTable = ({
+  editButtonHandler,
   isFieldDisabled = false,
   striped = true,
   bordered = true,
   tableClassName = '',
-}: FamilyInfo): JSX.Element => {
+}: EmployeeFamilyDetailsTableProps): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-  const familyDetails = useTypedSelector(selectGetFamilyDetails)
+  const getFamilyDetails = useTypedSelector(selectGetFamilyDetails)
   const dispatch = useAppDispatch()
+
   useEffect(() => {
-    dispatch(getFamilyDetails(employeeId as string))
+    dispatch(doFetchFamilyDetails(employeeId))
   }, [dispatch, employeeId])
+  const handleShowDeleteModal = (familyId: number) => {
+    setIsDeleteModalVisible(true)
+    setToDeleteFamilyId(familyId)
+  }
+
+  const handleConfirmDeleteFamilyDetails = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteFamilyMemberResultAction = await dispatch(
+      doDeleteFamilyMember(toDeleteFamilyId),
+    )
+    if (doDeleteFamilyMember.fulfilled.match(deleteFamilyMemberResultAction)) {
+      dispatch(doFetchFamilyDetails(employeeId))
+      dispatch(
+        addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Family Detail deleted successfully"
+          />,
+        ),
+      )
+    }
+  }
   const tableHeaderCellProps = {
     width: '25%',
     scope: 'col',
@@ -36,15 +66,16 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
     colSpan: 4,
     className: 'fw-semibold',
   }
+
   const sortedFamilyDetails = useMemo(() => {
-    if (familyDetails) {
-      return familyDetails
+    if (getFamilyDetails) {
+      return getFamilyDetails
         .slice()
         .sort((sortNode1, sortNode2) =>
           sortNode1.personName.localeCompare(sortNode2.personName),
         )
     }
-  }, [familyDetails])
+  }, [getFamilyDetails])
   return (
     <>
       <CTable
@@ -111,10 +142,18 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
               </CTableDataCell>
               {isFieldDisabled ? (
                 <CTableDataCell scope="row">
-                  <CButton color="info" className="btn-ovh me-2">
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-2"
+                    onClick={() => editButtonHandler?.(family.familyId)}
+                  >
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </CButton>
-                  <CButton color="danger" className="btn-ovh me-2">
+                  <CButton
+                    color="danger"
+                    className="btn-ovh me-2"
+                    onClick={() => handleShowDeleteModal(family.familyId)}
+                  >
                     <i className="fa fa-trash-o" aria-hidden="true"></i>
                   </CButton>
                 </CTableDataCell>
@@ -128,10 +167,21 @@ const FamilyDetailsTable: React.FC<FamilyInfo> = ({
       {isFieldDisabled && (
         <>
           <strong>
-            {familyDetails?.length
-              ? `Total Records: ${familyDetails?.length}`
+            {getFamilyDetails?.length
+              ? `Total Records: ${getFamilyDetails?.length}`
               : `No Records found`}
           </strong>
+          <OModal
+            alignment="center"
+            visible={isDeleteModalVisible}
+            setVisible={setIsDeleteModalVisible}
+            modalHeaderClass="d-none"
+            confirmButtonText="Yes"
+            cancelButtonText="No"
+            confirmButtonAction={handleConfirmDeleteFamilyDetails}
+          >
+            {`Do you really want to delete this ?`}
+          </OModal>
         </>
       )}
     </>

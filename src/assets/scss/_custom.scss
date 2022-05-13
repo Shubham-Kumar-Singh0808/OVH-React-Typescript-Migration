@@ -115,3 +115,6 @@ dd {
 .table-striped > thead > tr:nth-of-type(even) > * {
   background-color: $white;
 }
+input.form-control, select.form-select{
+  height: 34px;
+}
