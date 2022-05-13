@@ -24,5 +24,7 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/session-timeout';
 @import './components/inline-tabs-nav';
 @import './pages/login';
+@import './pages/qualifications-tab';
+@import './components/richtexteditor';
 @import './components/omodal';
 @import './components/user-role-features-expandable-table';

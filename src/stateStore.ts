@@ -2,6 +2,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
+import employeeQualificationsReducer from './reducers/MyProfile/Qualifications/qualificationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import { configureStore } from '@reduxjs/toolkit'
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
@@ -12,6 +13,7 @@ import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfigu
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
+  employeeQualificationsDetails: employeeQualificationsReducer,
   sidebarMenu: sidebarMenuSliceReducer,
   userRolesAndPermissions: userRolesAndPermissionsReducer,
   category: categoryReducer,
