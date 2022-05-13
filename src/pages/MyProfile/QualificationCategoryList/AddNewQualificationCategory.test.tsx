@@ -37,31 +37,31 @@ describe('Add New Qualification Category Testing', () => {
       screen.getByRole('option', { name: 'Select Category' }).selected,
     ).toBe(true)
   })
-})
 
-test('should display the correct number of options, including default option', () => {
-  render(
-    <ReduxProvider reduxStore={stateStore}>
-      <AddNewQualificationCategory />
-    </ReduxProvider>,
-  )
-  //including heading
-  expect(screen.getAllByRole('option').length).toBe(3)
-})
+  test('should display the correct number of options, including default option', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <AddNewQualificationCategory />
+      </ReduxProvider>,
+    )
+    //including heading
+    expect(screen.getAllByRole('option').length).toBe(3)
+  })
 
-it('should allow user to change Options', () => {
-  render(
-    <ReduxProvider reduxStore={stateStore}>
-      <AddNewQualificationCategory />
-    </ReduxProvider>,
-  )
-  userEvent.selectOptions(
-    // Find the select element.
-    screen.getByRole('combobox'),
-    // Find and select the Post Graduation option.
-    screen.getByRole('option', { name: 'Post Graduation' }),
-  )
-  expect(screen.getByRole('option', { name: 'Post Graduation' }).selected).toBe(
-    true,
-  )
+  it('should allow user to change Options', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <AddNewQualificationCategory />
+      </ReduxProvider>,
+    )
+    userEvent.selectOptions(
+      // Find the select element.
+      screen.getByRole('combobox'),
+      // Find and select the Post Graduation option.
+      screen.getByRole('option', { name: 'Post Graduation' }),
+    )
+    expect(
+      screen.getByRole('option', { name: 'Post Graduation' }).selected,
+    ).toBe(true)
+  })
 })

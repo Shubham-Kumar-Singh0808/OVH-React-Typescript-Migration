@@ -36,20 +36,4 @@ describe('Qualification Detail List Table Testing', () => {
       expect(screen.getByText('No data to display')).toBeInTheDocument()
     })
   })
-  test('should render table with data without crashing', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <QualificationCategoryListTable />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      expectPageSizeToBeRendered(20)
-      expect(
-        screen.getByText(
-          'Total Records: ' + mockQualificationCategories.length,
-        ),
-      ).toBeInTheDocument()
-    })
-  })
 })
