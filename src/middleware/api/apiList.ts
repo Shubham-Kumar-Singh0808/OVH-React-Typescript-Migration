@@ -1,6 +1,7 @@
 import {
   AuthenticationApi,
   CategoryApi,
+  QualificationsApi,
   SideMenuApi,
   SkillApi,
   PersonalInfoApi,
@@ -60,4 +61,13 @@ export const skillsApi: SkillApi = {
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
+}
+
+export const qualificationsApi: QualificationsApi = {
+  getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
+  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
+  getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',
+  addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
+  getPostGraduationAndGraduationList: apiPrefix + '/Employee/multipleSelection',
+  updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
 }

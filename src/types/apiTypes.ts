@@ -24,6 +24,15 @@ export interface SkillApi extends ApiBase {
   addNewSkillForCategory: string
   deleteSkillForCategory: string
 }
+
+export interface QualificationsApi extends ApiBase {
+  getEmployeeQualifications: string
+  getEmployeeSkillsList: string
+  getEmployeeCertificatesList: string
+  getPostGraduationAndGraduationList: string
+  addEmployeeQualifications: string
+  updateEmployeeQualifications: string
+}
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string
   isUserRoleExists: string

@@ -10,6 +10,8 @@ import React, { useEffect, useState } from 'react'
 import OCard from '../../../components/ReusableComponent/OCard'
 import TabsLabels from '../../../middleware/TabsLabels'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
+import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
+
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
@@ -29,7 +31,7 @@ const MyProfileTabs = (): JSX.Element => {
       1: <OCard />,
       2: <h1>Basic Info</h1>,
       3: <PersonalInfoTab />,
-      4: <h1>Qualification Details</h1>,
+      4: <QualificationDetails />,
       5: <h1>Review</h1>,
       6: <h1>Projects</h1>,
     }

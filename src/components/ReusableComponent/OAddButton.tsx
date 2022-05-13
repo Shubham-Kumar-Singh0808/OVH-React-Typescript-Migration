@@ -1,7 +1,7 @@
 import React from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import { AddButtonProps } from '../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-const OAddButton = ({ addButtonHandler }: AddButtonProps): JSX.Element => {
+import { QualificationProps } from '../../types/MyProfile/Qualifications/qualificationTypes'
+const OAddButton = ({ addButtonHandler }: QualificationProps): JSX.Element => {
   return (
     <>
       <CRow className="justify-content-end">
