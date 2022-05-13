@@ -12,12 +12,13 @@ import {
   selectIsQualificationCategoryListLoading,
 } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import CIcon from '@coreui/icons-react'
 import QualificationCategoryListTable from './QualificationCategoryListTable'
-import { cilArrowLeft } from '@coreui/icons'
 import AddNewQualificationCategory from './AddNewQualificationCategory'
+import { AddUpdateEmployeeQualificationProps } from '../../../types/MyProfile/Qualifications/qualificationTypes'
 
-const QualificationCategoryList = (): JSX.Element => {
+const QualificationCategoryList = ({
+  backButtonHandler,
+}: AddUpdateEmployeeQualificationProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(selectIsQualificationCategoryListLoading)
 
@@ -29,15 +30,14 @@ const QualificationCategoryList = (): JSX.Element => {
     <>
       {!isLoading ? (
         <>
-          <CCardHeader className="ps-0 pe-0">
-            Qualification Detail List
+          <CCardHeader>
+            <h4 className="h4">Qualification Detail List</h4>
           </CCardHeader>
           <CCardBody className="ps-0 pe-0">
             <CRow>
               <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
-                <CButton color="info" className="px-4 text-white" size="sm">
-                  <CIcon icon={cilArrowLeft} />
-                  Back
+                <CButton color="info btn-ovh me-1" onClick={backButtonHandler}>
+                  <i className="fa fa-arrow-left  me-1"></i>Back
                 </CButton>
               </CCol>
               <CCol xs={12}>

@@ -96,7 +96,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
   }
 
   const formLabelProps = {
-    htmlFor: 'inputNewCategory',
+    htmlFor: 'inputNewQualifictionCategory',
     className: 'col-form-label category-label',
   }
 
@@ -124,6 +124,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
               aria-label="Default select example"
               size="sm"
               name="qualificationCategory"
+              value={newQualificationCategory?.qualificationCategory}
               onChange={handleInputChange}
             >
               <option value={''}>Select Category</option>

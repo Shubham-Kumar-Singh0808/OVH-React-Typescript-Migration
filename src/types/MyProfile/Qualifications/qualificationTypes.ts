@@ -32,7 +32,7 @@ export type EmployeeSkills = {
   expMonth: string
   expYear: string
 }
-export type QualificationProps = {
+export type AddBackButtonsProps = {
   addButtonHandler?: () => void
   backButtonHandler?: () => void
   isEmployeeQualificationExist?: boolean
