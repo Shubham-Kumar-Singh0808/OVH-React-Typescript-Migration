@@ -7,26 +7,26 @@ import {
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
-import { fetchFamilyDetailsApiCall } from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
+import { getEmployeeFamilyDetails } from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 const initialPersonalInfoTabState: PersonalInfoTabStateType = {
   getFamilyDetails: [],
   addFamilyState: {} as EmployeeFamilyDetails,
   error: 0,
   isLoading: false,
 }
-export const doFetchFamilyDetails = createAsyncThunk<
+export const fetchFamilyDetails = createAsyncThunk<
   FamilyDetailsModal[] | undefined,
-  number | string,
+  string,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
 >(
-  'familyDetailsTable/doFetchFamilyDetails',
-  async (employeeId: number | string, thunkApi) => {
+  'familyDetailsTable/fetchFamilyDetails',
+  async (employeeId: string, thunkApi) => {
     try {
-      return await fetchFamilyDetailsApiCall(employeeId)
+      return await getEmployeeFamilyDetails(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -39,7 +39,7 @@ const familyDetailsTableSlice = createSlice({
   initialState: initialPersonalInfoTabState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(doFetchFamilyDetails.fulfilled, (state, action) => {
+    builder.addCase(fetchFamilyDetails.fulfilled, (state, action) => {
       state.isLoading = false
       state.getFamilyDetails = action.payload as FamilyDetailsModal[]
     })

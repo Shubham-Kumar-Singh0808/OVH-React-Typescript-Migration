@@ -72,7 +72,7 @@ export const selectError = (state: RootState): ValidationError =>
   state.authentication.error
 export const selectToken = (state: RootState): string =>
   state.authentication.authenticatedUser.token
-export const selectEmployeeId = (state: RootState): number =>
-  state.authentication.authenticatedUser.employeeId as number
+export const selectEmployeeId = (state: RootState): string =>
+  state.authentication.authenticatedUser.employeeId as string
 
 export default authenticationSlice.reducer

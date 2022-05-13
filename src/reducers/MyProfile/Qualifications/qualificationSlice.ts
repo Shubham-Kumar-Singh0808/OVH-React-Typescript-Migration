@@ -11,7 +11,7 @@ import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import {
   fetchEmployeeCertifications,
-  fetchEmployeeQualifications,
+  getEmployeeQualifications,
   fetchEmployeeSkills,
 } from '../../../middleware/api/MyProfile/Qualifications/qualificationsApi'
 
@@ -19,7 +19,7 @@ const initialQualificationState = {} as EmployeeQualificationStateType
 
 export const doFetchQualifications = createAsyncThunk<
   EmployeeQualificationsType | undefined,
-  string | number,
+  string,
   {
     dispatch: AppDispatch
     state: RootState
@@ -27,9 +27,9 @@ export const doFetchQualifications = createAsyncThunk<
   }
 >(
   'employeeQualifications/doFetchQualifications',
-  async (employeeId: string | number, thunkApi) => {
+  async (employeeId: string, thunkApi) => {
     try {
-      return await fetchEmployeeQualifications(employeeId)
+      return await getEmployeeQualifications(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -54,7 +54,7 @@ export const doFetchCertifications = createAsyncThunk<
   }
 })
 
-export const doFetchSkills = createAsyncThunk<
+export const fetchSkills = createAsyncThunk<
   SkillDetailsType[] | undefined,
   void,
   {
@@ -62,7 +62,7 @@ export const doFetchSkills = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('employeeQualifications/doFetchSkills', async (_, thunkApi) => {
+>('employeeQualifications/fetchSkills', async (_, thunkApi) => {
   try {
     return await fetchEmployeeSkills()
   } catch (error) {
@@ -92,10 +92,10 @@ const employeeQualificationsSlice = createSlice({
         state.certificationDetails =
           action.payload as CertificationDetailsType[]
       })
-      .addCase(doFetchSkills.pending, (state) => {
+      .addCase(fetchSkills.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(doFetchSkills.fulfilled, (state, action) => {
+      .addCase(fetchSkills.fulfilled, (state, action) => {
         state.isLoading = false
         state.SkillDetails = action.payload as SkillDetailsType[]
       })

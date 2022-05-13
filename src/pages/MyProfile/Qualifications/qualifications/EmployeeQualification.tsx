@@ -10,10 +10,10 @@ const EmployeeQualifications = (): JSX.Element => {
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-
+  console.log(typeof employeeId)
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchQualifications(employeeId))
+    dispatch(doFetchQualifications(employeeId as string))
   }, [dispatch, employeeId])
   return (
     <>

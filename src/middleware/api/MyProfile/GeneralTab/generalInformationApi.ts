@@ -6,8 +6,8 @@ import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralT
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-export const postEmployeeGeneralInformation = async (
-  employeeId: number,
+export const getEmployeeGeneralInformation = async (
+  employeeId: string,
 ): Promise<{ generalInformation: EmployeeGeneralInformation } | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeGeneralInformationApi.getLoggedInEmployeeData,

@@ -8,8 +8,8 @@ import { AllowedHttpMethods, qualificationsApi } from '../../apiList'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-export const fetchEmployeeQualifications = async (
-  employeeId: string | number,
+export const getEmployeeQualifications = async (
+  employeeId: string,
 ): Promise<EmployeeQualificationsType> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApi.employeeQualifications,
