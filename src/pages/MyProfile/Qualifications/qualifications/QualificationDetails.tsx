@@ -5,6 +5,8 @@ import EmployeeQualifications from './EmployeeQualification'
 import OAddButton from '../../../../components/ReusableComponent/OAddButton'
 import SkillsTable from '../skills/SkillsTable'
 import AddUpdateEmployeeQualification from './AddUpdateEmployeeQualification'
+import AddUpdateEmployeeCertification from '../certifications/AddUpdateEmployeeCertification'
+import { EmployeeCertificationProps } from '../../../../types/MyProfile/Qualifications/certificcationTypes'
 const QualificationDetails = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   return (
@@ -24,7 +26,9 @@ const QualificationDetails = (): JSX.Element => {
             <h4 className="h4">Certifications</h4>
           </CCardHeader>
           <CCardBody>
-            <OAddButton />
+            <OAddButton
+              addButtonHandler={() => setToggle('addCertificationSection')}
+            />
             <CertificationsTable />
           </CCardBody>
           <CCardHeader>
@@ -45,6 +49,13 @@ const QualificationDetails = (): JSX.Element => {
         <AddUpdateEmployeeQualification
           isEmployeeQualificationExist={true}
           backButtonHandler={() => setToggle('')}
+        />
+      )}
+      {toggle === 'addCertificationSection' && (
+        <AddUpdateEmployeeCertification
+          backButtonHandler={() => setToggle('')}
+          headerTitle="Add Certification"
+          confirmButtonText="Add"
         />
       )}
     </>
