@@ -4,3 +4,7 @@ export type EmployeeCertificationProps = {
   confirmButtonText: string
   backButtonHandler: () => void
 }
+
+export type EmployeeCertificationTableProps = {
+  editCertificateButtonHandler: (technologyName: string) => void
+}

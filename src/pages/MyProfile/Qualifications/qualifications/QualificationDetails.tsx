@@ -6,9 +6,13 @@ import OAddButton from '../../../../components/ReusableComponent/OAddButton'
 import SkillsTable from '../skills/SkillsTable'
 import AddUpdateEmployeeQualification from './AddUpdateEmployeeQualification'
 import AddUpdateEmployeeCertification from '../certifications/AddUpdateEmployeeCertification'
-import { EmployeeCertificationProps } from '../../../../types/MyProfile/Qualifications/certificcationTypes'
+
 const QualificationDetails = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
+
+  const editCertificateButtonHandler = (technologyname: string) => {
+    setToggle('EditCertificateSection')
+  }
   return (
     <>
       {toggle === '' && (
@@ -29,7 +33,9 @@ const QualificationDetails = (): JSX.Element => {
             <OAddButton
               addButtonHandler={() => setToggle('addCertificationSection')}
             />
-            <CertificationsTable />
+            <CertificationsTable
+              editCertificateButtonHandler={editCertificateButtonHandler}
+            />
           </CCardBody>
           <CCardHeader>
             <h4 className="h4">Skills</h4>
@@ -56,6 +62,14 @@ const QualificationDetails = (): JSX.Element => {
           backButtonHandler={() => setToggle('')}
           headerTitle="Add Certification"
           confirmButtonText="Add"
+        />
+      )}
+      {toggle === 'EditCertificateSection' && (
+        <AddUpdateEmployeeCertification
+          headerTitle="Edit Certification"
+          confirmButtonText="Update"
+          backButtonHandler={() => setToggle('')}
+          isEditCertificationDetails={true}
         />
       )}
     </>

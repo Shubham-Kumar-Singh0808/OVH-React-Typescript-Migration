@@ -114,15 +114,8 @@ function AddUpdateEmployeeCertification({
                 aria-label="Default select example"
                 name="technologyId"
                 id="technology"
-                // value={employeeVisaDetails?.countryId}
-                // onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Technology</option>
-                {/* {fetchCountryDetails?.countries?.map((countriesItem, index) => (
-                  <option key={index} value={countriesItem.id}>
-                    {countriesItem.name}
-                  </option>
-                ))} */}
               </CFormSelect>
             </CCol>
           </CRow>

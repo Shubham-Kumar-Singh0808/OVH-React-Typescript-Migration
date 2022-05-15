@@ -15,6 +15,7 @@ export type EmployeeQualifications = {
 }
 
 export type EmployeeCertifications = {
+  id: string
   certificateType: string
   technology: string
   code: string

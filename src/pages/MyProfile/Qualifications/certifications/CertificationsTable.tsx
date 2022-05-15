@@ -10,7 +10,10 @@ import {
 } from '@coreui/react-pro'
 import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
-const CertificationsTable = (): JSX.Element => {
+import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qualifications/certificcationTypes'
+const CertificationsTable = ({
+  editCertificateButtonHandler,
+}: EmployeeCertificationTableProps): JSX.Element => {
   const employeeCertificateData = useTypedSelector(
     (state) => state.employeeQualificationsDetails.certificationDetails,
   )
@@ -64,7 +67,13 @@ const CertificationsTable = (): JSX.Element => {
                 {certificateItem.description}
               </CTableDataCell>
               <CTableDataCell scope="row">
-                <CButton color="info" className="btn-ovh me-1">
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1"
+                  onClick={() =>
+                    editCertificateButtonHandler(certificateItem.id)
+                  }
+                >
                   <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </CButton>
                 <CButton color="danger" className="btn-ovh me-1">
