@@ -2,7 +2,7 @@ import { ValidationError } from '../commonTypes'
 
 export type AuthenticatedUser = {
   employeeName: string
-  employeeId: string
+  employeeId: string | number
   userName: string
   role: string
   tenantKey: string

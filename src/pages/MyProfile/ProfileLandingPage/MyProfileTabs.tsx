@@ -8,7 +8,9 @@ import {
 import React, { useEffect, useState } from 'react'
 
 import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
-import OCard from '../../../components/ReusableComponent/OCard'
+import GeneralTab from '../GeneralTab/GeneralTab'
+import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
+import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
 import TabsLabels from '../../../middleware/TabsLabels'
 
 interface ShowTabContentType<TValue> {
@@ -27,10 +29,10 @@ const MyProfileTabs = (): JSX.Element => {
 
   const changeTabContent = (tabKey: number): JSX.Element => {
     const showTabContent: ShowTabContentType<JSX.Element> = {
-      1: <OCard />,
+      1: <GeneralTab />,
       2: <BasicInfoTab />,
-      3: <h1>Personal Info</h1>,
-      4: <h1>Qualification Details</h1>,
+      3: <PersonalInfoTab />,
+      4: <QualificationDetails />,
       5: <h1>Review</h1>,
       6: <h1>Projects</h1>,
     }
