@@ -32,7 +32,13 @@ export type EmployeeSkills = {
   expMonth: string
   expYear: string
 }
-export type QualificationProps = {
+export interface EmployeeSkillInfo {
+  striped: boolean
+  bordered: boolean
+  tableClassName: string
+  isFieldDisabled: boolean
+}
+export type AddBackButtonsProps = {
   addButtonHandler?: () => void
   backButtonHandler?: () => void
   isEmployeeQualificationExist?: boolean
