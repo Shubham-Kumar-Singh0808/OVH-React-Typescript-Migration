@@ -1,4 +1,5 @@
 import { ValidationError } from '../../commonTypes'
+import { EmployeeCertifications } from './certificationTypes'
 
 export type PostGraduationAndGraduationLookUp = {
   id: string
@@ -12,18 +13,6 @@ export type EmployeeQualifications = {
   hscName: string
   sscName: string
   others: string
-}
-
-export type EmployeeCertifications = {
-  id: string
-  certificateType: string
-  technology: string
-  code: string
-  completedDate: string
-  expiryDate: string
-  percent: string
-  description: string
-  name: string
 }
 
 export type EmployeeSkills = {

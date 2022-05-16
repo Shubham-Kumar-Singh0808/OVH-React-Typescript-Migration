@@ -1,11 +1,11 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  EmployeeCertifications,
   EmployeeQualificationDetails,
   EmployeeQualifications,
   EmployeeSkills,
   PostGraduationAndGraduationList,
 } from '../../../types/MyProfile/Qualifications/qualificationTypes'
+import { EmployeeCertifications } from '../../../types/MyProfile/Qualifications/certificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import {
   getEmployeeCertifications,

@@ -15,8 +15,17 @@ import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
-import { EmployeeCertificationProps } from '../../../../types/MyProfile/Qualifications/certificcationTypes'
-import { EmployeeCertifications } from '../../../../types/MyProfile/Qualifications/qualificationTypes'
+import {
+  getAllTechnology,
+  getCertificateDetailsByTechnologyName,
+} from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
+import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import {
+  EmployeeCertificationProps,
+  EmployeeCertifications,
+} from '../../../../types/MyProfile/Qualifications/certificationTypes'
+
 function AddUpdateEmployeeCertification({
   isEditCertificationDetails = false,
   headerTitle,
@@ -26,13 +35,32 @@ function AddUpdateEmployeeCertification({
   const initialCerificationDetails = {} as EmployeeCertifications
 
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  const [addCerification, setAddCerification] = useState({
+  const [addCertification, setAddCertification] = useState(
     initialCerificationDetails,
-  })
+  )
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
   const [error, setError] = useState<Date | null>(null)
 
+  const getTechnologies = useTypedSelector(
+    (state) => state.certificateDetails.getAllTechnologies,
+  )
+  const getCertificateByTechnology = useTypedSelector(
+    (state) => state.certificateDetails.typeOfCertificate,
+  )
+  console.log(getCertificateByTechnology)
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(getAllEmployeeCertifications())
+  }, [dispatch])
+  useEffect(() => {
+    dispatch(getAllTechnology())
+    if (addCertification?.technologyId) {
+      dispatch(
+        getCertificateDetailsByTechnologyName(addCertification?.technologyId),
+      )
+    }
+  }, [dispatch, addCertification?.technologyId])
   const formik = useFormik({
     initialValues: { name: '', message: '' },
     onSubmit: (values) => {
@@ -67,7 +95,7 @@ function AddUpdateEmployeeCertification({
     if (isEditCertificationDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = 'completedDate'
-      setAddCerification((prevState) => {
+      setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
     } else {
@@ -78,13 +106,19 @@ function AddUpdateEmployeeCertification({
     if (isEditCertificationDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = 'expiryDate'
-      setAddCerification((prevState) => {
+      setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
     } else {
       setDateOfExpire(date)
     }
     setError(date)
+  }
+  const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setAddCertification((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
   }
   return (
     <>
@@ -107,29 +141,62 @@ function AddUpdateEmployeeCertification({
           <CRow className="mt-4 mb-4">
             <CFormLabel {...technologyLabelProps}>
               Technology:
-              <span className={'text-danger'}>*</span>
+              <span
+                className={
+                  addCertification.technology ? 'text-white' : 'text-danger'
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
                 aria-label="Default select example"
                 name="technologyId"
                 id="technology"
+                value={addCertification.technology}
+                onChange={handleInputChange}
               >
                 <option value={''}>Select Technology</option>
+                {getTechnologies?.map((certificateItem, index) => (
+                  <option key={index} value={certificateItem.name}>
+                    {certificateItem.name}
+                  </option>
+                ))}
               </CFormSelect>
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...certificationTypeLabelProps}>
-              CertificateType: <span className="text-danger">*</span>
+              CertificateType:{' '}
+              <span
+                className={
+                  addCertification.certificateType
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
                 aria-label="Default select example"
                 name="certificateType"
                 id="certificationType"
+                onChange={handleInputChange}
               >
                 <option value={''}>Select Type of Certificate</option>
+                {getCertificateByTechnology?.map(
+                  (certificateTypeItem, index) => (
+                    <option
+                      key={index}
+                      value={certificateTypeItem.technologyName}
+                    >
+                      {certificateTypeItem.certificateType}
+                    </option>
+                  ),
+                )}
               </CFormSelect>
             </CCol>
           </CRow>

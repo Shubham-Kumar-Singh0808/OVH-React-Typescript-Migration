@@ -12,7 +12,7 @@ import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import qualificationCategoryReducer from './reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-
+import certificationReducer from './reducers/MyProfile/Qualifications/certificationSlice'
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
@@ -24,6 +24,7 @@ export const allReducers = {
   personalInfoDetails: personalInfoReducer,
   skill: skillReducer,
   qualificationCategory: qualificationCategoryReducer,
+  certificateDetails: certificationReducer,
   // add your slice reducers here
 }
 

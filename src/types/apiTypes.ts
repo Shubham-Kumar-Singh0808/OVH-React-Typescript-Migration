@@ -44,6 +44,9 @@ export interface QualificationsApi extends ApiBase {
   getPostGraduationAndGraduationList: string
   addEmployeeQualifications: string
   updateEmployeeQualifications: string
+  getAllTechnologyList: string
+  getCertificateByTechnology: string
+  addEmployeeCertificates: string
 }
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string

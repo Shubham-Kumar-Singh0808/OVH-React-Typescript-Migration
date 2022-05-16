@@ -10,7 +10,7 @@ import {
 } from '@coreui/react-pro'
 import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
-import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qualifications/certificcationTypes'
+import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qualifications/certificationTypes'
 const CertificationsTable = ({
   editCertificateButtonHandler,
 }: EmployeeCertificationTableProps): JSX.Element => {
