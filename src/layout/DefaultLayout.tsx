@@ -15,6 +15,9 @@ const DefaultLayout = (): JSX.Element => {
   const toastState = useTypedSelector((state) => state.app.toast)
   const toasterReference = useRef<HTMLDivElement>(null)
 
+  const timeout = 20 * 60 * 1000
+  const promptTimeout = 30 * 1000
+
   return (
     <>
       <div className="d-flex flex-row">
@@ -30,7 +33,7 @@ const DefaultLayout = (): JSX.Element => {
               placement="top-end"
             />
 
-            <IdleModal />
+            <IdleModal timeout={timeout} promptTimeout={promptTimeout} />
           </div>
         </div>
         <AppAside />

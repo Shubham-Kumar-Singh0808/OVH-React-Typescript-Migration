@@ -7,10 +7,13 @@ import { useAppDispatch } from '../stateStore'
 import { useHistory } from 'react-router-dom'
 import { useIdleTimer } from 'react-idle-timer'
 
-const IdleModal = (): JSX.Element => {
-  const timeout = 20 * 60 * 1000
-  const promptTimeout = 30 * 1000
-
+const IdleModal = ({
+  timeout,
+  promptTimeout,
+}: {
+  timeout: number
+  promptTimeout: number
+}): JSX.Element => {
   const [isIdleModalOpen, setIsIdleModalOpen] = useState(false)
   const history = useHistory()
   const dispatch = useAppDispatch()
@@ -81,7 +84,7 @@ const IdleModal = (): JSX.Element => {
         <CModalBody className={'idle-modal-body'}>
           <h4>{`You're Idle. Do some activity`}</h4>
           <br />
-          <p>You`&apos;ll be logged out in {remainingBadge} second(s).</p>
+          <p>You&apos;ll be logged out in {remainingBadge} second(s).</p>
           <br />
         </CModalBody>
       </CModal>

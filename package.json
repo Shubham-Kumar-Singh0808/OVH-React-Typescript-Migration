@@ -83,20 +83,20 @@
       "clover",
       "json",
       "lcov",
-      [
-        "text",
-        {
-          "skipFull": true
-        }
-      ]
+      "text"
     ],
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
-      "src/pages/**/*.{ts,tsx}",
       "!**/*index.ts",
       "!src/serviceWorker.ts",
       "!src/polyfill.ts",
-      "!src/assets/**/*"
+      "!src/assets/**/*",
+      "!src/types/**/*",
+      "!src/_nav.tsx",
+      "!src/index.tsx",
+      "!src/react-app-env.d.ts",
+      "!src/reportWebVitals.ts",
+      "!src/routes.ts"
     ]
   }
 }
