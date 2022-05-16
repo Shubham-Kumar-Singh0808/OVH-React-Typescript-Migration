@@ -10,24 +10,16 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import DownloadSampleFileButton from './DownloadSampleFileButton'
+import moment from 'moment'
 import { selectLoggedInData } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
-import { useTypedSelector } from '../../../stateStore'
+import { updateEmployeeDefaultPic } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 
 const BasicInfoTab = (): JSX.Element => {
-  // onchange handler for date pickers
-  const onDateChangeHandler = (date: Date, e: { name: string }) => {
-    // if (employeeData) {
-    //   let formatDate = moment(date).format('DD/MM/YYYY')
-    //   let name = e.name
-    //   setEmployeeData((prevState) => {
-    //     return { ...prevState, ...{ [name]: formatDate } }
-    //   })
-    // }
-  }
   const employeeBasicInformation = useTypedSelector(selectLoggedInData)
   const {
     id,
@@ -83,6 +75,87 @@ const BasicInfoTab = (): JSX.Element => {
     employeeBasicInformationEditData,
     setEmployeeBasicInformationEditData,
   ] = useState(selectedUserBasicInformation)
+  const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
+
+  const dispatch = useAppDispatch()
+
+  // onchange handler for input fields
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = e.target
+    setEmployeeBasicInformationEditData((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
+  }
+
+  // onchange handler for date pickers
+  const onDateChangeHandler = (date: Date, e: { name: string }) => {
+    if (employeeBasicInformationEditData) {
+      const formatDate = moment(date).format('DD/MM/YYYY')
+      const name = e.name
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: formatDate } }
+      })
+    }
+  }
+
+  // condition to enable and disable save button
+  useEffect(() => {
+    if (
+      employeeBasicInformationEditData.curentLocation &&
+      employeeBasicInformationEditData.bloodgroup &&
+      employeeBasicInformationEditData.maritalStatus &&
+      employeeBasicInformationEditData.personalEmail &&
+      employeeBasicInformationEditData.officialBirthday
+    ) {
+      setSaveButtonEnabled(true)
+    } else {
+      setSaveButtonEnabled(false)
+    }
+  }, [employeeBasicInformationEditData, baseLocationShown, realBirthdayShown])
+
+  // condition to enable and disable save button
+  useEffect(() => {
+    if (baseLocationShown) {
+      if (employeeBasicInformationEditData.baseLocation) {
+        setSaveButtonEnabled(true)
+      } else {
+        setSaveButtonEnabled(false)
+      }
+    }
+    if (realBirthdayShown) {
+      if (employeeBasicInformationEditData.realBirthday) {
+        setSaveButtonEnabled(true)
+      } else {
+        setSaveButtonEnabled(false)
+      }
+    }
+    if (employeeBasicInformationEditData.maritalStatus === 'Married') {
+      if (employeeBasicInformationEditData.anniversary) {
+        setSaveButtonEnabled(true)
+      } else {
+        setSaveButtonEnabled(false)
+      }
+    }
+  }, [
+    baseLocationShown,
+    employeeBasicInformationEditData.baseLocation,
+    realBirthdayShown,
+    employeeBasicInformationEditData.realBirthday,
+    employeeBasicInformationEditData.maritalStatus,
+    employeeBasicInformationEditData.anniversary,
+  ])
+  // change on gender the defaultPic api should call
+  useEffect(() => {
+    if (employeeBasicInformationEditData.gender) {
+      dispatch(
+        updateEmployeeDefaultPic(employeeBasicInformationEditData.gender),
+      )
+    }
+  }, [dispatch, employeeBasicInformationEditData.gender])
 
   return (
     <>
@@ -138,6 +211,7 @@ const BasicInfoTab = (): JSX.Element => {
               name="curentLocation"
               placeholder="Enter Location"
               value={employeeBasicInformationEditData.curentLocation}
+              onChange={handleChange}
             />
             <CFormCheck
               className="mt-2"
@@ -169,6 +243,7 @@ const BasicInfoTab = (): JSX.Element => {
                 name="baseLocation"
                 placeholder="Enter Location"
                 value={employeeBasicInformationEditData.baseLocation}
+                onChange={handleChange}
               />
             </CCol>
           </CRow>
@@ -183,6 +258,7 @@ const BasicInfoTab = (): JSX.Element => {
               aria-label="Gender"
               name="gender"
               value={employeeBasicInformationEditData.gender}
+              onChange={handleChange}
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -208,6 +284,7 @@ const BasicInfoTab = (): JSX.Element => {
               aria-label="bloodGroup"
               name="bloodgroup"
               value={employeeBasicInformationEditData.bloodgroup}
+              onChange={handleChange}
             >
               <option value={''}>Select blood group</option>
               <option value="A+">A+</option>
@@ -302,6 +379,7 @@ const BasicInfoTab = (): JSX.Element => {
               aria-label="MaritalStatus"
               name="maritalStatus"
               value={employeeBasicInformationEditData.maritalStatus}
+              onChange={handleChange}
             >
               <option value={''}>Select Marital Status</option>
               <option value="Single">Single</option>
@@ -325,7 +403,7 @@ const BasicInfoTab = (): JSX.Element => {
                 dropdownMode="select"
                 placeholderText="dd/mm/yyyy"
                 name="realBirthday"
-                // value={employeeData.anniversary}
+                value={employeeBasicInformationEditData.anniversary}
                 onChange={(date: Date) =>
                   onDateChangeHandler(date, { name: 'anniversary' })
                 }
@@ -375,6 +453,16 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel className="col-sm-3 col-form-label text-end">
+            Country:
+          </CFormLabel>
+          <CCol sm={2}>
+            <CFormLabel className="col-form-label text-end">
+              {employeeBasicInformation.country}
+            </CFormLabel>
+          </CCol>
+        </CRow>
+        <CRow className="mt-3 ">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
             Personal Email:
             <span
               className={
@@ -393,6 +481,7 @@ const BasicInfoTab = (): JSX.Element => {
               name="personalEmail"
               placeholder="Personal Email"
               value={employeeBasicInformationEditData.personalEmail}
+              onChange={handleChange}
             />
           </CCol>
         </CRow>
@@ -407,6 +496,7 @@ const BasicInfoTab = (): JSX.Element => {
               name="skypeId"
               placeholder="Enter SkypeID"
               value={employeeBasicInformationEditData.skypeId}
+              onChange={handleChange}
             />
           </CCol>
         </CRow>
@@ -452,13 +542,25 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3">
-          <CCol md={{ span: 6, offset: 3 }}></CCol>
+          <CCol md={{ span: 6, offset: 3 }}>
+            {rbtCvName && (
+              <a
+                className="text-decoration-none cursor-pointer"
+                href="RBT_CV"
+                download={rbtCvName}
+              >
+                <i className="fa fa-paperclip me-1"></i>
+                Rbt Cv
+              </a>
+            )}
+          </CCol>
         </CRow>
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
             <CButton
               className="btn-ovh btn btn-success mt-4"
               size="sm"
+              disabled={!saveButtonEnabled}
               type="submit"
             >
               Save

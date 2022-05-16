@@ -2,7 +2,8 @@ import { CCol, CRow } from '@coreui/react-pro'
 
 import React from 'react'
 
-// import RbtCvSample from 'src/assets/documents/RBT_CV_Sample.doc'
+// import RbtCvSample from '../../../assets/documents/RBT_CV_Sample.doc'
+
 const DownloadSampleFileButton = (): JSX.Element => {
   return (
     <>

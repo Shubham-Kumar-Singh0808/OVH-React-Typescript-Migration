@@ -1,13 +1,14 @@
 import {
   AuthenticationApi,
+  BasicInfoApi,
   CategoryApi,
-  QualificationCategoryApi,
-  SkillApi,
-  SideMenuApi,
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
-  UserRolesConfigurationApi,
+  QualificationCategoryApi,
   QualificationsApi,
+  SideMenuApi,
+  SkillApi,
+  UserRolesConfigurationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -81,4 +82,8 @@ export const qualificationsApi: QualificationsApi = {
   addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
   getPostGraduationAndGraduationList: apiPrefix + '/Employee/multipleSelection',
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
+}
+
+export const basicInfoApi: BasicInfoApi = {
+  defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
 }

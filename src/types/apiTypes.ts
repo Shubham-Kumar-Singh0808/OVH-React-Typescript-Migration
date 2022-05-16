@@ -69,3 +69,6 @@ export interface PersonalInfoApi extends ApiBase {
   deleteVisaDetail: string
   fileUploadVisaImage: string
 }
+export interface BasicInfoApi extends ApiBase {
+  defaultPicByGender: string
+}

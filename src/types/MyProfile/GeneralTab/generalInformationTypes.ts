@@ -9,6 +9,7 @@ export type EmployeeGeneralInformation = {
   emailId?: string
   anniversary?: string
   curentLocation?: string
+  country?: string
   employmentTypeName?: string
   address?: string
   emergencyContact?: string
