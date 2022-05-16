@@ -1,7 +1,6 @@
-import { Method } from 'axios'
+export type ValidationError = number | null
 
-export type ApiMethodsType = { [key: string]: Method }
-
-export type ApiObjectType = { [key: string]: string }
-
-export type ValidationErrorType = number | null
+export type TextEditorProps = {
+  value: string
+  setFieldValue: (val: string) => void
+}
