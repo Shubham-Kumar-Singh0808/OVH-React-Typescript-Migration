@@ -33,14 +33,28 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/base-64": "^1.0.0",
-    "@types/jest": "^26.0.15",
+    "@types/draft-js": "^0.11.9",
+    "@types/draftjs-to-html": "^0.8.1",
+    "@types/html-to-draftjs": "^1.4.0",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
+    "@types/react-datepicker": "^4.4.1",
     "@types/react-dom": "^17.0.0",
+    "@types/react-draft-wysiwyg": "^1.13.4",
     "axios": "^0.26.1",
     "base-64": "^1.0.0",
+    "moment": "^2.29.3",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
+    "formik": "^2.2.9",
+    "html-react-parser": "^1.4.12",
+    "html-to-draftjs": "^1.5.0",
+    "multiselect-react-dropdown": "^2.0.22",
     "react": "^17.0.2",
+    "react-datepicker": "^4.7.0",
     "react-dom": "^17.0.2",
+    "react-moment": "^1.1.2",
+    "react-draft-wysiwyg": "^1.14.7",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
@@ -52,6 +66,7 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
+    "@types/jest": "^27.5.0",
     "@types/react-router-dom": "^5.1.8",
     "auto-changelog": "~2.3.0",
     "eslint": "^7.32.0",
@@ -59,11 +74,12 @@
     "eslint-plugin-prettier": "^3.4.0",
     "msw": "^0.39.2",
     "prettier": "2.3.2",
+    "redux-mock-store": "^1.5.4",
     "sass": "^1.37.5"
   },
   "jest": {
     "transformIgnorePatterns": [
-      "node_modules/(?!(@coreui/react-pro|tippy.js|perfect-scrollbar)/)"
+      "node_modules/(?!(@coreui/react-pro|@coreui/icons|tippy.js|perfect-scrollbar)/)"
     ],
     "coverageReporters": [
       "cobertura",

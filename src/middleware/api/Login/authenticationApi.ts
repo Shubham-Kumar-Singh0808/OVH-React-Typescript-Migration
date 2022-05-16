@@ -1,6 +1,6 @@
-import { authenticationApi, methods } from '../apiList'
+import { AllowedHttpMethods, authenticationApi } from '../apiList'
 
-import { AuthenticatedUserType } from '../../../types/Login/authenticationTypes'
+import { AuthenticatedUser } from '../../../types/Login/authenticationTypes'
 import axios from 'axios'
 import { encode } from 'base-64'
 import { getUnauthenticatedRequestConfig } from '../../../utils/apiUtils'
@@ -9,12 +9,12 @@ export const postLoginUser = async (
   username: string,
   password: string,
   tenantKey: string,
-): Promise<{ authenticatedUser: AuthenticatedUserType } | undefined> => {
+): Promise<{ authenticatedUser: AuthenticatedUser } | undefined> => {
   const encodedCredentials = encode(`${username}:${password}`)
 
   const requestConfig = getUnauthenticatedRequestConfig({
     url: authenticationApi.login,
-    method: methods.get,
+    method: AllowedHttpMethods.get,
     additionalHeaders: {
       Authorization: `Basic ${encodedCredentials}`,
     },
@@ -22,7 +22,6 @@ export const postLoginUser = async (
   })
 
   const response = await axios(requestConfig)
-
   if (response.status === 200) {
     const data = {
       authenticatedUser: {

@@ -3,6 +3,6 @@ import AppBreadcrumb from './AppBreadcrumb'
 import AppContent from './AppContent'
 import AppFooter from './AppFooter'
 import AppHeader from './AppHeader'
-import AppSidebar from './AppSidebar'
+import AppSidebar from './SidebarMenu/AppSidebar'
 
 export { AppAside, AppBreadcrumb, AppContent, AppFooter, AppHeader, AppSidebar }

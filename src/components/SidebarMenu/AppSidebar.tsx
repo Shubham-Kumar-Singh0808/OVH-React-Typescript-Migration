@@ -1,22 +1,14 @@
-import 'simplebar/dist/simplebar.min.css'
+import { CSidebar, CSidebarBrand, CSidebarNav } from '@coreui/react-pro'
 
-import {
-  CSidebar,
-  CSidebarBrand,
-  CSidebarNav,
-  CSidebarToggler,
-} from '@coreui/react-pro'
-
-import { AppSidebarNav } from './AppSidebarNav'
+import AppSidebarNavItems from './AppSidebarNavItems'
 import CIcon from '@coreui/icons-react'
 import React from 'react'
 import SimpleBar from 'simplebar-react'
-import { logoNegative } from '../assets/brand/logo-negative'
+import { logoNegative } from '../../assets/brand/logo-negative'
 // sidebar nav config
-import navigation from '../_nav'
-import { sygnet } from '../assets/brand/sygnet'
+import { sygnet } from '../../assets/brand/sygnet'
 import { useDispatch } from 'react-redux'
-import { useTypedSelector } from '../stateStore'
+import { useTypedSelector } from '../../stateStore'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
@@ -39,15 +31,15 @@ const AppSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
-          <AppSidebarNav items={navigation} />
+          <AppSidebarNavItems />
         </SimpleBar>
       </CSidebarNav>
-      <CSidebarToggler
+      {/* <CSidebarToggler
         className="d-none d-lg-flex"
         onClick={() =>
           dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })
         }
-      />
+      /> */}
     </CSidebar>
   )
 }

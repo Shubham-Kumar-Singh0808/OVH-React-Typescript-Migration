@@ -12,7 +12,7 @@ import React from 'react'
 const OCard = (props: {
   className?: string
   CHeaderClassName?: string
-  title: string
+  title?: string
   CBodyClassName?: string
   CFooterClassName?: string
   CLinkClassName?: string
