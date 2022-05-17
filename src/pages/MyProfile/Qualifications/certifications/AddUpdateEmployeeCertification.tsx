@@ -15,11 +15,14 @@ import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { addToast } from '../../../../reducers/appSlice'
 import {
   getAllTechnology,
   getCertificateDetailsByTechnologyName,
+  addEmployeeCertification,
 } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
-import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   EmployeeCertificationProps,
@@ -38,58 +41,51 @@ function AddUpdateEmployeeCertification({
   const [addCertification, setAddCertification] = useState(
     initialCerificationDetails,
   )
-  const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
-  const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
+  const [dateOfCompletion, setDateOfCompletion] = useState<Date | string>()
+  const [dateOfExpiry, setDateOfExpiry] = useState<Date | string>()
   const [error, setError] = useState<Date | null>(null)
 
   const getTechnologies = useTypedSelector(
-    (state) => state.certificateDetails.getAllTechnologies,
+    (state) => state.employeeCertificates.getAllTechnologies,
   )
   const getCertificateByTechnology = useTypedSelector(
-    (state) => state.certificateDetails.typeOfCertificate,
+    (state) => state.employeeCertificates.typeOfCertificate,
   )
-  console.log(getCertificateByTechnology)
+  const employeeId = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.employeeId,
+  )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(getAllEmployeeCertifications())
   }, [dispatch])
   useEffect(() => {
     dispatch(getAllTechnology())
-    if (addCertification?.technologyId) {
+    if (addCertification?.technology) {
       dispatch(
-        getCertificateDetailsByTechnologyName(addCertification?.technologyId),
+        getCertificateDetailsByTechnologyName(addCertification?.technology),
       )
     }
-  }, [dispatch, addCertification?.technologyId])
+  }, [dispatch, addCertification?.technology])
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="Your changes have been saved successfully.."
+      toastColor="success"
+    />
+  )
   const formik = useFormik({
     initialValues: { name: '', message: '' },
     onSubmit: (values) => {
       console.log('Logging in ', values)
     },
   })
-  const technologyLabelProps = {
-    htmlFor: 'technology',
-    className: 'col-sm-3 col-form-label text-end',
-  }
-  const certificationTypeLabelProps = {
-    className: 'col-sm-3 col-form-label text-end',
-    htmlFor: 'certificationType',
-  }
-  const certificationLabelProps = {
-    className: 'col-sm-3 col-form-label text-end',
-    htmlFor: 'ContactNumber',
-  }
-  const registrationLabelProps = {
-    className: 'col-sm-3 col-form-label text-end',
-    htmlFor: 'registrationNumber',
-  }
-  const percentageLabelProps = {
-    className: 'col-sm-3 col-form-label text-end',
-    htmlFor: 'percentage',
-  }
-  const descriptionLabelProps = {
-    className: 'col-sm-3 col-form-label text-end',
-    htmlFor: 'description',
+
+  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
+    return {
+      htmlFor: htmlFor,
+      className: className,
+    }
   }
   const onChangeDateOfCompletionHandler = (date: Date) => {
     if (isEditCertificationDetails) {
@@ -99,7 +95,7 @@ function AddUpdateEmployeeCertification({
         return { ...prevState, ...{ [name]: formatDate } }
       })
     } else {
-      setDateOfIssue(date)
+      setDateOfCompletion(date)
     }
   }
   const onChangeDateOfExpireHandler = (date: Date) => {
@@ -110,15 +106,71 @@ function AddUpdateEmployeeCertification({
         return { ...prevState, ...{ [name]: formatDate } }
       })
     } else {
-      setDateOfExpire(date)
+      setDateOfExpiry(date)
     }
     setError(date)
   }
-  const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setAddCertification((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
+
+  useEffect(() => {
+    if ((dateOfCompletion as string) <= (dateOfExpiry as string)) {
+      setError(null)
+    }
+  }, [dateOfCompletion, dateOfExpiry])
+  const handleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+
+    setAddCertification((values) => {
+      return { ...values, ...{ [name]: value } }
     })
+  }
+
+  useEffect(() => {
+    if (
+      addCertification.technology &&
+      addCertification.certificateType &&
+      addCertification.name &&
+      addCertification.code &&
+      dateOfCompletion
+    ) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [addCertification, dateOfCompletion])
+
+  const handleClearInputFields = () => {
+    setAddCertification({
+      technologyId: '',
+      technologyName: '',
+      certificateType: '',
+      technology: '',
+      code: '',
+      percent: 0,
+      name: '',
+    })
+    setDateOfCompletion('')
+    setDateOfExpiry('')
+  }
+  const handleAddCertificateDetails = async () => {
+    const prepareObject = {
+      ...addCertification,
+      ...{
+        completedDate: moment(dateOfCompletion).format('DD/MM/YYYY'),
+        expiryDate: moment(dateOfExpiry).format('DD/MM/YYYY'),
+        employeeId: employeeId,
+      },
+    }
+    const addCertificateResultAction = await dispatch(
+      addEmployeeCertification(prepareObject),
+    )
+    if (addEmployeeCertification.fulfilled.match(addCertificateResultAction)) {
+      backButtonHandler()
+      dispatch(addToast(successToastMessage))
+    }
   }
   return (
     <>
@@ -139,7 +191,14 @@ function AddUpdateEmployeeCertification({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...technologyLabelProps}>
+            <CFormLabel
+              {...{
+                ...dynamicFormLabelProps(
+                  'technology',
+                  'col-sm-3 col-form-label text-end',
+                ),
+              }}
+            >
               Technology:
               <span
                 className={
@@ -152,8 +211,8 @@ function AddUpdateEmployeeCertification({
             <CCol sm={3}>
               <CFormSelect
                 aria-label="Default select example"
-                name="technologyId"
                 id="technology"
+                name="technology"
                 value={addCertification.technology}
                 onChange={handleInputChange}
               >
@@ -167,7 +226,14 @@ function AddUpdateEmployeeCertification({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...certificationTypeLabelProps}>
+            <CFormLabel
+              {...{
+                ...dynamicFormLabelProps(
+                  'certificateType',
+                  'col-sm-3 col-form-label text-end',
+                ),
+              }}
+            >
               CertificateType:{' '}
               <span
                 className={
@@ -182,8 +248,9 @@ function AddUpdateEmployeeCertification({
             <CCol sm={3}>
               <CFormSelect
                 aria-label="Default select example"
+                id="certificateType"
                 name="certificateType"
-                id="certificationType"
+                value={addCertification.certificateType}
                 onChange={handleInputChange}
               >
                 <option value={''}>Select Type of Certificate</option>
@@ -191,7 +258,7 @@ function AddUpdateEmployeeCertification({
                   (certificateTypeItem, index) => (
                     <option
                       key={index}
-                      value={certificateTypeItem.technologyName}
+                      value={certificateTypeItem.certificateType}
                     >
                       {certificateTypeItem.certificateType}
                     </option>
@@ -201,49 +268,77 @@ function AddUpdateEmployeeCertification({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...certificationLabelProps}>
-              Certification:<span className="text-danger">*</span>
+            <CFormLabel
+              {...{
+                ...dynamicFormLabelProps(
+                  'certification',
+                  'col-sm-3 col-form-label text-end',
+                ),
+              }}
+            >
+              Certification:
+              <span
+                className={addCertification.name ? 'text-white' : 'text-danger'}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
                 id="certification"
                 name="name"
+                value={addCertification.name}
                 placeholder="Certification Name"
-                maxLength={10}
+                maxLength={32}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...registrationLabelProps}>
-              Registration No:<span className="text-danger">*</span>
+            <CFormLabel
+              {...{
+                ...dynamicFormLabelProps(
+                  'registrationNumber',
+                  'col-sm-3 col-form-label text-end',
+                ),
+              }}
+            >
+              Registration No:
+              <span
+                className={addCertification.code ? 'text-white' : 'text-danger'}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
                 id="registrationNumber"
                 name="code"
+                value={addCertification.code}
                 placeholder="Certification Id"
-                maxLength={10}
+                maxLength={32}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Completed Date:
-              <span className={dateOfIssue ? 'text-white' : 'text-danger'}>
+              <span className={dateOfCompletion ? 'text-white' : 'text-danger'}>
                 *
               </span>
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
                 className="form-control"
-                name="dateOfIssue"
+                name="dateOfCompletion"
                 maxDate={new Date()}
-                value={dateOfIssue as string}
-                selected={dateOfIssue as Date}
+                value={dateOfCompletion as string}
+                selected={dateOfCompletion as Date}
                 onChange={onChangeDateOfCompletionHandler}
-                id="dateOfIssue"
+                id="dateOfCompletion"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -261,8 +356,8 @@ function AddUpdateEmployeeCertification({
               <DatePicker
                 className="form-control"
                 name="dateOfExpire"
-                value={(dateOfExpire as string) || (dateOfExpire as string)}
-                selected={dateOfExpire as Date}
+                value={(dateOfExpiry as string) || (dateOfExpiry as string)}
+                selected={dateOfExpiry as Date}
                 onChange={onChangeDateOfExpireHandler}
                 id="dateOfExpire"
                 peekNextMonth
@@ -275,19 +370,29 @@ function AddUpdateEmployeeCertification({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...percentageLabelProps}>Percentage:</CFormLabel>
+            <CFormLabel
+              {...dynamicFormLabelProps(
+                'percentage',
+                'col-sm-3 col-form-label text-end',
+              )}
+            >
+              Percentage:
+            </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="number"
                 id="percentage"
                 name="percent"
+                value={addCertification.percent}
                 placeholder="100"
-                maxLength={3}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...descriptionLabelProps}>Description:</CFormLabel>
+            <CFormLabel className="col-sm-3 col-form-label text-end">
+              Description:
+            </CFormLabel>
             <CCol sm={8}>
               <OTextEditor
                 setFieldValue={(val) => formik.setFieldValue('', val)}
@@ -307,10 +412,15 @@ function AddUpdateEmployeeCertification({
                     className="btn-ovh me-1"
                     color="success"
                     disabled={!isAddButtonEnabled}
+                    onClick={handleAddCertificateDetails}
                   >
                     {confirmButtonText}
                   </CButton>
-                  <CButton color="warning " className="btn-ovh">
+                  <CButton
+                    color="warning "
+                    className="btn-ovh"
+                    onClick={handleClearInputFields}
+                  >
                     Clear
                   </CButton>
                 </>

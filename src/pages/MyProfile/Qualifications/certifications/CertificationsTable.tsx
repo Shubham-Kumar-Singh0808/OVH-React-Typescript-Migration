@@ -8,14 +8,14 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qualifications/certificationTypes'
 const CertificationsTable = ({
   editCertificateButtonHandler,
 }: EmployeeCertificationTableProps): JSX.Element => {
   const employeeCertificateData = useTypedSelector(
-    (state) => state.employeeQualificationsDetails.certificationDetails,
+    (state) => state.employeeCertificates.certificationDetails,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -58,20 +58,24 @@ const CertificationsTable = ({
                 {certificateItem.completedDate}
               </CTableDataCell>
               <CTableDataCell scope="row">
-                {certificateItem.expiryDate}
+                {certificateItem.expiryDate
+                  ? certificateItem.expiryDate
+                  : 'N/A'}
               </CTableDataCell>
               <CTableDataCell scope="row">
-                {certificateItem.percent}
+                {certificateItem.percent ? certificateItem.percent : 'N/A'}
               </CTableDataCell>
               <CTableDataCell scope="row">
-                {certificateItem.description}
+                {certificateItem.description
+                  ? certificateItem.description
+                  : 'N/A'}
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <CButton
                   color="info"
                   className="btn-ovh me-1"
                   onClick={() =>
-                    editCertificateButtonHandler(certificateItem.id)
+                    editCertificateButtonHandler(certificateItem.id as number)
                   }
                 >
                   <i className="fa fa-pencil-square-o" aria-hidden="true"></i>

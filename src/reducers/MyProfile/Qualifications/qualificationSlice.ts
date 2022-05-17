@@ -5,10 +5,8 @@ import {
   EmployeeSkills,
   PostGraduationAndGraduationList,
 } from '../../../types/MyProfile/Qualifications/qualificationTypes'
-import { EmployeeCertifications } from '../../../types/MyProfile/Qualifications/certificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import {
-  getEmployeeCertifications,
   getEmployeeQualifications,
   getPgLookUpAndGraduationLookUpListItems,
   getEmployeeSkills,
@@ -34,26 +32,6 @@ export const getAllEmployeeQualifications = createAsyncThunk<
   async (employeeId: string | number, thunkApi) => {
     try {
       return await getEmployeeQualifications(employeeId)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-
-export const getAllEmployeeCertifications = createAsyncThunk<
-  EmployeeCertifications[] | undefined,
-  void,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->(
-  'employeeQualifications/getAllEmployeeCertifications',
-  async (_, thunkApi) => {
-    try {
-      return await getEmployeeCertifications()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -144,10 +122,6 @@ const employeeQualificationsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllEmployeeCertifications.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.certificationDetails = action.payload as EmployeeCertifications[]
-      })
       .addCase(getAllEmployeeSkills.fulfilled, (state, action) => {
         state.isLoading = false
         state.skillDetails = action.payload as EmployeeSkills[]
@@ -185,7 +159,6 @@ const employeeQualificationsSlice = createSlice({
         isAnyOf(
           getAllEmployeePgAndGraduationItems.rejected,
           getAllEmployeeQualifications.rejected,
-          getAllEmployeeCertifications.rejected,
           getAllEmployeeSkills.rejected,
           updateQualificationDetails.rejected,
           postQualificationDetails.rejected,

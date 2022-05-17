@@ -1,13 +1,12 @@
 import { ValidationError } from '../../commonTypes'
-import { EmployeeCertifications } from './certificationTypes'
 
 export type PostGraduationAndGraduationLookUp = {
   id: string
   label: string
 }
 export type EmployeeQualifications = {
-  id: number | string
-  empId: number | string
+  id?: number | string
+  empId?: number | string
   pgLookUp: PostGraduationAndGraduationLookUp[]
   graduationLookUp: PostGraduationAndGraduationLookUp[]
   hscName: string
@@ -44,7 +43,6 @@ export type PostGraduationAndGraduationList = {
 }
 export type EmployeeQualificationDetails = {
   qualificationDetails: EmployeeQualifications
-  certificationDetails: EmployeeCertifications[]
   skillDetails: EmployeeSkills[]
   pgLookUpAndGraduationLookUpDetails: PostGraduationAndGraduationList
   isLoading: boolean

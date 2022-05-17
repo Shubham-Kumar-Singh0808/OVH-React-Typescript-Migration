@@ -4,11 +4,6 @@ import {
   EmployeeSkills,
   PostGraduationAndGraduationList,
 } from '../../../../types/MyProfile/Qualifications/qualificationTypes'
-import {
-  EmployeeCertifications,
-  getAllTechnologyLookUp,
-  getCertificateType,
-} from '../../../../types/MyProfile/Qualifications/certificationTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
@@ -21,17 +16,6 @@ export const getEmployeeQualifications = async (
     params: {
       empID: employeeId,
     },
-  })
-  const response = await axios(requestConfig)
-  return response.data
-}
-
-export const getEmployeeCertifications = async (): Promise<
-  EmployeeCertifications[]
-> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApi.getEmployeeCertificatesList,
-    method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
   return response.data
@@ -75,34 +59,9 @@ export const updateEmployeeQualifications = async (
     url: qualificationsApi.updateEmployeeQualifications,
     method: AllowedHttpMethods.put,
     params: {
-      empId: addQualification.empId,
+      empId: addQualification.empId as number,
     },
     data: addQualification,
-  })
-  const response = await axios(requestConfig)
-  return response.data
-}
-
-export const getAllTechnologies = async (): Promise<
-  getAllTechnologyLookUp[] | undefined
-> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApi.getAllTechnologyList,
-    method: AllowedHttpMethods.get,
-  })
-  const response = await axios(requestConfig)
-  return response.data
-}
-
-export const getCertificateByTechnologyName = async (
-  technologyName: string,
-): Promise<getCertificateType[]> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApi.getCertificateByTechnology,
-    method: AllowedHttpMethods.get,
-    params: {
-      technologyName: technologyName,
-    },
   })
   const response = await axios(requestConfig)
   return response.data
