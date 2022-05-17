@@ -84,6 +84,7 @@ export const qualificationsApi: QualificationsApi = {
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
 }
 
-export const basicInfoApi: BasicInfoApi = {
+export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
+  updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
 }

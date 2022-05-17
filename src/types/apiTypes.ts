@@ -71,4 +71,5 @@ export interface PersonalInfoApi extends ApiBase {
 }
 export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
+  updateEmployeeDetails: string
 }

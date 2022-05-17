@@ -3,10 +3,11 @@ import {
   EmployeeGeneralInformationState,
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
 import { AxiosError } from 'axios'
-import { getEmployeeGeneralInformationApi } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
-import { ValidationError } from '../../../types/commonTypes'
 import { RootState } from '../../../stateStore'
+import { ValidationError } from '../../../types/commonTypes'
+import { getEmployeeGeneralInformationApi } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
 
 const initialGeneralInformationState = {} as EmployeeGeneralInformationState
 
@@ -43,7 +44,8 @@ const employeeGeneralInformationSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getEmployeeGeneralInformation.fulfilled, (state, action) => {
-        return { ...state, ...action.payload, isLoading: false }
+        state.generalInformation = action.payload as EmployeeGeneralInformation
+        state.isLoading = false
       })
       .addCase(getEmployeeGeneralInformation.rejected, (state, action) => {
         state.isLoading = false
@@ -54,8 +56,9 @@ const employeeGeneralInformationSlice = createSlice({
 export const { setEmployeeGeneralInformation, clearError } =
   employeeGeneralInformationSlice.actions
 
-export const selectLoggedInData = (
+export const selectLoggedInEmployeeData = (
   state: RootState,
-): EmployeeGeneralInformationState => state.getLoggedInEmployeeData
+): EmployeeGeneralInformation =>
+  state.getLoggedInEmployeeData.generalInformation
 
 export default employeeGeneralInformationSlice.reducer

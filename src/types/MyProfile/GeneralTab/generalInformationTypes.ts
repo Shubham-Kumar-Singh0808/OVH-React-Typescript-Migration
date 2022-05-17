@@ -29,8 +29,7 @@ export type EmployeeGeneralInformation = {
   rbtCvName?: string
 }
 
-export interface EmployeeGeneralInformationState
-  extends EmployeeGeneralInformation {
+export type EmployeeGeneralInformationState = {
   generalInformation: EmployeeGeneralInformation
   error: ValidationError
   isLoading: boolean

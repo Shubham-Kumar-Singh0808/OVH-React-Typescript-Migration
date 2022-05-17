@@ -15,12 +15,13 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import DownloadSampleFileButton from './DownloadSampleFileButton'
+// import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
+import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import moment from 'moment'
-import { selectLoggedInData } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
-import { updateEmployeeDefaultPic } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
+import { selectLoggedInEmployeeData } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 
 const BasicInfoTab = (): JSX.Element => {
-  const employeeBasicInformation = useTypedSelector(selectLoggedInData)
+  const employeeBasicInformation = useTypedSelector(selectLoggedInEmployeeData)
   const {
     id,
     baseLocation,
@@ -148,21 +149,48 @@ const BasicInfoTab = (): JSX.Element => {
     employeeBasicInformationEditData.maritalStatus,
     employeeBasicInformationEditData.anniversary,
   ])
+
+  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
+    return {
+      htmlFor: htmlFor,
+      className: className,
+    }
+  }
+
   // change on gender the defaultPic api should call
   useEffect(() => {
     if (employeeBasicInformationEditData.gender) {
       dispatch(
-        updateEmployeeDefaultPic(employeeBasicInformationEditData.gender),
+        employeeBasicInformationThunk.updateEmployeeDefaultPicOnGenderChange(
+          employeeBasicInformationEditData.gender,
+        ),
       )
     }
   }, [dispatch, employeeBasicInformationEditData.gender])
 
+  // upon save click have to save updated employee details
+  const handleSubmitBasicDetails = async () => {
+    const prepareObject = employeeBasicInformationEditData
+    dispatch(
+      employeeBasicInformationThunk.updateEmployeeBasicInformation(
+        prepareObject,
+      ),
+    )
+  }
   return (
     <>
-      <CForm className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required">
+      <CForm
+        className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
+        onSubmit={handleSubmitBasicDetails}
+      >
         <DownloadSampleFileButton />
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeId',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Employee ID:
           </CFormLabel>
           <CCol sm={2}>
@@ -172,7 +200,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeEmailId',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Email ID:
           </CFormLabel>
           <CCol sm={2}>
@@ -182,7 +215,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeFullName',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Full Name:
           </CFormLabel>
           <CCol sm={2}>
@@ -192,7 +230,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeCurrentLocation',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Current Location:
             <span
               className={
@@ -206,6 +249,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              id="employeeCurrentLocation"
               size="sm"
               type="text"
               name="curentLocation"
@@ -224,7 +268,12 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         {baseLocationShown && (
           <CRow className="mt-3 ">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel
+              {...dynamicFormLabelProps(
+                'employeeBaseLocation',
+                'col-sm-3 col-form-label text-end',
+              )}
+            >
               Base Location:
               <span
                 className={
@@ -238,6 +287,7 @@ const BasicInfoTab = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                id="employeeBaseLocation"
                 size="sm"
                 type="text"
                 name="baseLocation"
@@ -249,11 +299,17 @@ const BasicInfoTab = (): JSX.Element => {
           </CRow>
         )}
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeGender',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Gender:
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
+              id="employeeGender"
               size="sm"
               aria-label="Gender"
               name="gender"
@@ -266,7 +322,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeBloodGroup',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Blood group:
             <span
               className={
@@ -280,6 +341,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
+              id="employeeBloodGroup"
               size="sm"
               aria-label="bloodGroup"
               name="bloodgroup"
@@ -299,7 +361,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeOfficialBirthday',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Official Birthday:
             <span
               className={
@@ -313,6 +380,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
+              id="employeeOfficialBirthday"
               className="form-control form-control-sm"
               maxDate={new Date()}
               peekNextMonth
@@ -338,12 +406,26 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         {realBirthdayShown && (
           <CRow className="mt-3 ">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel
+              {...dynamicFormLabelProps(
+                'employeeRealBirthday',
+                'col-sm-3 col-form-label text-end',
+              )}
+            >
               Real Birthday:
-              <span className="text-danger">*</span>
+              <span
+                className={
+                  employeeBasicInformationEditData.realBirthday
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                id="employeeRealBirthday"
                 className="form-control form-control-sm"
                 maxDate={new Date()}
                 peekNextMonth
@@ -361,7 +443,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CRow>
         )}
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeMaritalStatus',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Marital Status:
             <span
               className={
@@ -375,6 +462,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
+              id="employeeMaritalStatus"
               size="sm"
               aria-label="MaritalStatus"
               name="maritalStatus"
@@ -389,12 +477,26 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         {employeeBasicInformationEditData.maritalStatus === 'Married' && (
           <CRow className="mt-3 ">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel
+              {...dynamicFormLabelProps(
+                'employeeAnniversary',
+                'col-sm-3 col-form-label text-end',
+              )}
+            >
               Anniversary:
-              <span className="text-danger">*</span>
+              <span
+                className={
+                  employeeBasicInformationEditData.anniversary
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                id="employeeAnniversary"
                 className="form-control form-control-sm"
                 maxDate={new Date()}
                 peekNextMonth
@@ -412,7 +514,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CRow>
         )}
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'department',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Department:
           </CFormLabel>
           <CCol sm={2}>
@@ -422,7 +529,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'reportingManager',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Reporting Manager:
           </CFormLabel>
           <CCol sm={6}>
@@ -432,7 +544,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employmentType',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Employment Type:
           </CFormLabel>
           <CCol sm={2}>
@@ -442,7 +559,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'jobType',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Job Type:
           </CFormLabel>
           <CCol sm={2}>
@@ -452,7 +574,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'country',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Country:
           </CFormLabel>
           <CCol sm={2}>
@@ -462,7 +589,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeePersonalEmail',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Personal Email:
             <span
               className={
@@ -476,6 +608,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              id="employeePersonalEmail"
               size="sm"
               type="text"
               name="personalEmail"
@@ -486,11 +619,17 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeSkypeID',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Skype ID:
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              id="employeeSkypeID"
               size="sm"
               type="text"
               name="skypeId"
@@ -501,7 +640,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'employeeProfilePicture',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Profile Picture:
           </CFormLabel>
           <CCol sm={3}>
@@ -514,29 +658,39 @@ const BasicInfoTab = (): JSX.Element => {
               />
             </div>
             <CFormInput
+              id="employeeProfilePicture"
               type="file"
               className="form-control mt-2"
-              id="exampleFormControlFile1"
               accept="image/*"
             />
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'aboutMe',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             About Me:
           </CFormLabel>
-          <CCol sm={9}></CCol>
+          <CCol sm={9}>{/* <OTextEditor /> */}</CCol>
         </CRow>
         <CRow className="mt-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            {...dynamicFormLabelProps(
+              'uploadRBTCV',
+              'col-sm-3 col-form-label text-end',
+            )}
+          >
             Upload RBT CV:
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              id="uploadRBTCV"
               className="form-control"
               type="file"
               name="file"
-              id="exampleFormControlFile2"
               accept=".doc, .docx, .pdf"
             />
           </CCol>
