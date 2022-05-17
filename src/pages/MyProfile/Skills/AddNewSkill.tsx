@@ -8,7 +8,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../reducers/appSlice'
+import { appActions } from '../../../reducers/appSlice'
 import { cilPlus } from '@coreui/icons'
 
 const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
@@ -39,7 +39,7 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
           skillItem.skill.toLowerCase() === newSkillName.toLowerCase(),
       ).length > 0
     ) {
-      dispatch(addToast(toastElement))
+      dispatch(appActions.addToast(toastElement))
       return
     }
 

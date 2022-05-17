@@ -1,31 +1,33 @@
-import {
-  CCardHeader,
-  CCardBody,
-  CRow,
-  CCol,
-  CForm,
-  CButton,
-  CFormLabel,
-  CFormInput,
-  CFormSelect,
-} from '@coreui/react-pro'
-import moment from 'moment'
-import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  doFetchCountryDetails,
-  doFetchCountryVisaDetails,
-  doAddNewVisaDetails,
-  doUpdateVisaDetails,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
-import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+
 import {
   AddEditEmployeeVisaDetails,
   EmployeeVisaDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-import 'react-datepicker/dist/react-datepicker.css'
+import {
+  CButton,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CForm,
+  CFormInput,
+  CFormLabel,
+  CFormSelect,
+  CRow,
+} from '@coreui/react-pro'
+import React, { useEffect, useState } from 'react'
+import {
+  doAddNewVisaDetails,
+  doFetchCountryDetails,
+  doFetchCountryVisaDetails,
+  doUpdateVisaDetails,
+} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
+import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../reducers/appSlice'
+import { appActions } from '../../../reducers/appSlice'
+import moment from 'moment'
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,
@@ -149,7 +151,9 @@ function AddEditVisaDetails({
     )
     if (doAddNewVisaDetails.fulfilled.match(addVisaMemberResultAction)) {
       backButtonHandler()
-      dispatch(dispatch(addToast(getToastMessage(actionMapping.added))))
+      dispatch(
+        dispatch(appActions.addToast(getToastMessage(actionMapping.added))),
+      )
     }
   }
   const handleUpdateVisaMember = async () => {
@@ -161,7 +165,7 @@ function AddEditVisaDetails({
     )
     if (doUpdateVisaDetails.fulfilled.match(updateVisaMemberResultAction)) {
       backButtonHandler()
-      dispatch(addToast(getToastMessage(actionMapping.updated)))
+      dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
     }
   }
   const formLabelProps = {
