@@ -5,7 +5,7 @@ import React, { Suspense, useCallback, useEffect } from 'react'
 
 import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
-import { setAuthentication } from './reducers/Login/authenticationSlice'
+import { authenticationActions } from './reducers/Login/authenticationSlice'
 import { useDispatch } from 'react-redux'
 
 // Containers
@@ -38,7 +38,9 @@ const App = (): JSX.Element => {
   useEffect(() => {
     const initialAuthenticationState = loadState()
 
-    dispatch(setAuthentication(initialAuthenticationState))
+    dispatch(
+      authenticationActions.setAuthentication(initialAuthenticationState),
+    )
   })
 
   return (
