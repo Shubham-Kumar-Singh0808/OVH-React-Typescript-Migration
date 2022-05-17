@@ -44,10 +44,11 @@ const appSlice = createSlice({
   },
 })
 
-export const { addToast, toggleSidebar, setReRenderMenu, setIsSessionExpired } =
-  appSlice.actions
-
-export const selectIsSessionExpired = (state: RootState): boolean =>
+const selectIsSessionExpired = (state: RootState): boolean =>
   state.app.isSessionExpired
+
+export const appSelectors = { selectIsSessionExpired }
+
+export const appActions = appSlice.actions
 
 export default appSlice.reducer

@@ -6,8 +6,8 @@ import React, { Suspense, useCallback, useEffect } from 'react'
 import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
 import SessionTimeout from './components/SessionTimeout'
-import { selectIsSessionExpired } from './reducers/appSlice'
-import { setAuthentication } from './reducers/Login/authenticationSlice'
+import { appSelectors } from './reducers/appSlice'
+import { authenticationActions } from './reducers/Login/authenticationSlice'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from './stateStore'
 
@@ -16,7 +16,9 @@ const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 const Login = React.lazy(() => import('./pages/Login/Login'))
 
 const App = (): JSX.Element => {
-  const setIsSessionExpired = useTypedSelector(selectIsSessionExpired)
+  const setIsSessionExpired = useTypedSelector(
+    appSelectors.selectIsSessionExpired,
+  )
   const dispatch = useDispatch()
 
   const loadState = useCallback(() => {
@@ -42,7 +44,9 @@ const App = (): JSX.Element => {
   useEffect(() => {
     const initialAuthenticationState = loadState()
 
-    dispatch(setAuthentication(initialAuthenticationState))
+    dispatch(
+      authenticationActions.setAuthentication(initialAuthenticationState),
+    )
   })
 
   return (

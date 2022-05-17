@@ -3,7 +3,7 @@ import { CButton, CImage } from '@coreui/react-pro'
 import AppFooter from './AppFooter'
 import RayBizTechLogo from '../assets/images/logo/RbtLogo.svg'
 import React from 'react'
-import { setIsSessionExpired } from '../reducers/appSlice'
+import { appActions } from '../reducers/appSlice'
 import { useAppDispatch } from '../stateStore'
 import { useHistory } from 'react-router-dom'
 
@@ -12,7 +12,7 @@ const SessionTimeout = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const handleLoginAgain = () => {
-    dispatch(setIsSessionExpired(false))
+    dispatch(appActions.setIsSessionExpired(false))
     history.push('/login')
   }
 

@@ -1,8 +1,8 @@
 import { CBadge, CModal, CModalBody } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 
-import { clearAuthentication } from '../reducers/Login/authenticationSlice'
-import { setIsSessionExpired } from '../reducers/appSlice'
+import { appActions } from '../reducers/appSlice'
+import { authenticationActions } from '../reducers/Login/authenticationSlice'
 import { useAppDispatch } from '../stateStore'
 import { useHistory } from 'react-router-dom'
 import { useIdleTimer } from 'react-idle-timer'
@@ -33,10 +33,10 @@ const IdleModal = ({
 
     // clear authentication
     localStorage.clear()
-    dispatch(clearAuthentication())
+    dispatch(authenticationActions.clearAuthentication())
 
     //set session expired
-    dispatch(setIsSessionExpired(true))
+    dispatch(appActions.setIsSessionExpired(true))
 
     // redirect to session expire page
     history.push('/sessionExpire')

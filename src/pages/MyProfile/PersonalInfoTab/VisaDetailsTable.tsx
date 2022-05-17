@@ -1,10 +1,3 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  doFetchVisaDetails,
-  doDeleteVisaDetails,
-  selectGetVisaDetails,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import {
   CButton,
   CTable,
@@ -14,10 +7,18 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
+import React, { useEffect, useMemo, useState } from 'react'
+import {
+  doDeleteVisaDetails,
+  doFetchVisaDetails,
+  selectGetVisaDetails,
+} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
 import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../reducers/appSlice'
+import { appActions } from '../../../reducers/appSlice'
 const VisaDetailsTable = ({
   editVisaButtonHandler,
 }: EmployeeVisaDetailsTableProps): JSX.Element => {
@@ -43,7 +44,7 @@ const VisaDetailsTable = ({
     if (doDeleteVisaDetails.fulfilled.match(deleteFamilyMemberResultAction)) {
       dispatch(doFetchVisaDetails(employeeId))
       dispatch(
-        addToast(
+        appActions.addToast(
           <OToast
             toastColor="success"
             toastMessage="Visa Detail deleted successfully"
