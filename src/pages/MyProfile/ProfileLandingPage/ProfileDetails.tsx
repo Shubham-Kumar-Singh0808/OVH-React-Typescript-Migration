@@ -1,10 +1,27 @@
-/* eslint-disable react/no-unescaped-entities */
 import { CCol, CRow } from '@coreui/react-pro'
 
+import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import React from 'react'
-import { useSelector } from 'react-redux'
 
-const ProfileDetails = (): JSX.Element => {
+// import React, { useEffect } from 'react'
+// import {
+//   getEmployeeGeneralInformation,
+//   selectLoggedInData,
+// } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+// import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
+// import { selectEmployeeId } from '../../../reducers/Login/authenticationSlice'
+
+const ProfileDetails = ({
+  employeeGeneralInformation,
+}: EmployeeGeneralInformation): JSX.Element => {
+  // const employeeId = useTypedSelector(selectEmployeeId)
+  // const employeeGeneralInformation = useTypedSelector(selectLoggedInData)
+  // const dispatch = useAppDispatch()
+
+  // useEffect(() => {
+  //   dispatch(getEmployeeGeneralInformation(employeeId as string))
+  // }, [dispatch, employeeId])
   return (
     <>
       <CRow className="mb-4">
@@ -20,18 +37,20 @@ const ProfileDetails = (): JSX.Element => {
         </CCol>
         <CCol sm={2}>
           <div className="profile-name">
-            <h4>'generalInformation. fullName'</h4>
-            <p className="job-title">'generalInformation. designation'</p>
+            <h4>{employeeGeneralInformation?.fullName}</h4>
+            <p className="job-title">
+              {employeeGeneralInformation?.designation}
+            </p>
           </div>
         </CCol>
-        <CCol sm={2}>
+        {/* <CCol sm={2}>
           <dl>
             <dt>Employee Id</dt>
             <dd className="mb-0">'generalInformation. id'</dd>
             <dt>Blood Group</dt>
             <dd className="mb-0">'generalInformation. bloodgroup'</dd>
           </dl>
-        </CCol>
+        </CCol> */}
         {/* <CCol sm={2}>
           <dl>
             {generalInformation.homeNumber && (

@@ -1,10 +1,11 @@
-import { CCardHeader, CRow, CCol } from '@coreui/react-pro'
+import { CCardHeader, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
   getEmployeeGeneralInformation,
   selectLoggedInData,
 } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
 import { selectEmployeeId } from '../../../reducers/Login/authenticationSlice'
 
 const EmployeeGeneralInformation = (): JSX.Element => {
@@ -27,23 +28,23 @@ const EmployeeGeneralInformation = (): JSX.Element => {
         </CCol>
         <CCol md={4}>
           <dl>
-            {employeeGeneralInformation.baseLocation && (
+            {employeeGeneralInformation?.baseLocation && (
               <>
                 <dt>Base Location</dt>
-                <dd>{employeeGeneralInformation.baseLocation}</dd>
+                <dd>{employeeGeneralInformation?.baseLocation}</dd>
               </>
             )}
-            {employeeGeneralInformation.curentLocation && (
+            {employeeGeneralInformation?.curentLocation && (
               <>
                 <dt>Current Location</dt>
-                <dd>{employeeGeneralInformation.curentLocation}</dd>
+                <dd>{employeeGeneralInformation?.curentLocation}</dd>
               </>
             )}
 
-            {employeeGeneralInformation.address && (
+            {employeeGeneralInformation?.address && (
               <>
                 <dt>Current Address</dt>
-                <dd>{employeeGeneralInformation.address}</dd>
+                <dd>{employeeGeneralInformation?.address}</dd>
               </>
             )}
           </dl>
@@ -52,25 +53,25 @@ const EmployeeGeneralInformation = (): JSX.Element => {
         <CCol md={5}>
           <dl>
             <dt>Gender</dt>
-            <dd>{employeeGeneralInformation.gender}</dd>
-            {employeeGeneralInformation.bloodgroup && (
+            <dd>{employeeGeneralInformation?.gender}</dd>
+            {employeeGeneralInformation?.bloodgroup && (
               <>
                 <dt>Blood Group</dt>
-                <dd>{employeeGeneralInformation.bloodgroup}</dd>
+                <dd>{employeeGeneralInformation?.bloodgroup}</dd>
               </>
             )}
             <dt>Date of Birth</dt>
-            <dd>{employeeGeneralInformation.realBirthday}</dd>
-            {employeeGeneralInformation.maritalStatus && (
+            <dd>{employeeGeneralInformation?.realBirthday}</dd>
+            {employeeGeneralInformation?.maritalStatus && (
               <>
                 <dt>Marital Status</dt>
-                <dd>{employeeGeneralInformation.maritalStatus}</dd>
+                <dd>{employeeGeneralInformation?.maritalStatus}</dd>
               </>
             )}
-            {employeeGeneralInformation.emergencyContact && (
+            {employeeGeneralInformation?.emergencyContact && (
               <>
                 <dt>Emergency Contact</dt>
-                <dd>{employeeGeneralInformation.emergencyContact}</dd>
+                <dd>{employeeGeneralInformation?.emergencyContact}</dd>
               </>
             )}
           </dl>
