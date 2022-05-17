@@ -3,25 +3,12 @@ import { CCol, CRow } from '@coreui/react-pro'
 import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import React from 'react'
 
-// import React, { useEffect } from 'react'
-// import {
-//   getEmployeeGeneralInformation,
-//   selectLoggedInData,
-// } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
-// import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
-// import { selectEmployeeId } from '../../../reducers/Login/authenticationSlice'
-
+type ProfileDetailsProps = {
+  employeeGeneralInformation: EmployeeGeneralInformation
+}
 const ProfileDetails = ({
   employeeGeneralInformation,
-}: EmployeeGeneralInformation): JSX.Element => {
-  // const employeeId = useTypedSelector(selectEmployeeId)
-  // const employeeGeneralInformation = useTypedSelector(selectLoggedInData)
-  // const dispatch = useAppDispatch()
-
-  // useEffect(() => {
-  //   dispatch(getEmployeeGeneralInformation(employeeId as string))
-  // }, [dispatch, employeeId])
+}: ProfileDetailsProps): JSX.Element => {
   return (
     <>
       <CRow className="mb-4">
@@ -30,8 +17,8 @@ const ProfileDetails = ({
             <img
               width="120px"
               height="120px;"
-              src="{generalInformation.profilePicPath}"
-              alt="{generalInformation.fullName}"
+              src={employeeGeneralInformation?.profilePicPath}
+              alt={employeeGeneralInformation?.fullName}
             />
           </div>
         </CCol>
@@ -43,52 +30,58 @@ const ProfileDetails = ({
             </p>
           </div>
         </CCol>
-        {/* <CCol sm={2}>
+        <CCol sm={2}>
           <dl>
             <dt>Employee Id</dt>
-            <dd className="mb-0">'generalInformation. id'</dd>
+            <dd className="mb-0">{employeeGeneralInformation?.id}</dd>
             <dt>Blood Group</dt>
-            <dd className="mb-0">'generalInformation. bloodgroup'</dd>
+            <dd className="mb-0">{employeeGeneralInformation?.bloodgroup}</dd>
           </dl>
-        </CCol> */}
-        {/* <CCol sm={2}>
+        </CCol>
+        <CCol sm={2}>
           <dl>
-            {generalInformation.homeNumber && (
+            {employeeGeneralInformation?.homeNumber && (
               <>
                 <dt>Home</dt>
-                <dd className="mb-0">{generalInformation.homeNumber}</dd>
+                <dd className="mb-0">
+                  {employeeGeneralInformation.homeNumber}
+                </dd>
               </>
             )}
-            {generalInformation.mobile && (
+            {employeeGeneralInformation?.mobile && (
               <>
                 <dt>Mobile</dt>
-                <dd className="mb-0">{generalInformation.mobile}</dd>
+                <dd className="mb-0">{employeeGeneralInformation.mobile}</dd>
               </>
             )}
-            {generalInformation.alternativeMobile && (
+            {employeeGeneralInformation?.alternativeMobile && (
               <>
                 <dt>Alternative Mobile</dt>
-                <dd className="mb-0">{generalInformation.alternativeMobile}</dd>
+                <dd className="mb-0">
+                  {employeeGeneralInformation.alternativeMobile}
+                </dd>
               </>
             )}
-            {generalInformation.workNumber && (
+            {employeeGeneralInformation?.workNumber && (
               <>
                 <dt>Work</dt>
-                <dd className="mb-0">{generalInformation.workNumber}</dd>
+                <dd className="mb-0">
+                  {employeeGeneralInformation.workNumber}
+                </dd>
               </>
             )}
           </dl>
         </CCol>
-        <CCol sm={3}> 
+        <CCol sm={3}>
           <dl>
             <dt>Email ID</dt>
-            <dd>{generalInformation.emailId}</dd>
+            <dd>{employeeGeneralInformation?.emailId}</dd>
             <dt>Experience</dt>
-            <dd>{generalInformation.updatedExperience}</dd>
+            <dd>{employeeGeneralInformation?.updatedExperience}</dd>
             <dt>Skype</dt>
-            <dd>{generalInformation.skypeId}</dd>
+            <dd>{employeeGeneralInformation?.skypeId}</dd>
           </dl>
-        </CCol>*/}
+        </CCol>
       </CRow>
     </>
   )

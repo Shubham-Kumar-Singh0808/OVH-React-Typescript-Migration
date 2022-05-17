@@ -56,7 +56,7 @@ const employeeGeneralInformationSlice = createSlice({
 export const { setEmployeeGeneralInformation, clearError } =
   employeeGeneralInformationSlice.actions
 
-export const selectLoggedInData = (
+export const selectLoggedInEmployeeData = (
   state: RootState,
 ): EmployeeGeneralInformation =>
   state.getLoggedInEmployeeData.generalInformation

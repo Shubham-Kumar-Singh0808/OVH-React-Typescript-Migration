@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import {
   getEmployeeGeneralInformation,
-  selectLoggedInData,
+  selectLoggedInEmployeeData,
 } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -12,7 +12,9 @@ import { selectEmployeeId } from '../../../reducers/Login/authenticationSlice'
 
 const MyProfile = (): JSX.Element => {
   const employeeId = useTypedSelector(selectEmployeeId)
-  const employeeGeneralInformation = useTypedSelector(selectLoggedInData)
+  const employeeGeneralInformation = useTypedSelector(
+    selectLoggedInEmployeeData,
+  )
   const dispatch = useAppDispatch()
 
   useEffect(() => {

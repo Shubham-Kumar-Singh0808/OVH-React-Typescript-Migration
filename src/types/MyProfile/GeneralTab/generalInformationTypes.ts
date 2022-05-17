@@ -1,17 +1,38 @@
 import { ValidationError } from '../../commonTypes'
 
 export type EmployeeGeneralInformation = {
+  id?: number
   baseLocation?: string
-  curentLocation?: string
-  address?: string
-  gender?: string
   bloodgroup?: string
-  realBirthday?: string
-  maritalStatus?: string
-  emergencyContact?: string
-  officialBirthday?: string
-  fullName?: string
+  departmentName?: string
   designation?: string
+  emailId?: string
+  anniversary?: string
+  curentLocation?: string
+  country?: string
+  employmentTypeName?: string
+  address?: string
+  emergencyContact?: string
+  fullName?: string
+  gender?: string
+  jobTypeName?: string
+  maritalStatus?: string
+  officialBirthday?: string
+  thumbPicture?: string
+  personalEmail?: string
+  realBirthday?: string
+  projectManager?: string
+  empManager?: string
+  rbtCvPath?: string
+  aboutMe?: string
+  skypeId?: string
+  rbtCvName?: string
+  profilePicPath?: string
+  homeNumber?: string
+  mobile?: string
+  alternativeMobile?: string
+  workNumber?: string
+  updatedExperience?: string
 }
 
 export type EmployeeGeneralInformationState = {
