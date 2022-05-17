@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   CButton,
   CTable,
@@ -8,12 +8,20 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
+import {
+  deleteCertificateDetails,
+  getAllEmployeeCertifications,
+} from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qualifications/certificationTypes'
+import { addToast } from '../../../../reducers/appSlice'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import OModal from '../../../../components/ReusableComponent/OModal'
 const CertificationsTable = ({
   editCertificateButtonHandler,
 }: EmployeeCertificationTableProps): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteCertificateById, setToDeleteCertificateById] = useState(0)
   const employeeCertificateData = useTypedSelector(
     (state) => state.employeeCertificates.certificationDetails,
   )
@@ -21,6 +29,40 @@ const CertificationsTable = ({
   useEffect(() => {
     dispatch(getAllEmployeeCertifications())
   }, [dispatch])
+
+  const handleShowDeleteModal = (certificationId: number) => {
+    setToDeleteCertificateById(certificationId)
+    setIsDeleteModalVisible(true)
+  }
+  const handleConfirmDeleteCertificate = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteCertificateResultAction = await dispatch(
+      deleteCertificateDetails(toDeleteCertificateById),
+    )
+    if (
+      deleteCertificateDetails.fulfilled.match(deleteCertificateResultAction)
+    ) {
+      dispatch(getAllEmployeeCertifications())
+      dispatch(
+        addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Certificate deleted successfully"
+          />,
+        ),
+      )
+    }
+  }
+
+  const sortedCertificateDetails = useMemo(() => {
+    if (employeeCertificateData) {
+      return employeeCertificateData
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.name.localeCompare(sortNode2.name),
+        )
+    }
+  }, [employeeCertificateData])
   return (
     <>
       <CTable striped>
@@ -39,7 +81,7 @@ const CertificationsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {employeeCertificateData?.map((certificateItem, index) => (
+          {sortedCertificateDetails?.map((certificateItem, index) => (
             <CTableRow key={index}>
               <CTableDataCell scope="row">{index + 1}</CTableDataCell>
               <CTableDataCell scope="row">
@@ -80,7 +122,13 @@ const CertificationsTable = ({
                 >
                   <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </CButton>
-                <CButton color="danger" className="btn-ovh me-1">
+                <CButton
+                  color="danger"
+                  className="btn-ovh me-1"
+                  onClick={() =>
+                    handleShowDeleteModal(certificateItem.id as number)
+                  }
+                >
                   <i className="fa fa-trash-o" aria-hidden="true"></i>
                 </CButton>
               </CTableDataCell>
@@ -93,6 +141,17 @@ const CertificationsTable = ({
           ? `Total Records: ${employeeCertificateData.length}`
           : `No Records Found`}
       </strong>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteCertificate}
+      >
+        {`Do you really want to delete this ?`}
+      </OModal>
     </>
   )
 }

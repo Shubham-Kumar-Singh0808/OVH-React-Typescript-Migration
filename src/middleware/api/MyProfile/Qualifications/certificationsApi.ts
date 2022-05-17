@@ -65,3 +65,31 @@ export const getCertificationInformationById = async (
   const responseVisa = await axios(requestConfig)
   return responseVisa.data
 }
+export const updateEmployeeCertificateDetails = async (
+  certificateDetails: EmployeeCertifications,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: qualificationsApi.updateEmployeeCertificate,
+    method: AllowedHttpMethods.put,
+    data: certificateDetails,
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
+export const deleteEmployeeCertification = async (
+  certificationId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: qualificationsApi.deleteEmployeeCertificate,
+    method: AllowedHttpMethods.delete,
+    params: {
+      certificationId: certificationId,
+    },
+    data: {
+      certificationId: certificationId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}

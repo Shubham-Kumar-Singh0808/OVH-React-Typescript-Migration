@@ -49,6 +49,7 @@ export interface QualificationsApi extends ApiBase {
   addEmployeeCertificates: string
   getEmployeeCertificate: string
   updateEmployeeCertificate: string
+  deleteEmployeeCertificate: string
 }
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string

@@ -8,10 +8,12 @@ import {
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import {
   addNewCertificate,
+  deleteEmployeeCertification,
   getAllTechnologies,
   getCertificateByTechnologyName,
   getCertificationInformationById,
   getEmployeeCertifications,
+  updateEmployeeCertificateDetails,
 } from '../../../middleware/api/MyProfile/Qualifications/certificationsApi'
 
 import { AxiosError } from 'axios'
@@ -115,16 +117,52 @@ export const getEmployeeCertificateByID = createAsyncThunk<
   },
 )
 
+export const updateCertificateInformation = createAsyncThunk<
+  number | undefined,
+  EmployeeCertifications,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeCertifications/updateCertificateInformation',
+  async (employeeCertificateDetails: EmployeeCertifications, thunkApi) => {
+    try {
+      return await updateEmployeeCertificateDetails(employeeCertificateDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+export const deleteCertificateDetails = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeCertifications/deleteCertificateDetails',
+  async (certificationId, thunkApi) => {
+    try {
+      return await deleteEmployeeCertification(certificationId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const employeeCertificationsSlice = createSlice({
   name: 'employeeCertifications',
   initialState: initialCertificationState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllEmployeeCertifications.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.certificationDetails = action.payload as EmployeeCertifications[]
-      })
       .addCase(getAllTechnology.fulfilled, (state, action) => {
         state.isLoading = false
         state.getAllTechnologies = action.payload as getAllTechnologyLookUp[]
@@ -144,11 +182,28 @@ const employeeCertificationsSlice = createSlice({
         state.certificationDetails =
           action.payload as unknown as EmployeeCertifications[]
       })
+      .addCase(deleteCertificateDetails.fulfilled, (state) => {
+        state.isLoading = false
+      })
+      .addMatcher(
+        isAnyOf(
+          getAllEmployeeCertifications.fulfilled,
+          getEmployeeCertificateByID.fulfilled,
+          updateCertificateInformation.fulfilled,
+        ),
+        (state, action) => {
+          state.isLoading = false
+          state.certificationDetails =
+            action.payload as EmployeeCertifications[]
+        },
+      )
       .addMatcher(
         isAnyOf(
           getAllTechnology.pending,
           getCertificateDetailsByTechnologyName.pending,
           getEmployeeCertificateByID.pending,
+          updateCertificateInformation.pending,
+          deleteCertificateDetails.pending,
         ),
         (state) => {
           state.isLoading = true
@@ -160,6 +215,8 @@ const employeeCertificationsSlice = createSlice({
           getAllTechnology.rejected,
           getCertificateDetailsByTechnologyName.rejected,
           getEmployeeCertificateByID.rejected,
+          updateCertificateInformation.rejected,
+          deleteCertificateDetails.rejected,
         ),
         (state, action) => {
           state.isLoading = false

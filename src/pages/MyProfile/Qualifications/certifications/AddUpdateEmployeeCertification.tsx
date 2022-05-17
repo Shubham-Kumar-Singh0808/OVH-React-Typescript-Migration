@@ -21,6 +21,7 @@ import {
   getAllTechnology,
   getCertificateDetailsByTechnologyName,
   addEmployeeCertification,
+  updateCertificateInformation,
 } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -35,14 +36,14 @@ function AddUpdateEmployeeCertification({
   confirmButtonText,
   backButtonHandler,
 }: EmployeeCertificationProps): JSX.Element {
-  const initialCerificationDetails = {} as EmployeeCertifications
+  const initialCertificationDetails = {} as EmployeeCertifications
 
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [addCertification, setAddCertification] = useState(
-    initialCerificationDetails,
+    initialCertificationDetails,
   )
-  const [dateOfCompletion, setDateOfCompletion] = useState<Date | string>()
-  const [dateOfExpiry, setDateOfExpiry] = useState<Date | string>()
+  const [completedDate, setCompletedDate] = useState<Date | string>()
+  const [expiryDate, setExpiryDate] = useState<Date | string>()
   const [error, setError] = useState<Date | null>(null)
 
   const getTechnologies = useTypedSelector(
@@ -54,7 +55,9 @@ function AddUpdateEmployeeCertification({
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-
+  const fetchCertificateDetails = useTypedSelector(
+    (state) => state.employeeCertificates.certificationDetails,
+  )
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(getAllEmployeeCertifications())
@@ -95,7 +98,7 @@ function AddUpdateEmployeeCertification({
         return { ...prevState, ...{ [name]: formatDate } }
       })
     } else {
-      setDateOfCompletion(date)
+      setCompletedDate(date)
     }
   }
   const onChangeDateOfExpireHandler = (date: Date) => {
@@ -106,16 +109,20 @@ function AddUpdateEmployeeCertification({
         return { ...prevState, ...{ [name]: formatDate } }
       })
     } else {
-      setDateOfExpiry(date)
+      setExpiryDate(date)
     }
     setError(date)
   }
+  const warningToastMessage = (
+    <OToast
+      toastMessage="Date of Expiry should be greater"
+      toastColor="warning"
+    />
+  )
 
-  useEffect(() => {
-    if ((dateOfCompletion as string) <= (dateOfExpiry as string)) {
-      setError(null)
-    }
-  }, [dateOfCompletion, dateOfExpiry])
+  if ((completedDate as string) <= (expiryDate as string)) {
+    dispatch(addToast(warningToastMessage))
+  }
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -134,13 +141,13 @@ function AddUpdateEmployeeCertification({
       addCertification.certificateType &&
       addCertification.name &&
       addCertification.code &&
-      dateOfCompletion
+      completedDate
     ) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [addCertification, dateOfCompletion])
+  }, [addCertification, completedDate])
 
   const handleClearInputFields = () => {
     setAddCertification({
@@ -152,15 +159,15 @@ function AddUpdateEmployeeCertification({
       percent: 0,
       name: '',
     })
-    setDateOfCompletion('')
-    setDateOfExpiry('')
+    setCompletedDate('')
+    setExpiryDate('')
   }
   const handleAddCertificateDetails = async () => {
     const prepareObject = {
       ...addCertification,
       ...{
-        completedDate: moment(dateOfCompletion).format('DD/MM/YYYY'),
-        expiryDate: moment(dateOfExpiry).format('DD/MM/YYYY'),
+        completedDate: moment(completedDate).format('DD/MM/YYYY'),
+        expiryDate: moment(expiryDate).format('DD/MM/YYYY'),
         employeeId: employeeId,
       },
     }
@@ -172,6 +179,29 @@ function AddUpdateEmployeeCertification({
       dispatch(addToast(successToastMessage))
     }
   }
+
+  const handleUpdateCertificationDetails = async () => {
+    const prepareObject = {
+      ...addCertification,
+      ...{
+        completedDate: moment(completedDate).format('DD/MM/YYYY'),
+        expiryDate: moment(expiryDate).format('DD/MM/YYYY'),
+        employeeId: employeeId,
+      },
+    }
+    const updateCertificateResultAction = await dispatch(
+      updateCertificateInformation(prepareObject),
+    )
+    if (
+      updateCertificateInformation.fulfilled.match(
+        updateCertificateResultAction,
+      )
+    ) {
+      backButtonHandler()
+      dispatch(addToast(successToastMessage))
+    }
+  }
+
   return (
     <>
       <CCardHeader>
@@ -326,19 +356,19 @@ function AddUpdateEmployeeCertification({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Completed Date:
-              <span className={dateOfCompletion ? 'text-white' : 'text-danger'}>
+              <span className={completedDate ? 'text-white' : 'text-danger'}>
                 *
               </span>
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
                 className="form-control"
-                name="dateOfCompletion"
+                name="completedDate"
                 maxDate={new Date()}
-                value={dateOfCompletion as string}
-                selected={dateOfCompletion as Date}
+                value={completedDate as string}
+                selected={completedDate as Date}
                 onChange={onChangeDateOfCompletionHandler}
-                id="dateOfCompletion"
+                id="completedDate"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -355,11 +385,11 @@ function AddUpdateEmployeeCertification({
             <CCol sm={3}>
               <DatePicker
                 className="form-control"
-                name="dateOfExpire"
-                value={(dateOfExpiry as string) || (dateOfExpiry as string)}
-                selected={dateOfExpiry as Date}
+                name="expiryDate"
+                value={(expiryDate as string) || (expiryDate as string)}
+                selected={expiryDate as Date}
                 onChange={onChangeDateOfExpireHandler}
-                id="dateOfExpire"
+                id="expiryDate"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -403,7 +433,11 @@ function AddUpdateEmployeeCertification({
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               {isEditCertificationDetails ? (
-                <CButton className="btn-ovh me-2" color="success">
+                <CButton
+                  className="btn-ovh me-2"
+                  color="success"
+                  onClick={handleUpdateCertificationDetails}
+                >
                   {confirmButtonText}
                 </CButton>
               ) : (

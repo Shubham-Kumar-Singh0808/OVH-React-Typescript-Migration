@@ -87,4 +87,5 @@ export const qualificationsApi: QualificationsApi = {
   addEmployeeCertificates: apiPrefix + '/Employee/certification',
   getEmployeeCertificate: apiPrefix + '/Employee/getCertification',
   updateEmployeeCertificate: apiPrefix + '/Employee/certification',
+  deleteEmployeeCertificate: apiPrefix + '/Employee/certification',
 }
