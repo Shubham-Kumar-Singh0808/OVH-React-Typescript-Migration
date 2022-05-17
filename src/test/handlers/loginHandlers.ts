@@ -1,12 +1,12 @@
 import { correctPassword, username } from '../constants'
 
-import { authenticationApi } from '../../middleware/api/apiList'
+import { authenticationApiConfig } from '../../middleware/api/apiList'
 import { encode } from 'base-64'
 import { rest } from 'msw'
 
 export const loginHandlers = [
   // login api mock
-  rest.get(authenticationApi.login, (req, res, ctx) => {
+  rest.get(authenticationApiConfig.login, (req, res, ctx) => {
     const encodedCredentials = encode(`${username}:${correctPassword}`)
     const correctAuthorization = `Basic ${encodedCredentials}`
     const authorizationFromHeader = req.headers.get('authorization')

@@ -11,8 +11,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import {
-  removeCategoryById,
-  selectCategoryList,
+  categorySelectors,
+  categoryThunk,
 } from '../../../reducers/MyProfile/Categories/categorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -25,7 +25,7 @@ import { currentPageData } from '../../../utils/paginationUtils'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const CategoryListTable = (): JSX.Element => {
-  const categories = useTypedSelector(selectCategoryList)
+  const categories = useTypedSelector(categorySelectors.selectCategoryList)
   const dispatch = useAppDispatch()
 
   const {
@@ -64,7 +64,7 @@ const CategoryListTable = (): JSX.Element => {
   const handleConfirmDelete = async (categoryId: number) => {
     setIsDeleteModalVisible(false)
 
-    dispatch(removeCategoryById(categoryId))
+    dispatch(categoryThunk.deleteCategoryById(categoryId))
   }
 
   const currentPageItems = useMemo(

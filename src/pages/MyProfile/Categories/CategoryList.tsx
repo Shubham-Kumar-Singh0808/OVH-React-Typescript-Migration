@@ -1,8 +1,8 @@
 import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import {
-  fetchAllCategories,
-  selectIsCategoryListLoading,
+  categorySelectors,
+  categoryThunk,
 } from '../../../reducers/MyProfile/Categories/categorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -14,10 +14,12 @@ import { cilArrowLeft } from '@coreui/icons'
 
 const CategoryList = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const isLoading = useTypedSelector(selectIsCategoryListLoading)
+  const isLoading = useTypedSelector(
+    categorySelectors.selectIsCategoryListLoading,
+  )
 
   useEffect(() => {
-    dispatch(fetchAllCategories())
+    dispatch(categoryThunk.getAllCategoryList())
   }, [dispatch])
 
   return (

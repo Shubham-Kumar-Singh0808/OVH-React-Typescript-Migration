@@ -23,10 +23,10 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
-import { useFormik } from 'formik'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../../reducers/appSlice'
 import QualificationCategoryList from '../../QualificationCategoryList/QualificationCategoryList'
+import { appActions } from '../../../../reducers/appSlice'
+import { useFormik } from 'formik'
 
 const AddUpdateEmployeeQualification = ({
   backButtonHandler,
@@ -127,7 +127,7 @@ const AddUpdateEmployeeQualification = ({
         updateQualificationDetails(addQualification),
       )
       if (updateQualificationDetails.fulfilled.match(updateResultAction)) {
-        dispatch(addToast(getToastMessage(actionMapping.updated)))
+        dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
 
         backButtonHandler()
       }
@@ -139,7 +139,7 @@ const AddUpdateEmployeeQualification = ({
         }),
       )
       if (postQualificationDetails.fulfilled.match(postResultAction)) {
-        dispatch(addToast(getToastMessage(actionMapping.added)))
+        dispatch(appActions.addToast(getToastMessage(actionMapping.added)))
         backButtonHandler()
       }
     }

@@ -1,10 +1,9 @@
 import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import {
-  doneRefreshList,
-  fetchAllSkillById,
-  selectIsSkillListLoading,
-  selectRefreshList,
+  skillActions,
+  skillSelectors,
+  skillThunk,
 } from '../../../reducers/MyProfile/Skills/skillSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -22,17 +21,17 @@ const SkillList = ({
   categoryType: string
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const isLoading = useTypedSelector(selectIsSkillListLoading)
-  const refreshList = useTypedSelector(selectRefreshList)
+  const isLoading = useTypedSelector(skillSelectors.selectIsSkillListLoading)
+  const refreshList = useTypedSelector(skillSelectors.selectRefreshList)
 
   useEffect(() => {
-    dispatch(fetchAllSkillById(categoryId))
+    dispatch(skillThunk.getAllSkillListById(categoryId))
   }, [dispatch, categoryId])
 
   useEffect(() => {
     if (refreshList) {
-      dispatch(fetchAllSkillById(categoryId))
-      dispatch(doneRefreshList())
+      dispatch(skillThunk.getAllSkillListById(categoryId))
+      dispatch(skillActions.doneRefreshList())
     }
   }, [dispatch, categoryId, refreshList])
   return (
