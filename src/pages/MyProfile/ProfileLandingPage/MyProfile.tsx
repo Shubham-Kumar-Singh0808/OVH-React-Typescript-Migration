@@ -11,15 +11,9 @@ import ProfileDetails from './ProfileDetails'
 import { selectEmployeeId } from '../../../reducers/Login/authenticationSlice'
 
 const MyProfile = (): JSX.Element => {
-  const employeeId = useTypedSelector(selectEmployeeId)
   const employeeGeneralInformation = useTypedSelector(
     selectLoggedInEmployeeData,
   )
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(getEmployeeGeneralInformation(employeeId as string))
-  }, [dispatch, employeeId])
   return (
     <>
       <OCard

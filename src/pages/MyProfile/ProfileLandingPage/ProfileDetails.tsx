@@ -1,11 +1,8 @@
 import { CCol, CRow } from '@coreui/react-pro'
 
-import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
+import { ProfileDetailsProps } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import React from 'react'
 
-type ProfileDetailsProps = {
-  employeeGeneralInformation: EmployeeGeneralInformation
-}
 const ProfileDetails = ({
   employeeGeneralInformation,
 }: ProfileDetailsProps): JSX.Element => {
@@ -44,21 +41,21 @@ const ProfileDetails = ({
               <>
                 <dt>Home</dt>
                 <dd className="mb-0">
-                  {employeeGeneralInformation.homeNumber}
+                  {employeeGeneralInformation?.homeNumber}
                 </dd>
               </>
             )}
             {employeeGeneralInformation?.mobile && (
               <>
                 <dt>Mobile</dt>
-                <dd className="mb-0">{employeeGeneralInformation.mobile}</dd>
+                <dd className="mb-0">{employeeGeneralInformation?.mobile}</dd>
               </>
             )}
             {employeeGeneralInformation?.alternativeMobile && (
               <>
                 <dt>Alternative Mobile</dt>
                 <dd className="mb-0">
-                  {employeeGeneralInformation.alternativeMobile}
+                  {employeeGeneralInformation?.alternativeMobile}
                 </dd>
               </>
             )}
@@ -66,7 +63,7 @@ const ProfileDetails = ({
               <>
                 <dt>Work</dt>
                 <dd className="mb-0">
-                  {employeeGeneralInformation.workNumber}
+                  {employeeGeneralInformation?.workNumber}
                 </dd>
               </>
             )}

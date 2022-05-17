@@ -2,17 +2,25 @@ import './assets/scss/style.scss'
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import React, { Suspense, useCallback, useEffect } from 'react'
+import {
+  selectEmployeeId,
+  selectToken,
+  setAuthentication,
+} from './reducers/Login/authenticationSlice'
 
 import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
-import { setAuthentication } from './reducers/Login/authenticationSlice'
+import { getEmployeeGeneralInformation } from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useDispatch } from 'react-redux'
+import { useTypedSelector } from './stateStore'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 const Login = React.lazy(() => import('./pages/Login/Login'))
 
 const App = (): JSX.Element => {
+  const employeeId = useTypedSelector(selectEmployeeId)
+  const authenticatedToken = useTypedSelector(selectToken)
   const dispatch = useDispatch()
 
   const loadState = useCallback(() => {
@@ -40,6 +48,11 @@ const App = (): JSX.Element => {
 
     dispatch(setAuthentication(initialAuthenticationState))
   })
+  useEffect(() => {
+    if (authenticatedToken) {
+      dispatch(getEmployeeGeneralInformation(employeeId))
+    }
+  }, [authenticatedToken, dispatch, employeeId])
 
   return (
     <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>

@@ -71,8 +71,8 @@ export const { setAuthentication, clearAuthentication, clearError } =
 export const selectError = (state: RootState): ValidationError =>
   state.authentication.error
 export const selectToken = (state: RootState): string =>
-  state.authentication.authenticatedUser.token
+  state.authentication.authenticatedUser?.token
 export const selectEmployeeId = (state: RootState): string =>
-  state.authentication.authenticatedUser.employeeId as string
+  state.authentication.authenticatedUser?.employeeId as string
 
 export default authenticationSlice.reducer

@@ -34,7 +34,9 @@ export type EmployeeGeneralInformation = {
   workNumber?: string
   updatedExperience?: string
 }
-
+export type ProfileDetailsProps = {
+  employeeGeneralInformation: EmployeeGeneralInformation
+}
 export type EmployeeGeneralInformationState = {
   generalInformation: EmployeeGeneralInformation
   error: ValidationError
