@@ -91,7 +91,7 @@ const Login = (): JSX.Element => {
         <CRow className="justify-content-center">
           <CCol sm={8} md={4}>
             <CCardGroup>
-              <CCard>
+              <CCard className="login-card">
                 <CCardBody className="login-card-body">
                   <CForm>
                     <h2 className="text-center mg-bot-20 gray-900 login-heading">
