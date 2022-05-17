@@ -1,8 +1,8 @@
 import { CButton, CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import {
-  addNewCategoryByName,
-  selectCategoryList,
+  categorySelectors,
+  categoryThunk,
 } from '../../../reducers/MyProfile/Categories/categorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -12,7 +12,7 @@ import { addToast } from '../../../reducers/appSlice'
 import { cilPlus } from '@coreui/icons'
 
 const AddNewCategory = (): JSX.Element => {
-  const categories = useTypedSelector(selectCategoryList)
+  const categories = useTypedSelector(categorySelectors.selectCategoryList)
   const dispatch = useAppDispatch()
 
   const [newCategoryName, setNewCategoryName] = useState('')
@@ -45,7 +45,7 @@ const AddNewCategory = (): JSX.Element => {
 
     setNewCategoryName('')
 
-    dispatch(addNewCategoryByName(toAddCategoryName))
+    dispatch(categoryThunk.postNewCategoryByName(toAddCategoryName))
   }
 
   const formLabelProps = {

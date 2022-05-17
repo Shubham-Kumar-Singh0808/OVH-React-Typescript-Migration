@@ -15,9 +15,9 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import {
-  clearError,
-  doLoginUser,
-  selectError,
+  authenticationActions,
+  authenticationSelectors,
+  authenticationThunk,
 } from '../../reducers/Login/authenticationSlice'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 
@@ -34,7 +34,7 @@ const Login = (): JSX.Element => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const error = useTypedSelector(selectError)
+  const error = useTypedSelector(authenticationSelectors.selectError)
 
   const dispatch = useAppDispatch()
   const history = useHistory()
@@ -42,7 +42,7 @@ const Login = (): JSX.Element => {
   useEffect(() => {
     if (username && password) {
       setIsLoginBtnEnabled(true)
-      dispatch(clearError())
+      dispatch(authenticationActions.clearError())
     } else {
       setIsLoginBtnEnabled(false)
     }
@@ -70,10 +70,10 @@ const Login = (): JSX.Element => {
   ): Promise<void> => {
     event.preventDefault()
     const resultAction = await dispatch(
-      doLoginUser({ username, password, tenantKey }),
+      authenticationThunk.authenticateUser({ username, password, tenantKey }),
     )
 
-    if (doLoginUser.fulfilled.match(resultAction)) {
+    if (authenticationThunk.authenticateUser.fulfilled.match(resultAction)) {
       history.push('/dashboard')
     } else {
       setPassword('')

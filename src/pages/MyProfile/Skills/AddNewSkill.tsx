@@ -1,8 +1,8 @@
 import { CButton, CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import {
-  addNewSkillByName,
-  selectSkillList,
+  skillSelectors,
+  skillThunk,
 } from '../../../reducers/MyProfile/Skills/skillSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -13,7 +13,7 @@ import { cilPlus } from '@coreui/icons'
 
 const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const skills = useTypedSelector(selectSkillList)
+  const skills = useTypedSelector(skillSelectors.selectSkillList)
 
   const [newSkillName, setNewSkillName] = useState('')
   const [isAddSkillBtnEnabled, setIsAddSkillBtnEnabled] = useState(false)
@@ -45,7 +45,7 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
 
     setNewSkillName('')
 
-    dispatch(addNewSkillByName({ categoryId, toAddSkillName }))
+    dispatch(skillThunk.postNewSkillByName({ categoryId, toAddSkillName }))
   }
 
   const formLabelProps = {
