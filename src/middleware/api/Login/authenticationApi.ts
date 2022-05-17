@@ -1,11 +1,11 @@
-import { AllowedHttpMethods, authenticationApi } from '../apiList'
+import { AllowedHttpMethods, authenticationApiConfig } from '../apiList'
 
 import { AuthenticatedUser } from '../../../types/Login/authenticationTypes'
 import axios from 'axios'
 import { encode } from 'base-64'
 import { getUnauthenticatedRequestConfig } from '../../../utils/apiUtils'
 
-export const postLoginUser = async (
+const authenticateUser = async (
   username: string,
   password: string,
   tenantKey: string,
@@ -13,7 +13,7 @@ export const postLoginUser = async (
   const encodedCredentials = encode(`${username}:${password}`)
 
   const requestConfig = getUnauthenticatedRequestConfig({
-    url: authenticationApi.login,
+    url: authenticationApiConfig.login,
     method: AllowedHttpMethods.get,
     additionalHeaders: {
       Authorization: `Basic ${encodedCredentials}`,
@@ -46,3 +46,7 @@ export const postLoginUser = async (
     return data
   }
 }
+
+const authenticationApi = { authenticateUser }
+
+export default authenticationApi
