@@ -1,5 +1,6 @@
 import { AllowedHttpMethods, qualificationsApi } from '../../apiList'
 import {
+  EditEmployeeCertificates,
   EmployeeCertifications,
   getAllTechnologyLookUp,
   getCertificateType,
@@ -57,7 +58,7 @@ export const addNewCertificate = async (
 
 export const getCertificationInformationById = async (
   id: number,
-): Promise<EmployeeCertifications> => {
+): Promise<EditEmployeeCertificates> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: `${qualificationsApi.getEmployeeCertificate}/${id}`,
     method: AllowedHttpMethods.get,

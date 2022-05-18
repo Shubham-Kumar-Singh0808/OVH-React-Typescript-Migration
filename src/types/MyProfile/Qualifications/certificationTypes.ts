@@ -17,12 +17,25 @@ export type EmployeeCertifications = {
   code: string
   completedDate?: string
   expiryDate?: string
-  percent: number
+  percent: number | string
   description?: string
   name: string
   skill?: null
 }
 
+export type EditEmployeeCertificates = {
+  id: number
+  certificateType: string
+  code: string
+  completedDate: string
+  description: string
+  employeeId: number | string
+  expiryDate: string
+  name: string
+  percent: number | string
+  skill: null
+  technology: string
+}
 export type EmployeeCertificationTableProps = {
   editCertificateButtonHandler: (id: number) => void
 }
@@ -42,6 +55,7 @@ export type CertificationState = {
   getAllTechnologies: getAllTechnologyLookUp[]
   typeOfCertificate: getCertificateType[]
   certificationDetails: EmployeeCertifications[]
+  editCertificateDetails: EditEmployeeCertificates
   isLoading: boolean
   error: ValidationError
 }

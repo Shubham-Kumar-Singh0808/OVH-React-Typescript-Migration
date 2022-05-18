@@ -1,6 +1,7 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   CertificationState,
+  EditEmployeeCertificates,
   EmployeeCertifications,
   getAllTechnologyLookUp,
   getCertificateType,
@@ -19,7 +20,14 @@ import {
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 
-const initialCertificationState = {} as CertificationState
+const initialCertificationState: CertificationState = {
+  editCertificateDetails: {} as EditEmployeeCertificates,
+  getAllTechnologies: [],
+  typeOfCertificate: [],
+  certificationDetails: [],
+  isLoading: false,
+  error: null,
+}
 
 export const getAllEmployeeCertifications = createAsyncThunk<
   EmployeeCertifications[] | undefined,
@@ -98,7 +106,7 @@ export const addEmployeeCertification = createAsyncThunk<
 )
 
 export const getEmployeeCertificateByID = createAsyncThunk<
-  EmployeeCertifications | undefined,
+  EditEmployeeCertificates | undefined,
   number,
   {
     dispatch: AppDispatch
@@ -179,8 +187,8 @@ const employeeCertificationsSlice = createSlice({
       })
       .addCase(getEmployeeCertificateByID.fulfilled, (state, action) => {
         state.isLoading = false
-        state.certificationDetails =
-          action.payload as unknown as EmployeeCertifications[]
+        state.editCertificateDetails =
+          action.payload as unknown as EditEmployeeCertificates
       })
       .addCase(deleteCertificateDetails.fulfilled, (state) => {
         state.isLoading = false

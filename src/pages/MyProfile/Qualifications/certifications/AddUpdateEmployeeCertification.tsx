@@ -22,6 +22,7 @@ import {
   getCertificateDetailsByTechnologyName,
   addEmployeeCertification,
   updateCertificateInformation,
+  getEmployeeCertificateByID,
 } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -38,7 +39,7 @@ function AddUpdateEmployeeCertification({
 }: EmployeeCertificationProps): JSX.Element {
   const initialCertificationDetails = {} as EmployeeCertifications
 
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [addCertification, setAddCertification] = useState(
     initialCertificationDetails,
   )
@@ -56,12 +57,13 @@ function AddUpdateEmployeeCertification({
     (state) => state.authentication.authenticatedUser.employeeId,
   )
   const fetchCertificateDetails = useTypedSelector(
-    (state) => state.employeeCertificates.certificationDetails,
+    (state) => state.employeeCertificates.editCertificateDetails,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(getAllEmployeeCertifications())
   }, [dispatch])
+
   useEffect(() => {
     dispatch(getAllTechnology())
     if (addCertification?.technology) {
@@ -70,7 +72,6 @@ function AddUpdateEmployeeCertification({
       )
     }
   }, [dispatch, addCertification?.technology])
-
   const successToastMessage = (
     <OToast
       toastMessage="Your changes have been saved successfully.."
@@ -83,6 +84,12 @@ function AddUpdateEmployeeCertification({
       console.log('Logging in ', values)
     },
   })
+
+  useEffect(() => {
+    if (isEditCertificationDetails) {
+      setAddCertification(fetchCertificateDetails)
+    }
+  }, [fetchCertificateDetails, isEditCertificationDetails])
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -119,10 +126,11 @@ function AddUpdateEmployeeCertification({
       toastColor="warning"
     />
   )
-
-  if ((completedDate as string) <= (expiryDate as string)) {
-    dispatch(addToast(warningToastMessage))
-  }
+  // useEffect(() => {
+  //   if ((completedDate as string) <= (expiryDate as string)) {
+  //     dispatch(addToast(warningToastMessage))
+  //   }
+  // })
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -143,14 +151,15 @@ function AddUpdateEmployeeCertification({
       addCertification.code &&
       completedDate
     ) {
-      setIsAddButtonEnabled(true)
+      setIsButtonEnabled(true)
     } else {
-      setIsAddButtonEnabled(false)
+      setIsButtonEnabled(false)
     }
   }, [addCertification, completedDate])
 
   const handleClearInputFields = () => {
     setAddCertification({
+      id: 0,
       technologyId: '',
       technologyName: '',
       certificateType: '',
@@ -183,11 +192,6 @@ function AddUpdateEmployeeCertification({
   const handleUpdateCertificationDetails = async () => {
     const prepareObject = {
       ...addCertification,
-      ...{
-        completedDate: moment(completedDate).format('DD/MM/YYYY'),
-        expiryDate: moment(expiryDate).format('DD/MM/YYYY'),
-        employeeId: employeeId,
-      },
     }
     const updateCertificateResultAction = await dispatch(
       updateCertificateInformation(prepareObject),
@@ -243,7 +247,7 @@ function AddUpdateEmployeeCertification({
                 aria-label="Default select example"
                 id="technology"
                 name="technology"
-                value={addCertification.technology}
+                value={addCertification?.technology}
                 onChange={handleInputChange}
               >
                 <option value={''}>Select Technology</option>
@@ -280,7 +284,8 @@ function AddUpdateEmployeeCertification({
                 aria-label="Default select example"
                 id="certificateType"
                 name="certificateType"
-                value={addCertification.certificateType}
+                disabled={!addCertification.technology}
+                value={addCertification?.certificateType}
                 onChange={handleInputChange}
               >
                 <option value={''}>Select Type of Certificate</option>
@@ -318,7 +323,7 @@ function AddUpdateEmployeeCertification({
                 type="text"
                 id="certification"
                 name="name"
-                value={addCertification.name}
+                value={addCertification?.name}
                 placeholder="Certification Name"
                 maxLength={32}
                 onChange={handleInputChange}
@@ -346,7 +351,7 @@ function AddUpdateEmployeeCertification({
                 type="text"
                 id="registrationNumber"
                 name="code"
-                value={addCertification.code}
+                value={addCertification?.code}
                 placeholder="Certification Id"
                 maxLength={32}
                 onChange={handleInputChange}
@@ -365,7 +370,10 @@ function AddUpdateEmployeeCertification({
                 className="form-control"
                 name="completedDate"
                 maxDate={new Date()}
-                value={completedDate as string}
+                value={
+                  (completedDate as string) ||
+                  (addCertification?.completedDate as string)
+                }
                 selected={completedDate as Date}
                 onChange={onChangeDateOfCompletionHandler}
                 id="completedDate"
@@ -386,7 +394,10 @@ function AddUpdateEmployeeCertification({
               <DatePicker
                 className="form-control"
                 name="expiryDate"
-                value={(expiryDate as string) || (expiryDate as string)}
+                value={
+                  (expiryDate as string) ||
+                  (addCertification?.expiryDate as string)
+                }
                 selected={expiryDate as Date}
                 onChange={onChangeDateOfExpireHandler}
                 id="expiryDate"
@@ -413,9 +424,10 @@ function AddUpdateEmployeeCertification({
                 type="number"
                 id="percentage"
                 name="percent"
-                value={addCertification.percent}
+                value={addCertification?.percent}
                 placeholder="100"
-                onChange={handleInputChange}
+                min={0}
+                max={100}
               />
             </CCol>
           </CRow>
@@ -445,7 +457,7 @@ function AddUpdateEmployeeCertification({
                   <CButton
                     className="btn-ovh me-1"
                     color="success"
-                    disabled={!isAddButtonEnabled}
+                    disabled={!isButtonEnabled}
                     onClick={handleAddCertificateDetails}
                   >
                     {confirmButtonText}
