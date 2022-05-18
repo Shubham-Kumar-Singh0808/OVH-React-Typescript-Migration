@@ -38,6 +38,6 @@ const appSlice = createSlice({
   },
 })
 
-export const { addToast, toggleSidebar, setReRenderMenu } = appSlice.actions
+export const appActions = appSlice.actions
 
 export default appSlice.reducer

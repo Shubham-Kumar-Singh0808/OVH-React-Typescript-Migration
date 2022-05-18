@@ -1,18 +1,18 @@
 import { CButton, CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import {
-  addNewCategoryByName,
-  selectCategoryList,
+  categorySelectors,
+  categoryThunk,
 } from '../../../reducers/MyProfile/Categories/categorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../reducers/appSlice'
+import { appActions } from '../../../reducers/appSlice'
 import { cilPlus } from '@coreui/icons'
 
 const AddNewCategory = (): JSX.Element => {
-  const categories = useTypedSelector(selectCategoryList)
+  const categories = useTypedSelector(categorySelectors.selectCategoryList)
   const dispatch = useAppDispatch()
 
   const [newCategoryName, setNewCategoryName] = useState('')
@@ -39,13 +39,13 @@ const AddNewCategory = (): JSX.Element => {
           category.categoryType.toLowerCase() === newCategoryName.toLowerCase(),
       ).length > 0
     ) {
-      dispatch(addToast(toastElement))
+      dispatch(appActions.addToast(toastElement))
       return
     }
 
     setNewCategoryName('')
 
-    dispatch(addNewCategoryByName(toAddCategoryName))
+    dispatch(categoryThunk.postNewCategoryByName(toAddCategoryName))
   }
 
   const formLabelProps = {

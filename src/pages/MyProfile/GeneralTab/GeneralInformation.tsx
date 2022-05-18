@@ -6,13 +6,14 @@ import {
 } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
-import { selectEmployeeId } from '../../../reducers/Login/authenticationSlice'
+import { authenticationSelectors } from '../../../reducers/Login/authenticationSlice'
 
 const EmployeeGeneralInformation = (): JSX.Element => {
-  const employeeId = useTypedSelector(selectEmployeeId)
+  const employeeId = useTypedSelector(authenticationSelectors.selectEmployeeId)
   const employeeGeneralInformation = useTypedSelector(
     selectLoggedInEmployeeData,
   )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
