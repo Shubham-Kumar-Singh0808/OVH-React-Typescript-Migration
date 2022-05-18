@@ -2,9 +2,11 @@ import {
   AllowedHttpMethods,
   employeeGeneralInformationApi,
 } from '../../apiList'
+
 import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import moment from 'moment'
 
 export const getEmployeeGeneralInformationApi = async (
   employeeId: string,
@@ -17,5 +19,11 @@ export const getEmployeeGeneralInformationApi = async (
     },
   })
   const response = await axios(requestConfig)
-  return response.data
+  return {
+    ...response.data,
+    ...{
+      anniversary: moment(response.data.anniversary).format('DD/MM/YYYY'),
+      realBirthday: moment(response.data.realBirthday).format('DD/MM/YYYY'),
+    },
+  }
 }

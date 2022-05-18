@@ -8,7 +8,7 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
@@ -78,6 +78,11 @@ const BasicInfoTab = (): JSX.Element => {
   const [dateErrorMessage, setDateErrorMessage] = useState(false)
 
   const dispatch = useAppDispatch()
+
+  // const formattedDates = useMemo(() => {
+  //   if(selectedUserBasicInformation.anniversary && selectedUserBasicInformation.realBirthday){
+  //   }
+  // })
 
   // onchange handler for input fields
   const handleChange = (
@@ -150,6 +155,8 @@ const BasicInfoTab = (): JSX.Element => {
   ])
 
   useEffect(() => {
+    console.log(employeeBasicInformationEditData.realBirthday)
+    console.log(employeeBasicInformationEditData.anniversary)
     if (
       employeeBasicInformationEditData.realBirthday &&
       employeeBasicInformationEditData.anniversary
@@ -160,10 +167,12 @@ const BasicInfoTab = (): JSX.Element => {
       const anniversaryDate = moment(
         employeeBasicInformationEditData.anniversary,
       ).format('YYYY')
-      if (anniversaryDate > realBirthdayDate) {
-        setDateErrorMessage(false)
-      } else {
+      console.log(realBirthdayDate)
+      console.log(anniversaryDate)
+      if (anniversaryDate < realBirthdayDate) {
         setDateErrorMessage(true)
+      } else {
+        setDateErrorMessage(false)
       }
     }
   }, [

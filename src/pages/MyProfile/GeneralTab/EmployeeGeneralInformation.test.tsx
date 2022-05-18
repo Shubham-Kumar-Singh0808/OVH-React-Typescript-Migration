@@ -3,15 +3,15 @@ import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 
 import { EnhancedStore } from '@reduxjs/toolkit'
+import GeneralTab from './GeneralTab'
 import { Provider } from 'react-redux'
 import React from 'react'
+import { employeeGeneralInformationApi } from '../../../middleware/api/apiList'
+import { getEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { mockGeneralInformationData } from '../../../test/data/generalInformationData'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import stateStore from '../../../stateStore'
-import { employeeGeneralInformationApi } from '../../../middleware/api/apiList'
-import { mockGeneralInformationData } from '../../../test/data/generalInformationData'
-import { getEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
-import GeneralTab from './GeneralTab'
 
 const ReduxProvider = ({
   children,
@@ -49,7 +49,7 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 const employeeId = '1997'
 const employeeGeneralInformationSlice = () =>
-  stateStore.getState().getLoggedInEmployeeData
+  stateStore.getState().getLoggedInEmployeeData.generalInformation
 
 describe('Employee General Information Testing', () => {
   it('should be fetched from the server and put in the store', async () => {
