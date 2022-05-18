@@ -1,11 +1,9 @@
-import * as reactRedux from 'react-redux'
-
-import { EnhancedStore, Store } from '@reduxjs/toolkit'
-import { Provider, useSelector } from 'react-redux'
 import { render, screen } from '@testing-library/react'
 
+import { EnhancedStore } from '@reduxjs/toolkit'
 import ProfileDetails from './ProfileDetails'
 import { ProfileDetailsMockData } from '../../../middleware/ProfileDetailsData'
+import { Provider } from 'react-redux'
 import React from 'react'
 import stateStore from '../../../stateStore'
 

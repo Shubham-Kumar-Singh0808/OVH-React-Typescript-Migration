@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+
+import { CNavItem } from '@coreui/react-pro'
 import React from 'react'
 import { selectLoggedInEmployeeData } from '../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useTypedSelector } from '../../stateStore'
@@ -11,13 +13,15 @@ const UserProfile = (): JSX.Element => {
   return (
     <>
       <div className="user-profile-wrap">
-        <Link to="/profile">
-          <img
-            src={employeeGeneralInformation?.profilePicPath}
-            alt={employeeGeneralInformation?.fullName}
-            className="user-profile-img"
-          />
-        </Link>
+        <CNavItem>
+          <NavLink to="/profile">
+            <img
+              src={employeeGeneralInformation?.profilePicPath}
+              alt={employeeGeneralInformation?.fullName}
+              className="user-profile-img"
+            />
+          </NavLink>
+        </CNavItem>
         <div className="user-profile-text">
           <h4>
             <span className="user-profile-name">
