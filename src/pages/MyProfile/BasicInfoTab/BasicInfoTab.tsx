@@ -1,5 +1,3 @@
-import 'react-datepicker/dist/react-datepicker.css'
-
 import {
   CButton,
   CCol,
@@ -77,6 +75,7 @@ const BasicInfoTab = (): JSX.Element => {
     setEmployeeBasicInformationEditData,
   ] = useState(selectedUserBasicInformation)
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
+  const [dateErrorMessage, setDateErrorMessage] = useState(false)
 
   const dispatch = useAppDispatch()
 
@@ -148,6 +147,28 @@ const BasicInfoTab = (): JSX.Element => {
     employeeBasicInformationEditData.realBirthday,
     employeeBasicInformationEditData.maritalStatus,
     employeeBasicInformationEditData.anniversary,
+  ])
+
+  useEffect(() => {
+    if (
+      employeeBasicInformationEditData.realBirthday &&
+      employeeBasicInformationEditData.anniversary
+    ) {
+      const realBirthdayDate = moment(
+        employeeBasicInformationEditData.realBirthday,
+      ).format('YYYY')
+      const anniversaryDate = moment(
+        employeeBasicInformationEditData.anniversary,
+      ).format('YYYY')
+      if (anniversaryDate > realBirthdayDate) {
+        setDateErrorMessage(false)
+      } else {
+        setDateErrorMessage(true)
+      }
+    }
+  }, [
+    employeeBasicInformationEditData.anniversary,
+    employeeBasicInformationEditData.realBirthday,
   ])
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
@@ -510,6 +531,11 @@ const BasicInfoTab = (): JSX.Element => {
                   onDateChangeHandler(date, { name: 'anniversary' })
                 }
               />
+              {dateErrorMessage && (
+                <p className="text-danger">
+                  Anniversary date should be greater than Real Birthday date....
+                </p>
+              )}
             </CCol>
           </CRow>
         )}

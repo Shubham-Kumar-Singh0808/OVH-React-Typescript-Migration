@@ -1,4 +1,5 @@
 import './assets/scss/style.scss'
+import 'react-datepicker/dist/react-datepicker.css'
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import React, { Suspense, useCallback, useEffect } from 'react'
