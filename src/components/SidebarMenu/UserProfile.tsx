@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react'
-import {
-  getEmployeeGeneralInformation,
-  selectLoggedInEmployeeData,
-} from '../../reducers/MyProfile/GeneralTab/generalInformationSlice'
-import { useAppDispatch, useTypedSelector } from '../../stateStore'
-
 import { Link } from 'react-router-dom'
-import { selectEmployeeId } from '../../reducers/Login/authenticationSlice'
+import React from 'react'
+import { selectLoggedInEmployeeData } from '../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { useTypedSelector } from '../../stateStore'
 
 const UserProfile = (): JSX.Element => {
   const employeeGeneralInformation = useTypedSelector(

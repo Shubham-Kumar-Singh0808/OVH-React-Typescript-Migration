@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react'
-import {
-  getEmployeeGeneralInformation,
-  selectLoggedInEmployeeData,
-} from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import MyProfileTabs from './MyProfileTabs'
 import OCard from '../../../components/ReusableComponent/OCard'
 import ProfileDetails from './ProfileDetails'
-import { selectEmployeeId } from '../../../reducers/Login/authenticationSlice'
+import React from 'react'
+import { selectLoggedInEmployeeData } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { useTypedSelector } from '../../../stateStore'
 
 const MyProfile = (): JSX.Element => {
   const employeeGeneralInformation = useTypedSelector(

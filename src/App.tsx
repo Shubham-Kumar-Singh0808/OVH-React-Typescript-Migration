@@ -4,14 +4,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import React, { Suspense, useCallback, useEffect } from 'react'
 import {
   authenticationActions,
-  selectEmployeeId,
-  selectToken,
-  setAuthentication,
+  authenticationSelectors,
 } from './reducers/Login/authenticationSlice'
 
 import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
-// import { authenticationActions } from './reducers/Login/authenticationSlice'
 import { getEmployeeGeneralInformation } from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from './stateStore'
@@ -21,8 +18,10 @@ const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 const Login = React.lazy(() => import('./pages/Login/Login'))
 
 const App = (): JSX.Element => {
-  const employeeId = useTypedSelector(selectEmployeeId)
-  const authenticatedToken = useTypedSelector(selectToken)
+  const employeeId = useTypedSelector(authenticationSelectors.selectEmployeeId)
+  const authenticatedToken = useTypedSelector(
+    authenticationSelectors.selectToken,
+  )
   const dispatch = useDispatch()
 
   const loadState = useCallback(() => {
