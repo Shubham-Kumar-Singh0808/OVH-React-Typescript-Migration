@@ -1,13 +1,13 @@
 import {
   AuthenticationApi,
   CategoryApi,
-  QualificationCategoryApi,
-  SkillApi,
-  SideMenuApi,
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
-  UserRolesConfigurationApi,
+  QualificationCategoryApi,
   QualificationsApi,
+  SideMenuApi,
+  SkillApi,
+  UserRolesConfigurationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -21,7 +21,7 @@ export enum AllowedHttpMethods {
   put = 'put',
 }
 
-export const authenticationApi: AuthenticationApi = {
+export const authenticationApiConfig: AuthenticationApi = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
@@ -38,7 +38,7 @@ export const userRolesConfigurationApi: UserRolesConfigurationApi = {
   assignPermission: apiPrefix + '/roleFeature/assignPermission',
 }
 
-export const categoriesApi: CategoryApi = {
+export const categoriesApiConfig: CategoryApi = {
   getAllCategories: apiPrefix + '/jobapplicant/getAllCategories',
   addCategory: apiPrefix + '/jobapplicant/addCategory',
   deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
@@ -58,7 +58,7 @@ export const personalInfoApi: PersonalInfoApi = {
   deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
   fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
 }
-export const skillsApi: SkillApi = {
+export const skillsApiConfig: SkillApi = {
   getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',

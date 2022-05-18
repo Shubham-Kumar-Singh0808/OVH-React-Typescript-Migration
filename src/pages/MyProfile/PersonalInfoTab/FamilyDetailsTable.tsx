@@ -1,10 +1,3 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  doFetchFamilyDetails,
-  doDeleteFamilyMember,
-  selectGetFamilyDetails,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import {
   CButton,
   CTable,
@@ -14,10 +7,18 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
+import React, { useEffect, useMemo, useState } from 'react'
+import {
+  doDeleteFamilyMember,
+  doFetchFamilyDetails,
+  selectGetFamilyDetails,
+} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
 import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../reducers/appSlice'
+import { appActions } from '../../../reducers/appSlice'
 const FamilyDetailsTable = ({
   editButtonHandler,
   isFieldDisabled = false,
@@ -49,7 +50,7 @@ const FamilyDetailsTable = ({
     if (doDeleteFamilyMember.fulfilled.match(deleteFamilyMemberResultAction)) {
       dispatch(doFetchFamilyDetails(employeeId))
       dispatch(
-        addToast(
+        appActions.addToast(
           <OToast
             toastColor="success"
             toastMessage="Family Detail deleted successfully"
