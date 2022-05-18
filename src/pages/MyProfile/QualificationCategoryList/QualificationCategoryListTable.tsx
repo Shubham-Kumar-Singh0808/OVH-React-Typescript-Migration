@@ -10,21 +10,22 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import CIcon from '@coreui/icons-react'
-import OModal from '../../../components/ReusableComponent/OModal'
-import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../components/ReusableComponent/OPagination'
-import { cilTrash } from '@coreui/icons'
-import { currentPageData } from '../../../utils/paginationUtils'
-import { usePagination } from '../../../middleware/hooks/usePagination'
 import {
   getQualificationCategories,
   removeQualificationCategoryById,
   selectQualificationCategoryList,
 } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
+import CIcon from '@coreui/icons-react'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../reducers/appSlice'
+import { appActions } from '../../../reducers/appSlice'
+import { cilTrash } from '@coreui/icons'
+import { currentPageData } from '../../../utils/paginationUtils'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const QualificationCategoryListTable = (): JSX.Element => {
   const qualificationCategories = useTypedSelector(
@@ -90,7 +91,7 @@ const QualificationCategoryListTable = (): JSX.Element => {
       )
     ) {
       dispatch(getQualificationCategories())
-      dispatch(addToast(deleteToastElement))
+      dispatch(appActions.addToast(deleteToastElement))
     }
   }
   const currentPageItems = useMemo(

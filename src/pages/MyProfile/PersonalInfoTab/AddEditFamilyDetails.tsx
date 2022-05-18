@@ -1,28 +1,29 @@
 import {
-  CCardHeader,
+  AddEditEmployeeFamilyDetails,
+  EmployeeFamilyDetails,
+} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import {
+  CButton,
   CCardBody,
-  CRow,
+  CCardHeader,
   CCol,
   CForm,
-  CButton,
-  CFormLabel,
   CFormInput,
+  CFormLabel,
   CFormSelect,
+  CRow,
 } from '@coreui/react-pro'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
-  doUpdateFamilyDetails,
   doAddNewFamilyMember,
+  doUpdateFamilyDetails,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
 import DatePicker from 'react-datepicker'
-import {
-  EmployeeFamilyDetails,
-  AddEditEmployeeFamilyDetails,
-} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../reducers/appSlice'
+import { appActions } from '../../../reducers/appSlice'
+import moment from 'moment'
 function AddEditFamilyDetails({
   isEditFamilyDetails = false,
   headerTitle,
@@ -122,7 +123,7 @@ function AddEditFamilyDetails({
     )
     if (doAddNewFamilyMember.fulfilled.match(addFamilyMemberResultAction)) {
       backButtonHandler()
-      dispatch(addToast(getToastMessage(actionMapping.added)))
+      dispatch(appActions.addToast(getToastMessage(actionMapping.added)))
     }
   }
   const handleUpdateFamilyMember = async () => {
@@ -137,7 +138,7 @@ function AddEditFamilyDetails({
     )
     if (doUpdateFamilyDetails.fulfilled.match(updateFamilyMemberResultAction)) {
       backButtonHandler()
-      dispatch(addToast(getToastMessage(actionMapping.updated)))
+      dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
     }
   }
   const nameProps = {
