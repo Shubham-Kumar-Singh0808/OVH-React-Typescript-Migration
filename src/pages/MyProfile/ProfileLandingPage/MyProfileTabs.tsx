@@ -9,7 +9,6 @@ import React, { useEffect, useState } from 'react'
 
 import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
-import OCard from '../../../components/ReusableComponent/OCard'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
 import TabsLabels from '../../../middleware/TabsLabels'

@@ -3,6 +3,7 @@ import {
   CategoryApi,
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
+  ProfileHistoryApi,
   QualificationCategoryApi,
   QualificationsApi,
   SideMenuApi,
@@ -82,4 +83,8 @@ export const qualificationsApi: QualificationsApi = {
   addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
   getPostGraduationAndGraduationList: apiPrefix + '/Employee/multipleSelection',
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
+}
+
+export const profileHistoryConfig: ProfileHistoryApi = {
+  getprofileHistory: apiPrefix + '/Employee/getEmployeeProfileHistory',
 }
