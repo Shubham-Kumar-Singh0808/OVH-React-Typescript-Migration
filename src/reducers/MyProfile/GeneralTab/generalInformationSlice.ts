@@ -7,11 +7,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
-import { getEmployeeGeneralInformationApi } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
+import employeeGeneralInformationApi from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
 
 const initialGeneralInformationState = {} as EmployeeGeneralInformationState
 
-export const getEmployeeGeneralInformation = createAsyncThunk<
+const getEmployeeGeneralInformation = createAsyncThunk<
   { generalInformation: EmployeeGeneralInformation } | undefined,
   string,
   { rejectValue: ValidationError }
@@ -19,7 +19,9 @@ export const getEmployeeGeneralInformation = createAsyncThunk<
   'getLoggedInEmployeeData/getEmployeeGeneralInformation',
   async (employeeId: string, thunkApi) => {
     try {
-      return await getEmployeeGeneralInformationApi(employeeId)
+      return await employeeGeneralInformationApi.getEmployeeGeneralInformation(
+        employeeId,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -56,9 +58,15 @@ const employeeGeneralInformationSlice = createSlice({
 export const { setEmployeeGeneralInformation, clearError } =
   employeeGeneralInformationSlice.actions
 
-export const selectLoggedInEmployeeData = (
+const selectLoggedInEmployeeData = (
   state: RootState,
 ): EmployeeGeneralInformation =>
   state.getLoggedInEmployeeData.generalInformation
+export const getEmployeeGeneralInformationThunk = {
+  getEmployeeGeneralInformation,
+}
+export const loggedInEmployeeSelectors = {
+  selectLoggedInEmployeeData,
+}
 
 export default employeeGeneralInformationSlice.reducer

@@ -15,12 +15,14 @@ import DatePicker from 'react-datepicker'
 import DownloadSampleFileButton from './DownloadSampleFileButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
+import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
-import { selectLoggedInEmployeeData } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useFormik } from 'formik'
 
 const BasicInfoTab = (): JSX.Element => {
-  const employeeBasicInformation = useTypedSelector(selectLoggedInEmployeeData)
+  const employeeBasicInformation = useTypedSelector(
+    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
+  )
   const selectedUserBasicInformation = {
     id: employeeBasicInformation.id,
     baseLocation: employeeBasicInformation.baseLocation,

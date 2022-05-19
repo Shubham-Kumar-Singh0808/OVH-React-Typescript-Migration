@@ -68,9 +68,9 @@ const authenticationSlice = createSlice({
 const selectError = (state: RootState): ValidationError =>
   state.authentication.error
 const selectToken = (state: RootState): string =>
-  state.authentication.authenticatedUser.token
+  state.authentication.authenticatedUser?.token
 const selectEmployeeId = (state: RootState): string =>
-  state.authentication.authenticatedUser.employeeId as string
+  state.authentication.authenticatedUser?.employeeId as string
 
 export const authenticationThunk = {
   authenticateUser,

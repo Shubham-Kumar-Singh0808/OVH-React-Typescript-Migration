@@ -27,8 +27,16 @@ export type EmployeeGeneralInformation = {
   aboutMe?: string
   skypeId?: string
   rbtCvName?: string
+  profilePicPath?: string
+  homeNumber?: string
+  mobile?: string
+  alternativeMobile?: string
+  workNumber?: string
+  updatedExperience?: string | number
 }
-
+export type ProfileDetailsProps = {
+  employeeGeneralInformation: EmployeeGeneralInformation
+}
 export type EmployeeGeneralInformationState = {
   generalInformation: EmployeeGeneralInformation
   error: ValidationError

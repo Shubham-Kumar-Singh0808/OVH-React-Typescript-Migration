@@ -1,7 +1,14 @@
 import MyProfileTabs from './MyProfileTabs'
 import OCard from '../../../components/ReusableComponent/OCard'
+import ProfileDetails from './ProfileDetails'
 import React from 'react'
+import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { useTypedSelector } from '../../../stateStore'
+
 const MyProfile = (): JSX.Element => {
+  const employeeGeneralInformation = useTypedSelector(
+    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
+  )
   return (
     <>
       <OCard
@@ -10,6 +17,9 @@ const MyProfile = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
+        <ProfileDetails
+          employeeGeneralInformation={employeeGeneralInformation}
+        />
         <MyProfileTabs />
       </OCard>
     </>
