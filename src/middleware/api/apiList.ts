@@ -25,7 +25,7 @@ export const authenticationApiConfig: AuthenticationApi = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
-export const sideMenuApi: SideMenuApi = {
+export const sideMenuApiConfig: SideMenuApi = {
   getMenuData: apiPrefix + '/roleFeature/menuItems',
 }
 export const userRolesConfigurationApi: UserRolesConfigurationApi = {
@@ -71,9 +71,10 @@ export const qualificationCategoryApi: QualificationCategoryApi = {
   addNewQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
   deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
 }
-export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
-  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
-}
+export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi =
+  {
+    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+  }
 export const qualificationsApi: QualificationsApi = {
   getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
   getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',

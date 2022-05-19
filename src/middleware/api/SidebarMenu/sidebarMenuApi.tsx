@@ -1,4 +1,4 @@
-import { AllowedHttpMethods, sideMenuApi } from '../../api/apiList'
+import { AllowedHttpMethods, sideMenuApiConfig } from '../../api/apiList'
 
 import { SidebarMenuReturnApi } from '../../../types/SidebarMenu/sidebarMenuType'
 import axios from 'axios'
@@ -10,7 +10,7 @@ export const getSidebarMenu = createAsyncThunk<
   string | number
 >('sidebarMenu/doFetchSidebarMenu', async (employeeId: string | number) => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: sideMenuApi.getMenuData,
+    url: sideMenuApiConfig.getMenuData,
     method: AllowedHttpMethods.get,
     params: {
       loggedInEmpId: employeeId,

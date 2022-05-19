@@ -6,10 +6,11 @@ import {
   CTabPane,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import TabsLabels from '../../../middleware/TabsLabels'
-import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
+
 import GeneralTab from '../GeneralTab/GeneralTab'
+import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
+import TabsLabels from '../../../middleware/TabsLabels'
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }

@@ -1,16 +1,17 @@
 import {
   AllowedHttpMethods,
-  employeeGeneralInformationApi,
+  employeeGeneralInformationApiConfig,
 } from '../../apiList'
+
 import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-export const getEmployeeGeneralInformationApi = async (
+const getEmployeeGeneralInformation = async (
   employeeId: string,
 ): Promise<{ generalInformation: EmployeeGeneralInformation } | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeGeneralInformationApi.getLoggedInEmployeeData,
+    url: employeeGeneralInformationApiConfig.getLoggedInEmployeeData,
     method: AllowedHttpMethods.get,
     params: {
       loggedInEmpId: employeeId,
@@ -19,3 +20,8 @@ export const getEmployeeGeneralInformationApi = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
+const employeeGeneralInformationApi = {
+  getEmployeeGeneralInformation,
+}
+export default employeeGeneralInformationApi
