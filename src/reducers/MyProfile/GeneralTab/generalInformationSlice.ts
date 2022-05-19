@@ -3,14 +3,15 @@ import {
   EmployeeGeneralInformationState,
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
 import { AxiosError } from 'axios'
-import { getEmployeeGeneralInformationApi } from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
-import { ValidationError } from '../../../types/commonTypes'
 import { RootState } from '../../../stateStore'
+import { ValidationError } from '../../../types/commonTypes'
+import employeeGeneralInformationApi from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
 
 const initialGeneralInformationState = {} as EmployeeGeneralInformationState
 
-export const getEmployeeGeneralInformation = createAsyncThunk<
+const getEmployeeGeneralInformation = createAsyncThunk<
   { generalInformation: EmployeeGeneralInformation } | undefined,
   string,
   { rejectValue: ValidationError }
@@ -18,7 +19,9 @@ export const getEmployeeGeneralInformation = createAsyncThunk<
   'getLoggedInEmployeeData/getEmployeeGeneralInformation',
   async (employeeId: string, thunkApi) => {
     try {
-      return await getEmployeeGeneralInformationApi(employeeId)
+      return await employeeGeneralInformationApi.getEmployeeGeneralInformation(
+        employeeId,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -43,7 +46,8 @@ const employeeGeneralInformationSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getEmployeeGeneralInformation.fulfilled, (state, action) => {
-        return { ...state, ...action.payload, isLoading: false }
+        state.generalInformation = action.payload as EmployeeGeneralInformation
+        state.isLoading = false
       })
       .addCase(getEmployeeGeneralInformation.rejected, (state, action) => {
         state.isLoading = false
@@ -54,8 +58,15 @@ const employeeGeneralInformationSlice = createSlice({
 export const { setEmployeeGeneralInformation, clearError } =
   employeeGeneralInformationSlice.actions
 
-export const selectLoggedInData = (
+const selectLoggedInEmployeeData = (
   state: RootState,
-): EmployeeGeneralInformationState => state.getLoggedInEmployeeData
+): EmployeeGeneralInformation =>
+  state.getLoggedInEmployeeData.generalInformation
+export const getEmployeeGeneralInformationThunk = {
+  getEmployeeGeneralInformation,
+}
+export const loggedInEmployeeSelectors = {
+  selectLoggedInEmployeeData,
+}
 
 export default employeeGeneralInformationSlice.reducer
