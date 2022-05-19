@@ -1,4 +1,4 @@
-import { AllowedHttpMethods, qualificationsApi } from '../../apiList'
+import { AllowedHttpMethods, qualificationsApiConfig } from '../../apiList'
 import {
   EmployeeQualifications,
   EmployeeSkills,
@@ -11,7 +11,7 @@ export const getEmployeeQualifications = async (
   employeeId: string | number,
 ): Promise<EmployeeQualifications> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApi.getEmployeeQualifications,
+    url: qualificationsApiConfig.getEmployeeQualifications,
     method: AllowedHttpMethods.get,
     params: {
       empID: employeeId,
@@ -23,7 +23,7 @@ export const getEmployeeQualifications = async (
 
 export const getEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApi.getEmployeeSkillsList,
+    url: qualificationsApiConfig.getEmployeeSkillsList,
     method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
@@ -33,7 +33,7 @@ export const getEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
 export const getPgLookUpAndGraduationLookUpListItems =
   async (): Promise<PostGraduationAndGraduationList> => {
     const requestConfig = getAuthenticatedRequestConfig({
-      url: qualificationsApi.getPostGraduationAndGraduationList,
+      url: qualificationsApiConfig.getPostGraduationAndGraduationList,
       method: AllowedHttpMethods.get,
     })
     const response = await axios(requestConfig)
@@ -45,7 +45,7 @@ export const saveInitialEmployeeQualifications = async (
 ): Promise<EmployeeQualifications> => {
   const { id, ...addQualificationRest } = addQualification
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApi.addEmployeeQualifications,
+    url: qualificationsApiConfig.addEmployeeQualifications,
     method: AllowedHttpMethods.post,
     data: { ...addQualificationRest },
   })
@@ -56,7 +56,7 @@ export const updateEmployeeQualifications = async (
   addQualification: EmployeeQualifications,
 ): Promise<EmployeeQualifications> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApi.updateEmployeeQualifications,
+    url: qualificationsApiConfig.updateEmployeeQualifications,
     method: AllowedHttpMethods.put,
     params: {
       empId: addQualification.empId as number,
@@ -66,3 +66,12 @@ export const updateEmployeeQualifications = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
+const qualificationsApi = {
+  getEmployeeQualifications,
+  getEmployeeSkills,
+  getPgLookUpAndGraduationLookUpListItems,
+  saveInitialEmployeeQualifications,
+  updateEmployeeQualifications,
+}
+export default qualificationsApi

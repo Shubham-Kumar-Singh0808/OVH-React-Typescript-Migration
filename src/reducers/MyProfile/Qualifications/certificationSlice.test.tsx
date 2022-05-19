@@ -5,6 +5,13 @@ describe('Certification Section Reducer Test', () => {
     const initialState = undefined
     const action = { type: '' }
     const result = certificationSlice(initialState, action)
-    expect(result).toEqual({})
+    expect(result).toEqual({
+      certificationDetails: [],
+      editCertificateDetails: {},
+      error: null,
+      getAllTechnologies: [],
+      isLoading: false,
+      typeOfCertificate: [],
+    })
   })
 })

@@ -9,9 +9,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import {
-  addNewQualificationCategoryByName,
-  getQualificationCategories,
-  selectQualificationCategoryList,
+  qualificationCategorySelectors,
+  qualificationCategoryThunk,
 } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -21,7 +20,7 @@ import { appActions } from '../../../reducers/appSlice'
 
 const AddNewQualificationCategory = (): JSX.Element => {
   const employeeQualificationCategories = useTypedSelector(
-    selectQualificationCategoryList,
+    qualificationCategorySelectors.selectQualificationCategoryList,
   )
   const dispatch = useAppDispatch()
   const initialNewQualificationCategory = {} as QualificationCategoryList
@@ -90,8 +89,12 @@ const AddNewQualificationCategory = (): JSX.Element => {
       qualificationName: '',
     })
 
-    dispatch(addNewQualificationCategoryByName(toAddQualificationName))
-    dispatch(getQualificationCategories())
+    dispatch(
+      qualificationCategoryThunk.addNewQualificationCategoryByName(
+        toAddQualificationName,
+      ),
+    )
+    dispatch(qualificationCategoryThunk.getQualificationCategories())
     dispatch(appActions.addToast(successToastMessage))
   }
 

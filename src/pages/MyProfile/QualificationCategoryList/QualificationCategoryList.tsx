@@ -8,8 +8,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import {
-  getQualificationCategories,
-  selectIsQualificationCategoryListLoading,
+  qualificationCategorySelectors,
+  qualificationCategoryThunk,
 } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import QualificationCategoryListTable from './QualificationCategoryListTable'
@@ -20,10 +20,12 @@ const QualificationCategoryList = ({
   backButtonHandler,
 }: AddUpdateEmployeeQualificationProps): JSX.Element => {
   const dispatch = useAppDispatch()
-  const isLoading = useTypedSelector(selectIsQualificationCategoryListLoading)
+  const isLoading = useTypedSelector(
+    qualificationCategorySelectors.selectIsQualificationCategoryListLoading,
+  )
 
   useEffect(() => {
-    dispatch(getQualificationCategories())
+    dispatch(qualificationCategoryThunk.getQualificationCategories())
   }, [dispatch])
 
   return (

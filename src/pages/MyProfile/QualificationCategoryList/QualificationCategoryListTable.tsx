@@ -11,9 +11,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import {
-  getQualificationCategories,
-  removeQualificationCategoryById,
-  selectQualificationCategoryList,
+  qualificationCategorySelectors,
+  qualificationCategoryThunk,
 } from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -29,7 +28,7 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const QualificationCategoryListTable = (): JSX.Element => {
   const qualificationCategories = useTypedSelector(
-    selectQualificationCategoryList,
+    qualificationCategorySelectors.selectQualificationCategoryList,
   )
   const dispatch = useAppDispatch()
 
@@ -83,14 +82,14 @@ const QualificationCategoryListTable = (): JSX.Element => {
     setIsDeleteModalVisible(false)
 
     const deleteQualificationCategoryResultAction = await dispatch(
-      removeQualificationCategoryById(id),
+      qualificationCategoryThunk.removeQualificationCategoryById(id),
     )
     if (
-      removeQualificationCategoryById.fulfilled.match(
+      qualificationCategoryThunk.removeQualificationCategoryById.fulfilled.match(
         deleteQualificationCategoryResultAction,
       )
     ) {
-      dispatch(getQualificationCategories())
+      dispatch(qualificationCategoryThunk.getQualificationCategories())
       dispatch(appActions.addToast(deleteToastElement))
     }
   }

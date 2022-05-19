@@ -65,7 +65,7 @@ export const skillsApiConfig: SkillApi = {
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
 }
 
-export const qualificationCategoryApi: QualificationCategoryApi = {
+export const qualificationCategoryApiConfig: QualificationCategoryApi = {
   getAllQualificationCategories:
     apiPrefix + '/Employee/getQualiactionCategoryList',
   addNewQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
@@ -74,7 +74,7 @@ export const qualificationCategoryApi: QualificationCategoryApi = {
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
   getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
 }
-export const qualificationsApi: QualificationsApi = {
+export const qualificationsApiConfig: QualificationsApi = {
   getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
   getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
   getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',

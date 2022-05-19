@@ -13,18 +13,10 @@ import { useFormik } from 'formik'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../../reducers/appSlice'
-import {
-  getAllTechnology,
-  getCertificateDetailsByTechnologyName,
-  addEmployeeCertification,
-  updateCertificateInformation,
-  getEmployeeCertificateByID,
-} from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
-import { getAllEmployeeCertifications } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
+import { appActions } from '../../../../reducers/appSlice'
+import { certificationThunk } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   EmployeeCertificationProps,
@@ -45,7 +37,7 @@ function AddUpdateEmployeeCertification({
   )
   const [completedDate, setCompletedDate] = useState<Date | string>()
   const [expiryDate, setExpiryDate] = useState<Date | string>()
-  const [error, setError] = useState<Date | null>(null)
+  const [error, setError] = useState<boolean>(false)
 
   const getTechnologies = useTypedSelector(
     (state) => state.employeeCertificates.getAllTechnologies,
@@ -61,14 +53,16 @@ function AddUpdateEmployeeCertification({
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(getAllEmployeeCertifications())
+    dispatch(certificationThunk.getAllEmployeeCertifications())
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(getAllTechnology())
+    dispatch(certificationThunk.getAllTechnology())
     if (addCertification?.technology) {
       dispatch(
-        getCertificateDetailsByTechnologyName(addCertification?.technology),
+        certificationThunk.getCertificateDetailsByTechnologyName(
+          addCertification?.technology,
+        ),
       )
     }
   }, [dispatch, addCertification?.technology])
@@ -118,7 +112,6 @@ function AddUpdateEmployeeCertification({
     } else {
       setExpiryDate(date)
     }
-    setError(date)
   }
   const warningToastMessage = (
     <OToast
@@ -126,11 +119,16 @@ function AddUpdateEmployeeCertification({
       toastColor="warning"
     />
   )
-  // useEffect(() => {
-  //   if ((completedDate as string) <= (expiryDate as string)) {
-  //     dispatch(addToast(warningToastMessage))
-  //   }
-  // })
+  useEffect(() => {
+    if ((completedDate as string) <= (expiryDate as string)) {
+      setError(false)
+    }
+  }, [completedDate, expiryDate])
+  useEffect(() => {
+    if (error) {
+      dispatch(appActions.addToast(warningToastMessage))
+    }
+  }, [completedDate, dispatch, error, expiryDate, warningToastMessage])
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -149,7 +147,7 @@ function AddUpdateEmployeeCertification({
       addCertification.certificateType &&
       addCertification.name &&
       addCertification.code &&
-      completedDate
+      (completedDate || addCertification.completedDate)
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -181,11 +179,15 @@ function AddUpdateEmployeeCertification({
       },
     }
     const addCertificateResultAction = await dispatch(
-      addEmployeeCertification(prepareObject),
+      certificationThunk.addEmployeeCertification(prepareObject),
     )
-    if (addEmployeeCertification.fulfilled.match(addCertificateResultAction)) {
+    if (
+      certificationThunk.addEmployeeCertification.fulfilled.match(
+        addCertificateResultAction,
+      )
+    ) {
       backButtonHandler()
-      dispatch(addToast(successToastMessage))
+      dispatch(appActions.addToast(successToastMessage))
     }
   }
 
@@ -194,15 +196,15 @@ function AddUpdateEmployeeCertification({
       ...addCertification,
     }
     const updateCertificateResultAction = await dispatch(
-      updateCertificateInformation(prepareObject),
+      certificationThunk.updateCertificateInformation(prepareObject),
     )
     if (
-      updateCertificateInformation.fulfilled.match(
+      certificationThunk.updateCertificateInformation.fulfilled.match(
         updateCertificateResultAction,
       )
     ) {
       backButtonHandler()
-      dispatch(addToast(successToastMessage))
+      dispatch(appActions.addToast(successToastMessage))
     }
   }
 
@@ -361,7 +363,13 @@ function AddUpdateEmployeeCertification({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Completed Date:
-              <span className={completedDate ? 'text-white' : 'text-danger'}>
+              <span
+                className={
+                  addCertification?.completedDate || completedDate
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -426,6 +434,7 @@ function AddUpdateEmployeeCertification({
                 name="percent"
                 value={addCertification?.percent}
                 placeholder="100"
+                onChange={handleInputChange}
                 min={0}
                 max={100}
               />
@@ -448,6 +457,7 @@ function AddUpdateEmployeeCertification({
                 <CButton
                   className="btn-ovh me-2"
                   color="success"
+                  disabled={!isButtonEnabled}
                   onClick={handleUpdateCertificationDetails}
                 >
                   {confirmButtonText}

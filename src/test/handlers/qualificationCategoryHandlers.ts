@@ -1,11 +1,11 @@
-import { qualificationCategoryApi } from '../../middleware/api/apiList'
+import { qualificationCategoryApiConfig } from '../../middleware/api/apiList'
 import { mockQualificationCategories } from '../data/qualificationCategoryListData'
 import { rest } from 'msw'
 
 export const qualificationCategoryListHandlers = [
   // addQualificationCategory api mock
   rest.get(
-    qualificationCategoryApi.addNewQualificationCategory,
+    qualificationCategoryApiConfig.addNewQualificationCategory,
     (req, res, ctx) => {
       return res(
         ctx.json({
@@ -17,14 +17,14 @@ export const qualificationCategoryListHandlers = [
   ),
   // getAllQualificationCategories api mock
   rest.get(
-    qualificationCategoryApi.getAllQualificationCategories,
+    qualificationCategoryApiConfig.getAllQualificationCategories,
     (req, res, ctx) => {
       return res.once(ctx.status(200), ctx.json([]))
     },
   ),
   // getAllQualificationCategories api mock
   rest.get(
-    qualificationCategoryApi.getAllQualificationCategories,
+    qualificationCategoryApiConfig.getAllQualificationCategories,
     (req, res, ctx) => {
       return res(ctx.status(200), ctx.json(mockQualificationCategories))
     },

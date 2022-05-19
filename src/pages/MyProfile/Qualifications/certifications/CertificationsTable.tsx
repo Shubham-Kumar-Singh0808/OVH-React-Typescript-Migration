@@ -8,13 +8,10 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import {
-  deleteCertificateDetails,
-  getAllEmployeeCertifications,
-} from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
+import { certificationThunk } from '../../../../../src/reducers/MyProfile/Qualifications/certificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
-import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qualifications/certificationTypes'
-import { addToast } from '../../../../reducers/appSlice'
+import { EmployeeCertificationTableProps } from '../../../../../src/types/MyProfile/Qualifications/certificationTypes'
+import { appActions } from '../../../../reducers/appSlice'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import OModal from '../../../../components/ReusableComponent/OModal'
 const CertificationsTable = ({
@@ -27,9 +24,15 @@ const CertificationsTable = ({
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(getAllEmployeeCertifications())
+    dispatch(certificationThunk.getAllEmployeeCertifications())
   }, [dispatch])
 
+  const toastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="Certificate deleted successfully"
+    />
+  )
   const handleShowDeleteModal = (certificationId: number) => {
     setToDeleteCertificateById(certificationId)
     setIsDeleteModalVisible(true)
@@ -37,20 +40,15 @@ const CertificationsTable = ({
   const handleConfirmDeleteCertificate = async () => {
     setIsDeleteModalVisible(false)
     const deleteCertificateResultAction = await dispatch(
-      deleteCertificateDetails(toDeleteCertificateById),
+      certificationThunk.deleteCertificateDetails(toDeleteCertificateById),
     )
     if (
-      deleteCertificateDetails.fulfilled.match(deleteCertificateResultAction)
-    ) {
-      dispatch(getAllEmployeeCertifications())
-      dispatch(
-        addToast(
-          <OToast
-            toastColor="success"
-            toastMessage="Certificate deleted successfully"
-          />,
-        ),
+      certificationThunk.deleteCertificateDetails.fulfilled.match(
+        deleteCertificateResultAction,
       )
+    ) {
+      dispatch(certificationThunk.getAllEmployeeCertifications())
+      dispatch(appActions.addToast(toastElement))
     }
   }
 

@@ -6,13 +6,7 @@ import {
   PostGraduationAndGraduationList,
 } from '../../../types/MyProfile/Qualifications/qualificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import {
-  getEmployeeQualifications,
-  getPgLookUpAndGraduationLookUpListItems,
-  getEmployeeSkills,
-  saveInitialEmployeeQualifications,
-  updateEmployeeQualifications,
-} from '../../../middleware/api/MyProfile/Qualifications/qualificationsApi'
+import qualificationsApi from '../../../../src/middleware/api/MyProfile/Qualifications/qualificationsApi'
 
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
@@ -31,7 +25,7 @@ export const getAllEmployeeQualifications = createAsyncThunk<
   'employeeQualifications/getAllEmployeeQualifications',
   async (employeeId: string | number, thunkApi) => {
     try {
-      return await getEmployeeQualifications(employeeId)
+      return await qualificationsApi.getEmployeeQualifications(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -49,7 +43,7 @@ export const getAllEmployeeSkills = createAsyncThunk<
   }
 >('employeeQualifications/getEmployeeSkills', async (_, thunkApi) => {
   try {
-    return await getEmployeeSkills()
+    return await qualificationsApi.getEmployeeSkills()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -68,7 +62,9 @@ export const postQualificationDetails = createAsyncThunk<
   'employeeQualifications/postQualificationDetails',
   async (addQualification: EmployeeQualifications, thunkApi) => {
     try {
-      return await saveInitialEmployeeQualifications(addQualification)
+      return await qualificationsApi.saveInitialEmployeeQualifications(
+        addQualification,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -88,7 +84,9 @@ export const updateQualificationDetails = createAsyncThunk<
   'employeeQualifications/updateQualificationDetails',
   async (addQualification: EmployeeQualifications, thunkApi) => {
     try {
-      return await updateEmployeeQualifications(addQualification)
+      return await qualificationsApi.updateEmployeeQualifications(
+        addQualification,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -108,7 +106,7 @@ export const getAllEmployeePgAndGraduationItems = createAsyncThunk<
   'employeeQualifications/getAllEmployeePgAndGraduationItems',
   async (_, thunkApi) => {
     try {
-      return await getPgLookUpAndGraduationLookUpListItems()
+      return await qualificationsApi.getPgLookUpAndGraduationLookUpListItems()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -172,6 +170,7 @@ const employeeQualificationsSlice = createSlice({
 })
 export const selectIsQualificationListLoading = (state: RootState): boolean =>
   state.qualificationCategory.isLoading
+
 export const selectEmployeeQualification = (
   state: RootState,
 ): EmployeeQualifications =>
@@ -179,4 +178,20 @@ export const selectEmployeeQualification = (
 
 export const selectEmployeeId = (state: RootState): string | number =>
   state.authentication.authenticatedUser.employeeId
+
+export const qualificationsThunk = {
+  getAllEmployeePgAndGraduationItems,
+  getAllEmployeeQualifications,
+  getAllEmployeeSkills,
+  updateQualificationDetails,
+  postQualificationDetails,
+}
+
+export const qualificationActions = employeeQualificationsSlice.actions
+
+export const qualificationSelectors = {
+  selectIsQualificationListLoading,
+  selectEmployeeQualification,
+  selectEmployeeId,
+}
 export default employeeQualificationsSlice.reducer

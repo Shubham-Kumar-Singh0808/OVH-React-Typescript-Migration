@@ -4,11 +4,7 @@ import {
   QualificationCategoryState,
 } from '../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import {
-  deleteQualificationCategoryById,
-  getAllQualificationCategoryList,
-  postNewQualificationCategoryByName,
-} from '../../../middleware/api/MyProfile/QualificationCategoryList/qualificationCategoryApi'
+import qualificationCategoryApi from '../../../../src/middleware/api/MyProfile/QualificationCategoryList/qualificationCategoryApi'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 
@@ -16,7 +12,7 @@ export const getQualificationCategories = createAsyncThunk(
   'qualificationCategory/fetchAllQualificationCategories',
   async (_, thunkApi) => {
     try {
-      return await getAllQualificationCategoryList()
+      return await qualificationCategoryApi.getAllQualificationCategoryList()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -38,7 +34,7 @@ export const addNewQualificationCategoryByName = createAsyncThunk<
     thunkApi,
   ) => {
     try {
-      return await postNewQualificationCategoryByName({
+      return await qualificationCategoryApi.postNewQualificationCategoryByName({
         qualificationCategory,
         qualificationName,
       })
@@ -60,7 +56,7 @@ export const removeQualificationCategoryById = createAsyncThunk<
   'qualificationCategory/removeQualificationCategoryById',
   async (id, thunkApi) => {
     try {
-      return await deleteQualificationCategoryById(id)
+      return await qualificationCategoryApi.deleteQualificationCategoryById(id)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -115,5 +111,18 @@ export const selectQualificationCategoryList = (
   state: RootState,
 ): QualificationCategoryList[] =>
   state.qualificationCategory.qualificationCategoryList
+
+export const qualificationCategoryThunk = {
+  getQualificationCategories,
+  removeQualificationCategoryById,
+  addNewQualificationCategoryByName,
+}
+
+export const qualificationCategoryActions = qualificationCategorySlice.actions
+
+export const qualificationCategorySelectors = {
+  selectIsQualificationCategoryListLoading,
+  selectQualificationCategoryList,
+}
 
 export default qualificationCategorySlice.reducer

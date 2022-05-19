@@ -13,14 +13,8 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import {
-  getAllEmployeePgAndGraduationItems,
-  getAllEmployeeQualifications,
-  postQualificationDetails,
-  updateQualificationDetails,
-} from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { qualificationsThunk } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -80,8 +74,8 @@ const AddUpdateEmployeeQualification = ({
   }, [addQualification])
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(getAllEmployeePgAndGraduationItems())
-    dispatch(getAllEmployeeQualifications(employeeId))
+    dispatch(qualificationsThunk.getAllEmployeePgAndGraduationItems())
+    dispatch(qualificationsThunk.getAllEmployeeQualifications(employeeId))
   }, [dispatch, employeeId])
 
   useEffect(() => {
@@ -124,21 +118,29 @@ const AddUpdateEmployeeQualification = ({
   const handleAddUpdateQualification = async () => {
     if (addQualification.id) {
       const updateResultAction = await dispatch(
-        updateQualificationDetails(addQualification),
+        qualificationsThunk.updateQualificationDetails(addQualification),
       )
-      if (updateQualificationDetails.fulfilled.match(updateResultAction)) {
+      if (
+        qualificationsThunk.updateQualificationDetails.fulfilled.match(
+          updateResultAction,
+        )
+      ) {
         dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
 
         backButtonHandler()
       }
     } else {
       const postResultAction = await dispatch(
-        postQualificationDetails({
+        qualificationsThunk.postQualificationDetails({
           ...addQualification,
           ...{ empId: employeeId as number },
         }),
       )
-      if (postQualificationDetails.fulfilled.match(postResultAction)) {
+      if (
+        qualificationsThunk.postQualificationDetails.fulfilled.match(
+          postResultAction,
+        )
+      ) {
         dispatch(appActions.addToast(getToastMessage(actionMapping.added)))
         backButtonHandler()
       }
