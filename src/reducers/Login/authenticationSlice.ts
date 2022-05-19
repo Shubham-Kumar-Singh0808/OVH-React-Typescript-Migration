@@ -8,11 +8,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../types/commonTypes'
-import { postLoginUser } from '../../middleware/api/Login/authenticationApi'
+import authenticationApi from '../../middleware/api/Login/authenticationApi'
 
 const initialAuthenticationState = {} as AuthenticationState
 
-export const doLoginUser = createAsyncThunk<
+const authenticateUser = createAsyncThunk<
   { authenticatedUser: AuthenticatedUser } | undefined,
   LoginCredentials,
   {
@@ -21,10 +21,10 @@ export const doLoginUser = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'authentication/doLoginUser',
+  'authentication/authenticateUser',
   async (userCredentials: LoginCredentials, thunkApi) => {
     try {
-      return await postLoginUser(
+      return await authenticationApi.authenticateUser(
         userCredentials.username,
         userCredentials.password,
         userCredentials.tenantKey,
@@ -52,25 +52,36 @@ const authenticationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(doLoginUser.pending, (state) => {
+      .addCase(authenticateUser.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(doLoginUser.fulfilled, (state, action) => {
+      .addCase(authenticateUser.fulfilled, (state, action) => {
         return { ...state, ...action.payload, isLoading: false }
       })
-      .addCase(doLoginUser.rejected, (state, action) => {
+      .addCase(authenticateUser.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as ValidationError
       })
   },
 })
 
-export const { setAuthentication, clearAuthentication, clearError } =
-  authenticationSlice.actions
-
-export const selectError = (state: RootState): ValidationError =>
+const selectError = (state: RootState): ValidationError =>
   state.authentication.error
-export const selectToken = (state: RootState): string =>
-  state.authentication.authenticatedUser.token
+const selectToken = (state: RootState): string =>
+  state.authentication.authenticatedUser?.token
+const selectEmployeeId = (state: RootState): string =>
+  state.authentication.authenticatedUser?.employeeId as string
+
+export const authenticationThunk = {
+  authenticateUser,
+}
+
+export const authenticationActions = authenticationSlice.actions
+
+export const authenticationSelectors = {
+  selectError,
+  selectToken,
+  selectEmployeeId,
+}
 
 export default authenticationSlice.reducer

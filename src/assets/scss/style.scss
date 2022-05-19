@@ -22,6 +22,9 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/global-search';
 @import './components/inline-tabs-nav';
 @import './pages/login';
+@import './pages/qualifications-tab';
+@import './components/richtexteditor';
 @import './components/omodal';
 @import './components/user-role-features-expandable-table';
 @import './pages/myprofile/profilehistory/profilehistory';
+@import './components/user-profile';

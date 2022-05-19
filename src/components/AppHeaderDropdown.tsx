@@ -6,7 +6,7 @@ import {
 } from '@coreui/react-pro'
 
 import React from 'react'
-import { clearAuthentication } from '../reducers/Login/authenticationSlice'
+import { authenticationActions } from '../reducers/Login/authenticationSlice'
 import { useAppDispatch } from '../stateStore'
 import { useHistory } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ const AppHeaderDropdown = (): JSX.Element => {
 
   const handleLogout = () => {
     localStorage.clear()
-    dispatch(clearAuthentication())
+    dispatch(authenticationActions.clearAuthentication())
     history.push('/')
   }
 

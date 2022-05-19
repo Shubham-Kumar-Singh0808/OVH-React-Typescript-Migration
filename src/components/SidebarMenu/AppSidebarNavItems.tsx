@@ -3,21 +3,27 @@ import { NavLink, useLocation } from 'react-router-dom'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 
+import { appActions } from '../../reducers/appSlice'
 import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
 
 const AppSidebarNavItems = (): JSX.Element => {
   const location = useLocation()
-  const employeeId: string = useTypedSelector(
+  const employeeId: string | number = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
+  )
+  const reRenderMenu: boolean = useTypedSelector(
+    (state) => state.app.reRenderMenu,
   )
   const dispatch = useAppDispatch()
   const getSidebarMenuItems = useTypedSelector(
     (state) => state.sidebarMenu.menuItems,
   )
   useEffect(() => {
-    //here iam dispatching doFetchEmployeeQualifications with my param : employeeId when the page mounts
-    dispatch(getSidebarMenu(employeeId))
-  }, [dispatch, employeeId])
+    if (reRenderMenu) {
+      dispatch(getSidebarMenu(employeeId))
+      dispatch(appActions.setReRenderMenu(false))
+    }
+  }, [dispatch, employeeId, reRenderMenu])
   function navLink(name: string, iconClass: string) {
     return (
       <>
