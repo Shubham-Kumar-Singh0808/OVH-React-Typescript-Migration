@@ -2,7 +2,7 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { BasicInformationState } from '../../../types/MyProfile/BasicInfoTab/basicInformationType'
+import { BasicInformationState } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
 import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
