@@ -1,6 +1,5 @@
-import { Link, NavLink } from 'react-router-dom'
-
 import { CNavItem } from '@coreui/react-pro'
+import { NavLink } from 'react-router-dom'
 import React from 'react'
 import { selectLoggedInEmployeeData } from '../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useTypedSelector } from '../../stateStore'
