@@ -7,7 +7,6 @@ import {
   authenticationSelectors,
 } from './reducers/Login/authenticationSlice'
 
-import { AuthenticationState } from './types/Login/authenticationTypes'
 import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
 import { getEmployeeGeneralInformation } from './reducers/MyProfile/GeneralTab/generalInformationSlice'
