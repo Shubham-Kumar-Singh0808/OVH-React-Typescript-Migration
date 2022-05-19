@@ -6,7 +6,7 @@ import OAddButton from '../../../../components/ReusableComponent/OAddButton'
 import SkillsTable from '../skills/SkillsTable'
 import AddUpdateEmployeeQualification from './AddUpdateEmployeeQualification'
 import AddUpdateEmployeeCertification from '../certifications/AddUpdateEmployeeCertification'
-import { getEmployeeCertificateByID } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
+import { certificationThunk } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useAppDispatch } from '../../../../stateStore'
 
 const QualificationDetails = (): JSX.Element => {
@@ -15,7 +15,7 @@ const QualificationDetails = (): JSX.Element => {
 
   const editCertificateButtonHandler = (id: number) => {
     setToggle('EditCertificateSection')
-    dispatch(getEmployeeCertificateByID(id))
+    dispatch(certificationThunk.getEmployeeCertificateByID(id))
   }
   return (
     <>

@@ -13,7 +13,7 @@ import { ValidationError } from '../../../types/commonTypes'
 
 const initialQualificationState = {} as EmployeeQualificationDetails
 
-export const getAllEmployeeQualifications = createAsyncThunk<
+const getAllEmployeeQualifications = createAsyncThunk<
   EmployeeQualifications | undefined,
   string | number,
   {
@@ -33,7 +33,7 @@ export const getAllEmployeeQualifications = createAsyncThunk<
   },
 )
 
-export const getAllEmployeeSkills = createAsyncThunk<
+const getAllEmployeeSkills = createAsyncThunk<
   EmployeeSkills[] | undefined,
   void,
   {
@@ -41,7 +41,7 @@ export const getAllEmployeeSkills = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('employeeQualifications/getEmployeeSkills', async (_, thunkApi) => {
+>('employeeQualifications/getAllEmployeeSkills', async (_, thunkApi) => {
   try {
     return await qualificationsApi.getEmployeeSkills()
   } catch (error) {
@@ -50,7 +50,7 @@ export const getAllEmployeeSkills = createAsyncThunk<
   }
 })
 
-export const postQualificationDetails = createAsyncThunk<
+const postQualificationDetails = createAsyncThunk<
   EmployeeQualifications | undefined,
   EmployeeQualifications,
   {
@@ -72,7 +72,7 @@ export const postQualificationDetails = createAsyncThunk<
   },
 )
 
-export const updateQualificationDetails = createAsyncThunk<
+const updateQualificationDetails = createAsyncThunk<
   EmployeeQualifications | undefined,
   EmployeeQualifications,
   {
@@ -94,7 +94,7 @@ export const updateQualificationDetails = createAsyncThunk<
   },
 )
 
-export const getAllEmployeePgAndGraduationItems = createAsyncThunk<
+const getAllEmployeePgAndGraduationItems = createAsyncThunk<
   PostGraduationAndGraduationList | undefined,
   void,
   {
@@ -168,10 +168,10 @@ const employeeQualificationsSlice = createSlice({
       )
   },
 })
-export const selectIsQualificationListLoading = (state: RootState): boolean =>
+const selectIsQualificationListLoading = (state: RootState): boolean =>
   state.qualificationCategory.isLoading
 
-export const selectEmployeeQualification = (
+const selectEmployeeQualification = (
   state: RootState,
 ): EmployeeQualifications =>
   state.employeeQualificationsDetails.qualificationDetails

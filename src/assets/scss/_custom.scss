@@ -32,6 +32,16 @@ body {
   -webkit-transition: all 0.15s;
   transition: all 0.15s;
 }
+.btn-download {
+  background-color: $blue-btnBg;
+  border-color: $blue-btnBorder;
+  color: $white;
+  &:hover {
+    color: $white;
+    background-color: $blue-btnHover;
+    border-color: $blue-btnHoverBorder;
+  }
+}
 .form-check-input[type='checkbox'] {
   border-radius: 0.15em;
 }

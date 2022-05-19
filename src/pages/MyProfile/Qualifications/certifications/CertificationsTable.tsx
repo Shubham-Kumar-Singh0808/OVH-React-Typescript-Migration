@@ -8,7 +8,10 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { certificationThunk } from '../../../../../src/reducers/MyProfile/Qualifications/certificationSlice'
+import {
+  certificationThunk,
+  selectCertificateList,
+} from '../../../../../src/reducers/MyProfile/Qualifications/certificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 import { EmployeeCertificationTableProps } from '../../../../../src/types/MyProfile/Qualifications/certificationTypes'
 import { appActions } from '../../../../reducers/appSlice'
@@ -19,9 +22,7 @@ const CertificationsTable = ({
 }: EmployeeCertificationTableProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteCertificateById, setToDeleteCertificateById] = useState(0)
-  const employeeCertificateData = useTypedSelector(
-    (state) => state.employeeCertificates.certificationDetails,
-  )
+  const employeeCertificateData = useTypedSelector(selectCertificateList)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(certificationThunk.getAllEmployeeCertifications())

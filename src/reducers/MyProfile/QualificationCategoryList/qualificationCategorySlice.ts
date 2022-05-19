@@ -8,8 +8,8 @@ import qualificationCategoryApi from '../../../../src/middleware/api/MyProfile/Q
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 
-export const getQualificationCategories = createAsyncThunk(
-  'qualificationCategory/fetchAllQualificationCategories',
+const getQualificationCategories = createAsyncThunk(
+  'qualificationCategory/getAllQualificationCategoryList',
   async (_, thunkApi) => {
     try {
       return await qualificationCategoryApi.getAllQualificationCategoryList()
@@ -19,7 +19,7 @@ export const getQualificationCategories = createAsyncThunk(
     }
   },
 )
-export const addNewQualificationCategoryByName = createAsyncThunk<
+const addNewQualificationCategoryByName = createAsyncThunk<
   QualificationCategoryList[] | undefined,
   QualificationCategoryList,
   {
@@ -44,7 +44,7 @@ export const addNewQualificationCategoryByName = createAsyncThunk<
     }
   },
 )
-export const removeQualificationCategoryById = createAsyncThunk<
+const removeQualificationCategoryById = createAsyncThunk<
   QualificationCategoryList[] | undefined,
   number,
   {

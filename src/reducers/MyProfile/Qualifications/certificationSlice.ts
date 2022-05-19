@@ -20,7 +20,7 @@ const initialCertificationState: CertificationState = {
   error: null,
 }
 
-export const getAllEmployeeCertifications = createAsyncThunk<
+const getAllEmployeeCertifications = createAsyncThunk<
   EmployeeCertifications[] | undefined,
   void,
   {
@@ -39,7 +39,7 @@ export const getAllEmployeeCertifications = createAsyncThunk<
     }
   },
 )
-export const getAllTechnology = createAsyncThunk<
+const getAllTechnology = createAsyncThunk<
   getAllTechnologyLookUp[] | undefined,
   void,
   {
@@ -56,7 +56,7 @@ export const getAllTechnology = createAsyncThunk<
   }
 })
 
-export const getCertificateDetailsByTechnologyName = createAsyncThunk<
+const getCertificateDetailsByTechnologyName = createAsyncThunk<
   getCertificateType[] | undefined,
   string,
   {
@@ -78,7 +78,7 @@ export const getCertificateDetailsByTechnologyName = createAsyncThunk<
   },
 )
 
-export const addEmployeeCertification = createAsyncThunk<
+const addEmployeeCertification = createAsyncThunk<
   number | undefined,
   EmployeeCertifications,
   {
@@ -87,7 +87,7 @@ export const addEmployeeCertification = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'employeeCertifications/postNewCertificate',
+  'employeeCertifications/addEmployeeCertification',
   async (employeeCertificateDetails: EmployeeCertifications, thunkApi) => {
     try {
       return await certificationsApi.addNewCertificate(
@@ -100,7 +100,7 @@ export const addEmployeeCertification = createAsyncThunk<
   },
 )
 
-export const getEmployeeCertificateByID = createAsyncThunk<
+const getEmployeeCertificateByID = createAsyncThunk<
   EditEmployeeCertificates | undefined,
   number,
   {
@@ -120,7 +120,7 @@ export const getEmployeeCertificateByID = createAsyncThunk<
   },
 )
 
-export const updateCertificateInformation = createAsyncThunk<
+const updateCertificateInformation = createAsyncThunk<
   number | undefined,
   EmployeeCertifications,
   {
@@ -142,7 +142,7 @@ export const updateCertificateInformation = createAsyncThunk<
   },
 )
 
-export const deleteCertificateDetails = createAsyncThunk<
+const deleteCertificateDetails = createAsyncThunk<
   number | undefined,
   number,
   {

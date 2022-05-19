@@ -8,7 +8,7 @@ import {
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-export const getEmployeeCertifications = async (): Promise<
+const getEmployeeCertifications = async (): Promise<
   EmployeeCertifications[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -19,7 +19,7 @@ export const getEmployeeCertifications = async (): Promise<
   return response.data
 }
 
-export const getAllTechnologies = async (): Promise<
+const getAllTechnologies = async (): Promise<
   getAllTechnologyLookUp[] | undefined
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -30,7 +30,7 @@ export const getAllTechnologies = async (): Promise<
   return response.data
 }
 
-export const getCertificateByTechnologyName = async (
+const getCertificateByTechnologyName = async (
   technologyName: string,
 ): Promise<getCertificateType[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -44,7 +44,7 @@ export const getCertificateByTechnologyName = async (
   return response.data
 }
 
-export const addNewCertificate = async (
+const addNewCertificate = async (
   employeeCertificateDetails: EmployeeCertifications,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -56,7 +56,7 @@ export const addNewCertificate = async (
   return responseVisa.data
 }
 
-export const getCertificationInformationById = async (
+const getCertificationInformationById = async (
   id: number,
 ): Promise<EditEmployeeCertificates> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -66,7 +66,7 @@ export const getCertificationInformationById = async (
   const responseVisa = await axios(requestConfig)
   return responseVisa.data
 }
-export const updateEmployeeCertificateDetails = async (
+const updateEmployeeCertificateDetails = async (
   certificateDetails: EmployeeCertifications,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -78,7 +78,7 @@ export const updateEmployeeCertificateDetails = async (
   return response.data
 }
 
-export const deleteEmployeeCertification = async (
+const deleteEmployeeCertification = async (
   certificationId: number,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
