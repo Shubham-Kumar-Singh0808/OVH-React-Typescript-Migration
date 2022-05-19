@@ -9,7 +9,7 @@ import {
 
 import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
-import { getEmployeeGeneralInformation } from './reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { getEmployeeGeneralInformationThunk } from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from './stateStore'
 
@@ -53,7 +53,11 @@ const App = (): JSX.Element => {
   })
   useEffect(() => {
     if (authenticatedToken) {
-      dispatch(getEmployeeGeneralInformation(employeeId))
+      dispatch(
+        getEmployeeGeneralInformationThunk.getEmployeeGeneralInformation(
+          employeeId,
+        ),
+      )
     }
   }, [authenticatedToken, dispatch, employeeId])
 

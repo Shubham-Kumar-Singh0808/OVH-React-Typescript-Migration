@@ -1,12 +1,12 @@
 import { CNavItem } from '@coreui/react-pro'
 import { NavLink } from 'react-router-dom'
 import React from 'react'
-import { selectLoggedInEmployeeData } from '../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { loggedInEmployeeSelectors } from '../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useTypedSelector } from '../../stateStore'
 
 const UserProfile = (): JSX.Element => {
   const employeeGeneralInformation = useTypedSelector(
-    selectLoggedInEmployeeData,
+    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
 
   return (

@@ -2,12 +2,12 @@ import MyProfileTabs from './MyProfileTabs'
 import OCard from '../../../components/ReusableComponent/OCard'
 import ProfileDetails from './ProfileDetails'
 import React from 'react'
-import { selectLoggedInEmployeeData } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useTypedSelector } from '../../../stateStore'
 
 const MyProfile = (): JSX.Element => {
   const employeeGeneralInformation = useTypedSelector(
-    selectLoggedInEmployeeData,
+    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
   return (
     <>

@@ -12,7 +12,7 @@ import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
 import menuItems from '../../middleware/MenuLinks'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import { sideMenuApi } from '../../middleware/api/apiList'
+import { sideMenuApiConfig } from '../../middleware/api/apiList'
 import stateStore from '../../stateStore'
 
 const middlewares = []
@@ -31,7 +31,7 @@ const mockUseLocationValue = {
 const mockUseSelectorValue = true
 const mockUseDispatchValue: string | number = 1998
 
-const url = sideMenuApi.getMenuData
+const url = sideMenuApiConfig.getMenuData
 const server = setupServer(
   rest.get(url, (req, res, ctx) => res(ctx.status(200), ctx.json(menuItems))),
   rest.get('*', (req, res, ctx) => {

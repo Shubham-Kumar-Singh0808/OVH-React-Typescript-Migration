@@ -8,7 +8,7 @@ import EmployeeGeneralInformation from './GeneralInformation'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import { employeeGeneralInformationApi } from '../../../middleware/api/apiList'
+import { employeeGeneralInformationApiConfig } from '../../../middleware/api/apiList'
 import { getEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { mockGeneralInformationData } from '../../../test/data/generalInformationData'
 import { rest } from 'msw'
@@ -30,7 +30,7 @@ jest.mock('react-redux', () => ({
     return mockUseDispatchValue
   }),
 }))
-const url = employeeGeneralInformationApi.getLoggedInEmployeeData
+const url = employeeGeneralInformationApiConfig.getLoggedInEmployeeData
 const server = setupServer(
   rest.get(url, (req, res, ctx) =>
     res(ctx.status(200), ctx.json(mockGeneralInformationData)),

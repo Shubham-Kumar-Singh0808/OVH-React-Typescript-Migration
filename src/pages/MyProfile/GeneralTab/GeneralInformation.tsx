@@ -1,12 +1,12 @@
 import { CCardHeader, CCol, CRow } from '@coreui/react-pro'
 
 import React from 'react'
-import { selectLoggedInEmployeeData } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useTypedSelector } from '../../../stateStore'
 
 const EmployeeGeneralInformation = (): JSX.Element => {
   const employeeGeneralInformation = useTypedSelector(
-    selectLoggedInEmployeeData,
+    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
 
   return (

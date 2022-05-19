@@ -32,7 +32,7 @@ export type EmployeeGeneralInformation = {
   mobile?: string
   alternativeMobile?: string
   workNumber?: string
-  updatedExperience?: string
+  updatedExperience?: string | number
 }
 export type ProfileDetailsProps = {
   employeeGeneralInformation: EmployeeGeneralInformation
