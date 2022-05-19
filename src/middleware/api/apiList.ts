@@ -1,5 +1,6 @@
 import {
   AuthenticationApi,
+  BasicInfoApi,
   CategoryApi,
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
@@ -82,4 +83,9 @@ export const qualificationsApi: QualificationsApi = {
   addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
   getPostGraduationAndGraduationList: apiPrefix + '/Employee/multipleSelection',
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
+}
+
+export const basicInfoApiConfig: BasicInfoApi = {
+  defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
+  updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
 }
