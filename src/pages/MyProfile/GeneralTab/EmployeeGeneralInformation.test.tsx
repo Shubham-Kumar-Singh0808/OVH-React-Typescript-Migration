@@ -9,7 +9,7 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import { employeeGeneralInformationApiConfig } from '../../../middleware/api/apiList'
-import { getEmployeeGeneralInformation } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { getEmployeeGeneralInformationThunk } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { mockGeneralInformationData } from '../../../test/data/generalInformationData'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
@@ -67,7 +67,9 @@ describe('Employee General Information Testing', () => {
   })
   it('should be fetched from the server and put in the store', async () => {
     await stateStore.dispatch(
-      getEmployeeGeneralInformation(employeeId as string),
+      getEmployeeGeneralInformationThunk.getEmployeeGeneralInformation(
+        employeeId as string,
+      ),
     )
     expect(employeeGeneralInformationSlice()).toMatchObject(
       mockGeneralInformationData,
