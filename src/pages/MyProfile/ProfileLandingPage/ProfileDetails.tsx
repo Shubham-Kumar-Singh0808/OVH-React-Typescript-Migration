@@ -1,10 +1,11 @@
-/* eslint-disable react/no-unescaped-entities */
 import { CCol, CRow } from '@coreui/react-pro'
 
+import { ProfileDetailsProps } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import React from 'react'
-import { useSelector } from 'react-redux'
 
-const ProfileDetails = (): JSX.Element => {
+const ProfileDetails = ({
+  employeeGeneralInformation,
+}: ProfileDetailsProps): JSX.Element => {
   return (
     <>
       <CRow className="mb-4">
@@ -13,63 +14,71 @@ const ProfileDetails = (): JSX.Element => {
             <img
               width="120px"
               height="120px;"
-              src="{generalInformation.profilePicPath}"
-              alt="{generalInformation.fullName}"
+              src={employeeGeneralInformation?.profilePicPath}
+              alt={employeeGeneralInformation?.fullName}
             />
           </div>
         </CCol>
         <CCol sm={2}>
           <div className="profile-name">
-            <h4>'generalInformation. fullName'</h4>
-            <p className="job-title">'generalInformation. designation'</p>
+            <h4>{employeeGeneralInformation?.fullName}</h4>
+            <p className="job-title">
+              {employeeGeneralInformation?.designation}
+            </p>
           </div>
         </CCol>
         <CCol sm={2}>
           <dl>
             <dt>Employee Id</dt>
-            <dd className="mb-0">'generalInformation. id'</dd>
+            <dd className="mb-0">{employeeGeneralInformation?.id}</dd>
             <dt>Blood Group</dt>
-            <dd className="mb-0">'generalInformation. bloodgroup'</dd>
+            <dd className="mb-0">{employeeGeneralInformation?.bloodgroup}</dd>
           </dl>
         </CCol>
-        {/* <CCol sm={2}>
+        <CCol sm={2}>
           <dl>
-            {generalInformation.homeNumber && (
+            {employeeGeneralInformation?.homeNumber && (
               <>
                 <dt>Home</dt>
-                <dd className="mb-0">{generalInformation.homeNumber}</dd>
+                <dd className="mb-0">
+                  {employeeGeneralInformation?.homeNumber}
+                </dd>
               </>
             )}
-            {generalInformation.mobile && (
+            {employeeGeneralInformation?.mobile && (
               <>
                 <dt>Mobile</dt>
-                <dd className="mb-0">{generalInformation.mobile}</dd>
+                <dd className="mb-0">{employeeGeneralInformation?.mobile}</dd>
               </>
             )}
-            {generalInformation.alternativeMobile && (
+            {employeeGeneralInformation?.alternativeMobile && (
               <>
                 <dt>Alternative Mobile</dt>
-                <dd className="mb-0">{generalInformation.alternativeMobile}</dd>
+                <dd className="mb-0">
+                  {employeeGeneralInformation?.alternativeMobile}
+                </dd>
               </>
             )}
-            {generalInformation.workNumber && (
+            {employeeGeneralInformation?.workNumber && (
               <>
                 <dt>Work</dt>
-                <dd className="mb-0">{generalInformation.workNumber}</dd>
+                <dd className="mb-0">
+                  {employeeGeneralInformation?.workNumber}
+                </dd>
               </>
             )}
           </dl>
         </CCol>
-        <CCol sm={3}> 
+        <CCol sm={3}>
           <dl>
             <dt>Email ID</dt>
-            <dd>{generalInformation.emailId}</dd>
+            <dd>{employeeGeneralInformation?.emailId}</dd>
             <dt>Experience</dt>
-            <dd>{generalInformation.updatedExperience}</dd>
+            <dd>{employeeGeneralInformation?.updatedExperience}</dd>
             <dt>Skype</dt>
-            <dd>{generalInformation.skypeId}</dd>
+            <dd>{employeeGeneralInformation?.skypeId}</dd>
           </dl>
-        </CCol>*/}
+        </CCol>
       </CRow>
     </>
   )
