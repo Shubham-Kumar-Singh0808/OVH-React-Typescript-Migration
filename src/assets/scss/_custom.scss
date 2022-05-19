@@ -33,13 +33,13 @@ body {
   transition: all 0.15s;
 }
 .btn-download {
-  background-color: #34b2e7;
-  border-color: #2db0e6;
+  background-color: $blue-btnBg;
+  border-color: $blue-btnBorder;
   color: $white;
   &:hover {
     color: $white;
-    background-color: #24ace5;
-    border-color: #1ba9e4;
+    background-color: $blue-btnHover;
+    border-color: $blue-btnHoverBorder;
   }
 }
 .form-check-input[type='checkbox'] {

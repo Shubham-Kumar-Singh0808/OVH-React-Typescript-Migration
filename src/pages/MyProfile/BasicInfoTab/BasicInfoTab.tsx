@@ -21,53 +21,29 @@ import { useFormik } from 'formik'
 
 const BasicInfoTab = (): JSX.Element => {
   const employeeBasicInformation = useTypedSelector(selectLoggedInEmployeeData)
-  const {
-    id,
-    baseLocation,
-    bloodgroup,
-    departmentName,
-    designation,
-    emailId,
-    anniversary,
-    curentLocation,
-    employmentTypeName,
-    fullName,
-    gender,
-    jobTypeName,
-    maritalStatus,
-    officialBirthday,
-    thumbPicture,
-    personalEmail,
-    realBirthday,
-    projectManager,
-    rbtCvPath,
-    aboutMe,
-    skypeId,
-    rbtCvName,
-  } = employeeBasicInformation
   const selectedUserBasicInformation = {
-    id,
-    baseLocation,
-    bloodgroup,
-    departmentName,
-    designation,
-    emailId,
-    curentLocation,
-    employmentTypeName,
-    fullName,
-    gender,
-    jobTypeName,
-    maritalStatus,
-    thumbPicture,
-    personalEmail,
-    projectManager,
-    rbtCvPath,
-    rbtCvName,
-    aboutMe,
-    officialBirthday,
-    realBirthday,
-    anniversary,
-    skypeId,
+    id: employeeBasicInformation.id,
+    baseLocation: employeeBasicInformation.baseLocation,
+    bloodgroup: employeeBasicInformation.bloodgroup,
+    departmentName: employeeBasicInformation.departmentName,
+    designation: employeeBasicInformation.designation,
+    emailId: employeeBasicInformation.emailId,
+    curentLocation: employeeBasicInformation.curentLocation,
+    employmentTypeName: employeeBasicInformation.employmentTypeName,
+    fullName: employeeBasicInformation.fullName,
+    gender: employeeBasicInformation.gender,
+    jobTypeName: employeeBasicInformation.jobTypeName,
+    maritalStatus: employeeBasicInformation.maritalStatus,
+    thumbPicture: employeeBasicInformation.thumbPicture,
+    personalEmail: employeeBasicInformation.personalEmail,
+    projectManager: employeeBasicInformation.projectManager,
+    rbtCvPath: employeeBasicInformation.rbtCvPath,
+    rbtCvName: employeeBasicInformation.rbtCvName,
+    aboutMe: employeeBasicInformation.aboutMe,
+    officialBirthday: employeeBasicInformation.officialBirthday,
+    realBirthday: employeeBasicInformation.realBirthday,
+    anniversary: employeeBasicInformation.anniversary,
+    skypeId: employeeBasicInformation.skypeId,
   }
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
   const [realBirthdayShown, setRealBirthdayShown] = useState<boolean>(false)
@@ -737,11 +713,11 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3">
           <CCol md={{ span: 6, offset: 3 }}>
-            {rbtCvName && (
+            {employeeBasicInformation.rbtCvName && (
               <a
                 className="text-decoration-none cursor-pointer"
                 href="RBT_CV"
-                download={rbtCvName}
+                download={employeeBasicInformation.rbtCvName}
               >
                 <i className="fa fa-paperclip me-1"></i>
                 Rbt Cv

@@ -17,6 +17,7 @@ const updateDefaultPicOnGenderChange = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
 const updateEmployeeBasicInformation = async (
   prepareObject: EmployeeGeneralInformation,
 ): Promise<number | undefined> => {
