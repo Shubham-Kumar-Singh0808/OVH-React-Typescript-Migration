@@ -8,15 +8,16 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import DownloadSampleFileButton from './DownloadSampleFileButton'
-// import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
+import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import moment from 'moment'
 import { selectLoggedInEmployeeData } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { useFormik } from 'formik'
 
 const BasicInfoTab = (): JSX.Element => {
   const employeeBasicInformation = useTypedSelector(selectLoggedInEmployeeData)
@@ -78,11 +79,6 @@ const BasicInfoTab = (): JSX.Element => {
   const [dateErrorMessage, setDateErrorMessage] = useState(false)
 
   const dispatch = useAppDispatch()
-
-  // const formattedDates = useMemo(() => {
-  //   if(selectedUserBasicInformation.anniversary && selectedUserBasicInformation.realBirthday){
-  //   }
-  // })
 
   // onchange handler for input fields
   const handleChange = (
@@ -155,8 +151,6 @@ const BasicInfoTab = (): JSX.Element => {
   ])
 
   useEffect(() => {
-    console.log(employeeBasicInformationEditData.realBirthday)
-    console.log(employeeBasicInformationEditData.anniversary)
     if (
       employeeBasicInformationEditData.realBirthday &&
       employeeBasicInformationEditData.anniversary
@@ -167,8 +161,6 @@ const BasicInfoTab = (): JSX.Element => {
       const anniversaryDate = moment(
         employeeBasicInformationEditData.anniversary,
       ).format('YYYY')
-      console.log(realBirthdayDate)
-      console.log(anniversaryDate)
       if (anniversaryDate < realBirthdayDate) {
         setDateErrorMessage(true)
       } else {
@@ -207,6 +199,14 @@ const BasicInfoTab = (): JSX.Element => {
       ),
     )
   }
+
+  const formik = useFormik({
+    initialValues: { name: '', message: '' },
+    onSubmit: (values) => {
+      console.log('Logging in ', values)
+    },
+  })
+
   return (
     <>
       <CForm
@@ -709,7 +709,12 @@ const BasicInfoTab = (): JSX.Element => {
           >
             About Me:
           </CFormLabel>
-          <CCol sm={9}>{/* <OTextEditor /> */}</CCol>
+          <CCol sm={9}>
+            <OTextEditor
+              setFieldValue={(val) => formik.setFieldValue('', val)}
+              value={'Hello'}
+            />
+          </CCol>
         </CRow>
         <CRow className="mt-3">
           <CFormLabel

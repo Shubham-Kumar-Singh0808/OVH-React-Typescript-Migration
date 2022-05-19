@@ -164,7 +164,9 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
             <div>
               <CFormLabel className="text-info">
                 Add Role:
-                <span className="text-danger">*</span>
+                <span className={roleInput ? 'text-white' : 'text-danger'}>
+                  *
+                </span>
               </CFormLabel>
               <CFormInput
                 className="mb-2"
