@@ -67,7 +67,7 @@ export const skillsApiConfig: SkillApi = {
 }
 
 export const qualificationCategoryApiConfig: QualificationCategoryApi = {
-  getAllQualificationCategories:
+  getQualificationCategories:
     apiPrefix + '/Employee/getQualiactionCategoryList',
   addNewQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
   deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
@@ -82,12 +82,13 @@ export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi 
   }
 export const qualificationsApiConfig: QualificationsApi = {
   getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
-  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
-  getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',
+  getEmployeeSkills: apiPrefix + '/jobapplicant/getEmployeeskillList',
+  getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
-  getPostGraduationAndGraduationList: apiPrefix + '/Employee/multipleSelection',
+  getPostGraduationAndGraduationLookUp:
+    apiPrefix + '/Employee/multipleSelection',
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
-  getAllTechnologyList: apiPrefix + '/jobapplicant/getAllTechnology',
+  getAllTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
   getCertificateByTechnology:
     apiPrefix + '/EmployeeSkill/getCertificateByTechnology',
   addEmployeeCertificates: apiPrefix + '/Employee/certification',

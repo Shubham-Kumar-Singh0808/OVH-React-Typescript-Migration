@@ -23,7 +23,7 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(qualificationsThunk.getAllEmployeeSkills())
+    dispatch(qualificationsThunk.getEmployeeSkills())
   }, [dispatch])
   const tableHeaderCellProps = {
     width: '25%',

@@ -82,10 +82,10 @@ const QualificationCategoryListTable = (): JSX.Element => {
     setIsDeleteModalVisible(false)
 
     const deleteQualificationCategoryResultAction = await dispatch(
-      qualificationCategoryThunk.removeQualificationCategoryById(id),
+      qualificationCategoryThunk.deleteQualificationCategoryById(id),
     )
     if (
-      qualificationCategoryThunk.removeQualificationCategoryById.fulfilled.match(
+      qualificationCategoryThunk.deleteQualificationCategoryById.fulfilled.match(
         deleteQualificationCategoryResultAction,
       )
     ) {

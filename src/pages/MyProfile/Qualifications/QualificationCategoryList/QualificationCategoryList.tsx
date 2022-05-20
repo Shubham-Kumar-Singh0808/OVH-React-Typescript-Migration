@@ -8,8 +8,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import {
-  qualificationCategorySelectors,
   qualificationCategoryThunk,
+  qualificationCategorySelectors,
 } from '../../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import QualificationCategoryListTable from './QualificationCategoryListTable'

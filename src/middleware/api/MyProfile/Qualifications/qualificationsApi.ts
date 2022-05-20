@@ -23,17 +23,17 @@ const getEmployeeQualifications = async (
 
 const getEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.getEmployeeSkillsList,
+    url: qualificationsApiConfig.getEmployeeSkills,
     method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
   return response.data
 }
 
-const getPgLookUpAndGraduationLookUpListItems =
+const getPgLookUpAndGraduationLookUpItems =
   async (): Promise<PostGraduationAndGraduationList> => {
     const requestConfig = getAuthenticatedRequestConfig({
-      url: qualificationsApiConfig.getPostGraduationAndGraduationList,
+      url: qualificationsApiConfig.getPostGraduationAndGraduationLookUp,
       method: AllowedHttpMethods.get,
     })
     const response = await axios(requestConfig)
@@ -70,7 +70,7 @@ const updateEmployeeQualifications = async (
 const qualificationsApi = {
   getEmployeeQualifications,
   getEmployeeSkills,
-  getPgLookUpAndGraduationLookUpListItems,
+  getPgLookUpAndGraduationLookUpItems,
   saveInitialEmployeeQualifications,
   updateEmployeeQualifications,
 }

@@ -74,8 +74,8 @@ const AddUpdateEmployeeQualification = ({
   }, [addQualification])
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(qualificationsThunk.getAllEmployeePgAndGraduationItems())
-    dispatch(qualificationsThunk.getAllEmployeeQualifications(employeeId))
+    dispatch(qualificationsThunk.getEmployeePgAndGraduationItems())
+    dispatch(qualificationsThunk.getEmployeeQualifications(employeeId))
   }, [dispatch, employeeId])
 
   useEffect(() => {
@@ -118,10 +118,10 @@ const AddUpdateEmployeeQualification = ({
   const handleAddUpdateQualification = async () => {
     if (addQualification.id) {
       const updateResultAction = await dispatch(
-        qualificationsThunk.updateQualificationDetails(addQualification),
+        qualificationsThunk.updateEmployeeQualifications(addQualification),
       )
       if (
-        qualificationsThunk.updateQualificationDetails.fulfilled.match(
+        qualificationsThunk.updateEmployeeQualifications.fulfilled.match(
           updateResultAction,
         )
       ) {
@@ -131,13 +131,13 @@ const AddUpdateEmployeeQualification = ({
       }
     } else {
       const postResultAction = await dispatch(
-        qualificationsThunk.postQualificationDetails({
+        qualificationsThunk.addEmployeeQualifications({
           ...addQualification,
           ...{ empId: employeeId as number },
         }),
       )
       if (
-        qualificationsThunk.postQualificationDetails.fulfilled.match(
+        qualificationsThunk.addEmployeeQualifications.fulfilled.match(
           postResultAction,
         )
       ) {

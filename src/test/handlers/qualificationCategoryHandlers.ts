@@ -17,14 +17,14 @@ export const qualificationCategoryListHandlers = [
   ),
   // getAllQualificationCategories api mock
   rest.get(
-    qualificationCategoryApiConfig.getAllQualificationCategories,
+    qualificationCategoryApiConfig.getQualificationCategories,
     (req, res, ctx) => {
       return res.once(ctx.status(200), ctx.json([]))
     },
   ),
   // getAllQualificationCategories api mock
   rest.get(
-    qualificationCategoryApiConfig.getAllQualificationCategories,
+    qualificationCategoryApiConfig.getQualificationCategories,
     (req, res, ctx) => {
       return res(ctx.status(200), ctx.json(mockQualificationCategories))
     },

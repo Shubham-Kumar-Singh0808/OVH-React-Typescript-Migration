@@ -15,7 +15,7 @@ const EmployeeQualifications = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(qualificationsThunk.getAllEmployeeQualifications(employeeId))
+    dispatch(qualificationsThunk.getEmployeeQualifications(employeeId))
   }, [dispatch, employeeId])
   return (
     <>

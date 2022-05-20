@@ -9,17 +9,17 @@ import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 
 const getQualificationCategories = createAsyncThunk(
-  'qualificationCategory/getAllQualificationCategoryList',
+  'qualificationCategory/getQualificationCategories',
   async (_, thunkApi) => {
     try {
-      return await qualificationCategoryApi.getAllQualificationCategoryList()
+      return await qualificationCategoryApi.getQualificationCategories()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-const addNewQualificationCategoryByName = createAsyncThunk<
+const addQualificationCategoryByName = createAsyncThunk<
   QualificationCategoryList[] | undefined,
   QualificationCategoryList,
   {
@@ -28,13 +28,13 @@ const addNewQualificationCategoryByName = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'qualificationCategory/addNewQualificationCategoryByName',
+  'qualificationCategory/addQualificationCategoryByName',
   async (
     { qualificationCategory, qualificationName }: QualificationCategoryList,
     thunkApi,
   ) => {
     try {
-      return await qualificationCategoryApi.postNewQualificationCategoryByName({
+      return await qualificationCategoryApi.addQualificationCategoryByName({
         qualificationCategory,
         qualificationName,
       })
@@ -44,7 +44,7 @@ const addNewQualificationCategoryByName = createAsyncThunk<
     }
   },
 )
-const removeQualificationCategoryById = createAsyncThunk<
+const deleteQualificationCategoryById = createAsyncThunk<
   QualificationCategoryList[] | undefined,
   number,
   {
@@ -53,7 +53,7 @@ const removeQualificationCategoryById = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'qualificationCategory/removeQualificationCategoryById',
+  'qualificationCategory/deleteQualificationCategoryById',
   async (id, thunkApi) => {
     try {
       return await qualificationCategoryApi.deleteQualificationCategoryById(id)
@@ -82,8 +82,8 @@ const qualificationCategorySlice = createSlice({
       .addMatcher(
         isAnyOf(
           getQualificationCategories.pending,
-          removeQualificationCategoryById.pending,
-          addNewQualificationCategoryByName.pending,
+          deleteQualificationCategoryById.pending,
+          addQualificationCategoryByName.pending,
         ),
         (state) => {
           state.isLoading = true
@@ -92,8 +92,8 @@ const qualificationCategorySlice = createSlice({
       .addMatcher(
         isAnyOf(
           getQualificationCategories.fulfilled,
-          removeQualificationCategoryById.fulfilled,
-          addNewQualificationCategoryByName.fulfilled,
+          deleteQualificationCategoryById.fulfilled,
+          addQualificationCategoryByName.fulfilled,
         ),
         (state, action) => {
           state.isLoading = false
@@ -107,6 +107,7 @@ const qualificationCategorySlice = createSlice({
 export const selectIsQualificationCategoryListLoading = (
   state: RootState,
 ): boolean => state.qualificationCategory.isLoading
+
 export const selectQualificationCategoryList = (
   state: RootState,
 ): QualificationCategoryList[] =>
@@ -114,8 +115,8 @@ export const selectQualificationCategoryList = (
 
 export const qualificationCategoryThunk = {
   getQualificationCategories,
-  removeQualificationCategoryById,
-  addNewQualificationCategoryByName,
+  deleteQualificationCategoryById,
+  addQualificationCategoryByName,
 }
 
 export const qualificationCategoryActions = qualificationCategorySlice.actions

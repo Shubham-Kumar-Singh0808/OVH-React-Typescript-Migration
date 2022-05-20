@@ -53,14 +53,14 @@ function AddUpdateEmployeeCertification({
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(certificationThunk.getAllEmployeeCertifications())
+    dispatch(certificationThunk.getEmployeeCertifications())
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(certificationThunk.getAllTechnology())
+    dispatch(certificationThunk.getTechnologies())
     if (addCertification?.technology) {
       dispatch(
-        certificationThunk.getCertificateDetailsByTechnologyName(
+        certificationThunk.getCertificateByTechnologyName(
           addCertification?.technology,
         ),
       )
@@ -197,10 +197,10 @@ function AddUpdateEmployeeCertification({
       ...addCertification,
     }
     const updateCertificateResultAction = await dispatch(
-      certificationThunk.updateCertificateInformation(prepareObject),
+      certificationThunk.updateEmployeeCertificate(prepareObject),
     )
     if (
-      certificationThunk.updateCertificateInformation.fulfilled.match(
+      certificationThunk.updateEmployeeCertificate.fulfilled.match(
         updateCertificateResultAction,
       )
     ) {

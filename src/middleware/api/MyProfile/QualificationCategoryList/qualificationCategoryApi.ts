@@ -7,11 +7,11 @@ import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 import { QualificationCategoryList } from '../../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
 
-const getAllQualificationCategoryList = async (): Promise<
+const getQualificationCategories = async (): Promise<
   QualificationCategoryList[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationCategoryApiConfig.getAllQualificationCategories,
+    url: qualificationCategoryApiConfig.getQualificationCategories,
     method: AllowedHttpMethods.get,
   })
 
@@ -19,7 +19,7 @@ const getAllQualificationCategoryList = async (): Promise<
   return response.data
 }
 
-const postNewQualificationCategoryByName = async ({
+const addQualificationCategoryByName = async ({
   qualificationCategory,
   qualificationName,
 }: QualificationCategoryList): Promise<QualificationCategoryList[]> => {
@@ -55,8 +55,8 @@ const deleteQualificationCategoryById = async (
 }
 
 const qualificationCategoryApi = {
-  getAllQualificationCategoryList,
-  postNewQualificationCategoryByName,
+  getQualificationCategories,
+  addQualificationCategoryByName,
   deleteQualificationCategoryById,
 }
 export default qualificationCategoryApi

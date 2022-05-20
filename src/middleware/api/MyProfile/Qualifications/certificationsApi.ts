@@ -8,11 +8,9 @@ import {
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-const getEmployeeCertifications = async (): Promise<
-  EmployeeCertifications[]
-> => {
+const getEmployeeCertificates = async (): Promise<EmployeeCertifications[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.getEmployeeCertificatesList,
+    url: qualificationsApiConfig.getEmployeeCertificates,
     method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
@@ -23,7 +21,7 @@ const getAllTechnologies = async (): Promise<
   getAllTechnologyLookUp[] | undefined
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.getAllTechnologyList,
+    url: qualificationsApiConfig.getAllTechnologies,
     method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
@@ -44,7 +42,7 @@ const getCertificateByTechnologyName = async (
   return response.data
 }
 
-const addNewCertificate = async (
+const addEmployeeCertification = async (
   employeeCertificateDetails: EmployeeCertifications,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -66,7 +64,7 @@ const getCertificationInformationById = async (
   const responseVisa = await axios(requestConfig)
   return responseVisa.data
 }
-const updateEmployeeCertificateDetails = async (
+const updateEmployeeCertificate = async (
   certificateDetails: EmployeeCertifications,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -96,12 +94,12 @@ const deleteEmployeeCertification = async (
 }
 
 const certificationsApi = {
-  getEmployeeCertifications,
+  getEmployeeCertificates,
   getAllTechnologies,
   getCertificateByTechnologyName,
-  addNewCertificate,
+  addEmployeeCertification,
   getCertificationInformationById,
-  updateEmployeeCertificateDetails,
+  updateEmployeeCertificate,
   deleteEmployeeCertification,
 }
 export default certificationsApi

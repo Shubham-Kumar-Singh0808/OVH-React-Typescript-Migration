@@ -25,7 +25,7 @@ const CertificationsTable = ({
   const employeeCertificateData = useTypedSelector(selectCertificates)
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(certificationThunk.getAllEmployeeCertifications())
+    dispatch(certificationThunk.getEmployeeCertifications())
   }, [dispatch])
 
   const toastElement = (
@@ -41,14 +41,14 @@ const CertificationsTable = ({
   const handleConfirmDeleteCertificate = async () => {
     setIsDeleteModalVisible(false)
     const deleteCertificateResultAction = await dispatch(
-      certificationThunk.deleteCertificateDetails(toDeleteCertificateById),
+      certificationThunk.deleteEmployeeCertificate(toDeleteCertificateById),
     )
     if (
-      certificationThunk.deleteCertificateDetails.fulfilled.match(
+      certificationThunk.deleteEmployeeCertificate.fulfilled.match(
         deleteCertificateResultAction,
       )
     ) {
-      dispatch(certificationThunk.getAllEmployeeCertifications())
+      dispatch(certificationThunk.getEmployeeCertifications())
       dispatch(appActions.addToast(toastElement))
     }
   }
