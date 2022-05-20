@@ -12,7 +12,7 @@ import { reduxService } from '../../../reducers/reduxService'
 const CategoryList = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(
-    reduxService.category.selectors.selectCategoryList,
+    reduxService.category.selectors.selectIsCategoryListLoading,
   )
 
   useEffect(() => {
