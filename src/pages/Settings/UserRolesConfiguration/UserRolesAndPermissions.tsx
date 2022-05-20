@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import {
-  doFetchUserRoleSubFeatures,
-  doFetchUserRoles,
-} from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
 import AddDeleteRoleButtons from './AddDeleteRoleButtons'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -10,14 +6,15 @@ import { SelectedRole } from '../../../types/Settings/UserRolesConfiguration/use
 import UserRoleFeaturesExpandableTable from './UserRoleFeaturesExpandableTable'
 import UserRolesList from './UserRolesList'
 import { useAppDispatch } from '../../../stateStore'
+import { userRolesAndPermissionsThunk } from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
-const initialSelectedState = {} as SelectedRole
+const initialSelectedRoleState = {} as SelectedRole
 const UserRolesAndPermission: React.FC = (): JSX.Element => {
-  const [selectedRole, setSelectedRole] = useState(initialSelectedState)
+  const [selectedRole, setSelectedRole] = useState(initialSelectedRoleState)
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchUserRoles())
-    dispatch(doFetchUserRoleSubFeatures())
+    dispatch(userRolesAndPermissionsThunk.getUserRoles())
+    dispatch(userRolesAndPermissionsThunk.getUserRoleSubFeatures())
   }, [dispatch])
 
   return (

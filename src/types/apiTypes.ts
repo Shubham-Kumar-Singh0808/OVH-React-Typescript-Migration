@@ -48,7 +48,7 @@ export interface QualificationsApi extends ApiBase {
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string
   isUserRoleExists: string
-  addNewUserRole: string
+  createUserRole: string
   deleteUserRole: string
   getSubFeatures: string
   featuresUnderRole: string

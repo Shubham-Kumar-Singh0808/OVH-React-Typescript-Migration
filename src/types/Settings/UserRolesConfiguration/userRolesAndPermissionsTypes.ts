@@ -6,7 +6,7 @@ export type UserRole = {
   features: null
 }
 
-export type AddUserRole = {
+export type CreateUserRole = {
   roleInput: string
   reportingManagerFlag: boolean
 }
@@ -42,7 +42,7 @@ export type UserRoleSubFeatures = {
   features: UserRoleFeatures[]
 }
 
-export type FeaturesUnderRole = {
+export type UserFeaturesUnderRole = {
   featureId: number
   name: string
   viewaccess: boolean
@@ -54,7 +54,7 @@ export type FeaturesUnderRole = {
 export type UserRolesAndPermissionsState = {
   roles: UserRole[]
   subFeatures: UserRoleSubFeatures[]
-  featuresUnderRole: FeaturesUnderRole[]
+  featuresUnderRole: UserFeaturesUnderRole[]
   isRoleExits: boolean | null
   isLoading: boolean
   error: ValidationError

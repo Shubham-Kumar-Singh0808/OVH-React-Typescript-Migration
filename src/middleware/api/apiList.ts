@@ -29,10 +29,10 @@ export const authenticationApiConfig: AuthenticationApi = {
 export const sideMenuApiConfig: SideMenuApi = {
   getMenuData: apiPrefix + '/roleFeature/menuItems',
 }
-export const userRolesConfigurationApi: UserRolesConfigurationApi = {
+export const userRolesConfigurationApiConfig: UserRolesConfigurationApi = {
   getUserRoles: apiPrefix + '/roleFeature/roles',
   isUserRoleExists: apiPrefix + '/roleFeature/isRoleExits',
-  addNewUserRole: apiPrefix + '/roleFeature/role',
+  createUserRole: apiPrefix + '/roleFeature/role',
   deleteUserRole: apiPrefix + '/roleFeature/deleterole',
   getSubFeatures: apiPrefix + '/roleFeature/SubFeatures',
   featuresUnderRole: apiPrefix + '/roleFeature/features_UnderRole',

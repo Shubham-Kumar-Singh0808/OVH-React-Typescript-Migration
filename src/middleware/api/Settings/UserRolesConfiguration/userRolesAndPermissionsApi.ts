@@ -1,18 +1,21 @@
 import {
-  AddUserRole,
-  FeaturesUnderRole,
+  AllowedHttpMethods,
+  userRolesConfigurationApiConfig,
+} from '../../apiList'
+import {
+  CreateUserRole,
+  UserFeaturesUnderRole,
   UserRole,
   UserRoleSubFeatures,
   UtilsRenderPermissionSwitchReturn,
 } from '../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
-import { AllowedHttpMethods, userRolesConfigurationApi } from '../../apiList'
 
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-export const getUserRoles = async (): Promise<UserRole[] | undefined> => {
+const getUserRoles = async (): Promise<UserRole[] | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: userRolesConfigurationApi.getUserRoles,
+    url: userRolesConfigurationApiConfig.getUserRoles,
     method: AllowedHttpMethods.get,
   })
 
@@ -20,11 +23,11 @@ export const getUserRoles = async (): Promise<UserRole[] | undefined> => {
   return response.data
 }
 
-export const checkIsRoleExits = async (
+const checkIsRoleExits = async (
   roleInput: string,
 ): Promise<boolean | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: userRolesConfigurationApi.isUserRoleExists,
+    url: userRolesConfigurationApiConfig.isUserRoleExists,
     method: AllowedHttpMethods.get,
     params: {
       roleName: roleInput,
@@ -34,12 +37,12 @@ export const checkIsRoleExits = async (
   return response.data
 }
 
-export const createUserRole = async ({
+const createUserRole = async ({
   roleInput,
   reportingManagerFlag,
-}: AddUserRole): Promise<number | undefined> => {
+}: CreateUserRole): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: userRolesConfigurationApi.addNewUserRole,
+    url: userRolesConfigurationApiConfig.createUserRole,
     method: AllowedHttpMethods.post,
     params: {
       roleName: roleInput,
@@ -50,11 +53,9 @@ export const createUserRole = async ({
   return response.data
 }
 
-export const deleteUserRole = async (
-  roleId: number,
-): Promise<number | undefined> => {
+const deleteUserRole = async (roleId: number): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: userRolesConfigurationApi.deleteUserRole,
+    url: userRolesConfigurationApiConfig.deleteUserRole,
     method: AllowedHttpMethods.post,
     params: {
       roleId: roleId,
@@ -64,22 +65,22 @@ export const deleteUserRole = async (
   return response.data
 }
 
-export const getUserRoleSubFeatures = async (): Promise<
+const getUserRoleSubFeatures = async (): Promise<
   UserRoleSubFeatures[] | undefined
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: userRolesConfigurationApi.getSubFeatures,
+    url: userRolesConfigurationApiConfig.getSubFeatures,
     method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
   return response.data
 }
 
-export const getUserFeaturesUnderRole = async (
+const getUserFeaturesUnderRole = async (
   selectedRoleId: string,
-): Promise<FeaturesUnderRole[] | undefined> => {
+): Promise<UserFeaturesUnderRole[] | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: userRolesConfigurationApi.featuresUnderRole,
+    url: userRolesConfigurationApiConfig.featuresUnderRole,
     method: AllowedHttpMethods.get,
     params: {
       roleId: selectedRoleId,
@@ -88,14 +89,25 @@ export const getUserFeaturesUnderRole = async (
   const response = await axios(requestConfig)
   return response.data
 }
-export const updateAssignPermissions = async (
+const updateAssignPermissions = async (
   prepareObject: UtilsRenderPermissionSwitchReturn,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: userRolesConfigurationApi.assignPermission,
+    url: userRolesConfigurationApiConfig.assignPermission,
     method: AllowedHttpMethods.post,
     data: prepareObject,
   })
   const response = await axios(requestConfig)
   return response.data
 }
+
+const userRolesAndPermissionsApi = {
+  getUserRoles,
+  checkIsRoleExits,
+  createUserRole,
+  deleteUserRole,
+  getUserRoleSubFeatures,
+  getUserFeaturesUnderRole,
+  updateAssignPermissions,
+}
+export default userRolesAndPermissionsApi
