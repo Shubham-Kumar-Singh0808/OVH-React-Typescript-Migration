@@ -1,32 +1,33 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  EmployeeFamilyData,
-  VisaDetails,
-  PersonalInfoTabState,
-  GetCountryDetails,
-  VisaCountryDetails,
-  EmployeeVisaDetails,
   EditFamilyDetailsState,
-  EmployeeFamilyDetails,
   EditVisaDetailsState,
+  EmployeeFamilyData,
+  EmployeeFamilyDetails,
+  EmployeeVisaDetails,
+  GetCountryDetails,
+  PersonalInfoTabState,
+  VisaCountryDetails,
+  VisaDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
-import { ValidationError } from '../../../types/commonTypes'
 import {
-  getFamilyDetailsApiCall,
-  getVisaDetailsApiCall,
-  getCountryDetailsApiCall,
   fetchVisaCountryDetailsApiCall,
-  getAddNewVisaMemberApiCall,
-  getFamilyInformationByFamilyIdApiCall,
-  getUpdateNewFamilyMemberApiCall,
   getAddNewFamilyMemberApiCall,
-  getVisaInformationByVisaIdApiCall,
-  getUpdateNewVisaMemberApiCall,
+  getAddNewVisaMemberApiCall,
+  getCountryDetailsApiCall,
   getDeleteNewFamilyMemberApiCall,
   getDeleteVisaDetailsApiCall,
-} from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
+  getFamilyDetailsApiCall,
+  getFamilyInformationByFamilyIdApiCall,
+  getUpdateNewFamilyMemberApiCall,
+  getUpdateNewVisaMemberApiCall,
+  getVisaDetailsApiCall,
+  getVisaInformationByVisaIdApiCall,
+} from '../../../middleware/api/MyProfile/PersonalInfoTab/PersonalInfoApi'
+
+import { AxiosError } from 'axios'
+import { ValidationError } from '../../../types/commonTypes'
 const initialPersonalInfoTabState: PersonalInfoTabState = {
   getFamilyDetails: [],
   getVisaDetails: [],
