@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import AddUpdateEmployeeCertification from '../certifications/AddUpdateEmployeeCertification'
+import AddUpdateEmployeeCertification from './AddUpdateEmployeeCertification'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import stateStore from '../../../../stateStore'
-import { getEmployeeCertifications } from '../../../../middleware/api/MyProfile/Qualifications/certificationsApi'
 import { certificationThunk } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 const ReduxProvider = ({
   children,

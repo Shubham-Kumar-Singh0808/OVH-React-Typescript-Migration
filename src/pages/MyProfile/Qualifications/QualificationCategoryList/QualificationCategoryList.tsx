@@ -10,11 +10,11 @@ import React, { useEffect } from 'react'
 import {
   qualificationCategorySelectors,
   qualificationCategoryThunk,
-} from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+} from '../../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import QualificationCategoryListTable from './QualificationCategoryListTable'
 import AddNewQualificationCategory from './AddNewQualificationCategory'
-import { AddUpdateEmployeeQualificationProps } from '../../../types/MyProfile/Qualifications/qualificationTypes'
+import { AddUpdateEmployeeQualificationProps } from '../../../../types/MyProfile/Qualifications/qualificationTypes'
 
 const QualificationCategoryList = ({
   backButtonHandler,

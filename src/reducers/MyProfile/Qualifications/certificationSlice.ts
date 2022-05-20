@@ -236,7 +236,7 @@ const employeeCertificationsSlice = createSlice({
 export const selectIsCertificationListLoading = (state: RootState): boolean =>
   state.employeeCertificates.isLoading
 
-export const selectCertificateList = (
+export const selectCertificates = (
   state: RootState,
 ): EmployeeCertifications[] => state.employeeCertificates.certificationDetails
 
@@ -254,7 +254,7 @@ export const qualificationCategoryActions = employeeCertificationsSlice.actions
 
 export const certificationSelectors = {
   selectIsCertificationListLoading,
-  selectCertificateList,
+  selectCertificates,
 }
 
 export default employeeCertificationsSlice.reducer

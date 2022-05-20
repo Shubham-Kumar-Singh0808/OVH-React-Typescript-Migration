@@ -18,7 +18,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import QualificationCategoryList from '../../QualificationCategoryList/QualificationCategoryList'
+import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
 import { appActions } from '../../../../reducers/appSlice'
 import { useFormik } from 'formik'
 

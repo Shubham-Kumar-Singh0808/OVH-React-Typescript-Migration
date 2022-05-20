@@ -48,7 +48,7 @@ function AddUpdateEmployeeCertification({
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-  const fetchCertificateDetails = useTypedSelector(
+  const getCertificateDetails = useTypedSelector(
     (state) => state.employeeCertificates.editCertificateDetails,
   )
   const dispatch = useAppDispatch()
@@ -81,9 +81,9 @@ function AddUpdateEmployeeCertification({
 
   useEffect(() => {
     if (isEditCertificationDetails) {
-      setAddCertification(fetchCertificateDetails)
+      setAddCertification(getCertificateDetails)
     }
-  }, [fetchCertificateDetails, isEditCertificationDetails])
+  }, [getCertificateDetails, isEditCertificationDetails])
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -113,22 +113,23 @@ function AddUpdateEmployeeCertification({
       setExpiryDate(date)
     }
   }
-  const warningToastMessage = (
-    <OToast
-      toastMessage="Date of Expiry should be greater"
-      toastColor="warning"
-    />
-  )
   useEffect(() => {
-    if ((completedDate as string) <= (expiryDate as string)) {
+    if ((expiryDate as string) <= (completedDate as string)) {
       setError(false)
     }
   }, [completedDate, expiryDate])
   useEffect(() => {
     if (error) {
-      dispatch(appActions.addToast(warningToastMessage))
+      dispatch(
+        appActions.addToast(
+          <OToast
+            toastMessage="Date of Expiry should be greater"
+            toastColor="danger"
+          />,
+        ),
+      )
     }
-  }, [completedDate, dispatch, error, expiryDate, warningToastMessage])
+  }, [completedDate, dispatch, error, expiryDate])
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>

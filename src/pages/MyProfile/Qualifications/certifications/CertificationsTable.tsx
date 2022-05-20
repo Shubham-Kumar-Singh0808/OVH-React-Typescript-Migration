@@ -10,10 +10,10 @@ import {
 } from '@coreui/react-pro'
 import {
   certificationThunk,
-  selectCertificateList,
-} from '../../../../../src/reducers/MyProfile/Qualifications/certificationSlice'
+  selectCertificates,
+} from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
-import { EmployeeCertificationTableProps } from '../../../../../src/types/MyProfile/Qualifications/certificationTypes'
+import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qualifications/certificationTypes'
 import { appActions } from '../../../../reducers/appSlice'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import OModal from '../../../../components/ReusableComponent/OModal'
@@ -22,7 +22,7 @@ const CertificationsTable = ({
 }: EmployeeCertificationTableProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteCertificateById, setToDeleteCertificateById] = useState(0)
-  const employeeCertificateData = useTypedSelector(selectCertificateList)
+  const employeeCertificateData = useTypedSelector(selectCertificates)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(certificationThunk.getAllEmployeeCertifications())

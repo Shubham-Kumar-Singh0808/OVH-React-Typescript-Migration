@@ -11,12 +11,12 @@ import React, { useEffect, useState } from 'react'
 import {
   qualificationCategorySelectors,
   qualificationCategoryThunk,
-} from '../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+} from '../../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-import OToast from '../../../components/ReusableComponent/OToast'
-import { QualificationCategoryList } from '../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
-import { appActions } from '../../../reducers/appSlice'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { QualificationCategoryList } from '../../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
+import { appActions } from '../../../../reducers/appSlice'
 
 const AddNewQualificationCategory = (): JSX.Element => {
   const employeeQualificationCategories = useTypedSelector(
