@@ -33,7 +33,8 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   const [deleteRoleModalVisibility, setDeleteRoleModalVisibility] =
     useState(false)
   const [roleInput, setRoleInput] = useState('')
-  const [reportingManagerFlag, setReportingManagerFlag] = useState(false)
+  const [reportingManagerFlag, setReportingManagerFlag] =
+    useState<boolean>(false)
   const [isDeleteRoleBtnEnabled, setIsDeleteRoleBtnEnabled] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -74,6 +75,9 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
       if (doAddNewUserRole.fulfilled.match(addRoleResultAction)) {
         dispatch(doFetchUserRoles())
         setRoleInput('')
+        if (reportingManagerFlag) {
+          setReportingManagerFlag(false)
+        }
         dispatch(appActions.addToast(getToastMessage(actionMapping.added)))
         dispatch(clearIsRoleExists())
       }
@@ -81,6 +85,9 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
       dispatch(clearIsRoleExists())
       dispatch(appActions.addToast(isExistsToastElement))
       setRoleInput('')
+      if (reportingManagerFlag) {
+        setReportingManagerFlag(false)
+      }
     }
   }
 
@@ -157,7 +164,9 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
             <div>
               <CFormLabel className="text-info">
                 Add Role:
-                <span className="text-danger">*</span>
+                <span className={roleInput ? 'text-white' : 'text-danger'}>
+                  *
+                </span>
               </CFormLabel>
               <CFormInput
                 className="mb-2"

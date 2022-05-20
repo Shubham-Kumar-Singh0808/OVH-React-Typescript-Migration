@@ -10,6 +10,8 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 // Import styles
 @import '@coreui/coreui-pro/scss/coreui';
 @import '@coreui/coreui-pro/scss/themes/dark';
+@import 'react-datepicker/dist/react-datepicker.css';
+@import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 @import 'layout';
 
@@ -20,9 +22,12 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/sidebar-nav';
 @import './components/card';
 @import './components/global-search';
+@import './components/idle-modal';
+@import './components/session-timeout';
 @import './components/inline-tabs-nav';
 @import './pages/login';
 @import './pages/qualifications-tab';
 @import './components/richtexteditor';
 @import './components/omodal';
 @import './components/user-role-features-expandable-table';
+@import './components/user-profile';

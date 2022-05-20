@@ -1,11 +1,10 @@
+import { ContentState, EditorState, convertToRaw } from 'draft-js'
 import React, { useState } from 'react'
+
 import { Editor } from 'react-draft-wysiwyg'
-import { convertToRaw, ContentState, EditorState } from 'draft-js'
+import { TextEditorProps } from '../../types/commonTypes'
 import draftToHtml from 'draftjs-to-html'
 import htmlToDraft from 'html-to-draftjs'
-
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { TextEditorProps } from '../../types/commonTypes'
 
 export const OTextEditor = ({
   value,
