@@ -49,7 +49,7 @@ const deleteSkill = createAsyncThunk(
   },
 )
 
-const initialSkillSliceState: SkillSliceState = {
+const initialSkillState: SkillSliceState = {
   skillList: [],
   refreshList: false,
   isLoading: false,
@@ -57,7 +57,7 @@ const initialSkillSliceState: SkillSliceState = {
 
 const skillSlice = createSlice({
   name: 'skill',
-  initialState: initialSkillSliceState,
+  initialState: initialSkillState,
   reducers: {
     clearSkillList: (state) => {
       state.skillList = []
