@@ -53,6 +53,7 @@
     "react": "^17.0.2",
     "react-datepicker": "^4.7.0",
     "react-dom": "^17.0.2",
+    "react-idle-timer": "^5.1.3",
     "react-moment": "^1.1.2",
     "react-draft-wysiwyg": "^1.14.7",
     "react-redux": "^7.2.4",
@@ -87,20 +88,20 @@
       "clover",
       "json",
       "lcov",
-      [
-        "text",
-        {
-          "skipFull": true
-        }
-      ]
+      "text"
     ],
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
-      "src/pages/**/*.{ts,tsx}",
       "!**/*index.ts",
       "!src/serviceWorker.ts",
       "!src/polyfill.ts",
-      "!src/assets/**/*"
+      "!src/assets/**/*",
+      "!src/types/**/*",
+      "!src/_nav.tsx",
+      "!src/index.tsx",
+      "!src/react-app-env.d.ts",
+      "!src/reportWebVitals.ts",
+      "!src/routes.ts"
     ]
   }
 }
