@@ -34,7 +34,7 @@ describe('Add Certification Testing', () => {
         />
       </ReduxProvider>,
     )
-    await stateStore.dispatch(certificationThunk.getAllEmployeeCertifications())
+    await stateStore.dispatch(certificationThunk.getEmployeeCertifications())
   })
   test('should render Add button as disabled and Clear Button not disabled initially', () => {
     render(
