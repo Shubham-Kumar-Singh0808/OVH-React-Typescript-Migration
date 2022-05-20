@@ -18,7 +18,8 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
+import { reduxService } from '../../../reducers/reduxService'
+
 const VisaDetailsTable = ({
   editVisaButtonHandler,
 }: EmployeeVisaDetailsTableProps): JSX.Element => {
@@ -44,7 +45,7 @@ const VisaDetailsTable = ({
     if (doDeleteVisaDetails.fulfilled.match(deleteFamilyMemberResultAction)) {
       dispatch(doFetchVisaDetails(employeeId))
       dispatch(
-        appActions.addToast(
+        reduxService.app.actions.addToast(
           <OToast
             toastColor="success"
             toastMessage="Visa Detail deleted successfully"

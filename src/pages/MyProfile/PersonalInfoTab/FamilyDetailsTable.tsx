@@ -18,7 +18,8 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
+import { reduxService } from '../../../reducers/reduxService'
+
 const FamilyDetailsTable = ({
   editButtonHandler,
   isFieldDisabled = false,
@@ -50,7 +51,7 @@ const FamilyDetailsTable = ({
     if (doDeleteFamilyMember.fulfilled.match(deleteFamilyMemberResultAction)) {
       dispatch(doFetchFamilyDetails(employeeId))
       dispatch(
-        appActions.addToast(
+        reduxService.app.actions.addToast(
           <OToast
             toastColor="success"
             toastMessage="Family Detail deleted successfully"

@@ -17,7 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import OToast from '../../../components/ReusableComponent/OToast'
 import { QualificationCategoryList } from '../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
-import { appActions } from '../../../reducers/appSlice'
+import { reduxService } from '../../../reducers/reduxService'
 
 const AddNewQualificationCategory = (): JSX.Element => {
   const employeeQualificationCategories = useTypedSelector(
@@ -81,7 +81,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
           newQualificationCategory.qualificationName.toLowerCase(),
       ).length > 0
     ) {
-      dispatch(appActions.addToast(alreadyExistToastMessage))
+      dispatch(reduxService.app.actions.addToast(alreadyExistToastMessage))
       return
     }
 
@@ -92,7 +92,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
 
     dispatch(addNewQualificationCategoryByName(toAddQualificationName))
     dispatch(getQualificationCategories())
-    dispatch(appActions.addToast(successToastMessage))
+    dispatch(reduxService.app.actions.addToast(successToastMessage))
   }
 
   const formLabelProps = {

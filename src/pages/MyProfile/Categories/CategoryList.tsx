@@ -1,9 +1,5 @@
 import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import {
-  categorySelectors,
-  categoryThunk,
-} from '../../../reducers/MyProfile/Categories/categorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import AddNewCategory from './AddNewCategory'
@@ -11,15 +7,16 @@ import CIcon from '@coreui/icons-react'
 import CategoryListTable from './CategoryListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { cilArrowLeft } from '@coreui/icons'
+import { reduxService } from '../../../reducers/reduxService'
 
 const CategoryList = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(
-    categorySelectors.selectIsCategoryListLoading,
+    reduxService.category.selectors.selectCategoryList,
   )
 
   useEffect(() => {
-    dispatch(categoryThunk.getAllCategoryList())
+    dispatch(reduxService.category.getAllCategories())
   }, [dispatch])
 
   return (

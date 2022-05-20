@@ -10,10 +10,6 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import {
-  categorySelectors,
-  categoryThunk,
-} from '../../../reducers/MyProfile/Categories/categorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
@@ -22,10 +18,13 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../utils/paginationUtils'
+import { reduxService } from '../../../reducers/reduxService'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const CategoryListTable = (): JSX.Element => {
-  const categories = useTypedSelector(categorySelectors.selectCategoryList)
+  const categories = useTypedSelector(
+    reduxService.category.selectors.selectCategoryList,
+  )
   const dispatch = useAppDispatch()
 
   const {
@@ -64,7 +63,7 @@ const CategoryListTable = (): JSX.Element => {
   const handleConfirmDelete = async (categoryId: number) => {
     setIsDeleteModalVisible(false)
 
-    dispatch(categoryThunk.deleteCategoryById(categoryId))
+    dispatch(reduxService.category.deleteCategory(categoryId))
   }
 
   const currentPageItems = useMemo(

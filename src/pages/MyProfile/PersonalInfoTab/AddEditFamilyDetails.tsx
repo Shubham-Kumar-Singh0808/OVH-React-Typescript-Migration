@@ -22,8 +22,9 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
 import moment from 'moment'
+import { reduxService } from '../../../reducers/reduxService'
+
 function AddEditFamilyDetails({
   isEditFamilyDetails = false,
   headerTitle,
@@ -123,7 +124,9 @@ function AddEditFamilyDetails({
     )
     if (doAddNewFamilyMember.fulfilled.match(addFamilyMemberResultAction)) {
       backButtonHandler()
-      dispatch(appActions.addToast(getToastMessage(actionMapping.added)))
+      dispatch(
+        reduxService.app.actions.addToast(getToastMessage(actionMapping.added)),
+      )
     }
   }
   const handleUpdateFamilyMember = async () => {
@@ -138,7 +141,11 @@ function AddEditFamilyDetails({
     )
     if (doUpdateFamilyDetails.fulfilled.match(updateFamilyMemberResultAction)) {
       backButtonHandler()
-      dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
+      dispatch(
+        reduxService.app.actions.addToast(
+          getToastMessage(actionMapping.updated),
+        ),
+      )
     }
   }
   const nameProps = {

@@ -1,6 +1,6 @@
 import {
-  SkillListItem,
-  SkillState,
+  Skill,
+  SkillSliceState,
 } from '../../../types/MyProfile/Skills/skillTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
@@ -9,19 +9,19 @@ import { RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
 import skillApi from '../../../middleware/api/MyProfile/Skills/skillApi'
 
-const getAllSkillListById = createAsyncThunk(
-  'skill/getAllSkillListById',
+const getAllSkills = createAsyncThunk(
+  'skill/getAllSkills',
   async (categoryId: number, thunkApi) => {
     try {
-      return await skillApi.getAllSkillListById(categoryId)
+      return await skillApi.getAllSkills(categoryId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-const postNewSkillByName = createAsyncThunk(
-  'skill/postNewSkillByName',
+const createNewSkill = createAsyncThunk(
+  'skill/createNewSkill',
   async (
     {
       categoryId,
@@ -30,18 +30,18 @@ const postNewSkillByName = createAsyncThunk(
     thunkApi,
   ) => {
     try {
-      return await skillApi.postNewSkillByName(categoryId, toAddSkillName)
+      return await skillApi.createNewSkill(categoryId, toAddSkillName)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-const deleteSkillById = createAsyncThunk(
-  'skill/deleteSkillById',
+const deleteSkill = createAsyncThunk(
+  'skill/deleteSkill',
   async (skillId: number, thunkApi) => {
     try {
-      return await skillApi.deleteSkillById(skillId)
+      return await skillApi.deleteSkill(skillId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -49,7 +49,7 @@ const deleteSkillById = createAsyncThunk(
   },
 )
 
-const initialSkillState: SkillState = {
+const initialSkillSliceState: SkillSliceState = {
   skillList: [],
   refreshList: false,
   isLoading: false,
@@ -57,7 +57,7 @@ const initialSkillState: SkillState = {
 
 const skillSlice = createSlice({
   name: 'skill',
-  initialState: initialSkillState,
+  initialState: initialSkillSliceState,
   reducers: {
     clearSkillList: (state) => {
       state.skillList = []
@@ -70,23 +70,23 @@ const skillSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(deleteSkillById.fulfilled, (state) => {
+    builder.addCase(deleteSkill.fulfilled, (state) => {
       state.refreshList = true
     })
 
     builder
       .addMatcher(
         isAnyOf(
-          getAllSkillListById.pending,
-          postNewSkillByName.pending,
-          deleteSkillById.pending,
+          getAllSkills.pending,
+          createNewSkill.pending,
+          deleteSkill.pending,
         ),
         (state) => {
           state.isLoading = true
         },
       )
       .addMatcher(
-        isAnyOf(getAllSkillListById.fulfilled, postNewSkillByName.fulfilled),
+        isAnyOf(getAllSkills.fulfilled, createNewSkill.fulfilled),
         (state, action) => {
           state.isLoading = false
           state.skillList = action.payload
@@ -98,21 +98,24 @@ const skillSlice = createSlice({
 const selectIsSkillListLoading = (state: RootState): boolean =>
   state.skill.isLoading
 const selectRefreshList = (state: RootState): boolean => state.skill.refreshList
-const selectSkillList = (state: RootState): SkillListItem[] =>
-  state.skill.skillList
+const selectSkillList = (state: RootState): Skill[] => state.skill.skillList
 
-export const skillThunk = {
-  getAllSkillListById,
-  postNewSkillByName,
-  deleteSkillById,
+const skillThunk = {
+  getAllSkills,
+  createNewSkill,
+  deleteSkill,
 }
 
-export const skillActions = skillSlice.actions
-
-export const skillSelectors = {
+const skillSelectors = {
   selectIsSkillListLoading,
   selectRefreshList,
   selectSkillList,
+}
+
+export const skillService = {
+  ...skillThunk,
+  actions: skillSlice.actions,
+  selectors: skillSelectors,
 }
 
 export default skillSlice.reducer

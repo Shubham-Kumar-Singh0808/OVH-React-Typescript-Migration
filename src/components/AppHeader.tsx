@@ -12,9 +12,9 @@ import {
 import AppHeaderDropdown from './AppHeaderDropdown'
 import CIcon from '@coreui/icons-react'
 import React from 'react'
-import { appActions } from '../reducers/appSlice'
 import { cilMenu } from '@coreui/icons'
 import { logo } from '../assets/brand/logo'
+import { reduxService } from '../reducers/reduxService'
 import { useAppDispatch } from '../stateStore'
 
 const AppHeader = (): JSX.Element => {
@@ -25,7 +25,7 @@ const AppHeader = (): JSX.Element => {
       <CContainer fluid>
         <CHeaderToggler
           className="ps-1 me-auto"
-          onClick={() => dispatch(appActions.toggleSidebar())}
+          onClick={() => dispatch(reduxService.app.actions.toggleSidebar())}
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>

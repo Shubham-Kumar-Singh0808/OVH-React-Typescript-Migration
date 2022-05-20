@@ -22,9 +22,9 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
 import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../utils/paginationUtils'
+import { reduxService } from '../../../reducers/reduxService'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const QualificationCategoryListTable = (): JSX.Element => {
@@ -91,7 +91,7 @@ const QualificationCategoryListTable = (): JSX.Element => {
       )
     ) {
       dispatch(getQualificationCategories())
-      dispatch(appActions.addToast(deleteToastElement))
+      dispatch(reduxService.app.actions.addToast(deleteToastElement))
     }
   }
   const currentPageItems = useMemo(

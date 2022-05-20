@@ -3,8 +3,8 @@ import { NavLink, useLocation } from 'react-router-dom'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 
-import { appActions } from '../../reducers/appSlice'
 import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
+import { reduxService } from '../../reducers/reduxService'
 
 const AppSidebarNavItems = (): JSX.Element => {
   const location = useLocation()
@@ -21,7 +21,7 @@ const AppSidebarNavItems = (): JSX.Element => {
   useEffect(() => {
     if (reRenderMenu) {
       dispatch(getSidebarMenu(employeeId))
-      dispatch(appActions.setReRenderMenu(false))
+      dispatch(reduxService.app.actions.setReRenderMenu(false))
     }
   }, [dispatch, employeeId, reRenderMenu])
   function navLink(name: string, iconClass: string) {

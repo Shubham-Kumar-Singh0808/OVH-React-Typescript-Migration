@@ -1,19 +1,15 @@
 import { CButton, CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import {
-  skillSelectors,
-  skillThunk,
-} from '../../../reducers/MyProfile/Skills/skillSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
 import { cilPlus } from '@coreui/icons'
+import { reduxService } from '../../../reducers/reduxService'
 
 const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const skills = useTypedSelector(skillSelectors.selectSkillList)
+  const skills = useTypedSelector(reduxService.skill.selectors.selectSkillList)
 
   const [newSkillName, setNewSkillName] = useState('')
   const [isAddSkillBtnEnabled, setIsAddSkillBtnEnabled] = useState(false)
@@ -39,13 +35,13 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
           skillItem.skill.toLowerCase() === newSkillName.toLowerCase(),
       ).length > 0
     ) {
-      dispatch(appActions.addToast(toastElement))
+      dispatch(reduxService.app.actions.addToast(toastElement))
       return
     }
 
     setNewSkillName('')
 
-    dispatch(skillThunk.postNewSkillByName({ categoryId, toAddSkillName }))
+    dispatch(reduxService.skill.createNewSkill({ categoryId, toAddSkillName }))
   }
 
   const formLabelProps = {

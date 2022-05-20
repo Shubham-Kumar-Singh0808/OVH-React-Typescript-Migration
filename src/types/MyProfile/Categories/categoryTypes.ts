@@ -1,10 +1,10 @@
-export type CategoryListItem = {
+export type Category = {
   categoryId: number
   categoryType: string
   employeeSkill: null
 }
 
-export type CategoryState = {
-  categoryList: CategoryListItem[]
+export type CategorySliceState = {
+  categoryList: Category[]
   isLoading: boolean
 }

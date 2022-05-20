@@ -1,10 +1,5 @@
 import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import {
-  skillActions,
-  skillSelectors,
-  skillThunk,
-} from '../../../reducers/MyProfile/Skills/skillSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import AddNewSkill from './AddNewSkill'
@@ -12,6 +7,7 @@ import CIcon from '@coreui/icons-react'
 import OCard from '../../../components/ReusableComponent/OCard'
 import SkillListTable from './SkillListTable'
 import { cilArrowLeft } from '@coreui/icons'
+import { reduxService } from '../../../reducers/reduxService'
 
 const SkillList = ({
   categoryId,
@@ -21,17 +17,21 @@ const SkillList = ({
   categoryType: string
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const isLoading = useTypedSelector(skillSelectors.selectIsSkillListLoading)
-  const refreshList = useTypedSelector(skillSelectors.selectRefreshList)
+  const isLoading = useTypedSelector(
+    reduxService.skill.selectors.selectIsSkillListLoading,
+  )
+  const refreshList = useTypedSelector(
+    reduxService.skill.selectors.selectRefreshList,
+  )
 
   useEffect(() => {
-    dispatch(skillThunk.getAllSkillListById(categoryId))
+    dispatch(reduxService.skill.getAllSkills(categoryId))
   }, [dispatch, categoryId])
 
   useEffect(() => {
     if (refreshList) {
-      dispatch(skillThunk.getAllSkillListById(categoryId))
-      dispatch(skillActions.doneRefreshList())
+      dispatch(reduxService.skill.getAllSkills(categoryId))
+      dispatch(reduxService.skill.actions.doneRefreshList())
     }
   }, [dispatch, categoryId, refreshList])
   return (

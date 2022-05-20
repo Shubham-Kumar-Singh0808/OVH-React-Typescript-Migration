@@ -72,16 +72,20 @@ const selectToken = (state: RootState): string =>
 const selectEmployeeId = (state: RootState): string =>
   state.authentication.authenticatedUser?.employeeId as string
 
-export const authenticationThunk = {
+const authenticationThunk = {
   authenticateUser,
 }
 
-export const authenticationActions = authenticationSlice.actions
-
-export const authenticationSelectors = {
+const authenticationSelectors = {
   selectError,
   selectToken,
   selectEmployeeId,
+}
+
+export const authenticationService = {
+  ...authenticationThunk,
+  actions: authenticationSlice.actions,
+  selectors: authenticationSelectors,
 }
 
 export default authenticationSlice.reducer
