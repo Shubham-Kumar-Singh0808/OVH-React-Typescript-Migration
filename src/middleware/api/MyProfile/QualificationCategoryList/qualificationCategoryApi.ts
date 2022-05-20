@@ -19,12 +19,12 @@ const getQualificationCategories = async (): Promise<
   return response.data
 }
 
-const addQualificationCategoryByName = async ({
+const addQualificationCategory = async ({
   qualificationCategory,
   qualificationName,
 }: QualificationCategoryList): Promise<QualificationCategoryList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationCategoryApiConfig.addNewQualificationCategory,
+    url: qualificationCategoryApiConfig.addQualificationCategory,
     method: AllowedHttpMethods.post,
     data: {
       qualificationCategory: qualificationCategory,
@@ -36,7 +36,7 @@ const addQualificationCategoryByName = async ({
   return response.data
 }
 
-const deleteQualificationCategoryById = async (
+const deleteQualificationCategory = async (
   id: number,
 ): Promise<QualificationCategoryList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -56,7 +56,7 @@ const deleteQualificationCategoryById = async (
 
 const qualificationCategoryApi = {
   getQualificationCategories,
-  addQualificationCategoryByName,
-  deleteQualificationCategoryById,
+  addQualificationCategory,
+  deleteQualificationCategory,
 }
 export default qualificationCategoryApi

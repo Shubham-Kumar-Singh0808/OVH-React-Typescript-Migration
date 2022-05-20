@@ -13,7 +13,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { qualificationsThunk } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { qualificationSelectors } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
@@ -74,8 +74,8 @@ const AddUpdateEmployeeQualification = ({
   }, [addQualification])
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(qualificationsThunk.getEmployeePgAndGraduationItems())
-    dispatch(qualificationsThunk.getEmployeeQualifications(employeeId))
+    dispatch(qualificationSelectors.getPgLookUpAndGraduationLookUpItems())
+    dispatch(qualificationSelectors.getEmployeeQualifications(employeeId))
   }, [dispatch, employeeId])
 
   useEffect(() => {
@@ -118,10 +118,10 @@ const AddUpdateEmployeeQualification = ({
   const handleAddUpdateQualification = async () => {
     if (addQualification.id) {
       const updateResultAction = await dispatch(
-        qualificationsThunk.updateEmployeeQualifications(addQualification),
+        qualificationSelectors.updateEmployeeQualifications(addQualification),
       )
       if (
-        qualificationsThunk.updateEmployeeQualifications.fulfilled.match(
+        qualificationSelectors.updateEmployeeQualifications.fulfilled.match(
           updateResultAction,
         )
       ) {
@@ -131,13 +131,13 @@ const AddUpdateEmployeeQualification = ({
       }
     } else {
       const postResultAction = await dispatch(
-        qualificationsThunk.addEmployeeQualifications({
+        qualificationSelectors.addEmployeeQualifications({
           ...addQualification,
           ...{ empId: employeeId as number },
         }),
       )
       if (
-        qualificationsThunk.addEmployeeQualifications.fulfilled.match(
+        qualificationSelectors.addEmployeeQualifications.fulfilled.match(
           postResultAction,
         )
       ) {

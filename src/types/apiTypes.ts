@@ -27,7 +27,7 @@ export interface SkillApi extends ApiBase {
 
 export interface QualificationCategoryApi extends ApiBase {
   getQualificationCategories: string
-  addNewQualificationCategory: string
+  addQualificationCategory: string
   deleteQualificationCategory: string
 }
 export interface EmployeeGeneralInformationApi extends ApiBase {
@@ -44,7 +44,7 @@ export interface QualificationsApi extends ApiBase {
   getPostGraduationAndGraduationLookUp: string
   addEmployeeQualifications: string
   updateEmployeeQualifications: string
-  getAllTechnologies: string
+  getTechnologies: string
   getCertificateByTechnology: string
   addEmployeeCertificates: string
   getEmployeeCertificate: string

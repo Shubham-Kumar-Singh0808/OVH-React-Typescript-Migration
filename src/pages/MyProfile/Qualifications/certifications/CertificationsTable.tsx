@@ -8,10 +8,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import {
-  certificationThunk,
-  selectCertificates,
-} from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
+import { certificationSelectors } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qualifications/certificationTypes'
 import { appActions } from '../../../../reducers/appSlice'
@@ -22,10 +19,12 @@ const CertificationsTable = ({
 }: EmployeeCertificationTableProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteCertificateById, setToDeleteCertificateById] = useState(0)
-  const employeeCertificateData = useTypedSelector(selectCertificates)
+  const employeeCertificateData = useTypedSelector(
+    certificationSelectors.selectCertificates,
+  )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(certificationThunk.getEmployeeCertifications())
+    dispatch(certificationSelectors.getEmployeeCertificates())
   }, [dispatch])
 
   const toastElement = (
@@ -41,14 +40,14 @@ const CertificationsTable = ({
   const handleConfirmDeleteCertificate = async () => {
     setIsDeleteModalVisible(false)
     const deleteCertificateResultAction = await dispatch(
-      certificationThunk.deleteEmployeeCertificate(toDeleteCertificateById),
+      certificationSelectors.deleteEmployeeCertificate(toDeleteCertificateById),
     )
     if (
-      certificationThunk.deleteEmployeeCertificate.fulfilled.match(
+      certificationSelectors.deleteEmployeeCertificate.fulfilled.match(
         deleteCertificateResultAction,
       )
     ) {
-      dispatch(certificationThunk.getEmployeeCertifications())
+      dispatch(certificationSelectors.getEmployeeCertificates())
       dispatch(appActions.addToast(toastElement))
     }
   }

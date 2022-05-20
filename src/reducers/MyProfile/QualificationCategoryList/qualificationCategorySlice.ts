@@ -19,7 +19,7 @@ const getQualificationCategories = createAsyncThunk(
     }
   },
 )
-const addQualificationCategoryByName = createAsyncThunk<
+const addQualificationCategory = createAsyncThunk<
   QualificationCategoryList[] | undefined,
   QualificationCategoryList,
   {
@@ -28,13 +28,13 @@ const addQualificationCategoryByName = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'qualificationCategory/addQualificationCategoryByName',
+  'qualificationCategory/addQualificationCategory',
   async (
     { qualificationCategory, qualificationName }: QualificationCategoryList,
     thunkApi,
   ) => {
     try {
-      return await qualificationCategoryApi.addQualificationCategoryByName({
+      return await qualificationCategoryApi.addQualificationCategory({
         qualificationCategory,
         qualificationName,
       })
@@ -44,7 +44,7 @@ const addQualificationCategoryByName = createAsyncThunk<
     }
   },
 )
-const deleteQualificationCategoryById = createAsyncThunk<
+const deleteQualificationCategory = createAsyncThunk<
   QualificationCategoryList[] | undefined,
   number,
   {
@@ -52,17 +52,14 @@ const deleteQualificationCategoryById = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->(
-  'qualificationCategory/deleteQualificationCategoryById',
-  async (id, thunkApi) => {
-    try {
-      return await qualificationCategoryApi.deleteQualificationCategoryById(id)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
+>('qualificationCategory/deleteQualificationCategory', async (id, thunkApi) => {
+  try {
+    return await qualificationCategoryApi.deleteQualificationCategory(id)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
 
 const initialCategoryState: QualificationCategoryState = {
   qualificationCategoryList: [],
@@ -82,8 +79,8 @@ const qualificationCategorySlice = createSlice({
       .addMatcher(
         isAnyOf(
           getQualificationCategories.pending,
-          deleteQualificationCategoryById.pending,
-          addQualificationCategoryByName.pending,
+          deleteQualificationCategory.pending,
+          addQualificationCategory.pending,
         ),
         (state) => {
           state.isLoading = true
@@ -92,8 +89,8 @@ const qualificationCategorySlice = createSlice({
       .addMatcher(
         isAnyOf(
           getQualificationCategories.fulfilled,
-          deleteQualificationCategoryById.fulfilled,
-          addQualificationCategoryByName.fulfilled,
+          deleteQualificationCategory.fulfilled,
+          addQualificationCategory.fulfilled,
         ),
         (state, action) => {
           state.isLoading = false
@@ -104,24 +101,24 @@ const qualificationCategorySlice = createSlice({
   },
 })
 
-export const selectIsQualificationCategoryListLoading = (
-  state: RootState,
-): boolean => state.qualificationCategory.isLoading
+const selectIsQualificationCategoryListLoading = (state: RootState): boolean =>
+  state.qualificationCategory.isLoading
 
-export const selectQualificationCategoryList = (
+const selectQualificationCategoryList = (
   state: RootState,
 ): QualificationCategoryList[] =>
   state.qualificationCategory.qualificationCategoryList
 
 export const qualificationCategoryThunk = {
   getQualificationCategories,
-  deleteQualificationCategoryById,
-  addQualificationCategoryByName,
+  deleteQualificationCategory,
+  addQualificationCategory,
 }
 
 export const qualificationCategoryActions = qualificationCategorySlice.actions
 
 export const qualificationCategorySelectors = {
+  ...qualificationCategoryThunk,
   selectIsQualificationCategoryListLoading,
   selectQualificationCategoryList,
 }

@@ -40,7 +40,7 @@ const getPgLookUpAndGraduationLookUpItems =
     return response.data
   }
 
-const saveInitialEmployeeQualifications = async (
+const addEmployeeQualifications = async (
   addQualification: EmployeeQualifications,
 ): Promise<EmployeeQualifications> => {
   const { id, ...addQualificationRest } = addQualification
@@ -71,7 +71,7 @@ const qualificationsApi = {
   getEmployeeQualifications,
   getEmployeeSkills,
   getPgLookUpAndGraduationLookUpItems,
-  saveInitialEmployeeQualifications,
+  addEmployeeQualifications,
   updateEmployeeQualifications,
 }
 export default qualificationsApi

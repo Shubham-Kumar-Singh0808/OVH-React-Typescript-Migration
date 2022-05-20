@@ -20,7 +20,7 @@ const initialCertificationState: CertificationState = {
   error: null,
 }
 
-const getEmployeeCertifications = createAsyncThunk<
+const getEmployeeCertificates = createAsyncThunk<
   EmployeeCertifications[] | undefined,
   void,
   {
@@ -28,7 +28,7 @@ const getEmployeeCertifications = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('employeeCertifications/getEmployeeCertifications', async (_, thunkApi) => {
+>('employeeCertifications/getEmployeeCertificates', async (_, thunkApi) => {
   try {
     return await certificationsApi.getEmployeeCertificates()
   } catch (error) {
@@ -46,7 +46,7 @@ const getTechnologies = createAsyncThunk<
   }
 >('employeeCertifications/getTechnologies', async (_, thunkApi) => {
   try {
-    return await certificationsApi.getAllTechnologies()
+    return await certificationsApi.getTechnologies()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -97,7 +97,7 @@ const addEmployeeCertification = createAsyncThunk<
   },
 )
 
-const getEmployeeCertificateByID = createAsyncThunk<
+const getEmployeeCertificate = createAsyncThunk<
   EditEmployeeCertificates | undefined,
   number,
   {
@@ -106,10 +106,10 @@ const getEmployeeCertificateByID = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'employeeCertifications/getEmployeeCertificateByID',
+  'employeeCertifications/getEmployeeCertificate',
   async (id: number, thunkApi) => {
     try {
-      return await certificationsApi.getCertificationInformationById(id)
+      return await certificationsApi.getEmployeeCertificate(id)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -151,9 +151,7 @@ const deleteEmployeeCertificate = createAsyncThunk<
   'employeeCertifications/deleteEmployeeCertificate',
   async (certificationId, thunkApi) => {
     try {
-      return await certificationsApi.deleteEmployeeCertification(
-        certificationId,
-      )
+      return await certificationsApi.deleteEmployeeCertificate(certificationId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -178,7 +176,7 @@ const employeeCertificationsSlice = createSlice({
       .addCase(addEmployeeCertification.fulfilled, (state) => {
         state.isLoading = false
       })
-      .addCase(getEmployeeCertificateByID.fulfilled, (state, action) => {
+      .addCase(getEmployeeCertificate.fulfilled, (state, action) => {
         state.isLoading = false
         state.editCertificateDetails =
           action.payload as unknown as EditEmployeeCertificates
@@ -188,8 +186,8 @@ const employeeCertificationsSlice = createSlice({
       })
       .addMatcher(
         isAnyOf(
-          getEmployeeCertifications.fulfilled,
-          getEmployeeCertificateByID.fulfilled,
+          getEmployeeCertificates.fulfilled,
+          getEmployeeCertificate.fulfilled,
           updateEmployeeCertificate.fulfilled,
         ),
         (state, action) => {
@@ -202,7 +200,7 @@ const employeeCertificationsSlice = createSlice({
         isAnyOf(
           getTechnologies.pending,
           getCertificateByTechnologyName.pending,
-          getEmployeeCertificateByID.pending,
+          getEmployeeCertificate.pending,
           updateEmployeeCertificate.pending,
           deleteEmployeeCertificate.pending,
         ),
@@ -212,10 +210,10 @@ const employeeCertificationsSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          getEmployeeCertifications.rejected,
+          getEmployeeCertificates.rejected,
           getTechnologies.rejected,
           getCertificateByTechnologyName.rejected,
-          getEmployeeCertificateByID.rejected,
+          getEmployeeCertificate.rejected,
           updateEmployeeCertificate.rejected,
           deleteEmployeeCertificate.rejected,
         ),
@@ -227,18 +225,17 @@ const employeeCertificationsSlice = createSlice({
   },
 })
 
-export const selectIsCertificationListLoading = (state: RootState): boolean =>
+const selectIsCertificationListLoading = (state: RootState): boolean =>
   state.employeeCertificates.isLoading
 
-export const selectCertificates = (
-  state: RootState,
-): EmployeeCertifications[] => state.employeeCertificates.certificationDetails
+const selectCertificates = (state: RootState): EmployeeCertifications[] =>
+  state.employeeCertificates.certificationDetails
 
-export const certificationThunk = {
-  getEmployeeCertifications,
+const certificationThunk = {
+  getEmployeeCertificates,
   getTechnologies,
   getCertificateByTechnologyName,
-  getEmployeeCertificateByID,
+  getEmployeeCertificate,
   addEmployeeCertification,
   updateEmployeeCertificate,
   deleteEmployeeCertificate,
@@ -247,6 +244,7 @@ export const certificationThunk = {
 export const qualificationCategoryActions = employeeCertificationsSlice.actions
 
 export const certificationSelectors = {
+  ...certificationThunk,
   selectIsCertificationListLoading,
   selectCertificates,
 }

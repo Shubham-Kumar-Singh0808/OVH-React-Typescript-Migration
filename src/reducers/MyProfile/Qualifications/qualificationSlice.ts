@@ -62,9 +62,7 @@ const addEmployeeQualifications = createAsyncThunk<
   'employeeQualifications/addEmployeeQualifications',
   async (addQualification: EmployeeQualifications, thunkApi) => {
     try {
-      return await qualificationsApi.saveInitialEmployeeQualifications(
-        addQualification,
-      )
+      return await qualificationsApi.addEmployeeQualifications(addQualification)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -94,7 +92,7 @@ const updateEmployeeQualifications = createAsyncThunk<
   },
 )
 
-const getEmployeePgAndGraduationItems = createAsyncThunk<
+const getPgLookUpAndGraduationLookUpItems = createAsyncThunk<
   PostGraduationAndGraduationList | undefined,
   void,
   {
@@ -103,7 +101,7 @@ const getEmployeePgAndGraduationItems = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'employeeQualifications/getEmployeePgAndGraduationItems',
+  'employeeQualifications/getPgLookUpAndGraduationLookUpItems',
   async (_, thunkApi) => {
     try {
       return await qualificationsApi.getPgLookUpAndGraduationLookUpItems()
@@ -124,11 +122,14 @@ const employeeQualificationsSlice = createSlice({
         state.isLoading = false
         state.skillDetails = action.payload as EmployeeSkills[]
       })
-      .addCase(getEmployeePgAndGraduationItems.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.pgLookUpAndGraduationLookUpDetails =
-          action.payload as PostGraduationAndGraduationList
-      })
+      .addCase(
+        getPgLookUpAndGraduationLookUpItems.fulfilled,
+        (state, action) => {
+          state.isLoading = false
+          state.pgLookUpAndGraduationLookUpDetails =
+            action.payload as PostGraduationAndGraduationList
+        },
+      )
       .addMatcher(
         isAnyOf(
           getEmployeeQualifications.pending,
@@ -152,7 +153,7 @@ const employeeQualificationsSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          getEmployeePgAndGraduationItems.rejected,
+          getPgLookUpAndGraduationLookUpItems.rejected,
           getEmployeeQualifications.rejected,
           getEmployeeSkills.rejected,
           updateEmployeeQualifications.rejected,
@@ -173,11 +174,11 @@ const selectEmployeeQualification = (
 ): EmployeeQualifications =>
   state.employeeQualificationsDetails.qualificationDetails
 
-export const selectEmployeeId = (state: RootState): string | number =>
+const selectEmployeeId = (state: RootState): string | number =>
   state.authentication.authenticatedUser.employeeId
 
-export const qualificationsThunk = {
-  getEmployeePgAndGraduationItems,
+const qualificationsThunk = {
+  getPgLookUpAndGraduationLookUpItems,
   getEmployeeQualifications,
   getEmployeeSkills,
   updateEmployeeQualifications,
@@ -187,6 +188,7 @@ export const qualificationsThunk = {
 export const qualificationActions = employeeQualificationsSlice.actions
 
 export const qualificationSelectors = {
+  ...qualificationsThunk,
   selectIsQualificationListLoading,
   selectEmployeeQualification,
   selectEmployeeId,

@@ -90,7 +90,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
     })
 
     dispatch(
-      qualificationCategoryThunk.addQualificationCategoryByName(
+      qualificationCategoryThunk.addQualificationCategory(
         toAddQualificationName,
       ),
     )

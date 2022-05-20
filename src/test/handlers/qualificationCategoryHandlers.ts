@@ -5,7 +5,7 @@ import { rest } from 'msw'
 export const qualificationCategoryListHandlers = [
   // addQualificationCategory api mock
   rest.get(
-    qualificationCategoryApiConfig.addNewQualificationCategory,
+    qualificationCategoryApiConfig.addQualificationCategory,
     (req, res, ctx) => {
       return res(
         ctx.json({

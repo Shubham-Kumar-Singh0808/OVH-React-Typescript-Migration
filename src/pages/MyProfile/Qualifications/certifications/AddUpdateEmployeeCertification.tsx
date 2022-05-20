@@ -16,7 +16,7 @@ import DatePicker from 'react-datepicker'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { appActions } from '../../../../reducers/appSlice'
-import { certificationThunk } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
+import { certificationSelectors } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   EmployeeCertificationProps,
@@ -53,14 +53,14 @@ function AddUpdateEmployeeCertification({
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(certificationThunk.getEmployeeCertifications())
+    dispatch(certificationSelectors.getEmployeeCertificates())
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(certificationThunk.getTechnologies())
+    dispatch(certificationSelectors.getTechnologies())
     if (addCertification?.technology) {
       dispatch(
-        certificationThunk.getCertificateByTechnologyName(
+        certificationSelectors.getCertificateByTechnologyName(
           addCertification?.technology,
         ),
       )
@@ -180,10 +180,10 @@ function AddUpdateEmployeeCertification({
       },
     }
     const addCertificateResultAction = await dispatch(
-      certificationThunk.addEmployeeCertification(prepareObject),
+      certificationSelectors.addEmployeeCertification(prepareObject),
     )
     if (
-      certificationThunk.addEmployeeCertification.fulfilled.match(
+      certificationSelectors.addEmployeeCertification.fulfilled.match(
         addCertificateResultAction,
       )
     ) {
@@ -197,10 +197,10 @@ function AddUpdateEmployeeCertification({
       ...addCertification,
     }
     const updateCertificateResultAction = await dispatch(
-      certificationThunk.updateEmployeeCertificate(prepareObject),
+      certificationSelectors.updateEmployeeCertificate(prepareObject),
     )
     if (
-      certificationThunk.updateEmployeeCertificate.fulfilled.match(
+      certificationSelectors.updateEmployeeCertificate.fulfilled.match(
         updateCertificateResultAction,
       )
     ) {
