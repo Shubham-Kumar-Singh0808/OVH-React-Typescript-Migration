@@ -7,6 +7,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 
+import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
@@ -30,7 +31,7 @@ const MyProfileTabs = (): JSX.Element => {
   const changeTabContent = (tabKey: number): JSX.Element => {
     const showTabContent: ShowTabContentType<JSX.Element> = {
       1: <GeneralTab />,
-      2: <h1>Basic Info</h1>,
+      2: <BasicInfoTab />,
       3: <PersonalInfoTab />,
       4: <QualificationDetails />,
       5: <h1>Review</h1>,

@@ -72,3 +72,7 @@ export interface PersonalInfoApi extends ApiBase {
 export interface ProfileHistoryApi extends ApiBase {
   getprofileHistory: string
 }
+export interface BasicInfoApi extends ApiBase {
+  defaultPicByGender: string
+  updateEmployeeDetails: string
+}

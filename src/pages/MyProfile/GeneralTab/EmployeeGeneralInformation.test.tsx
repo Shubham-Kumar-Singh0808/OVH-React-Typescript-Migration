@@ -6,6 +6,7 @@ import { render, screen } from '@testing-library/react'
 
 import EmployeeGeneralInformation from './GeneralInformation'
 import { EnhancedStore } from '@reduxjs/toolkit'
+import GeneralTab from './GeneralTab'
 import { Provider } from 'react-redux'
 import React from 'react'
 import { employeeGeneralInformationApiConfig } from '../../../middleware/api/apiList'

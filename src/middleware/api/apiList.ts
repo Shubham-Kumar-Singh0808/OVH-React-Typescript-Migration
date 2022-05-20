@@ -1,5 +1,6 @@
 import {
   AuthenticationApi,
+  BasicInfoApi,
   CategoryApi,
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
@@ -87,4 +88,8 @@ export const qualificationsApi: QualificationsApi = {
 
 export const profileHistoryConfig: ProfileHistoryApi = {
   getprofileHistory: apiPrefix + '/Employee/getEmployeeProfileHistory',
+}
+export const basicInfoApiConfig: BasicInfoApi = {
+  defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
+  updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
 }
