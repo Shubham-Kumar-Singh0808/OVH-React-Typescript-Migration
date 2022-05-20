@@ -8,11 +8,15 @@ import {
 import React, { useRef } from 'react'
 
 import { CToaster } from '@coreui/react-pro'
+import IdleModal from '../components/IdleModal'
 import { useTypedSelector } from '../stateStore'
 
 const DefaultLayout = (): JSX.Element => {
   const toastState = useTypedSelector((state) => state.app.toast)
   const toasterReference = useRef<HTMLDivElement>(null)
+
+  const timeout = 20 * 60 * 1000
+  const promptTimeout = 30 * 1000
 
   return (
     <>
@@ -28,6 +32,8 @@ const DefaultLayout = (): JSX.Element => {
               push={toastState}
               placement="top-end"
             />
+
+            <IdleModal timeout={timeout} promptTimeout={promptTimeout} />
           </div>
         </div>
         <AppAside />
