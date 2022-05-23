@@ -2,8 +2,8 @@ import { AllowedHttpMethods, qualificationsApiConfig } from '../../apiList'
 import {
   EditEmployeeCertificates,
   EmployeeCertifications,
-  getAllTechnologyLookUp,
-  getCertificateType,
+  GetAllTechnologyItems,
+  GetTypeOfCertificate,
 } from '../../../../types/MyProfile/Qualifications/certificationTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
@@ -18,7 +18,7 @@ const getEmployeeCertificates = async (): Promise<EmployeeCertifications[]> => {
 }
 
 const getTechnologies = async (): Promise<
-  getAllTechnologyLookUp[] | undefined
+  GetAllTechnologyItems[] | undefined
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApiConfig.getTechnologies,
@@ -30,7 +30,7 @@ const getTechnologies = async (): Promise<
 
 const getCertificateByTechnologyName = async (
   technologyName: string,
-): Promise<getCertificateType[]> => {
+): Promise<GetTypeOfCertificate[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApiConfig.getCertificateByTechnology,
     method: AllowedHttpMethods.get,

@@ -40,11 +40,11 @@ export type EmployeeCertificationTableProps = {
   editCertificateButtonHandler: (id: number) => void
 }
 
-export type getAllTechnologyLookUp = {
+export type GetAllTechnologyItems = {
   id: number
   name: string
 }
-export type getCertificateType = {
+export type GetTypeOfCertificate = {
   id: number
   technologyId: number
   technologyName: string
@@ -52,8 +52,8 @@ export type getCertificateType = {
   technology: string
 }
 export type CertificationState = {
-  getAllTechnologies: getAllTechnologyLookUp[]
-  typeOfCertificate: getCertificateType[]
+  getAllTechnologies: GetAllTechnologyItems[]
+  typeOfCertificate: GetTypeOfCertificate[]
   certificationDetails: EmployeeCertifications[]
   editCertificateDetails: EditEmployeeCertificates
   isLoading: boolean

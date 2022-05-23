@@ -3,8 +3,8 @@ import {
   CertificationState,
   EditEmployeeCertificates,
   EmployeeCertifications,
-  getAllTechnologyLookUp,
-  getCertificateType,
+  GetAllTechnologyItems,
+  GetTypeOfCertificate,
 } from '../../../types/MyProfile/Qualifications/certificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import certificationsApi from '../../../middleware/api/MyProfile/Qualifications/certificationsApi'
@@ -37,7 +37,7 @@ const getEmployeeCertificates = createAsyncThunk<
   }
 })
 const getTechnologies = createAsyncThunk<
-  getAllTechnologyLookUp[] | undefined,
+  GetAllTechnologyItems[] | undefined,
   void,
   {
     dispatch: AppDispatch
@@ -54,7 +54,7 @@ const getTechnologies = createAsyncThunk<
 })
 
 const getCertificateByTechnologyName = createAsyncThunk<
-  getCertificateType[] | undefined,
+  GetTypeOfCertificate[] | undefined,
   string,
   {
     dispatch: AppDispatch
@@ -167,11 +167,11 @@ const employeeCertificationsSlice = createSlice({
     builder
       .addCase(getTechnologies.fulfilled, (state, action) => {
         state.isLoading = false
-        state.getAllTechnologies = action.payload as getAllTechnologyLookUp[]
+        state.getAllTechnologies = action.payload as GetAllTechnologyItems[]
       })
       .addCase(getCertificateByTechnologyName.fulfilled, (state, action) => {
         state.isLoading = false
-        state.typeOfCertificate = action.payload as getCertificateType[]
+        state.typeOfCertificate = action.payload as GetTypeOfCertificate[]
       })
       .addCase(addEmployeeCertification.fulfilled, (state) => {
         state.isLoading = false
