@@ -11,7 +11,7 @@ const getProfileHistory = async (
     url: profileHistoryConfig.getprofileHistory,
     method: AllowedHttpMethods.get,
     params: {
-      loggedInEmpId: employeeId,
+      employeeId: employeeId,
     },
   })
   const response = await axios(requestConfig)

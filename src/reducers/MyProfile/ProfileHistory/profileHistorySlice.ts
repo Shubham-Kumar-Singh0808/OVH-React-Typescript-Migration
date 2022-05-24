@@ -40,7 +40,8 @@ const profileHistorySlice = createSlice({
         state.isLoading = true
       })
       .addCase(getProfileHistory.fulfilled, (state, action) => {
-        state.profileHistoryList = action.payload as profileHistoryItem[]
+        state.isLoading = false
+        state.profileHistoryList = action.payload
       })
       .addCase(getProfileHistory.rejected, (state, action) => {
         state.isLoading = false
@@ -53,12 +54,15 @@ export const { setProfileHistory } = profileHistorySlice.actions
 const profileHistoryData = (state: RootState): profileHistoryItem[] =>
   state.profileHistory.profileHistoryList
 
+const profileHistoryIsLoading = (state: RootState): boolean =>
+  state.profileHistory.isLoading
 export const getProfileHistoryThunk = {
   getProfileHistory,
 }
 
 export const profileHistorySelectors = {
   profileHistoryData,
+  profileHistoryIsLoading,
 }
 
 export default profileHistorySlice.reducer
