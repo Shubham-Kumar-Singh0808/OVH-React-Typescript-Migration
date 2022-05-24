@@ -8,6 +8,14 @@ const ProfileHistoryTimeLine = (): JSX.Element => {
   const employeeProfileHistory = useTypedSelector(
     profileHistorySelectors.profileHistoryData,
   )
+  console.log(employeeProfileHistory)
+  // if (employeeProfileHistory == undefined) {
+  //   console.log('Unidened hai')
+  // } else {
+  //   console.log('Unidened nai hai')
+  //   employeeProfileHistory = employeeProfileHistory
+  //   console.log(employeeProfileHistory)
+  // }
   return (
     <>
       <div className="sh-timeline-container">

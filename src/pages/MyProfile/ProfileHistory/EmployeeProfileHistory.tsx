@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
-import {
-  getProfileHistoryThunk,
-  profileHistorySelectors,
-} from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 
 import { CCardHeader } from '@coreui/react-pro'
 import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
 import { authenticationSelectors } from '../../../reducers/Login/authenticationSlice'
+import profileHistoryApi from '../../../middleware/api/MyProfile/ProfileHistory/profileHistoryApi'
+import { profileHistorySelectors } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../../../stateStore'
 
@@ -21,9 +19,7 @@ const EmployeeProfileHistory = (): JSX.Element => {
   )
   useEffect(() => {
     if (authenticatedToken) {
-      const prfHist = dispatch(
-        getProfileHistoryThunk.getProfileHistory(employeeId),
-      )
+      dispatch(profileHistoryApi.getProfileHistory(employeeId))
     }
   }, [authenticatedToken, dispatch, employeeId])
   return (
