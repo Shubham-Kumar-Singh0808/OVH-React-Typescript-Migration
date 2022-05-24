@@ -1,12 +1,13 @@
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   Skill,
   SkillSliceState,
 } from '../../../types/MyProfile/Skills/skillTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
+import { AllowedLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
-import { ValidationError } from '../../../types/commonTypes'
 import skillApi from '../../../middleware/api/MyProfile/Skills/skillApi'
 
 const getAllSkills = createAsyncThunk(
@@ -52,7 +53,7 @@ const deleteSkill = createAsyncThunk(
 const initialSkillState: SkillSliceState = {
   skillList: [],
   refreshList: false,
-  isLoading: false,
+  isLoading: AllowedLoadingState.idle,
 }
 
 const skillSlice = createSlice({
@@ -82,20 +83,20 @@ const skillSlice = createSlice({
           deleteSkill.pending,
         ),
         (state) => {
-          state.isLoading = true
+          state.isLoading = AllowedLoadingState.loading
         },
       )
       .addMatcher(
         isAnyOf(getAllSkills.fulfilled, createNewSkill.fulfilled),
         (state, action) => {
-          state.isLoading = false
+          state.isLoading = AllowedLoadingState.succeeded
           state.skillList = action.payload
         },
       )
   },
 })
 
-const selectIsSkillListLoading = (state: RootState): boolean =>
+const selectIsSkillListLoading = (state: RootState): LoadingState =>
   state.skill.isLoading
 const selectRefreshList = (state: RootState): boolean => state.skill.refreshList
 const selectSkillList = (state: RootState): Skill[] => state.skill.skillList

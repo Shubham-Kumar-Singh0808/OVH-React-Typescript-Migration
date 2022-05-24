@@ -41,6 +41,7 @@ const Login = (): JSX.Element => {
     if (username && password) {
       setIsLoginBtnEnabled(true)
       dispatch(reduxService.authentication.actions.clearError())
+      dispatch(reduxService.authentication.actions.clearLoading())
     } else {
       setIsLoginBtnEnabled(false)
     }

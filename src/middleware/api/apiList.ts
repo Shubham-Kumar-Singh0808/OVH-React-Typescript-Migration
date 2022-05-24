@@ -22,6 +22,13 @@ export enum AllowedHttpMethods {
   put = 'put',
 }
 
+export enum AllowedLoadingState {
+  idle = 'idle',
+  loading = 'loading',
+  succeeded = 'succeeded',
+  failed = 'failed',
+}
+
 export const authenticationApiConfig: AuthenticationApi = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',

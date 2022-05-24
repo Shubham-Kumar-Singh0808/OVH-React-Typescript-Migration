@@ -1,3 +1,5 @@
+import { LoadingState } from '../../commonTypes'
+
 export type Skill = {
   skillId: number
   skill: string
@@ -6,5 +8,5 @@ export type Skill = {
 export type SkillSliceState = {
   skillList: Skill[]
   refreshList: boolean
-  isLoading: boolean
+  isLoading: LoadingState
 }

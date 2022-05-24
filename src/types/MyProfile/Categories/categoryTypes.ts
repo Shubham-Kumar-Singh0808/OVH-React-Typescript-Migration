@@ -1,3 +1,5 @@
+import { LoadingState } from '../../commonTypes'
+
 export type Category = {
   categoryId: number
   categoryType: string
@@ -6,5 +8,5 @@ export type Category = {
 
 export type CategorySliceState = {
   categoryList: Category[]
-  isLoading: boolean
+  isLoading: LoadingState
 }
