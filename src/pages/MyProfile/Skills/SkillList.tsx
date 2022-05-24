@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import AddNewSkill from './AddNewSkill'
+import { AllowedLoadingState } from '../../../middleware/api/apiList'
 import CIcon from '@coreui/icons-react'
 import OCard from '../../../components/ReusableComponent/OCard'
 import SkillListTable from './SkillListTable'
@@ -41,7 +42,7 @@ const SkillList = ({
         title={`Skill List for ${categoryType}`}
         CFooterClassName="d-none"
       >
-        {!isLoading ? (
+        {isLoading !== AllowedLoadingState.loading ? (
           <CRow>
             <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
               <CButton color="info" className="px-4 text-white" size="sm">
