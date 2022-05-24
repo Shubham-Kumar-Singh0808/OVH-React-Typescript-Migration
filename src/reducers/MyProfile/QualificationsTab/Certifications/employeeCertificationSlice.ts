@@ -7,7 +7,7 @@ import {
   CertificateType,
 } from '../../../../types/MyProfile/QualificationsTab/Certifications/employeeCertificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import certificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/Certifications/employeeCertificationsApi'
+import employeeCertificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/Certifications/employeeCertificationsApi'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../../types/commonTypes'
 
@@ -30,7 +30,7 @@ const getEmployeeCertificates = createAsyncThunk<
   }
 >('employeeCertifications/getEmployeeCertificates', async (_, thunkApi) => {
   try {
-    return await certificationsApi.getEmployeeCertificates()
+    return await employeeCertificationsApi.getEmployeeCertificates()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -46,7 +46,7 @@ const getTechnologies = createAsyncThunk<
   }
 >('employeeCertifications/getTechnologies', async (_, thunkApi) => {
   try {
-    return await certificationsApi.getTechnologies()
+    return await employeeCertificationsApi.getTechnologies()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -65,7 +65,7 @@ const getCertificateByTechnologyName = createAsyncThunk<
   'employeeCertifications/getCertificateByTechnologyName',
   async (technologyName: string, thunkApi) => {
     try {
-      return await certificationsApi.getCertificateByTechnologyName(
+      return await employeeCertificationsApi.getCertificateByTechnologyName(
         technologyName,
       )
     } catch (error) {
@@ -87,7 +87,7 @@ const addEmployeeCertification = createAsyncThunk<
   'employeeCertifications/addEmployeeCertification',
   async (employeeCertificateDetails: EmployeeCertifications, thunkApi) => {
     try {
-      return await certificationsApi.addEmployeeCertification(
+      return await employeeCertificationsApi.addEmployeeCertification(
         employeeCertificateDetails,
       )
     } catch (error) {
@@ -109,7 +109,7 @@ const getEmployeeCertificate = createAsyncThunk<
   'employeeCertifications/getEmployeeCertificate',
   async (id: number, thunkApi) => {
     try {
-      return await certificationsApi.getEmployeeCertificate(id)
+      return await employeeCertificationsApi.getEmployeeCertificate(id)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -129,7 +129,7 @@ const updateEmployeeCertificate = createAsyncThunk<
   'employeeCertifications/updateEmployeeCertificate',
   async (employeeCertificateDetails: EmployeeCertifications, thunkApi) => {
     try {
-      return await certificationsApi.updateEmployeeCertificate(
+      return await employeeCertificationsApi.updateEmployeeCertificate(
         employeeCertificateDetails,
       )
     } catch (error) {
@@ -151,7 +151,9 @@ const deleteEmployeeCertificate = createAsyncThunk<
   'employeeCertifications/deleteEmployeeCertificate',
   async (certificationId, thunkApi) => {
     try {
-      return await certificationsApi.deleteEmployeeCertificate(certificationId)
+      return await employeeCertificationsApi.deleteEmployeeCertificate(
+        certificationId,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

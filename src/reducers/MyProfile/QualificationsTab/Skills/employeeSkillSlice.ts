@@ -8,7 +8,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../../stateStore'
 import { ValidationError } from '../../../../types/commonTypes'
-import skillApi from '../../../../middleware/api/MyProfile/QualificationsTab/Skills/employeeSkillsApi'
+import employeeSkillsApi from '../../../../middleware/api/MyProfile/QualificationsTab/Skills/employeeSkillsApi'
 
 const getEmployeeSkills = createAsyncThunk<
   EmployeeSkills[] | undefined,
@@ -20,7 +20,7 @@ const getEmployeeSkills = createAsyncThunk<
   }
 >('skill/getEmployeeSkills', async (_, thunkApi) => {
   try {
-    return await skillApi.getEmployeeSkills()
+    return await employeeSkillsApi.getEmployeeSkills()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -31,7 +31,7 @@ const getAllSkillListById = createAsyncThunk(
   'skill/getAllSkillListById',
   async (categoryId: number, thunkApi) => {
     try {
-      return await skillApi.getAllSkillListById(categoryId)
+      return await employeeSkillsApi.getAllSkillListById(categoryId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -48,7 +48,10 @@ const postNewSkillByName = createAsyncThunk(
     thunkApi,
   ) => {
     try {
-      return await skillApi.postNewSkillByName(categoryId, toAddSkillName)
+      return await employeeSkillsApi.postNewSkillByName(
+        categoryId,
+        toAddSkillName,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -59,7 +62,7 @@ const deleteSkillById = createAsyncThunk(
   'skill/deleteSkillById',
   async (skillId: number, thunkApi) => {
     try {
-      return await skillApi.deleteSkillById(skillId)
+      return await employeeSkillsApi.deleteSkillById(skillId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

@@ -5,7 +5,7 @@ import {
   PostGraduationAndGraduationList,
 } from '../../../../types/MyProfile/QualificationsTab/Qualifications/employeeQualificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import qualificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/Qualifications/employeeQualificationsApi'
+import employeeQualificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/Qualifications/employeeQualificationsApi'
 
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../../types/commonTypes'
@@ -24,7 +24,9 @@ const getEmployeeQualifications = createAsyncThunk<
   'employeeQualifications/getEmployeeQualifications',
   async (employeeId: string | number, thunkApi) => {
     try {
-      return await qualificationsApi.getEmployeeQualifications(employeeId)
+      return await employeeQualificationsApi.getEmployeeQualifications(
+        employeeId,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -44,7 +46,9 @@ const addEmployeeQualifications = createAsyncThunk<
   'employeeQualifications/addEmployeeQualifications',
   async (addQualification: EmployeeQualifications, thunkApi) => {
     try {
-      return await qualificationsApi.addEmployeeQualifications(addQualification)
+      return await employeeQualificationsApi.addEmployeeQualifications(
+        addQualification,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -64,7 +68,7 @@ const updateEmployeeQualifications = createAsyncThunk<
   'employeeQualifications/updateEmployeeQualifications',
   async (addQualification: EmployeeQualifications, thunkApi) => {
     try {
-      return await qualificationsApi.updateEmployeeQualifications(
+      return await employeeQualificationsApi.updateEmployeeQualifications(
         addQualification,
       )
     } catch (error) {
@@ -86,7 +90,7 @@ const getPgLookUpAndGraduationLookUpItems = createAsyncThunk<
   'employeeQualifications/getPgLookUpAndGraduationLookUpItems',
   async (_, thunkApi) => {
     try {
-      return await qualificationsApi.getPgLookUpAndGraduationLookUpItems()
+      return await employeeQualificationsApi.getPgLookUpAndGraduationLookUpItems()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
