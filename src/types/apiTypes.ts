@@ -20,6 +20,7 @@ export interface CategoryApi extends ApiBase {
 }
 
 export interface SkillApi extends ApiBase {
+  getEmployeeSkills: string
   getSkillListForCategory: string
   addNewSkillForCategory: string
   deleteSkillForCategory: string
@@ -39,11 +40,14 @@ export interface PersonalInfoApi extends ApiBase {
 }
 export interface QualificationsApi extends ApiBase {
   getEmployeeQualifications: string
-  getEmployeeSkills: string
-  getEmployeeCertificates: string
+
   getPostGraduationAndGraduationLookUp: string
   addEmployeeQualifications: string
   updateEmployeeQualifications: string
+}
+
+export interface CertificationsApi extends ApiBase {
+  getEmployeeCertificates: string
   getTechnologies: string
   getCertificateByTechnology: string
   addEmployeeCertificates: string

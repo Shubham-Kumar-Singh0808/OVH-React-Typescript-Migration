@@ -1,13 +1,31 @@
 import {
+  EmployeeSkills,
   SkillListItem,
   SkillState,
 } from '../../../types/MyProfile/Skills/skillTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
 import skillApi from '../../../middleware/api/MyProfile/Skills/skillApi'
+
+const getEmployeeSkills = createAsyncThunk<
+  EmployeeSkills[] | undefined,
+  void,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('skill/getEmployeeSkills', async (_, thunkApi) => {
+  try {
+    return await skillApi.getEmployeeSkills()
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
 
 const getAllSkillListById = createAsyncThunk(
   'skill/getAllSkillListById',
@@ -53,6 +71,7 @@ const initialSkillState: SkillState = {
   skillList: [],
   refreshList: false,
   isLoading: false,
+  skillDetails: [],
 }
 
 const skillSlice = createSlice({
@@ -70,13 +89,18 @@ const skillSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(deleteSkillById.fulfilled, (state) => {
-      state.refreshList = true
-    })
-
+    builder
+      .addCase(deleteSkillById.fulfilled, (state) => {
+        state.refreshList = true
+      })
+      .addCase(getEmployeeSkills.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.skillDetails = action.payload as unknown as EmployeeSkills[]
+      })
     builder
       .addMatcher(
         isAnyOf(
+          getEmployeeSkills.pending,
           getAllSkillListById.pending,
           postNewSkillByName.pending,
           deleteSkillById.pending,
@@ -102,6 +126,7 @@ const selectSkillList = (state: RootState): SkillListItem[] =>
   state.skill.skillList
 
 export const skillThunk = {
+  getEmployeeSkills,
   getAllSkillListById,
   postNewSkillByName,
   deleteSkillById,

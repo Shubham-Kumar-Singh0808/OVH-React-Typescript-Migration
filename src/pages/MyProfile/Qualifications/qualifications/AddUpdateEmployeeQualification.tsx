@@ -13,7 +13,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { qualificationSelectors } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { qualificationsThunk } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
@@ -74,8 +74,8 @@ const AddUpdateEmployeeQualification = ({
   }, [addQualification])
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(qualificationSelectors.getPgLookUpAndGraduationLookUpItems())
-    dispatch(qualificationSelectors.getEmployeeQualifications(employeeId))
+    dispatch(qualificationsThunk.getPgLookUpAndGraduationLookUpItems())
+    dispatch(qualificationsThunk.getEmployeeQualifications(employeeId))
   }, [dispatch, employeeId])
 
   useEffect(() => {
@@ -118,10 +118,10 @@ const AddUpdateEmployeeQualification = ({
   const handleAddUpdateQualification = async () => {
     if (addQualification.id) {
       const updateResultAction = await dispatch(
-        qualificationSelectors.updateEmployeeQualifications(addQualification),
+        qualificationsThunk.updateEmployeeQualifications(addQualification),
       )
       if (
-        qualificationSelectors.updateEmployeeQualifications.fulfilled.match(
+        qualificationsThunk.updateEmployeeQualifications.fulfilled.match(
           updateResultAction,
         )
       ) {
@@ -131,13 +131,13 @@ const AddUpdateEmployeeQualification = ({
       }
     } else {
       const postResultAction = await dispatch(
-        qualificationSelectors.addEmployeeQualifications({
+        qualificationsThunk.addEmployeeQualifications({
           ...addQualification,
           ...{ empId: employeeId as number },
         }),
       )
       if (
-        qualificationSelectors.addEmployeeQualifications.fulfilled.match(
+        qualificationsThunk.addEmployeeQualifications.fulfilled.match(
           postResultAction,
         )
       ) {

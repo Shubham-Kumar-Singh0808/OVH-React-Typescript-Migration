@@ -2,7 +2,6 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeQualificationDetails,
   EmployeeQualifications,
-  EmployeeSkills,
   PostGraduationAndGraduationList,
 } from '../../../types/MyProfile/Qualifications/qualificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
@@ -32,23 +31,6 @@ const getEmployeeQualifications = createAsyncThunk<
     }
   },
 )
-
-const getEmployeeSkills = createAsyncThunk<
-  EmployeeSkills[] | undefined,
-  void,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->('employeeQualifications/getEmployeeSkills', async (_, thunkApi) => {
-  try {
-    return await qualificationsApi.getEmployeeSkills()
-  } catch (error) {
-    const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-  }
-})
 
 const addEmployeeQualifications = createAsyncThunk<
   EmployeeQualifications | undefined,
@@ -118,10 +100,6 @@ const employeeQualificationsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getEmployeeSkills.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.skillDetails = action.payload as EmployeeSkills[]
-      })
       .addCase(
         getPgLookUpAndGraduationLookUpItems.fulfilled,
         (state, action) => {
@@ -155,7 +133,6 @@ const employeeQualificationsSlice = createSlice({
         isAnyOf(
           getPgLookUpAndGraduationLookUpItems.rejected,
           getEmployeeQualifications.rejected,
-          getEmployeeSkills.rejected,
           updateEmployeeQualifications.rejected,
           addEmployeeQualifications.rejected,
         ),
@@ -174,13 +151,9 @@ const selectEmployeeQualification = (
 ): EmployeeQualifications =>
   state.employeeQualificationsDetails.qualificationDetails
 
-const selectEmployeeId = (state: RootState): string | number =>
-  state.authentication.authenticatedUser.employeeId
-
-const qualificationsThunk = {
+export const qualificationsThunk = {
   getPgLookUpAndGraduationLookUpItems,
   getEmployeeQualifications,
-  getEmployeeSkills,
   updateEmployeeQualifications,
   addEmployeeQualifications,
 }
@@ -188,9 +161,7 @@ const qualificationsThunk = {
 export const qualificationActions = employeeQualificationsSlice.actions
 
 export const qualificationSelectors = {
-  ...qualificationsThunk,
   selectIsQualificationListLoading,
   selectEmployeeQualification,
-  selectEmployeeId,
 }
 export default employeeQualificationsSlice.reducer

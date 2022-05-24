@@ -2,6 +2,7 @@ import {
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
+  CertificationsApi,
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
   QualificationCategoryApi,
@@ -60,6 +61,7 @@ export const personalInfoApi: PersonalInfoApi = {
   fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
 }
 export const skillsApiConfig: SkillApi = {
+  getEmployeeSkills: apiPrefix + '/jobapplicant/getEmployeeskillList',
   getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
@@ -82,12 +84,13 @@ export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi 
   }
 export const qualificationsApiConfig: QualificationsApi = {
   getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
-  getEmployeeSkills: apiPrefix + '/jobapplicant/getEmployeeskillList',
-  getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
   getPostGraduationAndGraduationLookUp:
     apiPrefix + '/Employee/multipleSelection',
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
+}
+export const certificationsApiConfig: CertificationsApi = {
+  getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
   getCertificateByTechnology:
     apiPrefix + '/EmployeeSkill/getCertificateByTechnology',
@@ -96,7 +99,6 @@ export const qualificationsApiConfig: QualificationsApi = {
   updateEmployeeCertificate: apiPrefix + '/Employee/certification',
   deleteEmployeeCertificate: apiPrefix + '/Employee/certification',
 }
-
 export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',

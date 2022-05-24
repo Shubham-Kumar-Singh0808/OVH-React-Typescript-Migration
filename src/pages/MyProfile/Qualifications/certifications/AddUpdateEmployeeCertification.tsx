@@ -16,7 +16,7 @@ import DatePicker from 'react-datepicker'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { appActions } from '../../../../reducers/appSlice'
-import { certificationSelectors } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
+import { certificationThunk } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   EmployeeCertificationProps,
@@ -53,14 +53,14 @@ function AddUpdateEmployeeCertification({
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(certificationSelectors.getEmployeeCertificates())
+    dispatch(certificationThunk.getEmployeeCertificates())
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(certificationSelectors.getTechnologies())
+    dispatch(certificationThunk.getTechnologies())
     if (addCertification?.technology) {
       dispatch(
-        certificationSelectors.getCertificateByTechnologyName(
+        certificationThunk.getCertificateByTechnologyName(
           addCertification?.technology,
         ),
       )
@@ -114,10 +114,14 @@ function AddUpdateEmployeeCertification({
     }
   }
   useEffect(() => {
-    if ((expiryDate as string) <= (completedDate as string)) {
+    if (
+      (addCertification?.expiryDate as string) <=
+      (addCertification?.completedDate as string)
+    ) {
       setError(false)
     }
-  }, [completedDate, expiryDate])
+  }, [addCertification?.completedDate, addCertification?.expiryDate])
+
   useEffect(() => {
     if (error) {
       dispatch(
@@ -180,10 +184,10 @@ function AddUpdateEmployeeCertification({
       },
     }
     const addCertificateResultAction = await dispatch(
-      certificationSelectors.addEmployeeCertification(prepareObject),
+      certificationThunk.addEmployeeCertification(prepareObject),
     )
     if (
-      certificationSelectors.addEmployeeCertification.fulfilled.match(
+      certificationThunk.addEmployeeCertification.fulfilled.match(
         addCertificateResultAction,
       )
     ) {
@@ -197,10 +201,10 @@ function AddUpdateEmployeeCertification({
       ...addCertification,
     }
     const updateCertificateResultAction = await dispatch(
-      certificationSelectors.updateEmployeeCertificate(prepareObject),
+      certificationThunk.updateEmployeeCertificate(prepareObject),
     )
     if (
-      certificationSelectors.updateEmployeeCertificate.fulfilled.match(
+      certificationThunk.updateEmployeeCertificate.fulfilled.match(
         updateCertificateResultAction,
       )
     ) {

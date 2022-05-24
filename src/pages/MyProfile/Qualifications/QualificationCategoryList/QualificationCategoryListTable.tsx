@@ -10,7 +10,10 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import { qualificationCategorySelectors } from '../../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
+import {
+  qualificationCategorySelectors,
+  qualificationCategoryThunk,
+} from '../../../../reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
@@ -79,14 +82,14 @@ const QualificationCategoryListTable = (): JSX.Element => {
     setIsDeleteModalVisible(false)
 
     const deleteQualificationCategoryResultAction = await dispatch(
-      qualificationCategorySelectors.deleteQualificationCategory(id),
+      qualificationCategoryThunk.deleteQualificationCategory(id),
     )
     if (
-      qualificationCategorySelectors.deleteQualificationCategory.fulfilled.match(
+      qualificationCategoryThunk.deleteQualificationCategory.fulfilled.match(
         deleteQualificationCategoryResultAction,
       )
     ) {
-      dispatch(qualificationCategorySelectors.getQualificationCategories())
+      dispatch(qualificationCategoryThunk.getQualificationCategories())
       dispatch(appActions.addToast(deleteToastElement))
     }
   }

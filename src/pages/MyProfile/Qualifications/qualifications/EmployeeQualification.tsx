@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react'
 import { CCol, CForm, CRow } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { qualificationSelectors } from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import {
+  qualificationSelectors,
+  qualificationsThunk,
+} from '../../../../reducers/MyProfile/Qualifications/qualificationSlice'
+import { authenticationSelectors } from '../../../../reducers/Login/authenticationSlice'
 import parse from 'html-react-parser'
 
 const EmployeeQualifications = (): JSX.Element => {
   const employeeQualification = useTypedSelector(
     qualificationSelectors.selectEmployeeQualification,
   )
-  const employeeId = useTypedSelector(qualificationSelectors.selectEmployeeId)
+  const employeeId = useTypedSelector(authenticationSelectors.selectEmployeeId)
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(qualificationSelectors.getEmployeeQualifications(employeeId))
+    dispatch(qualificationsThunk.getEmployeeQualifications(employeeId))
   }, [dispatch, employeeId])
   return (
     <>

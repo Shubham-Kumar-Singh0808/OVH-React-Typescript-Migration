@@ -14,19 +14,6 @@ export type EmployeeQualifications = {
   others: string
 }
 
-export type EmployeeSkills = {
-  categoryType: string
-  skillType: string
-  competency: string
-  expMonth: string
-  expYear: string
-}
-export interface EmployeeSkillInfo {
-  striped: boolean
-  bordered: boolean
-  tableClassName: string
-  isFieldDisabled: boolean
-}
 export type AddBackButtonsProps = {
   addButtonHandler?: () => void
   backButtonHandler?: () => void
@@ -43,7 +30,6 @@ export type PostGraduationAndGraduationList = {
 }
 export type EmployeeQualificationDetails = {
   qualificationDetails: EmployeeQualifications
-  skillDetails: EmployeeSkills[]
   pgLookUpAndGraduationLookUpDetails: PostGraduationAndGraduationList
   isLoading: boolean
   error: ValidationError

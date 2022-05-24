@@ -5,7 +5,7 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import stateStore from '../../../../stateStore'
-import { certificationSelectors } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
+import { certificationThunk } from '../../../../reducers/MyProfile/Qualifications/certificationSlice'
 const ReduxProvider = ({
   children,
   reduxStore,
@@ -34,7 +34,7 @@ describe('Add Certification Testing', () => {
         />
       </ReduxProvider>,
     )
-    await stateStore.dispatch(certificationSelectors.getEmployeeCertificates())
+    await stateStore.dispatch(certificationThunk.getEmployeeCertificates())
   })
   test('should render Add button as disabled and Clear Button not disabled initially', () => {
     render(

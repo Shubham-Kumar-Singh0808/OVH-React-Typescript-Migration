@@ -4,7 +4,7 @@ import {
   QualificationCategoryState,
 } from '../../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import qualificationCategoryApi from '../../../../src/middleware/api/MyProfile/QualificationCategoryList/qualificationCategoryApi'
+import qualificationCategoryApi from '../../../middleware/api/MyProfile/QualificationCategoryList/qualificationCategoryApi'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 
@@ -118,7 +118,6 @@ export const qualificationCategoryThunk = {
 export const qualificationCategoryActions = qualificationCategorySlice.actions
 
 export const qualificationCategorySelectors = {
-  ...qualificationCategoryThunk,
   selectIsQualificationCategoryListLoading,
   selectQualificationCategoryList,
 }

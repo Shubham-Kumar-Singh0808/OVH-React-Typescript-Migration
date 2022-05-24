@@ -1,7 +1,6 @@
 import { AllowedHttpMethods, qualificationsApiConfig } from '../../apiList'
 import {
   EmployeeQualifications,
-  EmployeeSkills,
   PostGraduationAndGraduationList,
 } from '../../../../types/MyProfile/Qualifications/qualificationTypes'
 import axios from 'axios'
@@ -16,15 +15,6 @@ const getEmployeeQualifications = async (
     params: {
       empID: employeeId,
     },
-  })
-  const response = await axios(requestConfig)
-  return response.data
-}
-
-const getEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.getEmployeeSkills,
-    method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
   return response.data
@@ -69,7 +59,6 @@ const updateEmployeeQualifications = async (
 
 const qualificationsApi = {
   getEmployeeQualifications,
-  getEmployeeSkills,
   getPgLookUpAndGraduationLookUpItems,
   addEmployeeQualifications,
   updateEmployeeQualifications,

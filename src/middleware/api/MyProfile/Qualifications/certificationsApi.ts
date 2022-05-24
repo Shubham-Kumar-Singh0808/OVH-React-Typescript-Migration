@@ -1,4 +1,4 @@
-import { AllowedHttpMethods, qualificationsApiConfig } from '../../apiList'
+import { AllowedHttpMethods, certificationsApiConfig } from '../../apiList'
 import {
   EditEmployeeCertificates,
   EmployeeCertifications,
@@ -10,7 +10,7 @@ import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeeCertificates = async (): Promise<EmployeeCertifications[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.getEmployeeCertificates,
+    url: certificationsApiConfig.getEmployeeCertificates,
     method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
@@ -19,7 +19,7 @@ const getEmployeeCertificates = async (): Promise<EmployeeCertifications[]> => {
 
 const getTechnologies = async (): Promise<Technology[] | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.getTechnologies,
+    url: certificationsApiConfig.getTechnologies,
     method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
@@ -30,7 +30,7 @@ const getCertificateByTechnologyName = async (
   technologyName: string,
 ): Promise<CertificateType[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.getCertificateByTechnology,
+    url: certificationsApiConfig.getCertificateByTechnology,
     method: AllowedHttpMethods.get,
     params: {
       technologyName: technologyName,
@@ -44,7 +44,7 @@ const addEmployeeCertification = async (
   employeeCertificateDetails: EmployeeCertifications,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.addEmployeeCertificates,
+    url: certificationsApiConfig.addEmployeeCertificates,
     method: AllowedHttpMethods.post,
     data: employeeCertificateDetails,
   })
@@ -56,7 +56,7 @@ const getEmployeeCertificate = async (
   id: number,
 ): Promise<EditEmployeeCertificates> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: `${qualificationsApiConfig.getEmployeeCertificate}/${id}`,
+    url: `${certificationsApiConfig.getEmployeeCertificate}/${id}`,
     method: AllowedHttpMethods.get,
   })
   const responseVisa = await axios(requestConfig)
@@ -66,7 +66,7 @@ const updateEmployeeCertificate = async (
   certificateDetails: EmployeeCertifications,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.updateEmployeeCertificate,
+    url: certificationsApiConfig.updateEmployeeCertificate,
     method: AllowedHttpMethods.put,
     data: certificateDetails,
   })
@@ -78,7 +78,7 @@ const deleteEmployeeCertificate = async (
   certificationId: number,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: qualificationsApiConfig.deleteEmployeeCertificate,
+    url: certificationsApiConfig.deleteEmployeeCertificate,
     method: AllowedHttpMethods.delete,
     params: {
       certificationId: certificationId,

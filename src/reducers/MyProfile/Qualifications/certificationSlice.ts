@@ -231,7 +231,7 @@ const selectIsCertificationListLoading = (state: RootState): boolean =>
 const selectCertificates = (state: RootState): EmployeeCertifications[] =>
   state.employeeCertificates.certificationDetails
 
-const certificationThunk = {
+export const certificationThunk = {
   getEmployeeCertificates,
   getTechnologies,
   getCertificateByTechnologyName,
@@ -244,7 +244,6 @@ const certificationThunk = {
 export const qualificationCategoryActions = employeeCertificationsSlice.actions
 
 export const certificationSelectors = {
-  ...certificationThunk,
   selectIsCertificationListLoading,
   selectCertificates,
 }
