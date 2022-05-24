@@ -54,9 +54,9 @@ const deleteQualificationCategory = async (
   return response.data
 }
 
-const qualificationCategoryApi = {
+const employeeQualificationCategoryApi = {
   getQualificationCategories,
   addQualificationCategory,
   deleteQualificationCategory,
 }
-export default qualificationCategoryApi
+export default employeeQualificationCategoryApi

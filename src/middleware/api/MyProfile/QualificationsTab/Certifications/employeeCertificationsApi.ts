@@ -94,7 +94,7 @@ const deleteEmployeeCertificate = async (
   return response.data
 }
 
-const certificationsApi = {
+const employeeCertificationsApi = {
   getEmployeeCertificates,
   getTechnologies,
   getCertificateByTechnologyName,
@@ -103,4 +103,4 @@ const certificationsApi = {
   updateEmployeeCertificate,
   deleteEmployeeCertificate,
 }
-export default certificationsApi
+export default employeeCertificationsApi

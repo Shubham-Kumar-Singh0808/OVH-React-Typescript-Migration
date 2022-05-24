@@ -65,11 +65,11 @@ const deleteSkillById = async (skillId: number): Promise<SkillListItem[]> => {
   return response.data
 }
 
-const skillApi = {
+const employeeSkillApi = {
   getEmployeeSkills,
   getAllSkillListById,
   postNewSkillByName,
   deleteSkillById,
 }
 
-export default skillApi
+export default employeeSkillApi

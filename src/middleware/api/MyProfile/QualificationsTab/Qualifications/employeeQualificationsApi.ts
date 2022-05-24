@@ -57,10 +57,10 @@ const updateEmployeeQualifications = async (
   return response.data
 }
 
-const qualificationsApi = {
+const employeeQualificationsApi = {
   getEmployeeQualifications,
   getPgLookUpAndGraduationLookUpItems,
   addEmployeeQualifications,
   updateEmployeeQualifications,
 }
-export default qualificationsApi
+export default employeeQualificationsApi
