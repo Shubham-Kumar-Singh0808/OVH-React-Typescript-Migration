@@ -1,4 +1,4 @@
-import { QualificationCategoryList } from '../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
+import { QualificationCategoryList } from '../../types/MyProfile/QualificationCategoryList/qualificationCategoryTypes'
 
 export const mockQualificationCategories: QualificationCategoryList[] = [
   {
