@@ -2,13 +2,12 @@ import {
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
-  EmployeeCertificationsApi,
   EmployeeGeneralInformationApi,
   PersonalInfoApi,
-  EmployeeQualificationCategoryApi,
-  EmployeeQualificationsApi,
+  QualificationCategoryApi,
+  QualificationsApi,
   SideMenuApi,
-  EmployeeSkillApi,
+  SkillApi,
   UserRolesConfigurationApi,
 } from '../../types/apiTypes'
 
@@ -60,46 +59,32 @@ export const personalInfoApi: PersonalInfoApi = {
   deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
   fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
 }
-export const employeeSkillsApiConfig: EmployeeSkillApi = {
-  getEmployeeSkills: apiPrefix + '/jobapplicant/getEmployeeskillList',
+export const skillsApiConfig: SkillApi = {
   getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
 }
 
-export const employeeQualificationCategoryApiConfig: EmployeeQualificationCategoryApi =
-  {
-    getQualificationCategories:
-      apiPrefix + '/Employee/getQualiactionCategoryList',
-    addQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
-    deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
-  }
-export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
-  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+export const qualificationCategoryApi: QualificationCategoryApi = {
+  getAllQualificationCategories:
+    apiPrefix + '/Employee/getQualiactionCategoryList',
+  addNewQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
+  deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
 }
-
 export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi =
   {
     getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
   }
-export const qualificationsApiConfig: EmployeeQualificationsApi = {
+export const qualificationsApi: QualificationsApi = {
   getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
+  getEmployeeSkillsList: apiPrefix + '/jobapplicant/getEmployeeskillList',
+  getEmployeeCertificatesList: apiPrefix + '/Employee/certification/',
   addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
-  getPostGraduationAndGraduationLookUp:
-    apiPrefix + '/Employee/multipleSelection',
+  getPostGraduationAndGraduationList: apiPrefix + '/Employee/multipleSelection',
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
 }
-export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
-  getEmployeeCertificates: apiPrefix + '/Employee/certification/',
-  getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
-  getCertificateByTechnology:
-    apiPrefix + '/EmployeeSkill/getCertificateByTechnology',
-  addEmployeeCertificates: apiPrefix + '/Employee/certification',
-  getEmployeeCertificate: apiPrefix + '/Employee/getCertification',
-  updateEmployeeCertificate: apiPrefix + '/Employee/certification',
-  deleteEmployeeCertificate: apiPrefix + '/Employee/certification',
-}
+
 export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',

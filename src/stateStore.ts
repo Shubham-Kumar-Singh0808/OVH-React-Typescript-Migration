@@ -3,16 +3,16 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
-import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/Qualifications/employeeQualificationSlice'
+import employeeQualificationsReducer from './reducers/MyProfile/Qualifications/qualificationSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
-import skillReducer from './reducers/MyProfile/QualificationsTab/Skills/employeeSkillSlice'
+import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
-import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
+import qualificationCategoryReducer from './reducers/MyProfile/QualificationCategoryList/qualificationCategorySlice'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import certificationReducer from './reducers/MyProfile/QualificationsTab/Certifications/employeeCertificationSlice'
+
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
@@ -24,7 +24,6 @@ export const allReducers = {
   personalInfoDetails: personalInfoReducer,
   skill: skillReducer,
   qualificationCategory: qualificationCategoryReducer,
-  employeeCertificates: certificationReducer,
   // add your slice reducers here
 }
 

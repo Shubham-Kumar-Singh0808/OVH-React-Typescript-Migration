@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react'
 import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
-import QualificationDetails from '../QualificationsTab/QualificationDetails'
+import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
 import TabsLabels from '../../../middleware/TabsLabels'
 
 interface ShowTabContentType<TValue> {
