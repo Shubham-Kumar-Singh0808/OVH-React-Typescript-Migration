@@ -3,7 +3,7 @@ import { CCardHeader } from '@coreui/react-pro'
 
 import EmployeeGeneralInformation from './GeneralInformation'
 import FamilyDetailsTable from '../PersonalInfoTab/FamilyDetailsTable'
-import SkillsTable from '../Qualifications/skills/SkillsTable'
+import EmployeeSkillsTable from '../../../pages/MyProfile/QualificationsTab/Skills/EmployeeSkillsTable'
 const GeneralTab = (): JSX.Element => {
   return (
     <>
@@ -15,7 +15,7 @@ const GeneralTab = (): JSX.Element => {
         isFieldDisabled={false}
         tableClassName="mt-4"
       />
-      <SkillsTable
+      <EmployeeSkillsTable
         striped={true}
         bordered={true}
         isFieldDisabled={false}

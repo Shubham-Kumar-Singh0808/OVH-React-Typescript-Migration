@@ -19,15 +19,16 @@ export interface CategoryApi extends ApiBase {
   deleteCategory: string
 }
 
-export interface SkillApi extends ApiBase {
+export interface EmployeeSkillApi extends ApiBase {
+  getEmployeeSkills: string
   getSkillListForCategory: string
   addNewSkillForCategory: string
   deleteSkillForCategory: string
 }
 
-export interface QualificationCategoryApi extends ApiBase {
-  getAllQualificationCategories: string
-  addNewQualificationCategory: string
+export interface EmployeeQualificationCategoryApi extends ApiBase {
+  getQualificationCategories: string
+  addQualificationCategory: string
   deleteQualificationCategory: string
 }
 export interface EmployeeGeneralInformationApi extends ApiBase {
@@ -37,13 +38,21 @@ export interface EmployeeGeneralInformationApi extends ApiBase {
 export interface PersonalInfoApi extends ApiBase {
   getFamilyDetails: string
 }
-export interface QualificationsApi extends ApiBase {
+export interface EmployeeQualificationsApi extends ApiBase {
   getEmployeeQualifications: string
-  getEmployeeSkillsList: string
-  getEmployeeCertificatesList: string
-  getPostGraduationAndGraduationList: string
+  getPostGraduationAndGraduationLookUp: string
   addEmployeeQualifications: string
   updateEmployeeQualifications: string
+}
+
+export interface EmployeeCertificationsApi extends ApiBase {
+  getEmployeeCertificates: string
+  getTechnologies: string
+  getCertificateByTechnology: string
+  addEmployeeCertificates: string
+  getEmployeeCertificate: string
+  updateEmployeeCertificate: string
+  deleteEmployeeCertificate: string
 }
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string
