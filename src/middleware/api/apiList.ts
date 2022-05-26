@@ -66,6 +66,11 @@ export const employeeSkillsApiConfig: EmployeeSkillApi = {
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
+  addEmployeeSkill: apiPrefix + '/jobapplicant/addSkillToEmployee',
+  getEmployeeSkillInformation: apiPrefix + '/jobapplicant/editSkill',
+  updateEmployeeSkillInformation:
+    apiPrefix + '/jobapplicant/updateEmployeeSkill',
+  deleteEmployeeSkill: apiPrefix + '/jobapplicant/deleteEmployeeSkill',
 }
 
 export const employeeQualificationCategoryApiConfig: EmployeeQualificationCategoryApi =

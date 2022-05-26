@@ -24,6 +24,10 @@ export interface EmployeeSkillApi extends ApiBase {
   getSkillListForCategory: string
   addNewSkillForCategory: string
   deleteSkillForCategory: string
+  addEmployeeSkill: string
+  getEmployeeSkillInformation: string
+  updateEmployeeSkillInformation: string
+  deleteEmployeeSkill: string
 }
 
 export interface EmployeeQualificationCategoryApi extends ApiBase {
