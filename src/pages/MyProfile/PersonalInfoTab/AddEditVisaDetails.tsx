@@ -16,12 +16,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import {
-  doAddNewVisaDetails,
-  doFetchCountryDetails,
-  doFetchCountryVisaDetails,
-  doUpdateVisaDetails,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
@@ -55,9 +50,11 @@ function AddEditVisaDetails({
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchCountryDetails())
+    dispatch(personalInfoThunk.getEmployeeCountryDetails())
     if (employeeVisaDetails?.countryId) {
-      dispatch(doFetchCountryVisaDetails(employeeVisaDetails?.countryId))
+      dispatch(
+        personalInfoThunk.getEmployeeVisaType(employeeVisaDetails?.countryId),
+      )
     }
   }, [dispatch, employeeVisaDetails?.countryId])
 
@@ -148,9 +145,13 @@ function AddEditVisaDetails({
       dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
     }
     const addVisaMemberResultAction = await dispatch(
-      doAddNewVisaDetails(prepareObject),
+      personalInfoThunk.addEmployeeVisa(prepareObject),
     )
-    if (doAddNewVisaDetails.fulfilled.match(addVisaMemberResultAction)) {
+    if (
+      personalInfoThunk.addEmployeeVisa.fulfilled.match(
+        addVisaMemberResultAction,
+      )
+    ) {
       backButtonHandler()
       dispatch(
         dispatch(
@@ -166,9 +167,13 @@ function AddEditVisaDetails({
       ...employeeVisaDetails,
     }
     const updateVisaMemberResultAction = await dispatch(
-      doUpdateVisaDetails(prepareObject),
+      personalInfoThunk.updateEmployeeVisa(prepareObject),
     )
-    if (doUpdateVisaDetails.fulfilled.match(updateVisaMemberResultAction)) {
+    if (
+      personalInfoThunk.updateEmployeeVisa.fulfilled.match(
+        updateVisaMemberResultAction,
+      )
+    ) {
       backButtonHandler()
       dispatch(
         reduxService.app.actions.addToast(

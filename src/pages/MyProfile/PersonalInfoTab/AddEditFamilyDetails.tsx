@@ -14,10 +14,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import {
-  doAddNewFamilyMember,
-  doUpdateFamilyDetails,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
@@ -120,9 +117,13 @@ function AddEditFamilyDetails({
       },
     }
     const addFamilyMemberResultAction = await dispatch(
-      doAddNewFamilyMember(prepareObject),
+      personalInfoThunk.addEmployeeFamilyMember(prepareObject),
     )
-    if (doAddNewFamilyMember.fulfilled.match(addFamilyMemberResultAction)) {
+    if (
+      personalInfoThunk.addEmployeeFamilyMember.fulfilled.match(
+        addFamilyMemberResultAction,
+      )
+    ) {
       backButtonHandler()
       dispatch(
         reduxService.app.actions.addToast(getToastMessage(actionMapping.added)),
@@ -137,9 +138,13 @@ function AddEditFamilyDetails({
       },
     }
     const updateFamilyMemberResultAction = await dispatch(
-      doUpdateFamilyDetails(prepareObject),
+      personalInfoThunk.updateEmployeeFamilyMember(prepareObject),
     )
-    if (doUpdateFamilyDetails.fulfilled.match(updateFamilyMemberResultAction)) {
+    if (
+      personalInfoThunk.updateEmployeeFamilyMember.fulfilled.match(
+        updateFamilyMemberResultAction,
+      )
+    ) {
       backButtonHandler()
       dispatch(
         reduxService.app.actions.addToast(
@@ -280,6 +285,7 @@ function AddEditFamilyDetails({
                   className="btn-ovh me-2"
                   color="success"
                   onClick={handleUpdateFamilyMember}
+                  disabled={!isAddButtonEnabled}
                 >
                   {confirmButtonText}
                 </CButton>
