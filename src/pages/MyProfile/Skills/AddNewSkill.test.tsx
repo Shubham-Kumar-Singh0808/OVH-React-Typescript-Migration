@@ -6,8 +6,8 @@ import AddNewSkill from './AddNewSkill'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../../stateStore'
-import { testCategoryId } from '../../../../test/data/skillListData'
+import { skillMockCategoryId } from '../../../test/data/skillListData'
+import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
 
 const ReduxProvider = ({
@@ -28,7 +28,7 @@ describe('Add New Skill Testing', () => {
   test('should render add new skill form without crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <AddNewSkill categoryId={testCategoryId} />
+        <AddNewSkill categoryId={skillMockCategoryId} />
       </ReduxProvider>,
     )
     expectComponentToBeRendered()
@@ -37,7 +37,7 @@ describe('Add New Skill Testing', () => {
   test('should enabled add skill button when input is not empty', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <AddNewSkill categoryId={testCategoryId} />
+        <AddNewSkill categoryId={skillMockCategoryId} />
       </ReduxProvider>,
     )
 
@@ -53,7 +53,7 @@ describe('Add New Skill Testing', () => {
   test('should clear input and disable button after submitting and new skill should be added', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <AddNewSkill categoryId={testCategoryId} />
+        <AddNewSkill categoryId={skillMockCategoryId} />
       </ReduxProvider>,
     )
 

@@ -1,27 +1,28 @@
 import {
-  CCardHeader,
+  CButton,
   CCardBody,
-  CRow,
+  CCardHeader,
   CCol,
   CForm,
-  CButton,
-  CFormLabel,
   CFormInput,
+  CFormLabel,
   CFormSelect,
+  CRow,
 } from '@coreui/react-pro'
-import { useFormik } from 'formik'
-import moment from 'moment'
+import {
+  EmployeeCertificationProps,
+  EmployeeCertifications,
+} from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import React, { useEffect, useState } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
 import DatePicker from 'react-datepicker'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { appActions } from '../../../../reducers/appSlice'
-import { certificationThunk } from '../../../../reducers/MyProfile/QualificationsTab/Certifications/employeeCertificationSlice'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import {
-  EmployeeCertificationProps,
-  EmployeeCertifications,
-} from '../../../../types/MyProfile/QualificationsTab/Certifications/employeeCertificationTypes'
+import { certificationThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import moment from 'moment'
+import { useFormik } from 'formik'
 
 function AddUpdateEmployeeCertification({
   isEditCertificationDetails = false,

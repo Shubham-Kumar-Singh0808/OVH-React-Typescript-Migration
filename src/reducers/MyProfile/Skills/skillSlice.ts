@@ -1,37 +1,19 @@
 import {
-  EmployeeSkills,
   SkillListItem,
   SkillState,
-} from '../../../../types/MyProfile/QualificationsTab/Skills/employeeSkillTypes'
+} from '../../../types/MyProfile/Skills/skillTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { AppDispatch, RootState } from '../../../../stateStore'
-import { ValidationError } from '../../../../types/commonTypes'
-import employeeSkillsApi from '../../../../middleware/api/MyProfile/QualificationsTab/Skills/employeeSkillsApi'
-
-const getEmployeeSkills = createAsyncThunk<
-  EmployeeSkills[] | undefined,
-  void,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->('skill/getEmployeeSkills', async (_, thunkApi) => {
-  try {
-    return await employeeSkillsApi.getEmployeeSkills()
-  } catch (error) {
-    const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-  }
-})
+import { RootState } from '../../../stateStore'
+import { ValidationError } from '../../../types/commonTypes'
+import skillApi from '../../../middleware/api/MyProfile/Skills/skillApi'
 
 const getAllSkillListById = createAsyncThunk(
   'skill/getAllSkillListById',
   async (categoryId: number, thunkApi) => {
     try {
-      return await employeeSkillsApi.getAllSkillListById(categoryId)
+      return await skillApi.getAllSkillListById(categoryId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -48,10 +30,7 @@ const postNewSkillByName = createAsyncThunk(
     thunkApi,
   ) => {
     try {
-      return await employeeSkillsApi.postNewSkillByName(
-        categoryId,
-        toAddSkillName,
-      )
+      return await skillApi.postNewSkillByName(categoryId, toAddSkillName)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -62,7 +41,7 @@ const deleteSkillById = createAsyncThunk(
   'skill/deleteSkillById',
   async (skillId: number, thunkApi) => {
     try {
-      return await employeeSkillsApi.deleteSkillById(skillId)
+      return await skillApi.deleteSkillById(skillId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -74,7 +53,6 @@ const initialSkillState: SkillState = {
   skillList: [],
   refreshList: false,
   isLoading: false,
-  skillDetails: [],
 }
 
 const skillSlice = createSlice({
@@ -92,18 +70,12 @@ const skillSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(deleteSkillById.fulfilled, (state) => {
-        state.refreshList = true
-      })
-      .addCase(getEmployeeSkills.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.skillDetails = action.payload as unknown as EmployeeSkills[]
-      })
+    builder.addCase(deleteSkillById.fulfilled, (state) => {
+      state.refreshList = true
+    })
     builder
       .addMatcher(
         isAnyOf(
-          getEmployeeSkills.pending,
           getAllSkillListById.pending,
           postNewSkillByName.pending,
           deleteSkillById.pending,
@@ -129,7 +101,6 @@ const selectSkillList = (state: RootState): SkillListItem[] =>
   state.skill.skillList
 
 export const skillThunk = {
-  getEmployeeSkills,
   getAllSkillListById,
   postNewSkillByName,
   deleteSkillById,

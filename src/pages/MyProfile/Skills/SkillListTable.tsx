@@ -13,16 +13,16 @@ import React, { useEffect, useMemo, useState } from 'react'
 import {
   skillSelectors,
   skillThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/Skills/employeeSkillSlice'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+} from '../../../reducers/MyProfile/Skills/skillSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
-import OModal from '../../../../components/ReusableComponent/OModal'
-import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../../components/ReusableComponent/OPagination'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
 import { cilTrash } from '@coreui/icons'
-import { currentPageData } from '../../../../utils/paginationUtils'
-import { usePagination } from '../../../../middleware/hooks/usePagination'
+import { currentPageData } from '../../../utils/paginationUtils'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const SkillListTable = (): JSX.Element => {
   const dispatch = useAppDispatch()

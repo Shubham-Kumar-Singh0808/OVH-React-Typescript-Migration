@@ -1,4 +1,3 @@
-import React, { useEffect, useMemo, useState } from 'react'
 import {
   CButton,
   CTable,
@@ -8,15 +7,18 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   certificationSelectors,
   certificationThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/Certifications/employeeCertificationSlice'
-import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
-import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/QualificationsTab/Certifications/employeeCertificationTypes'
-import { appActions } from '../../../../reducers/appSlice'
-import OToast from '../../../../components/ReusableComponent/OToast'
+} from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
+import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import OModal from '../../../../components/ReusableComponent/OModal'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { appActions } from '../../../../reducers/appSlice'
+
 const CertificationsTable = ({
   editCertificateButtonHandler,
 }: EmployeeCertificationTableProps): JSX.Element => {

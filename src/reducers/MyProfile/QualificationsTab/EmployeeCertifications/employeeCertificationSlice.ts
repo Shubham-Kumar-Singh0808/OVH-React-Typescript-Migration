@@ -1,15 +1,16 @@
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
+  CertificateType,
   CertificationState,
   EditEmployeeCertificates,
   EmployeeCertifications,
   Technology,
-  CertificateType,
-} from '../../../../types/MyProfile/QualificationsTab/Certifications/employeeCertificationTypes'
+} from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import employeeCertificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/Certifications/employeeCertificationsApi'
+
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../../types/commonTypes'
+import employeeCertificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationsApi'
 
 const initialCertificationState: CertificationState = {
   editCertificateDetails: {} as EditEmployeeCertificates,

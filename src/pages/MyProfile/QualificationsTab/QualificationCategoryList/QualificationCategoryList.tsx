@@ -8,13 +8,14 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import {
-  qualificationCategoryThunk,
   qualificationCategorySelectors,
+  qualificationCategoryThunk,
 } from '../../../../reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import QualificationCategoryListTable from './QualificationCategoryListTable'
+
 import AddNewQualificationCategory from './AddNewQualificationCategory'
-import { AddUpdateEmployeeQualificationProps } from '../../../../types/MyProfile/QualificationsTab/Qualifications/employeeQualificationTypes'
+import { AddUpdateEmployeeQualificationProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
+import QualificationCategoryListTable from './QualificationCategoryListTable'
 
 const QualificationCategoryList = ({
   backButtonHandler,

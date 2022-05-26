@@ -1,4 +1,4 @@
-import { SkillListItem } from '../../types/MyProfile/QualificationsTab/Skills/employeeSkillTypes'
+import { SkillListItem } from '../../types/MyProfile/Skills/skillTypes'
 
 export const skillMockCategoryId = 1
 export const skillMockCategoryType = 'Data Science'

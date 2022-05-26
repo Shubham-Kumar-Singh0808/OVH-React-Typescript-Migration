@@ -1,4 +1,4 @@
-import { EmployeeCertifications } from '../../types/MyProfile/QualificationsTab/Certifications/employeeCertificationTypes'
+import { EmployeeCertifications } from '../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 
 export const mockCertificationCategories: EmployeeCertifications[] = [
   {

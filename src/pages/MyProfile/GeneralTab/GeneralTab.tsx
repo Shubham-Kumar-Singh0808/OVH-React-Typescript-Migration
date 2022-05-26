@@ -1,9 +1,9 @@
-import React from 'react'
 import { CCardHeader } from '@coreui/react-pro'
-
 import EmployeeGeneralInformation from './GeneralInformation'
+import EmployeeSkillsTable from '../QualificationsTab/EmployeeSkills/EmployeeSkillsTable'
 import FamilyDetailsTable from '../PersonalInfoTab/FamilyDetailsTable'
-import EmployeeSkillsTable from '../../../pages/MyProfile/QualificationsTab/Skills/EmployeeSkillsTable'
+import React from 'react'
+
 const GeneralTab = (): JSX.Element => {
   return (
     <>

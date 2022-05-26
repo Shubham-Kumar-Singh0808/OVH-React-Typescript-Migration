@@ -2,7 +2,8 @@ import { AllowedHttpMethods, qualificationsApiConfig } from '../../../apiList'
 import {
   EmployeeQualifications,
   PostGraduationAndGraduationList,
-} from '../../../../../types/MyProfile/QualificationsTab/Qualifications/employeeQualificationTypes'
+} from '../../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
+
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 

@@ -4,14 +4,14 @@ import {
   mockSkills,
   skillMockCategoryId,
   skillMockCategoryType,
-} from '../../../../test/data/skillListData'
+} from '../../../test/data/skillListData'
 import { render, screen, waitFor } from '@testing-library/react'
 
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import SkillList from './SkillList'
-import stateStore from '../../../../stateStore'
+import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
 
 const ReduxProvider = ({
