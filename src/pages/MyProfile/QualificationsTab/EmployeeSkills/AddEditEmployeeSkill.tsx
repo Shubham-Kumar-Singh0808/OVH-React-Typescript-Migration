@@ -127,7 +127,7 @@ function AddEditEmployeeSkill({
     return (
       <OToast
         toastColor="success"
-        toastMessage={`Your Skill Have been ${action}  successfully.`}
+        toastMessage={`Your skill have been ${action}  successfully.`}
       />
     )
   }

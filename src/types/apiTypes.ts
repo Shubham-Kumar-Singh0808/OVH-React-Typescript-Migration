@@ -18,6 +18,21 @@ export interface CategoryApi extends ApiBase {
   addCategory: string
   deleteCategory: string
 }
+export interface PersonalInfoApi extends ApiBase {
+  getFamilyDetails: string
+  getVisaDetails: string
+  getCountryDetails: string
+  getVisaTypeDetails: string
+  addNewVisaMember: string
+  getFamilyInformation: string
+  updateFamilyInformation: string
+  addNewFamilyMember: string
+  getVisaInformation: string
+  updateVisaInformation: string
+  deleteFamilyMember: string
+  deleteVisaDetail: string
+  fileUploadVisaImage: string
+}
 
 export interface EmployeeSkillApi extends ApiBase {
   getEmployeeSkills: string

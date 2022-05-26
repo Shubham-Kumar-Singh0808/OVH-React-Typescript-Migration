@@ -6,21 +6,18 @@ import AddEditVisaDetails from './AddEditVisaDetails'
 import AddEditFamilyDetails from './AddEditFamilyDetails'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import { useAppDispatch } from '../../../stateStore'
-import {
-  doEditNewFamilyMember,
-  doEditNewVisaMember,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 const PersonalInfoTab = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
 
   const editButtonHandler = (familyId: number) => {
     setToggle('EditFamily')
-    dispatch(doEditNewFamilyMember(familyId))
+    dispatch(personalInfoThunk.getEmployeeFamilyMember(familyId))
   }
   const editVisaButtonHandler = (id: number) => {
     setToggle('EditVisa')
-    dispatch(doEditNewVisaMember(id))
+    dispatch(personalInfoThunk.getEmployeeVisa(id))
   }
 
   return (
