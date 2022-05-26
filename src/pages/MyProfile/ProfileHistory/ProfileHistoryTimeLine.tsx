@@ -26,17 +26,18 @@ const ProfileHistoryTimeLine = (): JSX.Element => {
           curItem.list.length? () : ()
           ),
         )} */}
-        {employeeProfileHistory?.map((curItem, index) =>
-          curItem.list.length ? (
-            curItem.list?.map((childItem, index) => {
-              ;<CBadge className="rounded-pill" color="success">
-                {childItem.baseLocation}
-              </CBadge>
-            })
-          ) : (
-            <>No data</>
-          ),
-        )}
+        {employeeProfileHistory &&
+          employeeProfileHistory?.map((curItem, index) =>
+            curItem.list.length ? (
+              curItem.list?.map((childItem, index) => {
+                ;<CBadge className="rounded-pill" color="success">
+                  {childItem.baseLocation}
+                </CBadge>
+              })
+            ) : (
+              <>No data</>
+            ),
+          )}
         {/* <div className="sh-timeline-card">
           <div className="sh-timeline-timestamp">09-Apr-2022 10:16:48 AM</div>
           <div className="sh-timeline-content">

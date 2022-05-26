@@ -14,9 +14,9 @@ const EmployeeProfileHistory = (): JSX.Element => {
     authenticationSelectors.selectToken,
   )
   const dispatch = useDispatch()
-  const employeeProfileHistoryIsLoading = useTypedSelector(
-    profileHistorySelectors.profileHistoryIsLoading,
-  )
+  // const employeeProfileHistoryIsLoading = useTypedSelector(
+  //   profileHistorySelectors.profileHistoryIsLoading,
+  // )
   useEffect(() => {
     if (authenticatedToken) {
       dispatch(profileHistoryApi.getProfileHistory(employeeId))
@@ -27,13 +27,14 @@ const EmployeeProfileHistory = (): JSX.Element => {
       <CCardHeader>
         <h4 className="h4">Employee Profile History</h4>
       </CCardHeader>
-      {!employeeProfileHistoryIsLoading ? (
+      <ProfileHistoryTimeLine />
+      {/* {!employeeProfileHistoryIsLoading ? (
         <>
           <ProfileHistoryTimeLine />
         </>
       ) : (
         <>No Data</>
-      )}
+      )} */}
     </>
   )
 }
