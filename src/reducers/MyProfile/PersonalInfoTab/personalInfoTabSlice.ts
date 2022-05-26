@@ -11,20 +11,6 @@ import {
   VisaDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import {
-  fetchVisaCountryDetailsApiCall,
-  getAddNewFamilyMemberApiCall,
-  getAddNewVisaMemberApiCall,
-  getCountryDetailsApiCall,
-  getDeleteNewFamilyMemberApiCall,
-  getDeleteVisaDetailsApiCall,
-  getFamilyDetailsApiCall,
-  getFamilyInformationByFamilyIdApiCall,
-  getUpdateNewFamilyMemberApiCall,
-  getUpdateNewVisaMemberApiCall,
-  getVisaDetailsApiCall,
-  getVisaInformationByVisaIdApiCall,
-} from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
