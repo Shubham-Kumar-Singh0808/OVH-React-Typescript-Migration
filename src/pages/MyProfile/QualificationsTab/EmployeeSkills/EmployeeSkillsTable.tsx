@@ -13,7 +13,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import { employeeSkillThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 
-const SkillsTable: React.FC<EmployeeSkillInfo> = ({
+const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   striped = false,
   bordered = false,
   isFieldDisabled = false,
@@ -33,7 +33,7 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
   }
   const tableDataCellProps = {
     colSpan: 4,
-    className: 'fw-semibold',
+    className: 'fw-bold',
   }
   return (
     <>
@@ -125,4 +125,4 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
   )
 }
 
-export default SkillsTable
+export default EmployeeSkillsTable

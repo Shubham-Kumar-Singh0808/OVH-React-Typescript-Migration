@@ -65,8 +65,8 @@ const AddUpdateEmployeeQualification = ({
     if (
       addQualification.graduationLookUp &&
       addQualification.graduationLookUp.length > 0 &&
-      addQualification.hscName &&
-      addQualification.sscName
+      addQualification.hscName.replace(/\s+$/gi, '') &&
+      addQualification.sscName.replace(/\s+$/gi, '')
     ) {
       setIsButtonEnabled(true)
     } else {

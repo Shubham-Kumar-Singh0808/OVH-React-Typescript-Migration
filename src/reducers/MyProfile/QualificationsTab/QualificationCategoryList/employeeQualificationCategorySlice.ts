@@ -66,18 +66,19 @@ const deleteQualificationCategory = createAsyncThunk<
 const initialCategoryState: QualificationCategoryState = {
   qualificationCategoryList: [],
   isLoading: false,
+  error: null,
 }
 
 const qualificationCategorySlice = createSlice({
   name: 'qualificationCategory',
   initialState: initialCategoryState,
-  reducers: {
-    clearCategoryList: (state) => {
-      state.qualificationCategoryList = []
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(deleteQualificationCategory.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as ValidationError
+      })
       .addMatcher(
         isAnyOf(
           getQualificationCategories.pending,
@@ -111,6 +112,10 @@ const selectQualificationCategoryList = (
 ): QualificationCategoryList[] =>
   state.qualificationCategory.qualificationCategoryList
 
+const selectDeleteQualificationCategoryError = (
+  state: RootState,
+): ValidationError => state.qualificationCategory.error
+
 export const qualificationCategoryThunk = {
   getQualificationCategories,
   deleteQualificationCategory,
@@ -122,6 +127,7 @@ export const qualificationCategoryActions = qualificationCategorySlice.actions
 export const qualificationCategorySelectors = {
   selectIsQualificationCategoryListLoading,
   selectQualificationCategoryList,
+  selectDeleteQualificationCategoryError,
 }
 
 export default qualificationCategorySlice.reducer
