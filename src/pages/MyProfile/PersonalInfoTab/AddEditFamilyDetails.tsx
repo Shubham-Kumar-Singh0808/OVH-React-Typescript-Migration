@@ -58,7 +58,7 @@ function AddEditFamilyDetails({
         return { ...prevState, ...{ [name]: contactValue } }
       })
     } else if (name === 'personName') {
-      const personValue = value.replace(/[^a-zA-Z]/gi, '')
+      const personValue = value.replace(/[^a-zA-Z\s]/gi, '')
       setEmployeeFamily((prevState) => {
         return { ...prevState, ...{ [name]: personValue } }
       })
@@ -112,7 +112,9 @@ function AddEditFamilyDetails({
       ...employeeFamily,
       ...{
         employeeId: employeeId,
-        dateOfBirth: moment(dateOfBirth).format('DD/MM/YYYY'),
+        dateOfBirth: dateOfBirth
+          ? moment(dateOfBirth).format('DD/MM/YYYY')
+          : undefined,
       },
     }
     const addFamilyMemberResultAction = await dispatch(

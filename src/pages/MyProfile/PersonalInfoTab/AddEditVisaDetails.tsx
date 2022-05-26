@@ -258,7 +258,13 @@ function AddEditVisaDetails({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Issue:
-              <span className={dateOfIssue ? 'text-white' : 'text-danger'}>
+              <span
+                className={
+                  dateOfIssue || fetchEditVisaDetails.dateOfIssue
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -286,7 +292,13 @@ function AddEditVisaDetails({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Expire :
-              <span className={dateOfExpire ? 'text-white' : 'text-danger'}>
+              <span
+                className={
+                  dateOfExpire || fetchEditVisaDetails.dateOfExpire
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -340,6 +352,7 @@ function AddEditVisaDetails({
                   className="btn-ovh me-2"
                   color="success"
                   onClick={handleUpdateVisaMember}
+                  disabled={!isAddButtonEnabled}
                 >
                   {confirmButtonText}
                 </CButton>
