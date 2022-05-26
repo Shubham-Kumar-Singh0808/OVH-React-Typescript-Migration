@@ -45,7 +45,7 @@ export const categoriesApiConfig: CategoryApi = {
   addCategory: apiPrefix + '/jobapplicant/addCategory',
   deleteCategory: apiPrefix + '/jobapplicant/deleteCategory',
 }
-export const personalInfoApi: PersonalInfoApi = {
+export const personalInfoApiConfig: PersonalInfoApi = {
   getFamilyDetails: apiPrefix + '/Employee/familyInformation',
   getVisaDetails: apiPrefix + '/Employee/getEmployeeVisaDetailsList',
   getCountryDetails: apiPrefix + '/Employee/getCountryLookUps',
@@ -60,12 +60,18 @@ export const personalInfoApi: PersonalInfoApi = {
   deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
   fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
 }
+
 export const employeeSkillsApiConfig: EmployeeSkillApi = {
   getEmployeeSkills: apiPrefix + '/jobapplicant/getEmployeeskillList',
   getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
+  addEmployeeSkill: apiPrefix + '/jobapplicant/addSkillToEmployee',
+  getEmployeeSkillInformation: apiPrefix + '/jobapplicant/editSkill',
+  updateEmployeeSkillInformation:
+    apiPrefix + '/jobapplicant/updateEmployeeSkill',
+  deleteEmployeeSkill: apiPrefix + '/jobapplicant/deleteEmployeeSkill',
 }
 
 export const employeeQualificationCategoryApiConfig: EmployeeQualificationCategoryApi =

@@ -13,20 +13,7 @@ import {
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
-import {
-  getFamilyDetailsApiCall,
-  getVisaDetailsApiCall,
-  getCountryDetailsApiCall,
-  fetchVisaCountryDetailsApiCall,
-  getAddNewVisaMemberApiCall,
-  getFamilyInformationByFamilyIdApiCall,
-  getUpdateNewFamilyMemberApiCall,
-  getAddNewFamilyMemberApiCall,
-  getVisaInformationByVisaIdApiCall,
-  getUpdateNewVisaMemberApiCall,
-  getDeleteNewFamilyMemberApiCall,
-  getDeleteVisaDetailsApiCall,
-} from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
+import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 const initialPersonalInfoTabState: PersonalInfoTabState = {
   getFamilyDetails: [],
   getVisaDetails: [],
@@ -38,7 +25,7 @@ const initialPersonalInfoTabState: PersonalInfoTabState = {
   error: 0,
 }
 
-export const doFetchFamilyDetails = createAsyncThunk<
+const getEmployeeFamilyDetails = createAsyncThunk<
   EmployeeFamilyData[] | undefined,
   number | string,
   {
@@ -47,17 +34,18 @@ export const doFetchFamilyDetails = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'personalInfoTab/doFetchFamilyDetails',
+  'personalInfoTab/getEmployeeFamilyDetails',
   async (employeeId: number | string, thunkApi) => {
     try {
-      return await getFamilyDetailsApiCall(employeeId)
+      return await personalInfoApi.getEmployeeFamilyDetails(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-export const doFetchVisaDetails = createAsyncThunk<
+
+const getEmployeeVisaDetails = createAsyncThunk<
   VisaDetails[] | undefined,
   string | number,
   {
@@ -66,17 +54,18 @@ export const doFetchVisaDetails = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'personalInfoTab/doFetchVisaDetails',
+  'personalInfoTab/getEmployeeVisaDetails',
   async (employeeId: string | number, thunkApi) => {
     try {
-      return await getVisaDetailsApiCall(employeeId)
+      return await personalInfoApi.getEmployeeVisaDetails(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-export const doFetchCountryDetails = createAsyncThunk<
+
+const getEmployeeCountryDetails = createAsyncThunk<
   GetCountryDetails | undefined,
   void,
   {
@@ -84,15 +73,16 @@ export const doFetchCountryDetails = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('personalInfoTab/doFetchCountryDetails', async (_, thunkApi) => {
+>('personalInfoTab/getEmployeeCountryDetails', async (_, thunkApi) => {
   try {
-    return await getCountryDetailsApiCall()
+    return await personalInfoApi.getEmployeeCountryDetails()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
-export const doFetchCountryVisaDetails = createAsyncThunk<
+
+const getEmployeeVisaType = createAsyncThunk<
   VisaCountryDetails[] | undefined,
   string | number,
   {
@@ -101,29 +91,10 @@ export const doFetchCountryVisaDetails = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'personalInfoTab/doFetchCountryVisaDetails',
+  'personalInfoTab/getEmployeeVisaType',
   async (countryId: string | number, thunkApi) => {
     try {
-      return await fetchVisaCountryDetailsApiCall(countryId)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-export const doAddNewVisaDetails = createAsyncThunk<
-  number | undefined,
-  EmployeeVisaDetails,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->(
-  'addEditFamilyDetails/doAddNewVisaDetails',
-  async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
-    try {
-      return await getAddNewVisaMemberApiCall(employeeVisaDetails)
+      return await personalInfoApi.getEmployeeVisaType(countryId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -131,80 +102,7 @@ export const doAddNewVisaDetails = createAsyncThunk<
   },
 )
 
-export const doEditNewFamilyMember = createAsyncThunk<
-  EditFamilyDetailsState | undefined,
-  number,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->(
-  'personalInfoTab/doEditNewFamilyMember',
-  async (familyId: number, thunkApi) => {
-    try {
-      return await getFamilyInformationByFamilyIdApiCall(familyId)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-export const doUpdateFamilyDetails = createAsyncThunk<
-  number | undefined,
-  EmployeeFamilyDetails,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->(
-  'personalInfoTab/doUpdateFamilyDetails',
-  async (employeeFamily: EmployeeFamilyDetails, thunkApi) => {
-    try {
-      return await getUpdateNewFamilyMemberApiCall(employeeFamily)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-export const doAddNewFamilyMember = createAsyncThunk<
-  number | undefined,
-  EmployeeFamilyDetails,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->(
-  'personalInfoTab/doAddNewFamilyMember',
-  async (employeeFamily: EmployeeFamilyDetails, thunkApi) => {
-    try {
-      return await getAddNewFamilyMemberApiCall(employeeFamily)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-export const doEditNewVisaMember = createAsyncThunk<
-  EditVisaDetailsState | undefined,
-  number,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->('personalInfoTab/doEditNewVisaMember', async (id: number, thunkApi) => {
-  try {
-    return await getVisaInformationByVisaIdApiCall(id)
-  } catch (error) {
-    const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-  }
-})
-export const doUpdateVisaDetails = createAsyncThunk<
+const addEmployeeVisa = createAsyncThunk<
   number | undefined,
   EmployeeVisaDetails,
   {
@@ -213,33 +111,110 @@ export const doUpdateVisaDetails = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'personalInfoTab/doUpdateVisaDetails',
+  'addEditFamilyDetails/addEmployeeVisa',
   async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
-      return await getUpdateNewVisaMemberApiCall(employeeVisaDetails)
+      return await personalInfoApi.addEmployeeVisa(employeeVisaDetails)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-export const doDeleteFamilyMember = createAsyncThunk<
-  number | undefined,
+
+const getEmployeeFamilyMember = createAsyncThunk<
+  EditFamilyDetailsState | undefined,
   number,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
->('personalInfoTab/doDeleteFamilyMember', async (familyId, thunkApi) => {
+>('personalInfoTab/getEditFamilyMember', async (familyId: number, thunkApi) => {
   try {
-    return await getDeleteNewFamilyMemberApiCall(familyId)
+    return await personalInfoApi.getEmployeeFamilyMember(familyId)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
-export const doDeleteVisaDetails = createAsyncThunk<
+
+const updateEmployeeFamilyMember = createAsyncThunk<
+  number | undefined,
+  EmployeeFamilyDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'personalInfoTab/getUpdateFamilyDetails',
+  async (employeeFamily: EmployeeFamilyDetails, thunkApi) => {
+    try {
+      return await personalInfoApi.updateEmployeeFamilyMember(employeeFamily)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const addEmployeeFamilyMember = createAsyncThunk<
+  number | undefined,
+  EmployeeFamilyDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'personalInfoTab/addEmployeeFamilyMember',
+  async (employeeFamily: EmployeeFamilyDetails, thunkApi) => {
+    try {
+      return await personalInfoApi.addEmployeeFamilyMember(employeeFamily)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getEmployeeVisa = createAsyncThunk<
+  EditVisaDetailsState | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('personalInfoTab/getEmployeeVisa', async (id: number, thunkApi) => {
+  try {
+    return await personalInfoApi.getEmployeeVisa(id)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+const updateEmployeeVisa = createAsyncThunk<
+  number | undefined,
+  EmployeeVisaDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'personalInfoTab/updateEmployeeVisa',
+  async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
+    try {
+      return await personalInfoApi.updateEmployeeVisa(employeeVisaDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+const deleteEmployeeFamilyMember = createAsyncThunk<
   number | undefined,
   number,
   {
@@ -247,9 +222,25 @@ export const doDeleteVisaDetails = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('personalInfoTab/doDeleteVisaDetails', async (visaId, thunkApi) => {
+>('personalInfoTab/deleteEmployeeFamilyMember', async (familyId, thunkApi) => {
   try {
-    return await getDeleteVisaDetailsApiCall(visaId)
+    return await personalInfoApi.deleteEmployeeFamilyMember(familyId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+const deleteEmployeeVisa = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('personalInfoTab/deleteEmployeeVisa', async (visaId, thunkApi) => {
+  try {
+    return await personalInfoApi.deleteEmployeeVisa(visaId)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -263,82 +254,63 @@ const personalInfoTabSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(doFetchFamilyDetails.fulfilled, (state, action) => {
+      .addCase(getEmployeeFamilyDetails.fulfilled, (state, action) => {
         state.isLoading = false
         state.getFamilyDetails = action.payload as EmployeeFamilyData[]
       })
-      .addCase(doFetchVisaDetails.fulfilled, (state, action) => {
+      .addCase(getEmployeeVisaDetails.fulfilled, (state, action) => {
         state.isLoading = false
         state.getVisaDetails = action.payload as VisaDetails[]
       })
-      .addCase(doFetchCountryDetails.fulfilled, (state, action) => {
+      .addCase(getEmployeeCountryDetails.fulfilled, (state, action) => {
         state.isLoading = false
         state.SubCountries = action.payload as GetCountryDetails
       })
-      .addCase(doFetchCountryVisaDetails.fulfilled, (state, action) => {
+      .addCase(getEmployeeVisaType.fulfilled, (state, action) => {
         state.isLoading = false
         state.SubVisa = action.payload as VisaCountryDetails[]
       })
-      .addCase(doAddNewVisaDetails.fulfilled, (state) => {
-        state.isLoading = false
-      })
-      .addCase(doEditNewFamilyMember.fulfilled, (state, action) => {
+      .addCase(getEmployeeFamilyMember.fulfilled, (state, action) => {
         state.isLoading = false
         state.editFamilyDetails =
           action.payload as unknown as EditFamilyDetailsState
       })
-      .addCase(doUpdateFamilyDetails.fulfilled, (state) => {
-        state.isLoading = false
-      })
-      .addCase(doUpdateVisaDetails.fulfilled, (state) => {
-        state.isLoading = false
-      })
-      .addCase(doAddNewFamilyMember.fulfilled, (state) => {
-        state.isLoading = false
-      })
-      .addCase(doEditNewVisaMember.fulfilled, (state, action) => {
+      .addCase(getEmployeeVisa.fulfilled, (state, action) => {
         state.isLoading = false
         state.editVisaDetails =
           action.payload as unknown as EditVisaDetailsState
       })
-
-      .addCase(doDeleteFamilyMember.fulfilled, (state) => {
-        state.isLoading = false
-      })
-      .addCase(doDeleteVisaDetails.fulfilled, (state) => {
-        state.isLoading = false
-      })
       .addMatcher(
-        isAnyOf(doUpdateVisaDetails.fulfilled, doUpdateVisaDetails.fulfilled),
+        isAnyOf(
+          deleteEmployeeFamilyMember.fulfilled,
+          deleteEmployeeVisa.fulfilled,
+          updateEmployeeVisa.fulfilled,
+          updateEmployeeFamilyMember.fulfilled,
+          addEmployeeFamilyMember.fulfilled,
+        ),
         (state) => {
           state.isLoading = false
         },
       )
       .addMatcher(
-        isAnyOf(doFetchFamilyDetails.pending, doFetchVisaDetails.pending),
-        (state) => {
-          state.isLoading = true
-        },
-      )
-      .addMatcher(
         isAnyOf(
-          doFetchCountryDetails.pending,
-          doFetchCountryDetails.pending,
-          doFetchCountryVisaDetails.pending,
+          getEmployeeFamilyDetails.pending,
+          getEmployeeVisaDetails.pending,
+          getEmployeeCountryDetails.pending,
+          getEmployeeCountryDetails.pending,
+          getEmployeeVisaType.pending,
         ),
         (state) => {
           state.isLoading = true
         },
       )
       .addMatcher(
-        isAnyOf(doFetchFamilyDetails.rejected, doFetchVisaDetails.rejected),
-        (state, action) => {
-          state.isLoading = false
-          state.error = action.payload as ValidationError
-        },
-      )
-      .addMatcher(
-        isAnyOf(doFetchCountryDetails.rejected, doFetchCountryDetails.rejected),
+        isAnyOf(
+          getEmployeeFamilyDetails.rejected,
+          getEmployeeVisaDetails.rejected,
+          getEmployeeCountryDetails.rejected,
+          getEmployeeCountryDetails.rejected,
+        ),
         (state, action) => {
           state.isLoading = false
           state.error = action.payload as ValidationError
@@ -346,9 +318,26 @@ const personalInfoTabSlice = createSlice({
       )
   },
 })
-export const selectGetFamilyDetails = (
-  state: RootState,
-): EmployeeFamilyData[] => state.personalInfoDetails.getFamilyDetails
-export const selectGetVisaDetails = (state: RootState): VisaDetails[] =>
+const selectGetFamilyDetails = (state: RootState): EmployeeFamilyData[] =>
+  state.personalInfoDetails.getFamilyDetails
+const selectGetVisaDetails = (state: RootState): VisaDetails[] =>
   state.personalInfoDetails.getVisaDetails
+export const personalInfoThunk = {
+  getEmployeeFamilyDetails,
+  addEmployeeFamilyMember,
+  getEmployeeFamilyMember,
+  updateEmployeeFamilyMember,
+  deleteEmployeeFamilyMember,
+  getEmployeeVisaDetails,
+  getEmployeeCountryDetails,
+  getEmployeeVisaType,
+  addEmployeeVisa,
+  getEmployeeVisa,
+  updateEmployeeVisa,
+  deleteEmployeeVisa,
+}
+export const personalInfoSelectors = {
+  selectGetFamilyDetails,
+  selectGetVisaDetails,
+}
 export default personalInfoTabSlice.reducer
