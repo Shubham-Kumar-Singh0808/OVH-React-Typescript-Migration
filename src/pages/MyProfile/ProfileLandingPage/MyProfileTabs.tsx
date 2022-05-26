@@ -11,7 +11,7 @@ import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
-import QualificationDetails from '../Qualifications/qualifications/QualificationDetails'
+import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import TabsLabels from '../../../middleware/TabsLabels'
 
 interface ShowTabContentType<TValue> {
