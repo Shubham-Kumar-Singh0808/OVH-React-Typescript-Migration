@@ -74,7 +74,6 @@ const skillSlice = createSlice({
     builder.addCase(deleteSkill.fulfilled, (state) => {
       state.refreshList = true
     })
-
     builder
       .addMatcher(
         isAnyOf(
