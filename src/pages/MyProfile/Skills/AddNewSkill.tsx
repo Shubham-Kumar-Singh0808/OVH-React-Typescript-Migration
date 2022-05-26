@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react'
 import {
   skillSelectors,
   skillThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/Skills/employeeSkillSlice'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+} from '../../../reducers/MyProfile/Skills/skillSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
-import OToast from '../../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../../reducers/appSlice'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { appActions } from '../../../reducers/appSlice'
 import { cilPlus } from '@coreui/icons'
 
 const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {

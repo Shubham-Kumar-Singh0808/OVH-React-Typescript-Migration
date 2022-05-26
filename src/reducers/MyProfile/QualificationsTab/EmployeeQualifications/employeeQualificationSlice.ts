@@ -3,12 +3,12 @@ import {
   EmployeeQualificationDetails,
   EmployeeQualifications,
   PostGraduationAndGraduationList,
-} from '../../../../types/MyProfile/QualificationsTab/Qualifications/employeeQualificationTypes'
+} from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import employeeQualificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/Qualifications/employeeQualificationsApi'
 
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../../types/commonTypes'
+import employeeQualificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationsApi'
 
 const initialQualificationState = {} as EmployeeQualificationDetails
 

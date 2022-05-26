@@ -2,17 +2,19 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
-import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
-import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/Qualifications/employeeQualificationSlice'
-import { configureStore } from '@reduxjs/toolkit'
-import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
-import skillReducer from './reducers/MyProfile/QualificationsTab/Skills/employeeSkillSlice'
-import thunkMiddleware from 'redux-thunk'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
-import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
+import certificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import { configureStore } from '@reduxjs/toolkit'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
+import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
+import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
+import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
+import skillReducer from './reducers/MyProfile/Skills/skillSlice'
+import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import certificationReducer from './reducers/MyProfile/QualificationsTab/Certifications/employeeCertificationSlice'
+
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
@@ -25,6 +27,7 @@ export const allReducers = {
   skill: skillReducer,
   qualificationCategory: qualificationCategoryReducer,
   employeeCertificates: certificationReducer,
+  employeeSkill: employeeSkillReducer,
   // add your slice reducers here
 }
 

@@ -5,20 +5,15 @@ export type EmployeeSkills = {
   expMonth: string
   expYear: string
 }
+
 export interface EmployeeSkillInfo {
   striped: boolean
   bordered: boolean
   tableClassName: string
   isFieldDisabled: boolean
 }
-export type SkillListItem = {
-  skillId: number
-  skill: string
-}
 
-export type SkillState = {
-  skillList: SkillListItem[]
+export type EmployeeSkillState = {
   skillDetails: EmployeeSkills[]
-  refreshList: boolean
   isLoading: boolean
 }

@@ -3,11 +3,12 @@ import {
   employeeCertificationsApiConfig,
 } from '../../../apiList'
 import {
+  CertificateType,
   EditEmployeeCertificates,
   EmployeeCertifications,
   Technology,
-  CertificateType,
-} from '../../../../../types/MyProfile/QualificationsTab/Certifications/employeeCertificationTypes'
+} from '../../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
+
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 

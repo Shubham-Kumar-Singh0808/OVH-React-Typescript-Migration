@@ -4,12 +4,12 @@ import {
   skillActions,
   skillSelectors,
   skillThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/Skills/employeeSkillSlice'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+} from '../../../reducers/MyProfile/Skills/skillSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import AddNewSkill from './AddNewSkill'
 import CIcon from '@coreui/icons-react'
-import OCard from '../../../../components/ReusableComponent/OCard'
+import OCard from '../../../components/ReusableComponent/OCard'
 import SkillListTable from './SkillListTable'
 import { cilArrowLeft } from '@coreui/icons'
 

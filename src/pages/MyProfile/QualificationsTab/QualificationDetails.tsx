@@ -1,12 +1,13 @@
 import { CCardBody, CCardHeader } from '@coreui/react-pro'
 import React, { useState } from 'react'
-import EmployeeCertificationsTable from './Certifications/EmployeeCertificationsTable'
-import EmployeeQualifications from './Qualifications/EmployeeQualification'
+
+import AddUpdateEmployeeCertification from './EmployeeCertifications/AddUpdateEmployeeCertification'
+import AddUpdateEmployeeQualification from './EmployeeQualifications/AddUpdateEmployeeQualification'
+import EmployeeCertificationsTable from './EmployeeCertifications/EmployeeCertificationsTable'
+import EmployeeQualifications from './EmployeeQualifications/EmployeeQualification'
+import EmployeeSkillsTable from './EmployeeSkills/EmployeeSkillsTable'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
-import EmployeeSkillsTable from '../../../pages/MyProfile/QualificationsTab/Skills/EmployeeSkillsTable'
-import AddUpdateEmployeeQualification from './Qualifications/AddUpdateEmployeeQualification'
-import AddUpdateEmployeeCertification from './Certifications/AddUpdateEmployeeCertification'
-import { certificationThunk } from '../../../reducers/MyProfile/QualificationsTab/Certifications/employeeCertificationSlice'
+import { certificationThunk } from '../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { useAppDispatch } from '../../../stateStore'
 
 const QualificationDetails = (): JSX.Element => {

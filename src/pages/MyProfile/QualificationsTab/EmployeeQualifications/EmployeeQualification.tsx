@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
 import { CCol, CForm, CRow } from '@coreui/react-pro'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import React, { useEffect } from 'react'
 import {
   qualificationSelectors,
   qualificationsThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/Qualifications/employeeQualificationSlice'
+} from '../../../../reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
 import { authenticationSelectors } from '../../../../reducers/Login/authenticationSlice'
 import parse from 'html-react-parser'
 

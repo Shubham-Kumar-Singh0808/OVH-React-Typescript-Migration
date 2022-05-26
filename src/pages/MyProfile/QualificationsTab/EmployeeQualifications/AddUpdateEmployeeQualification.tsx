@@ -2,7 +2,7 @@ import {
   AddUpdateEmployeeQualificationProps,
   EmployeeQualifications,
   PostGraduationAndGraduationLookUp,
-} from '../../../../types/MyProfile/QualificationsTab/Qualifications/employeeQualificationTypes'
+} from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import {
   CButton,
   CCardBody,
@@ -13,13 +13,14 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { qualificationsThunk } from '../../../../reducers/MyProfile/QualificationsTab/Qualifications/employeeQualificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
 import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
 import { appActions } from '../../../../reducers/appSlice'
+import { qualificationsThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import { useFormik } from 'formik'
 
 const AddUpdateEmployeeQualification = ({

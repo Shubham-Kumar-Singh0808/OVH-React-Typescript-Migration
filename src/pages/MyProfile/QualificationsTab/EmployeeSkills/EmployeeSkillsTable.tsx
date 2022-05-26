@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import {
   CButton,
   CTable,
@@ -8,9 +7,12 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
-import { skillThunk } from '../../../../reducers/MyProfile/QualificationsTab/Skills/employeeSkillSlice'
-import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab/Skills/employeeSkillTypes'
+import React, { useEffect } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
+import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
+import { employeeSkillThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
+
 const SkillsTable: React.FC<EmployeeSkillInfo> = ({
   striped = false,
   bordered = false,
@@ -18,12 +20,12 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
   tableClassName = '',
 }: EmployeeSkillInfo): JSX.Element => {
   const employeeSkillsData = useTypedSelector(
-    (state) => state.skill.skillDetails,
+    (state) => state.employeeSkill.skillDetails,
   )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(skillThunk.getEmployeeSkills())
+    dispatch(employeeSkillThunk.getEmployeeSkills())
   }, [dispatch])
   const tableHeaderCellProps = {
     width: '25%',
