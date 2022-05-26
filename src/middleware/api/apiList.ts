@@ -9,8 +9,6 @@ import {
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
-  QualificationCategoryApi,
-  QualificationsApi,
   SideMenuApi,
   UserRolesConfigurationApi,
 } from '../../types/apiTypes'
