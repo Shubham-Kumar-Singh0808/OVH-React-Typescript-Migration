@@ -2,7 +2,6 @@ import { CButton, CCol, CRow } from '@coreui/react-pro'
 
 import { AddBackButtonsProps } from '../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import React from 'react'
-
 const OAddButton = ({ addButtonHandler }: AddBackButtonsProps): JSX.Element => {
   return (
     <>

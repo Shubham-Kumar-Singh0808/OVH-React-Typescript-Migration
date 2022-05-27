@@ -14,14 +14,13 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { appActions } from '../../../reducers/appSlice'
 import moment from 'moment'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
-
 function AddEditFamilyDetails({
   isEditFamilyDetails = false,
   headerTitle,
