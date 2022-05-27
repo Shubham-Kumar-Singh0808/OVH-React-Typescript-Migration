@@ -8,7 +8,7 @@ import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
 import SessionTimeout from './components/SessionTimeout'
 import { getEmployeeGeneralInformationThunk } from './reducers/MyProfile/GeneralTab/generalInformationSlice'
-import { reduxService } from './reducers/reduxService'
+import { reduxServices } from './reducers/reduxServices'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -16,13 +16,13 @@ const Login = React.lazy(() => import('./pages/Login/Login'))
 
 const App = (): JSX.Element => {
   const setIsSessionExpired = useTypedSelector(
-    reduxService.app.selectors.selectIsSessionExpired,
+    reduxServices.app.selectors.selectIsSessionExpired,
   )
   const employeeId = useTypedSelector(
-    reduxService.authentication.selectors.selectEmployeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const authenticatedToken = useTypedSelector(
-    reduxService.authentication.selectors.selectToken,
+    reduxServices.authentication.selectors.selectToken,
   )
   const dispatch = useAppDispatch()
 
@@ -50,7 +50,7 @@ const App = (): JSX.Element => {
     const initialAuthenticationState = loadState()
 
     dispatch(
-      reduxService.authentication.actions.setAuthentication(
+      reduxServices.authentication.actions.setAuthentication(
         initialAuthenticationState,
       ),
     )

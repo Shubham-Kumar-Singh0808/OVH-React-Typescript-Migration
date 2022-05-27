@@ -21,7 +21,7 @@ import { OTextEditor } from '../../../../components/ReusableComponent/OTextEdito
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { certificationThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import moment from 'moment'
-import { reduxService } from '../../../../reducers/reduxService'
+import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 
 function AddUpdateEmployeeCertification({
@@ -126,7 +126,7 @@ function AddUpdateEmployeeCertification({
   useEffect(() => {
     if (error) {
       dispatch(
-        reduxService.app.actions.addToast(
+        reduxServices.app.actions.addToast(
           <OToast
             toastMessage="Date of Expiry should be greater"
             toastColor="danger"
@@ -193,7 +193,7 @@ function AddUpdateEmployeeCertification({
       )
     ) {
       backButtonHandler()
-      dispatch(reduxService.app.actions.addToast(successToastMessage))
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -210,7 +210,7 @@ function AddUpdateEmployeeCertification({
       )
     ) {
       backButtonHandler()
-      dispatch(reduxService.app.actions.addToast(successToastMessage))
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 

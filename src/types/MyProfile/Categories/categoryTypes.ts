@@ -7,6 +7,6 @@ export type Category = {
 }
 
 export type CategorySliceState = {
-  categoryList: Category[]
+  categories: Category[]
   isLoading: LoadingState
 }

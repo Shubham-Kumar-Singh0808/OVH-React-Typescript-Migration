@@ -5,7 +5,7 @@ import {
 } from '../../../types/MyProfile/Skills/skillTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
-import { AllowedLoadingState } from '../../../middleware/api/apiList'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import skillApi from '../../../middleware/api/MyProfile/Skills/skillApi'
@@ -21,8 +21,8 @@ const getAllSkills = createAsyncThunk(
     }
   },
 )
-const createNewSkill = createAsyncThunk(
-  'skill/createNewSkill',
+const createSkill = createAsyncThunk(
+  'skill/createSkill',
   async (
     {
       categoryId,
@@ -31,7 +31,7 @@ const createNewSkill = createAsyncThunk(
     thunkApi,
   ) => {
     try {
-      return await skillApi.createNewSkill(categoryId, toAddSkillName)
+      return await skillApi.createSkill(categoryId, toAddSkillName)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -51,9 +51,9 @@ const deleteSkill = createAsyncThunk(
 )
 
 const initialSkillState: SkillSliceState = {
-  skillList: [],
+  skills: [],
   refreshList: false,
-  isLoading: AllowedLoadingState.idle,
+  isLoading: ApiLoadingState.idle,
 }
 
 const skillSlice = createSlice({
@@ -61,7 +61,7 @@ const skillSlice = createSlice({
   initialState: initialSkillState,
   reducers: {
     clearSkillList: (state) => {
-      state.skillList = []
+      state.skills = []
     },
     toRefreshList: (state) => {
       state.refreshList = true
@@ -76,40 +76,35 @@ const skillSlice = createSlice({
     })
     builder
       .addMatcher(
-        isAnyOf(
-          getAllSkills.pending,
-          createNewSkill.pending,
-          deleteSkill.pending,
-        ),
+        isAnyOf(getAllSkills.pending, createSkill.pending, deleteSkill.pending),
         (state) => {
-          state.isLoading = AllowedLoadingState.loading
+          state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
-        isAnyOf(getAllSkills.fulfilled, createNewSkill.fulfilled),
+        isAnyOf(getAllSkills.fulfilled, createSkill.fulfilled),
         (state, action) => {
-          state.isLoading = AllowedLoadingState.succeeded
-          state.skillList = action.payload
+          state.isLoading = ApiLoadingState.succeeded
+          state.skills = action.payload
         },
       )
   },
 })
 
-const selectIsSkillListLoading = (state: RootState): LoadingState =>
-  state.skill.isLoading
-const selectRefreshList = (state: RootState): boolean => state.skill.refreshList
-const selectSkillList = (state: RootState): Skill[] => state.skill.skillList
+const isLoading = (state: RootState): LoadingState => state.skill.isLoading
+const refreshList = (state: RootState): boolean => state.skill.refreshList
+const skills = (state: RootState): Skill[] => state.skill.skills
 
 const skillThunk = {
   getAllSkills,
-  createNewSkill,
+  createSkill,
   deleteSkill,
 }
 
 const skillSelectors = {
-  selectIsSkillListLoading,
-  selectRefreshList,
-  selectSkillList,
+  isLoading,
+  refreshList,
+  skills,
 }
 
 export const skillService = {

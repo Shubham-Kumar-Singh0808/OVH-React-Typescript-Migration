@@ -22,7 +22,7 @@ import {
 
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { reduxService } from '../../../reducers/reduxService'
+import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 
 const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
@@ -79,7 +79,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
           setReportingManagerFlag(false)
         }
         dispatch(
-          reduxService.app.actions.addToast(
+          reduxServices.app.actions.addToast(
             getToastMessage(actionMapping.added),
           ),
         )
@@ -87,7 +87,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
       }
     } else {
       dispatch(clearIsRoleExists())
-      dispatch(reduxService.app.actions.addToast(isExistsToastElement))
+      dispatch(reduxServices.app.actions.addToast(isExistsToastElement))
       setRoleInput('')
       if (reportingManagerFlag) {
         setReportingManagerFlag(false)
@@ -97,7 +97,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
 
   const isEmployee = () => {
     if (selectedRole.name.toLowerCase() === 'employee') {
-      return dispatch(reduxService.app.actions.addToast(defaultToastElement))
+      return dispatch(reduxServices.app.actions.addToast(defaultToastElement))
     }
   }
 
@@ -119,7 +119,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
     if (doDeleteUserRole.fulfilled.match(deleteRoleResultAction)) {
       dispatch(doFetchUserRoles())
       dispatch(
-        reduxService.app.actions.addToast(
+        reduxServices.app.actions.addToast(
           getToastMessage(actionMapping.deleted),
         ),
       )

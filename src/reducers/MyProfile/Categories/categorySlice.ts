@@ -6,7 +6,7 @@ import {
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
-import { AllowedLoadingState } from '../../../middleware/api/apiList'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import categoryApi from '../../../middleware/api/MyProfile/Categories/categoryApi'
 
@@ -21,7 +21,8 @@ const getAllCategories = createAsyncThunk(
     }
   },
 )
-const createNewCategory = createAsyncThunk<
+
+const createCategory = createAsyncThunk<
   Category[] | undefined,
   string,
   {
@@ -29,14 +30,15 @@ const createNewCategory = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('category/createNewCategory', async (categoryName, thunkApi) => {
+>('category/createCategory', async (categoryName, thunkApi) => {
   try {
-    return await categoryApi.createNewCategory(categoryName)
+    return await categoryApi.createCategory(categoryName)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
+
 const deleteCategory = createAsyncThunk<
   Category[] | undefined,
   number,
@@ -55,16 +57,16 @@ const deleteCategory = createAsyncThunk<
 })
 
 const initialCategoryState: CategorySliceState = {
-  categoryList: [],
-  isLoading: AllowedLoadingState.idle,
+  categories: [],
+  isLoading: ApiLoadingState.idle,
 }
 
 const categorySlice = createSlice({
   name: 'category',
   initialState: initialCategoryState,
   reducers: {
-    clearCategoryList: (state) => {
-      state.categoryList = []
+    clearCategories: (state) => {
+      state.categories = []
     },
   },
   extraReducers: (builder) => {
@@ -72,41 +74,39 @@ const categorySlice = createSlice({
       .addMatcher(
         isAnyOf(
           getAllCategories.pending,
-          createNewCategory.pending,
+          createCategory.pending,
           deleteCategory.pending,
         ),
         (state) => {
-          state.isLoading = AllowedLoadingState.loading
+          state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
         isAnyOf(
           getAllCategories.fulfilled,
-          createNewCategory.fulfilled,
+          createCategory.fulfilled,
           deleteCategory.fulfilled,
         ),
         (state, action) => {
-          state.isLoading = AllowedLoadingState.succeeded
-          state.categoryList = action.payload as Category[]
+          state.isLoading = ApiLoadingState.succeeded
+          state.categories = action.payload as Category[]
         },
       )
   },
 })
 
-const selectIsCategoryListLoading = (state: RootState): LoadingState =>
-  state.category.isLoading
-const selectCategoryList = (state: RootState): Category[] =>
-  state.category.categoryList
+const isLoading = (state: RootState): LoadingState => state.category.isLoading
+const categories = (state: RootState): Category[] => state.category.categories
 
 const categoryThunk = {
   getAllCategories,
-  createNewCategory,
+  createCategory,
   deleteCategory,
 }
 
 const categorySelectors = {
-  selectIsCategoryListLoading,
-  selectCategoryList,
+  isLoading,
+  categories,
 }
 
 export const categoryService = {

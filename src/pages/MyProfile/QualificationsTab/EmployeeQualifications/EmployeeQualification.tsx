@@ -7,14 +7,14 @@ import {
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import parse from 'html-react-parser'
-import { reduxService } from '../../../../reducers/reduxService'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const EmployeeQualifications = (): JSX.Element => {
   const employeeQualification = useTypedSelector(
     qualificationSelectors.selectEmployeeQualification,
   )
   const employeeId = useTypedSelector(
-    reduxService.authentication.selectors.selectEmployeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
 
   const dispatch = useAppDispatch()

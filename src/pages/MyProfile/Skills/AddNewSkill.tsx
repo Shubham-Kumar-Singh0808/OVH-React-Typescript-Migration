@@ -5,11 +5,11 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import CIcon from '@coreui/icons-react'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { cilPlus } from '@coreui/icons'
-import { reduxService } from '../../../reducers/reduxService'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const skills = useTypedSelector(reduxService.skill.selectors.selectSkillList)
+  const skills = useTypedSelector(reduxServices.skill.selectors.skills)
 
   const [newSkillName, setNewSkillName] = useState('')
   const [isAddSkillBtnEnabled, setIsAddSkillBtnEnabled] = useState(false)
@@ -35,13 +35,13 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
           skillItem.skill.toLowerCase() === newSkillName.toLowerCase(),
       ).length > 0
     ) {
-      dispatch(reduxService.app.actions.addToast(toastElement))
+      dispatch(reduxServices.app.actions.addToast(toastElement))
       return
     }
 
     setNewSkillName('')
 
-    dispatch(reduxService.skill.createNewSkill({ categoryId, toAddSkillName }))
+    dispatch(reduxServices.skill.createSkill({ categoryId, toAddSkillName }))
   }
 
   const formLabelProps = {

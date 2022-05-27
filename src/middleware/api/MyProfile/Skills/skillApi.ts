@@ -16,7 +16,7 @@ const getAllSkills = async (categoryId: number): Promise<Skill[]> => {
   return response.data
 }
 
-const createNewSkill = async (
+const createSkill = async (
   categoryId: number,
   skillName: string,
 ): Promise<Skill[]> => {
@@ -53,6 +53,6 @@ const deleteSkill = async (skillId: number): Promise<Skill[]> => {
   return response.data
 }
 
-const skillApi = { getAllSkills, createNewSkill, deleteSkill }
+const skillApi = { getAllSkills, createSkill, deleteSkill }
 
 export default skillApi

@@ -18,12 +18,12 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../utils/paginationUtils'
-import { reduxService } from '../../../reducers/reduxService'
+import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const SkillListTable = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const skills = useTypedSelector(reduxService.skill.selectors.selectSkillList)
+  const skills = useTypedSelector(reduxServices.skill.selectors.skills)
 
   const {
     paginationRange,
@@ -62,7 +62,7 @@ const SkillListTable = (): JSX.Element => {
   const handleConfirmDelete = async (skillId: number) => {
     setIsDeleteModalVisible(false)
 
-    dispatch(reduxService.skill.deleteSkill(skillId))
+    dispatch(reduxServices.skill.deleteSkill(skillId))
   }
 
   const currentPageItems = useMemo(() => {

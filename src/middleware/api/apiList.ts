@@ -24,7 +24,7 @@ export enum AllowedHttpMethods {
   put = 'put',
 }
 
-export enum AllowedLoadingState {
+export enum ApiLoadingState {
   idle = 'idle',
   loading = 'loading',
   succeeded = 'succeeded',

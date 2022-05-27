@@ -5,11 +5,11 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import CIcon from '@coreui/icons-react'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { cilPlus } from '@coreui/icons'
-import { reduxService } from '../../../reducers/reduxService'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const AddNewCategory = (): JSX.Element => {
   const categories = useTypedSelector(
-    reduxService.category.selectors.selectCategoryList,
+    reduxServices.category.selectors.categories,
   )
   const dispatch = useAppDispatch()
 
@@ -37,13 +37,13 @@ const AddNewCategory = (): JSX.Element => {
           category.categoryType.toLowerCase() === newCategoryName.toLowerCase(),
       ).length > 0
     ) {
-      dispatch(reduxService.app.actions.addToast(toastElement))
+      dispatch(reduxServices.app.actions.addToast(toastElement))
       return
     }
 
     setNewCategoryName('')
 
-    dispatch(reduxService.category.createNewCategory(toAddCategoryName))
+    dispatch(reduxServices.category.createCategory(toAddCategoryName))
   }
 
   const formLabelProps = {

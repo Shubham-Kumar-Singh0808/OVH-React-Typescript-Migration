@@ -33,7 +33,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
-import { reduxService } from '../../../reducers/reduxService'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableProps> =
   ({ selectedRoleId }: UserRoleFeaturesExpandableTableProps): JSX.Element => {
@@ -118,12 +118,12 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
           prepareObject.permission ? 'assigned' : 'removed'
         } '${prepareObject.type}' permission to '${target.name}'`
         dispatch(
-          reduxService.app.actions.addToast(
+          reduxServices.app.actions.addToast(
             <OToast toastColor="success" toastMessage={oToastMessage} />,
           ),
         )
         dispatch(doFetchFeaturesUnderRole(selectedRoleId as string))
-        dispatch(reduxService.app.actions.setReRenderMenu(true))
+        dispatch(reduxServices.app.actions.setReRenderMenu(true))
       }
     }
     return (

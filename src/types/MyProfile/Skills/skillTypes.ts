@@ -6,7 +6,7 @@ export type Skill = {
 }
 
 export type SkillSliceState = {
-  skillList: Skill[]
+  skills: Skill[]
   refreshList: boolean
   isLoading: LoadingState
 }

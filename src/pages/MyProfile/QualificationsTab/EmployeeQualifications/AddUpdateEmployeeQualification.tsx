@@ -20,7 +20,7 @@ import { OTextEditor } from '../../../../components/ReusableComponent/OTextEdito
 import OToast from '../../../../components/ReusableComponent/OToast'
 import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
 import { qualificationsThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
-import { reduxService } from '../../../../reducers/reduxService'
+import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 
 const AddUpdateEmployeeQualification = ({
@@ -127,7 +127,7 @@ const AddUpdateEmployeeQualification = ({
         )
       ) {
         dispatch(
-          reduxService.app.actions.addToast(
+          reduxServices.app.actions.addToast(
             getToastMessage(actionMapping.updated),
           ),
         )
@@ -147,7 +147,7 @@ const AddUpdateEmployeeQualification = ({
         )
       ) {
         dispatch(
-          reduxService.app.actions.addToast(
+          reduxServices.app.actions.addToast(
             getToastMessage(actionMapping.added),
           ),
         )

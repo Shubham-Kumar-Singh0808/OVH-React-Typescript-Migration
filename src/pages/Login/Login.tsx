@@ -18,7 +18,7 @@ import { useAppDispatch, useTypedSelector } from '../../stateStore'
 
 import AIMLBridgeLogo from '../../assets/images/logo/ai_bridge_logo_207X65.png'
 import RayBizTechLogo from '../../assets/images/logo/raybiztech-logo.png'
-import { reduxService } from '../../reducers/reduxService'
+import { reduxService } from '../../reducers/reduxServices'
 import { useHistory } from 'react-router-dom'
 
 const Login = (): JSX.Element => {

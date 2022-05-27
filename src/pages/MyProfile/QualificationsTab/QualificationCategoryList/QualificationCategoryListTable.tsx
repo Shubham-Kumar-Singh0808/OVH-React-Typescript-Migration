@@ -23,7 +23,7 @@ import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../../utils/paginationUtils'
-import { reduxService } from '../../../../reducers/reduxService'
+import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const QualificationCategoryListTable = (): JSX.Element => {
@@ -90,7 +90,7 @@ const QualificationCategoryListTable = (): JSX.Element => {
       )
     ) {
       dispatch(qualificationCategoryThunk.getQualificationCategories())
-      dispatch(reduxService.app.actions.addToast(deleteToastElement))
+      dispatch(reduxServices.app.actions.addToast(deleteToastElement))
     }
   }
   const currentPageItems = useMemo(

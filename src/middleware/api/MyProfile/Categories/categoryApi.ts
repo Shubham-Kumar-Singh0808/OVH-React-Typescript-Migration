@@ -14,7 +14,7 @@ const getAllCategories = async (): Promise<Category[]> => {
   return response.data
 }
 
-const createNewCategory = async (categoryName: string): Promise<Category[]> => {
+const createCategory = async (categoryName: string): Promise<Category[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: categoriesApiConfig.addCategory,
     method: AllowedHttpMethods.get,
@@ -48,7 +48,7 @@ const deleteCategory = async (categoryId: number): Promise<Category[]> => {
 
 const categoryApi = {
   getAllCategories,
-  createNewCategory,
+  createCategory,
   deleteCategory,
 }
 

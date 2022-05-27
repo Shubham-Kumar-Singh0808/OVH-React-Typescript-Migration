@@ -6,13 +6,13 @@ import {
 } from '../../types/Login/authenticationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { AllowedLoadingState } from '../../middleware/api/apiList'
+import { ApiLoadingState } from '../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../types/commonTypes'
 import authenticationApi from '../../middleware/api/Login/authenticationApi'
 
 const initialAuthenticationState = {
-  isLoading: AllowedLoadingState.idle,
+  isLoading: ApiLoadingState.idle,
 } as AuthenticationState
 
 const authenticateUser = createAsyncThunk<
@@ -53,23 +53,23 @@ const authenticationSlice = createSlice({
       state.error = null
     },
     clearLoading: (state) => {
-      state.isLoading = AllowedLoadingState.idle
+      state.isLoading = ApiLoadingState.idle
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(authenticateUser.pending, (state) => {
-        state.isLoading = AllowedLoadingState.loading
+        state.isLoading = ApiLoadingState.loading
       })
       .addCase(authenticateUser.fulfilled, (state, action) => {
         return {
           ...state,
           ...action.payload,
-          isLoading: AllowedLoadingState.succeeded,
+          isLoading: ApiLoadingState.succeeded,
         }
       })
       .addCase(authenticateUser.rejected, (state, action) => {
-        state.isLoading = AllowedLoadingState.failed
+        state.isLoading = ApiLoadingState.failed
         state.error = action.payload as ValidationError
       })
   },

@@ -18,12 +18,12 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../utils/paginationUtils'
-import { reduxService } from '../../../reducers/reduxService'
+import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const CategoryListTable = (): JSX.Element => {
   const categories = useTypedSelector(
-    reduxService.category.selectors.selectCategoryList,
+    reduxServices.category.selectors.categories,
   )
   const dispatch = useAppDispatch()
 
@@ -63,7 +63,7 @@ const CategoryListTable = (): JSX.Element => {
   const handleConfirmDelete = async (categoryId: number) => {
     setIsDeleteModalVisible(false)
 
-    dispatch(reduxService.category.deleteCategory(categoryId))
+    dispatch(reduxServices.category.deleteCategory(categoryId))
   }
 
   const currentPageItems = useMemo(

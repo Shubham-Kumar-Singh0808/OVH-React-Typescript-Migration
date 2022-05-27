@@ -9,15 +9,15 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import {
-  personalInfoThunk,
   personalInfoSelectors,
+  personalInfoThunk,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { reduxService } from '../../../reducers/reduxService'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const VisaDetailsTable = ({
   editVisaButtonHandler,
@@ -50,7 +50,7 @@ const VisaDetailsTable = ({
     ) {
       dispatch(personalInfoThunk.getEmployeeVisaDetails(employeeId))
       dispatch(
-        reduxService.app.actions.addToast(
+        reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
             toastMessage="Visa Detail deleted successfully"

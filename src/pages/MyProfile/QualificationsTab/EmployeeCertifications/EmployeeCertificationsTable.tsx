@@ -17,7 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { reduxService } from '../../../../reducers/reduxService'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const CertificationsTable = ({
   editCertificateButtonHandler,
@@ -53,7 +53,7 @@ const CertificationsTable = ({
       )
     ) {
       dispatch(certificationThunk.getEmployeeCertificates())
-      dispatch(reduxService.app.actions.addToast(toastElement))
+      dispatch(reduxServices.app.actions.addToast(toastElement))
     }
   }
 

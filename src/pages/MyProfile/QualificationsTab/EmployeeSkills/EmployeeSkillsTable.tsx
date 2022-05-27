@@ -14,7 +14,7 @@ import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { employeeSkillThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
-import { reduxService } from '../../../../reducers/reduxService'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const SkillsTable: React.FC<EmployeeSkillInfo> = ({
   editSkillButtonHandler,
@@ -55,7 +55,7 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
       )
     ) {
       dispatch(employeeSkillThunk.getEmployeeSkills())
-      dispatch(dispatch(reduxService.app.actions.addToast(toastElement)))
+      dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
     }
   }
 

@@ -14,7 +14,7 @@ import CIcon from '@coreui/icons-react'
 import React from 'react'
 import { cilMenu } from '@coreui/icons'
 import { logo } from '../assets/brand/logo'
-import { reduxService } from '../reducers/reduxService'
+import { reduxServices } from '../reducers/reduxServices'
 import { useAppDispatch } from '../stateStore'
 
 const AppHeader = (): JSX.Element => {
@@ -25,7 +25,7 @@ const AppHeader = (): JSX.Element => {
       <CContainer fluid>
         <CHeaderToggler
           className="ps-1 me-auto"
-          onClick={() => dispatch(reduxService.app.actions.toggleSidebar())}
+          onClick={() => dispatch(reduxServices.app.actions.toggleSidebar())}
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>

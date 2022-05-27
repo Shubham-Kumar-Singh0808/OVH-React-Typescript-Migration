@@ -1,7 +1,7 @@
 import { CBadge, CModal, CModalBody } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 
-import { reduxService } from '../reducers/reduxService'
+import { reduxServices } from '../reducers/reduxServices'
 import { useAppDispatch } from '../stateStore'
 import { useHistory } from 'react-router-dom'
 import { useIdleTimer } from 'react-idle-timer'
@@ -32,10 +32,10 @@ const IdleModal = ({
 
     // clear authentication
     localStorage.clear()
-    dispatch(reduxService.authentication.actions.clearAuthentication())
+    dispatch(reduxServices.authentication.actions.clearAuthentication())
 
     //set session expired
-    dispatch(reduxService.app.actions.setIsSessionExpired(true))
+    dispatch(reduxServices.app.actions.setIsSessionExpired(true))
 
     // redirect to session expire page
     history.push('/sessionExpire')

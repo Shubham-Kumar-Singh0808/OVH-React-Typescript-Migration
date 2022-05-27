@@ -16,13 +16,13 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
 import moment from 'moment'
-import { reduxService } from '../../../reducers/reduxService'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 function AddEditVisaDetails({
   isEditVisaDetails = false,
@@ -155,7 +155,7 @@ function AddEditVisaDetails({
       backButtonHandler()
       dispatch(
         dispatch(
-          reduxService.app.actions.addToast(
+          reduxServices.app.actions.addToast(
             getToastMessage(actionMapping.added),
           ),
         ),
@@ -176,7 +176,7 @@ function AddEditVisaDetails({
     ) {
       backButtonHandler()
       dispatch(
-        reduxService.app.actions.addToast(
+        reduxServices.app.actions.addToast(
           getToastMessage(actionMapping.updated),
         ),
       )
