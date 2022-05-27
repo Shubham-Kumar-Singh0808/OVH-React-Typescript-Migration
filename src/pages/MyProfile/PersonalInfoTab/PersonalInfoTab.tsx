@@ -93,7 +93,16 @@ const PersonalInfoTab = (): JSX.Element => {
   const [checkBox, setCheckBox] = useState(false)
 
   useEffect(() => {
-    if (!checkBox) {
+    if (checkBox) {
+      setEmployeePermanentAddressInformationEditData({
+        permanentAddress:
+          employeePresenetAddressInformationEditData.presentAddress,
+        permanentCity: employeePresenetAddressInformationEditData.presentCity,
+        permanentZip: employeePresenetAddressInformationEditData.presentZip,
+        permanentLandMark:
+          employeePresenetAddressInformationEditData.presentLandMark,
+      })
+    } else {
       setEmployeePermanentAddressInformationEditData({
         permanentAddress: '',
         permanentCity: '',
@@ -101,7 +110,13 @@ const PersonalInfoTab = (): JSX.Element => {
         permanentLandMark: '',
       })
     }
-  }, [checkBox])
+  }, [
+    checkBox,
+    employeePresenetAddressInformationEditData.presentAddress,
+    employeePresenetAddressInformationEditData.presentCity,
+    employeePresenetAddressInformationEditData.presentLandMark,
+    employeePresenetAddressInformationEditData.presentZip,
+  ])
   const onChangeContactDetailsHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -227,6 +242,7 @@ const PersonalInfoTab = (): JSX.Element => {
       ...employeePresenetAddressInformationEditData,
       ...employeePermanentAddressInformationEditData,
       ...employeePassportInformationEditData,
+      id: employeePersonalInformation.id,
     }
     dispatch(
       employeeBasicInformationThunk.updateEmployeeBasicInformation(
@@ -267,7 +283,16 @@ const PersonalInfoTab = (): JSX.Element => {
             <CCardBody>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Mobile:<span className="text-danger">*</span>
+                  Mobile:{' '}
+                  <span
+                    className={
+                      employeeContactInformationEditData?.mobile
+                        ? 'text-white'
+                        : 'text-danger'
+                    }
+                  >
+                    *
+                  </span>
                 </CFormLabel>
                 <CCol sm={1}>
                   <CFormInput
@@ -390,7 +415,16 @@ const PersonalInfoTab = (): JSX.Element => {
             <CCardBody>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Name:<span className="text-danger">*</span>
+                  Name:{' '}
+                  <span
+                    className={
+                      employeeEmergencyContactInformationEditData?.emergencyContactName
+                        ? 'text-white'
+                        : 'text-danger'
+                    }
+                  >
+                    *
+                  </span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormInput
@@ -408,7 +442,16 @@ const PersonalInfoTab = (): JSX.Element => {
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Mobile:<span className="text-danger">*</span>
+                  Mobile:{' '}
+                  <span
+                    className={
+                      employeeEmergencyContactInformationEditData?.emergencyPhone
+                        ? 'text-white'
+                        : 'text-danger'
+                    }
+                  >
+                    *
+                  </span>
                 </CFormLabel>
                 <CCol sm={1}>
                   <CFormInput
@@ -437,12 +480,20 @@ const PersonalInfoTab = (): JSX.Element => {
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
                   Relationship:
-                  <span className="text-danger">*</span>
+                  <span
+                    className={
+                      employeeEmergencyContactInformationEditData?.emergencyRelationShip
+                        ? 'text-white'
+                        : 'text-danger'
+                    }
+                  >
+                    *
+                  </span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormSelect
                     aria-label="Relationship"
-                    name="relationShip"
+                    name="emergencyRelationShip"
                     id="Relationship"
                     size="sm"
                     onChange={onChangeEmergencyContactDetailsHandler}
@@ -471,7 +522,16 @@ const PersonalInfoTab = (): JSX.Element => {
             <CCardBody>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Address:<span className="text-danger">*</span>
+                  Address:
+                  <span
+                    className={
+                      employeePresenetAddressInformationEditData?.presentAddress
+                        ? 'text-white'
+                        : 'text-danger'
+                    }
+                  >
+                    *
+                  </span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormInput
@@ -488,7 +548,16 @@ const PersonalInfoTab = (): JSX.Element => {
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  City/Town:<span className="text-danger">*</span>
+                  City/Town:{' '}
+                  <span
+                    className={
+                      employeePresenetAddressInformationEditData?.presentCity
+                        ? 'text-white'
+                        : 'text-danger'
+                    }
+                  >
+                    *
+                  </span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormInput
@@ -505,7 +574,16 @@ const PersonalInfoTab = (): JSX.Element => {
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Zip:<span className="text-danger">*</span>
+                  Zip:{' '}
+                  <span
+                    className={
+                      employeePresenetAddressInformationEditData?.presentZip
+                        ? 'text-white'
+                        : 'text-danger'
+                    }
+                  >
+                    *
+                  </span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormInput
