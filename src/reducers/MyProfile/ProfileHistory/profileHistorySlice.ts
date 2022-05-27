@@ -1,16 +1,16 @@
 import { AppDispatch, RootState } from '../../../stateStore'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
-  profileHistoryItem,
-  profileHistoryState,
+  ProfileHistoryItem,
+  ProfileHistoryState,
 } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import profileHistoryApi from '../../../middleware/api/MyProfile/ProfileHistory/profileHistoryApi'
 
 const getProfileHistory = createAsyncThunk<
-  profileHistoryItem[] | undefined,
+  ProfileHistoryItem[] | undefined,
   string,
   {
     dispatch: AppDispatch
@@ -25,17 +25,18 @@ const getProfileHistory = createAsyncThunk<
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
-const initialProfileHistoryState = {} as profileHistoryState
+const initialProfileHistoryState: ProfileHistoryState = {
+  profileHistoryList: [],
+  isLoading: false,
+  error: null,
+}
 
 const profileHistorySlice = createSlice({
   name: 'profileHistory',
   initialState: initialProfileHistoryState,
   reducers: {
-    setProfileHistory: (state, action) => {
-      return { ...state, ...action.payload }
-    },
-    clearError: (state) => {
-      state.error = null
+    clearProfileHistoryList: (state) => {
+      state.profileHistoryList = []
     },
   },
 
@@ -45,7 +46,8 @@ const profileHistorySlice = createSlice({
         state.isLoading = true
       })
       .addCase(getProfileHistory.fulfilled, (state, action) => {
-        state.profileHistoryList = action.payload as profileHistoryItem[]
+        state.isLoading = false
+        state.profileHistoryList = action.payload as ProfileHistoryItem[]
       })
       .addCase(getProfileHistory.rejected, (state, action) => {
         state.isLoading = false
@@ -53,16 +55,18 @@ const profileHistorySlice = createSlice({
       })
   },
 })
-export const { setProfileHistory } = profileHistorySlice.actions
 
-const profileHistoryData = (state: RootState): profileHistoryItem[] =>
+const profileHistoryIsLoading = (state: RootState): boolean =>
+  state.profileHistory.isLoading
+const profileHistoryData = (state: RootState): ProfileHistoryItem[] =>
   state.profileHistory.profileHistoryList
 
-export const getProfileHistoryThunk = {
+export const profileHistoryThunk = {
   getProfileHistory,
 }
-
+export const setProfileHistory = profileHistorySlice.actions
 export const profileHistorySelectors = {
+  profileHistoryIsLoading,
   profileHistoryData,
 }
 

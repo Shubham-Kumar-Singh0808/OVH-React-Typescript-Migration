@@ -1,6 +1,6 @@
 import { ValidationError } from '../../commonTypes'
 
-export type profileHistoryItem = {
+export type ProfileHistoryItem = {
   size: number
   list: list[]
 }
@@ -122,8 +122,8 @@ export type list = {
   oldComments: string
   comments: string
 }
-export type profileHistoryState = {
-  profileHistoryList: profileHistoryItem[]
+export type ProfileHistoryState = {
+  profileHistoryList: ProfileHistoryItem[]
   error: ValidationError
   isLoading: boolean
 }

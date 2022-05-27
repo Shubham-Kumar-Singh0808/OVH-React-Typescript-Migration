@@ -1,10 +1,12 @@
+import { CCardHeader, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
+import {
+  profileHistorySelectors,
+  profileHistoryThunk,
+} from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 
-import { CCardHeader } from '@coreui/react-pro'
 import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
 import { authenticationSelectors } from '../../../reducers/Login/authenticationSlice'
-import profileHistoryApi from '../../../middleware/api/MyProfile/ProfileHistory/profileHistoryApi'
-import { profileHistorySelectors } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../../../stateStore'
 
@@ -13,13 +15,15 @@ const EmployeeProfileHistory = (): JSX.Element => {
   const authenticatedToken = useTypedSelector(
     authenticationSelectors.selectToken,
   )
+
   const dispatch = useDispatch()
-  // const employeeProfileHistoryIsLoading = useTypedSelector(
-  //   profileHistorySelectors.profileHistoryIsLoading,
-  // )
+  const isLoading = useTypedSelector(
+    profileHistorySelectors.profileHistoryIsLoading,
+  )
+
   useEffect(() => {
     if (authenticatedToken) {
-      dispatch(profileHistoryApi.getProfileHistory(employeeId))
+      dispatch(profileHistoryThunk.getProfileHistory(employeeId))
     }
   }, [authenticatedToken, dispatch, employeeId])
   return (
@@ -27,14 +31,16 @@ const EmployeeProfileHistory = (): JSX.Element => {
       <CCardHeader>
         <h4 className="h4">Employee Profile History</h4>
       </CCardHeader>
-      <ProfileHistoryTimeLine />
-      {/* {!employeeProfileHistoryIsLoading ? (
+      {/* <ProfileHistoryTimeLine /> */}
+      {!isLoading ? (
         <>
           <ProfileHistoryTimeLine />
         </>
       ) : (
-        <>No Data</>
-      )} */}
+        <>
+          <CSpinner />
+        </>
+      )}
     </>
   )
 }

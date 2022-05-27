@@ -1,7 +1,13 @@
-import { CBadge, CFormLabel } from '@coreui/react-pro'
+import { CBadge, CFormLabel, CSpinner } from '@coreui/react-pro'
+import React, { useEffect } from 'react'
+import {
+  profileHistorySelectors,
+  profileHistoryThunk,
+} from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 
-import React from 'react'
-import { profileHistorySelectors } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
+import { ProfileHistoryState } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
+import { authenticationSelectors } from '../../../reducers/Login/authenticationSlice'
+import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../../../stateStore'
 
 const ProfileHistoryTimeLine = (): JSX.Element => {
@@ -9,24 +15,35 @@ const ProfileHistoryTimeLine = (): JSX.Element => {
     profileHistorySelectors.profileHistoryData,
   )
   console.log(employeeProfileHistory)
-  // if (employeeProfileHistory == undefined) {
-  //   console.log('Unidened hai')
+
+  // const employeeProfileHistory = useTypedSelector(
+  //   profileHistorySelectors.profileHistoryData,
+  // )
+  // console.log(employeeProfileHistory)
+  // if (employeeProfileHistory.length === 0) {
+  //   console.log(`${employeeProfileHistory.length} Unidened hai`)
   // } else {
   //   console.log('Unidened nai hai')
-  //   employeeProfileHistory = employeeProfileHistory
-  //   console.log(employeeProfileHistory)
   // }
   return (
     <>
       <div className="sh-timeline-container">
-        {/* {employeeProfileHistory.length ? (
-          <>No Data</>
+        {employeeProfileHistory.length ? (
+          <>
+            {employeeProfileHistory?.map((curItem, index) => {
+              curItem.list.map((childItem, index) => {
+                ;<CBadge className="rounded-pill" color="success">
+                  {childItem.baseLocation}
+                </CBadge>
+              })
+            })}
+          </>
         ) : (
-          employeeProfileHistory?.map((curItem, index) => 
-          curItem.list.length? () : ()
-          ),
-        )} */}
-        {employeeProfileHistory &&
+          <>
+            <CSpinner />
+          </>
+        )}
+        {/* {employeeProfileHistory &&
           employeeProfileHistory?.map((curItem, index) =>
             curItem.list.length ? (
               curItem.list?.map((childItem, index) => {
@@ -37,7 +54,7 @@ const ProfileHistoryTimeLine = (): JSX.Element => {
             ) : (
               <>No data</>
             ),
-          )}
+          )} */}
         {/* <div className="sh-timeline-card">
           <div className="sh-timeline-timestamp">09-Apr-2022 10:16:48 AM</div>
           <div className="sh-timeline-content">
