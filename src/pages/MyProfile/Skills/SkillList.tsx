@@ -3,12 +3,12 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import AddNewSkill from './AddNewSkill'
-import { AllowedLoadingState } from '../../../middleware/api/apiList'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import CIcon from '@coreui/icons-react'
 import OCard from '../../../components/ReusableComponent/OCard'
 import SkillListTable from './SkillListTable'
 import { cilArrowLeft } from '@coreui/icons'
-import { reduxService } from '../../../reducers/reduxService'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const SkillList = ({
   categoryId,
@@ -18,21 +18,19 @@ const SkillList = ({
   categoryType: string
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const isLoading = useTypedSelector(
-    reduxService.skill.selectors.selectIsSkillListLoading,
-  )
+  const isLoading = useTypedSelector(reduxServices.skill.selectors.isLoading)
   const refreshList = useTypedSelector(
-    reduxService.skill.selectors.selectRefreshList,
+    reduxServices.skill.selectors.refreshList,
   )
 
   useEffect(() => {
-    dispatch(reduxService.skill.getAllSkills(categoryId))
+    dispatch(reduxServices.skill.getAllSkills(categoryId))
   }, [dispatch, categoryId])
 
   useEffect(() => {
     if (refreshList) {
-      dispatch(reduxService.skill.getAllSkills(categoryId))
-      dispatch(reduxService.skill.actions.doneRefreshList())
+      dispatch(reduxServices.skill.getAllSkills(categoryId))
+      dispatch(reduxServices.skill.actions.doneRefreshList())
     }
   }, [dispatch, categoryId, refreshList])
   return (
@@ -42,7 +40,7 @@ const SkillList = ({
         title={`Skill List for ${categoryType}`}
         CFooterClassName="d-none"
       >
-        {isLoading !== AllowedLoadingState.loading ? (
+        {isLoading !== ApiLoadingState.loading ? (
           <CRow>
             <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
               <CButton color="info" className="px-4 text-white" size="sm">

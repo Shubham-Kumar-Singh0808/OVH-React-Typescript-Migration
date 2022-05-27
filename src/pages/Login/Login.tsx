@@ -18,7 +18,7 @@ import { useAppDispatch, useTypedSelector } from '../../stateStore'
 
 import AIMLBridgeLogo from '../../assets/images/logo/ai_bridge_logo_207X65.png'
 import RayBizTechLogo from '../../assets/images/logo/raybiztech-logo.png'
-import { reduxService } from '../../reducers/reduxServices'
+import { reduxServices } from '../../reducers/reduxServices'
 import { useHistory } from 'react-router-dom'
 
 const Login = (): JSX.Element => {
@@ -31,7 +31,7 @@ const Login = (): JSX.Element => {
   const [password, setPassword] = useState('')
 
   const error = useTypedSelector(
-    reduxService.authentication.selectors.selectError,
+    reduxServices.authentication.selectors.selectError,
   )
 
   const dispatch = useAppDispatch()
@@ -40,8 +40,8 @@ const Login = (): JSX.Element => {
   useEffect(() => {
     if (username && password) {
       setIsLoginBtnEnabled(true)
-      dispatch(reduxService.authentication.actions.clearError())
-      dispatch(reduxService.authentication.actions.clearLoading())
+      dispatch(reduxServices.authentication.actions.clearError())
+      dispatch(reduxServices.authentication.actions.clearLoading())
     } else {
       setIsLoginBtnEnabled(false)
     }
@@ -69,7 +69,7 @@ const Login = (): JSX.Element => {
   ): Promise<void> => {
     event.preventDefault()
     const resultAction = await dispatch(
-      reduxService.authentication.authenticateUser({
+      reduxServices.authentication.authenticateUser({
         username,
         password,
         tenantKey,
@@ -77,7 +77,9 @@ const Login = (): JSX.Element => {
     )
 
     if (
-      reduxService.authentication.authenticateUser.fulfilled.match(resultAction)
+      reduxServices.authentication.authenticateUser.fulfilled.match(
+        resultAction,
+      )
     ) {
       history.push('/dashboard')
     } else {
