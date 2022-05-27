@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CCardHeader,
   CCardBody,
@@ -10,15 +10,21 @@ import {
   CFormCheck,
   CButton,
 } from '@coreui/react-pro'
-// import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import DatePicker from 'react-datepicker'
 import FamilyDetailsTable from './FamilyDetailsTable'
 import VisaDetailsTable from './VisaDetailsTable'
 import AddEditVisaDetails from './AddEditVisaDetails'
 import AddEditFamilyDetails from './AddEditFamilyDetails'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
-import { useAppDispatch } from '../../../stateStore'
+import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
+import { useTypedSelector, useAppDispatch } from '../../../stateStore'
+import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 const PersonalInfoTab = (): JSX.Element => {
+  const employeePersonalInformation = useTypedSelector(
+    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
+  )
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
 
@@ -29,6 +35,204 @@ const PersonalInfoTab = (): JSX.Element => {
   const editVisaButtonHandler = (id: number) => {
     setToggle('EditVisa')
     dispatch(personalInfoThunk.getEmployeeVisa(id))
+  }
+  const selectedUserContactDetails = {
+    mobile: employeePersonalInformation.mobile,
+    alternativeMobile: employeePersonalInformation.alternativeMobile,
+    homeCode: employeePersonalInformation.homeCode,
+    homeNumber: employeePersonalInformation.homeNumber,
+    workCode: employeePersonalInformation.workCode,
+    workNumber: employeePersonalInformation.workNumber,
+  }
+  const selectedUserEmergencyContactDetails = {
+    emergencyContactName: employeePersonalInformation.emergencyContactName,
+    emergencyPhone: employeePersonalInformation.emergencyPhone,
+    emergencyRelationShip: employeePersonalInformation.emergencyRelationShip,
+  }
+  const selectedUserPresenetAddressDetails = {
+    presentAddress: employeePersonalInformation.presentAddress,
+    presentCity: employeePersonalInformation.presentCity,
+    presentZip: employeePersonalInformation.presentZip,
+    presentLandMark: employeePersonalInformation.presentLandMark,
+  }
+  const selectedUserPermanentAddressDetails = {
+    permanentAddress: employeePersonalInformation.permanentAddress,
+    permanentCity: employeePersonalInformation.permanentCity,
+    permanentZip: employeePersonalInformation.permanentZip,
+    permanentLandMark: employeePersonalInformation.permanentLandMark,
+  }
+  const selectedUserPassportDetails = {
+    passportNumber: employeePersonalInformation.passportNumber,
+    passportIssuedPlace: employeePersonalInformation.passportIssuedPlace,
+    passportIssuedDate: employeePersonalInformation.passportIssuedDate,
+    passportExpDate: employeePersonalInformation.passportExpDate,
+  }
+  const [
+    employeeContactInformationEditData,
+    setEmployeeContactInformationEditData,
+  ] = useState(selectedUserContactDetails)
+
+  const [
+    employeeEmergencyContactInformationEditData,
+    setEmployeeEmergencyContactInformationEditData,
+  ] = useState(selectedUserEmergencyContactDetails)
+
+  const [
+    employeePresenetAddressInformationEditData,
+    setEmployeePresenetAddressInformationEditData,
+  ] = useState(selectedUserPresenetAddressDetails)
+  const [
+    employeePermanentAddressInformationEditData,
+    setEmployeePermanentAddressInformationEditData,
+  ] = useState(selectedUserPermanentAddressDetails)
+
+  const [
+    employeePassportInformationEditData,
+    setEmployeePassportInformationEditData,
+  ] = useState(selectedUserPassportDetails)
+  const [checkBox, setCheckBox] = useState(false)
+
+  useEffect(() => {
+    if (!checkBox) {
+      setEmployeePermanentAddressInformationEditData({
+        permanentAddress: '',
+        permanentCity: '',
+        permanentZip: '',
+        permanentLandMark: '',
+      })
+    }
+  }, [checkBox])
+  const onChangeContactDetailsHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = e.target
+    if (name === 'mobile') {
+      const mobileValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: mobileValue } }
+      })
+    } else if (name === 'alternativeMobile') {
+      const alternativeMobileValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: alternativeMobileValue } }
+      })
+    } else if (name === 'homeCode') {
+      const homeCodeValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: homeCodeValue } }
+      })
+    } else if (name === 'homeNumber') {
+      const homeNumberValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: homeNumberValue } }
+      })
+    } else if (name === 'workCode') {
+      const workCodeValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: workCodeValue } }
+      })
+    } else if (name === 'workNumber') {
+      const workNumberValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: workNumberValue } }
+      })
+    } else {
+      setEmployeeContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
+  }
+  const onChangeEmergencyContactDetailsHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = e.target
+    if (name === 'emergencyPhone') {
+      const emergencyPhoneValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeEmergencyContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: emergencyPhoneValue } }
+      })
+    } else if (name === 'emergencyContactName') {
+      const emergencyContactNameValue = value.replace(/[^a-zA-Z\s]/gi, '')
+      setEmployeeEmergencyContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: emergencyContactNameValue } }
+      })
+    } else {
+      setEmployeeEmergencyContactInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
+  }
+
+  const onChangePresenetAddressHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = e.target
+    if (name === 'presentZip') {
+      const presentZipValue = value.replace(/[^0-9]/gi, '')
+      setEmployeePresenetAddressInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: presentZipValue } }
+      })
+    } else {
+      setEmployeePresenetAddressInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
+  }
+
+  const onChangePermanentAddressHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = e.target
+    if (name === 'permanentZip') {
+      const permanentZipValue = value.replace(/[^0-9]/gi, '')
+      setEmployeePermanentAddressInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: permanentZipValue } }
+      })
+    } else {
+      setEmployeePermanentAddressInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
+  }
+
+  const onChangePassportInformationHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = e.target
+    setEmployeePassportInformationEditData((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
+  }
+  const onDateChangeHandler = (date: Date, e: { name: string }) => {
+    if (employeePassportInformationEditData) {
+      const formatDate = moment(date).format('DD/MM/YYYY')
+      const name = e.name
+      setEmployeePassportInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: formatDate } }
+      })
+    }
+  }
+
+  console.log(employeePermanentAddressInformationEditData.permanentAddress)
+  const handleSubmitBasicDetails = async () => {
+    const prepareObject = {
+      ...employeeContactInformationEditData,
+      ...employeeEmergencyContactInformationEditData,
+      ...employeePresenetAddressInformationEditData,
+      ...employeePermanentAddressInformationEditData,
+      ...employeePassportInformationEditData,
+    }
+    dispatch(
+      employeeBasicInformationThunk.updateEmployeeBasicInformation(
+        prepareObject,
+      ),
+    )
   }
 
   return (
@@ -75,7 +279,15 @@ const PersonalInfoTab = (): JSX.Element => {
                   />
                 </CCol>
                 <CCol sm={3}>
-                  <CFormInput type="text" placeholder="98xxxxxxxx" size="sm" />
+                  <CFormInput
+                    type="text"
+                    placeholder="98xxxxxxxx"
+                    size="sm"
+                    name="mobile"
+                    onChange={onChangeContactDetailsHandler}
+                    value={employeeContactInformationEditData.mobile}
+                    maxLength={10}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -92,7 +304,15 @@ const PersonalInfoTab = (): JSX.Element => {
                   />
                 </CCol>
                 <CCol sm={3}>
-                  <CFormInput type="text" size="sm" placeholder="98xxxxxxxx" />
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    name="alternativeMobile"
+                    placeholder="98xxxxxxxx"
+                    value={employeeContactInformationEditData.alternativeMobile}
+                    onChange={onChangeContactDetailsHandler}
+                    maxLength={10}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -109,10 +329,24 @@ const PersonalInfoTab = (): JSX.Element => {
                   />
                 </CCol>
                 <CCol sm={2}>
-                  <CFormInput type="text" size="sm" />
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    name="homeCode"
+                    value={employeeContactInformationEditData.homeCode}
+                    onChange={onChangeContactDetailsHandler}
+                    maxLength={4}
+                  />
                 </CCol>
                 <CCol sm={3}>
-                  <CFormInput type="text" size="sm" />
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    name="homeNumber"
+                    onChange={onChangeContactDetailsHandler}
+                    value={employeeContactInformationEditData.homeNumber}
+                    maxLength={8}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -129,10 +363,24 @@ const PersonalInfoTab = (): JSX.Element => {
                   />
                 </CCol>
                 <CCol sm={2}>
-                  <CFormInput type="text" size="sm" />
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    onChange={onChangeContactDetailsHandler}
+                    value={employeeContactInformationEditData.workCode}
+                    name="workCode"
+                    maxLength={4}
+                  />
                 </CCol>
                 <CCol sm={3}>
-                  <CFormInput type="text" size="sm" />
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    name="workNumber"
+                    onChange={onChangeContactDetailsHandler}
+                    value={employeeContactInformationEditData.workNumber}
+                    maxLength={8}
+                  />
                 </CCol>
               </CRow>
             </CCardBody>
@@ -148,8 +396,13 @@ const PersonalInfoTab = (): JSX.Element => {
                   <CFormInput
                     type="text"
                     size="sm"
-                    id="Name"
-                    placeholder="Name"
+                    name="emergencyContactName"
+                    id="emergencyContactName"
+                    placeholder="emergencyContactName"
+                    onChange={onChangeEmergencyContactDetailsHandler}
+                    value={
+                      employeeEmergencyContactInformationEditData.emergencyContactName
+                    }
                   />
                 </CCol>
               </CRow>
@@ -172,6 +425,12 @@ const PersonalInfoTab = (): JSX.Element => {
                     id="Mobile"
                     placeholder="9xxxxxxxxx"
                     size="sm"
+                    name="emergencyPhone"
+                    onChange={onChangeEmergencyContactDetailsHandler}
+                    value={
+                      employeeEmergencyContactInformationEditData.emergencyPhone
+                    }
+                    maxLength={10}
                   />
                 </CCol>
               </CRow>
@@ -186,6 +445,10 @@ const PersonalInfoTab = (): JSX.Element => {
                     name="relationShip"
                     id="Relationship"
                     size="sm"
+                    onChange={onChangeEmergencyContactDetailsHandler}
+                    value={
+                      employeeEmergencyContactInformationEditData.emergencyRelationShip
+                    }
                   >
                     <option value={''}>Select Relationship</option>
                     <option value="Brother">Brother</option>
@@ -211,7 +474,16 @@ const PersonalInfoTab = (): JSX.Element => {
                   Address:<span className="text-danger">*</span>
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormInput type="text" placeholder="Address" size="sm" />
+                  <CFormInput
+                    type="text"
+                    name="presentAddress"
+                    placeholder="Address"
+                    size="sm"
+                    onChange={onChangePresenetAddressHandler}
+                    value={
+                      employeePresenetAddressInformationEditData.presentAddress
+                    }
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -219,7 +491,16 @@ const PersonalInfoTab = (): JSX.Element => {
                   City/Town:<span className="text-danger">*</span>
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormInput type="text" placeholder="City/Town" size="sm" />
+                  <CFormInput
+                    type="text"
+                    placeholder="City/Town"
+                    size="sm"
+                    name="presentCity"
+                    onChange={onChangePresenetAddressHandler}
+                    value={
+                      employeePresenetAddressInformationEditData.presentCity
+                    }
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -227,7 +508,17 @@ const PersonalInfoTab = (): JSX.Element => {
                   Zip:<span className="text-danger">*</span>
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormInput type="text" placeholder="Zip" size="sm" />
+                  <CFormInput
+                    type="text"
+                    placeholder="Zip"
+                    size="sm"
+                    name="presentZip"
+                    onChange={onChangePresenetAddressHandler}
+                    value={
+                      employeePresenetAddressInformationEditData.presentZip
+                    }
+                    maxLength={6}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -235,7 +526,16 @@ const PersonalInfoTab = (): JSX.Element => {
                   Landmark:
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormInput type="text" placeholder="Landmark" size="sm" />
+                  <CFormInput
+                    type="text"
+                    placeholder="Landmark"
+                    size="sm"
+                    name="presentLandMark"
+                    onChange={onChangePresenetAddressHandler}
+                    value={
+                      employeePresenetAddressInformationEditData.presentLandMark
+                    }
+                  />
                 </CCol>
               </CRow>
             </CCardBody>
@@ -247,6 +547,7 @@ const PersonalInfoTab = (): JSX.Element => {
                 <CFormCheck
                   id="flexCheckDefault"
                   label="Same as Present Address"
+                  onClick={() => setCheckBox(!checkBox)}
                 />
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -254,7 +555,19 @@ const PersonalInfoTab = (): JSX.Element => {
                   Address:
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormInput type="text" placeholder=" Address" size="sm" />
+                  <CFormInput
+                    disabled={checkBox}
+                    type="text"
+                    placeholder=" Address"
+                    size="sm"
+                    name="permanentAddress"
+                    onChange={onChangePermanentAddressHandler}
+                    value={
+                      checkBox
+                        ? employeePresenetAddressInformationEditData.presentAddress
+                        : employeePermanentAddressInformationEditData.permanentAddress
+                    }
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -262,7 +575,19 @@ const PersonalInfoTab = (): JSX.Element => {
                   City/Town:
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormInput type="text" placeholder=" City/Town" size="sm" />
+                  <CFormInput
+                    type="text"
+                    disabled={checkBox}
+                    placeholder=" City/Town"
+                    size="sm"
+                    name="permanentCity"
+                    onChange={onChangePermanentAddressHandler}
+                    value={
+                      checkBox
+                        ? employeePresenetAddressInformationEditData.presentCity
+                        : employeePermanentAddressInformationEditData.permanentCity
+                    }
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -270,7 +595,20 @@ const PersonalInfoTab = (): JSX.Element => {
                   Zip:
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormInput type="text" placeholder=" Zip" size="sm" />
+                  <CFormInput
+                    type="text"
+                    placeholder=" Zip"
+                    size="sm"
+                    disabled={checkBox}
+                    name="permanentZip"
+                    onChange={onChangePermanentAddressHandler}
+                    value={
+                      checkBox
+                        ? employeePresenetAddressInformationEditData.presentZip
+                        : employeePermanentAddressInformationEditData.permanentZip
+                    }
+                    maxLength={6}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -278,7 +616,19 @@ const PersonalInfoTab = (): JSX.Element => {
                   Landmark:
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormInput type="text" placeholder="Landmark" size="sm" />
+                  <CFormInput
+                    type="text"
+                    disabled={checkBox}
+                    placeholder="Landmark"
+                    size="sm"
+                    name="permanentLandMark"
+                    onChange={onChangePermanentAddressHandler}
+                    value={
+                      checkBox
+                        ? employeePresenetAddressInformationEditData.presentLandMark
+                        : employeePermanentAddressInformationEditData.permanentLandMark
+                    }
+                  />
                 </CCol>
               </CRow>
             </CCardBody>
@@ -295,6 +645,9 @@ const PersonalInfoTab = (): JSX.Element => {
                     type="text"
                     placeholder="Passport Number"
                     size="sm"
+                    name="passportNumber"
+                    onChange={onChangePassportInformationHandler}
+                    value={employeePassportInformationEditData.passportNumber}
                   />
                 </CCol>
               </CRow>
@@ -307,8 +660,13 @@ const PersonalInfoTab = (): JSX.Element => {
                     type="text"
                     size="sm"
                     placeholder="Place"
+                    name="passportIssuedPlace"
                     aria-label="Disabled input example"
                     disabled
+                    onChange={onChangePassportInformationHandler}
+                    value={
+                      employeePassportInformationEditData.passportIssuedPlace
+                    }
                   />
                 </CCol>
               </CRow>
@@ -317,18 +675,23 @@ const PersonalInfoTab = (): JSX.Element => {
                   Date of Issue :
                 </CFormLabel>
                 <CCol sm={3}>
-                  {/* <DatePicker
+                  <DatePicker
+                    id="passportIssuedDate"
                     className="form-control form-control-sm"
-                    name="dateOfBirth"
                     maxDate={new Date()}
-                    id="dateOfBirth"
                     peekNextMonth
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
                     placeholderText="dd/mm/yyyy"
-                    dateFormat="dd/MM/yyyy"
-                  /> */}
+                    name="officialBirthday"
+                    value={
+                      employeePassportInformationEditData.passportIssuedDate
+                    }
+                    onChange={(date: Date) =>
+                      onDateChangeHandler(date, { name: 'passportIssuedDate' })
+                    }
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -336,20 +699,21 @@ const PersonalInfoTab = (): JSX.Element => {
                   Date of Expiry:
                 </CFormLabel>
                 <CCol sm={3}>
-                  {/* <DatePicker
-                    className="form-control"
-                    name="dateOfBirth"
+                  <DatePicker
+                    id="passportExpDate"
+                    className="form-control form-control-sm"
                     maxDate={new Date()}
-                     selected={dateOfBirth as Date}
-                     onChange={(date: Date) => onDateChangeHandler(date)}
-                    id="dateOfBirth"
                     peekNextMonth
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
                     placeholderText="dd/mm/yyyy"
-                    dateFormat="dd/MM/yyyy"
-                  /> */}
+                    name="passportExpDate"
+                    value={employeePassportInformationEditData.passportExpDate}
+                    onChange={(date: Date) =>
+                      onDateChangeHandler(date, { name: 'passportExpDate' })
+                    }
+                  />
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
@@ -384,6 +748,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     className="btn-ovh btn btn-success mt-4"
                     size="sm"
                     type="submit"
+                    onClick={handleSubmitBasicDetails}
                   >
                     Save
                   </CButton>
