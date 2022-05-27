@@ -179,6 +179,7 @@ function AddEditEmployeeSkill({
         updateSkillMemberResultAction,
       )
     ) {
+      backButtonHandler()
       dispatch(
         dispatch(appActions.addToast(getToastMessage(actionMapping.updated))),
       )
