@@ -70,7 +70,7 @@ const FamilyDetailsTable = ({
   }
   const tableDataCellProps = {
     colSpan: 4,
-    className: 'bold',
+    className: 'fw-semibold',
   }
 
   const sortedFamilyDetails = useMemo(() => {
@@ -93,7 +93,7 @@ const FamilyDetailsTable = ({
         {!isFieldDisabled ? (
           <>
             <CTableHead color="primary">
-              <CTableRow className="bold">
+              <CTableRow>
                 <CTableDataCell {...tableDataCellProps}>
                   Family Details
                 </CTableDataCell>
