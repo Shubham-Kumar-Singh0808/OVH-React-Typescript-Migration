@@ -250,7 +250,6 @@ const PersonalInfoTab = (): JSX.Element => {
       ),
     )
   }
-
   return (
     <>
       <>
@@ -432,7 +431,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     size="sm"
                     name="emergencyContactName"
                     id="emergencyContactName"
-                    placeholder="emergencyContactName"
+                    placeholder="Name"
                     onChange={onChangeEmergencyContactDetailsHandler}
                     value={
                       employeeEmergencyContactInformationEditData.emergencyContactName
