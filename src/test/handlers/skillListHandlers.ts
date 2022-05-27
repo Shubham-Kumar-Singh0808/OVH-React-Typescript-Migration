@@ -1,6 +1,6 @@
-import { employeeSkillsApiConfig } from '../../middleware/api/apiList'
 import { mockSkills } from '../data/skillListData'
 import { rest } from 'msw'
+import { employeeSkillsApiConfig } from '../../middleware/api/apiList'
 
 export const skillListHandlers = [
   // addNewSkillForCategory api mock

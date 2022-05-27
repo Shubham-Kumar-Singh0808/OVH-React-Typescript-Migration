@@ -1,13 +1,12 @@
-import { CCardBody, CCardHeader } from '@coreui/react-pro'
 import React, { useState } from 'react'
-
-import AddEditFamilyDetails from './AddEditFamilyDetails'
-import AddEditVisaDetails from './AddEditVisaDetails'
+import { CCardHeader, CCardBody } from '@coreui/react-pro'
 import FamilyDetailsTable from './FamilyDetailsTable'
-import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import VisaDetailsTable from './VisaDetailsTable'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import AddEditVisaDetails from './AddEditVisaDetails'
+import AddEditFamilyDetails from './AddEditFamilyDetails'
+import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import { useAppDispatch } from '../../../stateStore'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 const PersonalInfoTab = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()

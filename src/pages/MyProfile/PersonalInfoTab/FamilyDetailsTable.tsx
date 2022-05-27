@@ -9,8 +9,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import {
-  personalInfoSelectors,
   personalInfoThunk,
+  personalInfoSelectors,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -18,7 +18,6 @@ import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/Person
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { appActions } from '../../../reducers/appSlice'
-
 const FamilyDetailsTable = ({
   editButtonHandler,
   isFieldDisabled = false,

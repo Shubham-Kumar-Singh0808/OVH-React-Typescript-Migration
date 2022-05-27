@@ -1,17 +1,16 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  EditFamilyDetailsState,
-  EditVisaDetailsState,
   EmployeeFamilyData,
-  EmployeeFamilyDetails,
-  EmployeeVisaDetails,
-  GetCountryDetails,
-  PersonalInfoTabState,
-  VisaCountryDetails,
   VisaDetails,
+  PersonalInfoTabState,
+  GetCountryDetails,
+  VisaCountryDetails,
+  EmployeeVisaDetails,
+  EditFamilyDetailsState,
+  EmployeeFamilyDetails,
+  EditVisaDetailsState,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
