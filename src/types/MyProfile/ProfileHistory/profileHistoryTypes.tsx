@@ -1,10 +1,10 @@
 import { ValidationError } from '../../commonTypes'
 
 export type ProfileHistoryItem = {
-  size: number
-  list: list[]
+  // size: number
+  list: List[]
 }
-export type list = {
+export type List = {
   id: number
   firstName: string
   lastName: string
@@ -123,7 +123,7 @@ export type list = {
   comments: string
 }
 export type ProfileHistoryState = {
-  profileHistoryList: ProfileHistoryItem[]
+  profileHistoryList: List[]
   error: ValidationError
   isLoading: boolean
 }

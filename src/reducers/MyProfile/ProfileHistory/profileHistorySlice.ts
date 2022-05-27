@@ -1,5 +1,6 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
+  List,
   ProfileHistoryItem,
   ProfileHistoryState,
 } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
@@ -10,7 +11,7 @@ import { ValidationError } from '../../../types/commonTypes'
 import profileHistoryApi from '../../../middleware/api/MyProfile/ProfileHistory/profileHistoryApi'
 
 const getProfileHistory = createAsyncThunk<
-  ProfileHistoryItem[] | undefined,
+  List[] | undefined,
   string,
   {
     dispatch: AppDispatch
@@ -47,7 +48,7 @@ const profileHistorySlice = createSlice({
       })
       .addCase(getProfileHistory.fulfilled, (state, action) => {
         state.isLoading = false
-        state.profileHistoryList = action.payload as ProfileHistoryItem[]
+        state.profileHistoryList = action.payload as List[]
       })
       .addCase(getProfileHistory.rejected, (state, action) => {
         state.isLoading = false
@@ -58,7 +59,7 @@ const profileHistorySlice = createSlice({
 
 const profileHistoryIsLoading = (state: RootState): boolean =>
   state.profileHistory.isLoading
-const profileHistoryData = (state: RootState): ProfileHistoryItem[] =>
+const profileHistoryData = (state: RootState): List[] =>
   state.profileHistory.profileHistoryList
 
 export const profileHistoryThunk = {
