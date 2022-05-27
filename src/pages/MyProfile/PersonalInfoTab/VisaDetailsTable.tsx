@@ -1,10 +1,3 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  doFetchVisaDetails,
-  doDeleteVisaDetails,
-  selectGetVisaDetails,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import {
   CButton,
   CTable,
@@ -14,10 +7,17 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
+import React, { useEffect, useMemo, useState } from 'react'
+import {
+  personalInfoThunk,
+  personalInfoSelectors,
+} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
 import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../reducers/appSlice'
+import { appActions } from '../../../reducers/appSlice'
 const VisaDetailsTable = ({
   editVisaButtonHandler,
 }: EmployeeVisaDetailsTableProps): JSX.Element => {
@@ -26,10 +26,12 @@ const VisaDetailsTable = ({
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
-  const getVisaDetails = useTypedSelector(selectGetVisaDetails)
+  const getEmployeeVisaData = useTypedSelector(
+    personalInfoSelectors.selectGetVisaDetails,
+  )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchVisaDetails(employeeId))
+    dispatch(personalInfoThunk.getEmployeeVisaDetails(employeeId))
   }, [dispatch, employeeId])
   const handleShowDeleteModal = (visaId: number) => {
     setToDeleteVisaId(visaId)
@@ -38,12 +40,16 @@ const VisaDetailsTable = ({
   const handleConfirmDeleteVisaDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(
-      doDeleteVisaDetails(toDeleteVisaId),
+      personalInfoThunk.deleteEmployeeVisa(toDeleteVisaId),
     )
-    if (doDeleteVisaDetails.fulfilled.match(deleteFamilyMemberResultAction)) {
-      dispatch(doFetchVisaDetails(employeeId))
+    if (
+      personalInfoThunk.deleteEmployeeVisa.fulfilled.match(
+        deleteFamilyMemberResultAction,
+      )
+    ) {
+      dispatch(personalInfoThunk.getEmployeeVisaDetails(employeeId))
       dispatch(
-        addToast(
+        appActions.addToast(
           <OToast
             toastColor="success"
             toastMessage="Visa Detail deleted successfully"
@@ -53,14 +59,14 @@ const VisaDetailsTable = ({
     }
   }
   const sortedVisaDetails = useMemo(() => {
-    if (getVisaDetails) {
-      return getVisaDetails
+    if (getEmployeeVisaData) {
+      return getEmployeeVisaData
         .slice()
         .sort((sortNode1, sortNode2) =>
           sortNode1.countryName.localeCompare(sortNode2.countryName),
         )
     }
-  }, [getVisaDetails])
+  }, [getEmployeeVisaData])
 
   return (
     <>
@@ -108,8 +114,8 @@ const VisaDetailsTable = ({
         </CTableBody>
       </CTable>
       <strong>
-        {getVisaDetails?.length
-          ? `Total Records: ${getVisaDetails?.length}`
+        {getEmployeeVisaData?.length
+          ? `Total Records: ${getEmployeeVisaData?.length}`
           : `No Records found`}
       </strong>
       <OModal

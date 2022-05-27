@@ -11,8 +11,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import {
-  removeSkillById,
-  selectSkillList,
+  skillSelectors,
+  skillThunk,
 } from '../../../reducers/MyProfile/Skills/skillSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -26,7 +26,7 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const SkillListTable = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const skills = useTypedSelector(selectSkillList)
+  const skills = useTypedSelector(skillSelectors.selectSkillList)
 
   const {
     paginationRange,
@@ -65,7 +65,7 @@ const SkillListTable = (): JSX.Element => {
   const handleConfirmDelete = async (skillId: number) => {
     setIsDeleteModalVisible(false)
 
-    dispatch(removeSkillById(skillId))
+    dispatch(skillThunk.deleteSkillById(skillId))
   }
 
   const currentPageItems = useMemo(() => {

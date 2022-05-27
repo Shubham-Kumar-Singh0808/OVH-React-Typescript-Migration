@@ -1,31 +1,28 @@
-import {
-  CCardHeader,
-  CCardBody,
-  CRow,
-  CCol,
-  CForm,
-  CButton,
-  CFormLabel,
-  CFormInput,
-  CFormSelect,
-} from '@coreui/react-pro'
-import moment from 'moment'
-import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  doFetchCountryDetails,
-  doFetchCountryVisaDetails,
-  doAddNewVisaDetails,
-  doUpdateVisaDetails,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
-import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+
 import {
   AddEditEmployeeVisaDetails,
   EmployeeVisaDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-import 'react-datepicker/dist/react-datepicker.css'
+import {
+  CButton,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CForm,
+  CFormInput,
+  CFormLabel,
+  CFormSelect,
+  CRow,
+} from '@coreui/react-pro'
+import React, { useEffect, useState } from 'react'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
+import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { addToast } from '../../../reducers/appSlice'
+import { appActions } from '../../../reducers/appSlice'
+import moment from 'moment'
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,
@@ -40,21 +37,23 @@ function AddEditVisaDetails({
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
   const [error, setError] = useState<Date | null>(null)
-  const fetchCountryDetails = useTypedSelector(
+  const getCountryDetails = useTypedSelector(
     (state) => state.personalInfoDetails.SubCountries,
   )
-  const fetchVisaCountryDetails = useTypedSelector(
+  const getVisaCountryDetails = useTypedSelector(
     (state) => state.personalInfoDetails.SubVisa,
   )
-  const fetchEditVisaDetails = useTypedSelector(
+  const getVisaInformation = useTypedSelector(
     (state) => state.personalInfoDetails.editVisaDetails,
   )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(doFetchCountryDetails())
+    dispatch(personalInfoThunk.getEmployeeCountryDetails())
     if (employeeVisaDetails?.countryId) {
-      dispatch(doFetchCountryVisaDetails(employeeVisaDetails?.countryId))
+      dispatch(
+        personalInfoThunk.getEmployeeVisaType(employeeVisaDetails?.countryId),
+      )
     }
   }, [dispatch, employeeVisaDetails?.countryId])
 
@@ -82,9 +81,9 @@ function AddEditVisaDetails({
   ])
   useEffect(() => {
     if (isEditVisaDetails) {
-      setEmployeeVisaDetails(fetchEditVisaDetails)
+      setEmployeeVisaDetails(getVisaInformation)
     }
-  }, [isEditVisaDetails, fetchEditVisaDetails])
+  }, [isEditVisaDetails, getVisaInformation])
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
@@ -145,11 +144,17 @@ function AddEditVisaDetails({
       dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
     }
     const addVisaMemberResultAction = await dispatch(
-      doAddNewVisaDetails(prepareObject),
+      personalInfoThunk.addEmployeeVisa(prepareObject),
     )
-    if (doAddNewVisaDetails.fulfilled.match(addVisaMemberResultAction)) {
+    if (
+      personalInfoThunk.addEmployeeVisa.fulfilled.match(
+        addVisaMemberResultAction,
+      )
+    ) {
       backButtonHandler()
-      dispatch(dispatch(addToast(getToastMessage(actionMapping.added))))
+      dispatch(
+        dispatch(appActions.addToast(getToastMessage(actionMapping.added))),
+      )
     }
   }
   const handleUpdateVisaMember = async () => {
@@ -157,11 +162,15 @@ function AddEditVisaDetails({
       ...employeeVisaDetails,
     }
     const updateVisaMemberResultAction = await dispatch(
-      doUpdateVisaDetails(prepareObject),
+      personalInfoThunk.updateEmployeeVisa(prepareObject),
     )
-    if (doUpdateVisaDetails.fulfilled.match(updateVisaMemberResultAction)) {
+    if (
+      personalInfoThunk.updateEmployeeVisa.fulfilled.match(
+        updateVisaMemberResultAction,
+      )
+    ) {
       backButtonHandler()
-      dispatch(addToast(getToastMessage(actionMapping.updated)))
+      dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
     }
   }
   const formLabelProps = {
@@ -210,7 +219,7 @@ function AddEditVisaDetails({
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Country</option>
-                {fetchCountryDetails?.countries?.map((countriesItem, index) => (
+                {getCountryDetails?.countries?.map((countriesItem, index) => (
                   <option key={index} value={countriesItem.id}>
                     {countriesItem.name}
                   </option>
@@ -238,7 +247,7 @@ function AddEditVisaDetails({
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Visa</option>
-                {fetchVisaCountryDetails?.map((visaTypeItem, index) => (
+                {getVisaCountryDetails?.map((visaTypeItem, index) => (
                   <option key={index} value={visaTypeItem.visaTypeId}>
                     {visaTypeItem.visaType}
                   </option>
@@ -249,7 +258,13 @@ function AddEditVisaDetails({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Issue:
-              <span className={dateOfIssue ? 'text-white' : 'text-danger'}>
+              <span
+                className={
+                  dateOfIssue || getVisaInformation.dateOfIssue
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -277,7 +292,13 @@ function AddEditVisaDetails({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Expire :
-              <span className={dateOfExpire ? 'text-white' : 'text-danger'}>
+              <span
+                className={
+                  dateOfExpire || getVisaInformation.dateOfExpire
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -331,6 +352,7 @@ function AddEditVisaDetails({
                   className="btn-ovh me-2"
                   color="success"
                   onClick={handleUpdateVisaMember}
+                  disabled={!isAddButtonEnabled}
                 >
                   {confirmButtonText}
                 </CButton>

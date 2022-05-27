@@ -4,27 +4,23 @@ import {
   CategoryState,
 } from '../../../types/MyProfile/Categories/categoryTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import {
-  deleteCategoryById,
-  getAllCategoryList,
-  postNewCategoryByName,
-} from '../../../middleware/api/MyProfile/Categories/categoryApi'
 
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
+import categoryApi from '../../../middleware/api/MyProfile/Categories/categoryApi'
 
-export const fetchAllCategories = createAsyncThunk(
-  'category/fetchAllCategories',
+const getAllCategoryList = createAsyncThunk(
+  'category/getAllCategoryList',
   async (_, thunkApi) => {
     try {
-      return await getAllCategoryList()
+      return await categoryApi.getAllCategoryList()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-export const addNewCategoryByName = createAsyncThunk<
+const postNewCategoryByName = createAsyncThunk<
   CategoryListItem[] | undefined,
   string,
   {
@@ -32,15 +28,15 @@ export const addNewCategoryByName = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('category/addNewCategoryByName', async (toAddCategoryName, thunkApi) => {
+>('category/postNewCategoryByName', async (toAddCategoryName, thunkApi) => {
   try {
-    return await postNewCategoryByName(toAddCategoryName)
+    return await categoryApi.postNewCategoryByName(toAddCategoryName)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
-export const removeCategoryById = createAsyncThunk<
+const deleteCategoryById = createAsyncThunk<
   CategoryListItem[] | undefined,
   number,
   {
@@ -48,9 +44,9 @@ export const removeCategoryById = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('category/removeCategoryById', async (categoryId, thunkApi) => {
+>('category/deleteCategoryById', async (categoryId, thunkApi) => {
   try {
-    return await deleteCategoryById(categoryId)
+    return await categoryApi.deleteCategoryById(categoryId)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -74,9 +70,9 @@ const categorySlice = createSlice({
     builder
       .addMatcher(
         isAnyOf(
-          fetchAllCategories.pending,
-          addNewCategoryByName.pending,
-          removeCategoryById.pending,
+          getAllCategoryList.pending,
+          postNewCategoryByName.pending,
+          deleteCategoryById.pending,
         ),
         (state) => {
           state.isLoading = true
@@ -84,9 +80,9 @@ const categorySlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          fetchAllCategories.fulfilled,
-          addNewCategoryByName.fulfilled,
-          removeCategoryById.fulfilled,
+          getAllCategoryList.fulfilled,
+          postNewCategoryByName.fulfilled,
+          deleteCategoryById.fulfilled,
         ),
         (state, action) => {
           state.isLoading = false
@@ -96,9 +92,22 @@ const categorySlice = createSlice({
   },
 })
 
-export const selectIsCategoryListLoading = (state: RootState): boolean =>
+const selectIsCategoryListLoading = (state: RootState): boolean =>
   state.category.isLoading
-export const selectCategoryList = (state: RootState): CategoryListItem[] =>
+const selectCategoryList = (state: RootState): CategoryListItem[] =>
   state.category.categoryList
+
+export const categoryThunk = {
+  getAllCategoryList,
+  postNewCategoryByName,
+  deleteCategoryById,
+}
+
+export const categoryActions = categorySlice.actions
+
+export const categorySelectors = {
+  selectIsCategoryListLoading,
+  selectCategoryList,
+}
 
 export default categorySlice.reducer

@@ -20,7 +20,6 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { addToast, setReRenderMenu } from '../../../reducers/appSlice'
 import {
   doAssignRolePermission,
   doFetchFeaturesUnderRole,
@@ -34,6 +33,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
+import { appActions } from '../../../reducers/appSlice'
 
 const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableProps> =
   ({ selectedRoleId }: UserRoleFeaturesExpandableTableProps): JSX.Element => {
@@ -118,12 +118,12 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
           prepareObject.permission ? 'assigned' : 'removed'
         } '${prepareObject.type}' permission to '${target.name}'`
         dispatch(
-          addToast(
+          appActions.addToast(
             <OToast toastColor="success" toastMessage={oToastMessage} />,
           ),
         )
         dispatch(doFetchFeaturesUnderRole(selectedRoleId as string))
-        dispatch(setReRenderMenu(true))
+        dispatch(appActions.setReRenderMenu(true))
       }
     }
     return (

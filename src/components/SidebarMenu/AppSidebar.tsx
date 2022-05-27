@@ -4,6 +4,7 @@ import AppSidebarNavItems from './AppSidebarNavItems'
 import CIcon from '@coreui/icons-react'
 import React from 'react'
 import SimpleBar from 'simplebar-react'
+import UserProfile from './UserProfile'
 import { logoNegative } from '../../assets/brand/logo-negative'
 // sidebar nav config
 import { sygnet } from '../../assets/brand/sygnet'
@@ -31,6 +32,7 @@ const AppSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
+          <UserProfile />
           <AppSidebarNavItems />
         </SimpleBar>
       </CSidebarNav>

@@ -23,6 +23,8 @@ $success-login-btn-border: #85bd47;
   padding-bottom: 25px;
   .login-heading {
     color: $gray-900;
+    font-weight: 400 !important;
+    font-size: 30px;
   }
   .login-btn {
     font-size: 12px;
@@ -44,9 +46,11 @@ $success-login-btn-border: #85bd47;
   .pad-ver {
     padding: 15px 0px;
   }
+  .login-card {
+    padding: 20px;
+  }
   .login-card-body {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
 
     i {
       font-size: 14px;

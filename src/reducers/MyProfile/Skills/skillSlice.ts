@@ -3,29 +3,25 @@ import {
   SkillState,
 } from '../../../types/MyProfile/Skills/skillTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import {
-  deleteSkillById,
-  getAllSkillListById,
-  postNewSkillByName,
-} from '../../../middleware/api/MyProfile/Skills/skillApi'
 
 import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
+import skillApi from '../../../middleware/api/MyProfile/Skills/skillApi'
 
-export const fetchAllSkillById = createAsyncThunk(
-  'skill/fetchAllSkillById',
+const getAllSkillListById = createAsyncThunk(
+  'skill/getAllSkillListById',
   async (categoryId: number, thunkApi) => {
     try {
-      return await getAllSkillListById(categoryId)
+      return await skillApi.getAllSkillListById(categoryId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-export const addNewSkillByName = createAsyncThunk(
-  'skill/addNewSkillByName',
+const postNewSkillByName = createAsyncThunk(
+  'skill/postNewSkillByName',
   async (
     {
       categoryId,
@@ -34,18 +30,18 @@ export const addNewSkillByName = createAsyncThunk(
     thunkApi,
   ) => {
     try {
-      return await postNewSkillByName(categoryId, toAddSkillName)
+      return await skillApi.postNewSkillByName(categoryId, toAddSkillName)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-export const removeSkillById = createAsyncThunk(
-  'skill/removeSkillById',
+const deleteSkillById = createAsyncThunk(
+  'skill/deleteSkillById',
   async (skillId: number, thunkApi) => {
     try {
-      return await deleteSkillById(skillId)
+      return await skillApi.deleteSkillById(skillId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -74,23 +70,22 @@ const skillSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(removeSkillById.fulfilled, (state) => {
+    builder.addCase(deleteSkillById.fulfilled, (state) => {
       state.refreshList = true
     })
-
     builder
       .addMatcher(
         isAnyOf(
-          fetchAllSkillById.pending,
-          addNewSkillByName.pending,
-          removeSkillById.pending,
+          getAllSkillListById.pending,
+          postNewSkillByName.pending,
+          deleteSkillById.pending,
         ),
         (state) => {
           state.isLoading = true
         },
       )
       .addMatcher(
-        isAnyOf(fetchAllSkillById.fulfilled, addNewSkillByName.fulfilled),
+        isAnyOf(getAllSkillListById.fulfilled, postNewSkillByName.fulfilled),
         (state, action) => {
           state.isLoading = false
           state.skillList = action.payload
@@ -99,14 +94,24 @@ const skillSlice = createSlice({
   },
 })
 
-export const { clearSkillList, toRefreshList, doneRefreshList } =
-  skillSlice.actions
-
-export const selectIsSkillListLoading = (state: RootState): boolean =>
+const selectIsSkillListLoading = (state: RootState): boolean =>
   state.skill.isLoading
-export const selectRefreshList = (state: RootState): boolean =>
-  state.skill.refreshList
-export const selectSkillList = (state: RootState): SkillListItem[] =>
+const selectRefreshList = (state: RootState): boolean => state.skill.refreshList
+const selectSkillList = (state: RootState): SkillListItem[] =>
   state.skill.skillList
+
+export const skillThunk = {
+  getAllSkillListById,
+  postNewSkillByName,
+  deleteSkillById,
+}
+
+export const skillActions = skillSlice.actions
+
+export const skillSelectors = {
+  selectIsSkillListLoading,
+  selectRefreshList,
+  selectSkillList,
+}
 
 export default skillSlice.reducer
