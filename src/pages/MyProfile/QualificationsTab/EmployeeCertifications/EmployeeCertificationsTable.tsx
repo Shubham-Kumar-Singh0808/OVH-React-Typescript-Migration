@@ -19,7 +19,7 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { appActions } from '../../../../reducers/appSlice'
 
-const CertificationsTable = ({
+const EmployeeCertificationsTable = ({
   editCertificateButtonHandler,
 }: EmployeeCertificationTableProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -66,9 +66,10 @@ const CertificationsTable = ({
         )
     }
   }, [employeeCertificateData])
+
   return (
     <>
-      <CTable striped>
+      <CTable striped responsive>
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -159,4 +160,4 @@ const CertificationsTable = ({
   )
 }
 
-export default CertificationsTable
+export default EmployeeCertificationsTable
