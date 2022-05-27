@@ -9,7 +9,8 @@ import EmployeeSkillsTable from './EmployeeSkills/EmployeeSkillsTable'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import { certificationThunk } from '../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { useAppDispatch } from '../../../stateStore'
-
+import { employeeSkillThunk } from '../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
+import AddEditEmployeeSkill from './EmployeeSkills/AddEditEmployeeSkill'
 const QualificationDetails = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
@@ -18,6 +19,11 @@ const QualificationDetails = (): JSX.Element => {
     setToggle('EditCertificateSection')
     dispatch(certificationThunk.getEmployeeCertificate(id))
   }
+  const editSkillButtonHandler = (skillId: number) => {
+    setToggle('editSkill')
+    dispatch(employeeSkillThunk.getEmployeeSkillInformation(skillId))
+  }
+
   return (
     <>
       {toggle === '' && (
@@ -25,7 +31,7 @@ const QualificationDetails = (): JSX.Element => {
           <CCardHeader>
             <h4 className="h4">Qualifications</h4>
           </CCardHeader>
-          <CCardBody className="ps-0">
+          <CCardBody className="ps-0 pe-0">
             <OAddButton
               addButtonHandler={() => setToggle('addQualificationSection')}
             />
@@ -46,8 +52,9 @@ const QualificationDetails = (): JSX.Element => {
             <h4 className="h4">Skills</h4>
           </CCardHeader>
           <CCardBody className="ps-0 pe-0">
-            <OAddButton />
+            <OAddButton addButtonHandler={() => setToggle('addSkills')} />
             <EmployeeSkillsTable
+              editSkillButtonHandler={editSkillButtonHandler}
               isFieldDisabled={true}
               striped={true}
               bordered={false}
@@ -75,6 +82,21 @@ const QualificationDetails = (): JSX.Element => {
           confirmButtonText="Update"
           backButtonHandler={() => setToggle('')}
           isEditCertificationDetails={true}
+        />
+      )}
+      {toggle === 'addSkills' && (
+        <AddEditEmployeeSkill
+          headerTitle="Add Skill"
+          confirmButtonText="Add"
+          backButtonHandler={() => setToggle('')}
+        />
+      )}
+      {toggle === 'editSkill' && (
+        <AddEditEmployeeSkill
+          headerTitle="Edit Skill"
+          confirmButtonText="Update"
+          backButtonHandler={() => setToggle('')}
+          isEditSkillsDetails={true}
         />
       )}
     </>

@@ -67,44 +67,21 @@ const EmployeeCertificationsTable = ({
     }
   }, [employeeCertificateData])
 
-  const tableDataCellProps = {
-    className: 'fw-bold',
-  }
   return (
     <>
       <CTable striped responsive>
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              #
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              Technology
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              Type of Certificate
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              Certification
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              Registration No
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              Completed Date
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              Expiry Date
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              Percentage
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              Description
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" {...tableDataCellProps}>
-              Actions
-            </CTableHeaderCell>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Technology</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Type of Certificate</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Certification</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Registration No</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Completed Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Expiry Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>

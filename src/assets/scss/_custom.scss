@@ -128,3 +128,10 @@ dd {
 input.form-control, select.form-select{
   height: 34px;
 }
+
+.table > :not(caption) > * > *{
+  color: #404040;
+}
+th {
+  font-weight: bold;
+}

@@ -7,13 +7,16 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
+import OModal from '../../../../components/ReusableComponent/OModal'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { appActions } from '../../../../reducers/appSlice'
 import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import { employeeSkillThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 
 const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
+  editSkillButtonHandler,
   striped = false,
   bordered = false,
   isFieldDisabled = false,
@@ -27,13 +30,40 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   useEffect(() => {
     dispatch(employeeSkillThunk.getEmployeeSkills())
   }, [dispatch])
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteSkillId, setToDeleteSkillId] = useState(0)
+
+  const handleShowDeleteModal = (skillId: number) => {
+    setToDeleteSkillId(skillId)
+    setIsDeleteModalVisible(true)
+  }
+  const handleConfirmDeleteVisaDetails = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteSkillsResultAction = await dispatch(
+      employeeSkillThunk.deleteEmployeeSkill(toDeleteSkillId),
+    )
+    const toastElement = (
+      <OToast
+        toastMessage="Skill Detail deleted successfully"
+        toastColor={'success'}
+      />
+    )
+    if (
+      employeeSkillThunk.deleteEmployeeSkill.fulfilled.match(
+        deleteSkillsResultAction,
+      )
+    ) {
+      dispatch(employeeSkillThunk.getEmployeeSkills())
+      dispatch(dispatch(appActions.addToast(toastElement)))
+    }
+  }
+
   const tableHeaderCellProps = {
     width: '25%',
     scope: 'col',
   }
   const tableDataCellProps = {
     colSpan: 4,
-    className: 'fw-bold',
   }
   return (
     <>
@@ -68,7 +98,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
         ) : (
           <>
             <CTableHead>
-              <CTableRow>
+              <CTableRow className="fw-bold">
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Category</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Skill</CTableHeaderCell>
@@ -98,10 +128,18 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
               <CTableDataCell scope="row">{`${skillItem.expYear}Year('s) ${skillItem.expMonth}month('s)`}</CTableDataCell>
               {isFieldDisabled ? (
                 <CTableDataCell scope="row">
-                  <CButton color="info" className="btn-ovh me-1">
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-1"
+                    onClick={() => editSkillButtonHandler?.(skillItem.skillId)}
+                  >
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </CButton>
-                  <CButton color="danger" className="btn-ovh me-1">
+                  <CButton
+                    color="danger"
+                    className="btn-ovh me-1"
+                    onClick={() => handleShowDeleteModal(skillItem.skillId)}
+                  >
                     <i className="fa fa-trash-o" aria-hidden="true"></i>
                   </CButton>
                 </CTableDataCell>
@@ -115,14 +153,24 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
       {isFieldDisabled && (
         <>
           <strong>
-            {employeeSkillsData.length
-              ? `Total Records: ${employeeSkillsData.length}`
+            {employeeSkillsData?.length
+              ? `Total Records: ${employeeSkillsData?.length}`
               : `No Records found`}
           </strong>
+          <OModal
+            alignment="center"
+            visible={isDeleteModalVisible}
+            setVisible={setIsDeleteModalVisible}
+            modalHeaderClass="d-none"
+            confirmButtonText="Yes"
+            cancelButtonText="No"
+            confirmButtonAction={handleConfirmDeleteVisaDetails}
+          >
+            {`Do you really want to delete this ?`}
+          </OModal>
         </>
       )}
     </>
   )
 }
-
 export default EmployeeSkillsTable
