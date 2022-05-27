@@ -9,8 +9,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import {
-  personalInfoThunk,
   personalInfoSelectors,
+  personalInfoThunk,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -18,6 +18,7 @@ import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/Personal
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { appActions } from '../../../reducers/appSlice'
+
 const VisaDetailsTable = ({
   editVisaButtonHandler,
 }: EmployeeVisaDetailsTableProps): JSX.Element => {

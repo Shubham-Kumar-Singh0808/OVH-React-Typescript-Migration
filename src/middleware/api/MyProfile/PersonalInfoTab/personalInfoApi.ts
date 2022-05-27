@@ -1,17 +1,18 @@
-import { personalInfoApiConfig, AllowedHttpMethods } from '../../apiList'
-
+import { AllowedHttpMethods, personalInfoApiConfig } from '../../apiList'
 import {
+  EditFamilyDetailsState,
+  EditVisaDetailsState,
   EmployeeFamilyData,
-  VisaDetails,
+  EmployeeFamilyDetails,
+  EmployeeVisaDetails,
   GetCountryDetails,
   VisaCountryDetails,
-  EmployeeVisaDetails,
-  EditFamilyDetailsState,
-  EmployeeFamilyDetails,
-  EditVisaDetailsState,
+  VisaDetails,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+
 const getEmployeeFamilyDetails = async (
   employeeId: number | string,
 ): Promise<EmployeeFamilyData[]> => {

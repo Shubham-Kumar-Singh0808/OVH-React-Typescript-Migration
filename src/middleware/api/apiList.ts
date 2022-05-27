@@ -4,11 +4,11 @@ import {
   CategoryApi,
   EmployeeCertificationsApi,
   EmployeeGeneralInformationApi,
-  PersonalInfoApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
-  SideMenuApi,
   EmployeeSkillApi,
+  PersonalInfoApi,
+  SideMenuApi,
   UserRolesConfigurationApi,
 } from '../../types/apiTypes'
 
