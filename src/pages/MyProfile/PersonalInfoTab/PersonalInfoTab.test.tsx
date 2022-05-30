@@ -48,4 +48,12 @@ describe('Personal Info Tab Testing', () => {
     )
     expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument()
   })
+  it('should display the correct number of options', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <PersonalInfoTab />
+      </ReduxProvider>,
+    )
+    expect(screen.getAllByRole('option').length).toBe(11)
+  })
 })
