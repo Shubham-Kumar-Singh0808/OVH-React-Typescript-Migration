@@ -41,65 +41,64 @@ const PersonalInfoTab = (): JSX.Element => {
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
 
-  const selectedUserBasicInformation = {
-    id: employeeBasicInformation.id,
-    baseLocation: employeeBasicInformation.baseLocation,
-    bloodgroup: employeeBasicInformation.bloodgroup,
-    departmentName: employeeBasicInformation.departmentName,
-    designation: employeeBasicInformation.designation,
-    emailId: employeeBasicInformation.emailId,
-    curentLocation: employeeBasicInformation.curentLocation,
-    employmentTypeName: employeeBasicInformation.employmentTypeName,
-    fullName: employeeBasicInformation.fullName,
-    gender: employeeBasicInformation.gender,
-    jobTypeName: employeeBasicInformation.jobTypeName,
-    maritalStatus: employeeBasicInformation.maritalStatus,
-    thumbPicture: employeeBasicInformation.thumbPicture,
-    personalEmail: employeeBasicInformation.personalEmail,
-    projectManager: employeeBasicInformation.projectManager,
-    rbtCvPath: employeeBasicInformation.rbtCvPath,
-    rbtCvName: employeeBasicInformation.rbtCvName,
-    aboutMe: employeeBasicInformation.aboutMe,
-    officialBirthday: employeeBasicInformation.officialBirthday,
-    realBirthday: employeeBasicInformation.realBirthday,
-    anniversary: employeeBasicInformation.anniversary,
-    skypeId: employeeBasicInformation.skypeId,
-  }
-
   const selectedUserContactDetails = {
-    mobile: employeePersonalInformation.mobile,
-    alternativeMobile: employeePersonalInformation.alternativeMobile,
-    homeCode: employeePersonalInformation.homeCode,
-    homeNumber: employeePersonalInformation.homeNumber,
-    workCode: employeePersonalInformation.workCode,
-    workNumber: employeePersonalInformation.workNumber,
+    mobile: employeePersonalInformation?.mobile,
+    alternativeMobile: employeePersonalInformation?.alternativeMobile,
+    homeCode: employeePersonalInformation?.homeCode,
+    homeNumber: employeePersonalInformation?.homeNumber,
+    workCode: employeePersonalInformation?.workCode,
+    workNumber: employeePersonalInformation?.workNumber,
   }
 
   const selectedUserEmergencyContactDetails = {
-    emergencyContactName: employeePersonalInformation.emergencyContactName,
-    emergencyPhone: employeePersonalInformation.emergencyPhone,
-    emergencyRelationShip: employeePersonalInformation.emergencyRelationShip,
+    emergencyContactName: employeePersonalInformation?.emergencyContactName,
+    emergencyPhone: employeePersonalInformation?.emergencyPhone,
+    emergencyRelationShip: employeePersonalInformation?.emergencyRelationShip,
   }
 
   const selectedUserPresenetAddressDetails = {
-    presentAddress: employeePersonalInformation.presentAddress,
-    presentCity: employeePersonalInformation.presentCity,
-    presentZip: employeePersonalInformation.presentZip,
-    presentLandMark: employeePersonalInformation.presentLandMark,
+    presentAddress: employeePersonalInformation?.presentAddress,
+    presentCity: employeePersonalInformation?.presentCity,
+    presentZip: employeePersonalInformation?.presentZip,
+    presentLandMark: employeePersonalInformation?.presentLandMark,
   }
 
   const selectedUserPermanentAddressDetails = {
-    permanentAddress: employeePersonalInformation.permanentAddress,
-    permanentCity: employeePersonalInformation.permanentCity,
-    permanentZip: employeePersonalInformation.permanentZip,
-    permanentLandMark: employeePersonalInformation.permanentLandMark,
+    permanentAddress: employeePersonalInformation?.permanentAddress,
+    permanentCity: employeePersonalInformation?.permanentCity,
+    permanentZip: employeePersonalInformation?.permanentZip,
+    permanentLandMark: employeePersonalInformation?.permanentLandMark,
   }
 
   const selectedUserPassportDetails = {
-    passportNumber: employeePersonalInformation.passportNumber,
-    passportIssuedPlace: employeePersonalInformation.passportIssuedPlace,
-    passportIssuedDate: employeePersonalInformation.passportIssuedDate,
-    passportExpDate: employeePersonalInformation.passportExpDate,
+    passportNumber: employeePersonalInformation?.passportNumber,
+    passportIssuedPlace: employeePersonalInformation?.passportIssuedPlace,
+    passportIssuedDate: employeePersonalInformation?.passportIssuedDate,
+    passportExpDate: employeePersonalInformation?.passportExpDate,
+  }
+
+  const selectedUserBasicInformation = {
+    baseLocation: employeeBasicInformation?.baseLocation,
+    bloodgroup: employeeBasicInformation?.bloodgroup,
+    departmentName: employeeBasicInformation?.departmentName,
+    designation: employeeBasicInformation?.designation,
+    emailId: employeeBasicInformation?.emailId,
+    curentLocation: employeeBasicInformation?.curentLocation,
+    employmentTypeName: employeeBasicInformation?.employmentTypeName,
+    fullName: employeeBasicInformation?.fullName,
+    gender: employeeBasicInformation?.gender,
+    jobTypeName: employeeBasicInformation?.jobTypeName,
+    maritalStatus: employeeBasicInformation?.maritalStatus,
+    thumbPicture: employeeBasicInformation?.thumbPicture,
+    personalEmail: employeeBasicInformation?.personalEmail,
+    projectManager: employeeBasicInformation?.projectManager,
+    rbtCvPath: employeeBasicInformation?.rbtCvPath,
+    rbtCvName: employeeBasicInformation?.rbtCvName,
+    aboutMe: employeeBasicInformation?.aboutMe,
+    officialBirthday: employeeBasicInformation?.officialBirthday,
+    realBirthday: employeeBasicInformation?.realBirthday,
+    anniversary: employeeBasicInformation?.anniversary,
+    skypeId: employeeBasicInformation?.skypeId,
   }
 
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
@@ -323,6 +322,12 @@ const PersonalInfoTab = (): JSX.Element => {
       ),
     )
   }
+  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
+    return {
+      htmlFor: htmlFor,
+      className: className,
+    }
+  }
 
   return (
     <>
@@ -356,7 +361,12 @@ const PersonalInfoTab = (): JSX.Element => {
               </CCardHeader>
               <CCardBody>
                 <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
+                  <CFormLabel
+                    {...dynamicFormLabelProps(
+                      'employeeId',
+                      'col-sm-3 col-form-label text-end',
+                    )}
+                  >
                     Mobile:{' '}
                     <span
                       className={
@@ -390,7 +400,12 @@ const PersonalInfoTab = (): JSX.Element => {
                   </CCol>
                 </CRow>
                 <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
+                  <CFormLabel
+                    {...dynamicFormLabelProps(
+                      'employeeId',
+                      'col-sm-3 col-form-label text-end',
+                    )}
+                  >
                     Alternative Mobile:
                   </CFormLabel>
                   <CCol sm={1}>
@@ -415,7 +430,12 @@ const PersonalInfoTab = (): JSX.Element => {
                   </CCol>
                 </CRow>
                 <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
+                  <CFormLabel
+                    {...dynamicFormLabelProps(
+                      'employeeId',
+                      'col-sm-3 col-form-label text-end',
+                    )}
+                  >
                     Home:
                   </CFormLabel>
                   <CCol sm={1}>
@@ -449,7 +469,12 @@ const PersonalInfoTab = (): JSX.Element => {
                   </CCol>
                 </CRow>
                 <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
+                  <CFormLabel
+                    {...dynamicFormLabelProps(
+                      'employeeId',
+                      'col-sm-3 col-form-label text-end',
+                    )}
+                  >
                     Work:
                   </CFormLabel>
                   <CCol sm={1}>
