@@ -1,3 +1,5 @@
+import { ValidationError } from '../../../commonTypes'
+
 export type QualificationCategoryList = {
   id?: number
   qualificationCategory: string
@@ -7,4 +9,5 @@ export type QualificationCategoryList = {
 export type QualificationCategoryState = {
   qualificationCategoryList: QualificationCategoryList[]
   isLoading: boolean
+  error: ValidationError
 }

@@ -49,7 +49,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
   useEffect(() => {
     if (
       newQualificationCategory.qualificationCategory &&
-      newQualificationCategory.qualificationName
+      newQualificationCategory.qualificationName?.replace(/\s+$/gi, '')
     ) {
       setIsAddQualificationCategoryBtnEnabled(true)
     } else {
@@ -72,7 +72,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
   }
 
   const handleAddQualificationCategory = async () => {
-    const toAddQualificationName = newQualificationCategory
+    const addQualificationName = newQualificationCategory
     if (
       employeeQualificationCategories.filter(
         (category) =>
@@ -90,16 +90,14 @@ const AddNewQualificationCategory = (): JSX.Element => {
     })
 
     dispatch(
-      qualificationCategoryThunk.addQualificationCategory(
-        toAddQualificationName,
-      ),
+      qualificationCategoryThunk.addQualificationCategory(addQualificationName),
     )
     dispatch(qualificationCategoryThunk.getQualificationCategories())
     dispatch(reduxServices.app.actions.addToast(successToastMessage))
   }
 
   const formLabelProps = {
-    htmlFor: 'inputNewQualifictionCategory',
+    htmlFor: 'inputNewQualificationCategory',
     className: 'col-form-label category-label',
   }
 

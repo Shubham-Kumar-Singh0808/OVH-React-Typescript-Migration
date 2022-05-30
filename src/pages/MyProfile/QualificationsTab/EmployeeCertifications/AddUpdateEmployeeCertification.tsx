@@ -151,8 +151,8 @@ function AddUpdateEmployeeCertification({
     if (
       addCertification.technology &&
       addCertification.certificateType &&
-      addCertification.name &&
-      addCertification.code &&
+      addCertification.name?.replace(/\s+$/gi, '') &&
+      addCertification.code?.replace(/\s+$/gi, '') &&
       (completedDate || addCertification.completedDate)
     ) {
       setIsButtonEnabled(true)
@@ -333,7 +333,7 @@ function AddUpdateEmployeeCertification({
                 name="name"
                 value={addCertification?.name}
                 placeholder="Certification Name"
-                maxLength={32}
+                maxLength={26}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -361,7 +361,7 @@ function AddUpdateEmployeeCertification({
                 name="code"
                 value={addCertification?.code}
                 placeholder="Certification Id"
-                maxLength={32}
+                maxLength={24}
                 onChange={handleInputChange}
               />
             </CCol>

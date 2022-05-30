@@ -65,8 +65,8 @@ const AddUpdateEmployeeQualification = ({
     if (
       addQualification.graduationLookUp &&
       addQualification.graduationLookUp.length > 0 &&
-      addQualification.hscName &&
-      addQualification.sscName
+      addQualification.hscName.replace(/\s+$/gi, '') &&
+      addQualification.sscName.replace(/\s+$/gi, '')
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -163,7 +163,7 @@ const AddUpdateEmployeeQualification = ({
           <CCardHeader>
             <h4 className="h4">Add Qualification</h4>
           </CCardHeader>
-          <CCardBody>
+          <CCardBody className="ps-0 pe-0">
             <CRow className="justify-content-end">
               <CCol className="text-end" md={4}>
                 {(employeeRole === 'admin' ||

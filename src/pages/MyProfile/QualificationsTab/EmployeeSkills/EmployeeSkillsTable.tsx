@@ -16,7 +16,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { employeeSkillThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
-const SkillsTable: React.FC<EmployeeSkillInfo> = ({
+const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   editSkillButtonHandler,
   striped = false,
   bordered = false,
@@ -65,7 +65,6 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
   }
   const tableDataCellProps = {
     colSpan: 4,
-    className: 'fw-semibold',
   }
   return (
     <>
@@ -100,7 +99,7 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
         ) : (
           <>
             <CTableHead>
-              <CTableRow>
+              <CTableRow className="fw-bold">
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Category</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Skill</CTableHeaderCell>
@@ -175,4 +174,4 @@ const SkillsTable: React.FC<EmployeeSkillInfo> = ({
     </>
   )
 }
-export default SkillsTable
+export default EmployeeSkillsTable

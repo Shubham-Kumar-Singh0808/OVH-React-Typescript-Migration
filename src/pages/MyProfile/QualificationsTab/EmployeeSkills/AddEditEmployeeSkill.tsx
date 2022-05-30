@@ -181,6 +181,7 @@ function AddEditEmployeeSkill({
         updateSkillMemberResultAction,
       )
     ) {
+      backButtonHandler()
       dispatch(
         dispatch(
           reduxServices.app.actions.addToast(
