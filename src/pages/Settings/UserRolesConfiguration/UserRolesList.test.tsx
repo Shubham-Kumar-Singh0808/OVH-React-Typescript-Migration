@@ -8,11 +8,11 @@ import React from 'react'
 import { UserRole } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import UserRolesList from './UserRolesList'
 import { mockUserRoles } from '../../../test/data/userRolesData'
+import { reduxServices } from '../../../reducers/reduxServices'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
-import { userRolesAndPermissionsThunk } from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { userRolesConfigurationApiConfig } from '../../../middleware/api/apiList'
 
 const ReduxProvider = ({
@@ -71,7 +71,9 @@ describe('User Roles List Testing', () => {
     expect(screen.getByTestId('form-select')).toBeInTheDocument()
   })
   it('should be fetched from the server and put in the store', async () => {
-    await stateStore.dispatch(userRolesAndPermissionsThunk.getUserRoles())
+    await stateStore.dispatch(
+      reduxServices.userRolesAndPermissions.getUserRoles(),
+    )
     expect(userRolesAndPermissionsSlice()).toHaveLength(3)
   })
   it('should show selected value in the select element', () => {
