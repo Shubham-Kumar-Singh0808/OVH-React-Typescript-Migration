@@ -98,6 +98,10 @@ const PersonalInfoTab = (): JSX.Element => {
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
   const [isPassportButtonEnabled, setIsPassportButtonEnabled] = useState(false)
   const [
+    isPassportPlaceOfIssueButtonEnabled,
+    setIsPassportPlaceOfIssueButtonEnabled,
+  ] = useState(false)
+  const [
     employeeContactInformationEditData,
     setEmployeeContactInformationEditData,
   ] = useState(selectedUserContactDetails)
@@ -220,6 +224,15 @@ const PersonalInfoTab = (): JSX.Element => {
       setIsPassportButtonEnabled(false)
     }
   }, [employeePassportInformationEditData?.passportNumber])
+
+  useEffect(() => {
+    if (employeePassportInformationEditData?.passportIssuedPlace) {
+      setIsPassportPlaceOfIssueButtonEnabled(true)
+    } else {
+      setIsPassportPlaceOfIssueButtonEnabled(false)
+    }
+  }, [employeePassportInformationEditData?.passportIssuedPlace])
+
   const onChangeEmergencyContactDetailsHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -872,6 +885,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       name="file"
                       className="form-control form-control-sm"
                       id="exampleFormControlFile2"
+                      disabled={!isPassportPlaceOfIssueButtonEnabled}
                     />
                   </CCol>
                 </CRow>
@@ -885,6 +899,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       name="file"
                       className="form-control form-control-sm"
                       id="exampleFormControlFile2"
+                      disabled={!isPassportPlaceOfIssueButtonEnabled}
                     />
                   </CCol>
                 </CRow>
@@ -894,7 +909,6 @@ const PersonalInfoTab = (): JSX.Element => {
                       className="btn-ovh btn btn-success mt-4"
                       size="sm"
                       type="submit"
-                      // onClick={handleSubmitBasicDetails}
                       disabled={!saveButtonEnabled}
                     >
                       Save
