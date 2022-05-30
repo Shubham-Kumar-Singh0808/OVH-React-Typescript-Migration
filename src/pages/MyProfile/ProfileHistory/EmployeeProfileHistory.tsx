@@ -4,25 +4,26 @@ import React, { useEffect } from 'react'
 import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
 import { authenticationService } from '../../../reducers/Login/authenticationSlice'
 import { profileHistoryService } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
+import { reduxServices } from '../../../reducers/reduxServices'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../../../stateStore'
 
 const EmployeeProfileHistory = (): JSX.Element => {
   const employeeId = useTypedSelector(
-    authenticationService.selectors.selectEmployeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const authenticatedToken = useTypedSelector(
-    authenticationService.selectors.selectToken,
+    reduxServices.authentication.selectors.selectToken,
   )
 
   const dispatch = useDispatch()
   const isLoading = useTypedSelector(
-    profileHistoryService.selectors.profileHistoryIsLoading,
+    reduxServices.profileHistory.selectors.profileHistoryIsLoading,
   )
 
   useEffect(() => {
     if (authenticatedToken) {
-      dispatch(profileHistoryService.getProfileHistory(employeeId))
+      dispatch(reduxServices.profileHistory.getProfileHistory(employeeId))
     }
   }, [authenticatedToken, dispatch, employeeId])
   return (
