@@ -19,9 +19,9 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import DatePicker from 'react-datepicker'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../../reducers/appSlice'
 import { certificationThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import moment from 'moment'
+import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 
 function AddUpdateEmployeeCertification({
@@ -126,7 +126,7 @@ function AddUpdateEmployeeCertification({
   useEffect(() => {
     if (error) {
       dispatch(
-        appActions.addToast(
+        reduxServices.app.actions.addToast(
           <OToast
             toastMessage="Date of Expiry should be greater"
             toastColor="danger"
@@ -151,8 +151,8 @@ function AddUpdateEmployeeCertification({
     if (
       addCertification.technology &&
       addCertification.certificateType &&
-      addCertification.name &&
-      addCertification.code &&
+      addCertification.name?.replace(/\s+$/gi, '') &&
+      addCertification.code?.replace(/\s+$/gi, '') &&
       (completedDate || addCertification.completedDate)
     ) {
       setIsButtonEnabled(true)
@@ -193,7 +193,7 @@ function AddUpdateEmployeeCertification({
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(successToastMessage))
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -210,7 +210,7 @@ function AddUpdateEmployeeCertification({
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(successToastMessage))
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -333,7 +333,7 @@ function AddUpdateEmployeeCertification({
                 name="name"
                 value={addCertification?.name}
                 placeholder="Certification Name"
-                maxLength={32}
+                maxLength={26}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -361,7 +361,7 @@ function AddUpdateEmployeeCertification({
                 name="code"
                 value={addCertification?.code}
                 placeholder="Certification Id"
-                maxLength={32}
+                maxLength={24}
                 onChange={handleInputChange}
               />
             </CCol>

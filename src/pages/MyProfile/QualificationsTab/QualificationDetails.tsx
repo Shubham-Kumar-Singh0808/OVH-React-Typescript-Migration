@@ -31,7 +31,7 @@ const QualificationDetails = (): JSX.Element => {
           <CCardHeader>
             <h4 className="h4">Qualifications</h4>
           </CCardHeader>
-          <CCardBody>
+          <CCardBody className="ps-0 pe-0">
             <OAddButton
               addButtonHandler={() => setToggle('addQualificationSection')}
             />
@@ -40,7 +40,7 @@ const QualificationDetails = (): JSX.Element => {
           <CCardHeader>
             <h4 className="h4">Certifications</h4>
           </CCardHeader>
-          <CCardBody>
+          <CCardBody className="ps-0 pe-0">
             <OAddButton
               addButtonHandler={() => setToggle('addCertificationSection')}
             />
@@ -51,7 +51,7 @@ const QualificationDetails = (): JSX.Element => {
           <CCardHeader>
             <h4 className="h4">Skills</h4>
           </CCardHeader>
-          <CCardBody>
+          <CCardBody className="ps-0 pe-0">
             <OAddButton addButtonHandler={() => setToggle('addSkills')} />
             <EmployeeSkillsTable
               editSkillButtonHandler={editSkillButtonHandler}

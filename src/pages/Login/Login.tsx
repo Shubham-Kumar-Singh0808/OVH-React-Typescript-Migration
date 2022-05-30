@@ -14,15 +14,11 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import {
-  authenticationActions,
-  authenticationSelectors,
-  authenticationThunk,
-} from '../../reducers/Login/authenticationSlice'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 
 import AIMLBridgeLogo from '../../assets/images/logo/ai_bridge_logo_207X65.png'
 import RayBizTechLogo from '../../assets/images/logo/raybiztech-logo.png'
+import { reduxServices } from '../../reducers/reduxServices'
 import { useHistory } from 'react-router-dom'
 
 const Login = (): JSX.Element => {
@@ -34,7 +30,9 @@ const Login = (): JSX.Element => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const error = useTypedSelector(authenticationSelectors.selectError)
+  const error = useTypedSelector(
+    reduxServices.authentication.selectors.selectError,
+  )
 
   const dispatch = useAppDispatch()
   const history = useHistory()
@@ -42,7 +40,8 @@ const Login = (): JSX.Element => {
   useEffect(() => {
     if (username && password) {
       setIsLoginBtnEnabled(true)
-      dispatch(authenticationActions.clearError())
+      dispatch(reduxServices.authentication.actions.clearError())
+      dispatch(reduxServices.authentication.actions.clearLoading())
     } else {
       setIsLoginBtnEnabled(false)
     }
@@ -70,10 +69,18 @@ const Login = (): JSX.Element => {
   ): Promise<void> => {
     event.preventDefault()
     const resultAction = await dispatch(
-      authenticationThunk.authenticateUser({ username, password, tenantKey }),
+      reduxServices.authentication.authenticateUser({
+        username,
+        password,
+        tenantKey,
+      }),
     )
 
-    if (authenticationThunk.authenticateUser.fulfilled.match(resultAction)) {
+    if (
+      reduxServices.authentication.authenticateUser.fulfilled.match(
+        resultAction,
+      )
+    ) {
       history.push('/dashboard')
     } else {
       setPassword('')

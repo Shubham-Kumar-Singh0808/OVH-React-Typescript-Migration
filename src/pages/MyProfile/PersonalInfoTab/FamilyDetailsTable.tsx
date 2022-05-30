@@ -9,15 +9,16 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import {
-  personalInfoThunk,
   personalInfoSelectors,
+  personalInfoThunk,
 } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
+import { reduxServices } from '../../../reducers/reduxServices'
+
 const FamilyDetailsTable = ({
   editButtonHandler,
   isFieldDisabled = false,
@@ -55,7 +56,7 @@ const FamilyDetailsTable = ({
     ) {
       dispatch(personalInfoThunk.getEmployeeFamilyDetails(employeeId))
       dispatch(
-        appActions.addToast(
+        reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
             toastMessage="Family Detail deleted successfully"

@@ -6,14 +6,16 @@ import {
 } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-import { authenticationSelectors } from '../../../../reducers/Login/authenticationSlice'
 import parse from 'html-react-parser'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const EmployeeQualifications = (): JSX.Element => {
   const employeeQualification = useTypedSelector(
     qualificationSelectors.selectEmployeeQualification,
   )
-  const employeeId = useTypedSelector(authenticationSelectors.selectEmployeeId)
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
