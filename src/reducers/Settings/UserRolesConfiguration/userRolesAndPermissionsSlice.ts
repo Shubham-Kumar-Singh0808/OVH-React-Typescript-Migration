@@ -45,7 +45,7 @@ const checkIsRoleExists = createAsyncThunk<
   'userRolesAndPermissions/checkIsRoleExists',
   async (roleInput: string, thunkApi) => {
     try {
-      return await userRolesAndPermissionsApi.checkIsRoleExits(roleInput)
+      return await userRolesAndPermissionsApi.checkIsRoleExists(roleInput)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -176,9 +176,6 @@ const userRolesAndPermissionsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.roles = action.payload as UserRole[]
       })
-      .addCase(checkIsRoleExists.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
       .addCase(getUserRoleSubFeatures.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.subFeatures = action.payload as UserRoleSubFeatures[]
@@ -189,6 +186,7 @@ const userRolesAndPermissionsSlice = createSlice({
       })
       .addMatcher(
         isAnyOf(
+          checkIsRoleExists.fulfilled,
           createUserRole.fulfilled,
           deleteUserRole.fulfilled,
           updateAssignPermission.fulfilled,

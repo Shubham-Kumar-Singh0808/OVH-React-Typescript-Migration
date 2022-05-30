@@ -23,7 +23,7 @@ const getUserRoles = async (): Promise<UserRole[] | undefined> => {
   return response.data
 }
 
-const checkIsRoleExits = async (
+const checkIsRoleExists = async (
   roleInput: string,
 ): Promise<boolean | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -103,7 +103,7 @@ const updateAssignPermissions = async (
 
 const userRolesAndPermissionsApi = {
   getUserRoles,
-  checkIsRoleExits,
+  checkIsRoleExists,
   createUserRole,
   deleteUserRole,
   getUserRoleSubFeatures,
