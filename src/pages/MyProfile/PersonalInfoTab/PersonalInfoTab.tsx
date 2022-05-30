@@ -18,10 +18,12 @@ import VisaDetailsTable from './VisaDetailsTable'
 import AddEditVisaDetails from './AddEditVisaDetails'
 import AddEditFamilyDetails from './AddEditFamilyDetails'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { useTypedSelector, useAppDispatch } from '../../../stateStore'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { reduxServices } from '../../../reducers/reduxServices'
 const PersonalInfoTab = (): JSX.Element => {
   const employeePersonalInformation = useTypedSelector(
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
@@ -230,6 +232,26 @@ const PersonalInfoTab = (): JSX.Element => {
       setIsPassportPlaceOfIssueButtonEnabled(false)
     }
   }, [employeePassportDetails?.passportIssuedPlace])
+
+  useEffect(() => {
+    if (
+      (employeePassportDetails?.passportIssuedDate as string) >=
+      (employeePassportDetails.passportExpDate as string)
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="Date of Expiry should be greter "
+          />,
+        ),
+      )
+    }
+  }, [
+    employeePassportDetails?.passportIssuedDate,
+    employeePassportDetails.passportExpDate,
+    dispatch,
+  ])
 
   const onChangeEmergencyContactDetailsHandler = (
     e:
