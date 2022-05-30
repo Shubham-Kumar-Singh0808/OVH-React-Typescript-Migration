@@ -14,13 +14,14 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
 import moment from 'moment'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { reduxServices } from '../../../reducers/reduxServices'
+
 function AddEditFamilyDetails({
   isEditFamilyDetails = false,
   headerTitle,
@@ -58,7 +59,7 @@ function AddEditFamilyDetails({
         return { ...prevState, ...{ [name]: contactValue } }
       })
     } else if (name === 'personName') {
-      const personValue = value.replace(/[^a-zA-Z]/gi, '')
+      const personValue = value.replace(/[^a-zA-Z\s]$/gi, '')
       setEmployeeFamily((prevState) => {
         return { ...prevState, ...{ [name]: personValue } }
       })
@@ -112,7 +113,9 @@ function AddEditFamilyDetails({
       ...employeeFamily,
       ...{
         employeeId: employeeId,
-        dateOfBirth: moment(dateOfBirth).format('DD/MM/YYYY'),
+        dateOfBirth: dateOfBirth
+          ? moment(dateOfBirth).format('DD/MM/YYYY')
+          : undefined,
       },
     }
     const addFamilyMemberResultAction = await dispatch(
@@ -124,7 +127,11 @@ function AddEditFamilyDetails({
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(getToastMessage(actionMapping.added)))
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.added),
+        ),
+      )
     }
   }
   const handleUpdateFamilyMember = async () => {
@@ -143,7 +150,11 @@ function AddEditFamilyDetails({
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.updated),
+        ),
+      )
     }
   }
   const nameProps = {

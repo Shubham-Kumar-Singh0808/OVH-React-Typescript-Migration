@@ -14,13 +14,14 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
 import moment from 'moment'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { reduxServices } from '../../../reducers/reduxServices'
+
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,
@@ -35,13 +36,13 @@ function AddEditVisaDetails({
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
   const [error, setError] = useState<Date | null>(null)
-  const fetchCountryDetails = useTypedSelector(
+  const getCountryDetails = useTypedSelector(
     (state) => state.personalInfoDetails.SubCountries,
   )
-  const fetchVisaCountryDetails = useTypedSelector(
+  const getVisaCountryDetails = useTypedSelector(
     (state) => state.personalInfoDetails.SubVisa,
   )
-  const fetchEditVisaDetails = useTypedSelector(
+  const getVisaInformation = useTypedSelector(
     (state) => state.personalInfoDetails.editVisaDetails,
   )
 
@@ -89,9 +90,9 @@ function AddEditVisaDetails({
   ])
   useEffect(() => {
     if (isEditVisaDetails) {
-      setEmployeeVisaDetails(fetchEditVisaDetails)
+      setEmployeeVisaDetails(getVisaInformation)
     }
-  }, [isEditVisaDetails, fetchEditVisaDetails])
+  }, [isEditVisaDetails, getVisaInformation])
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
@@ -161,7 +162,11 @@ function AddEditVisaDetails({
     ) {
       backButtonHandler()
       dispatch(
-        dispatch(appActions.addToast(getToastMessage(actionMapping.added))),
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.added),
+          ),
+        ),
       )
     }
   }
@@ -178,7 +183,11 @@ function AddEditVisaDetails({
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.updated),
+        ),
+      )
     }
   }
   const formLabelProps = {
@@ -227,7 +236,7 @@ function AddEditVisaDetails({
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Country</option>
-                {fetchCountryDetails?.countries?.map((countriesItem, index) => (
+                {getCountryDetails?.countries?.map((countriesItem, index) => (
                   <option key={index} value={countriesItem.id}>
                     {countriesItem.name}
                   </option>
@@ -255,7 +264,7 @@ function AddEditVisaDetails({
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Visa</option>
-                {fetchVisaCountryDetails?.map((visaTypeItem, index) => (
+                {getVisaCountryDetails?.map((visaTypeItem, index) => (
                   <option key={index} value={visaTypeItem.visaTypeId}>
                     {visaTypeItem.visaType}
                   </option>
@@ -266,7 +275,13 @@ function AddEditVisaDetails({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Issue:
-              <span className={dateOfIssue ? 'text-white' : 'text-danger'}>
+              <span
+                className={
+                  dateOfIssue || getVisaInformation.dateOfIssue
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -294,7 +309,13 @@ function AddEditVisaDetails({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Expire :
-              <span className={dateOfExpire ? 'text-white' : 'text-danger'}>
+              <span
+                className={
+                  dateOfExpire || getVisaInformation.dateOfExpire
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -348,6 +369,7 @@ function AddEditVisaDetails({
                   className="btn-ovh me-2"
                   color="success"
                   onClick={handleUpdateVisaMember}
+                  disabled={!isAddButtonEnabled}
                 >
                   {confirmButtonText}
                 </CButton>

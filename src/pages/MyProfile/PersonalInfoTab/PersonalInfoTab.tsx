@@ -337,7 +337,7 @@ const PersonalInfoTab = (): JSX.Element => {
             <CCardHeader>
               <h4 className="h4">Family Details</h4>
             </CCardHeader>
-            <CCardBody>
+            <CCardBody className="ps-0 pe-0">
               <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
               <FamilyDetailsTable
                 editButtonHandler={editButtonHandler}
@@ -351,7 +351,7 @@ const PersonalInfoTab = (): JSX.Element => {
             <CCardHeader>
               <h4 className="h4">Visa Details</h4>
             </CCardHeader>
-            <CCardBody>
+            <CCardBody className="ps-0 pe-0">
               <OAddButton addButtonHandler={() => setToggle('AddVisa')} />
               <VisaDetailsTable editVisaButtonHandler={editVisaButtonHandler} />
             </CCardBody>

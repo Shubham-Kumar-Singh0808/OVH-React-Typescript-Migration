@@ -1,12 +1,13 @@
-import { AppDispatch, RootState } from '../../../../stateStore'
 import {
+  AddUpdateEmployeeSkill,
+  CategorySkillListItem,
+  EditEmployeeSkills,
   EmployeeSkillState,
   EmployeeSkills,
-  AddUpdateEmployeeSkill,
-  EditEmployeeSkills,
-  CategorySkillListItem,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
+import { AppDispatch, RootState } from '../../../../stateStore'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../../types/commonTypes'
 import employeeSkillsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillsApi'

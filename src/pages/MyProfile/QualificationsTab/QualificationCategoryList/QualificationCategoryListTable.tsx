@@ -21,9 +21,9 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../../reducers/appSlice'
 import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../../utils/paginationUtils'
+import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const QualificationCategoryListTable = (): JSX.Element => {
@@ -78,6 +78,13 @@ const QualificationCategoryListTable = (): JSX.Element => {
       toastMessage="Qualification details deleted successfully."
     />
   )
+
+  const alreadyExistToastMessage = (
+    <OToast
+      toastColor="danger"
+      toastMessage="This qualification details are already used in qualification, So you cannot delete."
+    />
+  )
   const handleConfirmDelete = async (id: number) => {
     setIsDeleteModalVisible(false)
 
@@ -90,7 +97,14 @@ const QualificationCategoryListTable = (): JSX.Element => {
       )
     ) {
       dispatch(qualificationCategoryThunk.getQualificationCategories())
-      dispatch(appActions.addToast(deleteToastElement))
+      dispatch(reduxServices.app.actions.addToast(deleteToastElement))
+    } else if (
+      qualificationCategoryThunk.deleteQualificationCategory.rejected.match(
+        deleteQualificationCategoryResultAction,
+      ) &&
+      deleteQualificationCategoryResultAction.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
     }
   }
   const currentPageItems = useMemo(
