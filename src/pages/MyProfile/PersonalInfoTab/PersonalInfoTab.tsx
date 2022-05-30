@@ -40,6 +40,7 @@ const PersonalInfoTab = (): JSX.Element => {
   const employeeBasicInformation = useTypedSelector(
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
+
   const selectedUserBasicInformation = {
     id: employeeBasicInformation.id,
     baseLocation: employeeBasicInformation.baseLocation,
@@ -64,6 +65,7 @@ const PersonalInfoTab = (): JSX.Element => {
     anniversary: employeeBasicInformation.anniversary,
     skypeId: employeeBasicInformation.skypeId,
   }
+
   const selectedUserContactDetails = {
     mobile: employeePersonalInformation.mobile,
     alternativeMobile: employeePersonalInformation.alternativeMobile,
@@ -72,72 +74,68 @@ const PersonalInfoTab = (): JSX.Element => {
     workCode: employeePersonalInformation.workCode,
     workNumber: employeePersonalInformation.workNumber,
   }
+
   const selectedUserEmergencyContactDetails = {
     emergencyContactName: employeePersonalInformation.emergencyContactName,
     emergencyPhone: employeePersonalInformation.emergencyPhone,
     emergencyRelationShip: employeePersonalInformation.emergencyRelationShip,
   }
+
   const selectedUserPresenetAddressDetails = {
     presentAddress: employeePersonalInformation.presentAddress,
     presentCity: employeePersonalInformation.presentCity,
     presentZip: employeePersonalInformation.presentZip,
     presentLandMark: employeePersonalInformation.presentLandMark,
   }
+
   const selectedUserPermanentAddressDetails = {
     permanentAddress: employeePersonalInformation.permanentAddress,
     permanentCity: employeePersonalInformation.permanentCity,
     permanentZip: employeePersonalInformation.permanentZip,
     permanentLandMark: employeePersonalInformation.permanentLandMark,
   }
+
   const selectedUserPassportDetails = {
     passportNumber: employeePersonalInformation.passportNumber,
     passportIssuedPlace: employeePersonalInformation.passportIssuedPlace,
     passportIssuedDate: employeePersonalInformation.passportIssuedDate,
     passportExpDate: employeePersonalInformation.passportExpDate,
   }
+
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
   const [isPassportButtonEnabled, setIsPassportButtonEnabled] = useState(false)
   const [
     isPassportPlaceOfIssueButtonEnabled,
     setIsPassportPlaceOfIssueButtonEnabled,
   ] = useState(false)
-  const [
-    employeeContactInformationEditData,
-    setEmployeeContactInformationEditData,
-  ] = useState(selectedUserContactDetails)
 
-  const [
-    employeeEmergencyContactInformationEditData,
-    setEmployeeEmergencyContactInformationEditData,
-  ] = useState(selectedUserEmergencyContactDetails)
+  const [employeeContactDetails, setEmployeeContactDetails] = useState(
+    selectedUserContactDetails,
+  )
 
-  const [
-    employeePresenetAddressInformationEditData,
-    setEmployeePresenetAddressInformationEditData,
-  ] = useState(selectedUserPresenetAddressDetails)
-  const [
-    employeePermanentAddressInformationEditData,
-    setEmployeePermanentAddressInformationEditData,
-  ] = useState(selectedUserPermanentAddressDetails)
+  const [employeeEmergencyContactDetails, setEmployeeEmergencyContactDetails] =
+    useState(selectedUserEmergencyContactDetails)
 
-  const [
-    employeePassportInformationEditData,
-    setEmployeePassportInformationEditData,
-  ] = useState(selectedUserPassportDetails)
+  const [employeePresenetAddressDetails, setEmployeePresenetAddressDetails] =
+    useState(selectedUserPresenetAddressDetails)
+
+  const [employeePermanentAddressDetails, setEmployeePermanentAddressDetails] =
+    useState(selectedUserPermanentAddressDetails)
+
+  const [employeePassportDetails, setEmployeePassportDetails] = useState(
+    selectedUserPassportDetails,
+  )
   const [checkBox, setCheckBox] = useState(false)
-
   useEffect(() => {
     if (checkBox) {
-      setEmployeePermanentAddressInformationEditData({
-        permanentAddress:
-          employeePresenetAddressInformationEditData.presentAddress,
-        permanentCity: employeePresenetAddressInformationEditData.presentCity,
-        permanentZip: employeePresenetAddressInformationEditData.presentZip,
-        permanentLandMark:
-          employeePresenetAddressInformationEditData.presentLandMark,
+      setEmployeePermanentAddressDetails({
+        permanentAddress: employeePresenetAddressDetails.presentAddress,
+        permanentCity: employeePresenetAddressDetails.presentCity,
+        permanentZip: employeePresenetAddressDetails.presentZip,
+        permanentLandMark: employeePresenetAddressDetails.presentLandMark,
       })
     } else {
-      setEmployeePermanentAddressInformationEditData({
+      setEmployeePermanentAddressDetails({
         permanentAddress: '',
         permanentCity: '',
         permanentZip: '',
@@ -146,34 +144,35 @@ const PersonalInfoTab = (): JSX.Element => {
     }
   }, [
     checkBox,
-    employeePresenetAddressInformationEditData.presentAddress,
-    employeePresenetAddressInformationEditData.presentCity,
-    employeePresenetAddressInformationEditData.presentLandMark,
-    employeePresenetAddressInformationEditData.presentZip,
+    employeePresenetAddressDetails.presentAddress,
+    employeePresenetAddressDetails.presentCity,
+    employeePresenetAddressDetails.presentLandMark,
+    employeePresenetAddressDetails.presentZip,
   ])
   useEffect(() => {
     if (
-      employeeContactInformationEditData?.mobile &&
-      employeeEmergencyContactInformationEditData?.emergencyContactName &&
-      employeeEmergencyContactInformationEditData?.emergencyPhone &&
-      employeeEmergencyContactInformationEditData?.emergencyRelationShip &&
-      employeePresenetAddressInformationEditData.presentAddress &&
-      employeePresenetAddressInformationEditData.presentCity &&
-      employeePresenetAddressInformationEditData.presentZip
+      employeeContactDetails?.mobile &&
+      employeeEmergencyContactDetails?.emergencyContactName &&
+      employeeEmergencyContactDetails?.emergencyPhone &&
+      employeeEmergencyContactDetails?.emergencyRelationShip &&
+      employeePresenetAddressDetails.presentAddress &&
+      employeePresenetAddressDetails.presentCity &&
+      employeePresenetAddressDetails.presentZip
     ) {
       setSaveButtonEnabled(true)
     } else {
       setSaveButtonEnabled(false)
     }
   }, [
-    employeeContactInformationEditData?.mobile,
-    employeeEmergencyContactInformationEditData?.emergencyContactName,
-    employeeEmergencyContactInformationEditData?.emergencyPhone,
-    employeeEmergencyContactInformationEditData?.emergencyRelationShip,
-    employeePresenetAddressInformationEditData.presentAddress,
-    employeePresenetAddressInformationEditData.presentCity,
-    employeePresenetAddressInformationEditData.presentZip,
+    employeeContactDetails?.mobile,
+    employeeEmergencyContactDetails?.emergencyContactName,
+    employeeEmergencyContactDetails?.emergencyPhone,
+    employeeEmergencyContactDetails?.emergencyRelationShip,
+    employeePresenetAddressDetails.presentAddress,
+    employeePresenetAddressDetails.presentCity,
+    employeePresenetAddressDetails.presentZip,
   ])
+
   const onChangeContactDetailsHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -182,56 +181,56 @@ const PersonalInfoTab = (): JSX.Element => {
     const { name, value } = e.target
     if (name === 'mobile') {
       const mobileValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactInformationEditData((prevState) => {
+      setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: mobileValue } }
       })
     } else if (name === 'alternativeMobile') {
       const alternativeMobileValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactInformationEditData((prevState) => {
+      setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: alternativeMobileValue } }
       })
     } else if (name === 'homeCode') {
       const homeCodeValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactInformationEditData((prevState) => {
+      setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: homeCodeValue } }
       })
     } else if (name === 'homeNumber') {
       const homeNumberValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactInformationEditData((prevState) => {
+      setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: homeNumberValue } }
       })
     } else if (name === 'workCode') {
       const workCodeValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactInformationEditData((prevState) => {
+      setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: workCodeValue } }
       })
     } else if (name === 'workNumber') {
       const workNumberValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactInformationEditData((prevState) => {
+      setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: workNumberValue } }
       })
     } else {
-      setEmployeeContactInformationEditData((prevState) => {
+      setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: value } }
       })
     }
   }
 
   useEffect(() => {
-    if (employeePassportInformationEditData?.passportNumber) {
+    if (employeePassportDetails?.passportNumber) {
       setIsPassportButtonEnabled(true)
     } else {
       setIsPassportButtonEnabled(false)
     }
-  }, [employeePassportInformationEditData?.passportNumber])
+  }, [employeePassportDetails?.passportNumber])
 
   useEffect(() => {
-    if (employeePassportInformationEditData?.passportIssuedPlace) {
+    if (employeePassportDetails?.passportIssuedPlace) {
       setIsPassportPlaceOfIssueButtonEnabled(true)
     } else {
       setIsPassportPlaceOfIssueButtonEnabled(false)
     }
-  }, [employeePassportInformationEditData?.passportIssuedPlace])
+  }, [employeePassportDetails?.passportIssuedPlace])
 
   const onChangeEmergencyContactDetailsHandler = (
     e:
@@ -241,16 +240,16 @@ const PersonalInfoTab = (): JSX.Element => {
     const { name, value } = e.target
     if (name === 'emergencyPhone') {
       const emergencyPhoneValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeEmergencyContactInformationEditData((prevState) => {
+      setEmployeeEmergencyContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: emergencyPhoneValue } }
       })
     } else if (name === 'emergencyContactName') {
       const emergencyContactNameValue = value.replace(/[^a-zA-Z\s]/gi, '')
-      setEmployeeEmergencyContactInformationEditData((prevState) => {
+      setEmployeeEmergencyContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: emergencyContactNameValue } }
       })
     } else {
-      setEmployeeEmergencyContactInformationEditData((prevState) => {
+      setEmployeeEmergencyContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: value } }
       })
     }
@@ -262,11 +261,11 @@ const PersonalInfoTab = (): JSX.Element => {
     const { name, value } = e.target
     if (name === 'presentZip') {
       const presentZipValue = value.replace(/[^0-9]/gi, '')
-      setEmployeePresenetAddressInformationEditData((prevState) => {
+      setEmployeePresenetAddressDetails((prevState) => {
         return { ...prevState, ...{ [name]: presentZipValue } }
       })
     } else {
-      setEmployeePresenetAddressInformationEditData((prevState) => {
+      setEmployeePresenetAddressDetails((prevState) => {
         return { ...prevState, ...{ [name]: value } }
       })
     }
@@ -278,11 +277,11 @@ const PersonalInfoTab = (): JSX.Element => {
     const { name, value } = e.target
     if (name === 'permanentZip') {
       const permanentZipValue = value.replace(/[^0-9]/gi, '')
-      setEmployeePermanentAddressInformationEditData((prevState) => {
+      setEmployeePermanentAddressDetails((prevState) => {
         return { ...prevState, ...{ [name]: permanentZipValue } }
       })
     } else {
-      setEmployeePermanentAddressInformationEditData((prevState) => {
+      setEmployeePermanentAddressDetails((prevState) => {
         return { ...prevState, ...{ [name]: value } }
       })
     }
@@ -294,29 +293,28 @@ const PersonalInfoTab = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setEmployeePassportInformationEditData((prevState) => {
+    setEmployeePassportDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
   }
   const onDateChangeHandler = (date: Date, e: { name: string }) => {
-    if (employeePassportInformationEditData) {
+    if (employeePassportDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = e.name
-      setEmployeePassportInformationEditData((prevState) => {
+      setEmployeePassportDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
     }
   }
 
-  console.log(employeePermanentAddressInformationEditData.permanentAddress)
   const handleSubmitBasicDetails = async () => {
     const prepareObject = {
       ...selectedUserBasicInformation,
-      ...employeeContactInformationEditData,
-      ...employeeEmergencyContactInformationEditData,
-      ...employeePresenetAddressInformationEditData,
-      ...employeePermanentAddressInformationEditData,
-      ...employeePassportInformationEditData,
+      ...employeeContactDetails,
+      ...employeeEmergencyContactDetails,
+      ...employeePresenetAddressDetails,
+      ...employeePermanentAddressDetails,
+      ...employeePassportDetails,
       id: employeePersonalInformation.id,
     }
     dispatch(
@@ -325,6 +323,7 @@ const PersonalInfoTab = (): JSX.Element => {
       ),
     )
   }
+
   return (
     <>
       <>
@@ -361,7 +360,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     Mobile:{' '}
                     <span
                       className={
-                        employeeContactInformationEditData?.mobile
+                        employeeContactDetails?.mobile
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -385,7 +384,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       name="mobile"
                       onChange={onChangeContactDetailsHandler}
-                      value={employeeContactInformationEditData.mobile}
+                      value={employeeContactDetails.mobile}
                       maxLength={10}
                     />
                   </CCol>
@@ -409,9 +408,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       name="alternativeMobile"
                       placeholder="98xxxxxxxx"
-                      value={
-                        employeeContactInformationEditData.alternativeMobile
-                      }
+                      value={employeeContactDetails.alternativeMobile}
                       onChange={onChangeContactDetailsHandler}
                       maxLength={10}
                     />
@@ -435,7 +432,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       type="text"
                       size="sm"
                       name="homeCode"
-                      value={employeeContactInformationEditData.homeCode}
+                      value={employeeContactDetails.homeCode}
                       onChange={onChangeContactDetailsHandler}
                       maxLength={4}
                     />
@@ -446,7 +443,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       name="homeNumber"
                       onChange={onChangeContactDetailsHandler}
-                      value={employeeContactInformationEditData.homeNumber}
+                      value={employeeContactDetails.homeNumber}
                       maxLength={8}
                     />
                   </CCol>
@@ -469,7 +466,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       type="text"
                       size="sm"
                       onChange={onChangeContactDetailsHandler}
-                      value={employeeContactInformationEditData.workCode}
+                      value={employeeContactDetails.workCode}
                       name="workCode"
                       maxLength={4}
                     />
@@ -480,7 +477,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       name="workNumber"
                       onChange={onChangeContactDetailsHandler}
-                      value={employeeContactInformationEditData.workNumber}
+                      value={employeeContactDetails.workNumber}
                       maxLength={8}
                     />
                   </CCol>
@@ -495,7 +492,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     Name:{' '}
                     <span
                       className={
-                        employeeEmergencyContactInformationEditData?.emergencyContactName
+                        employeeEmergencyContactDetails?.emergencyContactName
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -512,7 +509,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       placeholder="Name"
                       onChange={onChangeEmergencyContactDetailsHandler}
                       value={
-                        employeeEmergencyContactInformationEditData.emergencyContactName
+                        employeeEmergencyContactDetails.emergencyContactName
                       }
                     />
                   </CCol>
@@ -522,7 +519,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     Mobile:{' '}
                     <span
                       className={
-                        employeeEmergencyContactInformationEditData?.emergencyPhone
+                        employeeEmergencyContactDetails?.emergencyPhone
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -547,9 +544,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       name="emergencyPhone"
                       onChange={onChangeEmergencyContactDetailsHandler}
-                      value={
-                        employeeEmergencyContactInformationEditData.emergencyPhone
-                      }
+                      value={employeeEmergencyContactDetails.emergencyPhone}
                       maxLength={10}
                     />
                   </CCol>
@@ -559,7 +554,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     Relationship:
                     <span
                       className={
-                        employeeEmergencyContactInformationEditData?.emergencyRelationShip
+                        employeeEmergencyContactDetails?.emergencyRelationShip
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -575,7 +570,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       onChange={onChangeEmergencyContactDetailsHandler}
                       value={
-                        employeeEmergencyContactInformationEditData.emergencyRelationShip
+                        employeeEmergencyContactDetails.emergencyRelationShip
                       }
                     >
                       <option value={''}>Select Relationship</option>
@@ -602,7 +597,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     Address:
                     <span
                       className={
-                        employeePresenetAddressInformationEditData?.presentAddress
+                        employeePresenetAddressDetails?.presentAddress
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -617,9 +612,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       placeholder="Address"
                       size="sm"
                       onChange={onChangePresenetAddressHandler}
-                      value={
-                        employeePresenetAddressInformationEditData.presentAddress
-                      }
+                      value={employeePresenetAddressDetails.presentAddress}
                     />
                   </CCol>
                 </CRow>
@@ -628,7 +621,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     City/Town:{' '}
                     <span
                       className={
-                        employeePresenetAddressInformationEditData?.presentCity
+                        employeePresenetAddressDetails?.presentCity
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -643,9 +636,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       name="presentCity"
                       onChange={onChangePresenetAddressHandler}
-                      value={
-                        employeePresenetAddressInformationEditData.presentCity
-                      }
+                      value={employeePresenetAddressDetails.presentCity}
                     />
                   </CCol>
                 </CRow>
@@ -654,7 +645,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     Zip:{' '}
                     <span
                       className={
-                        employeePresenetAddressInformationEditData?.presentZip
+                        employeePresenetAddressDetails?.presentZip
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -669,9 +660,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       name="presentZip"
                       onChange={onChangePresenetAddressHandler}
-                      value={
-                        employeePresenetAddressInformationEditData.presentZip
-                      }
+                      value={employeePresenetAddressDetails.presentZip}
                       maxLength={6}
                     />
                   </CCol>
@@ -687,9 +676,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       name="presentLandMark"
                       onChange={onChangePresenetAddressHandler}
-                      value={
-                        employeePresenetAddressInformationEditData.presentLandMark
-                      }
+                      value={employeePresenetAddressDetails.presentLandMark}
                     />
                   </CCol>
                 </CRow>
@@ -719,8 +706,8 @@ const PersonalInfoTab = (): JSX.Element => {
                       onChange={onChangePermanentAddressHandler}
                       value={
                         checkBox
-                          ? employeePresenetAddressInformationEditData.presentAddress
-                          : employeePermanentAddressInformationEditData.permanentAddress
+                          ? employeePresenetAddressDetails.presentAddress
+                          : employeePermanentAddressDetails.permanentAddress
                       }
                     />
                   </CCol>
@@ -739,8 +726,8 @@ const PersonalInfoTab = (): JSX.Element => {
                       onChange={onChangePermanentAddressHandler}
                       value={
                         checkBox
-                          ? employeePresenetAddressInformationEditData.presentCity
-                          : employeePermanentAddressInformationEditData.permanentCity
+                          ? employeePresenetAddressDetails.presentCity
+                          : employeePermanentAddressDetails.permanentCity
                       }
                     />
                   </CCol>
@@ -759,8 +746,8 @@ const PersonalInfoTab = (): JSX.Element => {
                       onChange={onChangePermanentAddressHandler}
                       value={
                         checkBox
-                          ? employeePresenetAddressInformationEditData.presentZip
-                          : employeePermanentAddressInformationEditData.permanentZip
+                          ? employeePresenetAddressDetails.presentZip
+                          : employeePermanentAddressDetails.permanentZip
                       }
                       maxLength={6}
                     />
@@ -780,8 +767,8 @@ const PersonalInfoTab = (): JSX.Element => {
                       onChange={onChangePermanentAddressHandler}
                       value={
                         checkBox
-                          ? employeePresenetAddressInformationEditData.presentLandMark
-                          : employeePermanentAddressInformationEditData.permanentLandMark
+                          ? employeePresenetAddressDetails.presentLandMark
+                          : employeePermanentAddressDetails.permanentLandMark
                       }
                     />
                   </CCol>
@@ -802,7 +789,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       name="passportNumber"
                       onChange={onChangePassportInformationHandler}
-                      value={employeePassportInformationEditData.passportNumber}
+                      value={employeePassportDetails.passportNumber}
                     />
                   </CCol>
                 </CRow>
@@ -819,9 +806,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       aria-label="Disabled input example"
                       disabled={!isPassportButtonEnabled}
                       onChange={onChangePassportInformationHandler}
-                      value={
-                        employeePassportInformationEditData.passportIssuedPlace
-                      }
+                      value={employeePassportDetails.passportIssuedPlace}
                     />
                   </CCol>
                 </CRow>
@@ -840,9 +825,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       dropdownMode="select"
                       placeholderText="dd/mm/yyyy"
                       name="officialBirthday"
-                      value={
-                        employeePassportInformationEditData.passportIssuedDate
-                      }
+                      value={employeePassportDetails.passportIssuedDate}
                       onChange={(date: Date) =>
                         onDateChangeHandler(date, {
                           name: 'passportIssuedDate',
@@ -866,9 +849,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       dropdownMode="select"
                       placeholderText="dd/mm/yyyy"
                       name="passportExpDate"
-                      value={
-                        employeePassportInformationEditData.passportExpDate
-                      }
+                      value={employeePassportDetails.passportExpDate}
                       onChange={(date: Date) =>
                         onDateChangeHandler(date, { name: 'passportExpDate' })
                       }
