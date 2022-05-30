@@ -18,6 +18,21 @@ export interface CategoryApi extends ApiBase {
   addCategory: string
   deleteCategory: string
 }
+export interface PersonalInfoApi extends ApiBase {
+  getFamilyDetails: string
+  getVisaDetails: string
+  getCountryDetails: string
+  getVisaTypeDetails: string
+  addNewVisaMember: string
+  getFamilyInformation: string
+  updateFamilyInformation: string
+  addNewFamilyMember: string
+  getVisaInformation: string
+  updateVisaInformation: string
+  deleteFamilyMember: string
+  deleteVisaDetail: string
+  fileUploadVisaImage: string
+}
 
 export interface SkillApi extends ApiBase {
   getSkillListForCategory: string
@@ -25,9 +40,17 @@ export interface SkillApi extends ApiBase {
   deleteSkillForCategory: string
 }
 
-export interface QualificationCategoryApi extends ApiBase {
-  getAllQualificationCategories: string
-  addNewQualificationCategory: string
+export interface EmployeeSkillApi extends ApiBase {
+  getEmployeeSkills: string
+  addEmployeeSkill: string
+  getEmployeeSkillInformation: string
+  updateEmployeeSkillInformation: string
+  deleteEmployeeSkill: string
+}
+
+export interface EmployeeQualificationCategoryApi extends ApiBase {
+  getQualificationCategories: string
+  addQualificationCategory: string
   deleteQualificationCategory: string
 }
 export interface EmployeeGeneralInformationApi extends ApiBase {
@@ -37,13 +60,21 @@ export interface EmployeeGeneralInformationApi extends ApiBase {
 export interface PersonalInfoApi extends ApiBase {
   getFamilyDetails: string
 }
-export interface QualificationsApi extends ApiBase {
+export interface EmployeeQualificationsApi extends ApiBase {
   getEmployeeQualifications: string
-  getEmployeeSkillsList: string
-  getEmployeeCertificatesList: string
-  getPostGraduationAndGraduationList: string
+  getPostGraduationAndGraduationLookUp: string
   addEmployeeQualifications: string
   updateEmployeeQualifications: string
+}
+
+export interface EmployeeCertificationsApi extends ApiBase {
+  getEmployeeCertificates: string
+  getTechnologies: string
+  getCertificateByTechnology: string
+  addEmployeeCertificates: string
+  getEmployeeCertificate: string
+  updateEmployeeCertificate: string
+  deleteEmployeeCertificate: string
 }
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string

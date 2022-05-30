@@ -1,25 +1,21 @@
 import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import {
-  categorySelectors,
-  categoryThunk,
-} from '../../../reducers/MyProfile/Categories/categorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import AddNewCategory from './AddNewCategory'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import CIcon from '@coreui/icons-react'
 import CategoryListTable from './CategoryListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { cilArrowLeft } from '@coreui/icons'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const CategoryList = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const isLoading = useTypedSelector(
-    categorySelectors.selectIsCategoryListLoading,
-  )
+  const isLoading = useTypedSelector(reduxServices.category.selectors.isLoading)
 
   useEffect(() => {
-    dispatch(categoryThunk.getAllCategoryList())
+    dispatch(reduxServices.category.getAllCategories())
   }, [dispatch])
 
   return (
@@ -29,7 +25,7 @@ const CategoryList = (): JSX.Element => {
         title="Category List"
         CFooterClassName="d-none"
       >
-        {!isLoading ? (
+        {isLoading !== ApiLoadingState.loading ? (
           <CRow>
             <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
               <CButton color="info" className="px-4 text-white" size="sm">

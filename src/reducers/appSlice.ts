@@ -1,8 +1,9 @@
 import { JSXElementConstructor, ReactElement } from 'react'
 
+import { RootState } from '../stateStore'
 import { createSlice } from '@reduxjs/toolkit'
 
-type AppStateType = {
+type AppState = {
   sidebarShow: boolean
   sidebarUnfoldable: boolean
   asideShow: boolean
@@ -11,15 +12,17 @@ type AppStateType = {
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>
     | undefined
   reRenderMenu: boolean
+  isSessionExpired: boolean
 }
 
-const initialState: AppStateType = {
+const initialState: AppState = {
   sidebarShow: true,
   sidebarUnfoldable: false,
   asideShow: false,
   theme: 'default',
   toast: undefined,
   reRenderMenu: true,
+  isSessionExpired: false,
 }
 
 const appSlice = createSlice({
@@ -35,9 +38,17 @@ const appSlice = createSlice({
     setReRenderMenu: (state, action) => {
       return { ...state, reRenderMenu: action.payload }
     },
+    setIsSessionExpired: (state, action) => {
+      return { ...state, isSessionExpired: action.payload }
+    },
   },
 })
 
-export const appActions = appSlice.actions
+const selectIsSessionExpired = (state: RootState): boolean =>
+  state.app.isSessionExpired
+
+const appSelectors = { selectIsSessionExpired }
+
+export const appService = { actions: appSlice.actions, selectors: appSelectors }
 
 export default appSlice.reducer
