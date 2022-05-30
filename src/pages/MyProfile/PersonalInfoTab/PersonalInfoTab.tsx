@@ -36,6 +36,33 @@ const PersonalInfoTab = (): JSX.Element => {
     setToggle('EditVisa')
     dispatch(personalInfoThunk.getEmployeeVisa(id))
   }
+  const employeeBasicInformation = useTypedSelector(
+    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
+  )
+  const selectedUserBasicInformation = {
+    id: employeeBasicInformation.id,
+    baseLocation: employeeBasicInformation.baseLocation,
+    bloodgroup: employeeBasicInformation.bloodgroup,
+    departmentName: employeeBasicInformation.departmentName,
+    designation: employeeBasicInformation.designation,
+    emailId: employeeBasicInformation.emailId,
+    curentLocation: employeeBasicInformation.curentLocation,
+    employmentTypeName: employeeBasicInformation.employmentTypeName,
+    fullName: employeeBasicInformation.fullName,
+    gender: employeeBasicInformation.gender,
+    jobTypeName: employeeBasicInformation.jobTypeName,
+    maritalStatus: employeeBasicInformation.maritalStatus,
+    thumbPicture: employeeBasicInformation.thumbPicture,
+    personalEmail: employeeBasicInformation.personalEmail,
+    projectManager: employeeBasicInformation.projectManager,
+    rbtCvPath: employeeBasicInformation.rbtCvPath,
+    rbtCvName: employeeBasicInformation.rbtCvName,
+    aboutMe: employeeBasicInformation.aboutMe,
+    officialBirthday: employeeBasicInformation.officialBirthday,
+    realBirthday: employeeBasicInformation.realBirthday,
+    anniversary: employeeBasicInformation.anniversary,
+    skypeId: employeeBasicInformation.skypeId,
+  }
   const selectedUserContactDetails = {
     mobile: employeePersonalInformation.mobile,
     alternativeMobile: employeePersonalInformation.alternativeMobile,
@@ -67,6 +94,7 @@ const PersonalInfoTab = (): JSX.Element => {
     passportIssuedDate: employeePersonalInformation.passportIssuedDate,
     passportExpDate: employeePersonalInformation.passportExpDate,
   }
+  const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
   const [
     employeeContactInformationEditData,
     setEmployeeContactInformationEditData,
@@ -115,6 +143,29 @@ const PersonalInfoTab = (): JSX.Element => {
     employeePresenetAddressInformationEditData.presentAddress,
     employeePresenetAddressInformationEditData.presentCity,
     employeePresenetAddressInformationEditData.presentLandMark,
+    employeePresenetAddressInformationEditData.presentZip,
+  ])
+  useEffect(() => {
+    if (
+      employeeContactInformationEditData?.mobile &&
+      employeeEmergencyContactInformationEditData?.emergencyContactName &&
+      employeeEmergencyContactInformationEditData?.emergencyPhone &&
+      employeeEmergencyContactInformationEditData?.emergencyRelationShip &&
+      employeePresenetAddressInformationEditData.presentAddress &&
+      employeePresenetAddressInformationEditData.presentCity &&
+      employeePresenetAddressInformationEditData.presentZip
+    ) {
+      setSaveButtonEnabled(true)
+    } else {
+      setSaveButtonEnabled(false)
+    }
+  }, [
+    employeeContactInformationEditData?.mobile,
+    employeeEmergencyContactInformationEditData?.emergencyContactName,
+    employeeEmergencyContactInformationEditData?.emergencyPhone,
+    employeeEmergencyContactInformationEditData?.emergencyRelationShip,
+    employeePresenetAddressInformationEditData.presentAddress,
+    employeePresenetAddressInformationEditData.presentCity,
     employeePresenetAddressInformationEditData.presentZip,
   ])
   const onChangeContactDetailsHandler = (
@@ -237,6 +288,7 @@ const PersonalInfoTab = (): JSX.Element => {
   console.log(employeePermanentAddressInformationEditData.permanentAddress)
   const handleSubmitBasicDetails = async () => {
     const prepareObject = {
+      ...selectedUserBasicInformation,
       ...employeeContactInformationEditData,
       ...employeeEmergencyContactInformationEditData,
       ...employeePresenetAddressInformationEditData,
@@ -826,6 +878,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     size="sm"
                     type="submit"
                     onClick={handleSubmitBasicDetails}
+                    disabled={!saveButtonEnabled}
                   >
                     Save
                   </CButton>
