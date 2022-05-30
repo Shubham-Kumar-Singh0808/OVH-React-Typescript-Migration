@@ -17,7 +17,6 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
-import { userRolesAndPermissionsThunk } from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
 const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   selectedRole,
@@ -59,26 +58,26 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   const handleConfirmAddRole = async () => {
     setAddRoleModalVisibility(false)
     const rolesExistsResultAction = await dispatch(
-      userRolesAndPermissionsThunk.checkIsRoleExists(roleInput),
+      reduxServices.userRolesAndPermissions.checkIsRoleExists(roleInput),
     )
     if (
-      userRolesAndPermissionsThunk.checkIsRoleExists.fulfilled.match(
+      reduxServices.userRolesAndPermissions.checkIsRoleExists.fulfilled.match(
         rolesExistsResultAction,
       ) &&
       rolesExistsResultAction.payload === false
     ) {
       const addRoleResultAction = await dispatch(
-        userRolesAndPermissionsThunk.createUserRole({
+        reduxServices.userRolesAndPermissions.createUserRole({
           roleInput,
           reportingManagerFlag,
         }),
       )
       if (
-        userRolesAndPermissionsThunk.createUserRole.fulfilled.match(
+        reduxServices.userRolesAndPermissions.createUserRole.fulfilled.match(
           addRoleResultAction,
         )
       ) {
-        dispatch(userRolesAndPermissionsThunk.getUserRoles())
+        dispatch(reduxServices.userRolesAndPermissions.getUserRoles())
         setRoleInput('')
         if (reportingManagerFlag) {
           setReportingManagerFlag(false)
@@ -117,16 +116,16 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   const handleConfirmDeleteRole = async () => {
     setDeleteRoleModalVisibility(false)
     const deleteRoleResultAction = await dispatch(
-      userRolesAndPermissionsThunk.deleteUserRole(
+      reduxServices.userRolesAndPermissions.deleteUserRole(
         selectedRole.roleId as number,
       ),
     )
     if (
-      userRolesAndPermissionsThunk.deleteUserRole.fulfilled.match(
+      reduxServices.userRolesAndPermissions.deleteUserRole.fulfilled.match(
         deleteRoleResultAction,
       )
     ) {
-      dispatch(userRolesAndPermissionsThunk.getUserRoles())
+      dispatch(reduxServices.userRolesAndPermissions.getUserRoles())
       dispatch(
         reduxServices.app.actions.addToast(
           getToastMessage(actionMapping.deleted),

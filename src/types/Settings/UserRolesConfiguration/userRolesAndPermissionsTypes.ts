@@ -1,4 +1,4 @@
-import { ValidationError } from '../../commonTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type UserRole = {
   roleId: number
@@ -55,8 +55,7 @@ export type UserRolesAndPermissionsState = {
   roles: UserRole[]
   subFeatures: UserRoleSubFeatures[]
   featuresUnderRole: UserFeaturesUnderRole[]
-  isRoleExits: boolean | null
-  isLoading: boolean
+  isLoading: LoadingState
   error: ValidationError
 }
 

@@ -9,11 +9,10 @@ import {
 } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import userRolesAndPermissionsApi from '../../../middleware/api/Settings/UserRolesConfiguration/userRolesAndPermissionsApi'
-
-const initialUserRolesPermissionsState = {} as UserRolesAndPermissionsState
 
 // fetch user roles action creator
 const getUserRoles = createAsyncThunk<
@@ -136,6 +135,7 @@ const getUserFeaturesUnderRole = createAsyncThunk<
   },
 )
 
+// assign role permissions
 const updateAssignPermission = createAsyncThunk<
   number | undefined,
   UtilsRenderPermissionSwitchReturn,
@@ -158,6 +158,14 @@ const updateAssignPermission = createAsyncThunk<
   },
 )
 
+const initialUserRolesPermissionsState: UserRolesAndPermissionsState = {
+  roles: [],
+  subFeatures: [],
+  featuresUnderRole: [],
+  isLoading: ApiLoadingState.idle,
+  error: null,
+}
+
 const userRolesAndPermissionsSlice = createSlice({
   name: 'userRolesAndPermissions',
   initialState: initialUserRolesPermissionsState,
@@ -165,19 +173,18 @@ const userRolesAndPermissionsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserRoles.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.succeeded
         state.roles = action.payload as UserRole[]
       })
       .addCase(checkIsRoleExists.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isRoleExits = action.payload as boolean
+        state.isLoading = ApiLoadingState.succeeded
       })
       .addCase(getUserRoleSubFeatures.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.succeeded
         state.subFeatures = action.payload as UserRoleSubFeatures[]
       })
       .addCase(getUserFeaturesUnderRole.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.succeeded
         state.featuresUnderRole = action.payload as UserFeaturesUnderRole[]
       })
       .addMatcher(
@@ -187,7 +194,7 @@ const userRolesAndPermissionsSlice = createSlice({
           updateAssignPermission.fulfilled,
         ),
         (state) => {
-          state.isLoading = false
+          state.isLoading = ApiLoadingState.succeeded
         },
       )
       .addMatcher(
@@ -201,7 +208,7 @@ const userRolesAndPermissionsSlice = createSlice({
           updateAssignPermission.pending,
         ),
         (state) => {
-          state.isLoading = true
+          state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
@@ -215,22 +222,21 @@ const userRolesAndPermissionsSlice = createSlice({
           updateAssignPermission.rejected,
         ),
         (state, action) => {
-          state.isLoading = false
+          state.isLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
         },
       )
   },
 })
 
-const selectUserRoles = (state: RootState): UserRole[] =>
+const userRoles = (state: RootState): UserRole[] =>
   state.userRolesAndPermissions.roles
 
-const selectUserRoleSubFeatures = (state: RootState): UserRoleSubFeatures[] =>
+const userRoleSubFeatures = (state: RootState): UserRoleSubFeatures[] =>
   state.userRolesAndPermissions.subFeatures
 
-const selectUserFeaturesUnderRole = (
-  state: RootState,
-): UserFeaturesUnderRole[] => state.userRolesAndPermissions.featuresUnderRole
+const userFeaturesUnderRole = (state: RootState): UserFeaturesUnderRole[] =>
+  state.userRolesAndPermissions.featuresUnderRole
 
 export const userRolesAndPermissionsThunk = {
   getUserRoles,
@@ -243,9 +249,15 @@ export const userRolesAndPermissionsThunk = {
 }
 
 export const userRolesAndPermissionsSelectors = {
-  selectUserRoles,
-  selectUserRoleSubFeatures,
-  selectUserFeaturesUnderRole,
+  userRoles,
+  userRoleSubFeatures,
+  userFeaturesUnderRole,
+}
+
+export const userRolesAndPermissionsService = {
+  ...userRolesAndPermissionsThunk,
+  actions: userRolesAndPermissionsSlice.actions,
+  selectors: userRolesAndPermissionsSelectors,
 }
 
 export default userRolesAndPermissionsSlice.reducer

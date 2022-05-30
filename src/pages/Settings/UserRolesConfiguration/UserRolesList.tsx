@@ -2,15 +2,15 @@ import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
 import React from 'react'
 import { UserRolesListProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import { userRolesAndPermissionsSelectors } from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
 const UserRolesList: React.FC<UserRolesListProps> = ({
   selectedRole,
   setSelectedRole,
 }: UserRolesListProps): JSX.Element => {
   const userRoles = useTypedSelector(
-    userRolesAndPermissionsSelectors.selectUserRoles,
+    reduxServices.userRolesAndPermissions.selectors.userRoles,
   )
 
   const handleRoleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

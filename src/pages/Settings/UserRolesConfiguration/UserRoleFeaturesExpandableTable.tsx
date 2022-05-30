@@ -25,10 +25,6 @@ import {
   renderPermissionSwitch,
 } from '../../../utils/rolesAndPermissionsUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  userRolesAndPermissionsSelectors,
-  userRolesAndPermissionsThunk,
-} from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
@@ -50,18 +46,18 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
     const dispatch = useAppDispatch()
 
     const subFeatures = useTypedSelector(
-      userRolesAndPermissionsSelectors.selectUserRoleSubFeatures,
+      reduxServices.userRolesAndPermissions.selectors.userRoleSubFeatures,
     )
 
     const features = useTypedSelector(
-      userRolesAndPermissionsSelectors.selectUserFeaturesUnderRole,
+      reduxServices.userRolesAndPermissions.selectors.userFeaturesUnderRole,
     )
 
     // on every selected role change doFetchFeaturesUnderRole will dispatch
     useEffect(() => {
       if (selectedRoleId) {
         dispatch(
-          userRolesAndPermissionsThunk.getUserFeaturesUnderRole(
+          reduxServices.userRolesAndPermissions.getUserFeaturesUnderRole(
             selectedRoleId as string,
           ),
         )
@@ -117,10 +113,12 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
         selectedRoleId as number,
       )
       const assignPermissionResultAction = await dispatch(
-        userRolesAndPermissionsThunk.updateAssignPermission(prepareObject),
+        reduxServices.userRolesAndPermissions.updateAssignPermission(
+          prepareObject,
+        ),
       )
       if (
-        userRolesAndPermissionsThunk.updateAssignPermission.fulfilled.match(
+        reduxServices.userRolesAndPermissions.updateAssignPermission.fulfilled.match(
           assignPermissionResultAction,
         )
       ) {
@@ -133,7 +131,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
           ),
         )
         dispatch(
-          userRolesAndPermissionsThunk.getUserFeaturesUnderRole(
+          reduxServices.userRolesAndPermissions.getUserFeaturesUnderRole(
             selectedRoleId as string,
           ),
         )
