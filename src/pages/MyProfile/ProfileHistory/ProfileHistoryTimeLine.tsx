@@ -1,7 +1,7 @@
 import { CBadge, CFormLabel, CSpinner } from '@coreui/react-pro'
 
 import React from 'react'
-import { profileHistorySelectors } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
+import { profileHistoryService } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import { useTypedSelector } from '../../../stateStore'
 
 interface HistoryValue {
@@ -10,7 +10,7 @@ interface HistoryValue {
 
 const ProfileHistoryTimeLine = (): JSX.Element => {
   const employeeProfileHistory = useTypedSelector(
-    profileHistorySelectors.profileHistoryData,
+    profileHistoryService.selectors.profileHistoryData,
   )
   const historyFields = ['personName', 'contactNumber']
   return (

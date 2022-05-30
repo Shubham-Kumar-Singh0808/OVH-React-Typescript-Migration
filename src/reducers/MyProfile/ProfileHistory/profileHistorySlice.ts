@@ -62,13 +62,18 @@ const profileHistoryIsLoading = (state: RootState): boolean =>
 const profileHistoryData = (state: RootState): List[] =>
   state.profileHistory.profileHistoryList
 
-export const profileHistoryThunk = {
+const profileHistoryThunk = {
   getProfileHistory,
 }
-export const setProfileHistory = profileHistorySlice.actions
-export const profileHistorySelectors = {
+// export const setProfileHistory = profileHistorySlice.actions
+const profileHistorySelectors = {
   profileHistoryIsLoading,
   profileHistoryData,
 }
 
+export const profileHistoryService = {
+  ...profileHistoryThunk,
+  actions: profileHistorySlice.actions,
+  selectors: profileHistorySelectors,
+}
 export default profileHistorySlice.reducer

@@ -1,29 +1,28 @@
 import { CCardHeader, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import {
-  profileHistorySelectors,
-  profileHistoryThunk,
-} from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 
 import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
-import { authenticationSelectors } from '../../../reducers/Login/authenticationSlice'
+import { authenticationService } from '../../../reducers/Login/authenticationSlice'
+import { profileHistoryService } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../../../stateStore'
 
 const EmployeeProfileHistory = (): JSX.Element => {
-  const employeeId = useTypedSelector(authenticationSelectors.selectEmployeeId)
+  const employeeId = useTypedSelector(
+    authenticationService.selectors.selectEmployeeId,
+  )
   const authenticatedToken = useTypedSelector(
-    authenticationSelectors.selectToken,
+    authenticationService.selectors.selectToken,
   )
 
   const dispatch = useDispatch()
   const isLoading = useTypedSelector(
-    profileHistorySelectors.profileHistoryIsLoading,
+    profileHistoryService.selectors.profileHistoryIsLoading,
   )
 
   useEffect(() => {
     if (authenticatedToken) {
-      dispatch(profileHistoryThunk.getProfileHistory(employeeId))
+      dispatch(profileHistoryService.getProfileHistory(employeeId))
     }
   }, [authenticatedToken, dispatch, employeeId])
   return (
