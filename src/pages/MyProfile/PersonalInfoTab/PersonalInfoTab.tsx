@@ -22,7 +22,6 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { useTypedSelector, useAppDispatch } from '../../../stateStore'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { reduxServices } from '../../../reducers/reduxServices'
 const PersonalInfoTab = (): JSX.Element => {
   const employeePersonalInformation = useTypedSelector(
@@ -33,11 +32,13 @@ const PersonalInfoTab = (): JSX.Element => {
 
   const editButtonHandler = (familyId: number) => {
     setToggle('EditFamily')
-    dispatch(personalInfoThunk.getEmployeeFamilyMember(familyId))
+    dispatch(
+      reduxServices.personalInformation.getEmployeeFamilyMember(familyId),
+    )
   }
   const editVisaButtonHandler = (id: number) => {
     setToggle('EditVisa')
-    dispatch(personalInfoThunk.getEmployeeVisa(id))
+    dispatch(reduxServices.personalInformation.getEmployeeVisa(id))
   }
   const employeeBasicInformation = useTypedSelector(
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
@@ -328,7 +329,7 @@ const PersonalInfoTab = (): JSX.Element => {
     }
   }
 
-  const handleSubmitBasicDetails = async () => {
+  const handleSubmitPersonalInfoDetails = async () => {
     const prepareObject = {
       ...selectedUserBasicInformation,
       ...employeeContactDetails,
@@ -377,7 +378,7 @@ const PersonalInfoTab = (): JSX.Element => {
               <OAddButton addButtonHandler={() => setToggle('AddVisa')} />
               <VisaDetailsTable editVisaButtonHandler={editVisaButtonHandler} />
             </CCardBody>
-            <CForm onSubmit={handleSubmitBasicDetails}>
+            <CForm onSubmit={handleSubmitPersonalInfoDetails}>
               <CCardHeader>
                 <h4 className="h4">Contact Details</h4>
               </CCardHeader>

@@ -19,7 +19,6 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
 import moment from 'moment'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 function AddEditFamilyDetails({
@@ -119,10 +118,10 @@ function AddEditFamilyDetails({
       },
     }
     const addFamilyMemberResultAction = await dispatch(
-      personalInfoThunk.addEmployeeFamilyMember(prepareObject),
+      reduxServices.personalInformation.addEmployeeFamilyMember(prepareObject),
     )
     if (
-      personalInfoThunk.addEmployeeFamilyMember.fulfilled.match(
+      reduxServices.personalInformation.addEmployeeFamilyMember.fulfilled.match(
         addFamilyMemberResultAction,
       )
     ) {
@@ -142,10 +141,12 @@ function AddEditFamilyDetails({
       },
     }
     const updateFamilyMemberResultAction = await dispatch(
-      personalInfoThunk.updateEmployeeFamilyMember(prepareObject),
+      reduxServices.personalInformation.updateEmployeeFamilyMember(
+        prepareObject,
+      ),
     )
     if (
-      personalInfoThunk.updateEmployeeFamilyMember.fulfilled.match(
+      reduxServices.personalInformation.updateEmployeeFamilyMember.fulfilled.match(
         updateFamilyMemberResultAction,
       )
     ) {

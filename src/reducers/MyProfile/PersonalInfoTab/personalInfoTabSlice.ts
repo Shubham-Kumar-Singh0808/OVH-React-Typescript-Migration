@@ -340,4 +340,9 @@ export const personalInfoSelectors = {
   selectGetFamilyDetails,
   selectGetVisaDetails,
 }
+export const personalInfoService = {
+  ...personalInfoThunk,
+  actions: personalInfoTabSlice.actions,
+  selectors: personalInfoSelectors,
+}
 export default personalInfoTabSlice.reducer
