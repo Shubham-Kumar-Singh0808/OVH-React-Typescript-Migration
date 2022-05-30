@@ -56,10 +56,20 @@ function AddEditVisaDetails({
   }, [dispatch, employeeVisaDetails?.countryId])
 
   useEffect(() => {
-    if ((dateOfIssue as string) <= (dateOfExpire as string)) {
+    if (
+      ((dateOfIssue as string) ||
+        (employeeVisaDetails?.dateOfIssue as string)) <=
+      ((dateOfExpire as string) ||
+        (employeeVisaDetails?.dateOfExpire as string))
+    ) {
       setError(null)
     }
-  }, [dateOfIssue, dateOfExpire])
+  }, [
+    dateOfIssue,
+    dateOfExpire,
+    employeeVisaDetails?.dateOfIssue,
+    employeeVisaDetails?.dateOfExpire,
+  ])
   useEffect(() => {
     if (
       employeeVisaDetails?.countryId &&
