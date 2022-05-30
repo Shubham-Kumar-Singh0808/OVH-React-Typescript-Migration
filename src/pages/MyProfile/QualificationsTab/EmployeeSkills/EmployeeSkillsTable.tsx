@@ -7,13 +7,14 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
+import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../../reducers/appSlice'
-import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import { employeeSkillThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   editSkillButtonHandler,
@@ -54,7 +55,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
       )
     ) {
       dispatch(employeeSkillThunk.getEmployeeSkills())
-      dispatch(dispatch(appActions.addToast(toastElement)))
+      dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
     }
   }
 

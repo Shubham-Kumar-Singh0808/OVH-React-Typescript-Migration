@@ -1,31 +1,29 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import {
-  CCardHeader,
-  CCardBody,
-  CRow,
-  CCol,
-  CForm,
-  CButton,
-  CFormLabel,
-  CFormSelect,
-} from '@coreui/react-pro'
 import {
   AddEditEmployeeSkillsProps,
   AddUpdateEmployeeSkill,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import {
-  employeeSkillThunk,
-  employeeSkillSelectors,
-} from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
+  CButton,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CForm,
+  CFormLabel,
+  CFormSelect,
+  CRow,
+} from '@coreui/react-pro'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
-  categorySelectors,
-  categoryThunk,
-} from '../../../../reducers/MyProfile/Categories/categorySlice'
+  employeeSkillSelectors,
+  employeeSkillThunk,
+} from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
-import { useFormik } from 'formik'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../../reducers/appSlice'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useFormik } from 'formik'
+
 function AddEditEmployeeSkill({
   isEditSkillsDetails = false,
   headerTitle,
@@ -42,7 +40,7 @@ function AddEditEmployeeSkill({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [isSkillAddButtonEnabled, setIsSkillAddButtonEnabled] = useState(false)
   const getAllCategoriesDetails = useTypedSelector(
-    categorySelectors.selectCategoryList,
+    reduxServices.category.selectors.categories,
   )
   const getCategorySkillDetails = useTypedSelector(
     employeeSkillSelectors.selectCategorySkillList,
@@ -53,7 +51,7 @@ function AddEditEmployeeSkill({
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(categoryThunk.getAllCategoryList())
+    dispatch(reduxServices.category.getAllCategories())
     if (employeeSkill?.categoryType) {
       dispatch(
         employeeSkillThunk.getCategorySkills(employeeSkill?.categoryType),
@@ -159,7 +157,11 @@ function AddEditEmployeeSkill({
     ) {
       backButtonHandler()
       dispatch(
-        dispatch(appActions.addToast(getToastMessage(actionMapping.added))),
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.added),
+          ),
+        ),
       )
     }
   }
@@ -181,7 +183,11 @@ function AddEditEmployeeSkill({
     ) {
       backButtonHandler()
       dispatch(
-        dispatch(appActions.addToast(getToastMessage(actionMapping.updated))),
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.updated),
+          ),
+        ),
       )
     }
   }

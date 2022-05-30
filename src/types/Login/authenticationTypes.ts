@@ -1,4 +1,4 @@
-import { ValidationError } from '../commonTypes'
+import { LoadingState, ValidationError } from '../commonTypes'
 
 export type AuthenticatedUser = {
   employeeName: string
@@ -19,5 +19,5 @@ export type LoginCredentials = {
 export type AuthenticationState = {
   authenticatedUser: AuthenticatedUser
   error: ValidationError
-  isLoading: boolean
+  isLoading: LoadingState
 }

@@ -1,6 +1,6 @@
-import { CategoryListItem } from '../../types/MyProfile/Categories/categoryTypes'
+import { Category } from '../../types/MyProfile/Categories/categoryTypes'
 
-export const mockCategories: CategoryListItem[] = [
+export const mockCategories: Category[] = [
   {
     categoryId: 10,
     categoryType: 'Testing',
