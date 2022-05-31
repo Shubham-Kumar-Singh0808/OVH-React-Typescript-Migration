@@ -5,7 +5,7 @@ import {
   AppHeader,
   AppSidebar,
 } from '../components/index'
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 
 import { CToaster } from '@coreui/react-pro'
 import IdleModal from '../components/IdleModal'
@@ -14,9 +14,26 @@ import { useTypedSelector } from '../stateStore'
 const DefaultLayout = (): JSX.Element => {
   const toastState = useTypedSelector((state) => state.app.toast)
   const toasterReference = useRef<HTMLDivElement>(null)
+  const currentUsername = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.userName,
+  )
 
-  const timeout = 20 * 60 * 1000
-  const promptTimeout = 30 * 1000
+  const timeoutProps = useMemo(() => {
+    if (
+      currentUsername === 'sunnymanesh.eagala' ||
+      currentUsername === 'admin.staging'
+    ) {
+      return {
+        timeout: 5 * 60 * 1000,
+        promptTimeout: 5 * 60 * 1000,
+      }
+    }
+
+    return {
+      timeout: 20 * 60 * 1000,
+      promptTimeout: 30 * 1000,
+    }
+  }, [currentUsername])
 
   return (
     <>
@@ -33,7 +50,10 @@ const DefaultLayout = (): JSX.Element => {
               placement="top-end"
             />
 
-            <IdleModal timeout={timeout} promptTimeout={promptTimeout} />
+            <IdleModal
+              timeout={timeoutProps.timeout}
+              promptTimeout={timeoutProps.promptTimeout}
+            />
           </div>
         </div>
         <AppAside />
