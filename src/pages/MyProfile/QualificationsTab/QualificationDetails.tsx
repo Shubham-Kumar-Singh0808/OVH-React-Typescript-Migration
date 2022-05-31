@@ -2,7 +2,6 @@ import { CCardBody, CCardHeader } from '@coreui/react-pro'
 import React, { useState } from 'react'
 
 import AddEditEmployeeSkill from './EmployeeSkills/AddEditEmployeeSkill'
-import AddShift from './AddShift'
 import AddUpdateEmployeeCertification from './EmployeeCertifications/AddUpdateEmployeeCertification'
 import AddUpdateEmployeeQualification from './EmployeeQualifications/AddUpdateEmployeeQualification'
 import EmployeeCertificationsTable from './EmployeeCertifications/EmployeeCertificationsTable'
@@ -55,7 +54,6 @@ const QualificationDetails = (): JSX.Element => {
           </CCardHeader>
           <CCardBody className="ps-0 pe-0">
             <OAddButton addButtonHandler={() => setToggle('addSkills')} />
-            <OAddButton addButtonHandler={() => setToggle('addShift')} />
             <EmployeeSkillsTable
               editSkillButtonHandler={editSkillButtonHandler}
               isFieldDisabled={true}
@@ -102,7 +100,6 @@ const QualificationDetails = (): JSX.Element => {
           isEditSkillsDetails={true}
         />
       )}
-      {toggle === 'addShift' && <AddShift />}
     </>
   )
 }
