@@ -132,10 +132,6 @@ input.form-control,
 select.form-select {
   height: 34px;
 }
-.title-sm,
-.form-select {
-  font-size: 12px;
-}
 .table > :not(caption) > * > * {
   color: #404040;
 }
@@ -166,3 +162,13 @@ th {
     text-align: center;
 }
 
+.sh-date-picker {
+  background-image: url('../icons/calendar.png');
+  /* position: relative; */
+  background-position: calc(100% - 4px);
+  background-size: 24px;
+  background-repeat: no-repeat;
+}
+.sh-date-picker:hover {
+  cursor: pointer;
+}
