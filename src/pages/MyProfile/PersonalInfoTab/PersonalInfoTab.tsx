@@ -136,13 +136,6 @@ const PersonalInfoTab = (): JSX.Element => {
         permanentZip: employeePresenetAddressDetails.presentZip,
         permanentLandMark: employeePresenetAddressDetails.presentLandMark,
       })
-    } else {
-      setEmployeePermanentAddressDetails({
-        permanentAddress: '',
-        permanentCity: '',
-        permanentZip: '',
-        permanentLandMark: '',
-      })
     }
   }, [
     checkBox,
