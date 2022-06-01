@@ -39,7 +39,7 @@ const OModal = ({
           {modalTitle && <strong>{modalTitle}</strong>}
         </CModalHeader>
         <CCloseButton
-          className={`cursor-pointer ${closeButtonClass}`}
+          className={`btn-modal-close cursor-pointer ${closeButtonClass}`}
           onClick={() => {
             setVisible(false)
           }}
