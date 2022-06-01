@@ -1,3 +1,4 @@
+import addNewEmployeeService from './EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeSlice'
 import { appService } from './appSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
@@ -52,4 +53,5 @@ export const reduxServices = {
   employeeDesignationReports: employeeDesigationReportService,
   visaList: visaListService,
   employeeLeaveSettings: employeeLeaveSettingsService,
+  getEmpDepartments: addNewEmployeeService,
 }

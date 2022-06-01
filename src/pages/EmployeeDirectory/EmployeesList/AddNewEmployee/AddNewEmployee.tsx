@@ -1,4 +1,13 @@
 import {
+  Birthday,
+  DateOfJoining,
+  Department,
+  Experience,
+  FullName,
+  Gender,
+  UserNameEmail,
+} from './index'
+import {
   CButton,
   CCol,
   CFormCheck,
@@ -8,13 +17,14 @@ import {
   CFormSwitch,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const AddNewEmployee = (): JSX.Element => {
-  const [userEmail, setUserEmail] = useState<string>()
   const [contractIsDisable, setContractIsDisable] = useState<boolean>(false)
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -25,12 +35,27 @@ const AddNewEmployee = (): JSX.Element => {
   const onDateChangeHandler = (e: Date) => {
     console.log(e)
   }
-  const handleUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserEmail(e.target.value)
-  }
+
   //   const handleContractIsDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
   //     console.log(e.currentTarget.value)
   //   }
+
+  //making dispatch
+  const dispatch = useAppDispatch()
+  const isLoading = useTypedSelector(
+    reduxServices.getEmpDepartments.employeeDepartmentsService.selectors
+      .isLoading,
+  )
+  const departmentsList = useTypedSelector(
+    reduxServices.getEmpDepartments.employeeDepartmentsService.selectors
+      .employeeDepartments,
+  )
+  useEffect(() => {
+    dispatch(
+      reduxServices.getEmpDepartments.employeeDepartmentsService.getEmployeeDepartments(),
+    )
+  }, [dispatch])
+
   return (
     <>
       <OCard
@@ -46,280 +71,30 @@ const AddNewEmployee = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mb-3">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'username',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
-            Username
-            <span
-            //   className={
-            //     employeeBasicInformationEditData.curentLocation
-            //       ? 'text-white'
-            //       : 'text-danger'
-            //   }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormInput
-              id="username"
-              size="sm"
-              type="text"
-              name="username"
-              placeholder="User Name"
-              value={userEmail}
-              onChange={handleUserEmail}
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mb-3">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'email',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
-            Email
-            <span
-            //   className={
-            //     employeeBasicInformationEditData.curentLocation
-            //       ? 'text-white'
-            //       : 'text-danger'
-            //   }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormInput
-              id="email"
-              size="sm"
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={userEmail}
-              disabled
-            />
-            <strong>@aibridgeml.com</strong>
-          </CCol>
-        </CRow>
-        <CRow className="mb-3">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'fullname:',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
-            Email
-            <span
-            //   className={
-            //     employeeBasicInformationEditData.curentLocation
-            //       ? 'text-white'
-            //       : 'text-danger'
-            //   }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={9}>
-            <CRow>
-              <CCol sm={3}>
-                <CFormInput
-                  id="fullname"
-                  size="sm"
-                  type="text"
-                  name="firstname"
-                  placeholder="First Name"
-                  value=""
-                />
-              </CCol>
-              <CCol sm={3}>
-                <CFormInput
-                  size="sm"
-                  type="text"
-                  name="middlename"
-                  placeholder="Middle Name"
-                  value=""
-                />
-              </CCol>
-              <CCol sm={3}>
-                <CFormInput
-                  size="sm"
-                  type="text"
-                  name="lastname"
-                  placeholder="Last Name"
-                  value=""
-                />
-              </CCol>
-            </CRow>
-          </CCol>
-        </CRow>
-        <CRow className="mb-3">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'gender',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
-            Gender
-            <span
-            //   className={
-            //     employeeBasicInformationEditData.curentLocation
-            //       ? 'text-white'
-            //       : 'text-danger'
-            //   }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              id="gender"
-              size="sm"
-              aria-label="gender"
-              name="gender"
-              value=""
-            >
-              <option value={''}>Select Gender</option>
-              <option value="Female">Female</option>
-              <option value="Male">Male</option>
-            </CFormSelect>
-          </CCol>
-        </CRow>
-        <CRow className="mb-3">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'birthday',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
-            Birthday:
-            <span
-            //   className={
-            //     employeeBasicInformationEditData.curentLocation
-            //       ? 'text-white'
-            //       : 'text-danger'
-            //   }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <DatePicker
-              id="birthday"
-              className="form-control form-control-sm sh-date-picker"
-              maxDate={new Date()}
-              peekNextMonth
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              placeholderText="dd/mm/yyyy"
-              name="officialBirthday"
-              value=""
-              onChange={(date: Date) => onDateChangeHandler(date)}
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mb-3">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'dateofJoining',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
-            Date of Joining:
-            <span
-            //   className={
-            //     employeeBasicInformationEditData.curentLocation
-            //       ? 'text-white'
-            //       : 'text-danger'
-            //   }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <DatePicker
-              id="birthday"
-              className="form-control form-control-sm sh-date-picker"
-              maxDate={new Date()}
-              peekNextMonth
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              placeholderText="dd/mm/yyyy"
-              name="officialBirthday"
-              value=""
-              onChange={(date: Date) => onDateChangeHandler(date)}
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mb-3">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'experience',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
-            Experience
-            <span
-            //   className={
-            //     employeeBasicInformationEditData.curentLocation
-            //       ? 'text-white'
-            //       : 'text-danger'
-            //   }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormInput
-              id="experience"
-              size="sm"
-              type="text"
-              name="experience"
-              placeholder="Experience"
-              value=""
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mb-3">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'department',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
-            Department
-            <span
-            //   className={
-            //     employeeBasicInformationEditData.curentLocation
-            //       ? 'text-white'
-            //       : 'text-danger'
-            //   }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              id="department"
-              size="sm"
-              aria-label="department"
-              name="department"
-              value=""
-            >
-              <option value={''}>Select Department</option>
-              <option value="Accounts">Accounts</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Networking">Networking</option>
-            </CFormSelect>
-          </CCol>
-        </CRow>
+
+        <UserNameEmail dynamicFormLabelProps={dynamicFormLabelProps} />
+
+        <FullName dynamicFormLabelProps={dynamicFormLabelProps} />
+
+        <Gender dynamicFormLabelProps={dynamicFormLabelProps} />
+
+        <Birthday
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          onDateChangeHandler={onDateChangeHandler}
+        />
+
+        <DateOfJoining
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          onDateChangeHandler={onDateChangeHandler}
+        />
+
+        <Experience dynamicFormLabelProps={dynamicFormLabelProps} />
+
+        <Department
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          departmentsList={departmentsList}
+        />
+
         <CRow className="mb-3">
           <CFormLabel
             {...dynamicFormLabelProps(

@@ -191,3 +191,6 @@ export interface EmployeeLeaveSettingsApi extends ApiBase {
   deleteLeaveCategory: string
   addUpdateLeaveCategory: string
 }
+export interface AddNewEmployeeAPi extends ApiBase {
+  getEmployeeDepartments: string
+}

@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix error
 import {
+  AddNewEmployeeAPi,
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
@@ -233,4 +234,8 @@ export const employeeLeaveSettingsApiConfig: EmployeeLeaveSettingsApi = {
     apiPrefix + '/leaveSetup/bioAdminManager/leaveCalendarSettings',
   deleteLeaveCategory: apiPrefix + '/leaveSetup/bioAdmin/leaveCategory',
   addUpdateLeaveCategory: apiPrefix + '/leaveSetup/bioAdmin/leaveCategory',
+}
+
+export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
 }

@@ -163,10 +163,10 @@ th {
 }
 
 .sh-date-picker {
-  background-image: url('../icons/calendar.png');
+  background-image: url('../icons/calendar.svg');
   /* position: relative; */
-  background-position: calc(100% - 4px);
-  background-size: 24px;
+  background-position: calc(100% - 10px);
+  background-size: 16px;
   background-repeat: no-repeat;
 }
 .sh-date-picker:hover {
