@@ -1,7 +1,7 @@
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
   CertificateType,
-  CertificationState,
+  CertificationSliceState,
   EditEmployeeCertificates,
   EmployeeCertifications,
   Technology,
@@ -9,16 +9,17 @@ import {
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { ValidationError } from '../../../../types/commonTypes'
+import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import employeeCertificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationsApi'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
-const initialCertificationState: CertificationState = {
+const initialCertificationState: CertificationSliceState = {
   editCertificateDetails: {} as EditEmployeeCertificates,
   getAllTechnologies: [],
   typeOfCertificate: [],
   certificationDetails: [],
-  isLoading: false,
   error: null,
+  isLoading: ApiLoadingState.idle,
 }
 
 const getEmployeeCertificates = createAsyncThunk<
@@ -169,23 +170,23 @@ const employeeCertificationsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getTechnologies.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.succeeded
         state.getAllTechnologies = action.payload as Technology[]
       })
       .addCase(getCertificateByTechnologyName.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.succeeded
         state.typeOfCertificate = action.payload as CertificateType[]
       })
       .addCase(addEmployeeCertification.fulfilled, (state) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.succeeded
       })
       .addCase(getEmployeeCertificate.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.succeeded
         state.editCertificateDetails =
           action.payload as unknown as EditEmployeeCertificates
       })
       .addCase(deleteEmployeeCertificate.fulfilled, (state) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.succeeded
       })
       .addMatcher(
         isAnyOf(
@@ -194,7 +195,7 @@ const employeeCertificationsSlice = createSlice({
           updateEmployeeCertificate.fulfilled,
         ),
         (state, action) => {
-          state.isLoading = false
+          state.isLoading = ApiLoadingState.succeeded
           state.certificationDetails =
             action.payload as EmployeeCertifications[]
         },
@@ -208,7 +209,7 @@ const employeeCertificationsSlice = createSlice({
           deleteEmployeeCertificate.pending,
         ),
         (state) => {
-          state.isLoading = true
+          state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
@@ -221,17 +222,16 @@ const employeeCertificationsSlice = createSlice({
           deleteEmployeeCertificate.rejected,
         ),
         (state, action) => {
-          state.isLoading = false
+          state.isLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
         },
       )
   },
 })
 
-const selectIsCertificationListLoading = (state: RootState): boolean =>
+const isLoading = (state: RootState): LoadingState =>
   state.employeeCertificates.isLoading
-
-const selectCertificates = (state: RootState): EmployeeCertifications[] =>
+const employeeCertificates = (state: RootState): EmployeeCertifications[] =>
   state.employeeCertificates.certificationDetails
 
 export const certificationThunk = {
@@ -246,9 +246,15 @@ export const certificationThunk = {
 
 export const qualificationCategoryActions = employeeCertificationsSlice.actions
 
-export const certificationSelectors = {
-  selectIsCertificationListLoading,
-  selectCertificates,
+export const employeeCertificationSelectors = {
+  isLoading,
+  employeeCertificates,
+}
+
+export const employeeCertificateService = {
+  ...certificationThunk,
+  actions: employeeCertificationsSlice.actions,
+  selectors: employeeCertificationSelectors,
 }
 
 export default employeeCertificationsSlice.reducer

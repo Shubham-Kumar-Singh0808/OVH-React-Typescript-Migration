@@ -19,7 +19,6 @@ import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
-import { qualificationsThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 
@@ -75,8 +74,14 @@ const AddUpdateEmployeeQualification = ({
   }, [addQualification])
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(qualificationsThunk.getPgLookUpAndGraduationLookUpItems())
-    dispatch(qualificationsThunk.getEmployeeQualifications(employeeId))
+    dispatch(
+      reduxServices.employeeQualifications.getPgLookUpAndGraduationLookUpItems(),
+    )
+    dispatch(
+      reduxServices.employeeQualifications.getEmployeeQualifications(
+        employeeId,
+      ),
+    )
   }, [dispatch, employeeId])
 
   useEffect(() => {
@@ -119,10 +124,12 @@ const AddUpdateEmployeeQualification = ({
   const handleAddUpdateQualification = async () => {
     if (addQualification.id) {
       const updateResultAction = await dispatch(
-        qualificationsThunk.updateEmployeeQualifications(addQualification),
+        reduxServices.employeeQualifications.updateEmployeeQualifications(
+          addQualification,
+        ),
       )
       if (
-        qualificationsThunk.updateEmployeeQualifications.fulfilled.match(
+        reduxServices.employeeQualifications.updateEmployeeQualifications.fulfilled.match(
           updateResultAction,
         )
       ) {
@@ -136,13 +143,13 @@ const AddUpdateEmployeeQualification = ({
       }
     } else {
       const postResultAction = await dispatch(
-        qualificationsThunk.addEmployeeQualifications({
+        reduxServices.employeeQualifications.addEmployeeQualifications({
           ...addQualification,
           ...{ empId: employeeId as number },
         }),
       )
       if (
-        qualificationsThunk.addEmployeeQualifications.fulfilled.match(
+        reduxServices.employeeQualifications.addEmployeeQualifications.fulfilled.match(
           postResultAction,
         )
       ) {

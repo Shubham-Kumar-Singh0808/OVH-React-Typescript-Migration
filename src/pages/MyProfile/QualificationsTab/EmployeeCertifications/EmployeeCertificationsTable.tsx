@@ -8,10 +8,6 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import {
-  certificationSelectors,
-  certificationThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
@@ -24,12 +20,12 @@ const EmployeeCertificationsTable = ({
 }: EmployeeCertificationTableProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteCertificateById, setToDeleteCertificateById] = useState(0)
-  const employeeCertificateData = useTypedSelector(
-    certificationSelectors.selectCertificates,
+  const employeeCertificates = useTypedSelector(
+    reduxServices.employeeCertifications.selectors.employeeCertificates,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(certificationThunk.getEmployeeCertificates())
+    dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
   }, [dispatch])
 
   const toastElement = (
@@ -45,27 +41,29 @@ const EmployeeCertificationsTable = ({
   const handleConfirmDeleteCertificate = async () => {
     setIsDeleteModalVisible(false)
     const deleteCertificateResultAction = await dispatch(
-      certificationThunk.deleteEmployeeCertificate(toDeleteCertificateById),
+      reduxServices.employeeCertifications.deleteEmployeeCertificate(
+        toDeleteCertificateById,
+      ),
     )
     if (
-      certificationThunk.deleteEmployeeCertificate.fulfilled.match(
+      reduxServices.employeeCertifications.deleteEmployeeCertificate.fulfilled.match(
         deleteCertificateResultAction,
       )
     ) {
-      dispatch(certificationThunk.getEmployeeCertificates())
+      dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
       dispatch(reduxServices.app.actions.addToast(toastElement))
     }
   }
 
   const sortedCertificateDetails = useMemo(() => {
-    if (employeeCertificateData) {
-      return employeeCertificateData
+    if (employeeCertificates) {
+      return employeeCertificates
         .slice()
         .sort((sortNode1, sortNode2) =>
           sortNode1.name.localeCompare(sortNode2.name),
         )
     }
-  }, [employeeCertificateData])
+  }, [employeeCertificates])
 
   return (
     <>
@@ -141,8 +139,8 @@ const EmployeeCertificationsTable = ({
         </CTableBody>
       </CTable>
       <strong>
-        {employeeCertificateData?.length
-          ? `Total Records: ${employeeCertificateData.length}`
+        {employeeCertificates?.length
+          ? `Total Records: ${employeeCertificates.length}`
           : `No Records Found`}
       </strong>
       <OModal

@@ -19,7 +19,6 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import DatePicker from 'react-datepicker'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { certificationThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import moment from 'moment'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
@@ -54,14 +53,14 @@ function AddUpdateEmployeeCertification({
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(certificationThunk.getEmployeeCertificates())
+    dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(certificationThunk.getTechnologies())
+    dispatch(reduxServices.employeeCertifications.getTechnologies())
     if (addCertification?.technology) {
       dispatch(
-        certificationThunk.getCertificateByTechnologyName(
+        reduxServices.employeeCertifications.getCertificateByTechnologyName(
           addCertification?.technology,
         ),
       )
@@ -185,10 +184,12 @@ function AddUpdateEmployeeCertification({
       },
     }
     const addCertificateResultAction = await dispatch(
-      certificationThunk.addEmployeeCertification(prepareObject),
+      reduxServices.employeeCertifications.addEmployeeCertification(
+        prepareObject,
+      ),
     )
     if (
-      certificationThunk.addEmployeeCertification.fulfilled.match(
+      reduxServices.employeeCertifications.addEmployeeCertification.fulfilled.match(
         addCertificateResultAction,
       )
     ) {
@@ -202,10 +203,12 @@ function AddUpdateEmployeeCertification({
       ...addCertification,
     }
     const updateCertificateResultAction = await dispatch(
-      certificationThunk.updateEmployeeCertificate(prepareObject),
+      reduxServices.employeeCertifications.updateEmployeeCertificate(
+        prepareObject,
+      ),
     )
     if (
-      certificationThunk.updateEmployeeCertificate.fulfilled.match(
+      reduxServices.employeeCertifications.updateEmployeeCertificate.fulfilled.match(
         updateCertificateResultAction,
       )
     ) {

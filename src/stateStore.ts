@@ -3,7 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
-import certificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import employeeCertificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
@@ -26,7 +26,7 @@ export const allReducers = {
   personalInfoDetails: personalInfoReducer,
   skill: skillReducer,
   qualificationCategory: qualificationCategoryReducer,
-  employeeCertificates: certificationReducer,
+  employeeCertificates: employeeCertificationReducer,
   employeeSkill: employeeSkillReducer,
   // add your slice reducers here
 }

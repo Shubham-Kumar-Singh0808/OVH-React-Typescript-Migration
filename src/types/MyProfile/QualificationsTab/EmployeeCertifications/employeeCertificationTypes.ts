@@ -1,4 +1,4 @@
-import { ValidationError } from '../../../commonTypes'
+import { LoadingState, ValidationError } from '../../../commonTypes'
 
 export type EmployeeCertificationProps = {
   isEditCertificationDetails?: boolean
@@ -51,11 +51,11 @@ export type CertificateType = {
   certificateType: string
   technology: string
 }
-export type CertificationState = {
+export type CertificationSliceState = {
   getAllTechnologies: Technology[]
   typeOfCertificate: CertificateType[]
   certificationDetails: EmployeeCertifications[]
   editCertificateDetails: EditEmployeeCertificates
-  isLoading: boolean
+  isLoading: LoadingState
   error: ValidationError
 }
