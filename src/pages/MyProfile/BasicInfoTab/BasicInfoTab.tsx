@@ -169,13 +169,29 @@ const BasicInfoTab = (): JSX.Element => {
   }, [dispatch, employeeBasicInformationEditData.gender])
 
   // upon save click have to save updated employee details
-  const handleSubmitBasicDetails = async () => {
+  const handleSubmitBasicDetails = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ): Promise<void> => {
+    event.preventDefault()
     const prepareObject = employeeBasicInformationEditData
-    dispatch(
+    const resultAction = await dispatch(
       employeeBasicInformationThunk.updateEmployeeBasicInformation(
         prepareObject,
       ),
     )
+    if (
+      (await employeeBasicInformationThunk.updateEmployeeBasicInformation.fulfilled.match(
+        resultAction,
+      )) &&
+      !resultAction.payload
+    ) {
+      window.location.reload()
+      // dispatch(
+      //   getEmployeeGeneralInformationThunk.getEmployeeGeneralInformation(
+      //     employeeId,
+      //   ),
+      // )
+    }
   }
 
   const formik = useFormik({
@@ -189,7 +205,7 @@ const BasicInfoTab = (): JSX.Element => {
     <>
       <CForm
         className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
-        onSubmit={handleSubmitBasicDetails}
+        // onSubmit={handleSubmitBasicDetails}
       >
         <DownloadSampleFileButton />
         <CRow className="mt-3 ">
@@ -733,7 +749,8 @@ const BasicInfoTab = (): JSX.Element => {
               className="btn-ovh btn btn-success mt-4"
               size="sm"
               disabled={!saveButtonEnabled}
-              type="submit"
+              type="button"
+              onClick={handleSubmitBasicDetails}
             >
               Save
             </CButton>

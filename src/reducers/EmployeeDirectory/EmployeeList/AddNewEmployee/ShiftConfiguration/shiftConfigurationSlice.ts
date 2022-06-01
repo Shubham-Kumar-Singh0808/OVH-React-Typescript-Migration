@@ -1,13 +1,17 @@
 import { AppDispatch, RootState } from '../../../../../stateStore'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import {
+  EmployeeShiftDetails,
+  ShiftConfigurationState,
+} from '../../../../../types/EmployeeDirectory/EmployeeList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
+import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
-import { EmployeeShiftDetails } from '../../../../../types/EmployeeDirectory/EmployeeList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import { ValidationError } from '../../../../../types/commonTypes'
 import shiftConfigurationApi from '../../../../../middleware/api/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationApi'
 
-// fetch user roles action creator
-export const getEmployeeShifts = createAsyncThunk<
+// fetch employee shifts action creator
+const getEmployeeShifts = createAsyncThunk<
   EmployeeShiftDetails[] | undefined,
   void,
   {
@@ -15,7 +19,7 @@ export const getEmployeeShifts = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('userRolesAndPermissions/doFetchUserRoles', async (_, thunkApi) => {
+>('shiftConfiguration/getEmployeeShifts', async (_, thunkApi) => {
   try {
     return await shiftConfigurationApi.getEmployeeShifts()
   } catch (error) {
@@ -23,10 +27,73 @@ export const getEmployeeShifts = createAsyncThunk<
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
+
+// create employee time slot
+const createEmployeeTimeSlot = createAsyncThunk<
+  number | undefined,
+  EmployeeShiftDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'shiftConfiguration/createEmployeeTimeSlot',
+  async (employeeShiftDetails, thunkApi) => {
+    try {
+      return await shiftConfigurationApi.createEmployeeTimeSlot(
+        employeeShiftDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const initialShiftConfigurationState: ShiftConfigurationState = {
+  employeeShifts: [],
+  isLoading: ApiLoadingState.idle,
+}
+
 const shiftConfigurationSlice = createSlice({
-  name: 'authentication',
-  initialState: null,
+  name: 'shiftConfiguration',
+  initialState: initialShiftConfigurationState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getEmployeeShifts.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeeShifts = action.payload as EmployeeShiftDetails[]
+      })
+      .addCase(createEmployeeTimeSlot.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
+      .addMatcher(
+        isAnyOf(getEmployeeShifts.pending, createEmployeeTimeSlot.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+  },
 })
+
+const employeeShifts = (state: RootState): EmployeeShiftDetails[] =>
+  state.shiftConfiguration.employeeShifts
+
+export const shiftConfigurationThunk = {
+  getEmployeeShifts,
+  createEmployeeTimeSlot,
+}
+
+export const shiftConfigurationSelectors = {
+  employeeShifts,
+}
+
+export const shiftConfigurationService = {
+  ...shiftConfigurationThunk,
+  actions: shiftConfigurationSlice.actions,
+  selectors: shiftConfigurationSelectors,
+}
 
 export default shiftConfigurationSlice.reducer

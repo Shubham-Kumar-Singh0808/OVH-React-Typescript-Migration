@@ -10,6 +10,7 @@ import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTa
 import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
+import shiftConfigurationReducer from './reducers/EmployeeDirectory/EmployeeList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
@@ -28,6 +29,7 @@ export const allReducers = {
   qualificationCategory: qualificationCategoryReducer,
   employeeCertificates: certificationReducer,
   employeeSkill: employeeSkillReducer,
+  shiftConfiguration: shiftConfigurationReducer,
   // add your slice reducers here
 }
 

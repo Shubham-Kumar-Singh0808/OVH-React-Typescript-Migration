@@ -1,5 +1,7 @@
 import {
   CButton,
+  CCol,
+  CRow,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -9,8 +11,12 @@ import {
 } from '@coreui/react-pro'
 
 import React from 'react'
+import { ShiftListTableProps } from '../../../../../types/EmployeeDirectory/EmployeeList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 
-const ShiftListTable = (): JSX.Element => {
+const ShiftListTable = ({
+  employeeShifts,
+}: ShiftListTableProps): JSX.Element => {
+  console.log(employeeShifts)
   return (
     <>
       <CTable striped responsive className="ps-0 pe-0">
@@ -25,23 +31,40 @@ const ShiftListTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          <CTableRow>
-            <CTableDataCell scope="row"></CTableDataCell>
-            <CTableDataCell scope="row"></CTableDataCell>
-            <CTableDataCell scope="row"></CTableDataCell>
-            <CTableDataCell scope="row"></CTableDataCell>
-            <CTableDataCell scope="row"></CTableDataCell>
-            <CTableDataCell scope="row">
-              <CButton color="info" className="btn-ovh me-1">
-                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </CButton>
-              <CButton color="danger" className="btn-ovh me-1">
-                <i className="fa fa-trash-o" aria-hidden="true"></i>
-              </CButton>
-            </CTableDataCell>
-          </CTableRow>
+          {employeeShifts?.map((employeeShift, index) => {
+            return (
+              <CTableRow key={index}>
+                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                <CTableDataCell scope="row">
+                  {employeeShift.name}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {`${employeeShift.startTimeHour}:${employeeShift.startTimeMinutes}`}
+                </CTableDataCell>
+                <CTableDataCell scope="row">{`${employeeShift.endTimeHour}:${employeeShift.endTimeMinutes}`}</CTableDataCell>
+                <CTableDataCell scope="row">
+                  {employeeShift.graceTime}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  <CButton color="info" className="btn-ovh me-1">
+                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </CButton>
+                  <CButton color="danger" className="btn-ovh me-1">
+                    <i className="fa fa-trash-o" aria-hidden="true"></i>
+                  </CButton>
+                </CTableDataCell>
+              </CTableRow>
+            )
+          })}
         </CTableBody>
       </CTable>
+      <CRow>
+        <CCol xs={4}>
+          <p>
+            <strong>Total Records: {employeeShifts.length}</strong>
+          </p>
+        </CCol>
+      </CRow>
     </>
   )
 }

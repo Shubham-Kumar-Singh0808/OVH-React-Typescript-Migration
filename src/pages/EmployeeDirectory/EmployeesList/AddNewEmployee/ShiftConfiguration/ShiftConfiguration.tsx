@@ -6,60 +6,158 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
+import { ActionMapping } from '../../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { EmployeeShiftDetails } from '../../../../../types/EmployeeDirectory/EmployeeList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import OAddButton from '../../../../../components/ReusableComponent/OAddButton'
 import OCard from '../../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../../components/ReusableComponent/OToast'
 import ShiftListTable from './ShiftListTable'
+import { reduxServices } from '../../../../../reducers/reduxServices'
 
 const ShiftConfiguration = (): JSX.Element => {
-  const [shiftDetails, setShiftDetails] = useState<EmployeeShiftDetails>({
-    id: 0,
-    name: '',
-    startTimeHour: '',
-    startTimeMinutes: '',
-    endTimeHour: '',
-    endTimeMinutes: '',
-    graceTime: '',
-  })
+  const employeeShifts = useTypedSelector(
+    reduxServices.shiftConfiguration.selectors.employeeShifts,
+  )
+  const [employeeShiftDetails, setEmployeeShiftDetails] =
+    useState<EmployeeShiftDetails>({
+      id: 0,
+      name: '',
+      startTimeHour: '',
+      startTimeMinutes: '',
+      endTimeHour: '',
+      endTimeMinutes: '',
+      graceTime: '',
+    })
+  const [isAddBtnEnabled, setIsAddBtnEnabled] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'startTimeHour') {
       const startTimeHour = value.replace(/[^0-9]/gi, '')
-      let valueCopy = +startTimeHour
-      if (valueCopy > 23) valueCopy = 23
-      setShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: valueCopy } }
+      // let valueCopy = +startTimeHour
+      // if (valueCopy > 23) valueCopy = 23
+      setEmployeeShiftDetails((prevState) => {
+        return { ...prevState, ...{ [name]: startTimeHour } }
       })
     } else if (name === 'startTimeMinutes') {
       const startTimeMinutes = value.replace(/[^0-9]/gi, '')
-      setShiftDetails((prevState) => {
+      setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: startTimeMinutes } }
       })
     } else if (name === 'endTimeHour') {
       const endTimeHour = value.replace(/[^0-9]/gi, '')
-      setShiftDetails((prevState) => {
+      setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: endTimeHour } }
       })
     } else if (name === 'endTimeMinutes') {
       const endTimeMinutes = value.replace(/[^0-9]/gi, '')
-      setShiftDetails((prevState) => {
+      setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: endTimeMinutes } }
       })
     } else if (name === 'graceTime') {
       const graceTime = value.replace(/[^0-9]/gi, '')
-      setShiftDetails((prevState) => {
+      setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: graceTime } }
       })
     } else {
-      setShiftDetails((prevState) => {
+      setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: value } }
       })
     }
   }
-  console.log(shiftDetails)
 
+  const shiftAlreadyExistToastMessage = (
+    <OToast toastColor="danger" toastMessage="Shift already exists!" />
+  )
+
+  const actionMapping: ActionMapping = {
+    added: 'added',
+    deleted: 'deleted',
+  }
+
+  const getToastMessage = (action: string) => {
+    return (
+      <OToast
+        toastColor="success"
+        toastMessage={`Shift ${action} successfully`}
+      />
+    )
+  }
+  const handleAddEmployeeTimeSlot = async () => {
+    const createEmployeeTimeSlotResultAction = await dispatch(
+      reduxServices.shiftConfiguration.createEmployeeTimeSlot(
+        employeeShiftDetails,
+      ),
+    )
+    if (
+      reduxServices.shiftConfiguration.createEmployeeTimeSlot.fulfilled.match(
+        createEmployeeTimeSlotResultAction,
+      )
+    ) {
+      dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.added),
+        ),
+      )
+      setEmployeeShiftDetails({
+        id: 0,
+        name: '',
+        startTimeHour: '',
+        startTimeMinutes: '',
+        endTimeHour: '',
+        endTimeMinutes: '',
+        graceTime: '',
+      })
+    } else if (
+      reduxServices.shiftConfiguration.createEmployeeTimeSlot.rejected.match(
+        createEmployeeTimeSlotResultAction,
+      ) &&
+      createEmployeeTimeSlotResultAction.payload === 409
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(shiftAlreadyExistToastMessage),
+      )
+      setEmployeeShiftDetails({
+        id: 0,
+        name: '',
+        startTimeHour: '',
+        startTimeMinutes: '',
+        endTimeHour: '',
+        endTimeMinutes: '',
+        graceTime: '',
+      })
+    }
+  }
+
+  useEffect(() => {
+    dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (
+      employeeShiftDetails.name &&
+      employeeShiftDetails.startTimeHour &&
+      employeeShiftDetails.startTimeMinutes &&
+      employeeShiftDetails.endTimeHour &&
+      employeeShiftDetails.endTimeMinutes &&
+      employeeShiftDetails.graceTime
+    ) {
+      setIsAddBtnEnabled(true)
+    } else {
+      setIsAddBtnEnabled(false)
+    }
+  }, [
+    employeeShiftDetails.endTimeHour,
+    employeeShiftDetails.endTimeMinutes,
+    employeeShiftDetails.graceTime,
+    employeeShiftDetails.name,
+    employeeShiftDetails.startTimeHour,
+    employeeShiftDetails.startTimeMinutes,
+  ])
   return (
     <>
       <OCard
@@ -78,7 +176,9 @@ const ShiftConfiguration = (): JSX.Element => {
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Name :
                 <span
-                  className={shiftDetails.name ? 'text-white' : 'text-danger'}
+                  className={
+                    employeeShiftDetails.name ? 'text-white' : 'text-danger'
+                  }
                 >
                   *
                 </span>
@@ -90,14 +190,24 @@ const ShiftConfiguration = (): JSX.Element => {
                   type="text"
                   name="name"
                   placeholder="Shift Name"
-                  value={shiftDetails.name}
+                  value={employeeShiftDetails.name}
                   onChange={handleInputChange}
                 />
               </CCol>
             </CRow>
             <CRow className="mt-4 mb-4">
               <CFormLabel className="col-sm-3 col-form-label text-end">
-                Start Time :<span className={'text-danger'}>*</span>
+                Start Time :
+                <span
+                  className={
+                    employeeShiftDetails.startTimeHour &&
+                    employeeShiftDetails.startTimeMinutes
+                      ? 'text-white'
+                      : 'text-danger'
+                  }
+                >
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={1}>
                 <CFormInput
@@ -107,7 +217,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   name="startTimeHour"
                   placeholder="Hours"
                   maxLength={2}
-                  value={shiftDetails.startTimeHour}
+                  value={employeeShiftDetails.startTimeHour}
                   onChange={handleInputChange}
                 />
               </CCol>
@@ -119,14 +229,24 @@ const ShiftConfiguration = (): JSX.Element => {
                   name="startTimeMinutes"
                   placeholder="Min"
                   maxLength={2}
-                  value={shiftDetails.startTimeMinutes}
+                  value={employeeShiftDetails.startTimeMinutes}
                   onChange={handleInputChange}
                 />
               </CCol>
             </CRow>
             <CRow className="mt-4 mb-4">
               <CFormLabel className="col-sm-3 col-form-label text-end">
-                End Time :<span className={'text-danger'}>*</span>
+                End Time :
+                <span
+                  className={
+                    employeeShiftDetails.endTimeHour &&
+                    employeeShiftDetails.endTimeMinutes
+                      ? 'text-white'
+                      : 'text-danger'
+                  }
+                >
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={1}>
                 <CFormInput
@@ -136,7 +256,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   name="endTimeHour"
                   placeholder="Hours"
                   maxLength={2}
-                  value={shiftDetails.endTimeHour}
+                  value={employeeShiftDetails.endTimeHour}
                   onChange={handleInputChange}
                 />
               </CCol>
@@ -148,14 +268,23 @@ const ShiftConfiguration = (): JSX.Element => {
                   name="endTimeMinutes"
                   placeholder="Min"
                   maxLength={2}
-                  value={shiftDetails.endTimeMinutes}
+                  value={employeeShiftDetails.endTimeMinutes}
                   onChange={handleInputChange}
                 />
               </CCol>
             </CRow>
             <CRow className="mt-4 mb-4">
               <CFormLabel className="col-sm-3 col-form-label text-end">
-                Grace period :<span className={'text-danger'}>*</span>
+                Grace period :
+                <span
+                  className={
+                    employeeShiftDetails.graceTime
+                      ? 'text-white'
+                      : 'text-danger'
+                  }
+                >
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={2}>
                 <CFormInput
@@ -165,19 +294,22 @@ const ShiftConfiguration = (): JSX.Element => {
                   name="graceTime"
                   placeholder="In Minutes"
                   maxLength={3}
-                  value={shiftDetails.graceTime}
+                  value={employeeShiftDetails.graceTime}
                   onChange={handleInputChange}
                 />
               </CCol>
             </CRow>
             <CRow className="mt-4 mb-4">
               <CCol sm={4}>
-                <OAddButton />
+                <OAddButton
+                  addButtonHandler={handleAddEmployeeTimeSlot}
+                  isAddBtnEnabled={isAddBtnEnabled}
+                />
               </CCol>
             </CRow>
           </CForm>
           <CCol xs={12} className="ps-0 pe-0">
-            <ShiftListTable />
+            <ShiftListTable employeeShifts={employeeShifts} />
           </CCol>
         </CRow>
       </OCard>

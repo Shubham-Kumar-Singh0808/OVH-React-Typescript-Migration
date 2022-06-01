@@ -7,7 +7,7 @@ import { EmployeeShiftDetails } from '../../../../../../types/EmployeeDirectory/
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../../utils/apiUtils'
 
-export const getEmployeeShifts = async (): Promise<EmployeeShiftDetails[]> => {
+const getEmployeeShifts = async (): Promise<EmployeeShiftDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: shiftConfigurationApiConfig.getAllShifts,
     method: AllowedHttpMethods.get,
@@ -17,8 +17,22 @@ export const getEmployeeShifts = async (): Promise<EmployeeShiftDetails[]> => {
   return response.data
 }
 
+const createEmployeeTimeSlot = async (
+  employeeShiftDetails: EmployeeShiftDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: shiftConfigurationApiConfig.addTimeSlot,
+    method: AllowedHttpMethods.post,
+    data: employeeShiftDetails,
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const shiftConfigurationApi = {
   getEmployeeShifts,
+  createEmployeeTimeSlot,
 }
 
 export default shiftConfigurationApi
