@@ -4,11 +4,12 @@ import {
   CategoryApi,
   EmployeeCertificationsApi,
   EmployeeGeneralInformationApi,
-  PersonalInfoApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
-  SideMenuApi,
   EmployeeSkillApi,
+  PersonalInfoApi,
+  ShiftConfigurationApi,
+  SideMenuApi,
   UserRolesConfigurationApi,
 } from '../../types/apiTypes'
 
@@ -109,4 +110,8 @@ export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
 export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
+}
+
+export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
+  getAllShifts: apiPrefix + '/jobapplicant/getAllShifting',
 }

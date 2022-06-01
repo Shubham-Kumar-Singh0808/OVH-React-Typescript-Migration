@@ -101,3 +101,6 @@ export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
 }
+export interface ShiftConfigurationApi extends ApiBase {
+  getAllShifts: string
+}

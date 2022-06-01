@@ -26,8 +26,8 @@ const ShiftConfiguration = (): JSX.Element => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'startTimeHour') {
-      const startTimeHour = value.replace(/\D/g, '')
-      let valueCopy = Number(startTimeHour)
+      const startTimeHour = value.replace(/[^0-9]/gi, '')
+      let valueCopy = +startTimeHour
       if (valueCopy > 23) valueCopy = 23
       setShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: valueCopy } }
