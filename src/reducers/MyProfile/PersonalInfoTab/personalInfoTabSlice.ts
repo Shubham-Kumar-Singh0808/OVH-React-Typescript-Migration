@@ -322,6 +322,20 @@ const selectGetFamilyDetails = (state: RootState): EmployeeFamilyData[] =>
   state.personalInfoDetails.getFamilyDetails
 const selectGetVisaDetails = (state: RootState): VisaDetails[] =>
   state.personalInfoDetails.getVisaDetails
+
+const selectGetCountryDetails = (state: RootState): GetCountryDetails =>
+  state.personalInfoDetails.SubCountries
+
+const selectGetVisaType = (state: RootState): VisaCountryDetails[] =>
+  state.personalInfoDetails.SubVisa
+
+const selectGetEmployeeVisa = (state: RootState): EditVisaDetailsState =>
+  state.personalInfoDetails.editVisaDetails
+
+const selectGetEmployeeFamilyMember = (
+  state: RootState,
+): EditFamilyDetailsState => state.personalInfoDetails.editFamilyDetails
+
 export const personalInfoThunk = {
   getEmployeeFamilyDetails,
   addEmployeeFamilyMember,
@@ -339,6 +353,10 @@ export const personalInfoThunk = {
 export const personalInfoSelectors = {
   selectGetFamilyDetails,
   selectGetVisaDetails,
+  selectGetCountryDetails,
+  selectGetVisaType,
+  selectGetEmployeeVisa,
+  selectGetEmployeeFamilyMember,
 }
 export const personalInfoService = {
   ...personalInfoThunk,

@@ -24,7 +24,7 @@ const FamilyDetailsTable = ({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const getEmployeeFamilyData = useTypedSelector(
     reduxServices.personalInformation.selectors.selectGetFamilyDetails,

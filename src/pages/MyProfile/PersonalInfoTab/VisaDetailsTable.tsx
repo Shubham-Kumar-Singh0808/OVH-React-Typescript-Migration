@@ -20,11 +20,13 @@ const VisaDetailsTable = ({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
+
   const getEmployeeVisaData = useTypedSelector(
     reduxServices.personalInformation.selectors.selectGetVisaDetails,
   )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(

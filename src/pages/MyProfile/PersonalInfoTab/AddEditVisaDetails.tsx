@@ -33,16 +33,16 @@ function AddEditVisaDetails({
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
   const [error, setError] = useState<Date | null>(null)
-  const fetchCountryDetails = useTypedSelector(
-    (state) => state.personalInfoDetails.SubCountries,
-  )
-  const fetchVisaCountryDetails = useTypedSelector(
-    (state) => state.personalInfoDetails.SubVisa,
-  )
-  const fetchEditVisaDetails = useTypedSelector(
-    (state) => state.personalInfoDetails.editVisaDetails,
-  )
 
+  const getEmployeeCountryDetails = useTypedSelector(
+    reduxServices.personalInformation.selectors.selectGetCountryDetails,
+  )
+  const getVisaCountryDetails = useTypedSelector(
+    reduxServices.personalInformation.selectors.selectGetVisaType,
+  )
+  const getEditVisaDetails = useTypedSelector(
+    reduxServices.personalInformation.selectors.selectGetEmployeeVisa,
+  )
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
@@ -89,9 +89,9 @@ function AddEditVisaDetails({
   ])
   useEffect(() => {
     if (isEditVisaDetails) {
-      setEmployeeVisaDetails(fetchEditVisaDetails)
+      setEmployeeVisaDetails(getEditVisaDetails)
     }
-  }, [isEditVisaDetails, fetchEditVisaDetails])
+  }, [isEditVisaDetails, getEditVisaDetails])
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
@@ -235,11 +235,13 @@ function AddEditVisaDetails({
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Country</option>
-                {fetchCountryDetails?.countries?.map((countriesItem, index) => (
-                  <option key={index} value={countriesItem.id}>
-                    {countriesItem.name}
-                  </option>
-                ))}
+                {getEmployeeCountryDetails?.countries?.map(
+                  (countriesItem, index) => (
+                    <option key={index} value={countriesItem.id}>
+                      {countriesItem.name}
+                    </option>
+                  ),
+                )}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -263,7 +265,7 @@ function AddEditVisaDetails({
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Visa</option>
-                {fetchVisaCountryDetails?.map((visaTypeItem, index) => (
+                {getVisaCountryDetails?.map((visaTypeItem, index) => (
                   <option key={index} value={visaTypeItem.visaTypeId}>
                     {visaTypeItem.visaType}
                   </option>
