@@ -27,7 +27,7 @@ const FamilyDetailsTable = ({
     reduxServices.authentication.selectors.selectEmployeeId,
   )
   const getEmployeeFamilyData = useTypedSelector(
-    reduxServices.personalInformation.selectors.selectGetFamilyDetails,
+    reduxServices.personalInformation.selectors.familyDetails,
   )
   const dispatch = useAppDispatch()
 

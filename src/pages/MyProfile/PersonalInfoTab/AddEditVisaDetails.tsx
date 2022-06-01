@@ -35,13 +35,13 @@ function AddEditVisaDetails({
   const [error, setError] = useState<Date | null>(null)
 
   const getEmployeeCountryDetails = useTypedSelector(
-    reduxServices.personalInformation.selectors.selectGetCountryDetails,
+    reduxServices.personalInformation.selectors.countryDetails,
   )
   const getVisaCountryDetails = useTypedSelector(
-    reduxServices.personalInformation.selectors.selectGetVisaType,
+    reduxServices.personalInformation.selectors.visaTypeDetails,
   )
   const getEditVisaDetails = useTypedSelector(
-    reduxServices.personalInformation.selectors.selectGetEmployeeVisa,
+    reduxServices.personalInformation.selectors.employeeVisaDetails,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {

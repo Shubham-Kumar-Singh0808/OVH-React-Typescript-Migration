@@ -81,5 +81,9 @@ export const employeeBasicInformationThunk = {
   updateEmployeeDefaultPicOnGenderChange,
   updateEmployeeBasicInformation,
 }
+export const basicInformationService = {
+  ...employeeBasicInformationThunk,
+  actions: basicInformationSlice.actions,
+}
 
 export default basicInformationSlice.reducer

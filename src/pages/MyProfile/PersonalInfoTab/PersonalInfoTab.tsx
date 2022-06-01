@@ -19,7 +19,6 @@ import AddEditVisaDetails from './AddEditVisaDetails'
 import AddEditFamilyDetails from './AddEditFamilyDetails'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { useTypedSelector, useAppDispatch } from '../../../stateStore'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -43,7 +42,6 @@ const PersonalInfoTab = (): JSX.Element => {
   const employeeBasicInformation = useTypedSelector(
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
-
   const selectedUserContactDetails = {
     mobile: employeePersonalInformation?.mobile,
     alternativeMobile: employeePersonalInformation?.alternativeMobile,
@@ -333,7 +331,7 @@ const PersonalInfoTab = (): JSX.Element => {
       id: employeePersonalInformation.id,
     }
     dispatch(
-      employeeBasicInformationThunk.updateEmployeeBasicInformation(
+      reduxServices.basicInformation.updateEmployeeBasicInformation(
         prepareObject,
       ),
     )
@@ -371,7 +369,7 @@ const PersonalInfoTab = (): JSX.Element => {
               <OAddButton addButtonHandler={() => setToggle('AddVisa')} />
               <VisaDetailsTable editVisaButtonHandler={editVisaButtonHandler} />
             </CCardBody>
-            <CForm onSubmit={handleSubmitPersonalInfoDetails}>
+            <CForm>
               <CCardHeader>
                 <h4 className="h4">Contact Details</h4>
               </CCardHeader>
@@ -932,6 +930,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       type="submit"
                       disabled={!saveButtonEnabled}
+                      onClick={handleSubmitPersonalInfoDetails}
                     >
                       Save
                     </CButton>

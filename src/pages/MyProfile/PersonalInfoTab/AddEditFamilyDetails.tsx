@@ -39,7 +39,7 @@ function AddEditFamilyDetails({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const fetchEditFamilyDetails = useTypedSelector(
-    reduxServices.personalInformation.selectors.selectGetEmployeeFamilyMember,
+    reduxServices.personalInformation.selectors.employeeFamilyMember,
   )
   useEffect(() => {
     if (isEditFamilyDetails) {
