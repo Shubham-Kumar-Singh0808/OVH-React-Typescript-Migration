@@ -16,13 +16,14 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
 import moment from 'moment'
+import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import { reduxServices } from '../../../reducers/reduxServices'
+
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,
@@ -153,7 +154,11 @@ function AddEditVisaDetails({
     ) {
       backButtonHandler()
       dispatch(
-        dispatch(appActions.addToast(getToastMessage(actionMapping.added))),
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.added),
+          ),
+        ),
       )
     }
   }
@@ -170,7 +175,11 @@ function AddEditVisaDetails({
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.updated),
+        ),
+      )
     }
   }
   const formLabelProps = {

@@ -19,8 +19,8 @@ import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
-import { appActions } from '../../../../reducers/appSlice'
 import { qualificationsThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 
 const AddUpdateEmployeeQualification = ({
@@ -126,7 +126,11 @@ const AddUpdateEmployeeQualification = ({
           updateResultAction,
         )
       ) {
-        dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.updated),
+          ),
+        )
 
         backButtonHandler()
       }
@@ -142,7 +146,11 @@ const AddUpdateEmployeeQualification = ({
           postResultAction,
         )
       ) {
-        dispatch(appActions.addToast(getToastMessage(actionMapping.added)))
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.added),
+          ),
+        )
         backButtonHandler()
       }
     }

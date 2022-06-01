@@ -7,13 +7,13 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import { UserRole } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import UserRolesList from './UserRolesList'
-import { doFetchUserRoles } from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { mockUserRoles } from '../../../test/data/userRolesData'
+import { reduxServices } from '../../../reducers/reduxServices'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
-import { userRolesConfigurationApi } from '../../../middleware/api/apiList'
+import { userRolesConfigurationApiConfig } from '../../../middleware/api/apiList'
 
 const ReduxProvider = ({
   children,
@@ -28,7 +28,7 @@ const mockSelectedRole = {
   name: 'admin',
   features: null,
 }
-const url = userRolesConfigurationApi.getUserRoles
+const url = userRolesConfigurationApiConfig.getUserRoles
 const server = setupServer(
   rest.get(url, (req, res, ctx) =>
     res(ctx.status(200), ctx.json(mockUserRoles)),
@@ -71,7 +71,9 @@ describe('User Roles List Testing', () => {
     expect(screen.getByTestId('form-select')).toBeInTheDocument()
   })
   it('should be fetched from the server and put in the store', async () => {
-    await stateStore.dispatch(doFetchUserRoles())
+    await stateStore.dispatch(
+      reduxServices.userRolesAndPermissions.getUserRoles(),
+    )
     expect(userRolesAndPermissionsSlice()).toHaveLength(3)
   })
   it('should show selected value in the select element', () => {

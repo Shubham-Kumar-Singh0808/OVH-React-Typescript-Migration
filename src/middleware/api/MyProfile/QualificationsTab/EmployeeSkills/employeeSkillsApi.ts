@@ -1,10 +1,15 @@
-import { AllowedHttpMethods, employeeSkillsApiConfig } from '../../../apiList'
 import {
-  EmployeeSkills,
   AddUpdateEmployeeSkill,
-  EditEmployeeSkills,
   CategorySkillListItem,
+  EditEmployeeSkills,
+  EmployeeSkills,
 } from '../../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
+import {
+  AllowedHttpMethods,
+  employeeSkillsApiConfig,
+  skillsApiConfig,
+} from '../../../apiList'
+
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
@@ -21,7 +26,7 @@ const getCategorySkills = async (
   categoryType: number | string,
 ): Promise<CategorySkillListItem[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeSkillsApiConfig.getSkillListForCategory,
+    url: skillsApiConfig.getSkillListForCategory,
     method: AllowedHttpMethods.get,
     params: { categoryId: categoryType },
   })

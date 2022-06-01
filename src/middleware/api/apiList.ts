@@ -10,6 +10,7 @@ import {
   PersonalInfoApi,
   ShiftConfigurationApi,
   SideMenuApi,
+  SkillApi,
   UserRolesConfigurationApi,
 } from '../../types/apiTypes'
 
@@ -24,17 +25,25 @@ export enum AllowedHttpMethods {
   put = 'put',
 }
 
+export enum ApiLoadingState {
+  idle = 'idle',
+  loading = 'loading',
+  succeeded = 'succeeded',
+  failed = 'failed',
+}
+
 export const authenticationApiConfig: AuthenticationApi = {
   login: apiPrefix + '/auth/login',
   logout: apiPrefix + '/user/logoutUser',
 }
+
 export const sideMenuApiConfig: SideMenuApi = {
   getMenuData: apiPrefix + '/roleFeature/menuItems',
 }
-export const userRolesConfigurationApi: UserRolesConfigurationApi = {
+export const userRolesConfigurationApiConfig: UserRolesConfigurationApi = {
   getUserRoles: apiPrefix + '/roleFeature/roles',
   isUserRoleExists: apiPrefix + '/roleFeature/isRoleExits',
-  addNewUserRole: apiPrefix + '/roleFeature/role',
+  createUserRole: apiPrefix + '/roleFeature/role',
   deleteUserRole: apiPrefix + '/roleFeature/deleterole',
   getSubFeatures: apiPrefix + '/roleFeature/SubFeatures',
   featuresUnderRole: apiPrefix + '/roleFeature/features_UnderRole',
@@ -62,12 +71,15 @@ export const personalInfoApiConfig: PersonalInfoApi = {
   fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
 }
 
-export const employeeSkillsApiConfig: EmployeeSkillApi = {
-  getEmployeeSkills: apiPrefix + '/jobapplicant/getEmployeeskillList',
+export const skillsApiConfig: SkillApi = {
   getSkillListForCategory: apiPrefix + '/jobapplicant/getCategorySkill',
   addNewSkillForCategory:
     apiPrefix + '/jobapplicant/addSkillToSpecificCategory',
   deleteSkillForCategory: apiPrefix + '/jobapplicant/deleteSkill',
+}
+
+export const employeeSkillsApiConfig: EmployeeSkillApi = {
+  getEmployeeSkills: apiPrefix + '/jobapplicant/getEmployeeskillList',
   addEmployeeSkill: apiPrefix + '/jobapplicant/addSkillToEmployee',
   getEmployeeSkillInformation: apiPrefix + '/jobapplicant/editSkill',
   updateEmployeeSkillInformation:
@@ -90,6 +102,7 @@ export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi 
   {
     getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
   }
+
 export const qualificationsApiConfig: EmployeeQualificationsApi = {
   getEmployeeQualifications: apiPrefix + '/Employee/getEmployeeQualification',
   addEmployeeQualifications: apiPrefix + '/Employee/saveNewQualification',
@@ -97,6 +110,7 @@ export const qualificationsApiConfig: EmployeeQualificationsApi = {
     apiPrefix + '/Employee/multipleSelection',
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
 }
+
 export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
@@ -107,6 +121,7 @@ export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   updateEmployeeCertificate: apiPrefix + '/Employee/certification',
   deleteEmployeeCertificate: apiPrefix + '/Employee/certification',
 }
+
 export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',

@@ -34,11 +34,14 @@ export interface PersonalInfoApi extends ApiBase {
   fileUploadVisaImage: string
 }
 
-export interface EmployeeSkillApi extends ApiBase {
-  getEmployeeSkills: string
+export interface SkillApi extends ApiBase {
   getSkillListForCategory: string
   addNewSkillForCategory: string
   deleteSkillForCategory: string
+}
+
+export interface EmployeeSkillApi extends ApiBase {
+  getEmployeeSkills: string
   addEmployeeSkill: string
   getEmployeeSkillInformation: string
   updateEmployeeSkillInformation: string
@@ -76,7 +79,7 @@ export interface EmployeeCertificationsApi extends ApiBase {
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string
   isUserRoleExists: string
-  addNewUserRole: string
+  createUserRole: string
   deleteUserRole: string
   getSubFeatures: string
   featuresUnderRole: string
