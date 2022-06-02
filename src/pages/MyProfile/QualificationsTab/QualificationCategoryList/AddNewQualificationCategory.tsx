@@ -46,7 +46,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
   useEffect(() => {
     if (
       newQualificationCategory.qualificationCategory &&
-      newQualificationCategory.qualificationName?.replace(/\s+$/gi, '')
+      newQualificationCategory.qualificationName
     ) {
       setIsAddQualificationCategoryBtnEnabled(true)
     } else {
@@ -62,10 +62,16 @@ const AddNewQualificationCategory = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-
-    setNewQualificationCategory((values) => {
-      return { ...values, ...{ [name]: value } }
-    })
+    if (name === 'qualificationName') {
+      const qualificationName = value.replace(/^\s*/, '')
+      setNewQualificationCategory((prevState) => {
+        return { ...prevState, ...{ [name]: qualificationName } }
+      })
+    } else {
+      setNewQualificationCategory((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
   }
 
   const handleAddQualificationCategory = async () => {

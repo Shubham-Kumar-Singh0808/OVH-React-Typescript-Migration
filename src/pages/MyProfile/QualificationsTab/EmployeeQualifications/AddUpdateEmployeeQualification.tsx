@@ -98,9 +98,21 @@ const AddUpdateEmployeeQualification = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setAddQualification((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'hscName') {
+      const hscName = value.replace(/^\s*/, '')
+      setAddQualification((prevState) => {
+        return { ...prevState, ...{ [name]: hscName } }
+      })
+    } else if (name === 'sscName') {
+      const sscName = value.replace(/^\s*/, '')
+      setAddQualification((prevState) => {
+        return { ...prevState, ...{ [name]: sscName } }
+      })
+    } else {
+      setAddQualification((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
   const handleMultiSelect = (
     list: PostGraduationAndGraduationLookUp[],
@@ -120,6 +132,15 @@ const AddUpdateEmployeeQualification = ({
     })
   }
 
+  const handleClearDetails = () => {
+    setAddQualification({
+      pgLookUp: [],
+      graduationLookUp: [],
+      hscName: '',
+      sscName: '',
+      others: '',
+    })
+  }
   const handleAddUpdateQualification = async () => {
     if (addQualification.id) {
       const updateResultAction = await dispatch(
@@ -326,7 +347,11 @@ const AddUpdateEmployeeQualification = ({
                     Add
                   </CButton>
                   <span>
-                    <CButton color="warning " className="btn-ovh">
+                    <CButton
+                      color="warning "
+                      className="btn-ovh"
+                      onClick={handleClearDetails}
+                    >
                       Clear
                     </CButton>
                   </span>
@@ -342,5 +367,4 @@ const AddUpdateEmployeeQualification = ({
     </>
   )
 }
-
 export default AddUpdateEmployeeQualification

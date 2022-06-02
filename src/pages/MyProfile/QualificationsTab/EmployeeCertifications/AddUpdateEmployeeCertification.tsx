@@ -140,18 +140,29 @@ function AddUpdateEmployeeCertification({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-
-    setAddCertification((values) => {
-      return { ...values, ...{ [name]: value } }
-    })
+    if (name === 'code') {
+      const registrationNumber = value.replace(/\s/g, '')
+      setAddCertification((prevState) => {
+        return { ...prevState, ...{ [name]: registrationNumber } }
+      })
+    } else if (name === 'name') {
+      const certificate = value.replace(/\s/g, '')
+      setAddCertification((prevState) => {
+        return { ...prevState, ...{ [name]: certificate } }
+      })
+    } else {
+      setAddCertification((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
   }
 
   useEffect(() => {
     if (
       addCertification.technology &&
       addCertification.certificateType &&
-      addCertification.name?.replace(/\s+$/gi, '') &&
-      addCertification.code?.replace(/\s+$/gi, '') &&
+      addCertification.name &&
+      addCertification.code &&
       (completedDate || addCertification.completedDate)
     ) {
       setIsButtonEnabled(true)
@@ -336,7 +347,7 @@ function AddUpdateEmployeeCertification({
                 name="name"
                 value={addCertification?.name}
                 placeholder="Certification Name"
-                maxLength={26}
+                maxLength={24}
                 onChange={handleInputChange}
               />
             </CCol>
