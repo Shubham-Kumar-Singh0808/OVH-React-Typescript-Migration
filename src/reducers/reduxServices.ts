@@ -3,6 +3,7 @@ import { authenticationService } from './Login/authenticationSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
 import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { employeeQualificationService } from './MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
@@ -14,4 +15,5 @@ export const reduxServices = {
   userRolesAndPermissions: userRolesAndPermissionsService,
   employeeCertifications: employeeCertificateService,
   employeeQualifications: employeeQualificationService,
+  employeeQualificationCategory: qualificationCategoryService,
 }

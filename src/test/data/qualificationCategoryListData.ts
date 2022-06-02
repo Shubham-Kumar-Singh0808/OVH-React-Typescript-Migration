@@ -1,6 +1,6 @@
-import { QualificationCategoryList } from '../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
+import { QualificationCategory } from '../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
 
-export const mockQualificationCategories: QualificationCategoryList[] = [
+export const mockQualificationCategories: QualificationCategory[] = [
   {
     id: 2,
     qualificationCategory: 'Post Graduation',

@@ -28,7 +28,7 @@ export type PostGraduationAndGraduationList = {
   graduationDetails: PostGraduationAndGraduationLookUp[]
   pgDetails: PostGraduationAndGraduationLookUp[]
 }
-export type EmployeeQualificationDetails = {
+export type EmployeeQualificationSliceState = {
   qualificationDetails: EmployeeQualifications
   pgLookUpAndGraduationLookUpDetails: PostGraduationAndGraduationList
   isLoading: LoadingState

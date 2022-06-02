@@ -7,17 +7,17 @@ import EmployeeCertificationsTable from './EmployeeCertifications/EmployeeCertif
 import EmployeeQualifications from './EmployeeQualifications/EmployeeQualification'
 import EmployeeSkillsTable from './EmployeeSkills/EmployeeSkillsTable'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
-import { certificationThunk } from '../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { useAppDispatch } from '../../../stateStore'
 import { employeeSkillThunk } from '../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import AddEditEmployeeSkill from './EmployeeSkills/AddEditEmployeeSkill'
+import { reduxServices } from '../../../reducers/reduxServices'
 const QualificationDetails = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
 
   const editCertificateButtonHandler = (id: number) => {
     setToggle('EditCertificateSection')
-    dispatch(certificationThunk.getEmployeeCertificate(id))
+    dispatch(reduxServices.employeeCertifications.getEmployeeCertificate(id))
   }
   const editSkillButtonHandler = (skillId: number) => {
     setToggle('editSkill')

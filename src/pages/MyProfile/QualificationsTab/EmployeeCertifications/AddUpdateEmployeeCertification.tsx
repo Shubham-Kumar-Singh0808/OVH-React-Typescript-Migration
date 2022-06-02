@@ -184,12 +184,12 @@ function AddUpdateEmployeeCertification({
       },
     }
     const addCertificateResultAction = await dispatch(
-      reduxServices.employeeCertifications.addEmployeeCertification(
+      reduxServices.employeeCertifications.createEmployeeCertification(
         prepareObject,
       ),
     )
     if (
-      reduxServices.employeeCertifications.addEmployeeCertification.fulfilled.match(
+      reduxServices.employeeCertifications.createEmployeeCertification.fulfilled.match(
         addCertificateResultAction,
       )
     ) {

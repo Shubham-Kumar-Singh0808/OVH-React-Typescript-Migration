@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
-  EmployeeQualificationDetails,
+  EmployeeQualificationSliceState,
   EmployeeQualifications,
   PostGraduationAndGraduationList,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
@@ -11,7 +11,7 @@ import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import employeeQualificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationsApi'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
-const initialQualificationState = {} as EmployeeQualificationDetails
+const initialQualificationState = {} as EmployeeQualificationSliceState
 
 const getEmployeeQualifications = createAsyncThunk<
   EmployeeQualifications | undefined,

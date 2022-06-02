@@ -62,10 +62,9 @@ const AddUpdateEmployeeQualification = ({
   )
   useEffect(() => {
     if (
-      addQualification.graduationLookUp &&
-      addQualification.graduationLookUp.length > 0 &&
-      addQualification.hscName.replace(/\s+$/gi, '') &&
-      addQualification.sscName.replace(/\s+$/gi, '')
+      addQualification.graduationLookUp?.length > 0 &&
+      addQualification.hscName &&
+      addQualification.sscName
     ) {
       setIsButtonEnabled(true)
     } else {

@@ -77,7 +77,7 @@ const getCertificateByTechnologyName = createAsyncThunk<
   },
 )
 
-const addEmployeeCertification = createAsyncThunk<
+const createEmployeeCertification = createAsyncThunk<
   number | undefined,
   EmployeeCertifications,
   {
@@ -86,10 +86,10 @@ const addEmployeeCertification = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'employeeCertifications/addEmployeeCertification',
+  'employeeCertifications/createEmployeeCertification',
   async (employeeCertificateDetails: EmployeeCertifications, thunkApi) => {
     try {
-      return await employeeCertificationsApi.addEmployeeCertification(
+      return await employeeCertificationsApi.createEmployeeCertification(
         employeeCertificateDetails,
       )
     } catch (error) {
@@ -177,7 +177,7 @@ const employeeCertificationsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.typeOfCertificate = action.payload as CertificateType[]
       })
-      .addCase(addEmployeeCertification.fulfilled, (state) => {
+      .addCase(createEmployeeCertification.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
       .addCase(getEmployeeCertificate.fulfilled, (state, action) => {
@@ -234,17 +234,15 @@ const isLoading = (state: RootState): LoadingState =>
 const employeeCertificates = (state: RootState): EmployeeCertifications[] =>
   state.employeeCertificates.certificationDetails
 
-export const certificationThunk = {
+export const employeeCertificationThunk = {
   getEmployeeCertificates,
   getTechnologies,
   getCertificateByTechnologyName,
   getEmployeeCertificate,
-  addEmployeeCertification,
+  createEmployeeCertification,
   updateEmployeeCertificate,
   deleteEmployeeCertificate,
 }
-
-export const qualificationCategoryActions = employeeCertificationsSlice.actions
 
 export const employeeCertificationSelectors = {
   isLoading,
@@ -252,7 +250,7 @@ export const employeeCertificationSelectors = {
 }
 
 export const employeeCertificateService = {
-  ...certificationThunk,
+  ...employeeCertificationThunk,
   actions: employeeCertificationsSlice.actions,
   selectors: employeeCertificationSelectors,
 }

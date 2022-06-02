@@ -90,7 +90,7 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
   {
     getQualificationCategories:
       apiPrefix + '/Employee/getQualiactionCategoryList',
-    addQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
+    createQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
     deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
   }
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
@@ -115,7 +115,7 @@ export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
   getCertificateByTechnology:
     apiPrefix + '/EmployeeSkill/getCertificateByTechnology',
-  addEmployeeCertificates: apiPrefix + '/Employee/certification',
+  createEmployeeCertification: apiPrefix + '/Employee/certification',
   getEmployeeCertificate: apiPrefix + '/Employee/getCertification',
   updateEmployeeCertificate: apiPrefix + '/Employee/certification',
   deleteEmployeeCertificate: apiPrefix + '/Employee/certification',
