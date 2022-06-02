@@ -57,18 +57,17 @@ function AddEditVisaDetails({
 
   useEffect(() => {
     if (
-      ((dateOfIssue as string) ||
-        (employeeVisaDetails?.dateOfIssue as string)) <=
-      ((dateOfExpire as string) ||
-        (employeeVisaDetails?.dateOfExpire as string))
+      (dateOfIssue as string) <= (dateOfExpire as string) ||
+      (employeeVisaDetails?.dateOfIssue as string) <=
+        (employeeVisaDetails?.dateOfExpire as string)
     ) {
       setError(null)
     }
   }, [
-    dateOfIssue,
     dateOfExpire,
-    employeeVisaDetails?.dateOfIssue,
+    dateOfIssue,
     employeeVisaDetails?.dateOfExpire,
+    employeeVisaDetails?.dateOfIssue,
   ])
   useEffect(() => {
     if (
@@ -276,7 +275,13 @@ function AddEditVisaDetails({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Issue:
-              <span className={dateOfIssue ? 'text-white' : 'text-danger'}>
+              <span
+                className={
+                  getEditVisaDetails?.dateOfIssue || dateOfIssue
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -287,7 +292,7 @@ function AddEditVisaDetails({
                 maxDate={new Date()}
                 value={
                   (dateOfIssue as string) ||
-                  (employeeVisaDetails?.dateOfIssue as string)
+                  (getEditVisaDetails?.dateOfIssue as string)
                 }
                 selected={dateOfIssue as Date}
                 onChange={onChangeDateOfIssueHandler}
@@ -304,7 +309,13 @@ function AddEditVisaDetails({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Expire :
-              <span className={dateOfExpire ? 'text-white' : 'text-danger'}>
+              <span
+                className={
+                  getEditVisaDetails?.dateOfExpire || dateOfExpire
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -314,7 +325,7 @@ function AddEditVisaDetails({
                 name="dateOfExpire"
                 value={
                   (dateOfExpire as string) ||
-                  (employeeVisaDetails?.dateOfExpire as string)
+                  (getEditVisaDetails?.dateOfExpire as string)
                 }
                 selected={dateOfExpire as Date}
                 onChange={onChangeDateOfExpireHandler}
