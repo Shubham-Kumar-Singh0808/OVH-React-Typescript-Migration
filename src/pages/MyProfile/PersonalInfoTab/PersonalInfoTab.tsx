@@ -110,6 +110,9 @@ const PersonalInfoTab = ({
     isPassportPlaceOfIssueButtonEnabled,
     setIsPassportPlaceOfIssueButtonEnabled,
   ] = useState(false)
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
 
   const [employeeContactDetails, setEmployeeContactDetails] = useState(
     selectedUserContactDetails,
@@ -331,6 +334,12 @@ const PersonalInfoTab = ({
           />,
         ),
       )
+      dispatch(
+        reduxServices.generalInformation.getEmployeeGeneralInformation(
+          employeeId,
+        ),
+      )
+
       handleActiveTab(1)
     }
   }
