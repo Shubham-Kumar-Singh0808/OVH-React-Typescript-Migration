@@ -20,11 +20,10 @@ import AddEditFamilyDetails from './AddEditFamilyDetails'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { useTypedSelector, useAppDispatch } from '../../../stateStore'
-import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { reduxServices } from '../../../reducers/reduxServices'
 const PersonalInfoTab = (): JSX.Element => {
   const employeePersonalInformation = useTypedSelector(
-    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
+    reduxServices.generalInformation.selectors.selectLoggedInEmployeeData,
   )
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
@@ -40,7 +39,7 @@ const PersonalInfoTab = (): JSX.Element => {
     dispatch(reduxServices.personalInformation.getEmployeeVisa(id))
   }
   const employeeBasicInformation = useTypedSelector(
-    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
+    reduxServices.generalInformation.selectors.selectLoggedInEmployeeData,
   )
   const selectedUserContactDetails = {
     mobile: employeePersonalInformation?.mobile,

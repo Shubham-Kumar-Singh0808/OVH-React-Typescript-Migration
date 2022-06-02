@@ -5,6 +5,7 @@ import { skillService } from './MyProfile/Skills/skillSlice'
 import { personalInfoService } from './MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
+import { generalInformationService } from './MyProfile/GeneralTab/generalInformationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -14,4 +15,5 @@ export const reduxServices = {
   personalInformation: personalInfoService,
   userRolesAndPermissions: userRolesAndPermissionsService,
   basicInformation: basicInformationService,
+  generalInformation: generalInformationService,
 }
