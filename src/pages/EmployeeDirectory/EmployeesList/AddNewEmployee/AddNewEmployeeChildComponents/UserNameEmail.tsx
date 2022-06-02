@@ -1,7 +1,7 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
 
-import { DynamicFormLabelProps } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const UserNameEmail = ({
   dynamicFormLabelProps,

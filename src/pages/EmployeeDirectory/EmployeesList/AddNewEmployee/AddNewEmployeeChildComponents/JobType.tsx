@@ -1,22 +1,21 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
-import { EmployeeDepartmentProps } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
 
-const Department = ({
+const JobType = ({
   dynamicFormLabelProps,
-  departmentsList,
-}: EmployeeDepartmentProps): JSX.Element => {
+}: DynamicFormLabelProps): JSX.Element => {
   return (
     <>
       <CRow className="mb-3">
         <CFormLabel
           {...dynamicFormLabelProps(
-            'department',
+            'jobtype',
             'col-sm-3 col-form-label text-end',
           )}
         >
-          Department
+          Job Type:
           <span
           //   className={
           //     employeeBasicInformationEditData.curentLocation
@@ -29,18 +28,16 @@ const Department = ({
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect
-            id="department"
+            id="jobtype"
             size="sm"
-            aria-label="department"
-            name="department"
+            aria-label="jobtype"
+            name="jobtype"
             value=""
           >
-            <option value={''}>Select Department</option>
-            {departmentsList?.map((curItem) => (
-              <option key={curItem.departmentId} value={curItem.departmentName}>
-                {curItem.departmentName}
-              </option>
-            ))}
+            <option value={''}>Select Job Type</option>
+            <option value="Accounts">Accounts</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Networking">Networking</option>
           </CFormSelect>
         </CCol>
       </CRow>
@@ -48,4 +45,4 @@ const Department = ({
   )
 }
 
-export default Department
+export default JobType

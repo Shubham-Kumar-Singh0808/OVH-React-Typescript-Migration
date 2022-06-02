@@ -1,9 +1,9 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
 
-const Experience = ({
+const ProjectManager = ({
   dynamicFormLabelProps,
 }: DynamicFormLabelProps): JSX.Element => {
   return (
@@ -11,11 +11,11 @@ const Experience = ({
       <CRow className="mb-3">
         <CFormLabel
           {...dynamicFormLabelProps(
-            'experience',
+            'projectmanager',
             'col-sm-3 col-form-label text-end',
           )}
         >
-          Experience
+          Project Manager:
           <span
           //   className={
           //     employeeBasicInformationEditData.curentLocation
@@ -28,11 +28,11 @@ const Experience = ({
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
-            id="experience"
+            id="projectmanager"
             size="sm"
             type="text"
-            name="experience"
-            placeholder="Experience"
+            name="projectmanager"
+            placeholder="Project Manager"
             value=""
           />
         </CCol>
@@ -41,4 +41,4 @@ const Experience = ({
   )
 }
 
-export default Experience
+export default ProjectManager

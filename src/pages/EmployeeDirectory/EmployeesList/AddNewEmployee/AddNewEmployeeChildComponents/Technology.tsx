@@ -1,15 +1,9 @@
-import {
-  CCol,
-  CFormInput,
-  CFormLabel,
-  CFormSelect,
-  CRow,
-} from '@coreui/react-pro'
+import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
 
-const Gender = ({
+const Technology = ({
   dynamicFormLabelProps,
 }: DynamicFormLabelProps): JSX.Element => {
   return (
@@ -17,11 +11,11 @@ const Gender = ({
       <CRow className="mb-3">
         <CFormLabel
           {...dynamicFormLabelProps(
-            'gender',
+            'technology',
             'col-sm-3 col-form-label text-end',
           )}
         >
-          Gender
+          Technology:
           <span
           //   className={
           //     employeeBasicInformationEditData.curentLocation
@@ -34,15 +28,16 @@ const Gender = ({
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect
-            id="gender"
+            id="technology"
             size="sm"
-            aria-label="gender"
-            name="gender"
+            aria-label="technology"
+            name="technology"
             value=""
           >
-            <option value={''}>Select Gender</option>
-            <option value="Female">Female</option>
-            <option value="Male">Male</option>
+            <option value={''}>Select Technology</option>
+            <option value="Accounts">Accounts</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Networking">Networking</option>
           </CFormSelect>
         </CCol>
       </CRow>
@@ -50,4 +45,4 @@ const Gender = ({
   )
 }
 
-export default Gender
+export default Technology

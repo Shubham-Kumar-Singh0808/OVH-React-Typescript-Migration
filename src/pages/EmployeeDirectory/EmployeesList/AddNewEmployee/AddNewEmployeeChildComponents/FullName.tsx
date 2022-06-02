@@ -1,6 +1,6 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
 
 const FullName = ({

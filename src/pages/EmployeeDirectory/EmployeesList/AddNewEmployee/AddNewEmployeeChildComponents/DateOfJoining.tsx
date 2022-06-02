@@ -1,16 +1,10 @@
-import {
-  CCol,
-  CFormInput,
-  CFormLabel,
-  CFormSelect,
-  CRow,
-} from '@coreui/react-pro'
+import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
 
-import { DateChangeHandlerProp } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { DateChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import DatePicker from 'react-datepicker'
 import React from 'react'
 
-const Birthday = ({
+const DateOfJoining = ({
   dynamicFormLabelProps,
   onDateChangeHandler,
 }: DateChangeHandlerProp): JSX.Element => {
@@ -19,11 +13,11 @@ const Birthday = ({
       <CRow className="mb-3">
         <CFormLabel
           {...dynamicFormLabelProps(
-            'birthday',
+            'dateofJoining',
             'col-sm-3 col-form-label text-end',
           )}
         >
-          Birthday:
+          Date of Joining:
           <span
           //   className={
           //     employeeBasicInformationEditData.curentLocation
@@ -54,4 +48,4 @@ const Birthday = ({
   )
 }
 
-export default Birthday
+export default DateOfJoining
