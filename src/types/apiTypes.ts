@@ -107,4 +107,6 @@ export interface BasicInfoApi extends ApiBase {
 export interface ShiftConfigurationApi extends ApiBase {
   getAllShifts: string
   addTimeSlot: string
+  updateShiftDetail: string
+  deleteShiftDetail: string
 }

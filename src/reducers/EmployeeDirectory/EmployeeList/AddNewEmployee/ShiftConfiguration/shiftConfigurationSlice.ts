@@ -28,7 +28,7 @@ const getEmployeeShifts = createAsyncThunk<
   }
 })
 
-// create employee time slot
+// create employee time slot action creator
 const createEmployeeTimeSlot = createAsyncThunk<
   number | undefined,
   EmployeeShiftDetails,
@@ -51,6 +51,46 @@ const createEmployeeTimeSlot = createAsyncThunk<
   },
 )
 
+// update employee shift detail action creator
+const updateEmployeeShiftDetail = createAsyncThunk<
+  number | undefined,
+  EmployeeShiftDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'shiftConfiguration/updateEmployeeShiftDetail',
+  async (employeeShiftDetails, thunkApi) => {
+    try {
+      return await shiftConfigurationApi.updateEmployeeShiftDetail(
+        employeeShiftDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+// delete employee shift detail action creator
+const deleteEmployeeShiftDetail = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('shiftConfiguration/deleteEmployeeShiftDetail', async (shiftId, thunkApi) => {
+  try {
+    return await shiftConfigurationApi.deleteEmployeeShiftDetail(shiftId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const initialShiftConfigurationState: ShiftConfigurationState = {
   employeeShifts: [],
   isLoading: ApiLoadingState.idle,
@@ -66,13 +106,36 @@ const shiftConfigurationSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.employeeShifts = action.payload as EmployeeShiftDetails[]
       })
-      .addCase(createEmployeeTimeSlot.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
       .addMatcher(
-        isAnyOf(getEmployeeShifts.pending, createEmployeeTimeSlot.pending),
+        isAnyOf(
+          createEmployeeTimeSlot.fulfilled,
+          updateEmployeeShiftDetail.fulfilled,
+          deleteEmployeeShiftDetail.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getEmployeeShifts.pending,
+          createEmployeeTimeSlot.pending,
+          updateEmployeeShiftDetail.pending,
+          deleteEmployeeShiftDetail.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getEmployeeShifts.rejected,
+          createEmployeeTimeSlot.rejected,
+          updateEmployeeShiftDetail.rejected,
+          deleteEmployeeShiftDetail.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.failed
         },
       )
   },
@@ -84,6 +147,8 @@ const employeeShifts = (state: RootState): EmployeeShiftDetails[] =>
 export const shiftConfigurationThunk = {
   getEmployeeShifts,
   createEmployeeTimeSlot,
+  updateEmployeeShiftDetail,
+  deleteEmployeeShiftDetail,
 }
 
 export const shiftConfigurationSelectors = {

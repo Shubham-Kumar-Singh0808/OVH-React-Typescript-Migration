@@ -2,12 +2,12 @@ import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 
 export type EmployeeShiftDetails = {
   id: number
-  name: string | number
-  startTimeHour: string | number
-  startTimeMinutes: string | number
-  endTimeHour: string | number
-  endTimeMinutes: string | number
-  graceTime: string | number
+  name: string
+  startTimeHour: string
+  startTimeMinutes: string
+  endTimeHour: string
+  endTimeMinutes: string
+  graceTime: string
 }
 
 export type ShiftConfigurationState = {

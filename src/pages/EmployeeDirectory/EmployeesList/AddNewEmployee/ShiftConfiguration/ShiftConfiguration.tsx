@@ -1,5 +1,7 @@
 import {
   CButton,
+  CCardBody,
+  CCardHeader,
   CCol,
   CForm,
   CFormInput,
@@ -12,7 +14,6 @@ import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { ActionMapping } from '../../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { EmployeeShiftDetails } from '../../../../../types/EmployeeDirectory/EmployeeList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import OAddButton from '../../../../../components/ReusableComponent/OAddButton'
-import OCard from '../../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import ShiftListTable from './ShiftListTable'
 import { reduxServices } from '../../../../../reducers/reduxServices'
@@ -68,6 +69,23 @@ const ShiftConfiguration = (): JSX.Element => {
       })
     }
   }
+
+  // const minutesValidation = () => {
+  //   if (
+  //     employeeShiftDetails.endTimeHour !== undefined ||
+  //     employeeShiftDetails.endTimeHour !== '' ||
+  //     employeeShiftDetails.endTimeHour !== null
+  //   ) {
+  //     if (employeeShiftDetails.endTimeHour.length === 1) {
+  //       employeeShiftDetails.endTimeHour =
+  //         '0' + employeeShiftDetails.endTimeHour
+  //     } else {
+  //       if (+employeeShiftDetails.endTimeHour > 23) {
+  //         employeeShiftDetails.endTimeHour = '23'
+  //       }
+  //     }
+  //   }
+  // }
 
   const shiftAlreadyExistToastMessage = (
     <OToast toastColor="danger" toastMessage="Shift already exists!" />
@@ -160,11 +178,10 @@ const ShiftConfiguration = (): JSX.Element => {
   ])
   return (
     <>
-      <OCard
-        className="mb-4 category-list-card"
-        title="Shift Configuration"
-        CFooterClassName="d-none"
-      >
+      <CCardHeader>
+        <h4 className="h4">Shift Configuration</h4>
+      </CCardHeader>
+      <CCardBody className="ps-0 pe-0">
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
             <CButton color="info" className="btn-ovh me-1">
@@ -303,7 +320,7 @@ const ShiftConfiguration = (): JSX.Element => {
               <CCol sm={4}>
                 <OAddButton
                   addButtonHandler={handleAddEmployeeTimeSlot}
-                  isAddBtnEnabled={isAddBtnEnabled}
+                  isAddBtnEnabled={!isAddBtnEnabled}
                 />
               </CCol>
             </CRow>
@@ -312,7 +329,7 @@ const ShiftConfiguration = (): JSX.Element => {
             <ShiftListTable employeeShifts={employeeShifts} />
           </CCol>
         </CRow>
-      </OCard>
+      </CCardBody>
     </>
   )
 }
