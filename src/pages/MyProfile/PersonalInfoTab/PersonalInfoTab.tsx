@@ -369,7 +369,7 @@ const PersonalInfoTab = (): JSX.Element => {
               <OAddButton addButtonHandler={() => setToggle('AddVisa')} />
               <VisaDetailsTable editVisaButtonHandler={editVisaButtonHandler} />
             </CCardBody>
-            <CForm>
+            <CForm onSubmit={handleSubmitPersonalInfoDetails}>
               <CCardHeader>
                 <h4 className="h4">Contact Details</h4>
               </CCardHeader>
@@ -930,7 +930,6 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       type="submit"
                       disabled={!saveButtonEnabled}
-                      onClick={handleSubmitPersonalInfoDetails}
                     >
                       Save
                     </CButton>
