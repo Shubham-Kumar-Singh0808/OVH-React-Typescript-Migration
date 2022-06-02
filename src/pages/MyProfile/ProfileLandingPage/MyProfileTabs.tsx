@@ -23,6 +23,7 @@ const MyProfileTabs = (): JSX.Element => {
     () => setActiveTabsContent(changeTabContent(activeTabsKey)),
     [activeTabsKey],
   )
+
   //Loading different components that comes in My Profile Tabs section
   //First add the item in 'TabsLabel.js' in 'middleware' folder
   //And add the key-value in below object
