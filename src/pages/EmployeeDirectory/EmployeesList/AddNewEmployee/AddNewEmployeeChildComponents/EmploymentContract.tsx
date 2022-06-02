@@ -1,13 +1,7 @@
-import {
-  CCol,
-  CFormCheck,
-  CFormLabel,
-  CFormSelect,
-  CRow,
-} from '@coreui/react-pro'
+import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
 
-import { DateChangeHandlerProp } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { DateChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import DatePicker from 'react-datepicker'
 
 const EmploymentContract = ({

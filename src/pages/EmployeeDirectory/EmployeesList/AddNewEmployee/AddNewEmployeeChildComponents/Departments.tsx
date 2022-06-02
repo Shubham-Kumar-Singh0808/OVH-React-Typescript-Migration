@@ -37,7 +37,10 @@ const Department = ({
           >
             <option value={''}>Select Department</option>
             {departmentsList?.map((curItem) => (
-              <option key={curItem.departmentId} value={curItem.departmentName}>
+              <option
+                key={curItem.departmentName}
+                value={curItem.departmentName}
+              >
                 {curItem.departmentName}
               </option>
             ))}

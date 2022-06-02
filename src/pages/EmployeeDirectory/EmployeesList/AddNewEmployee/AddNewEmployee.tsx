@@ -19,20 +19,10 @@ import {
   UserNameEmail,
   WorkFrom,
 } from './AddNewEmployeeChildComponents/index'
-import {
-  CButton,
-  CCol,
-  CFormCheck,
-  CFormInput,
-  CFormLabel,
-  CFormSelect,
-  CFormSwitch,
-  CRow,
-} from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import { CButton, CCol, CRow } from '@coreui/react-pro'
+import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-import DatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
@@ -54,17 +44,24 @@ const AddNewEmployee = (): JSX.Element => {
   //making dispatch
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(
-    reduxServices.getEmpDepartments.employeeDepartmentsService.selectors
-      .isLoading,
+    reduxServices.newEmployee.employeeDepartmentsService.selectors.isLoading,
   )
   const departmentsList = useTypedSelector(
-    reduxServices.getEmpDepartments.employeeDepartmentsService.selectors
+    reduxServices.newEmployee.employeeDepartmentsService.selectors
       .employeeDepartments,
+  )
+  const technologyList = useTypedSelector(
+    reduxServices.newEmployee.technologyService.selectors.technologies,
+  )
+  const countryList = useTypedSelector(
+    reduxServices.newEmployee.countryService.selectors.countriesList,
   )
   useEffect(() => {
     dispatch(
-      reduxServices.getEmpDepartments.employeeDepartmentsService.getEmployeeDepartments(),
+      reduxServices.newEmployee.employeeDepartmentsService.getEmployeeDepartments(),
     )
+    dispatch(reduxServices.newEmployee.technologyService.getAllTechnology())
+    dispatch(reduxServices.newEmployee.countryService.getAllCountries())
   }, [dispatch])
 
   return (
@@ -105,7 +102,10 @@ const AddNewEmployee = (): JSX.Element => {
           dynamicFormLabelProps={dynamicFormLabelProps}
           departmentsList={departmentsList}
         />
-        <Technology dynamicFormLabelProps={dynamicFormLabelProps} />
+        <Technology
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          technologyList={technologyList}
+        />
 
         <Designation dynamicFormLabelProps={dynamicFormLabelProps} />
 
@@ -121,7 +121,10 @@ const AddNewEmployee = (): JSX.Element => {
 
         <JobType dynamicFormLabelProps={dynamicFormLabelProps} />
 
-        <Country dynamicFormLabelProps={dynamicFormLabelProps} />
+        <Country
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          countryList={countryList}
+        />
 
         <Shift dynamicFormLabelProps={dynamicFormLabelProps} />
 

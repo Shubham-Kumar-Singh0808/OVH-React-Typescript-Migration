@@ -7,6 +7,7 @@ import authenticationReducer from './reducers/Login/authenticationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import certificateListReducer from './reducers/EmployeeDirectory/CertificatesList/certificatesListSlice'
 import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
+import countriesReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/countriesSlice'
 import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
 import employeeCertificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
@@ -17,13 +18,14 @@ import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTa
 import employeeReporteesReducer from './reducers/MyProfile/ReporteesTab/employeeReporteesSlice'
 import employeeReviewsReducer from './reducers/MyProfile/ReviewTab/employeeReviewsSlice'
 import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
-import getEmployeeDepartmentsSlice from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/getEmployeeDepartmentsSlice'
+import getEmployeeDepartmentsReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/getEmployeeDepartmentsSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import profileHistoryReducer from './reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import shiftConfigurationReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
+import technologyReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'
 import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
@@ -57,7 +59,9 @@ export const allReducers = {
   employeeDesignationReports: employeeDesignationReportReducer,
   visaList: visaListReducer,
   employeeLeaveSettings: employeeLeaveSettingsReducer,
-  getEmployeeDepartments: getEmployeeDepartmentsSlice,
+  getEmployeeDepartments: getEmployeeDepartmentsReducer,
+  getAllTechnology: technologyReducer,
+  country: countriesReducer,
   // add your slice reducers here
 }
 

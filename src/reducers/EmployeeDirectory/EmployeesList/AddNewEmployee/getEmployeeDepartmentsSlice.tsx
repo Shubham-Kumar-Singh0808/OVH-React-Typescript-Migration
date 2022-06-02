@@ -3,7 +3,7 @@ import {
   EmployeeDepartment,
 } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
@@ -53,13 +53,13 @@ const getEmployeeDepartmentsSlice = createSlice({
 const isLoading = (state: RootState): LoadingState =>
   state.getEmployeeDepartments.isLoading
 const employeeDepartments = (state: RootState): EmployeeDepartment[] =>
-  state.getEmployeeDepartments.employeeDepartments
+  state.getEmployeeDepartments.employeeDepartments as EmployeeDepartment[]
 
 const getEmployeeDepartmentsThunk = {
   getEmployeeDepartments,
 }
 
-const categorySelectors = {
+const employeeDepartmentSelectors = {
   isLoading,
   employeeDepartments,
 }
@@ -67,7 +67,7 @@ const categorySelectors = {
 export const employeeDepartmentsService = {
   ...getEmployeeDepartmentsThunk,
   actions: getEmployeeDepartmentsSlice.actions,
-  selectors: categorySelectors,
+  selectors: employeeDepartmentSelectors,
 }
 
 export default getEmployeeDepartmentsSlice.reducer

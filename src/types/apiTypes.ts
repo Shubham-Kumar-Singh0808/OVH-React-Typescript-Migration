@@ -193,4 +193,6 @@ export interface EmployeeLeaveSettingsApi extends ApiBase {
 }
 export interface AddNewEmployeeAPi extends ApiBase {
   getEmployeeDepartments: string
+  getAllTechnology: string
+  getEmpCountries: string
 }

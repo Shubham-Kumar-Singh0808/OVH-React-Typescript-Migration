@@ -238,4 +238,6 @@ export const employeeLeaveSettingsApiConfig: EmployeeLeaveSettingsApi = {
 
 export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  getEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
 }

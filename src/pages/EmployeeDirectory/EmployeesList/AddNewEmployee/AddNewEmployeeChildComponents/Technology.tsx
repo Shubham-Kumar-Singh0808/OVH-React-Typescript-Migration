@@ -1,11 +1,12 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
+import { TechnologyProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const Technology = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
+  technologyList,
+}: TechnologyProps): JSX.Element => {
   return (
     <>
       <CRow className="mb-3">
@@ -35,9 +36,11 @@ const Technology = ({
             value=""
           >
             <option value={''}>Select Technology</option>
-            <option value="Accounts">Accounts</option>
-            <option value="Marketing">Marketing</option>
-            <option value="Networking">Networking</option>
+            {technologyList?.map((curItem, ind) => (
+              <option key={curItem.name} value={curItem.name}>
+                {curItem.name}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
       </CRow>

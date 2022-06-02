@@ -1,11 +1,12 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { CountryProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
 
 const Country = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
+  countryList,
+}: CountryProps): JSX.Element => {
   return (
     <>
       <CRow className="mb-3">
@@ -35,9 +36,11 @@ const Country = ({
             value=""
           >
             <option value={''}>Select Country</option>
-            <option value="Accounts">Accounts</option>
-            <option value="Marketing">Marketing</option>
-            <option value="Networking">Networking</option>
+            {countryList?.map((curItem) => (
+              <option key={curItem.name} value={curItem.name}>
+                {curItem.name}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
       </CRow>

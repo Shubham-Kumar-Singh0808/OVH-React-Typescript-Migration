@@ -1,10 +1,4 @@
-import {
-  CCol,
-  CFormInput,
-  CFormLabel,
-  CFormSelect,
-  CRow,
-} from '@coreui/react-pro'
+import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
 import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
