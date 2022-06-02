@@ -126,3 +126,6 @@ export type EmployeeFamilyDetailsTableProps = {
 export type EmployeeVisaDetailsTableProps = {
   editVisaButtonHandler: (id: number) => void
 }
+export type handleActiveTabProps = {
+  handleActiveTab: (id: number) => void
+}

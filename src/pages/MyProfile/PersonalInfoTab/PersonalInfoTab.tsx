@@ -21,7 +21,10 @@ import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { useTypedSelector, useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-const PersonalInfoTab = (): JSX.Element => {
+import { handleActiveTabProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+const PersonalInfoTab = ({
+  handleActiveTab,
+}: handleActiveTabProps): JSX.Element => {
   const employeePersonalInformation = useTypedSelector(
     reduxServices.generalInformation.selectors.selectLoggedInEmployeeData,
   )
@@ -340,7 +343,15 @@ const PersonalInfoTab = (): JSX.Element => {
         resultAction,
       )
     ) {
-      window.location.reload()
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Your changes have been saved successfully"
+          />,
+        ),
+      )
+      handleActiveTab(1)
     }
   }
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {

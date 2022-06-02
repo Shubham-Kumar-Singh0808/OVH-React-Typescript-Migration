@@ -31,7 +31,7 @@ const MyProfileTabs = (): JSX.Element => {
     const showTabContent: ShowTabContentType<JSX.Element> = {
       1: <GeneralTab />,
       2: <BasicInfoTab />,
-      3: <PersonalInfoTab />,
+      3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
       4: <QualificationDetails />,
       5: <h1>Review</h1>,
       6: <h1>Projects</h1>,
