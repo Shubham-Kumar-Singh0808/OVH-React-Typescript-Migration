@@ -227,26 +227,6 @@ const PersonalInfoTab = ({
     }
   }, [employeePassportDetails?.passportIssuedPlace])
 
-  useEffect(() => {
-    if (
-      (employeePassportDetails?.passportIssuedDate as string) >=
-      (employeePassportDetails.passportExpDate as string)
-    ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="danger"
-            toastMessage="Date of Expiry should be greater "
-          />,
-        ),
-      )
-    }
-  }, [
-    employeePassportDetails?.passportIssuedDate,
-    employeePassportDetails.passportExpDate,
-    dispatch,
-  ])
-
   const onChangeEmergencyContactDetailsHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
