@@ -13,10 +13,6 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import {
-  employeeSkillSelectors,
-  employeeSkillThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
@@ -32,7 +28,7 @@ function AddEditEmployeeSkill({
 }: AddEditEmployeeSkillsProps): JSX.Element {
   const initialEmployeeSkillsDetails = {} as AddUpdateEmployeeSkill
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const [employeeSkill, setEmployeeSkill] = useState(
     initialEmployeeSkillsDetails,
@@ -43,18 +39,20 @@ function AddEditEmployeeSkill({
     reduxServices.category.selectors.categories,
   )
   const getCategorySkillDetails = useTypedSelector(
-    employeeSkillSelectors.selectCategorySkillList,
+    reduxServices.employeeSkill.selectors.selectCategorySkillList,
   )
 
   const editFetchSkillsDetails = useTypedSelector(
-    employeeSkillSelectors.selectEditSkillDetails,
+    reduxServices.employeeSkill.selectors.selectEditSkillDetails,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.category.getAllCategories())
     if (employeeSkill?.categoryType) {
       dispatch(
-        employeeSkillThunk.getCategorySkills(employeeSkill?.categoryType),
+        reduxServices.employeeSkill.getCategorySkills(
+          employeeSkill?.categoryType,
+        ),
       )
     }
   }, [dispatch, employeeSkill?.categoryType])
@@ -148,10 +146,10 @@ function AddEditEmployeeSkill({
       },
     }
     const addFamilyMemberResultAction = await dispatch(
-      employeeSkillThunk.addEmployeeSkill(prepareObject),
+      reduxServices.employeeSkill.addEmployeeSkill(prepareObject),
     )
     if (
-      employeeSkillThunk.addEmployeeSkill.fulfilled.match(
+      reduxServices.employeeSkill.addEmployeeSkill.fulfilled.match(
         addFamilyMemberResultAction,
       )
     ) {
@@ -174,10 +172,10 @@ function AddEditEmployeeSkill({
       categoryType: temp,
     }
     const updateSkillMemberResultAction = await dispatch(
-      employeeSkillThunk.updateEmployeeSkill(prepareObject),
+      reduxServices.employeeSkill.updateEmployeeSkill(prepareObject),
     )
     if (
-      employeeSkillThunk.updateEmployeeSkill.fulfilled.match(
+      reduxServices.employeeSkill.updateEmployeeSkill.fulfilled.match(
         updateSkillMemberResultAction,
       )
     ) {

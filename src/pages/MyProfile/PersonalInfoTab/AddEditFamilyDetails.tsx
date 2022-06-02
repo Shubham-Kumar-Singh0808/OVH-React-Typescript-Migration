@@ -28,7 +28,7 @@ function AddEditFamilyDetails({
   backButtonHandler,
 }: AddEditEmployeeFamilyDetails): JSX.Element {
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const dispatch = useAppDispatch()
   const initialEmployeeFamilyDetails = {} as EmployeeFamilyDetails
