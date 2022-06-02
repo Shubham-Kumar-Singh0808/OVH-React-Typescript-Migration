@@ -56,19 +56,11 @@ function AddEditVisaDetails({
   }, [dispatch, employeeVisaDetails?.countryId])
 
   useEffect(() => {
-    if (
-      (dateOfIssue as string) <= (dateOfExpire as string) ||
-      (employeeVisaDetails?.dateOfIssue as string) <=
-        (employeeVisaDetails?.dateOfExpire as string)
-    ) {
+    if ((dateOfIssue as string) <= (dateOfExpire as string)) {
       setError(null)
     }
-  }, [
-    dateOfExpire,
-    dateOfIssue,
-    employeeVisaDetails?.dateOfExpire,
-    employeeVisaDetails?.dateOfIssue,
-  ])
+  }, [dateOfIssue, dateOfExpire])
+
   useEffect(() => {
     if (
       employeeVisaDetails?.countryId &&
@@ -277,7 +269,7 @@ function AddEditVisaDetails({
               Date of Issue:
               <span
                 className={
-                  getEditVisaDetails?.dateOfIssue || dateOfIssue
+                  dateOfIssue || getEditVisaDetails.dateOfIssue
                     ? 'text-white'
                     : 'text-danger'
                 }
@@ -292,7 +284,7 @@ function AddEditVisaDetails({
                 maxDate={new Date()}
                 value={
                   (dateOfIssue as string) ||
-                  (getEditVisaDetails?.dateOfIssue as string)
+                  (employeeVisaDetails?.dateOfIssue as string)
                 }
                 selected={dateOfIssue as Date}
                 onChange={onChangeDateOfIssueHandler}
@@ -311,7 +303,7 @@ function AddEditVisaDetails({
               Date of Expire :
               <span
                 className={
-                  getEditVisaDetails?.dateOfExpire || dateOfExpire
+                  dateOfExpire || getEditVisaDetails.dateOfExpire
                     ? 'text-white'
                     : 'text-danger'
                 }
@@ -325,7 +317,7 @@ function AddEditVisaDetails({
                 name="dateOfExpire"
                 value={
                   (dateOfExpire as string) ||
-                  (getEditVisaDetails?.dateOfExpire as string)
+                  (employeeVisaDetails?.dateOfExpire as string)
                 }
                 selected={dateOfExpire as Date}
                 onChange={onChangeDateOfExpireHandler}

@@ -233,7 +233,7 @@ const PersonalInfoTab = (): JSX.Element => {
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="danger"
-            toastMessage="Date of Expiry should be greter "
+            toastMessage="Date of Expiry should be greater "
           />,
         ),
       )
@@ -319,21 +319,29 @@ const PersonalInfoTab = (): JSX.Element => {
     }
   }
 
-  const handleSubmitPersonalInfoDetails = async () => {
-    const prepareObject = {
-      ...selectedUserBasicInformation,
-      ...employeeContactDetails,
-      ...employeeEmergencyContactDetails,
-      ...employeePresenetAddressDetails,
-      ...employeePermanentAddressDetails,
-      ...employeePassportDetails,
-      id: employeePersonalInformation.id,
-    }
-    dispatch(
-      reduxServices.basicInformation.updateEmployeeBasicInformation(
-        prepareObject,
-      ),
+  const handleSubmitPersonalInfoDetails = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ): Promise<void> => {
+    event.preventDefault()
+    const resultAction = await dispatch(
+      reduxServices.basicInformation.updateEmployeeBasicInformation({
+        ...selectedUserBasicInformation,
+        ...employeeContactDetails,
+        ...employeeEmergencyContactDetails,
+        ...employeePresenetAddressDetails,
+        ...employeePermanentAddressDetails,
+        ...employeePassportDetails,
+        id: employeePersonalInformation.id,
+      }),
     )
+
+    if (
+      reduxServices.basicInformation.updateEmployeeBasicInformation.fulfilled.match(
+        resultAction,
+      )
+    ) {
+      window.location.reload()
+    }
   }
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -368,7 +376,7 @@ const PersonalInfoTab = (): JSX.Element => {
               <OAddButton addButtonHandler={() => setToggle('AddVisa')} />
               <VisaDetailsTable editVisaButtonHandler={editVisaButtonHandler} />
             </CCardBody>
-            <CForm onSubmit={handleSubmitPersonalInfoDetails}>
+            <CForm>
               <CCardHeader>
                 <h4 className="h4">Contact Details</h4>
               </CCardHeader>
@@ -880,7 +888,7 @@ const PersonalInfoTab = (): JSX.Element => {
                     <DatePicker
                       id="passportExpDate"
                       className="form-control form-control-sm"
-                      maxDate={new Date()}
+                      minDate={new Date()}
                       peekNextMonth
                       showMonthDropdown
                       showYearDropdown
@@ -929,6 +937,7 @@ const PersonalInfoTab = (): JSX.Element => {
                       size="sm"
                       type="submit"
                       disabled={!saveButtonEnabled}
+                      onClick={handleSubmitPersonalInfoDetails}
                     >
                       Save
                     </CButton>
