@@ -52,6 +52,7 @@ function AddUpdateEmployeeCertification({
     (state) => state.employeeCertificates.editCertificateDetails,
   )
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
   }, [dispatch])
@@ -66,6 +67,7 @@ function AddUpdateEmployeeCertification({
       )
     }
   }, [dispatch, addCertification?.technology])
+
   const successToastMessage = (
     <OToast
       toastMessage="Your changes have been saved successfully.."
@@ -113,6 +115,7 @@ function AddUpdateEmployeeCertification({
       setExpiryDate(date)
     }
   }
+
   useEffect(() => {
     if (
       (addCertification?.expiryDate as string) <=
@@ -150,6 +153,16 @@ function AddUpdateEmployeeCertification({
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: certificate } }
       })
+    } else if (name === 'percent') {
+      let percentValue = Number(value.replace(/[^0-9]/g, ''))
+      if (percentValue > 100) percentValue = 100
+      setAddCertification((prevState) => {
+        return { ...prevState, ...{ [name]: percentValue } }
+      })
+    } else if (name === 'technology') {
+      setAddCertification((values) => {
+        return { ...values, ...{ [name]: value, certificateType: '' } }
+      })
     } else {
       setAddCertification((values) => {
         return { ...values, ...{ [name]: value } }
@@ -185,6 +198,7 @@ function AddUpdateEmployeeCertification({
     setCompletedDate('')
     setExpiryDate('')
   }
+
   const handleAddCertificateDetails = async () => {
     const prepareObject = {
       ...addCertification,
@@ -449,7 +463,6 @@ function AddUpdateEmployeeCertification({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                type="number"
                 id="percentage"
                 name="percent"
                 value={addCertification?.percent}
@@ -457,6 +470,7 @@ function AddUpdateEmployeeCertification({
                 onChange={handleInputChange}
                 min={0}
                 max={100}
+                maxLength={3}
               />
             </CCol>
           </CRow>

@@ -235,9 +235,9 @@ const AddUpdateEmployeeQualification = ({
                 Graduation:
                 <span
                   className={
-                    addQualification.graduationLookUp?.length === 0
-                      ? 'text-danger'
-                      : 'text-white'
+                    addQualification.graduationLookUp?.length > 0
+                      ? 'text-white'
+                      : 'text-danger'
                   }
                 >
                   *
@@ -270,9 +270,9 @@ const AddUpdateEmployeeQualification = ({
                 Higher Secondary Certificate:
                 <span
                   className={
-                    addQualification.hscName?.length === 0
-                      ? 'text-danger'
-                      : 'text-white'
+                    addQualification.hscName?.length > 0
+                      ? 'text-white'
+                      : 'text-danger'
                   }
                 >
                   *
@@ -293,9 +293,9 @@ const AddUpdateEmployeeQualification = ({
                 Secondary School Certificate:
                 <span
                   className={
-                    addQualification.sscName?.length === 0
-                      ? 'text-danger'
-                      : 'text-white'
+                    addQualification.sscName?.length > 0
+                      ? 'text-white'
+                      : 'text-danger'
                   }
                 >
                   *
