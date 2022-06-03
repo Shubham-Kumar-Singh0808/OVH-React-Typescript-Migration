@@ -68,5 +68,10 @@ export const getEmployeeGeneralInformationThunk = {
 export const loggedInEmployeeSelectors = {
   selectLoggedInEmployeeData,
 }
+export const generalInformationService = {
+  ...getEmployeeGeneralInformationThunk,
+  actions: employeeGeneralInformationSlice.actions,
+  selectors: loggedInEmployeeSelectors,
+}
 
 export default employeeGeneralInformationSlice.reducer

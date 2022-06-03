@@ -13,7 +13,6 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { employeeSkillThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
@@ -24,12 +23,12 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   tableClassName = '',
 }: EmployeeSkillInfo): JSX.Element => {
   const employeeSkillsData = useTypedSelector(
-    (state) => state.employeeSkill.skillDetails,
+    reduxServices.employeeSkill.selectors.employeeSkillDetails,
   )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(employeeSkillThunk.getEmployeeSkills())
+    dispatch(reduxServices.employeeSkill.getEmployeeSkills())
   }, [dispatch])
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteSkillId, setToDeleteSkillId] = useState(0)
@@ -41,7 +40,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   const handleConfirmDeleteVisaDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteSkillsResultAction = await dispatch(
-      employeeSkillThunk.deleteEmployeeSkill(toDeleteSkillId),
+      reduxServices.employeeSkill.deleteEmployeeSkill(toDeleteSkillId),
     )
     const toastElement = (
       <OToast
@@ -50,11 +49,11 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
       />
     )
     if (
-      employeeSkillThunk.deleteEmployeeSkill.fulfilled.match(
+      reduxServices.employeeSkill.deleteEmployeeSkill.fulfilled.match(
         deleteSkillsResultAction,
       )
     ) {
-      dispatch(employeeSkillThunk.getEmployeeSkills())
+      dispatch(reduxServices.employeeSkill.getEmployeeSkills())
       dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
     }
   }
