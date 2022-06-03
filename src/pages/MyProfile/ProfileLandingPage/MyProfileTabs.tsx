@@ -21,18 +21,10 @@ interface ShowTabContentType<TValue> {
 }
 const MyProfileTabs = (): JSX.Element => {
   const [activeTabsKey, setActiveTabsKey] = useState(1)
-  const [viewCase, setviewCase] = useState(true)
   const [activeTabsContent, setActiveTabsContent] = useState<JSX.Element>()
   const employeeRole = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeRole,
   )
-  // if (employeeRole !== 'admin') {
-  //   setActiveTabsKey(0)
-  // }
-  // useEffect(
-  //   () => setActiveTabsContent(changeTabContent(activeTabsKey)),
-  //   [activeTabsKey],
-  // )
   useEffect(() => {
     if (
       employeeRole !== 'admin' &&
