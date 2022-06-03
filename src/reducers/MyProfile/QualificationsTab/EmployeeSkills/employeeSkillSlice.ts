@@ -182,6 +182,9 @@ const employeeSkillSlice = createSlice({
   },
 })
 
+const employeeSkillDetails = (state: RootState): EmployeeSkills[] =>
+  state.employeeSkill.skillDetails
+
 const selectIsLoading = (state: RootState): boolean =>
   state.employeeSkill.isLoading
 
@@ -205,6 +208,13 @@ export const employeeSkillSelectors = {
   selectIsLoading,
   selectEditSkillDetails,
   selectCategorySkillList,
+  employeeSkillDetails,
+}
+
+export const employeeSkillServices = {
+  ...employeeSkillThunk,
+  actions: employeeSkillSlice.actions,
+  selectors: employeeSkillSelectors,
 }
 
 export default employeeSkillSlice.reducer

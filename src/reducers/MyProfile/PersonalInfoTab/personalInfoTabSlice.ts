@@ -17,8 +17,8 @@ import { ValidationError } from '../../../types/commonTypes'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 
 const initialPersonalInfoTabState: PersonalInfoTabState = {
-  getFamilyDetails: [],
-  getVisaDetails: [],
+  employeeFamilyDetails: [],
+  employeeVisaDetails: [],
   SubCountries: {} as GetCountryDetails,
   SubVisa: [],
   editFamilyDetails: {} as EditFamilyDetailsState,
@@ -258,11 +258,11 @@ const personalInfoTabSlice = createSlice({
     builder
       .addCase(getEmployeeFamilyDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.getFamilyDetails = action.payload as EmployeeFamilyData[]
+        state.employeeFamilyDetails = action.payload as EmployeeFamilyData[]
       })
       .addCase(getEmployeeVisaDetails.fulfilled, (state, action) => {
         state.isLoading = false
-        state.getVisaDetails = action.payload as VisaDetails[]
+        state.employeeVisaDetails = action.payload as VisaDetails[]
       })
       .addCase(getEmployeeCountryDetails.fulfilled, (state, action) => {
         state.isLoading = false
@@ -320,10 +320,23 @@ const personalInfoTabSlice = createSlice({
       )
   },
 })
-const selectGetFamilyDetails = (state: RootState): EmployeeFamilyData[] =>
-  state.personalInfoDetails.getFamilyDetails
-const selectGetVisaDetails = (state: RootState): VisaDetails[] =>
-  state.personalInfoDetails.getVisaDetails
+const familyDetails = (state: RootState): EmployeeFamilyData[] =>
+  state.personalInfoDetails.employeeFamilyDetails
+const visaDetails = (state: RootState): VisaDetails[] =>
+  state.personalInfoDetails.employeeVisaDetails
+
+const countryDetails = (state: RootState): GetCountryDetails =>
+  state.personalInfoDetails.SubCountries
+
+const visaTypeDetails = (state: RootState): VisaCountryDetails[] =>
+  state.personalInfoDetails.SubVisa
+
+const employeeVisaDetails = (state: RootState): EditVisaDetailsState =>
+  state.personalInfoDetails.editVisaDetails
+
+const employeeFamilyMember = (state: RootState): EditFamilyDetailsState =>
+  state.personalInfoDetails.editFamilyDetails
+
 export const personalInfoThunk = {
   getEmployeeFamilyDetails,
   addEmployeeFamilyMember,
@@ -339,7 +352,16 @@ export const personalInfoThunk = {
   deleteEmployeeVisa,
 }
 export const personalInfoSelectors = {
-  selectGetFamilyDetails,
-  selectGetVisaDetails,
+  familyDetails,
+  visaDetails,
+  countryDetails,
+  visaTypeDetails,
+  employeeVisaDetails,
+  employeeFamilyMember,
+}
+export const personalInfoService = {
+  ...personalInfoThunk,
+  actions: personalInfoTabSlice.actions,
+  selectors: personalInfoSelectors,
 }
 export default personalInfoTabSlice.reducer

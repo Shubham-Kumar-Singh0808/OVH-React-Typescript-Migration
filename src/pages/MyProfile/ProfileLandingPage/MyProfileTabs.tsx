@@ -8,7 +8,6 @@ import {
 import React, { useEffect, useState } from 'react'
 
 import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
-import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
@@ -25,41 +24,40 @@ const MyProfileTabs = (): JSX.Element => {
   const employeeRole = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeRole,
   )
+  const handleActiveTab = (tabKey: number) => {
+    setActiveTabsKey(tabKey)
+  }
+
   useEffect(() => {
     if (
       employeeRole !== 'admin' &&
       employeeRole !== 'HR' &&
-      activeTabsKey == 9
+      activeTabsKey === 9
     ) {
       setActiveTabsKey(0)
     }
-    setActiveTabsContent(changeTabContent(activeTabsKey))
-  }, [activeTabsKey])
-
-  //Loading different components that comes in My Profile Tabs section
-  //First add the item in 'TabsLabel.js' in 'middleware' folder
-  //And add the key-value in below object
-
-  const changeTabContent = (tabKey: number): JSX.Element => {
-    const showTabContent: ShowTabContentType<JSX.Element> = {
-      0: <></>,
-      1: <GeneralTab />,
-      2: <BasicInfoTab />,
-      3: <PersonalInfoTab />,
-      4: <QualificationDetails />,
-      5: <h1>Review</h1>,
-      6: <h1>Projects</h1>,
-      9: <EmployeeProfileHistory />,
+    //Loading different components that comes in My Profile Tabs section
+    //First add the item in 'TabsLabel.js' in 'middleware' folder
+    //And add the key-value in below object
+    const changeTabContent = (tabKey: number): JSX.Element => {
+      const showTabContent: ShowTabContentType<JSX.Element> = {
+        1: <GeneralTab />,
+        2: <BasicInfoTab />,
+        3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
+        4: <QualificationDetails />,
+        5: <h1>Review</h1>,
+        6: <h1>Projects</h1>,
+      }
+      return showTabContent[tabKey] || 'Tab Content not available'
     }
-    return showTabContent[tabKey] || 'Tab Content not available'
-  }
-  const handleActiveTab = (tabKey: number) => {
-    setActiveTabsKey(tabKey)
-  }
+
+    setActiveTabsContent(changeTabContent(activeTabsKey))
+  }, [activeTabsKey, employeeRole])
+
   return (
     <>
       <CNav className="inline-tabs-nav" variant="tabs" role="tablist">
-        {TabsLabels.map((item, i) => (
+        {TabsLabels.map((item, _i) => (
           <CNavItem key={item.id}>
             {employeeRole !== 'admin' &&
             employeeRole !== 'HR' &&
