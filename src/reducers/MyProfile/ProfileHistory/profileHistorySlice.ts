@@ -1,7 +1,6 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   List,
-  ProfileHistoryItem,
   ProfileHistoryState,
 } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'

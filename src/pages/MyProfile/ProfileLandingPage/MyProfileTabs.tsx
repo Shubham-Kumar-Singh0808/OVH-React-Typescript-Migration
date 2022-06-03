@@ -13,23 +13,44 @@ import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import TabsLabels from '../../../middleware/TabsLabels'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../stateStore'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
 const MyProfileTabs = (): JSX.Element => {
   const [activeTabsKey, setActiveTabsKey] = useState(1)
+  const [viewCase, setviewCase] = useState(true)
   const [activeTabsContent, setActiveTabsContent] = useState<JSX.Element>()
-  useEffect(
-    () => setActiveTabsContent(changeTabContent(activeTabsKey)),
-    [activeTabsKey],
+  const employeeRole = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeRole,
   )
+  // if (employeeRole !== 'admin') {
+  //   setActiveTabsKey(0)
+  // }
+  // useEffect(
+  //   () => setActiveTabsContent(changeTabContent(activeTabsKey)),
+  //   [activeTabsKey],
+  // )
+  useEffect(() => {
+    if (
+      employeeRole !== 'admin' &&
+      employeeRole !== 'HR' &&
+      activeTabsKey == 9
+    ) {
+      setActiveTabsKey(0)
+    }
+    setActiveTabsContent(changeTabContent(activeTabsKey))
+  }, [activeTabsKey])
+
   //Loading different components that comes in My Profile Tabs section
   //First add the item in 'TabsLabel.js' in 'middleware' folder
   //And add the key-value in below object
 
   const changeTabContent = (tabKey: number): JSX.Element => {
     const showTabContent: ShowTabContentType<JSX.Element> = {
+      0: <></>,
       1: <GeneralTab />,
       2: <BasicInfoTab />,
       3: <PersonalInfoTab />,
@@ -48,12 +69,20 @@ const MyProfileTabs = (): JSX.Element => {
       <CNav className="inline-tabs-nav" variant="tabs" role="tablist">
         {TabsLabels.map((item, i) => (
           <CNavItem key={item.id}>
-            <CNavLink
-              active={activeTabsKey === item.id}
-              onClick={() => handleActiveTab(item.id)}
-            >
-              {item.name}
-            </CNavLink>
+            {employeeRole !== 'admin' &&
+            employeeRole !== 'HR' &&
+            item.id === 9 ? (
+              <></>
+            ) : (
+              <>
+                <CNavLink
+                  active={activeTabsKey === item.id}
+                  onClick={() => handleActiveTab(item.id)}
+                >
+                  {item.name}
+                </CNavLink>
+              </>
+            )}
           </CNavItem>
         ))}
       </CNav>

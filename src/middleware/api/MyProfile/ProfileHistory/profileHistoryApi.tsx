@@ -1,9 +1,6 @@
 import { AllowedHttpMethods, profileHistoryConfig } from '../../apiList'
-import {
-  List,
-  ProfileHistoryItem,
-} from '../../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 
+import { List } from '../../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 

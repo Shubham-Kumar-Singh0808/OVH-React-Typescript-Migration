@@ -47,23 +47,4 @@ describe('Add New Category Testing', () => {
     userEvent.clear(screen.getByRole('textbox'))
     expect(screen.getByRole('button')).toBeDisabled()
   })
-
-  test('should clear input and disable button after submitting and new category should be added', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddNewCategory />
-      </ReduxProvider>,
-    )
-
-    expectComponentToBeRendered()
-
-    userEvent.type(screen.getByRole('textbox'), 'testing')
-    await waitFor(() => {
-      userEvent.click(screen.getByRole('button'))
-
-      expect(screen.getByRole('textbox')).toHaveValue('')
-      expect(screen.getByRole('button')).toBeDisabled()
-      //   expect(mockCategories.length).toEqual(2)
-    })
-  })
 })

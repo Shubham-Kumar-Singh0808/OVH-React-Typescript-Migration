@@ -28,6 +28,7 @@ const TabsLabels = [
   {
     id: 9,
     name: 'Profile History',
+    viewCase: true,
   },
 ]
 export default TabsLabels
