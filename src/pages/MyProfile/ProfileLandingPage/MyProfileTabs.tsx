@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useState } from 'react'
 
 import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
+import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
@@ -47,6 +48,7 @@ const MyProfileTabs = (): JSX.Element => {
         4: <QualificationDetails />,
         5: <h1>Review</h1>,
         6: <h1>Projects</h1>,
+        9: <EmployeeProfileHistory />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'
     }
