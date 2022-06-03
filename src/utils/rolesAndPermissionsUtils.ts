@@ -1,6 +1,6 @@
 import {
   AccessModifier,
-  FeaturesUnderRole,
+  UserFeaturesUnderRole,
   UserRoleChildFeatures,
   UserRoleSubFeatures,
   UtilsChildFeatures,
@@ -10,7 +10,7 @@ import {
 
 // map features with child features and return a single array
 const mapFeaturesToChildFeatures = (
-  features: FeaturesUnderRole[],
+  features: UserFeaturesUnderRole[],
   childFeatures: UserRoleChildFeatures[],
 ): unknown => {
   return childFeatures.map((subFeatureItem) => {
@@ -32,7 +32,7 @@ const mapFeaturesToChildFeatures = (
 
 // map features with sub features and return a single array
 export const mapFeaturesToSubFeatures = (
-  features: FeaturesUnderRole[],
+  features: UserFeaturesUnderRole[],
   subFeatures: UserRoleSubFeatures[],
 ): unknown => {
   return subFeatures.map((item) => {

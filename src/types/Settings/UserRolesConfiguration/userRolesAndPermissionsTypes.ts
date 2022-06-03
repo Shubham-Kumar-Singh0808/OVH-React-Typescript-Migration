@@ -1,4 +1,4 @@
-import { ValidationError } from '../../commonTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type UserRole = {
   roleId: number
@@ -6,7 +6,7 @@ export type UserRole = {
   features: null
 }
 
-export type AddUserRole = {
+export type CreateUserRole = {
   roleInput: string
   reportingManagerFlag: boolean
 }
@@ -42,7 +42,7 @@ export type UserRoleSubFeatures = {
   features: UserRoleFeatures[]
 }
 
-export type FeaturesUnderRole = {
+export type UserFeaturesUnderRole = {
   featureId: number
   name: string
   viewaccess: boolean
@@ -54,9 +54,8 @@ export type FeaturesUnderRole = {
 export type UserRolesAndPermissionsState = {
   roles: UserRole[]
   subFeatures: UserRoleSubFeatures[]
-  featuresUnderRole: FeaturesUnderRole[]
-  isRoleExits: boolean | null
-  isLoading: boolean
+  featuresUnderRole: UserFeaturesUnderRole[]
+  isLoading: LoadingState
   error: ValidationError
 }
 

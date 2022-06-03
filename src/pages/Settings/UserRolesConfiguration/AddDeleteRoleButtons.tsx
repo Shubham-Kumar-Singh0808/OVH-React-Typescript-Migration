@@ -12,13 +12,6 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import {
-  clearIsRoleExists,
-  doAddNewUserRole,
-  doDeleteUserRole,
-  doFetchUserRoles,
-  doIsRoleExists,
-} from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
@@ -64,16 +57,27 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   )
   const handleConfirmAddRole = async () => {
     setAddRoleModalVisibility(false)
-    const rolesExistsResultAction = await dispatch(doIsRoleExists(roleInput))
+    const rolesExistsResultAction = await dispatch(
+      reduxServices.userRolesAndPermissions.checkIsRoleExists(roleInput),
+    )
     if (
-      doIsRoleExists.fulfilled.match(rolesExistsResultAction) &&
+      reduxServices.userRolesAndPermissions.checkIsRoleExists.fulfilled.match(
+        rolesExistsResultAction,
+      ) &&
       rolesExistsResultAction.payload === false
     ) {
       const addRoleResultAction = await dispatch(
-        doAddNewUserRole({ roleInput, reportingManagerFlag }),
+        reduxServices.userRolesAndPermissions.createUserRole({
+          roleInput,
+          reportingManagerFlag,
+        }),
       )
-      if (doAddNewUserRole.fulfilled.match(addRoleResultAction)) {
-        dispatch(doFetchUserRoles())
+      if (
+        reduxServices.userRolesAndPermissions.createUserRole.fulfilled.match(
+          addRoleResultAction,
+        )
+      ) {
+        dispatch(reduxServices.userRolesAndPermissions.getUserRoles())
         setRoleInput('')
         if (reportingManagerFlag) {
           setReportingManagerFlag(false)
@@ -83,10 +87,8 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
             getToastMessage(actionMapping.added),
           ),
         )
-        dispatch(clearIsRoleExists())
       }
     } else {
-      dispatch(clearIsRoleExists())
       dispatch(reduxServices.app.actions.addToast(isExistsToastElement))
       setRoleInput('')
       if (reportingManagerFlag) {
@@ -114,10 +116,16 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
   const handleConfirmDeleteRole = async () => {
     setDeleteRoleModalVisibility(false)
     const deleteRoleResultAction = await dispatch(
-      doDeleteUserRole(selectedRole.roleId as number),
+      reduxServices.userRolesAndPermissions.deleteUserRole(
+        selectedRole.roleId as number,
+      ),
     )
-    if (doDeleteUserRole.fulfilled.match(deleteRoleResultAction)) {
-      dispatch(doFetchUserRoles())
+    if (
+      reduxServices.userRolesAndPermissions.deleteUserRole.fulfilled.match(
+        deleteRoleResultAction,
+      )
+    ) {
+      dispatch(reduxServices.userRolesAndPermissions.getUserRoles())
       dispatch(
         reduxServices.app.actions.addToast(
           getToastMessage(actionMapping.deleted),
@@ -186,7 +194,7 @@ const AddDeleteRole: React.FC<AddDeleteRoleProps> = ({
               />
               <div>
                 <CRow className="mb-3">
-                  <CFormLabel className="col-sm-4 col-form-label">
+                  <CFormLabel className="col-sm-4 col-form-label pt-0">
                     Reporting Manager :
                   </CFormLabel>
                   <CCol sm={6}>

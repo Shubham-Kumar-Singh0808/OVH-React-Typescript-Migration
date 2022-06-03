@@ -21,10 +21,6 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import {
-  doAssignRolePermission,
-  doFetchFeaturesUnderRole,
-} from '../../../reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import {
   mapFeaturesToSubFeatures,
   renderPermissionSwitch,
 } from '../../../utils/rolesAndPermissionsUtils'
@@ -46,17 +42,25 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
         index: 0,
         subFeatureItemIndex: 0,
       })
+
     const dispatch = useAppDispatch()
+
     const subFeatures = useTypedSelector(
-      (state) => state.userRolesAndPermissions.subFeatures,
+      reduxServices.userRolesAndPermissions.selectors.userRoleSubFeatures,
     )
+
     const features = useTypedSelector(
-      (state) => state.userRolesAndPermissions.featuresUnderRole,
+      reduxServices.userRolesAndPermissions.selectors.userFeaturesUnderRole,
     )
+
     // on every selected role change doFetchFeaturesUnderRole will dispatch
     useEffect(() => {
       if (selectedRoleId) {
-        dispatch(doFetchFeaturesUnderRole(selectedRoleId as string))
+        dispatch(
+          reduxServices.userRolesAndPermissions.getUserFeaturesUnderRole(
+            selectedRoleId as string,
+          ),
+        )
       }
     }, [dispatch, selectedRoleId])
 
@@ -109,10 +113,14 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
         selectedRoleId as number,
       )
       const assignPermissionResultAction = await dispatch(
-        doAssignRolePermission(prepareObject),
+        reduxServices.userRolesAndPermissions.updateAssignPermission(
+          prepareObject,
+        ),
       )
       if (
-        doAssignRolePermission.fulfilled.match(assignPermissionResultAction)
+        reduxServices.userRolesAndPermissions.updateAssignPermission.fulfilled.match(
+          assignPermissionResultAction,
+        )
       ) {
         const oToastMessage = `Successfully you have ${
           prepareObject.permission ? 'assigned' : 'removed'
@@ -122,7 +130,11 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
             <OToast toastColor="success" toastMessage={oToastMessage} />,
           ),
         )
-        dispatch(doFetchFeaturesUnderRole(selectedRoleId as string))
+        dispatch(
+          reduxServices.userRolesAndPermissions.getUserFeaturesUnderRole(
+            selectedRoleId as string,
+          ),
+        )
         dispatch(reduxServices.app.actions.setReRenderMenu(true))
       }
     }
