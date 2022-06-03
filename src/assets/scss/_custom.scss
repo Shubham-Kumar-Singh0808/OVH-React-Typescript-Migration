@@ -135,3 +135,22 @@ input.form-control, select.form-select{
 th {
   font-weight: bold;
 }
+.shift-configuration-table{
+  
+  .edit-time-control {
+    .form-control{
+      width: 40px !important;
+    }
+    &.sh-left{
+    position: relative;
+    margin-right: 20px;
+      &:after{
+        content: ':';
+        display: block;
+        position: absolute;
+        top: calc(50% - 10px);
+        right: -12px;
+      }
+    }
+  }
+}

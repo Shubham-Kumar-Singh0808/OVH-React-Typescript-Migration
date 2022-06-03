@@ -63,6 +63,11 @@ const ShiftConfiguration = (): JSX.Element => {
       setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: graceTime } }
       })
+    } else if (name === 'name') {
+      const shiftName = value.replace(/^\s*/, '')
+      setEmployeeShiftDetails((prevState) => {
+        return { ...prevState, ...{ [name]: shiftName } }
+      })
     } else {
       setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: value } }
@@ -317,7 +322,7 @@ const ShiftConfiguration = (): JSX.Element => {
               </CCol>
             </CRow>
             <CRow className="mt-4 mb-4">
-              <CCol sm={4}>
+              <CCol sm={{ span: 6, offset: 3 }}>
                 <OAddButton
                   addButtonHandler={handleAddEmployeeTimeSlot}
                   isAddBtnEnabled={!isAddBtnEnabled}
