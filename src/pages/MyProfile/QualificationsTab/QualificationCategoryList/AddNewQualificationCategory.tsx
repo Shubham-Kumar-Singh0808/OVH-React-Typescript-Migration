@@ -129,6 +129,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
+              data-testid="form-select"
               aria-label="Default select example"
               size="sm"
               name="qualificationCategory"
