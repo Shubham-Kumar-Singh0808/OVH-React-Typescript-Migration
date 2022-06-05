@@ -1,8 +1,9 @@
+import { ActionMapping } from '../../../../Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 
 export type EmployeeShiftDetails = {
   id: number
-  name: string
+  name?: string
   startTimeHour: string
   startTimeMinutes: string
   endTimeHour: string
@@ -17,4 +18,6 @@ export type ShiftConfigurationState = {
 
 export type ShiftListTableProps = {
   employeeShifts: EmployeeShiftDetails[]
+  actionMapping: ActionMapping
+  getToastMessage: (value: string) => JSX.Element
 }

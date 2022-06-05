@@ -13,7 +13,6 @@ import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
 import { ActionMapping } from '../../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { EmployeeShiftDetails } from '../../../../../types/EmployeeDirectory/EmployeeList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
-import OAddButton from '../../../../../components/ReusableComponent/OAddButton'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import ShiftListTable from './ShiftListTable'
 import { reduxServices } from '../../../../../reducers/reduxServices'
@@ -38,8 +37,6 @@ const ShiftConfiguration = (): JSX.Element => {
     const { name, value } = e.target
     if (name === 'startTimeHour') {
       const startTimeHour = value.replace(/[^0-9]/gi, '')
-      // let valueCopy = +startTimeHour
-      // if (valueCopy > 23) valueCopy = 23
       setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: startTimeHour } }
       })
@@ -75,22 +72,64 @@ const ShiftConfiguration = (): JSX.Element => {
     }
   }
 
-  // const minutesValidation = () => {
-  //   if (
-  //     employeeShiftDetails.endTimeHour !== undefined ||
-  //     employeeShiftDetails.endTimeHour !== '' ||
-  //     employeeShiftDetails.endTimeHour !== null
-  //   ) {
-  //     if (employeeShiftDetails.endTimeHour.length === 1) {
-  //       employeeShiftDetails.endTimeHour =
-  //         '0' + employeeShiftDetails.endTimeHour
-  //     } else {
-  //       if (+employeeShiftDetails.endTimeHour > 23) {
-  //         employeeShiftDetails.endTimeHour = '23'
-  //       }
-  //     }
-  //   }
-  // }
+  const minutesValidation = () => {
+    if (
+      employeeShiftDetails.endTimeMinutes !== undefined ||
+      employeeShiftDetails.endTimeMinutes !== '' ||
+      employeeShiftDetails.endTimeMinutes !== null
+    ) {
+      if (employeeShiftDetails.endTimeMinutes.length === 1) {
+        employeeShiftDetails.endTimeMinutes =
+          '0' + employeeShiftDetails.endTimeMinutes
+      } else {
+        if (+employeeShiftDetails.endTimeMinutes > 59) {
+          employeeShiftDetails.endTimeMinutes = '59'
+        }
+      }
+    }
+    if (
+      employeeShiftDetails.startTimeMinutes !== undefined ||
+      employeeShiftDetails.startTimeMinutes !== '' ||
+      employeeShiftDetails.startTimeMinutes !== null
+    ) {
+      if (employeeShiftDetails.startTimeMinutes.length === 1) {
+        employeeShiftDetails.startTimeMinutes =
+          '0' + employeeShiftDetails.startTimeMinutes
+      } else {
+        if (+employeeShiftDetails.startTimeMinutes > 59) {
+          employeeShiftDetails.startTimeMinutes = '59'
+        }
+      }
+    }
+    if (
+      employeeShiftDetails.startTimeHour !== undefined ||
+      employeeShiftDetails.startTimeHour !== '' ||
+      employeeShiftDetails.startTimeHour !== null
+    ) {
+      if (employeeShiftDetails.startTimeHour.length === 1) {
+        employeeShiftDetails.startTimeHour =
+          '0' + employeeShiftDetails.startTimeHour
+      } else {
+        if (+employeeShiftDetails.startTimeHour > 23) {
+          employeeShiftDetails.startTimeHour = '23'
+        }
+      }
+    }
+    if (
+      employeeShiftDetails.endTimeHour !== undefined ||
+      employeeShiftDetails.endTimeHour !== '' ||
+      employeeShiftDetails.endTimeHour !== null
+    ) {
+      if (employeeShiftDetails.endTimeHour.length === 1) {
+        employeeShiftDetails.endTimeHour =
+          '0' + employeeShiftDetails.endTimeHour
+      } else {
+        if (+employeeShiftDetails.endTimeHour > 23) {
+          employeeShiftDetails.endTimeHour = '23'
+        }
+      }
+    }
+  }
 
   const shiftAlreadyExistToastMessage = (
     <OToast toastColor="danger" toastMessage="Shift already exists!" />
@@ -99,13 +138,18 @@ const ShiftConfiguration = (): JSX.Element => {
   const actionMapping: ActionMapping = {
     added: 'added',
     deleted: 'deleted',
+    updated: 'updated',
   }
 
   const getToastMessage = (action: string) => {
     return (
       <OToast
         toastColor="success"
-        toastMessage={`Shift ${action} successfully`}
+        toastMessage={
+          action === 'added'
+            ? `Shift ${action} successfully`
+            : `Shift details ${action} successfully`
+        }
       />
     )
   }
@@ -120,7 +164,7 @@ const ShiftConfiguration = (): JSX.Element => {
         createEmployeeTimeSlotResultAction,
       )
     ) {
-      dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
+      await dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
       dispatch(
         reduxServices.app.actions.addToast(
           getToastMessage(actionMapping.added),
@@ -241,6 +285,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.startTimeHour}
                   onChange={handleInputChange}
+                  onBlur={minutesValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -253,6 +298,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.startTimeMinutes}
                   onChange={handleInputChange}
+                  onBlur={minutesValidation}
                 />
               </CCol>
             </CRow>
@@ -280,6 +326,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.endTimeHour}
                   onChange={handleInputChange}
+                  onBlur={minutesValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -292,6 +339,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.endTimeMinutes}
                   onChange={handleInputChange}
+                  onBlur={minutesValidation}
                 />
               </CCol>
             </CRow>
@@ -323,15 +371,22 @@ const ShiftConfiguration = (): JSX.Element => {
             </CRow>
             <CRow className="mt-4 mb-4">
               <CCol sm={{ span: 6, offset: 3 }}>
-                <OAddButton
-                  addButtonHandler={handleAddEmployeeTimeSlot}
-                  isAddBtnEnabled={!isAddBtnEnabled}
-                />
+                <CButton
+                  disabled={!isAddBtnEnabled}
+                  color="info btn-ovh me-1"
+                  onClick={handleAddEmployeeTimeSlot}
+                >
+                  <i className="fa fa-plus me-1"></i>Add
+                </CButton>
               </CCol>
             </CRow>
           </CForm>
           <CCol xs={12} className="ps-0 pe-0">
-            <ShiftListTable employeeShifts={employeeShifts} />
+            <ShiftListTable
+              employeeShifts={employeeShifts}
+              actionMapping={actionMapping}
+              getToastMessage={getToastMessage}
+            />
           </CCol>
         </CRow>
       </CCardBody>
