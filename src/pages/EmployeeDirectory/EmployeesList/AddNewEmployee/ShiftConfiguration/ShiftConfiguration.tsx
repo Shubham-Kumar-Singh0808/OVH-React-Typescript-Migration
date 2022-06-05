@@ -281,6 +281,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   size="sm"
                   type="text"
                   name="startTimeHour"
+                  data-testid="sh-startTimeHour"
                   placeholder="Hours"
                   maxLength={2}
                   value={employeeShiftDetails.startTimeHour}
@@ -294,6 +295,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   size="sm"
                   type="text"
                   name="startTimeMinutes"
+                  data-testid="sh-startTimeMinutes"
                   placeholder="Min"
                   maxLength={2}
                   value={employeeShiftDetails.startTimeMinutes}
@@ -322,6 +324,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   size="sm"
                   type="text"
                   name="endTimeHour"
+                  data-testid="sh-endTimeHour"
                   placeholder="Hours"
                   maxLength={2}
                   value={employeeShiftDetails.endTimeHour}
@@ -335,6 +338,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   size="sm"
                   type="text"
                   name="endTimeMinutes"
+                  data-testid="sh-endTimeMinutes"
                   placeholder="Min"
                   maxLength={2}
                   value={employeeShiftDetails.endTimeMinutes}
