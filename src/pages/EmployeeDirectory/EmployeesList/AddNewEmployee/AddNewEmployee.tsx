@@ -56,12 +56,17 @@ const AddNewEmployee = (): JSX.Element => {
   const countryList = useTypedSelector(
     reduxServices.newEmployee.countryService.selectors.countriesList,
   )
+  const hrDataList = useTypedSelector(
+    reduxServices.newEmployee.hrDataService.selectors.hrDataList,
+  )
+
   useEffect(() => {
     dispatch(
       reduxServices.newEmployee.employeeDepartmentsService.getEmployeeDepartments(),
     )
     dispatch(reduxServices.newEmployee.technologyService.getAllTechnology())
     dispatch(reduxServices.newEmployee.countryService.getAllCountries())
+    dispatch(reduxServices.newEmployee.hrDataService.getAllHrData())
   }, [dispatch])
 
   return (
@@ -115,7 +120,10 @@ const AddNewEmployee = (): JSX.Element => {
 
         <ProjectManager dynamicFormLabelProps={dynamicFormLabelProps} />
 
-        <HRAssociate dynamicFormLabelProps={dynamicFormLabelProps} />
+        <HRAssociate
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          hrDataList={hrDataList}
+        />
 
         <EmploymentType dynamicFormLabelProps={dynamicFormLabelProps} />
 

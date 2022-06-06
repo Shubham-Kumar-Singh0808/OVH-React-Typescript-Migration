@@ -34,7 +34,7 @@ const EmploymentContract = ({
             inline
             type="radio"
             name="employmentcontract"
-            id="inlineCheckbox1"
+            id="employmentcontractyes"
             value="Yes"
             label="Yes"
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
@@ -45,7 +45,7 @@ const EmploymentContract = ({
             inline
             type="radio"
             name="employmentcontract"
-            id="inlineCheckbox2"
+            id="employmentcontractno"
             value="No"
             label="No"
             defaultChecked

@@ -240,4 +240,5 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
   getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
   getEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAllHrData: apiPrefix + '/jobapplicant/getAllHrData',
 }

@@ -38,7 +38,7 @@ const WorkFrom = ({
             inline
             type="radio"
             name="workfrom"
-            id="inlineCheckbox1"
+            id="workfromoffice"
             value="Office"
             label="Office"
             defaultChecked
@@ -47,7 +47,7 @@ const WorkFrom = ({
             inline
             type="radio"
             name="workfrom"
-            id="inlineCheckbox2"
+            id="workfromhome"
             value="Home"
             label="Home"
           />

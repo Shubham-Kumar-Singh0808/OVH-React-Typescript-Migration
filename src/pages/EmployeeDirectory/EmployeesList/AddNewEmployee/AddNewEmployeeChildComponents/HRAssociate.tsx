@@ -1,11 +1,18 @@
-import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
+import {
+  CCol,
+  CFormInput,
+  CFormLabel,
+  CFormSelect,
+  CRow,
+} from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { HrDataProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
 
 const HRAssociate = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
+  hrDataList,
+}: HrDataProps): JSX.Element => {
   return (
     <>
       <CRow className="mb-3">
@@ -27,6 +34,20 @@ const HRAssociate = ({
           </span>
         </CFormLabel>
         <CCol sm={3}>
+          <CFormSelect
+            id="country"
+            size="sm"
+            aria-label="country"
+            name="country"
+            value=""
+          >
+            <option value={''}>Select Country</option>
+            {hrDataList?.map((curItem) => (
+              <option key={curItem.fullName} value={curItem.fullName}>
+                {curItem.fullName}
+              </option>
+            ))}
+          </CFormSelect>
           <CFormInput
             id="hrassociate"
             size="sm"

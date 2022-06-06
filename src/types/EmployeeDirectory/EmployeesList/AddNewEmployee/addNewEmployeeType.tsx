@@ -17,6 +17,11 @@ export type GetCountries = {
   name: string
 }
 
+export type GetHrData = {
+  id: number
+  fullName: string
+}
+
 //AddNewEmployee functions and Props types for child components
 export interface DynamicFormLabelProps {
   dynamicFormLabelProps: (htmlFor: string, className: string) => void
@@ -35,11 +40,16 @@ export interface CountryProps extends DynamicFormLabelProps {
   countryList: GetCountries[]
 }
 
+export interface HrDataProps extends DynamicFormLabelProps {
+  hrDataList: GetHrData[]
+}
+
 //AddNewEmployee export as main object
 export type AddNewEmployeeState = {
   employeeDepartments?: EmployeeDepartment[]
   technologies?: GetAllTechnology[]
   countries?: GetCountries[]
+  hrData?: GetHrData[]
   error: ValidationError
   isLoading: LoadingState
 }
