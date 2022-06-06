@@ -11,7 +11,6 @@ import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
-import ShiftConfiguration from '../../EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/ShiftConfiguration'
 import TabsLabels from '../../../middleware/TabsLabels'
 
 interface ShowTabContentType<TValue> {
@@ -35,7 +34,7 @@ const MyProfileTabs = (): JSX.Element => {
       3: <PersonalInfoTab />,
       4: <QualificationDetails />,
       5: <h1>Review</h1>,
-      6: <ShiftConfiguration />,
+      6: <h1>Projects</h1>,
     }
     return showTabContent[tabKey] || 'Tab Content not available'
   }
