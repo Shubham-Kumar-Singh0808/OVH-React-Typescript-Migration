@@ -53,6 +53,7 @@ function AddUpdateEmployeeCertification({
     (state) => state.employeeCertificates.editCertificateDetails,
   )
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(certificationThunk.getEmployeeCertificates())
   }, [dispatch])
@@ -92,7 +93,17 @@ function AddUpdateEmployeeCertification({
       className: className,
     }
   }
+
   const onChangeDateOfCompletionHandler = (date: Date) => {
+    const currentDateExpiry = isEditCertificationDetails
+      ? addCertification.expiryDate?.toString()
+      : expiryDate?.toLocaleString()
+
+    const tempDateExpiry = moment(currentDateExpiry).format('DD/MM/YYYY')
+    const newDateExpiry = new Date(tempDateExpiry)
+
+    validateDates(date, newDateExpiry)
+
     if (isEditCertificationDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = 'completedDate'
@@ -103,7 +114,17 @@ function AddUpdateEmployeeCertification({
       setCompletedDate(date)
     }
   }
+
   const onChangeDateOfExpireHandler = (date: Date) => {
+    const currentCompletedDate = isEditCertificationDetails
+      ? getCertificateDetails?.completedDate?.toString()
+      : completedDate?.toLocaleString()
+
+    const tempDateCompleted = moment(currentCompletedDate).format('DD/MM/YYYY')
+    const newDateCompleted = new Date(tempDateCompleted)
+
+    validateDates(newDateCompleted, date)
+
     if (isEditCertificationDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = 'expiryDate'
@@ -114,14 +135,15 @@ function AddUpdateEmployeeCertification({
       setExpiryDate(date)
     }
   }
-  useEffect(() => {
-    if (
-      (addCertification?.expiryDate as string) <=
-      (addCertification?.completedDate as string)
-    ) {
-      setError(false)
-    }
-  }, [addCertification?.completedDate, addCertification?.expiryDate])
+
+  // useEffect(() => {
+  //   if (
+  //     (addCertification?.expiryDate as string) <=
+  //     (addCertification?.completedDate as string)
+  //   ) {
+  //     setError(false)
+  //   }
+  // }, [addCertification?.completedDate, addCertification?.expiryDate])
 
   useEffect(() => {
     if (error) {
@@ -174,43 +196,56 @@ function AddUpdateEmployeeCertification({
     })
     setCompletedDate('')
     setExpiryDate('')
+    setError(false)
   }
   const handleAddCertificateDetails = async () => {
-    const prepareObject = {
-      ...addCertification,
-      ...{
-        completedDate: moment(completedDate).format('DD/MM/YYYY'),
-        expiryDate: moment(expiryDate).format('DD/MM/YYYY'),
-        employeeId: employeeId,
-      },
-    }
-    const addCertificateResultAction = await dispatch(
-      certificationThunk.addEmployeeCertification(prepareObject),
-    )
-    if (
-      certificationThunk.addEmployeeCertification.fulfilled.match(
-        addCertificateResultAction,
+    if (!error) {
+      const prepareObject = {
+        ...addCertification,
+        ...{
+          completedDate: moment(completedDate).format('DD/MM/YYYY'),
+          expiryDate: moment(expiryDate).format('DD/MM/YYYY'),
+          employeeId: employeeId,
+        },
+      }
+      const addCertificateResultAction = await dispatch(
+        certificationThunk.addEmployeeCertification(prepareObject),
       )
-    ) {
-      backButtonHandler()
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      if (
+        certificationThunk.addEmployeeCertification.fulfilled.match(
+          addCertificateResultAction,
+        )
+      ) {
+        backButtonHandler()
+        dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      }
     }
   }
 
   const handleUpdateCertificationDetails = async () => {
-    const prepareObject = {
-      ...addCertification,
-    }
-    const updateCertificateResultAction = await dispatch(
-      certificationThunk.updateEmployeeCertificate(prepareObject),
-    )
-    if (
-      certificationThunk.updateEmployeeCertificate.fulfilled.match(
-        updateCertificateResultAction,
+    if (!error) {
+      const prepareObject = {
+        ...addCertification,
+      }
+      const updateCertificateResultAction = await dispatch(
+        certificationThunk.updateEmployeeCertificate(prepareObject),
       )
-    ) {
-      backButtonHandler()
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      if (
+        certificationThunk.updateEmployeeCertificate.fulfilled.match(
+          updateCertificateResultAction,
+        )
+      ) {
+        backButtonHandler()
+        dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      }
+    }
+  }
+
+  const validateDates = (startDate: Date, endDate: Date) => {
+    if (startDate.getTime() > endDate.getTime()) {
+      setError(true)
+    } else {
+      setError(false)
     }
   }
 

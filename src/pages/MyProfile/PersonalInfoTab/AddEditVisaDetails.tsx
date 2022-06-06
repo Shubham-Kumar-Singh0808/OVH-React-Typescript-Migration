@@ -43,6 +43,7 @@ function AddEditVisaDetails({
   const getEditVisaDetails = useTypedSelector(
     reduxServices.personalInformation.selectors.employeeVisaDetails,
   )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
@@ -54,12 +55,6 @@ function AddEditVisaDetails({
       )
     }
   }, [dispatch, employeeVisaDetails?.countryId])
-
-  useEffect(() => {
-    if ((dateOfIssue as string) <= (dateOfExpire as string)) {
-      setError(null)
-    }
-  }, [dateOfIssue, dateOfExpire])
 
   useEffect(() => {
     if (
@@ -89,7 +84,17 @@ function AddEditVisaDetails({
       return { ...prevState, ...{ [name]: value } }
     })
   }
+
   const onChangeDateOfIssueHandler = (date: Date) => {
+    const currentDateExpiry = isEditVisaDetails
+      ? employeeVisaDetails?.dateOfExpire?.toString()
+      : dateOfExpire?.toLocaleString()
+
+    const tempDateExpiry = moment(currentDateExpiry).format('DD/MM/YYYY')
+    const newDateExpiry = new Date(tempDateExpiry)
+
+    validateDates(date, newDateExpiry)
+
     if (isEditVisaDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = 'dateOfIssue'
@@ -100,17 +105,27 @@ function AddEditVisaDetails({
       setDateOfIssue(date)
     }
   }
+
   const onChangeDateOfExpireHandler = (date: Date) => {
+    const currentDateIssue = isEditVisaDetails
+      ? employeeVisaDetails?.dateOfIssue?.toString()
+      : dateOfIssue?.toLocaleString()
+
+    const tempDateIssue = moment(currentDateIssue).format('DD/MM/YYYY')
+    const newDateIssue = new Date(tempDateIssue)
+
+    validateDates(newDateIssue, date)
+
     if (isEditVisaDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = 'dateOfExpire'
       setEmployeeVisaDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
+      setDateOfExpire(date)
     } else {
       setDateOfExpire(date)
     }
-    setError(date)
   }
   const handleClearDetails = () => {
     setEmployeeVisaDetails({
@@ -123,6 +138,7 @@ function AddEditVisaDetails({
     })
     setDateOfIssue('')
     setDateOfExpire('')
+    setError(null)
   }
   const actionMapping = {
     added: 'added',
@@ -137,27 +153,29 @@ function AddEditVisaDetails({
     )
   }
   const handleAddVisaDetails = async () => {
-    const prepareObject = {
-      ...employeeVisaDetails,
-      dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),
-      dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
-    }
-    const addVisaMemberResultAction = await dispatch(
-      reduxServices.personalInformation.addEmployeeVisa(prepareObject),
-    )
-    if (
-      reduxServices.personalInformation.addEmployeeVisa.fulfilled.match(
-        addVisaMemberResultAction,
+    if (error === null) {
+      const prepareObject = {
+        ...employeeVisaDetails,
+        dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),
+        dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
+      }
+      const addVisaMemberResultAction = await dispatch(
+        reduxServices.personalInformation.addEmployeeVisa(prepareObject),
       )
-    ) {
-      backButtonHandler()
-      dispatch(
+      if (
+        reduxServices.personalInformation.addEmployeeVisa.fulfilled.match(
+          addVisaMemberResultAction,
+        )
+      ) {
+        backButtonHandler()
         dispatch(
-          reduxServices.app.actions.addToast(
-            getToastMessage(actionMapping.added),
+          dispatch(
+            reduxServices.app.actions.addToast(
+              getToastMessage(actionMapping.added),
+            ),
           ),
-        ),
-      )
+        )
+      }
     }
   }
   const handleUpdateVisaMember = async () => {
@@ -180,6 +198,15 @@ function AddEditVisaDetails({
       )
     }
   }
+
+  const validateDates = (startDate: Date, endDate: Date) => {
+    if (startDate.getTime() > endDate.getTime()) {
+      setError(endDate)
+    } else {
+      setError(null)
+    }
+  }
+
   const formLabelProps = {
     htmlFor: 'Country',
     className: 'col-sm-3 col-form-label text-end',
