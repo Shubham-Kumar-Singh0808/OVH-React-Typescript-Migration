@@ -34,22 +34,13 @@ describe('Shift Configuration Component Testing', () => {
         <ShiftConfiguration />
       </ReduxProvider>,
     )
-    const buttonElement = screen.getByText('Add')
-    const shiftNameInputElement = screen.getByPlaceholderText('Shift Name')
-    const startTimeHoursInputElement = screen.getByTestId('sh-startTimeHour')
-    const startTimeMinutesInputElement = screen.getByTestId(
-      'sh-startTimeMinutes',
-    )
-    const endTimeHoursInputElement = screen.getByTestId('sh-endTimeHour')
-    const endTimeMinutesInputElement = screen.getByTestId('sh-endTimeMinutes')
-    const graceTimeInputElement = screen.getByPlaceholderText('In Minutes')
-    userEvent.type(shiftNameInputElement, 'Canada Shift')
-    userEvent.type(startTimeHoursInputElement, '45')
-    userEvent.type(startTimeMinutesInputElement, '45')
-    userEvent.type(endTimeHoursInputElement, '2')
-    userEvent.type(endTimeMinutesInputElement, '99')
-    userEvent.type(graceTimeInputElement, '30')
-    userEvent.click(buttonElement)
+    userEvent.type(screen.getByPlaceholderText('Shift Name'), 'Canada Shift')
+    userEvent.type(screen.getByTestId('sh-startTimeHour'), '45')
+    userEvent.type(screen.getByTestId('sh-startTimeMinutes'), '45')
+    userEvent.type(screen.getByTestId('sh-endTimeHour'), '2')
+    userEvent.type(screen.getByTestId('sh-endTimeMinutes'), '99')
+    userEvent.type(screen.getByPlaceholderText('In Minutes'), '30')
+    userEvent.click(screen.getByText('Add'))
     await waitFor(() => {
       expect(screen.getAllByRole('row')).toHaveLength(
         mockEmployeeShifts.length + 1,

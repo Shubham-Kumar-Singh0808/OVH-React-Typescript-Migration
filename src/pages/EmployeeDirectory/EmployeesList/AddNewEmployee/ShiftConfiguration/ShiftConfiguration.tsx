@@ -65,19 +65,11 @@ const ShiftConfiguration = (): JSX.Element => {
       setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: shiftName } }
       })
-    } else {
-      setEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: value } }
-      })
     }
   }
 
-  const minutesValidation = () => {
-    if (
-      employeeShiftDetails.endTimeMinutes !== undefined ||
-      employeeShiftDetails.endTimeMinutes !== '' ||
-      employeeShiftDetails.endTimeMinutes !== null
-    ) {
+  const hoursAndMinutesValidation = () => {
+    if (employeeShiftDetails.endTimeMinutes !== undefined || '' || null) {
       if (employeeShiftDetails.endTimeMinutes.length === 1) {
         employeeShiftDetails.endTimeMinutes =
           '0' + employeeShiftDetails.endTimeMinutes
@@ -87,11 +79,7 @@ const ShiftConfiguration = (): JSX.Element => {
         }
       }
     }
-    if (
-      employeeShiftDetails.startTimeMinutes !== undefined ||
-      employeeShiftDetails.startTimeMinutes !== '' ||
-      employeeShiftDetails.startTimeMinutes !== null
-    ) {
+    if (employeeShiftDetails.startTimeMinutes !== undefined || '' || null) {
       if (employeeShiftDetails.startTimeMinutes.length === 1) {
         employeeShiftDetails.startTimeMinutes =
           '0' + employeeShiftDetails.startTimeMinutes
@@ -101,11 +89,7 @@ const ShiftConfiguration = (): JSX.Element => {
         }
       }
     }
-    if (
-      employeeShiftDetails.startTimeHour !== undefined ||
-      employeeShiftDetails.startTimeHour !== '' ||
-      employeeShiftDetails.startTimeHour !== null
-    ) {
+    if (employeeShiftDetails.startTimeHour !== undefined || '' || null) {
       if (employeeShiftDetails.startTimeHour.length === 1) {
         employeeShiftDetails.startTimeHour =
           '0' + employeeShiftDetails.startTimeHour
@@ -115,11 +99,7 @@ const ShiftConfiguration = (): JSX.Element => {
         }
       }
     }
-    if (
-      employeeShiftDetails.endTimeHour !== undefined ||
-      employeeShiftDetails.endTimeHour !== '' ||
-      employeeShiftDetails.endTimeHour !== null
-    ) {
+    if (employeeShiftDetails.endTimeHour !== undefined || '' || null) {
       if (employeeShiftDetails.endTimeHour.length === 1) {
         employeeShiftDetails.endTimeHour =
           '0' + employeeShiftDetails.endTimeHour
@@ -286,7 +266,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.startTimeHour}
                   onChange={handleInputChange}
-                  onBlur={minutesValidation}
+                  onBlur={hoursAndMinutesValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -300,7 +280,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.startTimeMinutes}
                   onChange={handleInputChange}
-                  onBlur={minutesValidation}
+                  onBlur={hoursAndMinutesValidation}
                 />
               </CCol>
             </CRow>
@@ -329,7 +309,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.endTimeHour}
                   onChange={handleInputChange}
-                  onBlur={minutesValidation}
+                  onBlur={hoursAndMinutesValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -343,7 +323,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.endTimeMinutes}
                   onChange={handleInputChange}
-                  onBlur={minutesValidation}
+                  onBlur={hoursAndMinutesValidation}
                 />
               </CCol>
             </CRow>

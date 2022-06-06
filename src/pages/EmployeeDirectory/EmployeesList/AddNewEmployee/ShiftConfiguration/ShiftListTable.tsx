@@ -14,7 +14,7 @@ import {
   EmployeeShiftDetails,
   ShiftListTableProps,
 } from '../../../../../types/EmployeeDirectory/EmployeeList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../../reducers/reduxServices'
@@ -31,12 +31,14 @@ const ShiftListTable = ({
   const [editEmployeeShiftDetails, setEditEmployeeShiftDetails] =
     useState<EmployeeShiftDetails>({
       id: 0,
+      name: '',
       startTimeHour: '',
       startTimeMinutes: '',
       endTimeHour: '',
       endTimeMinutes: '',
       graceTime: '',
     })
+
   const [deleteShiftModalVisibility, setDeleteShiftModalVisibility] =
     useState<boolean>(false)
   const dispatch = useAppDispatch()
@@ -73,12 +75,8 @@ const ShiftListTable = ({
     }
   }
 
-  const minutesValidation = () => {
-    if (
-      editEmployeeShiftDetails.endTimeMinutes !== undefined ||
-      editEmployeeShiftDetails.endTimeMinutes !== '' ||
-      editEmployeeShiftDetails.endTimeMinutes !== null
-    ) {
+  const hoursAndMinutesValidationForEdit = () => {
+    if (editEmployeeShiftDetails.endTimeMinutes !== undefined || '' || null) {
       if (editEmployeeShiftDetails.endTimeMinutes.length === 1) {
         editEmployeeShiftDetails.endTimeMinutes =
           '0' + editEmployeeShiftDetails.endTimeMinutes
@@ -88,11 +86,7 @@ const ShiftListTable = ({
         }
       }
     }
-    if (
-      editEmployeeShiftDetails.startTimeMinutes !== undefined ||
-      editEmployeeShiftDetails.startTimeMinutes !== '' ||
-      editEmployeeShiftDetails.startTimeMinutes !== null
-    ) {
+    if (editEmployeeShiftDetails.startTimeMinutes !== undefined || '' || null) {
       if (editEmployeeShiftDetails.startTimeMinutes.length === 1) {
         editEmployeeShiftDetails.startTimeMinutes =
           '0' + editEmployeeShiftDetails.startTimeMinutes
@@ -102,11 +96,7 @@ const ShiftListTable = ({
         }
       }
     }
-    if (
-      editEmployeeShiftDetails.startTimeHour !== undefined ||
-      editEmployeeShiftDetails.startTimeHour !== '' ||
-      editEmployeeShiftDetails.startTimeHour !== null
-    ) {
+    if (editEmployeeShiftDetails.startTimeHour !== undefined || '' || null) {
       if (editEmployeeShiftDetails.startTimeHour.length === 1) {
         editEmployeeShiftDetails.startTimeHour =
           '0' + editEmployeeShiftDetails.startTimeHour
@@ -116,11 +106,7 @@ const ShiftListTable = ({
         }
       }
     }
-    if (
-      editEmployeeShiftDetails.endTimeHour !== undefined ||
-      editEmployeeShiftDetails.endTimeHour !== '' ||
-      editEmployeeShiftDetails.endTimeHour !== null
-    ) {
+    if (editEmployeeShiftDetails.endTimeHour !== undefined || '' || null) {
       if (editEmployeeShiftDetails.endTimeHour.length === 1) {
         editEmployeeShiftDetails.endTimeHour =
           '0' + editEmployeeShiftDetails.endTimeHour
@@ -144,6 +130,7 @@ const ShiftListTable = ({
     setSelectShiftId(shiftId)
     setEditEmployeeShiftDetails({
       id: shiftId,
+      name: '',
       startTimeHour: startTimeHour,
       startTimeMinutes: startTimeMinutes,
       endTimeHour: endTimeHour,
@@ -164,7 +151,7 @@ const ShiftListTable = ({
       )
     ) {
       await dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
-      await setIsShiftDetailEdit(false)
+      setIsShiftDetailEdit(false)
       dispatch(
         reduxServices.app.actions.addToast(
           getToastMessage(actionMapping.updated as string),
@@ -198,6 +185,16 @@ const ShiftListTable = ({
       )
     }
   }
+
+  const sortedEmployeeShifts = useMemo(() => {
+    if (employeeShifts) {
+      return employeeShifts
+        .slice()
+        .sort((employeeShift1, employeeShift2) =>
+          employeeShift1.name.localeCompare(employeeShift2.name),
+        )
+    }
+  }, [employeeShifts])
 
   const tableHeaderCellPropsSNo = {
     width: '6%',
@@ -246,7 +243,7 @@ const ShiftListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {employeeShifts?.map((employeeShift, index) => {
+          {sortedEmployeeShifts?.map((employeeShift, index) => {
             return (
               <CTableRow key={index}>
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>
@@ -259,25 +256,27 @@ const ShiftListTable = ({
                       <div className="edit-time-control sh-left">
                         <CFormInput
                           id="startTimeHour"
+                          data-testid={`sh-startTimeHour-input${index}`}
                           size="sm"
                           type="text"
                           name="startTimeHour"
                           maxLength={2}
                           value={editEmployeeShiftDetails.startTimeHour}
                           onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={minutesValidation}
+                          onBlur={hoursAndMinutesValidationForEdit}
                         />
                       </div>
                       <div className="edit-time-control">
                         <CFormInput
                           id="startTimeMinutes"
+                          data-testid={`sh-startTimeMinutes-input${index}`}
                           size="sm"
                           type="text"
                           name="startTimeMinutes"
                           maxLength={2}
                           value={editEmployeeShiftDetails.startTimeMinutes}
                           onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={minutesValidation}
+                          onBlur={hoursAndMinutesValidationForEdit}
                         />
                       </div>
                     </div>
@@ -293,25 +292,27 @@ const ShiftListTable = ({
                       <div className="edit-time-control sh-left">
                         <CFormInput
                           id="endTimeHour"
+                          data-testid={`sh-endTimeHour-input${index}`}
                           size="sm"
                           type="text"
                           name="endTimeHour"
                           maxLength={2}
                           value={editEmployeeShiftDetails.endTimeHour}
                           onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={minutesValidation}
+                          onBlur={hoursAndMinutesValidationForEdit}
                         />
                       </div>
                       <div className="edit-time-control">
                         <CFormInput
                           id="endTimeMinutes"
+                          data-testid={`sh-endTimeMinutes-input${index}`}
                           size="sm"
                           type="text"
                           name="endTimeMinutes"
                           maxLength={2}
                           value={editEmployeeShiftDetails.endTimeMinutes}
                           onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={minutesValidation}
+                          onBlur={hoursAndMinutesValidationForEdit}
                         />
                       </div>
                     </div>
@@ -325,13 +326,13 @@ const ShiftListTable = ({
                     <div className="edit-time-control">
                       <CFormInput
                         id="graceTime"
+                        data-testid={`sh-graceTime-input${index}`}
                         size="sm"
                         type="text"
                         name="graceTime"
                         maxLength={3}
                         value={editEmployeeShiftDetails.graceTime}
                         onChange={editEmployeeShiftOnchangeHandler}
-                        onBlur={minutesValidation}
                       />
                     </div>
                   </CTableDataCell>
@@ -345,6 +346,7 @@ const ShiftListTable = ({
                   {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                     <CButton
                       color="success"
+                      data-testid={`sh-save-btn${index}`}
                       className="btn-ovh me-1"
                       onClick={handleSaveShiftButton}
                     >
@@ -353,6 +355,7 @@ const ShiftListTable = ({
                   ) : (
                     <CButton
                       color="info"
+                      data-testid={`sh-edit-btn${index}`}
                       className="btn-ovh me-1"
                       onClick={() => {
                         handleEditShiftButton(
@@ -374,11 +377,12 @@ const ShiftListTable = ({
 
                   <CButton
                     color="danger"
+                    data-testid={`sh-delete-btn${index}`}
                     className="btn-ovh me-1"
                     onClick={() => {
                       handleDeleteShiftDetail(
                         employeeShift.id,
-                        employeeShift.name as string,
+                        employeeShift.name,
                       )
                     }}
                   >

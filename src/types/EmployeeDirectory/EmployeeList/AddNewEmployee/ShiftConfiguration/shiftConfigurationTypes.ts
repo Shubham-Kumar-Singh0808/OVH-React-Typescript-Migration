@@ -3,7 +3,7 @@ import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 
 export type EmployeeShiftDetails = {
   id: number
-  name?: string
+  name: string
   startTimeHour: string
   startTimeMinutes: string
   endTimeHour: string
