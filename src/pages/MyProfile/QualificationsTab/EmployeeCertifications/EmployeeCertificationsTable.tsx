@@ -19,7 +19,7 @@ const EmployeeCertificationsTable = ({
   editCertificateButtonHandler,
 }: EmployeeCertificationTableProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [toDeleteCertificateById, setToDeleteCertificateById] = useState(0)
+  const [certificateId, setCertificateId] = useState(0)
   const employeeCertificates = useTypedSelector(
     reduxServices.employeeCertifications.selectors.employeeCertificates,
   )
@@ -35,14 +35,14 @@ const EmployeeCertificationsTable = ({
     />
   )
   const handleShowDeleteModal = (certificationId: number) => {
-    setToDeleteCertificateById(certificationId)
+    setCertificateId(certificationId)
     setIsDeleteModalVisible(true)
   }
   const handleConfirmDeleteCertificate = async () => {
     setIsDeleteModalVisible(false)
     const deleteCertificateResultAction = await dispatch(
       reduxServices.employeeCertifications.deleteEmployeeCertificate(
-        toDeleteCertificateById,
+        certificateId,
       ),
     )
     if (

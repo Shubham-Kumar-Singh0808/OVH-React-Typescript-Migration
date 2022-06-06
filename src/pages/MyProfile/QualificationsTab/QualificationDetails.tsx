@@ -15,9 +15,13 @@ const QualificationDetails = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
 
-  const editCertificateButtonHandler = (id: number) => {
+  const editCertificateButtonHandler = (certificateId: number) => {
     setToggle('EditCertificateSection')
-    dispatch(reduxServices.employeeCertifications.getEmployeeCertificate(id))
+    dispatch(
+      reduxServices.employeeCertifications.getEmployeeCertificate(
+        certificateId,
+      ),
+    )
   }
   const editSkillButtonHandler = (skillId: number) => {
     setToggle('editSkill')

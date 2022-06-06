@@ -177,16 +177,10 @@ const employeeCertificationsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.typeOfCertificate = action.payload as CertificateType[]
       })
-      .addCase(createEmployeeCertification.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
       .addCase(getEmployeeCertificate.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.editCertificateDetails =
           action.payload as unknown as EditEmployeeCertificates
-      })
-      .addCase(deleteEmployeeCertificate.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
       })
       .addMatcher(
         isAnyOf(
@@ -198,6 +192,15 @@ const employeeCertificationsSlice = createSlice({
           state.isLoading = ApiLoadingState.succeeded
           state.certificationDetails =
             action.payload as EmployeeCertifications[]
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          createEmployeeCertification.fulfilled,
+          deleteEmployeeCertificate.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
         },
       )
       .addMatcher(
