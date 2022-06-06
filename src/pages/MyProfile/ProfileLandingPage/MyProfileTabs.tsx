@@ -19,32 +19,33 @@ interface ShowTabContentType<TValue> {
 const MyProfileTabs = (): JSX.Element => {
   const [activeTabsKey, setActiveTabsKey] = useState(1)
   const [activeTabsContent, setActiveTabsContent] = useState<JSX.Element>()
-  useEffect(
-    () => setActiveTabsContent(changeTabContent(activeTabsKey)),
-    [activeTabsKey],
-  )
-  //Loading different components that comes in My Profile Tabs section
-  //First add the item in 'TabsLabel.js' in 'middleware' folder
-  //And add the key-value in below object
 
-  const changeTabContent = (tabKey: number): JSX.Element => {
-    const showTabContent: ShowTabContentType<JSX.Element> = {
-      1: <GeneralTab />,
-      2: <BasicInfoTab />,
-      3: <PersonalInfoTab />,
-      4: <QualificationDetails />,
-      5: <h1>Review</h1>,
-      6: <h1>Projects</h1>,
-    }
-    return showTabContent[tabKey] || 'Tab Content not available'
-  }
   const handleActiveTab = (tabKey: number) => {
     setActiveTabsKey(tabKey)
   }
+  //Loading different components that comes in My Profile Tabs section
+  //First add the item in 'TabsLabel.js' in 'middleware' folder
+  //And add the key-value in below object
+  useEffect(() => {
+    const changeTabContent = (tabKey: number): JSX.Element => {
+      const showTabContent: ShowTabContentType<JSX.Element> = {
+        1: <GeneralTab />,
+        2: <BasicInfoTab />,
+        3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
+        4: <QualificationDetails />,
+        5: <h1>Review</h1>,
+        6: <h1>Projects</h1>,
+      }
+      return showTabContent[tabKey] || 'Tab Content not available'
+    }
+
+    setActiveTabsContent(changeTabContent(activeTabsKey))
+  }, [activeTabsKey])
+
   return (
     <>
       <CNav className="inline-tabs-nav" variant="tabs" role="tablist">
-        {TabsLabels.map((item, i) => (
+        {TabsLabels.map((item, _i) => (
           <CNavItem key={item.id}>
             <CNavLink
               active={activeTabsKey === item.id}

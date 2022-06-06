@@ -8,15 +8,18 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import DownloadSampleFileButton from './DownloadSampleFileButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
+import OToast from '../../../components/ReusableComponent/OToast'
+import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
+import { reduxServices } from '../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 
 const BasicInfoTab = (): JSX.Element => {
@@ -55,6 +58,7 @@ const BasicInfoTab = (): JSX.Element => {
   ] = useState(selectedUserBasicInformation)
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
   const [dateErrorMessage, setDateErrorMessage] = useState(false)
+  const [cvToUpload, setCVToUpload] = useState<File | undefined>(undefined)
 
   const dispatch = useAppDispatch()
 
@@ -79,6 +83,14 @@ const BasicInfoTab = (): JSX.Element => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
     }
+  }
+
+  // change CV to upload state value
+  const onChangeCVHandler = async (element: HTMLInputElement) => {
+    const file = element.files
+    if (!file) return
+
+    setCVToUpload(file[0])
   }
 
   // condition to enable and disable save button
@@ -168,30 +180,24 @@ const BasicInfoTab = (): JSX.Element => {
     }
   }, [dispatch, employeeBasicInformationEditData.gender])
 
-  // upon save click have to save updated employee details
-  const handleSubmitBasicDetails = async (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ): Promise<void> => {
+  // upon save click have to save updated employee details and upload cv
+  const handleSubmitBasicDetails = async (event: SyntheticEvent) => {
     event.preventDefault()
     const prepareObject = employeeBasicInformationEditData
-    const resultAction = await dispatch(
-      employeeBasicInformationThunk.updateEmployeeBasicInformation(
-        prepareObject,
-      ),
-    )
-    if (
-      (await employeeBasicInformationThunk.updateEmployeeBasicInformation.fulfilled.match(
-        resultAction,
-      )) &&
-      !resultAction.payload
-    ) {
-      window.location.reload()
-      // dispatch(
-      //   getEmployeeGeneralInformationThunk.getEmployeeGeneralInformation(
-      //     employeeId,
-      //   ),
-      // )
+
+    try {
+      if (cvToUpload) {
+        await uploadFile()
+      }
+      dispatch(
+        employeeBasicInformationThunk.updateEmployeeBasicInformation(
+          prepareObject,
+        ),
+      )
+    } catch (error) {
+      console.error('Error saving changes')
     }
+    dispatch(reduxServices.app.actions.addToast(toastElement))
   }
 
   const formik = useFormik({
@@ -200,6 +206,25 @@ const BasicInfoTab = (): JSX.Element => {
       console.log('Logging in ', values)
     },
   })
+
+  const uploadFile = async function () {
+    if (cvToUpload) {
+      const formData = new FormData()
+      formData.append('file', cvToUpload, cvToUpload.name)
+      const prepareObject = {
+        personId: employeeBasicInformation.id as number,
+        file: formData,
+      }
+      await basicInfoApi.uploadEmployeeCV(prepareObject)
+    }
+  }
+
+  const toastElement = (
+    <OToast
+      toastMessage="Your changes have been saved successfully."
+      toastColor="success"
+    />
+  )
 
   return (
     <>
@@ -726,6 +751,9 @@ const BasicInfoTab = (): JSX.Element => {
               type="file"
               name="file"
               accept=".doc, .docx, .pdf"
+              onChange={(element: SyntheticEvent) =>
+                onChangeCVHandler(element.currentTarget as HTMLInputElement)
+              }
             />
           </CCol>
         </CRow>
