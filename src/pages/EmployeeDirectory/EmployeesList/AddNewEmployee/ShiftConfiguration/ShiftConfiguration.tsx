@@ -33,37 +33,18 @@ const ShiftConfiguration = (): JSX.Element => {
     })
   const [isAddBtnEnabled, setIsAddBtnEnabled] = useState<boolean>(false)
   const dispatch = useAppDispatch()
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const onchangeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    if (name === 'startTimeHour') {
-      const startTimeHour = value.replace(/[^0-9]/gi, '')
-      setEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: startTimeHour } }
-      })
-    } else if (name === 'startTimeMinutes') {
-      const startTimeMinutes = value.replace(/[^0-9]/gi, '')
-      setEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: startTimeMinutes } }
-      })
-    } else if (name === 'endTimeHour') {
-      const endTimeHour = value.replace(/[^0-9]/gi, '')
-      setEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: endTimeHour } }
-      })
-    } else if (name === 'endTimeMinutes') {
-      const endTimeMinutes = value.replace(/[^0-9]/gi, '')
-      setEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: endTimeMinutes } }
-      })
-    } else if (name === 'graceTime') {
-      const graceTime = value.replace(/[^0-9]/gi, '')
-      setEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: graceTime } }
-      })
-    } else if (name === 'name') {
+    if (name === 'name') {
       const shiftName = value.replace(/^\s*/, '')
       setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: shiftName } }
+      })
+    } else {
+      const newValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeShiftDetails((prevState) => {
+        return { ...prevState, ...{ [name]: newValue } }
       })
     }
   }
@@ -133,6 +114,7 @@ const ShiftConfiguration = (): JSX.Element => {
       />
     )
   }
+
   const handleAddEmployeeTimeSlot = async () => {
     const createEmployeeTimeSlotResultAction = await dispatch(
       reduxServices.shiftConfiguration.createEmployeeTimeSlot(
@@ -237,7 +219,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   name="name"
                   placeholder="Shift Name"
                   value={employeeShiftDetails.name}
-                  onChange={handleInputChange}
+                  onChange={onchangeInputHandler}
                 />
               </CCol>
             </CRow>
@@ -265,7 +247,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   placeholder="Hours"
                   maxLength={2}
                   value={employeeShiftDetails.startTimeHour}
-                  onChange={handleInputChange}
+                  onChange={onchangeInputHandler}
                   onBlur={hoursAndMinutesValidation}
                 />
               </CCol>
@@ -279,7 +261,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   placeholder="Min"
                   maxLength={2}
                   value={employeeShiftDetails.startTimeMinutes}
-                  onChange={handleInputChange}
+                  onChange={onchangeInputHandler}
                   onBlur={hoursAndMinutesValidation}
                 />
               </CCol>
@@ -308,7 +290,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   placeholder="Hours"
                   maxLength={2}
                   value={employeeShiftDetails.endTimeHour}
-                  onChange={handleInputChange}
+                  onChange={onchangeInputHandler}
                   onBlur={hoursAndMinutesValidation}
                 />
               </CCol>
@@ -322,7 +304,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   placeholder="Min"
                   maxLength={2}
                   value={employeeShiftDetails.endTimeMinutes}
-                  onChange={handleInputChange}
+                  onChange={onchangeInputHandler}
                   onBlur={hoursAndMinutesValidation}
                 />
               </CCol>
@@ -349,7 +331,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   placeholder="In Minutes"
                   maxLength={3}
                   value={employeeShiftDetails.graceTime}
-                  onChange={handleInputChange}
+                  onChange={onchangeInputHandler}
                 />
               </CCol>
             </CRow>

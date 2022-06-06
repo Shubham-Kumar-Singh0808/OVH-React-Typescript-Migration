@@ -47,32 +47,10 @@ const ShiftListTable = ({
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    if (name === 'startTimeHour') {
-      const startTimeHour = value.replace(/[^0-9]/gi, '')
-      setEditEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: startTimeHour } }
-      })
-    } else if (name === 'startTimeMinutes') {
-      const startTimeMinutes = value.replace(/[^0-9]/gi, '')
-      setEditEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: startTimeMinutes } }
-      })
-    } else if (name === 'endTimeHour') {
-      const endTimeHour = value.replace(/[^0-9]/gi, '')
-      setEditEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: endTimeHour } }
-      })
-    } else if (name === 'endTimeMinutes') {
-      const endTimeMinutes = value.replace(/[^0-9]/gi, '')
-      setEditEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: endTimeMinutes } }
-      })
-    } else if (name === 'graceTime') {
-      const graceTime = value.replace(/[^0-9]/gi, '')
-      setEditEmployeeShiftDetails((prevState) => {
-        return { ...prevState, ...{ [name]: graceTime } }
-      })
-    }
+    const newValue = value.replace(/[^0-9]/gi, '')
+    setEditEmployeeShiftDetails((prevState) => {
+      return { ...prevState, ...{ [name]: newValue } }
+    })
   }
 
   const hoursAndMinutesValidationForEdit = () => {
