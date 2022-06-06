@@ -1,8 +1,4 @@
-import {
-  AllowedHttpMethods,
-  addNewEmployeeAPiConfig,
-  categoriesApiConfig,
-} from '../../../apiList'
+import { AllowedHttpMethods, addNewEmployeeAPiConfig } from '../../../apiList'
 
 import { EmployeeDepartment } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import axios from 'axios'

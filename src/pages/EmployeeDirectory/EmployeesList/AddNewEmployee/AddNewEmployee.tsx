@@ -43,9 +43,9 @@ const AddNewEmployee = (): JSX.Element => {
 
   //making dispatch
   const dispatch = useAppDispatch()
-  const isLoading = useTypedSelector(
-    reduxServices.newEmployee.employeeDepartmentsService.selectors.isLoading,
-  )
+  // const isLoading = useTypedSelector(
+  //   reduxServices.newEmployee.employeeDepartmentsService.selectors.isLoading,
+  // )
   const departmentsList = useTypedSelector(
     reduxServices.newEmployee.employeeDepartmentsService.selectors
       .employeeDepartments,
