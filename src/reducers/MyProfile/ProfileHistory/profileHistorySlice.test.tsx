@@ -1,4 +1,4 @@
-import { List } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
+import { ProfileUpdateData } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import profileHistorySliceReducer from './profileHistorySlice'
 
 describe('Profile History Slice Test', () => {
@@ -9,7 +9,7 @@ describe('Profile History Slice Test', () => {
     expect(result).toEqual({
       error: null,
       isLoading: false,
-      profileHistoryList: [] as List[],
+      profileHistoryList: [] as ProfileUpdateData[],
     })
   })
 })

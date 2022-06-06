@@ -1,6 +1,6 @@
-import { List } from '../../types/MyProfile/ProfileHistory/profileHistoryTypes'
+import { ProfileUpdateData } from '../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 
-export const mockEmployeeProfileHistoryData: List[] = [
+export const mockEmployeeProfileHistoryData: ProfileUpdateData[] = [
   {
     id: 1,
     firstName: 'Mohd',

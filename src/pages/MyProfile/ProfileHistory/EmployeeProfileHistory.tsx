@@ -1,6 +1,7 @@
 import { CCardHeader, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
 import { profileHistoryService } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -19,7 +20,7 @@ const EmployeeProfileHistory = (): JSX.Element => {
   )
   const dispatch = useDispatch()
   const isLoading = useTypedSelector(
-    reduxServices.profileHistory.selectors.profileHistoryIsLoading,
+    reduxServices.profileHistory.selectors.isLoading,
   )
 
   useEffect(() => {
@@ -32,8 +33,8 @@ const EmployeeProfileHistory = (): JSX.Element => {
       <CCardHeader>
         <h4 className="h4">Employee Profile History</h4>
       </CCardHeader>
-      {/* <ProfileHistoryTimeLine /> */}
-      {!isLoading ? (
+
+      {isLoading !== ApiLoadingState.loading ? (
         <>
           <ProfileHistoryTimeLine
             employeeProfileHistory={employeeProfileHistory}
