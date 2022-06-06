@@ -1,5 +1,3 @@
-import 'react-datepicker/dist/react-datepicker.css'
-
 import {
   AddEditEmployeeVisaDetails,
   EmployeeVisaDetails,
@@ -17,13 +15,10 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
-import moment from 'moment'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { reduxServices } from '../../../reducers/reduxServices'
-
+import moment from 'moment'
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,
@@ -38,22 +33,24 @@ function AddEditVisaDetails({
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
   const [error, setError] = useState<Date | null>(null)
-  const getCountryDetails = useTypedSelector(
-    (state) => state.personalInfoDetails.SubCountries,
+
+  const getEmployeeCountryDetails = useTypedSelector(
+    reduxServices.personalInformation.selectors.countryDetails,
   )
   const getVisaCountryDetails = useTypedSelector(
-    (state) => state.personalInfoDetails.SubVisa,
+    reduxServices.personalInformation.selectors.visaTypeDetails,
   )
-  const getVisaInformation = useTypedSelector(
-    (state) => state.personalInfoDetails.editVisaDetails,
+  const getEditVisaDetails = useTypedSelector(
+    reduxServices.personalInformation.selectors.employeeVisaDetails,
   )
-
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(personalInfoThunk.getEmployeeCountryDetails())
+    dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
     if (employeeVisaDetails?.countryId) {
       dispatch(
-        personalInfoThunk.getEmployeeVisaType(employeeVisaDetails?.countryId),
+        reduxServices.personalInformation.getEmployeeVisaType(
+          employeeVisaDetails?.countryId,
+        ),
       )
     }
   }, [dispatch, employeeVisaDetails?.countryId])
@@ -63,6 +60,7 @@ function AddEditVisaDetails({
       setError(null)
     }
   }, [dateOfIssue, dateOfExpire])
+
   useEffect(() => {
     if (
       employeeVisaDetails?.countryId &&
@@ -82,9 +80,9 @@ function AddEditVisaDetails({
   ])
   useEffect(() => {
     if (isEditVisaDetails) {
-      setEmployeeVisaDetails(getVisaInformation)
+      setEmployeeVisaDetails(getEditVisaDetails)
     }
-  }, [isEditVisaDetails, getVisaInformation])
+  }, [isEditVisaDetails, getEditVisaDetails])
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
@@ -145,10 +143,10 @@ function AddEditVisaDetails({
       dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
     }
     const addVisaMemberResultAction = await dispatch(
-      personalInfoThunk.addEmployeeVisa(prepareObject),
+      reduxServices.personalInformation.addEmployeeVisa(prepareObject),
     )
     if (
-      personalInfoThunk.addEmployeeVisa.fulfilled.match(
+      reduxServices.personalInformation.addEmployeeVisa.fulfilled.match(
         addVisaMemberResultAction,
       )
     ) {
@@ -167,10 +165,10 @@ function AddEditVisaDetails({
       ...employeeVisaDetails,
     }
     const updateVisaMemberResultAction = await dispatch(
-      personalInfoThunk.updateEmployeeVisa(prepareObject),
+      reduxServices.personalInformation.updateEmployeeVisa(prepareObject),
     )
     if (
-      personalInfoThunk.updateEmployeeVisa.fulfilled.match(
+      reduxServices.personalInformation.updateEmployeeVisa.fulfilled.match(
         updateVisaMemberResultAction,
       )
     ) {
@@ -228,11 +226,13 @@ function AddEditVisaDetails({
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Country</option>
-                {getCountryDetails?.countries?.map((countriesItem, index) => (
-                  <option key={index} value={countriesItem.id}>
-                    {countriesItem.name}
-                  </option>
-                ))}
+                {getEmployeeCountryDetails?.countries?.map(
+                  (countriesItem, index) => (
+                    <option key={index} value={countriesItem.id}>
+                      {countriesItem.name}
+                    </option>
+                  ),
+                )}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -269,7 +269,7 @@ function AddEditVisaDetails({
               Date of Issue:
               <span
                 className={
-                  dateOfIssue || getVisaInformation.dateOfIssue
+                  dateOfIssue || getEditVisaDetails.dateOfIssue
                     ? 'text-white'
                     : 'text-danger'
                 }
@@ -303,7 +303,7 @@ function AddEditVisaDetails({
               Date of Expire :
               <span
                 className={
-                  dateOfExpire || getVisaInformation.dateOfExpire
+                  dateOfExpire || getEditVisaDetails.dateOfExpire
                     ? 'text-white'
                     : 'text-danger'
                 }
@@ -361,7 +361,6 @@ function AddEditVisaDetails({
                   className="btn-ovh me-2"
                   color="success"
                   onClick={handleUpdateVisaMember}
-                  disabled={!isAddButtonEnabled}
                 >
                   {confirmButtonText}
                 </CButton>
