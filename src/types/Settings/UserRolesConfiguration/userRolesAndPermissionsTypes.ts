@@ -127,7 +127,6 @@ export type UserRoleSubFeaturesTableProps = {
 export type ActionMapping = {
   added: string
   deleted: string
-  updated?: string
 }
 
 export type AccessModifier =

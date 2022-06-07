@@ -14,13 +14,13 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
 import DownloadSampleFileButton from './DownloadSampleFileButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
-import OToast from '../../../components/ReusableComponent/OToast'
-import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
-import { reduxServices } from '../../../reducers/reduxServices'
 import { useFormik } from 'formik'
+import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const BasicInfoTab = (): JSX.Element => {
   const employeeBasicInformation = useTypedSelector(
@@ -230,7 +230,7 @@ const BasicInfoTab = (): JSX.Element => {
     <>
       <CForm
         className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
-        // onSubmit={handleSubmitBasicDetails}
+        onSubmit={handleSubmitBasicDetails}
       >
         <DownloadSampleFileButton />
         <CRow className="mt-3 ">
@@ -777,8 +777,7 @@ const BasicInfoTab = (): JSX.Element => {
               className="btn-ovh btn btn-success mt-4"
               size="sm"
               disabled={!saveButtonEnabled}
-              type="button"
-              onClick={handleSubmitBasicDetails}
+              type="submit"
             >
               Save
             </CButton>
