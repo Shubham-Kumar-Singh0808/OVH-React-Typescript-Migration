@@ -13,12 +13,23 @@
       margin-top: 0.75rem;
       font-weight: 700;
       padding: 5px 8px;
+      &:hover {
+        background-color: $primary-navHover;
+        border-color: $primary-navHover;
+        cursor: pointer;
+      }
       &.active {
-        border-color: #428bca;
+        border-color: $primary-navHover;
         border-bottom-color: $white;
         height: 33px;
         color: $black;
         line-height: 24px;
+        &:hover {
+          background-color: $primary-navHover;
+          border-bottom-color: $primary-navHover;
+          cursor: pointer;
+          color: $white;
+        }
       }
     }
   }
