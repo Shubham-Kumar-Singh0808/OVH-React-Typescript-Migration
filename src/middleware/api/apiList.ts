@@ -20,7 +20,6 @@ import {
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
-  ShiftConfigurationApi,
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,

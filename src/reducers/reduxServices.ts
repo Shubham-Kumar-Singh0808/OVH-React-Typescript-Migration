@@ -42,7 +42,6 @@ export const reduxServices = {
   // technology: technologyService,
   // country: countryService,
   newEmployee: addNewEmployeeService,
-  shiftConfiguration: shiftConfigurationService,
   employeeCertifications: employeeCertificateService,
   employeeQualifications: employeeQualificationService,
   employeeQualificationCategory: qualificationCategoryService,
