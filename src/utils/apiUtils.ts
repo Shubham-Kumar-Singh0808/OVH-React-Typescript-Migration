@@ -1,4 +1,4 @@
-import { Method } from 'axios'
+import { Method, ResponseType } from 'axios'
 
 export const getUnauthenticatedRequestConfig = ({
   url,
@@ -31,18 +31,21 @@ export const getAuthenticatedRequestConfig = ({
   params,
   data,
   additionalHeaders,
+  responseType,
 }: {
   url: string
   method: Method
   params?: { [key: string]: string | number | boolean }
   data?: { [key: string]: string | number | unknown }
   additionalHeaders?: { [key: string]: string | number }
+  responseType?: ResponseType
 }): {
   url: string
   method: Method
   headers: { tenantKey: string; [key: string]: string | number }
   params?: { [key: string]: string | number | boolean }
   data?: { [key: string]: string | number | unknown }
+  responseType?: ResponseType
 } => {
   const token = localStorage.getItem('token') as string
   const tenantKey = localStorage.getItem('tenantKey') as string
@@ -55,6 +58,7 @@ export const getAuthenticatedRequestConfig = ({
       ...additionalHeaders,
     },
     params,
+    responseType,
     data,
   }
 }

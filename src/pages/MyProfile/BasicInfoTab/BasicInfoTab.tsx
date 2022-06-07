@@ -14,15 +14,22 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
 import DownloadSampleFileButton from './DownloadSampleFileButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
+import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
 import { useFormik } from 'formik'
-import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const BasicInfoTab = (): JSX.Element => {
+  const tenantKey = useTypedSelector(
+    reduxServices.authentication.selectors.selectTenantKey,
+  )
+  const authenticatedToken = useTypedSelector(
+    reduxServices.authentication.selectors.selectToken,
+  )
+
   const employeeBasicInformation = useTypedSelector(
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
@@ -226,6 +233,29 @@ const BasicInfoTab = (): JSX.Element => {
     />
   )
 
+  const testFunction = async () => {
+    if (employeeBasicInformation.rbtCvName) {
+      const prepareObject = {
+        fileName: employeeBasicInformation.rbtCvName,
+        token: authenticatedToken,
+        tenantKey: tenantKey,
+      }
+      const cvDownload = await basicInfoApi.getEmployeeCV(prepareObject)
+      if (cvDownload) {
+        console.log(cvDownload)
+        const url = window.URL.createObjectURL(
+          new Blob([cvDownload], {
+            type: cvDownload.type,
+          }),
+        )
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${employeeBasicInformation.rbtCvName}`)
+        document.body.appendChild(link)
+        link.click()
+      }
+    }
+  }
   return (
     <>
       <CForm
@@ -758,15 +788,11 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3">
-          <CCol md={{ span: 6, offset: 3 }}>
+          <CCol md={{ span: 6, offset: 3 }} onClick={testFunction}>
             {employeeBasicInformation.rbtCvName && (
-              <a
-                className="text-decoration-none cursor-pointer"
-                href="RBT_CV"
-                download={employeeBasicInformation.rbtCvName}
-              >
+              <a className="cursor-pointer">
                 <i className="fa fa-paperclip me-1"></i>
-                Rbt Cv
+                {employeeBasicInformation.rbtCvName}
               </a>
             )}
           </CCol>
