@@ -9,6 +9,7 @@ import {
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
+  ShiftConfigurationApi,
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
@@ -129,4 +130,11 @@ export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
   uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
+}
+
+export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
+  getAllShifts: apiPrefix + '/jobapplicant/getAllShifting',
+  addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
+  updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
+  deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
 }

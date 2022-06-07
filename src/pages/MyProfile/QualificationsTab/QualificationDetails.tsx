@@ -1,16 +1,17 @@
 import { CCardBody, CCardHeader } from '@coreui/react-pro'
 import React, { useState } from 'react'
 
+import AddEditEmployeeSkill from './EmployeeSkills/AddEditEmployeeSkill'
 import AddUpdateEmployeeCertification from './EmployeeCertifications/AddUpdateEmployeeCertification'
 import AddUpdateEmployeeQualification from './EmployeeQualifications/AddUpdateEmployeeQualification'
 import EmployeeCertificationsTable from './EmployeeCertifications/EmployeeCertificationsTable'
 import EmployeeQualifications from './EmployeeQualifications/EmployeeQualification'
 import EmployeeSkillsTable from './EmployeeSkills/EmployeeSkillsTable'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
-import { useAppDispatch } from '../../../stateStore'
 import { employeeSkillThunk } from '../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
-import AddEditEmployeeSkill from './EmployeeSkills/AddEditEmployeeSkill'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../stateStore'
+
 const QualificationDetails = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()

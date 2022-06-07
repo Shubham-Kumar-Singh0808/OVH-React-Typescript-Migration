@@ -2,15 +2,16 @@ import { appService } from './appSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
+import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import { employeeQualificationService } from './MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import { employeeSkillServices } from './MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import { generalInformationService } from './MyProfile/GeneralTab/generalInformationSlice'
 import { personalInfoService } from './MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { profileHistoryService } from './MyProfile/ProfileHistory/profileHistorySlice'
+import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
+import { shiftConfigurationService } from './EmployeeDirectory/EmployeeList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
-import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
-import { employeeQualificationService } from './MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -20,6 +21,7 @@ export const reduxServices = {
   profileHistory: profileHistoryService,
   personalInformation: personalInfoService,
   userRolesAndPermissions: userRolesAndPermissionsService,
+  shiftConfiguration: shiftConfigurationService,
   employeeCertifications: employeeCertificateService,
   employeeQualifications: employeeQualificationService,
   employeeQualificationCategory: qualificationCategoryService,
