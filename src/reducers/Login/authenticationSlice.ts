@@ -82,6 +82,9 @@ const selectToken = (state: RootState): string =>
 const selectEmployeeId = (state: RootState): string =>
   state.authentication.authenticatedUser?.employeeId as string
 
+const selectEmployeeRole = (state: RootState): string =>
+  state.authentication.authenticatedUser?.role as string
+
 const authenticationThunk = {
   authenticateUser,
 }
@@ -90,6 +93,7 @@ const authenticationSelectors = {
   selectError,
   selectToken,
   selectEmployeeId,
+  selectEmployeeRole,
 }
 
 export const authenticationService = {

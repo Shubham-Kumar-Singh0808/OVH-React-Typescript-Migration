@@ -1,4 +1,4 @@
-import { ValidationError } from '../../../commonTypes'
+import { LoadingState, ValidationError } from '../../../commonTypes'
 
 export type PostGraduationAndGraduationLookUp = {
   id: string
@@ -29,9 +29,9 @@ export type PostGraduationAndGraduationList = {
   graduationDetails: PostGraduationAndGraduationLookUp[]
   pgDetails: PostGraduationAndGraduationLookUp[]
 }
-export type EmployeeQualificationDetails = {
+export type EmployeeQualificationSliceState = {
   qualificationDetails: EmployeeQualifications
   pgLookUpAndGraduationLookUpDetails: PostGraduationAndGraduationList
-  isLoading: boolean
+  isLoading: LoadingState
   error: ValidationError
 }

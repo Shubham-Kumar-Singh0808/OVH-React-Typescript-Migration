@@ -1,13 +1,13 @@
-import { ValidationError } from '../../../commonTypes'
+import { ValidationError, LoadingState } from '../../../commonTypes'
 
-export type QualificationCategoryList = {
+export type QualificationCategory = {
   id?: number
   qualificationCategory: string
   qualificationName: string
 }
 
-export type QualificationCategoryState = {
-  qualificationCategoryList: QualificationCategoryList[]
-  isLoading: boolean
+export type QualificationCategorySliceState = {
+  qualificationCategories: QualificationCategory[]
+  isLoading: LoadingState
   error: ValidationError
 }

@@ -1,12 +1,13 @@
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
-  QualificationCategoryList,
-  QualificationCategoryState,
+  QualificationCategory,
+  QualificationCategorySliceState,
 } from '../../../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import employeeQualificationCategoryApi from '../../../../middleware/api/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryApi'
 import { AxiosError } from 'axios'
-import { ValidationError } from '../../../../types/commonTypes'
+import { LoadingState, ValidationError } from '../../../../types/commonTypes'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const getQualificationCategories = createAsyncThunk(
   'qualificationCategory/getQualificationCategories',
@@ -19,25 +20,27 @@ const getQualificationCategories = createAsyncThunk(
     }
   },
 )
-const addQualificationCategory = createAsyncThunk<
-  QualificationCategoryList[] | undefined,
-  QualificationCategoryList,
+const createQualificationCategory = createAsyncThunk<
+  QualificationCategory[] | undefined,
+  QualificationCategory,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
 >(
-  'qualificationCategory/addQualificationCategory',
+  'qualificationCategory/createQualificationCategory',
   async (
-    { qualificationCategory, qualificationName }: QualificationCategoryList,
+    { qualificationCategory, qualificationName }: QualificationCategory,
     thunkApi,
   ) => {
     try {
-      return await employeeQualificationCategoryApi.addQualificationCategory({
-        qualificationCategory,
-        qualificationName,
-      })
+      return await employeeQualificationCategoryApi.createQualificationCategory(
+        {
+          qualificationCategory,
+          qualificationName,
+        },
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -45,7 +48,7 @@ const addQualificationCategory = createAsyncThunk<
   },
 )
 const deleteQualificationCategory = createAsyncThunk<
-  QualificationCategoryList[] | undefined,
+  QualificationCategory[] | undefined,
   number,
   {
     dispatch: AppDispatch
@@ -63,9 +66,9 @@ const deleteQualificationCategory = createAsyncThunk<
   }
 })
 
-const initialCategoryState: QualificationCategoryState = {
-  qualificationCategoryList: [],
-  isLoading: false,
+const initialCategoryState: QualificationCategorySliceState = {
+  qualificationCategories: [],
+  isLoading: ApiLoadingState.idle,
   error: null,
 }
 
@@ -76,58 +79,59 @@ const qualificationCategorySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(deleteQualificationCategory.rejected, (state, action) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.failed
         state.error = action.payload as ValidationError
       })
       .addMatcher(
         isAnyOf(
           getQualificationCategories.pending,
           deleteQualificationCategory.pending,
-          addQualificationCategory.pending,
+          createQualificationCategory.pending,
         ),
         (state) => {
-          state.isLoading = true
+          state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
         isAnyOf(
           getQualificationCategories.fulfilled,
           deleteQualificationCategory.fulfilled,
-          addQualificationCategory.fulfilled,
+          createQualificationCategory.fulfilled,
         ),
         (state, action) => {
-          state.isLoading = false
-          state.qualificationCategoryList =
-            action.payload as QualificationCategoryList[]
+          state.isLoading = ApiLoadingState.succeeded
+          state.qualificationCategories =
+            action.payload as QualificationCategory[]
         },
       )
   },
 })
 
-const selectIsQualificationCategoryListLoading = (state: RootState): boolean =>
+const isLoading = (state: RootState): LoadingState =>
   state.qualificationCategory.isLoading
 
-const selectQualificationCategoryList = (
-  state: RootState,
-): QualificationCategoryList[] =>
-  state.qualificationCategory.qualificationCategoryList
+const qualificationCategories = (state: RootState): QualificationCategory[] =>
+  state.qualificationCategory.qualificationCategories
 
-const selectDeleteQualificationCategoryError = (
-  state: RootState,
-): ValidationError => state.qualificationCategory.error
+const isError = (state: RootState): ValidationError =>
+  state.qualificationCategory.error
 
 export const qualificationCategoryThunk = {
   getQualificationCategories,
   deleteQualificationCategory,
-  addQualificationCategory,
+  createQualificationCategory,
 }
 
-export const qualificationCategoryActions = qualificationCategorySlice.actions
-
 export const qualificationCategorySelectors = {
-  selectIsQualificationCategoryListLoading,
-  selectQualificationCategoryList,
-  selectDeleteQualificationCategoryError,
+  isLoading,
+  qualificationCategories,
+  isError,
+}
+
+export const qualificationCategoryService = {
+  ...qualificationCategoryThunk,
+  actions: qualificationCategorySlice.actions,
+  selectors: qualificationCategorySelectors,
 }
 
 export default qualificationCategorySlice.reducer
