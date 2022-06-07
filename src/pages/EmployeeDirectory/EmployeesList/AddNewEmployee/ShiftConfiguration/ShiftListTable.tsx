@@ -53,7 +53,7 @@ const ShiftListTable = ({
     })
   }
 
-  const hoursAndMinutesValidationForEdit = () => {
+  const editHoursAndMinutesValidation = () => {
     if (editEmployeeShiftDetails.endTimeMinutes !== undefined || '' || null) {
       if (editEmployeeShiftDetails.endTimeMinutes.length === 1) {
         editEmployeeShiftDetails.endTimeMinutes =
@@ -96,7 +96,7 @@ const ShiftListTable = ({
     }
   }
 
-  const handleEditShiftButton = (
+  const editShiftDetailsButtonHandler = (
     shiftId: number,
     startTimeHour: string,
     startTimeMinutes: string,
@@ -117,7 +117,7 @@ const ShiftListTable = ({
     })
   }
 
-  const handleSaveShiftButton = async () => {
+  const saveShiftDetailsButtonHandler = async () => {
     const updateEmployeeShiftDetailResultAction = await dispatch(
       reduxServices.shiftConfiguration.updateEmployeeShiftDetail(
         editEmployeeShiftDetails,
@@ -138,13 +138,16 @@ const ShiftListTable = ({
     }
   }
 
-  const handleDeleteShiftDetail = async (shiftId: number, name: string) => {
+  const deleteShiftDetailButtonHandler = async (
+    shiftId: number,
+    name: string,
+  ) => {
     setDeleteShiftModalVisibility(true)
     setSelectShiftId(shiftId)
     setSelectShiftName(name)
   }
 
-  const handleConfirmDeleteShift = async () => {
+  const confirmDeleteShiftButtonHandler = async () => {
     setDeleteShiftModalVisibility(false)
 
     const deleteEmployeeShiftDetailResultAction = await dispatch(
@@ -241,7 +244,7 @@ const ShiftListTable = ({
                           maxLength={2}
                           value={editEmployeeShiftDetails.startTimeHour}
                           onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={hoursAndMinutesValidationForEdit}
+                          onBlur={editHoursAndMinutesValidation}
                         />
                       </div>
                       <div className="edit-time-control">
@@ -254,7 +257,7 @@ const ShiftListTable = ({
                           maxLength={2}
                           value={editEmployeeShiftDetails.startTimeMinutes}
                           onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={hoursAndMinutesValidationForEdit}
+                          onBlur={editHoursAndMinutesValidation}
                         />
                       </div>
                     </div>
@@ -277,7 +280,7 @@ const ShiftListTable = ({
                           maxLength={2}
                           value={editEmployeeShiftDetails.endTimeHour}
                           onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={hoursAndMinutesValidationForEdit}
+                          onBlur={editHoursAndMinutesValidation}
                         />
                       </div>
                       <div className="edit-time-control">
@@ -290,7 +293,7 @@ const ShiftListTable = ({
                           maxLength={2}
                           value={editEmployeeShiftDetails.endTimeMinutes}
                           onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={hoursAndMinutesValidationForEdit}
+                          onBlur={editHoursAndMinutesValidation}
                         />
                       </div>
                     </div>
@@ -326,7 +329,7 @@ const ShiftListTable = ({
                       color="success"
                       data-testid={`sh-save-btn${index}`}
                       className="btn-ovh me-1"
-                      onClick={handleSaveShiftButton}
+                      onClick={saveShiftDetailsButtonHandler}
                     >
                       <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     </CButton>
@@ -336,7 +339,7 @@ const ShiftListTable = ({
                       data-testid={`sh-edit-btn${index}`}
                       className="btn-ovh me-1"
                       onClick={() => {
-                        handleEditShiftButton(
+                        editShiftDetailsButtonHandler(
                           employeeShift.id,
                           employeeShift.startTimeHour,
                           employeeShift.startTimeMinutes,
@@ -358,7 +361,7 @@ const ShiftListTable = ({
                     data-testid={`sh-delete-btn${index}`}
                     className="btn-ovh me-1"
                     onClick={() => {
-                      handleDeleteShiftDetail(
+                      deleteShiftDetailButtonHandler(
                         employeeShift.id,
                         employeeShift.name,
                       )
@@ -386,7 +389,7 @@ const ShiftListTable = ({
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
-        confirmButtonAction={handleConfirmDeleteShift}
+        confirmButtonAction={confirmDeleteShiftButtonHandler}
       >
         <p>
           Are you sure you want to delete this
