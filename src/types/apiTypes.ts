@@ -106,4 +106,10 @@ export interface ProfileHistoryApi extends ApiBase {
 export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
+  uploadEmployeeCV: string
+}
+
+export interface UploadFileReturn {
+  personId: number
+  file: FormData
 }
