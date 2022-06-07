@@ -1,0 +1,32 @@
+.autocomplete-dropdown {
+  &-wrap {
+    display: block;
+    border-radius: 2px;
+    box-shadow: 0 2px 1px 0 rgb(0, 0, 0, 0.15%);
+    margin: 1px 0 0;
+    padding: 0;
+    border: 1px solid #e9e9e9;
+    position: absolute;
+    top: 32px;
+    left: 0;
+    right: 0;
+    &.hide {
+      display: none;
+    }
+  }
+  &-item {
+    padding: 5px 10px;
+    display: block;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.428571429;
+    white-space: nowrap;
+
+    &.active {
+      color: #fff;
+      text-decoration: none;
+      background-color: $primary-navHover;
+      outline: 0;
+    }
+  }
+}

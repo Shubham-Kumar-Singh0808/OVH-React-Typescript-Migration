@@ -33,10 +33,14 @@ const HRAssociate = ({
         </CFormLabel>
         <CCol sm={3}>
           <Autocomplete
-            inputProps={{ id: 'hr-autocomplete' }}
+            inputProps={{
+              className: 'form-control form-control-sm',
+              id: 'hr-autocomplete',
+              placeholder: 'Type name here for auto fill',
+            }}
             getItemValue={(item) => item.fullName}
             items={hrDataList}
-            wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+            wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
               <div
                 className={
@@ -50,9 +54,12 @@ const HRAssociate = ({
             )}
             renderItem={(item, isHighlighted) => (
               <div
-                className="autocomplete-dropdown-item"
+                className={
+                  isHighlighted
+                    ? 'autocomplete-dropdown-item active'
+                    : 'autocomplete-dropdown-item '
+                }
                 key={item.fullName}
-                style={{ background: isHighlighted ? 'red' : 'white' }}
               >
                 {item.fullName}
               </div>
