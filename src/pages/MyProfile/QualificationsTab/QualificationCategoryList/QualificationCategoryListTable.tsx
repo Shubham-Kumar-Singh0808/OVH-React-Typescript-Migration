@@ -10,10 +10,6 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import {
-  qualificationCategorySelectors,
-  qualificationCategoryThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
@@ -28,7 +24,8 @@ import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const QualificationCategoryListTable = (): JSX.Element => {
   const qualificationCategories = useTypedSelector(
-    qualificationCategorySelectors.selectQualificationCategoryList,
+    reduxServices.employeeQualificationCategory.selectors
+      .qualificationCategories,
   )
   const dispatch = useAppDispatch()
 
@@ -89,17 +86,21 @@ const QualificationCategoryListTable = (): JSX.Element => {
     setIsDeleteModalVisible(false)
 
     const deleteQualificationCategoryResultAction = await dispatch(
-      qualificationCategoryThunk.deleteQualificationCategory(id),
+      reduxServices.employeeQualificationCategory.deleteQualificationCategory(
+        id,
+      ),
     )
     if (
-      qualificationCategoryThunk.deleteQualificationCategory.fulfilled.match(
+      reduxServices.employeeQualificationCategory.deleteQualificationCategory.fulfilled.match(
         deleteQualificationCategoryResultAction,
       )
     ) {
-      dispatch(qualificationCategoryThunk.getQualificationCategories())
+      dispatch(
+        reduxServices.employeeQualificationCategory.getQualificationCategories(),
+      )
       dispatch(reduxServices.app.actions.addToast(deleteToastElement))
     } else if (
-      qualificationCategoryThunk.deleteQualificationCategory.rejected.match(
+      reduxServices.employeeQualificationCategory.deleteQualificationCategory.rejected.match(
         deleteQualificationCategoryResultAction,
       ) &&
       deleteQualificationCategoryResultAction.payload === 500
@@ -196,11 +197,13 @@ const QualificationCategoryListTable = (): JSX.Element => {
         </CCol>
       )}
       <OModal
+        alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Qualification Category"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={() =>
           handleConfirmDelete(toDeleteQualificationCategoryId)
         }

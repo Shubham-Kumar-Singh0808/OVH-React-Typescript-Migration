@@ -6,8 +6,9 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import { mockQualificationCategories } from '../../../../test/data/qualificationCategoryListData'
 import stateStore from '../../../../stateStore'
-import userEvent from '@testing-library/user-event'
 import QualificationCategoryListTable from './QualificationCategoryListTable'
+import userEvent from '@testing-library/user-event'
+import QualificationCategoryList from './QualificationCategoryList'
 
 const ReduxProvider = ({
   children,

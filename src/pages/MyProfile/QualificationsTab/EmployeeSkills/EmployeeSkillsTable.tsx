@@ -111,43 +111,54 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
         )}
 
         <CTableBody>
-          {employeeSkillsData?.map((skillItem, index) => (
-            <CTableRow key={index}>
-              {isFieldDisabled ? (
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-              ) : (
-                <></>
-              )}
-              <CTableDataCell scope="row">
-                {skillItem.categoryType}
-              </CTableDataCell>
-              <CTableDataCell scope="row">{skillItem.skillType}</CTableDataCell>
-              <CTableDataCell scope="row">
-                {skillItem.competency}
-              </CTableDataCell>
-              <CTableDataCell scope="row">{`${skillItem.expYear}Year('s) ${skillItem.expMonth}month('s)`}</CTableDataCell>
-              {isFieldDisabled ? (
+          {employeeSkillsData?.map((skillItem, index) => {
+            return (
+              <CTableRow key={index}>
+                {isFieldDisabled ? (
+                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                ) : (
+                  <></>
+                )}
                 <CTableDataCell scope="row">
-                  <CButton
-                    color="info"
-                    className="btn-ovh me-1"
-                    onClick={() => editSkillButtonHandler?.(skillItem.skillId)}
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    className="btn-ovh me-1"
-                    onClick={() => handleShowDeleteModal(skillItem.skillId)}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
+                  {skillItem.categoryType}
                 </CTableDataCell>
-              ) : (
-                <></>
-              )}
-            </CTableRow>
-          ))}
+                <CTableDataCell scope="row">
+                  {skillItem.skillType}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {skillItem.competency}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {`${skillItem.expYear}Year('s) ${skillItem.expMonth}month('s)`}
+                </CTableDataCell>
+                {isFieldDisabled ? (
+                  <CTableDataCell scope="row">
+                    <CButton
+                      color="info"
+                      className="btn-ovh me-1"
+                      onClick={() =>
+                        editSkillButtonHandler?.(skillItem.skillId)
+                      }
+                    >
+                      <i
+                        className="fa fa-pencil-square-o"
+                        aria-hidden="true"
+                      ></i>
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      className="btn-ovh me-1"
+                      onClick={() => handleShowDeleteModal(skillItem.skillId)}
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTableDataCell>
+                ) : (
+                  <></>
+                )}
+              </CTableRow>
+            )
+          })}
         </CTableBody>
       </CTable>
       {isFieldDisabled && (

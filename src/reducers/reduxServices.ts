@@ -8,6 +8,9 @@ import { personalInfoService } from './MyProfile/PersonalInfoTab/personalInfoTab
 import { profileHistoryService } from './MyProfile/ProfileHistory/profileHistorySlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
+import { employeeQualificationService } from './MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -17,6 +20,9 @@ export const reduxServices = {
   profileHistory: profileHistoryService,
   personalInformation: personalInfoService,
   userRolesAndPermissions: userRolesAndPermissionsService,
+  employeeCertifications: employeeCertificateService,
+  employeeQualifications: employeeQualificationService,
+  employeeQualificationCategory: qualificationCategoryService,
   basicInformation: basicInformationService,
   generalInformation: generalInformationService,
   employeeSkill: employeeSkillServices,
