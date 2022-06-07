@@ -21,7 +21,7 @@ import { profileHistoryService } from './MyProfile/ProfileHistory/profileHistory
 import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
-import { technologyService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
+// import { technologyService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
 import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
@@ -38,6 +38,11 @@ export const reduxServices = {
   personalInformation: personalInfoService,
   userRolesAndPermissions: userRolesAndPermissionsService,
   employeeDesignation: employeeDesignationListService,
+  // getEmpDepartments: addNewEmployeeService,
+  // technology: technologyService,
+  // country: countryService,
+  newEmployee: addNewEmployeeService,
+  shiftConfiguration: shiftConfigurationService,
   employeeCertifications: employeeCertificateService,
   employeeQualifications: employeeQualificationService,
   employeeQualificationCategory: qualificationCategoryService,
@@ -46,7 +51,7 @@ export const reduxServices = {
   employeeSkill: employeeSkillServices,
   employeeReviews: employeeReviewsService,
   employeeProjects: employeeProjectsService,
-  shiftConfiguration: shiftConfigurationService,
+  // shiftConfiguration: shiftConfigurationService,
   employeeReportees: employeeReporteesService,
   certificateList: certificateListService,
   employeeAssets: employeeAssetsService,
