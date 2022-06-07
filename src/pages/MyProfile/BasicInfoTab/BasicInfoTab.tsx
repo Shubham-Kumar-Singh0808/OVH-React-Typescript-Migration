@@ -133,17 +133,13 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData.realBirthday &&
       employeeBasicInformationEditData.anniversary
     ) {
-      const tempRealBirthday = moment(
+      const realBirthdayDate = moment(
         employeeBasicInformationEditData.realBirthday,
-      ).format('DD-MM-YYYY')
-      const tempAnniversary = moment(
+      ).format('YYYY')
+      const anniversaryDate = moment(
         employeeBasicInformationEditData.anniversary,
-      ).format('DD-MM-YYYY')
-      const newRealBirthday = new Date(tempRealBirthday)
-      const newAnniversary = new Date(tempAnniversary)
-      const checkDateIsValid =
-        moment(newRealBirthday).isSameOrBefore(newAnniversary)
-      if (!checkDateIsValid) {
+      ).format('YYYY')
+      if (anniversaryDate < realBirthdayDate) {
         setDateErrorMessage(true)
       } else {
         setDateErrorMessage(false)
@@ -516,7 +512,7 @@ const BasicInfoTab = (): JSX.Element => {
                 showYearDropdown
                 dropdownMode="select"
                 placeholderText="dd/mm/yyyy"
-                name="anniversary"
+                name="realBirthday"
                 value={employeeBasicInformationEditData.anniversary}
                 onChange={(date: Date) =>
                   onDateChangeHandler(date, { name: 'anniversary' })

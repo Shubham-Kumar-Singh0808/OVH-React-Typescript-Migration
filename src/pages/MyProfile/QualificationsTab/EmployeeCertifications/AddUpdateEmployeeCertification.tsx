@@ -136,15 +136,6 @@ function AddUpdateEmployeeCertification({
     }
   }
 
-  // useEffect(() => {
-  //   if (
-  //     (addCertification?.expiryDate as string) <=
-  //     (addCertification?.completedDate as string)
-  //   ) {
-  //     setError(false)
-  //   }
-  // }, [addCertification?.completedDate, addCertification?.expiryDate])
-
   useEffect(() => {
     if (error) {
       dispatch(
