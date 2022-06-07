@@ -18,7 +18,6 @@ export type AddBackButtonsProps = {
   addButtonHandler?: () => void
   backButtonHandler?: () => void
   isEmployeeQualificationExist?: boolean
-  isAddBtnEnabled?: boolean
 }
 export type AddUpdateEmployeeQualificationProps = {
   addButtonHandler?: () => void
