@@ -8,6 +8,7 @@ import {
   EmployeeQualificationsApi,
   EmployeeSkillApi,
   PersonalInfoApi,
+  ProfileHistoryApi,
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
@@ -110,6 +111,9 @@ export const qualificationsApiConfig: EmployeeQualificationsApi = {
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
 }
 
+export const profileHistoryConfig: ProfileHistoryApi = {
+  getprofileHistory: apiPrefix + '/Employee/getEmployeeProfileHistory',
+}
 export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',

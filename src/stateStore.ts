@@ -9,6 +9,7 @@ import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/g
 import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import profileHistoryReducer from './reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
@@ -26,6 +27,7 @@ export const allReducers = {
   personalInfoDetails: personalInfoReducer,
   skill: skillReducer,
   qualificationCategory: qualificationCategoryReducer,
+  profileHistory: profileHistoryReducer,
   employeeCertificates: certificationReducer,
   employeeSkill: employeeSkillReducer,
   // add your slice reducers here
