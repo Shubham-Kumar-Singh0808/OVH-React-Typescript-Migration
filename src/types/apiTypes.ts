@@ -196,4 +196,5 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllTechnology: string
   getEmpCountries: string
   getAllHrData: string
+  getAllReportingManagersData: string
 }

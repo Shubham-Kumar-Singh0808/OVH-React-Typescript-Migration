@@ -59,6 +59,10 @@ const AddNewEmployee = (): JSX.Element => {
   const hrDataList = useTypedSelector(
     reduxServices.newEmployee.hrDataService.selectors.hrDataList,
   )
+  const reportingManagersList = useTypedSelector(
+    reduxServices.newEmployee.reportingManagersService.selectors
+      .reportingManagersList,
+  )
 
   useEffect(() => {
     dispatch(
@@ -67,6 +71,9 @@ const AddNewEmployee = (): JSX.Element => {
     dispatch(reduxServices.newEmployee.technologyService.getAllTechnology())
     dispatch(reduxServices.newEmployee.countryService.getAllCountries())
     dispatch(reduxServices.newEmployee.hrDataService.getAllHrData())
+    dispatch(
+      reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
+    )
   }, [dispatch])
 
   return (
@@ -116,9 +123,15 @@ const AddNewEmployee = (): JSX.Element => {
 
         <Role dynamicFormLabelProps={dynamicFormLabelProps} />
 
-        <ReportingManager dynamicFormLabelProps={dynamicFormLabelProps} />
+        <ReportingManager
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          reportingManagersList={reportingManagersList}
+        />
 
-        <ProjectManager dynamicFormLabelProps={dynamicFormLabelProps} />
+        <ProjectManager
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          reportingManagersList={reportingManagersList}
+        />
 
         <HRAssociate
           dynamicFormLabelProps={dynamicFormLabelProps}

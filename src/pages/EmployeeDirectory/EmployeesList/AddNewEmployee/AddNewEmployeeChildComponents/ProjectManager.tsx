@@ -1,11 +1,14 @@
-import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
+import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
+import React, { useState } from 'react'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import React from 'react'
+import Autocomplete from 'react-autocomplete'
+import { ReportingManagerProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const ProjectManager = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
+  reportingManagersList,
+}: ReportingManagerProps): JSX.Element => {
+  const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
   return (
     <>
       <CRow className="mb-3">
@@ -27,13 +30,44 @@ const ProjectManager = ({
           </span>
         </CFormLabel>
         <CCol sm={3}>
-          <CFormInput
-            id="projectmanager"
-            size="sm"
-            type="text"
-            name="projectmanager"
-            placeholder="Project Manager"
-            value=""
+          <Autocomplete
+            inputProps={{
+              className: 'form-control form-control-sm',
+              id: 'projectmanagers-autocomplete',
+              placeholder: 'Type name here for auto fill',
+            }}
+            getItemValue={(item) => item.fullName}
+            items={reportingManagersList}
+            wrapperStyle={{ position: 'relative' }}
+            renderMenu={(children) => (
+              <div
+                className={
+                  autoCompleteTarget && autoCompleteTarget.length > 0
+                    ? 'autocomplete-dropdown-wrap'
+                    : 'autocomplete-dropdown-wrap hide'
+                }
+              >
+                {children}
+              </div>
+            )}
+            renderItem={(item, isHighlighted) => (
+              <div
+                className={
+                  isHighlighted
+                    ? 'autocomplete-dropdown-item active'
+                    : 'autocomplete-dropdown-item '
+                }
+                key={item.fullName}
+              >
+                {item.fullName}
+              </div>
+            )}
+            value={autoCompleteTarget}
+            shouldItemRender={(item, value) =>
+              item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
+            }
+            onChange={(e) => setAutoCompleteTarget(e.target.value)}
+            onSelect={(value) => setAutoCompleteTarget(value)}
           />
         </CCol>
       </CRow>
