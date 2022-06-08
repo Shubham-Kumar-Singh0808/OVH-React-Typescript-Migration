@@ -83,3 +83,4 @@ trigger:
    trigger:
      project: OVH-Migration-Automation Scripts/
      branch: master
+     strategy: depend
