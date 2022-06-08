@@ -108,6 +108,7 @@ export interface BasicInfoApi extends ApiBase {
   updateEmployeeDetails: string
   uploadEmployeeCV: string
   downloadEmployeeCV: string
+  downloadSampleCV: string
 }
 
 export interface UploadFileReturn {

@@ -22,6 +22,7 @@ const updateDefaultPicOnGenderChange = async (
 const uploadEmployeeCV = async (
   prepareObject: UploadFileReturn,
 ): Promise<number | undefined> => {
+  console.log('fromApi' + prepareObject.file.get('file'))
   const requestConfig = getAuthenticatedRequestConfig({
     url: basicInfoApiConfig.uploadEmployeeCV,
     method: AllowedHttpMethods.post,
@@ -53,6 +54,23 @@ const downloadEmployeeCV = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
+const downloadSampleCV = async (fileName: string): Promise<File> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: basicInfoApiConfig.downloadSampleCV,
+    method: AllowedHttpMethods.get,
+    additionalHeaders: {
+      'Content-Type': 'application/json',
+    },
+    params: {
+      fileName: fileName,
+    },
+    responseType: 'blob',
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const updateEmployeeBasicInformation = async (
   prepareObject: EmployeeGeneralInformation,
 ): Promise<number | undefined> => {
@@ -70,5 +88,6 @@ const basicInfoApi = {
   updateEmployeeBasicInformation,
   uploadEmployeeCV,
   downloadEmployeeCV,
+  downloadSampleCV,
 }
 export default basicInfoApi

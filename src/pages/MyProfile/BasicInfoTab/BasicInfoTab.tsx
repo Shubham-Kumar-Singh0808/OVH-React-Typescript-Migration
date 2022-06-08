@@ -14,7 +14,6 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
 import DownloadSampleFileButton from './DownloadSampleFileButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
-import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
@@ -192,18 +191,22 @@ const BasicInfoTab = (): JSX.Element => {
     event.preventDefault()
     const prepareObject = employeeBasicInformationEditData
 
-    try {
-      if (cvToUpload) {
-        await uploadFile()
+    if (cvToUpload) {
+      const formData = new FormData()
+      formData.append('file', cvToUpload, cvToUpload.name)
+      const uploadPrepareObject = {
+        personId: employeeBasicInformation.id as number,
+        file: formData,
       }
       dispatch(
-        employeeBasicInformationThunk.updateEmployeeBasicInformation(
-          prepareObject,
-        ),
+        employeeBasicInformationThunk.uploadEmployeeCV(uploadPrepareObject),
       )
-    } catch (error) {
-      console.error('Error saving changes')
     }
+    dispatch(
+      employeeBasicInformationThunk.updateEmployeeBasicInformation(
+        prepareObject,
+      ),
+    )
     dispatch(reduxServices.app.actions.addToast(toastElement))
   }
 
@@ -213,57 +216,23 @@ const BasicInfoTab = (): JSX.Element => {
       console.log('Logging in ', values)
     },
   })
-
-  const uploadFile = async function () {
-    if (cvToUpload) {
-      const formData = new FormData()
-      formData.append('file', cvToUpload, cvToUpload.name)
-      const prepareObject = {
-        personId: employeeBasicInformation.id as number,
-        file: formData,
-      }
-      await basicInfoApi.uploadEmployeeCV(prepareObject)
-    }
-  }
-
   const toastElement = (
     <OToast
       toastMessage="Your changes have been saved successfully."
       toastColor="success"
     />
   )
-
-  const downloadCVHandler = async () => {
-    if (employeeBasicInformation.rbtCvName) {
-      const prepareObject = {
-        fileName: employeeBasicInformation.rbtCvName,
-        token: authenticatedToken,
-        tenantKey: tenantKey,
-      }
-      const cvDownload = await basicInfoApi.downloadEmployeeCV(prepareObject)
-      if (cvDownload) {
-        console.log(cvDownload)
-        const url = window.URL.createObjectURL(
-          new Blob([cvDownload], {
-            type: cvDownload.type,
-          }),
-        )
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', `${employeeBasicInformation.rbtCvName}`)
-        document.body.appendChild(link)
-        link.click()
-        link.remove()
-      }
-    }
-  }
   return (
     <>
       <CForm
         className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
         onSubmit={handleSubmitBasicDetails}
       >
-        <DownloadSampleFileButton />
+        <CRow className="justify-content-end">
+          <CCol className="text-end" md={4}>
+            <DownloadSampleFileButton className="text-decoration-none btn btn-download btn-ovh" />
+          </CCol>
+        </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
             {...dynamicFormLabelProps(
@@ -789,12 +758,14 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3">
-          <CCol md={{ span: 2, offset: 3 }}>
+          <CCol md={{ span: 3, offset: 3 }}>
             {employeeBasicInformation.rbtCvName && (
-              <text className="cursor-pointer" onClick={downloadCVHandler}>
-                <i className="fa fa-paperclip me-1"></i>
-                {employeeBasicInformation.rbtCvName}
-              </text>
+              <DownloadSampleFileButton
+                className="cursor-pointer"
+                fileName={employeeBasicInformation.rbtCvName}
+                token={authenticatedToken}
+                tenantKey={tenantKey}
+              />
             )}
           </CCol>
         </CRow>

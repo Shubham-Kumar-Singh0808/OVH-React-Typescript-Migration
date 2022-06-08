@@ -130,4 +130,5 @@ export const basicInfoApiConfig: BasicInfoApi = {
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
   uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
   downloadEmployeeCV: apiPrefix + '/jobapplicant/downloadRBTCv',
+  downloadSampleCV: apiPrefix + '/jobapplicant/downloadCVFormateFile',
 }
