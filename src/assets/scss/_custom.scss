@@ -15,9 +15,11 @@ body {
 .info-checkbox {
   background-color: $info-base;
 }
-.title-sm,
-.form-select {
+.title-sm {
   font-size: 14px;
+}
+.form-select {
+  font-size: 13px;
 }
 .form-label {
   font-weight: $font-weight-bold;
