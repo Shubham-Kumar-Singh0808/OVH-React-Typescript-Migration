@@ -3,6 +3,7 @@ stages:
   - test
   - sonarqube
   - deployqa
+  - trigger
 
 build project:
   image: node:16
@@ -77,3 +78,8 @@ deploy qa:
     url: https://ovhqa.raybiztech.com
   only:
     - qa
+trigger:
+   stage: trigger
+   trigger:
+     project: OVH-Migration-Automation Scripts/
+     branch: master
