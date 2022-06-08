@@ -120,3 +120,7 @@ export interface ShiftConfigurationApi extends ApiBase {
   updateShiftDetail: string
   deleteShiftDetail: string
 }
+
+export interface MyAssetsApi extends ApiBase {
+  getEmployeeAssets: string
+}
