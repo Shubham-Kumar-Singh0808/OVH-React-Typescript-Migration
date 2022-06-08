@@ -35,14 +35,22 @@ export const getAuthenticatedRequestConfig = ({
   url: string
   method: Method
   params?: { [key: string]: string | number | boolean }
-  data?: { [key: string]: string | number | unknown }
+  data?:
+    | { [key: string]: string | number | unknown }
+    | unknown
+    | string
+    | number
   additionalHeaders?: { [key: string]: string | number }
 }): {
   url: string
   method: Method
   headers: { tenantKey: string; [key: string]: string | number }
   params?: { [key: string]: string | number | boolean }
-  data?: { [key: string]: string | number | unknown }
+  data?:
+    | { [key: string]: string | number | unknown }
+    | unknown
+    | string
+    | number
 } => {
   const token = localStorage.getItem('token') as string
   const tenantKey = localStorage.getItem('tenantKey') as string
