@@ -69,10 +69,19 @@ const BasicInfoTab = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    if (name === 'curentLocation' || 'baseLocation') {
-      const currentLocation = value.replace(/[^a-zA-Z\s]/gi, '')
+    if (name === 'curentLocation') {
+      const currentLocation = value
+        .replace(/[^a-zA-Z\s]/gi, '')
+        .replace(/^\s*/, '')
       setEmployeeBasicInformationEditData((prevState) => {
         return { ...prevState, ...{ [name]: currentLocation } }
+      })
+    } else if (name === 'baseLocation') {
+      const baseLocation = value
+        .replace(/[^a-zA-Z\s]/gi, '')
+        .replace(/^\s*/, '')
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: baseLocation } }
       })
     } else {
       setEmployeeBasicInformationEditData((prevState) => {
@@ -233,6 +242,7 @@ const BasicInfoTab = (): JSX.Element => {
     />
   )
 
+  // base location and real date of birth hide and show validations
   useEffect(() => {
     if (
       employeeBasicInformationEditData.curentLocation?.toLowerCase() !==
