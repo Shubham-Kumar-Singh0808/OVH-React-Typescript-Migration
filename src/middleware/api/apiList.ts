@@ -20,6 +20,7 @@ import {
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
+  ShiftConfigurationApi,
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
@@ -242,4 +243,10 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getAllHrData: apiPrefix + '/jobapplicant/getAllHrData',
   getAllReportingManagersData:
     apiPrefix + '/jobapplicant/getAllReportingManagersData',
+}
+export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
+  getAllShifts: apiPrefix + '/jobapplicant/getAllShifting',
+  addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
+  updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
+  deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
 }
