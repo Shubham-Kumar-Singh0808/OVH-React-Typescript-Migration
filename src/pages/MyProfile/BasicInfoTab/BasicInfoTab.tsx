@@ -69,9 +69,16 @@ const BasicInfoTab = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setEmployeeBasicInformationEditData((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'curentLocation' || 'baseLocation') {
+      const currentLocation = value.replace(/[^a-zA-Z\s]/gi, '')
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: currentLocation } }
+      })
+    } else {
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   // onchange handler for date pickers
@@ -235,10 +242,24 @@ const BasicInfoTab = (): JSX.Element => {
     } else {
       setBaseLocationShown(false)
     }
-  }, [
-    employeeBasicInformationEditData.baseLocation,
-    employeeBasicInformationEditData.curentLocation,
-  ])
+    const tempOfficialBirthday =
+      employeeBasicInformationEditData?.officialBirthday?.toString()
+
+    const tempRealBirthday =
+      employeeBasicInformationEditData?.realBirthday?.toString()
+
+    const newOfficialBirthday = new Date(
+      moment(tempOfficialBirthday).format('DD/MM/YYYY'),
+    )
+    const newRealBirthday = new Date(
+      moment(tempRealBirthday).format('DD/MM/YYYY'),
+    )
+    if (newOfficialBirthday.getTime() !== newRealBirthday.getTime()) {
+      setRealBirthdayShown(true)
+    } else {
+      setRealBirthdayShown(false)
+    }
+  }, [])
   return (
     <>
       <CForm
@@ -677,7 +698,7 @@ const BasicInfoTab = (): JSX.Element => {
             <CFormInput
               id="employeePersonalEmail"
               size="sm"
-              type="text"
+              type="email"
               name="personalEmail"
               placeholder="Personal Email"
               value={employeeBasicInformationEditData.personalEmail}
