@@ -11,8 +11,6 @@ import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
-import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
-import OCard from '../../../components/ReusableComponent/OCard'
 import TabsLabels from '../../../middleware/TabsLabels'
 
 interface ShowTabContentType<TValue> {
@@ -22,18 +20,6 @@ const MyProfileTabs = (): JSX.Element => {
   const [activeTabsKey, setActiveTabsKey] = useState(1)
   const [activeTabsContent, setActiveTabsContent] = useState<JSX.Element>()
 
-  const changeTabContent = (tabKey: number): JSX.Element => {
-    const showTabContent: ShowTabContentType<JSX.Element> = {
-      1: <OCard />,
-      2: <h1>Basic Info</h1>,
-      3: <h1>Personal Info</h1>,
-      4: <h1>Qualification Details</h1>,
-      5: <h1>Review</h1>,
-      6: <h1>Projects</h1>,
-      9: <EmployeeProfileHistory />,
-    }
-    return showTabContent[tabKey] || 'Tab Content not available'
-  }
   const handleActiveTab = (tabKey: number) => {
     setActiveTabsKey(tabKey)
   }
