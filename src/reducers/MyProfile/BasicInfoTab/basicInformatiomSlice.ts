@@ -59,7 +59,6 @@ const uploadEmployeeCV = createAsyncThunk<
   'basicInformation/uploadRBTCv',
   async (prepareObject: UploadFileReturn, thunkApi) => {
     try {
-      console.log('fromSlice' + prepareObject.file.get('file'))
       return await basicInfoApi.uploadEmployeeCV(prepareObject)
     } catch (error) {
       const err = error as AxiosError

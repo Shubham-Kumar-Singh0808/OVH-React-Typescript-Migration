@@ -22,7 +22,6 @@ const updateDefaultPicOnGenderChange = async (
 const uploadEmployeeCV = async (
   prepareObject: UploadFileReturn,
 ): Promise<number | undefined> => {
-  console.log('fromApi' + prepareObject.file.get('file'))
   const requestConfig = getAuthenticatedRequestConfig({
     url: basicInfoApiConfig.uploadEmployeeCV,
     method: AllowedHttpMethods.post,
