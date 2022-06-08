@@ -7,6 +7,7 @@ import {
   CTableRow,
   CCardHeader,
   CCardBody,
+  CBadge,
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -25,13 +26,13 @@ const EmployeeReviews = (): JSX.Element => {
       reduxServices.reviewInformation.getEmployeeReviewDetails(employeeId),
     )
   }, [dispatch, employeeId])
-  console.log(getReviewDetails)
+
   return (
     <>
       <CCardHeader>
         <h4 className="h4">Review List</h4>
       </CCardHeader>
-      <CCardBody className="ps-0 pe-0">
+      <CCardBody>
         <CTable striped>
           <CTableHead>
             <CTableRow>
@@ -73,10 +74,10 @@ const EmployeeReviews = (): JSX.Element => {
                   {review.empAvgRating}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
-                  {review.overallAvgRating}
+                  {review.overallAvgRating || 'N/A'}
                 </CTableDataCell>
-                <CTableDataCell className="label label-success employee_status employee-status ng-scope">
-                  {review.formStatus}
+                <CTableDataCell scope="row">
+                  <CBadge color="success"> {review.formStatus}</CBadge>
                 </CTableDataCell>
               </CTableRow>
             ))}
