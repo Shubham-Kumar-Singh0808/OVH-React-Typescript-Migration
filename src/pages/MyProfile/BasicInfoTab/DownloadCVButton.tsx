@@ -22,7 +22,6 @@ const DownloadCVButton = (props: DownloadCVInterface): JSX.Element => {
 
   const downloadSampleCVHandler = async () => {
     const cvDownload = await basicInfoApi.downloadSampleCV(defaultFileName)
-
     downloadFile(cvDownload)
   }
 
