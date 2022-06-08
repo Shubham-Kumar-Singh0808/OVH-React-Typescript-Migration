@@ -240,7 +240,7 @@ const BasicInfoTab = (): JSX.Element => {
         token: authenticatedToken,
         tenantKey: tenantKey,
       }
-      const cvDownload = await basicInfoApi.getEmployeeCV(prepareObject)
+      const cvDownload = await basicInfoApi.downloadEmployeeCV(prepareObject)
       if (cvDownload) {
         console.log(cvDownload)
         const url = window.URL.createObjectURL(

@@ -37,7 +37,7 @@ const uploadEmployeeCV = async (
   return response.data
 }
 
-const getEmployeeCV = async (
+const downloadEmployeeCV = async (
   prepareObject: DownloadCVReturn,
 ): Promise<Blob | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -69,6 +69,6 @@ const basicInfoApi = {
   updateDefaultPicOnGenderChange,
   updateEmployeeBasicInformation,
   uploadEmployeeCV,
-  getEmployeeCV,
+  downloadEmployeeCV,
 }
 export default basicInfoApi
