@@ -233,7 +233,7 @@ const BasicInfoTab = (): JSX.Element => {
     />
   )
 
-  const testFunction = async () => {
+  const downloadCVHandler = async () => {
     if (employeeBasicInformation.rbtCvName) {
       const prepareObject = {
         fileName: employeeBasicInformation.rbtCvName,
@@ -253,6 +253,7 @@ const BasicInfoTab = (): JSX.Element => {
         link.setAttribute('download', `${employeeBasicInformation.rbtCvName}`)
         document.body.appendChild(link)
         link.click()
+        link.remove()
       }
     }
   }
@@ -788,7 +789,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3">
-          <CCol md={{ span: 6, offset: 3 }} onClick={testFunction}>
+          <CCol md={{ span: 6, offset: 3 }} onClick={downloadCVHandler}>
             {employeeBasicInformation.rbtCvName && (
               <a className="cursor-pointer">
                 <i className="fa fa-paperclip me-1"></i>
