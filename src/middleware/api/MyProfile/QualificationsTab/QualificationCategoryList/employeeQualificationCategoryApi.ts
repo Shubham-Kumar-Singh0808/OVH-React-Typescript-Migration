@@ -5,10 +5,10 @@ import {
 
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
-import { QualificationCategoryList } from '../../../../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
+import { QualificationCategory } from '../../../../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
 
 const getQualificationCategories = async (): Promise<
-  QualificationCategoryList[]
+  QualificationCategory[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeQualificationCategoryApiConfig.getQualificationCategories,
@@ -19,12 +19,12 @@ const getQualificationCategories = async (): Promise<
   return response.data
 }
 
-const addQualificationCategory = async ({
+const createQualificationCategory = async ({
   qualificationCategory,
   qualificationName,
-}: QualificationCategoryList): Promise<QualificationCategoryList[]> => {
+}: QualificationCategory): Promise<QualificationCategory[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeQualificationCategoryApiConfig.addQualificationCategory,
+    url: employeeQualificationCategoryApiConfig.createQualificationCategory,
     method: AllowedHttpMethods.post,
     data: {
       qualificationCategory: qualificationCategory,
@@ -38,7 +38,7 @@ const addQualificationCategory = async ({
 
 const deleteQualificationCategory = async (
   id: number,
-): Promise<QualificationCategoryList[]> => {
+): Promise<QualificationCategory[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeQualificationCategoryApiConfig.deleteQualificationCategory,
     method: AllowedHttpMethods.delete,
@@ -56,7 +56,7 @@ const deleteQualificationCategory = async (
 
 const employeeQualificationCategoryApi = {
   getQualificationCategories,
-  addQualificationCategory,
+  createQualificationCategory,
   deleteQualificationCategory,
 }
 export default employeeQualificationCategoryApi

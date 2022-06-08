@@ -8,8 +8,6 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import { getEmployeeGeneralInformationThunk } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import stateStore from '../../../stateStore'
-import { act } from 'react-dom/test-utils'
-import userEvent from '@testing-library/user-event'
 
 const ReduxProvider = ({
   children,

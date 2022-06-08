@@ -44,11 +44,11 @@ const getCertificateByTechnologyName = async (
   return response.data
 }
 
-const addEmployeeCertification = async (
+const createEmployeeCertification = async (
   employeeCertificateDetails: EmployeeCertifications,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeCertificationsApiConfig.addEmployeeCertificates,
+    url: employeeCertificationsApiConfig.createEmployeeCertification,
     method: AllowedHttpMethods.post,
     data: employeeCertificateDetails,
   })
@@ -99,7 +99,7 @@ const employeeCertificationsApi = {
   getEmployeeCertificates,
   getTechnologies,
   getCertificateByTechnologyName,
-  addEmployeeCertification,
+  createEmployeeCertification,
   getEmployeeCertificate,
   updateEmployeeCertificate,
   deleteEmployeeCertificate,

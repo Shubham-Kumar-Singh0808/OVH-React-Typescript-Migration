@@ -1,17 +1,12 @@
 import { CCol, CForm, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import {
-  qualificationSelectors,
-  qualificationsThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import parse from 'html-react-parser'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const EmployeeQualifications = (): JSX.Element => {
   const employeeQualification = useTypedSelector(
-    qualificationSelectors.selectEmployeeQualification,
+    reduxServices.employeeQualifications.selectors.employeeQualifications,
   )
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
@@ -19,7 +14,11 @@ const EmployeeQualifications = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(qualificationsThunk.getEmployeeQualifications(employeeId))
+    dispatch(
+      reduxServices.employeeQualifications.getEmployeeQualifications(
+        employeeId,
+      ),
+    )
   }, [dispatch, employeeId])
   return (
     <>
