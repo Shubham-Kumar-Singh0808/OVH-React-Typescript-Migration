@@ -14,13 +14,13 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
 import DownloadSampleFileButton from './DownloadSampleFileButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
+import OToast from '../../../components/ReusableComponent/OToast'
+import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
-import { useFormik } from 'formik'
-import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
-import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { useFormik } from 'formik'
 
 const BasicInfoTab = (): JSX.Element => {
   const employeeBasicInformation = useTypedSelector(
@@ -226,6 +226,19 @@ const BasicInfoTab = (): JSX.Element => {
     />
   )
 
+  useEffect(() => {
+    if (
+      employeeBasicInformationEditData.curentLocation?.toLowerCase() !==
+      employeeBasicInformationEditData.baseLocation?.toLowerCase()
+    ) {
+      setBaseLocationShown(true)
+    } else {
+      setBaseLocationShown(false)
+    }
+  }, [
+    employeeBasicInformationEditData.baseLocation,
+    employeeBasicInformationEditData.curentLocation,
+  ])
   return (
     <>
       <CForm
