@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 
-import { render, screen } from '@testing-library/react'
+import { queryByAttribute, render, screen } from '@testing-library/react'
 
 import BasicInfoTab from './BasicInfoTab'
 import { EnhancedStore } from '@reduxjs/toolkit'
@@ -8,6 +8,8 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import { getEmployeeGeneralInformationThunk } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import stateStore from '../../../stateStore'
+import { act } from 'react-dom/test-utils'
+import userEvent from '@testing-library/user-event'
 
 const ReduxProvider = ({
   children,
@@ -34,5 +36,17 @@ describe('Basic Info Tab Testing', () => {
     )
     expect(screen.getByText('Employee ID:')).toBeInTheDocument()
     expect(screen.getByText('INDIA')).toBeInTheDocument()
+  })
+  test('should render a file upload field', async () => {
+    const getById = queryByAttribute.bind(null, 'id')
+
+    const component = render(
+      <ReduxProvider reduxStore={stateStore}>
+        <BasicInfoTab />
+      </ReduxProvider>,
+    )
+    const uploadField = getById(component.container, 'uploadRBTCV')
+
+    expect(uploadField).toBeTruthy()
   })
 })

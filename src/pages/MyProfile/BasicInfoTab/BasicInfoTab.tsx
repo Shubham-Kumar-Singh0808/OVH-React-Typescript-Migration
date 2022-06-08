@@ -65,6 +65,7 @@ const BasicInfoTab = (): JSX.Element => {
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
   const [dateErrorMessage, setDateErrorMessage] = useState(false)
   const [cvToUpload, setCVToUpload] = useState<File | undefined>(undefined)
+  const [uploadErrorText, setUploadErrorText] = useState<string>('')
 
   const dispatch = useAppDispatch()
 
@@ -94,8 +95,29 @@ const BasicInfoTab = (): JSX.Element => {
   // change CV to upload state value
   const onChangeCVHandler = async (element: HTMLInputElement) => {
     const file = element.files
+    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    let extension = ''
     if (!file) return
 
+    if (file) {
+      extension = file[0].name.split('.').pop() as string
+    }
+
+    if (file[0].size > 2048000) {
+      setUploadErrorText(
+        'File size exceeded. Please upload a file less than 2MB.',
+      )
+      return
+    }
+
+    if (!acceptedFileTypes.includes(extension)) {
+      setUploadErrorText(
+        'Wrong file format chosen. Please choose either doc, docx, or pdf.',
+      )
+      return
+    }
+
+    setUploadErrorText('')
     setCVToUpload(file[0])
   }
 
@@ -758,7 +780,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3">
-          <CCol md={{ span: 3, offset: 3 }}>
+          <CCol md={{ span: 6, offset: 3 }}>
             {employeeBasicInformation.rbtCvName && (
               <DownloadCVButton
                 className="cursor-pointer"
@@ -766,6 +788,11 @@ const BasicInfoTab = (): JSX.Element => {
                 token={authenticatedToken}
                 tenantKey={tenantKey}
               />
+            )}
+            {uploadErrorText && (
+              <div>
+                <strong className="text-danger mt-3">{uploadErrorText}</strong>
+              </div>
             )}
           </CCol>
         </CRow>
