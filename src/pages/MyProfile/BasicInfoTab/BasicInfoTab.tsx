@@ -789,12 +789,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3">
-          <CCol md={{ span: 6, offset: 3 }} onClick={downloadCVHandler}>
+          <CCol md={{ span: 2, offset: 3 }}>
             {employeeBasicInformation.rbtCvName && (
-              <a className="cursor-pointer">
+              <text className="cursor-pointer" onClick={downloadCVHandler}>
                 <i className="fa fa-paperclip me-1"></i>
                 {employeeBasicInformation.rbtCvName}
-              </a>
+              </text>
             )}
           </CCol>
         </CRow>
