@@ -20,13 +20,16 @@ import {
   WorkFrom,
 } from './AddNewEmployeeChildComponents/index'
 import { CButton, CCol, CRow } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { ToggleShiftProp } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
-const AddNewEmployee = (): JSX.Element => {
+const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
+  const [shiftName, setShiftName] = useState<string>()
+
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
       htmlFor: htmlFor,
@@ -63,6 +66,9 @@ const AddNewEmployee = (): JSX.Element => {
     reduxServices.newEmployee.reportingManagersService.selectors
       .reportingManagersList,
   )
+  const employeeShifts = useTypedSelector(
+    reduxServices.shiftConfiguration.selectors.employeeShifts,
+  )
 
   useEffect(() => {
     dispatch(
@@ -74,8 +80,9 @@ const AddNewEmployee = (): JSX.Element => {
     dispatch(
       reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
     )
+    dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
   }, [dispatch])
-
+  console.log(shiftName)
   return (
     <>
       <OCard
@@ -147,7 +154,13 @@ const AddNewEmployee = (): JSX.Element => {
           countryList={countryList}
         />
 
-        <Shift dynamicFormLabelProps={dynamicFormLabelProps} />
+        <Shift
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          employeeShifts={employeeShifts}
+          setShiftName={setShiftName}
+          shiftName={shiftName as string}
+          setToggleShift={setToggleShift}
+        />
 
         <EmploymentContract
           dynamicFormLabelProps={dynamicFormLabelProps}

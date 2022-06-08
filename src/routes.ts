@@ -48,7 +48,7 @@ const LeaveSettings = React.lazy(
 const AddNewEmployee = React.lazy(
   () =>
     import(
-      './pages/EmployeeDirectory/EmployeesList/AddNewEmployee/AddNewEmployee'
+      './pages/EmployeeDirectory/EmployeesList/AddNewEmployee/NewEmployeeLandingPage'
     ),
 )
 /**
@@ -102,7 +102,7 @@ const routes = [
   {
     path: '/addNewEmployee',
     name: 'Add New Employee',
-    component: AddNewEmployee,
+    component: NewEmployeeLandingPage,
   },
 ]
 

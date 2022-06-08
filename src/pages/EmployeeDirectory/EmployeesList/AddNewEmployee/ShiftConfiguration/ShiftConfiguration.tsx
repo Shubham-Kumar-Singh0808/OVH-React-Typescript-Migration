@@ -10,16 +10,21 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
+import {
+  EmployeeShiftDetails,
+  ToggleShiftProp,
+} from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import React, { useEffect, useState } from 'react'
 import ShiftListTable from './ShiftListTable'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { ActionMapping } from '../../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
-import { EmployeeShiftDetails } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import OCard from '../../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 
-const ShiftConfiguration = (): JSX.Element => {
+const ShiftConfiguration = ({
+  setToggleShift,
+}: ToggleShiftProp): JSX.Element => {
   const employeeShifts = useTypedSelector(
     reduxServices.shiftConfiguration.selectors.employeeShifts,
   )
@@ -156,9 +161,9 @@ const ShiftConfiguration = (): JSX.Element => {
     }
   }
 
-  useEffect(() => {
-    dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
+  // }, [dispatch])
 
   useEffect(() => {
     if (
@@ -190,7 +195,11 @@ const ShiftConfiguration = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton color="info" className="btn-ovh me-1">
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              onClick={() => setToggleShift(true)}
+            >
               <i className="fa fa-arrow-left me-1"></i>Back
             </CButton>
           </CCol>

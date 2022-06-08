@@ -1,5 +1,7 @@
 import { LoadingState, ValidationError } from '../../../commonTypes'
 
+import { EmployeeShiftDetails } from './ShiftConfiguration/shiftConfigurationTypes'
+
 //AddNewEmployee child component types
 export type EmployeeDepartment = {
   departmentId: number
@@ -26,6 +28,12 @@ export type GetAllReportingManagers = {
   id: number
   fullName: string
 }
+
+export type EmployeeShift = {
+  id: number
+  name: string
+}
+
 //AddNewEmployee functions and Props types for child components
 export interface DynamicFormLabelProps {
   dynamicFormLabelProps: (htmlFor: string, className: string) => void
@@ -49,6 +57,16 @@ export interface HrDataProps extends DynamicFormLabelProps {
 }
 export interface ReportingManagerProps extends DynamicFormLabelProps {
   reportingManagersList: GetAllReportingManagers[]
+}
+export interface EmployeeShiftProps extends DynamicFormLabelProps {
+  employeeShifts: EmployeeShiftDetails[]
+  setShiftName: (value: string) => void
+  shiftName: string
+  setToggleShift: (value: boolean) => void
+}
+
+export interface ToggleShiftProp {
+  setToggleShift: (value: boolean) => void
 }
 
 //AddNewEmployee export as main object
