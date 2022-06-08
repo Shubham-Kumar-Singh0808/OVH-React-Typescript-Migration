@@ -113,3 +113,7 @@ export interface UploadFileReturn {
   personId: number
   file: FormData
 }
+
+export interface ReviewsTabApi extends ApiBase {
+  getEmployeeReviews: string
+}

@@ -26,7 +26,6 @@ const VisaDetailsTable = ({
   const getEmployeeVisaData = useTypedSelector(
     reduxServices.personalInformation.selectors.visaDetails,
   )
-
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(

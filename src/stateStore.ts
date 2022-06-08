@@ -15,6 +15,7 @@ import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import reviewDetailsReducer from './reducers/MyProfile/ReviewTab/employeeReviewSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -30,6 +31,7 @@ export const allReducers = {
   employeeCertificates: employeeCertificationReducer,
   profileHistory: profileHistoryReducer,
   employeeSkill: employeeSkillReducer,
+  reviewDetails: reviewDetailsReducer,
   // add your slice reducers here
 }
 

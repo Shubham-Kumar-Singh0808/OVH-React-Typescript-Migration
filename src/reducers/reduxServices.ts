@@ -11,6 +11,7 @@ import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguratio
 import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { employeeQualificationService } from './MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import { reviewDetailsService } from './MyProfile/ReviewTab/employeeReviewSlice'
 
 export const reduxServices = {
   app: appService,
@@ -26,4 +27,5 @@ export const reduxServices = {
   basicInformation: basicInformationService,
   generalInformation: generalInformationService,
   employeeSkill: employeeSkillServices,
+  reviewInformation: reviewDetailsService,
 }

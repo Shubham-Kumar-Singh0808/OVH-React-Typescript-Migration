@@ -12,6 +12,7 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
+  ReviewsTabApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -129,4 +130,8 @@ export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
   uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
+}
+
+export const reviewsTabApiConfig: ReviewsTabApi = {
+  getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
 }
