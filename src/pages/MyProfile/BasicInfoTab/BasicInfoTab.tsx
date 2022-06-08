@@ -12,7 +12,7 @@ import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
-import DownloadSampleFileButton from './DownloadSampleFileButton'
+import DownloadCVButton from './DownloadCVButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
@@ -230,7 +230,7 @@ const BasicInfoTab = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <DownloadSampleFileButton className="text-decoration-none btn btn-download btn-ovh" />
+            <DownloadCVButton className="text-decoration-none btn btn-download btn-ovh" />
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
@@ -760,7 +760,7 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3">
           <CCol md={{ span: 3, offset: 3 }}>
             {employeeBasicInformation.rbtCvName && (
-              <DownloadSampleFileButton
+              <DownloadCVButton
                 className="cursor-pointer"
                 fileName={employeeBasicInformation.rbtCvName}
                 token={authenticatedToken}
