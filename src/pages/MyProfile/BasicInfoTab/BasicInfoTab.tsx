@@ -21,6 +21,7 @@ import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTa
 import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useFormik } from 'formik'
+import validator from 'validator'
 
 const BasicInfoTab = (): JSX.Element => {
   const employeeBasicInformation = useTypedSelector(
@@ -52,6 +53,7 @@ const BasicInfoTab = (): JSX.Element => {
   }
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
   const [realBirthdayShown, setRealBirthdayShown] = useState<boolean>(false)
+  const [emailError, setEmailError] = useState<boolean>(false)
   const [
     employeeBasicInformationEditData,
     setEmployeeBasicInformationEditData,
@@ -61,6 +63,14 @@ const BasicInfoTab = (): JSX.Element => {
   const [cvToUpload, setCVToUpload] = useState<File | undefined>(undefined)
 
   const dispatch = useAppDispatch()
+
+  const validateEmail = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailError(false)
+    } else {
+      setEmailError(true)
+    }
+  }
 
   // onchange handler for input fields
   const handleChange = (
@@ -82,6 +92,12 @@ const BasicInfoTab = (): JSX.Element => {
         .replace(/^\s*/, '')
       setEmployeeBasicInformationEditData((prevState) => {
         return { ...prevState, ...{ [name]: baseLocation } }
+      })
+    } else if (name === 'personalEmail') {
+      const personalEmail = value
+      validateEmail(personalEmail)
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: personalEmail } }
       })
     } else {
       setEmployeeBasicInformationEditData((prevState) => {
@@ -116,13 +132,22 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData.bloodgroup &&
       employeeBasicInformationEditData.maritalStatus &&
       employeeBasicInformationEditData.personalEmail &&
-      employeeBasicInformationEditData.officialBirthday
+      employeeBasicInformationEditData.officialBirthday &&
+      !emailError
     ) {
       setSaveButtonEnabled(true)
     } else {
       setSaveButtonEnabled(false)
     }
-  }, [employeeBasicInformationEditData, baseLocationShown, realBirthdayShown])
+    if (employeeBasicInformationEditData.personalEmail) {
+      validateEmail(employeeBasicInformationEditData.personalEmail)
+    }
+  }, [
+    employeeBasicInformationEditData,
+    baseLocationShown,
+    realBirthdayShown,
+    emailError,
+  ])
 
   // condition to enable and disable save button
   useEffect(() => {
@@ -270,6 +295,7 @@ const BasicInfoTab = (): JSX.Element => {
       setRealBirthdayShown(false)
     }
   }, [])
+
   return (
     <>
       <CForm
@@ -696,7 +722,7 @@ const BasicInfoTab = (): JSX.Element => {
             Personal Email:
             <span
               className={
-                employeeBasicInformationEditData.personalEmail
+                employeeBasicInformationEditData.personalEmail && !emailError
                   ? 'text-white'
                   : 'text-danger'
               }
