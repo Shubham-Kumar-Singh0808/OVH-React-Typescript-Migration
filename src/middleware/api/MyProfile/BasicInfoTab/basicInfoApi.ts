@@ -25,7 +25,7 @@ const uploadEmployeeCV = async (
   const requestConfig = getAuthenticatedRequestConfig({
     url: basicInfoApiConfig.uploadEmployeeCV,
     method: AllowedHttpMethods.post,
-    data: { data: prepareObject.file },
+    data: prepareObject.file,
     params: {
       personId: prepareObject.personId,
     },
