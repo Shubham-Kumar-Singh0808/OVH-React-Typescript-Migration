@@ -17,7 +17,9 @@ const UserRolesAndPermissions = React.lazy(
 const MyProfile = React.lazy(
   () => import('./pages/MyProfile/ProfileLandingPage/MyProfile'),
 )
-
+const CertificatesList = React.lazy(
+  () => import('./pages/EmployeeDirectory/CertificatesList/CertificatesList'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -30,6 +32,11 @@ const routes = [
     component: UserRolesAndPermissions,
   },
   { path: '/profile', name: 'My Profile', component: MyProfile },
+  {
+    path: '/employeeCertificatesReport',
+    name: 'Employee Certificates Report',
+    component: CertificatesList,
+  },
 ]
 
 export default routes
