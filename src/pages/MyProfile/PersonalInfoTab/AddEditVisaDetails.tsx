@@ -13,9 +13,10 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
+import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import moment from 'moment'
@@ -32,6 +33,8 @@ function AddEditVisaDetails({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
+  const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined)
+  const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState<Date | null>(null)
 
   const getEmployeeCountryDetails = useTypedSelector(
@@ -43,6 +46,10 @@ function AddEditVisaDetails({
   const getEditVisaDetails = useTypedSelector(
     reduxServices.personalInformation.selectors.employeeVisaDetails,
   )
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
@@ -60,6 +67,16 @@ function AddEditVisaDetails({
       setError(null)
     }
   }, [dateOfIssue, dateOfExpire])
+
+  useEffect(() => {
+    if (selectedFile) {
+      setImageUrl(URL.createObjectURL(selectedFile))
+    }
+  }, [selectedFile])
+
+  const selectImageFile = selectedFile
+    ? imageUrl
+    : 'data:image/jpeg;base64,' + employeeVisaDetails.visaDetailsData
 
   useEffect(() => {
     if (
@@ -83,12 +100,14 @@ function AddEditVisaDetails({
       setEmployeeVisaDetails(getEditVisaDetails)
     }
   }, [isEditVisaDetails, getEditVisaDetails])
+
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
   }
+
   const onChangeDateOfIssueHandler = (date: Date) => {
     if (isEditVisaDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
@@ -100,6 +119,7 @@ function AddEditVisaDetails({
       setDateOfIssue(date)
     }
   }
+
   const onChangeDateOfExpireHandler = (date: Date) => {
     if (isEditVisaDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
@@ -112,6 +132,14 @@ function AddEditVisaDetails({
     }
     setError(date)
   }
+
+  const onChangeFileEventHandler = async (element: HTMLInputElement) => {
+    const file = element.files
+    if (!file) return
+
+    setSelectedFile(file[0])
+  }
+
   const handleClearDetails = () => {
     setEmployeeVisaDetails({
       id: '',
@@ -123,6 +151,7 @@ function AddEditVisaDetails({
     })
     setDateOfIssue('')
     setDateOfExpire('')
+    setImageUrl('')
   }
   const actionMapping = {
     added: 'added',
@@ -150,7 +179,14 @@ function AddEditVisaDetails({
         addVisaMemberResultAction,
       )
     ) {
-      backButtonHandler()
+      if (selectedFile) {
+        const newAddedVisaID = await personalInfoApi.getEmployeeVisaDetails(
+          parseInt(employeeId),
+        )
+        const lastArrayIndex: number = newAddedVisaID.length - 1
+
+        await uploadFile(newAddedVisaID[lastArrayIndex].id)
+      }
       dispatch(
         dispatch(
           reduxServices.app.actions.addToast(
@@ -159,6 +195,7 @@ function AddEditVisaDetails({
         ),
       )
     }
+    backButtonHandler()
   }
   const handleUpdateVisaMember = async () => {
     const prepareObject = {
@@ -172,14 +209,29 @@ function AddEditVisaDetails({
         updateVisaMemberResultAction,
       )
     ) {
-      backButtonHandler()
+      if (selectedFile) {
+        await uploadFile(employeeVisaDetails.id as number)
+      }
       dispatch(
         reduxServices.app.actions.addToast(
           getToastMessage(actionMapping.updated),
         ),
       )
     }
+    backButtonHandler()
   }
+
+  const uploadFile = async function (id: number) {
+    if (selectedFile) {
+      const formData = new FormData()
+      formData.append('file', selectedFile, selectedFile.name)
+      const visaId = id
+      const file = formData as FormData
+
+      await personalInfoApi.uploadVisaImage(visaId, file)
+    }
+  }
+
   const formLabelProps = {
     htmlFor: 'Country',
     className: 'col-sm-3 col-form-label text-end',
@@ -199,7 +251,10 @@ function AddEditVisaDetails({
             <CButton
               color="info"
               className="btn-ovh me-1"
-              onClick={backButtonHandler}
+              onClick={() => {
+                backButtonHandler()
+                handleClearDetails()
+              }}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -342,21 +397,40 @@ function AddEditVisaDetails({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                id="uploadedFile"
                 className="form-control"
                 type="file"
                 name="file"
                 accept="image/*,"
+                onChange={(element: SyntheticEvent) =>
+                  onChangeFileEventHandler(
+                    element.currentTarget as HTMLInputElement,
+                  )
+                }
               />
             </CCol>
-            <CCol sm={{ span: 6, offset: 3 }}>
-              <p className=" text-info ">
-                Note: Please upload less than 400KB size image.
-              </p>
-            </CCol>
+            {selectedFile || getEditVisaDetails?.visaDetailsData ? (
+              <CCol sm={{ span: 6, offset: 3 }}>
+                <img
+                  src={selectImageFile}
+                  alt=""
+                  style={{ width: '100px', margin: '10px 0' }}
+                />
+              </CCol>
+            ) : (
+              <>
+                <div className="w-100"></div>
+                <CCol sm={{ span: 6, offset: 3 }}>
+                  <p className=" text-info ">
+                    Note: Please upload less than 400KB size image.
+                  </p>
+                </CCol>
+              </>
+            )}
           </CRow>
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
-              {isEditVisaDetails ? (
+              {isEditVisaDetails || employeeVisaDetails?.visaDetailsData ? (
                 <CButton
                   className="btn-ovh me-2"
                   color="success"
