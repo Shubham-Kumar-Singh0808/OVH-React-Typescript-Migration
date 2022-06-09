@@ -8,18 +8,24 @@ import {
   CCardHeader,
   CCardBody,
   CLink,
+  CRow,
+  CCol,
 } from '@coreui/react-pro'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
+import { usePagination } from '../../../middleware/hooks/usePagination'
+import { currentPageData } from '../../../utils/paginationUtils'
 const EmployeeMyAssetsTab = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [specification, setSpecification] = useState<string>('')
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-  const getMyAssetDetails = useTypedSelector(
+  const myAssetDetails = useTypedSelector(
     reduxServices.employeeMyAssets.selectors.myAssetDetails,
   )
 
@@ -29,80 +35,150 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
       reduxServices.employeeMyAssets.getEmployeeMyAssetsDetails(employeeId),
     )
   }, [dispatch, employeeId])
+
   const handleModal = (specification: string) => {
     setIsModalVisible(true)
     setSpecification(specification)
   }
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(myAssetDetails.length, 20)
+
+  useEffect(() => {
+    setPageSize(20)
+    setCurrentPage(1)
+  }, [myAssetDetails, setPageSize, setCurrentPage])
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const currentPageItems = useMemo(
+    () => currentPageData(myAssetDetails, currentPage, pageSize),
+    [myAssetDetails, currentPage, pageSize],
+  )
 
   return (
     <>
       <CCardHeader>
         <h4 className="h4">My Assets</h4>
       </CCardHeader>
+
       <CCardBody>
-        <CTable striped>
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell scope="col">#</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Asset Number</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Asset Type</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Product Type</CTableHeaderCell>
-              <CTableHeaderCell scope="col">
-                Product Specifications
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Location</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Asset Status</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Employee Name</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            {getMyAssetDetails?.map((assetsItem, index) => (
-              <CTableRow key={index}>
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  {assetsItem.assetNumber}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {assetsItem.assetType}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {assetsItem.productName}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  <CLink
-                    className="cursor-pointer text-decoration-none text-primary"
-                    onClick={() => handleModal(assetsItem.pSpecification)}
-                  >
-                    {assetsItem.pSpecification}
-                  </CLink>
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {assetsItem.location}
-                </CTableDataCell>
-                <CTableDataCell scope="row">{assetsItem.status}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  {assetsItem.employeeName}
-                </CTableDataCell>
-              </CTableRow>
-            ))}
-          </CTableBody>
-        </CTable>
+        {myAssetDetails.length ? (
+          <>
+            <CTable striped>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Asset Number</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Asset Type</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Product Type</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">
+                    Product Specifications
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Location</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Asset Status</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Employee Name</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {currentPageItems.map((assetsItem, index) => {
+                  return (
+                    <CTableRow key={index}>
+                      <CTableDataCell scope="row">
+                        {getItemNumber(index)}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {assetsItem.assetNumber}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {assetsItem.assetType}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {assetsItem.productName}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        <CLink
+                          className="cursor-pointer text-decoration-none text-primary"
+                          onClick={() => handleModal(assetsItem.pSpecification)}
+                        >
+                          {assetsItem.pSpecification}
+                        </CLink>
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {assetsItem.location}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {assetsItem.status}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {assetsItem.employeeName}
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
+              </CTableBody>
+            </CTable>
+            <CRow>
+              <CCol xs={4}>
+                <p>
+                  &nbsp;&nbsp;
+                  <strong>Total Records: {myAssetDetails.length}</strong>
+                </p>
+              </CCol>
+              <CCol xs={3}>
+                {myAssetDetails.length > 20 && (
+                  <OPageSizeSelect
+                    handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  />
+                )}
+              </CCol>
+              {myAssetDetails.length > 20 && (
+                <CCol
+                  xs={5}
+                  className="d-grid gap-2 d-md-flex justify-content-md-end"
+                >
+                  <OPagination
+                    currentPage={currentPage}
+                    pageSetter={setCurrentPage}
+                    paginationRange={paginationRange}
+                  />
+                </CCol>
+              )}
+            </CRow>
+          </>
+        ) : (
+          <CCol>
+            <CRow className="category-no-data">
+              <h4 className="text-center">No data to display</h4>
+            </CRow>
+          </CCol>
+        )}
+        <OModal
+          alignment="center"
+          modalFooterClass="d-none"
+          modalHeaderClass="d-none"
+          visible={isModalVisible}
+          setVisible={setIsModalVisible}
+        >
+          {specification}
+        </OModal>
       </CCardBody>
-      <strong>
-        {getMyAssetDetails?.length
-          ? `Total Records: ${getMyAssetDetails?.length}`
-          : `No Records found`}
-      </strong>
-      <OModal
-        alignment="center"
-        modalFooterClass="d-none"
-        modalHeaderClass="d-none"
-        visible={isModalVisible}
-        setVisible={setIsModalVisible}
-      >
-        {specification}
-      </OModal>
     </>
   )
 }
+
 export default EmployeeMyAssetsTab
