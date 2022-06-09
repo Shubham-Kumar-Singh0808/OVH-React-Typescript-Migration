@@ -21,6 +21,7 @@ import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 import validator from 'validator'
+import Demo from './BasicInfoTabImageCropper'
 
 const BasicInfoTab = (): JSX.Element => {
   const tenantKey = useTypedSelector(
@@ -797,20 +798,21 @@ const BasicInfoTab = (): JSX.Element => {
             Profile Picture:
           </CFormLabel>
           <CCol sm={3}>
-            <div className="profile-avatar">
+            {/* <div className="profile-avatar">
               <img
                 width="120px"
                 height="120px;"
                 src={employeeBasicInformation.thumbPicture}
                 alt="User Profile"
               />
-            </div>
-            <CFormInput
+            </div> */}
+            {/* <CFormInput
               id="employeeProfilePicture"
               type="file"
               className="form-control mt-2"
               accept="image/*"
-            />
+            /> */}
+            <Demo file={employeeBasicInformation.thumbPicture} />
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
