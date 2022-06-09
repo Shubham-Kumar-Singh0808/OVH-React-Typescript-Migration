@@ -12,7 +12,6 @@ import {
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
-import { METHODS } from 'http'
 const getEmployeeFamilyDetails = async (
   employeeId: number | string,
 ): Promise<EmployeeFamilyData[]> => {
