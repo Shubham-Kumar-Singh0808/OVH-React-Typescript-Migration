@@ -14,12 +14,13 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
 import DownloadCVButton from './DownloadCVButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
-import { useFormik } from 'formik'
-import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { useFormik } from 'formik'
+import validator from 'validator'
 
 const BasicInfoTab = (): JSX.Element => {
   const tenantKey = useTypedSelector(
@@ -58,6 +59,7 @@ const BasicInfoTab = (): JSX.Element => {
   }
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
   const [realBirthdayShown, setRealBirthdayShown] = useState<boolean>(false)
+  const [emailError, setEmailError] = useState<boolean>(false)
   const [
     employeeBasicInformationEditData,
     setEmployeeBasicInformationEditData,
@@ -69,6 +71,14 @@ const BasicInfoTab = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
 
+  const validateEmail = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailError(false)
+    } else {
+      setEmailError(true)
+    }
+  }
+
   // onchange handler for input fields
   const handleChange = (
     e:
@@ -76,9 +86,31 @@ const BasicInfoTab = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setEmployeeBasicInformationEditData((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'curentLocation') {
+      const currentLocation = value
+        .replace(/[^a-zA-Z\s]/gi, '')
+        .replace(/^\s*/, '')
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: currentLocation } }
+      })
+    } else if (name === 'baseLocation') {
+      const baseLocation = value
+        .replace(/[^a-zA-Z\s]/gi, '')
+        .replace(/^\s*/, '')
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: baseLocation } }
+      })
+    } else if (name === 'personalEmail') {
+      const personalEmail = value
+      validateEmail(personalEmail)
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: personalEmail } }
+      })
+    } else {
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   // onchange handler for date pickers
@@ -128,13 +160,22 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData.bloodgroup &&
       employeeBasicInformationEditData.maritalStatus &&
       employeeBasicInformationEditData.personalEmail &&
-      employeeBasicInformationEditData.officialBirthday
+      employeeBasicInformationEditData.officialBirthday &&
+      !emailError
     ) {
       setSaveButtonEnabled(true)
     } else {
       setSaveButtonEnabled(false)
     }
-  }, [employeeBasicInformationEditData, baseLocationShown, realBirthdayShown])
+    if (employeeBasicInformationEditData.personalEmail) {
+      validateEmail(employeeBasicInformationEditData.personalEmail)
+    }
+  }, [
+    employeeBasicInformationEditData,
+    baseLocationShown,
+    realBirthdayShown,
+    emailError,
+  ])
 
   // condition to enable and disable save button
   useEffect(() => {
@@ -244,6 +285,37 @@ const BasicInfoTab = (): JSX.Element => {
       toastColor="success"
     />
   )
+
+  // base location and real date of birth hide and show validations
+  useEffect(() => {
+    if (
+      employeeBasicInformationEditData.curentLocation?.toLowerCase() !==
+      employeeBasicInformationEditData.baseLocation?.toLowerCase()
+    ) {
+      setBaseLocationShown(true)
+    } else {
+      setBaseLocationShown(false)
+    }
+    const tempOfficialBirthday =
+      employeeBasicInformationEditData?.officialBirthday?.toString()
+
+    const tempRealBirthday =
+      employeeBasicInformationEditData?.realBirthday?.toString()
+
+    const newOfficialBirthday = new Date(
+      moment(tempOfficialBirthday).format('DD/MM/YYYY'),
+    )
+    const newRealBirthday = new Date(
+      moment(tempRealBirthday).format('DD/MM/YYYY'),
+    )
+    if (newOfficialBirthday.getTime() !== newRealBirthday.getTime()) {
+      setRealBirthdayShown(true)
+    } else {
+      setRealBirthdayShown(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <>
       <CForm
@@ -674,7 +746,7 @@ const BasicInfoTab = (): JSX.Element => {
             Personal Email:
             <span
               className={
-                employeeBasicInformationEditData.personalEmail
+                employeeBasicInformationEditData.personalEmail && !emailError
                   ? 'text-white'
                   : 'text-danger'
               }
@@ -686,7 +758,7 @@ const BasicInfoTab = (): JSX.Element => {
             <CFormInput
               id="employeePersonalEmail"
               size="sm"
-              type="text"
+              type="email"
               name="personalEmail"
               placeholder="Personal Email"
               value={employeeBasicInformationEditData.personalEmail}
