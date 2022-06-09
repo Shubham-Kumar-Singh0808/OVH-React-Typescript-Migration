@@ -3,8 +3,7 @@ stages:
   - test
   - sonarqube
   - deployqa
-  - trigger
-
+  
 build project:
   image: node:16
   stage: build
@@ -78,7 +77,3 @@ deploy qa:
     url: https://ovhqa.raybiztech.com
   only:
     - qa
-trigger_build:
-  stage: trigger
-  script:
-    - "curl -X POST -F token=2a8be40f20eca9bb364749d88ea3ec -F ref=master https://gitlab.raybiztech.com/api/v4/projects/1108/trigger/pipeline"
