@@ -78,8 +78,3 @@ deploy qa:
     url: https://ovhqa.raybiztech.com
   only:
     - qa
-trigger robot:
-   stage: trigger
-   trigger:
-     project: OVH-Migration-Automation Scripts/
-     branch:  master
