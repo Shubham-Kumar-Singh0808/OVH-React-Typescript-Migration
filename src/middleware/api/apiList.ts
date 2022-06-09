@@ -130,6 +130,8 @@ export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
   uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
+  downloadEmployeeCV: apiPrefix + '/jobapplicant/downloadRBTCv',
+  downloadSampleCV: apiPrefix + '/jobapplicant/downloadCVFormateFile',
 }
 
 export const shiftConfigurationApiConfig: ShiftConfigurationApi = {

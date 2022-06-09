@@ -107,11 +107,19 @@ export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
   uploadEmployeeCV: string
+  downloadEmployeeCV: string
+  downloadSampleCV: string
 }
 
 export interface UploadFileReturn {
   personId: number
   file: FormData
+}
+
+export interface DownloadCVReturn {
+  fileName: string
+  token: string
+  tenantKey: string
 }
 
 export interface ShiftConfigurationApi extends ApiBase {

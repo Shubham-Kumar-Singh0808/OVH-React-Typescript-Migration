@@ -3,7 +3,7 @@ import { AllowedHttpMethods, basicInfoApiConfig } from '../../apiList'
 import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
-import { UploadFileReturn } from '../../../../types/apiTypes'
+import { DownloadCVReturn, UploadFileReturn } from '../../../../types/apiTypes'
 
 const updateDefaultPicOnGenderChange = async (
   gender: string,
@@ -25,13 +25,46 @@ const uploadEmployeeCV = async (
   const requestConfig = getAuthenticatedRequestConfig({
     url: basicInfoApiConfig.uploadEmployeeCV,
     method: AllowedHttpMethods.post,
-    data: { data: prepareObject.file },
+    data: prepareObject.file,
     params: {
       personId: prepareObject.personId,
     },
     additionalHeaders: {
       'Content-Type': 'multipart/form-data',
     },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
+const downloadEmployeeCV = async (
+  prepareObject: DownloadCVReturn,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: basicInfoApiConfig.downloadEmployeeCV,
+    method: AllowedHttpMethods.get,
+    params: {
+      fileName: prepareObject.fileName,
+      token: prepareObject.token,
+      tenantKey: prepareObject.tenantKey,
+    },
+    responseType: 'blob',
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
+const downloadSampleCV = async (fileName: string): Promise<File> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: basicInfoApiConfig.downloadSampleCV,
+    method: AllowedHttpMethods.get,
+    additionalHeaders: {
+      'Content-Type': 'application/json',
+    },
+    params: {
+      fileName: fileName,
+    },
+    responseType: 'blob',
   })
   const response = await axios(requestConfig)
   return response.data
@@ -53,5 +86,7 @@ const basicInfoApi = {
   updateDefaultPicOnGenderChange,
   updateEmployeeBasicInformation,
   uploadEmployeeCV,
+  downloadEmployeeCV,
+  downloadSampleCV,
 }
 export default basicInfoApi

@@ -12,10 +12,9 @@ import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
-import DownloadSampleFileButton from './DownloadSampleFileButton'
+import DownloadCVButton from './DownloadCVButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../components/ReusableComponent/OToast'
-import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
@@ -24,6 +23,13 @@ import { useFormik } from 'formik'
 import validator from 'validator'
 
 const BasicInfoTab = (): JSX.Element => {
+  const tenantKey = useTypedSelector(
+    reduxServices.authentication.selectors.selectTenantKey,
+  )
+  const authenticatedToken = useTypedSelector(
+    reduxServices.authentication.selectors.selectToken,
+  )
+
   const employeeBasicInformation = useTypedSelector(
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
@@ -61,6 +67,7 @@ const BasicInfoTab = (): JSX.Element => {
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
   const [dateErrorMessage, setDateErrorMessage] = useState(false)
   const [cvToUpload, setCVToUpload] = useState<File | undefined>(undefined)
+  const [uploadErrorText, setUploadErrorText] = useState<string>('')
 
   const dispatch = useAppDispatch()
 
@@ -120,8 +127,29 @@ const BasicInfoTab = (): JSX.Element => {
   // change CV to upload state value
   const onChangeCVHandler = async (element: HTMLInputElement) => {
     const file = element.files
+    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    let extension = ''
     if (!file) return
 
+    if (file) {
+      extension = file[0].name.split('.').pop() as string
+    }
+
+    if (file[0].size > 2048000) {
+      setUploadErrorText(
+        'File size exceeded. Please upload a file less than 2MB.',
+      )
+      return
+    }
+
+    if (!acceptedFileTypes.includes(extension)) {
+      setUploadErrorText(
+        'Wrong file format chosen. Please choose either doc, docx, or pdf.',
+      )
+      return
+    }
+
+    setUploadErrorText('')
     setCVToUpload(file[0])
   }
 
@@ -226,18 +254,22 @@ const BasicInfoTab = (): JSX.Element => {
     event.preventDefault()
     const prepareObject = employeeBasicInformationEditData
 
-    try {
-      if (cvToUpload) {
-        await uploadFile()
+    if (cvToUpload) {
+      const formData = new FormData()
+      formData.append('file', cvToUpload, cvToUpload.name)
+      const uploadPrepareObject = {
+        personId: employeeBasicInformation.id as number,
+        file: formData,
       }
       dispatch(
-        employeeBasicInformationThunk.updateEmployeeBasicInformation(
-          prepareObject,
-        ),
+        employeeBasicInformationThunk.uploadEmployeeCV(uploadPrepareObject),
       )
-    } catch (error) {
-      console.error('Error saving changes')
     }
+    dispatch(
+      employeeBasicInformationThunk.updateEmployeeBasicInformation(
+        prepareObject,
+      ),
+    )
     dispatch(reduxServices.app.actions.addToast(toastElement))
   }
 
@@ -247,19 +279,6 @@ const BasicInfoTab = (): JSX.Element => {
       console.log('Logging in ', values)
     },
   })
-
-  const uploadFile = async function () {
-    if (cvToUpload) {
-      const formData = new FormData()
-      formData.append('file', cvToUpload, cvToUpload.name)
-      const prepareObject = {
-        personId: employeeBasicInformation.id as number,
-        file: formData,
-      }
-      await basicInfoApi.uploadEmployeeCV(prepareObject)
-    }
-  }
-
   const toastElement = (
     <OToast
       toastMessage="Your changes have been saved successfully."
@@ -303,7 +322,11 @@ const BasicInfoTab = (): JSX.Element => {
         className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
         onSubmit={handleSubmitBasicDetails}
       >
-        <DownloadSampleFileButton />
+        <CRow className="justify-content-end mt-3">
+          <CCol className="text-end" md={4}>
+            <DownloadCVButton className="text-decoration-none btn btn-download btn-ovh" />
+          </CCol>
+        </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
             {...dynamicFormLabelProps(
@@ -831,14 +854,17 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3">
           <CCol md={{ span: 6, offset: 3 }}>
             {employeeBasicInformation.rbtCvName && (
-              <a
-                className="text-decoration-none cursor-pointer"
-                href="RBT_CV"
-                download={employeeBasicInformation.rbtCvName}
-              >
-                <i className="fa fa-paperclip me-1"></i>
-                Rbt Cv
-              </a>
+              <DownloadCVButton
+                className="cursor-pointer"
+                fileName={employeeBasicInformation.rbtCvName}
+                token={authenticatedToken}
+                tenantKey={tenantKey}
+              />
+            )}
+            {uploadErrorText && (
+              <div>
+                <strong className="text-danger mt-3">{uploadErrorText}</strong>
+              </div>
             )}
           </CCol>
         </CRow>
