@@ -15,6 +15,7 @@ export type PersonalInfoTabState = {
   SubVisa: VisaCountryDetails[]
   editFamilyDetails: EditFamilyDetailsState
   editVisaDetails: EditVisaDetailsState
+  selectedVisaID: number
   isLoading: boolean
   error: ValidationError
 }
@@ -51,8 +52,8 @@ export type EmployeeVisaDetails = {
   visaType?: string
   countryId: number | string
   countryName?: string
-  dateOfIssue?: string | number
-  dateOfExpire?: string | number
+  dateOfIssue?: string | Date | number
+  dateOfExpire?: string | Date | number
   createdBy?: string
   updatedBy?: string
   createdDate?: string | number

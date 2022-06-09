@@ -133,16 +133,24 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData.realBirthday &&
       employeeBasicInformationEditData.anniversary
     ) {
-      const realBirthdayDate = moment(
-        employeeBasicInformationEditData.realBirthday,
-      ).format('YYYY')
-      const anniversaryDate = moment(
-        employeeBasicInformationEditData.anniversary,
-      ).format('YYYY')
-      if (anniversaryDate < realBirthdayDate) {
+      const currentRealBirthday =
+        employeeBasicInformationEditData.realBirthday.toString()
+      const currentAnniversary =
+        employeeBasicInformationEditData.anniversary.toString()
+
+      const newRealBirthday = new Date(
+        moment(currentRealBirthday).format('DD/MM/YYYY'),
+      )
+      const newAnniversary = new Date(
+        moment(currentAnniversary).format('DD/MM/YYYY'),
+      )
+
+      if (newRealBirthday.getTime() >= newAnniversary.getTime()) {
         setDateErrorMessage(true)
+        setSaveButtonEnabled(false)
       } else {
         setDateErrorMessage(false)
+        setSaveButtonEnabled(true)
       }
     }
   }, [
@@ -441,6 +449,7 @@ const BasicInfoTab = (): JSX.Element => {
                 showYearDropdown
                 dropdownMode="select"
                 placeholderText="dd/mm/yyyy"
+                dateFormat="dd/mm/yyyy"
                 name="realBirthday"
                 value={employeeBasicInformationEditData.realBirthday}
                 onChange={(date: Date) =>
@@ -506,13 +515,12 @@ const BasicInfoTab = (): JSX.Element => {
               <DatePicker
                 id="employeeAnniversary"
                 className="form-control form-control-sm"
-                maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
                 placeholderText="dd/mm/yyyy"
-                name="realBirthday"
+                name="anniversary"
                 value={employeeBasicInformationEditData.anniversary}
                 onChange={(date: Date) =>
                   onDateChangeHandler(date, { name: 'anniversary' })

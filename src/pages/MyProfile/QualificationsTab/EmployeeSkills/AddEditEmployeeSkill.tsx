@@ -19,6 +19,7 @@ import { OTextEditor } from '../../../../components/ReusableComponent/OTextEdito
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
+import { callbackify } from 'util'
 
 function AddEditEmployeeSkill({
   isEditSkillsDetails = false,

@@ -489,7 +489,7 @@ function AddUpdateEmployeeCertification({
                 <CButton
                   className="btn-ovh me-2"
                   color="success"
-                  disabled={!isButtonEnabled}
+                  disabled={error}
                   onClick={handleUpdateCertificationDetails}
                 >
                   {confirmButtonText}

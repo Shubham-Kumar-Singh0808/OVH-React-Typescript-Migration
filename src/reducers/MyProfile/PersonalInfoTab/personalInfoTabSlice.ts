@@ -14,6 +14,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
+import { stat } from 'fs'
 const initialPersonalInfoTabState: PersonalInfoTabState = {
   employeeFamilyDetails: [],
   employeeVisaDetails: [],
@@ -21,6 +22,7 @@ const initialPersonalInfoTabState: PersonalInfoTabState = {
   SubVisa: [],
   editFamilyDetails: {} as EditFamilyDetailsState,
   editVisaDetails: {} as EditVisaDetailsState,
+  selectedVisaID: -1 as number,
   isLoading: false,
   error: 0,
 }
@@ -250,7 +252,11 @@ const deleteEmployeeVisa = createAsyncThunk<
 const personalInfoTabSlice = createSlice({
   name: 'personalInfoTab',
   initialState: initialPersonalInfoTabState,
-  reducers: {},
+  reducers: {
+    setSelectedVisaID: (state, action) => {
+      state.selectedVisaID = action.payload
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -335,6 +341,9 @@ const employeeVisaDetails = (state: RootState): EditVisaDetailsState =>
 const employeeFamilyMember = (state: RootState): EditFamilyDetailsState =>
   state.personalInfoDetails.editFamilyDetails
 
+const selectedVisaID = (state: RootState): number =>
+  state.personalInfoDetails.selectedVisaID
+
 export const personalInfoThunk = {
   getEmployeeFamilyDetails,
   addEmployeeFamilyMember,
@@ -356,6 +365,7 @@ export const personalInfoSelectors = {
   visaTypeDetails,
   employeeVisaDetails,
   employeeFamilyMember,
+  selectedVisaID,
 }
 export const personalInfoService = {
   ...personalInfoThunk,

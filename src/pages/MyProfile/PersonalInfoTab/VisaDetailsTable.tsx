@@ -70,6 +70,12 @@ const VisaDetailsTable = ({
     }
   }, [getEmployeeVisaData])
 
+  const handleSelectedVisa = (visaId: number) => {
+    dispatch(
+      reduxServices.personalInformation.actions.setSelectedVisaID(visaId),
+    )
+  }
+
   return (
     <>
       <CTable striped>
@@ -100,7 +106,10 @@ const VisaDetailsTable = ({
               <CTableDataCell scope="row">
                 <CButton
                   color="info btn-ovh me-2"
-                  onClick={() => editVisaButtonHandler(visaItem.id)}
+                  onClick={() => {
+                    editVisaButtonHandler(visaItem.id)
+                    handleSelectedVisa(visaItem.id)
+                  }}
                 >
                   <i className="fa fa-pencil-square-o"></i>
                 </CButton>

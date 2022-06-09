@@ -19,6 +19,8 @@ import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import moment from 'moment'
+import { format } from 'prettier'
+import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,
@@ -32,7 +34,15 @@ function AddEditVisaDetails({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
   const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
-  const [error, setError] = useState<Date | null>(null)
+  const [error, setError] = useState<boolean>(false)
+
+  const [selectedDateIssue, setSelectedDateIssue] = useState<
+    Date | string | number
+  >()
+
+  const selectedVisaID = useTypedSelector(
+    reduxServices.personalInformation.selectors.selectedVisaID,
+  )
 
   const getEmployeeCountryDetails = useTypedSelector(
     reduxServices.personalInformation.selectors.countryDetails,
@@ -45,6 +55,19 @@ function AddEditVisaDetails({
   )
 
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    async function getSelectedVisaDtails() {
+      const selectedVisaDetails = await personalInfoApi.getEmployeeVisa(
+        selectedVisaID as number,
+      )
+      setSelectedDateIssue(selectedVisaDetails.dateOfIssue)
+      console.log(selectedVisaDetails)
+    }
+    getSelectedVisaDtails()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(() => {
     dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
     if (employeeVisaDetails?.countryId) {
@@ -73,11 +96,13 @@ function AddEditVisaDetails({
     dateOfIssue,
     dateOfExpire,
   ])
+
   useEffect(() => {
     if (isEditVisaDetails) {
       setEmployeeVisaDetails(getEditVisaDetails)
     }
   }, [isEditVisaDetails, getEditVisaDetails])
+
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setEmployeeVisaDetails((prevState) => {
@@ -87,7 +112,7 @@ function AddEditVisaDetails({
 
   const onChangeDateOfIssueHandler = (date: Date) => {
     const currentDateExpiry = isEditVisaDetails
-      ? employeeVisaDetails?.dateOfExpire?.toString()
+      ? employeeVisaDetails.dateOfExpire?.toString()
       : dateOfExpire?.toLocaleString()
 
     const tempDateExpiry = moment(currentDateExpiry).format('DD/MM/YYYY')
@@ -101,6 +126,7 @@ function AddEditVisaDetails({
       setEmployeeVisaDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
+      setDateOfIssue(date)
     } else {
       setDateOfIssue(date)
     }
@@ -108,14 +134,13 @@ function AddEditVisaDetails({
 
   const onChangeDateOfExpireHandler = (date: Date) => {
     const currentDateIssue = isEditVisaDetails
-      ? employeeVisaDetails?.dateOfIssue?.toString()
+      ? employeeVisaDetails.dateOfIssue?.toString()
       : dateOfIssue?.toLocaleString()
 
     const tempDateIssue = moment(currentDateIssue).format('DD/MM/YYYY')
     const newDateIssue = new Date(tempDateIssue)
 
     validateDates(newDateIssue, date)
-
     if (isEditVisaDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = 'dateOfExpire'
@@ -138,7 +163,7 @@ function AddEditVisaDetails({
     })
     setDateOfIssue('')
     setDateOfExpire('')
-    setError(null)
+    setError(false)
   }
   const actionMapping = {
     added: 'added',
@@ -153,29 +178,27 @@ function AddEditVisaDetails({
     )
   }
   const handleAddVisaDetails = async () => {
-    if (error === null) {
-      const prepareObject = {
-        ...employeeVisaDetails,
-        dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),
-        dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
-      }
-      const addVisaMemberResultAction = await dispatch(
-        reduxServices.personalInformation.addEmployeeVisa(prepareObject),
+    const prepareObject = {
+      ...employeeVisaDetails,
+      dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),
+      dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
+    }
+    const addVisaMemberResultAction = await dispatch(
+      reduxServices.personalInformation.addEmployeeVisa(prepareObject),
+    )
+    if (
+      reduxServices.personalInformation.addEmployeeVisa.fulfilled.match(
+        addVisaMemberResultAction,
       )
-      if (
-        reduxServices.personalInformation.addEmployeeVisa.fulfilled.match(
-          addVisaMemberResultAction,
-        )
-      ) {
-        backButtonHandler()
+    ) {
+      backButtonHandler()
+      dispatch(
         dispatch(
-          dispatch(
-            reduxServices.app.actions.addToast(
-              getToastMessage(actionMapping.added),
-            ),
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.added),
           ),
-        )
-      }
+        ),
+      )
     }
   }
   const handleUpdateVisaMember = async () => {
@@ -201,9 +224,11 @@ function AddEditVisaDetails({
 
   const validateDates = (startDate: Date, endDate: Date) => {
     if (startDate.getTime() > endDate.getTime()) {
-      setError(endDate)
+      setError(true)
+      setIsAddButtonEnabled(true)
     } else {
-      setError(null)
+      setError(false)
+      setIsAddButtonEnabled(false)
     }
   }
 
@@ -314,6 +339,11 @@ function AddEditVisaDetails({
                   (employeeVisaDetails?.dateOfIssue as string)
                 }
                 selected={dateOfIssue as Date}
+                // selected={
+                //   isEditVisaDetails
+                //     ? (selectedDateIssue as Date)
+                //     : (dateOfIssue as Date)
+                // }
                 onChange={onChangeDateOfIssueHandler}
                 id="dateOfIssue"
                 peekNextMonth
@@ -353,7 +383,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
+                placeholderText="dd/MM/yyyy"
                 dateFormat="dd/MM/yyyy"
               />
               {error && (
@@ -387,6 +417,7 @@ function AddEditVisaDetails({
                 <CButton
                   className="btn-ovh me-2"
                   color="success"
+                  disabled={error}
                   onClick={handleUpdateVisaMember}
                 >
                   {confirmButtonText}
