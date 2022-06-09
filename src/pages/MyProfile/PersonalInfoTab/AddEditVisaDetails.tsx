@@ -197,6 +197,7 @@ function AddEditVisaDetails({
     }
     backButtonHandler()
   }
+  
   const handleUpdateVisaMember = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
