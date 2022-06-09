@@ -32,7 +32,8 @@ const EmployeeReviews = (): JSX.Element => {
       <CCardHeader>
         <h4 className="h4">Review List</h4>
       </CCardHeader>
-      <CCardBody>
+      <br></br>
+      <CCardBody className="ps-0 pe-0">
         <CTable striped>
           <CTableHead>
             <CTableRow>
@@ -84,10 +85,11 @@ const EmployeeReviews = (): JSX.Element => {
           </CTableBody>
         </CTable>
       </CCardBody>
+      <br></br>
       <strong>
         {getReviewDetails?.length
           ? `Total Records: ${getReviewDetails?.length}`
-          : `No Records found`}
+          : `No Records Found...`}
       </strong>
     </>
   )
