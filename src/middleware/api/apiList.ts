@@ -2,6 +2,7 @@ import {
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
+  CertificateTypeApi,
   EmployeeCertificationsApi,
   EmployeeGeneralInformationApi,
   EmployeeQualificationCategoryApi,
@@ -139,4 +140,8 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
   updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
+}
+
+export const certificateTypeApiConfig: CertificateTypeApi = {
+  getAllTechnologies: '',
 }
