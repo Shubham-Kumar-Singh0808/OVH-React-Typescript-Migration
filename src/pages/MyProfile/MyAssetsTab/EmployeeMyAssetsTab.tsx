@@ -9,10 +9,13 @@ import {
   CCardBody,
   CLink,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
+import OModal from '../../../components/ReusableComponent/OModal'
 const EmployeeMyAssetsTab = (): JSX.Element => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [specification, setSpecification] = useState<string>('')
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -26,6 +29,10 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
       reduxServices.employeeMyAssets.getEmployeeMyAssetsDetails(employeeId),
     )
   }, [dispatch, employeeId])
+  const handleModal = (specification: string) => {
+    setIsModalVisible(true)
+    setSpecification(specification)
+  }
 
   return (
     <>
@@ -64,7 +71,7 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
                 <CTableDataCell scope="row">
                   <CLink
                     className="cursor-pointer text-decoration-none text-primary"
-                    // onClick={() => handleModal(assetsItem.pSpecification)}
+                    onClick={() => handleModal(assetsItem.pSpecification)}
                   >
                     {assetsItem.pSpecification}
                   </CLink>
@@ -86,6 +93,15 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
           ? `Total Records: ${getMyAssetDetails?.length}`
           : `No Records found`}
       </strong>
+      <OModal
+        alignment="center"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+        visible={isModalVisible}
+        setVisible={setIsModalVisible}
+      >
+        {specification}
+      </OModal>
     </>
   )
 }
