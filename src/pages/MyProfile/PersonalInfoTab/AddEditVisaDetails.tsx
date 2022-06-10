@@ -36,10 +36,9 @@ function AddEditVisaDetails({
   const [dateOfExpire, setDateOfExpire] = useState<Date | string | undefined>()
   const [error, setError] = useState<boolean>(false)
 
-  const [selectedDateOfIssue, setSelectedDateOfIssue] = useState<
-    Date | string | undefined
-  >()
-  const [reloadDate, setReloadDate] = useState<boolean>(false)
+  // const [selectedDateOfIssue, setSelectedDateOfIssue] = useState<
+  //   Date | string | undefined
+  // >()
 
   const selectedVisaID = useTypedSelector(
     reduxServices.personalInformation.selectors.selectedVisaID,
@@ -72,11 +71,7 @@ function AddEditVisaDetails({
         selectedVisaID as number,
       )
       // setDateOfIssue(selectedVisaDetails.dateOfIssue as Date)
-      setSelectedDateOfIssue(selectedVisaDetails.dateOfIssue as Date)
-      setReloadDate(false)
-      setTimeout(() => {
-        setReloadDate(true)
-      }, 1000)
+      // setSelectedDateOfIssue(selectedVisaDetails.dateOfIssue as Date)
       console.log(selectedVisaDetails.dateOfIssue as Date)
     }
     getSelectedVisaDtails()
