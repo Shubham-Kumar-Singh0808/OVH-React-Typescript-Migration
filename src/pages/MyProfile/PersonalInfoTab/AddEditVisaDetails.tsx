@@ -32,17 +32,25 @@ function AddEditVisaDetails({
     initialEmployeeVisaDetails,
   )
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
-  const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
+  const [dateOfIssue, setDateOfIssue] = useState<Date | string | undefined>()
+  const [dateOfExpire, setDateOfExpire] = useState<Date | string | undefined>()
   const [error, setError] = useState<boolean>(false)
 
-  const [selectedDateIssue, setSelectedDateIssue] = useState<
-    Date | string | number
+  const [selectedDateOfIssue, setSelectedDateOfIssue] = useState<
+    Date | string | undefined
   >()
+  const [reloadDate, setReloadDate] = useState<boolean>(false)
 
   const selectedVisaID = useTypedSelector(
     reduxServices.personalInformation.selectors.selectedVisaID,
   )
+
+  // const visaDateOfIssue = useTypedSelector(
+  //   reduxServices.personalInformation.selectors.visaDateOfIssue,
+  // )
+  // const setVisaDateOfExpiry = useTypedSelector(
+  //   reduxServices.personalInformation.selectors.visaDateOfExpiry,
+  // )
 
   const getEmployeeCountryDetails = useTypedSelector(
     reduxServices.personalInformation.selectors.countryDetails,
@@ -55,14 +63,21 @@ function AddEditVisaDetails({
   )
 
   const dispatch = useAppDispatch()
+  // console.log(visaDateOfIssue)
+  // console.log(setVisaDateOfExpiry)
 
   useEffect(() => {
     async function getSelectedVisaDtails() {
       const selectedVisaDetails = await personalInfoApi.getEmployeeVisa(
         selectedVisaID as number,
       )
-      setSelectedDateIssue(selectedVisaDetails.dateOfIssue)
-      console.log(selectedVisaDetails)
+      // setDateOfIssue(selectedVisaDetails.dateOfIssue as Date)
+      setSelectedDateOfIssue(selectedVisaDetails.dateOfIssue as Date)
+      setReloadDate(false)
+      setTimeout(() => {
+        setReloadDate(true)
+      }, 1000)
+      console.log(selectedVisaDetails.dateOfIssue as Date)
     }
     getSelectedVisaDtails()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -341,7 +356,7 @@ function AddEditVisaDetails({
                 selected={dateOfIssue as Date}
                 // selected={
                 //   isEditVisaDetails
-                //     ? (selectedDateIssue as Date)
+                //     ? (selectedDateOfIssue as Date)
                 //     : (dateOfIssue as Date)
                 // }
                 onChange={onChangeDateOfIssueHandler}
@@ -377,6 +392,11 @@ function AddEditVisaDetails({
                   (employeeVisaDetails?.dateOfExpire as string)
                 }
                 selected={dateOfExpire as Date}
+                // selected={
+                //   isEditVisaDetails
+                //     ? (employeeVisaDetails.dateOfExpire as Date)
+                //     : (dateOfExpire as Date)
+                // }
                 onChange={onChangeDateOfExpireHandler}
                 id="dateOfExpire"
                 peekNextMonth

@@ -50,7 +50,7 @@ export interface EmployeeSkillApi extends ApiBase {
 
 export interface EmployeeQualificationCategoryApi extends ApiBase {
   getQualificationCategories: string
-  addQualificationCategory: string
+  createQualificationCategory: string
   deleteQualificationCategory: string
 }
 export interface EmployeeGeneralInformationApi extends ApiBase {
@@ -71,7 +71,7 @@ export interface EmployeeCertificationsApi extends ApiBase {
   getEmployeeCertificates: string
   getTechnologies: string
   getCertificateByTechnology: string
-  addEmployeeCertificates: string
+  createEmployeeCertification: string
   getEmployeeCertificate: string
   updateEmployeeCertificate: string
   deleteEmployeeCertificate: string
@@ -100,7 +100,23 @@ export interface PersonalInfoApi extends ApiBase {
   deleteVisaDetail: string
   fileUploadVisaImage: string
 }
+export interface ProfileHistoryApi extends ApiBase {
+  getprofileHistory: string
+}
 export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
+  uploadEmployeeCV: string
+}
+
+export interface UploadFileReturn {
+  personId: number
+  file: FormData
+}
+
+export interface ShiftConfigurationApi extends ApiBase {
+  getAllShifts: string
+  addTimeSlot: string
+  updateShiftDetail: string
+  deleteShiftDetail: string
 }

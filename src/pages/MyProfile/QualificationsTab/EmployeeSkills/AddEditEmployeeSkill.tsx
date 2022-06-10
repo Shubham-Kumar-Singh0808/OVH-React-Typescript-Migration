@@ -59,7 +59,7 @@ function AddEditEmployeeSkill({
   }, [dispatch, employeeSkill?.categoryType])
 
   const employeeSkillHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target
+    const { name, value } = e.target || null
     setEmployeeSkill((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })

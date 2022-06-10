@@ -8,6 +8,8 @@ import {
   EmployeeQualificationsApi,
   EmployeeSkillApi,
   PersonalInfoApi,
+  ProfileHistoryApi,
+  ShiftConfigurationApi,
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
@@ -90,7 +92,7 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
   {
     getQualificationCategories:
       apiPrefix + '/Employee/getQualiactionCategoryList',
-    addQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
+    createQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
     deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
   }
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
@@ -110,12 +112,15 @@ export const qualificationsApiConfig: EmployeeQualificationsApi = {
   updateEmployeeQualifications: apiPrefix + '/Employee/updateQualification',
 }
 
+export const profileHistoryConfig: ProfileHistoryApi = {
+  getprofileHistory: apiPrefix + '/Employee/getEmployeeProfileHistory',
+}
 export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
   getCertificateByTechnology:
     apiPrefix + '/EmployeeSkill/getCertificateByTechnology',
-  addEmployeeCertificates: apiPrefix + '/Employee/certification',
+  createEmployeeCertification: apiPrefix + '/Employee/certification',
   getEmployeeCertificate: apiPrefix + '/Employee/getCertification',
   updateEmployeeCertificate: apiPrefix + '/Employee/certification',
   deleteEmployeeCertificate: apiPrefix + '/Employee/certification',
@@ -124,4 +129,12 @@ export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
 export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
+  uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
+}
+
+export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
+  getAllShifts: apiPrefix + '/jobapplicant/getAllShifting',
+  addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
+  updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
+  deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
 }

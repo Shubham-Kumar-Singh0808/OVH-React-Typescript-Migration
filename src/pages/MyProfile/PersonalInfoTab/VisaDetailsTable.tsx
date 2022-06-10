@@ -13,6 +13,7 @@ import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/Personal
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
+// import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 
 const VisaDetailsTable = ({
   editVisaButtonHandler,
@@ -70,7 +71,18 @@ const VisaDetailsTable = ({
     }
   }, [getEmployeeVisaData])
 
-  const handleSelectedVisa = (visaId: number) => {
+  const handleSelectedVisa = async (visaId: number) => {
+    // const visaDetails = await personalInfoApi.getEmployeeVisa(visaId)
+    // dispatch(
+    //   reduxServices.personalInformation.actions.setVisaDateOfIssue(
+    //     visaDetails.dateOfIssue as Date,
+    //   ),
+    // )
+    // dispatch(
+    //   reduxServices.personalInformation.actions.setVisaDateOfExpiry(
+    //     visaDetails.dateOfExpire as Date,
+    //   ),
+    // )
     dispatch(
       reduxServices.personalInformation.actions.setSelectedVisaID(visaId),
     )

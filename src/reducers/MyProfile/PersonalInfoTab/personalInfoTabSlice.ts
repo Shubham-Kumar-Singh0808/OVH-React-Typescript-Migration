@@ -1,20 +1,20 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  EmployeeFamilyData,
-  VisaDetails,
-  PersonalInfoTabState,
-  GetCountryDetails,
-  VisaCountryDetails,
-  EmployeeVisaDetails,
   EditFamilyDetailsState,
-  EmployeeFamilyDetails,
   EditVisaDetailsState,
+  EmployeeFamilyData,
+  EmployeeFamilyDetails,
+  EmployeeVisaDetails,
+  GetCountryDetails,
+  PersonalInfoTabState,
+  VisaCountryDetails,
+  VisaDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
-import { stat } from 'fs'
 const initialPersonalInfoTabState: PersonalInfoTabState = {
   employeeFamilyDetails: [],
   employeeVisaDetails: [],
@@ -23,6 +23,8 @@ const initialPersonalInfoTabState: PersonalInfoTabState = {
   editFamilyDetails: {} as EditFamilyDetailsState,
   editVisaDetails: {} as EditVisaDetailsState,
   selectedVisaID: -1 as number,
+  // visaDateOfIssue: '',
+  // visaDateOfExpiry: '',
   isLoading: false,
   error: 0,
 }
@@ -256,6 +258,12 @@ const personalInfoTabSlice = createSlice({
     setSelectedVisaID: (state, action) => {
       state.selectedVisaID = action.payload
     },
+    // setVisaDateOfIssue: (state, action) => {
+    //   state.visaDateOfIssue = action.payload
+    // },
+    // setVisaDateOfExpiry: (state, action) => {
+    //   state.visaDateOfExpiry = action.payload
+    // },
   },
 
   extraReducers: (builder) => {
@@ -344,6 +352,12 @@ const employeeFamilyMember = (state: RootState): EditFamilyDetailsState =>
 const selectedVisaID = (state: RootState): number =>
   state.personalInfoDetails.selectedVisaID
 
+// const visaDateOfIssue = (state: RootState): string | number | Date =>
+//   state.personalInfoDetails.visaDateOfIssue
+
+// const visaDateOfExpiry = (state: RootState): string | number | Date =>
+//   state.personalInfoDetails.visaDateOfExpiry
+
 export const personalInfoThunk = {
   getEmployeeFamilyDetails,
   addEmployeeFamilyMember,
@@ -366,6 +380,8 @@ export const personalInfoSelectors = {
   employeeVisaDetails,
   employeeFamilyMember,
   selectedVisaID,
+  // visaDateOfIssue,
+  // visaDateOfExpiry,
 }
 export const personalInfoService = {
   ...personalInfoThunk,

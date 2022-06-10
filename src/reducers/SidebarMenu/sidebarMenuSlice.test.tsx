@@ -1,10 +1,4 @@
-import sidebarMenuSliceReducer, {
-  setSidebarMenuSliceHandler,
-} from './sidebarMenuSlice'
-
-import { forEachChild } from 'typescript'
-import { mockSidebarData } from '../../test/data/sidebaeMenuData'
-import { waitFor } from '@testing-library/react'
+import sidebarMenuSliceReducer from './sidebarMenuSlice'
 
 describe('Sidebar Reducer Test', () => {
   it('should return the initial state when passed an empty action', () => {
