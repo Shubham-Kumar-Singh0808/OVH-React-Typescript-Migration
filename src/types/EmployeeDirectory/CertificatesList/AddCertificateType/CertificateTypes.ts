@@ -1,12 +1,14 @@
 import { ValidationError, LoadingState } from '../../../commonTypes'
 
-export type Technology = {
+export type CertificateType = {
+  name?: string
+  certificateType: string
   id: number
-  name: string
+  technologyId: number
+  technologyName: string
 }
-
 export type CertificateTypeSliceState = {
-  Technology: Technology[]
+  certificateTypes: CertificateType[]
   isLoading: LoadingState
   error: ValidationError
 }

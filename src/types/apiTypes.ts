@@ -130,5 +130,5 @@ export interface ShiftConfigurationApi extends ApiBase {
 }
 
 export interface CertificateTypeApi extends ApiBase {
-  getAllTechnologies: string
+  getCertificateTypeList: string
 }
