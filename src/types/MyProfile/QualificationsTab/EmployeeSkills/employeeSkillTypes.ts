@@ -48,6 +48,7 @@ export type AddEditEmployeeSkillsProps = {
   headerTitle: string
   confirmButtonText: string
   backButtonHandler: () => void
+  addButtonHandler?: () => void
 }
 export type CategorySkillListItem = {
   skillId: number
