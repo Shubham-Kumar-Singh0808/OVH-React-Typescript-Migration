@@ -155,6 +155,7 @@ const CategoryListTable = (): JSX.Element => {
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Category"
         confirmButtonText="Delete"
+        closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteCategoryId)}
       >
         {`Are you sure you want to delete this ${toDeleteCategoryName} category item?`}
