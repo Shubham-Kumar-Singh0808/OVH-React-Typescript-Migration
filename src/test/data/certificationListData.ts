@@ -1,6 +1,6 @@
-import { EmployeeCertifications } from '../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
+import { EmployeeCertification } from '../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 
-export const mockCertificationCategories: EmployeeCertifications[] = [
+export const mockCertificationCategories: EmployeeCertification[] = [
   {
     id: 300,
     code: '9874',

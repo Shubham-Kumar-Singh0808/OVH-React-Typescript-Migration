@@ -1,6 +1,6 @@
 import {
   AddUpdateEmployeeQualificationProps,
-  EmployeeQualifications,
+  EmployeeQualification,
   PostGraduationAndGraduationLookUp,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import {
@@ -27,7 +27,7 @@ const AddUpdateEmployeeQualification = ({
   addButtonHandler,
   isEmployeeQualificationExist = false,
 }: AddUpdateEmployeeQualificationProps): JSX.Element => {
-  const initialQualificationData = {} as EmployeeQualifications
+  const initialQualificationData = {} as EmployeeQualification
   const [addQualification, setAddQualification] = useState(
     initialQualificationData,
   )
