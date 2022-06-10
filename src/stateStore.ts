@@ -17,6 +17,7 @@ import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
+import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -34,6 +35,7 @@ export const allReducers = {
   employeeSkill: employeeSkillReducer,
   employeeDesignationList: employeeDesignationListReducer,
   shiftConfiguration: shiftConfigurationReducer,
+  certificateType: certificateTypeReducer,
   // add your slice reducers here
 }
 
