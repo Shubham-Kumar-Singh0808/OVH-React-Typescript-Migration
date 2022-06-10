@@ -4,7 +4,7 @@ export type PostGraduationAndGraduationLookUp = {
   id: string
   label: string
 }
-export type EmployeeQualifications = {
+export type EmployeeQualification = {
   id?: number | string
   empId?: number | string
   pgLookUp: PostGraduationAndGraduationLookUp[]
@@ -29,7 +29,7 @@ export type PostGraduationAndGraduationList = {
   pgDetails: PostGraduationAndGraduationLookUp[]
 }
 export type EmployeeQualificationSliceState = {
-  qualificationDetails: EmployeeQualifications
+  qualificationDetails: EmployeeQualification
   pgLookUpAndGraduationLookUpDetails: PostGraduationAndGraduationList
   isLoading: LoadingState
   error: ValidationError
