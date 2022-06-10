@@ -25,5 +25,9 @@ const TabsLabels = [
     id: 6,
     name: 'Projects',
   },
+  {
+    id: 9,
+    name: 'Profile History',
+  },
 ]
 export default TabsLabels

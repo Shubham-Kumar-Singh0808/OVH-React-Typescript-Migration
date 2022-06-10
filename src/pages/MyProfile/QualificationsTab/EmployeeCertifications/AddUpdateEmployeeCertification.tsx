@@ -11,7 +11,7 @@ import {
 } from '@coreui/react-pro'
 import {
   EmployeeCertificationProps,
-  EmployeeCertifications,
+  EmployeeCertification,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -19,9 +19,8 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import DatePicker from 'react-datepicker'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../../reducers/appSlice'
-import { certificationThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import moment from 'moment'
+import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 
 function AddUpdateEmployeeCertification({
@@ -30,7 +29,7 @@ function AddUpdateEmployeeCertification({
   confirmButtonText,
   backButtonHandler,
 }: EmployeeCertificationProps): JSX.Element {
-  const initialCertificationDetails = {} as EmployeeCertifications
+  const initialCertificationDetails = {} as EmployeeCertification
 
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [addCertification, setAddCertification] = useState(
@@ -53,20 +52,22 @@ function AddUpdateEmployeeCertification({
     (state) => state.employeeCertificates.editCertificateDetails,
   )
   const dispatch = useAppDispatch()
+
   useEffect(() => {
-    dispatch(certificationThunk.getEmployeeCertificates())
+    dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(certificationThunk.getTechnologies())
+    dispatch(reduxServices.employeeCertifications.getTechnologies())
     if (addCertification?.technology) {
       dispatch(
-        certificationThunk.getCertificateByTechnologyName(
+        reduxServices.employeeCertifications.getCertificateByTechnologyName(
           addCertification?.technology,
         ),
       )
     }
   }, [dispatch, addCertification?.technology])
+
   const successToastMessage = (
     <OToast
       toastMessage="Your changes have been saved successfully.."
@@ -114,6 +115,7 @@ function AddUpdateEmployeeCertification({
       setExpiryDate(date)
     }
   }
+
   useEffect(() => {
     if (
       (addCertification?.expiryDate as string) <=
@@ -126,7 +128,7 @@ function AddUpdateEmployeeCertification({
   useEffect(() => {
     if (error) {
       dispatch(
-        appActions.addToast(
+        reduxServices.app.actions.addToast(
           <OToast
             toastMessage="Date of Expiry should be greater"
             toastColor="danger"
@@ -141,18 +143,39 @@ function AddUpdateEmployeeCertification({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-
-    setAddCertification((values) => {
-      return { ...values, ...{ [name]: value } }
-    })
+    if (name === 'code') {
+      const registrationNumber = value.replace(/\s/g, '')
+      setAddCertification((prevState) => {
+        return { ...prevState, ...{ [name]: registrationNumber } }
+      })
+    } else if (name === 'name') {
+      const certificate = value.replace(/\s/g, '')
+      setAddCertification((prevState) => {
+        return { ...prevState, ...{ [name]: certificate } }
+      })
+    } else if (name === 'percent') {
+      let percentValue = Number(value.replace(/[^0-9]/g, ''))
+      if (percentValue > 100) percentValue = 100
+      setAddCertification((prevState) => {
+        return { ...prevState, ...{ [name]: percentValue } }
+      })
+    } else if (name === 'technology') {
+      setAddCertification((values) => {
+        return { ...values, ...{ [name]: value, certificateType: '' } }
+      })
+    } else {
+      setAddCertification((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
   }
 
   useEffect(() => {
     if (
       addCertification.technology &&
       addCertification.certificateType &&
-      addCertification.name?.replace(/\s+$/gi, '') &&
-      addCertification.code?.replace(/\s+$/gi, '') &&
+      addCertification.name &&
+      addCertification.code &&
       (completedDate || addCertification.completedDate)
     ) {
       setIsButtonEnabled(true)
@@ -175,6 +198,7 @@ function AddUpdateEmployeeCertification({
     setCompletedDate('')
     setExpiryDate('')
   }
+
   const handleAddCertificateDetails = async () => {
     const prepareObject = {
       ...addCertification,
@@ -185,15 +209,17 @@ function AddUpdateEmployeeCertification({
       },
     }
     const addCertificateResultAction = await dispatch(
-      certificationThunk.addEmployeeCertification(prepareObject),
+      reduxServices.employeeCertifications.createEmployeeCertification(
+        prepareObject,
+      ),
     )
     if (
-      certificationThunk.addEmployeeCertification.fulfilled.match(
+      reduxServices.employeeCertifications.createEmployeeCertification.fulfilled.match(
         addCertificateResultAction,
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(successToastMessage))
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -202,15 +228,17 @@ function AddUpdateEmployeeCertification({
       ...addCertification,
     }
     const updateCertificateResultAction = await dispatch(
-      certificationThunk.updateEmployeeCertificate(prepareObject),
+      reduxServices.employeeCertifications.updateEmployeeCertificate(
+        prepareObject,
+      ),
     )
     if (
-      certificationThunk.updateEmployeeCertificate.fulfilled.match(
+      reduxServices.employeeCertifications.updateEmployeeCertificate.fulfilled.match(
         updateCertificateResultAction,
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(successToastMessage))
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -333,7 +361,7 @@ function AddUpdateEmployeeCertification({
                 name="name"
                 value={addCertification?.name}
                 placeholder="Certification Name"
-                maxLength={26}
+                maxLength={24}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -435,7 +463,6 @@ function AddUpdateEmployeeCertification({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                type="number"
                 id="percentage"
                 name="percent"
                 value={addCertification?.percent}
@@ -443,6 +470,7 @@ function AddUpdateEmployeeCertification({
                 onChange={handleInputChange}
                 min={0}
                 max={100}
+                maxLength={3}
               />
             </CCol>
           </CRow>

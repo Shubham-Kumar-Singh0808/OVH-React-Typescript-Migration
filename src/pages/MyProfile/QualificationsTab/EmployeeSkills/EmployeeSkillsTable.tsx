@@ -7,13 +7,13 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
+import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../../reducers/appSlice'
-import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
-import { employeeSkillThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   editSkillButtonHandler,
@@ -23,12 +23,12 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   tableClassName = '',
 }: EmployeeSkillInfo): JSX.Element => {
   const employeeSkillsData = useTypedSelector(
-    (state) => state.employeeSkill.skillDetails,
+    reduxServices.employeeSkill.selectors.employeeSkillDetails,
   )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(employeeSkillThunk.getEmployeeSkills())
+    dispatch(reduxServices.employeeSkill.getEmployeeSkills())
   }, [dispatch])
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteSkillId, setToDeleteSkillId] = useState(0)
@@ -40,7 +40,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   const handleConfirmDeleteVisaDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteSkillsResultAction = await dispatch(
-      employeeSkillThunk.deleteEmployeeSkill(toDeleteSkillId),
+      reduxServices.employeeSkill.deleteEmployeeSkill(toDeleteSkillId),
     )
     const toastElement = (
       <OToast
@@ -49,12 +49,12 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
       />
     )
     if (
-      employeeSkillThunk.deleteEmployeeSkill.fulfilled.match(
+      reduxServices.employeeSkill.deleteEmployeeSkill.fulfilled.match(
         deleteSkillsResultAction,
       )
     ) {
-      dispatch(employeeSkillThunk.getEmployeeSkills())
-      dispatch(dispatch(appActions.addToast(toastElement)))
+      dispatch(reduxServices.employeeSkill.getEmployeeSkills())
+      dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
     }
   }
 
@@ -111,43 +111,54 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
         )}
 
         <CTableBody>
-          {employeeSkillsData?.map((skillItem, index) => (
-            <CTableRow key={index}>
-              {isFieldDisabled ? (
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-              ) : (
-                <></>
-              )}
-              <CTableDataCell scope="row">
-                {skillItem.categoryType}
-              </CTableDataCell>
-              <CTableDataCell scope="row">{skillItem.skillType}</CTableDataCell>
-              <CTableDataCell scope="row">
-                {skillItem.competency}
-              </CTableDataCell>
-              <CTableDataCell scope="row">{`${skillItem.expYear}Year('s) ${skillItem.expMonth}month('s)`}</CTableDataCell>
-              {isFieldDisabled ? (
+          {employeeSkillsData?.map((skillItem, index) => {
+            return (
+              <CTableRow key={index}>
+                {isFieldDisabled ? (
+                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                ) : (
+                  <></>
+                )}
                 <CTableDataCell scope="row">
-                  <CButton
-                    color="info"
-                    className="btn-ovh me-1"
-                    onClick={() => editSkillButtonHandler?.(skillItem.skillId)}
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    className="btn-ovh me-1"
-                    onClick={() => handleShowDeleteModal(skillItem.skillId)}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
+                  {skillItem.categoryType}
                 </CTableDataCell>
-              ) : (
-                <></>
-              )}
-            </CTableRow>
-          ))}
+                <CTableDataCell scope="row">
+                  {skillItem.skillType}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {skillItem.competency}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {`${skillItem.expYear}Year('s) ${skillItem.expMonth}month('s)`}
+                </CTableDataCell>
+                {isFieldDisabled ? (
+                  <CTableDataCell scope="row">
+                    <CButton
+                      color="info"
+                      className="btn-ovh me-1"
+                      onClick={() =>
+                        editSkillButtonHandler?.(skillItem.skillId)
+                      }
+                    >
+                      <i
+                        className="fa fa-pencil-square-o"
+                        aria-hidden="true"
+                      ></i>
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      className="btn-ovh me-1"
+                      onClick={() => handleShowDeleteModal(skillItem.skillId)}
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTableDataCell>
+                ) : (
+                  <></>
+                )}
+              </CTableRow>
+            )
+          })}
         </CTableBody>
       </CTable>
       {isFieldDisabled && (

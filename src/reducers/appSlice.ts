@@ -47,8 +47,8 @@ const appSlice = createSlice({
 const selectIsSessionExpired = (state: RootState): boolean =>
   state.app.isSessionExpired
 
-export const appSelectors = { selectIsSessionExpired }
+const appSelectors = { selectIsSessionExpired }
 
-export const appActions = appSlice.actions
+export const appService = { actions: appSlice.actions, selectors: appSelectors }
 
 export default appSlice.reducer

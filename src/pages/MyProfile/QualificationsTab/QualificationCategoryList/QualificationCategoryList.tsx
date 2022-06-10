@@ -7,31 +7,32 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import {
-  qualificationCategorySelectors,
-  qualificationCategoryThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import AddNewQualificationCategory from './AddNewQualificationCategory'
 import { AddUpdateEmployeeQualificationProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import QualificationCategoryListTable from './QualificationCategoryListTable'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const QualificationCategoryList = ({
   backButtonHandler,
 }: AddUpdateEmployeeQualificationProps): JSX.Element => {
   const dispatch = useAppDispatch()
+
   const isLoading = useTypedSelector(
-    qualificationCategorySelectors.selectIsQualificationCategoryListLoading,
+    reduxServices.employeeQualificationCategory.selectors.isLoading,
   )
 
   useEffect(() => {
-    dispatch(qualificationCategoryThunk.getQualificationCategories())
+    dispatch(
+      reduxServices.employeeQualificationCategory.getQualificationCategories(),
+    )
   }, [dispatch])
 
   return (
     <>
-      {!isLoading ? (
+      {isLoading !== ApiLoadingState.loading ? (
         <>
           <CCardHeader>
             <h4 className="h4">Qualification Detail List</h4>

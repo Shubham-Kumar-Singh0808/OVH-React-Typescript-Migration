@@ -1,9 +1,9 @@
-import { SkillListItem } from '../../types/MyProfile/Skills/skillTypes'
+import { Skill } from '../../types/MyProfile/Skills/skillTypes'
 
 export const skillMockCategoryId = 1
 export const skillMockCategoryType = 'Data Science'
 
-export const mockSkills: SkillListItem[] = [
+export const mockSkills: Skill[] = [
   {
     skillId: 1,
     skill: 'skillMock1',

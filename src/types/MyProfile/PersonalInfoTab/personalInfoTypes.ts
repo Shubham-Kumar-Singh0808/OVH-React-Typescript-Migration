@@ -9,8 +9,8 @@ export type EmployeeFamilyData = {
 }
 
 export type PersonalInfoTabState = {
-  getFamilyDetails: EmployeeFamilyData[]
-  getVisaDetails: VisaDetails[]
+  employeeFamilyDetails: EmployeeFamilyData[]
+  employeeVisaDetails: VisaDetails[]
   SubCountries: GetCountryDetails
   SubVisa: VisaCountryDetails[]
   editFamilyDetails: EditFamilyDetailsState
@@ -125,4 +125,7 @@ export type EmployeeFamilyDetailsTableProps = {
 }
 export type EmployeeVisaDetailsTableProps = {
   editVisaButtonHandler: (id: number) => void
+}
+export type handleActiveTabProps = {
+  handleActiveTab: (id: number) => void
 }

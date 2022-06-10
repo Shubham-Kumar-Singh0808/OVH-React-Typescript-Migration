@@ -1,6 +1,6 @@
-import { FeaturesUnderRole } from '../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import { UserFeaturesUnderRole } from '../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 
-export const mockUserRoleFeatures: FeaturesUnderRole[] = [
+export const mockUserRoleFeatures: UserFeaturesUnderRole[] = [
   {
     featureId: 1,
     name: 'Dashboard',

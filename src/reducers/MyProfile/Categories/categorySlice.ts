@@ -1,113 +1,118 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  CategoryListItem,
-  CategoryState,
+  Category,
+  CategorySliceState,
 } from '../../../types/MyProfile/Categories/categoryTypes'
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
-import { ValidationError } from '../../../types/commonTypes'
 import categoryApi from '../../../middleware/api/MyProfile/Categories/categoryApi'
 
-const getAllCategoryList = createAsyncThunk(
-  'category/getAllCategoryList',
+const getAllCategories = createAsyncThunk(
+  'category/getAllCategories',
   async (_, thunkApi) => {
     try {
-      return await categoryApi.getAllCategoryList()
+      return await categoryApi.getAllCategories()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-const postNewCategoryByName = createAsyncThunk<
-  CategoryListItem[] | undefined,
+
+const createCategory = createAsyncThunk<
+  Category[] | undefined,
   string,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
->('category/postNewCategoryByName', async (toAddCategoryName, thunkApi) => {
+>('category/createCategory', async (categoryName, thunkApi) => {
   try {
-    return await categoryApi.postNewCategoryByName(toAddCategoryName)
+    return await categoryApi.createCategory(categoryName)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
-const deleteCategoryById = createAsyncThunk<
-  CategoryListItem[] | undefined,
+
+const deleteCategory = createAsyncThunk<
+  Category[] | undefined,
   number,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
->('category/deleteCategoryById', async (categoryId, thunkApi) => {
+>('category/deleteCategory', async (categoryId, thunkApi) => {
   try {
-    return await categoryApi.deleteCategoryById(categoryId)
+    return await categoryApi.deleteCategory(categoryId)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
 
-const initialCategoryState: CategoryState = {
-  categoryList: [],
-  isLoading: false,
+const initialCategoryState: CategorySliceState = {
+  categories: [],
+  isLoading: ApiLoadingState.idle,
 }
 
 const categorySlice = createSlice({
   name: 'category',
   initialState: initialCategoryState,
   reducers: {
-    clearCategoryList: (state) => {
-      state.categoryList = []
+    clearCategories: (state) => {
+      state.categories = []
     },
   },
   extraReducers: (builder) => {
     builder
       .addMatcher(
         isAnyOf(
-          getAllCategoryList.pending,
-          postNewCategoryByName.pending,
-          deleteCategoryById.pending,
+          getAllCategories.pending,
+          createCategory.pending,
+          deleteCategory.pending,
         ),
         (state) => {
-          state.isLoading = true
+          state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
         isAnyOf(
-          getAllCategoryList.fulfilled,
-          postNewCategoryByName.fulfilled,
-          deleteCategoryById.fulfilled,
+          getAllCategories.fulfilled,
+          createCategory.fulfilled,
+          deleteCategory.fulfilled,
         ),
         (state, action) => {
-          state.isLoading = false
-          state.categoryList = action.payload as CategoryListItem[]
+          state.isLoading = ApiLoadingState.succeeded
+          state.categories = action.payload as Category[]
         },
       )
   },
 })
 
-const selectIsCategoryListLoading = (state: RootState): boolean =>
-  state.category.isLoading
-const selectCategoryList = (state: RootState): CategoryListItem[] =>
-  state.category.categoryList
+const isLoading = (state: RootState): LoadingState => state.category.isLoading
+const categories = (state: RootState): Category[] => state.category.categories
 
-export const categoryThunk = {
-  getAllCategoryList,
-  postNewCategoryByName,
-  deleteCategoryById,
+const categoryThunk = {
+  getAllCategories,
+  createCategory,
+  deleteCategory,
 }
 
-export const categoryActions = categorySlice.actions
+const categorySelectors = {
+  isLoading,
+  categories,
+}
 
-export const categorySelectors = {
-  selectIsCategoryListLoading,
-  selectCategoryList,
+export const categoryService = {
+  ...categoryThunk,
+  actions: categorySlice.actions,
+  selectors: categorySelectors,
 }
 
 export default categorySlice.reducer

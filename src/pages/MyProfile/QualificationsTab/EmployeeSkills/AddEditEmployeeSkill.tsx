@@ -1,31 +1,25 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import {
-  CCardHeader,
-  CCardBody,
-  CRow,
-  CCol,
-  CForm,
-  CButton,
-  CFormLabel,
-  CFormSelect,
-} from '@coreui/react-pro'
 import {
   AddEditEmployeeSkillsProps,
   AddUpdateEmployeeSkill,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import {
-  employeeSkillThunk,
-  employeeSkillSelectors,
-} from '../../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
-import {
-  categorySelectors,
-  categoryThunk,
-} from '../../../../reducers/MyProfile/Categories/categorySlice'
+  CButton,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CForm,
+  CFormLabel,
+  CFormSelect,
+  CRow,
+} from '@coreui/react-pro'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
-import { useFormik } from 'formik'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../../reducers/appSlice'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useFormik } from 'formik'
+
 function AddEditEmployeeSkill({
   isEditSkillsDetails = false,
   headerTitle,
@@ -34,7 +28,7 @@ function AddEditEmployeeSkill({
 }: AddEditEmployeeSkillsProps): JSX.Element {
   const initialEmployeeSkillsDetails = {} as AddUpdateEmployeeSkill
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const [employeeSkill, setEmployeeSkill] = useState(
     initialEmployeeSkillsDetails,
@@ -42,27 +36,29 @@ function AddEditEmployeeSkill({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [isSkillAddButtonEnabled, setIsSkillAddButtonEnabled] = useState(false)
   const getAllCategoriesDetails = useTypedSelector(
-    categorySelectors.selectCategoryList,
+    reduxServices.category.selectors.categories,
   )
   const getCategorySkillDetails = useTypedSelector(
-    employeeSkillSelectors.selectCategorySkillList,
+    reduxServices.employeeSkill.selectors.selectCategorySkillList,
   )
 
   const editFetchSkillsDetails = useTypedSelector(
-    employeeSkillSelectors.selectEditSkillDetails,
+    reduxServices.employeeSkill.selectors.selectEditSkillDetails,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(categoryThunk.getAllCategoryList())
+    dispatch(reduxServices.category.getAllCategories())
     if (employeeSkill?.categoryType) {
       dispatch(
-        employeeSkillThunk.getCategorySkills(employeeSkill?.categoryType),
+        reduxServices.employeeSkill.getCategorySkills(
+          employeeSkill?.categoryType,
+        ),
       )
     }
   }, [dispatch, employeeSkill?.categoryType])
 
   const employeeSkillHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target
+    const { name, value } = e.target || null
     setEmployeeSkill((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
@@ -150,16 +146,20 @@ function AddEditEmployeeSkill({
       },
     }
     const addFamilyMemberResultAction = await dispatch(
-      employeeSkillThunk.addEmployeeSkill(prepareObject),
+      reduxServices.employeeSkill.addEmployeeSkill(prepareObject),
     )
     if (
-      employeeSkillThunk.addEmployeeSkill.fulfilled.match(
+      reduxServices.employeeSkill.addEmployeeSkill.fulfilled.match(
         addFamilyMemberResultAction,
       )
     ) {
       backButtonHandler()
       dispatch(
-        dispatch(appActions.addToast(getToastMessage(actionMapping.added))),
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.added),
+          ),
+        ),
       )
     }
   }
@@ -172,16 +172,20 @@ function AddEditEmployeeSkill({
       categoryType: temp,
     }
     const updateSkillMemberResultAction = await dispatch(
-      employeeSkillThunk.updateEmployeeSkill(prepareObject),
+      reduxServices.employeeSkill.updateEmployeeSkill(prepareObject),
     )
     if (
-      employeeSkillThunk.updateEmployeeSkill.fulfilled.match(
+      reduxServices.employeeSkill.updateEmployeeSkill.fulfilled.match(
         updateSkillMemberResultAction,
       )
     ) {
       backButtonHandler()
       dispatch(
-        dispatch(appActions.addToast(getToastMessage(actionMapping.updated))),
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.updated),
+          ),
+        ),
       )
     }
   }

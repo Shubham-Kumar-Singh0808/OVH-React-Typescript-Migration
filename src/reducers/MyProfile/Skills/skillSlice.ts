@@ -1,27 +1,28 @@
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
-  SkillListItem,
-  SkillState,
+  Skill,
+  SkillSliceState,
 } from '../../../types/MyProfile/Skills/skillTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
-import { ValidationError } from '../../../types/commonTypes'
 import skillApi from '../../../middleware/api/MyProfile/Skills/skillApi'
 
-const getAllSkillListById = createAsyncThunk(
-  'skill/getAllSkillListById',
+const getAllSkills = createAsyncThunk(
+  'skill/getAllSkills',
   async (categoryId: number, thunkApi) => {
     try {
-      return await skillApi.getAllSkillListById(categoryId)
+      return await skillApi.getAllSkills(categoryId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-const postNewSkillByName = createAsyncThunk(
-  'skill/postNewSkillByName',
+const createSkill = createAsyncThunk(
+  'skill/createSkill',
   async (
     {
       categoryId,
@@ -30,18 +31,18 @@ const postNewSkillByName = createAsyncThunk(
     thunkApi,
   ) => {
     try {
-      return await skillApi.postNewSkillByName(categoryId, toAddSkillName)
+      return await skillApi.createSkill(categoryId, toAddSkillName)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-const deleteSkillById = createAsyncThunk(
-  'skill/deleteSkillById',
+const deleteSkill = createAsyncThunk(
+  'skill/deleteSkill',
   async (skillId: number, thunkApi) => {
     try {
-      return await skillApi.deleteSkillById(skillId)
+      return await skillApi.deleteSkill(skillId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -49,10 +50,10 @@ const deleteSkillById = createAsyncThunk(
   },
 )
 
-const initialSkillState: SkillState = {
-  skillList: [],
+const initialSkillState: SkillSliceState = {
+  skills: [],
   refreshList: false,
-  isLoading: false,
+  isLoading: ApiLoadingState.idle,
 }
 
 const skillSlice = createSlice({
@@ -60,7 +61,7 @@ const skillSlice = createSlice({
   initialState: initialSkillState,
   reducers: {
     clearSkillList: (state) => {
-      state.skillList = []
+      state.skills = []
     },
     toRefreshList: (state) => {
       state.refreshList = true
@@ -70,48 +71,46 @@ const skillSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(deleteSkillById.fulfilled, (state) => {
+    builder.addCase(deleteSkill.fulfilled, (state) => {
       state.refreshList = true
     })
     builder
       .addMatcher(
-        isAnyOf(
-          getAllSkillListById.pending,
-          postNewSkillByName.pending,
-          deleteSkillById.pending,
-        ),
+        isAnyOf(getAllSkills.pending, createSkill.pending, deleteSkill.pending),
         (state) => {
-          state.isLoading = true
+          state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
-        isAnyOf(getAllSkillListById.fulfilled, postNewSkillByName.fulfilled),
+        isAnyOf(getAllSkills.fulfilled, createSkill.fulfilled),
         (state, action) => {
-          state.isLoading = false
-          state.skillList = action.payload
+          state.isLoading = ApiLoadingState.succeeded
+          state.skills = action.payload
         },
       )
   },
 })
 
-const selectIsSkillListLoading = (state: RootState): boolean =>
-  state.skill.isLoading
-const selectRefreshList = (state: RootState): boolean => state.skill.refreshList
-const selectSkillList = (state: RootState): SkillListItem[] =>
-  state.skill.skillList
+const isLoading = (state: RootState): LoadingState => state.skill.isLoading
+const refreshList = (state: RootState): boolean => state.skill.refreshList
+const skills = (state: RootState): Skill[] => state.skill.skills
 
-export const skillThunk = {
-  getAllSkillListById,
-  postNewSkillByName,
-  deleteSkillById,
+const skillThunk = {
+  getAllSkills,
+  createSkill,
+  deleteSkill,
 }
 
-export const skillActions = skillSlice.actions
+const skillSelectors = {
+  isLoading,
+  refreshList,
+  skills,
+}
 
-export const skillSelectors = {
-  selectIsSkillListLoading,
-  selectRefreshList,
-  selectSkillList,
+export const skillService = {
+  ...skillThunk,
+  actions: skillSlice.actions,
+  selectors: skillSelectors,
 }
 
 export default skillSlice.reducer

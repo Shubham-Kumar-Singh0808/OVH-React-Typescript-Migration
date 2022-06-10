@@ -6,6 +6,7 @@ import { BasicInformationState } from '../../../types/MyProfile/BasicInfoTab/bas
 import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
+import { UploadFileReturn } from '../../../types/apiTypes'
 
 const updateEmployeeDefaultPicOnGenderChange = createAsyncThunk<
   number | undefined,
@@ -46,6 +47,25 @@ const updateEmployeeBasicInformation = createAsyncThunk<
   },
 )
 
+const uploadEmployeeCV = createAsyncThunk<
+  number | undefined,
+  UploadFileReturn,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'basicInformation/uploadRBTCv',
+  async (prepareObject: UploadFileReturn, thunkApi) => {
+    try {
+      return await basicInfoApi.uploadEmployeeCV(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 const initialBasicInformationState: BasicInformationState = {
   isLoading: false,
 }
@@ -60,6 +80,7 @@ const basicInformationSlice = createSlice({
         isAnyOf(
           updateEmployeeDefaultPicOnGenderChange.pending,
           updateEmployeeBasicInformation.pending,
+          uploadEmployeeCV.pending,
         ),
         (state) => {
           state.isLoading = true
@@ -69,6 +90,7 @@ const basicInformationSlice = createSlice({
         isAnyOf(
           updateEmployeeDefaultPicOnGenderChange.fulfilled,
           updateEmployeeBasicInformation.fulfilled,
+          uploadEmployeeCV.fulfilled,
         ),
         (state) => {
           state.isLoading = false
@@ -80,6 +102,11 @@ const basicInformationSlice = createSlice({
 export const employeeBasicInformationThunk = {
   updateEmployeeDefaultPicOnGenderChange,
   updateEmployeeBasicInformation,
+  uploadEmployeeCV,
+}
+export const basicInformationService = {
+  ...employeeBasicInformationThunk,
+  actions: basicInformationSlice.actions,
 }
 
 export default basicInformationSlice.reducer

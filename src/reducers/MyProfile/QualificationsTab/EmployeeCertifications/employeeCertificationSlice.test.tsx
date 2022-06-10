@@ -1,17 +1,19 @@
-import certificationSlice from './employeeCertificationSlice'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import employeeCertificationsSlice from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import { EditEmployeeCertificate } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 
 describe('Certification Section Reducer Test', () => {
   it('should return the initial state when passed an empty action', () => {
     const initialState = undefined
     const action = { type: '' }
-    const result = certificationSlice(initialState, action)
+    const result = employeeCertificationsSlice(initialState, action)
     expect(result).toEqual({
-      certificationDetails: [],
-      editCertificateDetails: {},
-      error: null,
+      editCertificateDetails: {} as EditEmployeeCertificate,
       getAllTechnologies: [],
-      isLoading: false,
       typeOfCertificate: [],
+      certificationDetails: [],
+      error: null,
+      isLoading: ApiLoadingState.idle,
     })
   })
 })

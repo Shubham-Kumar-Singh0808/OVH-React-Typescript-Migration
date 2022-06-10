@@ -6,8 +6,9 @@ import AddUpdateEmployeeCertification from './AddUpdateEmployeeCertification'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import { certificationThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import stateStore from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
+
 const ReduxProvider = ({
   children,
   reduxStore,
@@ -36,7 +37,9 @@ describe('Add Certification Testing', () => {
         />
       </ReduxProvider>,
     )
-    await stateStore.dispatch(certificationThunk.getEmployeeCertificates())
+    await stateStore.dispatch(
+      reduxServices.employeeCertifications.getEmployeeCertificates(),
+    )
   })
   test('should render Add button as disabled and Clear Button not disabled initially', () => {
     render(

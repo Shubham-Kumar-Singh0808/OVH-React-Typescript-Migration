@@ -34,11 +34,14 @@ export interface PersonalInfoApi extends ApiBase {
   fileUploadVisaImage: string
 }
 
-export interface EmployeeSkillApi extends ApiBase {
-  getEmployeeSkills: string
+export interface SkillApi extends ApiBase {
   getSkillListForCategory: string
   addNewSkillForCategory: string
   deleteSkillForCategory: string
+}
+
+export interface EmployeeSkillApi extends ApiBase {
+  getEmployeeSkills: string
   addEmployeeSkill: string
   getEmployeeSkillInformation: string
   updateEmployeeSkillInformation: string
@@ -47,7 +50,7 @@ export interface EmployeeSkillApi extends ApiBase {
 
 export interface EmployeeQualificationCategoryApi extends ApiBase {
   getQualificationCategories: string
-  addQualificationCategory: string
+  createQualificationCategory: string
   deleteQualificationCategory: string
 }
 export interface EmployeeGeneralInformationApi extends ApiBase {
@@ -68,7 +71,7 @@ export interface EmployeeCertificationsApi extends ApiBase {
   getEmployeeCertificates: string
   getTechnologies: string
   getCertificateByTechnology: string
-  addEmployeeCertificates: string
+  createEmployeeCertification: string
   getEmployeeCertificate: string
   updateEmployeeCertificate: string
   deleteEmployeeCertificate: string
@@ -76,7 +79,7 @@ export interface EmployeeCertificationsApi extends ApiBase {
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string
   isUserRoleExists: string
-  addNewUserRole: string
+  createUserRole: string
   deleteUserRole: string
   getSubFeatures: string
   featuresUnderRole: string
@@ -97,7 +100,37 @@ export interface PersonalInfoApi extends ApiBase {
   deleteVisaDetail: string
   fileUploadVisaImage: string
 }
+export interface ProfileHistoryApi extends ApiBase {
+  getprofileHistory: string
+}
 export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
+  uploadEmployeeCV: string
+  downloadEmployeeCV: string
+  downloadSampleCV: string
+}
+
+export interface UploadFileReturn {
+  personId: number
+  file: FormData
+}
+
+export interface EmployeeDesignationListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getEmployeeDesignations: string
+  addEmployeeDesignation: string
+  deleteEmployeeDesignation: string
+}
+export interface DownloadCVReturn {
+  fileName: string
+  token: string
+  tenantKey: string
+}
+
+export interface ShiftConfigurationApi extends ApiBase {
+  getAllShifts: string
+  addTimeSlot: string
+  updateShiftDetail: string
+  deleteShiftDetail: string
 }

@@ -9,6 +9,7 @@ const MyProfile = (): JSX.Element => {
   const employeeGeneralInformation = useTypedSelector(
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
+
   return (
     <>
       <OCard

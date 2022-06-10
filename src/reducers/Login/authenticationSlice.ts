@@ -6,11 +6,14 @@ import {
 } from '../../types/Login/authenticationTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+import { ApiLoadingState } from '../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../types/commonTypes'
 import authenticationApi from '../../middleware/api/Login/authenticationApi'
 
-const initialAuthenticationState = {} as AuthenticationState
+const initialAuthenticationState = {
+  isLoading: ApiLoadingState.idle,
+} as AuthenticationState
 
 const authenticateUser = createAsyncThunk<
   { authenticatedUser: AuthenticatedUser } | undefined,
@@ -49,17 +52,24 @@ const authenticationSlice = createSlice({
     clearError: (state) => {
       state.error = null
     },
+    clearLoading: (state) => {
+      state.isLoading = ApiLoadingState.idle
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(authenticateUser.pending, (state) => {
-        state.isLoading = true
+        state.isLoading = ApiLoadingState.loading
       })
       .addCase(authenticateUser.fulfilled, (state, action) => {
-        return { ...state, ...action.payload, isLoading: false }
+        return {
+          ...state,
+          ...action.payload,
+          isLoading: ApiLoadingState.succeeded,
+        }
       })
       .addCase(authenticateUser.rejected, (state, action) => {
-        state.isLoading = false
+        state.isLoading = ApiLoadingState.failed
         state.error = action.payload as ValidationError
       })
   },
@@ -71,17 +81,27 @@ const selectToken = (state: RootState): string =>
   state.authentication.authenticatedUser?.token
 const selectEmployeeId = (state: RootState): string =>
   state.authentication.authenticatedUser?.employeeId as string
+const selectEmployeeRole = (state: RootState): string =>
+  state.authentication.authenticatedUser?.role as string
+const selectTenantKey = (state: RootState): string =>
+  state.authentication.authenticatedUser?.tenantKey as string
 
-export const authenticationThunk = {
+const authenticationThunk = {
   authenticateUser,
 }
 
-export const authenticationActions = authenticationSlice.actions
-
-export const authenticationSelectors = {
+const authenticationSelectors = {
   selectError,
   selectToken,
   selectEmployeeId,
+  selectEmployeeRole,
+  selectTenantKey,
+}
+
+export const authenticationService = {
+  ...authenticationThunk,
+  actions: authenticationSlice.actions,
+  selectors: authenticationSelectors,
 }
 
 export default authenticationSlice.reducer
