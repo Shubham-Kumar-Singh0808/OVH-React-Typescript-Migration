@@ -812,7 +812,10 @@ const BasicInfoTab = (): JSX.Element => {
               className="form-control mt-2"
               accept="image/*"
             /> */}
-            <Demo file={employeeBasicInformation.thumbPicture} />
+            <Demo
+              file={employeeBasicInformation.thumbPicture}
+              empId={employeeBasicInformation.id as number}
+            />
           </CCol>
         </CRow>
         <CRow className="mt-3 ">

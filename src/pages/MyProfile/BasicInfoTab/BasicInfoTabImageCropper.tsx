@@ -1,28 +1,54 @@
-import React, { ChangeEvent, ChangeEventHandler, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import Cropper from 'react-cropper'
 import 'cropperjs/dist/cropper.css'
 import './Demo.css'
+import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
+import { latest } from 'immer/dist/internal'
 
-const Demo = (prop: any): JSX.Element => {
-  const [image, setImage] = useState()
+export type ImageCropperProps = {
+  file: string | undefined
+  empId: number
+}
+
+export type UploadImage = {
+  empId: number
+  data: unknown
+}
+
+const Demo = (prop: ImageCropperProps): JSX.Element => {
+  const [image, setImage] = useState<string | undefined>()
   const [imageUploaded, setImageUploaded] = useState<boolean>(false)
-  const [cropData, setCropData] = useState('#')
-  const [cropper, setCropper] = useState<any>()
+  const [cropper, setCropper] = useState<unknown | any>()
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files
     if (!file) return
     const reader = new FileReader()
     reader.onload = () => {
-      setImage(reader.result as any)
+      console.log(reader.result)
+      setImage(reader.result as string)
       setImageUploaded(true)
     }
     reader.readAsDataURL(file[0])
   }
 
-  const getCropData = () => {
-    console.log('called')
+  const getCropData = async () => {
     if (typeof cropper !== 'undefined') {
-      setCropData(cropper.getCroppedCanvas().toDataURL())
+      cropper.getCroppedCanvas().toBlob(async (blob: Blob) => {
+        console.log(blob)
+        const imageFile = new File([blob], 'profilePicture', {
+          type: 'image/jpeg',
+        })
+        console.log(imageFile)
+        const formData = new FormData()
+        formData.append('file', imageFile)
+        const prepareFile = {
+          data: formData,
+          empId: prop.empId,
+        }
+        setTimeout(async () => {
+          await basicInfoApi.uploadEmployeeImage(prepareFile)
+        }, 1000)
+      }, 'image/jpeg')
     }
   }
 

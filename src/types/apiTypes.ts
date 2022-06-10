@@ -107,6 +107,7 @@ export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
   uploadEmployeeCV: string
+  uploadEmployeeImage: string
   downloadEmployeeCV: string
   downloadSampleCV: string
 }

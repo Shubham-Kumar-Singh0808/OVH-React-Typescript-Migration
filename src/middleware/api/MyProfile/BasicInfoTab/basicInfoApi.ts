@@ -37,6 +37,30 @@ const uploadEmployeeCV = async (
   return response.data
 }
 
+export type UploadImage = {
+  empId: number
+  data: unknown
+}
+
+const uploadEmployeeImage = async (
+  prepareObject: UploadImage,
+): Promise<number | undefined> => {
+  // console.log(prepareObject.data.get('file'))
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: basicInfoApiConfig.uploadEmployeeImage,
+    method: AllowedHttpMethods.post,
+    data: prepareObject.data,
+    params: {
+      empId: prepareObject.empId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const downloadEmployeeCV = async (
   prepareObject: DownloadCVReturn,
 ): Promise<Blob | undefined> => {
@@ -86,6 +110,7 @@ const basicInfoApi = {
   updateDefaultPicOnGenderChange,
   updateEmployeeBasicInformation,
   uploadEmployeeCV,
+  uploadEmployeeImage,
   downloadEmployeeCV,
   downloadSampleCV,
 }
