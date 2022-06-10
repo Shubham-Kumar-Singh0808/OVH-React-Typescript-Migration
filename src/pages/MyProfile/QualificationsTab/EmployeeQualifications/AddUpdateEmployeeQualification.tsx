@@ -1,6 +1,6 @@
 import {
   AddUpdateEmployeeQualificationProps,
-  EmployeeQualifications,
+  EmployeeQualification,
   PostGraduationAndGraduationLookUp,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import {
@@ -19,8 +19,7 @@ import Multiselect from 'multiselect-react-dropdown'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
-import { appActions } from '../../../../reducers/appSlice'
-import { qualificationsThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 
 const AddUpdateEmployeeQualification = ({
@@ -28,7 +27,7 @@ const AddUpdateEmployeeQualification = ({
   addButtonHandler,
   isEmployeeQualificationExist = false,
 }: AddUpdateEmployeeQualificationProps): JSX.Element => {
-  const initialQualificationData = {} as EmployeeQualifications
+  const initialQualificationData = {} as EmployeeQualification
   const [addQualification, setAddQualification] = useState(
     initialQualificationData,
   )
@@ -63,10 +62,9 @@ const AddUpdateEmployeeQualification = ({
   )
   useEffect(() => {
     if (
-      addQualification.graduationLookUp &&
-      addQualification.graduationLookUp.length > 0 &&
-      addQualification.hscName.replace(/\s+$/gi, '') &&
-      addQualification.sscName.replace(/\s+$/gi, '')
+      addQualification.graduationLookUp?.length > 0 &&
+      addQualification.hscName &&
+      addQualification.sscName
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -75,8 +73,14 @@ const AddUpdateEmployeeQualification = ({
   }, [addQualification])
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(qualificationsThunk.getPgLookUpAndGraduationLookUpItems())
-    dispatch(qualificationsThunk.getEmployeeQualifications(employeeId))
+    dispatch(
+      reduxServices.employeeQualifications.getPgLookUpAndGraduationLookUpItems(),
+    )
+    dispatch(
+      reduxServices.employeeQualifications.getEmployeeQualifications(
+        employeeId,
+      ),
+    )
   }, [dispatch, employeeId])
 
   useEffect(() => {
@@ -94,9 +98,21 @@ const AddUpdateEmployeeQualification = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setAddQualification((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'hscName') {
+      const hscName = value.replace(/^\s*/, '')
+      setAddQualification((prevState) => {
+        return { ...prevState, ...{ [name]: hscName } }
+      })
+    } else if (name === 'sscName') {
+      const sscName = value.replace(/^\s*/, '')
+      setAddQualification((prevState) => {
+        return { ...prevState, ...{ [name]: sscName } }
+      })
+    } else {
+      setAddQualification((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
   const handleMultiSelect = (
     list: PostGraduationAndGraduationLookUp[],
@@ -116,33 +132,52 @@ const AddUpdateEmployeeQualification = ({
     })
   }
 
+  const handleClearDetails = () => {
+    setAddQualification({
+      pgLookUp: [],
+      graduationLookUp: [],
+      hscName: '',
+      sscName: '',
+      others: '',
+    })
+  }
   const handleAddUpdateQualification = async () => {
     if (addQualification.id) {
       const updateResultAction = await dispatch(
-        qualificationsThunk.updateEmployeeQualifications(addQualification),
+        reduxServices.employeeQualifications.updateEmployeeQualifications(
+          addQualification,
+        ),
       )
       if (
-        qualificationsThunk.updateEmployeeQualifications.fulfilled.match(
+        reduxServices.employeeQualifications.updateEmployeeQualifications.fulfilled.match(
           updateResultAction,
         )
       ) {
-        dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.updated),
+          ),
+        )
 
         backButtonHandler()
       }
     } else {
       const postResultAction = await dispatch(
-        qualificationsThunk.addEmployeeQualifications({
+        reduxServices.employeeQualifications.addEmployeeQualifications({
           ...addQualification,
           ...{ empId: employeeId as number },
         }),
       )
       if (
-        qualificationsThunk.addEmployeeQualifications.fulfilled.match(
+        reduxServices.employeeQualifications.addEmployeeQualifications.fulfilled.match(
           postResultAction,
         )
       ) {
-        dispatch(appActions.addToast(getToastMessage(actionMapping.added)))
+        dispatch(
+          reduxServices.app.actions.addToast(
+            getToastMessage(actionMapping.added),
+          ),
+        )
         backButtonHandler()
       }
     }
@@ -200,9 +235,9 @@ const AddUpdateEmployeeQualification = ({
                 Graduation:
                 <span
                   className={
-                    addQualification.graduationLookUp?.length === 0
-                      ? 'text-danger'
-                      : 'text-white'
+                    addQualification.graduationLookUp?.length > 0
+                      ? 'text-white'
+                      : 'text-danger'
                   }
                 >
                   *
@@ -235,9 +270,9 @@ const AddUpdateEmployeeQualification = ({
                 Higher Secondary Certificate:
                 <span
                   className={
-                    addQualification.hscName?.length === 0
-                      ? 'text-danger'
-                      : 'text-white'
+                    addQualification.hscName?.length > 0
+                      ? 'text-white'
+                      : 'text-danger'
                   }
                 >
                   *
@@ -258,9 +293,9 @@ const AddUpdateEmployeeQualification = ({
                 Secondary School Certificate:
                 <span
                   className={
-                    addQualification.sscName?.length === 0
-                      ? 'text-danger'
-                      : 'text-white'
+                    addQualification.sscName?.length > 0
+                      ? 'text-white'
+                      : 'text-danger'
                   }
                 >
                   *
@@ -312,7 +347,11 @@ const AddUpdateEmployeeQualification = ({
                     Add
                   </CButton>
                   <span>
-                    <CButton color="warning " className="btn-ovh">
+                    <CButton
+                      color="warning "
+                      className="btn-ovh"
+                      onClick={handleClearDetails}
+                    >
                       Clear
                     </CButton>
                   </span>
@@ -328,5 +367,4 @@ const AddUpdateEmployeeQualification = ({
     </>
   )
 }
-
 export default AddUpdateEmployeeQualification

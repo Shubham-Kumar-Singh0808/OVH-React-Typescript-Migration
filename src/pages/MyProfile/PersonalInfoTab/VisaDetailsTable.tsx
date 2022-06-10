@@ -8,30 +8,30 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import {
-  personalInfoThunk,
-  personalInfoSelectors,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
+import { reduxServices } from '../../../reducers/reduxServices'
+
 const VisaDetailsTable = ({
   editVisaButtonHandler,
 }: EmployeeVisaDetailsTableProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
+
   const getEmployeeVisaData = useTypedSelector(
-    personalInfoSelectors.selectGetVisaDetails,
+    reduxServices.personalInformation.selectors.visaDetails,
   )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(personalInfoThunk.getEmployeeVisaDetails(employeeId))
+    dispatch(
+      reduxServices.personalInformation.getEmployeeVisaDetails(employeeId),
+    )
   }, [dispatch, employeeId])
   const handleShowDeleteModal = (visaId: number) => {
     setToDeleteVisaId(visaId)
@@ -40,16 +40,18 @@ const VisaDetailsTable = ({
   const handleConfirmDeleteVisaDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(
-      personalInfoThunk.deleteEmployeeVisa(toDeleteVisaId),
+      reduxServices.personalInformation.deleteEmployeeVisa(toDeleteVisaId),
     )
     if (
-      personalInfoThunk.deleteEmployeeVisa.fulfilled.match(
+      reduxServices.personalInformation.deleteEmployeeVisa.fulfilled.match(
         deleteFamilyMemberResultAction,
       )
     ) {
-      dispatch(personalInfoThunk.getEmployeeVisaDetails(employeeId))
       dispatch(
-        appActions.addToast(
+        reduxServices.personalInformation.getEmployeeVisaDetails(employeeId),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
             toastMessage="Visa Detail deleted successfully"

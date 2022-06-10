@@ -1,10 +1,10 @@
-import { ValidationError } from '../../../commonTypes'
+import { LoadingState, ValidationError } from '../../../commonTypes'
 
 export type PostGraduationAndGraduationLookUp = {
   id: string
   label: string
 }
-export type EmployeeQualifications = {
+export type EmployeeQualification = {
   id?: number | string
   empId?: number | string
   pgLookUp: PostGraduationAndGraduationLookUp[]
@@ -28,9 +28,9 @@ export type PostGraduationAndGraduationList = {
   graduationDetails: PostGraduationAndGraduationLookUp[]
   pgDetails: PostGraduationAndGraduationLookUp[]
 }
-export type EmployeeQualificationDetails = {
-  qualificationDetails: EmployeeQualifications
+export type EmployeeQualificationSliceState = {
+  qualificationDetails: EmployeeQualification
   pgLookUpAndGraduationLookUpDetails: PostGraduationAndGraduationList
-  isLoading: boolean
+  isLoading: LoadingState
   error: ValidationError
 }

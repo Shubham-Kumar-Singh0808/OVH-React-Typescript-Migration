@@ -8,22 +8,19 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import {
-  qualificationCategorySelectors,
-  qualificationCategoryThunk,
-} from '../../../../reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { QualificationCategoryList } from '../../../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
-import { appActions } from '../../../../reducers/appSlice'
+import { QualificationCategory } from '../../../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const AddNewQualificationCategory = (): JSX.Element => {
   const employeeQualificationCategories = useTypedSelector(
-    qualificationCategorySelectors.selectQualificationCategoryList,
+    reduxServices.employeeQualificationCategory.selectors
+      .qualificationCategories,
   )
   const dispatch = useAppDispatch()
-  const initialNewQualificationCategory = {} as QualificationCategoryList
+  const initialNewQualificationCategory = {} as QualificationCategory
   const [newQualificationCategory, setNewQualificationCategory] = useState(
     initialNewQualificationCategory,
   )
@@ -49,7 +46,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
   useEffect(() => {
     if (
       newQualificationCategory.qualificationCategory &&
-      newQualificationCategory.qualificationName?.replace(/\s+$/gi, '')
+      newQualificationCategory.qualificationName
     ) {
       setIsAddQualificationCategoryBtnEnabled(true)
     } else {
@@ -65,10 +62,16 @@ const AddNewQualificationCategory = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-
-    setNewQualificationCategory((values) => {
-      return { ...values, ...{ [name]: value } }
-    })
+    if (name === 'qualificationName') {
+      const qualificationName = value.replace(/^\s*/, '')
+      setNewQualificationCategory((prevState) => {
+        return { ...prevState, ...{ [name]: qualificationName } }
+      })
+    } else {
+      setNewQualificationCategory((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
   }
 
   const handleAddQualificationCategory = async () => {
@@ -80,7 +83,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
           newQualificationCategory.qualificationName.toLowerCase(),
       ).length > 0
     ) {
-      dispatch(appActions.addToast(alreadyExistToastMessage))
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
       return
     }
 
@@ -90,10 +93,14 @@ const AddNewQualificationCategory = (): JSX.Element => {
     })
 
     dispatch(
-      qualificationCategoryThunk.addQualificationCategory(addQualificationName),
+      reduxServices.employeeQualificationCategory.createQualificationCategory(
+        addQualificationName,
+      ),
     )
-    dispatch(qualificationCategoryThunk.getQualificationCategories())
-    dispatch(appActions.addToast(successToastMessage))
+    dispatch(
+      reduxServices.employeeQualificationCategory.getQualificationCategories(),
+    )
+    dispatch(reduxServices.app.actions.addToast(successToastMessage))
   }
 
   const formLabelProps = {
@@ -122,6 +129,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
+              data-testid="form-select"
               aria-label="Default select example"
               size="sm"
               name="qualificationCategory"

@@ -8,16 +8,12 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import {
-  personalInfoThunk,
-  personalInfoSelectors,
-} from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
+import { reduxServices } from '../../../reducers/reduxServices'
+
 const FamilyDetailsTable = ({
   editButtonHandler,
   isFieldDisabled = false,
@@ -28,15 +24,17 @@ const FamilyDetailsTable = ({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const getEmployeeFamilyData = useTypedSelector(
-    personalInfoSelectors.selectGetFamilyDetails,
+    reduxServices.personalInformation.selectors.familyDetails,
   )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(personalInfoThunk.getEmployeeFamilyDetails(employeeId))
+    dispatch(
+      reduxServices.personalInformation.getEmployeeFamilyDetails(employeeId),
+    )
   }, [dispatch, employeeId])
   const handleShowDeleteModal = (familyId: number) => {
     setIsDeleteModalVisible(true)
@@ -46,16 +44,20 @@ const FamilyDetailsTable = ({
   const handleConfirmDeleteFamilyDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(
-      personalInfoThunk.deleteEmployeeFamilyMember(toDeleteFamilyId),
+      reduxServices.personalInformation.deleteEmployeeFamilyMember(
+        toDeleteFamilyId,
+      ),
     )
     if (
-      personalInfoThunk.deleteEmployeeFamilyMember.fulfilled.match(
+      reduxServices.personalInformation.deleteEmployeeFamilyMember.fulfilled.match(
         deleteFamilyMemberResultAction,
       )
     ) {
-      dispatch(personalInfoThunk.getEmployeeFamilyDetails(employeeId))
       dispatch(
-        appActions.addToast(
+        reduxServices.personalInformation.getEmployeeFamilyDetails(employeeId),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
             toastMessage="Family Detail deleted successfully"

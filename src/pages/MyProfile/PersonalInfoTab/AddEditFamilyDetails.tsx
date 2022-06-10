@@ -14,13 +14,13 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { personalInfoThunk } from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { appActions } from '../../../reducers/appSlice'
 import moment from 'moment'
+import { reduxServices } from '../../../reducers/reduxServices'
+
 function AddEditFamilyDetails({
   isEditFamilyDetails = false,
   headerTitle,
@@ -28,7 +28,7 @@ function AddEditFamilyDetails({
   backButtonHandler,
 }: AddEditEmployeeFamilyDetails): JSX.Element {
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const dispatch = useAppDispatch()
   const initialEmployeeFamilyDetails = {} as EmployeeFamilyDetails
@@ -39,7 +39,7 @@ function AddEditFamilyDetails({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const fetchEditFamilyDetails = useTypedSelector(
-    (state) => state.personalInfoDetails.editFamilyDetails,
+    reduxServices.personalInformation.selectors.employeeFamilyMember,
   )
   useEffect(() => {
     if (isEditFamilyDetails) {
@@ -118,15 +118,19 @@ function AddEditFamilyDetails({
       },
     }
     const addFamilyMemberResultAction = await dispatch(
-      personalInfoThunk.addEmployeeFamilyMember(prepareObject),
+      reduxServices.personalInformation.addEmployeeFamilyMember(prepareObject),
     )
     if (
-      personalInfoThunk.addEmployeeFamilyMember.fulfilled.match(
+      reduxServices.personalInformation.addEmployeeFamilyMember.fulfilled.match(
         addFamilyMemberResultAction,
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(getToastMessage(actionMapping.added)))
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.added),
+        ),
+      )
     }
   }
   const handleUpdateFamilyMember = async () => {
@@ -137,15 +141,21 @@ function AddEditFamilyDetails({
       },
     }
     const updateFamilyMemberResultAction = await dispatch(
-      personalInfoThunk.updateEmployeeFamilyMember(prepareObject),
+      reduxServices.personalInformation.updateEmployeeFamilyMember(
+        prepareObject,
+      ),
     )
     if (
-      personalInfoThunk.updateEmployeeFamilyMember.fulfilled.match(
+      reduxServices.personalInformation.updateEmployeeFamilyMember.fulfilled.match(
         updateFamilyMemberResultAction,
       )
     ) {
       backButtonHandler()
-      dispatch(appActions.addToast(getToastMessage(actionMapping.updated)))
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.updated),
+        ),
+      )
     }
   }
   const nameProps = {

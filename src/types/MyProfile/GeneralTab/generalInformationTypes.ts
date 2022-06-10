@@ -33,6 +33,23 @@ export type EmployeeGeneralInformation = {
   alternativeMobile?: string
   workNumber?: string
   updatedExperience?: string | number
+  homeCode?: string
+  workCode?: string
+  emergencyContactName?: string
+  emergencyPhone?: string
+  emergencyRelationShip?: string
+  presentAddress?: string
+  presentCity?: string
+  presentZip?: string
+  presentLandMark?: string
+  permanentAddress?: string
+  permanentCity?: string
+  permanentZip?: string
+  permanentLandMark?: string
+  passportNumber?: string
+  passportIssuedPlace?: string
+  passportIssuedDate?: string
+  passportExpDate?: string
 }
 export type ProfileDetailsProps = {
   employeeGeneralInformation: EmployeeGeneralInformation

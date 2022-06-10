@@ -1,19 +1,20 @@
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
-  EmployeeQualificationDetails,
-  EmployeeQualifications,
+  EmployeeQualificationSliceState,
+  EmployeeQualification,
   PostGraduationAndGraduationList,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { ValidationError } from '../../../../types/commonTypes'
+import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import employeeQualificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationsApi'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
-const initialQualificationState = {} as EmployeeQualificationDetails
+const initialQualificationState = {} as EmployeeQualificationSliceState
 
 const getEmployeeQualifications = createAsyncThunk<
-  EmployeeQualifications | undefined,
+  EmployeeQualification | undefined,
   string | number,
   {
     dispatch: AppDispatch
@@ -35,8 +36,8 @@ const getEmployeeQualifications = createAsyncThunk<
 )
 
 const addEmployeeQualifications = createAsyncThunk<
-  EmployeeQualifications | undefined,
-  EmployeeQualifications,
+  EmployeeQualification | undefined,
+  EmployeeQualification,
   {
     dispatch: AppDispatch
     state: RootState
@@ -44,7 +45,7 @@ const addEmployeeQualifications = createAsyncThunk<
   }
 >(
   'employeeQualifications/addEmployeeQualifications',
-  async (addQualification: EmployeeQualifications, thunkApi) => {
+  async (addQualification: EmployeeQualification, thunkApi) => {
     try {
       return await employeeQualificationsApi.addEmployeeQualifications(
         addQualification,
@@ -57,8 +58,8 @@ const addEmployeeQualifications = createAsyncThunk<
 )
 
 const updateEmployeeQualifications = createAsyncThunk<
-  EmployeeQualifications | undefined,
-  EmployeeQualifications,
+  EmployeeQualification | undefined,
+  EmployeeQualification,
   {
     dispatch: AppDispatch
     state: RootState
@@ -66,7 +67,7 @@ const updateEmployeeQualifications = createAsyncThunk<
   }
 >(
   'employeeQualifications/updateEmployeeQualifications',
-  async (addQualification: EmployeeQualifications, thunkApi) => {
+  async (addQualification: EmployeeQualification, thunkApi) => {
     try {
       return await employeeQualificationsApi.updateEmployeeQualifications(
         addQualification,
@@ -107,7 +108,7 @@ const employeeQualificationsSlice = createSlice({
       .addCase(
         getPgLookUpAndGraduationLookUpItems.fulfilled,
         (state, action) => {
-          state.isLoading = false
+          state.isLoading = ApiLoadingState.succeeded
           state.pgLookUpAndGraduationLookUpDetails =
             action.payload as PostGraduationAndGraduationList
         },
@@ -119,7 +120,7 @@ const employeeQualificationsSlice = createSlice({
           addEmployeeQualifications.pending,
         ),
         (state) => {
-          state.isLoading = true
+          state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
@@ -129,8 +130,8 @@ const employeeQualificationsSlice = createSlice({
           addEmployeeQualifications.fulfilled,
         ),
         (state, action) => {
-          state.isLoading = false
-          state.qualificationDetails = action.payload as EmployeeQualifications
+          state.isLoading = ApiLoadingState.succeeded
+          state.qualificationDetails = action.payload as EmployeeQualification
         },
       )
       .addMatcher(
@@ -141,31 +142,34 @@ const employeeQualificationsSlice = createSlice({
           addEmployeeQualifications.rejected,
         ),
         (state, action) => {
-          state.isLoading = false
+          state.isLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
         },
       )
   },
 })
-const selectIsQualificationListLoading = (state: RootState): boolean =>
-  state.qualificationCategory.isLoading
 
-const selectEmployeeQualification = (
-  state: RootState,
-): EmployeeQualifications =>
+const isLoading = (state: RootState): LoadingState =>
+  state.employeeQualificationsDetails.isLoading
+
+const employeeQualifications = (state: RootState): EmployeeQualification =>
   state.employeeQualificationsDetails.qualificationDetails
 
-export const qualificationsThunk = {
+export const employeeQualificationsThunk = {
   getPgLookUpAndGraduationLookUpItems,
   getEmployeeQualifications,
   updateEmployeeQualifications,
   addEmployeeQualifications,
 }
 
-export const qualificationActions = employeeQualificationsSlice.actions
+export const employeeQualificationSelectors = {
+  isLoading,
+  employeeQualifications,
+}
 
-export const qualificationSelectors = {
-  selectIsQualificationListLoading,
-  selectEmployeeQualification,
+export const employeeQualificationService = {
+  ...employeeQualificationsThunk,
+  actions: employeeQualificationsSlice.actions,
+  selectors: employeeQualificationSelectors,
 }
 export default employeeQualificationsSlice.reducer

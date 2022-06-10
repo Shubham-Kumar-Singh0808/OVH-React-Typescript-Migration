@@ -1,10 +1,12 @@
-export type CategoryListItem = {
+import { LoadingState } from '../../commonTypes'
+
+export type Category = {
   categoryId: number
   categoryType: string
   employeeSkill: null
 }
 
-export type CategoryState = {
-  categoryList: CategoryListItem[]
-  isLoading: boolean
+export type CategorySliceState = {
+  categories: Category[]
+  isLoading: LoadingState
 }

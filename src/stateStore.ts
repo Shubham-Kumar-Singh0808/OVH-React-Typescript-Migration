@@ -3,17 +3,20 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
-import certificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { configureStore } from '@reduxjs/toolkit'
+import employeeCertificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
+import profileHistoryReducer from './reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
+import shiftConfigurationReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -26,8 +29,11 @@ export const allReducers = {
   personalInfoDetails: personalInfoReducer,
   skill: skillReducer,
   qualificationCategory: qualificationCategoryReducer,
-  employeeCertificates: certificationReducer,
+  employeeCertificates: employeeCertificationReducer,
+  profileHistory: profileHistoryReducer,
   employeeSkill: employeeSkillReducer,
+  employeeDesignationList: employeeDesignationListReducer,
+  shiftConfiguration: shiftConfigurationReducer,
   // add your slice reducers here
 }
 

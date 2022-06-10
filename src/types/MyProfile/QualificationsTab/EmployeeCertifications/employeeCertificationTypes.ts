@@ -1,4 +1,4 @@
-import { ValidationError } from '../../../commonTypes'
+import { LoadingState, ValidationError } from '../../../commonTypes'
 
 export type EmployeeCertificationProps = {
   isEditCertificationDetails?: boolean
@@ -7,7 +7,7 @@ export type EmployeeCertificationProps = {
   backButtonHandler: () => void
 }
 
-export type EmployeeCertifications = {
+export type EmployeeCertification = {
   id?: number | string
   technologyId?: string
   technologyName?: string
@@ -23,7 +23,7 @@ export type EmployeeCertifications = {
   skill?: null
 }
 
-export type EditEmployeeCertificates = {
+export type EditEmployeeCertificate = {
   id: number
   certificateType: string
   code: string
@@ -51,11 +51,11 @@ export type CertificateType = {
   certificateType: string
   technology: string
 }
-export type CertificationState = {
+export type CertificationSliceState = {
   getAllTechnologies: Technology[]
   typeOfCertificate: CertificateType[]
-  certificationDetails: EmployeeCertifications[]
-  editCertificateDetails: EditEmployeeCertificates
-  isLoading: boolean
+  certificationDetails: EmployeeCertification[]
+  editCertificateDetails: EditEmployeeCertificate
+  isLoading: LoadingState
   error: ValidationError
 }
