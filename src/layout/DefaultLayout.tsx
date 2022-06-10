@@ -15,8 +15,9 @@ const DefaultLayout = (): JSX.Element => {
   const toastState = useTypedSelector((state) => state.app.toast)
   const toasterReference = useRef<HTMLDivElement>(null)
 
-  const timeout = 20 * 60 * 1000
-  const promptTimeout = 30 * 1000
+  const timeout = Number(process.env.REACT_APP_IDLE_TIMEOUT) || 20 * 60 * 1000
+  const promptTimeout =
+    Number(process.env.REACT_APP_PROMPT_TIMEOUT) || 30 * 1000
 
   return (
     <>
