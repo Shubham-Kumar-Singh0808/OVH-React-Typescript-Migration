@@ -15,12 +15,12 @@ import {
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
+import CategoryList from '../../Categories/CategoryList'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import SkillList from '../../Skills/SkillList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
-import CategoryList from '../../Categories/CategoryList'
-import SkillList from '../../Skills/SkillList'
 
 function AddEditEmployeeSkill({
   isEditSkillsDetails = false,
