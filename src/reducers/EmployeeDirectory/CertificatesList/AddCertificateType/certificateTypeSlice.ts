@@ -17,7 +17,7 @@ const getCertificateTypeList = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('employeeCertifications/getCertificateTypeList', async (_, thunkApi) => {
+>('certificateType/getCertificateTypeList', async (_, thunkApi) => {
   try {
     return await certificateTypeApi.getCertificateTypeList()
   } catch (error) {

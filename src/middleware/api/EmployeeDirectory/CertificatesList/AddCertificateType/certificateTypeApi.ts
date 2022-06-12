@@ -16,4 +16,5 @@ const getCertificateTypeList = async (): Promise<CertificateType[]> => {
 const certificateTypeApi = {
   getCertificateTypeList,
 }
+
 export default certificateTypeApi
