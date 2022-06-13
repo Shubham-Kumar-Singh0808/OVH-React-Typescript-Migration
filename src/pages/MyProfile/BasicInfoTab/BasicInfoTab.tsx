@@ -86,6 +86,7 @@ const BasicInfoTab = (): JSX.Element => {
   //onChange handler for image upload and crop
   const croppedImageHandler = useCallback((croppedImageData: UploadImage) => {
     setSelectedProfilePicture(croppedImageData)
+    setSaveButtonEnabled(true)
   }, [])
 
   // onchange handler for input fields
@@ -157,7 +158,7 @@ const BasicInfoTab = (): JSX.Element => {
       )
       return
     }
-
+    setSaveButtonEnabled(true)
     setUploadErrorText('')
     setCVToUpload(file[0])
   }
@@ -870,7 +871,7 @@ const BasicInfoTab = (): JSX.Element => {
               />
             )}
             {uploadErrorText && (
-              <div>
+              <div id="error">
                 <strong className="text-danger mt-3">{uploadErrorText}</strong>
               </div>
             )}

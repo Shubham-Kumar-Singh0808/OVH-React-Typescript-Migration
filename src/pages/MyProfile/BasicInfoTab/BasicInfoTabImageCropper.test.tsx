@@ -45,5 +45,9 @@ describe('Basic Info Image Upload Crop Testing', () => {
       const fileUpload = getById(component.container, 'fileUpload')
       expect(fileUpload).toBeDefined()
     })
+    it('should not show any errors', () => {
+      const error = getById(component.container, 'error')
+      expect(error).toBeFalsy()
+    })
   })
 })

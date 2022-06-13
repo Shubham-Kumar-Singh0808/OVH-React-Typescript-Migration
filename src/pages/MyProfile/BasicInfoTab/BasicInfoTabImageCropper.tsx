@@ -6,17 +6,33 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
   const [image, setImage] = useState<string | undefined>()
   const [imageUploaded, setImageUploaded] = useState<boolean>(false)
   const [cropper, setCropper] = useState<Cropper>()
+  const [fileTypeError, setFileTypeError] = useState<string>('')
+  const { onUploadImage } = props
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files
+    const acceptedFileTypes = ['png', 'jpeg', 'jpg', 'PNG', 'JPEG', 'JPG']
+    let extension = '' as string
     if (!file) return
+    if (file) {
+      extension = file[0].name.split('.').pop() as string
+    }
+    if (!acceptedFileTypes.includes(extension)) {
+      setFileTypeError(
+        'Wrong file format chosen. Please choose either png, jpeg, or jpg.',
+      )
+      setImage(undefined)
+      setImageUploaded(false)
+      setCropper(undefined)
+      return
+    }
     const reader = new FileReader()
     reader.onload = () => {
       setImage(reader.result as string)
       setImageUploaded(true)
+      setFileTypeError('')
     }
     reader.readAsDataURL(file[0])
   }
-  const { onUploadImage } = props
 
   const getCropData = useCallback(async () => {
     if (typeof cropper !== 'undefined' && typeof cropper !== null) {
@@ -71,6 +87,11 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
           onChange={onChange}
           accept=".png, .jpg, .jpeg"
         />
+        {fileTypeError && (
+          <div>
+            <strong className="text-danger mt-3">{fileTypeError}</strong>
+          </div>
+        )}
         {imageUploaded && (
           <span>
             <Cropper
