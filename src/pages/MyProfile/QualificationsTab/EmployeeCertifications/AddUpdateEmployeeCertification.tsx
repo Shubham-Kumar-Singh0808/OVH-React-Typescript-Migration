@@ -288,8 +288,6 @@ function AddUpdateEmployeeCertification({
   }
 
   const validateDates = (startDate: Date, endDate: Date) => {
-    console.log(startDate)
-    console.log(endDate)
     if (startDate.getTime() > endDate.getTime()) {
       setError(true)
     } else {
