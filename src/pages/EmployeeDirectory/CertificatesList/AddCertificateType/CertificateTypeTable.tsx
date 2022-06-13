@@ -69,8 +69,6 @@ const CertificateTypeTable = (): JSX.Element => {
             </CTableHead>
             <CTableBody>
               {currentPageItems.map((certificateTypeItem, index) => {
-                console.log(currentPageItems)
-
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row">

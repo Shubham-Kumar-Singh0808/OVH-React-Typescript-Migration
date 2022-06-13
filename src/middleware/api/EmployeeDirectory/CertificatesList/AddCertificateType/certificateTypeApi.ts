@@ -13,8 +13,26 @@ const getCertificateTypeList = async (): Promise<CertificateType[]> => {
   return response.data
 }
 
+const addCertificateType = async ({
+  technologyId,
+  certificateType,
+}: CertificateType): Promise<CertificateType[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: certificateTypeApiConfig.addCertificateType,
+    method: AllowedHttpMethods.post,
+    data: {
+      technologyId: technologyId,
+      certificateType: certificateType,
+    },
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const certificateTypeApi = {
   getCertificateTypeList,
+  addCertificateType,
 }
 
 export default certificateTypeApi

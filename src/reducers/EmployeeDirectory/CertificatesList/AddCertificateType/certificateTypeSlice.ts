@@ -26,6 +26,29 @@ const getCertificateTypeList = createAsyncThunk<
   }
 })
 
+const addCertificateType = createAsyncThunk<
+  CertificateType[] | undefined,
+  CertificateType,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'certificateType/addCertificateType',
+  async ({ technologyId, certificateType }: CertificateType, thunkApi) => {
+    try {
+      return await certificateTypeApi.addCertificateType({
+        technologyId,
+        certificateType,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialCertificateTypeState: CertificateTypeSliceState = {
   certificateTypes: [],
   isLoading: ApiLoadingState.idle,
@@ -41,9 +64,15 @@ const certificateTypeSlice = createSlice({
         state.isLoading = ApiLoadingState.failed
         state.error = action.payload as ValidationError
       })
-      .addMatcher(isAnyOf(getCertificateTypeList.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(addCertificateType.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
       })
+      .addMatcher(
+        isAnyOf(getCertificateTypeList.pending, addCertificateType.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
       .addMatcher(
         isAnyOf(getCertificateTypeList.fulfilled),
         (state, action) => {
@@ -64,6 +93,7 @@ const isError = (state: RootState): ValidationError =>
 
 export const certificateTypeThunk = {
   getCertificateTypeList,
+  addCertificateType,
 }
 
 export const certificateTypeSelectors = {

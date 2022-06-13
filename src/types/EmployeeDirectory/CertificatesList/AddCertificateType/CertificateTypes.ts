@@ -3,9 +3,13 @@ import { ValidationError, LoadingState } from '../../../commonTypes'
 export type CertificateType = {
   name?: string
   certificateType: string
-  id: number
+  id?: number
   technologyId: number
-  technologyName: string
+  technologyName?: string
+}
+export type AddCertificateTypeProps = {
+  selectedTechnologyId: number
+  setSelectedTechnologyId: (value: number) => void
 }
 export type CertificateTypeSliceState = {
   certificateTypes: CertificateType[]

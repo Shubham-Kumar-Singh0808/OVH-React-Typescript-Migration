@@ -1,10 +1,11 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import AddNewCertificateType from './AddNewCertificateType'
 import CertificateTypeTable from './CertificateTypeTable'
 
 const CertificateType = (): JSX.Element => {
+  const [selectedTechnologyId, setSelectedTechnologyId] = useState<number>()
   return (
     <>
       <OCard
@@ -19,7 +20,10 @@ const CertificateType = (): JSX.Element => {
             </CButton>
           </CCol>
           <CCol xs={12}>
-            <AddNewCertificateType />
+            <AddNewCertificateType
+              selectedTechnologyId={selectedTechnologyId as number}
+              setSelectedTechnologyId={setSelectedTechnologyId}
+            />
           </CCol>
           <CCol xs={12} className="ps-0 pe-0">
             <CertificateTypeTable />

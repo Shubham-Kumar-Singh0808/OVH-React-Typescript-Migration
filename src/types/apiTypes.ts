@@ -137,4 +137,5 @@ export interface ShiftConfigurationApi extends ApiBase {
 
 export interface CertificateTypeApi extends ApiBase {
   getCertificateTypeList: string
+  addCertificateType: string
 }
