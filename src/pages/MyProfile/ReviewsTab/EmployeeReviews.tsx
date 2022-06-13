@@ -70,7 +70,7 @@ const EmployeeReviews = (): JSX.Element => {
       <CCardBody className="ps-0 pe-0">
         {getReviewDetails.length ? (
           <>
-            <CTable striped>
+            <CTable striped className="text-center">
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
