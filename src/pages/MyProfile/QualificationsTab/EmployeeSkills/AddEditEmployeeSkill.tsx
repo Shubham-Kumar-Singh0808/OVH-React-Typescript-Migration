@@ -21,8 +21,6 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import SkillList from '../../Skills/SkillList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
-import { callbackify } from 'util'
-import { data } from 'msw/lib/types/context'
 
 function AddEditEmployeeSkill({
   isEditSkillsDetails = false,
@@ -52,9 +50,6 @@ function AddEditEmployeeSkill({
     reduxServices.employeeSkill.selectors.selectEditSkillDetails,
   )
 
-  const getEmployeeSkill = useTypedSelector(
-    reduxServices.employeeSkill.selectors.employeeSkillDetails,
-  )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
