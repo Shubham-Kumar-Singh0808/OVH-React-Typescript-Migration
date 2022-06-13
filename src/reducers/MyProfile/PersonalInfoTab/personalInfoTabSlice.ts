@@ -15,6 +15,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
+
 const initialPersonalInfoTabState: PersonalInfoTabState = {
   employeeFamilyDetails: [],
   employeeVisaDetails: [],
