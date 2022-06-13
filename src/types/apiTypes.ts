@@ -116,7 +116,7 @@ export interface UploadFileReturn {
   file: FormData
 }
 
-export interface ReviewsTabApi extends ApiBase {
+export interface EmployeeReviewsApi extends ApiBase {
   getEmployeeReviews: string
 }
 export interface EmployeeDesignationListApi extends ApiBase {

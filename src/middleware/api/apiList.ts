@@ -12,7 +12,7 @@ import {
   ProfileHistoryApi,
   ShiftConfigurationApi,
   SideMenuApi,
-  SkillApi,
+  EmployeeReviewsApi
   UserRolesConfigurationApi,
   ReviewsTabApi,
 } from '../../types/apiTypes'
@@ -132,7 +132,7 @@ export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
   uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
-  downloadEmployeeCV: apiPrefix + '/jobapplicant/downloadRBTCv',
+  downloadEmployeeCV: apiPrefix + EmployeeReviewsApit/downloadRBTCv',
   downloadSampleCV: apiPrefix + '/jobapplicant/downloadCVFormateFile',
 }
 
@@ -150,6 +150,6 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
 }
 
-export const reviewsTabApiConfig: ReviewsTabApi = {
+export const reviewsTabApiConfig: EmployeeReviewsApi = {
   getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
 }
