@@ -116,6 +116,12 @@ export interface UploadFileReturn {
   file: FormData
 }
 
+export interface EmployeeDesignationListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getEmployeeDesignations: string
+  addEmployeeDesignation: string
+  deleteEmployeeDesignation: string
+}
 export interface DownloadCVReturn {
   fileName: string
   token: string

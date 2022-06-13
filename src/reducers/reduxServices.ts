@@ -1,4 +1,5 @@
 import { appService } from './appSlice'
+import { employeeDesignationListService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
@@ -21,6 +22,7 @@ export const reduxServices = {
   profileHistory: profileHistoryService,
   personalInformation: personalInfoService,
   userRolesAndPermissions: userRolesAndPermissionsService,
+  employeeDesignation: employeeDesignationListService,
   employeeCertifications: employeeCertificateService,
   employeeQualifications: employeeQualificationService,
   employeeQualificationCategory: qualificationCategoryService,

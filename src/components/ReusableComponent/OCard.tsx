@@ -16,13 +16,14 @@ const OCard = (props: {
   CBodyClassName?: string
   CFooterClassName?: string
   CLinkClassName?: string
+  CCardTitleClassName?: string
   children?: React.ReactNode
 }): JSX.Element => {
   return (
     <>
       <CCard className={props.className}>
         <CCardHeader className={props.CHeaderClassName}>
-          <h4 className="h4">{props.title}</h4>
+          <h4 className={`h4 ${props.CCardTitleClassName}`}>{props.title}</h4>
         </CCardHeader>
         <CCardBody className={props.CBodyClassName}>{props.children}</CCardBody>
         <CCardFooter className={props.CFooterClassName}>
