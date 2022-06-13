@@ -40,6 +40,7 @@ const uploadEmployeeCV = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
 const uploadEmployeeProfilePicture = async (
   prepareObject: UploadImage,
 ): Promise<number | undefined> => {
