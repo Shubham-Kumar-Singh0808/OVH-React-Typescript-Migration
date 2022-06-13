@@ -129,7 +129,8 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
                   {skillItem.competency}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
-                  {`${skillItem.expYear}Year('s) ${skillItem.expMonth}month('s)`}
+                  {skillItem.expYear && `${skillItem.expYear}`} Year(`s)&nbsp;
+                  {skillItem.expMonth && `${skillItem.expMonth}`} month(`s)
                 </CTableDataCell>
                 {isFieldDisabled ? (
                   <CTableDataCell scope="row">
