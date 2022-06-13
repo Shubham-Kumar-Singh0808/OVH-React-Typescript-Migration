@@ -66,10 +66,13 @@ const SkillListTable = (): JSX.Element => {
   }
 
   const currentPageItems = useMemo(() => {
-    const sortedSkills = skills
-      .slice()
-      .sort((a, b) => a.skill.localeCompare(b.skill))
-    return currentPageData(sortedSkills, currentPage, pageSize)
+    if (skills.length > 0) {
+      const sortedSkills = skills
+        .slice()
+        .sort((a, b) => a.skill.localeCompare(b.skill))
+      return currentPageData(sortedSkills, currentPage, pageSize)
+    }
+    return []
   }, [skills, currentPage, pageSize])
 
   return (
@@ -91,7 +94,7 @@ const SkillListTable = (): JSX.Element => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {currentPageItems.map((skillItem, index) => {
+              {currentPageItems?.map((skillItem, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row">
@@ -156,6 +159,7 @@ const SkillListTable = (): JSX.Element => {
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Skill"
         confirmButtonText="Delete"
+        closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteSkillId)}
       >
         {`Are you sure you want to delete this ${toDeleteSkillName} skill item?`}

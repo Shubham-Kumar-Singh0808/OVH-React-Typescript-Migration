@@ -3,6 +3,7 @@ import {
   BasicInfoApi,
   CategoryApi,
   EmployeeCertificationsApi,
+  EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
@@ -133,6 +134,13 @@ export const basicInfoApiConfig: BasicInfoApi = {
   uploadEmployeeImage: apiPrefix + '/fileUpload/uploadImage',
   downloadEmployeeCV: apiPrefix + '/jobapplicant/downloadRBTCv',
   downloadSampleCV: apiPrefix + '/jobapplicant/downloadCVFormateFile',
+}
+
+export const employeeDesignationListApiConfig: EmployeeDesignationListApi = {
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getEmployeeDesignations: apiPrefix + '/kra/designation',
+  addEmployeeDesignation: apiPrefix + '/jobapplicant/addDesignation',
+  deleteEmployeeDesignation: apiPrefix + '/jobapplicant/deleteDesignation',
 }
 
 export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
