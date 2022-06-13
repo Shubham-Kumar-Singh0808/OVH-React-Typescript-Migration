@@ -19,25 +19,7 @@ const ReduxProvider = ({
 const getById = queryByAttribute.bind(null, 'id')
 
 describe('Basic Info Image Upload Crop Testing', () => {
-  it('should not show the image upload preview', () => {
-    const component = render(
-      <ReduxProvider reduxStore={stateStore}>
-        <BasicInfoTabImageCropper
-          file={undefined}
-          empId={0}
-          onUploadImage={function (croppedImageData: UploadImage): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-
-    const imageUploadedField = getById(component.container, 'uploadedImage')
-    const profilePicture = getById(component.container, 'profilePicture')
-    expect(imageUploadedField).toBeFalsy()
-    expect(profilePicture).toBeTruthy()
-  })
-  it('cropper component should not be rendered', () => {
+  describe('No states passed', () => {
     const component = render(
       <ReduxProvider reduxStore={stateStore}>
         <BasicInfoTabImageCropper
@@ -49,7 +31,19 @@ describe('Basic Info Image Upload Crop Testing', () => {
         />
       </ReduxProvider>,
     )
-    const cropperComponent = getById(component.container, 'cropper')
-    expect(cropperComponent).toBeFalsy()
+    it('should not show the image upload preview', () => {
+      const imageUploadedField = getById(component.container, 'uploadedImage')
+      const profilePicture = getById(component.container, 'profilePicture')
+      expect(imageUploadedField).toBeFalsy()
+      expect(profilePicture).toBeTruthy()
+    })
+    it('cropper component should not be rendered', () => {
+      const cropperComponent = getById(component.container, 'cropper')
+      expect(cropperComponent).toBeFalsy()
+    })
+    it('file upload button should be rendered', () => {
+      const fileUpload = getById(component.container, 'fileUpload')
+      expect(fileUpload).toBeDefined()
+    })
   })
 })

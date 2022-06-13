@@ -65,10 +65,16 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
         </div>
       )}
       <div className="mt-2">
-        <input type="file" onChange={onChange} accept=".png, .jpg, .jpeg" />
+        <input
+          type="file"
+          id="fileUpload"
+          onChange={onChange}
+          accept=".png, .jpg, .jpeg"
+        />
         {imageUploaded && (
           <span>
             <Cropper
+              id="cropper"
               className="mt-2"
               style={{ height: 250, width: 250 }}
               zoomTo={0.1}
