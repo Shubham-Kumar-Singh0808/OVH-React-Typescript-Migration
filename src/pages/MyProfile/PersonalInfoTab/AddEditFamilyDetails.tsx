@@ -80,7 +80,10 @@ function AddEditFamilyDetails({
     }
   }
   useEffect(() => {
-    if (employeeFamily?.personName && employeeFamily?.relationShip) {
+    if (
+      employeeFamily?.personName?.replace(/^\s*/, '') &&
+      employeeFamily?.relationShip
+    ) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
@@ -194,7 +197,9 @@ function AddEditFamilyDetails({
               Name:
               <span
                 className={
-                  employeeFamily?.personName ? 'text-white' : 'text-danger'
+                  employeeFamily?.personName?.replace(/^\s*/, '')
+                    ? 'text-white'
+                    : 'text-danger'
                 }
               >
                 *
