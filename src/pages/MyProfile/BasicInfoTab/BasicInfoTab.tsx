@@ -264,6 +264,19 @@ const BasicInfoTab = (): JSX.Element => {
     event.preventDefault()
     const prepareObject = employeeBasicInformationEditData
 
+    if (selectedProfilePicture) {
+      await dispatch(
+        employeeBasicInformationThunk.uploadEmployeeProfilePicture(
+          selectedProfilePicture,
+        ),
+      )
+    }
+    await dispatch(
+      employeeBasicInformationThunk.updateEmployeeBasicInformation(
+        prepareObject,
+      ),
+    )
+
     if (cvToUpload) {
       const formData = new FormData()
       formData.append('file', cvToUpload, cvToUpload.name)
@@ -271,24 +284,12 @@ const BasicInfoTab = (): JSX.Element => {
         personId: employeeBasicInformation.id as number,
         file: formData,
       }
-      dispatch(
+      await dispatch(
         employeeBasicInformationThunk.uploadEmployeeCV(uploadPrepareObject),
       )
     }
-
-    if (selectedProfilePicture) {
-      dispatch(
-        employeeBasicInformationThunk.uploadEmployeeProfilePicture(
-          selectedProfilePicture,
-        ),
-      )
-    }
-    dispatch(
-      employeeBasicInformationThunk.updateEmployeeBasicInformation(
-        prepareObject,
-      ),
-    )
     dispatch(reduxServices.app.actions.addToast(toastElement))
+    window.location.reload()
   }
 
   const formik = useFormik({
