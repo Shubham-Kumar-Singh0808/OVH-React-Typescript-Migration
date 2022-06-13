@@ -3,12 +3,14 @@ import {
   BasicInfoApi,
   CategoryApi,
   EmployeeCertificationsApi,
+  EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
+  ShiftConfigurationApi,
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
@@ -130,6 +132,22 @@ export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
   uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
+  downloadEmployeeCV: apiPrefix + '/jobapplicant/downloadRBTCv',
+  downloadSampleCV: apiPrefix + '/jobapplicant/downloadCVFormateFile',
+}
+
+export const employeeDesignationListApiConfig: EmployeeDesignationListApi = {
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getEmployeeDesignations: apiPrefix + '/kra/designation',
+  addEmployeeDesignation: apiPrefix + '/jobapplicant/addDesignation',
+  deleteEmployeeDesignation: apiPrefix + '/jobapplicant/deleteDesignation',
+}
+
+export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
+  getAllShifts: apiPrefix + '/jobapplicant/getAllShifting',
+  addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
+  updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
+  deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
 }
 
 export const reviewsTabApiConfig: ReviewsTabApi = {

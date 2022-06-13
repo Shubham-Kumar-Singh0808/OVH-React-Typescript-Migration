@@ -3,7 +3,7 @@ stages:
   - test
   - sonarqube
   - deployqa
-
+  
 build project:
   image: node:16
   stage: build

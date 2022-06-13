@@ -1,16 +1,18 @@
 import { appService } from './appSlice'
+import { employeeDesignationListService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
+import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import { employeeQualificationService } from './MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import { employeeSkillServices } from './MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import { generalInformationService } from './MyProfile/GeneralTab/generalInformationSlice'
 import { personalInfoService } from './MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import { profileHistoryService } from './MyProfile/ProfileHistory/profileHistorySlice'
+import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
+import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
-import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
-import { employeeQualificationService } from './MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import { reviewDetailsService } from './MyProfile/ReviewTab/employeeReviewSlice'
 
 export const reduxServices = {
@@ -21,6 +23,7 @@ export const reduxServices = {
   profileHistory: profileHistoryService,
   personalInformation: personalInfoService,
   userRolesAndPermissions: userRolesAndPermissionsService,
+  employeeDesignation: employeeDesignationListService,
   employeeCertifications: employeeCertificateService,
   employeeQualifications: employeeQualificationService,
   employeeQualificationCategory: qualificationCategoryService,
@@ -28,4 +31,5 @@ export const reduxServices = {
   generalInformation: generalInformationService,
   employeeSkill: employeeSkillServices,
   reviewInformation: reviewDetailsService,
+  shiftConfiguration: shiftConfigurationService,
 }

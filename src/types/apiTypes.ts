@@ -107,6 +107,8 @@ export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
   uploadEmployeeCV: string
+  downloadEmployeeCV: string
+  downloadSampleCV: string
 }
 
 export interface UploadFileReturn {
@@ -116,4 +118,22 @@ export interface UploadFileReturn {
 
 export interface ReviewsTabApi extends ApiBase {
   getEmployeeReviews: string
+}
+export interface EmployeeDesignationListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getEmployeeDesignations: string
+  addEmployeeDesignation: string
+  deleteEmployeeDesignation: string
+}
+export interface DownloadCVReturn {
+  fileName: string
+  token: string
+  tenantKey: string
+}
+
+export interface ShiftConfigurationApi extends ApiBase {
+  getAllShifts: string
+  addTimeSlot: string
+  updateShiftDetail: string
+  deleteShiftDetail: string
 }

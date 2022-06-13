@@ -2,8 +2,8 @@ import { AppDispatch, RootState } from '../../../../stateStore'
 import {
   CertificateType,
   CertificationSliceState,
-  EditEmployeeCertificates,
-  EmployeeCertifications,
+  EditEmployeeCertificate,
+  EmployeeCertification,
   Technology,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
@@ -14,7 +14,7 @@ import employeeCertificationsApi from '../../../../middleware/api/MyProfile/Qual
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const initialCertificationState: CertificationSliceState = {
-  editCertificateDetails: {} as EditEmployeeCertificates,
+  editCertificateDetails: {} as EditEmployeeCertificate,
   getAllTechnologies: [],
   typeOfCertificate: [],
   certificationDetails: [],
@@ -23,7 +23,7 @@ const initialCertificationState: CertificationSliceState = {
 }
 
 const getEmployeeCertificates = createAsyncThunk<
-  EmployeeCertifications[] | undefined,
+  EmployeeCertification[] | undefined,
   void,
   {
     dispatch: AppDispatch
@@ -79,7 +79,7 @@ const getCertificateByTechnologyName = createAsyncThunk<
 
 const createEmployeeCertification = createAsyncThunk<
   number | undefined,
-  EmployeeCertifications,
+  EmployeeCertification,
   {
     dispatch: AppDispatch
     state: RootState
@@ -87,7 +87,7 @@ const createEmployeeCertification = createAsyncThunk<
   }
 >(
   'employeeCertifications/createEmployeeCertification',
-  async (employeeCertificateDetails: EmployeeCertifications, thunkApi) => {
+  async (employeeCertificateDetails: EmployeeCertification, thunkApi) => {
     try {
       return await employeeCertificationsApi.createEmployeeCertification(
         employeeCertificateDetails,
@@ -100,7 +100,7 @@ const createEmployeeCertification = createAsyncThunk<
 )
 
 const getEmployeeCertificate = createAsyncThunk<
-  EditEmployeeCertificates | undefined,
+  EditEmployeeCertificate | undefined,
   number,
   {
     dispatch: AppDispatch
@@ -121,7 +121,7 @@ const getEmployeeCertificate = createAsyncThunk<
 
 const updateEmployeeCertificate = createAsyncThunk<
   number | undefined,
-  EmployeeCertifications,
+  EmployeeCertification,
   {
     dispatch: AppDispatch
     state: RootState
@@ -129,7 +129,7 @@ const updateEmployeeCertificate = createAsyncThunk<
   }
 >(
   'employeeCertifications/updateEmployeeCertificate',
-  async (employeeCertificateDetails: EmployeeCertifications, thunkApi) => {
+  async (employeeCertificateDetails: EmployeeCertification, thunkApi) => {
     try {
       return await employeeCertificationsApi.updateEmployeeCertificate(
         employeeCertificateDetails,
@@ -180,7 +180,7 @@ const employeeCertificationsSlice = createSlice({
       .addCase(getEmployeeCertificate.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.editCertificateDetails =
-          action.payload as unknown as EditEmployeeCertificates
+          action.payload as unknown as EditEmployeeCertificate
       })
       .addMatcher(
         isAnyOf(
@@ -190,8 +190,7 @@ const employeeCertificationsSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.certificationDetails =
-            action.payload as EmployeeCertifications[]
+          state.certificationDetails = action.payload as EmployeeCertification[]
         },
       )
       .addMatcher(
@@ -234,7 +233,7 @@ const employeeCertificationsSlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState =>
   state.employeeCertificates.isLoading
-const employeeCertificates = (state: RootState): EmployeeCertifications[] =>
+const employeeCertificates = (state: RootState): EmployeeCertification[] =>
   state.employeeCertificates.certificationDetails
 
 export const employeeCertificationThunk = {

@@ -1,7 +1,7 @@
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
   EmployeeQualificationSliceState,
-  EmployeeQualifications,
+  EmployeeQualification,
   PostGraduationAndGraduationList,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
@@ -14,7 +14,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 const initialQualificationState = {} as EmployeeQualificationSliceState
 
 const getEmployeeQualifications = createAsyncThunk<
-  EmployeeQualifications | undefined,
+  EmployeeQualification | undefined,
   string | number,
   {
     dispatch: AppDispatch
@@ -36,8 +36,8 @@ const getEmployeeQualifications = createAsyncThunk<
 )
 
 const addEmployeeQualifications = createAsyncThunk<
-  EmployeeQualifications | undefined,
-  EmployeeQualifications,
+  EmployeeQualification | undefined,
+  EmployeeQualification,
   {
     dispatch: AppDispatch
     state: RootState
@@ -45,7 +45,7 @@ const addEmployeeQualifications = createAsyncThunk<
   }
 >(
   'employeeQualifications/addEmployeeQualifications',
-  async (addQualification: EmployeeQualifications, thunkApi) => {
+  async (addQualification: EmployeeQualification, thunkApi) => {
     try {
       return await employeeQualificationsApi.addEmployeeQualifications(
         addQualification,
@@ -58,8 +58,8 @@ const addEmployeeQualifications = createAsyncThunk<
 )
 
 const updateEmployeeQualifications = createAsyncThunk<
-  EmployeeQualifications | undefined,
-  EmployeeQualifications,
+  EmployeeQualification | undefined,
+  EmployeeQualification,
   {
     dispatch: AppDispatch
     state: RootState
@@ -67,7 +67,7 @@ const updateEmployeeQualifications = createAsyncThunk<
   }
 >(
   'employeeQualifications/updateEmployeeQualifications',
-  async (addQualification: EmployeeQualifications, thunkApi) => {
+  async (addQualification: EmployeeQualification, thunkApi) => {
     try {
       return await employeeQualificationsApi.updateEmployeeQualifications(
         addQualification,
@@ -131,7 +131,7 @@ const employeeQualificationsSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.qualificationDetails = action.payload as EmployeeQualifications
+          state.qualificationDetails = action.payload as EmployeeQualification
         },
       )
       .addMatcher(
@@ -152,7 +152,7 @@ const employeeQualificationsSlice = createSlice({
 const isLoading = (state: RootState): LoadingState =>
   state.employeeQualificationsDetails.isLoading
 
-const employeeQualifications = (state: RootState): EmployeeQualifications =>
+const employeeQualifications = (state: RootState): EmployeeQualification =>
   state.employeeQualificationsDetails.qualificationDetails
 
 export const employeeQualificationsThunk = {

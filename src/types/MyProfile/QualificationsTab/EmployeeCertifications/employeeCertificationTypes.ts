@@ -7,7 +7,7 @@ export type EmployeeCertificationProps = {
   backButtonHandler: () => void
 }
 
-export type EmployeeCertifications = {
+export type EmployeeCertification = {
   id?: number | string
   technologyId?: string
   technologyName?: string
@@ -23,7 +23,7 @@ export type EmployeeCertifications = {
   skill?: null
 }
 
-export type EditEmployeeCertificates = {
+export type EditEmployeeCertificate = {
   id: number
   certificateType: string
   code: string
@@ -54,8 +54,8 @@ export type CertificateType = {
 export type CertificationSliceState = {
   getAllTechnologies: Technology[]
   typeOfCertificate: CertificateType[]
-  certificationDetails: EmployeeCertifications[]
-  editCertificateDetails: EditEmployeeCertificates
+  certificationDetails: EmployeeCertification[]
+  editCertificateDetails: EditEmployeeCertificate
   isLoading: LoadingState
   error: ValidationError
 }
