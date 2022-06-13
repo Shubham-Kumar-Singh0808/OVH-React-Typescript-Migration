@@ -12,10 +12,9 @@ import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
-import DownloadSampleFileButton from './DownloadSampleFileButton'
+import DownloadCVButton from './DownloadCVButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../components/ReusableComponent/OToast'
-import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
@@ -24,6 +23,13 @@ import { useFormik } from 'formik'
 import validator from 'validator'
 
 const BasicInfoTab = (): JSX.Element => {
+  const tenantKey = useTypedSelector(
+    reduxServices.authentication.selectors.selectTenantKey,
+  )
+  const authenticatedToken = useTypedSelector(
+    reduxServices.authentication.selectors.selectToken,
+  )
+
   const employeeBasicInformation = useTypedSelector(
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
@@ -61,6 +67,51 @@ const BasicInfoTab = (): JSX.Element => {
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
   const [dateErrorMessage, setDateErrorMessage] = useState(false)
   const [cvToUpload, setCVToUpload] = useState<File | undefined>(undefined)
+  const [uploadErrorText, setUploadErrorText] = useState<string>('')
+
+  const [officialBday, setOfficialBday] = useState<Date>()
+  const [realBday, setRealBday] = useState<Date>()
+  const [selectedAnniversay, setSelectedAnniversary] = useState<Date>()
+
+  const [officialBdyFlag, setOfficialBdayFlag] = useState(false)
+  const [realBdayFlag, setRealBdayFlag] = useState(false)
+  const [anniversaryFlag, setAnniversaryFlag] = useState(false)
+
+  const currentOfficialBday =
+    employeeBasicInformation.officialBirthday as string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const officialBdayParts: any = employeeBasicInformation.officialBirthday
+    ? currentOfficialBday.split('/')
+    : ''
+  const newOfficialBday = employeeBasicInformation.officialBirthday
+    ? new Date(
+        +officialBdayParts[2],
+        officialBdayParts[1] - 1,
+        +officialBdayParts[0],
+      )
+    : new Date()
+
+  const currentRealBirthday = employeeBasicInformation.realBirthday as string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const realBdayParts: any = employeeBasicInformation.realBirthday
+    ? currentRealBirthday.split('/')
+    : ''
+  const newRealBirthday = employeeBasicInformation.realBirthday
+    ? new Date(+realBdayParts[2], realBdayParts[1] - 1, +realBdayParts[0])
+    : new Date()
+
+  const currentAnniversary = employeeBasicInformation.anniversary as string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const anniversaryParts: any = employeeBasicInformation.anniversary
+    ? currentAnniversary.split('/')
+    : ''
+  const newAnniversary = employeeBasicInformation.anniversary
+    ? new Date(
+        +anniversaryParts[2],
+        anniversaryParts[1] - 1,
+        +anniversaryParts[0],
+      )
+    : new Date()
 
   const dispatch = useAppDispatch()
 
@@ -120,8 +171,29 @@ const BasicInfoTab = (): JSX.Element => {
   // change CV to upload state value
   const onChangeCVHandler = async (element: HTMLInputElement) => {
     const file = element.files
+    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    let extension = ''
     if (!file) return
 
+    if (file) {
+      extension = file[0].name.split('.').pop() as string
+    }
+
+    if (file[0].size > 2048000) {
+      setUploadErrorText(
+        'File size exceeded. Please upload a file less than 2MB.',
+      )
+      return
+    }
+
+    if (!acceptedFileTypes.includes(extension)) {
+      setUploadErrorText(
+        'Wrong file format chosen. Please choose either doc, docx, or pdf.',
+      )
+      return
+    }
+
+    setUploadErrorText('')
     setCVToUpload(file[0])
   }
 
@@ -234,18 +306,22 @@ const BasicInfoTab = (): JSX.Element => {
     event.preventDefault()
     const prepareObject = employeeBasicInformationEditData
 
-    try {
-      if (cvToUpload) {
-        await uploadFile()
+    if (cvToUpload) {
+      const formData = new FormData()
+      formData.append('file', cvToUpload, cvToUpload.name)
+      const uploadPrepareObject = {
+        personId: employeeBasicInformation.id as number,
+        file: formData,
       }
       dispatch(
-        employeeBasicInformationThunk.updateEmployeeBasicInformation(
-          prepareObject,
-        ),
+        employeeBasicInformationThunk.uploadEmployeeCV(uploadPrepareObject),
       )
-    } catch (error) {
-      console.error('Error saving changes')
     }
+    dispatch(
+      employeeBasicInformationThunk.updateEmployeeBasicInformation(
+        prepareObject,
+      ),
+    )
     dispatch(reduxServices.app.actions.addToast(toastElement))
   }
 
@@ -255,19 +331,6 @@ const BasicInfoTab = (): JSX.Element => {
       console.log('Logging in ', values)
     },
   })
-
-  const uploadFile = async function () {
-    if (cvToUpload) {
-      const formData = new FormData()
-      formData.append('file', cvToUpload, cvToUpload.name)
-      const prepareObject = {
-        personId: employeeBasicInformation.id as number,
-        file: formData,
-      }
-      await basicInfoApi.uploadEmployeeCV(prepareObject)
-    }
-  }
-
   const toastElement = (
     <OToast
       toastMessage="Your changes have been saved successfully."
@@ -305,13 +368,30 @@ const BasicInfoTab = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const handleOfficialBday = (date: Date) => {
+    setOfficialBday(date)
+    setOfficialBdayFlag(true)
+  }
+  const handleRealBday = (date: Date) => {
+    setRealBday(date)
+    setRealBdayFlag(true)
+  }
+  const handleAnniversary = (date: Date) => {
+    setSelectedAnniversary(date)
+    setAnniversaryFlag(true)
+  }
+
   return (
     <>
       <CForm
         className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
         onSubmit={handleSubmitBasicDetails}
       >
-        <DownloadSampleFileButton />
+        <CRow className="justify-content-end mt-3">
+          <CCol className="text-end" md={4}>
+            <DownloadCVButton className="text-decoration-none btn btn-download btn-ovh" />
+          </CCol>
+        </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
             {...dynamicFormLabelProps(
@@ -518,9 +598,11 @@ const BasicInfoTab = (): JSX.Element => {
               placeholderText="dd/mm/yyyy"
               name="officialBirthday"
               value={employeeBasicInformationEditData.officialBirthday}
-              onChange={(date: Date) =>
+              selected={!officialBdyFlag ? newOfficialBday : officialBday}
+              onChange={(date: Date) => {
                 onDateChangeHandler(date, { name: 'officialBirthday' })
-              }
+                handleOfficialBday(date)
+              }}
             />
             <CFormCheck
               className="mt-2"
@@ -564,9 +646,11 @@ const BasicInfoTab = (): JSX.Element => {
                 dateFormat="dd/mm/yyyy"
                 name="realBirthday"
                 value={employeeBasicInformationEditData.realBirthday}
-                onChange={(date: Date) =>
+                selected={!realBdayFlag ? newRealBirthday : realBday}
+                onChange={(date: Date) => {
                   onDateChangeHandler(date, { name: 'realBirthday' })
-                }
+                  handleRealBday(date)
+                }}
               />
             </CCol>
           </CRow>
@@ -634,9 +718,13 @@ const BasicInfoTab = (): JSX.Element => {
                 placeholderText="dd/mm/yyyy"
                 name="anniversary"
                 value={employeeBasicInformationEditData.anniversary}
-                onChange={(date: Date) =>
-                  onDateChangeHandler(date, { name: 'anniversary' })
+                selected={
+                  !anniversaryFlag ? newAnniversary : selectedAnniversay
                 }
+                onChange={(date: Date) => {
+                  onDateChangeHandler(date, { name: 'anniversary' })
+                  handleAnniversary(date)
+                }}
               />
               {dateErrorMessage && (
                 <p className="text-danger">
@@ -839,14 +927,17 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3">
           <CCol md={{ span: 6, offset: 3 }}>
             {employeeBasicInformation.rbtCvName && (
-              <a
-                className="text-decoration-none cursor-pointer"
-                href="RBT_CV"
-                download={employeeBasicInformation.rbtCvName}
-              >
-                <i className="fa fa-paperclip me-1"></i>
-                Rbt Cv
-              </a>
+              <DownloadCVButton
+                className="cursor-pointer"
+                fileName={employeeBasicInformation.rbtCvName}
+                token={authenticatedToken}
+                tenantKey={tenantKey}
+              />
+            )}
+            {uploadErrorText && (
+              <div>
+                <strong className="text-danger mt-3">{uploadErrorText}</strong>
+              </div>
             )}
           </CCol>
         </CRow>

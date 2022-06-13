@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 
-import { render, screen } from '@testing-library/react'
+import { queryByAttribute, render, screen } from '@testing-library/react'
 
 import BasicInfoTab from './BasicInfoTab'
 import { EnhancedStore } from '@reduxjs/toolkit'
@@ -34,5 +34,17 @@ describe('Basic Info Tab Testing', () => {
     )
     expect(screen.getByText('Employee ID:')).toBeInTheDocument()
     expect(screen.getByText('INDIA')).toBeInTheDocument()
+  })
+  test('should render a file upload field', async () => {
+    const getById = queryByAttribute.bind(null, 'id')
+
+    const component = render(
+      <ReduxProvider reduxStore={stateStore}>
+        <BasicInfoTab />
+      </ReduxProvider>,
+    )
+    const uploadField = getById(component.container, 'uploadRBTCV')
+
+    expect(uploadField).toBeTruthy()
   })
 })

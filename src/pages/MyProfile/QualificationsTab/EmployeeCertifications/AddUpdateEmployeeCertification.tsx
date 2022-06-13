@@ -39,6 +39,9 @@ function AddUpdateEmployeeCertification({
   const [expiryDate, setExpiryDate] = useState<Date | string>()
   const [error, setError] = useState<boolean>(false)
 
+  const [completedDateFlag, setCompletedDateFlag] = useState<boolean>(false)
+  const [expiryDateFlag, setExpirtyDateFlag] = useState<boolean>(false)
+
   const getTechnologies = useTypedSelector(
     (state) => state.employeeCertificates.getAllTechnologies,
   )
@@ -67,6 +70,32 @@ function AddUpdateEmployeeCertification({
       )
     }
   }, [dispatch, addCertification?.technology])
+
+  const currentCompletedDate = addCertification.completedDate as string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const completedDateParts: any = addCertification.completedDate
+    ? currentCompletedDate.split('/')
+    : ''
+  const newCompletedDate = addCertification.completedDate
+    ? new Date(
+        +completedDateParts[2],
+        completedDateParts[1] - 1,
+        +completedDateParts[0],
+      )
+    : new Date()
+
+  const currentExpiryDate = addCertification.expiryDate as string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const expirtyDateParts: any = addCertification.expiryDate
+    ? currentExpiryDate.split('/')
+    : ''
+  const newExpiryDate = addCertification.expiryDate
+    ? new Date(
+        +expirtyDateParts[2],
+        expirtyDateParts[1] - 1,
+        +expirtyDateParts[0],
+      )
+    : new Date()
 
   const successToastMessage = (
     <OToast
@@ -100,7 +129,7 @@ function AddUpdateEmployeeCertification({
       : expiryDate?.toLocaleString()
 
     const tempDateExpiry = moment(currentDateExpiry).format('DD/MM/YYYY')
-    const newDateExpiry = new Date(tempDateExpiry)
+    const newDateExpiry = expiryDateFlag ? new Date(tempDateExpiry) : new Date()
 
     validateDates(date, newDateExpiry)
 
@@ -110,18 +139,20 @@ function AddUpdateEmployeeCertification({
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
-    } else {
-      setCompletedDate(date)
     }
+    setCompletedDate(date)
+    setCompletedDateFlag(true)
   }
 
   const onChangeDateOfExpireHandler = (date: Date) => {
     const currentCompletedDate = isEditCertificationDetails
-      ? getCertificateDetails?.completedDate?.toString()
+      ? addCertification?.completedDate?.toString()
       : completedDate?.toLocaleString()
 
     const tempDateCompleted = moment(currentCompletedDate).format('DD/MM/YYYY')
-    const newDateCompleted = new Date(tempDateCompleted)
+    const newDateCompleted = completedDateFlag
+      ? new Date(tempDateCompleted)
+      : new Date()
 
     validateDates(newDateCompleted, date)
 
@@ -131,19 +162,10 @@ function AddUpdateEmployeeCertification({
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
-    } else {
-      setExpiryDate(date)
     }
+    setExpiryDate(date)
+    setExpirtyDateFlag(true)
   }
-
-  // useEffect(() => {
-  //   if (
-  //     (addCertification?.expiryDate as string) <=
-  //     (addCertification?.completedDate as string)
-  //   ) {
-  //     setError(false)
-  //   }
-  // }, [addCertification?.completedDate, addCertification?.expiryDate])
 
   useEffect(() => {
     if (error) {
@@ -157,6 +179,7 @@ function AddUpdateEmployeeCertification({
       )
     }
   }, [completedDate, dispatch, error, expiryDate])
+
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -265,6 +288,8 @@ function AddUpdateEmployeeCertification({
   }
 
   const validateDates = (startDate: Date, endDate: Date) => {
+    console.log(startDate)
+    console.log(endDate)
     if (startDate.getTime() > endDate.getTime()) {
       setError(true)
     } else {
@@ -446,7 +471,11 @@ function AddUpdateEmployeeCertification({
                   (completedDate as string) ||
                   (addCertification?.completedDate as string)
                 }
-                selected={completedDate as Date}
+                selected={
+                  !completedDateFlag
+                    ? newCompletedDate
+                    : (completedDate as Date)
+                }
                 onChange={onChangeDateOfCompletionHandler}
                 id="completedDate"
                 peekNextMonth
@@ -470,7 +499,9 @@ function AddUpdateEmployeeCertification({
                   (expiryDate as string) ||
                   (addCertification?.expiryDate as string)
                 }
-                selected={expiryDate as Date}
+                selected={
+                  !expiryDateFlag ? newExpiryDate : (expiryDate as Date)
+                }
                 onChange={onChangeDateOfExpireHandler}
                 id="expiryDate"
                 peekNextMonth

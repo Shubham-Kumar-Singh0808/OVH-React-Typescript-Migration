@@ -172,6 +172,25 @@ const deleteEmployeeVisa = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
+const uploadVisaImage = async (
+  visaId: number,
+  file: FormData,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApiConfig.fileUploadVisaImage,
+    method: AllowedHttpMethods.post,
+    data: file,
+    params: {
+      visaId: visaId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
 const personalInfoApi = {
   getEmployeeFamilyDetails,
   addEmployeeFamilyMember,
@@ -185,5 +204,6 @@ const personalInfoApi = {
   getEmployeeVisa,
   updateEmployeeVisa,
   deleteEmployeeVisa,
+  uploadVisaImage,
 }
 export default personalInfoApi

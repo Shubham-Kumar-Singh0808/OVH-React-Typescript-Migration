@@ -13,7 +13,6 @@ import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/Personal
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
-// import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 
 const VisaDetailsTable = ({
   editVisaButtonHandler,
@@ -71,23 +70,6 @@ const VisaDetailsTable = ({
     }
   }, [getEmployeeVisaData])
 
-  const handleSelectedVisa = async (visaId: number) => {
-    // const visaDetails = await personalInfoApi.getEmployeeVisa(visaId)
-    // dispatch(
-    //   reduxServices.personalInformation.actions.setVisaDateOfIssue(
-    //     visaDetails.dateOfIssue as Date,
-    //   ),
-    // )
-    // dispatch(
-    //   reduxServices.personalInformation.actions.setVisaDateOfExpiry(
-    //     visaDetails.dateOfExpire as Date,
-    //   ),
-    // )
-    dispatch(
-      reduxServices.personalInformation.actions.setSelectedVisaID(visaId),
-    )
-  }
-
   return (
     <>
       <CTable striped>
@@ -118,10 +100,7 @@ const VisaDetailsTable = ({
               <CTableDataCell scope="row">
                 <CButton
                   color="info btn-ovh me-2"
-                  onClick={() => {
-                    editVisaButtonHandler(visaItem.id)
-                    handleSelectedVisa(visaItem.id)
-                  }}
+                  onClick={() => editVisaButtonHandler(visaItem.id)}
                 >
                   <i className="fa fa-pencil-square-o"></i>
                 </CButton>

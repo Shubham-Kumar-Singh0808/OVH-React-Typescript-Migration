@@ -13,13 +13,14 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
+import employeeSkillApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillsApi'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 import { callbackify } from 'util'
+import { data } from 'msw/lib/types/context'
 
 function AddEditEmployeeSkill({
   isEditSkillsDetails = false,
@@ -46,7 +47,12 @@ function AddEditEmployeeSkill({
   const editFetchSkillsDetails = useTypedSelector(
     reduxServices.employeeSkill.selectors.selectEditSkillDetails,
   )
+
+  const getEmployeeSkill = useTypedSelector(
+    reduxServices.employeeSkill.selectors.employeeSkillDetails,
+  )
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(reduxServices.category.getAllCategories())
     if (employeeSkill?.categoryType) {

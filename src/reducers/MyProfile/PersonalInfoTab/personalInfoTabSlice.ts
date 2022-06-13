@@ -22,9 +22,6 @@ const initialPersonalInfoTabState: PersonalInfoTabState = {
   SubVisa: [],
   editFamilyDetails: {} as EditFamilyDetailsState,
   editVisaDetails: {} as EditVisaDetailsState,
-  selectedVisaID: -1 as number,
-  // visaDateOfIssue: '',
-  // visaDateOfExpiry: '',
   isLoading: false,
   error: 0,
 }
@@ -254,17 +251,7 @@ const deleteEmployeeVisa = createAsyncThunk<
 const personalInfoTabSlice = createSlice({
   name: 'personalInfoTab',
   initialState: initialPersonalInfoTabState,
-  reducers: {
-    setSelectedVisaID: (state, action) => {
-      state.selectedVisaID = action.payload
-    },
-    // setVisaDateOfIssue: (state, action) => {
-    //   state.visaDateOfIssue = action.payload
-    // },
-    // setVisaDateOfExpiry: (state, action) => {
-    //   state.visaDateOfExpiry = action.payload
-    // },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -349,15 +336,6 @@ const employeeVisaDetails = (state: RootState): EditVisaDetailsState =>
 const employeeFamilyMember = (state: RootState): EditFamilyDetailsState =>
   state.personalInfoDetails.editFamilyDetails
 
-const selectedVisaID = (state: RootState): number =>
-  state.personalInfoDetails.selectedVisaID
-
-// const visaDateOfIssue = (state: RootState): string | number | Date =>
-//   state.personalInfoDetails.visaDateOfIssue
-
-// const visaDateOfExpiry = (state: RootState): string | number | Date =>
-//   state.personalInfoDetails.visaDateOfExpiry
-
 export const personalInfoThunk = {
   getEmployeeFamilyDetails,
   addEmployeeFamilyMember,
@@ -379,9 +357,6 @@ export const personalInfoSelectors = {
   visaTypeDetails,
   employeeVisaDetails,
   employeeFamilyMember,
-  selectedVisaID,
-  // visaDateOfIssue,
-  // visaDateOfExpiry,
 }
 export const personalInfoService = {
   ...personalInfoThunk,
