@@ -64,20 +64,11 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
     <div>
       {imageUploaded ? (
         <div className="basic-info-box mt-2">
-          <div
-            id="uploadedImage"
-            className="basic-info-img-preview"
-            style={{ width: '100%', float: 'left', height: '100%' }}
-          />
+          <div id="uploadedImage" className="basic-info-img-preview" />
         </div>
       ) : (
         <div id="profilePicture" className="profile-avatar mt-2">
-          <img
-            width="120px"
-            height="120px;"
-            src={props.file}
-            alt="User Profile"
-          />
+          <img className="basic-info-img" src={props.file} alt="User Profile" />
         </div>
       )}
       <div className="mt-2">
@@ -93,12 +84,11 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
           </div>
         )}
         {imageUploaded && (
-          <span>
+          <span className="basic-info-cropper-span mt-2">
             <Cropper
               id="cropper"
-              className="mt-2"
-              style={{ height: 250, width: 250 }}
-              zoomTo={0.1}
+              zoomTo={0}
+              className="basic-info-cropper-span"
               aspectRatio={1}
               preview=".basic-info-img-preview"
               src={image}
@@ -119,7 +109,6 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
           </span>
         )}
       </div>
-      <br style={{ clear: 'both' }} />
     </div>
   )
 }
