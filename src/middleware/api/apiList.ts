@@ -12,9 +12,9 @@ import {
   ProfileHistoryApi,
   ShiftConfigurationApi,
   SideMenuApi,
-  EmployeeReviewsApi
+  SkillApi,
   UserRolesConfigurationApi,
-  ReviewsTabApi,
+  EmployeeReviewsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -132,7 +132,7 @@ export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
   uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
-  downloadEmployeeCV: apiPrefix + EmployeeReviewsApit/downloadRBTCv',
+  downloadEmployeeCV: apiPrefix + '/jobapplicant/downloadRBTCv',
   downloadSampleCV: apiPrefix + '/jobapplicant/downloadCVFormateFile',
 }
 
