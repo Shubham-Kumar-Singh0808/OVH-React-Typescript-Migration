@@ -53,14 +53,14 @@ const employeeReviewSlice = createSlice({
     })
   },
 })
-const reviewsDetails = (state: RootState): EmployeeReviews[] =>
+const reviewDetails = (state: RootState): EmployeeReviews[] =>
   state.reviewDetails.employeeReviewDetails
 
 export const reviewDetailsThunk = {
   getEmployeeReviewDetails,
 }
 export const reviewDetailsSelectors = {
-  reviewsDetails,
+  reviewsDetails: reviewDetails,
 }
 export const reviewDetailsService = {
   ...reviewDetailsThunk,
