@@ -56,20 +56,27 @@ function AddEditVisaDetails({
   const dispatch = useAppDispatch()
 
   const currentDateOfIssue = employeeVisaDetails.dateOfIssue as string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dateIssueParts: any = employeeVisaDetails.dateOfIssue
+  const dateIssueParts: string[] | string = employeeVisaDetails.dateOfIssue
     ? currentDateOfIssue.split('/')
     : ''
   const newDateOfIssue = employeeVisaDetails.dateOfIssue
-    ? new Date(+dateIssueParts[2], dateIssueParts[1] - 1, +dateIssueParts[0])
+    ? new Date(
+        +dateIssueParts[2],
+        Number(dateIssueParts[1]) - 1,
+        +dateIssueParts[0],
+      )
     : new Date()
 
   const currentDateOfExpiry = employeeVisaDetails.dateOfExpire as string
-  const dateExpiryPart: any = employeeVisaDetails.dateOfExpire
+  const dateExpiryPart: string[] | string = employeeVisaDetails.dateOfExpire
     ? currentDateOfExpiry.split('/')
     : ''
   const newDateOfExpiry = employeeVisaDetails.dateOfExpire
-    ? new Date(+dateExpiryPart[2], dateExpiryPart[1] - 1, +dateExpiryPart[0])
+    ? new Date(
+        +dateExpiryPart[2],
+        Number(dateExpiryPart[1]) - 1,
+        +dateExpiryPart[0],
+      )
     : new Date()
 
   useEffect(() => {

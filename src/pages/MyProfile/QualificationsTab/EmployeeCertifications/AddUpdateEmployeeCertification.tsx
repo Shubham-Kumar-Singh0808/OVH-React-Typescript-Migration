@@ -72,27 +72,25 @@ function AddUpdateEmployeeCertification({
   }, [dispatch, addCertification?.technology])
 
   const currentCompletedDate = addCertification.completedDate as string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const completedDateParts: any = addCertification.completedDate
+  const completedDateParts: string[] | string = addCertification.completedDate
     ? currentCompletedDate.split('/')
     : ''
   const newCompletedDate = addCertification.completedDate
     ? new Date(
         +completedDateParts[2],
-        completedDateParts[1] - 1,
+        Number(completedDateParts[1]) - 1,
         +completedDateParts[0],
       )
     : new Date()
 
   const currentExpiryDate = addCertification.expiryDate as string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const expirtyDateParts: any = addCertification.expiryDate
+  const expirtyDateParts: string[] | string = addCertification.expiryDate
     ? currentExpiryDate.split('/')
     : ''
   const newExpiryDate = addCertification.expiryDate
     ? new Date(
         +expirtyDateParts[2],
-        expirtyDateParts[1] - 1,
+        Number(expirtyDateParts[1]) - 1,
         +expirtyDateParts[0],
       )
     : new Date()

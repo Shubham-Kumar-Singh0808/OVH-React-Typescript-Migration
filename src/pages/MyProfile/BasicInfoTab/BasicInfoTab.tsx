@@ -79,36 +79,37 @@ const BasicInfoTab = (): JSX.Element => {
 
   const currentOfficialBday =
     employeeBasicInformation.officialBirthday as string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const officialBdayParts: any = employeeBasicInformation.officialBirthday
-    ? currentOfficialBday.split('/')
-    : ''
+  const officialBdayParts: string[] | string =
+    employeeBasicInformation.officialBirthday
+      ? currentOfficialBday.split('/')
+      : ''
   const newOfficialBday = employeeBasicInformation.officialBirthday
     ? new Date(
         +officialBdayParts[2],
-        officialBdayParts[1] - 1,
+        Number(officialBdayParts[1]) - 1,
         +officialBdayParts[0],
       )
     : new Date()
 
   const currentRealBirthday = employeeBasicInformation.realBirthday as string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const realBdayParts: any = employeeBasicInformation.realBirthday
+  const realBdayParts: string[] | string = employeeBasicInformation.realBirthday
     ? currentRealBirthday.split('/')
     : ''
   const newRealBirthday = employeeBasicInformation.realBirthday
-    ? new Date(+realBdayParts[2], realBdayParts[1] - 1, +realBdayParts[0])
+    ? new Date(
+        +realBdayParts[2],
+        Number(realBdayParts[1]) - 1,
+        +realBdayParts[0],
+      )
     : new Date()
 
   const currentAnniversary = employeeBasicInformation.anniversary as string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const anniversaryParts: any = employeeBasicInformation.anniversary
-    ? currentAnniversary.split('/')
-    : ''
+  const anniversaryParts: string[] | string =
+    employeeBasicInformation.anniversary ? currentAnniversary.split('/') : ''
   const newAnniversary = employeeBasicInformation.anniversary
     ? new Date(
         +anniversaryParts[2],
-        anniversaryParts[1] - 1,
+        Number(anniversaryParts[1]) - 1,
         +anniversaryParts[0],
       )
     : new Date()
