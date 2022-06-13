@@ -1,8 +1,10 @@
-.box {
+.basic-info{
+&-box {
   box-sizing: border-box;
   width: 200px;
   height:200px;
 }
-.img-preview {
+&-img-preview {
   overflow: hidden;
+}
 }

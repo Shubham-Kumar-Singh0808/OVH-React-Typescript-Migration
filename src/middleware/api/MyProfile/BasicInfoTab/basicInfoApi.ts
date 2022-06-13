@@ -3,7 +3,11 @@ import { AllowedHttpMethods, basicInfoApiConfig } from '../../apiList'
 import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
-import { DownloadCVReturn, UploadFileReturn } from '../../../../types/apiTypes'
+import {
+  DownloadCVReturn,
+  UploadFileReturn,
+  UploadImage,
+} from '../../../../types/apiTypes'
 
 const updateDefaultPicOnGenderChange = async (
   gender: string,
@@ -36,16 +40,9 @@ const uploadEmployeeCV = async (
   const response = await axios(requestConfig)
   return response.data
 }
-
-export type UploadImage = {
-  empId: number
-  data: unknown
-}
-
-const uploadEmployeeImage = async (
+const uploadEmployeeProfilePicture = async (
   prepareObject: UploadImage,
 ): Promise<number | undefined> => {
-  // console.log(prepareObject.data.get('file'))
   const requestConfig = getAuthenticatedRequestConfig({
     url: basicInfoApiConfig.uploadEmployeeImage,
     method: AllowedHttpMethods.post,
@@ -110,7 +107,7 @@ const basicInfoApi = {
   updateDefaultPicOnGenderChange,
   updateEmployeeBasicInformation,
   uploadEmployeeCV,
-  uploadEmployeeImage,
+  uploadEmployeeProfilePicture,
   downloadEmployeeCV,
   downloadSampleCV,
 }

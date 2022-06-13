@@ -1,86 +1,79 @@
-import React, { ChangeEvent, useState } from 'react'
-import Cropper from 'react-cropper'
-import 'cropperjs/dist/cropper.css'
-import './Demo.css'
-import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
-import { latest } from 'immer/dist/internal'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { Cropper } from 'react-cropper'
+import { ImageCropperProps } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
 
-export type ImageCropperProps = {
-  file: string | undefined
-  empId: number
-}
-
-export type UploadImage = {
-  empId: number
-  data: unknown
-}
-
-const Demo = (prop: ImageCropperProps): JSX.Element => {
+const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
   const [image, setImage] = useState<string | undefined>()
   const [imageUploaded, setImageUploaded] = useState<boolean>(false)
-  const [cropper, setCropper] = useState<unknown | any>()
+  const [cropper, setCropper] = useState<Cropper>()
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files
     if (!file) return
     const reader = new FileReader()
     reader.onload = () => {
-      console.log(reader.result)
       setImage(reader.result as string)
       setImageUploaded(true)
     }
     reader.readAsDataURL(file[0])
   }
+  const { onUploadImage } = props
 
-  const getCropData = async () => {
-    if (typeof cropper !== 'undefined') {
-      cropper.getCroppedCanvas().toBlob(async (blob: Blob) => {
-        console.log(blob)
-        const imageFile = new File([blob], 'profilePicture', {
+  const getCropData = useCallback(async () => {
+    if (typeof cropper !== 'undefined' && typeof cropper !== null) {
+      cropper.getCroppedCanvas().toBlob(async (blob: unknown | Blob) => {
+        const imageFile = new File([blob as Blob], 'profilePicture', {
           type: 'image/jpeg',
         })
-        console.log(imageFile)
         const formData = new FormData()
         formData.append('file', imageFile)
         const prepareFile = {
           data: formData,
-          empId: prop.empId,
+          empId: props.empId,
         }
-        setTimeout(async () => {
-          await basicInfoApi.uploadEmployeeImage(prepareFile)
-        }, 1000)
+        setTimeout(() => {
+          onUploadImage(prepareFile)
+        }, 500)
       }, 'image/jpeg')
     }
-  }
+  }, [cropper, props.empId, onUploadImage])
+
+  useEffect(() => {
+    if (typeof cropper !== 'undefined')
+      setTimeout(() => {
+        getCropData()
+      }, 1000)
+  }, [cropper, getCropData, image])
 
   return (
     <div>
       {imageUploaded ? (
-        <div className="box mt-2">
+        <div className="basic-info-box mt-2">
           <div
-            className="img-preview"
+            id="uploadedImage"
+            className="basic-info-img-preview"
             style={{ width: '100%', float: 'left', height: '100%' }}
           />
         </div>
       ) : (
-        <div className="profile-avatar mt-2">
+        <div id="profilePicture" className="profile-avatar mt-2">
           <img
             width="120px"
             height="120px;"
-            src={prop.file}
+            src={props.file}
             alt="User Profile"
           />
         </div>
       )}
       <div className="mt-2">
-        <input type="file" onChange={onChange} />
+        <input type="file" onChange={onChange} accept=".png, .jpg, .jpeg" />
         {imageUploaded && (
-          <span onPointerLeave={getCropData}>
+          <span>
             <Cropper
               className="mt-2"
               style={{ height: 250, width: 250 }}
               zoomTo={0.1}
               aspectRatio={1}
-              preview=".img-preview"
+              preview=".basic-info-img-preview"
               src={image}
               viewMode={1}
               minCropBoxHeight={30}
@@ -92,6 +85,7 @@ const Demo = (prop: ImageCropperProps): JSX.Element => {
               checkOrientation={false}
               onInitialized={(instance) => {
                 setCropper(instance)
+                getCropData()
               }}
               guides={true}
             />
@@ -103,4 +97,4 @@ const Demo = (prop: ImageCropperProps): JSX.Element => {
   )
 }
 
-export default Demo
+export default BasicInfoTabImageCropper

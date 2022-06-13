@@ -129,3 +129,8 @@ export interface ShiftConfigurationApi extends ApiBase {
   updateShiftDetail: string
   deleteShiftDetail: string
 }
+
+export type UploadImage = {
+  empId: number
+  data: FormData
+}
