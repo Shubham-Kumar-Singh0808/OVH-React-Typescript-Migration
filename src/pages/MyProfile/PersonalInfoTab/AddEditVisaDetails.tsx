@@ -324,7 +324,7 @@ function AddEditVisaDetails({
               Date of Issue:
               <span
                 className={
-                  dateOfIssue || getEditVisaDetails.dateOfIssue
+                  employeeVisaDetails.dateOfIssue || dateOfIssue
                     ? 'text-white'
                     : 'text-danger'
                 }
@@ -358,7 +358,7 @@ function AddEditVisaDetails({
               Date of Expire :
               <span
                 className={
-                  dateOfExpire || getEditVisaDetails.dateOfExpire
+                  employeeVisaDetails.dateOfExpire || dateOfExpire
                     ? 'text-white'
                     : 'text-danger'
                 }
