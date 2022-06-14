@@ -130,6 +130,7 @@ const SkillListTable = (): JSX.Element => {
               {skills.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  selectedPageSize={pageSize}
                 />
               )}
             </CCol>

@@ -1,12 +1,17 @@
 import { CCardHeader, CCol, CRow } from '@coreui/react-pro'
 
 import React from 'react'
-import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { useTypedSelector } from '../../../stateStore'
 
 const EmployeeGeneralInformation = (): JSX.Element => {
-  const employeeGeneralInformation = useTypedSelector(
-    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
+  const [isViewingAnotherEmployee] = useSelectedEmployee()
+  const employeeGeneralInformation = useTypedSelector((state) =>
+    reduxServices.generalInformation.selectors.selectLoggedInEmployeeData(
+      state,
+      isViewingAnotherEmployee,
+    ),
   )
 
   return (

@@ -150,7 +150,7 @@ function AddUpdateEmployeeCertification({
       })
     } else if (name === 'name') {
       const certificate = value
-        .replace(/[^a-zA-Z0-9\s]/gi, '')
+        .replace(/^[ A-Za-z0-9_@./#&+-]*$/g, '')
         .replace(/^\s*/, '')
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: certificate } }

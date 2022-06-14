@@ -6,6 +6,7 @@ import {
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
+  EmployeeListApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
   EmployeeSkillApi,
@@ -15,6 +16,7 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
+  EmployeeReviewsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -88,6 +90,7 @@ export const employeeSkillsApiConfig: EmployeeSkillApi = {
   updateEmployeeSkillInformation:
     apiPrefix + '/jobapplicant/updateEmployeeSkill',
   deleteEmployeeSkill: apiPrefix + '/jobapplicant/deleteEmployeeSkill',
+  getEmployeeSkillsById: apiPrefix + '/jobapplicant/getEmployeeskills',
 }
 
 export const employeeQualificationCategoryApiConfig: EmployeeQualificationCategoryApi =
@@ -127,6 +130,7 @@ export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificate: apiPrefix + '/Employee/getCertification',
   updateEmployeeCertificate: apiPrefix + '/Employee/certification',
   deleteEmployeeCertificate: apiPrefix + '/Employee/certification',
+  getEmployeeCertificateById: apiPrefix + '/Employee/employeeCertification',
 }
 
 export const basicInfoApiConfig: BasicInfoApi = {
@@ -136,6 +140,11 @@ export const basicInfoApiConfig: BasicInfoApi = {
   uploadEmployeeImage: apiPrefix + '/fileUpload/uploadImage',
   downloadEmployeeCV: apiPrefix + '/jobapplicant/downloadRBTCv',
   downloadSampleCV: apiPrefix + '/jobapplicant/downloadCVFormateFile',
+}
+
+export const employeeListConfig: EmployeeListApi = {
+  getEmployeeList: apiPrefix + '/jobapplicant/EmployeesIndexData',
+  exportEmployeeData: apiPrefix + '/jobapplicant/exportEmployeeData',
 }
 
 export const employeeDesignationListApiConfig: EmployeeDesignationListApi = {
@@ -156,4 +165,8 @@ export const certificateTypeApiConfig: CertificateTypeApi = {
   getCertificateTypeList: apiPrefix + '/EmployeeSkill/getCertificateTypeList',
   addCertificateType: apiPrefix + '/EmployeeSkill/addCertificateType',
   deleteCertificateType: apiPrefix + '/EmployeeSkill/deleteCertificateType',
+}
+
+export const employeeReviewsApiConfig: EmployeeReviewsApi = {
+  getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
 }

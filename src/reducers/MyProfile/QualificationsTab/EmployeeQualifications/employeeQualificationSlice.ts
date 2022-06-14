@@ -1,21 +1,21 @@
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
-  EmployeeQualificationSliceState,
   EmployeeQualification,
+  EmployeeQualificationSliceState,
   PostGraduationAndGraduationList,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
+import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
-import { AxiosError } from 'axios'
-import { LoadingState, ValidationError } from '../../../../types/commonTypes'
-import employeeQualificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationsApi'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { AxiosError } from 'axios'
+import employeeQualificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationsApi'
 
 const initialQualificationState = {} as EmployeeQualificationSliceState
 
 const getEmployeeQualifications = createAsyncThunk<
   EmployeeQualification | undefined,
-  string | number,
+  string | number | undefined,
   {
     dispatch: AppDispatch
     state: RootState
@@ -23,7 +23,7 @@ const getEmployeeQualifications = createAsyncThunk<
   }
 >(
   'employeeQualifications/getEmployeeQualifications',
-  async (employeeId: string | number, thunkApi) => {
+  async (employeeId: string | number | undefined, thunkApi) => {
     try {
       return await employeeQualificationsApi.getEmployeeQualifications(
         employeeId,
