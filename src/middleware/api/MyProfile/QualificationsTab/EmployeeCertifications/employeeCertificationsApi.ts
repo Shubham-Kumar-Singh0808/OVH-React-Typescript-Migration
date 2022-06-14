@@ -66,6 +66,7 @@ const getEmployeeCertificate = async (
   const responseVisa = await axios(requestConfig)
   return responseVisa.data
 }
+
 const updateEmployeeCertificate = async (
   certificateDetails: EmployeeCertification,
 ): Promise<number | undefined> => {
@@ -95,6 +96,20 @@ const deleteEmployeeCertificate = async (
   return response.data
 }
 
+const getEmployeeCertificateById = async (
+  employeeId: string | number | undefined,
+): Promise<EmployeeCertification[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeCertificationsApiConfig.getEmployeeCertificateById,
+    method: AllowedHttpMethods.get,
+    params: {
+      empId: employeeId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeCertificationsApi = {
   getEmployeeCertificates,
   getTechnologies,
@@ -103,5 +118,6 @@ const employeeCertificationsApi = {
   getEmployeeCertificate,
   updateEmployeeCertificate,
   deleteEmployeeCertificate,
+  getEmployeeCertificateById,
 }
 export default employeeCertificationsApi

@@ -8,7 +8,7 @@ import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
 const getEmployeeQualifications = async (
-  employeeId: string | number,
+  employeeId: string | number | undefined,
 ): Promise<EmployeeQualification> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApiConfig.getEmployeeQualifications,

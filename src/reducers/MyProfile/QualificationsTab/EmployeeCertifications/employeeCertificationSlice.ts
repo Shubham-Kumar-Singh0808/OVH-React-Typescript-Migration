@@ -6,18 +6,19 @@ import {
   EmployeeCertification,
   Technology,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
+import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
-import { AxiosError } from 'axios'
-import { LoadingState, ValidationError } from '../../../../types/commonTypes'
-import employeeCertificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationsApi'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { AxiosError } from 'axios'
+import employeeCertificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationsApi'
 
 const initialCertificationState: CertificationSliceState = {
   editCertificateDetails: {} as EditEmployeeCertificate,
   getAllTechnologies: [],
   typeOfCertificate: [],
   certificationDetails: [],
+  selectedEmployeeCertifications: [],
   error: null,
   isLoading: ApiLoadingState.idle,
 }
@@ -38,6 +39,7 @@ const getEmployeeCertificates = createAsyncThunk<
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
   }
 })
+
 const getTechnologies = createAsyncThunk<
   Technology[] | undefined,
   void,
@@ -163,6 +165,28 @@ const deleteEmployeeCertificate = createAsyncThunk<
   },
 )
 
+const getEmployeeCertificateById = createAsyncThunk<
+  EmployeeCertification[] | undefined,
+  string | number | undefined,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeCertifications/getEmployeeCertificateById',
+  async (employeeId, thunkApi) => {
+    try {
+      return await employeeCertificationsApi.getEmployeeCertificateById(
+        employeeId,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const employeeCertificationsSlice = createSlice({
   name: 'employeeCertifications',
   initialState: initialCertificationState,
@@ -181,6 +205,11 @@ const employeeCertificationsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.editCertificateDetails =
           action.payload as unknown as EditEmployeeCertificate
+      })
+      .addCase(getEmployeeCertificateById.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.selectedEmployeeCertifications =
+          action.payload as EmployeeCertification[]
       })
       .addMatcher(
         isAnyOf(
@@ -209,6 +238,7 @@ const employeeCertificationsSlice = createSlice({
           getEmployeeCertificate.pending,
           updateEmployeeCertificate.pending,
           deleteEmployeeCertificate.pending,
+          getEmployeeCertificateById.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -222,6 +252,7 @@ const employeeCertificationsSlice = createSlice({
           getEmployeeCertificate.rejected,
           updateEmployeeCertificate.rejected,
           deleteEmployeeCertificate.rejected,
+          getEmployeeCertificateById.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -233,8 +264,13 @@ const employeeCertificationsSlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState =>
   state.employeeCertificates.isLoading
-const employeeCertificates = (state: RootState): EmployeeCertification[] =>
-  state.employeeCertificates.certificationDetails
+const employeeCertificates = (
+  state: RootState,
+  isViewingAnotherEmployee = false,
+): EmployeeCertification[] =>
+  isViewingAnotherEmployee
+    ? state.employeeCertificates.selectedEmployeeCertifications
+    : state.employeeCertificates.certificationDetails
 
 export const employeeCertificationThunk = {
   getEmployeeCertificates,
@@ -244,6 +280,7 @@ export const employeeCertificationThunk = {
   createEmployeeCertification,
   updateEmployeeCertificate,
   deleteEmployeeCertificate,
+  getEmployeeCertificateById,
 }
 
 export const employeeCertificationSelectors = {

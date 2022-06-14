@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 
-import { render, screen, waitFor } from '@testing-library/react'
+import { prettyDOM, render, screen, waitFor } from '@testing-library/react'
 
 import CategoryList from './CategoryList'
 import { EnhancedStore } from '@reduxjs/toolkit'

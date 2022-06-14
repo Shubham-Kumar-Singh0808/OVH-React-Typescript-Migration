@@ -126,6 +126,7 @@ const CategoryListTable = (): JSX.Element => {
               {categories.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  selectedPageSize={pageSize}
                 />
               )}
             </CCol>
