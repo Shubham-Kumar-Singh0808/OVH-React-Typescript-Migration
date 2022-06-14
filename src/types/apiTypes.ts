@@ -107,6 +107,7 @@ export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
   uploadEmployeeCV: string
+  uploadEmployeeImage: string
   downloadEmployeeCV: string
   downloadSampleCV: string
 }
@@ -138,4 +139,9 @@ export interface ShiftConfigurationApi extends ApiBase {
 export interface CertificateTypeApi extends ApiBase {
   getCertificateTypeList: string
   addCertificateType: string
+}
+
+export type UploadImage = {
+  empId: number
+  data: FormData
 }

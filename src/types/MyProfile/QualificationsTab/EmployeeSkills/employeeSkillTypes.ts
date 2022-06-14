@@ -34,7 +34,7 @@ export type EditEmployeeSkills = {
   employee: { id: string | number }
 }
 export type AddUpdateEmployeeSkill = {
-  categoryType: number
+  categoryType: number | string
   skillType: string | number
   expMonth: string
   expYear: string
