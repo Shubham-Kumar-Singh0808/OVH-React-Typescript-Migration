@@ -11,7 +11,7 @@ export type EmployeeMyAssets = {
 }
 
 export type MyAssetsTabState = {
-  employeeMyAssetsDetails: EmployeeMyAssets[]
+  employeeMyAssets: EmployeeMyAssets[]
   isLoading: boolean
   error: ValidationError
 }

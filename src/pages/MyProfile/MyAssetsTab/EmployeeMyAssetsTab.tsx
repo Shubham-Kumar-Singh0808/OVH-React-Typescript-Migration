@@ -22,18 +22,17 @@ import { currentPageData } from '../../../utils/paginationUtils'
 const EmployeeMyAssetsTab = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [specification, setSpecification] = useState<string>('')
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-  const myAssetDetails = useTypedSelector(
-    reduxServices.employeeMyAssets.selectors.myAssetDetails,
+  const employeeMyAssets = useTypedSelector(
+    reduxServices.employeeMyAssets.selectors.employeeMyAssets,
   )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(
-      reduxServices.employeeMyAssets.getEmployeeMyAssetsDetails(employeeId),
-    )
+    dispatch(reduxServices.employeeMyAssets.getEmployeeMyAssets(employeeId))
   }, [dispatch, employeeId])
 
   const handleModal = (specification: string) => {
@@ -47,12 +46,12 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(myAssetDetails.length, 20)
+  } = usePagination(employeeMyAssets.length, 20)
 
   useEffect(() => {
     setPageSize(20)
     setCurrentPage(1)
-  }, [myAssetDetails, setPageSize, setCurrentPage])
+  }, [employeeMyAssets, setPageSize, setCurrentPage])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -66,8 +65,8 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
   }
 
   const currentPageItems = useMemo(
-    () => currentPageData(myAssetDetails, currentPage, pageSize),
-    [myAssetDetails, currentPage, pageSize],
+    () => currentPageData(employeeMyAssets, currentPage, pageSize),
+    [employeeMyAssets, currentPage, pageSize],
   )
 
   return (
@@ -77,7 +76,7 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
       </CCardHeader>
 
       <CCardBody>
-        {myAssetDetails.length ? (
+        {employeeMyAssets.length ? (
           <>
             <CTable striped>
               <CTableHead>
@@ -136,17 +135,17 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
               <CCol xs={4}>
                 <p>
                   &nbsp;&nbsp;
-                  <strong>Total Records: {myAssetDetails.length}</strong>
+                  <strong>Total Records: {employeeMyAssets.length}</strong>
                 </p>
               </CCol>
               <CCol xs={3}>
-                {myAssetDetails.length > 20 && (
+                {employeeMyAssets.length > 20 && (
                   <OPageSizeSelect
                     handlePageSizeSelectChange={handlePageSizeSelectChange}
                   />
                 )}
               </CCol>
-              {myAssetDetails.length > 20 && (
+              {employeeMyAssets.length > 20 && (
                 <CCol
                   xs={5}
                   className="d-grid gap-2 d-md-flex justify-content-md-end"

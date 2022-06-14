@@ -1,13 +1,13 @@
-import { myAssetsApiConfig, AllowedHttpMethods } from '../../apiList'
+import { employeeMyAssetsApiConfig, AllowedHttpMethods } from '../../apiList'
 import { EmployeeMyAssets } from '../../../../types/MyProfile/MyAssetsTab/myAssetsTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-const getEmployeeMyAssetsDetails = async (
+const getEmployeeMyAssets = async (
   employeeId: number | string,
 ): Promise<EmployeeMyAssets[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: myAssetsApiConfig.getEmployeeAssets,
+    url: employeeMyAssetsApiConfig.getEmployeeAssets,
     method: AllowedHttpMethods.get,
     params: {
       employeeId: employeeId,
@@ -16,7 +16,7 @@ const getEmployeeMyAssetsDetails = async (
   const response = await axios(requestConfig)
   return response.data
 }
-const myAssetsTabApi = {
-  getEmployeeMyAssetsDetails,
+const employeeMyAssetsApi = {
+  getEmployeeMyAssets,
 }
-export default myAssetsTabApi
+export default employeeMyAssetsApi

@@ -1,22 +1,22 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 
 import {
-  EmployeeMyAssets,
-  MyAssetsTabState,
+  EmployeeMyAssets as EmployeeMyAsset,
+  MyAssetsTabState as EmployeeMyAssetsState,
 } from '../../../types/MyProfile/MyAssetsTab/myAssetsTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
-import myAssetsTabApi from '../../../middleware/api/MyProfile/MyAssetsTab/myAssetsApi'
+import employeeMyAssetsApi from '../../../middleware/api/MyProfile/MyAssetsTab/employeeMyAssetsApi'
 
-const initialMyAssetsTabState: MyAssetsTabState = {
-  employeeMyAssetsDetails: [],
+const initialEmployeeMyAssetsTabState: EmployeeMyAssetsState = {
+  employeeMyAssets: [],
   isLoading: false,
   error: 0,
 }
 
-const getEmployeeMyAssetsDetails = createAsyncThunk<
-  EmployeeMyAssets[] | undefined,
+const getEmployeeMyAssets = createAsyncThunk<
+  EmployeeMyAsset[] | undefined,
   number | string,
   {
     dispatch: AppDispatch
@@ -24,10 +24,10 @@ const getEmployeeMyAssetsDetails = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'myAssetsTab/getEmployeeMyAssetsDetails',
+  'employeeMyAssets/getEmployeeMyAssets',
   async (employeeId: number | string, thunkApi) => {
     try {
-      return await myAssetsTabApi.getEmployeeMyAssetsDetails(employeeId)
+      return await employeeMyAssetsApi.getEmployeeMyAssets(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -36,36 +36,36 @@ const getEmployeeMyAssetsDetails = createAsyncThunk<
 )
 
 const employeeMyAssetsSlice = createSlice({
-  name: 'reviewsTab',
-  initialState: initialMyAssetsTabState,
+  name: 'employeeMyAssets',
+  initialState: initialEmployeeMyAssetsTabState,
   reducers: {},
 
   extraReducers: (builder) => {
-    builder.addCase(getEmployeeMyAssetsDetails.fulfilled, (state, action) => {
+    builder.addCase(getEmployeeMyAssets.fulfilled, (state, action) => {
       state.isLoading = false
-      state.employeeMyAssetsDetails = action.payload as EmployeeMyAssets[]
+      state.employeeMyAssets = action.payload as EmployeeMyAsset[]
     })
-    builder.addCase(getEmployeeMyAssetsDetails.pending, (state) => {
+    builder.addCase(getEmployeeMyAssets.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(getEmployeeMyAssetsDetails.rejected, (state, action) => {
+    builder.addCase(getEmployeeMyAssets.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.payload as ValidationError
     })
   },
 })
-const myAssetDetails = (state: RootState): EmployeeMyAssets[] =>
-  state.myAssets.employeeMyAssetsDetails
+const employeeMyAssets = (state: RootState): EmployeeMyAsset[] =>
+  state.employeeMyAssets.employeeMyAssets
 
-export const myAssetsThunk = {
-  getEmployeeMyAssetsDetails,
+export const employeeMyAssetsThunk = {
+  getEmployeeMyAssets,
 }
-export const myAssetsSelectors = {
-  myAssetDetails,
+export const employeeMyAssetsSelectors = {
+  employeeMyAssets,
 }
-export const myAssetsService = {
-  ...myAssetsThunk,
+export const employeeMyAssetsService = {
+  ...employeeMyAssetsThunk,
   actions: employeeMyAssetsSlice.actions,
-  selectors: myAssetsSelectors,
+  selectors: employeeMyAssetsSelectors,
 }
 export default employeeMyAssetsSlice.reducer

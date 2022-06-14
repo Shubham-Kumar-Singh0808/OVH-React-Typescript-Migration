@@ -13,7 +13,7 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
-  MyAssetsApi,
+  MyAssetsApi as EmployeeMyAssetsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -140,6 +140,6 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
 }
 
-export const myAssetsApiConfig: MyAssetsApi = {
+export const employeeMyAssetsApiConfig: EmployeeMyAssetsApi = {
   getEmployeeAssets: apiPrefix + '/Employee/getEmployeeAssets',
 }
