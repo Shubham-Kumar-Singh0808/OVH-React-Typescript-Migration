@@ -41,3 +41,19 @@ export type GetEmployeeCertificateResponse = {
   list: EmployeeCertificate[]
   listsize: number
 }
+
+export type CertificateDetailsExpandableTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
+export type CertificatesFilterOptionsProps = {
+  selectedTechnology: string
+  setSelectedTechnology: (value: string) => void
+  selectedCertificate: string
+  setSelectedCertificate: (value: string) => void
+  setMultiSearchValue: (value: string) => void
+}

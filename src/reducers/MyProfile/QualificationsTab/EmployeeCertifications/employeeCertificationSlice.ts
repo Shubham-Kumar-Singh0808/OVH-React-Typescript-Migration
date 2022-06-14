@@ -6,12 +6,12 @@ import {
   EmployeeCertifications,
   Technology,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
+import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
-import { AxiosError } from 'axios'
-import { LoadingState, ValidationError } from '../../../../types/commonTypes'
-import employeeCertificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationsApi'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { AxiosError } from 'axios'
+import employeeCertificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationsApi'
 
 const initialCertificationState: CertificationSliceState = {
   editCertificateDetails: {} as EditEmployeeCertificates,
@@ -163,7 +163,7 @@ const deleteEmployeeCertificate = createAsyncThunk<
   },
 )
 
-const employeeCertificationsSlice = createSlice({
+const employeeCertificatesSlice = createSlice({
   name: 'employeeCertifications',
   initialState: initialCertificationState,
   reducers: {},
@@ -232,7 +232,7 @@ const employeeCertificationsSlice = createSlice({
   },
 })
 
-const isLoading = (state: RootState): LoadingState =>
+const listSize = (state: RootState): LoadingState =>
   state.employeeCertificates.isLoading
 const employeeCertificates = (state: RootState): EmployeeCertifications[] =>
   state.employeeCertificates.certificationDetails
@@ -248,14 +248,14 @@ export const employeeCertificationThunk = {
 }
 
 export const employeeCertificationSelectors = {
-  isLoading,
+  listSize,
   employeeCertificates,
 }
 
 export const employeeCertificateService = {
   ...employeeCertificationThunk,
-  actions: employeeCertificationsSlice.actions,
+  actions: employeeCertificatesSlice.actions,
   selectors: employeeCertificationSelectors,
 }
 
-export default employeeCertificationsSlice.reducer
+export default employeeCertificatesSlice.reducer

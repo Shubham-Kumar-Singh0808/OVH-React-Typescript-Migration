@@ -4,10 +4,14 @@ import React from 'react'
 
 const OPageSizeSelect = ({
   handlePageSizeSelectChange,
+  options = [20, 40],
+  selectedPageSize = 20,
 }: {
   handlePageSizeSelectChange: (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => void
+  options?: number[]
+  selectedPageSize?: number
 }): JSX.Element => {
   return (
     <CRow className="g-1 align-items-center">
@@ -19,9 +23,13 @@ const OPageSizeSelect = ({
           size="sm"
           className="mb-3"
           onChange={handlePageSizeSelectChange}
+          value={selectedPageSize.toString()}
         >
-          <option value="20">20</option>
-          <option value="40">40</option>
+          {options.map((value, index) => (
+            <option key={index} value={value.toString()}>
+              {value}
+            </option>
+          ))}
         </CFormSelect>
       </CCol>
       <CCol xs="auto">

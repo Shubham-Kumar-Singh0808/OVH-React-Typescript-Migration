@@ -7,10 +7,29 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
+import React, { useState } from 'react'
 
-import React from 'react'
+import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
+import { useTypedSelector } from '../../../stateStore'
 
-const CertificatesFilterOptions = (): JSX.Element => {
+const CertificatesFilterOptions = ({
+  selectedTechnology,
+  setSelectedTechnology,
+  selectedCertificate,
+  setSelectedCertificate,
+  setMultiSearchValue,
+}: CertificatesFilterOptionsProps): JSX.Element => {
+  const [searchInput, setSearchInput] = useState<string>('')
+  const getTechnologies = useTypedSelector(
+    (state) => state.employeeCertificates.getAllTechnologies,
+  )
+  const getCertificateByTechnology = useTypedSelector(
+    (state) => state.employeeCertificates.typeOfCertificate,
+  )
+
+  const multiSearchButtonHandler = () => {
+    setMultiSearchValue(searchInput)
+  }
   return (
     <>
       <CRow>
@@ -21,25 +40,43 @@ const CertificatesFilterOptions = (): JSX.Element => {
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="department"
+            id="technology"
             data-testid="form-select"
-            name="department"
+            name="technology"
+            value={selectedTechnology}
+            onChange={(e) => {
+              setSelectedTechnology(e.target.value)
+            }}
           >
             <option value={''}>Select Technology</option>
+            {getTechnologies?.map((certificateItem, index) => (
+              <option key={index} value={certificateItem.name}>
+                {certificateItem.name}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={2} className="text-end">
-          <CFormLabel className="mt-1">Certificate Type:</CFormLabel>
+          <CFormLabel className="mt-1">Select Certificate:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="department"
+            id="certificate"
             data-testid="form-select"
-            name="department"
+            name="certificate"
+            value={selectedCertificate}
+            onChange={(e) => {
+              setSelectedCertificate(e.target.value)
+            }}
           >
             <option value={''}>Select Certificate</option>
+            {getCertificateByTechnology?.map((certificateTypeItem, index) => (
+              <option key={index} value={certificateTypeItem.certificateType}>
+                {certificateTypeItem.certificateType}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
         <CCol xs={5} className="gap-2 d-md-flex justify-content-md-end">
@@ -70,8 +107,17 @@ const CertificatesFilterOptions = (): JSX.Element => {
               placeholder="Multiple Search"
               aria-label="Multiple Search"
               aria-describedby="button-addon2"
+              value={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value)
+              }}
             />
-            <CButton type="button" color="info" id="button-addon2">
+            <CButton
+              type="button"
+              color="info"
+              id="button-addon2"
+              onClick={multiSearchButtonHandler}
+            >
               <i className="fa fa-search"></i>
             </CButton>
           </CInputGroup>

@@ -3,12 +3,12 @@ import {
   CertificatesListSliceState,
   EmployeeCertificate,
 } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
-import { ValidationError } from '../../../types/commonTypes'
 import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
 
 // fetch employees certificates action creator
@@ -50,6 +50,8 @@ const certificateListSlice = createSlice({
 const employeesCertificates = (state: RootState): EmployeeCertificate[] =>
   state.certificateList.employeeCertificationList
 const listSize = (state: RootState): number => state.certificateList.listSize
+const isLoading = (state: RootState): LoadingState =>
+  state.certificateList.isLoading
 
 const certificateListThunk = {
   getEmployeesCertificates,
@@ -58,6 +60,7 @@ const certificateListThunk = {
 const certificateListSelectors = {
   employeesCertificates,
   listSize,
+  isLoading,
 }
 
 export const certificateListService = {
