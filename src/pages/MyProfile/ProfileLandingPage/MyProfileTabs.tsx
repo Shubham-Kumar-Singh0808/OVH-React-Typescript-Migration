@@ -15,7 +15,7 @@ import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import TabsLabels from '../../../middleware/TabsLabels'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import EmployeeMyAssetsTab from '../MyAssetsTab/EmployeeMyAssetsTab'
+import EmployeeMyAssets from '../MyAssetsTab/EmployeeMyAssets'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
@@ -48,7 +48,7 @@ const MyProfileTabs = (): JSX.Element => {
         3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
         4: <QualificationDetails />,
         5: <h1>Review</h1>,
-        6: <EmployeeMyAssetsTab />,
+        6: <EmployeeMyAssets />,
         9: <EmployeeProfileHistory />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'

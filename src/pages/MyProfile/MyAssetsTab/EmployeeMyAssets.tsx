@@ -74,8 +74,8 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
       <CCardHeader>
         <h4 className="h4">My Assets</h4>
       </CCardHeader>
-
-      <CCardBody>
+      <br />
+      <CCardBody className="ps-0 pe-0">
         {employeeMyAssets.length ? (
           <>
             <CTable striped>
@@ -131,10 +131,10 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
                 })}
               </CTableBody>
             </CTable>
+            <br />
             <CRow>
               <CCol xs={4}>
                 <p>
-                  &nbsp;&nbsp;
                   <strong>Total Records: {employeeMyAssets.length}</strong>
                 </p>
               </CCol>
@@ -160,11 +160,30 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
             </CRow>
           </>
         ) : (
-          <CCol>
-            <CRow className="category-no-data">
-              <h4 className="text-center">No data to display</h4>
-            </CRow>
-          </CCol>
+          <>
+            <CTable striped>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Asset Number</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Asset Type</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Product Type</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">
+                    Product Specifications
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Location</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Asset Status</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Employee Name</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+            </CTable>
+            <br />
+            <CCol xs={4}>
+              <p>
+                <strong>No Records Found... </strong>
+              </p>
+            </CCol>
+          </>
         )}
         <OModal
           alignment="center"
