@@ -1,20 +1,20 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeReviews,
-  ReviewsTabState,
+  ReviewsTabState as ReviewsState,
 } from '../../../types/MyProfile/ReviewsTab/reviewsTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
-import reviewsTabApi from '../../../middleware/api/MyProfile/ReviewsTab/reviewsApi'
+import reviewsApi from '../../../middleware/api/MyProfile/ReviewsTab/reviewsApi'
 
-const initialReviewsTabState: ReviewsTabState = {
+const initialReviewsState: ReviewsState = {
   employeeReviewDetails: [],
   isLoading: false,
   error: 0,
 }
 
-const getEmployeeReviewDetails = createAsyncThunk<
+const getEmployeeReviews = createAsyncThunk<
   EmployeeReviews[] | undefined,
   number | string,
   {
@@ -23,10 +23,10 @@ const getEmployeeReviewDetails = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'reviewsTab/getEmployeeReviewDetails',
+  'reviewsTab/getEmployeeReviews',
   async (employeeId: number | string, thunkApi) => {
     try {
-      return await reviewsTabApi.getEmployeeReviewDetails(employeeId)
+      return await reviewsApi.getEmployeeReviews(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -36,18 +36,18 @@ const getEmployeeReviewDetails = createAsyncThunk<
 
 const employeeReviewSlice = createSlice({
   name: 'reviewsTab',
-  initialState: initialReviewsTabState,
+  initialState: initialReviewsState,
   reducers: {},
 
   extraReducers: (builder) => {
-    builder.addCase(getEmployeeReviewDetails.fulfilled, (state, action) => {
+    builder.addCase(getEmployeeReviews.fulfilled, (state, action) => {
       state.isLoading = false
       state.employeeReviewDetails = action.payload as EmployeeReviews[]
     })
-    builder.addCase(getEmployeeReviewDetails.pending, (state) => {
+    builder.addCase(getEmployeeReviews.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(getEmployeeReviewDetails.rejected, (state, action) => {
+    builder.addCase(getEmployeeReviews.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.payload as ValidationError
     })
@@ -56,15 +56,15 @@ const employeeReviewSlice = createSlice({
 const reviewDetails = (state: RootState): EmployeeReviews[] =>
   state.reviewDetails.employeeReviewDetails
 
-export const reviewDetailsThunk = {
-  getEmployeeReviewDetails,
+export const reviewsThunk = {
+  getEmployeeReviews,
 }
-export const reviewDetailsSelectors = {
+export const reviewsSelectors = {
   reviewsDetails: reviewDetails,
 }
-export const reviewDetailsService = {
-  ...reviewDetailsThunk,
+export const reviewsService = {
+  ...reviewsThunk,
   actions: employeeReviewSlice.actions,
-  selectors: reviewDetailsSelectors,
+  selectors: reviewsSelectors,
 }
 export default employeeReviewSlice.reducer

@@ -22,15 +22,13 @@ const EmployeeReviews = (): JSX.Element => {
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-  const getReviewDetails = useTypedSelector(
-    reduxServices.reviewInformation.selectors.reviewsDetails,
+  const getReviews = useTypedSelector(
+    reduxServices.employeeReviews.selectors.reviewsDetails,
   )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(
-      reduxServices.reviewInformation.getEmployeeReviewDetails(employeeId),
-    )
+    dispatch(reduxServices.employeeReviews.getEmployeeReviews(employeeId))
   }, [dispatch, employeeId])
 
   const {
@@ -39,11 +37,11 @@ const EmployeeReviews = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(getReviewDetails.length, 20)
+  } = usePagination(getReviews.length, 20)
 
   useEffect(() => {
     setPageSize(20)
-  }, [getReviewDetails, setPageSize, setCurrentPage])
+  }, [getReviews, setPageSize, setCurrentPage])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -57,8 +55,8 @@ const EmployeeReviews = (): JSX.Element => {
   }
 
   const currentPageItems = useMemo(
-    () => currentPageData(getReviewDetails, currentPage, pageSize),
-    [getReviewDetails, currentPage, pageSize],
+    () => currentPageData(getReviews, currentPage, pageSize),
+    [getReviews, currentPage, pageSize],
   )
 
   return (
@@ -68,7 +66,7 @@ const EmployeeReviews = (): JSX.Element => {
       </CCardHeader>
       <br></br>
       <CCardBody className="ps-0 pe-0">
-        {getReviewDetails.length ? (
+        {getReviews.length ? (
           <>
             <CTable striped className="text-center">
               <CTableHead>
@@ -130,17 +128,17 @@ const EmployeeReviews = (): JSX.Element => {
             <CRow>
               <CCol xs={4}>
                 <p>
-                  <strong>Total Records: {getReviewDetails.length}</strong>
+                  <strong>Total Records: {getReviews.length}</strong>
                 </p>
               </CCol>
               <CCol xs={3}>
-                {getReviewDetails.length > 20 && (
+                {getReviews.length > 20 && (
                   <OPageSizeSelect
                     handlePageSizeSelectChange={handlePageSizeSelectChange}
                   />
                 )}
               </CCol>
-              {getReviewDetails.length > 20 && (
+              {getReviews.length > 20 && (
                 <CCol
                   xs={5}
                   className="d-grid gap-2 d-md-flex justify-content-md-end"
