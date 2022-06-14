@@ -161,4 +161,5 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
 
 export const employeeReporteesApiConfig: EmployeeReporteesApi = {
   getEmployeeReportees: apiPrefix + '/jobapplicant/getReportiesUnderManager',
+  getEmployeeReporteesKRA: apiPrefix + '/kra/kraForIndividual',
 }

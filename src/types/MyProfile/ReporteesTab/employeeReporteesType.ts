@@ -8,8 +8,24 @@ export type EmployeeReportees = {
   mobile: null
 }
 
+export type EmployeeReporteesKRAs = {
+  personId: number
+  id: number
+  name: string
+  description: string
+  kpiLookps: null
+  count: number
+  checkType: null
+  designationName: string
+  designationId: number
+  departmentName: string
+  departmentId: number
+  designationKraPercentage: number
+}
+
 export type ReporteesState = {
   employeeReportees: EmployeeReportees[]
+  employeeReporteesKRAs: EmployeeReporteesKRAs[]
   isLoading: boolean
   error: ValidationError
 }

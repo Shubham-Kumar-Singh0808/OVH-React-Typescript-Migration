@@ -153,4 +153,5 @@ export type UploadImage = {
 
 export interface EmployeeReporteesApi extends ApiBase {
   getEmployeeReportees: string
+  getEmployeeReporteesKRA: string
 }

@@ -2,6 +2,7 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeReportees,
   ReporteesState,
+  EmployeeReporteesKRAs,
 } from '../../../types/MyProfile/ReporteesTab/employeeReporteesType'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -10,6 +11,7 @@ import employeeReporteesApi from '../../../middleware/api/MyProfile/ReporteesTab
 
 const initialEmployeeReporteesState: ReporteesState = {
   employeeReportees: [],
+  employeeReporteesKRAs: [],
   isLoading: false,
   error: 0,
 }
@@ -34,6 +36,26 @@ const getEmployeeReportees = createAsyncThunk<
   },
 )
 
+const getEmployeeReporteesKRAs = createAsyncThunk<
+  EmployeeReporteesKRAs[] | undefined,
+  string | number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeReporteesKRAs/getEmployeeReporteesKRAs',
+  async (personId: string | number, thunkApi) => {
+    try {
+      return await employeeReporteesApi.getEmployeeReporteesKRAs(personId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const employeeReporteesSlice = createSlice({
   name: 'employeeReportees',
   initialState: initialEmployeeReporteesState,
@@ -43,6 +65,10 @@ const employeeReporteesSlice = createSlice({
     builder.addCase(getEmployeeReportees.fulfilled, (state, action) => {
       state.isLoading = false
       state.employeeReportees = action.payload as EmployeeReportees[]
+    })
+    builder.addCase(getEmployeeReporteesKRAs.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.employeeReporteesKRAs = action.payload as EmployeeReporteesKRAs[]
     })
     builder.addCase(getEmployeeReportees.pending, (state) => {
       state.isLoading = true
@@ -56,11 +82,16 @@ const employeeReporteesSlice = createSlice({
 const employeeReportees = (state: RootState): EmployeeReportees[] =>
   state.employeeReportees.employeeReportees
 
+const employeeReporteesKRAs = (state: RootState): EmployeeReporteesKRAs[] =>
+  state.employeeReportees.employeeReporteesKRAs
+
 const employeeReporteesThunk = {
   getEmployeeReportees,
+  getEmployeeReporteesKRAs,
 }
 const employeeReporteesSelectors = {
   employeeReportees,
+  employeeReporteesKRAs,
 }
 export const employeeReporteesService = {
   ...employeeReporteesThunk,
