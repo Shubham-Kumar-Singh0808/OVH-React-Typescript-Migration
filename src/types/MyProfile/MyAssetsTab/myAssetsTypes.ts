@@ -1,5 +1,5 @@
 import { ValidationError } from '../../commonTypes'
-export type EmployeeMyAssets = {
+export type EmployeeAsset = {
   assetNumber: string
   assetType: string
   productName: string
@@ -10,8 +10,8 @@ export type EmployeeMyAssets = {
   empId: number
 }
 
-export type MyAssetsTabState = {
-  employeeMyAssets: EmployeeMyAssets[]
+export type EmployeeAssetsState = {
+  employeeAssets: EmployeeAsset[]
   isLoading: boolean
   error: ValidationError
 }

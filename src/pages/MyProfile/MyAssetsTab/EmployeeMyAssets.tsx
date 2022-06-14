@@ -26,13 +26,13 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-  const employeeMyAssets = useTypedSelector(
-    reduxServices.employeeMyAssets.selectors.employeeMyAssets,
+  const employeeAssets = useTypedSelector(
+    reduxServices.employeeAssets.selectors.employeeMyAssets,
   )
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(reduxServices.employeeMyAssets.getEmployeeMyAssets(employeeId))
+    dispatch(reduxServices.employeeAssets.getEmployeeMyAssets(employeeId))
   }, [dispatch, employeeId])
 
   const handleModal = (specification: string) => {
@@ -46,12 +46,12 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(employeeMyAssets.length, 20)
+  } = usePagination(employeeAssets.length, 20)
 
   useEffect(() => {
     setPageSize(20)
     setCurrentPage(1)
-  }, [employeeMyAssets, setPageSize, setCurrentPage])
+  }, [employeeAssets, setPageSize, setCurrentPage])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -65,8 +65,8 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
   }
 
   const currentPageItems = useMemo(
-    () => currentPageData(employeeMyAssets, currentPage, pageSize),
-    [employeeMyAssets, currentPage, pageSize],
+    () => currentPageData(employeeAssets, currentPage, pageSize),
+    [employeeAssets, currentPage, pageSize],
   )
 
   return (
@@ -76,7 +76,7 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
       </CCardHeader>
       <br />
       <CCardBody className="ps-0 pe-0">
-        {employeeMyAssets.length ? (
+        {employeeAssets.length ? (
           <>
             <CTable striped>
               <CTableHead>
@@ -135,17 +135,17 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
             <CRow>
               <CCol xs={4}>
                 <p>
-                  <strong>Total Records: {employeeMyAssets.length}</strong>
+                  <strong>Total Records: {employeeAssets.length}</strong>
                 </p>
               </CCol>
               <CCol xs={3}>
-                {employeeMyAssets.length > 20 && (
+                {employeeAssets.length > 20 && (
                   <OPageSizeSelect
                     handlePageSizeSelectChange={handlePageSizeSelectChange}
                   />
                 )}
               </CCol>
-              {employeeMyAssets.length > 20 && (
+              {employeeAssets.length > 20 && (
                 <CCol
                   xs={5}
                   className="d-grid gap-2 d-md-flex justify-content-md-end"

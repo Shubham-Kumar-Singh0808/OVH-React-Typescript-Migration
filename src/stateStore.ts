@@ -16,7 +16,7 @@ import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import employeeMyAssetsReducer from './reducers/MyProfile/MyAssetsTab/myAssetsSlice'
+import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -33,7 +33,7 @@ export const allReducers = {
   profileHistory: profileHistoryReducer,
   employeeSkill: employeeSkillReducer,
   shiftConfiguration: shiftConfigurationReducer,
-  employeeMyAssets: employeeMyAssetsReducer,
+  employeeAssets: employeeAssetsReducer,
   // add your slice reducers here
 }
 
