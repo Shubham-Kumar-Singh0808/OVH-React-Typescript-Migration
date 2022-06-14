@@ -6,8 +6,11 @@ import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import certificateListReducer from './reducers/EmployeeDirectory/CertificatesList/certificatesListSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import employeeCertificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
+import employeeListReducer from './reducers/EmployeeDirectory/EmployeesList/employeeListSlice'
 import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import employeeReviewsReducer from './reducers/MyProfile/ReviewTab/employeeReviewsSlice'
 import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import profileHistoryReducer from './reducers/MyProfile/ProfileHistory/profileHistorySlice'
@@ -32,6 +35,9 @@ export const allReducers = {
   employeeCertificates: employeeCertificationReducer,
   profileHistory: profileHistoryReducer,
   employeeSkill: employeeSkillReducer,
+  employeeReviews: employeeReviewsReducer,
+  employeeList: employeeListReducer,
+  employeeDesignationList: employeeDesignationListReducer,
   shiftConfiguration: shiftConfigurationReducer,
   certificateList: certificateListReducer,
   // add your slice reducers here

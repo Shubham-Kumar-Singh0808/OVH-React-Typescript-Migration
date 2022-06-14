@@ -126,6 +126,7 @@ const CategoryListTable = (): JSX.Element => {
               {categories.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  selectedPageSize={pageSize}
                 />
               )}
             </CCol>
@@ -155,6 +156,7 @@ const CategoryListTable = (): JSX.Element => {
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Category"
         confirmButtonText="Delete"
+        closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteCategoryId)}
       >
         {`Are you sure you want to delete this ${toDeleteCategoryName} category item?`}

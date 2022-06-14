@@ -10,8 +10,8 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import {
+  EmployeeCertification,
   EmployeeCertificationProps,
-  EmployeeCertifications,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -29,7 +29,7 @@ function AddUpdateEmployeeCertification({
   confirmButtonText,
   backButtonHandler,
 }: EmployeeCertificationProps): JSX.Element {
-  const initialCertificationDetails = {} as EmployeeCertifications
+  const initialCertificationDetails = {} as EmployeeCertification
 
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [addCertification, setAddCertification] = useState(

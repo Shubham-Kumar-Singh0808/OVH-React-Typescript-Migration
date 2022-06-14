@@ -6,8 +6,12 @@ import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
 import { ProfileUpdateData } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import { Provider } from 'react-redux'
 import React from 'react'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import { mockEmployeeProfileHistoryData } from '../../../test/data/mockEmployeeProfileHistoryData'
 import stateStore from '../../../stateStore'
+
+const history = createMemoryHistory()
 
 const ReduxProvider = ({
   children,
@@ -15,7 +19,11 @@ const ReduxProvider = ({
 }: {
   children: JSX.Element
   reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+}) => (
+  <Router history={history}>
+    <Provider store={reduxStore}>{children}</Provider>
+  </Router>
+)
 
 describe('Testing Profile History Tab', () => {
   test('should render Profile History without crashing', () => {

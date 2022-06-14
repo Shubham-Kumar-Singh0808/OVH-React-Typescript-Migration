@@ -4,9 +4,12 @@ import {
   CategoryApi,
   CertificatesListApi,
   EmployeeCertificationsApi,
+  EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
+  EmployeeListApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
+  EmployeeReviewsApi,
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
@@ -87,6 +90,7 @@ export const employeeSkillsApiConfig: EmployeeSkillApi = {
   updateEmployeeSkillInformation:
     apiPrefix + '/jobapplicant/updateEmployeeSkill',
   deleteEmployeeSkill: apiPrefix + '/jobapplicant/deleteEmployeeSkill',
+  getEmployeeSkillsById: apiPrefix + '/jobapplicant/getEmployeeskills',
 }
 
 export const employeeQualificationCategoryApiConfig: EmployeeQualificationCategoryApi =
@@ -125,12 +129,28 @@ export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificate: apiPrefix + '/Employee/getCertification',
   updateEmployeeCertificate: apiPrefix + '/Employee/certification',
   deleteEmployeeCertificate: apiPrefix + '/Employee/certification',
+  getEmployeeCertificateById: apiPrefix + '/Employee/employeeCertification',
 }
 
 export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
   uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
+  uploadEmployeeImage: apiPrefix + '/fileUpload/uploadImage',
+  downloadEmployeeCV: apiPrefix + '/jobapplicant/downloadRBTCv',
+  downloadSampleCV: apiPrefix + '/jobapplicant/downloadCVFormateFile',
+}
+
+export const employeeListConfig: EmployeeListApi = {
+  getEmployeeList: apiPrefix + '/jobapplicant/EmployeesIndexData',
+  exportEmployeeData: apiPrefix + '/jobapplicant/exportEmployeeData',
+}
+
+export const employeeDesignationListApiConfig: EmployeeDesignationListApi = {
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getEmployeeDesignations: apiPrefix + '/kra/designation',
+  addEmployeeDesignation: apiPrefix + '/jobapplicant/addDesignation',
+  deleteEmployeeDesignation: apiPrefix + '/jobapplicant/deleteDesignation',
 }
 
 export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
@@ -143,4 +163,8 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
 export const certificatesListApiConfig: CertificatesListApi = {
   getAllEmployeeCertificates:
     apiPrefix + '/EmployeeSkill/getAllEmployeecertificates',
+}
+
+export const employeeReviewsApiConfig: EmployeeReviewsApi = {
+  getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
 }

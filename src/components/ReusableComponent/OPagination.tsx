@@ -1,6 +1,5 @@
 import { CPagination, CPaginationItem } from '@coreui/react-pro'
-
-import React from 'react'
+import React, { useMemo } from 'react'
 
 const OPagination = ({
   currentPage,
@@ -31,6 +30,21 @@ const OPagination = ({
     pageSetter(pageNumber)
   }
 
+  const paginationItems = useMemo(() => {
+    if (paginationRange.length < 6) {
+      return paginationRange
+    }
+
+    if (paginationRange.includes(currentPage + 4)) {
+      return paginationRange.slice(currentPage - 1, currentPage + 4)
+    } else {
+      return paginationRange.slice(
+        paginationRange.length - 5,
+        paginationRange.length,
+      )
+    }
+  }, [currentPage, paginationRange])
+
   return (
     <CPagination>
       <CPaginationItem disabled={currentPage === 1} onClick={handleFirstPage}>
@@ -42,7 +56,7 @@ const OPagination = ({
       >
         &lt; Prev
       </CPaginationItem>
-      {paginationRange.map((pageNumber, index) => {
+      {paginationItems.map((pageNumber, index) => {
         return (
           <CPaginationItem
             key={index}

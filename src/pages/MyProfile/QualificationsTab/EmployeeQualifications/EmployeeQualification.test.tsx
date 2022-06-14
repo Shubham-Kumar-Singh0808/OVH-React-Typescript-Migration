@@ -1,11 +1,16 @@
 import '@testing-library/jest-dom'
 
 import { render, screen, waitFor } from '@testing-library/react'
+
 import EmployeeQualifications from './EmployeeQualification'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import stateStore from '../../../../stateStore'
+
+const history = createMemoryHistory()
 
 const ReduxProvider = ({
   children,
@@ -13,7 +18,11 @@ const ReduxProvider = ({
 }: {
   children: JSX.Element
   reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+}) => (
+  <Router history={history}>
+    <Provider store={reduxStore}>{children}</Provider>
+  </Router>
+)
 
 const mockUseDispatchValue = 1983
 jest.mock('react-redux', () => ({

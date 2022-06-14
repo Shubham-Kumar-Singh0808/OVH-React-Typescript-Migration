@@ -6,6 +6,7 @@ import { BasicInformationState } from '../../../types/MyProfile/BasicInfoTab/bas
 import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
+import { UploadFileReturn, UploadImage } from '../../../types/apiTypes'
 
 const updateEmployeeDefaultPicOnGenderChange = createAsyncThunk<
   number | undefined,
@@ -46,9 +47,48 @@ const updateEmployeeBasicInformation = createAsyncThunk<
   },
 )
 
+const uploadEmployeeCV = createAsyncThunk<
+  number | undefined,
+  UploadFileReturn,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'basicInformation/uploadRBTCv',
+  async (prepareObject: UploadFileReturn, thunkApi) => {
+    try {
+      return await basicInfoApi.uploadEmployeeCV(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 const initialBasicInformationState: BasicInformationState = {
   isLoading: false,
 }
+
+const uploadEmployeeProfilePicture = createAsyncThunk<
+  number | undefined,
+  UploadImage,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'basicInformation/uploadEmployeeProfilePicture',
+  async (prepareObject: UploadImage, thunkApi) => {
+    try {
+      return await basicInfoApi.uploadEmployeeProfilePicture(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 
 const basicInformationSlice = createSlice({
   name: 'basicInformation',
@@ -60,6 +100,7 @@ const basicInformationSlice = createSlice({
         isAnyOf(
           updateEmployeeDefaultPicOnGenderChange.pending,
           updateEmployeeBasicInformation.pending,
+          uploadEmployeeCV.pending,
         ),
         (state) => {
           state.isLoading = true
@@ -69,6 +110,7 @@ const basicInformationSlice = createSlice({
         isAnyOf(
           updateEmployeeDefaultPicOnGenderChange.fulfilled,
           updateEmployeeBasicInformation.fulfilled,
+          uploadEmployeeCV.fulfilled,
         ),
         (state) => {
           state.isLoading = false
@@ -80,6 +122,8 @@ const basicInformationSlice = createSlice({
 export const employeeBasicInformationThunk = {
   updateEmployeeDefaultPicOnGenderChange,
   updateEmployeeBasicInformation,
+  uploadEmployeeProfilePicture,
+  uploadEmployeeCV,
 }
 export const basicInformationService = {
   ...employeeBasicInformationThunk,

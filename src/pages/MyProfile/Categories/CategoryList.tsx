@@ -1,16 +1,23 @@
-import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
+import {
+  CButton,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CRow,
+  CSpinner,
+} from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
+import { AddEditEmployeeSkillsProps } from '../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import AddNewCategory from './AddNewCategory'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import CIcon from '@coreui/icons-react'
 import CategoryListTable from './CategoryListTable'
-import OCard from '../../../components/ReusableComponent/OCard'
-import { cilArrowLeft } from '@coreui/icons'
 import { reduxServices } from '../../../reducers/reduxServices'
 
-const CategoryList = (): JSX.Element => {
+const CategoryList = ({
+  backButtonHandler,
+}: AddEditEmployeeSkillsProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(reduxServices.category.selectors.isLoading)
 
@@ -20,34 +27,34 @@ const CategoryList = (): JSX.Element => {
 
   return (
     <>
-      <OCard
-        className="mb-4 category-list-card"
-        title="Category List"
-        CFooterClassName="d-none"
-      >
-        {isLoading !== ApiLoadingState.loading ? (
-          <CRow>
-            <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
-              <CButton color="info" className="px-4 text-white" size="sm">
-                <CIcon icon={cilArrowLeft} />
-                Back
-              </CButton>
-            </CCol>
-            <CCol xs={12}>
-              <AddNewCategory />
-            </CCol>
-            <CCol xs={12}>
-              <CategoryListTable />
-            </CCol>
-          </CRow>
-        ) : (
-          <CCol>
-            <CRow className="category-loading-spinner">
-              <CSpinner />
+      {isLoading !== ApiLoadingState.loading ? (
+        <>
+          <CCardHeader>
+            <h4 className="h4">Category List</h4>
+          </CCardHeader>
+          <CCardBody className="ps-0 pe-0">
+            <CRow>
+              <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
+                <CButton color="info btn-ovh me-1" onClick={backButtonHandler}>
+                  <i className="fa fa-arrow-left  me-1"></i>Back
+                </CButton>
+              </CCol>
+              <CCol xs={12}>
+                <AddNewCategory />
+              </CCol>
+              <CCol xs={12}>
+                <CategoryListTable />
+              </CCol>
             </CRow>
-          </CCol>
-        )}
-      </OCard>
+          </CCardBody>
+        </>
+      ) : (
+        <CCol>
+          <CRow className="category-loading-spinner">
+            <CSpinner />
+          </CRow>
+        </CCol>
+      )}
     </>
   )
 }

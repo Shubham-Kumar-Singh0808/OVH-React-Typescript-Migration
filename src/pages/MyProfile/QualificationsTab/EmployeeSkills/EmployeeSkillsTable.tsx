@@ -14,6 +14,7 @@ import { EmployeeSkillInfo } from '../../../../types/MyProfile/QualificationsTab
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 
 const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   editSkillButtonHandler,
@@ -22,16 +23,27 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   isFieldDisabled = false,
   tableClassName = '',
 }: EmployeeSkillInfo): JSX.Element => {
-  const employeeSkillsData = useTypedSelector(
-    reduxServices.employeeSkill.selectors.employeeSkillDetails,
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
+  const dispatch = useAppDispatch()
+  const employeeSkillsData = useTypedSelector((state) =>
+    reduxServices.employeeSkill.selectors.employeeSkillDetails(
+      state,
+      isViewingAnotherEmployee,
+    ),
   )
 
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(reduxServices.employeeSkill.getEmployeeSkills())
-  }, [dispatch])
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteSkillId, setToDeleteSkillId] = useState(0)
+
+  useEffect(() => {
+    if (isViewingAnotherEmployee) {
+      dispatch(
+        reduxServices.employeeSkill.getEmployeeSkillsById(selectedEmployeeId),
+      )
+    } else {
+      dispatch(reduxServices.employeeSkill.getEmployeeSkills())
+    }
+  }, [dispatch, isViewingAnotherEmployee, selectedEmployeeId])
 
   const handleShowDeleteModal = (skillId: number) => {
     setToDeleteSkillId(skillId)
@@ -65,35 +77,37 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   const tableDataCellProps = {
     colSpan: 4,
   }
+
   return (
     <>
       <CTable
         responsive
-        striped={striped}
-        bordered={bordered}
+        striped={striped || isViewingAnotherEmployee}
+        bordered={bordered || isViewingAnotherEmployee}
         className={tableClassName}
       >
-        {!isFieldDisabled ? (
+        {!isFieldDisabled || isViewingAnotherEmployee ? (
           <CTableHead color="primary">
             <CTableRow>
               <CTableDataCell {...tableDataCellProps}>Skill Set</CTableDataCell>
             </CTableRow>
-            {!isFieldDisabled && (
-              <CTableRow>
-                <CTableHeaderCell {...tableHeaderCellProps}>
-                  Category
-                </CTableHeaderCell>
-                <CTableHeaderCell {...tableHeaderCellProps}>
-                  Skill
-                </CTableHeaderCell>
-                <CTableHeaderCell {...tableHeaderCellProps}>
-                  Competency
-                </CTableHeaderCell>
-                <CTableHeaderCell {...tableHeaderCellProps}>
-                  Experience
-                </CTableHeaderCell>
-              </CTableRow>
-            )}
+            {!isFieldDisabled ||
+              (isViewingAnotherEmployee && (
+                <CTableRow>
+                  <CTableHeaderCell {...tableHeaderCellProps}>
+                    Category
+                  </CTableHeaderCell>
+                  <CTableHeaderCell {...tableHeaderCellProps}>
+                    Skill
+                  </CTableHeaderCell>
+                  <CTableHeaderCell {...tableHeaderCellProps}>
+                    Competency
+                  </CTableHeaderCell>
+                  <CTableHeaderCell {...tableHeaderCellProps}>
+                    Experience
+                  </CTableHeaderCell>
+                </CTableRow>
+              ))}
           </CTableHead>
         ) : (
           <>
@@ -114,7 +128,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
           {employeeSkillsData?.map((skillItem, index) => {
             return (
               <CTableRow key={index}>
-                {isFieldDisabled ? (
+                {isFieldDisabled && !isViewingAnotherEmployee ? (
                   <CTableDataCell scope="row">{index + 1}</CTableDataCell>
                 ) : (
                   <></>
@@ -129,9 +143,10 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
                   {skillItem.competency}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
-                  {`${skillItem.expYear}Year('s) ${skillItem.expMonth}month('s)`}
+                  {skillItem.expYear && `${skillItem.expYear}`} Year(`s)&nbsp;
+                  {skillItem.expMonth && `${skillItem.expMonth}`} month(`s)
                 </CTableDataCell>
-                {isFieldDisabled ? (
+                {isFieldDisabled && !isViewingAnotherEmployee ? (
                   <CTableDataCell scope="row">
                     <CButton
                       color="info"

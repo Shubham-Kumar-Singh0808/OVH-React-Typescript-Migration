@@ -1,19 +1,20 @@
-import { personalInfoApiConfig, AllowedHttpMethods } from '../../apiList'
-
+import { AllowedHttpMethods, personalInfoApiConfig } from '../../apiList'
 import {
+  EditFamilyDetailsState,
+  EditVisaDetailsState,
   EmployeeFamilyData,
-  VisaDetails,
+  EmployeeFamilyDetails,
+  EmployeeVisaDetails,
   GetCountryDetails,
   VisaCountryDetails,
-  EmployeeVisaDetails,
-  EditFamilyDetailsState,
-  EmployeeFamilyDetails,
-  EditVisaDetailsState,
+  VisaDetails,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+
 const getEmployeeFamilyDetails = async (
-  employeeId: number | string,
+  employeeId: number | string | undefined,
 ): Promise<EmployeeFamilyData[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.getFamilyDetails,
@@ -82,7 +83,7 @@ const deleteEmployeeFamilyMember = async (
 }
 
 const getEmployeeVisaDetails = async (
-  employeeId: number | string,
+  employeeId: number | string | undefined,
 ): Promise<VisaDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.getVisaDetails,
@@ -172,6 +173,25 @@ const deleteEmployeeVisa = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
+const uploadVisaImage = async (
+  visaId: number,
+  file: FormData,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApiConfig.fileUploadVisaImage,
+    method: AllowedHttpMethods.post,
+    data: file,
+    params: {
+      visaId: visaId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
 const personalInfoApi = {
   getEmployeeFamilyDetails,
   addEmployeeFamilyMember,
@@ -185,5 +205,6 @@ const personalInfoApi = {
   getEmployeeVisa,
   updateEmployeeVisa,
   deleteEmployeeVisa,
+  uploadVisaImage,
 }
 export default personalInfoApi
