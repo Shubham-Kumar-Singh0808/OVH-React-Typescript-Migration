@@ -5,7 +5,7 @@ import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getProfileHistory = async (
-  employeeId: string,
+  employeeId: string | undefined,
 ): Promise<ProfileUpdateData[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: profileHistoryConfig.getprofileHistory,

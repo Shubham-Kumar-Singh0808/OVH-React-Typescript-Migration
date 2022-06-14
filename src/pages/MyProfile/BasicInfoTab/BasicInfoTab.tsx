@@ -16,15 +16,23 @@ import DownloadCVButton from './DownloadCVButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
-import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useFormik } from 'formik'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import validator from 'validator'
 import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
 import { UploadImage } from '../../../types/apiTypes'
 
 const BasicInfoTab = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const [isViewingAnotherEmployee] = useSelectedEmployee()
+  const employeeBasicInformation = useTypedSelector((state) =>
+    reduxServices.generalInformation.selectors.selectLoggedInEmployeeData(
+      state,
+      isViewingAnotherEmployee,
+    ),
+  )
   const tenantKey = useTypedSelector(
     reduxServices.authentication.selectors.selectTenantKey,
   )
@@ -32,9 +40,6 @@ const BasicInfoTab = (): JSX.Element => {
     reduxServices.authentication.selectors.selectToken,
   )
 
-  const employeeBasicInformation = useTypedSelector(
-    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
-  )
   const selectedUserBasicInformation = {
     id: employeeBasicInformation.id,
     baseLocation: employeeBasicInformation.baseLocation,
@@ -59,6 +64,7 @@ const BasicInfoTab = (): JSX.Element => {
     anniversary: employeeBasicInformation.anniversary,
     skypeId: employeeBasicInformation.skypeId,
   }
+
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
   const [realBirthdayShown, setRealBirthdayShown] = useState<boolean>(false)
   const [emailError, setEmailError] = useState<boolean>(false)
@@ -72,8 +78,6 @@ const BasicInfoTab = (): JSX.Element => {
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
   const [selectedProfilePicture, setSelectedProfilePicture] =
     useState<UploadImage>()
-
-  const dispatch = useAppDispatch()
 
   const validateEmail = (email: string) => {
     if (validator.isEmail(email)) {

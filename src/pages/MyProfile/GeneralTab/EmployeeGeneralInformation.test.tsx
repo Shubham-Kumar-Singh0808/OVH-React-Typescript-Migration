@@ -9,6 +9,8 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import GeneralTab from './GeneralTab'
 import { Provider } from 'react-redux'
 import React from 'react'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import { employeeGeneralInformationApiConfig } from '../../../middleware/api/apiList'
 import { getEmployeeGeneralInformationThunk } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { mockGeneralInformationData } from '../../../test/data/generalInformationData'
@@ -16,13 +18,19 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import stateStore from '../../../stateStore'
 
+const history = createMemoryHistory()
+
 const ReduxProvider = ({
   children,
   reduxStore,
 }: {
   children: JSX.Element
   reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+}) => (
+  <Router history={history}>
+    <Provider store={reduxStore}>{children}</Provider>
+  </Router>
+)
 
 const mockUseDispatchValue = '1984'
 jest.mock('react-redux', () => ({

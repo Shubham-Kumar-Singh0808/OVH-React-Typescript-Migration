@@ -126,9 +126,30 @@ const deleteEmployeeSkill = createAsyncThunk<
   }
 })
 
+const getEmployeeSkillsById = createAsyncThunk<
+  EmployeeSkills[] | undefined,
+  string | number | undefined,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeQualifications/getEmployeeSkillsById',
+  async (employeeId, thunkApi) => {
+    try {
+      return await employeeSkillsApi.getEmployeeSkillsById(employeeId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialSkillState: EmployeeSkillState = {
   isLoading: false,
   skillDetails: [],
+  selectedEmployeeSkills: [],
   AddEditSkill: {} as EditEmployeeSkills,
   CategorySkillList: [],
 }
@@ -155,6 +176,10 @@ const employeeSkillSlice = createSlice({
         state.isLoading = false
         state.CategorySkillList = action.payload as CategorySkillListItem[]
       })
+      .addCase(getEmployeeSkillsById.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.selectedEmployeeSkills = action.payload as EmployeeSkills[]
+      })
       .addMatcher(
         isAnyOf(
           getEmployeeSkills.pending,
@@ -162,6 +187,7 @@ const employeeSkillSlice = createSlice({
           getEmployeeSkillInformation.pending,
           updateEmployeeSkill.pending,
           deleteEmployeeSkill.pending,
+          getEmployeeSkillsById.pending,
         ),
         (state) => {
           state.isLoading = true
@@ -174,6 +200,7 @@ const employeeSkillSlice = createSlice({
           getEmployeeSkillInformation.rejected,
           updateEmployeeSkill.rejected,
           deleteEmployeeSkill.rejected,
+          getEmployeeSkillsById.rejected,
         ),
         (state) => {
           state.isLoading = false
@@ -182,8 +209,13 @@ const employeeSkillSlice = createSlice({
   },
 })
 
-const employeeSkillDetails = (state: RootState): EmployeeSkills[] =>
-  state.employeeSkill.skillDetails
+const employeeSkillDetails = (
+  state: RootState,
+  isViewingAnotherEmployee = false,
+): EmployeeSkills[] =>
+  isViewingAnotherEmployee
+    ? state.employeeSkill.selectedEmployeeSkills
+    : state.employeeSkill.skillDetails
 
 const selectIsLoading = (state: RootState): boolean =>
   state.employeeSkill.isLoading
@@ -201,6 +233,7 @@ export const employeeSkillThunk = {
   getEmployeeSkillInformation,
   updateEmployeeSkill,
   deleteEmployeeSkill,
+  getEmployeeSkillsById,
 }
 export const employeeSkillActions = employeeSkillSlice.actions
 

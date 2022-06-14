@@ -1,6 +1,6 @@
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import employeeCertificationsSlice from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { EditEmployeeCertificate } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
+import employeeCertificationsSlice from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 
 describe('Certification Section Reducer Test', () => {
   it('should return the initial state when passed an empty action', () => {
@@ -12,6 +12,7 @@ describe('Certification Section Reducer Test', () => {
       getAllTechnologies: [],
       typeOfCertificate: [],
       certificationDetails: [],
+      selectedEmployeeCertifications: [],
       error: null,
       isLoading: ApiLoadingState.idle,
     })

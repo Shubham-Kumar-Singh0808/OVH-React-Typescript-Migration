@@ -55,6 +55,7 @@ export type CertificationSliceState = {
   getAllTechnologies: Technology[]
   typeOfCertificate: CertificateType[]
   certificationDetails: EmployeeCertification[]
+  selectedEmployeeCertifications: EmployeeCertification[]
   editCertificateDetails: EditEmployeeCertificate
   isLoading: LoadingState
   error: ValidationError

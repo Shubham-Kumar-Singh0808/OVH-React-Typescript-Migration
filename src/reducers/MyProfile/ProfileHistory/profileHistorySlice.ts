@@ -12,20 +12,23 @@ import profileHistoryApi from '../../../middleware/api/MyProfile/ProfileHistory/
 
 const getProfileHistory = createAsyncThunk<
   ProfileUpdateData[] | undefined,
-  string,
+  string | undefined,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
->('profileHistory/getProfileHistory', async (employeeId: string, thunkApi) => {
-  try {
-    return await profileHistoryApi.getProfileHistory(employeeId)
-  } catch (error) {
-    const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-  }
-})
+>(
+  'profileHistory/getProfileHistory',
+  async (employeeId: string | undefined, thunkApi) => {
+    try {
+      return await profileHistoryApi.getProfileHistory(employeeId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 const initialProfileHistoryState: ProfileHistoryState = {
   profileHistoryList: [],
   isLoading: ApiLoadingState.idle,
