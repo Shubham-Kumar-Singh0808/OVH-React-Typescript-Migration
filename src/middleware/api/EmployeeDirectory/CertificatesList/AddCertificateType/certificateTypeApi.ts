@@ -30,9 +30,27 @@ const addCertificateType = async ({
   return response.data
 }
 
+const deleteCertificateType = async (
+  certificateId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: certificateTypeApiConfig.deleteCertificateType,
+    method: AllowedHttpMethods.delete,
+    params: {
+      certificateId: certificateId,
+    },
+    data: {
+      certificateId: certificateId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const certificateTypeApi = {
   getCertificateTypeList,
   addCertificateType,
+  deleteCertificateType,
 }
 
 export default certificateTypeApi

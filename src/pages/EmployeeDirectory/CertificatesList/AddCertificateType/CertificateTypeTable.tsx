@@ -9,7 +9,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import CIcon from '@coreui/icons-react'
 import { cilTrash } from '@coreui/icons'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -18,15 +18,22 @@ import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { currentPageData } from '../../../../utils/paginationUtils'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import OModal from '../../../../components/ReusableComponent/OModal'
 
 const CertificateTypeTable = (): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [certificateId, setCertificateId] = useState(0)
+
   const certificateTypeList = useTypedSelector(
     reduxServices.certificateType.selectors.certificateTypeList,
   )
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(reduxServices.certificateType.getCertificateTypeList())
   }, [dispatch])
+
   const {
     paginationRange,
     setPageSize,
@@ -54,6 +61,33 @@ const CertificateTypeTable = (): JSX.Element => {
     () => currentPageData(certificateTypeList, currentPage, pageSize),
     [certificateTypeList, currentPage, pageSize],
   )
+
+  const toastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="Certificate deleted successfully"
+    />
+  )
+
+  const handleShowDeleteModal = (certificateTypeId: number) => {
+    setCertificateId(certificateTypeId)
+    setIsDeleteModalVisible(true)
+  }
+  const handleConfirmDeleteCertificateType = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteCertificateTypeResultAction = await dispatch(
+      reduxServices.certificateType.deleteCertificateType(certificateId),
+    )
+    if (
+      reduxServices.certificateType.deleteCertificateType.fulfilled.match(
+        deleteCertificateTypeResultAction,
+      )
+    ) {
+      dispatch(reduxServices.certificateType.getCertificateTypeList())
+      dispatch(reduxServices.app.actions.addToast(toastElement))
+    }
+  }
+
   return (
     <>
       {certificateTypeList.length ? (
@@ -87,7 +121,15 @@ const CertificateTypeTable = (): JSX.Element => {
                           aria-hidden="true"
                         ></i>
                       </CButton>
-                      <CButton color="danger" size="sm">
+                      <CButton
+                        color="danger"
+                        size="sm"
+                        onClick={() =>
+                          handleShowDeleteModal(
+                            certificateTypeItem.id as number,
+                          )
+                        }
+                      >
                         <CIcon className="text-white" icon={cilTrash} />
                       </CButton>
                     </CTableDataCell>
@@ -130,6 +172,17 @@ const CertificateTypeTable = (): JSX.Element => {
           </CRow>
         </CCol>
       )}
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteCertificateType}
+      >
+        {`Do you really want to delete this certificateType ?`}
+      </OModal>
     </>
   )
 }

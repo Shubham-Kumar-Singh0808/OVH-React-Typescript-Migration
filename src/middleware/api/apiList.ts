@@ -155,4 +155,5 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
 export const certificateTypeApiConfig: CertificateTypeApi = {
   getCertificateTypeList: apiPrefix + '/EmployeeSkill/getCertificateTypeList',
   addCertificateType: apiPrefix + '/EmployeeSkill/addCertificateType',
+  deleteCertificateType: apiPrefix + '/EmployeeSkill/deleteCertificateType',
 }

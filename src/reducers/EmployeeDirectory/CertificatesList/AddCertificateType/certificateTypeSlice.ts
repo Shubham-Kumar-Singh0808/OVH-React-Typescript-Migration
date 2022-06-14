@@ -49,6 +49,23 @@ const addCertificateType = createAsyncThunk<
   },
 )
 
+const deleteCertificateType = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('certificateType/deleteCertificateType', async (certificateId, thunkApi) => {
+  try {
+    return await certificateTypeApi.deleteCertificateType(certificateId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const initialCertificateTypeState: CertificateTypeSliceState = {
   certificateTypes: [],
   isLoading: ApiLoadingState.idle,
@@ -64,20 +81,24 @@ const certificateTypeSlice = createSlice({
         state.isLoading = ApiLoadingState.failed
         state.error = action.payload as ValidationError
       })
-      .addCase(addCertificateType.fulfilled, (state) => {
+      .addCase(getCertificateTypeList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.certificateTypes = action.payload as CertificateType[]
       })
       .addMatcher(
-        isAnyOf(getCertificateTypeList.pending, addCertificateType.pending),
+        isAnyOf(addCertificateType.fulfilled, deleteCertificateType.fulfilled),
         (state) => {
-          state.isLoading = ApiLoadingState.loading
+          state.isLoading = ApiLoadingState.succeeded
         },
       )
       .addMatcher(
-        isAnyOf(getCertificateTypeList.fulfilled),
-        (state, action) => {
-          state.isLoading = ApiLoadingState.succeeded
-          state.certificateTypes = action.payload as CertificateType[]
+        isAnyOf(
+          getCertificateTypeList.pending,
+          addCertificateType.pending,
+          deleteCertificateType.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
         },
       )
   },
@@ -94,6 +115,7 @@ const isError = (state: RootState): ValidationError =>
 export const certificateTypeThunk = {
   getCertificateTypeList,
   addCertificateType,
+  deleteCertificateType,
 }
 
 export const certificateTypeSelectors = {
