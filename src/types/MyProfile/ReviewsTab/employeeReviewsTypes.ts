@@ -17,7 +17,7 @@ export type EmployeeReview = {
 }
 
 export type ReviewsTabState = {
-  employeeReview: EmployeeReview[]
+  employeeReviews: EmployeeReview[]
   isLoading: boolean
   error: ValidationError
 }

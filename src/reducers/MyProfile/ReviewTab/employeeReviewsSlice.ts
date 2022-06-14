@@ -9,7 +9,7 @@ import { ValidationError } from '../../../types/commonTypes'
 import employeeReviewsApi from '../../../middleware/api/MyProfile/ReviewsTab/employeeReviewsApi'
 
 const initialEmployeeReviewsState: EmployeeReviewsState = {
-  employeeReview: [],
+  employeeReviews: [],
   isLoading: false,
   error: 0,
 }
@@ -42,7 +42,7 @@ const employeeReviewSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getEmployeeReviews.fulfilled, (state, action) => {
       state.isLoading = false
-      state.employeeReview = action.payload as EmployeeReview[]
+      state.employeeReviews = action.payload as EmployeeReview[]
     })
     builder.addCase(getEmployeeReviews.pending, (state) => {
       state.isLoading = true
@@ -54,7 +54,7 @@ const employeeReviewSlice = createSlice({
   },
 })
 const employeeReviews = (state: RootState): EmployeeReview[] =>
-  state.employeeReviews.employeeReview
+  state.employeeReviews.employeeReviews
 
 const employeeReviewsThunk = {
   getEmployeeReviews,
