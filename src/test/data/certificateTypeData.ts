@@ -1,4 +1,5 @@
 import { CertificateType } from '../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
+import { Technology } from '../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 
 export const mockCertificateType: CertificateType[] = [
   {
@@ -144,5 +145,28 @@ export const mockCertificateType: CertificateType[] = [
     technologyId: 2,
     technologyName: '.Net',
     certificateType: 'MVC Certificate',
+  },
+]
+
+export const mockAllTechnology: Technology[] = [
+  {
+    id: 1,
+    name: 'Java',
+  },
+  {
+    id: 2,
+    name: '.Net',
+  },
+  {
+    id: 3,
+    name: 'PHP',
+  },
+  {
+    id: 4,
+    name: 'Testing',
+  },
+  {
+    id: 5,
+    name: 'iPhone',
   },
 ]

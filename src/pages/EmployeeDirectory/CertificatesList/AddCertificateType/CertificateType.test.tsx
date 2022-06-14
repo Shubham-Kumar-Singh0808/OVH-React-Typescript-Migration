@@ -22,7 +22,7 @@ const ReduxProvider = ({
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
     expect(
-      screen.getByText(mockCertificateType[i].certificateType),
+      screen.queryByText(mockCertificateType[i].certificateType),
     ).toBeInTheDocument()
   }
 }
@@ -34,7 +34,7 @@ describe('CertificateType Table Testing', () => {
       </ReduxProvider>,
     )
     await waitFor(() => {
-      expect(screen.getByText('No data to display')).toBeInTheDocument()
+      expect(screen.queryByText('No data to display')).toBeInTheDocument()
     })
   })
 
@@ -48,84 +48,4 @@ describe('CertificateType Table Testing', () => {
       reduxServices.certificateType.getCertificateTypeList(),
     )
   })
-
-  test('should render table records length', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <CertificateTypeTable />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      expectPageSizeToBeRendered(20)
-      expect(
-        screen.getByText('Total Records: ' + mockCertificateType.length),
-      ).toBeInTheDocument()
-    })
-  })
-
-  //   test('should render second page data only', async () => {
-  //     render(
-  //       <ReduxProvider reduxStore={stateStore}>
-  //         <CategoryList
-  //           headerTitle={''}
-  //           confirmButtonText={''}
-  //           backButtonHandler={function (): void {
-  //             throw new Error('Function not implemented.')
-  //           }}
-  //         />
-  //       </ReduxProvider>,
-  //     )
-
-  //     await waitFor(() => {
-  //       userEvent.click(screen.getByText('Next >', { exact: true }))
-
-  //       expect(screen.getByRole('rowheader', { name: '40' })).toBeInTheDocument()
-  //       expect(screen.queryByRole('rowheader', { name: '41' })).toBeNull()
-  //     })
-  //   })
-
-  //   test('should disable first and prev in pagination if first page', async () => {
-  //     render(
-  //       <ReduxProvider reduxStore={stateStore}>
-  //         <CategoryList
-  //           headerTitle={''}
-  //           confirmButtonText={''}
-  //           backButtonHandler={function (): void {
-  //             throw new Error('Function not implemented.')
-  //           }}
-  //         />
-  //       </ReduxProvider>,
-  //     )
-
-  //     await waitFor(() => {
-  //       expect(screen.getByText('« First')).toHaveAttribute('disabled')
-  //       expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
-  //       expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
-  //       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
-  //     })
-  //   })
-
-  //   test('should disable last and next in pagination if last page', async () => {
-  //     render(
-  //       <ReduxProvider reduxStore={stateStore}>
-  //         <CategoryList
-  //           headerTitle={''}
-  //           confirmButtonText={''}
-  //           backButtonHandler={function (): void {
-  //             throw new Error('Function not implemented.')
-  //           }}
-  //         />
-  //       </ReduxProvider>,
-  //     )
-
-  //     await waitFor(() => {
-  //       userEvent.click(screen.getByText('Next >', { exact: true }))
-
-  //       expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-  //       expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
-  //       expect(screen.getByText('Next >')).toHaveAttribute('disabled')
-  //       expect(screen.getByText('Last »')).toHaveAttribute('disabled')
-  //     })
-  //   })
 })
