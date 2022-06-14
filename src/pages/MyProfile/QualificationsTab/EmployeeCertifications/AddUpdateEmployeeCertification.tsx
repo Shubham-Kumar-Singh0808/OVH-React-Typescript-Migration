@@ -124,11 +124,15 @@ function AddUpdateEmployeeCertification({
 
   const onChangeDateOfCompletionHandler = (date: Date) => {
     const currentDateExpiry = isEditCertificationDetails
-      ? addCertification.expiryDate?.toString()
-      : expiryDate?.toLocaleString()
+      ? (addCertification.expiryDate as string)
+      : (expiryDate as string)
 
-    const tempDateExpiry = moment(currentDateExpiry).format('DD/MM/YYYY')
-    const newDateExpiry = expiryDateFlag ? new Date(tempDateExpiry) : new Date()
+    const dateParts: string[] | string = addCertification.expiryDate
+      ? currentDateExpiry.split('/')
+      : ''
+    const newDateExpiry = addCertification.expiryDate
+      ? new Date(+dateParts[2], Number(dateParts[1]) - 1, +dateParts[0])
+      : new Date(expiryDate as Date)
 
     validateDates(date, newDateExpiry)
 
@@ -144,14 +148,16 @@ function AddUpdateEmployeeCertification({
   }
 
   const onChangeDateOfExpireHandler = (date: Date) => {
-    const currentCompletedDate = isEditCertificationDetails
-      ? addCertification?.completedDate?.toString()
-      : completedDate?.toLocaleString()
+    const currentDateCompleted = isEditCertificationDetails
+      ? (addCertification.completedDate as string)
+      : (completedDate as string)
 
-    const tempDateCompleted = moment(currentCompletedDate).format('DD/MM/YYYY')
-    const newDateCompleted = completedDateFlag
-      ? new Date(tempDateCompleted)
-      : new Date()
+    const dateParts: string[] | string = addCertification.completedDate
+      ? currentDateCompleted.split('/')
+      : ''
+    const newDateCompleted = addCertification.completedDate
+      ? new Date(+dateParts[2], Number(dateParts[1]) - 1, +dateParts[0])
+      : new Date(completedDate as Date)
 
     validateDates(newDateCompleted, date)
 
@@ -287,7 +293,9 @@ function AddUpdateEmployeeCertification({
   }
 
   const validateDates = (startDate: Date, endDate: Date) => {
-    if (startDate.getTime() > endDate.getTime()) {
+    const newStartDate = startDate.setHours(0, 0, 0, 0)
+    const newEndtDate = endDate.setHours(0, 0, 0, 0)
+    if (newStartDate > newEndtDate) {
       setError(true)
     } else {
       setError(false)

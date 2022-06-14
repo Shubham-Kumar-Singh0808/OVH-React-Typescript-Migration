@@ -133,13 +133,15 @@ function AddEditVisaDetails({
 
   const onChangeDateOfIssueHandler = (date: Date) => {
     const currentDateExpiry = isEditVisaDetails
-      ? employeeVisaDetails.dateOfExpire?.toString()
-      : dateOfExpire?.toLocaleString()
+      ? (employeeVisaDetails.dateOfExpire as string)
+      : (dateOfExpire as string)
 
-    const tempDateExpiry = moment(currentDateExpiry).format('DD/MM/YYYY')
-    const newDateExpiry = dateOfExpiryFlag
-      ? new Date(tempDateExpiry)
-      : new Date()
+    const dateParts: string[] | string = employeeVisaDetails.dateOfExpire
+      ? currentDateExpiry.split('/')
+      : ''
+    const newDateExpiry = employeeVisaDetails.dateOfExpire
+      ? new Date(+dateParts[2], Number(dateParts[1]) - 1, +dateParts[0])
+      : new Date(dateOfExpire as Date)
 
     validateDates(date, newDateExpiry)
 
@@ -158,11 +160,17 @@ function AddEditVisaDetails({
 
   const onChangeDateOfExpireHandler = (date: Date) => {
     const currentDateIssue = isEditVisaDetails
-      ? employeeVisaDetails.dateOfIssue?.toString()
-      : dateOfIssue?.toLocaleString()
+      ? employeeVisaDetails.dateOfIssue
+        ? (employeeVisaDetails.dateOfIssue as string)
+        : (dateOfIssue as string)
+      : (dateOfIssue as string)
 
-    const tempDateIssue = moment(currentDateIssue).format('DD/MM/YYYY')
-    const newDateIssue = dateOfIssueFlag ? new Date(tempDateIssue) : new Date()
+    const dateParts: string[] | string = employeeVisaDetails.dateOfExpire
+      ? currentDateIssue.split('/')
+      : ''
+    const newDateIssue: number | Date = employeeVisaDetails.dateOfExpire
+      ? new Date(+dateParts[2], Number(dateParts[1]) - 1, +dateParts[0])
+      : new Date(dateOfIssue as string)
 
     validateDates(newDateIssue, date)
     if (isEditVisaDetails) {
@@ -211,6 +219,7 @@ function AddEditVisaDetails({
       />
     )
   }
+
   const handleAddVisaDetails = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
@@ -243,6 +252,7 @@ function AddEditVisaDetails({
     }
     backButtonHandler()
   }
+
   const handleUpdateVisaMember = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
@@ -268,7 +278,9 @@ function AddEditVisaDetails({
   }
 
   const validateDates = (startDate: Date, endDate: Date) => {
-    if (startDate.getTime() > endDate.getTime()) {
+    const newStartDate = startDate.setHours(0, 0, 0, 0)
+    const newEndtDate = endDate.setHours(0, 0, 0, 0)
+    if (newStartDate > newEndtDate) {
       setError(true)
       setIsAddButtonEnabled(true)
     } else {
