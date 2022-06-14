@@ -397,9 +397,12 @@ function AddEditVisaDetails({
                   (dateOfIssue as string) ||
                   (employeeVisaDetails?.dateOfIssue as string)
                 }
-                // selected={dateOfIssue as Date}
                 selected={
-                  !dateOfIssueFlag ? newDateOfIssue : (dateOfIssue as Date)
+                  !dateOfIssueFlag
+                    ? employeeVisaDetails.dateOfIssue
+                      ? newDateOfIssue
+                      : (dateOfIssue as Date)
+                    : (dateOfIssue as Date)
                 }
                 onChange={onChangeDateOfIssueHandler}
                 id="dateOfIssue"
@@ -434,7 +437,11 @@ function AddEditVisaDetails({
                   (employeeVisaDetails?.dateOfExpire as string)
                 }
                 selected={
-                  !dateOfExpiryFlag ? newDateOfExpiry : (dateOfExpire as Date)
+                  !dateOfExpiryFlag
+                    ? employeeVisaDetails?.dateOfExpire
+                      ? newDateOfExpiry
+                      : (dateOfExpire as Date)
+                    : (dateOfExpire as Date)
                 }
                 onChange={onChangeDateOfExpireHandler}
                 id="dateOfExpire"

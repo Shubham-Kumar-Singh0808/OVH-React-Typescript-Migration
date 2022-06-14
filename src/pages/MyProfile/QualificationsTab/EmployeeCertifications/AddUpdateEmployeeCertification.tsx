@@ -470,7 +470,9 @@ function AddUpdateEmployeeCertification({
                 }
                 selected={
                   !completedDateFlag
-                    ? newCompletedDate
+                    ? addCertification.completedDate
+                      ? newCompletedDate
+                      : (completedDate as Date)
                     : (completedDate as Date)
                 }
                 onChange={onChangeDateOfCompletionHandler}
@@ -497,7 +499,11 @@ function AddUpdateEmployeeCertification({
                   (addCertification?.expiryDate as string)
                 }
                 selected={
-                  !expiryDateFlag ? newExpiryDate : (expiryDate as Date)
+                  !expiryDateFlag
+                    ? addCertification.expiryDate
+                      ? newExpiryDate
+                      : (expiryDate as Date)
+                    : (expiryDate as Date)
                 }
                 onChange={onChangeDateOfExpireHandler}
                 id="expiryDate"

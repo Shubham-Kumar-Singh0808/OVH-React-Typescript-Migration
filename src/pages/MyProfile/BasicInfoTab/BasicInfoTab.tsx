@@ -82,12 +82,12 @@ const BasicInfoTab = (): JSX.Element => {
   const [anniversaryFlag, setAnniversaryFlag] = useState(false)
 
   const currentOfficialBday =
-    employeeBasicInformation.officialBirthday as string
+    employeeBasicInformationEditData.officialBirthday as string
   const officialBdayParts: string[] | string =
-    employeeBasicInformation.officialBirthday
+    employeeBasicInformationEditData.officialBirthday
       ? currentOfficialBday.split('/')
       : ''
-  const newOfficialBday = employeeBasicInformation.officialBirthday
+  const newOfficialBday = employeeBasicInformationEditData.officialBirthday
     ? new Date(
         +officialBdayParts[2],
         Number(officialBdayParts[1]) - 1,
@@ -95,28 +95,37 @@ const BasicInfoTab = (): JSX.Element => {
       )
     : new Date()
 
-  const currentRealBirthday = employeeBasicInformation.realBirthday as string
-  const realBdayParts: string[] | string = employeeBasicInformation.realBirthday
-    ? currentRealBirthday.split('/')
-    : ''
-  const newRealBirthday = employeeBasicInformation.realBirthday
-    ? new Date(
-        +realBdayParts[2],
-        Number(realBdayParts[1]) - 1,
-        +realBdayParts[0],
-      )
-    : new Date()
+  // const currentRealBirthday =
+  //   employeeBasicInformationEditData.realBirthday as string
+  // const realBdayParts: string[] | string =
+  //   employeeBasicInformationEditData.realBirthday
+  //     ? currentRealBirthday.split('/')
+  //     : ''
+  // const newRealBirthday = employeeBasicInformationEditData.realBirthday
+  //   ? new Date(
+  //       +realBdayParts[2],
+  //       Number(realBdayParts[1]) - 1,
+  //       +realBdayParts[0],
+  //     )
+  //   : new Date()
 
-  const currentAnniversary = employeeBasicInformation.anniversary as string
-  const anniversaryParts: string[] | string =
-    employeeBasicInformation.anniversary ? currentAnniversary.split('/') : ''
-  const newAnniversary = employeeBasicInformation.anniversary
-    ? new Date(
-        +anniversaryParts[2],
-        Number(anniversaryParts[1]) - 1,
-        +anniversaryParts[0],
-      )
-    : new Date()
+  // const currentAnniversary =
+  //   employeeBasicInformationEditData.anniversary as string
+  // const anniversaryParts: string[] | string =
+  //   employeeBasicInformationEditData.anniversary
+  //     ? currentAnniversary.split('/')
+  //     : ''
+  // const newAnniversary = employeeBasicInformationEditData.anniversary
+  //   ? new Date(
+  //       +anniversaryParts[2],
+  //       Number(anniversaryParts[1]) - 1,
+  //       +anniversaryParts[0],
+  //     )
+  //   : new Date()
+
+  console.log(newOfficialBday)
+  // console.log(newRealBirthday)
+  // console.log(newAnniversary)
 
   const dispatch = useAppDispatch()
 
@@ -618,7 +627,13 @@ const BasicInfoTab = (): JSX.Element => {
               placeholderText="dd/mm/yyyy"
               name="officialBirthday"
               value={employeeBasicInformationEditData.officialBirthday}
-              selected={!officialBdyFlag ? newOfficialBday : officialBday}
+              selected={
+                !officialBdyFlag
+                  ? newOfficialBday
+                    ? newOfficialBday
+                    : officialBday
+                  : officialBday
+              }
               onChange={(date: Date) => {
                 onDateChangeHandler(date, { name: 'officialBirthday' })
                 handleOfficialBday(date)
@@ -666,7 +681,7 @@ const BasicInfoTab = (): JSX.Element => {
                 dateFormat="dd/mm/yyyy"
                 name="realBirthday"
                 value={employeeBasicInformationEditData.realBirthday}
-                selected={!realBdayFlag ? newRealBirthday : realBday}
+                // selected={!realBdayFlag ? newRealBirthday : realBday}
                 onChange={(date: Date) => {
                   onDateChangeHandler(date, { name: 'realBirthday' })
                   handleRealBday(date)
@@ -738,9 +753,9 @@ const BasicInfoTab = (): JSX.Element => {
                 placeholderText="dd/mm/yyyy"
                 name="anniversary"
                 value={employeeBasicInformationEditData.anniversary}
-                selected={
-                  !anniversaryFlag ? newAnniversary : selectedAnniversay
-                }
+                // selected={
+                //   !anniversaryFlag ? newAnniversary : selectedAnniversay
+                // }
                 onChange={(date: Date) => {
                   onDateChangeHandler(date, { name: 'anniversary' })
                   handleAnniversary(date)
