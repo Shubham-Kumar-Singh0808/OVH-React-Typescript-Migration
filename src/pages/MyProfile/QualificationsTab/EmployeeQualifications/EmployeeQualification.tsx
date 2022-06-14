@@ -1,10 +1,13 @@
 import { CCol, CForm, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+
 import parse from 'html-react-parser'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 
 const EmployeeQualifications = (): JSX.Element => {
+  const [isViewingAnotherEmployee, selectEmployeeId] = useSelectedEmployee()
   const employeeQualification = useTypedSelector(
     reduxServices.employeeQualifications.selectors.employeeQualifications,
   )
@@ -16,10 +19,11 @@ const EmployeeQualifications = (): JSX.Element => {
   useEffect(() => {
     dispatch(
       reduxServices.employeeQualifications.getEmployeeQualifications(
-        employeeId,
+        isViewingAnotherEmployee ? selectEmployeeId : employeeId,
       ),
     )
-  }, [dispatch, employeeId])
+  }, [dispatch, employeeId, isViewingAnotherEmployee, selectEmployeeId])
+
   return (
     <>
       <CForm>

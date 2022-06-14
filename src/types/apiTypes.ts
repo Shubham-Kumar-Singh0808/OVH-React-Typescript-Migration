@@ -46,6 +46,7 @@ export interface EmployeeSkillApi extends ApiBase {
   getEmployeeSkillInformation: string
   updateEmployeeSkillInformation: string
   deleteEmployeeSkill: string
+  getEmployeeSkillsById: string
 }
 
 export interface EmployeeQualificationCategoryApi extends ApiBase {
@@ -75,7 +76,9 @@ export interface EmployeeCertificationsApi extends ApiBase {
   getEmployeeCertificate: string
   updateEmployeeCertificate: string
   deleteEmployeeCertificate: string
+  getEmployeeCertificateById: string
 }
+
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string
   isUserRoleExists: string
@@ -85,6 +88,7 @@ export interface UserRolesConfigurationApi extends ApiBase {
   featuresUnderRole: string
   assignPermission: string
 }
+
 export interface PersonalInfoApi extends ApiBase {
   getFamilyDetails: string
   getVisaDetails: string
@@ -100,6 +104,7 @@ export interface PersonalInfoApi extends ApiBase {
   deleteVisaDetail: string
   fileUploadVisaImage: string
 }
+
 export interface ProfileHistoryApi extends ApiBase {
   getprofileHistory: string
 }
@@ -119,6 +124,10 @@ export interface UploadFileReturn {
 
 export interface EmployeeReviewsApi extends ApiBase {
   getEmployeeReviews: string
+}
+export interface EmployeeListApi extends ApiBase {
+  getEmployeeList: string
+  exportEmployeeData: string
 }
 
 export interface EmployeeDesignationListApi extends ApiBase {

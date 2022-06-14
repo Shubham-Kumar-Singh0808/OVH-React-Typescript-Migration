@@ -14,19 +14,35 @@ import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qua
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 
 const EmployeeCertificationsTable = ({
   editCertificateButtonHandler,
 }: EmployeeCertificationTableProps): JSX.Element => {
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [certificateId, setCertificateId] = useState(0)
-  const employeeCertificates = useTypedSelector(
-    reduxServices.employeeCertifications.selectors.employeeCertificates,
+  const employeeCertificates = useTypedSelector((state) =>
+    reduxServices.employeeCertifications.selectors.employeeCertificates(
+      state,
+      isViewingAnotherEmployee,
+    ),
   )
+
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
-  }, [dispatch])
+    if (isViewingAnotherEmployee) {
+      dispatch(
+        reduxServices.employeeCertifications.getEmployeeCertificateById(
+          selectedEmployeeId,
+        ),
+      )
+    } else {
+      dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
+    }
+  }, [dispatch, isViewingAnotherEmployee, selectedEmployeeId])
 
   const toastElement = (
     <OToast
@@ -65,32 +81,64 @@ const EmployeeCertificationsTable = ({
     }
   }, [employeeCertificates])
 
+  const tableDataCellProps = {
+    colSpan: 9,
+    className: 'fw-semibold',
+  }
+
   return (
     <>
-      <CTable striped responsive>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">#</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Technology</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Type of Certificate</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Certification</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Registration No</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Completed Date</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Expiry Date</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
+      <CTable
+        responsive
+        striped={isViewingAnotherEmployee}
+        bordered={isViewingAnotherEmployee}
+      >
+        {!isViewingAnotherEmployee ? (
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell scope="col">#</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Technology</CTableHeaderCell>
+              <CTableHeaderCell scope="col">
+                Type of Certificate
+              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">Certification</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Registration No</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Completed Date</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Expiry Date</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+        ) : (
+          <CTableHead color="primary">
+            <CTableRow>
+              <CTableDataCell {...tableDataCellProps}>
+                Certifications
+              </CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>#</CTableHeaderCell>
+              <CTableHeaderCell>Technology</CTableHeaderCell>
+              <CTableHeaderCell>Type of Certificate</CTableHeaderCell>
+              <CTableHeaderCell>Certification</CTableHeaderCell>
+              <CTableHeaderCell>Registration No</CTableHeaderCell>
+              <CTableHeaderCell>Completed Date</CTableHeaderCell>
+              <CTableHeaderCell>Expiry Date</CTableHeaderCell>
+              <CTableHeaderCell>Percentage</CTableHeaderCell>
+              <CTableHeaderCell>Description</CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+        )}
         <CTableBody>
           {sortedCertificateDetails?.map((certificateItem, index) => (
             <CTableRow key={index}>
               <CTableDataCell scope="row">{index + 1}</CTableDataCell>
               <CTableDataCell scope="row">
-                {certificateItem.technology}
+                {certificateItem.technology ?? 'NA'}
               </CTableDataCell>
               <CTableDataCell scope="row">
-                {certificateItem.certificateType}
+                {certificateItem.certificateType ?? 'NA'}
               </CTableDataCell>
               <CTableDataCell scope="row">
                 {certificateItem.name}
@@ -114,26 +162,30 @@ const EmployeeCertificationsTable = ({
                   ? certificateItem.description
                   : 'N/A'}
               </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CButton
-                  color="info"
-                  className="btn-ovh me-1"
-                  onClick={() =>
-                    editCertificateButtonHandler(certificateItem.id as number)
-                  }
-                >
-                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </CButton>
-                <CButton
-                  color="danger"
-                  className="btn-ovh me-1"
-                  onClick={() =>
-                    handleShowDeleteModal(certificateItem.id as number)
-                  }
-                >
-                  <i className="fa fa-trash-o" aria-hidden="true"></i>
-                </CButton>
-              </CTableDataCell>
+              {!isViewingAnotherEmployee ? (
+                <CTableDataCell scope="row">
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-1"
+                    onClick={() =>
+                      editCertificateButtonHandler(certificateItem.id as number)
+                    }
+                  >
+                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </CButton>
+                  <CButton
+                    color="danger"
+                    className="btn-ovh me-1"
+                    onClick={() =>
+                      handleShowDeleteModal(certificateItem.id as number)
+                    }
+                  >
+                    <i className="fa fa-trash-o" aria-hidden="true"></i>
+                  </CButton>
+                </CTableDataCell>
+              ) : (
+                <></>
+              )}
             </CTableRow>
           ))}
         </CTableBody>

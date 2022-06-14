@@ -32,6 +32,7 @@ const AddNewCategory = (): JSX.Element => {
     const toAddCategoryName = newCategoryName
 
     if (
+      categories.length > 0 &&
       categories.filter(
         (category) =>
           category.categoryType.toLowerCase() === newCategoryName.toLowerCase(),
