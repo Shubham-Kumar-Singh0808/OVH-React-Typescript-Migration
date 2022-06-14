@@ -48,8 +48,7 @@ const MyProfileTabs = (): JSX.Element => {
         3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
         4: <QualificationDetails />,
         5: <h1>Review</h1>,
-        6: <h1>Projects</h1>,
-        7: <EmployeeMyAssets />,
+        6: <EmployeeMyAssets />,
         9: <EmployeeProfileHistory />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'
