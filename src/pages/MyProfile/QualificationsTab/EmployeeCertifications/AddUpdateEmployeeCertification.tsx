@@ -54,6 +54,7 @@ function AddUpdateEmployeeCertification({
   const getCertificateDetails = useTypedSelector(
     (state) => state.employeeCertificates.editCertificateDetails,
   )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
