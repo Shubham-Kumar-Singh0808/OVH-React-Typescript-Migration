@@ -122,6 +122,9 @@ export interface UploadFileReturn {
   file: FormData
 }
 
+export interface EmployeeReviewsApi extends ApiBase {
+  getEmployeeReviews: string
+}
 export interface EmployeeListApi extends ApiBase {
   getEmployeeList: string
   exportEmployeeData: string

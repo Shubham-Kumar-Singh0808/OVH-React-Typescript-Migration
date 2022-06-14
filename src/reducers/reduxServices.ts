@@ -14,6 +14,7 @@ import { qualificationCategoryService } from './MyProfile/QualificationsTab/Qual
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import { employeeReviewsService } from './MyProfile/ReviewTab/employeeReviewsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -31,5 +32,6 @@ export const reduxServices = {
   basicInformation: basicInformationService,
   generalInformation: generalInformationService,
   employeeSkill: employeeSkillServices,
+  employeeReviews: employeeReviewsService,
   shiftConfiguration: shiftConfigurationService,
 }
