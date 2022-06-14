@@ -1,13 +1,14 @@
 {
         "cSpell.words": [
-            "formik",
-            "testid",
             "coreui",
             "createaccess",
             "deleteaccess",
+            "formik",
             "headwrap",
             "infocheckbox",
             "reduxjs",
+            "Reportees",
+            "testid",
             "updateaccess",
             "viewaccess"
         ]

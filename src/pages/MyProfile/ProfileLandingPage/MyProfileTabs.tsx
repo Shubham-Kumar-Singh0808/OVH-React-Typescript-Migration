@@ -11,6 +11,7 @@ import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
+import EmployeeReportees from '../../ReporteesTab/EmployeeReportees'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import TabsLabels from '../../../middleware/TabsLabels'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -62,7 +63,7 @@ const MyProfileTabs = (): JSX.Element => {
         2: <BasicInfoTab />,
         3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
         4: <QualificationDetails />,
-        5: <h1>Review</h1>,
+        5: <EmployeeReportees />,
         6: <h1>Projects</h1>,
         9: <EmployeeProfileHistory />,
       }

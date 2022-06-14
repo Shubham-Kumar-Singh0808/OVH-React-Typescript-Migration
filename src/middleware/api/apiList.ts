@@ -15,6 +15,7 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
+  EmployeeReporteesApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -156,4 +157,8 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
   updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
+}
+
+export const employeeReporteesApiConfig: EmployeeReporteesApi = {
+  getEmployeeReportees: apiPrefix + '/jobapplicant/getReportiesUnderManager',
 }

@@ -18,7 +18,7 @@ import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-
+import employeeReporteesReducer from './reducers/MyProfile/ReporteesTab/employeeReporteesSlice'
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
@@ -36,6 +36,7 @@ export const allReducers = {
   employeeList: employeeListReducer,
   employeeDesignationList: employeeDesignationListReducer,
   shiftConfiguration: shiftConfigurationReducer,
+  employeeReportees: employeeReporteesReducer,
   // add your slice reducers here
 }
 
