@@ -18,6 +18,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import { useParams } from 'react-router-dom'
 import { useTypedSelector } from '../../../stateStore'
+import ProjectsTab from '../ProjectsTab/ProjectsTab'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
@@ -64,7 +65,7 @@ const MyProfileTabs = (): JSX.Element => {
         3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
         4: <QualificationDetails />,
         5: <EmployeeReviews />,
-        6: <h1>Projects</h1>,
+        6: <ProjectsTab />,
         9: <EmployeeProfileHistory />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'
