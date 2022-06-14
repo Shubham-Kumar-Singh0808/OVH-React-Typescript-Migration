@@ -7,7 +7,7 @@ import React from 'react'
 import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
 import { mockAssetsDetails } from '../../../test/data/employeeAssetsData'
-import EmployeeMyAssets from './EmployeeMyAssets'
+import EmployeeMyAssets from './EmployeeAssets'
 
 const ReduxProvider = ({
   children,

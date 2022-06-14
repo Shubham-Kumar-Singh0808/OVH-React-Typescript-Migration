@@ -15,7 +15,7 @@ import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import TabsLabels from '../../../middleware/TabsLabels'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import EmployeeMyAssets from '../MyAssetsTab/EmployeeMyAssets'
+import EmployeeMyAssets from '../MyAssetsTab/EmployeeAssets'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue

@@ -7,7 +7,7 @@ import {
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
-import employeeAssetsApi from '../../../middleware/api/MyProfile/MyAssetsTab/employeeMyAssetsApi'
+import employeeAssetsApi from '../../../middleware/api/MyProfile/MyAssetsTab/employeeAssetsApi'
 
 const initialEmployeeAssetsState: EmployeeAssetsState = {
   employeeAssets: [],
