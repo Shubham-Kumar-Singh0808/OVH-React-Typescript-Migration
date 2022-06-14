@@ -150,6 +150,6 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
 }
 
-export const reviewsApiConfig: EmployeeReviewsApi = {
+export const employeeReviewsApiConfig: EmployeeReviewsApi = {
   getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
 }

@@ -1,4 +1,4 @@
-import { reviewsApiConfig, AllowedHttpMethods } from '../../apiList'
+import { employeeReviewsApiConfig, AllowedHttpMethods } from '../../apiList'
 import { EmployeeReviews } from '../../../../types/MyProfile/ReviewsTab/reviewsTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
@@ -6,7 +6,7 @@ const getEmployeeReviews = async (
   employeeId: number | string,
 ): Promise<EmployeeReviews[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: reviewsApiConfig.getEmployeeReviews,
+    url: employeeReviewsApiConfig.getEmployeeReviews,
     method: AllowedHttpMethods.get,
     params: {
       employeeId: employeeId,
@@ -15,7 +15,7 @@ const getEmployeeReviews = async (
   const response = await axios(requestConfig)
   return response.data
 }
-const reviewsApi = {
+const employeeReviewsApi = {
   getEmployeeReviews,
 }
-export default reviewsApi
+export default employeeReviewsApi

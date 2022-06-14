@@ -1,14 +1,14 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeReviews,
-  ReviewsTabState as ReviewsState,
+  ReviewsTabState as EmployeeReviewsState,
 } from '../../../types/MyProfile/ReviewsTab/reviewsTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
-import reviewsApi from '../../../middleware/api/MyProfile/ReviewsTab/reviewsApi'
+import employeeReviewsApi from '../../../middleware/api/MyProfile/ReviewsTab/employeeReviewsApi'
 
-const initialReviewsState: ReviewsState = {
+const initialEmployeeReviewsState: EmployeeReviewsState = {
   employeeReviewDetails: [],
   isLoading: false,
   error: 0,
@@ -23,10 +23,10 @@ const getEmployeeReviews = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'reviewsTab/getEmployeeReviews',
+  'employeeReviews/getEmployeeReviews',
   async (employeeId: number | string, thunkApi) => {
     try {
-      return await reviewsApi.getEmployeeReviews(employeeId)
+      return await employeeReviewsApi.getEmployeeReviews(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -35,8 +35,8 @@ const getEmployeeReviews = createAsyncThunk<
 )
 
 const employeeReviewSlice = createSlice({
-  name: 'reviewsTab',
-  initialState: initialReviewsState,
+  name: 'employeeReviews',
+  initialState: initialEmployeeReviewsState,
   reducers: {},
 
   extraReducers: (builder) => {
@@ -53,18 +53,18 @@ const employeeReviewSlice = createSlice({
     })
   },
 })
-const reviewDetails = (state: RootState): EmployeeReviews[] =>
-  state.reviewDetails.employeeReviewDetails
+const employeeReviewsList = (state: RootState): EmployeeReviews[] =>
+  state.employeeReviews.employeeReviewDetails
 
-export const reviewsThunk = {
+const employeeReviewsThunk = {
   getEmployeeReviews,
 }
-export const reviewsSelectors = {
-  reviewsDetails: reviewDetails,
+const employeeReviewsSelectors = {
+  employeeReviewsList,
 }
-export const reviewsService = {
-  ...reviewsThunk,
+export const employeeReviewsService = {
+  ...employeeReviewsThunk,
   actions: employeeReviewSlice.actions,
-  selectors: reviewsSelectors,
+  selectors: employeeReviewsSelectors,
 }
 export default employeeReviewSlice.reducer

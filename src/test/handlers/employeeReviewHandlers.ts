@@ -1,14 +1,14 @@
-import { reviewsApiConfig } from '../../middleware/api/apiList'
+import { employeeReviewsApiConfig } from '../../middleware/api/apiList'
 import { mockReviewDetails } from '../data/employeeReviewsData'
 import { rest } from 'msw'
 
 export const reviewDetailsHandlers = [
   // getAllCertifications api mock
-  rest.get(reviewsApiConfig.getEmployeeReviews, (req, res, ctx) => {
+  rest.get(employeeReviewsApiConfig.getEmployeeReviews, (req, res, ctx) => {
     return res.once(ctx.status(200), ctx.json([]))
   }),
 
-  rest.get(reviewsApiConfig.getEmployeeReviews, (req, res, ctx) => {
+  rest.get(employeeReviewsApiConfig.getEmployeeReviews, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockReviewDetails))
   }),
 ]
