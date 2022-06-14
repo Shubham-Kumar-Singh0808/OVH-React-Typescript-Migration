@@ -6,7 +6,7 @@ import { BasicInformationState } from '../../../types/MyProfile/BasicInfoTab/bas
 import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
-import { UploadFileReturn } from '../../../types/apiTypes'
+import { UploadFileReturn, UploadImage } from '../../../types/apiTypes'
 
 const updateEmployeeDefaultPicOnGenderChange = createAsyncThunk<
   number | undefined,
@@ -70,6 +70,26 @@ const initialBasicInformationState: BasicInformationState = {
   isLoading: false,
 }
 
+const uploadEmployeeProfilePicture = createAsyncThunk<
+  number | undefined,
+  UploadImage,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'basicInformation/uploadEmployeeProfilePicture',
+  async (prepareObject: UploadImage, thunkApi) => {
+    try {
+      return await basicInfoApi.uploadEmployeeProfilePicture(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const basicInformationSlice = createSlice({
   name: 'basicInformation',
   initialState: initialBasicInformationState,
@@ -102,6 +122,7 @@ const basicInformationSlice = createSlice({
 export const employeeBasicInformationThunk = {
   updateEmployeeDefaultPicOnGenderChange,
   updateEmployeeBasicInformation,
+  uploadEmployeeProfilePicture,
   uploadEmployeeCV,
 }
 export const basicInformationService = {

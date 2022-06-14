@@ -8,7 +8,7 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
@@ -21,6 +21,8 @@ import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useFormik } from 'formik'
 import validator from 'validator'
+import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
+import { UploadImage } from '../../../types/apiTypes'
 
 const BasicInfoTab = (): JSX.Element => {
   const tenantKey = useTypedSelector(
@@ -68,6 +70,8 @@ const BasicInfoTab = (): JSX.Element => {
   const [dateErrorMessage, setDateErrorMessage] = useState(false)
   const [cvToUpload, setCVToUpload] = useState<File | undefined>(undefined)
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
+  const [selectedProfilePicture, setSelectedProfilePicture] =
+    useState<UploadImage>()
 
   const [officialBday, setOfficialBday] = useState<Date>()
   const [realBday, setRealBday] = useState<Date>()
@@ -123,6 +127,12 @@ const BasicInfoTab = (): JSX.Element => {
       setEmailError(true)
     }
   }
+
+  //onChange handler for image upload and crop
+  const croppedImageHandler = useCallback((croppedImageData: UploadImage) => {
+    setSelectedProfilePicture(croppedImageData)
+    setSaveButtonEnabled(true)
+  }, [])
 
   // onchange handler for input fields
   const handleChange = (
@@ -193,7 +203,7 @@ const BasicInfoTab = (): JSX.Element => {
       )
       return
     }
-
+    setSaveButtonEnabled(true)
     setUploadErrorText('')
     setCVToUpload(file[0])
   }
@@ -307,6 +317,19 @@ const BasicInfoTab = (): JSX.Element => {
     event.preventDefault()
     const prepareObject = employeeBasicInformationEditData
 
+    if (selectedProfilePicture) {
+      await dispatch(
+        employeeBasicInformationThunk.uploadEmployeeProfilePicture(
+          selectedProfilePicture,
+        ),
+      )
+    }
+    await dispatch(
+      employeeBasicInformationThunk.updateEmployeeBasicInformation(
+        prepareObject,
+      ),
+    )
+
     if (cvToUpload) {
       const formData = new FormData()
       formData.append('file', cvToUpload, cvToUpload.name)
@@ -314,16 +337,12 @@ const BasicInfoTab = (): JSX.Element => {
         personId: employeeBasicInformation.id as number,
         file: formData,
       }
-      dispatch(
+      await dispatch(
         employeeBasicInformationThunk.uploadEmployeeCV(uploadPrepareObject),
       )
     }
-    dispatch(
-      employeeBasicInformationThunk.updateEmployeeBasicInformation(
-        prepareObject,
-      ),
-    )
     dispatch(reduxServices.app.actions.addToast(toastElement))
+    window.location.reload()
   }
 
   const formik = useFormik({
@@ -871,19 +890,10 @@ const BasicInfoTab = (): JSX.Element => {
             Profile Picture:
           </CFormLabel>
           <CCol sm={3}>
-            <div className="profile-avatar">
-              <img
-                width="120px"
-                height="120px;"
-                src={employeeBasicInformation.thumbPicture}
-                alt="User Profile"
-              />
-            </div>
-            <CFormInput
-              id="employeeProfilePicture"
-              type="file"
-              className="form-control mt-2"
-              accept="image/*"
+            <BasicInfoTabImageCropper
+              file={employeeBasicInformation.thumbPicture}
+              empId={employeeBasicInformation.id as number}
+              onUploadImage={croppedImageHandler}
             />
           </CCol>
         </CRow>
@@ -936,7 +946,7 @@ const BasicInfoTab = (): JSX.Element => {
               />
             )}
             {uploadErrorText && (
-              <div>
+              <div id="error">
                 <strong className="text-danger mt-3">{uploadErrorText}</strong>
               </div>
             )}
