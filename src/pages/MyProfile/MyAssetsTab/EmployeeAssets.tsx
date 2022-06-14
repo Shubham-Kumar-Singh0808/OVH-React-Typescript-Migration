@@ -35,9 +35,9 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
     dispatch(reduxServices.employeeAssets.getEmployeeMyAssets(employeeId))
   }, [dispatch, employeeId])
 
-  const handleModal = (specification: string) => {
+  const handleModal = (productSpecification: string) => {
     setIsModalVisible(true)
-    setSpecification(specification)
+    setSpecification(productSpecification)
   }
 
   const {
