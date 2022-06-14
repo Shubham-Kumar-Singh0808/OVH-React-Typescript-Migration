@@ -282,10 +282,10 @@ function AddEditVisaDetails({
     const newEndtDate = endDate.setHours(0, 0, 0, 0)
     if (newStartDate > newEndtDate) {
       setError(true)
-      setIsAddButtonEnabled(true)
+      setIsAddButtonEnabled(false)
     } else {
       setError(false)
-      setIsAddButtonEnabled(false)
+      setIsAddButtonEnabled(true)
     }
   }
 
@@ -524,7 +524,7 @@ function AddEditVisaDetails({
                   <CButton
                     className="btn-ovh me-1"
                     color="success"
-                    disabled={!isAddButtonEnabled}
+                    disabled={!isAddButtonEnabled || error}
                     onClick={handleAddVisaDetails}
                   >
                     {confirmButtonText}
