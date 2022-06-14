@@ -7,10 +7,12 @@ export type CertificateType = {
   technologyId: number
   technologyName?: string
 }
+
 export type AddCertificateTypeProps = {
   selectedTechnologyId: number
   setSelectedTechnologyId: (value: number) => void
 }
+
 export type CertificateTypeSliceState = {
   certificateTypes: CertificateType[]
   isLoading: LoadingState

@@ -20,7 +20,6 @@ import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeS
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import OModal from '../../../../components/ReusableComponent/OModal'
-
 const CertificateTypeTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [certificateId, setCertificateId] = useState(0)
