@@ -1,21 +1,21 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  EmployeeReviews,
+  EmployeeReview,
   ReviewsTabState as EmployeeReviewsState,
-} from '../../../types/MyProfile/ReviewsTab/reviewsTypes'
+} from '../../../types/MyProfile/ReviewsTab/employeeReviewsTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import employeeReviewsApi from '../../../middleware/api/MyProfile/ReviewsTab/employeeReviewsApi'
 
 const initialEmployeeReviewsState: EmployeeReviewsState = {
-  employeeReviewDetails: [],
+  employeeReview: [],
   isLoading: false,
   error: 0,
 }
 
 const getEmployeeReviews = createAsyncThunk<
-  EmployeeReviews[] | undefined,
+  EmployeeReview[] | undefined,
   number | string,
   {
     dispatch: AppDispatch
@@ -42,7 +42,7 @@ const employeeReviewSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getEmployeeReviews.fulfilled, (state, action) => {
       state.isLoading = false
-      state.employeeReviewDetails = action.payload as EmployeeReviews[]
+      state.employeeReview = action.payload as EmployeeReview[]
     })
     builder.addCase(getEmployeeReviews.pending, (state) => {
       state.isLoading = true
@@ -53,14 +53,14 @@ const employeeReviewSlice = createSlice({
     })
   },
 })
-const employeeReviewsList = (state: RootState): EmployeeReviews[] =>
-  state.employeeReviews.employeeReviewDetails
+const employeeReviews = (state: RootState): EmployeeReview[] =>
+  state.employeeReviews.employeeReview
 
 const employeeReviewsThunk = {
   getEmployeeReviews,
 }
 const employeeReviewsSelectors = {
-  employeeReviewsList,
+  employeeReviews,
 }
 export const employeeReviewsService = {
   ...employeeReviewsThunk,

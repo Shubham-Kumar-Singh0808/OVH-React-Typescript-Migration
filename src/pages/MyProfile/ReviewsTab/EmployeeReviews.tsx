@@ -23,7 +23,7 @@ const EmployeeReviews = (): JSX.Element => {
     reduxServices.authentication.selectors.selectEmployeeId,
   )
   const employeeReviews = useTypedSelector(
-    reduxServices.employeeReviews.selectors.employeeReviewsList,
+    reduxServices.employeeReviews.selectors.employeeReviews,
   )
 
   const dispatch = useAppDispatch()

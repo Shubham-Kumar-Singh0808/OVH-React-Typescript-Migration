@@ -1,5 +1,5 @@
-import { EmployeeReviews } from '../../types/MyProfile/ReviewsTab/reviewsTypes'
-export const mockReviewDetails: EmployeeReviews[] = [
+import { EmployeeReview } from '../../types/MyProfile/ReviewsTab/employeeReviewsTypes'
+export const mockReviewDetails: EmployeeReview[] = [
   {
     id: 3,
     empId: 1000,

@@ -120,6 +120,7 @@ export interface UploadFileReturn {
 export interface EmployeeReviewsApi extends ApiBase {
   getEmployeeReviews: string
 }
+
 export interface EmployeeDesignationListApi extends ApiBase {
   getEmployeeDepartments: string
   getEmployeeDesignations: string

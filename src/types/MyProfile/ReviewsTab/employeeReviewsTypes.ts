@@ -1,5 +1,5 @@
 import { ValidationError } from '../../commonTypes'
-export type EmployeeReviews = {
+export type EmployeeReview = {
   id: number
   empId: number
   employeeName: string
@@ -17,7 +17,7 @@ export type EmployeeReviews = {
 }
 
 export type ReviewsTabState = {
-  employeeReviewDetails: EmployeeReviews[]
+  employeeReview: EmployeeReview[]
   isLoading: boolean
   error: ValidationError
 }
