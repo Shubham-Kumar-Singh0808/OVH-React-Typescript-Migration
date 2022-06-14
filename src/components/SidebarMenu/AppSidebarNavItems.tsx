@@ -48,7 +48,10 @@ const AppSidebarNavItems = (): JSX.Element => {
           >
             {curNavItem.childmenuItems.map((curChildNavItem, indx) => (
               <CNavItem key={indx}>
-                <NavLink className="nav-link" to={curChildNavItem.menuUrl}>
+                <NavLink
+                  className="nav-link"
+                  to={`/${curChildNavItem.menuUrl}`}
+                >
                   {curChildNavItem.menuName}
                 </NavLink>
               </CNavItem>
@@ -56,7 +59,7 @@ const AppSidebarNavItems = (): JSX.Element => {
           </CNavGroup>
         ) : (
           <CNavItem key={index}>
-            <NavLink className="nav-link" to={curNavItem.menuurl}>
+            <NavLink className="nav-link" to={`/${curNavItem.menuurl}`}>
               {navLink(curNavItem.menuName, curNavItem.menuclass)}
             </NavLink>
           </CNavItem>

@@ -88,6 +88,20 @@ const deleteEmployeeSkill = async (
   return response.data
 }
 
+const getEmployeeSkillsById = async (
+  employeeId: string | number | undefined,
+): Promise<EmployeeSkills[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeSkillsApiConfig.getEmployeeSkillsById,
+    method: AllowedHttpMethods.get,
+    params: {
+      empId: employeeId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeSkillApi = {
   getEmployeeSkills,
   getCategorySkills,
@@ -95,6 +109,7 @@ const employeeSkillApi = {
   getEmployeeSkillInformation,
   updateEmployeeSkill,
   deleteEmployeeSkill,
+  getEmployeeSkillsById,
 }
 
 export default employeeSkillApi

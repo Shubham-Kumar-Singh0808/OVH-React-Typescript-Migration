@@ -9,10 +9,12 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
 import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 
 const FamilyDetailsTable = ({
   editButtonHandler,
@@ -21,6 +23,7 @@ const FamilyDetailsTable = ({
   bordered = true,
   tableClassName = '',
 }: EmployeeFamilyDetailsTableProps): JSX.Element => {
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
   const employeeId = useTypedSelector(
@@ -33,9 +36,12 @@ const FamilyDetailsTable = ({
 
   useEffect(() => {
     dispatch(
-      reduxServices.personalInformation.getEmployeeFamilyDetails(employeeId),
+      reduxServices.personalInformation.getEmployeeFamilyDetails(
+        isViewingAnotherEmployee ? selectedEmployeeId : employeeId,
+      ),
     )
-  }, [dispatch, employeeId])
+  }, [dispatch, employeeId, isViewingAnotherEmployee, selectedEmployeeId])
+
   const handleShowDeleteModal = (familyId: number) => {
     setIsDeleteModalVisible(true)
     setToDeleteFamilyId(familyId)
@@ -84,6 +90,16 @@ const FamilyDetailsTable = ({
         )
     }
   }, [getEmployeeFamilyData])
+
+  const shouldDisplayHeaders = !isViewingAnotherEmployee ? (
+    <>
+      <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>
+      <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+    </>
+  ) : (
+    <></>
+  )
+
   return (
     <>
       <CTable
@@ -126,8 +142,7 @@ const FamilyDetailsTable = ({
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Relationship</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Contact Number</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                {shouldDisplayHeaders}
               </CTableRow>
             </CTableHead>
           </>
@@ -145,10 +160,14 @@ const FamilyDetailsTable = ({
               <CTableDataCell scope="row">
                 {family.contactNumber || 'N/A'}
               </CTableDataCell>
-              <CTableDataCell scope="row">
-                {family.dateOfBirth || 'N/A'}
-              </CTableDataCell>
-              {isFieldDisabled ? (
+              {!isFieldDisabled || !isViewingAnotherEmployee ? (
+                <CTableDataCell scope="row">
+                  {family.dateOfBirth || 'N/A'}
+                </CTableDataCell>
+              ) : (
+                <></>
+              )}
+              {isFieldDisabled && !isViewingAnotherEmployee ? (
                 <CTableDataCell scope="row">
                   <CButton
                     color="info"
