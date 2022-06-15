@@ -2,6 +2,32 @@ import { LoadingState, ValidationError } from '../../../commonTypes'
 
 import { EmployeeShiftDetails } from './ShiftConfiguration/shiftConfigurationTypes'
 
+//AddNewEmployee Post API
+export type AddEmployee = {
+  contractEndDate: Date
+  contractExists: string
+  contractStartDate: Date
+  country: string
+  dateOfJoining: Date
+  departmentName: string
+  designation: string
+  dob: Date
+  employmentTypeName: string
+  experience: number
+  firstName: string
+  gender: string
+  hrAssociate: GetHrData
+  jobTypeName: string
+  lastName: string
+  manager: GetAllReportingManagers
+  projectManager: GetAllReportingManagers
+  role: string
+  technology: string
+  timeSlotDTO: EmployeeShiftDetails
+  userName: string
+  workStatus: string
+}
+
 //AddNewEmployee child component types
 export type EmployeeDepartment = {
   departmentId: number

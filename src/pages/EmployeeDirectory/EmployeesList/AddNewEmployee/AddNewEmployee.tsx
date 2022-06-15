@@ -1,4 +1,8 @@
 import {
+  AddEmployee,
+  ToggleShiftProp,
+} from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import {
   Birthday,
   Country,
   DateOfJoining,
@@ -24,11 +28,11 @@ import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { ToggleShiftProp } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   const [shiftName, setShiftName] = useState<string>()
+  const [addEmployee, setAddEmployee] = useState<AddEmployee>()
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -98,25 +102,20 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
-
+        {addEmployee?.userName}
         <UserNameEmail dynamicFormLabelProps={dynamicFormLabelProps} />
 
         <FullName dynamicFormLabelProps={dynamicFormLabelProps} />
-
         <Gender dynamicFormLabelProps={dynamicFormLabelProps} />
-
         <Birthday
           dynamicFormLabelProps={dynamicFormLabelProps}
           onDateChangeHandler={onDateChangeHandler}
         />
-
         <DateOfJoining
           dynamicFormLabelProps={dynamicFormLabelProps}
           onDateChangeHandler={onDateChangeHandler}
         />
-
         <Experience dynamicFormLabelProps={dynamicFormLabelProps} />
-
         <Department
           dynamicFormLabelProps={dynamicFormLabelProps}
           departmentsList={departmentsList}
@@ -125,35 +124,26 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
           dynamicFormLabelProps={dynamicFormLabelProps}
           technologyList={technologyList}
         />
-
         <Designation dynamicFormLabelProps={dynamicFormLabelProps} />
-
         <Role dynamicFormLabelProps={dynamicFormLabelProps} />
-
         <ReportingManager
           dynamicFormLabelProps={dynamicFormLabelProps}
           reportingManagersList={reportingManagersList}
         />
-
         <ProjectManager
           dynamicFormLabelProps={dynamicFormLabelProps}
           reportingManagersList={reportingManagersList}
         />
-
         <HRAssociate
           dynamicFormLabelProps={dynamicFormLabelProps}
           hrDataList={hrDataList}
         />
-
         <EmploymentType dynamicFormLabelProps={dynamicFormLabelProps} />
-
         <JobType dynamicFormLabelProps={dynamicFormLabelProps} />
-
         <Country
           dynamicFormLabelProps={dynamicFormLabelProps}
           countryList={countryList}
         />
-
         <Shift
           dynamicFormLabelProps={dynamicFormLabelProps}
           employeeShifts={employeeShifts}
@@ -161,14 +151,11 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
           shiftName={shiftName as string}
           setToggleShift={setToggleShift}
         />
-
         <EmploymentContract
           dynamicFormLabelProps={dynamicFormLabelProps}
           onDateChangeHandler={onDateChangeHandler}
         />
-
         <WorkFrom dynamicFormLabelProps={dynamicFormLabelProps} />
-
         <CRow className="mb-3 align-items-center">
           <CCol sm={{ span: 6, offset: 3 }}>
             <CButton className="btn-ovh me-1" color="success">
