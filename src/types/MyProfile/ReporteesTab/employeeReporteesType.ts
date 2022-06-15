@@ -6,6 +6,7 @@ export type EmployeeReportees = {
   reporteeName: string
   allcoationDetails: string
   mobile: null
+  personId: number
 }
 
 export type EmployeeReporteesKRAs = {

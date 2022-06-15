@@ -12,11 +12,14 @@ import {
   CButton,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../stateStore'
-import { reduxServices } from '../../reducers/reduxServices'
+import React, { useState, useEffect } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
 import { Link } from 'react-router-dom'
+import OModal from '../../../components/ReusableComponent/OModal'
 const EmployeeReportees = (): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toKRAsPersonId, setToKRAsPersonId] = useState(0)
   const empID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -35,6 +38,14 @@ const EmployeeReportees = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.employeeReportees.getEmployeeReportees(empID))
   }, [dispatch, empID])
+
+  const handleModal = (personId: number) => {
+    setIsDeleteModalVisible(true)
+    setToKRAsPersonId(personId)
+    dispatch(
+      reduxServices.employeeReportees.getEmployeeReporteesKRAs(toKRAsPersonId),
+    )
+  }
 
   return (
     <>
@@ -89,7 +100,10 @@ const EmployeeReportees = (): JSX.Element => {
                   {reportee.allcoationDetails || 'N/A'}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
-                  <CLink className="cursor-pointer text-decoration-none text-primary">
+                  <CLink
+                    className="cursor-pointer text-decoration-none text-primary"
+                    onClick={() => handleModal(reportee.personId)}
+                  >
                     Click for KRAs
                   </CLink>
                 </CTableDataCell>
@@ -102,6 +116,15 @@ const EmployeeReportees = (): JSX.Element => {
             <strong>Total Records: {employeeReportees.length}</strong>
           </p>
         </CCol>
+        <OModal
+          alignment="center"
+          visible={isDeleteModalVisible}
+          setVisible={setIsDeleteModalVisible}
+          modalFooterClass="d-none"
+          modalHeaderClass="d-none"
+        >
+          {`Do you really want to delete this ?`}
+        </OModal>
       </CCardBody>
     </>
   )
