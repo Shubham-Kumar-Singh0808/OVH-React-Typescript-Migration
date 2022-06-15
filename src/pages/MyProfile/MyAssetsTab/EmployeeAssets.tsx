@@ -1,24 +1,26 @@
 import {
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CLink,
+  CRow,
   CTable,
   CTableBody,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-  CCardHeader,
-  CCardBody,
-  CLink,
-  CRow,
-  CCol,
 } from '@coreui/react-pro'
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { reduxServices } from '../../../reducers/reduxServices'
+
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import { usePagination } from '../../../middleware/hooks/usePagination'
 import { currentPageData } from '../../../utils/paginationUtils'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { usePagination } from '../../../middleware/hooks/usePagination'
+
 const EmployeeMyAssetsTab = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [specification, setSpecification] = useState<string>('')
@@ -85,7 +87,7 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
                   <CTableHeaderCell scope="col">Asset Number</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Asset Type</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Product Type</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">
+                  <CTableHeaderCell className="w-25" scope="col">
                     Product Specifications
                   </CTableHeaderCell>
                   <CTableHeaderCell scope="col">Location</CTableHeaderCell>
@@ -186,6 +188,7 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
           </>
         )}
         <OModal
+          modalSize="lg"
           alignment="center"
           modalFooterClass="d-none"
           modalHeaderClass="d-none"
