@@ -21,7 +21,6 @@ import { currentPageData } from '../../../utils/paginationUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import parse from 'html-react-parser'
-
 const EmployeeMyAssetsTab = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [specification, setSpecification] = useState<string>('')

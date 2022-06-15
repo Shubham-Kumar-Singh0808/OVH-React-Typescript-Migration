@@ -54,18 +54,22 @@ const employeeAssetsSlice = createSlice({
     })
   },
 })
+
 const employeeMyAssets = (state: RootState): EmployeeAsset[] =>
   state.employeeAssets.employeeAssets
 
-export const employeeAssetsThunk = {
+const employeeAssetsThunk = {
   getEmployeeMyAssets: getEmployeeAssets,
 }
-export const employeeAssetsSelectors = {
+
+const employeeAssetsSelectors = {
   employeeMyAssets,
 }
+
 export const employeeAssetsService = {
   ...employeeAssetsThunk,
   actions: employeeAssetsSlice.actions,
   selectors: employeeAssetsSelectors,
 }
+
 export default employeeAssetsSlice.reducer
