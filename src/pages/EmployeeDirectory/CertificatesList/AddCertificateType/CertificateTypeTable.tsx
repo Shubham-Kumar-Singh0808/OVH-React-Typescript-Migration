@@ -24,13 +24,13 @@ const CertificateTypeTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [certificateId, setCertificateId] = useState(0)
 
-  const certificateTypeList = useTypedSelector(
-    reduxServices.certificateType.selectors.certificateTypeList,
+  const certificateTypes = useTypedSelector(
+    reduxServices.certificateType.selectors.certificateTypes,
   )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(reduxServices.certificateType.getCertificateTypeList())
+    dispatch(reduxServices.certificateType.getCertificateTypes())
   }, [dispatch])
 
   const {
@@ -39,11 +39,11 @@ const CertificateTypeTable = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(certificateTypeList.length, 20)
+  } = usePagination(certificateTypes.length, 20)
 
   useEffect(() => {
     setPageSize(20)
-  }, [certificateTypeList, setPageSize, setCurrentPage])
+  }, [certificateTypes, setPageSize, setCurrentPage])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -57,8 +57,8 @@ const CertificateTypeTable = (): JSX.Element => {
   }
 
   const currentPageItems = useMemo(
-    () => currentPageData(certificateTypeList, currentPage, pageSize),
-    [certificateTypeList, currentPage, pageSize],
+    () => currentPageData(certificateTypes, currentPage, pageSize),
+    [certificateTypes, currentPage, pageSize],
   )
 
   const toastElement = (
@@ -82,14 +82,14 @@ const CertificateTypeTable = (): JSX.Element => {
         deleteCertificateTypeResultAction,
       )
     ) {
-      dispatch(reduxServices.certificateType.getCertificateTypeList())
+      dispatch(reduxServices.certificateType.getCertificateTypes())
       dispatch(reduxServices.app.actions.addToast(toastElement))
     }
   }
 
   return (
     <>
-      {certificateTypeList.length ? (
+      {certificateTypes.length ? (
         <>
           <CTable striped responsive>
             <CTableHead>
@@ -140,17 +140,17 @@ const CertificateTypeTable = (): JSX.Element => {
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records:{certificateTypeList.length}</strong>
+                <strong>Total Records:{certificateTypes.length}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {certificateTypeList.length > 20 && (
+              {certificateTypes.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                 />
               )}
             </CCol>
-            {certificateTypeList.length > 20 && (
+            {certificateTypes.length > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"

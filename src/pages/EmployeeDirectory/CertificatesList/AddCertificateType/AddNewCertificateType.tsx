@@ -24,8 +24,9 @@ const AddNewCertificateType = ({
     (state) => state.employeeCertificates.getAllTechnologies,
   )
   const dispatch = useAppDispatch()
-  const certificateTypeList = useTypedSelector(
-    reduxServices.certificateType.selectors.certificateTypeList,
+
+  const certificateTypes = useTypedSelector(
+    reduxServices.certificateType.selectors.certificateTypes,
   )
 
   useEffect(() => {
@@ -74,7 +75,7 @@ const AddNewCertificateType = ({
       certificateType: newCertificateType,
     }
     if (
-      certificateTypeList.filter(
+      certificateTypes.filter(
         (certificateTypeItem) =>
           certificateTypeItem.certificateType.toLowerCase() ===
           newCertificateType.toLowerCase(),
@@ -94,7 +95,7 @@ const AddNewCertificateType = ({
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
-    dispatch(reduxServices.certificateType.getCertificateTypeList())
+    dispatch(reduxServices.certificateType.getCertificateTypes())
   }
 
   const handleClearInputFields = () => {

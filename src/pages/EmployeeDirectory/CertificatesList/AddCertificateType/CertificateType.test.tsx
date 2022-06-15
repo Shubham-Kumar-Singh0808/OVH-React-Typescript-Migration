@@ -9,7 +9,6 @@ import { mockCertificateType } from '../../../../test/data/certificateTypeData'
 import stateStore from '../../../../stateStore'
 import CertificateTypeTable from './CertificateTypeTable'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import userEvent from '@testing-library/user-event'
 
 const ReduxProvider = ({
   children,
@@ -45,7 +44,7 @@ describe('CertificateType Table Testing', () => {
       </ReduxProvider>,
     )
     await stateStore.dispatch(
-      reduxServices.certificateType.getCertificateTypeList(),
+      reduxServices.certificateType.getCertificateTypes(),
     )
   })
 })

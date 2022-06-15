@@ -7,9 +7,9 @@ import {
   CertificateType,
   CertificateTypeSliceState,
 } from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
-import certificateTypeApi from '../../../../middleware/api/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeApi'
+import certificateTypesApi from '../../../../middleware/api/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeApi'
 
-const getCertificateTypeList = createAsyncThunk<
+const getCertificateTypes = createAsyncThunk<
   CertificateType[] | undefined,
   void,
   {
@@ -17,9 +17,9 @@ const getCertificateTypeList = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('certificateType/getCertificateTypeList', async (_, thunkApi) => {
+>('certificateType/getCertificateTypes', async (_, thunkApi) => {
   try {
-    return await certificateTypeApi.getCertificateTypeList()
+    return await certificateTypesApi.getCertificateTypes()
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -38,7 +38,7 @@ const addCertificateType = createAsyncThunk<
   'certificateType/addCertificateType',
   async ({ technologyId, certificateType }: CertificateType, thunkApi) => {
     try {
-      return await certificateTypeApi.addCertificateType({
+      return await certificateTypesApi.addCertificateType({
         technologyId,
         certificateType,
       })
@@ -59,7 +59,7 @@ const deleteCertificateType = createAsyncThunk<
   }
 >('certificateType/deleteCertificateType', async (certificateId, thunkApi) => {
   try {
-    return await certificateTypeApi.deleteCertificateType(certificateId)
+    return await certificateTypesApi.deleteCertificateType(certificateId)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -77,11 +77,11 @@ const certificateTypeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getCertificateTypeList.rejected, (state, action) => {
+      .addCase(getCertificateTypes.rejected, (state, action) => {
         state.isLoading = ApiLoadingState.failed
         state.error = action.payload as ValidationError
       })
-      .addCase(getCertificateTypeList.fulfilled, (state, action) => {
+      .addCase(getCertificateTypes.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.certificateTypes = action.payload as CertificateType[]
       })
@@ -93,7 +93,7 @@ const certificateTypeSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          getCertificateTypeList.pending,
+          getCertificateTypes.pending,
           addCertificateType.pending,
           deleteCertificateType.pending,
         ),
@@ -106,21 +106,21 @@ const certificateTypeSlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState =>
   state.certificateType.isLoading
-const certificateTypeList = (state: RootState): CertificateType[] =>
+const certificateTypes = (state: RootState): CertificateType[] =>
   state.certificateType.certificateTypes
 
 const isError = (state: RootState): ValidationError =>
   state.certificateType.error
 
-export const certificateTypeThunk = {
-  getCertificateTypeList,
+const certificateTypeThunk = {
+  getCertificateTypes,
   addCertificateType,
   deleteCertificateType,
 }
 
-export const certificateTypeSelectors = {
+const certificateTypeSelectors = {
   isLoading,
-  certificateTypeList,
+  certificateTypes,
   isError,
 }
 

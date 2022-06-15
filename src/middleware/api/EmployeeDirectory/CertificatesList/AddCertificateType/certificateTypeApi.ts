@@ -4,9 +4,9 @@ import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 import { CertificateType } from '../../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
 
-const getCertificateTypeList = async (): Promise<CertificateType[]> => {
+const getCertificateTypes = async (): Promise<CertificateType[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: certificateTypeApiConfig.getCertificateTypeList,
+    url: certificateTypeApiConfig.getCertificateTypes,
     method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
@@ -47,10 +47,10 @@ const deleteCertificateType = async (
   return response.data
 }
 
-const certificateTypeApi = {
-  getCertificateTypeList,
+const certificateTypesApi = {
+  getCertificateTypes,
   addCertificateType,
   deleteCertificateType,
 }
 
-export default certificateTypeApi
+export default certificateTypesApi

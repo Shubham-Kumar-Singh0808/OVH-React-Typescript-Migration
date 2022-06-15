@@ -2,7 +2,7 @@ import { certificateTypeApiConfig } from '../../middleware/api/apiList'
 import { mockCertificateType } from '../data/certificateTypeData'
 import { rest } from 'msw'
 
-export const categoryListHandlers = [
+export const certificateTypeHandlers = [
   // addCertificateType api mock
   rest.get(certificateTypeApiConfig.addCertificateType, (req, res, ctx) => {
     return res(
@@ -13,11 +13,11 @@ export const categoryListHandlers = [
     )
   }),
   // getAllCertificateType api mock
-  rest.get(certificateTypeApiConfig.getCertificateTypeList, (req, res, ctx) => {
+  rest.get(certificateTypeApiConfig.getCertificateTypes, (req, res, ctx) => {
     return res.once(ctx.status(200), ctx.json([]))
   }),
   // getAllCertificateType api mock
-  rest.get(certificateTypeApiConfig.getCertificateTypeList, (req, res, ctx) => {
+  rest.get(certificateTypeApiConfig.getCertificateTypes, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockCertificateType))
   }),
 ]
