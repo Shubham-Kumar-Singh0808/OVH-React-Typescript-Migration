@@ -11,6 +11,10 @@ import {
   CLink,
   CButton,
   CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -18,8 +22,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { Link } from 'react-router-dom'
 import OModal from '../../../components/ReusableComponent/OModal'
 const EmployeeReportees = (): JSX.Element => {
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [toKRAsPersonId, setToKRAsPersonId] = useState(0)
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const empID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -40,11 +43,9 @@ const EmployeeReportees = (): JSX.Element => {
   }, [dispatch, empID])
 
   const handleModal = (personId: number) => {
-    setIsDeleteModalVisible(true)
-    setToKRAsPersonId(personId)
-    dispatch(
-      reduxServices.employeeReportees.getEmployeeReporteesKRAs(toKRAsPersonId),
-    )
+    setIsModalVisible(true)
+    dispatch(reduxServices.employeeReportees.getEmployeeReporteesKRAs(personId))
+    console.log(personId)
   }
 
   return (
@@ -102,7 +103,7 @@ const EmployeeReportees = (): JSX.Element => {
                 <CTableDataCell scope="row">
                   <CLink
                     className="cursor-pointer text-decoration-none text-primary"
-                    onClick={() => handleModal(reportee.personId)}
+                    onClick={() => handleModal(reportee.reporteeId)}
                   >
                     Click for KRAs
                   </CLink>
@@ -118,12 +119,82 @@ const EmployeeReportees = (): JSX.Element => {
         </CCol>
         <OModal
           alignment="center"
-          visible={isDeleteModalVisible}
-          setVisible={setIsDeleteModalVisible}
+          visible={isModalVisible}
+          setVisible={setIsModalVisible}
           modalFooterClass="d-none"
           modalHeaderClass="d-none"
         >
-          {`Do you really want to delete this ?`}
+          <div className="expandable-table-headwrap mt-4">
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Department</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  Designation Percentage
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+                <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
+                <CTableHeaderCell scope="col">KRAs</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CAccordion flush className="expandable-table mb-3">
+                {employeeReporteesKRAs.map((KRAs, index) => {
+                  return (
+                    <React.Fragment key={index}>
+                      <CAccordionItem>
+                        <CAccordionHeader>
+                          <span
+                            className="title-sm expandable-table-title"
+                            data-testid="accordion-header-span"
+                          >
+                            {KRAs.name}
+                          </span>
+                          <span
+                            className="title-sm expandable-table-title"
+                            data-testid="accordion-header-span"
+                          >
+                            {KRAs.name}
+                          </span>
+                          <span
+                            className="title-sm expandable-table-title"
+                            data-testid="accordion-header-span"
+                          >
+                            {KRAs.departmentName}
+                          </span>
+                          <span
+                            className="title-sm expandable-table-title"
+                            data-testid="accordion-header-span"
+                          >
+                            {KRAs.designationName}
+                          </span>
+                          <span
+                            className="title-sm expandable-table-title"
+                            data-testid="accordion-header-span"
+                          >
+                            {KRAs.designationKraPercentage}
+                          </span>
+                          <span
+                            className="title-sm expandable-table-title"
+                            data-testid="accordion-header-span"
+                          >
+                            {KRAs.kpiLookps || 'N/A'}
+                          </span>
+                          <span
+                            className="title-sm expandable-table-title"
+                            data-testid="accordion-header-span"
+                          >
+                            {KRAs.count || 'N/A'}
+                          </span>
+                        </CAccordionHeader>
+                        <CAccordionBody></CAccordionBody>
+                      </CAccordionItem>
+                    </React.Fragment>
+                  )
+                })}
+              </CAccordion>
+            </CTableBody>
+          </div>
         </OModal>
       </CCardBody>
     </>
