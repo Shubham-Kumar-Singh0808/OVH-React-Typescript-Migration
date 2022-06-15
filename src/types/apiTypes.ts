@@ -149,6 +149,12 @@ export interface ShiftConfigurationApi extends ApiBase {
   deleteShiftDetail: string
 }
 
+export interface CertificateTypeApi extends ApiBase {
+  getCertificateTypes: string
+  addCertificateType: string
+  deleteCertificateType: string
+}
+
 export type UploadImage = {
   empId: number
   data: FormData

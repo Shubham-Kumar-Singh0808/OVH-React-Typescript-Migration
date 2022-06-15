@@ -2,6 +2,7 @@ import {
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
+  CertificateTypeApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
@@ -99,6 +100,7 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
     createQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
     deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
   }
+
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
   getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
 }
@@ -157,6 +159,12 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
   updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
+}
+
+export const certificateTypeApiConfig: CertificateTypeApi = {
+  getCertificateTypes: apiPrefix + '/EmployeeSkill/getCertificateTypeList',
+  addCertificateType: apiPrefix + '/EmployeeSkill/addCertificateType',
+  deleteCertificateType: apiPrefix + '/EmployeeSkill/deleteCertificateType',
 }
 
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {
