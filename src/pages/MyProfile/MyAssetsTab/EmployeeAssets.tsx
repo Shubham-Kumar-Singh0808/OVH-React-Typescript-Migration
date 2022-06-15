@@ -109,7 +109,7 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
                       <CTableDataCell scope="row">
                         {assetsItem.productName}
                       </CTableDataCell>
-                      <CTableDataCell scope="row">
+                      <CTableDataCell scope="row" className="w-25">
                         <CLink
                           className="cursor-pointer text-decoration-none text-primary"
                           onClick={() => handleModal(assetsItem.pSpecification)}
