@@ -61,9 +61,9 @@ function AddEditVisaDetails({
     : ''
   const newDateOfIssue = employeeVisaDetails.dateOfIssue
     ? new Date(
-        +dateIssueParts[2],
+        Number(dateIssueParts[2]),
         Number(dateIssueParts[1]) - 1,
-        +dateIssueParts[0],
+        Number(dateIssueParts[0]),
       )
     : new Date()
 
@@ -73,9 +73,9 @@ function AddEditVisaDetails({
     : ''
   const newDateOfExpiry = employeeVisaDetails.dateOfExpire
     ? new Date(
-        +dateExpiryPart[2],
+        Number(dateExpiryPart[2]),
         Number(dateExpiryPart[1]) - 1,
-        +dateExpiryPart[0],
+        Number(dateExpiryPart[0]),
       )
     : new Date()
 
@@ -140,7 +140,11 @@ function AddEditVisaDetails({
       ? currentDateExpiry.split('/')
       : ''
     const newDateExpiry = employeeVisaDetails.dateOfExpire
-      ? new Date(+dateParts[2], Number(dateParts[1]) - 1, +dateParts[0])
+      ? new Date(
+          Number(dateParts[2]),
+          Number(dateParts[1]) - 1,
+          Number(dateParts[0]),
+        )
       : new Date(dateOfExpire as Date)
 
     validateDates(date, newDateExpiry)
@@ -169,7 +173,11 @@ function AddEditVisaDetails({
       ? currentDateIssue.split('/')
       : ''
     const newDateIssue: number | Date = employeeVisaDetails.dateOfExpire
-      ? new Date(+dateParts[2], Number(dateParts[1]) - 1, +dateParts[0])
+      ? new Date(
+          Number(dateParts[2]),
+          Number(dateParts[1]) - 1,
+          Number(dateParts[0]),
+        )
       : new Date(dateOfIssue as string)
 
     validateDates(newDateIssue, date)

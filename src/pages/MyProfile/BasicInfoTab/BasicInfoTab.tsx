@@ -95,9 +95,9 @@ const BasicInfoTab = (): JSX.Element => {
       : ''
   const newOfficialBday = employeeBasicInformationEditData.officialBirthday
     ? new Date(
-        +officialBdayParts[2],
+        Number(officialBdayParts[2]),
         Number(officialBdayParts[1]) - 1,
-        +officialBdayParts[0],
+        Number(officialBdayParts[0]),
       )
     : (officialBday as Date)
 
@@ -109,9 +109,9 @@ const BasicInfoTab = (): JSX.Element => {
       : ''
   const newRealBirthday = employeeBasicInformationEditData.realBirthday
     ? new Date(
-        +realBdayParts[2],
+        Number(realBdayParts[2]),
         Number(realBdayParts[1]) - 1,
-        +realBdayParts[0],
+        Number(realBdayParts[0]),
       )
     : (realBday as Date)
 
@@ -123,9 +123,9 @@ const BasicInfoTab = (): JSX.Element => {
       : ''
   const newAnniversary = employeeBasicInformationEditData.anniversary
     ? new Date(
-        +anniversaryParts[2],
+        Number(anniversaryParts[2]),
         Number(anniversaryParts[1]) - 1,
-        +anniversaryParts[0],
+        Number(anniversaryParts[0]),
       )
     : (selectedAnniversary as Date)
 

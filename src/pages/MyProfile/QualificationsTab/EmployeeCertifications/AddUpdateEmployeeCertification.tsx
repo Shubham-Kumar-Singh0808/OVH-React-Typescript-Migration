@@ -78,9 +78,9 @@ function AddUpdateEmployeeCertification({
     : ''
   const newCompletedDate = addCertification.completedDate
     ? new Date(
-        +completedDateParts[2],
+        Number(completedDateParts[2]),
         Number(completedDateParts[1]) - 1,
-        +completedDateParts[0],
+        Number(completedDateParts[0]),
       )
     : new Date()
 
@@ -90,9 +90,9 @@ function AddUpdateEmployeeCertification({
     : ''
   const newExpiryDate = addCertification.expiryDate
     ? new Date(
-        +expirtyDateParts[2],
+        Number(expirtyDateParts[2]),
         Number(expirtyDateParts[1]) - 1,
-        +expirtyDateParts[0],
+        Number(expirtyDateParts[0]),
       )
     : new Date()
 
@@ -131,7 +131,11 @@ function AddUpdateEmployeeCertification({
       ? currentDateExpiry.split('/')
       : ''
     const newDateExpiry = addCertification.expiryDate
-      ? new Date(+dateParts[2], Number(dateParts[1]) - 1, +dateParts[0])
+      ? new Date(
+          Number(dateParts[2]),
+          Number(dateParts[1]) - 1,
+          Number(dateParts[0]),
+        )
       : new Date(expiryDate as Date)
 
     validateDates(date, newDateExpiry)
@@ -156,7 +160,11 @@ function AddUpdateEmployeeCertification({
       ? currentDateCompleted.split('/')
       : ''
     const newDateCompleted = addCertification.completedDate
-      ? new Date(+dateParts[2], Number(dateParts[1]) - 1, +dateParts[0])
+      ? new Date(
+          Number(dateParts[2]),
+          Number(dateParts[1]) - 1,
+          Number(dateParts[0]),
+        )
       : new Date(completedDate as Date)
 
     validateDates(newDateCompleted, date)
