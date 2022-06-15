@@ -1,6 +1,6 @@
 import { AllowedHttpMethods, qualificationsApiConfig } from '../../../apiList'
 import {
-  EmployeeQualifications,
+  EmployeeQualification,
   PostGraduationAndGraduationList,
 } from '../../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 
@@ -8,8 +8,8 @@ import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
 const getEmployeeQualifications = async (
-  employeeId: string | number,
-): Promise<EmployeeQualifications> => {
+  employeeId: string | number | undefined,
+): Promise<EmployeeQualification> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApiConfig.getEmployeeQualifications,
     method: AllowedHttpMethods.get,
@@ -32,8 +32,8 @@ const getPgLookUpAndGraduationLookUpItems =
   }
 
 const addEmployeeQualifications = async (
-  addQualification: EmployeeQualifications,
-): Promise<EmployeeQualifications> => {
+  addQualification: EmployeeQualification,
+): Promise<EmployeeQualification> => {
   const { id, ...addQualificationRest } = addQualification
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApiConfig.addEmployeeQualifications,
@@ -44,8 +44,8 @@ const addEmployeeQualifications = async (
   return response.data
 }
 const updateEmployeeQualifications = async (
-  addQualification: EmployeeQualifications,
-): Promise<EmployeeQualifications> => {
+  addQualification: EmployeeQualification,
+): Promise<EmployeeQualification> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: qualificationsApiConfig.updateEmployeeQualifications,
     method: AllowedHttpMethods.put,

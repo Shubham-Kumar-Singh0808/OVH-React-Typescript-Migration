@@ -6,6 +6,7 @@ import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import { configureStore } from '@reduxjs/toolkit'
 import employeeCertificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
+import employeeListReducer from './reducers/EmployeeDirectory/EmployeesList/employeeListSlice'
 import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
 import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
@@ -17,6 +18,9 @@ import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
+import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
+import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
+import employeeReviewsReducer from './reducers/MyProfile/ReviewTab/employeeReviewsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -32,8 +36,12 @@ export const allReducers = {
   employeeCertificates: employeeCertificationReducer,
   profileHistory: profileHistoryReducer,
   employeeSkill: employeeSkillReducer,
+  employeeReviews: employeeReviewsReducer,
+  employeeList: employeeListReducer,
+  employeeDesignationList: employeeDesignationListReducer,
   shiftConfiguration: shiftConfigurationReducer,
   employeeAssets: employeeAssetsReducer,
+  certificateType: certificateTypeReducer,
   // add your slice reducers here
 }
 

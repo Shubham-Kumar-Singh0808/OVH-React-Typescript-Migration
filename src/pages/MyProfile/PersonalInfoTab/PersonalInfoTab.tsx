@@ -1,32 +1,39 @@
-import React, { useEffect, useState } from 'react'
 import {
-  CCardHeader,
-  CCardBody,
-  CRow,
-  CFormLabel,
-  CCol,
-  CFormInput,
-  CFormSelect,
-  CFormCheck,
   CButton,
+  CCardBody,
+  CCardHeader,
+  CCol,
   CForm,
+  CFormCheck,
+  CFormInput,
+  CFormLabel,
+  CFormSelect,
+  CRow,
 } from '@coreui/react-pro'
-import moment from 'moment'
+import React, { useEffect, useState } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
+import AddEditFamilyDetails from './AddEditFamilyDetails'
+import AddEditVisaDetails from './AddEditVisaDetails'
 import DatePicker from 'react-datepicker'
 import FamilyDetailsTable from './FamilyDetailsTable'
-import VisaDetailsTable from './VisaDetailsTable'
-import AddEditVisaDetails from './AddEditVisaDetails'
-import AddEditFamilyDetails from './AddEditFamilyDetails'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { useTypedSelector, useAppDispatch } from '../../../stateStore'
-import { reduxServices } from '../../../reducers/reduxServices'
+import VisaDetailsTable from './VisaDetailsTable'
 import { handleActiveTabProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import moment from 'moment'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
+
 const PersonalInfoTab = ({
   handleActiveTab,
 }: handleActiveTabProps): JSX.Element => {
-  const employeePersonalInformation = useTypedSelector(
-    reduxServices.generalInformation.selectors.selectLoggedInEmployeeData,
+  const [isViewingAnotherEmployee] = useSelectedEmployee()
+  const employeePersonalInformation = useTypedSelector((state) =>
+    reduxServices.generalInformation.selectors.selectLoggedInEmployeeData(
+      state,
+      isViewingAnotherEmployee,
+    ),
   )
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
@@ -131,6 +138,7 @@ const PersonalInfoTab = ({
     selectedUserPassportDetails,
   )
   const [checkBox, setCheckBox] = useState(false)
+
   useEffect(() => {
     if (checkBox) {
       setEmployeePermanentAddressDetails({
@@ -147,6 +155,7 @@ const PersonalInfoTab = ({
     employeePresenetAddressDetails.presentLandMark,
     employeePresenetAddressDetails.presentZip,
   ])
+
   useEffect(() => {
     if (
       employeeContactDetails?.mobile &&
@@ -359,7 +368,11 @@ const PersonalInfoTab = ({
               <h4 className="h4">Family Details</h4>
             </CCardHeader>
             <CCardBody className="ps-0 pe-0">
-              <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
+              {!isViewingAnotherEmployee ? (
+                <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
+              ) : (
+                <></>
+              )}
               <FamilyDetailsTable
                 editButtonHandler={editButtonHandler}
                 isFieldDisabled={true}
@@ -373,7 +386,11 @@ const PersonalInfoTab = ({
               <h4 className="h4">Visa Details</h4>
             </CCardHeader>
             <CCardBody className="ps-0 pe-0">
-              <OAddButton addButtonHandler={() => setToggle('AddVisa')} />
+              {!isViewingAnotherEmployee ? (
+                <OAddButton addButtonHandler={() => setToggle('AddVisa')} />
+              ) : (
+                <></>
+              )}
               <VisaDetailsTable editVisaButtonHandler={editVisaButtonHandler} />
             </CCardBody>
             <CForm>

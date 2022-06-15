@@ -9,14 +9,17 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+
 import { EmployeeVisaDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 
 const VisaDetailsTable = ({
   editVisaButtonHandler,
 }: EmployeeVisaDetailsTableProps): JSX.Element => {
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
   const employeeId = useTypedSelector(
@@ -26,17 +29,21 @@ const VisaDetailsTable = ({
   const getEmployeeVisaData = useTypedSelector(
     reduxServices.personalInformation.selectors.visaDetails,
   )
-
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(
-      reduxServices.personalInformation.getEmployeeVisaDetails(employeeId),
+      reduxServices.personalInformation.getEmployeeVisaDetails(
+        isViewingAnotherEmployee ? selectedEmployeeId : employeeId,
+      ),
     )
-  }, [dispatch, employeeId])
+  }, [dispatch, employeeId, isViewingAnotherEmployee, selectedEmployeeId])
+
   const handleShowDeleteModal = (visaId: number) => {
     setToDeleteVisaId(visaId)
     setIsDeleteModalVisible(true)
   }
+
   const handleConfirmDeleteVisaDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(
@@ -60,6 +67,7 @@ const VisaDetailsTable = ({
       )
     }
   }
+
   const sortedVisaDetails = useMemo(() => {
     if (getEmployeeVisaData) {
       return getEmployeeVisaData
@@ -80,7 +88,11 @@ const VisaDetailsTable = ({
             <CTableHeaderCell scope="col">Visa Type</CTableHeaderCell>
             <CTableHeaderCell scope="col">Date of Issue</CTableHeaderCell>
             <CTableHeaderCell scope="col">Date of Expire</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            {!isViewingAnotherEmployee ? (
+              <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            ) : (
+              <></>
+            )}
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -97,20 +109,24 @@ const VisaDetailsTable = ({
               <CTableDataCell scope="row">
                 {visaItem.dateOfExpire}
               </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CButton
-                  color="info btn-ovh me-2"
-                  onClick={() => editVisaButtonHandler(visaItem.id)}
-                >
-                  <i className="fa fa-pencil-square-o"></i>
-                </CButton>
-                <CButton
-                  color="danger btn-ovh me-2"
-                  onClick={() => handleShowDeleteModal(visaItem.id)}
-                >
-                  <i className="fa fa-trash-o" aria-hidden="true"></i>
-                </CButton>
-              </CTableDataCell>
+              {!isViewingAnotherEmployee ? (
+                <CTableDataCell scope="row">
+                  <CButton
+                    color="info btn-ovh me-2"
+                    onClick={() => editVisaButtonHandler(visaItem.id)}
+                  >
+                    <i className="fa fa-pencil-square-o"></i>
+                  </CButton>
+                  <CButton
+                    color="danger btn-ovh me-2"
+                    onClick={() => handleShowDeleteModal(visaItem.id)}
+                  >
+                    <i className="fa fa-trash-o" aria-hidden="true"></i>
+                  </CButton>
+                </CTableDataCell>
+              ) : (
+                <></>
+              )}
             </CTableRow>
           ))}
         </CTableBody>

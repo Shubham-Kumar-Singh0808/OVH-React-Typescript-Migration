@@ -1,15 +1,15 @@
 {
-        "cSpell.words": [
-            "formik",
-            "testid",
-            "coreui",
-            "createaccess",
-            "deleteaccess",
-            "headwrap",
-            "infocheckbox",
-            "reduxjs",
-            "updateaccess",
-            "viewaccess"
-        ]
-    }
-    
+  "cSpell.words": [
+    "coreui",
+    "createaccess",
+    "deleteaccess",
+    "formik",
+    "headwrap",
+    "infocheckbox",
+    "reduxjs",
+    "Statusvalue",
+    "testid",
+    "updateaccess",
+    "viewaccess"
+  ]
+}

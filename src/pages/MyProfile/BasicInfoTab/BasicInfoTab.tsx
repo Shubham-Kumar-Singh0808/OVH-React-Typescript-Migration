@@ -8,24 +8,38 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import DatePicker from 'react-datepicker'
-import DownloadSampleFileButton from './DownloadSampleFileButton'
+import DownloadCVButton from './DownloadCVButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
-import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
-import { loggedInEmployeeSelectors } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
-import moment from 'moment'
-import { useFormik } from 'formik'
-import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
+import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { useFormik } from 'formik'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
+import validator from 'validator'
+import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
+import { UploadImage } from '../../../types/apiTypes'
 
 const BasicInfoTab = (): JSX.Element => {
-  const employeeBasicInformation = useTypedSelector(
-    loggedInEmployeeSelectors.selectLoggedInEmployeeData,
+  const dispatch = useAppDispatch()
+  const [isViewingAnotherEmployee] = useSelectedEmployee()
+  const employeeBasicInformation = useTypedSelector((state) =>
+    reduxServices.generalInformation.selectors.selectLoggedInEmployeeData(
+      state,
+      isViewingAnotherEmployee,
+    ),
   )
+  const tenantKey = useTypedSelector(
+    reduxServices.authentication.selectors.selectTenantKey,
+  )
+  const authenticatedToken = useTypedSelector(
+    reduxServices.authentication.selectors.selectToken,
+  )
+
   const selectedUserBasicInformation = {
     id: employeeBasicInformation.id,
     baseLocation: employeeBasicInformation.baseLocation,
@@ -50,8 +64,10 @@ const BasicInfoTab = (): JSX.Element => {
     anniversary: employeeBasicInformation.anniversary,
     skypeId: employeeBasicInformation.skypeId,
   }
+
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
   const [realBirthdayShown, setRealBirthdayShown] = useState<boolean>(false)
+  const [emailError, setEmailError] = useState<boolean>(false)
   const [
     employeeBasicInformationEditData,
     setEmployeeBasicInformationEditData,
@@ -59,8 +75,23 @@ const BasicInfoTab = (): JSX.Element => {
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
   const [dateErrorMessage, setDateErrorMessage] = useState(false)
   const [cvToUpload, setCVToUpload] = useState<File | undefined>(undefined)
+  const [uploadErrorText, setUploadErrorText] = useState<string>('')
+  const [selectedProfilePicture, setSelectedProfilePicture] =
+    useState<UploadImage>()
 
-  const dispatch = useAppDispatch()
+  const validateEmail = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailError(false)
+    } else {
+      setEmailError(true)
+    }
+  }
+
+  //onChange handler for image upload and crop
+  const croppedImageHandler = useCallback((croppedImageData: UploadImage) => {
+    setSelectedProfilePicture(croppedImageData)
+    setSaveButtonEnabled(true)
+  }, [])
 
   // onchange handler for input fields
   const handleChange = (
@@ -69,9 +100,31 @@ const BasicInfoTab = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setEmployeeBasicInformationEditData((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'curentLocation') {
+      const currentLocation = value
+        .replace(/[^a-zA-Z\s]/gi, '')
+        .replace(/^\s*/, '')
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: currentLocation } }
+      })
+    } else if (name === 'baseLocation') {
+      const baseLocation = value
+        .replace(/[^a-zA-Z\s]/gi, '')
+        .replace(/^\s*/, '')
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: baseLocation } }
+      })
+    } else if (name === 'personalEmail') {
+      const personalEmail = value
+      validateEmail(personalEmail)
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: personalEmail } }
+      })
+    } else {
+      setEmployeeBasicInformationEditData((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   // onchange handler for date pickers
@@ -88,8 +141,29 @@ const BasicInfoTab = (): JSX.Element => {
   // change CV to upload state value
   const onChangeCVHandler = async (element: HTMLInputElement) => {
     const file = element.files
+    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    let extension = ''
     if (!file) return
 
+    if (file) {
+      extension = file[0].name.split('.').pop() as string
+    }
+
+    if (file[0].size > 2048000) {
+      setUploadErrorText(
+        'File size exceeded. Please upload a file less than 2MB.',
+      )
+      return
+    }
+
+    if (!acceptedFileTypes.includes(extension)) {
+      setUploadErrorText(
+        'Wrong file format chosen. Please choose either doc, docx, or pdf.',
+      )
+      return
+    }
+    setSaveButtonEnabled(true)
+    setUploadErrorText('')
     setCVToUpload(file[0])
   }
 
@@ -100,13 +174,22 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData.bloodgroup &&
       employeeBasicInformationEditData.maritalStatus &&
       employeeBasicInformationEditData.personalEmail &&
-      employeeBasicInformationEditData.officialBirthday
+      employeeBasicInformationEditData.officialBirthday &&
+      !emailError
     ) {
       setSaveButtonEnabled(true)
     } else {
       setSaveButtonEnabled(false)
     }
-  }, [employeeBasicInformationEditData, baseLocationShown, realBirthdayShown])
+    if (employeeBasicInformationEditData.personalEmail) {
+      validateEmail(employeeBasicInformationEditData.personalEmail)
+    }
+  }, [
+    employeeBasicInformationEditData,
+    baseLocationShown,
+    realBirthdayShown,
+    emailError,
+  ])
 
   // condition to enable and disable save button
   useEffect(() => {
@@ -185,19 +268,32 @@ const BasicInfoTab = (): JSX.Element => {
     event.preventDefault()
     const prepareObject = employeeBasicInformationEditData
 
-    try {
-      if (cvToUpload) {
-        await uploadFile()
-      }
-      dispatch(
-        employeeBasicInformationThunk.updateEmployeeBasicInformation(
-          prepareObject,
+    if (selectedProfilePicture) {
+      await dispatch(
+        employeeBasicInformationThunk.uploadEmployeeProfilePicture(
+          selectedProfilePicture,
         ),
       )
-    } catch (error) {
-      console.error('Error saving changes')
+    }
+    await dispatch(
+      employeeBasicInformationThunk.updateEmployeeBasicInformation(
+        prepareObject,
+      ),
+    )
+
+    if (cvToUpload) {
+      const formData = new FormData()
+      formData.append('file', cvToUpload, cvToUpload.name)
+      const uploadPrepareObject = {
+        personId: employeeBasicInformation.id as number,
+        file: formData,
+      }
+      await dispatch(
+        employeeBasicInformationThunk.uploadEmployeeCV(uploadPrepareObject),
+      )
     }
     dispatch(reduxServices.app.actions.addToast(toastElement))
+    window.location.reload()
   }
 
   const formik = useFormik({
@@ -206,19 +302,6 @@ const BasicInfoTab = (): JSX.Element => {
       console.log('Logging in ', values)
     },
   })
-
-  const uploadFile = async function () {
-    if (cvToUpload) {
-      const formData = new FormData()
-      formData.append('file', cvToUpload, cvToUpload.name)
-      const prepareObject = {
-        personId: employeeBasicInformation.id as number,
-        file: formData,
-      }
-      await basicInfoApi.uploadEmployeeCV(prepareObject)
-    }
-  }
-
   const toastElement = (
     <OToast
       toastMessage="Your changes have been saved successfully."
@@ -226,13 +309,47 @@ const BasicInfoTab = (): JSX.Element => {
     />
   )
 
+  // base location and real date of birth hide and show validations
+  useEffect(() => {
+    if (
+      employeeBasicInformationEditData.curentLocation?.toLowerCase() !==
+      employeeBasicInformationEditData.baseLocation?.toLowerCase()
+    ) {
+      setBaseLocationShown(true)
+    } else {
+      setBaseLocationShown(false)
+    }
+    const tempOfficialBirthday =
+      employeeBasicInformationEditData?.officialBirthday?.toString()
+
+    const tempRealBirthday =
+      employeeBasicInformationEditData?.realBirthday?.toString()
+
+    const newOfficialBirthday = new Date(
+      moment(tempOfficialBirthday).format('DD/MM/YYYY'),
+    )
+    const newRealBirthday = new Date(
+      moment(tempRealBirthday).format('DD/MM/YYYY'),
+    )
+    if (newOfficialBirthday.getTime() !== newRealBirthday.getTime()) {
+      setRealBirthdayShown(true)
+    } else {
+      setRealBirthdayShown(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <>
       <CForm
         className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
         onSubmit={handleSubmitBasicDetails}
       >
-        <DownloadSampleFileButton />
+        <CRow className="justify-content-end mt-3">
+          <CCol className="text-end" md={4}>
+            <DownloadCVButton className="text-decoration-none btn btn-download btn-ovh" />
+          </CCol>
+        </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
             {...dynamicFormLabelProps(
@@ -652,7 +769,7 @@ const BasicInfoTab = (): JSX.Element => {
             Personal Email:
             <span
               className={
-                employeeBasicInformationEditData.personalEmail
+                employeeBasicInformationEditData.personalEmail && !emailError
                   ? 'text-white'
                   : 'text-danger'
               }
@@ -664,7 +781,7 @@ const BasicInfoTab = (): JSX.Element => {
             <CFormInput
               id="employeePersonalEmail"
               size="sm"
-              type="text"
+              type="email"
               name="personalEmail"
               placeholder="Personal Email"
               value={employeeBasicInformationEditData.personalEmail}
@@ -703,19 +820,10 @@ const BasicInfoTab = (): JSX.Element => {
             Profile Picture:
           </CFormLabel>
           <CCol sm={3}>
-            <div className="profile-avatar">
-              <img
-                width="120px"
-                height="120px;"
-                src={employeeBasicInformation.thumbPicture}
-                alt="User Profile"
-              />
-            </div>
-            <CFormInput
-              id="employeeProfilePicture"
-              type="file"
-              className="form-control mt-2"
-              accept="image/*"
+            <BasicInfoTabImageCropper
+              file={employeeBasicInformation.thumbPicture}
+              empId={employeeBasicInformation.id as number}
+              onUploadImage={croppedImageHandler}
             />
           </CCol>
         </CRow>
@@ -760,14 +868,17 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3">
           <CCol md={{ span: 6, offset: 3 }}>
             {employeeBasicInformation.rbtCvName && (
-              <a
-                className="text-decoration-none cursor-pointer"
-                href="RBT_CV"
-                download={employeeBasicInformation.rbtCvName}
-              >
-                <i className="fa fa-paperclip me-1"></i>
-                Rbt Cv
-              </a>
+              <DownloadCVButton
+                className="cursor-pointer"
+                fileName={employeeBasicInformation.rbtCvName}
+                token={authenticatedToken}
+                tenantKey={tenantKey}
+              />
+            )}
+            {uploadErrorText && (
+              <div id="error">
+                <strong className="text-danger mt-3">{uploadErrorText}</strong>
+              </div>
             )}
           </CCol>
         </CRow>

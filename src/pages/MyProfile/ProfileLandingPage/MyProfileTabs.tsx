@@ -12,8 +12,11 @@ import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfi
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
+import EmployeeReviews from '../ReviewsTab/EmployeeReviews'
 import TabsLabels from '../../../middleware/TabsLabels'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../stateStore'
+import { useParams } from 'react-router-dom'
 import { useTypedSelector } from '../../../stateStore'
 import EmployeeMyAssets from '../MyAssetsTab/EmployeeAssets'
 
@@ -21,14 +24,28 @@ interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
 const MyProfileTabs = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [activeTabsKey, setActiveTabsKey] = useState(1)
   const [activeTabsContent, setActiveTabsContent] = useState<JSX.Element>()
   const employeeRole = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeRole,
   )
+  const { employeeId } = useParams<{ employeeId?: string }>()
+
   const handleActiveTab = (tabKey: number) => {
     setActiveTabsKey(tabKey)
   }
+
+  useEffect(() => {
+    if (employeeId) {
+      dispatch(
+        reduxServices.generalInformation.getSelectedEmployeeInformation(
+          employeeId,
+        ),
+      )
+    }
+  }, [dispatch, employeeId])
 
   useEffect(() => {
     if (
@@ -47,7 +64,7 @@ const MyProfileTabs = (): JSX.Element => {
         2: <BasicInfoTab />,
         3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
         4: <QualificationDetails />,
-        5: <h1>Reviews</h1>,
+        5: <EmployeeReviews />,
         6: <h1>Projects</h1>,
         8: <EmployeeMyAssets />,
         9: <EmployeeProfileHistory />,
