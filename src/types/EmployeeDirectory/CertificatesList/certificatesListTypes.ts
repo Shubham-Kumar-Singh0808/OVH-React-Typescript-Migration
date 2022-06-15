@@ -51,9 +51,12 @@ export type CertificateDetailsExpandableTableProps = {
 }
 
 export type CertificatesFilterOptionsProps = {
-  selectedTechnology: string
-  setSelectedTechnology: (value: string) => void
-  selectedCertificate: string
-  setSelectedCertificate: (value: string) => void
+  selectTechnology: string
+  setSelectTechnology: (value: string) => void
+  setFilterByTechnology: (value: string) => void
+  setFilterByCertificate: (value: string) => void
   setMultiSearchValue: (value: string) => void
+  filterByTechnology: string
+  filterByCertificate: string
+  multiSearchValue: string
 }

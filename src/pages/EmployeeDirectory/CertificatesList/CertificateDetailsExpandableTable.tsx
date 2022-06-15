@@ -4,6 +4,7 @@ import {
   CAccordionHeader,
   CAccordionItem,
   CCol,
+  CLink,
   CRow,
   CTable,
   CTableBody,
@@ -17,6 +18,7 @@ import { CertificateDetailsExpandableTableProps } from '../../../types/EmployeeD
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import React from 'react'
+import parse from 'html-react-parser'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
@@ -81,35 +83,50 @@ const CertificateDetailsExpandableTable = (
                         </CTableHead>
                         <CTableBody>
                           {currEmployeeCertificates.certificationDtos.map(
-                            (currCertificate, currCertificateIndex) => {
+                            (currentCertificate, currentCertificateIndex) => {
+                              const descriptionLimit =
+                                currentCertificate.description &&
+                                currentCertificate.description.length > 30
+                                  ? `${currentCertificate.description.substring(
+                                      0,
+                                      30,
+                                    )}...`
+                                  : currentCertificate.description
                               return (
-                                <CTableRow key={currCertificateIndex}>
+                                <CTableRow key={currentCertificateIndex}>
                                   <CTableDataCell>
-                                    {currCertificateIndex + 1}
+                                    {currentCertificateIndex + 1}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currCertificate.technology || 'N/A'}
+                                    {currentCertificate.technology || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currCertificate.certificateType || 'N/A'}
+                                    {currentCertificate.certificateType ||
+                                      'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currCertificate.name || 'N/A'}
+                                    {currentCertificate.name || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currCertificate.code || 'N/A'}
+                                    {currentCertificate.code || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currCertificate.completedDate || 'N/A'}
+                                    {currentCertificate.completedDate || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currCertificate.expiryDate || 'N/A'}
+                                    {currentCertificate.expiryDate || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currCertificate.percent || 'N/A'}
+                                    {currentCertificate.percent || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currCertificate.description || 'N/A'}
+                                    {currentCertificate.description ? (
+                                      <CLink className="cursor-pointer text-decoration-none text-primary">
+                                        {parse(descriptionLimit as string)}
+                                      </CLink>
+                                    ) : (
+                                      'N/A'
+                                    )}
                                   </CTableDataCell>
                                 </CTableRow>
                               )

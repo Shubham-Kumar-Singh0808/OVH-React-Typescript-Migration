@@ -2,7 +2,7 @@ import {
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
-  CertificatesListApi,
+  CertificateListApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
@@ -160,9 +160,10 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
 }
 
-export const certificatesListApiConfig: CertificatesListApi = {
+export const certificateListApiConfig: CertificateListApi = {
   getAllEmployeeCertificates:
     apiPrefix + '/EmployeeSkill/getAllEmployeecertificates',
+  exportCertificateList: apiPrefix + '/EmployeeSkill/exportCertificatesList',
 }
 
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {

@@ -1,4 +1,4 @@
-import { AllowedHttpMethods, certificatesListApiConfig } from '../../apiList'
+import { AllowedHttpMethods, certificateListApiConfig } from '../../apiList'
 import {
   CertificateListApiProps,
   GetEmployeeCertificateResponse,
@@ -11,7 +11,7 @@ const getEmployeesCertificates = async (
   props: CertificateListApiProps,
 ): Promise<GetEmployeeCertificateResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: certificatesListApiConfig.getAllEmployeeCertificates,
+    url: certificateListApiConfig.getAllEmployeeCertificates,
     method: AllowedHttpMethods.get,
     params: {
       endIndex: props.endIndex ?? 20,
@@ -26,8 +26,27 @@ const getEmployeesCertificates = async (
   return response.data
 }
 
+const exportCertificatesData = async (
+  props: CertificateListApiProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: certificateListApiConfig.exportCertificateList,
+    method: AllowedHttpMethods.get,
+    params: {
+      selectionTechnology: props.selectionTechnology ?? '',
+      selectedCertificate: props.selectedCertificate ?? '',
+      multipleSearch: props.multipleSearch ?? '',
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
 const certificatesApi = {
   getEmployeesCertificates,
+  exportCertificatesData,
 }
 
 export default certificatesApi

@@ -7,19 +7,25 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
+import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
 import { useTypedSelector } from '../../../stateStore'
 
 const CertificatesFilterOptions = ({
-  selectedTechnology,
-  setSelectedTechnology,
-  selectedCertificate,
-  setSelectedCertificate,
+  selectTechnology,
+  setSelectTechnology,
+  setFilterByTechnology,
+  setFilterByCertificate,
   setMultiSearchValue,
+  filterByTechnology,
+  filterByCertificate,
+  multiSearchValue,
 }: CertificatesFilterOptionsProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
+  const [selectCertificate, setSelectCertificate] = useState<string>('')
+  const [isViewBtnEnabled, setIsViewBtnEnabled] = useState<boolean>(false)
   const getTechnologies = useTypedSelector(
     (state) => state.employeeCertificates.getAllTechnologies,
   )
@@ -30,6 +36,62 @@ const CertificatesFilterOptions = ({
   const multiSearchButtonHandler = () => {
     setMultiSearchValue(searchInput)
   }
+  const viewButtonHandler = () => {
+    setFilterByTechnology(selectTechnology)
+    setFilterByCertificate(selectCertificate)
+  }
+  const clearButtonHandler = () => {
+    setSelectTechnology('')
+    setSelectCertificate('')
+    setFilterByTechnology('')
+    setFilterByCertificate('')
+    setMultiSearchValue('')
+  }
+
+  useEffect(() => {
+    if (selectTechnology) {
+      setIsViewBtnEnabled(true)
+    } else {
+      setIsViewBtnEnabled(false)
+    }
+  }, [selectCertificate, selectTechnology])
+
+  const handleExportCertificatesData = async () => {
+    const certificateListDownload =
+      await certificatesApi.exportCertificatesData({
+        selectionTechnology: filterByTechnology,
+        selectedCertificate: filterByCertificate,
+        multipleSearch: multiSearchValue,
+      })
+    downloadFile(certificateListDownload)
+  }
+
+  const downloadFile = (excelDownload: Blob | undefined) => {
+    if (excelDownload) {
+      const url = window.URL.createObjectURL(
+        new Blob([excelDownload], {
+          type: excelDownload.type,
+        }),
+      )
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'CertificatesList.csv')
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    }
+  }
+
+  const sortedTechnologies = useMemo(() => {
+    if (getTechnologies) {
+      return getTechnologies
+        .slice()
+        .sort((technology1, technology2) =>
+          technology1.name.localeCompare(technology2.name),
+        )
+    }
+  }, [getTechnologies])
+
   return (
     <>
       <CRow>
@@ -43,13 +105,13 @@ const CertificatesFilterOptions = ({
             id="technology"
             data-testid="form-select"
             name="technology"
-            value={selectedTechnology}
+            value={selectTechnology}
             onChange={(e) => {
-              setSelectedTechnology(e.target.value)
+              setSelectTechnology(e.target.value)
             }}
           >
             <option value={''}>Select Technology</option>
-            {getTechnologies?.map((certificateItem, index) => (
+            {sortedTechnologies?.map((certificateItem, index) => (
               <option key={index} value={certificateItem.name}>
                 {certificateItem.name}
               </option>
@@ -66,9 +128,9 @@ const CertificatesFilterOptions = ({
             id="certificate"
             data-testid="form-select"
             name="certificate"
-            value={selectedCertificate}
+            value={selectCertificate}
             onChange={(e) => {
-              setSelectedCertificate(e.target.value)
+              setSelectCertificate(e.target.value)
             }}
           >
             <option value={''}>Select Certificate</option>
@@ -87,15 +149,28 @@ const CertificatesFilterOptions = ({
       </CRow>
       <CRow className="mt-4 mb-4">
         <CCol sm={{ span: 6, offset: 3 }}>
-          <CButton disabled={false} color="success btn-ovh me-1">
+          <CButton
+            className="cursor-pointer"
+            disabled={!isViewBtnEnabled}
+            color="success btn-ovh me-1"
+            onClick={viewButtonHandler}
+          >
             View
           </CButton>
-          <CButton disabled={false} color="warning btn-ovh me-1">
+          <CButton
+            className="cursor-pointer"
+            disabled={false}
+            color="warning btn-ovh me-1"
+            onClick={clearButtonHandler}
+          >
             Clear
           </CButton>
         </CCol>
         <CCol xs={3} className="gap-2 d-md-flex justify-content-md-end">
-          <CButton color="info btn-ovh me-0">
+          <CButton
+            color="info btn-ovh me-0"
+            onClick={handleExportCertificatesData}
+          >
             <i className="fa fa-plus  me-1"></i>Click to Export
           </CButton>
         </CCol>
@@ -113,6 +188,8 @@ const CertificatesFilterOptions = ({
               }}
             />
             <CButton
+              disabled={!searchInput}
+              className="cursor-pointer"
               type="button"
               color="info"
               id="button-addon2"

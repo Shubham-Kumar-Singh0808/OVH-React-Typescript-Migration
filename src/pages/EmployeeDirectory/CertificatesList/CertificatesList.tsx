@@ -10,9 +10,10 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const CertificatesList = (): JSX.Element => {
-  const [selectedTechnology, setSelectedTechnology] = useState<string>('')
-  const [selectedCertificate, setSelectedCertificate] = useState<string>('')
+  const [filterByTechnology, setFilterByTechnology] = useState<string>('')
+  const [filterByCertificate, setFilterByCertificate] = useState<string>('')
   const [multiSearchValue, setMultiSearchValue] = useState<string>('')
+  const [selectTechnology, setSelectTechnology] = useState<string>('')
   const dispatch = useAppDispatch()
   const listSize = useTypedSelector(
     reduxServices.certificateList.selectors.listSize,
@@ -31,20 +32,23 @@ const CertificatesList = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getTechnologies())
-    if (selectedTechnology) {
+    if (selectTechnology) {
       dispatch(
         reduxServices.employeeCertifications.getCertificateByTechnologyName(
-          selectedTechnology,
+          selectTechnology,
         ),
       )
     }
+  }, [dispatch, selectTechnology])
+
+  useEffect(() => {
     dispatch(
       reduxServices.certificateList.getEmployeesCertificates({
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
         multipleSearch: multiSearchValue,
-        selectedCertificate: selectedCertificate,
-        selectionTechnology: selectedTechnology,
+        selectedCertificate: filterByCertificate,
+        selectionTechnology: filterByTechnology,
       }),
     )
   }, [
@@ -52,8 +56,8 @@ const CertificatesList = (): JSX.Element => {
     dispatch,
     multiSearchValue,
     pageSize,
-    selectedCertificate,
-    selectedTechnology,
+    filterByCertificate,
+    filterByTechnology,
   ])
 
   return (
@@ -67,11 +71,14 @@ const CertificatesList = (): JSX.Element => {
         <CRow>
           <CCol xs={12}>
             <CertificatesFilterOptions
-              selectedTechnology={selectedTechnology}
-              setSelectedTechnology={setSelectedTechnology}
-              selectedCertificate={selectedCertificate}
-              setSelectedCertificate={setSelectedCertificate}
+              selectTechnology={selectTechnology}
+              setSelectTechnology={setSelectTechnology}
+              setFilterByTechnology={setFilterByTechnology}
+              setFilterByCertificate={setFilterByCertificate}
               setMultiSearchValue={setMultiSearchValue}
+              filterByTechnology={filterByTechnology}
+              filterByCertificate={filterByCertificate}
+              multiSearchValue={multiSearchValue}
             />
           </CCol>
           {isLoading !== ApiLoadingState.loading ? (

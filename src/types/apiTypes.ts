@@ -148,8 +148,9 @@ export interface ShiftConfigurationApi extends ApiBase {
   updateShiftDetail: string
   deleteShiftDetail: string
 }
-export interface CertificatesListApi extends ApiBase {
+export interface CertificateListApi extends ApiBase {
   getAllEmployeeCertificates: string
+  exportCertificateList: string
 }
 
 export type UploadImage = {
