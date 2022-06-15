@@ -20,6 +20,7 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import parse from 'html-react-parser'
 
 const EmployeeMyAssetsTab = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -97,6 +98,11 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
               </CTableHead>
               <CTableBody>
                 {currentPageItems.map((assetsItem, index) => {
+                  const descriptionLimit =
+                    assetsItem.pSpecification &&
+                    assetsItem.pSpecification.length > 30
+                      ? `${assetsItem.pSpecification.substring(0, 30)}...`
+                      : assetsItem.pSpecification
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell scope="row">
@@ -116,7 +122,7 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
                           className="cursor-pointer text-decoration-none text-primary"
                           onClick={() => handleModal(assetsItem.pSpecification)}
                         >
-                          {assetsItem.pSpecification}
+                          {parse(descriptionLimit)}
                         </CLink>
                       </CTableDataCell>
                       <CTableDataCell scope="row">
