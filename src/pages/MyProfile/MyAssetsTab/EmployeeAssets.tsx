@@ -188,12 +188,12 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
           </>
         )}
         <OModal
+          modalSize="lg"
           alignment="center"
           modalFooterClass="d-none"
           modalHeaderClass="d-none"
           visible={isModalVisible}
           setVisible={setIsModalVisible}
-          modalClass="lg"
         >
           {specification}
         </OModal>
