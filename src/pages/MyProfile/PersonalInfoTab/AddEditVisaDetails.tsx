@@ -312,6 +312,7 @@ function AddEditVisaDetails({
     htmlFor: 'Country',
     className: 'col-sm-3 col-form-label text-end',
   }
+
   const visaTypeProps = {
     className: 'col-sm-3 col-form-label text-end',
     htmlFor: 'Visa Type',
