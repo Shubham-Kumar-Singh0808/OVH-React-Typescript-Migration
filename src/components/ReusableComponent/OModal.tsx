@@ -19,6 +19,7 @@ const OModal = ({
   modalHeaderClass,
   modalFooterClass,
   modalBodyClass,
+  modalSize,
   closeButtonClass,
   isConfirmButtonDisabled = false,
   isCancelButtonDisabled = false,
@@ -29,6 +30,7 @@ const OModal = ({
   return (
     <>
       <CModal
+        size={modalSize}
         alignment={alignment}
         visible={visible}
         onClose={() => {

@@ -118,6 +118,7 @@ const EmployeeReportees = (): JSX.Element => {
           </p>
         </CCol>
         <OModal
+          modalSize="lg"
           alignment="center"
           visible={isModalVisible}
           setVisible={setIsModalVisible}
