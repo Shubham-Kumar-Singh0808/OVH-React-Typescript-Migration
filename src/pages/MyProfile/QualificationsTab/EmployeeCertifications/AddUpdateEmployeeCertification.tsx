@@ -149,7 +149,7 @@ function AddUpdateEmployeeCertification({
         return { ...prevState, ...{ [name]: registrationNumber } }
       })
     } else if (name === 'name') {
-      const certificate = value.replace(/\s/g, '')
+      const certificate = value.replace(/^\s*/, '')
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: certificate } }
       })
@@ -361,7 +361,7 @@ function AddUpdateEmployeeCertification({
                 name="name"
                 value={addCertification?.name}
                 placeholder="Certification Name"
-                maxLength={24}
+                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
