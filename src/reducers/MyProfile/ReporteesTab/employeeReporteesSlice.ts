@@ -73,7 +73,14 @@ const employeeReporteesSlice = createSlice({
     builder.addCase(getEmployeeReportees.pending, (state) => {
       state.isLoading = true
     })
+    builder.addCase(getEmployeeReporteesKRAs.pending, (state) => {
+      state.isLoading = true
+    })
     builder.addCase(getEmployeeReportees.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.payload as ValidationError
+    })
+    builder.addCase(getEmployeeReporteesKRAs.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.payload as ValidationError
     })
