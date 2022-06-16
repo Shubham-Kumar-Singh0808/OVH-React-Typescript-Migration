@@ -6,7 +6,6 @@ export type EntryExport = {
   id: number
   project: EmployeeProjectDetails
   projectSelected: number | undefined
-  isShown?: boolean
   projectDetailOpenedHandler(projectIndex: number | undefined): void
 }
 const ProjectsTabTableEntry = (props: EntryExport): JSX.Element => {
@@ -14,6 +13,7 @@ const ProjectsTabTableEntry = (props: EntryExport): JSX.Element => {
     boolean | undefined
   >(undefined)
   let icon: string
+  let show: boolean
 
   const toTitleCase = (str: string) => {
     return str
@@ -32,25 +32,26 @@ const ProjectsTabTableEntry = (props: EntryExport): JSX.Element => {
   useEffect(() => {
     if (projectDetailsClicked) {
       props.projectDetailOpenedHandler(props.id)
+      setProjectDetailsClicked(true)
+      console.log(props.id, 1)
     }
 
     if (!projectDetailsClicked) {
+      props.projectDetailOpenedHandler(undefined)
       setProjectDetailsClicked(false)
-    }
-
-    if (props.id === props.projectSelected && !projectDetailsClicked) {
-      setProjectDetailsClicked(true)
+      console.log(props.id, 2)
     }
   }, [projectDetailsClicked])
 
-  if (
-    projectDetailsClicked &&
-    (props.id === props.projectSelected || props.projectSelected === undefined)
-  ) {
+  useEffect(() => {
+    if (props.id !== props.projectSelected) {
+      setProjectDetailsClicked(false)
+    }
+  }, [props])
+
+  if (projectDetailsClicked && props.id === props.projectSelected) {
     icon = 'fa fa-minus-circle cursor-pointer'
   } else icon = 'fa fa-plus-circle cursor-pointer'
-
-  console.log(props.projectSelected)
 
   return (
     <>

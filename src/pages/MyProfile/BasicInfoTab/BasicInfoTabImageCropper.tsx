@@ -57,7 +57,7 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
     if (typeof cropper !== 'undefined')
       setTimeout(() => {
         getCropData()
-      }, 1000)
+      }, 500)
   }, [cropper, getCropData, image])
 
   return (
@@ -84,7 +84,10 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
           </div>
         )}
         {imageUploaded && (
-          <span className="basic-info-cropper-span mt-2">
+          <span
+            onMouseLeave={getCropData}
+            className="basic-info-cropper-span mt-2"
+          >
             <Cropper
               id="cropper"
               zoomTo={0}

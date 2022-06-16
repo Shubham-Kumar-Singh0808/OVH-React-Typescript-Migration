@@ -39,17 +39,21 @@ const ProjectsTabTable = (): JSX.Element => {
   }, [dispatch, employeeId])
 
   const projectDetailOpenedHandler = (projectIndex: number) => {
-    if (projectIndex !== undefined) {
-      setProjectDetailOpened(projectIndex)
-    }
+    // if (projectIndex !== undefined) {
+    //   setProjectDetailOpened(projectIndex)
+    // }
+    // if (projectIndex === projectDetailOpened) {
+    //   setProjectDetailOpened(undefined)
+    // }
+    setProjectDetailOpened(projectIndex)
   }
 
-  useEffect(() => {
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 500)
-  }, [projectDetailOpened])
+  // useEffect(() => {
+  //   setIsLoading(true)
+  //   setTimeout(() => {
+  //     setIsLoading(false)
+  //   }, 500)
+  // }, [projectDetailOpened])
 
   return (
     <>
