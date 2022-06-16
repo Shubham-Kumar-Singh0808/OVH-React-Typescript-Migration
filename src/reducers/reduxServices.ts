@@ -14,6 +14,7 @@ import { qualificationCategoryService } from './MyProfile/QualificationsTab/Qual
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import { employeeAssetsService } from './MyProfile/MyAssetsTab/employeeAssetsSlice'
 import { certificateTypeService } from './EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
 import { employeeReviewsService } from './MyProfile/ReviewTab/employeeReviewsSlice'
 
@@ -35,5 +36,6 @@ export const reduxServices = {
   employeeSkill: employeeSkillServices,
   employeeReviews: employeeReviewsService,
   shiftConfiguration: shiftConfigurationService,
+  employeeAssets: employeeAssetsService,
   certificateType: certificateTypeService,
 }
