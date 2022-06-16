@@ -11,10 +11,6 @@ import {
   CLink,
   CButton,
   CRow,
-  CAccordion,
-  CAccordionItem,
-  CAccordionHeader,
-  CAccordionBody,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -24,6 +20,7 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import parse from 'html-react-parser'
 const EmployeeReportees = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isIconVisible, setIsIconVisible] = useState(false)
   const empID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -50,16 +47,21 @@ const EmployeeReportees = (): JSX.Element => {
     dispatch(reduxServices.employeeReportees.getEmployeeReporteesKRAs(personId))
   }
 
-  const handleKPIs = (id: number) => {
-    setIsModalVisible(true)
-    dispatch(reduxServices.employeeReportees.getEmployeeReporteesKPIs(id))
-    console.log(id)
-  }
+  // const handleKPIs = (id: number) => {
+  //   dispatch(reduxServices.employeeReportees.getEmployeeReporteesKPIs(id))
+  // }
 
   const tableHeaderCellProps = {
     scope: 'col',
   }
-
+  const handleExpandRow = (
+    id: number | React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    dispatch(
+      reduxServices.employeeReportees.getEmployeeReporteesKPIs(id as number),
+    )
+    setIsIconVisible(!isIconVisible)
+  }
   return (
     <>
       <CRow className="justify-content-end">
@@ -142,7 +144,7 @@ const EmployeeReportees = (): JSX.Element => {
           modalHeaderClass="d-none"
         >
           <>
-            <CTable>
+            <CTable striped>
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">Name</CTableHeaderCell>
@@ -156,73 +158,74 @@ const EmployeeReportees = (): JSX.Element => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                <CAccordion flush className="expandable-table mb-3">
-                  {employeeReporteesKRAs.map((KRAs, index) => {
-                    return (
-                      <React.Fragment key={index}>
-                        <CAccordionItem onClick={() => handleKPIs(KRAs.id)}>
-                          <CAccordionHeader>
-                            <CTableDataCell scope="row">
-                              {KRAs.name}
-                            </CTableDataCell>
-                            <CTableDataCell scope="row">
-                              {KRAs.name}
-                            </CTableDataCell>
-                            <CTableDataCell scope="row">
-                              {KRAs.departmentName}
-                            </CTableDataCell>
-                            <CTableDataCell scope="row">
-                              {KRAs.designationName}
-                            </CTableDataCell>
-                            <CTableDataCell scope="row">
-                              {KRAs.designationKraPercentage}
-                            </CTableDataCell>
-                            <CTableDataCell scope="row">
-                              {KRAs.kpiLookps || 'N/A'}
-                            </CTableDataCell>
-                            <CTableDataCell scope="row">
-                              {KRAs.count || 'N/A'}
-                            </CTableDataCell>
-                          </CAccordionHeader>
-                          <CAccordionBody>
-                            <CTable responsive striped>
-                              <CTableHead color="info">
-                                <CTableRow>
-                                  <CTableHeaderCell>#</CTableHeaderCell>
-                                  <CTableHeaderCell>KPIName</CTableHeaderCell>
-                                  <CTableHeaderCell>
-                                    Description
-                                  </CTableHeaderCell>
+                {employeeReporteesKRAs.map((KRAs, index) => {
+                  return (
+                    <>
+                      <CTableRow key={index}>
+                        <CTableDataCell>
+                          <CButton
+                            className="fa fa-pluse-circle"
+                            onClick={() => handleExpandRow(KRAs.id as number)}
+                          >
+                            +
+                          </CButton>
+                        </CTableDataCell>
+
+                        <CTableDataCell scope="row">{KRAs.name}</CTableDataCell>
+                        <CTableDataCell scope="row">{KRAs.name}</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {KRAs.departmentName}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {KRAs.designationName}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {KRAs.designationKraPercentage}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {KRAs.kpiLookps || 'N/A'}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {KRAs.count || 'N/A'}
+                        </CTableDataCell>
+                      </CTableRow>
+                      {isIconVisible && (
+                        <>
+                          <CTableHead>
+                            <CTableRow col-span={9}>
+                              <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                              <CTableHeaderCell scope="col">
+                                KPI Name
+                              </CTableHeaderCell>
+                              <CTableHeaderCell scope="col">
+                                Description
+                              </CTableHeaderCell>
+                            </CTableRow>
+                          </CTableHead>
+                          <CTableBody>
+                            {employeeReporteesKRIs.map((kpi, index) => {
+                              return (
+                                <CTableRow key={index}>
+                                  <CTableDataCell>{index + 1}</CTableDataCell>
+                                  <CTableDataCell>
+                                    <CLink className="text-decoration-none">
+                                      {kpi.name}
+                                    </CLink>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <CLink>
+                                      {parse(kpi.description || 'N/A')}
+                                    </CLink>
+                                  </CTableDataCell>
                                 </CTableRow>
-                              </CTableHead>
-                              <CTableBody>
-                                {employeeReporteesKRIs.map((kpi, index) => {
-                                  return (
-                                    <CTableRow key={index}>
-                                      <CTableDataCell>
-                                        {index + 1}
-                                      </CTableDataCell>
-                                      <CTableDataCell>
-                                        <CLink className="text-decoration-none">
-                                          {kpi.name}
-                                        </CLink>
-                                      </CTableDataCell>
-                                      <CTableDataCell>
-                                        <CLink>
-                                          {parse(kpi.description || 'N/A')}
-                                        </CLink>
-                                      </CTableDataCell>
-                                    </CTableRow>
-                                  )
-                                })}
-                              </CTableBody>
-                            </CTable>
-                          </CAccordionBody>
-                        </CAccordionItem>
-                      </React.Fragment>
-                    )
-                  })}
-                </CAccordion>
+                              )
+                            })}
+                          </CTableBody>
+                        </>
+                      )}
+                    </>
+                  )
+                })}
               </CTableBody>
             </CTable>
           </>
