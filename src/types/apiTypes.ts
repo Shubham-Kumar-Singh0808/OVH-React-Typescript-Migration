@@ -155,6 +155,7 @@ export interface CertificateTypeApi extends ApiBase {
   checkIsCertificateTypeExists: string
   deleteCertificateType: string
   getCertificateType: string
+  updateCertificateType: string
 }
 
 export type UploadImage = {

@@ -121,12 +121,6 @@ const CertificateTypeTable = (): JSX.Element => {
     }
   }
 
-  useEffect(() => {
-    if (isEditCertificateType) {
-      dispatch(reduxServices.certificateType.getCertificateType(certificateId))
-    }
-  }, [certificateId, dispatch, isEditCertificateType])
-
   return (
     <>
       {certificateTypes.length ? (
@@ -155,7 +149,7 @@ const CertificateTypeTable = (): JSX.Element => {
                           aria-label="Default select example"
                           size="sm"
                           name="technology"
-                          value={editCertificateTypeDetails.technologyName}
+                          value={certificateTypeItem.technologyName}
                         >
                           <option value={''}>Select Category</option>
                           {getAllTechnology?.map((certificateItem, index) => (
@@ -179,7 +173,7 @@ const CertificateTypeTable = (): JSX.Element => {
                           size="sm"
                           name="certificate"
                           maxLength={32}
-                          value={editCertificateTypeDetails?.certificateType}
+                          value={certificateTypeItem.certificateType}
                           onChange={handleInputChange}
                         ></CFormInput>
                       </CTableDataCell>

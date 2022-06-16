@@ -109,6 +109,28 @@ const getCertificateType = createAsyncThunk<
   },
 )
 
+const updateCertificateType = createAsyncThunk<
+  number | undefined,
+  CertificateType,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'certificateType/updateCertificateType',
+  async (certificateTypeDetails, thunkApi) => {
+    try {
+      return await certificateTypesApi.updateCertificateType(
+        certificateTypeDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialCertificateTypeState: CertificateTypeSliceState = {
   certificateTypes: [],
   isLoading: ApiLoadingState.idle,

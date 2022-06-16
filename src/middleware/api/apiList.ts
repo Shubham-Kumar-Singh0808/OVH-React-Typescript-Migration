@@ -168,6 +168,7 @@ export const certificateTypeApiConfig: CertificateTypeApi = {
   checkIsCertificateTypeExists:
     apiPrefix + '/EmployeeSkill/checkForDuplicateCertificate',
   getCertificateType: apiPrefix + '/EmployeeSkill/editCertificateType',
+  updateCertificateType: apiPrefix + '/EmployeeSkill/updateCertificatetype',
 }
 
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {

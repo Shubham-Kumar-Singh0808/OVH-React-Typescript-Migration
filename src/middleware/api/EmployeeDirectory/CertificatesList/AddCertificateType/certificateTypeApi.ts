@@ -77,12 +77,26 @@ const getCertificateType = async (
   return response.data
 }
 
+const updateCertificateType = async (
+  certificateTypeDetails: CertificateType,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: certificateTypeApiConfig.updateCertificateType,
+    method: AllowedHttpMethods.put,
+    data: certificateTypeDetails,
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const certificateTypesApi = {
   getCertificateTypes,
   addCertificateType,
   checkIsCertificateTypeExists,
   deleteCertificateType,
   getCertificateType,
+  updateCertificateType,
 }
 
 export default certificateTypesApi
