@@ -64,6 +64,7 @@ const AddNewCategory = (): JSX.Element => {
             id="inputNewCategory"
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
+            placeholder={'Category Name'}
           />
         </CCol>
         <CCol sm={4} className="d-flex align-items-center new-category-col">

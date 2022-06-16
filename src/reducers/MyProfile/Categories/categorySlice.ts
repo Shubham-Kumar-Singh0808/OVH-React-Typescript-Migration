@@ -59,6 +59,8 @@ const deleteCategory = createAsyncThunk<
 const initialCategoryState: CategorySliceState = {
   categories: [],
   isLoading: ApiLoadingState.idle,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const categorySlice = createSlice({
@@ -67,6 +69,12 @@ const categorySlice = createSlice({
   reducers: {
     clearCategories: (state) => {
       state.categories = []
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -97,6 +105,8 @@ const categorySlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState => state.category.isLoading
 const categories = (state: RootState): Category[] => state.category.categories
+const pageFromState = (state: RootState): number => state.category.currentPage
+const pageSizeFromState = (state: RootState): number => state.category.pageSize
 
 const categoryThunk = {
   getAllCategories,
@@ -107,6 +117,8 @@ const categoryThunk = {
 const categorySelectors = {
   isLoading,
   categories,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const categoryService = {

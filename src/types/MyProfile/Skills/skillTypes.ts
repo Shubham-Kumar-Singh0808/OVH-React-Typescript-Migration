@@ -9,4 +9,6 @@ export type SkillSliceState = {
   skills: Skill[]
   refreshList: boolean
   isLoading: LoadingState
+  currentPage: number
+  pageSize: number
 }
