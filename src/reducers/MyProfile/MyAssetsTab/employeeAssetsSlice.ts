@@ -11,7 +11,7 @@ import employeeAssetsApi from '../../../middleware/api/MyProfile/MyAssetsTab/emp
 
 const initialEmployeeAssetsState: EmployeeAssetsState = {
   employeeAssets: [],
-  isLoading: false,
+  LoadingState: false,
   error: 0,
 }
 
@@ -42,14 +42,14 @@ const employeeAssetsSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getEmployeeAssets.fulfilled, (state, action) => {
-      state.isLoading = false
+      state.LoadingState = false
       state.employeeAssets = action.payload as EmployeeAsset[]
     })
     builder.addCase(getEmployeeAssets.pending, (state) => {
-      state.isLoading = true
+      state.LoadingState = true
     })
     builder.addCase(getEmployeeAssets.rejected, (state, action) => {
-      state.isLoading = false
+      state.LoadingState = false
       state.error = action.payload as ValidationError
     })
   },

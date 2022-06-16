@@ -13,6 +13,6 @@ export type EmployeeAsset = {
 
 export type EmployeeAssetsState = {
   employeeAssets: EmployeeAsset[]
-  isLoading: boolean
+  LoadingState: boolean
   error: ValidationError
 }
