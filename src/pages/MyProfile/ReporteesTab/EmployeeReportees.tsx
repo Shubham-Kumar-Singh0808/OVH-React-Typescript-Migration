@@ -145,48 +145,27 @@ const EmployeeReportees = (): JSX.Element => {
                     <React.Fragment key={index}>
                       <CAccordionItem>
                         <CAccordionHeader>
-                          <span
-                            className="title-sm expandable-table-title"
-                            data-testid="accordion-header-span"
-                          >
+                          <CTableDataCell scope="row">
                             {KRAs.name}
-                          </span>
-                          <span
-                            className="title-sm expandable-table-title"
-                            data-testid="accordion-header-span"
-                          >
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
                             {KRAs.name}
-                          </span>
-                          <span
-                            className="title-sm expandable-table-title"
-                            data-testid="accordion-header-span"
-                          >
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
                             {KRAs.departmentName}
-                          </span>
-                          <span
-                            className="title-sm expandable-table-title"
-                            data-testid="accordion-header-span"
-                          >
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
                             {KRAs.designationName}
-                          </span>
-                          <span
-                            className="title-sm expandable-table-title"
-                            data-testid="accordion-header-span"
-                          >
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
                             {KRAs.designationKraPercentage}
-                          </span>
-                          <span
-                            className="title-sm expandable-table-title"
-                            data-testid="accordion-header-span"
-                          >
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
                             {KRAs.kpiLookps || 'N/A'}
-                          </span>
-                          <span
-                            className="title-sm expandable-table-title"
-                            data-testid="accordion-header-span"
-                          >
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
                             {KRAs.count || 'N/A'}
-                          </span>
+                          </CTableDataCell>
                         </CAccordionHeader>
                         <CAccordionBody></CAccordionBody>
                       </CAccordionItem>
