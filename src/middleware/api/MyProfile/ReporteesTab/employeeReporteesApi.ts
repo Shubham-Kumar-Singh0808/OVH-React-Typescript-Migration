@@ -2,6 +2,7 @@ import { employeeReporteesApiConfig, AllowedHttpMethods } from '../../apiList'
 import {
   EmployeeReportees,
   EmployeeReporteesKRAs,
+  EmployeeReporteeskpis,
 } from '../../../../types/MyProfile/ReporteesTab/employeeReporteesType'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
@@ -33,8 +34,24 @@ const getEmployeeReporteesKRAs = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
+const getEmployeeReporteeskpis = async (
+  kraId: number | string,
+): Promise<EmployeeReporteeskpis[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeReporteesApiConfig.getEmployeeReporteeskpis,
+    method: AllowedHttpMethods.get,
+    params: {
+      kraId: kraId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeReporteesApi = {
   getEmployeeReportees,
   getEmployeeReporteesKRAs,
+  getEmployeeReporteeskpis,
 }
 export default employeeReporteesApi

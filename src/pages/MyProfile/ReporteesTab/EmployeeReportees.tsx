@@ -35,7 +35,11 @@ const EmployeeReportees = (): JSX.Element => {
     reduxServices.employeeReportees.selectors.employeeReporteesKRAs,
   )
 
-  console.log(employeeReporteesKRAs)
+  const employeeReporteeskpis = useTypedSelector(
+    reduxServices.employeeReportees.selectors.employeeReporteeskpis,
+  )
+
+  console.log(employeeReporteeskpis)
 
   const dispatch = useAppDispatch()
   useEffect(() => {
