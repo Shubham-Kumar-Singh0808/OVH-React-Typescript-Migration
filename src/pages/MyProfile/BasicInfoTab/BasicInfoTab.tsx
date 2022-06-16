@@ -10,7 +10,6 @@ import {
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import DatePicker from 'react-datepicker'
 import DownloadCVButton from './DownloadCVButton'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
@@ -26,6 +25,7 @@ import { UploadImage } from '../../../types/apiTypes'
 
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
+
   const [isViewingAnotherEmployee] = useSelectedEmployee()
   const employeeBasicInformation = useTypedSelector((state) =>
     reduxServices.generalInformation.selectors.selectLoggedInEmployeeData(
@@ -78,6 +78,56 @@ const BasicInfoTab = (): JSX.Element => {
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
   const [selectedProfilePicture, setSelectedProfilePicture] =
     useState<UploadImage>()
+
+  const [officialBday, setOfficialBday] = useState<Date>()
+  const [realBday, setRealBday] = useState<Date>()
+  const [selectedAnniversary, setSelectedAnniversary] = useState<Date>()
+
+  const [officialBdyFlag, setOfficialBdayFlag] = useState(false)
+  const [realBdayFlag, setRealBdayFlag] = useState(false)
+  const [anniversaryFlag, setAnniversaryFlag] = useState(false)
+
+  const currentOfficialBday =
+    employeeBasicInformationEditData.officialBirthday as string
+  const officialBdayParts: string[] | string =
+    employeeBasicInformationEditData.officialBirthday
+      ? currentOfficialBday.split('/')
+      : ''
+  const newOfficialBday = employeeBasicInformationEditData.officialBirthday
+    ? new Date(
+        Number(officialBdayParts[2]),
+        Number(officialBdayParts[1]) - 1,
+        Number(officialBdayParts[0]),
+      )
+    : (officialBday as Date)
+
+  const currentRealBirthday =
+    employeeBasicInformationEditData.realBirthday as string
+  const realBdayParts: string[] | string =
+    employeeBasicInformationEditData.realBirthday
+      ? currentRealBirthday.split('/')
+      : ''
+  const newRealBirthday = employeeBasicInformationEditData.realBirthday
+    ? new Date(
+        Number(realBdayParts[2]),
+        Number(realBdayParts[1]) - 1,
+        Number(realBdayParts[0]),
+      )
+    : (realBday as Date)
+
+  const currentAnniversary =
+    employeeBasicInformationEditData.anniversary as string
+  const anniversaryParts: string[] | string =
+    employeeBasicInformationEditData.anniversary
+      ? currentAnniversary.split('/')
+      : ''
+  const newAnniversary = employeeBasicInformationEditData.anniversary
+    ? new Date(
+        Number(anniversaryParts[2]),
+        Number(anniversaryParts[1]) - 1,
+        Number(anniversaryParts[0]),
+      )
+    : (selectedAnniversary as Date)
 
   const validateEmail = (email: string) => {
     if (validator.isEmail(email)) {
@@ -228,16 +278,24 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData.realBirthday &&
       employeeBasicInformationEditData.anniversary
     ) {
-      const realBirthdayDate = moment(
-        employeeBasicInformationEditData.realBirthday,
-      ).format('YYYY')
-      const anniversaryDate = moment(
-        employeeBasicInformationEditData.anniversary,
-      ).format('YYYY')
-      if (anniversaryDate < realBirthdayDate) {
+      const currentRealBirthday =
+        employeeBasicInformationEditData.realBirthday.toString()
+      const currentAnniversary =
+        employeeBasicInformationEditData.anniversary.toString()
+
+      const newRealBirthday = new Date(
+        moment(currentRealBirthday).format('DD/MM/YYYY'),
+      )
+      const newAnniversary = new Date(
+        moment(currentAnniversary).format('DD/MM/YYYY'),
+      )
+
+      if (newRealBirthday.getTime() >= newAnniversary.getTime()) {
         setDateErrorMessage(true)
+        setSaveButtonEnabled(false)
       } else {
         setDateErrorMessage(false)
+        setSaveButtonEnabled(true)
       }
     }
   }, [
@@ -338,6 +396,23 @@ const BasicInfoTab = (): JSX.Element => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const handleOfficialBday = (date: Date) => {
+    setOfficialBday(date)
+    setOfficialBdayFlag(true)
+  }
+  const handleRealBday = (date: Date) => {
+    setRealBday(date)
+    setRealBdayFlag(true)
+  }
+  const handleAnniversary = (date: Date) => {
+    setSelectedAnniversary(date)
+    setAnniversaryFlag(true)
+  }
+
+  const dateIsValid = (date: Date) => {
+    return !Number.isNaN(new Date(date).getTime())
+  }
 
   return (
     <>
@@ -556,9 +631,17 @@ const BasicInfoTab = (): JSX.Element => {
               placeholderText="dd/mm/yyyy"
               name="officialBirthday"
               value={employeeBasicInformationEditData.officialBirthday}
-              onChange={(date: Date) =>
-                onDateChangeHandler(date, { name: 'officialBirthday' })
+              selected={
+                !officialBdyFlag
+                  ? dateIsValid(newOfficialBday)
+                    ? newOfficialBday
+                    : officialBday
+                  : officialBday
               }
+              onChange={(date: Date) => {
+                onDateChangeHandler(date, { name: 'officialBirthday' })
+                handleOfficialBday(date)
+              }}
             />
             <CFormCheck
               className="mt-2"
@@ -599,11 +682,20 @@ const BasicInfoTab = (): JSX.Element => {
                 showYearDropdown
                 dropdownMode="select"
                 placeholderText="dd/mm/yyyy"
+                dateFormat="dd/mm/yyyy"
                 name="realBirthday"
                 value={employeeBasicInformationEditData.realBirthday}
-                onChange={(date: Date) =>
-                  onDateChangeHandler(date, { name: 'realBirthday' })
+                selected={
+                  !realBdayFlag
+                    ? dateIsValid(newRealBirthday)
+                      ? newRealBirthday
+                      : realBday
+                    : realBday
                 }
+                onChange={(date: Date) => {
+                  onDateChangeHandler(date, { name: 'realBirthday' })
+                  handleRealBday(date)
+                }}
               />
             </CCol>
           </CRow>
@@ -664,17 +756,24 @@ const BasicInfoTab = (): JSX.Element => {
               <DatePicker
                 id="employeeAnniversary"
                 className="form-control form-control-sm"
-                maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
                 placeholderText="dd/mm/yyyy"
-                name="realBirthday"
+                name="anniversary"
                 value={employeeBasicInformationEditData.anniversary}
-                onChange={(date: Date) =>
-                  onDateChangeHandler(date, { name: 'anniversary' })
+                selected={
+                  !anniversaryFlag
+                    ? dateIsValid(newAnniversary)
+                      ? newAnniversary
+                      : selectedAnniversary
+                    : selectedAnniversary
                 }
+                onChange={(date: Date) => {
+                  onDateChangeHandler(date, { name: 'anniversary' })
+                  handleAnniversary(date)
+                }}
               />
               {dateErrorMessage && (
                 <p className="text-danger">
