@@ -1,4 +1,4 @@
-import { ValidationError } from '../../commonTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type EmployeeAsset = {
   assetNumber: string
@@ -13,6 +13,6 @@ export type EmployeeAsset = {
 
 export type EmployeeAssetsState = {
   employeeAssets: EmployeeAsset[]
-  LoadingState: boolean
+  isLoading: LoadingState
   error: ValidationError
 }

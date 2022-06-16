@@ -8,10 +8,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import employeeAssetsApi from '../../../middleware/api/MyProfile/MyAssetsTab/employeeAssetsApi'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const initialEmployeeAssetsState: EmployeeAssetsState = {
   employeeAssets: [],
-  LoadingState: false,
+  isLoading: ApiLoadingState.idle,
   error: 0,
 }
 
@@ -42,15 +43,11 @@ const employeeAssetsSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getEmployeeAssets.fulfilled, (state, action) => {
-      state.LoadingState = false
+      state.isLoading = ApiLoadingState.succeeded
       state.employeeAssets = action.payload as EmployeeAsset[]
     })
     builder.addCase(getEmployeeAssets.pending, (state) => {
-      state.LoadingState = true
-    })
-    builder.addCase(getEmployeeAssets.rejected, (state, action) => {
-      state.LoadingState = false
-      state.error = action.payload as ValidationError
+      state.isLoading = ApiLoadingState.loading
     })
   },
 })
