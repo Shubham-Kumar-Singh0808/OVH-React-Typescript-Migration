@@ -131,79 +131,87 @@ const EmployeeReportees = (): JSX.Element => {
           modalFooterClass="d-none"
           modalHeaderClass="d-none"
         >
-          <div className="expandable-table-headwrap mt-4">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Department</CTableHeaderCell>
-                <CTableHeaderCell scope="col">
-                  Designation Percentage
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-                <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
-                <CTableHeaderCell scope="col">KRAs</CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              <CAccordion flush className="expandable-table mb-3">
-                {employeeReporteesKRAs.map((KRAs, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <CAccordionItem onClick={() => handleKPIs(KRAs.id)}>
-                        <CAccordionHeader>
-                          <CTableDataCell scope="row">
-                            {KRAs.name}
-                          </CTableDataCell>
-                          <CTableDataCell scope="row">
-                            {KRAs.name}
-                          </CTableDataCell>
-                          <CTableDataCell scope="row">
-                            {KRAs.departmentName}
-                          </CTableDataCell>
-                          <CTableDataCell scope="row">
-                            {KRAs.designationName}
-                          </CTableDataCell>
-                          <CTableDataCell scope="row">
-                            {KRAs.designationKraPercentage}
-                          </CTableDataCell>
-                          <CTableDataCell scope="row">
-                            {KRAs.kpiLookps || 'N/A'}
-                          </CTableDataCell>
-                          <CTableDataCell scope="row">
-                            {KRAs.count || 'N/A'}
-                          </CTableDataCell>
-                        </CAccordionHeader>
-                        <CAccordionBody>
-                          <CTable responsive striped>
-                            <CTableHead color="info">
-                              <CTableRow>
-                                <CTableHeaderCell>#</CTableHeaderCell>
-                                <CTableHeaderCell>KPIName</CTableHeaderCell>
-                                <CTableHeaderCell>Description</CTableHeaderCell>
-                              </CTableRow>
-                            </CTableHead>
-                            <CTableBody>
-                              {employeeReporteesKRIs.map((kpi, index) => {
-                                return (
-                                  <CTableRow key={index}>
-                                    <CTableDataCell>{index + 1}</CTableDataCell>
-                                    <CTableDataCell>{kpi.name}</CTableDataCell>
-                                    <CTableDataCell>
-                                      {kpi.description || 'N/A'}
-                                    </CTableDataCell>
-                                  </CTableRow>
-                                )
-                              })}
-                            </CTableBody>
-                          </CTable>
-                        </CAccordionBody>
-                      </CAccordionItem>
-                    </React.Fragment>
-                  )
-                })}
-              </CAccordion>
-            </CTableBody>
-          </div>
+          <>
+            <CTable>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Department</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">
+                    Designation Percentage
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">KRAs</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                <CAccordion flush className="expandable-table mb-3">
+                  {employeeReporteesKRAs.map((KRAs, index) => {
+                    return (
+                      <React.Fragment key={index}>
+                        <CAccordionItem onClick={() => handleKPIs(KRAs.id)}>
+                          <CAccordionHeader>
+                            <CTableDataCell scope="row">
+                              {KRAs.name}
+                            </CTableDataCell>
+                            <CTableDataCell scope="row">
+                              {KRAs.name}
+                            </CTableDataCell>
+                            <CTableDataCell scope="row">
+                              {KRAs.departmentName}
+                            </CTableDataCell>
+                            <CTableDataCell scope="row">
+                              {KRAs.designationName}
+                            </CTableDataCell>
+                            <CTableDataCell scope="row">
+                              {KRAs.designationKraPercentage}
+                            </CTableDataCell>
+                            <CTableDataCell scope="row">
+                              {KRAs.kpiLookps || 'N/A'}
+                            </CTableDataCell>
+                            <CTableDataCell scope="row">
+                              {KRAs.count || 'N/A'}
+                            </CTableDataCell>
+                          </CAccordionHeader>
+                          <CAccordionBody>
+                            <CTable responsive striped>
+                              <CTableHead color="info">
+                                <CTableRow>
+                                  <CTableHeaderCell>#</CTableHeaderCell>
+                                  <CTableHeaderCell>KPIName</CTableHeaderCell>
+                                  <CTableHeaderCell>
+                                    Description
+                                  </CTableHeaderCell>
+                                </CTableRow>
+                              </CTableHead>
+                              <CTableBody>
+                                {employeeReporteesKRIs.map((kpi, index) => {
+                                  return (
+                                    <CTableRow key={index}>
+                                      <CTableDataCell>
+                                        {index + 1}
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {kpi.name}
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {kpi.description || 'N/A'}
+                                      </CTableDataCell>
+                                    </CTableRow>
+                                  )
+                                })}
+                              </CTableBody>
+                            </CTable>
+                          </CAccordionBody>
+                        </CAccordionItem>
+                      </React.Fragment>
+                    )
+                  })}
+                </CAccordion>
+              </CTableBody>
+            </CTable>
+          </>
         </OModal>
       </CCardBody>
     </>
