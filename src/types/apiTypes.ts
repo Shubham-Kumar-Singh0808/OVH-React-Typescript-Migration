@@ -152,7 +152,9 @@ export interface ShiftConfigurationApi extends ApiBase {
 export interface CertificateTypeApi extends ApiBase {
   getCertificateTypes: string
   addCertificateType: string
+  checkIsCertificateTypeExists: string
   deleteCertificateType: string
+  getCertificateType: string
 }
 
 export type UploadImage = {

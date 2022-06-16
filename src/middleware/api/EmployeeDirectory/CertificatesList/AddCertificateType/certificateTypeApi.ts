@@ -13,6 +13,22 @@ const getCertificateTypes = async (): Promise<CertificateType[]> => {
   return response.data
 }
 
+const checkIsCertificateTypeExists = async ({
+  technologyId,
+  certificateType,
+}: CertificateType): Promise<boolean | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: certificateTypeApiConfig.checkIsCertificateTypeExists,
+    method: AllowedHttpMethods.get,
+    params: {
+      technologyId: technologyId,
+      certificateType: certificateType,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const addCertificateType = async ({
   technologyId,
   certificateType,
@@ -47,10 +63,26 @@ const deleteCertificateType = async (
   return response.data
 }
 
+const getCertificateType = async (
+  certificateId: number,
+): Promise<CertificateType> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: certificateTypeApiConfig.getCertificateType,
+    method: AllowedHttpMethods.get,
+    params: {
+      certificateId: certificateId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const certificateTypesApi = {
   getCertificateTypes,
   addCertificateType,
+  checkIsCertificateTypeExists,
   deleteCertificateType,
+  getCertificateType,
 }
 
 export default certificateTypesApi

@@ -1,6 +1,8 @@
 import {
   CButton,
   CCol,
+  CFormInput,
+  CFormSelect,
   CRow,
   CTable,
   CTableBody,
@@ -20,15 +22,27 @@ import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeS
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import OModal from '../../../../components/ReusableComponent/OModal'
+import { CertificateType } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 const CertificateTypeTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [certificateId, setCertificateId] = useState(0)
-
+  const [isEditCertificateType, setIsEditCertificateType] =
+    useState<boolean>(false)
+  const [editCertificateTypeDetails, setEditCertificateTypeDetails] =
+    useState<CertificateType>({
+      id: 0,
+      technologyId: 0,
+      technologyName: '',
+      certificateType: '',
+      technology: '',
+    })
   const certificateTypes = useTypedSelector(
     reduxServices.certificateType.selectors.certificateTypes,
   )
+  const getAllTechnology = useTypedSelector(
+    (state) => state.employeeCertificates.getAllTechnologies,
+  )
   const dispatch = useAppDispatch()
-
   useEffect(() => {
     dispatch(reduxServices.certificateType.getCertificateTypes())
   }, [dispatch])
@@ -44,7 +58,6 @@ const CertificateTypeTable = (): JSX.Element => {
   useEffect(() => {
     setPageSize(20)
   }, [certificateTypes, setPageSize, setCurrentPage])
-
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -72,6 +85,7 @@ const CertificateTypeTable = (): JSX.Element => {
     setCertificateId(certificateTypeId)
     setIsDeleteModalVisible(true)
   }
+
   const handleConfirmDeleteCertificateType = async () => {
     setIsDeleteModalVisible(false)
     const deleteCertificateTypeResultAction = await dispatch(
@@ -86,6 +100,32 @@ const CertificateTypeTable = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(toastElement))
     }
   }
+
+  const editCertificateTypeButtonHandler = (id: number): void => {
+    setIsEditCertificateType(true)
+    setCertificateId(id)
+    setEditCertificateTypeDetails({
+      id: 0,
+      technologyId: 0,
+      technologyName: '',
+      certificateType: '',
+      technology: '',
+    })
+  }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    if (name === 'certificate') {
+      setEditCertificateTypeDetails((prevState) => {
+        return { ...prevState, ...{ [name]: name } }
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (isEditCertificateType) {
+      dispatch(reduxServices.certificateType.getCertificateType(certificateId))
+    }
+  }, [certificateId, dispatch, isEditCertificateType])
 
   return (
     <>
@@ -107,30 +147,94 @@ const CertificateTypeTable = (): JSX.Element => {
                     <CTableHeaderCell scope="row">
                       {getItemNumber(index)}
                     </CTableHeaderCell>
-                    <CTableDataCell>
-                      {certificateTypeItem.technologyName}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {certificateTypeItem.certificateType}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <CButton color="info" className="btn-ovh me-1">
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                      <CButton
-                        color="danger"
-                        size="sm"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            certificateTypeItem.id as number,
-                          )
-                        }
-                      >
-                        <CIcon className="text-white" icon={cilTrash} />
-                      </CButton>
+                    {isEditCertificateType &&
+                    certificateTypeItem.id === certificateId ? (
+                      <CTableDataCell scope="row">
+                        <CFormSelect
+                          data-testid="form-select"
+                          aria-label="Default select example"
+                          size="sm"
+                          name="technology"
+                          value={editCertificateTypeDetails.technologyName}
+                        >
+                          <option value={''}>Select Category</option>
+                          {getAllTechnology?.map((certificateItem, index) => (
+                            <option key={index} value={certificateItem.name}>
+                              {certificateItem.name}
+                            </option>
+                          ))}
+                        </CFormSelect>
+                      </CTableDataCell>
+                    ) : (
+                      <CTableDataCell>
+                        {certificateTypeItem.technologyName}
+                      </CTableDataCell>
+                    )}
+                    {isEditCertificateType &&
+                    certificateTypeItem.id === certificateId ? (
+                      <CTableDataCell scope="row">
+                        <CFormInput
+                          type="text"
+                          id="Name"
+                          size="sm"
+                          name="certificate"
+                          maxLength={32}
+                          value={editCertificateTypeDetails?.certificateType}
+                          onChange={handleInputChange}
+                        ></CFormInput>
+                      </CTableDataCell>
+                    ) : (
+                      <CTableDataCell>
+                        {certificateTypeItem.certificateType}
+                      </CTableDataCell>
+                    )}
+                    <CTableDataCell scope="row">
+                      {isEditCertificateType &&
+                      certificateTypeItem.id === certificateId ? (
+                        <>
+                          <CButton
+                            color="success"
+                            data-testid={`sh-save-btn${index}`}
+                            className="btn-ovh me-1"
+                          >
+                            <i
+                              className="fa fa-floppy-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                          <CButton color="warning" className="btn-ovh me-1">
+                            <i className="fa fa-times" aria-hidden="true"></i>
+                          </CButton>
+                        </>
+                      ) : (
+                        <>
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-1"
+                            onClick={() => {
+                              editCertificateTypeButtonHandler(
+                                certificateTypeItem.id as number,
+                              )
+                            }}
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                          <CButton
+                            color="danger"
+                            size="sm"
+                            onClick={() =>
+                              handleShowDeleteModal(
+                                certificateTypeItem.id as number,
+                              )
+                            }
+                          >
+                            <CIcon className="text-white" icon={cilTrash} />
+                          </CButton>
+                        </>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )
@@ -185,5 +289,4 @@ const CertificateTypeTable = (): JSX.Element => {
     </>
   )
 }
-
 export default CertificateTypeTable

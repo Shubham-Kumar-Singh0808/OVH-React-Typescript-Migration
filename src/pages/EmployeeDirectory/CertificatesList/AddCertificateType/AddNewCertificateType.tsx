@@ -25,10 +25,6 @@ const AddNewCertificateType = ({
   )
   const dispatch = useAppDispatch()
 
-  const certificateTypes = useTypedSelector(
-    reduxServices.certificateType.selectors.certificateTypes,
-  )
-
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getTechnologies())
   }, [dispatch])
@@ -74,28 +70,30 @@ const AddNewCertificateType = ({
       technologyId: selectedTechnologyId,
       certificateType: newCertificateType,
     }
-    if (
-      certificateTypes.filter(
-        (certificateTypeItem) =>
-          certificateTypeItem.certificateType.toLowerCase() ===
-          newCertificateType.toLowerCase(),
-      ).length > 0
-    ) {
-      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
-      return
-    }
-    const addCertificateTypeResultAction = await dispatch(
-      reduxServices.certificateType.addCertificateType(prepareObject),
+    const isCertificateExistsResultAction = await dispatch(
+      reduxServices.certificateType.checkIsCertificateTypeExists(prepareObject),
     )
-
     if (
-      reduxServices.certificateType.addCertificateType.fulfilled.match(
-        addCertificateTypeResultAction,
-      )
+      reduxServices.certificateType.checkIsCertificateTypeExists.fulfilled.match(
+        isCertificateExistsResultAction,
+      ) &&
+      isCertificateExistsResultAction.payload === false
     ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      const addCertificateTypeResultAction = await dispatch(
+        reduxServices.certificateType.addCertificateType(prepareObject),
+      )
+
+      if (
+        reduxServices.certificateType.addCertificateType.fulfilled.match(
+          addCertificateTypeResultAction,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      }
+      dispatch(reduxServices.certificateType.getCertificateTypes())
+    } else {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
     }
-    dispatch(reduxServices.certificateType.getCertificateTypes())
   }
 
   const handleClearInputFields = () => {
@@ -116,7 +114,7 @@ const AddNewCertificateType = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Category:{' '}
+            Technology:{' '}
             <span
               className={selectedTechnologyId ? 'text-white' : 'text-danger'}
             >
@@ -146,7 +144,7 @@ const AddNewCertificateType = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Name:
+            Certificate:
             <span className={newCertificateType ? 'text-white' : 'text-danger'}>
               *
             </span>

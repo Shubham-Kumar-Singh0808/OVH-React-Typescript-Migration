@@ -26,6 +26,29 @@ const getCertificateTypes = createAsyncThunk<
   }
 })
 
+const checkIsCertificateTypeExists = createAsyncThunk<
+  boolean | undefined,
+  CertificateType,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'certificateType/checkIsCertificateTypeExists',
+  async ({ technologyId, certificateType }: CertificateType, thunkApi) => {
+    try {
+      return await certificateTypesApi.checkIsCertificateTypeExists({
+        technologyId,
+        certificateType,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const addCertificateType = createAsyncThunk<
   CertificateType[] | undefined,
   CertificateType,
@@ -66,6 +89,26 @@ const deleteCertificateType = createAsyncThunk<
   }
 })
 
+const getCertificateType = createAsyncThunk<
+  CertificateType | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'certificateType/getCertificateType',
+  async (certificateId: number, thunkApi) => {
+    try {
+      return await certificateTypesApi.getCertificateType(certificateId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialCertificateTypeState: CertificateTypeSliceState = {
   certificateTypes: [],
   isLoading: ApiLoadingState.idle,
@@ -77,16 +120,19 @@ const certificateTypeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getCertificateTypes.rejected, (state, action) => {
-        state.isLoading = ApiLoadingState.failed
-        state.error = action.payload as ValidationError
-      })
-      .addCase(getCertificateTypes.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.certificateTypes = action.payload as CertificateType[]
-      })
       .addMatcher(
-        isAnyOf(addCertificateType.fulfilled, deleteCertificateType.fulfilled),
+        isAnyOf(getCertificateType.fulfilled, getCertificateTypes.fulfilled),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          state.certificateTypes = action.payload as CertificateType[]
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          addCertificateType.fulfilled,
+          deleteCertificateType.fulfilled,
+          checkIsCertificateTypeExists.fulfilled,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },
@@ -94,11 +140,26 @@ const certificateTypeSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getCertificateTypes.pending,
+          checkIsCertificateTypeExists.pending,
           addCertificateType.pending,
           deleteCertificateType.pending,
+          getCertificateType.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getCertificateTypes.rejected,
+          checkIsCertificateTypeExists.rejected,
+          addCertificateType.rejected,
+          deleteCertificateType.rejected,
+          getCertificateType.rejected,
+        ),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.failed
+          state.error = action.payload as ValidationError
         },
       )
   },
@@ -106,6 +167,7 @@ const certificateTypeSlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState =>
   state.certificateType.isLoading
+
 const certificateTypes = (state: RootState): CertificateType[] =>
   state.certificateType.certificateTypes
 
@@ -115,7 +177,9 @@ const isError = (state: RootState): ValidationError =>
 const certificateTypeThunk = {
   getCertificateTypes,
   addCertificateType,
+  checkIsCertificateTypeExists,
   deleteCertificateType,
+  getCertificateType,
 }
 
 const certificateTypeSelectors = {

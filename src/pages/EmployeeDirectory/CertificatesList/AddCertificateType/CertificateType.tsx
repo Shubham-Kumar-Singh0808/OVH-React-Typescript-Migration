@@ -10,7 +10,7 @@ const CertificateType = (): JSX.Element => {
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Certificate Details"
+        title="Certificate Type"
         CFooterClassName="d-none"
       >
         <CRow>
