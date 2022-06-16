@@ -147,7 +147,7 @@ const CertificatesFilterOptions = ({
           </CButton>
         </CCol>
       </CRow>
-      <CRow className="mt-4 mb-4">
+      <CRow className="mt-5 mb-4">
         <CCol sm={{ span: 6, offset: 3 }}>
           <CButton
             className="cursor-pointer"

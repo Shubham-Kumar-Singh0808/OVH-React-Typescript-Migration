@@ -17,7 +17,7 @@ export type EmployeeCertificationDetail = {
 export type EmployeeCertificate = {
   id: number | null
   empName: string
-  employeeId: 1092
+  employeeId: number
   skilldtos: null
   visaDetailsDtos: null
   certificationDtos: EmployeeCertificationDetail[]
