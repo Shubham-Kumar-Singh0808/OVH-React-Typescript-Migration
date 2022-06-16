@@ -5,8 +5,7 @@ export type EmployeeReportees = {
   reporteeId: number
   reporteeName: string
   allcoationDetails: string
-  mobile: null
-  personId: number
+  mobile: string | null
 }
 
 export type EmployeeReporteesKRAs = {
