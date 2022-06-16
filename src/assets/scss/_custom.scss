@@ -147,3 +147,7 @@ th {
 .w-10 {
   width: 10;
 }
+
+.accordion-item.isItemOpen .collapse:not(.show) {
+  display: block;
+}

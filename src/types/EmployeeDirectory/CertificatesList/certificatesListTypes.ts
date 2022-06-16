@@ -48,6 +48,7 @@ export type CertificateDetailsExpandableTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  isItemOpen: boolean
 }
 
 export type CertificatesFilterOptionsProps = {
@@ -59,4 +60,5 @@ export type CertificatesFilterOptionsProps = {
   filterByTechnology: string
   filterByCertificate: string
   multiSearchValue: string
+  setIsItemOpen: (value: boolean) => void
 }

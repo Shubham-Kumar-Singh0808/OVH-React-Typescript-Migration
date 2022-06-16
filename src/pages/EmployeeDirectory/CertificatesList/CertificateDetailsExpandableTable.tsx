@@ -38,6 +38,7 @@ const CertificateDetailsExpandableTable = (
     setPageSize,
     currentPage,
     setCurrentPage,
+    isItemOpen,
   } = props
 
   const handlePageSizeSelectChange = (
@@ -55,7 +56,7 @@ const CertificateDetailsExpandableTable = (
             {employeesCertificates.map((currEmployeeCertificates, index) => {
               return (
                 <React.Fragment key={index}>
-                  <CAccordionItem>
+                  <CAccordionItem className={isItemOpen ? 'isItemOpen' : ''}>
                     <CAccordionHeader>
                       <span
                         className="title-sm expandable-table-title"
