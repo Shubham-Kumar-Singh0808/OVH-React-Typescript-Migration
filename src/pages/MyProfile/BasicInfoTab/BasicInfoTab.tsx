@@ -22,7 +22,7 @@ import { useFormik } from 'formik'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import validator from 'validator'
 import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
-import { UploadImage } from '../../../types/apiTypes'
+import { UploadImageInterface } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
 
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -77,7 +77,7 @@ const BasicInfoTab = (): JSX.Element => {
   const [cvToUpload, setCVToUpload] = useState<File | undefined>(undefined)
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
   const [selectedProfilePicture, setSelectedProfilePicture] =
-    useState<UploadImage>()
+    useState<UploadImageInterface>()
 
   const validateEmail = (email: string) => {
     if (validator.isEmail(email)) {
@@ -88,10 +88,13 @@ const BasicInfoTab = (): JSX.Element => {
   }
 
   //onChange handler for image upload and crop
-  const croppedImageHandler = useCallback((croppedImageData: UploadImage) => {
-    setSelectedProfilePicture(croppedImageData)
-    setSaveButtonEnabled(true)
-  }, [])
+  const croppedImageHandler = useCallback(
+    (croppedImageData: UploadImageInterface) => {
+      setSelectedProfilePicture(croppedImageData)
+      setSaveButtonEnabled(true)
+    },
+    [],
+  )
 
   // onchange handler for input fields
   const handleChange = (
@@ -254,14 +257,21 @@ const BasicInfoTab = (): JSX.Element => {
 
   // change on gender the defaultPic api should call
   useEffect(() => {
-    if (employeeBasicInformationEditData.gender) {
+    if (
+      employeeBasicInformationEditData.gender &&
+      employeeBasicInformation.profilePicPath?.includes('Default')
+    ) {
       dispatch(
         employeeBasicInformationThunk.updateEmployeeDefaultPicOnGenderChange(
           employeeBasicInformationEditData.gender,
         ),
       )
     }
-  }, [dispatch, employeeBasicInformationEditData.gender])
+  }, [
+    dispatch,
+    employeeBasicInformation.profilePicPath,
+    employeeBasicInformationEditData.gender,
+  ])
 
   // upon save click have to save updated employee details and upload cv
   const handleSubmitBasicDetails = async (event: SyntheticEvent) => {

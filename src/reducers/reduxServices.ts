@@ -15,6 +15,7 @@ import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/Add
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { employeeReviewsService } from './MyProfile/ReviewTab/employeeReviewsSlice'
+import { employeeProjectsService } from './MyProfile/ProjectsTab/employeeProjectSlice'
 
 export const reduxServices = {
   app: appService,
@@ -33,5 +34,6 @@ export const reduxServices = {
   generalInformation: generalInformationService,
   employeeSkill: employeeSkillServices,
   employeeReviews: employeeReviewsService,
+  employeeProjects: employeeProjectsService,
   shiftConfiguration: shiftConfigurationService,
 }

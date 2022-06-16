@@ -16,6 +16,7 @@ import {
   SkillApi,
   UserRolesConfigurationApi,
   EmployeeReviewsApi,
+  EmployeeProjectsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -161,4 +162,8 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
 
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {
   getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
+}
+
+export const employeeProjectsApiConfig: EmployeeProjectsApi = {
+  getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
 }

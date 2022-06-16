@@ -19,6 +19,7 @@ import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import employeeReviewsReducer from './reducers/MyProfile/ReviewTab/employeeReviewsSlice'
+import employeeProjectsReducer from './reducers/MyProfile/ProjectsTab/employeeProjectSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -38,6 +39,7 @@ export const allReducers = {
   employeeList: employeeListReducer,
   employeeDesignationList: employeeDesignationListReducer,
   shiftConfiguration: shiftConfigurationReducer,
+  employeeProjects: employeeProjectsReducer,
   // add your slice reducers here
 }
 
