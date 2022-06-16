@@ -165,6 +165,7 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
 export const employeeAssetsApiConfig: EmployeeAssetsApi = {
   getEmployeeAssets: apiPrefix + '/Employee/getEmployeeAssets',
 }
+
 export const certificateTypeApiConfig: CertificateTypeApi = {
   getCertificateTypes: apiPrefix + '/EmployeeSkill/getCertificateTypeList',
   addCertificateType: apiPrefix + '/EmployeeSkill/addCertificateType',

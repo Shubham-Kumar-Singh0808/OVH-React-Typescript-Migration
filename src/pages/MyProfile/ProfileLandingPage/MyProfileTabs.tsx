@@ -18,8 +18,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import { useParams } from 'react-router-dom'
 import { useTypedSelector } from '../../../stateStore'
-import EmployeeMyAssets from '../MyAssetsTab/EmployeeAssets'
-
+import EmployeeAssets from '../MyAssetsTab/EmployeeAssets'
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
@@ -66,7 +65,7 @@ const MyProfileTabs = (): JSX.Element => {
         4: <QualificationDetails />,
         5: <EmployeeReviews />,
         6: <h1>Projects</h1>,
-        8: <EmployeeMyAssets />,
+        8: <EmployeeAssets />,
         9: <EmployeeProfileHistory />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'

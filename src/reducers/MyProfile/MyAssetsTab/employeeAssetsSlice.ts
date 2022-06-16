@@ -55,7 +55,7 @@ const employeeAssetsSlice = createSlice({
   },
 })
 
-const employeeMyAssets = (state: RootState): EmployeeAsset[] =>
+const employeeAssets = (state: RootState): EmployeeAsset[] =>
   state.employeeAssets.employeeAssets
 
 const employeeAssetsThunk = {
@@ -63,7 +63,7 @@ const employeeAssetsThunk = {
 }
 
 const employeeAssetsSelectors = {
-  employeeMyAssets,
+  employeeMyAssets: employeeAssets,
 }
 
 export const employeeAssetsService = {

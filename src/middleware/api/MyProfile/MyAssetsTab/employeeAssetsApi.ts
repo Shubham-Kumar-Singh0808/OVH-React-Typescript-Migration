@@ -16,7 +16,9 @@ const getEmployeeAssets = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
 const employeeAssetsApi = {
   getEmployeeAssets,
 }
+
 export default employeeAssetsApi

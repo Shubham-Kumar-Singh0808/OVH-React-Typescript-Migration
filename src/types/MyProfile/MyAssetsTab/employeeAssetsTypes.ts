@@ -1,4 +1,5 @@
 import { ValidationError } from '../../commonTypes'
+
 export type EmployeeAsset = {
   assetNumber: string
   assetType: string
