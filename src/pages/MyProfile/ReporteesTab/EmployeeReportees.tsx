@@ -119,9 +119,11 @@ const EmployeeReportees = (): JSX.Element => {
           </CTableBody>
         </CTable>
         <CCol xs={4}>
-          <p>
-            <strong>Total Records: {employeeReportees.length}</strong>
-          </p>
+          <strong>
+            {employeeReportees?.length
+              ? `Total Records: ${employeeReportees?.length}`
+              : `No Records found`}
+          </strong>
         </CCol>
         <OModal
           modalSize="lg"
