@@ -21,6 +21,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { Link } from 'react-router-dom'
 import OModal from '../../../components/ReusableComponent/OModal'
+import parse from 'html-react-parser'
 const EmployeeReportees = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const empID = useTypedSelector(
@@ -52,6 +53,7 @@ const EmployeeReportees = (): JSX.Element => {
   const handleKPIs = (id: number) => {
     setIsModalVisible(true)
     dispatch(reduxServices.employeeReportees.getEmployeeReporteesKPIs(id))
+    console.log(id)
   }
 
   return (
@@ -195,10 +197,14 @@ const EmployeeReportees = (): JSX.Element => {
                                         {index + 1}
                                       </CTableDataCell>
                                       <CTableDataCell>
-                                        {kpi.name}
+                                        <CLink className="text-decoration-none">
+                                          {kpi.name}
+                                        </CLink>
                                       </CTableDataCell>
                                       <CTableDataCell>
-                                        {kpi.description || 'N/A'}
+                                        <CLink>
+                                          {parse(kpi.description || 'N/A')}
+                                        </CLink>
                                       </CTableDataCell>
                                     </CTableRow>
                                   )
