@@ -1777,6 +1777,11 @@
   "resolved" "https://registry.npmjs.org/@types/base-64/-/base-64-1.0.0.tgz"
   "version" "1.0.0"
 
+"@types/ckeditor4@^4.16.1":
+  "integrity" "sha512-2v3yiFsZVmCestsIamjYJM65KP9IDh6tpvb3chqMPEgN3q+N0NWwcv2TSJG/1jRGRsbo3dZRtDvfrNO3HT6eWg=="
+  "resolved" "https://registry.npmjs.org/@types/ckeditor4/-/ckeditor4-4.16.1.tgz"
+  "version" "4.16.1"
+
 "@types/cookie@^0.4.1":
   "integrity" "sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q=="
   "resolved" "https://registry.npmjs.org/@types/cookie/-/cookie-0.4.1.tgz"
@@ -3565,6 +3570,24 @@
   "integrity" "sha512-uc2Vix1frTfnuzxxu1Hp4ktSvM3QaI4oXl4ZUqL1wjTu/BGki9TrCWoqLTg/drR1KwAEarXuRFCG2Svr1GxPFw=="
   "resolved" "https://registry.npmjs.org/cjs-module-lexer/-/cjs-module-lexer-0.6.0.tgz"
   "version" "0.6.0"
+
+"ckeditor4-integrations-common@^1.0.0":
+  "integrity" "sha512-OAoQT/gYrHkg0qgzf6MS/rndYhq3SScLVQ3rtXQeuCE8ju7nFHg3qZ7WGA2XpFxcZzsMP6hhugXqdel5vbcC3g=="
+  "resolved" "https://registry.npmjs.org/ckeditor4-integrations-common/-/ckeditor4-integrations-common-1.0.0.tgz"
+  "version" "1.0.0"
+
+"ckeditor4-react@^3.1.0":
+  "integrity" "sha512-EWS16bxukJwpZMJoVKSOaikv62SiUy78hXCTWrJqRZRACKpgReAhG4GXxSdaXc3DHWycSILoNTZJ2QBXflI/5g=="
+  "resolved" "https://registry.npmjs.org/ckeditor4-react/-/ckeditor4-react-3.1.0.tgz"
+  "version" "3.1.0"
+  dependencies:
+    "ckeditor4-integrations-common" "^1.0.0"
+    "prop-types" "^15.8.1"
+
+"ckeditor4@^4.19.0":
+  "integrity" "sha512-hh+SslqHmqr9xmcUVMgdmWjO4tdxW+Lzd6jfxDzzjf6zwIFIoNSflgCqUvg2wcry4w0dHgdEoxVMdoJK9E7kUw=="
+  "resolved" "https://registry.npmjs.org/ckeditor4/-/ckeditor4-4.19.0.tgz"
+  "version" "4.19.0"
 
 "class-utils@^0.3.5":
   "integrity" "sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg=="
@@ -10159,7 +10182,7 @@
   optionalDependencies:
     "fsevents" "^2.1.3"
 
-"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0 || ^17.0 || ^18.0.0", "react@^15.5.x || ^16.x || ^17.x", "react@^16.0 || ^17.0.0 || ^18.0.0", "react@^16.7.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.3 || ^17 || ^18", "react@^16.9.0 || ^17", "react@^16.9.0 || ^17.0.0 || ^18", "react@^17", "react@^17.0.2", "react@>= 16", "react@>=0.14.0", "react@>=15", "react@>=16", "react@>=16.8.0", "react@0.13.x || 0.14.x || ^15.0.0-0 || 15.x.x || ^16.0.0-0 || ^16.x.x || ^17.x.x", "react@0.14 || 15 || 16 || 17 || 18", "react@17.0.2":
+"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0 || ^17.0 || ^18.0.0", "react@^15.5.x || ^16.x || ^17.x", "react@^16.0 || ^17.0.0 || ^18.0.0", "react@^16.7.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.3 || ^17 || ^18", "react@^16.9 || ^17", "react@^16.9.0 || ^17", "react@^16.9.0 || ^17.0.0 || ^18", "react@^17", "react@^17.0.2", "react@>= 16", "react@>=0.14.0", "react@>=15", "react@>=16", "react@>=16.8.0", "react@0.13.x || 0.14.x || ^15.0.0-0 || 15.x.x || ^16.0.0-0 || ^16.x.x || ^17.x.x", "react@0.14 || 15 || 16 || 17 || 18", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"

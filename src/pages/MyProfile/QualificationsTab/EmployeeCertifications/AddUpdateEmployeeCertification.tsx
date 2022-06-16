@@ -15,13 +15,16 @@ import {
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import DatePicker from 'react-datepicker'
-import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
+import {
+  CKEditor,
+  CKEditorEventHandler,
+  CKEditorEventPayload,
+} from 'ckeditor4-react'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import moment from 'moment'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useFormik } from 'formik'
+// import { useFormik } from 'formik'
 
 function AddUpdateEmployeeCertification({
   isEditCertificationDetails = false,
@@ -51,6 +54,7 @@ function AddUpdateEmployeeCertification({
   const getCertificateDetails = useTypedSelector(
     (state) => state.employeeCertificates.editCertificateDetails,
   )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -74,12 +78,12 @@ function AddUpdateEmployeeCertification({
       toastColor="success"
     />
   )
-  const formik = useFormik({
-    initialValues: { name: '', message: '' },
-    onSubmit: (values) => {
-      console.log('Logging in ', values)
-    },
-  })
+  // const formik = useFormik({
+  //   initialValues: { name: '', message: '' },
+  //   onSubmit: (values) => {
+  //     console.log('Logging in ', values)
+  //   },
+  // })
 
   useEffect(() => {
     if (isEditCertificationDetails) {
@@ -240,6 +244,41 @@ function AddUpdateEmployeeCertification({
       backButtonHandler()
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
+  }
+
+  const config = {
+    toolbarGroups: [
+      { name: 'styles', groups: ['styles'] },
+      { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+      { name: 'clipboard', groups: ['clipboard', 'undo'] },
+      {
+        name: 'paragraph',
+        groups: ['blocks', 'list', 'indent', 'align', 'bidi', 'paragraph'],
+      },
+      {
+        name: 'editing',
+        groups: ['find', 'selection', 'spellchecker', 'editing'],
+      },
+      { name: 'links', groups: ['links'] },
+      { name: 'insert', groups: ['insert'] },
+      { name: 'forms', groups: ['forms'] },
+      { name: 'tools', groups: ['tools'] },
+      { name: 'document', groups: ['mode', 'document', 'doctools'] },
+      { name: 'others', groups: ['others'] },
+      { name: 'colors', groups: ['colors'] },
+      { name: 'about', groups: ['about'] },
+    ],
+    format_tags: 'p;h1;h2;h3;h4;h5;h6;pre',
+    extraPlugins: 'justify',
+    removeButtons:
+      'Subscript,Superscript,Cut,Paste,Copy,PasteText,PasteFromWord,Scayt,Anchor,HorizontalRule,SpecialChar,Maximize,Source,Strike,Styles,About,Indent,Outdent',
+  }
+
+  const handleDescription = (data: string) => {
+    console.log(data)
+    setAddCertification((prevState) => {
+      return { ...prevState, ...{ description: data } }
+    })
   }
 
   return (
@@ -479,9 +518,15 @@ function AddUpdateEmployeeCertification({
               Description:
             </CFormLabel>
             <CCol sm={8}>
-              <OTextEditor
-                setFieldValue={(val) => formik.setFieldValue('', val)}
-                value={''}
+              <CKEditor<{
+                onChange: CKEditorEventHandler<'change'>
+              }>
+                initData={addCertification?.description}
+                config={config}
+                debug={true}
+                onChange={({ editor }) => {
+                  handleDescription(editor.getData().trim())
+                }}
               />
             </CCol>
           </CRow>
