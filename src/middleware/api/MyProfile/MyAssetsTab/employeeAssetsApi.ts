@@ -1,5 +1,5 @@
 import { employeeAssetsApiConfig, AllowedHttpMethods } from '../../apiList'
-import { EmployeeAsset } from '../../../../types/MyProfile/MyAssetsTab/myAssetsTypes'
+import { EmployeeAsset } from '../../../../types/MyProfile/MyAssetsTab/employeeAssetsTypes'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 

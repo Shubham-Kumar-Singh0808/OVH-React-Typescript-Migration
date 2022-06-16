@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeAsset,
   EmployeeAssetsState,
-} from '../../../types/MyProfile/MyAssetsTab/myAssetsTypes'
+} from '../../../types/MyProfile/MyAssetsTab/employeeAssetsTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'

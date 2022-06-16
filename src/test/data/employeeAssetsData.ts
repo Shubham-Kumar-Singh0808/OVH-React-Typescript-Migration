@@ -1,4 +1,4 @@
-import { EmployeeAsset } from '../../types/MyProfile/MyAssetsTab/myAssetsTypes'
+import { EmployeeAsset } from '../../types/MyProfile/MyAssetsTab/employeeAssetsTypes'
 export const mockAssetsDetails: EmployeeAsset[] = [
   {
     assetNumber: 'RBT/PRNTR/014',
