@@ -3,7 +3,7 @@ import {
   EmployeeReportees,
   ReporteesState,
   EmployeeReporteesKRAs,
-  EmployeeReporteeskpis,
+  EmployeeReporteesKPIs,
 } from '../../../types/MyProfile/ReporteesTab/employeeReporteesType'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -13,7 +13,7 @@ import employeeReporteesApi from '../../../middleware/api/MyProfile/ReporteesTab
 const initialEmployeeReporteesState: ReporteesState = {
   employeeReportees: [],
   employeeReporteesKRAs: [],
-  employeeReporteeskpis: [],
+  employeeReporteesKPIs: [],
   isLoading: false,
   error: 0,
 }
@@ -58,8 +58,8 @@ const getEmployeeReporteesKRAs = createAsyncThunk<
   },
 )
 
-const getEmployeeReporteeskpis = createAsyncThunk<
-  EmployeeReporteeskpis[] | undefined,
+const getEmployeeReporteesKPIs = createAsyncThunk<
+  EmployeeReporteesKPIs[] | undefined,
   string | number,
   {
     dispatch: AppDispatch
@@ -67,10 +67,10 @@ const getEmployeeReporteeskpis = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'employeeReportees/getEmployeeReporteeskpis',
+  'employeeReportees/getEmployeeReporteesKPIs',
   async (kraId: string | number, thunkApi) => {
     try {
-      return await employeeReporteesApi.getEmployeeReporteeskpis(kraId)
+      return await employeeReporteesApi.getEmployeeReporteesKPIs(kraId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -92,9 +92,9 @@ const employeeReporteesSlice = createSlice({
       state.isLoading = false
       state.employeeReporteesKRAs = action.payload as EmployeeReporteesKRAs[]
     })
-    builder.addCase(getEmployeeReporteeskpis.fulfilled, (state, action) => {
+    builder.addCase(getEmployeeReporteesKPIs.fulfilled, (state, action) => {
       state.isLoading = false
-      state.employeeReporteeskpis = action.payload as EmployeeReporteeskpis[]
+      state.employeeReporteesKPIs = action.payload as EmployeeReporteesKPIs[]
     })
     builder.addCase(getEmployeeReportees.pending, (state) => {
       state.isLoading = true
@@ -118,18 +118,18 @@ const employeeReportees = (state: RootState): EmployeeReportees[] =>
 const employeeReporteesKRAs = (state: RootState): EmployeeReporteesKRAs[] =>
   state.employeeReportees.employeeReporteesKRAs
 
-const employeeReporteeskpis = (state: RootState): EmployeeReporteeskpis[] =>
-  state.employeeReportees.employeeReporteeskpis
+const employeeReporteesKPIs = (state: RootState): EmployeeReporteesKPIs[] =>
+  state.employeeReportees.employeeReporteesKPIs
 
 const employeeReporteesThunk = {
   getEmployeeReportees,
   getEmployeeReporteesKRAs,
-  getEmployeeReporteeskpis,
+  getEmployeeReporteesKPIs,
 }
 const employeeReporteesSelectors = {
   employeeReportees,
   employeeReporteesKRAs,
-  employeeReporteeskpis,
+  employeeReporteesKPIs,
 }
 export const employeeReporteesService = {
   ...employeeReporteesThunk,

@@ -23,15 +23,15 @@ export type EmployeeReporteesKRAs = {
   departmentId: number
   designationKraPercentage: number
 }
-export type EmployeeReporteeskpis = {
-  kraId: number
+export type EmployeeReporteesKPIs = {
+  id: number
   name: string
   description: string
 }
 export type ReporteesState = {
   employeeReportees: EmployeeReportees[]
   employeeReporteesKRAs: EmployeeReporteesKRAs[]
-  employeeReporteeskpis: EmployeeReporteeskpis[]
+  employeeReporteesKPIs: EmployeeReporteesKPIs[]
   isLoading: boolean
   error: ValidationError
 }

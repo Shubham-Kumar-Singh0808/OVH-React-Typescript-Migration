@@ -35,11 +35,9 @@ const EmployeeReportees = (): JSX.Element => {
     reduxServices.employeeReportees.selectors.employeeReporteesKRAs,
   )
 
-  const employeeReporteeskpis = useTypedSelector(
-    reduxServices.employeeReportees.selectors.employeeReporteeskpis,
+  const employeeReporteesKRIs = useTypedSelector(
+    reduxServices.employeeReportees.selectors.employeeReporteesKPIs,
   )
-
-  console.log(employeeReporteeskpis)
 
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -49,7 +47,11 @@ const EmployeeReportees = (): JSX.Element => {
   const handleModal = (personId: number) => {
     setIsModalVisible(true)
     dispatch(reduxServices.employeeReportees.getEmployeeReporteesKRAs(personId))
-    console.log(personId)
+  }
+
+  const handleKPIs = (id: number) => {
+    setIsModalVisible(true)
+    dispatch(reduxServices.employeeReportees.getEmployeeReporteesKPIs(id))
   }
 
   return (
@@ -147,7 +149,7 @@ const EmployeeReportees = (): JSX.Element => {
                 {employeeReporteesKRAs.map((KRAs, index) => {
                   return (
                     <React.Fragment key={index}>
-                      <CAccordionItem>
+                      <CAccordionItem onClick={() => handleKPIs(KRAs.id)}>
                         <CAccordionHeader>
                           <CTableDataCell scope="row">
                             {KRAs.name}
@@ -171,7 +173,30 @@ const EmployeeReportees = (): JSX.Element => {
                             {KRAs.count || 'N/A'}
                           </CTableDataCell>
                         </CAccordionHeader>
-                        <CAccordionBody></CAccordionBody>
+                        <CAccordionBody>
+                          <CTable responsive striped>
+                            <CTableHead color="info">
+                              <CTableRow>
+                                <CTableHeaderCell>#</CTableHeaderCell>
+                                <CTableHeaderCell>KPIName</CTableHeaderCell>
+                                <CTableHeaderCell>Description</CTableHeaderCell>
+                              </CTableRow>
+                            </CTableHead>
+                            <CTableBody>
+                              {employeeReporteesKRIs.map((kpi, index) => {
+                                return (
+                                  <CTableRow key={index}>
+                                    <CTableDataCell>{index + 1}</CTableDataCell>
+                                    <CTableDataCell>{kpi.name}</CTableDataCell>
+                                    <CTableDataCell>
+                                      {kpi.description || 'N/A'}
+                                    </CTableDataCell>
+                                  </CTableRow>
+                                )
+                              })}
+                            </CTableBody>
+                          </CTable>
+                        </CAccordionBody>
                       </CAccordionItem>
                     </React.Fragment>
                   )
