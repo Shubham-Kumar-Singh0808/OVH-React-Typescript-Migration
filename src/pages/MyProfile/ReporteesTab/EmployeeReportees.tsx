@@ -56,6 +56,10 @@ const EmployeeReportees = (): JSX.Element => {
     console.log(id)
   }
 
+  const tableHeaderCellProps = {
+    scope: 'col',
+  }
+
   return (
     <>
       <CRow className="justify-content-end">
@@ -73,7 +77,9 @@ const EmployeeReportees = (): JSX.Element => {
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Manager</CTableHeaderCell>
+              <CTableHeaderCell {...tableHeaderCellProps}>
+                Manager
+              </CTableHeaderCell>
               <CTableHeaderCell scope="col">Reportee</CTableHeaderCell>
               <CTableHeaderCell scope="col">Mobile No.</CTableHeaderCell>
               <CTableHeaderCell scope="col">
