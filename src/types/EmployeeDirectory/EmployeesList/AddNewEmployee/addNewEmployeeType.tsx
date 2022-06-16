@@ -68,6 +68,9 @@ export interface DateChangeHandlerProp extends DynamicFormLabelProps {
   onDateChangeHandler: (e: Date) => void
 }
 
+export interface UserNameProps extends DynamicFormLabelProps {
+  userName: string
+}
 export interface EmployeeDepartmentProps extends DynamicFormLabelProps {
   departmentsList: EmployeeDepartment[]
 }
