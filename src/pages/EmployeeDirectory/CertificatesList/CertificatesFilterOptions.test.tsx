@@ -17,8 +17,8 @@ const ReduxProvider = ({
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
 
-describe('List Options Component Testing', () => {
-  test('should render Personal info tab component with out crashing', async () => {
+describe('Certificates Filter Options Component Testing', () => {
+  test('should render certificates filter options component with out crashing', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <CertificatesFilterOptions
@@ -33,5 +33,7 @@ describe('List Options Component Testing', () => {
         />
       </ReduxProvider>,
     )
+    expect(screen.getByRole('button', { name: 'View' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
   })
 })

@@ -22,7 +22,6 @@ const CertificatesFilterOptions = ({
   filterByTechnology,
   filterByCertificate,
   multiSearchValue,
-  setIsItemOpen,
 }: CertificatesFilterOptionsProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [selectCertificate, setSelectCertificate] = useState<string>('')
@@ -36,12 +35,10 @@ const CertificatesFilterOptions = ({
 
   const multiSearchButtonHandler = () => {
     setMultiSearchValue(searchInput)
-    setIsItemOpen(true)
   }
   const viewButtonHandler = () => {
     setFilterByTechnology(selectTechnology)
     setFilterByCertificate(selectCertificate)
-    setIsItemOpen(true)
   }
   const clearButtonHandler = () => {
     setSelectTechnology('')
@@ -49,7 +46,6 @@ const CertificatesFilterOptions = ({
     setFilterByTechnology('')
     setFilterByCertificate('')
     setMultiSearchValue('')
-    setIsItemOpen(false)
   }
 
   useEffect(() => {
@@ -122,12 +118,12 @@ const CertificatesFilterOptions = ({
             ))}
           </CFormSelect>
         </CCol>
-        <CCol sm={3}>
+        <CCol sm={4}>
           <CRow>
             <CCol sm={4} className="text-end">
               <CFormLabel className="mt-1">Certificate Type:</CFormLabel>
             </CCol>
-            <CCol sm={8}>
+            <CCol sm={6}>
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"
@@ -155,7 +151,7 @@ const CertificatesFilterOptions = ({
           </CRow>
         </CCol>
 
-        <CCol xs={6} className="d-md-flex justify-content-md-end">
+        <CCol xs={5} className="d-md-flex justify-content-md-end">
           <CButton color="info btn-ovh me-0">
             <i className="fa fa-plus  me-1"></i>Add Certificate Type
           </CButton>
@@ -190,7 +186,7 @@ const CertificatesFilterOptions = ({
         </CCol>
       </CRow>
       <CRow className="gap-2 d-md-flex justify-content-md-end">
-        <CCol sm={6} md={4} lg={5} xl={4} xxl={3} className="">
+        <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
           <CInputGroup className="global-search me-0">
             <CFormInput
               placeholder="Multiple Search"
