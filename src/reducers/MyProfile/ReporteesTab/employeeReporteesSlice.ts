@@ -5,7 +5,8 @@ import {
   EmployeeReporteesKRAs,
   EmployeeReporteesKPIs,
 } from '../../../types/MyProfile/ReporteesTab/employeeReporteesType'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import employeeReporteesApi from '../../../middleware/api/MyProfile/ReporteesTab/employeeReporteesApi'
@@ -14,7 +15,7 @@ const initialEmployeeReporteesState: ReporteesState = {
   employeeReportees: [],
   employeeReporteesKRAs: [],
   employeeReporteesKPIs: [],
-  isLoading: false,
+  isLoading: ApiLoadingState.idle,
   error: 0,
 }
 
@@ -85,31 +86,28 @@ const employeeReporteesSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getEmployeeReportees.fulfilled, (state, action) => {
-      state.isLoading = false
+      state.isLoading = ApiLoadingState.succeeded
       state.employeeReportees = action.payload as EmployeeReportees[]
     })
     builder.addCase(getEmployeeReporteesKRAs.fulfilled, (state, action) => {
-      state.isLoading = false
+      state.isLoading = ApiLoadingState.succeeded
       state.employeeReporteesKRAs = action.payload as EmployeeReporteesKRAs[]
     })
-    builder.addCase(getEmployeeReporteesKPIs.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.employeeReporteesKPIs = action.payload as EmployeeReporteesKPIs[]
-    })
-    builder.addCase(getEmployeeReportees.pending, (state) => {
-      state.isLoading = true
-    })
-    builder.addCase(getEmployeeReporteesKRAs.pending, (state) => {
-      state.isLoading = true
-    })
-    builder.addCase(getEmployeeReportees.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload as ValidationError
-    })
-    builder.addCase(getEmployeeReporteesKRAs.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload as ValidationError
-    })
+    builder
+      .addCase(getEmployeeReporteesKPIs.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.loading
+        state.employeeReporteesKPIs = action.payload as EmployeeReporteesKPIs[]
+      })
+      .addMatcher(
+        isAnyOf(
+          getEmployeeReportees.pending,
+          getEmployeeReporteesKRAs.pending,
+          getEmployeeReporteesKPIs.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 const employeeReportees = (state: RootState): EmployeeReportees[] =>
