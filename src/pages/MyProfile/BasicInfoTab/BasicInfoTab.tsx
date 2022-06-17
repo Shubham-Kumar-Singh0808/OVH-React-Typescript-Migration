@@ -330,7 +330,12 @@ const BasicInfoTab = (): JSX.Element => {
         )
       }
     }
-  }, [dispatch, employeeBasicInformationEditData.gender])
+  }, [
+    dispatch,
+    employeeBasicInformation.id,
+    employeeBasicInformationEditData.gender,
+    employeeBasicInformationEditData.rbtCvName,
+  ])
 
   // upon save click have to save updated employee details and upload cv
   const handleSubmitBasicDetails = async (event: SyntheticEvent) => {

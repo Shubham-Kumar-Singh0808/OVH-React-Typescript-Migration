@@ -32,7 +32,7 @@ const ProjectsTabTableEntryDetails = (
 
   useEffect(() => {
     dispatch(reduxServices.employeeProjects.getProjectDetails(props.projectId))
-  }, [])
+  })
 
   useEffect(() => {
     if (allProjectDetails?.length > 0) {
@@ -48,7 +48,7 @@ const ProjectsTabTableEntryDetails = (
           return filtered
         })
     }
-  }, [allProjectDetails])
+  }, [allProjectDetails, employeeId, props.projectId])
 
   return (
     <>
