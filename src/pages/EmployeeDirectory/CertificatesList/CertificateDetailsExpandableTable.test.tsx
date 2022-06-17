@@ -3,7 +3,6 @@ import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '../../../test/testUtils'
 
 import CertificateDetailsExpandableTable from './CertificateDetailsExpandableTable'
-import { EmployeeCertificate } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 import React from 'react'
 import { mockCertificateList } from '../../../test/data/certificateListData'
 import userEvent from '@testing-library/user-event'

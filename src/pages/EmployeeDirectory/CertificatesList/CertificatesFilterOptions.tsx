@@ -107,7 +107,7 @@ const CertificatesFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="technology"
-            data-testid="form-select"
+            data-testid="form-select1"
             name="technology"
             value={selectTechnology}
             onChange={(e) => {
@@ -132,7 +132,7 @@ const CertificatesFilterOptions = ({
                 aria-label="Default select example"
                 size="sm"
                 id="certificate"
-                data-testid="form-select"
+                data-testid="form-select2"
                 name="certificate"
                 value={selectCertificate}
                 onChange={(e) => {
@@ -203,6 +203,7 @@ const CertificatesFilterOptions = ({
             />
             <CButton
               disabled={!searchInput}
+              data-testid="multi-search-btn"
               className="cursor-pointer"
               type="button"
               color="info"
