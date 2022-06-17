@@ -164,7 +164,7 @@ const EmployeeReportees = (): JSX.Element => {
                         <CTableDataCell className="text-center">
                           {isIconVisible && selectedKRA === KRAs.id ? (
                             <i
-                              className="'fa fa-minus-circle cursor-pointer"
+                              className="fa fa-minus-circle cursor-pointer"
                               onClick={() => setIsIconVisible(false)}
                             />
                           ) : (
@@ -198,7 +198,7 @@ const EmployeeReportees = (): JSX.Element => {
                           <CTableRow>
                             <CTableDataCell colSpan={8}>
                               <CTable responsive striped>
-                                <CTableHead color="primary">
+                                <CTableHead color="info">
                                   <CTableRow>
                                     <CTableHeaderCell scope="col">
                                       #
