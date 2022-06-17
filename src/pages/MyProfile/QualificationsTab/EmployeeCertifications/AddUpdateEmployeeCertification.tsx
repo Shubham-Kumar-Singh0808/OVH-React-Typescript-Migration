@@ -60,6 +60,7 @@ function AddUpdateEmployeeCertification({
   const isLoading = useTypedSelector(
     reduxServices.employeeCertifications.selectors.isLoading,
   )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
