@@ -14,6 +14,7 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
+import parse from 'html-react-parser'
 
 const EmployeeCertificationsTable = ({
   editCertificateButtonHandler,
@@ -164,7 +165,7 @@ const EmployeeCertificationsTable = ({
               </CTableDataCell>
               <CTableDataCell scope="row">
                 {certificateItem.description
-                  ? removeHtmlTags(certificateItem.description)
+                  ? parse(certificateItem.description)
                   : 'N/A'}
               </CTableDataCell>
               {!isViewingAnotherEmployee ? (

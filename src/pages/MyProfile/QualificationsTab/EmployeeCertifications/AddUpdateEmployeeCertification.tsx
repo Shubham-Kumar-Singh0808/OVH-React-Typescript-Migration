@@ -117,8 +117,9 @@ function AddUpdateEmployeeCertification({
 
   useEffect(() => {
     if (addCertification.description) {
+      // setDescription(addCertification.description)
+      console.log(addCertification.description)
       setShowEditor(true)
-      setDescription(addCertification.description)
     }
   }, [addCertification.description])
 
@@ -332,12 +333,12 @@ function AddUpdateEmployeeCertification({
     format_tags: 'p;h1;h2;h3;h4;h5;h6;pre',
     extraPlugins: 'justify',
     removeButtons:
-      'Subscript,Superscript,Cut,Paste,Copy,PasteText,PasteFromWord,Scayt,Anchor,HorizontalRule,SpecialChar,Maximize,Source,Strike,Styles,About,Indent,Outdent',
+      'Subscript,Superscript,Cut,Paste,Copy,PasteText,PasteFromWord,Scayt,Anchor,HorizontalRule,SpecialChar,Maximize,Source,Strike,Styles,About,Indent,Outdent,Blockquote',
   }
 
-  const handleDescription = (data: string) => {
+  const handleDescription = (description: string) => {
     setAddCertification((prevState) => {
-      return { ...prevState, ...{ description: data } }
+      return { ...prevState, ...{ description: description } }
     })
   }
 
@@ -368,248 +369,244 @@ function AddUpdateEmployeeCertification({
             </CButton>
           </CCol>
         </CRow>
-        {isLoading !== ApiLoadingState.loading ? (
-          <CForm>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...{
-                  ...dynamicFormLabelProps(
-                    'technology',
-                    'col-sm-3 col-form-label text-end',
-                  ),
-                }}
-              >
-                Technology:
-                <span
-                  className={
-                    addCertification.technology ? 'text-white' : 'text-danger'
-                  }
-                >
-                  *
-                </span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormSelect
-                  aria-label="Default select example"
-                  id="technology"
-                  name="technology"
-                  value={addCertification?.technology}
-                  onChange={handleInputChange}
-                >
-                  <option value={''}>Select Technology</option>
-                  {getTechnologies?.map((certificateItem, index) => (
-                    <option key={index} value={certificateItem.name}>
-                      {certificateItem.name}
-                    </option>
-                  ))}
-                </CFormSelect>
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...{
-                  ...dynamicFormLabelProps(
-                    'certificateType',
-                    'col-sm-3 col-form-label text-end',
-                  ),
-                }}
-              >
-                CertificateType:{' '}
-                <span
-                  className={
-                    addCertification.certificateType
-                      ? 'text-white'
-                      : 'text-danger'
-                  }
-                >
-                  *
-                </span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormSelect
-                  aria-label="Default select example"
-                  id="certificateType"
-                  name="certificateType"
-                  disabled={!addCertification.technology}
-                  value={addCertification?.certificateType}
-                  onChange={handleInputChange}
-                >
-                  <option value={''}>Select Type of Certificate</option>
-                  {getCertificateByTechnology?.map(
-                    (certificateTypeItem, index) => (
-                      <option
-                        key={index}
-                        value={certificateTypeItem.certificateType}
-                      >
-                        {certificateTypeItem.certificateType}
-                      </option>
-                    ),
-                  )}
-                </CFormSelect>
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...{
-                  ...dynamicFormLabelProps(
-                    'certification',
-                    'col-sm-3 col-form-label text-end',
-                  ),
-                }}
-              >
-                Certification:
-                <span
-                  className={
-                    addCertification.name ? 'text-white' : 'text-danger'
-                  }
-                >
-                  *
-                </span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormInput
-                  type="text"
-                  id="certification"
-                  name="name"
-                  value={addCertification?.name}
-                  placeholder="Certification Name"
-                  maxLength={50}
-                  onChange={handleInputChange}
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...{
-                  ...dynamicFormLabelProps(
-                    'registrationNumber',
-                    'col-sm-3 col-form-label text-end',
-                  ),
-                }}
-              >
-                Registration No:
-                <span
-                  className={
-                    addCertification.code ? 'text-white' : 'text-danger'
-                  }
-                >
-                  *
-                </span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormInput
-                  type="text"
-                  id="registrationNumber"
-                  name="code"
-                  value={addCertification?.code}
-                  placeholder="Certification Id"
-                  maxLength={24}
-                  onChange={handleInputChange}
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel className="col-sm-3 col-form-label text-end">
-                Completed Date:
-                <span
-                  className={
-                    addCertification?.completedDate || completedDate
-                      ? 'text-white'
-                      : 'text-danger'
-                  }
-                >
-                  *
-                </span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <DatePicker
-                  className="form-control"
-                  name="completedDate"
-                  maxDate={new Date()}
-                  value={
-                    (completedDate as string) ||
-                    (addCertification?.completedDate as string)
-                  }
-                  selected={
-                    !completedDateFlag
-                      ? addCertification.completedDate
-                        ? newCompletedDate
-                        : (completedDate as Date)
-                      : (completedDate as Date)
-                  }
-                  onChange={onChangeDateOfCompletionHandler}
-                  id="completedDate"
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  placeholderText="dd/mm/yyyy"
-                  dateFormat="dd/MM/yyyy"
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel className="col-sm-3 col-form-label text-end">
-                Expiry Date :
-              </CFormLabel>
-              <CCol sm={3}>
-                <DatePicker
-                  className="form-control"
-                  name="expiryDate"
-                  value={
-                    (expiryDate as string) ||
-                    (addCertification?.expiryDate as string)
-                  }
-                  selected={
-                    !expiryDateFlag
-                      ? addCertification.expiryDate
-                        ? newExpiryDate
-                        : (expiryDate as Date)
-                      : (expiryDate as Date)
-                  }
-                  onChange={onChangeDateOfExpireHandler}
-                  id="expiryDate"
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  placeholderText="dd/mm/yyyy"
-                  dateFormat="dd/MM/yyyy"
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...dynamicFormLabelProps(
-                  'percentage',
+        <CForm>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...{
+                ...dynamicFormLabelProps(
+                  'technology',
                   'col-sm-3 col-form-label text-end',
-                )}
+                ),
+              }}
+            >
+              Technology:
+              <span
+                className={
+                  addCertification.technology ? 'text-white' : 'text-danger'
+                }
               >
-                Percentage:
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormInput
-                  id="percentage"
-                  name="percent"
-                  value={addCertification?.percent}
-                  placeholder="100"
-                  onChange={handleInputChange}
-                  min={0}
-                  max={100}
-                  maxLength={3}
-                />
-              </CCol>
-            </CRow>
-            {showEditor || !isEditCertificationDetails ? (
-              <CRow className="mt-4 mb-4">
-                <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Description:
-                </CFormLabel>
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormSelect
+                aria-label="Default select example"
+                id="technology"
+                name="technology"
+                value={addCertification?.technology}
+                onChange={handleInputChange}
+              >
+                <option value={''}>Select Technology</option>
+                {getTechnologies?.map((certificateItem, index) => (
+                  <option key={index} value={certificateItem.name}>
+                    {certificateItem.name}
+                  </option>
+                ))}
+              </CFormSelect>
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...{
+                ...dynamicFormLabelProps(
+                  'certificateType',
+                  'col-sm-3 col-form-label text-end',
+                ),
+              }}
+            >
+              CertificateType:{' '}
+              <span
+                className={
+                  addCertification.certificateType
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormSelect
+                aria-label="Default select example"
+                id="certificateType"
+                name="certificateType"
+                disabled={!addCertification.technology}
+                value={addCertification?.certificateType}
+                onChange={handleInputChange}
+              >
+                <option value={''}>Select Type of Certificate</option>
+                {getCertificateByTechnology?.map(
+                  (certificateTypeItem, index) => (
+                    <option
+                      key={index}
+                      value={certificateTypeItem.certificateType}
+                    >
+                      {certificateTypeItem.certificateType}
+                    </option>
+                  ),
+                )}
+              </CFormSelect>
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...{
+                ...dynamicFormLabelProps(
+                  'certification',
+                  'col-sm-3 col-form-label text-end',
+                ),
+              }}
+            >
+              Certification:
+              <span
+                className={addCertification.name ? 'text-white' : 'text-danger'}
+              >
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                type="text"
+                id="certification"
+                name="name"
+                value={addCertification?.name}
+                placeholder="Certification Name"
+                maxLength={50}
+                onChange={handleInputChange}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...{
+                ...dynamicFormLabelProps(
+                  'registrationNumber',
+                  'col-sm-3 col-form-label text-end',
+                ),
+              }}
+            >
+              Registration No:
+              <span
+                className={addCertification.code ? 'text-white' : 'text-danger'}
+              >
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                type="text"
+                id="registrationNumber"
+                name="code"
+                value={addCertification?.code}
+                placeholder="Certification Id"
+                maxLength={24}
+                onChange={handleInputChange}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-3 col-form-label text-end">
+              Completed Date:
+              <span
+                className={
+                  addCertification?.completedDate || completedDate
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <DatePicker
+                className="form-control"
+                name="completedDate"
+                maxDate={new Date()}
+                value={
+                  (completedDate as string) ||
+                  (addCertification?.completedDate as string)
+                }
+                selected={
+                  !completedDateFlag
+                    ? addCertification.completedDate
+                      ? newCompletedDate
+                      : (completedDate as Date)
+                    : (completedDate as Date)
+                }
+                onChange={onChangeDateOfCompletionHandler}
+                id="completedDate"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                placeholderText="dd/mm/yyyy"
+                dateFormat="dd/MM/yyyy"
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-3 col-form-label text-end">
+              Expiry Date :
+            </CFormLabel>
+            <CCol sm={3}>
+              <DatePicker
+                className="form-control"
+                name="expiryDate"
+                value={
+                  (expiryDate as string) ||
+                  (addCertification?.expiryDate as string)
+                }
+                selected={
+                  !expiryDateFlag
+                    ? addCertification.expiryDate
+                      ? newExpiryDate
+                      : (expiryDate as Date)
+                    : (expiryDate as Date)
+                }
+                onChange={onChangeDateOfExpireHandler}
+                id="expiryDate"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                placeholderText="dd/mm/yyyy"
+                dateFormat="dd/MM/yyyy"
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...dynamicFormLabelProps(
+                'percentage',
+                'col-sm-3 col-form-label text-end',
+              )}
+            >
+              Percentage:
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                id="percentage"
+                name="percent"
+                value={addCertification?.percent}
+                placeholder="100"
+                onChange={handleInputChange}
+                min={0}
+                max={100}
+                maxLength={3}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-3 col-form-label text-end">
+              Description:
+            </CFormLabel>
+            {isLoading !== ApiLoadingState.loading ? (
+              showEditor || !isEditCertificationDetails ? (
                 <CCol sm={8}>
                   <CKEditor<{
                     onChange: CKEditorEventHandler<'change'>
                   }>
-                    initData={description}
+                    initData={addCertification?.description}
                     config={config}
                     debug={true}
                     onChange={({ editor }) => {
@@ -617,48 +614,48 @@ function AddUpdateEmployeeCertification({
                     }}
                   />
                 </CCol>
-              </CRow>
+              ) : (
+                ''
+              )
             ) : (
-              ''
+              <>
+                <CSpinner />
+              </>
             )}
-            <CRow>
-              <CCol md={{ span: 6, offset: 3 }}>
-                {isEditCertificationDetails ? (
+          </CRow>
+          <CRow>
+            <CCol md={{ span: 6, offset: 3 }}>
+              {isEditCertificationDetails ? (
+                <CButton
+                  className="btn-ovh me-2"
+                  color="success"
+                  disabled={error}
+                  onClick={handleUpdateCertificationDetails}
+                >
+                  {confirmButtonText}
+                </CButton>
+              ) : (
+                <>
                   <CButton
-                    className="btn-ovh me-2"
+                    className="btn-ovh me-1"
                     color="success"
-                    disabled={error}
-                    onClick={handleUpdateCertificationDetails}
+                    disabled={!isButtonEnabled || error}
+                    onClick={handleAddCertificateDetails}
                   >
                     {confirmButtonText}
                   </CButton>
-                ) : (
-                  <>
-                    <CButton
-                      className="btn-ovh me-1"
-                      color="success"
-                      disabled={!isButtonEnabled || error}
-                      onClick={handleAddCertificateDetails}
-                    >
-                      {confirmButtonText}
-                    </CButton>
-                    <CButton
-                      color="warning "
-                      className="btn-ovh"
-                      onClick={handleClearInputFields}
-                    >
-                      Clear
-                    </CButton>
-                  </>
-                )}
-              </CCol>
-            </CRow>
-          </CForm>
-        ) : (
-          <>
-            <CSpinner />
-          </>
-        )}
+                  <CButton
+                    color="warning "
+                    className="btn-ovh"
+                    onClick={handleClearInputFields}
+                  >
+                    Clear
+                  </CButton>
+                </>
+              )}
+            </CCol>
+          </CRow>
+        </CForm>
       </CCardBody>
     </>
   )
