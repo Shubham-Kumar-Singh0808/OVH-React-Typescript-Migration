@@ -14,13 +14,13 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 
-import { CertificateDetailsExpandableTableProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import React from 'react'
 import parse from 'html-react-parser'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { CertificateDetailsExpandableTableProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 
 const CertificateDetailsExpandableTable = (
   props: CertificateDetailsExpandableTableProps,
@@ -28,6 +28,7 @@ const CertificateDetailsExpandableTable = (
   const employeesCertificates = useTypedSelector(
     reduxServices.certificateList.selectors.employeesCertificates,
   )
+
   const listSize = useTypedSelector(
     reduxServices.certificateList.selectors.listSize,
   )

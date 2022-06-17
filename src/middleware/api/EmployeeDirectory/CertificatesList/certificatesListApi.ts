@@ -44,6 +44,7 @@ const exportCertificatesData = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
 const certificatesApi = {
   getEmployeesCertificates,
   exportCertificatesData,

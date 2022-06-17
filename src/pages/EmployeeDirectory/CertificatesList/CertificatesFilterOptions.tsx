@@ -27,9 +27,11 @@ const CertificatesFilterOptions = ({
   const [searchInput, setSearchInput] = useState<string>('')
   const [selectCertificate, setSelectCertificate] = useState<string>('')
   const [isViewBtnEnabled, setIsViewBtnEnabled] = useState<boolean>(false)
+
   const getTechnologies = useTypedSelector(
     (state) => state.employeeCertificates.getAllTechnologies,
   )
+
   const getCertificateByTechnology = useTypedSelector(
     (state) => state.employeeCertificates.typeOfCertificate,
   )
@@ -38,11 +40,13 @@ const CertificatesFilterOptions = ({
     setMultiSearchValue(searchInput)
     setIsAccordionItemShow(true)
   }
+
   const viewButtonHandler = () => {
     setFilterByTechnology(selectTechnology)
     setFilterByCertificate(selectCertificate)
     setIsAccordionItemShow(true)
   }
+
   const clearButtonHandler = () => {
     setSelectTechnology('')
     setSelectCertificate('')

@@ -8,7 +8,6 @@ import React from 'react'
 describe('Certificates List Component Testing', () => {
   test('should render certificates list component with out crashing', async () => {
     render(<CertificatesList />)
-
     expect(screen.getByText('Certificate Details')).toBeInTheDocument()
   })
 })

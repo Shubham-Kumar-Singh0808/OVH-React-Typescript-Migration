@@ -49,7 +49,9 @@ const certificateListSlice = createSlice({
 
 const employeesCertificates = (state: RootState): EmployeeCertificate[] =>
   state.certificateList.employeeCertificationList
+
 const listSize = (state: RootState): number => state.certificateList.listSize
+
 const isLoading = (state: RootState): LoadingState =>
   state.certificateList.isLoading
 

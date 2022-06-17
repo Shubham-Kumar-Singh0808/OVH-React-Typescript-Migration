@@ -132,7 +132,7 @@ const AddNewCertificateType = ({
               value={selectedTechnologyId}
               onChange={handleInputChange}
             >
-              <option value={''}>Select Category</option>
+              <option value={''}>Select Technology</option>
               {getAllTechnology?.map((certificateItem, index) => (
                 <option key={index} value={certificateItem.id}>
                   {certificateItem.name}

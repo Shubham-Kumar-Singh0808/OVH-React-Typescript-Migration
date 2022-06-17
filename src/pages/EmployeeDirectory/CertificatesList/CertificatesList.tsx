@@ -15,10 +15,13 @@ const CertificatesList = (): JSX.Element => {
   const [multiSearchValue, setMultiSearchValue] = useState<string>('')
   const [selectTechnology, setSelectTechnology] = useState<string>('')
   const [isAccordionItemShow, setIsAccordionItemShow] = useState<boolean>(false)
+
   const dispatch = useAppDispatch()
+
   const listSize = useTypedSelector(
     reduxServices.certificateList.selectors.listSize,
   )
+
   const isLoading = useTypedSelector(
     reduxServices.certificateList.selectors.isLoading,
   )
