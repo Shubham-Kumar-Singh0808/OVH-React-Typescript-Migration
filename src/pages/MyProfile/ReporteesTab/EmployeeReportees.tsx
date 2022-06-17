@@ -196,36 +196,48 @@ const EmployeeReportees = (): JSX.Element => {
                       </CTableRow>
                       {isIconVisible && selectedKRA === KRAs.id ? (
                         <>
-                          <CTableHead>
-                            <CTableRow col-span={7}>
-                              <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                              <CTableHeaderCell scope="col">
-                                KPI Name
-                              </CTableHeaderCell>
-                              <CTableHeaderCell scope="col">
-                                Description
-                              </CTableHeaderCell>
-                            </CTableRow>
-                          </CTableHead>
-                          <CTableBody>
-                            {employeeReporteesKRIs.map((kpi, index) => {
-                              return (
-                                <CTableRow key={index} col-span={7}>
-                                  <CTableDataCell>{index + 1}</CTableDataCell>
-                                  <CTableDataCell>
-                                    <CLink className="text-decoration-none">
-                                      {kpi.name}
-                                    </CLink>
-                                  </CTableDataCell>
-                                  <CTableDataCell>
-                                    <CLink>
-                                      {parse(kpi.description || 'N/A')}
-                                    </CLink>
-                                  </CTableDataCell>
-                                </CTableRow>
-                              )
-                            })}
-                          </CTableBody>
+                          <CTableRow>
+                            <CTableDataCell colSpan={8}>
+                              <CTable responsive striped>
+                                <CTableHead color="info">
+                                  <CTableRow>
+                                    <CTableHeaderCell scope="col">
+                                      #
+                                    </CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">
+                                      KPI Name
+                                    </CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">
+                                      Description
+                                    </CTableHeaderCell>
+                                  </CTableRow>
+                                </CTableHead>
+                                <CTableBody>
+                                  {employeeReporteesKRIs.map(
+                                    (kpi, KRAindex) => {
+                                      return (
+                                        <CTableRow key={KRAindex} col-span={7}>
+                                          <CTableDataCell>
+                                            {KRAindex + 1}
+                                          </CTableDataCell>
+                                          <CTableDataCell>
+                                            <CLink className="text-decoration-none">
+                                              {kpi.name}
+                                            </CLink>
+                                          </CTableDataCell>
+                                          <CTableDataCell>
+                                            <CLink>
+                                              {parse(kpi.description || 'N/A')}
+                                            </CLink>
+                                          </CTableDataCell>
+                                        </CTableRow>
+                                      )
+                                    },
+                                  )}
+                                </CTableBody>
+                              </CTable>
+                            </CTableDataCell>
+                          </CTableRow>
                         </>
                       ) : (
                         <></>
