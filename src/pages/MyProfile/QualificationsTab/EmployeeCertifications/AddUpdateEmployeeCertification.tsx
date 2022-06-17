@@ -335,7 +335,6 @@ function AddUpdateEmployeeCertification({
   }
 
   const handleDescription = (data: string) => {
-    console.log(data)
     setAddCertification((prevState) => {
       return { ...prevState, ...{ description: data } }
     })
