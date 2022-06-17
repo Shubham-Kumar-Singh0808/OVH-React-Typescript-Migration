@@ -116,7 +116,7 @@ const AddNewCertificateType = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Category:{' '}
+            Technology:{' '}
             <span
               className={selectedTechnologyId ? 'text-white' : 'text-danger'}
             >
@@ -146,7 +146,7 @@ const AddNewCertificateType = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Name:
+            Certificate:
             <span className={newCertificateType ? 'text-white' : 'text-danger'}>
               *
             </span>

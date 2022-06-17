@@ -8,10 +8,10 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-
-import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
-import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
 import { useTypedSelector } from '../../../stateStore'
+import { Link } from 'react-router-dom'
+import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
+import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 
 const CertificatesFilterOptions = ({
   selectTechnology,
@@ -156,9 +156,11 @@ const CertificatesFilterOptions = ({
         </CCol>
 
         <CCol xs={5} className="d-md-flex justify-content-md-end">
-          <CButton color="info btn-ovh me-0">
-            <i className="fa fa-plus  me-1"></i>Add Certificate Type
-          </CButton>
+          <Link to={`/certificateTypeList`}>
+            <CButton color="info btn-ovh me-0">
+              <i className="fa fa-plus  me-1"></i>Add Certificate Type
+            </CButton>
+          </Link>
         </CCol>
       </CRow>
       <CRow className="mt-5 mb-4">
