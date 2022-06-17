@@ -9,6 +9,10 @@ import { mockCertificateType } from '../../../../test/data/certificateTypeData'
 import stateStore from '../../../../stateStore'
 import CertificateTypeTable from './CertificateTypeTable'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { createMemoryHistory } from 'history'
+import { Router } from 'react-router-dom'
+
+const history = createMemoryHistory()
 
 const ReduxProvider = ({
   children,
@@ -16,7 +20,11 @@ const ReduxProvider = ({
 }: {
   children: JSX.Element
   reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+}) => (
+  <Router history={history}>
+    <Provider store={reduxStore}>{children}</Provider>
+  </Router>
+)
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {

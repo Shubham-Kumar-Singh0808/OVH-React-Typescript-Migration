@@ -61,8 +61,8 @@ const selectOption = (technologyName: Technology) => {
 }
 
 const expectComponentToBeRendered = () => {
-  expect(screen.getByText('Category:')).toBeInTheDocument()
-  expect(screen.getByText('Name:')).toBeInTheDocument()
+  expect(screen.getByText('Technology:')).toBeInTheDocument()
+  expect(screen.getByText('Certificate:')).toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
   expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
 }
@@ -102,7 +102,7 @@ describe('Add New CertificateType Testing', () => {
         />
       </ReduxProvider>,
     )
-    expect(screen.getByText('Category:')).toBeInTheDocument()
+    expect(screen.getByText('Technology:')).toBeInTheDocument()
     expect(screen.getByTestId('form-select')).toBeInTheDocument()
   })
 
@@ -116,7 +116,7 @@ describe('Add New CertificateType Testing', () => {
       </ReduxProvider>,
     )
     expect(
-      screen.getByRole('option', { name: 'Select Category' }).selected,
+      screen.getByRole('option', { name: 'Select Technology' }).selected,
     ).toBe(true)
   })
 
