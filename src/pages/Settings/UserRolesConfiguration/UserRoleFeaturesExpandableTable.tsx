@@ -164,7 +164,7 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
                       </CAccordionHeader>
                       <CAccordionBody>
                         <CTable responsive striped>
-                          <CTableHead className="table-info" col-span={7}>
+                          <CTableHead color="info">
                             <CTableRow>
                               <CTableHeaderCell>Feature Name</CTableHeaderCell>
                               <CTableHeaderCell>View</CTableHeaderCell>
