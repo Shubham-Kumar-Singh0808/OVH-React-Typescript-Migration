@@ -21,6 +21,7 @@ import parse from 'html-react-parser'
 const EmployeeReportees = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isIconVisible, setIsIconVisible] = useState(false)
+  const [selectedKRA, setSelectedKRA] = useState(0)
   const empID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -47,21 +48,20 @@ const EmployeeReportees = (): JSX.Element => {
     dispatch(reduxServices.employeeReportees.getEmployeeReporteesKRAs(personId))
   }
 
-  // const handleKPIs = (id: number) => {
-  //   dispatch(reduxServices.employeeReportees.getEmployeeReporteesKPIs(id))
-  // }
-
   const tableHeaderCellProps = {
     scope: 'col',
   }
+
   const handleExpandRow = (
     id: number | React.MouseEvent<HTMLButtonElement>,
   ) => {
+    setSelectedKRA(id as number)
     dispatch(
       reduxServices.employeeReportees.getEmployeeReporteesKPIs(id as number),
     )
     setIsIconVisible(!isIconVisible)
   }
+
   return (
     <>
       <CRow className="justify-content-end">
@@ -162,11 +162,18 @@ const EmployeeReportees = (): JSX.Element => {
                   return (
                     <>
                       <CTableRow key={index}>
-                        <CTableDataCell scope="row">
-                          <i
-                            className="fa fa-plus-circle cursor-pointer"
-                            onClick={() => handleExpandRow(KRAs.id as number)}
-                          />
+                        <CTableDataCell className="text-center">
+                          {isIconVisible && selectedKRA === KRAs.id ? (
+                            <i
+                              className="'fa fa-minus-circle cursor-pointer"
+                              onClick={() => setIsIconVisible(false)}
+                            />
+                          ) : (
+                            <i
+                              className="fa fa-plus-circle cursor-pointer"
+                              onClick={() => handleExpandRow(KRAs.id as number)}
+                            />
+                          )}
                         </CTableDataCell>
 
                         <CTableDataCell scope="row">{KRAs.name}</CTableDataCell>
@@ -187,10 +194,10 @@ const EmployeeReportees = (): JSX.Element => {
                           {KRAs.count || 'N/A'}
                         </CTableDataCell>
                       </CTableRow>
-                      {isIconVisible && (
+                      {isIconVisible && selectedKRA === KRAs.id ? (
                         <>
                           <CTableHead>
-                            <CTableRow col-span={9}>
+                            <CTableRow col-span={7}>
                               <CTableHeaderCell scope="col">#</CTableHeaderCell>
                               <CTableHeaderCell scope="col">
                                 KPI Name
@@ -203,7 +210,7 @@ const EmployeeReportees = (): JSX.Element => {
                           <CTableBody>
                             {employeeReporteesKRIs.map((kpi, index) => {
                               return (
-                                <CTableRow key={index}>
+                                <CTableRow key={index} col-span={7}>
                                   <CTableDataCell>{index + 1}</CTableDataCell>
                                   <CTableDataCell>
                                     <CLink className="text-decoration-none">
@@ -220,6 +227,8 @@ const EmployeeReportees = (): JSX.Element => {
                             })}
                           </CTableBody>
                         </>
+                      ) : (
+                        <></>
                       )}
                     </>
                   )
