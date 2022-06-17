@@ -1,9 +1,9 @@
 import {
-  EmployeeReportees,
+  EmployeeReportee,
   EmployeeReporteesKRAs,
 } from '../../types/MyProfile/ReporteesTab/employeeReporteesType'
 
-export const mockReporteesDetails: EmployeeReportees[] = [
+export const mockReporteesDetails: EmployeeReportee[] = [
   {
     managerId: 1002,
     managerName: 'Chaitanya Mudunuri',

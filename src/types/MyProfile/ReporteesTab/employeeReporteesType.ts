@@ -1,5 +1,6 @@
 import { ValidationError, LoadingState } from '../../commonTypes'
-export type EmployeeReportees = {
+
+export type EmployeeReportee = {
   managerId: number
   managerName: string
   reporteeId: number
@@ -28,7 +29,7 @@ export type EmployeeReporteesKPIs = {
   description: string
 }
 export type ReporteesState = {
-  employeeReportees: EmployeeReportees[]
+  employeeReportees: EmployeeReportee[]
   employeeReporteesKRAs: EmployeeReporteesKRAs[]
   employeeReporteesKPIs: EmployeeReporteesKPIs[]
   isLoading: LoadingState

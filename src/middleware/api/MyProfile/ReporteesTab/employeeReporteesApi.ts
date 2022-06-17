@@ -1,6 +1,6 @@
 import { employeeReporteesApiConfig, AllowedHttpMethods } from '../../apiList'
 import {
-  EmployeeReportees,
+  EmployeeReportee,
   EmployeeReporteesKRAs,
   EmployeeReporteesKPIs,
 } from '../../../../types/MyProfile/ReporteesTab/employeeReporteesType'
@@ -9,7 +9,7 @@ import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeeReportees = async (
   empID: number | string,
-): Promise<EmployeeReportees[]> => {
+): Promise<EmployeeReportee[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeReporteesApiConfig.getEmployeeReportees,
     method: AllowedHttpMethods.get,

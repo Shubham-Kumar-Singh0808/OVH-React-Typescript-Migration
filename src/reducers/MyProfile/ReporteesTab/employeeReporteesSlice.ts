@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  EmployeeReportees,
+  EmployeeReportee,
   ReporteesState,
   EmployeeReporteesKRAs,
   EmployeeReporteesKPIs,
@@ -20,7 +20,7 @@ const initialEmployeeReporteesState: ReporteesState = {
 }
 
 const getEmployeeReportees = createAsyncThunk<
-  EmployeeReportees[] | undefined,
+  EmployeeReportee[] | undefined,
   number | string,
   {
     dispatch: AppDispatch
@@ -87,7 +87,7 @@ const employeeReporteesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getEmployeeReportees.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.employeeReportees = action.payload as EmployeeReportees[]
+      state.employeeReportees = action.payload as EmployeeReportee[]
     })
     builder.addCase(getEmployeeReporteesKRAs.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
@@ -111,7 +111,7 @@ const employeeReporteesSlice = createSlice({
   },
 })
 
-const employeeReportees = (state: RootState): EmployeeReportees[] =>
+const employeeReportees = (state: RootState): EmployeeReportee[] =>
   state.employeeReportees.employeeReportees
 
 const employeeReporteesKRAs = (state: RootState): EmployeeReporteesKRAs[] =>
