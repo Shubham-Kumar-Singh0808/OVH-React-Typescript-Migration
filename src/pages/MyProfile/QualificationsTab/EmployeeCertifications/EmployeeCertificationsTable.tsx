@@ -86,12 +86,6 @@ const EmployeeCertificationsTable = ({
     className: 'fw-semibold',
   }
 
-  const removeHtmlTags = (description: string) => {
-    const regex = /(<([^>]+)>)/gi
-    const result = description.replace(regex, '')
-    return result
-  }
-
   return (
     <>
       <CTable

@@ -43,7 +43,7 @@ function AddUpdateEmployeeCertification({
   const [expiryDateFlag, setExpirtyDateFlag] = useState<boolean>(false)
 
   const [showEditor, setShowEditor] = useState<boolean>(false)
-  const [description, setDescription] = useState<string | undefined>()
+  // const [description, setDescription] = useState<string | undefined>()
 
   const getTechnologies = useTypedSelector(
     (state) => state.employeeCertificates.getAllTechnologies,
@@ -618,9 +618,9 @@ function AddUpdateEmployeeCertification({
                 ''
               )
             ) : (
-              <>
+              <div className="d-flex justify-content-center">
                 <CSpinner />
-              </>
+              </div>
             )}
           </CRow>
           <CRow>
