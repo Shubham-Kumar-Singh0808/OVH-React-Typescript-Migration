@@ -147,14 +147,13 @@ const EmployeeReportees = (): JSX.Element => {
             <CTable striped>
               <CTableHead>
                 <CTableRow>
+                  <CTableHeaderCell className="text-center"></CTableHeaderCell>
                   <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Department</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">
-                    Designation Percentage
-                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Description</CTableHeaderCell>
                   <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">KRAs</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -199,7 +198,7 @@ const EmployeeReportees = (): JSX.Element => {
                           <CTableRow>
                             <CTableDataCell colSpan={8}>
                               <CTable responsive striped>
-                                <CTableHead color="info">
+                                <CTableHead color="primary">
                                   <CTableRow>
                                     <CTableHeaderCell scope="col">
                                       #
@@ -226,9 +225,12 @@ const EmployeeReportees = (): JSX.Element => {
                                             </CLink>
                                           </CTableDataCell>
                                           <CTableDataCell>
-                                            <CLink>
+                                            <Link
+                                              className="employee-name"
+                                              to={'#'}
+                                            >
                                               {parse(kpi.description || 'N/A')}
-                                            </CLink>
+                                            </Link>
                                           </CTableDataCell>
                                         </CTableRow>
                                       )
