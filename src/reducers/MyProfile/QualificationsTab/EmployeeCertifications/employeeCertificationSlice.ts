@@ -262,7 +262,7 @@ const employeeCertificationsSlice = createSlice({
   },
 })
 
-const isLoading = (state: RootState): LoadingState =>
+const listSize = (state: RootState): LoadingState =>
   state.employeeCertificates.isLoading
 const employeeCertificates = (
   state: RootState,
@@ -284,7 +284,7 @@ export const employeeCertificationThunk = {
 }
 
 export const employeeCertificationSelectors = {
-  isLoading,
+  listSize,
   employeeCertificates,
 }
 

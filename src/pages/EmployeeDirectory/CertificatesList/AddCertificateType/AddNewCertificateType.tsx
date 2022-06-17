@@ -116,7 +116,7 @@ const AddNewCertificateType = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Category:{' '}
+            Technology:{' '}
             <span
               className={selectedTechnologyId ? 'text-white' : 'text-danger'}
             >
@@ -132,7 +132,7 @@ const AddNewCertificateType = ({
               value={selectedTechnologyId}
               onChange={handleInputChange}
             >
-              <option value={''}>Select Category</option>
+              <option value={''}>Select Technology</option>
               {getAllTechnology?.map((certificateItem, index) => (
                 <option key={index} value={certificateItem.id}>
                   {certificateItem.name}
@@ -146,7 +146,7 @@ const AddNewCertificateType = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Name:
+            Certificate:
             <span className={newCertificateType ? 'text-white' : 'text-danger'}>
               *
             </span>
