@@ -29,7 +29,6 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { username } from '../../../../test/constants'
 
 const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   const [shiftName, setShiftName] = useState<string>()
@@ -104,10 +103,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
           </CCol>
         </CRow>
         {addEmployee?.userName}
-        <UserNameEmail
-          dynamicFormLabelProps={dynamicFormLabelProps}
-          userName={addEmployee?.userName as string}
-        />
+        <UserNameEmail dynamicFormLabelProps={dynamicFormLabelProps} />
 
         <FullName dynamicFormLabelProps={dynamicFormLabelProps} />
         <Gender dynamicFormLabelProps={dynamicFormLabelProps} />

@@ -1,12 +1,11 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
 
-import { UserNameProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const UserNameEmail = ({
   dynamicFormLabelProps,
-  userName,
-}: UserNameProps): JSX.Element => {
+}: DynamicFormLabelProps): JSX.Element => {
   const [userEmail, setUserEmail] = useState<string>()
   const handleUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserEmail(e.target.value)
@@ -22,9 +21,9 @@ const UserNameEmail = ({
           )}
         >
           Username
-          <span
+          {/* <span
             className={userName.length ? 'text-white' : 'text-danger'}
-          ></span>
+          ></span> */}
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
