@@ -110,6 +110,7 @@ const employeeReporteesSlice = createSlice({
       )
   },
 })
+
 const employeeReportees = (state: RootState): EmployeeReportees[] =>
   state.employeeReportees.employeeReportees
 
@@ -124,11 +125,13 @@ const employeeReporteesThunk = {
   getEmployeeReporteesKRAs,
   getEmployeeReporteesKPIs,
 }
+
 const employeeReporteesSelectors = {
   employeeReportees,
   employeeReporteesKRAs,
   employeeReporteesKPIs,
 }
+
 export const employeeReporteesService = {
   ...employeeReporteesThunk,
   actions: employeeReporteesSlice.actions,
