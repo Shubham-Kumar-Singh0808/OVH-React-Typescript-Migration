@@ -45,7 +45,7 @@ const AddNewCertificateType = ({
     const { name } = event.target
     if (name === 'certificate') {
       setNewCertificateType(
-        event.target.value.replace(/[^a-zA-Z\s]/gi, '').replace(/^\s*/, ''),
+        event.target.value.replace(/[^a-zA-Z0-9\s]/gi, '').replace(/^\s*/, ''),
       )
     } else {
       setSelectedTechnologyId(+event.target.value)

@@ -20,10 +20,13 @@ import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { currentPageData } from '../../../../utils/paginationUtils'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
-import OToast from '../../../../components/ReusableComponent/OToast'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import { CertificateType } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
-const CertificateTypeTable = (): JSX.Element => {
+import { CertificateTypeTableProps } from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
+const CertificateTypeTable = ({
+  actionMapping,
+  getToastMessage,
+}: CertificateTypeTableProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [certificateId, setCertificateId] = useState(0)
   const [isEditCertificateType, setIsEditCertificateType] =
@@ -74,13 +77,6 @@ const CertificateTypeTable = (): JSX.Element => {
     [certificateTypes, currentPage, pageSize],
   )
 
-  const toastElement = (
-    <OToast
-      toastColor="success"
-      toastMessage="Certificate deleted successfully"
-    />
-  )
-
   const handleShowDeleteModal = (certificateTypeId: number) => {
     setCertificateId(certificateTypeId)
     setIsDeleteModalVisible(true)
@@ -97,7 +93,32 @@ const CertificateTypeTable = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.certificateType.getCertificateTypes())
-      dispatch(reduxServices.app.actions.addToast(toastElement))
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.deleted),
+        ),
+      )
+    }
+  }
+
+  const saveCertificateTypeHandler = async () => {
+    const updateCertificateTypeResultAction = await dispatch(
+      reduxServices.certificateType.updateCertificateType(
+        editCertificateTypeDetails,
+      ),
+    )
+    if (
+      reduxServices.certificateType.updateCertificateType.fulfilled.match(
+        updateCertificateTypeResultAction,
+      )
+    ) {
+      await dispatch(reduxServices.certificateType.getCertificateTypes())
+      setIsEditCertificateType(false)
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.updated),
+        ),
+      )
     }
   }
 
@@ -112,13 +133,15 @@ const CertificateTypeTable = (): JSX.Element => {
       technology: '',
     })
   }
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    if (name === 'certificate') {
-      setEditCertificateTypeDetails((prevState) => {
-        return { ...prevState, ...{ [name]: name } }
-      })
-    }
+  const handleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+    setEditCertificateTypeDetails((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
   }
 
   return (
@@ -149,11 +172,10 @@ const CertificateTypeTable = (): JSX.Element => {
                           aria-label="Default select example"
                           size="sm"
                           name="technology"
-                          value={certificateTypeItem.technologyName}
+                          value={editCertificateTypeDetails.technologyName}
                         >
-                          <option value={''}>Select Category</option>
                           {getAllTechnology?.map((certificateItem, index) => (
-                            <option key={index} value={certificateItem.name}>
+                            <option key={index} value={certificateItem.id}>
                               {certificateItem.name}
                             </option>
                           ))}
@@ -173,7 +195,7 @@ const CertificateTypeTable = (): JSX.Element => {
                           size="sm"
                           name="certificate"
                           maxLength={32}
-                          value={certificateTypeItem.certificateType}
+                          value={editCertificateTypeDetails.certificateType}
                           onChange={handleInputChange}
                         ></CFormInput>
                       </CTableDataCell>
@@ -190,6 +212,7 @@ const CertificateTypeTable = (): JSX.Element => {
                             color="success"
                             data-testid={`sh-save-btn${index}`}
                             className="btn-ovh me-1"
+                            onClick={saveCertificateTypeHandler}
                           >
                             <i
                               className="fa fa-floppy-o"

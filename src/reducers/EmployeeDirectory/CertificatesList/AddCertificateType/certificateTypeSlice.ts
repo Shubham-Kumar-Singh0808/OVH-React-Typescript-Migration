@@ -154,6 +154,7 @@ const certificateTypeSlice = createSlice({
           addCertificateType.fulfilled,
           deleteCertificateType.fulfilled,
           checkIsCertificateTypeExists.fulfilled,
+          updateCertificateType.fulfilled,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -166,6 +167,7 @@ const certificateTypeSlice = createSlice({
           addCertificateType.pending,
           deleteCertificateType.pending,
           getCertificateType.pending,
+          updateCertificateType.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -178,6 +180,7 @@ const certificateTypeSlice = createSlice({
           addCertificateType.rejected,
           deleteCertificateType.rejected,
           getCertificateType.rejected,
+          updateCertificateType.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -202,6 +205,7 @@ const certificateTypeThunk = {
   checkIsCertificateTypeExists,
   deleteCertificateType,
   getCertificateType,
+  updateCertificateType,
 }
 
 const certificateTypeSelectors = {
