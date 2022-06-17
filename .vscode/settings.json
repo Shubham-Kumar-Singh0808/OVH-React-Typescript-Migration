@@ -1,21 +1,4 @@
 {
-<<<<<<< HEAD
-        "cSpell.words": [
-            "coreui",
-            "createaccess",
-            "deleteaccess",
-            "formik",
-            "headwrap",
-            "infocheckbox",
-            "reduxjs",
-            "Reportees",
-            "testid",
-            "updateaccess",
-            "viewaccess"
-        ]
-    }
-    
-=======
   "cSpell.words": [
     "coreui",
     "createaccess",
@@ -30,4 +13,3 @@
     "viewaccess"
   ]
 }
->>>>>>> develop
