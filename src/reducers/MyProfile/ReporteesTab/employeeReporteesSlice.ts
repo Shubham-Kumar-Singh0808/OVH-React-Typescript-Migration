@@ -2,8 +2,8 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeReportee,
   ReporteesState,
-  EmployeeReporteesKRAs,
-  EmployeeReporteesKPIs,
+  EmployeeReporteesKRA,
+  EmployeeReporteesKPI,
 } from '../../../types/MyProfile/ReporteesTab/employeeReporteesType'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
@@ -40,7 +40,7 @@ const getEmployeeReportees = createAsyncThunk<
 )
 
 const getEmployeeReporteesKRAs = createAsyncThunk<
-  EmployeeReporteesKRAs[] | undefined,
+  EmployeeReporteesKRA[] | undefined,
   string | number,
   {
     dispatch: AppDispatch
@@ -60,7 +60,7 @@ const getEmployeeReporteesKRAs = createAsyncThunk<
 )
 
 const getEmployeeReporteesKPIs = createAsyncThunk<
-  EmployeeReporteesKPIs[] | undefined,
+  EmployeeReporteesKPI[] | undefined,
   string | number,
   {
     dispatch: AppDispatch
@@ -91,12 +91,12 @@ const employeeReporteesSlice = createSlice({
     })
     builder.addCase(getEmployeeReporteesKRAs.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.employeeReporteesKRAs = action.payload as EmployeeReporteesKRAs[]
+      state.employeeReporteesKRAs = action.payload as EmployeeReporteesKRA[]
     })
     builder
       .addCase(getEmployeeReporteesKPIs.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.loading
-        state.employeeReporteesKPIs = action.payload as EmployeeReporteesKPIs[]
+        state.employeeReporteesKPIs = action.payload as EmployeeReporteesKPI[]
       })
       .addMatcher(
         isAnyOf(
@@ -114,10 +114,10 @@ const employeeReporteesSlice = createSlice({
 const employeeReportees = (state: RootState): EmployeeReportee[] =>
   state.employeeReportees.employeeReportees
 
-const employeeReporteesKRAs = (state: RootState): EmployeeReporteesKRAs[] =>
+const employeeReporteesKRAs = (state: RootState): EmployeeReporteesKRA[] =>
   state.employeeReportees.employeeReporteesKRAs
 
-const employeeReporteesKPIs = (state: RootState): EmployeeReporteesKPIs[] =>
+const employeeReporteesKPIs = (state: RootState): EmployeeReporteesKPI[] =>
   state.employeeReportees.employeeReporteesKPIs
 
 const employeeReporteesThunk = {

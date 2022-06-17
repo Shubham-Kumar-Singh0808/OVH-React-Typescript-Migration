@@ -1,6 +1,6 @@
 import {
   EmployeeReportee,
-  EmployeeReporteesKRAs,
+  EmployeeReporteesKRA,
 } from '../../types/MyProfile/ReporteesTab/employeeReporteesType'
 
 export const mockReporteesDetails: EmployeeReportee[] = [
@@ -22,7 +22,7 @@ export const mockReporteesDetails: EmployeeReportee[] = [
   },
 ]
 
-export const mockReporteesKRAs: EmployeeReporteesKRAs[] = [
+export const mockReporteesKRAs: EmployeeReporteesKRA[] = [
   {
     id: 149,
     name: 'Finance Management',

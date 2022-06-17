@@ -9,7 +9,7 @@ export type EmployeeReportee = {
   mobile: string | null
 }
 
-export type EmployeeReporteesKRAs = {
+export type EmployeeReporteesKRA = {
   personId: number
   id: number
   name: string
@@ -23,15 +23,15 @@ export type EmployeeReporteesKRAs = {
   departmentId: number
   designationKraPercentage: number
 }
-export type EmployeeReporteesKPIs = {
+export type EmployeeReporteesKPI = {
   id: number
   name: string
   description: string
 }
 export type ReporteesState = {
   employeeReportees: EmployeeReportee[]
-  employeeReporteesKRAs: EmployeeReporteesKRAs[]
-  employeeReporteesKPIs: EmployeeReporteesKPIs[]
+  employeeReporteesKRAs: EmployeeReporteesKRA[]
+  employeeReporteesKPIs: EmployeeReporteesKPI[]
   isLoading: LoadingState
   error: ValidationError
 }
