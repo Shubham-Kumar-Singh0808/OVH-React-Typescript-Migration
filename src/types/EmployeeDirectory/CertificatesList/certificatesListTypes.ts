@@ -37,7 +37,7 @@ export type CertificatesListSliceState = {
   isLoading: ApiLoadingState
 }
 
-export type GetEmployeeCertificateResponse = {
+export type EmployeeCertificateResponse = {
   list: EmployeeCertificate[]
   listsize: number
 }

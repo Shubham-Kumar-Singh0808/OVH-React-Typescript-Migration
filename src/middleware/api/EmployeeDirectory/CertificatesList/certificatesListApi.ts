@@ -1,7 +1,7 @@
 import { AllowedHttpMethods, certificateListApiConfig } from '../../apiList'
 import {
   CertificateListApiProps,
-  GetEmployeeCertificateResponse,
+  EmployeeCertificateResponse,
 } from '../../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 
 import axios from 'axios'
@@ -9,7 +9,7 @@ import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeesCertificates = async (
   props: CertificateListApiProps,
-): Promise<GetEmployeeCertificateResponse> => {
+): Promise<EmployeeCertificateResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: certificateListApiConfig.getAllEmployeeCertificates,
     method: AllowedHttpMethods.get,
