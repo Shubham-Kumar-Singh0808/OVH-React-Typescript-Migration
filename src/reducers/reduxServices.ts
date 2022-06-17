@@ -15,6 +15,10 @@ import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/Add
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { employeeReporteesService } from './MyProfile/ReporteesTab/employeeReporteesSlice'
+import { employeeAssetsService } from './MyProfile/MyAssetsTab/employeeAssetsSlice'
+import { certificateTypeService } from './EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
+import { employeeReviewsService } from './MyProfile/ReviewTab/employeeReviewsSlice'
+
 export const reduxServices = {
   app: appService,
   authentication: authenticationService,
@@ -31,6 +35,9 @@ export const reduxServices = {
   basicInformation: basicInformationService,
   generalInformation: generalInformationService,
   employeeSkill: employeeSkillServices,
+  employeeReviews: employeeReviewsService,
   shiftConfiguration: shiftConfigurationService,
   employeeReportees: employeeReporteesService,
+  employeeAssets: employeeAssetsService,
+  certificateType: certificateTypeService,
 }

@@ -202,6 +202,17 @@ function AddEditEmployeeSkill({
     }
   }
 
+  const categoryName = useMemo(() => {
+    if (employeeSkill.categoryType) {
+      return sortedCategoryDetails?.filter(
+        (category) =>
+          category.categoryId === Number(employeeSkill.categoryType),
+      )[0].categoryType
+    }
+
+    return ''
+  }, [employeeSkill.categoryType, sortedCategoryDetails])
+
   return (
     <>
       {toggle === '' && (
@@ -448,7 +459,7 @@ function AddEditEmployeeSkill({
       {toggle === 'skillListSection' && (
         <SkillList
           categoryId={employeeSkill.categoryType as number}
-          categoryType={''}
+          categoryType={categoryName}
           backButtonHandler={() => setToggle('')}
         />
       )}

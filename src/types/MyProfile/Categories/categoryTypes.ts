@@ -9,4 +9,6 @@ export type Category = {
 export type CategorySliceState = {
   categories: Category[]
   isLoading: LoadingState
+  currentPage: number
+  pageSize: number
 }

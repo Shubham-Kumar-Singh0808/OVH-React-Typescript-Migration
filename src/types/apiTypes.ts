@@ -122,6 +122,9 @@ export interface UploadFileReturn {
   file: FormData
 }
 
+export interface EmployeeReviewsApi extends ApiBase {
+  getEmployeeReviews: string
+}
 export interface EmployeeListApi extends ApiBase {
   getEmployeeList: string
   exportEmployeeData: string
@@ -144,6 +147,16 @@ export interface ShiftConfigurationApi extends ApiBase {
   addTimeSlot: string
   updateShiftDetail: string
   deleteShiftDetail: string
+}
+
+export interface EmployeeAssetsApi extends ApiBase {
+  getEmployeeAssets: string
+}
+
+export interface CertificateTypeApi extends ApiBase {
+  getCertificateTypes: string
+  addCertificateType: string
+  deleteCertificateType: string
 }
 
 export type UploadImage = {
