@@ -2,6 +2,7 @@ import {
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
+  CertificateListApi,
   CertificateTypeApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
@@ -167,6 +168,12 @@ export const employeeReporteesApiConfig: EmployeeReporteesApi = {
   getEmployeeReportees: apiPrefix + '/jobapplicant/getReportiesUnderManager',
   getEmployeeReporteesKRAs: apiPrefix + '/kra/kraForIndividual',
   getEmployeeReporteesKPIs: apiPrefix + '/kra/kpisForIndividualKra',
+}
+
+export const certificateListApiConfig: CertificateListApi = {
+  getAllEmployeeCertificates:
+    apiPrefix + '/EmployeeSkill/getAllEmployeecertificates',
+  exportCertificateList: apiPrefix + '/EmployeeSkill/exportCertificatesList',
 }
 
 export const employeeAssetsApiConfig: EmployeeAssetsApi = {

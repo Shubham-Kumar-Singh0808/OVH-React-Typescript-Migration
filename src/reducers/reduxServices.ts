@@ -2,6 +2,7 @@ import { appService } from './appSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
+import { certificateListService } from './EmployeeDirectory/CertificatesList/certificatesListSlice'
 import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { employeeDesignationListService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import { employeeListService } from './EmployeeDirectory/EmployeesList/employeeListSlice'
@@ -38,6 +39,7 @@ export const reduxServices = {
   employeeReviews: employeeReviewsService,
   shiftConfiguration: shiftConfigurationService,
   employeeReportees: employeeReporteesService,
+  certificateList: certificateListService,
   employeeAssets: employeeAssetsService,
   certificateType: certificateTypeService,
 }

@@ -10,8 +10,8 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import {
-  EmployeeCertificationProps,
   EmployeeCertification,
+  EmployeeCertificationProps,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
