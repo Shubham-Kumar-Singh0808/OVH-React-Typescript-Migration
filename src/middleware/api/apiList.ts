@@ -16,6 +16,7 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
+  EmployeeAssetsApi,
   EmployeeReviewsApi,
 } from '../../types/apiTypes'
 
@@ -159,6 +160,10 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
   updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
+}
+
+export const employeeAssetsApiConfig: EmployeeAssetsApi = {
+  getEmployeeAssets: apiPrefix + '/Employee/getEmployeeAssets',
 }
 
 export const certificateTypeApiConfig: CertificateTypeApi = {

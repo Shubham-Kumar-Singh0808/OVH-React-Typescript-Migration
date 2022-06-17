@@ -8,6 +8,7 @@ export type ModalPropsType = {
   modalFooterClass?: string
   modalBodyClass?: string
   closeButtonClass?: string
+  modalSize?: 'sm' | 'lg' | 'xl' | undefined
   isConfirmButtonDisabled?: boolean
   isCancelButtonDisabled?: boolean
   confirmButtonText?: string
