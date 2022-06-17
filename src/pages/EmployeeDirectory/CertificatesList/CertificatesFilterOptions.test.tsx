@@ -30,6 +30,7 @@ describe('Certificates Filter Options Component Testing', () => {
           filterByTechnology={'.Net'}
           filterByCertificate={'MVC Certificate'}
           multiSearchValue={'Java'}
+          setIsAccordionItemShow={jest.fn}
         />
       </ReduxProvider>,
     )

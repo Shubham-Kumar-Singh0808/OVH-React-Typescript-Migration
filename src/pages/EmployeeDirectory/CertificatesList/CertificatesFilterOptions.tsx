@@ -22,6 +22,7 @@ const CertificatesFilterOptions = ({
   filterByTechnology,
   filterByCertificate,
   multiSearchValue,
+  setIsAccordionItemShow,
 }: CertificatesFilterOptionsProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [selectCertificate, setSelectCertificate] = useState<string>('')
@@ -35,10 +36,12 @@ const CertificatesFilterOptions = ({
 
   const multiSearchButtonHandler = () => {
     setMultiSearchValue(searchInput)
+    setIsAccordionItemShow(true)
   }
   const viewButtonHandler = () => {
     setFilterByTechnology(selectTechnology)
     setFilterByCertificate(selectCertificate)
+    setIsAccordionItemShow(true)
   }
   const clearButtonHandler = () => {
     setSelectTechnology('')
@@ -46,6 +49,7 @@ const CertificatesFilterOptions = ({
     setFilterByTechnology('')
     setFilterByCertificate('')
     setMultiSearchValue('')
+    setIsAccordionItemShow(false)
   }
 
   useEffect(() => {
@@ -120,7 +124,7 @@ const CertificatesFilterOptions = ({
         </CCol>
         <CCol sm={4}>
           <CRow>
-            <CCol sm={4} className="text-end">
+            <CCol sm={4} lg={5} className="text-end">
               <CFormLabel className="mt-1">Certificate Type:</CFormLabel>
             </CCol>
             <CCol sm={6}>

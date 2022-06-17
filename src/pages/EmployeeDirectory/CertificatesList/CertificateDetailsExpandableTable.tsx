@@ -38,6 +38,7 @@ const CertificateDetailsExpandableTable = (
     setPageSize,
     currentPage,
     setCurrentPage,
+    isAccordionItemShow,
   } = props
 
   const handlePageSizeSelectChange = (
@@ -47,13 +48,15 @@ const CertificateDetailsExpandableTable = (
     setCurrentPage(1)
   }
 
+  const accordionItemShow = isAccordionItemShow ? 1 : 0
+
   return (
     <>
       {employeesCertificates.length ? (
         <>
           <CAccordion
             alwaysOpen
-            activeItemKey={1}
+            activeItemKey={accordionItemShow}
             flush
             className="expandable-table mb-4 mt-4"
           >

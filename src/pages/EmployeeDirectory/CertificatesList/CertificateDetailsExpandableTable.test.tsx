@@ -28,12 +28,12 @@ describe('Certificate Details Expandable Table Component Testing', () => {
         currentPage={1}
         pageSize={20}
         paginationRange={[1, 2, 3]}
+        isAccordionItemShow={false}
       />,
       {
         preloadedState: {
           certificateList: {
-            employeeCertificationList:
-              mockCertificateList as EmployeeCertificate[],
+            employeeCertificationList: mockCertificateList,
             listSize: 44,
           },
         },

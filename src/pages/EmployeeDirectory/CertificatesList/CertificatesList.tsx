@@ -14,6 +14,7 @@ const CertificatesList = (): JSX.Element => {
   const [filterByCertificate, setFilterByCertificate] = useState<string>('')
   const [multiSearchValue, setMultiSearchValue] = useState<string>('')
   const [selectTechnology, setSelectTechnology] = useState<string>('')
+  const [isAccordionItemShow, setIsAccordionItemShow] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const listSize = useTypedSelector(
     reduxServices.certificateList.selectors.listSize,
@@ -79,6 +80,7 @@ const CertificatesList = (): JSX.Element => {
               filterByTechnology={filterByTechnology}
               filterByCertificate={filterByCertificate}
               multiSearchValue={multiSearchValue}
+              setIsAccordionItemShow={setIsAccordionItemShow}
             />
           </CCol>
           {isLoading !== ApiLoadingState.loading ? (
@@ -89,6 +91,7 @@ const CertificatesList = (): JSX.Element => {
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
                 pageSize={pageSize}
+                isAccordionItemShow={isAccordionItemShow}
               />
             </CCol>
           ) : (
