@@ -47,6 +47,13 @@ const Login = (): JSX.Element => {
     }
   }, [username, password, dispatch])
 
+  useEffect(() => {
+    if (!username && !password) {
+      dispatch(reduxServices.authentication.actions.clearError())
+      dispatch(reduxServices.authentication.actions.clearLoading())
+    }
+  }, [dispatch, password, username])
+
   const rbtCopyright = 'Copyright © Ray Business Technologies Pvt Ltd'
   const aimlCopyright = 'Copyright © AIBridgeML Pvt Ltd'
 

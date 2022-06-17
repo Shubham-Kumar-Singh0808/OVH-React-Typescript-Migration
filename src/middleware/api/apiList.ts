@@ -3,13 +3,13 @@ import {
   BasicInfoApi,
   CategoryApi,
   CertificateListApi,
+  CertificateTypeApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
   EmployeeListApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
-  EmployeeReviewsApi,
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
@@ -17,6 +17,8 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
+  EmployeeAssetsApi,
+  EmployeeReviewsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -100,6 +102,7 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
     createQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
     deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
   }
+
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
   getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
 }
@@ -164,6 +167,16 @@ export const certificateListApiConfig: CertificateListApi = {
   getAllEmployeeCertificates:
     apiPrefix + '/EmployeeSkill/getAllEmployeecertificates',
   exportCertificateList: apiPrefix + '/EmployeeSkill/exportCertificatesList',
+}
+
+export const employeeAssetsApiConfig: EmployeeAssetsApi = {
+  getEmployeeAssets: apiPrefix + '/Employee/getEmployeeAssets',
+}
+
+export const certificateTypeApiConfig: CertificateTypeApi = {
+  getCertificateTypes: apiPrefix + '/EmployeeSkill/getCertificateTypeList',
+  addCertificateType: apiPrefix + '/EmployeeSkill/addCertificateType',
+  deleteCertificateType: apiPrefix + '/EmployeeSkill/deleteCertificateType',
 }
 
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {

@@ -19,11 +19,15 @@ const TabsLabels = [
   },
   {
     id: 5,
-    name: 'Review',
+    name: 'Reviews',
   },
   {
     id: 6,
     name: 'Projects',
+  },
+  {
+    id: 8,
+    name: 'Assets',
   },
   {
     id: 9,

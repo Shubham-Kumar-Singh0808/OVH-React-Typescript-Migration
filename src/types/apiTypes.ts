@@ -153,6 +153,16 @@ export interface CertificateListApi extends ApiBase {
   exportCertificateList: string
 }
 
+export interface EmployeeAssetsApi extends ApiBase {
+  getEmployeeAssets: string
+}
+
+export interface CertificateTypeApi extends ApiBase {
+  getCertificateTypes: string
+  addCertificateType: string
+  deleteCertificateType: string
+}
+
 export type UploadImage = {
   empId: number
   data: FormData

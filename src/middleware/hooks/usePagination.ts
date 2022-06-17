@@ -15,13 +15,19 @@ const range = (start: number, end: number) => {
 export const usePagination = (
   totalItemCount: number,
   customPageSize = 20,
+  initialPage = 1,
 ): UsePaginationType => {
   const [pageSize, setPageSize] = useState(customPageSize)
-  const [currentPage, setCurrentPage] = useState(1)
 
   const paginationRange = useMemo(() => {
     return range(1, Math.ceil(totalItemCount / pageSize))
   }, [totalItemCount, pageSize])
+
+  if (!paginationRange.includes(initialPage) && initialPage !== 1) {
+    initialPage = paginationRange[paginationRange.length - 1]
+  }
+
+  const [currentPage, setCurrentPage] = useState(initialPage)
 
   return { paginationRange, setPageSize, setCurrentPage, pageSize, currentPage }
 }
