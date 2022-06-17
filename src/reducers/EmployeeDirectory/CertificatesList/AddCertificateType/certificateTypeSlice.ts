@@ -135,6 +135,12 @@ const initialCertificateTypeState: CertificateTypeSliceState = {
   certificateTypes: [],
   isLoading: ApiLoadingState.idle,
   error: null,
+  editCertificateType: {
+    certificateType: '',
+    id: 0,
+    technologyId: 0,
+    technologyName: '',
+  },
 }
 const certificateTypeSlice = createSlice({
   name: 'certificateType',
@@ -142,13 +148,14 @@ const certificateTypeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(
-        isAnyOf(getCertificateType.fulfilled, getCertificateTypes.fulfilled),
-        (state, action) => {
-          state.isLoading = ApiLoadingState.succeeded
-          state.certificateTypes = action.payload as CertificateType[]
-        },
-      )
+      .addCase(getCertificateType.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editCertificateType = action.payload as CertificateType
+      })
+      .addCase(getCertificateTypes.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.certificateTypes = action.payload as CertificateType[]
+      })
       .addMatcher(
         isAnyOf(
           addCertificateType.fulfilled,
@@ -196,6 +203,9 @@ const isLoading = (state: RootState): LoadingState =>
 const certificateTypes = (state: RootState): CertificateType[] =>
   state.certificateType.certificateTypes
 
+const editCertificateType = (state: RootState): CertificateType =>
+  state.certificateType.editCertificateType
+
 const isError = (state: RootState): ValidationError =>
   state.certificateType.error
 
@@ -211,6 +221,7 @@ const certificateTypeThunk = {
 const certificateTypeSelectors = {
   isLoading,
   certificateTypes,
+  editCertificateType,
   isError,
 }
 

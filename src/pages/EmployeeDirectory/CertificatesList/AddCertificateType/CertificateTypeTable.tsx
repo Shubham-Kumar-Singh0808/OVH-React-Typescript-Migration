@@ -21,8 +21,8 @@ import { currentPageData } from '../../../../utils/paginationUtils'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OModal from '../../../../components/ReusableComponent/OModal'
-import { CertificateType } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import { CertificateTypeTableProps } from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
+import EditCertificateType from './EditCertificateType'
 const CertificateTypeTable = ({
   actionMapping,
   getToastMessage,
@@ -31,20 +31,11 @@ const CertificateTypeTable = ({
   const [certificateId, setCertificateId] = useState(0)
   const [isEditCertificateType, setIsEditCertificateType] =
     useState<boolean>(false)
-  const [editCertificateTypeDetails, setEditCertificateTypeDetails] =
-    useState<CertificateType>({
-      id: 0,
-      technologyId: 0,
-      technologyName: '',
-      certificateType: '',
-      technology: '',
-    })
+
   const certificateTypes = useTypedSelector(
     reduxServices.certificateType.selectors.certificateTypes,
   )
-  const getAllTechnology = useTypedSelector(
-    (state) => state.employeeCertificates.getAllTechnologies,
-  )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.certificateType.getCertificateTypes())
@@ -58,27 +49,28 @@ const CertificateTypeTable = ({
     pageSize,
   } = usePagination(certificateTypes.length, 20)
 
-  useEffect(() => {
-    setPageSize(20)
-  }, [certificateTypes, setPageSize, setCurrentPage])
-  const handlePageSizeSelectChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setPageSize(Number(event.target.value))
-    setCurrentPage(1)
-  }
+  // useEffect(() => {
+  //   setPageSize(20)
+  // }, [certificateTypes, setPageSize, setCurrentPage])
+  // const handlePageSizeSelectChange = (
+  //   event: React.ChangeEvent<HTMLSelectElement>,
+  // ) => {
+  //   setPageSize(Number(event.target.value))
+  //   setCurrentPage(1)
+  // }
 
-  const getItemNumber = (index: number) => {
-    return (currentPage - 1) * pageSize + index + 1
-  }
+  // const getItemNumber = (index: number) => {
+  //   return (currentPage - 1) * pageSize + index + 1
+  // }
 
-  const currentPageItems = useMemo(
-    () => currentPageData(certificateTypes, currentPage, pageSize),
-    [certificateTypes, currentPage, pageSize],
-  )
+  // const currentPageItems = useMemo(
+  //   () => currentPageData(certificateTypes, currentPage, pageSize),
+  //   [certificateTypes, currentPage, pageSize],
+  // )
 
   const handleShowDeleteModal = (certificateTypeId: number) => {
     setCertificateId(certificateTypeId)
+    setIsEditCertificateType(false)
     setIsDeleteModalVisible(true)
   }
 
@@ -101,54 +93,21 @@ const CertificateTypeTable = ({
     }
   }
 
-  const saveCertificateTypeHandler = async () => {
-    const updateCertificateTypeResultAction = await dispatch(
-      reduxServices.certificateType.updateCertificateType(
-        editCertificateTypeDetails,
-      ),
-    )
-    if (
-      reduxServices.certificateType.updateCertificateType.fulfilled.match(
-        updateCertificateTypeResultAction,
-      )
-    ) {
-      await dispatch(reduxServices.certificateType.getCertificateTypes())
-      setIsEditCertificateType(false)
-      dispatch(
-        reduxServices.app.actions.addToast(
-          getToastMessage(actionMapping.updated),
-        ),
-      )
-    }
-  }
-
   const editCertificateTypeButtonHandler = (id: number): void => {
     setIsEditCertificateType(true)
     setCertificateId(id)
-    setEditCertificateTypeDetails({
-      id: 0,
-      technologyId: 0,
-      technologyName: '',
-      certificateType: '',
-      technology: '',
-    })
+    dispatch(reduxServices.certificateType.getCertificateType(id))
   }
-  const handleInputChange = (
-    event:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { name, value } = event.target
-    setEditCertificateTypeDetails((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+
+  const cancelCertificateTypeButtonHandler = () => {
+    setIsEditCertificateType(false)
   }
 
   return (
     <>
       {certificateTypes.length ? (
         <>
-          <CTable striped responsive>
+          <CTable responsive>
             <CTableHead>
               <CTableRow className="align-items-start">
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -158,101 +117,60 @@ const CertificateTypeTable = ({
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {currentPageItems.map((certificateTypeItem, index) => {
+              {certificateTypes.map((certificateTypeItem, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">
-                      {getItemNumber(index)}
-                    </CTableHeaderCell>
+                    <CTableDataCell scope="row">{index + 1}</CTableDataCell>
                     {isEditCertificateType &&
-                    certificateTypeItem.id === certificateId ? (
-                      <CTableDataCell scope="row">
-                        <CFormSelect
-                          data-testid="form-select"
-                          aria-label="Default select example"
-                          size="sm"
-                          name="technology"
-                          value={editCertificateTypeDetails.technologyName}
-                        >
-                          {getAllTechnology?.map((certificateItem, index) => (
-                            <option key={index} value={certificateItem.id}>
-                              {certificateItem.name}
-                            </option>
-                          ))}
-                        </CFormSelect>
-                      </CTableDataCell>
+                    certificateId === certificateTypeItem.id ? (
+                      <EditCertificateType
+                        cancelCertificateTypeButtonHandler={
+                          cancelCertificateTypeButtonHandler
+                        }
+                        setIsEditCertificateType={setIsEditCertificateType}
+                        isEditCertificateType={isEditCertificateType}
+                      />
                     ) : (
-                      <CTableDataCell>
-                        {certificateTypeItem.technologyName}
-                      </CTableDataCell>
+                      <>
+                        <CTableDataCell>
+                          {certificateTypeItem.technologyName}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          {certificateTypeItem.certificateType}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {!isEditCertificateType && (
+                            <>
+                              <CButton
+                                color="info"
+                                className="btn-ovh me-1"
+                                onClick={() => {
+                                  editCertificateTypeButtonHandler(
+                                    certificateTypeItem.id as number,
+                                  )
+                                }}
+                              >
+                                <i
+                                  className="fa fa-pencil-square-o"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                              <CButton
+                                color="danger"
+                                size="sm"
+                                onClick={() =>
+                                  handleShowDeleteModal(
+                                    certificateTypeItem.id as number,
+                                  )
+                                }
+                              >
+                                <CIcon className="text-white" icon={cilTrash} />
+                              </CButton>
+                            </>
+                          )}
+                        </CTableDataCell>
+                      </>
                     )}
-                    {isEditCertificateType &&
-                    certificateTypeItem.id === certificateId ? (
-                      <CTableDataCell scope="row">
-                        <CFormInput
-                          type="text"
-                          id="Name"
-                          size="sm"
-                          name="certificate"
-                          maxLength={32}
-                          value={editCertificateTypeDetails.certificateType}
-                          onChange={handleInputChange}
-                        ></CFormInput>
-                      </CTableDataCell>
-                    ) : (
-                      <CTableDataCell>
-                        {certificateTypeItem.certificateType}
-                      </CTableDataCell>
-                    )}
-                    <CTableDataCell scope="row">
-                      {isEditCertificateType &&
-                      certificateTypeItem.id === certificateId ? (
-                        <>
-                          <CButton
-                            color="success"
-                            data-testid={`sh-save-btn${index}`}
-                            className="btn-ovh me-1"
-                            onClick={saveCertificateTypeHandler}
-                          >
-                            <i
-                              className="fa fa-floppy-o"
-                              aria-hidden="true"
-                            ></i>
-                          </CButton>
-                          <CButton color="warning" className="btn-ovh me-1">
-                            <i className="fa fa-times" aria-hidden="true"></i>
-                          </CButton>
-                        </>
-                      ) : (
-                        <>
-                          <CButton
-                            color="info"
-                            className="btn-ovh me-1"
-                            onClick={() => {
-                              editCertificateTypeButtonHandler(
-                                certificateTypeItem.id as number,
-                              )
-                            }}
-                          >
-                            <i
-                              className="fa fa-pencil-square-o"
-                              aria-hidden="true"
-                            ></i>
-                          </CButton>
-                          <CButton
-                            color="danger"
-                            size="sm"
-                            onClick={() =>
-                              handleShowDeleteModal(
-                                certificateTypeItem.id as number,
-                              )
-                            }
-                          >
-                            <CIcon className="text-white" icon={cilTrash} />
-                          </CButton>
-                        </>
-                      )}
-                    </CTableDataCell>
                   </CTableRow>
                 )
               })}
@@ -264,14 +182,14 @@ const CertificateTypeTable = ({
                 <strong>Total Records:{certificateTypes.length}</strong>
               </p>
             </CCol>
-            <CCol xs={3}>
+            {/* <CCol xs={3}>
               {certificateTypes.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                 />
               )}
-            </CCol>
-            {certificateTypes.length > 20 && (
+            </CCol> */}
+            {/* {certificateTypes.length > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"
@@ -282,7 +200,7 @@ const CertificateTypeTable = ({
                   paginationRange={paginationRange}
                 />
               </CCol>
-            )}
+            )} */}
           </CRow>
         </>
       ) : (

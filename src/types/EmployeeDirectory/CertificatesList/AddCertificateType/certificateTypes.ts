@@ -26,6 +26,7 @@ export type ActionMapping = {
 
 export type CertificateTypeSliceState = {
   certificateTypes: CertificateType[]
+  editCertificateType: CertificateType
   isLoading: LoadingState
   error: ValidationError
 }
