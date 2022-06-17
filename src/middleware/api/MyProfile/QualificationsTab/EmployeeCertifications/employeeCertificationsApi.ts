@@ -4,15 +4,15 @@ import {
 } from '../../../apiList'
 import {
   CertificateType,
-  EditEmployeeCertificates,
-  EmployeeCertifications,
+  EditEmployeeCertificate,
+  EmployeeCertification,
   Technology,
 } from '../../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
-const getEmployeeCertificates = async (): Promise<EmployeeCertifications[]> => {
+const getEmployeeCertificates = async (): Promise<EmployeeCertification[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeCertificationsApiConfig.getEmployeeCertificates,
     method: AllowedHttpMethods.get,
@@ -45,7 +45,7 @@ const getCertificateByTechnologyName = async (
 }
 
 const createEmployeeCertification = async (
-  employeeCertificateDetails: EmployeeCertifications,
+  employeeCertificateDetails: EmployeeCertification,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeCertificationsApiConfig.createEmployeeCertification,
@@ -58,7 +58,7 @@ const createEmployeeCertification = async (
 
 const getEmployeeCertificate = async (
   id: number,
-): Promise<EditEmployeeCertificates> => {
+): Promise<EditEmployeeCertificate> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: `${employeeCertificationsApiConfig.getEmployeeCertificate}/${id}`,
     method: AllowedHttpMethods.get,
@@ -66,8 +66,9 @@ const getEmployeeCertificate = async (
   const responseVisa = await axios(requestConfig)
   return responseVisa.data
 }
+
 const updateEmployeeCertificate = async (
-  certificateDetails: EmployeeCertifications,
+  certificateDetails: EmployeeCertification,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeCertificationsApiConfig.updateEmployeeCertificate,
@@ -95,6 +96,20 @@ const deleteEmployeeCertificate = async (
   return response.data
 }
 
+const getEmployeeCertificateById = async (
+  employeeId: string | number | undefined,
+): Promise<EmployeeCertification[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeCertificationsApiConfig.getEmployeeCertificateById,
+    method: AllowedHttpMethods.get,
+    params: {
+      empId: employeeId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeCertificationsApi = {
   getEmployeeCertificates,
   getTechnologies,
@@ -103,5 +118,6 @@ const employeeCertificationsApi = {
   getEmployeeCertificate,
   updateEmployeeCertificate,
   deleteEmployeeCertificate,
+  getEmployeeCertificateById,
 }
 export default employeeCertificationsApi

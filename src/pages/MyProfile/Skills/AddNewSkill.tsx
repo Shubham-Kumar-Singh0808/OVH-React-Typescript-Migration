@@ -30,6 +30,7 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
     const toAddSkillName = newSkillName
 
     if (
+      skills.length > 0 &&
       skills.filter(
         (skillItem) =>
           skillItem.skill.toLowerCase() === newSkillName.toLowerCase(),
@@ -61,6 +62,7 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
             id="inputNewSkill"
             value={newSkillName}
             onChange={(e) => setNewSkillName(e.target.value)}
+            placeholder={'Skill'}
           />
         </CCol>
         <CCol sm={4} className="d-flex align-items-center new-category-col">

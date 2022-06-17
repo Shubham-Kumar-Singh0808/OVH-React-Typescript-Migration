@@ -12,7 +12,7 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import '@coreui/coreui-pro/scss/themes/dark';
 @import 'react-datepicker/dist/react-datepicker.css';
 @import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
+@import 'cropperjs/dist/cropper.css';
 @import 'layout';
 
 // If you want to add custom CSS you can put it here.
@@ -31,5 +31,8 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/omodal';
 @import './components/user-role-features-expandable-table';
 @import './pages/myprofile/profilehistory/profilehistory';
+@import './pages/myprofile/basicinfo/basicinfo';
 @import './components/user-profile';
-@import './pages//employeedirectory//employeeslist/addnewemployee/shiftconfiguration/shift-configuration';
+@import './components/employee-list';
+@import './pages/employeedirectory/employeeslist/addnewemployee/shiftconfiguration/shift-configuration';
+@import './components/category-list';

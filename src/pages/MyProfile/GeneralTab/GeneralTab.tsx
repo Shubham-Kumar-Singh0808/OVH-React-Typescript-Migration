@@ -3,8 +3,11 @@ import EmployeeGeneralInformation from './GeneralInformation'
 import EmployeeSkillsTable from '../QualificationsTab/EmployeeSkills/EmployeeSkillsTable'
 import FamilyDetailsTable from '../PersonalInfoTab/FamilyDetailsTable'
 import React from 'react'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 
 const GeneralTab = (): JSX.Element => {
+  const [isViewingAnotherEmployee] = useSelectedEmployee()
+
   return (
     <>
       <EmployeeGeneralInformation />
@@ -15,12 +18,16 @@ const GeneralTab = (): JSX.Element => {
         isFieldDisabled={false}
         tableClassName="mt-4"
       />
-      <EmployeeSkillsTable
-        striped={true}
-        bordered={true}
-        isFieldDisabled={false}
-        tableClassName={''}
-      />
+      {!isViewingAnotherEmployee ? (
+        <EmployeeSkillsTable
+          striped={true}
+          bordered={true}
+          isFieldDisabled={false}
+          tableClassName={''}
+        />
+      ) : (
+        ''
+      )}
     </>
   )
 }

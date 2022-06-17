@@ -46,6 +46,7 @@ export interface EmployeeSkillApi extends ApiBase {
   getEmployeeSkillInformation: string
   updateEmployeeSkillInformation: string
   deleteEmployeeSkill: string
+  getEmployeeSkillsById: string
 }
 
 export interface EmployeeQualificationCategoryApi extends ApiBase {
@@ -75,7 +76,9 @@ export interface EmployeeCertificationsApi extends ApiBase {
   getEmployeeCertificate: string
   updateEmployeeCertificate: string
   deleteEmployeeCertificate: string
+  getEmployeeCertificateById: string
 }
+
 export interface UserRolesConfigurationApi extends ApiBase {
   getUserRoles: string
   isUserRoleExists: string
@@ -85,6 +88,7 @@ export interface UserRolesConfigurationApi extends ApiBase {
   featuresUnderRole: string
   assignPermission: string
 }
+
 export interface PersonalInfoApi extends ApiBase {
   getFamilyDetails: string
   getVisaDetails: string
@@ -100,6 +104,7 @@ export interface PersonalInfoApi extends ApiBase {
   deleteVisaDetail: string
   fileUploadVisaImage: string
 }
+
 export interface ProfileHistoryApi extends ApiBase {
   getprofileHistory: string
 }
@@ -107,6 +112,7 @@ export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
   uploadEmployeeCV: string
+  uploadEmployeeImage: string
   downloadEmployeeCV: string
   downloadSampleCV: string
 }
@@ -116,6 +122,20 @@ export interface UploadFileReturn {
   file: FormData
 }
 
+export interface EmployeeReviewsApi extends ApiBase {
+  getEmployeeReviews: string
+}
+export interface EmployeeListApi extends ApiBase {
+  getEmployeeList: string
+  exportEmployeeData: string
+}
+
+export interface EmployeeDesignationListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getEmployeeDesignations: string
+  addEmployeeDesignation: string
+  deleteEmployeeDesignation: string
+}
 export interface DownloadCVReturn {
   fileName: string
   token: string
@@ -127,4 +147,15 @@ export interface ShiftConfigurationApi extends ApiBase {
   addTimeSlot: string
   updateShiftDetail: string
   deleteShiftDetail: string
+}
+
+export interface CertificateTypeApi extends ApiBase {
+  getCertificateTypes: string
+  addCertificateType: string
+  deleteCertificateType: string
+}
+
+export type UploadImage = {
+  empId: number
+  data: FormData
 }

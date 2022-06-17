@@ -56,6 +56,7 @@ export type ProfileDetailsProps = {
 }
 export type EmployeeGeneralInformationState = {
   generalInformation: EmployeeGeneralInformation
+  selectedEmployeeInformation: EmployeeGeneralInformation
   error: ValidationError
   isLoading: boolean
 }

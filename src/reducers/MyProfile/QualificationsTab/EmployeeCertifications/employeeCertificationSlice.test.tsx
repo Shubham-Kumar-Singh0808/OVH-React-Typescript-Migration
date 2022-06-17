@@ -1,6 +1,6 @@
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { EditEmployeeCertificate } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import employeeCertificationsSlice from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
-import { EditEmployeeCertificates } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 
 describe('Certification Section Reducer Test', () => {
   it('should return the initial state when passed an empty action', () => {
@@ -8,10 +8,11 @@ describe('Certification Section Reducer Test', () => {
     const action = { type: '' }
     const result = employeeCertificationsSlice(initialState, action)
     expect(result).toEqual({
-      editCertificateDetails: {} as EditEmployeeCertificates,
+      editCertificateDetails: {} as EditEmployeeCertificate,
       getAllTechnologies: [],
       typeOfCertificate: [],
       certificationDetails: [],
+      selectedEmployeeCertifications: [],
       error: null,
       isLoading: ApiLoadingState.idle,
     })

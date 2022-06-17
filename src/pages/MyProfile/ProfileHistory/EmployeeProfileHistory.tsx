@@ -6,9 +6,11 @@ import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
 import { profileHistoryService } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useDispatch } from 'react-redux'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { useTypedSelector } from '../../../stateStore'
 
 const EmployeeProfileHistory = (): JSX.Element => {
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -25,9 +27,19 @@ const EmployeeProfileHistory = (): JSX.Element => {
 
   useEffect(() => {
     if (authenticatedToken) {
-      dispatch(reduxServices.profileHistory.getProfileHistory(employeeId))
+      dispatch(
+        reduxServices.profileHistory.getProfileHistory(
+          isViewingAnotherEmployee ? selectedEmployeeId : employeeId,
+        ),
+      )
     }
-  }, [authenticatedToken, dispatch, employeeId])
+  }, [
+    authenticatedToken,
+    dispatch,
+    employeeId,
+    isViewingAnotherEmployee,
+    selectedEmployeeId,
+  ])
   return (
     <>
       <CCardHeader>

@@ -9,7 +9,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
@@ -25,6 +25,12 @@ const CategoryListTable = (): JSX.Element => {
   const categories = useTypedSelector(
     reduxServices.category.selectors.categories,
   )
+  const pageFromState = useTypedSelector(
+    reduxServices.category.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.category.selectors.pageSizeFromState,
+  )
   const dispatch = useAppDispatch()
 
   const {
@@ -33,15 +39,11 @@ const CategoryListTable = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(categories.length, 20)
+  } = usePagination(categories.length, pageSizeFromState, pageFromState)
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteCategoryName, setToDeleteCategoryName] = useState('')
   const [toDeleteCategoryId, setToDeleteCategoryId] = useState(0)
-
-  useEffect(() => {
-    setPageSize(20)
-  }, [categories, setPageSize, setCurrentPage])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -63,6 +65,8 @@ const CategoryListTable = (): JSX.Element => {
   const handleConfirmDelete = async (categoryId: number) => {
     setIsDeleteModalVisible(false)
 
+    dispatch(reduxServices.category.actions.setCurrentPage(currentPage))
+    dispatch(reduxServices.category.actions.setPageSize(pageSize))
     dispatch(reduxServices.category.deleteCategory(categoryId))
   }
 
@@ -73,88 +77,87 @@ const CategoryListTable = (): JSX.Element => {
 
   return (
     <>
-      {categories.length ? (
-        <>
-          <CTable striped>
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col" className="w-25">
-                  #
+      <CTable striped>
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col" className="w-25">
+              #
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="w-50">
+              Name
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="w-25">
+              Action
+            </CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {currentPageItems.map((category, index) => {
+            return (
+              <CTableRow key={index}>
+                <CTableHeaderCell scope="row">
+                  {getItemNumber(index)}
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="w-50">
-                  Name
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="w-25">
-                  Action
-                </CTableHeaderCell>
+                <CTableDataCell>{category.categoryType}</CTableDataCell>
+                <CTableDataCell>
+                  <CButton
+                    color="danger"
+                    size="sm"
+                    onClick={() =>
+                      handleShowDeleteModal(
+                        category.categoryType,
+                        category.categoryId,
+                      )
+                    }
+                  >
+                    <CIcon className="text-white" icon={cilTrash} />
+                  </CButton>
+                </CTableDataCell>
               </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {currentPageItems.map((category, index) => {
-                return (
-                  <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">
-                      {getItemNumber(index)}
-                    </CTableHeaderCell>
-                    <CTableDataCell>{category.categoryType}</CTableDataCell>
-                    <CTableDataCell>
-                      <CButton
-                        color="danger"
-                        size="sm"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            category.categoryType,
-                            category.categoryId,
-                          )
-                        }
-                      >
-                        <CIcon className="text-white" icon={cilTrash} />
-                      </CButton>
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-            </CTableBody>
-          </CTable>
-          <CRow>
-            <CCol xs={4}>
-              <p>
-                <strong>Total Records: {categories.length}</strong>
-              </p>
-            </CCol>
-            <CCol xs={3}>
-              {categories.length > 20 && (
-                <OPageSizeSelect
-                  handlePageSizeSelectChange={handlePageSizeSelectChange}
-                />
-              )}
-            </CCol>
-            {categories.length > 20 && (
-              <CCol
-                xs={5}
-                className="d-grid gap-1 d-md-flex justify-content-md-end"
-              >
-                <OPagination
-                  currentPage={currentPage}
-                  pageSetter={setCurrentPage}
-                  paginationRange={paginationRange}
-                />
-              </CCol>
-            )}
-          </CRow>
-        </>
-      ) : (
-        <CCol>
-          <CRow className="category-no-data">
-            <h4 className="text-center">No data to display</h4>
-          </CRow>
+            )
+          })}
+        </CTableBody>
+      </CTable>
+      <CRow>
+        <CCol xs={4}>
+          <p>
+            <strong>Total Records: {categories.length}</strong>
+          </p>
         </CCol>
-      )}
+        {!categories.length && (
+          <CCol>
+            <CRow className="category-no-data">
+              <h4 className="text-center">No data to display</h4>
+            </CRow>
+          </CCol>
+        )}
+        <CCol xs={3}>
+          {categories.length > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {categories.length > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
       <OModal
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Category"
         confirmButtonText="Delete"
+        closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteCategoryId)}
       >
         {`Are you sure you want to delete this ${toDeleteCategoryName} category item?`}
