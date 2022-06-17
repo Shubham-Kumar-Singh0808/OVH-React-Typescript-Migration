@@ -166,4 +166,5 @@ export const employeeReviewsApiConfig: EmployeeReviewsApi = {
 
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
+  getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }

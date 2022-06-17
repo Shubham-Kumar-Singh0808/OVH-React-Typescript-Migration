@@ -1,19 +1,15 @@
 import { CTableDataCell, CTableRow } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
-import { EmployeeProjectDetails } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import React, { useState } from 'react'
+import { EmployeeProjectDetailsTableInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import ProjectsTabTableEntryDetails from './ProjectsTabTableEntryDetails'
 
-export type EntryExport = {
-  id: number
-  project: EmployeeProjectDetails
-  projectSelected: number | undefined
-  projectDetailOpenedHandler(projectIndex: number | undefined): void
-}
-const ProjectsTabTableEntry = (props: EntryExport): JSX.Element => {
+const ProjectsTabTableEntry = (
+  props: EmployeeProjectDetailsTableInterface,
+): JSX.Element => {
   const [projectDetailsClicked, setProjectDetailsClicked] = useState<
     boolean | undefined
-  >(undefined)
+  >(false)
   let icon: string
-  let show: boolean
 
   const toTitleCase = (str: string) => {
     return str
@@ -29,29 +25,39 @@ const ProjectsTabTableEntry = (props: EntryExport): JSX.Element => {
     setProjectDetailsClicked((projectDetailsClicked) => !projectDetailsClicked)
   }
 
-  useEffect(() => {
-    if (projectDetailsClicked) {
-      props.projectDetailOpenedHandler(props.id)
-      setProjectDetailsClicked(true)
-      console.log(props.id, 1)
-    }
-
-    if (!projectDetailsClicked) {
-      props.projectDetailOpenedHandler(undefined)
-      setProjectDetailsClicked(false)
-      console.log(props.id, 2)
-    }
-  }, [projectDetailsClicked])
-
-  useEffect(() => {
-    if (props.id !== props.projectSelected) {
-      setProjectDetailsClicked(false)
-    }
-  }, [props])
-
-  if (projectDetailsClicked && props.id === props.projectSelected) {
+  if (projectDetailsClicked) {
     icon = 'fa fa-minus-circle cursor-pointer'
   } else icon = 'fa fa-plus-circle cursor-pointer'
+
+  let health
+  if (props.project?.health === 'Green') {
+    health = (
+      <span className="profile-tab-label profile-tab-label-success">
+        {props.project.status}
+      </span>
+    )
+  }
+  if (props.project?.health === 'Orange') {
+    health = (
+      <span className="profile-tab-label profile-tab-label-warning">
+        {props.project.status}
+      </span>
+    )
+  }
+  if (props.project?.health === 'Red') {
+    health = (
+      <span className="profile-tab-label profile-tab-label-failed">
+        {props.project.status}
+      </span>
+    )
+  }
+  if (props.project?.health === 'Gray' || props.project?.health === 'Null') {
+    health = (
+      <span className="profile-tab-label profile-tab-label-null">
+        {props.project.status}
+      </span>
+    )
+  }
 
   return (
     <>
@@ -67,8 +73,15 @@ const ProjectsTabTableEntry = (props: EntryExport): JSX.Element => {
         <CTableDataCell scope="row">{props.project.managerName}</CTableDataCell>
         <CTableDataCell scope="row">{props.project.startdate}</CTableDataCell>
         <CTableDataCell scope="row">{props.project.enddate}</CTableDataCell>
-        <CTableDataCell scope="row">{props.project.status}</CTableDataCell>
+        <CTableDataCell scope="row">{health}</CTableDataCell>
       </CTableRow>
+      {projectDetailsClicked && (
+        <CTableDataCell colSpan={8}>
+          <ProjectsTabTableEntryDetails
+            projectId={props.project.id as number}
+          />
+        </CTableDataCell>
+      )}
     </>
   )
 }

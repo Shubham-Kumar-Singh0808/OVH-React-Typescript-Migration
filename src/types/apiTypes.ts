@@ -141,4 +141,5 @@ export interface ShiftConfigurationApi extends ApiBase {
 
 export interface EmployeeProjectsApi extends ApiBase {
   getEmployeeProjects: string
+  getProjectDetails: string
 }

@@ -15,9 +15,6 @@ import { EmployeeProjectsGetParams } from '../../../types/MyProfile/ProjectsTab/
 import ProjectsTabTableEntry from './ProjectsTabTableEntry'
 
 const ProjectsTabTable = (): JSX.Element => {
-  const [projectDetailOpened, setProjectDetailOpened] = useState<
-    number | undefined
-  >()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const employeeId = useTypedSelector(
@@ -28,6 +25,7 @@ const ProjectsTabTable = (): JSX.Element => {
   )
 
   useEffect(() => {
+    setIsLoading(true)
     const prepareObject: EmployeeProjectsGetParams = {
       firstIndex: 0,
       endIndex: 20,
@@ -38,22 +36,9 @@ const ProjectsTabTable = (): JSX.Element => {
     dispatch(reduxServices.employeeProjects.getEmployeeProjects(prepareObject))
   }, [dispatch, employeeId])
 
-  const projectDetailOpenedHandler = (projectIndex: number) => {
-    // if (projectIndex !== undefined) {
-    //   setProjectDetailOpened(projectIndex)
-    // }
-    // if (projectIndex === projectDetailOpened) {
-    //   setProjectDetailOpened(undefined)
-    // }
-    setProjectDetailOpened(projectIndex)
-  }
-
-  // useEffect(() => {
-  //   setIsLoading(true)
-  //   setTimeout(() => {
-  //     setIsLoading(false)
-  //   }, 500)
-  // }, [projectDetailOpened])
+  useEffect(() => {
+    if (employeeProjects) setIsLoading(false)
+  }, [employeeProjects])
 
   return (
     <>
@@ -79,8 +64,6 @@ const ProjectsTabTable = (): JSX.Element => {
                   id={index}
                   project={project}
                   key={index}
-                  projectSelected={projectDetailOpened}
-                  projectDetailOpenedHandler={projectDetailOpenedHandler}
                 />
               ))
             ) : (
