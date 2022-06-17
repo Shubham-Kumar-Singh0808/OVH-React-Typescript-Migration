@@ -1,4 +1,5 @@
 import { categoryListHandlers } from './categoryListHandlers'
+import { certificateListHandlers } from './certificateListHandler'
 import { employeeListHandlers } from './employeeListHandlers'
 import { employeeShiftsHandlers } from './employeeShiftsHandlers'
 import { generalInformationHandlers } from './generalInformationHandlers'
@@ -14,5 +15,6 @@ export const handlers = [
   ...generalInformationHandlers,
   ...employeeShiftsHandlers,
   ...employeeListHandlers,
+  ...certificateListHandlers,
   // add your handler here
 ]

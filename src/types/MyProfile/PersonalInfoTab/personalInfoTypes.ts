@@ -51,8 +51,8 @@ export type EmployeeVisaDetails = {
   visaType?: string
   countryId: number | string
   countryName?: string
-  dateOfIssue?: string | number
-  dateOfExpire?: string | number
+  dateOfIssue?: string | Date | number
+  dateOfExpire?: string | Date | number
   createdBy?: string
   updatedBy?: string
   createdDate?: string | number
@@ -102,8 +102,8 @@ export type EditVisaDetailsState = {
   visaType: string
   countryId: number
   countryName: string
-  dateOfIssue?: string | number
-  dateOfExpire?: string | number
+  dateOfIssue?: string | Date | number
+  dateOfExpire?: string | Date | number
   createdBy: string
   updatedBy: string
   createdDate?: string | number

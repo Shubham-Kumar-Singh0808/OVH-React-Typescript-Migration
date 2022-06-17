@@ -138,6 +138,20 @@ export interface ShiftConfigurationApi extends ApiBase {
   updateShiftDetail: string
   deleteShiftDetail: string
 }
+export interface CertificateListApi extends ApiBase {
+  getAllEmployeeCertificates: string
+  exportCertificateList: string
+}
+
+export interface EmployeeAssetsApi extends ApiBase {
+  getEmployeeAssets: string
+}
+
+export interface CertificateTypeApi extends ApiBase {
+  getCertificateTypes: string
+  addCertificateType: string
+  deleteCertificateType: string
+}
 
 export interface EmployeeProjectsApi extends ApiBase {
   getEmployeeProjects: string

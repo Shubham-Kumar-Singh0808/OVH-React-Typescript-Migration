@@ -54,6 +54,8 @@ const initialSkillState: SkillSliceState = {
   skills: [],
   refreshList: false,
   isLoading: ApiLoadingState.idle,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const skillSlice = createSlice({
@@ -68,6 +70,12 @@ const skillSlice = createSlice({
     },
     doneRefreshList: (state) => {
       state.refreshList = false
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -94,6 +102,8 @@ const skillSlice = createSlice({
 const isLoading = (state: RootState): LoadingState => state.skill.isLoading
 const refreshList = (state: RootState): boolean => state.skill.refreshList
 const skills = (state: RootState): Skill[] => state.skill.skills
+const pageFromState = (state: RootState): number => state.skill.currentPage
+const pageSizeFromState = (state: RootState): number => state.skill.pageSize
 
 const skillThunk = {
   getAllSkills,
@@ -105,6 +115,8 @@ const skillSelectors = {
   isLoading,
   refreshList,
   skills,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const skillService = {

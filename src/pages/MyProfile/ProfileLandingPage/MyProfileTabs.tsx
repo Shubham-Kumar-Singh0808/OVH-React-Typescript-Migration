@@ -20,6 +20,7 @@ import { useParams } from 'react-router-dom'
 import { useTypedSelector } from '../../../stateStore'
 import ProjectsTab from '../ProjectsTab/ProjectsTab'
 
+import EmployeeAssets from '../MyAssetsTab/EmployeeAssets'
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
@@ -66,6 +67,7 @@ const MyProfileTabs = (): JSX.Element => {
         4: <QualificationDetails />,
         5: <EmployeeReviews />,
         6: <ProjectsTab />,
+        8: <EmployeeAssets />,
         9: <EmployeeProfileHistory />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'

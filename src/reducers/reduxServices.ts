@@ -2,6 +2,7 @@ import { appService } from './appSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
+import { certificateListService } from './EmployeeDirectory/CertificatesList/certificatesListSlice'
 import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { employeeDesignationListService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import { employeeListService } from './EmployeeDirectory/EmployeesList/employeeListSlice'
@@ -14,6 +15,8 @@ import { qualificationCategoryService } from './MyProfile/QualificationsTab/Qual
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import { employeeAssetsService } from './MyProfile/MyAssetsTab/employeeAssetsSlice'
+import { certificateTypeService } from './EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
 import { employeeReviewsService } from './MyProfile/ReviewTab/employeeReviewsSlice'
 import { employeeProjectsService } from './MyProfile/ProjectsTab/employeeProjectSlice'
 
@@ -36,4 +39,7 @@ export const reduxServices = {
   employeeReviews: employeeReviewsService,
   employeeProjects: employeeProjectsService,
   shiftConfiguration: shiftConfigurationService,
+  certificateList: certificateListService,
+  employeeAssets: employeeAssetsService,
+  certificateType: certificateTypeService,
 }

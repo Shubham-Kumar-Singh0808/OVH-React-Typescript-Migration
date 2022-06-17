@@ -3,7 +3,11 @@ export function currentPageData<T>(
   currentPage: number,
   pageSize: number,
 ): T[] {
-  const firstPageIndex = (currentPage - 1) * pageSize
-  const lastPageIndex = firstPageIndex + pageSize
-  return tableData.slice(firstPageIndex, lastPageIndex)
+  if (tableData.length > 0) {
+    const firstPageIndex = (currentPage - 1) * pageSize
+    const lastPageIndex = firstPageIndex + pageSize
+    return tableData.slice(firstPageIndex, lastPageIndex)
+  }
+
+  return []
 }

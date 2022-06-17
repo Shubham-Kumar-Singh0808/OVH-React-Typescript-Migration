@@ -2,6 +2,8 @@ import {
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
+  CertificateListApi,
+  CertificateTypeApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
@@ -15,6 +17,7 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
+  EmployeeAssetsApi,
   EmployeeReviewsApi,
   EmployeeProjectsApi,
 } from '../../types/apiTypes'
@@ -100,6 +103,7 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
     createQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
     deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
   }
+
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
   getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
 }
@@ -158,6 +162,22 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
   updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
+}
+
+export const certificateListApiConfig: CertificateListApi = {
+  getAllEmployeeCertificates:
+    apiPrefix + '/EmployeeSkill/getAllEmployeecertificates',
+  exportCertificateList: apiPrefix + '/EmployeeSkill/exportCertificatesList',
+}
+
+export const employeeAssetsApiConfig: EmployeeAssetsApi = {
+  getEmployeeAssets: apiPrefix + '/Employee/getEmployeeAssets',
+}
+
+export const certificateTypeApiConfig: CertificateTypeApi = {
+  getCertificateTypes: apiPrefix + '/EmployeeSkill/getCertificateTypeList',
+  addCertificateType: apiPrefix + '/EmployeeSkill/addCertificateType',
+  deleteCertificateType: apiPrefix + '/EmployeeSkill/deleteCertificateType',
 }
 
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {
