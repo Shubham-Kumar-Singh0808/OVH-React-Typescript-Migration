@@ -36,6 +36,7 @@ function AddEditVisaDetails({
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined)
   const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState<boolean>(false)
+  const [validImage, setValidImage] = useState<boolean>(true)
 
   const [dateOfIssueFlag, setDateOfIssueFlag] = useState<boolean>(false)
   const [dateOfExpiryFlag, setDateOfExpiryFlag] = useState<boolean>(false)
@@ -126,6 +127,11 @@ function AddEditVisaDetails({
 
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
+    if (name === 'countryId' && employeeVisaDetails.countryId !== value) {
+      setEmployeeVisaDetails((prevState) => {
+        return { ...prevState, ...{ visaTypeId: '' } }
+      })
+    }
     setEmployeeVisaDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
@@ -197,6 +203,16 @@ function AddEditVisaDetails({
   const onChangeFileEventHandler = async (element: HTMLInputElement) => {
     const file = element.files
     if (!file) return
+    console.log(file[0])
+    if (Number(file[0].size) > Number(400000)) {
+      setValidImage(false)
+      setError(false)
+      console.log('invalid')
+    } else {
+      setValidImage(true)
+      setError(true)
+      console.log('valid')
+    }
 
     setSelectedFile(file[0])
   }
@@ -512,6 +528,15 @@ function AddEditVisaDetails({
                 <CCol sm={{ span: 6, offset: 3 }}>
                   <p className=" text-info ">
                     Note: Please upload less than 400KB size image.
+                  </p>
+                </CCol>
+              </>
+            )}
+            {!validImage && (
+              <>
+                <CCol sm={{ span: 6, offset: 3 }}>
+                  <p className=" text-danger ">
+                    Please upload less than 400KB size image.
                   </p>
                 </CCol>
               </>
