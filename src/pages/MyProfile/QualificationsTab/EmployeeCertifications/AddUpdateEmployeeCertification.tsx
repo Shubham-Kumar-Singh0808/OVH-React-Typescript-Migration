@@ -58,7 +58,7 @@ function AddUpdateEmployeeCertification({
     (state) => state.employeeCertificates.editCertificateDetails,
   )
   const isLoading = useTypedSelector(
-    reduxServices.employeeCertifications.selectors.isLoading,
+    reduxServices.employeeCertifications.selectors.listSize,
   )
 
   const dispatch = useAppDispatch()
