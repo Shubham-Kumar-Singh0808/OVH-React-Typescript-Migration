@@ -203,15 +203,12 @@ function AddEditVisaDetails({
   const onChangeFileEventHandler = async (element: HTMLInputElement) => {
     const file = element.files
     if (!file) return
-    console.log(file[0])
     if (Number(file[0].size) > Number(400000)) {
       setValidImage(false)
       setError(false)
-      console.log('invalid')
     } else {
       setValidImage(true)
       setError(true)
-      console.log('valid')
     }
 
     setSelectedFile(file[0])
