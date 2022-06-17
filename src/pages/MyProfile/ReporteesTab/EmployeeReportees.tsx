@@ -59,7 +59,7 @@ const EmployeeReportees = (): JSX.Element => {
     dispatch(
       reduxServices.employeeReportees.getEmployeeReporteesKPIs(id as number),
     )
-    setIsIconVisible(!isIconVisible)
+    setIsIconVisible(true)
   }
 
   return (
