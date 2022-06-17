@@ -162,13 +162,11 @@ const EmployeeReportees = (): JSX.Element => {
                   return (
                     <>
                       <CTableRow key={index}>
-                        <CTableDataCell>
-                          <CButton
-                            className="fa fa-pluse-circle"
+                        <CTableDataCell scope="row">
+                          <i
+                            className="fa fa-plus-circle cursor-pointer"
                             onClick={() => handleExpandRow(KRAs.id as number)}
-                          >
-                            +
-                          </CButton>
+                          />
                         </CTableDataCell>
 
                         <CTableDataCell scope="row">{KRAs.name}</CTableDataCell>
