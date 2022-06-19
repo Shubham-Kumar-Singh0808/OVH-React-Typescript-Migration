@@ -48,11 +48,7 @@ const CertificateType = (): JSX.Element => {
             />
           </CCol>
           <CCol xs={12} className="ps-0 pe-0">
-            <CertificateTypeTable
-              certificateTypes={certificateTypes}
-              getToastMessage={getToastMessage}
-              actionMapping={actionMapping}
-            />
+            <CertificateTypeTable />
           </CCol>
         </CRow>
       </OCard>

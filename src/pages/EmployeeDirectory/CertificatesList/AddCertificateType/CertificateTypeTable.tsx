@@ -1,8 +1,6 @@
 import {
   CButton,
   CCol,
-  CFormInput,
-  CFormSelect,
   CRow,
   CTable,
   CTableBody,
@@ -12,21 +10,21 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
-import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { usePagination } from '../../../../middleware/hooks/usePagination'
-import { currentPageData } from '../../../../utils/paginationUtils'
-import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../../components/ReusableComponent/OPagination'
-import OModal from '../../../../components/ReusableComponent/OModal'
+
+import CIcon from '@coreui/icons-react'
 import { CertificateTypeTableProps } from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
 import EditCertificateType from './EditCertificateType'
-const CertificateTypeTable = ({
-  actionMapping,
-  getToastMessage,
-}: CertificateTypeTableProps): JSX.Element => {
+import OModal from '../../../../components/ReusableComponent/OModal'
+import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../../components/ReusableComponent/OPagination'
+import { cilTrash } from '@coreui/icons'
+import { currentPageData } from '../../../../utils/paginationUtils'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
+import OToast from '../../../../components/ReusableComponent/OToast'
+
+const CertificateTypeTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [certificateId, setCertificateId] = useState(0)
   const [isEditCertificateType, setIsEditCertificateType] =
@@ -74,6 +72,13 @@ const CertificateTypeTable = ({
     setIsDeleteModalVisible(true)
   }
 
+  const toastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="CertificateType deleted successfully"
+    />
+  )
+
   const handleConfirmDeleteCertificateType = async () => {
     setIsDeleteModalVisible(false)
     const deleteCertificateTypeResultAction = await dispatch(
@@ -85,18 +90,16 @@ const CertificateTypeTable = ({
       )
     ) {
       dispatch(reduxServices.certificateType.getCertificateTypes())
-      dispatch(
-        reduxServices.app.actions.addToast(
-          getToastMessage(actionMapping.deleted),
-        ),
-      )
+      dispatch(reduxServices.app.actions.addToast(toastElement))
     }
   }
 
-  const editCertificateTypeButtonHandler = (id: number): void => {
+  const editCertificateTypeButtonHandler = async (
+    id: number,
+  ): Promise<void> => {
+    await dispatch(reduxServices.certificateType.getCertificateType(id))
     setIsEditCertificateType(true)
     setCertificateId(id)
-    dispatch(reduxServices.certificateType.getCertificateType(id))
   }
 
   const cancelCertificateTypeButtonHandler = () => {

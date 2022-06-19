@@ -5,9 +5,14 @@ import {
   CTableDataCell,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { CertificateType } from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
+
+import {
+  CertificateType,
+  CertificateTypeTableProps,
+} from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 export type EditCertificateTypeProps = {
   cancelCertificateTypeButtonHandler: () => void
@@ -21,10 +26,10 @@ const EditCertificateType = ({
 }: EditCertificateTypeProps): JSX.Element => {
   const [editCertificateTypeCopy, setEditCertificateTypeCopy] =
     useState<CertificateType>({
-      certificateType: '',
       id: 0,
       technologyId: 0,
       technologyName: '',
+      certificateType: '',
     })
 
   const dispatch = useAppDispatch()
@@ -43,7 +48,6 @@ const EditCertificateType = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    console.log(name, value)
     if (name === 'certificate') {
       const newValue = value.replace(/[^a-zA-Z\s]/gi, '').replace(/^\s*/, '')
       setEditCertificateTypeCopy((prevState) => {
@@ -55,6 +59,13 @@ const EditCertificateType = ({
       })
     }
   }
+
+  const toastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="CertificateType Updated successfully"
+    />
+  )
 
   const saveCertificateTypeHandler = async () => {
     const updateCertificateTypeResultAction = await dispatch(
@@ -69,11 +80,7 @@ const EditCertificateType = ({
     ) {
       await dispatch(reduxServices.certificateType.getCertificateTypes())
       setIsEditCertificateType(false)
-      //   dispatch(
-      //     reduxServices.app.actions.addToast(
-      //       getToastMessage(actionMapping.updated),
-      //     ),
-      //   )
+      dispatch(reduxServices.app.actions.addToast(toastElement))
     }
   }
 
@@ -82,7 +89,6 @@ const EditCertificateType = ({
       setEditCertificateTypeCopy(editCertificateType)
     }
   }, [editCertificateType, isEditCertificateType])
-  console.log(editCertificateTypeCopy)
 
   return (
     <>
@@ -91,14 +97,14 @@ const EditCertificateType = ({
           data-testid="form-select"
           aria-label="Default select example"
           size="sm"
-          id="technology"
-          name="technology"
+          id="technologyName"
+          name="technologyName"
           value={editCertificateTypeCopy.technologyName}
           onChange={handleInputChange}
         >
-          <option>{editCertificateTypeCopy.technologyName}</option>
+          <option>Select Technology</option>
           {getAllTechnology?.map((certificateItem, index) => (
-            <option key={index} value={certificateItem.id}>
+            <option key={index} value={certificateItem.name}>
               {certificateItem.name}
             </option>
           ))}
@@ -107,9 +113,9 @@ const EditCertificateType = ({
       <CTableDataCell scope="row">
         <CFormInput
           type="text"
-          id="certificate"
+          id="certificateType"
           size="sm"
-          name="certificate"
+          name="certificateType"
           maxLength={32}
           value={editCertificateTypeCopy.certificateType}
           onChange={handleInputChange}
