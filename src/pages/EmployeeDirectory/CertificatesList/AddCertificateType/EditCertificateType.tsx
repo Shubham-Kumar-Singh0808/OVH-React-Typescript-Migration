@@ -1,5 +1,6 @@
 import {
   CButton,
+  CCol,
   CFormInput,
   CFormSelect,
   CTableDataCell,
@@ -7,10 +8,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-import {
-  CertificateType,
-  CertificateTypeTableProps,
-} from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
+import { CertificateType } from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 
@@ -48,8 +46,8 @@ const EditCertificateType = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    if (name === 'certificate') {
-      const newValue = value.replace(/[^a-zA-Z\s]/gi, '').replace(/^\s*/, '')
+    if (name === 'certificateType') {
+      const newValue = value.replace(/[^a-zA-Z0-9\s]/gi, '').replace(/^\s*/, '')
       setEditCertificateTypeCopy((prevState) => {
         return { ...prevState, ...{ [name]: newValue } }
       })
@@ -67,20 +65,44 @@ const EditCertificateType = ({
     />
   )
 
+  const alreadyExistToastMessage = (
+    <OToast
+      toastMessage="This CertificateType is already exists"
+      toastColor="danger"
+    />
+  )
+
   const saveCertificateTypeHandler = async () => {
-    const updateCertificateTypeResultAction = await dispatch(
-      reduxServices.certificateType.updateCertificateType(
-        editCertificateTypeCopy,
-      ),
+    const prepareObject = {
+      technologyId: editCertificateTypeCopy.technologyId,
+      certificateType: editCertificateTypeCopy.certificateType,
+    }
+
+    const isCertificateExistsResultAction = await dispatch(
+      reduxServices.certificateType.checkIsCertificateTypeExists(prepareObject),
     )
     if (
-      reduxServices.certificateType.updateCertificateType.fulfilled.match(
-        updateCertificateTypeResultAction,
-      )
+      reduxServices.certificateType.checkIsCertificateTypeExists.fulfilled.match(
+        isCertificateExistsResultAction,
+      ) &&
+      isCertificateExistsResultAction.payload === false
     ) {
-      await dispatch(reduxServices.certificateType.getCertificateTypes())
-      setIsEditCertificateType(false)
-      dispatch(reduxServices.app.actions.addToast(toastElement))
+      const updateCertificateTypeResultAction = await dispatch(
+        reduxServices.certificateType.updateCertificateType(
+          editCertificateTypeCopy,
+        ),
+      )
+      if (
+        reduxServices.certificateType.updateCertificateType.fulfilled.match(
+          updateCertificateTypeResultAction,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(toastElement))
+        await dispatch(reduxServices.certificateType.getCertificateTypes())
+        setIsEditCertificateType(false)
+      }
+    } else {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
     }
   }
 
@@ -93,33 +115,36 @@ const EditCertificateType = ({
   return (
     <>
       <CTableDataCell scope="row">
-        <CFormSelect
-          data-testid="form-select"
-          aria-label="Default select example"
-          size="sm"
-          id="technologyName"
-          name="technologyName"
-          value={editCertificateTypeCopy.technologyName}
-          onChange={handleInputChange}
-        >
-          <option>Select Technology</option>
-          {getAllTechnology?.map((certificateItem, index) => (
-            <option key={index} value={certificateItem.name}>
-              {certificateItem.name}
-            </option>
-          ))}
-        </CFormSelect>
+        <CCol sm={6}>
+          <CFormSelect
+            data-testid="form-select"
+            aria-label="Default select example"
+            size="sm"
+            id="technologyId"
+            name="technologyId"
+            value={editCertificateTypeCopy.technologyId}
+            onChange={handleInputChange}
+          >
+            {getAllTechnology?.map((certificateItem, index) => (
+              <option key={index} value={certificateItem.id}>
+                {certificateItem.name}
+              </option>
+            ))}
+          </CFormSelect>
+        </CCol>
       </CTableDataCell>
       <CTableDataCell scope="row">
-        <CFormInput
-          type="text"
-          id="certificateType"
-          size="sm"
-          name="certificateType"
-          maxLength={32}
-          value={editCertificateTypeCopy.certificateType}
-          onChange={handleInputChange}
-        ></CFormInput>
+        <CCol sm={6}>
+          <CFormInput
+            type="text"
+            id="certificateType"
+            size="sm"
+            name="certificateType"
+            maxLength={32}
+            value={editCertificateTypeCopy.certificateType}
+            onChange={handleInputChange}
+          ></CFormInput>
+        </CCol>
       </CTableDataCell>
       <CTableDataCell scope="row">
         <CButton

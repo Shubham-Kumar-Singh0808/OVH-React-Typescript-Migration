@@ -1,33 +1,12 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import OToast from '../../../../components/ReusableComponent/OToast'
-import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
-import { ActionMapping } from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
 import AddNewCertificateType from './AddNewCertificateType'
 import CertificateTypeTable from './CertificateTypeTable'
 
 const CertificateType = (): JSX.Element => {
   const [selectedTechnologyId, setSelectedTechnologyId] = useState<number>()
 
-  const certificateTypes = useTypedSelector(
-    reduxServices.certificateType.selectors.certificateTypes,
-  )
-  const actionMapping: ActionMapping = {
-    added: 'added',
-    deleted: 'deleted',
-    updated: 'updated',
-  }
-
-  const getToastMessage = (action: string) => {
-    return (
-      <OToast
-        toastColor="success"
-        toastMessage={`Certificate Type ${action} successfully`}
-      />
-    )
-  }
   return (
     <>
       <OCard

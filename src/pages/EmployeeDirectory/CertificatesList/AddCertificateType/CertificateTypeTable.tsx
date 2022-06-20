@@ -13,7 +13,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import CIcon from '@coreui/icons-react'
-import { CertificateTypeTableProps } from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
 import EditCertificateType from './EditCertificateType'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
@@ -23,6 +22,7 @@ import { currentPageData } from '../../../../utils/paginationUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const CertificateTypeTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -35,6 +35,7 @@ const CertificateTypeTable = (): JSX.Element => {
   )
 
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(reduxServices.certificateType.getCertificateTypes())
   }, [dispatch])
@@ -47,24 +48,24 @@ const CertificateTypeTable = (): JSX.Element => {
     pageSize,
   } = usePagination(certificateTypes.length, 20)
 
-  // useEffect(() => {
-  //   setPageSize(20)
-  // }, [certificateTypes, setPageSize, setCurrentPage])
-  // const handlePageSizeSelectChange = (
-  //   event: React.ChangeEvent<HTMLSelectElement>,
-  // ) => {
-  //   setPageSize(Number(event.target.value))
-  //   setCurrentPage(1)
-  // }
+  useEffect(() => {
+    setPageSize(20)
+  }, [certificateTypes, setPageSize, setCurrentPage])
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
 
-  // const getItemNumber = (index: number) => {
-  //   return (currentPage - 1) * pageSize + index + 1
-  // }
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
 
-  // const currentPageItems = useMemo(
-  //   () => currentPageData(certificateTypes, currentPage, pageSize),
-  //   [certificateTypes, currentPage, pageSize],
-  // )
+  const currentPageItems = useMemo(
+    () => currentPageData(certificateTypes, currentPage, pageSize),
+    [certificateTypes, currentPage, pageSize],
+  )
 
   const handleShowDeleteModal = (certificateTypeId: number) => {
     setCertificateId(certificateTypeId)
@@ -105,7 +106,9 @@ const CertificateTypeTable = (): JSX.Element => {
   const cancelCertificateTypeButtonHandler = () => {
     setIsEditCertificateType(false)
   }
-
+  const isLoading = useTypedSelector(
+    reduxServices.certificateType.selectors.isLoading,
+  )
   return (
     <>
       {certificateTypes.length ? (
@@ -120,10 +123,13 @@ const CertificateTypeTable = (): JSX.Element => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {certificateTypes.map((certificateTypeItem, index) => {
+              {currentPageItems.map((certificateTypeItem, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {' '}
+                      {getItemNumber(index)}
+                    </CTableDataCell>
                     {isEditCertificateType &&
                     certificateId === certificateTypeItem.id ? (
                       <EditCertificateType
@@ -185,14 +191,14 @@ const CertificateTypeTable = (): JSX.Element => {
                 <strong>Total Records:{certificateTypes.length}</strong>
               </p>
             </CCol>
-            {/* <CCol xs={3}>
+            <CCol xs={3}>
               {certificateTypes.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                 />
               )}
-            </CCol> */}
-            {/* {certificateTypes.length > 20 && (
+            </CCol>
+            {certificateTypes.length > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"
@@ -203,13 +209,15 @@ const CertificateTypeTable = (): JSX.Element => {
                   paginationRange={paginationRange}
                 />
               </CCol>
-            )} */}
+            )}
           </CRow>
         </>
       ) : (
         <CCol>
           <CRow>
-            <h4 className="text-center">No data to display</h4>
+            {isLoading !== ApiLoadingState.loading && (
+              <h4 className="text-center">No data to display</h4>
+            )}
           </CRow>
         </CCol>
       )}
