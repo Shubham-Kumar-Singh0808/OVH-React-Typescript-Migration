@@ -43,7 +43,6 @@ function AddUpdateEmployeeCertification({
   const [expiryDateFlag, setExpirtyDateFlag] = useState<boolean>(false)
 
   const [showEditor, setShowEditor] = useState<boolean>(false)
-  // const [description, setDescription] = useState<string | undefined>()
 
   const getTechnologies = useTypedSelector(
     (state) => state.employeeCertificates.getAllTechnologies,
@@ -117,8 +116,6 @@ function AddUpdateEmployeeCertification({
 
   useEffect(() => {
     if (addCertification.description) {
-      // setDescription(addCertification.description)
-      console.log(addCertification.description)
       setShowEditor(true)
     }
   }, [addCertification.description])
@@ -331,9 +328,12 @@ function AddUpdateEmployeeCertification({
       { name: 'about', groups: ['about'] },
     ],
     format_tags: 'p;h1;h2;h3;h4;h5;h6;pre',
-    extraPlugins: 'justify',
+    extraPlugins: 'justify, uploadimage',
+    filebrowserUploadMethod: 'form',
+    filebrowserUploadUrl: '/uploader/upload',
     removeButtons:
       'Subscript,Superscript,Cut,Paste,Copy,PasteText,PasteFromWord,Scayt,Anchor,HorizontalRule,SpecialChar,Maximize,Source,Strike,Styles,About,Indent,Outdent,Blockquote',
+    removeDialogTabs: 'image:Link;image:Upload;image:Advanced',
   }
 
   const handleDescription = (description: string) => {
