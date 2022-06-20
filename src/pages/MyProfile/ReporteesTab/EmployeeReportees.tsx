@@ -255,6 +255,11 @@ const EmployeeReportees = (): JSX.Element => {
                 })}
               </CTableBody>
             </CTable>
+            <strong>
+              {employeeReporteesKRAs?.length
+                ? `Total Records: ${employeeReporteesKRAs?.length}`
+                : `No Records found`}
+            </strong>
           </>
         </OModal>
       </CCardBody>
