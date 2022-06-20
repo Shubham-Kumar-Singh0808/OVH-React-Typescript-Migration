@@ -1,7 +1,7 @@
 import { CCardHeader } from '@coreui/react-pro'
 
 import React from 'react'
-import EmployeeProjectsTable from './ProjectsTabTable'
+import EmployeeProjectsTable from './EmployeeProjectsTable'
 
 const EmployeeProjects = (): JSX.Element => {
   return (
