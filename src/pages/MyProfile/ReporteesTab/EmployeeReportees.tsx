@@ -18,7 +18,9 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { Link } from 'react-router-dom'
 import OModal from '../../../components/ReusableComponent/OModal'
 import parse from 'html-react-parser'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 const EmployeeReportees = (): JSX.Element => {
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [selectedKRA, setSelectedKRA] = useState(0)
@@ -40,8 +42,12 @@ const EmployeeReportees = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(reduxServices.employeeReportees.getEmployeeReportees(empID))
-  }, [dispatch, empID])
+    dispatch(
+      reduxServices.employeeReportees.getEmployeeReportees(
+        isViewingAnotherEmployee ? selectedEmployeeId : empID,
+      ),
+    )
+  }, [dispatch, empID, isViewingAnotherEmployee, selectedEmployeeId])
 
   const handleModal = (personId: number) => {
     setIsModalVisible(true)

@@ -21,7 +21,7 @@ const initialEmployeeReporteesState: ReporteesState = {
 
 const getEmployeeReportees = createAsyncThunk<
   EmployeeReportee[] | undefined,
-  number | string,
+  number | string | undefined,
   {
     dispatch: AppDispatch
     state: RootState
@@ -29,7 +29,7 @@ const getEmployeeReportees = createAsyncThunk<
   }
 >(
   'employeeReportees/getEmployeeReportees',
-  async (empID: number | string, thunkApi) => {
+  async (empID: number | string | undefined, thunkApi) => {
     try {
       return await employeeReporteesApi.getEmployeeReportees(empID)
     } catch (error) {
