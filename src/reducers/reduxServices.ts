@@ -18,6 +18,7 @@ import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguratio
 import { employeeAssetsService } from './MyProfile/MyAssetsTab/employeeAssetsSlice'
 import { certificateTypeService } from './EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
 import { employeeReviewsService } from './MyProfile/ReviewTab/employeeReviewsSlice'
+import { employeeProjectsService } from './MyProfile/ProjectsTab/employeeProjectSlice'
 
 export const reduxServices = {
   app: appService,
@@ -36,6 +37,7 @@ export const reduxServices = {
   generalInformation: generalInformationService,
   employeeSkill: employeeSkillServices,
   employeeReviews: employeeReviewsService,
+  employeeProjects: employeeProjectsService,
   shiftConfiguration: shiftConfigurationService,
   certificateList: certificateListService,
   employeeAssets: employeeAssetsService,

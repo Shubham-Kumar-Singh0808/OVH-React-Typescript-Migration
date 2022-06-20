@@ -117,11 +117,6 @@ export interface BasicInfoApi extends ApiBase {
   downloadSampleCV: string
 }
 
-export interface UploadFileReturn {
-  personId: number
-  file: FormData
-}
-
 export interface EmployeeReviewsApi extends ApiBase {
   getEmployeeReviews: string
 }
@@ -135,11 +130,6 @@ export interface EmployeeDesignationListApi extends ApiBase {
   getEmployeeDesignations: string
   addEmployeeDesignation: string
   deleteEmployeeDesignation: string
-}
-export interface DownloadCVReturn {
-  fileName: string
-  token: string
-  tenantKey: string
 }
 
 export interface ShiftConfigurationApi extends ApiBase {
@@ -163,7 +153,7 @@ export interface CertificateTypeApi extends ApiBase {
   deleteCertificateType: string
 }
 
-export type UploadImage = {
-  empId: number
-  data: FormData
+export interface EmployeeProjectsApi extends ApiBase {
+  getEmployeeProjects: string
+  getProjectDetails: string
 }
