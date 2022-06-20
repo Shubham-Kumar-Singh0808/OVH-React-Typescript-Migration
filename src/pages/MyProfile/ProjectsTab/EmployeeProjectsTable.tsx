@@ -12,9 +12,9 @@ import React, { useEffect, useState } from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmployeeProjectsGetParams } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
-import ProjectsTabTableEntry from './ProjectsTabTableEntry'
+import EmployeeProjectsEntry from './EmployeeProjectsEntry'
 
-const ProjectsTabTable = (): JSX.Element => {
+const EmployeeProjectsTable = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const employeeId = useTypedSelector(
@@ -60,7 +60,7 @@ const ProjectsTabTable = (): JSX.Element => {
             {!isLoading ? (
               employeeProjects &&
               employeeProjects.Projs?.map((project, index) => (
-                <ProjectsTabTableEntry
+                <EmployeeProjectsEntry
                   id={index}
                   project={project}
                   key={index}
@@ -80,4 +80,4 @@ const ProjectsTabTable = (): JSX.Element => {
   )
 }
 
-export default ProjectsTabTable
+export default EmployeeProjectsTable

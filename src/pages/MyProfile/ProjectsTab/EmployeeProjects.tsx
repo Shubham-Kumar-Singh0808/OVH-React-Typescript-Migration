@@ -1,18 +1,18 @@
 import { CCardHeader } from '@coreui/react-pro'
 
 import React from 'react'
-import ProjectsTabTable from './ProjectsTabTable'
+import EmployeeProjectsTable from './ProjectsTabTable'
 
-const ProjectsTab = (): JSX.Element => {
+const EmployeeProjects = (): JSX.Element => {
   return (
     <>
       <CCardHeader>
         <h4 className="h4">Project Report</h4>
       </CCardHeader>
       <br />
-      <ProjectsTabTable />
+      <EmployeeProjectsTable />
     </>
   )
 }
 
-export default ProjectsTab
+export default EmployeeProjects

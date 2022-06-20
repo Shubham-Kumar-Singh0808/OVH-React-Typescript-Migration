@@ -15,7 +15,7 @@ import {
   ProjectDetails,
 } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
-const ProjectsTabTableEntryDetails = (
+const EmployeeProjectsDetail = (
   props: EmployeeProjectDetailInterface,
 ): JSX.Element => {
   const [projectDetails, setProjectDetails] = useState<
@@ -114,4 +114,4 @@ const ProjectsTabTableEntryDetails = (
   )
 }
 
-export default ProjectsTabTableEntryDetails
+export default EmployeeProjectsDetail

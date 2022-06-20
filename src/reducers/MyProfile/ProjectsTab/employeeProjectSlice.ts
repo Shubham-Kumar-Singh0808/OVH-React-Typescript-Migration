@@ -101,7 +101,7 @@ export const employeeProjectsThunk = {
   getProjectDetails,
 }
 
-export const employeeProjectsSelectors = {
+const employeeProjectsSelectors = {
   isLoading,
   employeeProjects,
   projectDetails,
