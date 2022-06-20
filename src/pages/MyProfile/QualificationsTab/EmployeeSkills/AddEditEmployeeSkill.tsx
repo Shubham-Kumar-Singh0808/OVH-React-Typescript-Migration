@@ -278,7 +278,7 @@ function AddEditEmployeeSkill({
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Skills:
+                  Skill:
                   <span
                     className={
                       employeeSkill?.skillType ? 'text-white' : 'text-danger'
