@@ -32,7 +32,7 @@ const EmployeeProjectsDetail = (
 
   useEffect(() => {
     dispatch(reduxServices.employeeProjects.getProjectDetails(props.projectId))
-  })
+  }, [dispatch, props.projectId])
 
   useEffect(() => {
     if (allProjectDetails?.length > 0) {

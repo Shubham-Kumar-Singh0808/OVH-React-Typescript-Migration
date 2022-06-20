@@ -1,9 +1,9 @@
 import { CTableDataCell, CTableRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { EmployeeProjectDetailsTableInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
-import EmployeeProjectsDetail from './EmployeeProjectsDetails'
+import EmployeeProjectDetails from './EmployeeProjectsDetails'
 
-const EmployeeProjectsEntry = (
+const EmployeeProjectEntry = (
   props: EmployeeProjectDetailsTableInterface,
 ): JSX.Element => {
   const [projectDetailsClicked, setProjectDetailsClicked] = useState<
@@ -77,11 +77,11 @@ const EmployeeProjectsEntry = (
       </CTableRow>
       {projectDetailsClicked && (
         <CTableDataCell colSpan={8}>
-          <EmployeeProjectsDetail projectId={props.project.id as number} />
+          <EmployeeProjectDetails projectId={props.project.id as number} />
         </CTableDataCell>
       )}
     </>
   )
 }
 
-export default EmployeeProjectsEntry
+export default EmployeeProjectEntry

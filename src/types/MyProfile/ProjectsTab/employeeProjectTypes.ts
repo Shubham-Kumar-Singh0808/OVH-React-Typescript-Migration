@@ -12,6 +12,7 @@ export type EmployeeProjectDetails = {
   managerId?: number
   startdate?: string | Date
   enddate?: string | Date
+  description: string
   status?: string
   managerName?: string
   count?: number

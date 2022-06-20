@@ -69,7 +69,7 @@ const EmployeeProjectsTable = (): JSX.Element => {
             ) : (
               <CTableRow color="default" className="text-center">
                 <CTableDataCell colSpan={8}>
-                  <CSpinner />
+                  <CSpinner data-testid="employee-loader" />
                 </CTableDataCell>
               </CTableRow>
             )}
