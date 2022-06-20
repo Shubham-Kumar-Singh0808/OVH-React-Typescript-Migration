@@ -6,7 +6,12 @@ import { TechnologyProps } from '../../../../../types/EmployeeDirectory/Employee
 const Technology = ({
   dynamicFormLabelProps,
   technologyList,
+  setTechnologyValue,
+  technologyValue,
 }: TechnologyProps): JSX.Element => {
+  const onDepartmentChangeHandler = (e: { target: { value: string } }) => {
+    setTechnologyValue(e.target.value)
+  }
   return (
     <>
       <CRow className="mb-3">
@@ -33,7 +38,8 @@ const Technology = ({
             size="sm"
             aria-label="technology"
             name="technology"
-            value=""
+            value={technologyValue}
+            onChange={onDepartmentChangeHandler}
           >
             <option value={''}>Select Technology</option>
             {technologyList?.map((curItem, ind) => (

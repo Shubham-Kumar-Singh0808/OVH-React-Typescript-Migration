@@ -1,6 +1,5 @@
 import Birthday from './Birthday'
 import Country from './Country'
-import DateOfJoining from './DateOfJoining'
 import Department from './Departments'
 import Designation from './Designation'
 import EmploymentContract from './EmploymentContract'
@@ -10,6 +9,7 @@ import FullName from './FullName'
 import Gender from './Gender'
 import HRAssociate from './HRAssociate'
 import JobType from './JobType'
+import JoinedDate from './JoinedDate'
 import ProjectManager from './ProjectManager'
 import ReportingManager from './ReportingManager'
 import Role from './Role'
@@ -24,7 +24,7 @@ export {
   UserNameEmail,
   Gender,
   Birthday,
-  DateOfJoining,
+  JoinedDate,
   Experience,
   Technology,
   Designation,

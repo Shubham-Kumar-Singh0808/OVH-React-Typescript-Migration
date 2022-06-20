@@ -74,9 +74,26 @@ export interface UserNameProps extends DynamicFormLabelProps {
 }
 export interface EmployeeDepartmentProps extends DynamicFormLabelProps {
   departmentsList: EmployeeDepartment[]
+  setDepartmentValue: (value: string) => void
+  departmentValue: string
 }
 export interface TechnologyProps extends DynamicFormLabelProps {
   technologyList: GetAllTechnology[]
+  setTechnologyValue: (value: string) => void
+  technologyValue: string
+}
+
+export type GetList = {
+  id: number
+  name: string
+}
+
+export interface SelectProps extends DynamicFormLabelProps {
+  list: GetList[]
+  setValue: (value: string) => void
+  value: string
+  name: string
+  label: string
 }
 export interface CountryProps extends DynamicFormLabelProps {
   countryList: GetCountries[]

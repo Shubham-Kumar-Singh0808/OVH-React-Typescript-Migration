@@ -1,11 +1,11 @@
 import {
   AddEmployee,
+  GetList,
   ToggleShiftProp,
 } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import {
   Birthday,
   Country,
-  DateOfJoining,
   Department,
   Designation,
   EmploymentContract,
@@ -15,6 +15,7 @@ import {
   Gender,
   HRAssociate,
   JobType,
+  JoinedDate,
   ProjectManager,
   ReportingManager,
   Role,
@@ -28,12 +29,22 @@ import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OSelectList from '../../../../components/ReusableComponent/OSelectList'
+import { listComposer } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   const dispatch = useAppDispatch()
+
+  // Todo: Remove all the state and use single state with Add Employee
   const [shiftName, setShiftName] = useState<string>()
   const [gender, setGender] = useState<string>()
+  const [department, setDepartment] = useState<string>()
+  const [technology, setTechnology] = useState<string>()
+  const [designation, setDesignation] = useState<string>()
+  const [userRole, setUserRole] = useState<string>()
+  const [employmentType, setEmploymentType] = useState<string>()
+  const [countryType, setCountryType] = useState<string>()
   const [date, setDate] = useState<Date>()
   const [addEmployee, setAddEmployee] = useState<AddEmployee>()
 
@@ -50,6 +61,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
 
   console.log('gender', gender)
   console.log('date', date)
+  console.log('department', department)
 
   //   const handleContractIsDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
   //     console.log(e.currentTarget.value)
@@ -62,9 +74,46 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     reduxServices.newEmployee.employeeDepartmentsService.selectors
       .employeeDepartments,
   )
+
+  const composedDepartmentList = listComposer(
+    departmentsList as [],
+    'departmentId',
+    'departmentName',
+  )
+
   const technologyList = useTypedSelector(
     reduxServices.newEmployee.technologyService.selectors.technologies,
   )
+
+  const composedTechnologyList = listComposer(
+    technologyList as [],
+    'id',
+    'name',
+  )
+
+  const genderList: GetList[] = [
+    { id: 1, name: 'Female' },
+    { id: 2, name: 'Male' },
+  ]
+  const composedGenderList = listComposer(genderList as [], 'id', 'name')
+
+  const designationList: GetList[] = [
+    { id: 1, name: 'Accounts' },
+    { id: 2, name: 'Marketing' },
+    { id: 3, name: 'Networking' },
+  ]
+  const composedDesignationList = listComposer(
+    designationList as [],
+    'id',
+    'name',
+  )
+
+  const userRoles = useTypedSelector(
+    reduxServices.userRolesAndPermissions.selectors.userRoles,
+  )
+
+  const composedUserRoles = listComposer(userRoles as [], 'roleId', 'name')
+
   const countryList = useTypedSelector(
     reduxServices.newEmployee.countryService.selectors.countriesList,
   )
@@ -91,7 +140,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     )
     dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
   }, [dispatch])
-  console.log(shiftName)
+
   return (
     <>
       <OCard
@@ -111,32 +160,57 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
         <UserNameEmail dynamicFormLabelProps={dynamicFormLabelProps} />
 
         <FullName dynamicFormLabelProps={dynamicFormLabelProps} />
-        <Gender
+        <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
-          setEmployeeGender={setGender}
-          employeeGender={gender as string}
+          list={composedGenderList}
+          setValue={setGender}
+          value={gender as string}
+          name="Gender"
+          label="Select Gender"
         />
         <Birthday
           dynamicFormLabelProps={dynamicFormLabelProps}
           onDateChangeHandler={onDateChangeHandler}
           dateValue={date as Date}
         />
-        <DateOfJoining
+        <JoinedDate
           dynamicFormLabelProps={dynamicFormLabelProps}
           onDateChangeHandler={onDateChangeHandler}
           dateValue={date as Date}
         />
         <Experience dynamicFormLabelProps={dynamicFormLabelProps} />
-        <Department
+        <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
-          departmentsList={departmentsList}
+          list={composedDepartmentList}
+          setValue={setDepartment}
+          value={department as string}
+          name="Department"
+          label="Select Department"
         />
-        <Technology
+        <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
-          technologyList={technologyList}
+          list={composedTechnologyList}
+          setValue={setTechnology}
+          value={technology as string}
+          name="Technology"
+          label="Select Technology"
         />
-        <Designation dynamicFormLabelProps={dynamicFormLabelProps} />
-        <Role dynamicFormLabelProps={dynamicFormLabelProps} />
+        <OSelectList
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          list={composedDesignationList}
+          setValue={setDesignation}
+          value={designation as string}
+          name="Designation"
+          label="Select Designation"
+        />
+        <OSelectList
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          list={composedUserRoles}
+          setValue={setUserRole}
+          value={userRole as string}
+          name="Role"
+          label="Select Role"
+        />
         <ReportingManager
           dynamicFormLabelProps={dynamicFormLabelProps}
           reportingManagersList={reportingManagersList}
@@ -149,18 +223,37 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
           dynamicFormLabelProps={dynamicFormLabelProps}
           hrDataList={hrDataList}
         />
-        <EmploymentType dynamicFormLabelProps={dynamicFormLabelProps} />
-        <JobType dynamicFormLabelProps={dynamicFormLabelProps} />
-        <Country
+        <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
-          countryList={countryList}
+          list={designationList}
+          setValue={setEmploymentType}
+          value={employmentType as string}
+          name="EmploymentType"
+          label="Select Employment Type"
         />
-        <Shift
+        <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
-          employeeShifts={employeeShifts}
-          setShiftName={setShiftName}
-          shiftName={shiftName as string}
-          setToggleShift={setToggleShift}
+          list={designationList}
+          setValue={setEmploymentType}
+          value={employmentType as string}
+          name="JobType"
+          label="Select Job Type"
+        />
+        <OSelectList
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          list={countryList}
+          setValue={setCountryType}
+          value={countryType as string}
+          name="Country"
+          label="Select Country"
+        />
+        <OSelectList
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          list={employeeShifts}
+          setValue={setShiftName}
+          value={shiftName as string}
+          name="Shift"
+          label="Select Shift"
         />
         <EmploymentContract
           dynamicFormLabelProps={dynamicFormLabelProps}

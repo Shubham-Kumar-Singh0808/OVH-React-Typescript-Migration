@@ -7,7 +7,9 @@ import React from 'react'
 const DateOfJoining = ({
   dynamicFormLabelProps,
   onDateChangeHandler,
+  dateValue,
 }: DateChangeHandlerProp): JSX.Element => {
+  const date = dateValue == null ? '' : dateValue.toLocaleDateString()
   return (
     <>
       <CRow className="mb-3">
@@ -30,7 +32,7 @@ const DateOfJoining = ({
         </CFormLabel>
         <CCol sm={3}>
           <DatePicker
-            id="birthday"
+            id="joinedDate"
             className="form-control form-control-sm sh-date-picker"
             maxDate={new Date()}
             peekNextMonth
@@ -38,8 +40,8 @@ const DateOfJoining = ({
             showYearDropdown
             dropdownMode="select"
             placeholderText="dd/mm/yyyy"
-            name="officialBirthday"
-            value=""
+            name="joinedDate"
+            value={date}
             onChange={(date: Date) => onDateChangeHandler(date)}
           />
         </CCol>

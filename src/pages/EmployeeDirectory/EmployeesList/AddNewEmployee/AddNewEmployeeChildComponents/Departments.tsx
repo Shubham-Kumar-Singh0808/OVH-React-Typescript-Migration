@@ -6,7 +6,12 @@ import React from 'react'
 const Department = ({
   dynamicFormLabelProps,
   departmentsList,
+  setDepartmentValue,
+  departmentValue,
 }: EmployeeDepartmentProps): JSX.Element => {
+  const onDepartmentChangeHandler = (e: { target: { value: string } }) => {
+    setDepartmentValue(e.target.value)
+  }
   return (
     <>
       <CRow className="mb-3">
@@ -33,7 +38,8 @@ const Department = ({
             size="sm"
             aria-label="department"
             name="department"
-            value=""
+            value={departmentValue}
+            onChange={onDepartmentChangeHandler}
           >
             <option value={''}>Select Department</option>
             {departmentsList?.map((curItem) => (
