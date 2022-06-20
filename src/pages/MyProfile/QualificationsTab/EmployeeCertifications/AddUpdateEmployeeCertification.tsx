@@ -115,10 +115,13 @@ function AddUpdateEmployeeCertification({
   }, [getCertificateDetails, isEditCertificationDetails])
 
   useEffect(() => {
-    if (addCertification.description) {
-      setShowEditor(true)
+    if (getCertificateDetails.description) {
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
     }
-  }, [addCertification.description])
+  }, [getCertificateDetails])
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
