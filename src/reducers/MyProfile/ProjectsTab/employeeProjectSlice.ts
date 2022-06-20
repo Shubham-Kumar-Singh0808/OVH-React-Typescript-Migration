@@ -6,7 +6,6 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import {
   EmployeeProjects,
-  EmployeeProjectsGetParams,
   EmployeeProjectsSliceState,
   ProjectDetails,
 } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
