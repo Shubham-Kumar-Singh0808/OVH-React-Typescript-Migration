@@ -8,7 +8,6 @@ import {
   CFormLabel,
   CFormSelect,
   CRow,
-  CSpinner,
 } from '@coreui/react-pro'
 import {
   EmployeeCertification,
@@ -21,7 +20,6 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import moment from 'moment'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { ApiLoadingState } from '../../../../middleware//api/apiList'
 
 function AddUpdateEmployeeCertification({
   isEditCertificationDetails = false,
@@ -55,9 +53,6 @@ function AddUpdateEmployeeCertification({
   )
   const getCertificateDetails = useTypedSelector(
     (state) => state.employeeCertificates.editCertificateDetails,
-  )
-  const isLoading = useTypedSelector(
-    reduxServices.employeeCertifications.selectors.listSize,
   )
 
   const dispatch = useAppDispatch()
@@ -603,27 +598,21 @@ function AddUpdateEmployeeCertification({
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Description:
             </CFormLabel>
-            {isLoading !== ApiLoadingState.loading ? (
-              showEditor || !isEditCertificationDetails ? (
-                <CCol sm={8}>
-                  <CKEditor<{
-                    onChange: CKEditorEventHandler<'change'>
-                  }>
-                    initData={addCertification?.description}
-                    config={config}
-                    debug={true}
-                    onChange={({ editor }) => {
-                      handleDescription(editor.getData().trim())
-                    }}
-                  />
-                </CCol>
-              ) : (
-                ''
-              )
+            {showEditor || !isEditCertificationDetails ? (
+              <CCol sm={8}>
+                <CKEditor<{
+                  onChange: CKEditorEventHandler<'change'>
+                }>
+                  initData={addCertification?.description}
+                  config={config}
+                  debug={true}
+                  onChange={({ editor }) => {
+                    handleDescription(editor.getData().trim())
+                  }}
+                />
+              </CCol>
             ) : (
-              <div className="d-flex justify-content-center">
-                <CSpinner />
-              </div>
+              ''
             )}
           </CRow>
           <CRow>
