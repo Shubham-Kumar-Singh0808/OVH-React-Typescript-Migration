@@ -66,6 +66,7 @@ export interface DynamicFormLabelProps {
 }
 export interface DateChangeHandlerProp extends DynamicFormLabelProps {
   onDateChangeHandler: (e: Date) => void
+  dateValue: Date
 }
 
 export interface UserNameProps extends DynamicFormLabelProps {
@@ -96,6 +97,11 @@ export interface EmployeeShiftProps extends DynamicFormLabelProps {
 
 export interface ToggleShiftProp {
   setToggleShift: (value: boolean) => void
+}
+
+export interface EmployeeGenderProps extends DynamicFormLabelProps {
+  setEmployeeGender: (value: string) => void
+  employeeGender: string
 }
 
 //AddNewEmployee export as main object

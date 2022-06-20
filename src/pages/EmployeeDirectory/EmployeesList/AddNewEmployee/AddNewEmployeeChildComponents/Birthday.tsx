@@ -7,7 +7,10 @@ import React from 'react'
 const Birthday = ({
   dynamicFormLabelProps,
   onDateChangeHandler,
-}: DateChangeHandlerProp): JSX.Element => {
+  dateValue,
+}: // dateValue,
+DateChangeHandlerProp): JSX.Element => {
+  const date = dateValue == null ? '' : dateValue.toDateString()
   return (
     <>
       <CRow className="mb-3">
@@ -39,7 +42,7 @@ const Birthday = ({
             dropdownMode="select"
             placeholderText="dd/mm/yyyy"
             name="officialBirthday"
-            value=""
+            value={date}
             onChange={(date: Date) => onDateChangeHandler(date)}
           />
         </CCol>

@@ -1,11 +1,17 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
+import React, { useState } from 'react'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import React from 'react'
+import { EmployeeGenderProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const Gender = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
+  setEmployeeGender,
+  employeeGender,
+}: EmployeeGenderProps): JSX.Element => {
+  const onEmployeeChangeHandler = (e: { target: { value: string } }) => {
+    setEmployeeGender(e.target.value)
+  }
+
   return (
     <>
       <CRow className="mb-3">
@@ -32,7 +38,8 @@ const Gender = ({
             size="sm"
             aria-label="gender"
             name="gender"
-            value=""
+            onChange={onEmployeeChangeHandler}
+            value={employeeGender}
           >
             <option value={''}>Select Gender</option>
             <option value="Female">Female</option>

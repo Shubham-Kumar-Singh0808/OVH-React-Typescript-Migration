@@ -31,7 +31,10 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
+  const dispatch = useAppDispatch()
   const [shiftName, setShiftName] = useState<string>()
+  const [gender, setGender] = useState<string>()
+  const [date, setDate] = useState<Date>()
   const [addEmployee, setAddEmployee] = useState<AddEmployee>()
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
@@ -40,16 +43,18 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
       className: className,
     }
   }
+
   const onDateChangeHandler = (e: Date) => {
-    console.log(e)
+    setDate(e)
   }
+
+  console.log('gender', gender)
+  console.log('date', date)
 
   //   const handleContractIsDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
   //     console.log(e.currentTarget.value)
   //   }
 
-  //making dispatch
-  const dispatch = useAppDispatch()
   // const isLoading = useTypedSelector(
   //   reduxServices.newEmployee.employeeDepartmentsService.selectors.isLoading,
   // )
@@ -95,10 +100,10 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end mb-3">
+        <CRow className="mb-3 justify-content-end">
           <CCol className="text-end" md={4}>
             <CButton color="info" className="btn-ovh me-1">
-              <i className="fa fa-arrow-left  me-1"></i>Back
+              <i className="fa fa-arrow-left me-1"></i>Back
             </CButton>
           </CCol>
         </CRow>
@@ -106,14 +111,20 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
         <UserNameEmail dynamicFormLabelProps={dynamicFormLabelProps} />
 
         <FullName dynamicFormLabelProps={dynamicFormLabelProps} />
-        <Gender dynamicFormLabelProps={dynamicFormLabelProps} />
+        <Gender
+          dynamicFormLabelProps={dynamicFormLabelProps}
+          setEmployeeGender={setGender}
+          employeeGender={gender as string}
+        />
         <Birthday
           dynamicFormLabelProps={dynamicFormLabelProps}
           onDateChangeHandler={onDateChangeHandler}
+          dateValue={date as Date}
         />
         <DateOfJoining
           dynamicFormLabelProps={dynamicFormLabelProps}
           onDateChangeHandler={onDateChangeHandler}
+          dateValue={date as Date}
         />
         <Experience dynamicFormLabelProps={dynamicFormLabelProps} />
         <Department
@@ -154,6 +165,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
         <EmploymentContract
           dynamicFormLabelProps={dynamicFormLabelProps}
           onDateChangeHandler={onDateChangeHandler}
+          dateValue={date as Date}
         />
         <WorkFrom dynamicFormLabelProps={dynamicFormLabelProps} />
         <CRow className="mb-3 align-items-center">
