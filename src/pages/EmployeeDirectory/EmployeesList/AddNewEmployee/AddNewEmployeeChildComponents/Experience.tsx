@@ -33,7 +33,7 @@ const Experience = ({
             type="text"
             name="experience"
             placeholder="Experience"
-            value=""
+            // value=""
           />
         </CCol>
       </CRow>

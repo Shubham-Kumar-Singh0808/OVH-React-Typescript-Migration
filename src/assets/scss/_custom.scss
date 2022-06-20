@@ -174,3 +174,7 @@ th {
 .sh-date-picker:hover {
   cursor: pointer;
 }
+
+input.capetalized {
+  text-transform: capitalize;
+}

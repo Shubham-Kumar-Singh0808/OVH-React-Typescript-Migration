@@ -35,7 +35,8 @@ const FullName = ({
                 type="text"
                 name="firstname"
                 placeholder="First Name"
-                value=""
+                className="capetalized"
+                // value=""
               />
             </CCol>
             <CCol sm={3}>
@@ -44,7 +45,8 @@ const FullName = ({
                 type="text"
                 name="middlename"
                 placeholder="Middle Name"
-                value=""
+                className="capetalized"
+                // value=""
               />
             </CCol>
             <CCol sm={3}>
@@ -53,7 +55,8 @@ const FullName = ({
                 type="text"
                 name="lastname"
                 placeholder="Last Name"
-                value=""
+                className="capetalized"
+                // value=""
               />
             </CCol>
           </CRow>
