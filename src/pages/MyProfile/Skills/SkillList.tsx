@@ -20,7 +20,7 @@ const SkillList = ({
   backButtonHandler,
 }: {
   categoryId: number
-  categoryType: string
+  categoryType: string | undefined
   backButtonHandler: () => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -31,6 +31,8 @@ const SkillList = ({
 
   useEffect(() => {
     dispatch(reduxServices.skill.getAllSkills(categoryId))
+    dispatch(reduxServices.skill.actions.setCurrentPage(1))
+    dispatch(reduxServices.skill.actions.setPageSize(20))
   }, [dispatch, categoryId])
 
   useEffect(() => {
@@ -39,12 +41,13 @@ const SkillList = ({
       dispatch(reduxServices.skill.actions.doneRefreshList())
     }
   }, [dispatch, categoryId, refreshList])
+
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
           <CCardHeader>
-            <h4 className="h4">Skill List</h4>
+            <h4 className="h4">Skill List for {categoryType} Category</h4>
           </CCardHeader>
           <CCardBody className="ps-0 pe-0">
             <CRow>
