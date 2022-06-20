@@ -96,7 +96,7 @@ const projectDetails = (state: RootState): ProjectDetails[] =>
 const isLoading = (state: RootState): LoadingState =>
   state.employeeProjects.isLoading
 
-export const employeeProjectsThunk = {
+const employeeProjectsThunk = {
   getEmployeeProjects,
   getProjectDetails,
 }
