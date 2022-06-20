@@ -9,7 +9,9 @@ const EmployeeProjectEntry = (
   const [projectDetailsClicked, setProjectDetailsClicked] = useState<
     boolean | undefined
   >(false)
-  let icon: string
+  const icon = projectDetailsClicked
+    ? 'fa fa-minus-circle cursor-pointer'
+    : 'fa fa-plus-circle cursor-pointer'
 
   const toTitleCase = (str: string) => {
     return str
@@ -25,35 +27,43 @@ const EmployeeProjectEntry = (
     setProjectDetailsClicked((projectDetailsClicked) => !projectDetailsClicked)
   }
 
-  if (projectDetailsClicked) {
-    icon = 'fa fa-minus-circle cursor-pointer'
-  } else icon = 'fa fa-plus-circle cursor-pointer'
-
   let health
   if (props.project?.health === 'Green') {
     health = (
-      <span className="profile-tab-label profile-tab-label-success">
+      <span
+        data-testid="project-health"
+        className="profile-tab-label profile-tab-label-success"
+      >
         {props.project.status}
       </span>
     )
   }
   if (props.project?.health === 'Orange') {
     health = (
-      <span className="profile-tab-label profile-tab-label-warning">
+      <span
+        data-testid="project-health"
+        className="profile-tab-label profile-tab-label-warning"
+      >
         {props.project.status}
       </span>
     )
   }
   if (props.project?.health === 'Red') {
     health = (
-      <span className="profile-tab-label profile-tab-label-failed">
+      <span
+        data-testid="project-health"
+        className="profile-tab-label profile-tab-label-failed"
+      >
         {props.project.status}
       </span>
     )
   }
-  if (props.project?.health === 'Gray' || props.project?.health === 'Null') {
+  if (props.project?.health === 'Gray' || props.project?.health === 'null') {
     health = (
-      <span className="profile-tab-label profile-tab-label-null">
+      <span
+        data-testid="project-health"
+        className="profile-tab-label profile-tab-label-null"
+      >
         {props.project.status}
       </span>
     )

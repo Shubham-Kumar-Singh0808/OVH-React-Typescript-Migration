@@ -16,7 +16,7 @@ const initialProjectsState = {} as EmployeeProjectsSliceState
 
 const getEmployeeProjects = createAsyncThunk<
   EmployeeProjects | undefined,
-  EmployeeProjectsGetParams,
+  string,
   {
     dispatch: AppDispatch
     state: RootState
@@ -24,9 +24,9 @@ const getEmployeeProjects = createAsyncThunk<
   }
 >(
   'employeeProjects/getEmployeeProjects',
-  async (prepareObject: EmployeeProjectsGetParams, thunkApi) => {
+  async (employeeId: string, thunkApi) => {
     try {
-      return await projectsTabApi.getEmployeeProjects(prepareObject)
+      return await projectsTabApi.getEmployeeProjects(employeeId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

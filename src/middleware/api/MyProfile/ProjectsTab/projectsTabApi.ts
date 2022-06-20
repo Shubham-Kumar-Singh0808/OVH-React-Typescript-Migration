@@ -2,23 +2,20 @@ import { AllowedHttpMethods, employeeProjectsApiConfig } from '../../apiList'
 
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
-import {
-  EmployeeProjects,
-  EmployeeProjectsGetParams,
-} from '../../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import { EmployeeProjects } from '../../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
 const getEmployeeProjects = async (
-  prepareObject: EmployeeProjectsGetParams,
+  employeeid: string,
 ): Promise<EmployeeProjects> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeProjectsApiConfig.getEmployeeProjects,
     method: AllowedHttpMethods.get,
     params: {
-      employeeid: prepareObject.employeeid,
-      endIndex: prepareObject.endIndex,
-      firstIndex: prepareObject.firstIndex,
-      projectStatus: prepareObject.projectStatus,
-      type: prepareObject.type,
+      employeeid: employeeid,
+      endIndex: 20,
+      firstIndex: 0,
+      projectStatus: 'All',
+      type: 'All',
     },
   })
   const response = await axios(requestConfig)

@@ -35,7 +35,7 @@ const EmployeeProjectsDetail = (
   }, [dispatch, props.projectId])
 
   useEffect(() => {
-    if (allProjectDetails?.length > 0) {
+    if (allProjectDetails?.length) {
       allProjectDetails
         .filter(
           (allProjectDetails) =>

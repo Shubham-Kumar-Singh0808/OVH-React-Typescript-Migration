@@ -11,7 +11,6 @@ import {
 import React, { useEffect, useState } from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { EmployeeProjectsGetParams } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 import EmployeeProjectsEntry from './EmployeeProjectsEntry'
 
 const EmployeeProjectsTable = (): JSX.Element => {
@@ -26,14 +25,8 @@ const EmployeeProjectsTable = (): JSX.Element => {
 
   useEffect(() => {
     setIsLoading(true)
-    const prepareObject: EmployeeProjectsGetParams = {
-      firstIndex: 0,
-      endIndex: 20,
-      projectStatus: 'All',
-      type: 'All',
-      employeeid: employeeId as string,
-    }
-    dispatch(reduxServices.employeeProjects.getEmployeeProjects(prepareObject))
+    employeeId &&
+      dispatch(reduxServices.employeeProjects.getEmployeeProjects(employeeId))
   }, [dispatch, employeeId])
 
   useEffect(() => {
