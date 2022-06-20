@@ -29,6 +29,7 @@ const CertificateTypeTable = (): JSX.Element => {
   const [certificateId, setCertificateId] = useState(0)
   const [isEditCertificateType, setIsEditCertificateType] =
     useState<boolean>(false)
+  const [toDeleteCertificate, setToDeleteCertificate] = useState('')
 
   const certificateTypes = useTypedSelector(
     reduxServices.certificateType.selectors.certificateTypes,
@@ -67,8 +68,12 @@ const CertificateTypeTable = (): JSX.Element => {
     [certificateTypes, currentPage, pageSize],
   )
 
-  const handleShowDeleteModal = (certificateTypeId: number) => {
+  const handleShowDeleteModal = (
+    certificateTypeId: number,
+    certificate: string,
+  ) => {
     setCertificateId(certificateTypeId)
+    setToDeleteCertificate(certificate)
     setIsEditCertificateType(false)
     setIsDeleteModalVisible(true)
   }
@@ -170,6 +175,7 @@ const CertificateTypeTable = (): JSX.Element => {
                                 onClick={() =>
                                   handleShowDeleteModal(
                                     certificateTypeItem.id as number,
+                                    certificateTypeItem.certificateType,
                                   )
                                 }
                               >
@@ -230,7 +236,7 @@ const CertificateTypeTable = (): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteCertificateType}
       >
-        {`Do you really want to delete this certificateType ?`}
+        {`Do you really want to delete this ${toDeleteCertificate} Certificate ?`}
       </OModal>
     </>
   )

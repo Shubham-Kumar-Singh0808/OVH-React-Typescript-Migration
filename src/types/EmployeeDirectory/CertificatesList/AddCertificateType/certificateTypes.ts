@@ -13,17 +13,6 @@ export type AddCertificateTypeProps = {
   setSelectedTechnologyId: (value: number) => void
 }
 
-export type CertificateTypeTableProps = {
-  certificateTypes: CertificateType[]
-  actionMapping: ActionMapping
-  getToastMessage: (value: string) => JSX.Element
-}
-export type ActionMapping = {
-  added?: string
-  deleted: string
-  updated: string
-}
-
 export type CertificateTypeSliceState = {
   certificateTypes: CertificateType[]
   editCertificateType: CertificateType
