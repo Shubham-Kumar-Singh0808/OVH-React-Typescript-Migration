@@ -11,6 +11,7 @@ import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
+import EmployeeReportees from '../ReporteesTab/EmployeeReportees'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import EmployeeReviews from '../ReviewsTab/EmployeeReviews'
 import TabsLabels from '../../../middleware/TabsLabels'
@@ -67,6 +68,7 @@ const MyProfileTabs = (): JSX.Element => {
         4: <QualificationDetails />,
         5: <EmployeeReviews />,
         6: <EmployeeProjects />,
+        7: <EmployeeReportees />,
         8: <EmployeeAssets />,
         9: <EmployeeProfileHistory />,
       }

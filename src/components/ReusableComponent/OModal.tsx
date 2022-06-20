@@ -20,7 +20,7 @@ const OModal = ({
   modalFooterClass,
   modalBodyClass,
   closeButtonClass,
-  modalSize = 'sm',
+  modalSize,
   isConfirmButtonDisabled = false,
   isCancelButtonDisabled = false,
   confirmButtonText = 'Confirm',
