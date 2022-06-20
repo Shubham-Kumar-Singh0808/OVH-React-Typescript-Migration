@@ -15,13 +15,12 @@ import {
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import DatePicker from 'react-datepicker'
-import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
+import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import moment from 'moment'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useFormik } from 'formik'
+import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 
 function AddUpdateEmployeeCertification({
   isEditCertificationDetails = false,
@@ -41,6 +40,8 @@ function AddUpdateEmployeeCertification({
 
   const [completedDateFlag, setCompletedDateFlag] = useState<boolean>(false)
   const [expiryDateFlag, setExpirtyDateFlag] = useState<boolean>(false)
+
+  const [showEditor, setShowEditor] = useState<boolean>(false)
 
   const getTechnologies = useTypedSelector(
     (state) => state.employeeCertificates.getAllTechnologies,
@@ -102,18 +103,21 @@ function AddUpdateEmployeeCertification({
       toastColor="success"
     />
   )
-  const formik = useFormik({
-    initialValues: { name: '', message: '' },
-    onSubmit: (values) => {
-      console.log('Logging in ', values)
-    },
-  })
 
   useEffect(() => {
     if (isEditCertificationDetails) {
       setAddCertification(getCertificateDetails)
     }
   }, [getCertificateDetails, isEditCertificationDetails])
+
+  useEffect(() => {
+    if (getCertificateDetails?.description) {
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+    }
+  }, [getCertificateDetails])
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -298,6 +302,12 @@ function AddUpdateEmployeeCertification({
       backButtonHandler()
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
+  }
+
+  const handleDescription = (description: string) => {
+    setAddCertification((prevState) => {
+      return { ...prevState, ...{ description: description } }
+    })
   }
 
   const validateDates = (startDate: Date, endDate: Date) => {
@@ -558,12 +568,22 @@ function AddUpdateEmployeeCertification({
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Description:
             </CFormLabel>
-            <CCol sm={8}>
-              <OTextEditor
-                setFieldValue={(val) => formik.setFieldValue('', val)}
-                value={''}
-              />
-            </CCol>
+            {showEditor || !isEditCertificationDetails ? (
+              <CCol sm={8}>
+                <CKEditor<{
+                  onChange: CKEditorEventHandler<'change'>
+                }>
+                  initData={addCertification?.description}
+                  config={ckeditorConfig}
+                  debug={true}
+                  onChange={({ editor }) => {
+                    handleDescription(editor.getData().trim())
+                  }}
+                />
+              </CCol>
+            ) : (
+              ''
+            )}
           </CRow>
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
