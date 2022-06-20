@@ -4,10 +4,10 @@ import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralT
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 import {
-  DownloadCVReturn,
-  UploadFileReturn,
-  UploadImage,
-} from '../../../../types/apiTypes'
+  DownloadCVInterface,
+  UploadCVInterface,
+  UploadImageInterface,
+} from '../../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
 
 const updateDefaultPicOnGenderChange = async (
   gender: string,
@@ -24,7 +24,7 @@ const updateDefaultPicOnGenderChange = async (
 }
 
 const uploadEmployeeCV = async (
-  prepareObject: UploadFileReturn,
+  prepareObject: UploadCVInterface,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: basicInfoApiConfig.uploadEmployeeCV,
@@ -42,7 +42,7 @@ const uploadEmployeeCV = async (
 }
 
 const uploadEmployeeProfilePicture = async (
-  prepareObject: UploadImage,
+  prepareObject: UploadImageInterface,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: basicInfoApiConfig.uploadEmployeeImage,
@@ -60,7 +60,7 @@ const uploadEmployeeProfilePicture = async (
 }
 
 const downloadEmployeeCV = async (
-  prepareObject: DownloadCVReturn,
+  prepareObject: DownloadCVInterface,
 ): Promise<Blob | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: basicInfoApiConfig.downloadEmployeeCV,

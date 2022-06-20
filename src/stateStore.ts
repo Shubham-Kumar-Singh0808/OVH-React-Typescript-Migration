@@ -20,6 +20,7 @@ import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import employeeReporteesReducer from './reducers/MyProfile/ReporteesTab/employeeReporteesSlice'
+import employeeProjectsReducer from './reducers/MyProfile/ProjectsTab/employeeProjectSlice'
 import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
 import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
@@ -43,6 +44,7 @@ export const allReducers = {
   employeeDesignationList: employeeDesignationListReducer,
   shiftConfiguration: shiftConfigurationReducer,
   employeeReportees: employeeReporteesReducer,
+  employeeProjects: employeeProjectsReducer,
   certificateList: certificateListReducer,
   employeeAssets: employeeAssetsReducer,
   certificateType: certificateTypeReducer,

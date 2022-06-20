@@ -2,11 +2,14 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { BasicInformationState } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
+import {
+  BasicInformationState,
+  UploadCVInterface,
+  UploadImageInterface,
+} from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
 import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
-import { UploadFileReturn, UploadImage } from '../../../types/apiTypes'
 
 const updateEmployeeDefaultPicOnGenderChange = createAsyncThunk<
   number | undefined,
@@ -49,7 +52,7 @@ const updateEmployeeBasicInformation = createAsyncThunk<
 
 const uploadEmployeeCV = createAsyncThunk<
   number | undefined,
-  UploadFileReturn,
+  UploadCVInterface,
   {
     dispatch: AppDispatch
     state: RootState
@@ -57,7 +60,7 @@ const uploadEmployeeCV = createAsyncThunk<
   }
 >(
   'basicInformation/uploadRBTCv',
-  async (prepareObject: UploadFileReturn, thunkApi) => {
+  async (prepareObject: UploadCVInterface, thunkApi) => {
     try {
       return await basicInfoApi.uploadEmployeeCV(prepareObject)
     } catch (error) {
@@ -72,7 +75,7 @@ const initialBasicInformationState: BasicInformationState = {
 
 const uploadEmployeeProfilePicture = createAsyncThunk<
   number | undefined,
-  UploadImage,
+  UploadImageInterface,
   {
     dispatch: AppDispatch
     state: RootState
@@ -80,7 +83,7 @@ const uploadEmployeeProfilePicture = createAsyncThunk<
   }
 >(
   'basicInformation/uploadEmployeeProfilePicture',
-  async (prepareObject: UploadImage, thunkApi) => {
+  async (prepareObject: UploadImageInterface, thunkApi) => {
     try {
       return await basicInfoApi.uploadEmployeeProfilePicture(prepareObject)
     } catch (error) {
