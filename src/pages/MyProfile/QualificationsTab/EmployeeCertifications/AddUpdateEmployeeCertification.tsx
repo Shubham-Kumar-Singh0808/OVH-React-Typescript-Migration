@@ -110,7 +110,7 @@ function AddUpdateEmployeeCertification({
   }, [getCertificateDetails, isEditCertificationDetails])
 
   useEffect(() => {
-    if (getCertificateDetails.description) {
+    if (getCertificateDetails?.description) {
       setShowEditor(false)
       setTimeout(() => {
         setShowEditor(true)
