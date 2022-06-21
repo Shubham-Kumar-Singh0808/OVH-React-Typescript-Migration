@@ -4,11 +4,16 @@ import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import certificateListReducer from './reducers/EmployeeDirectory/CertificatesList/certificatesListSlice'
+import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
 import { configureStore } from '@reduxjs/toolkit'
+import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
 import employeeCertificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import employeeListReducer from './reducers/EmployeeDirectory/EmployeesList/employeeListSlice'
+import employeeProjectsReducer from './reducers/MyProfile/ProjectsTab/employeeProjectSlice'
 import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import employeeReporteesReducer from './reducers/MyProfile/ReporteesTab/employeeReporteesSlice'
 import employeeReviewsReducer from './reducers/MyProfile/ReviewTab/employeeReviewsSlice'
 import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
@@ -19,11 +24,7 @@ import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import employeeReporteesReducer from './reducers/MyProfile/ReporteesTab/employeeReporteesSlice'
-import employeeProjectsReducer from './reducers/MyProfile/ProjectsTab/employeeProjectSlice'
-import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
-import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
-import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
+import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -48,6 +49,7 @@ export const allReducers = {
   certificateList: certificateListReducer,
   employeeAssets: employeeAssetsReducer,
   certificateType: certificateTypeReducer,
+  visaList: visaListReducer,
   // add your slice reducers here
 }
 
