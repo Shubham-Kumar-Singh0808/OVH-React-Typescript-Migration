@@ -173,3 +173,7 @@ export interface VisaListApi extends ApiBase {
   getVisaTypes: string
   exportVisaList: string
 }
+
+export interface EmployeeHandbookSettingsApi extends ApiBase {
+  getEmployeeHandbookList: string
+}
