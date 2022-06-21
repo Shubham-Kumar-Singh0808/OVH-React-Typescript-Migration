@@ -17,10 +17,12 @@ export interface EmployeeSkillInfo {
 
 export type EmployeeSkillState = {
   skillDetails: EmployeeSkills[]
+  selectedEmployeeSkills: EmployeeSkills[]
   AddEditSkill: EditEmployeeSkills
   CategorySkillList: CategorySkillListItem[]
   isLoading: boolean
 }
+
 export type EditEmployeeSkills = {
   categoryType: number
   competency: string
@@ -34,7 +36,7 @@ export type EditEmployeeSkills = {
   employee: { id: string | number }
 }
 export type AddUpdateEmployeeSkill = {
-  categoryType: number
+  categoryType: number | string
   skillType: string | number
   expMonth: string
   expYear: string

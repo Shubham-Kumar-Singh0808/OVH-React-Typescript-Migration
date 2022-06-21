@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 
-import { render, screen, waitFor } from '@testing-library/react'
+import { prettyDOM, render, screen, waitFor } from '@testing-library/react'
 
 import CategoryList from './CategoryList'
 import { EnhancedStore } from '@reduxjs/toolkit'
@@ -28,7 +28,13 @@ describe('Category List Table Testing', () => {
   test('should render no data to display if categories is empty', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <CategoryList />
+        <CategoryList
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
     await waitFor(() => {
@@ -39,7 +45,13 @@ describe('Category List Table Testing', () => {
   test('should render table with data without crashing', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <CategoryList />
+        <CategoryList
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
 
@@ -54,7 +66,13 @@ describe('Category List Table Testing', () => {
   test('should render correct number of page records', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <CategoryList />
+        <CategoryList
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
 
@@ -67,7 +85,13 @@ describe('Category List Table Testing', () => {
   test('should render correct number of 40 page records', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <CategoryList />
+        <CategoryList
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
 
@@ -86,7 +110,13 @@ describe('Category List Table Testing', () => {
   test('should render first page data only', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <CategoryList />
+        <CategoryList
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
 
@@ -99,7 +129,13 @@ describe('Category List Table Testing', () => {
   test('should render second page data only', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <CategoryList />
+        <CategoryList
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
 
@@ -114,7 +150,13 @@ describe('Category List Table Testing', () => {
   test('should disable first and prev in pagination if first page', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <CategoryList />
+        <CategoryList
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
 
@@ -129,7 +171,13 @@ describe('Category List Table Testing', () => {
   test('should disable last and next in pagination if last page', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <CategoryList />
+        <CategoryList
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
 

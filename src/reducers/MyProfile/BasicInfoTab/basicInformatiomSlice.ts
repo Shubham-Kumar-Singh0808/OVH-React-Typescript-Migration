@@ -2,11 +2,14 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { AxiosError } from 'axios'
-import { BasicInformationState } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
+import {
+  BasicInformationState,
+  UploadCVInterface,
+  UploadImageInterface,
+} from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
 import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import basicInfoApi from '../../../middleware/api/MyProfile/BasicInfoTab/basicInfoApi'
-import { UploadFileReturn } from '../../../types/apiTypes'
 
 const updateEmployeeDefaultPicOnGenderChange = createAsyncThunk<
   number | undefined,
@@ -49,7 +52,7 @@ const updateEmployeeBasicInformation = createAsyncThunk<
 
 const uploadEmployeeCV = createAsyncThunk<
   number | undefined,
-  UploadFileReturn,
+  UploadCVInterface,
   {
     dispatch: AppDispatch
     state: RootState
@@ -57,7 +60,7 @@ const uploadEmployeeCV = createAsyncThunk<
   }
 >(
   'basicInformation/uploadRBTCv',
-  async (prepareObject: UploadFileReturn, thunkApi) => {
+  async (prepareObject: UploadCVInterface, thunkApi) => {
     try {
       return await basicInfoApi.uploadEmployeeCV(prepareObject)
     } catch (error) {
@@ -69,6 +72,26 @@ const uploadEmployeeCV = createAsyncThunk<
 const initialBasicInformationState: BasicInformationState = {
   isLoading: false,
 }
+
+const uploadEmployeeProfilePicture = createAsyncThunk<
+  number | undefined,
+  UploadImageInterface,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'basicInformation/uploadEmployeeProfilePicture',
+  async (prepareObject: UploadImageInterface, thunkApi) => {
+    try {
+      return await basicInfoApi.uploadEmployeeProfilePicture(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 
 const basicInformationSlice = createSlice({
   name: 'basicInformation',
@@ -102,6 +125,7 @@ const basicInformationSlice = createSlice({
 export const employeeBasicInformationThunk = {
   updateEmployeeDefaultPicOnGenderChange,
   updateEmployeeBasicInformation,
+  uploadEmployeeProfilePicture,
   uploadEmployeeCV,
 }
 export const basicInformationService = {

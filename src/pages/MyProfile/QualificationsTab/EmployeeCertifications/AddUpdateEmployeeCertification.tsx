@@ -10,18 +10,17 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import {
-  EmployeeCertificationProps,
   EmployeeCertification,
+  EmployeeCertificationProps,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import DatePicker from 'react-datepicker'
-import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
+import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import moment from 'moment'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useFormik } from 'formik'
+import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 
 function AddUpdateEmployeeCertification({
   isEditCertificationDetails = false,
@@ -39,18 +38,24 @@ function AddUpdateEmployeeCertification({
   const [expiryDate, setExpiryDate] = useState<Date | string>()
   const [error, setError] = useState<boolean>(false)
 
+  const [completedDateFlag, setCompletedDateFlag] = useState<boolean>(false)
+  const [expiryDateFlag, setExpirtyDateFlag] = useState<boolean>(false)
+
+  const [showEditor, setShowEditor] = useState<boolean>(false)
+
   const getTechnologies = useTypedSelector(
-    (state) => state.employeeCertificates.getAllTechnologies,
+    reduxServices.employeeCertifications.selectors.technologies,
   )
   const getCertificateByTechnology = useTypedSelector(
-    (state) => state.employeeCertificates.typeOfCertificate,
+    reduxServices.employeeCertifications.selectors.certificateByTechnology,
   )
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const getCertificateDetails = useTypedSelector(
-    (state) => state.employeeCertificates.editCertificateDetails,
+    reduxServices.employeeCertifications.selectors.certificateDetails,
   )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -68,18 +73,36 @@ function AddUpdateEmployeeCertification({
     }
   }, [dispatch, addCertification?.technology])
 
+  const currentCompletedDate = addCertification.completedDate as string
+  const completedDateParts: string[] | string = addCertification.completedDate
+    ? currentCompletedDate.split('/')
+    : ''
+  const newCompletedDate = addCertification.completedDate
+    ? new Date(
+        Number(completedDateParts[2]),
+        Number(completedDateParts[1]) - 1,
+        Number(completedDateParts[0]),
+      )
+    : new Date()
+
+  const currentExpiryDate = addCertification.expiryDate as string
+  const expirtyDateParts: string[] | string = addCertification.expiryDate
+    ? currentExpiryDate.split('/')
+    : ''
+  const newExpiryDate = addCertification.expiryDate
+    ? new Date(
+        Number(expirtyDateParts[2]),
+        Number(expirtyDateParts[1]) - 1,
+        Number(expirtyDateParts[0]),
+      )
+    : new Date()
+
   const successToastMessage = (
     <OToast
       toastMessage="Your changes have been saved successfully.."
       toastColor="success"
     />
   )
-  const formik = useFormik({
-    initialValues: { name: '', message: '' },
-    onSubmit: (values) => {
-      console.log('Logging in ', values)
-    },
-  })
 
   useEffect(() => {
     if (isEditCertificationDetails) {
@@ -87,43 +110,79 @@ function AddUpdateEmployeeCertification({
     }
   }, [getCertificateDetails, isEditCertificationDetails])
 
+  useEffect(() => {
+    if (getCertificateDetails?.description) {
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+    }
+  }, [getCertificateDetails])
+
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
       htmlFor: htmlFor,
       className: className,
     }
   }
+
   const onChangeDateOfCompletionHandler = (date: Date) => {
+    const currentDateExpiry = isEditCertificationDetails
+      ? (addCertification.expiryDate as string)
+      : (expiryDate as string)
+
+    const dateParts: string[] | string = addCertification.expiryDate
+      ? currentDateExpiry.split('/')
+      : ''
+    const newDateExpiry = addCertification.expiryDate
+      ? new Date(
+          Number(dateParts[2]),
+          Number(dateParts[1]) - 1,
+          Number(dateParts[0]),
+        )
+      : new Date(expiryDate as Date)
+
+    validateDates(date, newDateExpiry)
+
     if (isEditCertificationDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = 'completedDate'
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
-    } else {
-      setCompletedDate(date)
     }
+    setCompletedDate(date)
+    setCompletedDateFlag(true)
   }
+
   const onChangeDateOfExpireHandler = (date: Date) => {
+    const currentDateCompleted = isEditCertificationDetails
+      ? (addCertification.completedDate as string)
+      : (completedDate as string)
+
+    const dateParts: string[] | string = addCertification.completedDate
+      ? currentDateCompleted.split('/')
+      : ''
+    const newDateCompleted = addCertification.completedDate
+      ? new Date(
+          Number(dateParts[2]),
+          Number(dateParts[1]) - 1,
+          Number(dateParts[0]),
+        )
+      : new Date(completedDate as Date)
+
+    validateDates(newDateCompleted, date)
+
     if (isEditCertificationDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = 'expiryDate'
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
-    } else {
-      setExpiryDate(date)
     }
+    setExpiryDate(date)
+    setExpirtyDateFlag(true)
   }
-
-  useEffect(() => {
-    if (
-      (addCertification?.expiryDate as string) <=
-      (addCertification?.completedDate as string)
-    ) {
-      setError(false)
-    }
-  }, [addCertification?.completedDate, addCertification?.expiryDate])
 
   useEffect(() => {
     if (error) {
@@ -137,6 +196,7 @@ function AddUpdateEmployeeCertification({
       )
     }
   }, [completedDate, dispatch, error, expiryDate])
+
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -149,7 +209,7 @@ function AddUpdateEmployeeCertification({
         return { ...prevState, ...{ [name]: registrationNumber } }
       })
     } else if (name === 'name') {
-      const certificate = value.replace(/\s/g, '')
+      const certificate = value.replace(/^\s*/, '')
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: certificate } }
       })
@@ -197,6 +257,7 @@ function AddUpdateEmployeeCertification({
     })
     setCompletedDate('')
     setExpiryDate('')
+    setError(false)
   }
 
   const handleAddCertificateDetails = async () => {
@@ -213,6 +274,7 @@ function AddUpdateEmployeeCertification({
         prepareObject,
       ),
     )
+
     if (
       reduxServices.employeeCertifications.createEmployeeCertification.fulfilled.match(
         addCertificateResultAction,
@@ -239,6 +301,22 @@ function AddUpdateEmployeeCertification({
     ) {
       backButtonHandler()
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    }
+  }
+
+  const handleDescription = (description: string) => {
+    setAddCertification((prevState) => {
+      return { ...prevState, ...{ description: description } }
+    })
+  }
+
+  const validateDates = (startDate: Date, endDate: Date) => {
+    const newStartDate = startDate.setHours(0, 0, 0, 0)
+    const newEndtDate = endDate.setHours(0, 0, 0, 0)
+    if (newStartDate > newEndtDate) {
+      setError(true)
+    } else {
+      setError(false)
     }
   }
 
@@ -361,7 +439,7 @@ function AddUpdateEmployeeCertification({
                 name="name"
                 value={addCertification?.name}
                 placeholder="Certification Name"
-                maxLength={24}
+                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -416,7 +494,13 @@ function AddUpdateEmployeeCertification({
                   (completedDate as string) ||
                   (addCertification?.completedDate as string)
                 }
-                selected={completedDate as Date}
+                selected={
+                  !completedDateFlag
+                    ? addCertification.completedDate
+                      ? newCompletedDate
+                      : (completedDate as Date)
+                    : (completedDate as Date)
+                }
                 onChange={onChangeDateOfCompletionHandler}
                 id="completedDate"
                 peekNextMonth
@@ -440,7 +524,13 @@ function AddUpdateEmployeeCertification({
                   (expiryDate as string) ||
                   (addCertification?.expiryDate as string)
                 }
-                selected={expiryDate as Date}
+                selected={
+                  !expiryDateFlag
+                    ? addCertification.expiryDate
+                      ? newExpiryDate
+                      : (expiryDate as Date)
+                    : (expiryDate as Date)
+                }
                 onChange={onChangeDateOfExpireHandler}
                 id="expiryDate"
                 peekNextMonth
@@ -478,12 +568,22 @@ function AddUpdateEmployeeCertification({
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Description:
             </CFormLabel>
-            <CCol sm={8}>
-              <OTextEditor
-                setFieldValue={(val) => formik.setFieldValue('', val)}
-                value={''}
-              />
-            </CCol>
+            {showEditor || !isEditCertificationDetails ? (
+              <CCol sm={8}>
+                <CKEditor<{
+                  onChange: CKEditorEventHandler<'change'>
+                }>
+                  initData={addCertification?.description}
+                  config={ckeditorConfig}
+                  debug={true}
+                  onChange={({ editor }) => {
+                    handleDescription(editor.getData().trim())
+                  }}
+                />
+              </CCol>
+            ) : (
+              ''
+            )}
           </CRow>
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
@@ -491,7 +591,7 @@ function AddUpdateEmployeeCertification({
                 <CButton
                   className="btn-ovh me-2"
                   color="success"
-                  disabled={!isButtonEnabled}
+                  disabled={error}
                   onClick={handleUpdateCertificationDetails}
                 >
                   {confirmButtonText}
@@ -501,7 +601,7 @@ function AddUpdateEmployeeCertification({
                   <CButton
                     className="btn-ovh me-1"
                     color="success"
-                    disabled={!isButtonEnabled}
+                    disabled={!isButtonEnabled || error}
                     onClick={handleAddCertificateDetails}
                   >
                     {confirmButtonText}

@@ -11,23 +11,43 @@ import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
+import EmployeeReportees from '../ReporteesTab/EmployeeReportees'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
+import EmployeeReviews from '../ReviewsTab/EmployeeReviews'
 import TabsLabels from '../../../middleware/TabsLabels'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../stateStore'
+import { useParams } from 'react-router-dom'
 import { useTypedSelector } from '../../../stateStore'
+import EmployeeProjects from '../ProjectsTab/EmployeeProjects'
 
+import EmployeeAssets from '../MyAssetsTab/EmployeeAssets'
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
 const MyProfileTabs = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [activeTabsKey, setActiveTabsKey] = useState(1)
   const [activeTabsContent, setActiveTabsContent] = useState<JSX.Element>()
   const employeeRole = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeRole,
   )
+  const { employeeId } = useParams<{ employeeId?: string }>()
+
   const handleActiveTab = (tabKey: number) => {
     setActiveTabsKey(tabKey)
   }
+
+  useEffect(() => {
+    if (employeeId) {
+      dispatch(
+        reduxServices.generalInformation.getSelectedEmployeeInformation(
+          employeeId,
+        ),
+      )
+    }
+  }, [dispatch, employeeId])
 
   useEffect(() => {
     if (
@@ -46,8 +66,10 @@ const MyProfileTabs = (): JSX.Element => {
         2: <BasicInfoTab />,
         3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
         4: <QualificationDetails />,
-        5: <h1>Review</h1>,
-        6: <h1>Projects</h1>,
+        5: <EmployeeReviews />,
+        6: <EmployeeProjects />,
+        7: <EmployeeReportees />,
+        8: <EmployeeAssets />,
         9: <EmployeeProfileHistory />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'

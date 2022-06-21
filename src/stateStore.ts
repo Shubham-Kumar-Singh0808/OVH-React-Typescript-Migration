@@ -3,10 +3,18 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
+import certificateListReducer from './reducers/EmployeeDirectory/CertificatesList/certificatesListSlice'
+import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
 import { configureStore } from '@reduxjs/toolkit'
+import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
 import employeeCertificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
+import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import employeeGeneralInformationReducer from './reducers/MyProfile/GeneralTab/generalInformationSlice'
+import employeeListReducer from './reducers/EmployeeDirectory/EmployeesList/employeeListSlice'
+import employeeProjectsReducer from './reducers/MyProfile/ProjectsTab/employeeProjectSlice'
 import employeeQualificationsReducer from './reducers/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import employeeReporteesReducer from './reducers/MyProfile/ReporteesTab/employeeReporteesSlice'
+import employeeReviewsReducer from './reducers/MyProfile/ReviewTab/employeeReviewsSlice'
 import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import profileHistoryReducer from './reducers/MyProfile/ProfileHistory/profileHistorySlice'
@@ -16,7 +24,7 @@ import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
+import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -32,8 +40,16 @@ export const allReducers = {
   employeeCertificates: employeeCertificationReducer,
   profileHistory: profileHistoryReducer,
   employeeSkill: employeeSkillReducer,
+  employeeReviews: employeeReviewsReducer,
+  employeeList: employeeListReducer,
   employeeDesignationList: employeeDesignationListReducer,
   shiftConfiguration: shiftConfigurationReducer,
+  employeeReportees: employeeReporteesReducer,
+  employeeProjects: employeeProjectsReducer,
+  certificateList: certificateListReducer,
+  employeeAssets: employeeAssetsReducer,
+  certificateType: certificateTypeReducer,
+  visaList: visaListReducer,
   // add your slice reducers here
 }
 

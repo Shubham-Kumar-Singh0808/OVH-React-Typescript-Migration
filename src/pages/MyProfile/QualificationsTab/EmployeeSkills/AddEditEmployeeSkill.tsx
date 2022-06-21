@@ -61,11 +61,19 @@ function AddEditEmployeeSkill({
     }
   }, [dispatch, employeeSkill?.categoryType])
 
-  const employeeSkillHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target || null
-    setEmployeeSkill((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+  const employeeSkillHandler = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const { name, value } = event.target
+    if (name === 'categoryType') {
+      setEmployeeSkill((prevState) => {
+        return { ...prevState, ...{ [name]: value, skillType: '' } }
+      })
+    } else {
+      setEmployeeSkill((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   const formik = useFormik({
@@ -194,6 +202,17 @@ function AddEditEmployeeSkill({
     }
   }
 
+  const categoryName = useMemo(() => {
+    if (employeeSkill.categoryType) {
+      return sortedCategoryDetails?.filter(
+        (category) =>
+          category.categoryId === Number(employeeSkill.categoryType),
+      )[0].categoryType
+    }
+
+    return ''
+  }, [employeeSkill.categoryType, sortedCategoryDetails])
+
   return (
     <>
       {toggle === '' && (
@@ -216,7 +235,7 @@ function AddEditEmployeeSkill({
             <CForm>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  category:
+                  Category:
                   <span
                     className={
                       employeeSkill?.categoryType ? 'text-white' : 'text-danger'
@@ -259,7 +278,7 @@ function AddEditEmployeeSkill({
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Skills:
+                  Skill:
                   <span
                     className={
                       employeeSkill?.skillType ? 'text-white' : 'text-danger'
@@ -439,8 +458,8 @@ function AddEditEmployeeSkill({
       )}
       {toggle === 'skillListSection' && (
         <SkillList
-          categoryId={employeeSkill.categoryType}
-          categoryType={''}
+          categoryId={employeeSkill.categoryType as number}
+          categoryType={categoryName}
           backButtonHandler={() => setToggle('')}
         />
       )}

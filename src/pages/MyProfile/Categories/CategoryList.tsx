@@ -23,6 +23,8 @@ const CategoryList = ({
 
   useEffect(() => {
     dispatch(reduxServices.category.getAllCategories())
+    dispatch(reduxServices.category.actions.setCurrentPage(1))
+    dispatch(reduxServices.category.actions.setPageSize(20))
   }, [dispatch])
 
   return (

@@ -24,6 +24,12 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 const SkillListTable = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const skills = useTypedSelector(reduxServices.skill.selectors.skills)
+  const pageFromState = useTypedSelector(
+    reduxServices.skill.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.skill.selectors.pageSizeFromState,
+  )
 
   const {
     paginationRange,
@@ -31,16 +37,19 @@ const SkillListTable = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(skills.length, 20)
+  } = usePagination(skills.length, pageSizeFromState, pageFromState)
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteSkillName, setToDeleteSkillName] = useState('')
   const [toDeleteSkillId, setToDeleteSkillId] = useState(0)
 
   useEffect(() => {
-    setPageSize(20)
-    setCurrentPage(1)
-  }, [skills, setPageSize, setCurrentPage])
+    dispatch(reduxServices.skill.actions.setPageSize(pageSize))
+  }, [dispatch, pageSize])
+
+  useEffect(() => {
+    dispatch(reduxServices.skill.actions.setCurrentPage(currentPage))
+  }, [currentPage, dispatch])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -77,83 +86,80 @@ const SkillListTable = (): JSX.Element => {
 
   return (
     <>
-      {skills.length ? (
-        <>
-          <CTable striped>
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col" className="w-25">
-                  #
+      <CTable striped>
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col" className="w-25">
+              #
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="w-50">
+              Name
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="w-25">
+              Action
+            </CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {currentPageItems?.map((skillItem, index) => {
+            return (
+              <CTableRow key={index}>
+                <CTableHeaderCell scope="row">
+                  {getItemNumber(index)}
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="w-50">
-                  Name
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="w-25">
-                  Action
-                </CTableHeaderCell>
+                <CTableDataCell>{skillItem.skill}</CTableDataCell>
+                <CTableDataCell>
+                  <CButton
+                    color="danger"
+                    size="sm"
+                    onClick={() =>
+                      handleShowDeleteModal(skillItem.skill, skillItem.skillId)
+                    }
+                  >
+                    <CIcon className="text-white" icon={cilTrash} />
+                  </CButton>
+                </CTableDataCell>
               </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {currentPageItems?.map((skillItem, index) => {
-                return (
-                  <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">
-                      {getItemNumber(index)}
-                    </CTableHeaderCell>
-                    <CTableDataCell>{skillItem.skill}</CTableDataCell>
-                    <CTableDataCell>
-                      <CButton
-                        color="danger"
-                        size="sm"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            skillItem.skill,
-                            skillItem.skillId,
-                          )
-                        }
-                      >
-                        <CIcon className="text-white" icon={cilTrash} />
-                      </CButton>
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-            </CTableBody>
-          </CTable>
-          <CRow>
-            <CCol xs={4}>
-              <p>
-                <strong>Total Records: {skills.length}</strong>
-              </p>
-            </CCol>
-            <CCol xs={3}>
-              {skills.length > 20 && (
-                <OPageSizeSelect
-                  handlePageSizeSelectChange={handlePageSizeSelectChange}
-                />
-              )}
-            </CCol>
-            {skills.length > 20 && (
-              <CCol
-                xs={5}
-                className="d-grid gap-2 d-md-flex justify-content-md-end"
-              >
-                <OPagination
-                  currentPage={currentPage}
-                  pageSetter={setCurrentPage}
-                  paginationRange={paginationRange}
-                />
-              </CCol>
-            )}
-          </CRow>
-        </>
-      ) : (
-        <CCol>
-          <CRow className="category-no-data">
-            <h4 className="text-center">No data to display</h4>
-          </CRow>
+            )
+          })}
+        </CTableBody>
+      </CTable>
+      <CRow>
+        <CCol xs={4}>
+          <p>
+            <strong>Total Records: {skills.length}</strong>
+          </p>
         </CCol>
-      )}
+
+        {!skills.length && (
+          <CCol>
+            <CRow className="category-no-data">
+              <h4 className="text-center">No data to display</h4>
+            </CRow>
+          </CCol>
+        )}
+        <CCol xs={3}>
+          {skills.length > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {skills.length > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-2 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
+
       <OModal
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}

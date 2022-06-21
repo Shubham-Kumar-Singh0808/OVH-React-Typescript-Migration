@@ -2,11 +2,18 @@ import {
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
+  CertificateListApi,
+  CertificateTypeApi,
+  EmployeeAssetsApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
+  EmployeeListApi,
+  EmployeeProjectsApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
+  EmployeeReporteesApi,
+  EmployeeReviewsApi,
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
@@ -14,6 +21,7 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
+  VisaListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -87,6 +95,7 @@ export const employeeSkillsApiConfig: EmployeeSkillApi = {
   updateEmployeeSkillInformation:
     apiPrefix + '/jobapplicant/updateEmployeeSkill',
   deleteEmployeeSkill: apiPrefix + '/jobapplicant/deleteEmployeeSkill',
+  getEmployeeSkillsById: apiPrefix + '/jobapplicant/getEmployeeskills',
 }
 
 export const employeeQualificationCategoryApiConfig: EmployeeQualificationCategoryApi =
@@ -96,6 +105,7 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
     createQualificationCategory: apiPrefix + '/Employee/saveQualiCategory',
     deleteQualificationCategory: apiPrefix + '/Employee/deleteQualiCategory',
   }
+
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
   getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
 }
@@ -125,14 +135,21 @@ export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificate: apiPrefix + '/Employee/getCertification',
   updateEmployeeCertificate: apiPrefix + '/Employee/certification',
   deleteEmployeeCertificate: apiPrefix + '/Employee/certification',
+  getEmployeeCertificateById: apiPrefix + '/Employee/employeeCertification',
 }
 
 export const basicInfoApiConfig: BasicInfoApi = {
   defaultPicByGender: apiPrefix + '/jobapplicant/defaultPic',
   updateEmployeeDetails: apiPrefix + '/jobapplicant/updateEmployeeDetails',
   uploadEmployeeCV: apiPrefix + '/fileUpload/uploadRBTResume',
+  uploadEmployeeImage: apiPrefix + '/fileUpload/uploadImage',
   downloadEmployeeCV: apiPrefix + '/jobapplicant/downloadRBTCv',
   downloadSampleCV: apiPrefix + '/jobapplicant/downloadCVFormateFile',
+}
+
+export const employeeListConfig: EmployeeListApi = {
+  getEmployeeList: apiPrefix + '/jobapplicant/EmployeesIndexData',
+  exportEmployeeData: apiPrefix + '/jobapplicant/exportEmployeeData',
 }
 
 export const employeeDesignationListApiConfig: EmployeeDesignationListApi = {
@@ -147,4 +164,46 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   addTimeSlot: apiPrefix + '/jobapplicant/addTimeSlot',
   updateShiftDetail: apiPrefix + '/jobapplicant/updateShiftDetail',
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
+}
+
+export const employeeReporteesApiConfig: EmployeeReporteesApi = {
+  getEmployeeReportees: apiPrefix + '/jobapplicant/getReportiesUnderManager',
+  getEmployeeReporteesKRAs: apiPrefix + '/kra/kraForIndividual',
+  getEmployeeReporteesKPIs: apiPrefix + '/kra/kpisForIndividualKra',
+}
+
+export const certificateListApiConfig: CertificateListApi = {
+  getAllEmployeeCertificates:
+    apiPrefix + '/EmployeeSkill/getAllEmployeecertificates',
+  exportCertificateList: apiPrefix + '/EmployeeSkill/exportCertificatesList',
+}
+
+export const employeeAssetsApiConfig: EmployeeAssetsApi = {
+  getEmployeeAssets: apiPrefix + '/Employee/getEmployeeAssets',
+}
+
+export const certificateTypeApiConfig: CertificateTypeApi = {
+  getCertificateTypes: apiPrefix + '/EmployeeSkill/getCertificateTypeList',
+  addCertificateType: apiPrefix + '/EmployeeSkill/addCertificateType',
+  deleteCertificateType: apiPrefix + '/EmployeeSkill/deleteCertificateType',
+  checkIsCertificateTypeExists:
+    apiPrefix + '/EmployeeSkill/checkForDuplicateCertificate',
+  getCertificateType: apiPrefix + '/EmployeeSkill/editCertificateType',
+  updateCertificateType: apiPrefix + '/EmployeeSkill/updateCertificatetype',
+}
+
+export const employeeReviewsApiConfig: EmployeeReviewsApi = {
+  getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
+}
+
+export const visaListApiConfig: VisaListApi = {
+  getVisaList: apiPrefix + '/EmployeeSkill/getAllVisaDetails',
+  getCountries: apiPrefix + '/EmployeeSkill/getCountries',
+  getVisaTypes: apiPrefix + '/Employee/getCountryChangeList',
+  exportVisaList: apiPrefix + '/EmployeeSkill/exportEmployeeVisaList',
+}
+
+export const employeeProjectsApiConfig: EmployeeProjectsApi = {
+  getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
+  getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }

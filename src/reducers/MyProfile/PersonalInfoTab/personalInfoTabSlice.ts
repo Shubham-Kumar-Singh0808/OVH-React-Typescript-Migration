@@ -29,7 +29,7 @@ const initialPersonalInfoTabState: PersonalInfoTabState = {
 
 const getEmployeeFamilyDetails = createAsyncThunk<
   EmployeeFamilyData[] | undefined,
-  number | string,
+  number | string | undefined,
   {
     dispatch: AppDispatch
     state: RootState
@@ -37,7 +37,7 @@ const getEmployeeFamilyDetails = createAsyncThunk<
   }
 >(
   'personalInfoTab/getEmployeeFamilyDetails',
-  async (employeeId: number | string, thunkApi) => {
+  async (employeeId: number | string | undefined, thunkApi) => {
     try {
       return await personalInfoApi.getEmployeeFamilyDetails(employeeId)
     } catch (error) {
@@ -49,7 +49,7 @@ const getEmployeeFamilyDetails = createAsyncThunk<
 
 const getEmployeeVisaDetails = createAsyncThunk<
   VisaDetails[] | undefined,
-  string | number,
+  string | number | undefined,
   {
     dispatch: AppDispatch
     state: RootState
@@ -57,7 +57,7 @@ const getEmployeeVisaDetails = createAsyncThunk<
   }
 >(
   'personalInfoTab/getEmployeeVisaDetails',
-  async (employeeId: string | number, thunkApi) => {
+  async (employeeId: string | number | undefined, thunkApi) => {
     try {
       return await personalInfoApi.getEmployeeVisaDetails(employeeId)
     } catch (error) {
