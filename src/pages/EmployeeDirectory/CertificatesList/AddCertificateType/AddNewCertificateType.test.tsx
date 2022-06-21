@@ -68,7 +68,7 @@ const expectComponentToBeRendered = () => {
 }
 
 describe('Add New CertificateType Testing', () => {
-  test('should render add new qualification category form without crashing', () => {
+  test('should render add new CertificateType form without crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <AddNewCertificateType

@@ -15,6 +15,7 @@ export type AddCertificateTypeProps = {
 
 export type CertificateTypeSliceState = {
   certificateTypes: CertificateType[]
+  editCertificateType: CertificateType
   isLoading: LoadingState
   error: ValidationError
 }

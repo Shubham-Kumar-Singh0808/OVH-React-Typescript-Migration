@@ -44,16 +44,16 @@ function AddUpdateEmployeeCertification({
   const [showEditor, setShowEditor] = useState<boolean>(false)
 
   const getTechnologies = useTypedSelector(
-    (state) => state.employeeCertificates.getAllTechnologies,
+    reduxServices.employeeCertifications.selectors.technologies,
   )
   const getCertificateByTechnology = useTypedSelector(
-    (state) => state.employeeCertificates.typeOfCertificate,
+    reduxServices.employeeCertifications.selectors.certificateByTechnology,
   )
   const employeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const getCertificateDetails = useTypedSelector(
-    (state) => state.employeeCertificates.editCertificateDetails,
+    reduxServices.employeeCertifications.selectors.certificateDetails,
   )
 
   const dispatch = useAppDispatch()

@@ -10,23 +10,31 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
-import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { usePagination } from '../../../../middleware/hooks/usePagination'
-import { currentPageData } from '../../../../utils/paginationUtils'
+
+import CIcon from '@coreui/icons-react'
+import EditCertificateType from './EditCertificateType'
+import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
+import { cilTrash } from '@coreui/icons'
+import { currentPageData } from '../../../../utils/paginationUtils'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import OModal from '../../../../components/ReusableComponent/OModal'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+
 const CertificateTypeTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [certificateId, setCertificateId] = useState(0)
+  const [isEditCertificateType, setIsEditCertificateType] =
+    useState<boolean>(false)
+  const [toDeleteCertificate, setToDeleteCertificate] = useState('')
 
   const certificateTypes = useTypedSelector(
     reduxServices.certificateType.selectors.certificateTypes,
   )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -44,7 +52,6 @@ const CertificateTypeTable = (): JSX.Element => {
   useEffect(() => {
     setPageSize(20)
   }, [certificateTypes, setPageSize, setCurrentPage])
-
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -61,17 +68,23 @@ const CertificateTypeTable = (): JSX.Element => {
     [certificateTypes, currentPage, pageSize],
   )
 
+  const handleShowDeleteModal = (
+    certificateTypeId: number,
+    certificate: string,
+  ) => {
+    setCertificateId(certificateTypeId)
+    setToDeleteCertificate(certificate)
+    setIsEditCertificateType(false)
+    setIsDeleteModalVisible(true)
+  }
+
   const toastElement = (
     <OToast
       toastColor="success"
-      toastMessage="Certificate deleted successfully"
+      toastMessage="CertificateType deleted successfully"
     />
   )
 
-  const handleShowDeleteModal = (certificateTypeId: number) => {
-    setCertificateId(certificateTypeId)
-    setIsDeleteModalVisible(true)
-  }
   const handleConfirmDeleteCertificateType = async () => {
     setIsDeleteModalVisible(false)
     const deleteCertificateTypeResultAction = await dispatch(
@@ -87,11 +100,25 @@ const CertificateTypeTable = (): JSX.Element => {
     }
   }
 
+  const editCertificateTypeButtonHandler = async (
+    id: number,
+  ): Promise<void> => {
+    await dispatch(reduxServices.certificateType.getCertificateType(id))
+    setIsEditCertificateType(true)
+    setCertificateId(id)
+  }
+
+  const cancelCertificateTypeButtonHandler = () => {
+    setIsEditCertificateType(false)
+  }
+  const isLoading = useTypedSelector(
+    reduxServices.certificateType.selectors.isLoading,
+  )
   return (
     <>
       {certificateTypes.length ? (
         <>
-          <CTable striped responsive>
+          <CTable responsive>
             <CTableHead>
               <CTableRow className="align-items-start">
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -104,34 +131,61 @@ const CertificateTypeTable = (): JSX.Element => {
               {currentPageItems.map((certificateTypeItem, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">
+                    <CTableDataCell scope="row">
+                      {' '}
                       {getItemNumber(index)}
-                    </CTableHeaderCell>
-                    <CTableDataCell>
-                      {certificateTypeItem.technologyName}
                     </CTableDataCell>
-                    <CTableDataCell>
-                      {certificateTypeItem.certificateType}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <CButton color="info" className="btn-ovh me-1">
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                      <CButton
-                        color="danger"
-                        size="sm"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            certificateTypeItem.id as number,
-                          )
+                    {isEditCertificateType &&
+                    certificateId === certificateTypeItem.id ? (
+                      <EditCertificateType
+                        cancelCertificateTypeButtonHandler={
+                          cancelCertificateTypeButtonHandler
                         }
-                      >
-                        <CIcon className="text-white" icon={cilTrash} />
-                      </CButton>
-                    </CTableDataCell>
+                        setIsEditCertificateType={setIsEditCertificateType}
+                        isEditCertificateType={isEditCertificateType}
+                      />
+                    ) : (
+                      <>
+                        <CTableDataCell>
+                          {certificateTypeItem.technologyName}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          {certificateTypeItem.certificateType}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {!isEditCertificateType && (
+                            <>
+                              <CButton
+                                color="info"
+                                className="btn-ovh me-1"
+                                onClick={() => {
+                                  editCertificateTypeButtonHandler(
+                                    certificateTypeItem.id as number,
+                                  )
+                                }}
+                              >
+                                <i
+                                  className="fa fa-pencil-square-o"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                              <CButton
+                                color="danger"
+                                size="sm"
+                                onClick={() =>
+                                  handleShowDeleteModal(
+                                    certificateTypeItem.id as number,
+                                    certificateTypeItem.certificateType,
+                                  )
+                                }
+                              >
+                                <CIcon className="text-white" icon={cilTrash} />
+                              </CButton>
+                            </>
+                          )}
+                        </CTableDataCell>
+                      </>
+                    )}
                   </CTableRow>
                 )
               })}
@@ -167,7 +221,9 @@ const CertificateTypeTable = (): JSX.Element => {
       ) : (
         <CCol>
           <CRow>
-            <h4 className="text-center">No data to display</h4>
+            {isLoading !== ApiLoadingState.loading && (
+              <h4 className="text-center">No data to display</h4>
+            )}
           </CRow>
         </CCol>
       )}
@@ -180,10 +236,9 @@ const CertificateTypeTable = (): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteCertificateType}
       >
-        {`Do you really want to delete this certificateType ?`}
+        {`Do you really want to delete this ${toDeleteCertificate} Certificate ?`}
       </OModal>
     </>
   )
 }
-
 export default CertificateTypeTable

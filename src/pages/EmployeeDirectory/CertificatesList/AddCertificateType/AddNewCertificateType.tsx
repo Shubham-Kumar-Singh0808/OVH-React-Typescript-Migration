@@ -21,13 +21,9 @@ const AddNewCertificateType = ({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const getAllTechnology = useTypedSelector(
-    (state) => state.employeeCertificates.getAllTechnologies,
+    reduxServices.employeeCertifications.selectors.technologies,
   )
   const dispatch = useAppDispatch()
-
-  const certificateTypes = useTypedSelector(
-    reduxServices.certificateType.selectors.certificateTypes,
-  )
 
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getTechnologies())
@@ -49,7 +45,7 @@ const AddNewCertificateType = ({
     const { name } = event.target
     if (name === 'certificate') {
       setNewCertificateType(
-        event.target.value.replace(/[^a-zA-Z\s]/gi, '').replace(/^\s*/, ''),
+        event.target.value.replace(/[^a-zA-Z0-9\s]/gi, '').replace(/^\s*/, ''),
       )
     } else {
       setSelectedTechnologyId(+event.target.value)
@@ -74,28 +70,31 @@ const AddNewCertificateType = ({
       technologyId: selectedTechnologyId,
       certificateType: newCertificateType,
     }
-    if (
-      certificateTypes.filter(
-        (certificateTypeItem) =>
-          certificateTypeItem.certificateType.toLowerCase() ===
-          newCertificateType.toLowerCase(),
-      ).length > 0
-    ) {
-      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
-      return
-    }
-    const addCertificateTypeResultAction = await dispatch(
-      reduxServices.certificateType.addCertificateType(prepareObject),
+    const isCertificateExistsResultAction = await dispatch(
+      reduxServices.certificateType.checkIsCertificateTypeExists(prepareObject),
     )
-
     if (
-      reduxServices.certificateType.addCertificateType.fulfilled.match(
-        addCertificateTypeResultAction,
-      )
+      reduxServices.certificateType.checkIsCertificateTypeExists.fulfilled.match(
+        isCertificateExistsResultAction,
+      ) &&
+      isCertificateExistsResultAction.payload === false
     ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      const addCertificateTypeResultAction = await dispatch(
+        reduxServices.certificateType.addCertificateType(prepareObject),
+      )
+
+      if (
+        reduxServices.certificateType.addCertificateType.fulfilled.match(
+          addCertificateTypeResultAction,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(successToastMessage))
+        handleClearInputFields()
+      }
+      dispatch(reduxServices.certificateType.getCertificateTypes())
+    } else {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
     }
-    dispatch(reduxServices.certificateType.getCertificateTypes())
   }
 
   const handleClearInputFields = () => {

@@ -150,7 +150,10 @@ export interface EmployeeAssetsApi extends ApiBase {
 export interface CertificateTypeApi extends ApiBase {
   getCertificateTypes: string
   addCertificateType: string
+  checkIsCertificateTypeExists: string
   deleteCertificateType: string
+  getCertificateType: string
+  updateCertificateType: string
 }
 
 export interface EmployeeProjectsApi extends ApiBase {
