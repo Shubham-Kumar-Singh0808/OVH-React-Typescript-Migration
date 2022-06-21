@@ -5,22 +5,13 @@ import {
 } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import {
   Birthday,
-  Country,
-  Department,
-  Designation,
   EmploymentContract,
-  EmploymentType,
   Experience,
   FullName,
-  Gender,
   HRAssociate,
-  JobType,
   JoinedDate,
   ProjectManager,
   ReportingManager,
-  Role,
-  Shift,
-  Technology,
   UserNameEmail,
   WorkFrom,
 } from './AddNewEmployeeChildComponents/index'

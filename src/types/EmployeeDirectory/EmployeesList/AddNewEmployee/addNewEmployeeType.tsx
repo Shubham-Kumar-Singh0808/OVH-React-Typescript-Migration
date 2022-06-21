@@ -60,9 +60,14 @@ export type EmployeeShift = {
   name: string
 }
 
+export type Label = {
+  htmlFor: string
+  className: string
+}
+
 //AddNewEmployee functions and Props types for child components
 export interface DynamicFormLabelProps {
-  dynamicFormLabelProps: (htmlFor: string, className: string) => void
+  dynamicFormLabelProps: (htmlFor: string, className: string) => Label
 }
 export interface DateChangeHandlerProp extends DynamicFormLabelProps {
   onDateChangeHandler: (e: Date) => void

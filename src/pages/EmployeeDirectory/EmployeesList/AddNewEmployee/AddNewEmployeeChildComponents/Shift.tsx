@@ -1,7 +1,7 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
 
 import { EmployeeShiftProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import React from 'react'
 
 const Shift = ({
   dynamicFormLabelProps,
@@ -15,9 +15,9 @@ const Shift = ({
   // }
   const shiftHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setShiftName(e.target.value)
-    const employeeShiftsFilter = employeeShifts.filter(
-      (curItem) => curItem.name === e.target.value,
-    )
+    // const employeeShiftsFilter = employeeShifts.filter(
+    //   (curItem) => curItem.name === e.target.value,
+    // )
   }
   return (
     <>

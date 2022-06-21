@@ -1,7 +1,7 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
 
 import { EmployeeGenderProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import React from 'react'
 
 const Gender = ({
   dynamicFormLabelProps,
