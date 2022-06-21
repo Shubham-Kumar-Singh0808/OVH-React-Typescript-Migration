@@ -8,9 +8,8 @@ const Birthday = ({
   dynamicFormLabelProps,
   onDateChangeHandler,
   dateValue,
-}: // dateValue,
-DateChangeHandlerProp): JSX.Element => {
-  const date = dateValue == null ? '' : dateValue.toDateString()
+}: DateChangeHandlerProp): JSX.Element => {
+  const date = dateValue == null ? '' : dateValue.toLocaleDateString()
   return (
     <>
       <CRow className="mb-3">
@@ -40,8 +39,8 @@ DateChangeHandlerProp): JSX.Element => {
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
-            placeholderText="dd/mm/yyyy"
-            name="officialBirthday"
+            placeholderText="Select birth date"
+            name="birthday"
             value={date}
             onChange={(date: Date) => onDateChangeHandler(date)}
           />

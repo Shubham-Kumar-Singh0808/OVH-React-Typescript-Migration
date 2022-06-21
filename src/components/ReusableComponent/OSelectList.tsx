@@ -14,7 +14,7 @@ const OSelect = ({
   const onChangeHandler = (e: { target: { value: string } }) => {
     setValue(e.target.value)
   }
-  console.log('list', list)
+
   if (!list) {
     return <></>
   }

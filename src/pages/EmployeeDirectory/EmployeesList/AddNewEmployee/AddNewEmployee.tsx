@@ -38,15 +38,9 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
 
   // Todo: Remove all the state and use single state with Add Employee
   const [shiftName, setShiftName] = useState<string>()
-  const [gender, setGender] = useState<string>()
-  const [department, setDepartment] = useState<string>()
-  const [technology, setTechnology] = useState<string>()
-  const [designation, setDesignation] = useState<string>()
-  const [userRole, setUserRole] = useState<string>()
-  const [employmentType, setEmploymentType] = useState<string>()
-  const [countryType, setCountryType] = useState<string>()
   const [date, setDate] = useState<Date>()
-  const [addEmployee, setAddEmployee] = useState<AddEmployee>()
+  const initEmployee = {} as AddEmployee
+  const [addEmployee, setAddEmployee] = useState(initEmployee)
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -59,9 +53,38 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     setDate(e)
   }
 
-  console.log('gender', gender)
-  console.log('date', date)
-  console.log('department', department)
+  // Start - Field handler
+  const onHandleGender = (value: string) => {
+    setAddEmployee({ ...addEmployee, gender: value })
+  }
+  const onHandleDepartment = (value: string) => {
+    setAddEmployee({ ...addEmployee, departmentName: value })
+  }
+  const onHandleTechnology = (value: string) => {
+    setAddEmployee({ ...addEmployee, technology: value })
+  }
+  const onHandleDesignation = (value: string) => {
+    setAddEmployee({ ...addEmployee, designation: value })
+  }
+  const onHandleUserRole = (value: string) => {
+    setAddEmployee({ ...addEmployee, role: value })
+  }
+  const onHandleEmployeeType = (value: string) => {
+    setAddEmployee({ ...addEmployee, employmentTypeName: value })
+  }
+  const onHandleCountryType = (value: string) => {
+    setAddEmployee({ ...addEmployee, country: value })
+  }
+  const onHandleBirthday = (value: Date) => {
+    setAddEmployee({ ...addEmployee, dob: value })
+  }
+  const onHandleJoinDate = (value: Date) => {
+    setAddEmployee({ ...addEmployee, dateOfJoining: value })
+  }
+  const onHandleJobType = (value: string) => {
+    setAddEmployee({ ...addEmployee, jobTypeName: value })
+  }
+  // End - Field handler
 
   //   const handleContractIsDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
   //     console.log(e.currentTarget.value)
@@ -70,19 +93,50 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   // const isLoading = useTypedSelector(
   //   reduxServices.newEmployee.employeeDepartmentsService.selectors.isLoading,
   // )
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.newEmployee.employeeDepartmentsService.getEmployeeDepartments(),
+    )
+    dispatch(reduxServices.newEmployee.technologyService.getAllTechnology())
+    dispatch(reduxServices.newEmployee.countryService.getAllCountries())
+    dispatch(reduxServices.newEmployee.hrDataService.getAllHrData())
+    dispatch(
+      reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
+    )
+    dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
+    dispatch(reduxServices.userRolesAndPermissions.getUserRoles())
+  }, [dispatch])
+
+  const countryList = useTypedSelector(
+    reduxServices.newEmployee.countryService.selectors.countriesList,
+  )
+  const hrDataList = useTypedSelector(
+    reduxServices.newEmployee.hrDataService.selectors.hrDataList,
+  )
+  const reportingManagersList = useTypedSelector(
+    reduxServices.newEmployee.reportingManagersService.selectors
+      .reportingManagersList,
+  )
+  const employeeShifts = useTypedSelector(
+    reduxServices.shiftConfiguration.selectors.employeeShifts,
+  )
+  const userRoles = useTypedSelector(
+    reduxServices.userRolesAndPermissions.selectors.userRoles,
+  )
+  const technologyList = useTypedSelector(
+    reduxServices.newEmployee.technologyService.selectors.technologies,
+  )
   const departmentsList = useTypedSelector(
     reduxServices.newEmployee.employeeDepartmentsService.selectors
       .employeeDepartments,
   )
 
+  // Start - Compose data
   const composedDepartmentList = listComposer(
     departmentsList as [],
     'departmentId',
     'departmentName',
-  )
-
-  const technologyList = useTypedSelector(
-    reduxServices.newEmployee.technologyService.selectors.technologies,
   )
 
   const composedTechnologyList = listComposer(
@@ -108,38 +162,8 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     'name',
   )
 
-  const userRoles = useTypedSelector(
-    reduxServices.userRolesAndPermissions.selectors.userRoles,
-  )
-
   const composedUserRoles = listComposer(userRoles as [], 'roleId', 'name')
-
-  const countryList = useTypedSelector(
-    reduxServices.newEmployee.countryService.selectors.countriesList,
-  )
-  const hrDataList = useTypedSelector(
-    reduxServices.newEmployee.hrDataService.selectors.hrDataList,
-  )
-  const reportingManagersList = useTypedSelector(
-    reduxServices.newEmployee.reportingManagersService.selectors
-      .reportingManagersList,
-  )
-  const employeeShifts = useTypedSelector(
-    reduxServices.shiftConfiguration.selectors.employeeShifts,
-  )
-
-  useEffect(() => {
-    dispatch(
-      reduxServices.newEmployee.employeeDepartmentsService.getEmployeeDepartments(),
-    )
-    dispatch(reduxServices.newEmployee.technologyService.getAllTechnology())
-    dispatch(reduxServices.newEmployee.countryService.getAllCountries())
-    dispatch(reduxServices.newEmployee.hrDataService.getAllHrData())
-    dispatch(
-      reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
-    )
-    dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
-  }, [dispatch])
+  // End - compose data
 
   return (
     <>
@@ -163,51 +187,51 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
         <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
           list={composedGenderList}
-          setValue={setGender}
-          value={gender as string}
+          setValue={onHandleGender}
+          value={addEmployee.gender as string}
           name="Gender"
           label="Select Gender"
         />
         <Birthday
           dynamicFormLabelProps={dynamicFormLabelProps}
-          onDateChangeHandler={onDateChangeHandler}
-          dateValue={date as Date}
+          onDateChangeHandler={onHandleBirthday}
+          dateValue={addEmployee.dob as Date}
         />
         <JoinedDate
           dynamicFormLabelProps={dynamicFormLabelProps}
-          onDateChangeHandler={onDateChangeHandler}
-          dateValue={date as Date}
+          onDateChangeHandler={onHandleJoinDate}
+          dateValue={addEmployee.dateOfJoining as Date}
         />
         <Experience dynamicFormLabelProps={dynamicFormLabelProps} />
         <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
           list={composedDepartmentList}
-          setValue={setDepartment}
-          value={department as string}
+          setValue={onHandleDepartment}
+          value={addEmployee.departmentName as string}
           name="Department"
           label="Select Department"
         />
         <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
           list={composedTechnologyList}
-          setValue={setTechnology}
-          value={technology as string}
+          setValue={onHandleTechnology}
+          value={addEmployee.technology as string}
           name="Technology"
           label="Select Technology"
         />
         <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
           list={composedDesignationList}
-          setValue={setDesignation}
-          value={designation as string}
+          setValue={onHandleDesignation}
+          value={addEmployee.designation as string}
           name="Designation"
           label="Select Designation"
         />
         <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
           list={composedUserRoles}
-          setValue={setUserRole}
-          value={userRole as string}
+          setValue={onHandleUserRole}
+          value={addEmployee.role as string}
           name="Role"
           label="Select Role"
         />
@@ -225,25 +249,25 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
         />
         <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
-          list={designationList}
-          setValue={setEmploymentType}
-          value={employmentType as string}
+          list={composedDesignationList}
+          setValue={onHandleEmployeeType}
+          value={addEmployee.employmentTypeName as string}
           name="EmploymentType"
           label="Select Employment Type"
         />
         <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
-          list={designationList}
-          setValue={setEmploymentType}
-          value={employmentType as string}
+          list={composedDesignationList}
+          setValue={onHandleJobType}
+          value={addEmployee.jobTypeName as string}
           name="JobType"
           label="Select Job Type"
         />
         <OSelectList
           dynamicFormLabelProps={dynamicFormLabelProps}
           list={countryList}
-          setValue={setCountryType}
-          value={countryType as string}
+          setValue={onHandleCountryType}
+          value={addEmployee.country as string}
           name="Country"
           label="Select Country"
         />

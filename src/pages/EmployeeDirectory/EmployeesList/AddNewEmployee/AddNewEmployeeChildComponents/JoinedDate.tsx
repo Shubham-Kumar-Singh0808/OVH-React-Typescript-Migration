@@ -39,7 +39,7 @@ const DateOfJoining = ({
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
-            placeholderText="dd/mm/yyyy"
+            placeholderText="Select joined date"
             name="joinedDate"
             value={date}
             onChange={(date: Date) => onDateChangeHandler(date)}
