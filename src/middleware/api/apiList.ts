@@ -4,12 +4,16 @@ import {
   CategoryApi,
   CertificateListApi,
   CertificateTypeApi,
+  EmployeeAssetsApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
   EmployeeListApi,
+  EmployeeProjectsApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
+  EmployeeReporteesApi,
+  EmployeeReviewsApi,
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
@@ -17,10 +21,7 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
-  EmployeeReporteesApi,
-  EmployeeAssetsApi,
-  EmployeeReviewsApi,
-  EmployeeProjectsApi,
+  VisaListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -193,6 +194,13 @@ export const certificateTypeApiConfig: CertificateTypeApi = {
 
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {
   getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
+}
+
+export const visaListApiConfig: VisaListApi = {
+  getVisaList: apiPrefix + '/EmployeeSkill/getAllVisaDetails',
+  getCountries: apiPrefix + '/EmployeeSkill/getCountries',
+  getVisaTypes: apiPrefix + '/Employee/getCountryChangeList',
+  exportVisaList: apiPrefix + '/EmployeeSkill/exportEmployeeVisaList',
 }
 
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
