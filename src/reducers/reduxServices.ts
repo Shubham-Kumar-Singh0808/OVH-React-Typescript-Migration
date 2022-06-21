@@ -50,7 +50,7 @@ export const reduxServices = {
   employeeSkill: employeeSkillServices,
   employeeReviews: employeeReviewsService,
   employeeProjects: employeeProjectsService,
-  // shiftConfiguration: shiftConfigurationService,
+  shiftConfiguration: shiftConfigurationService,
   employeeReportees: employeeReporteesService,
   certificateList: certificateListService,
   employeeAssets: employeeAssetsService,
@@ -62,5 +62,4 @@ export const reduxServices = {
   getEmpDepartments: addNewEmployeeService,
   technology: technologyService,
   country: countryService,
-  newEmployee: addNewEmployeeService,
 }

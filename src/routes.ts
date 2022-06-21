@@ -102,7 +102,7 @@ const routes = [
   {
     path: '/addNewEmployee',
     name: 'Add New Employee',
-    component: NewEmployeeLandingPage,
+    component: AddNewEmployee,
   },
 ]
 
