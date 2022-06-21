@@ -21,7 +21,7 @@ const AddNewCertificateType = ({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const getAllTechnology = useTypedSelector(
-    (state) => state.employeeCertificates.getAllTechnologies,
+    reduxServices.employeeCertifications.selectors.technologies,
   )
   const dispatch = useAppDispatch()
 
