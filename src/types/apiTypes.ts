@@ -167,3 +167,7 @@ export type UploadImage = {
   empId: number
   data: FormData
 }
+
+export interface EmployeeReportApi extends ApiBase {
+  getEmployeeReports: string
+}

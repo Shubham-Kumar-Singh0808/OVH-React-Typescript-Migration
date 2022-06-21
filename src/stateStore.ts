@@ -22,6 +22,7 @@ import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfigu
 import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
 import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
+import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeReportSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -44,6 +45,7 @@ export const allReducers = {
   certificateList: certificateListReducer,
   employeeAssets: employeeAssetsReducer,
   certificateType: certificateTypeReducer,
+  employeeReport: employeeReportReducer,
   // add your slice reducers here
 }
 

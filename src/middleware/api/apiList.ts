@@ -19,6 +19,7 @@ import {
   UserRolesConfigurationApi,
   EmployeeAssetsApi,
   EmployeeReviewsApi,
+  EmployeeReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -181,4 +182,8 @@ export const certificateTypeApiConfig: CertificateTypeApi = {
 
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {
   getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
+}
+
+export const employeeReportApiConfig: EmployeeReportApi = {
+  getEmployeeReports: apiPrefix + 'jobapplicant/getSelectedTypeEmployeeData',
 }
