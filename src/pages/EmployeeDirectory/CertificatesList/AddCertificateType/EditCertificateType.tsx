@@ -33,7 +33,7 @@ const EditCertificateType = ({
   const dispatch = useAppDispatch()
 
   const getAllTechnology = useTypedSelector(
-    (state) => state.employeeCertificates.getAllTechnologies,
+    reduxServices.employeeCertifications.selectors.technologies,
   )
 
   const editCertificateType = useTypedSelector(

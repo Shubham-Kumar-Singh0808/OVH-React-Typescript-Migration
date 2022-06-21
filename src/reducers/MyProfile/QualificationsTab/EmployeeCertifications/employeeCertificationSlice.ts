@@ -272,6 +272,9 @@ const employeeCertificates = (
     ? state.employeeCertificates.selectedEmployeeCertifications
     : state.employeeCertificates.certificationDetails
 
+const technologies = (state: RootState): Technology[] =>
+  state.employeeCertificates.getAllTechnologies
+
 export const employeeCertificationThunk = {
   getEmployeeCertificates,
   getTechnologies,
@@ -286,6 +289,7 @@ export const employeeCertificationThunk = {
 export const employeeCertificationSelectors = {
   listSize,
   employeeCertificates,
+  technologies,
 }
 
 export const employeeCertificateService = {
