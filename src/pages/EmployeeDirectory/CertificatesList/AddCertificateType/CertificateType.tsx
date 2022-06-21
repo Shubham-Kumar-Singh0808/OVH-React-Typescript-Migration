@@ -7,6 +7,7 @@ import CertificateTypeTable from './CertificateTypeTable'
 
 const CertificateType = (): JSX.Element => {
   const [selectedTechnologyId, setSelectedTechnologyId] = useState<number>()
+
   return (
     <>
       <OCard

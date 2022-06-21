@@ -10,6 +10,12 @@ describe('Certificate Type Slice Test', () => {
       certificateTypes: [],
       isLoading: ApiLoadingState.idle,
       error: null,
+      editCertificateType: {
+        certificateType: '',
+        id: 0,
+        technologyId: 0,
+        technologyName: '',
+      },
     })
   })
 })
