@@ -17,9 +17,11 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
+  EmployeeReporteesApi,
   EmployeeAssetsApi,
   EmployeeReviewsApi,
   EmployeeReportApi,
+  EmployeeProjectsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -164,6 +166,12 @@ export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
   deleteShiftDetail: apiPrefix + '/jobapplicant/deleteShiftDetail',
 }
 
+export const employeeReporteesApiConfig: EmployeeReporteesApi = {
+  getEmployeeReportees: apiPrefix + '/jobapplicant/getReportiesUnderManager',
+  getEmployeeReporteesKRAs: apiPrefix + '/kra/kraForIndividual',
+  getEmployeeReporteesKPIs: apiPrefix + '/kra/kpisForIndividualKra',
+}
+
 export const certificateListApiConfig: CertificateListApi = {
   getAllEmployeeCertificates:
     apiPrefix + '/EmployeeSkill/getAllEmployeecertificates',
@@ -178,6 +186,10 @@ export const certificateTypeApiConfig: CertificateTypeApi = {
   getCertificateTypes: apiPrefix + '/EmployeeSkill/getCertificateTypeList',
   addCertificateType: apiPrefix + '/EmployeeSkill/addCertificateType',
   deleteCertificateType: apiPrefix + '/EmployeeSkill/deleteCertificateType',
+  checkIsCertificateTypeExists:
+    apiPrefix + '/EmployeeSkill/checkForDuplicateCertificate',
+  getCertificateType: apiPrefix + '/EmployeeSkill/editCertificateType',
+  updateCertificateType: apiPrefix + '/EmployeeSkill/updateCertificatetype',
 }
 
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {
@@ -186,4 +198,9 @@ export const employeeReviewsApiConfig: EmployeeReviewsApi = {
 
 export const employeeReportApiConfig: EmployeeReportApi = {
   getEmployeeReports: apiPrefix + 'jobapplicant/getSelectedTypeEmployeeData',
+}
+
+export const employeeProjectsApiConfig: EmployeeProjectsApi = {
+  getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
+  getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }

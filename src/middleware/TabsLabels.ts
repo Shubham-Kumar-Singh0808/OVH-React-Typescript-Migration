@@ -26,6 +26,10 @@ const TabsLabels = [
     name: 'Projects',
   },
   {
+    id: 7,
+    name: 'Reportees',
+  },
+  {
     id: 8,
     name: 'Assets',
   },

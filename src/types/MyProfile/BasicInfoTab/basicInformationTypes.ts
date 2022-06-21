@@ -1,11 +1,9 @@
-import { UploadImage } from '../../apiTypes'
-
 export type BasicInformationState = {
   isLoading: boolean
 }
 
 export type DownloadCVInterface = {
-  className: string
+  className?: string
   fileName?: string
   tenantKey?: string
   token?: string
@@ -14,5 +12,15 @@ export type DownloadCVInterface = {
 export type ImageCropperProps = {
   file: string | undefined
   empId: number
-  onUploadImage: (croppedImageData: UploadImage) => void
+  onUploadImage: (croppedImageData: UploadImageInterface) => void
+}
+
+export type UploadImageInterface = {
+  empId: number
+  data: FormData
+}
+
+export type UploadCVInterface = {
+  personId: number
+  file: FormData
 }
