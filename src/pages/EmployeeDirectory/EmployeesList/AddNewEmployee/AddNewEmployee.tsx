@@ -36,7 +36,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   // Todo: Remove all the state and use single state with Add Employee
   const [shiftName, setShiftName] = useState<string>()
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
-  const [distinationToggle, setDistinationoggle] = useState<boolean>(false)
+  const [destinationToggle, setDestinationoggle] = useState<boolean>(false)
 
   const initEmployee = {} as AddEmployee
   const [addEmployee, setAddEmployee] = useState(initEmployee)
@@ -277,7 +277,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   }
 
   const handleBackButton = () => {
-    setDistinationoggle(false)
+    setDestinationoggle(false)
     setShiftToggle(false)
   }
 
@@ -301,8 +301,8 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
           </CCol>
         </CRow>
         {shiftToggle && <span>Shift</span>}
-        {distinationToggle && <span>distination</span>}
-        {!shiftToggle && !distinationToggle ? (
+        {destinationToggle && <span>destination</span>}
+        {!shiftToggle && !destinationToggle ? (
           <>
             <UserNameEmail
               dynamicFormLabelProps={dynamicFormLabelProps}
@@ -362,8 +362,8 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               list={composedDesignationList}
               setValue={onHandleDesignation}
               value={addEmployee.designation}
-              setToggleShift={() => setDistinationoggle(!distinationToggle)}
-              toggleValue={distinationToggle as boolean}
+              setToggleShift={() => setDestinationoggle(!destinationToggle)}
+              toggleValue={destinationToggle as boolean}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}
