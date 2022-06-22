@@ -20,7 +20,6 @@ const addNewEmployee = createAsyncThunk<
   }
 >('newEmployee/addNewEmployee', async (payload: AddEmployee, thunkApi) => {
   try {
-    console.log('####@#', payload)
     return await addNewEmployeeAPi.addNewEmployeeApi.addNewEmployee(payload)
   } catch (error) {
     const err = error as AxiosError

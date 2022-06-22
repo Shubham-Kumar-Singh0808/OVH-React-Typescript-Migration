@@ -1,11 +1,23 @@
-import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
+import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
+import { SelectShiftProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const Designation = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
+  list,
+  setValue,
+  setToggleShift,
+  value,
+  toggleValue,
+}: SelectShiftProps): JSX.Element => {
+  const onChangeHandler = (e: { target: { value: string } }) => {
+    setValue(e.target.value)
+  }
+
+  if (!list) {
+    return <></>
+  }
   return (
     <>
       <CRow className="mb-3">
@@ -32,13 +44,28 @@ const Designation = ({
             size="sm"
             aria-label="designation"
             name="designation"
-            value=""
+            value={value}
+            onChange={onChangeHandler}
           >
-            <option value={''}>Select Designation</option>
-            <option value="Accounts">Accounts</option>
-            <option value="Marketing">Marketing</option>
-            <option value="Networking">Networking</option>
+            <option value={''}>Select Shift</option>
+            {list?.map((item, index) => {
+              const { name } = item
+              return (
+                <option key={index} value={name}>
+                  {name}
+                </option>
+              )
+            })}
           </CFormSelect>
+        </CCol>
+        <CCol sm={3}>
+          <CButton
+            color="info"
+            className="btn-ovh me-1"
+            onClick={() => setToggleShift(!toggleValue)}
+          >
+            <i className="fa fa-plus  me-1"></i>Add
+          </CButton>
         </CCol>
       </CRow>
     </>

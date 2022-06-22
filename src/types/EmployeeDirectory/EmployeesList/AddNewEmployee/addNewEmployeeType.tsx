@@ -148,7 +148,13 @@ export interface TechnologyProps extends DynamicFormLabelProps {
   setTechnologyValue: (value: string) => void
   technologyValue: string
 }
-
+export interface SelectShiftProps extends DynamicFormLabelProps {
+  list: GetList[]
+  setValue: (value: string) => void
+  setToggleShift: (value: boolean) => void
+  value: string
+  toggleValue: boolean
+}
 export interface SelectProps extends DynamicFormLabelProps {
   list: GetList[]
   setValue: (value: string) => void

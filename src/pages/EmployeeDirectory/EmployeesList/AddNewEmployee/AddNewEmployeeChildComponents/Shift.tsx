@@ -1,23 +1,22 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
-import { EmployeeShiftProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
+import { SelectShiftProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const Shift = ({
   dynamicFormLabelProps,
-  employeeShifts,
-  shiftName,
-  setShiftName,
+  list,
+  setValue,
   setToggleShift,
-}: EmployeeShiftProps): JSX.Element => {
-  // const toggleShiftHandler = () => {
-  //   setToggleShift(!toggleShift)
-  // }
-  const shiftHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setShiftName(e.target.value)
-    // const employeeShiftsFilter = employeeShifts.filter(
-    //   (curItem) => curItem.name === e.target.value,
-    // )
+  value,
+  toggleValue,
+}: SelectShiftProps): JSX.Element => {
+  const onChangeHandler = (e: { target: { value: string } }) => {
+    setValue(e.target.value)
+  }
+
+  if (!list) {
+    return <></>
   }
   return (
     <>
@@ -45,22 +44,25 @@ const Shift = ({
             size="sm"
             aria-label="shift"
             name="shift"
-            value={shiftName}
-            onChange={shiftHandler}
+            value={value}
+            onChange={onChangeHandler}
           >
             <option value={''}>Select Shift</option>
-            {employeeShifts?.map((curItem) => (
-              <option key={curItem.name} value={curItem.name}>
-                {curItem.name}
-              </option>
-            ))}
+            {list?.map((item, index) => {
+              const { name } = item
+              return (
+                <option key={index} value={name}>
+                  {name}
+                </option>
+              )
+            })}
           </CFormSelect>
         </CCol>
         <CCol sm={3}>
           <CButton
             color="info"
             className="btn-ovh me-1"
-            onClick={() => setToggleShift(false)}
+            onClick={() => setToggleShift(!toggleValue)}
           >
             <i className="fa fa-plus  me-1"></i>Add
           </CButton>
