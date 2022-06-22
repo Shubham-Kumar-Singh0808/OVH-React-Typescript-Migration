@@ -21,6 +21,7 @@ import employeeSkillReducer from './reducers/MyProfile/QualificationsTab/Employe
 import getAllReportingManagersReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/reportingManagersSlice'
 import getEmployeeDepartmentsReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/getEmployeeDepartmentsSlice'
 import hrDataReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/hrDataSlice'
+import newEmployeeReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeSlice'
 import personalInfoReducer from './reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import profileHistoryReducer from './reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
@@ -66,6 +67,7 @@ export const allReducers = {
   country: countriesReducer,
   getAllHrData: hrDataReducer,
   getAllReportingManagers: getAllReportingManagersReducer,
+  newEmployee: newEmployeeReducer,
   // add your slice reducers here
 }
 

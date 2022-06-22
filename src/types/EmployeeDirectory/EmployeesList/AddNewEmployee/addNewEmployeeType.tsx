@@ -4,9 +4,9 @@ import { EmployeeShiftDetails } from './ShiftConfiguration/shiftConfigurationTyp
 
 //AddNewEmployee Post API
 export type AddEmployee = {
-  contractEndDate: Date
+  contractEndDate?: Date
   contractExists: string
-  contractStartDate: Date
+  contractStartDate?: Date
   country: string
   dateOfJoining: Date
   departmentName: string
@@ -65,13 +65,67 @@ export type Label = {
   className: string
 }
 
+export type GetList = {
+  id: number
+  name: string
+}
+
+export type GetReportManager = {
+  id: number
+  fullName: string
+}
+
+export type GetProjectManager = {
+  id: number
+  fullName: string
+}
+
+export type GetHRAssociate = {
+  id: number
+  fullName: string
+}
+
 //AddNewEmployee functions and Props types for child components
 export interface DynamicFormLabelProps {
   dynamicFormLabelProps: (htmlFor: string, className: string) => Label
 }
+
+export interface ExperienceChangeHandlerProp extends DynamicFormLabelProps {
+  onExperienceHandler: (experience: number) => void
+  experienceValue: number
+}
+
+export interface WorkFromChangeHandlerProp extends DynamicFormLabelProps {
+  onWorkFromHandler: (from: string) => void
+  workFromValue: string
+}
+
+export interface UsernameEmailChangeHandlerProp extends DynamicFormLabelProps {
+  usernameChangeHandler: (username: string) => void
+  username: string
+}
+
+export interface FullNameChangeHandlerProp extends DynamicFormLabelProps {
+  firstNameChangeHandler: (firstName: string) => void
+  lastNameChangeHandler: (lastName: string) => void
+  middleNameChangeHandler: (middleName: string) => void
+  firstNameValue: string
+  lastNameValue: string
+  middleNameValue: string
+}
+
 export interface DateChangeHandlerProp extends DynamicFormLabelProps {
   onDateChangeHandler: (e: Date) => void
   dateValue: Date
+}
+
+export interface StartEndDateChangeHandlerProp extends DynamicFormLabelProps {
+  onStartDateChangeHandler: (start: Date) => void
+  onEndDateChangeHandler: (end: Date) => void
+  onContractExistHandler: (isDisable: string) => void
+  startDateValue: Date
+  endDateValue: Date
+  isContractExist: string
 }
 
 export interface UserNameProps extends DynamicFormLabelProps {
@@ -88,11 +142,6 @@ export interface TechnologyProps extends DynamicFormLabelProps {
   technologyValue: string
 }
 
-export type GetList = {
-  id: number
-  name: string
-}
-
 export interface SelectProps extends DynamicFormLabelProps {
   list: GetList[]
   setValue: (value: string) => void
@@ -106,9 +155,16 @@ export interface CountryProps extends DynamicFormLabelProps {
 
 export interface HrDataProps extends DynamicFormLabelProps {
   hrDataList: GetHrData[]
+  onSelectHRAssociate: (value: GetHRAssociate) => void
 }
-export interface ReportingManagerProps extends DynamicFormLabelProps {
-  reportingManagersList: GetAllReportingManagers[]
+
+export interface ReportManagerProps extends DynamicFormLabelProps {
+  reportManagersList: GetAllReportingManagers[]
+  onSelectReportManager: (value: GetReportManager) => void
+}
+export interface ManagerProps extends DynamicFormLabelProps {
+  managersList: GetAllReportingManagers[]
+  onSelectManager: (value: GetProjectManager) => void
 }
 export interface EmployeeShiftProps extends DynamicFormLabelProps {
   employeeShifts: EmployeeShiftDetails[]
@@ -135,4 +191,5 @@ export type AddNewEmployeeState = {
   reportingManagers?: GetAllReportingManagers[]
   error: ValidationError
   isLoading: LoadingState
+  addEmployee?: AddEmployee
 }

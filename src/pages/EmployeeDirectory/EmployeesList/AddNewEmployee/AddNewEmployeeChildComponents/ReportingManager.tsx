@@ -1,14 +1,32 @@
 import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
+import {
+  GetReportManager,
+  ReportManagerProps,
+} from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React, { useState } from 'react'
 
 import Autocomplete from 'react-autocomplete'
-import { ReportingManagerProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const ReportingManager = ({
   dynamicFormLabelProps,
-  reportingManagersList,
-}: ReportingManagerProps): JSX.Element => {
+  reportManagersList,
+  onSelectReportManager,
+}: ReportManagerProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
+
+  const onHandleSelectReportManager = (fullName: string) => {
+    setAutoCompleteTarget(fullName)
+    const managerName = reportManagersList.find(
+      (value) => value.fullName === fullName,
+    )
+
+    const reportManager = {
+      id: managerName?.id,
+      fullName: managerName?.fullName,
+    } as GetReportManager
+    onSelectReportManager(reportManager)
+  }
+
   return (
     <>
       <CRow className="mb-3">
@@ -37,7 +55,7 @@ const ReportingManager = ({
               placeholder: 'Type name here for auto fill',
             }}
             getItemValue={(item) => item.fullName}
-            items={reportingManagersList}
+            items={reportManagersList}
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
               <div
@@ -67,7 +85,7 @@ const ReportingManager = ({
               item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
             }
             onChange={(e) => setAutoCompleteTarget(e.target.value)}
-            onSelect={(value) => setAutoCompleteTarget(value)}
+            onSelect={(value) => onHandleSelectReportManager(value)}
           />
         </CCol>
       </CRow>

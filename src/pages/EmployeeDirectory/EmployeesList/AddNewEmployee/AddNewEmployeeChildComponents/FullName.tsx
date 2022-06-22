@@ -1,11 +1,17 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { FullNameChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
 
 const FullName = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
+  firstNameChangeHandler,
+  lastNameChangeHandler,
+  middleNameChangeHandler,
+  firstNameValue,
+  lastNameValue,
+  middleNameValue,
+}: FullNameChangeHandlerProp): JSX.Element => {
   return (
     <>
       <CRow className="mb-3">
@@ -36,7 +42,10 @@ const FullName = ({
                 name="firstname"
                 placeholder="First Name"
                 className="capetalized"
-                // value=""
+                value={firstNameValue}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                  firstNameChangeHandler(e.target.value)
+                }
               />
             </CCol>
             <CCol sm={3}>
@@ -46,7 +55,10 @@ const FullName = ({
                 name="middlename"
                 placeholder="Middle Name"
                 className="capetalized"
-                // value=""
+                value={middleNameValue}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                  middleNameChangeHandler(e.target.value)
+                }
               />
             </CCol>
             <CCol sm={3}>
@@ -56,7 +68,10 @@ const FullName = ({
                 name="lastname"
                 placeholder="Last Name"
                 className="capetalized"
-                // value=""
+                value={lastNameValue}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                  lastNameChangeHandler(e.target.value)
+                }
               />
             </CCol>
           </CRow>

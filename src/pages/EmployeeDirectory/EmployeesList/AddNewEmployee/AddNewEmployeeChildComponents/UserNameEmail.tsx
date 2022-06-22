@@ -1,14 +1,17 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import React from 'react'
+import { UsernameEmailChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const UserNameEmail = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
-  const [userEmail, setUserEmail] = useState<string>()
+  usernameChangeHandler,
+  username,
+}: UsernameEmailChangeHandlerProp): JSX.Element => {
+  // const [userEmail, setUserEmail] = useState<string>()
   const handleUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserEmail(e.target.value)
+    // setUserEmail(e.target.value)
+    usernameChangeHandler(e.target.value)
   }
 
   return (
@@ -32,7 +35,7 @@ const UserNameEmail = ({
             type="text"
             name="username"
             placeholder="User Name"
-            value={userEmail}
+            value={username}
             onChange={handleUserEmail}
           />
         </CCol>
@@ -62,7 +65,7 @@ const UserNameEmail = ({
             type="text"
             name="email"
             placeholder="Email"
-            value={userEmail}
+            value={username}
             disabled
           />
           <strong>@aibridgeml.com</strong>

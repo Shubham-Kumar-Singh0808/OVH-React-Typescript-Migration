@@ -1,14 +1,22 @@
 import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
 
-import { DateChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import DatePicker from 'react-datepicker'
+import React from 'react'
+import { StartEndDateChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const EmploymentContract = ({
   dynamicFormLabelProps,
-  onDateChangeHandler,
-}: DateChangeHandlerProp): JSX.Element => {
-  const [contractIsDisable, setContractIsDisable] = useState<boolean>(false)
+  onContractExistHandler,
+  onStartDateChangeHandler,
+  onEndDateChangeHandler,
+  isContractExist,
+  startDateValue,
+  endDateValue,
+}: StartEndDateChangeHandlerProp): JSX.Element => {
+  const startDate =
+    startDateValue == null ? '' : startDateValue.toLocaleDateString()
+  const endDate = endDateValue == null ? '' : endDateValue.toLocaleDateString()
+
   return (
     <>
       <CRow className="mb-3 align-items-center">
@@ -38,7 +46,7 @@ const EmploymentContract = ({
             value="Yes"
             label="Yes"
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-              setContractIsDisable(true)
+              onContractExistHandler('true')
             }
           />
           <CFormCheck
@@ -50,12 +58,12 @@ const EmploymentContract = ({
             label="No"
             defaultChecked
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-              setContractIsDisable(false)
+              onContractExistHandler('false')
             }
           />
         </CCol>
       </CRow>
-      {contractIsDisable ? (
+      {isContractExist === 'true' ? (
         <>
           <CRow className="mb-3">
             <CFormLabel
@@ -84,10 +92,10 @@ const EmploymentContract = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
+                placeholderText="Select start date"
                 name="contractstartdate"
-                value=""
-                onChange={(date: Date) => onDateChangeHandler(date)}
+                value={startDate}
+                onChange={(date: Date) => onStartDateChangeHandler(date)}
               />
             </CCol>
           </CRow>
@@ -118,10 +126,10 @@ const EmploymentContract = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
+                placeholderText="Select end date"
                 name="contractenddate"
-                value=""
-                onChange={(date: Date) => onDateChangeHandler(date)}
+                value={endDate}
+                onChange={(date: Date) => onEndDateChangeHandler(date)}
               />
               <span></span>
             </CCol>

@@ -1,16 +1,31 @@
 import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
+import {
+  GetHRAssociate,
+  HrDataProps,
+} from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React, { useState } from 'react'
 
 import Autocomplete from 'react-autocomplete'
-import { HrDataProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 // import { fakeRequest, getStates } from 'react-autocomplete'
 
 const HRAssociate = ({
   dynamicFormLabelProps,
   hrDataList,
+  onSelectHRAssociate,
 }: HrDataProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
+
+  const onHandleSelectHRAssociate = (fullName: string) => {
+    setAutoCompleteTarget(fullName)
+    const managerName = hrDataList.find((value) => value.fullName === fullName)
+
+    const reportManager = {
+      id: managerName?.id,
+      fullName: managerName?.fullName,
+    } as GetHRAssociate
+    onSelectHRAssociate(reportManager)
+  }
   return (
     <>
       <CRow className="mb-3">
@@ -69,7 +84,7 @@ const HRAssociate = ({
               item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
             }
             onChange={(e) => setAutoCompleteTarget(e.target.value)}
-            onSelect={(value) => setAutoCompleteTarget(value)}
+            onSelect={(value) => onHandleSelectHRAssociate(value)}
           />
         </CCol>
       </CRow>

@@ -1,4 +1,4 @@
-import addNewEmployeeService from './EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeSlice'
+import addNewEmployeeService from './EmployeeDirectory/EmployeesList/AddNewEmployee'
 import { appService } from './appSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'

@@ -1,11 +1,13 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { ExperienceChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
 
 const Experience = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
+  onExperienceHandler,
+  experienceValue,
+}: ExperienceChangeHandlerProp): JSX.Element => {
   return (
     <>
       <CRow className="mb-3">
@@ -30,10 +32,14 @@ const Experience = ({
           <CFormInput
             id="experience"
             size="sm"
-            type="text"
+            type="number"
             name="experience"
             placeholder="Experience"
-            // value=""
+            min="0"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+              onExperienceHandler(Number(e.target.value))
+            }
+            value={experienceValue}
           />
         </CCol>
       </CRow>

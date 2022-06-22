@@ -8,7 +8,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import { RootState } from '../../../../stateStore'
-import addNewEmployeeAPi from '../../../../middleware/api/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeApi'
+import addNewEmployeeAPi from '../../../../middleware/api/EmployeeDirectory/EmployeesList/AddNewEmployee'
 
 const getAllHrData = createAsyncThunk(
   'hrData/getAllHrData',

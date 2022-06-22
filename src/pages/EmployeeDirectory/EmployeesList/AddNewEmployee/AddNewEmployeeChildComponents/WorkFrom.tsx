@@ -1,11 +1,13 @@
 import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 
-import { DynamicFormLabelProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
+import { WorkFromChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const WorkFrom = ({
   dynamicFormLabelProps,
-}: DynamicFormLabelProps): JSX.Element => {
+  onWorkFromHandler,
+  workFromValue,
+}: WorkFromChangeHandlerProp): JSX.Element => {
   return (
     <>
       <CRow className="mb-3 align-items-center">
@@ -42,6 +44,9 @@ const WorkFrom = ({
             value="Office"
             label="Office"
             defaultChecked
+            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+              onWorkFromHandler('Office')
+            }
           />
           <CFormCheck
             inline
@@ -50,6 +55,9 @@ const WorkFrom = ({
             id="workfromhome"
             value="Home"
             label="Home"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+              onWorkFromHandler('Home')
+            }
           />
         </CCol>
       </CRow>

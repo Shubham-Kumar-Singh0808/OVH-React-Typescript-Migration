@@ -1,15 +1,22 @@
-import getAllHrDataApi from './hrDataApi'
-import getAllTechnologyApi from './technologyApi'
-import getCountriesApi from './countriesApi'
-import getEmployeeDepartmentsApi from './employeeDepartmentsApi'
-import reportingManagersApi from './reportingManagersApi'
+import { AllowedHttpMethods, addNewEmployeeAPiConfig } from '../../../apiList'
 
-const addNewEmployeeAPi = {
-  getEmployeeDepartmentsApi,
-  getAllTechnologyApi,
-  getCountriesApi,
-  getAllHrDataApi,
-  reportingManagersApi,
+import { AddEmployee } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import axios from 'axios'
+import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+
+const addNewEmployee = async (
+  addEmployee: AddEmployee,
+): Promise<AddEmployee> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: addNewEmployeeAPiConfig.addNewEmployee,
+    method: AllowedHttpMethods.post,
+    data: addEmployee,
+  })
+  const response = await axios(requestConfig)
+  return response.data
 }
 
-export default addNewEmployeeAPi
+const addNewEmployeeApi = {
+  addNewEmployee,
+}
+export default addNewEmployeeApi

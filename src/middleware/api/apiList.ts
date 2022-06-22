@@ -243,4 +243,5 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getAllHrData: apiPrefix + '/jobapplicant/getAllHrData',
   getAllReportingManagersData:
     apiPrefix + '/jobapplicant/getAllReportingManagersData',
+  addNewEmployee: apiPrefix + '/jobapplicant/jobAdmin/addNewEmployee',
 }
