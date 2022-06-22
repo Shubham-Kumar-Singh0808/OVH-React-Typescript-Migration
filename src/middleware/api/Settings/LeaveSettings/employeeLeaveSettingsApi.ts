@@ -2,7 +2,10 @@ import { AllowedHttpMethods, employeeLeaveSettingsConfig } from '../../apiList'
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-import { EmployeeSaveLeaveCalenderTypes } from '../../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
+import {
+  EmployeeSaveLeaveCalenderTypes,
+  EmployeeLeaveCategories,
+} from '../../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 const employeeLeaveCalenderSettings = async (
   employeeLeaveCalender: EmployeeSaveLeaveCalenderTypes,
@@ -16,7 +19,20 @@ const employeeLeaveCalenderSettings = async (
   return response.data
 }
 
+const getEmployeeLeaveCategories = async (): Promise<
+  EmployeeLeaveCategories[]
+> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeLeaveSettingsConfig.getEmployeeLeaveCategories,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeLeaveSettingsApi = {
   employeeLeaveCalenderSettings,
+  getEmployeeLeaveCategories,
 }
 export default employeeLeaveSettingsApi

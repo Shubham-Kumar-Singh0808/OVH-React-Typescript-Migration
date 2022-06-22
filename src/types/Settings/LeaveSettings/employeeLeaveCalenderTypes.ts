@@ -1,4 +1,4 @@
-import { ValidationError } from '../../commonTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
 export type EmployeeSaveLeaveCalenderTypes = {
   id: string
   leaveCycleMonth: string
@@ -9,8 +9,15 @@ export type EmployeeSaveLeaveCalenderTypes = {
   probationPeriod: number
 }
 
+export type EmployeeLeaveCategories = {
+  id: number
+  name: string
+  leaveType: string
+}
+
 export type LeaveSettingsState = {
   employeeLeaveCalender: EmployeeSaveLeaveCalenderTypes
-  isLoading: boolean
+  employeeLeaveCategories: EmployeeLeaveCategories[]
+  isLoading: LoadingState
   error: ValidationError
 }

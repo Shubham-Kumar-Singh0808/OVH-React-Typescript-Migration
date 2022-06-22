@@ -212,4 +212,5 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
 export const employeeLeaveSettingsConfig: EmployeeLeaveSettingsApi = {
   saveLeaveCalendarSettings:
     apiPrefix + '/leaveSetup/bioAdmin/leaveCalendarSettings',
+  getEmployeeLeaveCategories: apiPrefix + '/leaveSetup/leaveCategoriesForAdmin',
 }
