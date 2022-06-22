@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CCardBody,
   CCardHeader,
@@ -9,7 +9,53 @@ import {
   CFormInput,
   CButton,
 } from '@coreui/react-pro'
+import { EmployeeSaveLeaveCalenderTypes } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../stateStore'
+import OToast from '../../../components/ReusableComponent/OToast'
+
 const EmployeeLeaveCalender = (): JSX.Element => {
+  const initialEmployeeLeaveSettings = {} as EmployeeSaveLeaveCalenderTypes
+  const [employeeLeaveCalender, setEmployeeLeaveCalender] = useState(
+    initialEmployeeLeaveSettings,
+  )
+  const dispatch = useAppDispatch()
+
+  const onChangeLeavecalenderHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = e.target
+    setEmployeeLeaveCalender((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
+  }
+  const handleSaveLeaveCalender = async () => {
+    const prepareObject = {
+      ...employeeLeaveCalender,
+    }
+
+    const addFamilyMemberResultAction = await dispatch(
+      reduxServices.employeeLeaveSettings.employeeLeaveCalenderSettings(
+        prepareObject,
+      ),
+    )
+    if (
+      reduxServices.employeeLeaveSettings.employeeLeaveCalenderSettings.fulfilled.match(
+        addFamilyMemberResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Family Detail deleted successfully"
+          />,
+        ),
+      )
+    }
+  }
   return (
     <>
       <CCardHeader>
@@ -17,7 +63,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       </CCardHeader>
       <CCardBody>
         <CRow className="mt-4 mb-4">
-          <h3>Leave Calender</h3>
+          <h4>Leave Calendar Settings</h4>
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">
@@ -28,6 +74,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
               aria-label="leaveCycleMonth"
               name="leaveCycleMonth"
               id="leaveCycleMonth"
+              value={employeeLeaveCalender?.leaveCycleMonth}
+              onChange={onChangeLeavecalenderHandler}
             >
               <option value="January">January</option>
               <option value="February">February</option>
@@ -53,6 +101,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
               aria-label="probationPeriod"
               name="probationPeriod"
               id="probationPeriod"
+              value={employeeLeaveCalender?.probationPeriod}
+              onChange={onChangeLeavecalenderHandler}
             >
               <option value="0">0</option>
               <option value="1">1</option>
@@ -77,6 +127,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
               type="number"
               id="maxLeavesEarned"
               name="maxLeavesEarned"
+              value={employeeLeaveCalender?.maxLeavesEarned}
+              onChange={onChangeLeavecalenderHandler}
             />
           </CCol>
         </CRow>
@@ -89,6 +141,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
               aria-label="payrollCutoffDate"
               name="payrollCutoffDate"
               id="payrollCutoffDate"
+              value={employeeLeaveCalender?.payrollCutoffDate}
+              onChange={onChangeLeavecalenderHandler}
             >
               <option value="0">0</option>
               <option value="1">1</option>
@@ -119,7 +173,13 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             Number of Leaves/Year :
           </CFormLabel>
           <CCol sm={2}>
-            <CFormInput type="number" id="leavesPerYear" name="leavesPerYear" />
+            <CFormInput
+              type="number"
+              id="leavesPerYear"
+              name="leavesPerYear"
+              value={employeeLeaveCalender?.leavesPerYear}
+              onChange={onChangeLeavecalenderHandler}
+            />
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -129,14 +189,20 @@ const EmployeeLeaveCalender = (): JSX.Element => {
           <CCol sm={2}>
             <CFormInput
               type="number"
-              id="maxLeavesEarned"
-              name="maxLeavesEarned"
+              id="maxAccrualPerYear"
+              name="maxAccrualPerYear"
+              value={employeeLeaveCalender?.maxAccrualPerYear}
+              onChange={onChangeLeavecalenderHandler}
             />
           </CCol>
         </CRow>
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
-            <CButton className="btn-ovh me-1" color="success">
+            <CButton
+              className="btn-ovh me-1"
+              color="success"
+              onClick={handleSaveLeaveCalender}
+            >
               Save
             </CButton>
             <CButton color="warning " className="btn-ovh">

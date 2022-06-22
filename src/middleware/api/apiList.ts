@@ -22,6 +22,7 @@ import {
   SkillApi,
   UserRolesConfigurationApi,
   VisaListApi,
+  EmployeeLeaveSettingsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -206,4 +207,9 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
+}
+
+export const employeeLeaveSettingsConfig: EmployeeLeaveSettingsApi = {
+  saveLeaveCalendarSettings:
+    apiPrefix + '/leaveSetup/bioAdmin/leaveCalendarSettings',
 }
