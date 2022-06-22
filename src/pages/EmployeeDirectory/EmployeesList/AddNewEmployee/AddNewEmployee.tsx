@@ -152,6 +152,8 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     )
     dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
     dispatch(reduxServices.userRolesAndPermissions.getUserRoles())
+    dispatch(reduxServices.newEmployee.employmentService.getAllEmploymentType())
+    dispatch(reduxServices.newEmployee.jobTypeService.getAllJobType())
   }, [dispatch])
 
   const countryList = useTypedSelector(
@@ -177,6 +179,16 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     reduxServices.newEmployee.employeeDepartmentsService.selectors
       .employeeDepartments,
   )
+  const employmentTypes = useTypedSelector(
+    reduxServices.newEmployee.employmentService.selectors.employments,
+  )
+
+  const jobTypesTest = useTypedSelector(
+    reduxServices.newEmployee.jobTypeService.selectors.jobTypes,
+  )
+
+  // the API is having 404 for now Akshitha is fixing it
+  console.log('employmentTypes', employmentTypes, jobTypesTest)
 
   // Start - Compose data
   const composedDepartmentList = listComposer(
@@ -243,29 +255,9 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   )
 
   const handleAddEmployee = async () => {
-    const testPayload: AddEmployee = {
-      contractExists: 'false',
-      country: 'INDIA',
-      dateOfJoining: new Date(),
-      departmentName: 'Development',
-      designation: 'Associate Project Manager ',
-      dob: new Date(),
-      employmentTypeName: 'Permanent',
-      experience: 2,
-      firstName: 'hello1',
-      gender: 'Male',
-      hrAssociate: {
-        id: 1872,
-        fullName: 'Jagadish',
-      },
-      jobTypeName: 'Full Time',
-      lastName: 'World1',
-      manager: {
-        id: 1002,
-        fullName: 'Chaitanya',
-      },
-      role: 'SQA',
-      technology: 'Java',
+    // Note: timeSlotDTO is static because someone working on this
+    const payload: AddEmployee = {
+      ...addEmployee,
       timeSlotDTO: {
         id: 1,
         name: 'General Shift',
@@ -275,20 +267,10 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
         endTimeMinutes: '19',
         graceTime: '30',
       },
-      userName: 'hello1',
-      workStatus: 'office',
-      // contractEndDate: new Date(),
-      // contractStartDate: new Date(),
-      projectManager: {
-        id: 1,
-        fullName: 'asdasd',
-      },
     }
 
-    console.log('####@#addEmployee', addEmployee)
-
     const newEmployeeResponse = await dispatch(
-      reduxServices.newEmployee.addEmployeeService.addNewEmployee(testPayload),
+      reduxServices.newEmployee.addEmployeeService.addNewEmployee(payload),
     )
     if (
       reduxServices.newEmployee.addEmployeeService.addNewEmployee.fulfilled.match(

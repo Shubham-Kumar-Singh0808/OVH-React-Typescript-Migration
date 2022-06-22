@@ -35,7 +35,14 @@ export type EmployeeDepartment = {
   supportManagementFlag: boolean
   allocationSupportFlag: boolean
 }
-
+export type GetAllJobType = {
+  id: number
+  jobType: string
+}
+export type GetAllEmployment = {
+  id: number
+  employmentType: string
+}
 export type GetAllTechnology = {
   id: number
   name: string
@@ -192,4 +199,6 @@ export type AddNewEmployeeState = {
   error: ValidationError
   isLoading: LoadingState
   addEmployee?: AddEmployee
+  employments?: GetAllEmployment[]
+  jobTypes?: GetAllJobType[]
 }
