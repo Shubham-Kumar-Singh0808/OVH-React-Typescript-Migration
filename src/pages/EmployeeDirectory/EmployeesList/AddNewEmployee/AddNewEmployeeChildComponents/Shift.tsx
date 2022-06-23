@@ -29,9 +29,6 @@ const Shift = ({
     setValue(selectedShift)
   }
 
-  if (!list) {
-    return <></>
-  }
   return (
     <>
       <CRow className="mb-3 align-items-center">

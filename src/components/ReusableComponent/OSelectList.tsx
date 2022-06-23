@@ -16,10 +16,6 @@ const OSelect = ({
     setValue(e.target.value)
   }
 
-  if (!list) {
-    return <></>
-  }
-
   return (
     <>
       <CRow className="mb-3">

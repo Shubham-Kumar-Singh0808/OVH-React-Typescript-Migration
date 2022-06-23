@@ -145,18 +145,6 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
       },
     })
   }
-  // const onHandleMiddleName = (value: string) => {
-  //   setAddEmployee({ ...addEmployee, middleName: value })
-  // }
-  // End - Field handler
-
-  //   const handleContractIsDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     console.log(e.currentTarget.value)
-  //   }
-
-  // const isLoading = useTypedSelector(
-  //   reduxServices.newEmployee.employeeDepartmentsService.selectors.isLoading,
-  // )
 
   useEffect(() => {
     dispatch(
