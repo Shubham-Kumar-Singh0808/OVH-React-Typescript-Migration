@@ -6,6 +6,7 @@ import { hrDataService } from './hrDataSlice'
 import { jobTypeService } from './getJobTypeSlice'
 import { reportingManagersService } from './reportingManagersSlice'
 import { technologyService } from './getAllTechnologySlice'
+import { userervice } from './userSlice'
 
 const addNewEmployeeService = {
   employeeDepartmentsService,
@@ -16,6 +17,7 @@ const addNewEmployeeService = {
   addEmployeeService,
   employmentService,
   jobTypeService,
+  userervice,
 }
 
 export default addNewEmployeeService

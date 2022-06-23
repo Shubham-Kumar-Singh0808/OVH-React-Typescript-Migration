@@ -5,6 +5,7 @@ import getAllTechnologyApi from './technologyApi'
 import getCountriesApi from './countriesApi'
 import getEmployeeDepartmentsApi from './employeeDepartmentsApi'
 import getJobTypesApi from './jobTypeApi'
+import getUserApi from './userApi'
 import reportingManagersApi from './reportingManagersApi'
 
 const employeeAPi = {
@@ -16,6 +17,7 @@ const employeeAPi = {
   reportingManagersApi,
   addNewEmployeeApi,
   getJobTypesApi,
+  getUserApi,
 }
 
 export default employeeAPi

@@ -1,19 +1,25 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 
+import OToast from '../../../../../components/ReusableComponent/OToast'
 import React from 'react'
 import { UsernameEmailChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const UserNameEmail = ({
   dynamicFormLabelProps,
   usernameChangeHandler,
+  onAllowedUserChangeHandler,
   username,
+  isUserAllowed,
 }: UsernameEmailChangeHandlerProp): JSX.Element => {
-  // const [userEmail, setUserEmail] = useState<string>()
   const handleUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setUserEmail(e.target.value)
     usernameChangeHandler(e.target.value)
   }
 
+  const handleOnBlurInput = () => {
+    onAllowedUserChangeHandler(username)
+  }
+
+  console.log('isUserAllowed', isUserAllowed)
   return (
     <>
       <CRow className="mb-3">
@@ -36,6 +42,7 @@ const UserNameEmail = ({
             name="username"
             placeholder="User Name"
             value={username}
+            onBlur={handleOnBlurInput}
             onChange={handleUserEmail}
           />
         </CCol>

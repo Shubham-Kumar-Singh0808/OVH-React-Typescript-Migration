@@ -72,6 +72,7 @@ export const allReducers = {
   getAllReportingManagers: getAllReportingManagersReducer,
   newEmployee: newEmployeeReducer,
   getJobTypes: getAllJobTypeReducer,
+  checkUserExist: checkUserExistReducer,
   // add your slice reducers here
 }
 

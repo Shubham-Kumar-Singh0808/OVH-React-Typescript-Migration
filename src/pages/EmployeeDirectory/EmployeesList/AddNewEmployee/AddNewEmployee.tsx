@@ -38,6 +38,8 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationoggle] = useState<boolean>(false)
 
+  const [allowedUsername, setAllowedUsername] = useState<string>()
+
   const initEmployee = {} as AddEmployee
   const [addEmployee, setAddEmployee] = useState(initEmployee)
 
@@ -92,6 +94,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     setAddEmployee({ ...addEmployee, firstName: value })
   }
   const onHandleUsername = (value: string) => {
+    setAllowedUsername('')
     setAddEmployee({ ...addEmployee, userName: value })
   }
   const onHandleContractExist = (value: string) => {
@@ -159,6 +162,29 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     dispatch(reduxServices.newEmployee.jobTypeService.getAllJobType())
   }, [dispatch])
 
+  const onHandleAllowedUser = async (username: string) => {
+    const response = await dispatch(
+      reduxServices.newEmployee.userervice.checkIsUserExists(username),
+    )
+
+    if (response.payload) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          alreadyExistToastMessage('Employee is already exists'),
+        ),
+      )
+    } else {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          toastElement('New Employee successfully added'),
+        ),
+      )
+    }
+  }
+
+  const isUserExist = useTypedSelector(
+    reduxServices.newEmployee.userervice.selectors.isUserExist,
+  )
   const countryList = useTypedSelector(
     reduxServices.newEmployee.countryService.selectors.countriesList,
   )
@@ -232,17 +258,6 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   // End - compose data
 
   // POST method
-  const toastElement = (
-    <OToast
-      toastColor="success"
-      toastMessage="New Employee successfully added"
-    />
-  )
-
-  const alreadyExistToastMessage = (
-    <OToast toastMessage="Employee is already exists" toastColor="danger" />
-  )
-
   const handleAddEmployee = async () => {
     // Note: timeSlotDTO is static because someone working on this
     const payload: AddEmployee = {
@@ -266,11 +281,23 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
         newEmployeeResponse,
       )
     ) {
-      dispatch(reduxServices.app.actions.addToast(toastElement))
+      dispatch(
+        reduxServices.app.actions.addToast(
+          toastElement('New employee is successfully added'),
+        ),
+      )
     } else {
-      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
+      dispatch(reduxServices.app.actions.addToast('Failed to add new employee'))
     }
   }
+
+  const toastElement = (message: string) => (
+    <OToast toastColor="success" toastMessage={message} />
+  )
+
+  const alreadyExistToastMessage = (message: string) => (
+    <OToast toastMessage={message} toastColor="danger" />
+  )
 
   const handleClearFields = () => {
     setAddEmployee(initEmployee)
@@ -307,7 +334,9 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
             <UserNameEmail
               dynamicFormLabelProps={dynamicFormLabelProps}
               usernameChangeHandler={onHandleUsername}
+              onAllowedUserChangeHandler={onHandleAllowedUser}
               username={addEmployee.userName}
+              isUserAllowed={isUserExist as boolean}
             />
             <FullName
               dynamicFormLabelProps={dynamicFormLabelProps}

@@ -29,6 +29,10 @@ export type AddEmployee = {
 }
 
 //AddNewEmployee child component types
+export type UserType = {
+  isUserExist: boolean
+}
+
 export type EmployeeDepartment = {
   departmentId: number
   departmentName: string
@@ -109,7 +113,9 @@ export interface WorkFromChangeHandlerProp extends DynamicFormLabelProps {
 
 export interface UsernameEmailChangeHandlerProp extends DynamicFormLabelProps {
   usernameChangeHandler: (username: string) => void
+  onAllowedUserChangeHandler: (username: string) => void
   username: string
+  isUserAllowed: boolean
 }
 
 export interface FullNameChangeHandlerProp extends DynamicFormLabelProps {
@@ -207,4 +213,5 @@ export type AddNewEmployeeState = {
   addEmployee?: AddEmployee
   employments?: GetAllEmployment[]
   jobTypes?: GetAllJobType[]
+  userType?: boolean
 }

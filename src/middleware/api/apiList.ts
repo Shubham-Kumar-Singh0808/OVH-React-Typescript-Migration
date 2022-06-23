@@ -56,6 +56,7 @@ export const authenticationApiConfig: AuthenticationApi = {
 export const sideMenuApiConfig: SideMenuApi = {
   getMenuData: apiPrefix + '/roleFeature/menuItems',
 }
+
 export const userRolesConfigurationApiConfig: UserRolesConfigurationApi = {
   getUserRoles: apiPrefix + '/roleFeature/roles',
   isUserRoleExists: apiPrefix + '/roleFeature/isRoleExits',
@@ -246,4 +247,5 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   addNewEmployee: apiPrefix + '/jobapplicant/jobAdmin/addNewEmployee',
   getAllemploymentType: apiPrefix + '/jobapplicant/getEmploymentType',
   getAllJobType: apiPrefix + '/jobapplicant/getJobType',
+  getCheckIfUserExist: apiPrefix + '/Employee/isemployeeUsernameexist',
 }

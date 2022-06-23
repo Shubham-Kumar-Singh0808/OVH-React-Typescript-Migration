@@ -200,4 +200,5 @@ export interface AddNewEmployeeAPi extends ApiBase {
   addNewEmployee: string
   getAllemploymentType: string
   getAllJobType: string
+  getCheckIfUserExist: string
 }
