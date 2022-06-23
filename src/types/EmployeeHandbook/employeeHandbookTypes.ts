@@ -1,6 +1,6 @@
 import { LoadingState, ValidationError } from '../commonTypes'
 
-export type GetHandbooksResponse = {
+export type Handbook = {
   id: number
   displayOrder: number
   title: string
@@ -14,6 +14,10 @@ export type GetHandbooksResponse = {
   country: string
   handCountry: HandCountry[]
   empCountry: string
+}
+
+export type GetHandbooksResponse = {
+  hanbooks: Handbook[]
 }
 
 type HandCountry = {
