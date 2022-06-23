@@ -430,7 +430,11 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               dynamicFormLabelProps={dynamicFormLabelProps}
               list={employeeShifts}
               setValue={onHandleShift}
-              value={addEmployee.timeSlotDTO.name as string}
+              value={
+                addEmployee.timeSlotDTO
+                  ? addEmployee.timeSlotDTO.name
+                  : ('' as string)
+              }
               setToggleShift={() => setShiftToggle(!shiftToggle)}
               toggleValue={shiftToggle as boolean}
             />

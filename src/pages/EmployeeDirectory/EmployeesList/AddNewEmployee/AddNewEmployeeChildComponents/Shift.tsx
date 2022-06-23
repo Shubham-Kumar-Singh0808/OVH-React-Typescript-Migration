@@ -12,14 +12,6 @@ const Shift = ({
   value,
   toggleValue,
 }: SelectShiftProps): JSX.Element => {
-  // const onChangeHandler = (e: { target: { value: string } }) => {
-  //   setValue(e.target.value)
-  // }
-
-  if (!list) {
-    return <></>
-  }
-
   const onHandleSelectManager = (e: { target: { value: string } }) => {
     const name = e.target.value
     const shift = list.find((value) => value.name === name)
@@ -34,6 +26,10 @@ const Shift = ({
       graceTime: shift?.graceTime,
     } as EmployeeShiftDetails
     setValue(selectedShift)
+  }
+
+  if (!list) {
+    return <></>
   }
   return (
     <>
