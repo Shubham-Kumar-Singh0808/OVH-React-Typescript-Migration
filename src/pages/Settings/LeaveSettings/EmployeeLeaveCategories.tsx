@@ -18,7 +18,7 @@ const EmployeeLeaveCategories = (): JSX.Element => {
     reduxServices.employeeLeaveSettings.selectors.leaveCategories,
   )
   const dispatch = useAppDispatch()
-  console.log(getEmployeeLeaveCategories)
+  // console.log(getEmployeeLeaveCategories)
 
   useEffect(() => {
     dispatch(reduxServices.employeeLeaveSettings.getEmployeeLeaveCategories())
@@ -60,13 +60,12 @@ const EmployeeLeaveCategories = (): JSX.Element => {
               </CTableRow>
             ))}
           </CTableBody>
-          <br />
-          <strong>
-            {getEmployeeLeaveCategories?.length
-              ? `Total Records: ${getEmployeeLeaveCategories?.length}`
-              : `No Records found`}
-          </strong>
         </CTable>
+        <strong>
+          {getEmployeeLeaveCategories?.length
+            ? `Total Records: ${getEmployeeLeaveCategories?.length}`
+            : `No Records found`}
+        </strong>
       </CCardBody>
     </>
   )

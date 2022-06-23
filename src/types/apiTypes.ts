@@ -177,4 +177,5 @@ export interface VisaListApi extends ApiBase {
 export interface EmployeeLeaveSettingsApi extends ApiBase {
   saveLeaveCalendarSettings: string
   getEmployeeLeaveCategories: string
+  getEmployeeLeaveCalenderSettings: string
 }

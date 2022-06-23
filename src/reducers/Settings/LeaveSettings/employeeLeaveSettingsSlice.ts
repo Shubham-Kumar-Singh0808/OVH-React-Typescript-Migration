@@ -3,6 +3,7 @@ import {
   EmployeeSaveLeaveCalenderTypes,
   LeaveSettingsState,
   EmployeeLeaveCategories,
+  EmployeeLeaveCalenderTypes,
 } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
@@ -12,13 +13,26 @@ import employeeLeaveSettingsApi from '../../../middleware/api/Settings/LeaveSett
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const initialemployeeLeaveSettingsState: LeaveSettingsState = {
-  employeeLeaveCalender: {} as EmployeeSaveLeaveCalenderTypes,
+  employeeSaveLeaveCalender: {} as EmployeeSaveLeaveCalenderTypes,
+  employeeLeaveCalender: {} as EmployeeLeaveCalenderTypes,
   employeeLeaveCategories: [],
   isLoading: ApiLoadingState.idle,
   error: 0,
 }
 
-const employeeLeaveCalenderSettings = createAsyncThunk<
+const getEmployeeLeaveCalenderSettings = createAsyncThunk(
+  'leaveSettings/getEmployeeLeaveCalenderSettings',
+  async (_, thunkApi) => {
+    try {
+      return await employeeLeaveSettingsApi.getEmployeeLeaveCalenderSettings()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const saveEmployeeLeaveCalenderSettings = createAsyncThunk<
   number | undefined,
   EmployeeSaveLeaveCalenderTypes,
   {
@@ -27,10 +41,10 @@ const employeeLeaveCalenderSettings = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'leaveSettings/employeeLeaveCalenderSettings',
+  'leaveSettings/saveEmployeeLeaveCalenderSettings',
   async (employeeLeaveCalender: EmployeeSaveLeaveCalenderTypes, thunkApi) => {
     try {
-      return await employeeLeaveSettingsApi.employeeLeaveCalenderSettings(
+      return await employeeLeaveSettingsApi.saveEmployeeLeaveCalenderSettings(
         employeeLeaveCalender,
       )
     } catch (error) {
@@ -58,27 +72,40 @@ const employeeLeaveSettingsSlice = createSlice({
   reducers: {},
 
   extraReducers: (builder) => {
-    builder.addMatcher(
-      isAnyOf(getEmployeeLeaveCategories.fulfilled),
-      (state, action) => {
+    builder
+      .addCase(getEmployeeLeaveCalenderSettings.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.employeeLeaveCategories =
-          action.payload as EmployeeLeaveCategories[]
-      },
-    )
+        state.employeeLeaveCalender =
+          action.payload as EmployeeLeaveCalenderTypes
+      })
+      .addMatcher(
+        isAnyOf(getEmployeeLeaveCategories.fulfilled),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          state.employeeLeaveCategories =
+            action.payload as EmployeeLeaveCategories[]
+        },
+      )
   },
 })
 
 const leaveCategories = (state: RootState): EmployeeLeaveCategories[] =>
   state.employeeLeaveSettings.employeeLeaveCategories
 
+const getEmployeeLeaveCalender = (
+  state: RootState,
+): EmployeeLeaveCalenderTypes =>
+  state.employeeLeaveSettings.employeeLeaveCalender
+
 export const leaveSettingsThunk = {
-  employeeLeaveCalenderSettings,
+  saveEmployeeLeaveCalenderSettings,
   getEmployeeLeaveCategories,
+  getEmployeeLeaveCalenderSettings,
 }
 
 export const employeeLeaveSettingsSelectors = {
   leaveCategories,
+  getEmployeeLeaveCalender,
 }
 
 export const leaveSettingsService = {

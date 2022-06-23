@@ -15,9 +15,20 @@ export type EmployeeLeaveCategories = {
   leaveType: string
 }
 
+export type EmployeeLeaveCalenderTypes = {
+  id: string
+  leaveCycleMonth: string
+  leavesPerYear: number
+  maxAccrualPerYear: number
+  maxLeavesEarned: number
+  payrollCutoffDate: number
+  probationPeriod: number
+}
+
 export type LeaveSettingsState = {
-  employeeLeaveCalender: EmployeeSaveLeaveCalenderTypes
+  employeeSaveLeaveCalender: EmployeeSaveLeaveCalenderTypes
   employeeLeaveCategories: EmployeeLeaveCategories[]
+  employeeLeaveCalender: EmployeeLeaveCalenderTypes
   isLoading: LoadingState
   error: ValidationError
 }

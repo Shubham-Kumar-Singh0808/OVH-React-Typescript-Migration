@@ -5,9 +5,21 @@ import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 import {
   EmployeeSaveLeaveCalenderTypes,
   EmployeeLeaveCategories,
+  EmployeeLeaveCalenderTypes,
 } from '../../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
-const employeeLeaveCalenderSettings = async (
+const getEmployeeLeaveCalenderSettings =
+  async (): Promise<EmployeeLeaveCalenderTypes> => {
+    const requestConfig = getAuthenticatedRequestConfig({
+      url: employeeLeaveSettingsConfig.getEmployeeLeaveCalenderSettings,
+      method: AllowedHttpMethods.get,
+    })
+
+    const response = await axios(requestConfig)
+    return response.data
+  }
+
+const saveEmployeeLeaveCalenderSettings = async (
   employeeLeaveCalender: EmployeeSaveLeaveCalenderTypes,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -32,7 +44,8 @@ const getEmployeeLeaveCategories = async (): Promise<
 }
 
 const employeeLeaveSettingsApi = {
-  employeeLeaveCalenderSettings,
+  saveEmployeeLeaveCalenderSettings,
   getEmployeeLeaveCategories,
+  getEmployeeLeaveCalenderSettings,
 }
 export default employeeLeaveSettingsApi

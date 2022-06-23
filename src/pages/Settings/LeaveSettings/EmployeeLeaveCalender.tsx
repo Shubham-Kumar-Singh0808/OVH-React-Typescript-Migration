@@ -1,23 +1,44 @@
-import React, { useState } from 'react'
 import {
-  CRow,
-  CFormLabel,
-  CFormSelect,
+  CButton,
   CCol,
   CFormInput,
-  CButton,
+  CFormLabel,
+  CFormSelect,
+  CRow,
 } from '@coreui/react-pro'
-import { EmployeeSaveLeaveCalenderTypes } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import React, { useEffect, useState } from 'react'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { EmployeeSaveLeaveCalenderTypes } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 const EmployeeLeaveCalender = (): JSX.Element => {
-  const initialEmployeeLeaveSettings = {} as EmployeeSaveLeaveCalenderTypes
-  const [employeeLeaveCalender, setEmployeeLeaveCalender] = useState(
-    initialEmployeeLeaveSettings,
+  const [employeeLeaveCalender, setEmployeeLeaveCalender] =
+    useState<EmployeeSaveLeaveCalenderTypes>({
+      id: '1',
+      leaveCycleMonth: '',
+      leavesPerYear: 0,
+      maxAccrualPerYear: 0,
+      maxLeavesEarned: 0,
+      payrollCutoffDate: 0,
+      probationPeriod: 0,
+    })
+  const getEmployeeCalender = useTypedSelector(
+    reduxServices.employeeLeaveSettings.selectors.getEmployeeLeaveCalender,
   )
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.employeeLeaveSettings.getEmployeeLeaveCalenderSettings(),
+    )
+  }, [dispatch])
+
+  useEffect(() => {
+    if (getEmployeeCalender) {
+      setEmployeeLeaveCalender(getEmployeeCalender)
+    }
+  }, [getEmployeeCalender])
 
   const onChangeLeaveCalenderHandler = (
     e:
@@ -29,22 +50,21 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       return { ...prevState, ...{ [name]: value } }
     })
   }
-  const handleSaveLeaveCalender = async () => {
-    const prepareObject = {
-      ...employeeLeaveCalender,
-      id: '1',
-    }
 
-    const addFamilyMemberResultAction = await dispatch(
-      reduxServices.employeeLeaveSettings.employeeLeaveCalenderSettings(
-        prepareObject,
+  const handleSaveLeaveCalender = async () => {
+    const SaveLeaveCalenderResultAction = await dispatch(
+      reduxServices.employeeLeaveSettings.saveEmployeeLeaveCalenderSettings(
+        employeeLeaveCalender,
       ),
     )
     if (
-      reduxServices.employeeLeaveSettings.employeeLeaveCalenderSettings.fulfilled.match(
-        addFamilyMemberResultAction,
+      reduxServices.employeeLeaveSettings.saveEmployeeLeaveCalenderSettings.fulfilled.match(
+        SaveLeaveCalenderResultAction,
       )
     ) {
+      await dispatch(
+        reduxServices.employeeLeaveSettings.getEmployeeLeaveCalenderSettings(),
+      )
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
@@ -55,11 +75,13 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       )
     }
   }
+  console.log(employeeLeaveCalender)
+
   return (
     <>
-      {/* <CRow className="mt-4 mb-4">
-        <h4>Leave Calendar Settings</h4>
-      </CRow> */}
+      <CRow className="mt-4 mb-4">
+        <h4 className="calender-title">Leave Calendar Settings</h4>
+      </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel className="col-sm-3 col-form-label text-end">
           Leave Cycle Month:
