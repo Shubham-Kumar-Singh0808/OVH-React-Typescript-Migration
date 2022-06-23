@@ -2,11 +2,15 @@ import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import AddEmployeeDesignation from './AddEmployeeDesignation'
 import EmployeeDesignationListTable from './EmployeeDesignationListTable'
+import { Link } from 'react-router-dom'
 import OCard from '../../../../../components/ReusableComponent/OCard'
+import { ToggleDesignationProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../../stateStore'
 
-const EmployeeDesignationList = (): JSX.Element => {
+const EmployeeDesignationList = ({
+  setToggleDesignation,
+}: ToggleDesignationProp): JSX.Element => {
   const [selectedDepartmentId, setSelectedDepartmentId] = useState<number>()
   const dispatch = useAppDispatch()
 
@@ -23,7 +27,10 @@ const EmployeeDesignationList = (): JSX.Element => {
       >
         <CRow>
           <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end pe-0">
-            <CButton color="info btn-ovh me-1">
+            <CButton
+              color="info btn-ovh me-1"
+              onClick={() => setToggleDesignation(true)}
+            >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
           </CCol>

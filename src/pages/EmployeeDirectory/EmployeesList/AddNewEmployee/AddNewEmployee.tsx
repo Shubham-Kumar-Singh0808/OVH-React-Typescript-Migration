@@ -24,9 +24,11 @@ import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
+import EmployeeDesignationList from './DesignationList/EmployeeDesignationList'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import ShiftConfiguration from './ShiftConfiguration/ShiftConfiguration'
 import { listComposer } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
@@ -157,9 +159,12 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     dispatch(reduxServices.userRolesAndPermissions.getUserRoles())
     dispatch(reduxServices.newEmployee.employmentService.getAllEmploymentType())
     dispatch(reduxServices.newEmployee.jobTypeService.getAllJobType())
+    dispatch(reduxServices.employeeDesignation.getAllEmployeeDesignations())
   }, [dispatch])
 
   const onHandleAllowedUser = async (username: string) => {
+    if (username === '' || username == null) return
+
     const response = await dispatch(
       reduxServices.newEmployee.userervice.checkIsUserExists(username),
     )
@@ -167,12 +172,14 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     if (response.payload) {
       dispatch(
         reduxServices.app.actions.addToast(
-          alreadyExistToastMessage('Username is already exists!'),
+          alreadyExistToastMessage('Employee username is already exists!'),
         ),
       )
     } else {
       dispatch(
-        reduxServices.app.actions.addToast(toastElement('Valid username')),
+        reduxServices.app.actions.addToast(
+          toastElement('Employee username is invalid'),
+        ),
       )
     }
   }
@@ -206,9 +213,11 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   const employmentTypes = useTypedSelector(
     reduxServices.newEmployee.employmentService.selectors.employments,
   )
-
   const jobTypes = useTypedSelector(
     reduxServices.newEmployee.jobTypeService.selectors.jobTypes,
+  )
+  const employeeDesignationList = useTypedSelector(
+    reduxServices.employeeDesignation.selectors.employeeDesignationList,
   )
 
   // Start - Compose data
@@ -217,34 +226,23 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     'departmentId',
     'departmentName',
   )
-
   const composedTechnologyList = listComposer(
     technologyList as [],
     'id',
     'name',
   )
-
   const composedUserRoles = listComposer(userRoles as [], 'roleId', 'name')
-
   const genderList: GetList[] = [
     { id: 1, name: 'Female' },
     { id: 2, name: 'Male' },
   ]
   const composedGenderList = listComposer(genderList as [], 'id', 'name')
-
-  const designationList: GetList[] = [
-    { id: 1, name: 'Accounts' },
-    { id: 2, name: 'Marketing' },
-    { id: 3, name: 'Networking' },
-  ]
   const composedDesignationList = listComposer(
-    designationList as [],
+    employeeDesignationList as [],
     'id',
     'name',
   )
-
   const composedJobTypes = listComposer(jobTypes as [], 'id', 'jobType')
-
   const composedEmploymentList = listComposer(
     employmentTypes as [],
     'id',
@@ -311,19 +309,12 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="mb-3 justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              onClick={handleBackButton}
-            >
-              <i className="fa fa-arrow-left me-1"></i>Back
-            </CButton>
-          </CCol>
-        </CRow>
-        {shiftToggle && <span>Shift</span>}
-        {destinationToggle && <span>destination</span>}
+        {shiftToggle && (
+          <ShiftConfiguration setToggleShift={handleBackButton} />
+        )}
+        {destinationToggle && (
+          <EmployeeDesignationList setToggleDesignation={handleBackButton} />
+        )}
         {!shiftToggle && !destinationToggle ? (
           <>
             <UserNameEmail

@@ -164,6 +164,7 @@ export const employeeDesignationListApiConfig: EmployeeDesignationListApi = {
   getEmployeeDesignations: apiPrefix + '/kra/designation',
   addEmployeeDesignation: apiPrefix + '/jobapplicant/addDesignation',
   deleteEmployeeDesignation: apiPrefix + '/jobapplicant/deleteDesignation',
+  getAllEmployeeDesignation: apiPrefix + '/jobapplicant/getAllDesignations',
 }
 
 export const shiftConfigurationApiConfig: ShiftConfigurationApi = {

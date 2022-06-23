@@ -130,6 +130,7 @@ export interface EmployeeDesignationListApi extends ApiBase {
   getEmployeeDesignations: string
   addEmployeeDesignation: string
   deleteEmployeeDesignation: string
+  getAllEmployeeDesignation: string
 }
 
 export interface ShiftConfigurationApi extends ApiBase {
