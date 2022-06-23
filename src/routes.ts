@@ -32,6 +32,9 @@ const EmployeeList = React.lazy(
 const VisaDetailsList = React.lazy(
   () => import('./pages/EmployeeDirectory/VisaList/VisaList'),
 )
+const EmployeeHandbook = React.lazy(
+  () => import('./pages/EmployeeHandbook/EmployeeHandbook'),
+)
 
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -65,6 +68,11 @@ const routes = [
     path: '/visaDetailsList',
     name: 'Visa Details',
     component: VisaDetailsList,
+  },
+  {
+    path: '/employeehandbook',
+    name: 'Employee Handbook',
+    component: EmployeeHandbook,
   },
 ]
 
