@@ -38,8 +38,6 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationoggle] = useState<boolean>(false)
 
-  const [allowedUsername, setAllowedUsername] = useState<string>()
-
   const initEmployee = {} as AddEmployee
   const [addEmployee, setAddEmployee] = useState(initEmployee)
 
@@ -94,7 +92,6 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     setAddEmployee({ ...addEmployee, firstName: value })
   }
   const onHandleUsername = (value: string) => {
-    setAllowedUsername('')
     setAddEmployee({ ...addEmployee, userName: value })
   }
   const onHandleContractExist = (value: string) => {
@@ -170,14 +167,12 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     if (response.payload) {
       dispatch(
         reduxServices.app.actions.addToast(
-          alreadyExistToastMessage('Employee is already exists'),
+          alreadyExistToastMessage('Username is already exists!'),
         ),
       )
     } else {
       dispatch(
-        reduxServices.app.actions.addToast(
-          toastElement('New Employee successfully added'),
-        ),
+        reduxServices.app.actions.addToast(toastElement('Valid username')),
       )
     }
   }
