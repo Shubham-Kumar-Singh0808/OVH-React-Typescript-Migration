@@ -32,37 +32,37 @@ describe('Employee Projects Testing', () => {
       </ReduxProvider>,
     )
   })
-  it('should show the correct project name', () => {
+  test('should show the correct project name', () => {
     const projectName = screen.getByRole('cell', {
       name: mockEmployeeProjectEntry.projectName,
     })
     expect(projectName).toBeTruthy()
   })
-  it('should show the correct project client name', () => {
+  test('should show the correct project client name', () => {
     const projectClient = screen.getByRole('cell', {
       name: mockEmployeeProjectEntry.client,
     })
     expect(projectClient).toBeTruthy()
   })
-  it('should show the correct project manager', () => {
+  test('should show the correct project manager', () => {
     const projectManagerName = screen.getByRole('cell', {
       name: mockEmployeeProjectEntry.managerName,
     })
     expect(projectManagerName).toBeTruthy()
   })
-  it('should show the correct project start date', () => {
+  test('should show the correct project start date', () => {
     const projectStartDate = screen.getByRole('cell', {
       name: mockEmployeeProjectEntry.startdate as string,
     })
     expect(projectStartDate).toBeTruthy()
   })
-  it('should show the correct project end date', () => {
+  test('should show the correct project end date', () => {
     const projectEndDate = screen.getByRole('cell', {
       name: mockEmployeeProjectEntry.enddate as string,
     })
     expect(projectEndDate).toBeTruthy()
   })
-  it('should show the correct project status', () => {
+  test('should show the correct project status', () => {
     const projectStatus = screen.getByRole('cell', {
       name: mockEmployeeProjectEntry.status,
     })
@@ -70,7 +70,7 @@ describe('Employee Projects Testing', () => {
   })
 })
 describe('Project Entry Health Class Testing', () => {
-  it('should have the correct health class - green', () => {
+  test('should have the correct health class - green', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeProjectsEntry id={1} project={mockEmployeeProjectEntry} />
@@ -81,7 +81,7 @@ describe('Project Entry Health Class Testing', () => {
       'profile-tab-label profile-tab-label-success',
     )
   })
-  it('should have the correct health class - orange', () => {
+  test('should have the correct health class - orange', () => {
     const projectHealthOrange = mockEmployeeProjectEntry
     projectHealthOrange.health = 'Orange'
     render(
@@ -94,12 +94,12 @@ describe('Project Entry Health Class Testing', () => {
       'profile-tab-label profile-tab-label-warning',
     )
   })
-  it('should have the correct health class - red', () => {
-    const projectHealthOrange = mockEmployeeProjectEntry
-    projectHealthOrange.health = 'Red'
+  test('should have the correct health class - red', () => {
+    const projectHealthRed = mockEmployeeProjectEntry
+    projectHealthRed.health = 'Red'
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeProjectsEntry id={1} project={projectHealthOrange} />
+        <EmployeeProjectsEntry id={1} project={projectHealthRed} />
       </ReduxProvider>,
     )
     const projectStatus = screen.queryByTestId('project-health')
@@ -107,12 +107,12 @@ describe('Project Entry Health Class Testing', () => {
       'profile-tab-label profile-tab-label-failed',
     )
   })
-  it('should have the correct health class - gray', () => {
-    const projectHealthOrange = mockEmployeeProjectEntry
-    projectHealthOrange.health = 'Gray'
+  test('should have the correct health class - gray', () => {
+    const projectHealthGray = mockEmployeeProjectEntry
+    projectHealthGray.health = 'Gray'
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeProjectsEntry id={1} project={projectHealthOrange} />
+        <EmployeeProjectsEntry id={1} project={projectHealthGray} />
       </ReduxProvider>,
     )
     const projectStatus = screen.queryByTestId('project-health')
@@ -120,15 +120,16 @@ describe('Project Entry Health Class Testing', () => {
       'profile-tab-label profile-tab-label-null',
     )
   })
-  it('should have the correct health class - null', () => {
-    const projectHealthOrange = mockEmployeeProjectEntry
-    projectHealthOrange.health = 'null'
+  test('should have the correct health class - null', () => {
+    const projectHealthNull = mockEmployeeProjectEntry
+    projectHealthNull.health = null
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeProjectsEntry id={1} project={projectHealthOrange} />
+        <EmployeeProjectsEntry id={1} project={projectHealthNull} />
       </ReduxProvider>,
     )
     const projectStatus = screen.queryByTestId('project-health')
+    console.log(projectStatus)
     expect(projectStatus).toHaveClass(
       'profile-tab-label profile-tab-label-null',
     )

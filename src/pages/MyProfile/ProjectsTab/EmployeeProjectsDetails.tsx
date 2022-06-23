@@ -104,7 +104,7 @@ const EmployeeProjectsDetail = (
           ) : (
             <CTableRow color="default" className="text-center">
               <CTableDataCell colSpan={7}>
-                <CSpinner />
+                <CSpinner data-testid="project-loader" />
               </CTableDataCell>
             </CTableRow>
           )}

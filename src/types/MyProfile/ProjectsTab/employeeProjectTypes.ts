@@ -19,7 +19,7 @@ export type EmployeeProjectDetails = {
   billable?: false
   isAllocated?: null
   employeeId?: null | string | unknown
-  health?: string
+  health?: string | null
   client?: string
   type?: string
   clientId: number
@@ -108,5 +108,5 @@ export type ProjectDetails = {
   totalDays: null
   hours: null
   totalValue: null
-  allocation: number
+  allocation: number | string
 }
