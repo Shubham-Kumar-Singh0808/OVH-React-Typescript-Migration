@@ -38,9 +38,6 @@ export const reduxServices = {
   personalInformation: personalInfoService,
   userRolesAndPermissions: userRolesAndPermissionsService,
   employeeDesignation: employeeDesignationListService,
-  // getEmpDepartments: addNewEmployeeService,
-  // technology: technologyService,
-  // country: countryService,
   newEmployee: addNewEmployeeService,
   employeeCertifications: employeeCertificateService,
   employeeQualifications: employeeQualificationService,
@@ -59,7 +56,6 @@ export const reduxServices = {
   employeeDesignationReports: employeeDesigationReportService,
   visaList: visaListService,
   employeeLeaveSettings: employeeLeaveSettingsService,
-  getEmpDepartments: addNewEmployeeService,
   technology: technologyService,
   country: countryService,
 }
