@@ -1,7 +1,7 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
 import React from 'react'
-import { SelectShiftProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { SelectDesignationProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const Designation = ({
   dynamicFormLabelProps,
@@ -10,7 +10,7 @@ const Designation = ({
   setToggleShift,
   value,
   toggleValue,
-}: SelectShiftProps): JSX.Element => {
+}: SelectDesignationProps): JSX.Element => {
   const onChangeHandler = (e: { target: { value: string } }) => {
     setValue(e.target.value)
   }

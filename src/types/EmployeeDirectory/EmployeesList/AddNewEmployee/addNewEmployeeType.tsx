@@ -155,6 +155,13 @@ export interface TechnologyProps extends DynamicFormLabelProps {
   technologyValue: string
 }
 export interface SelectShiftProps extends DynamicFormLabelProps {
+  list: EmployeeShiftDetails[]
+  setValue: (value: EmployeeShiftDetails) => void
+  setToggleShift: (value: boolean) => void
+  value: string
+  toggleValue: boolean
+}
+export interface SelectDesignationProps extends DynamicFormLabelProps {
   list: GetList[]
   setValue: (value: string) => void
   setToggleShift: (value: boolean) => void

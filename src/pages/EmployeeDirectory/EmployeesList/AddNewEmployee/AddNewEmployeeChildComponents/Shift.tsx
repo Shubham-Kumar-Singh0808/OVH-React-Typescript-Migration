@@ -1,6 +1,7 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
+import React, { useState } from 'react'
 
-import React from 'react'
+import { EmployeeShiftDetails } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import { SelectShiftProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const Shift = ({
@@ -11,12 +12,28 @@ const Shift = ({
   value,
   toggleValue,
 }: SelectShiftProps): JSX.Element => {
-  const onChangeHandler = (e: { target: { value: string } }) => {
-    setValue(e.target.value)
-  }
+  // const onChangeHandler = (e: { target: { value: string } }) => {
+  //   setValue(e.target.value)
+  // }
 
   if (!list) {
     return <></>
+  }
+
+  const onHandleSelectManager = (e: { target: { value: string } }) => {
+    const name = e.target.value
+    const shift = list.find((value) => value.name === name)
+
+    const selectedShift = {
+      id: shift?.id,
+      name: shift?.name,
+      startTimeHour: shift?.startTimeHour,
+      startTimeMinutes: shift?.startTimeMinutes,
+      endTimeHour: shift?.endTimeHour,
+      endTimeMinutes: shift?.endTimeMinutes,
+      graceTime: shift?.graceTime,
+    } as EmployeeShiftDetails
+    setValue(selectedShift)
   }
   return (
     <>
@@ -45,7 +62,7 @@ const Shift = ({
             aria-label="shift"
             name="shift"
             value={value}
-            onChange={onChangeHandler}
+            onChange={onHandleSelectManager}
           >
             <option value={''}>Select Shift</option>
             {list?.map((item, index) => {

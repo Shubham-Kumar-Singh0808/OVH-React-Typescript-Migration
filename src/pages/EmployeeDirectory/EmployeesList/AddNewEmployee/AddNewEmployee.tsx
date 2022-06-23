@@ -25,6 +25,7 @@ import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 import EmployeeDesignationList from './DesignationList/EmployeeDesignationList'
+import { EmployeeShiftDetails } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -35,10 +36,8 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  // Todo: Remove all the state and use single state with Add Employee
-  const [shiftName, setShiftName] = useState<string>()
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
-  const [destinationToggle, setDestinationoggle] = useState<boolean>(false)
+  const [destinationToggle, setDestinationtoggle] = useState<boolean>(false)
 
   const initEmployee = {} as AddEmployee
   const [addEmployee, setAddEmployee] = useState(initEmployee)
@@ -129,6 +128,20 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
       hrAssociate: {
         id: value.id,
         fullName: value.fullName,
+      },
+    })
+  }
+  const onHandleShift = (value: EmployeeShiftDetails) => {
+    setAddEmployee({
+      ...addEmployee,
+      timeSlotDTO: {
+        id: value.id,
+        name: value.name,
+        startTimeHour: value.startTimeHour,
+        startTimeMinutes: value.startTimeMinutes,
+        endTimeHour: value.endTimeHour,
+        endTimeMinutes: value.endTimeMinutes,
+        graceTime: value.graceTime,
       },
     })
   }
@@ -252,22 +265,8 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
 
   // POST method
   const handleAddEmployee = async () => {
-    // Note: timeSlotDTO is static because someone working on this
-    const payload: AddEmployee = {
-      ...addEmployee,
-      timeSlotDTO: {
-        id: 1,
-        name: 'General Shift',
-        startTimeHour: '09',
-        startTimeMinutes: '00',
-        endTimeHour: '18',
-        endTimeMinutes: '19',
-        graceTime: '30',
-      },
-    }
-
     const newEmployeeResponse = await dispatch(
-      reduxServices.newEmployee.addEmployeeService.addNewEmployee(payload),
+      reduxServices.newEmployee.addEmployeeService.addNewEmployee(addEmployee),
     )
     if (
       reduxServices.newEmployee.addEmployeeService.addNewEmployee.fulfilled.match(
@@ -297,7 +296,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   }
 
   const handleBackButton = () => {
-    setDestinationoggle(false)
+    setDestinationtoggle(false)
     setShiftToggle(false)
   }
 
@@ -377,7 +376,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               list={composedDesignationList}
               setValue={onHandleDesignation}
               value={addEmployee.designation}
-              setToggleShift={() => setDestinationoggle(!destinationToggle)}
+              setToggleShift={() => setDestinationtoggle(!destinationToggle)}
               toggleValue={destinationToggle as boolean}
             />
             <OSelectList
@@ -430,8 +429,8 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
             <Shift
               dynamicFormLabelProps={dynamicFormLabelProps}
               list={employeeShifts}
-              setValue={setShiftName}
-              value={shiftName as string}
+              setValue={onHandleShift}
+              value={addEmployee.timeSlotDTO.name as string}
               setToggleShift={() => setShiftToggle(!shiftToggle)}
               toggleValue={shiftToggle as boolean}
             />
