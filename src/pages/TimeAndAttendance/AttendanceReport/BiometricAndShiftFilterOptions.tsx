@@ -13,9 +13,9 @@ import React from 'react'
 const BiometricAndShiftFilterOptions = (): JSX.Element => {
   return (
     <>
-      <CRow className="mt-2">
-        <CCol sm={2} md={3}>
-          <CFormLabel className="mt-1">Biometric:</CFormLabel>
+      <CRow className="mt-3">
+        <CCol sm={2} md={3} className="me-2">
+          <CFormLabel>Biometric:</CFormLabel>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
@@ -28,7 +28,7 @@ const BiometricAndShiftFilterOptions = (): JSX.Element => {
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={3}>
-          <CFormLabel className="mt-1">Shift:</CFormLabel>
+          <CFormLabel>Shift:</CFormLabel>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
@@ -41,19 +41,13 @@ const BiometricAndShiftFilterOptions = (): JSX.Element => {
         </CCol>
       </CRow>
       <CRow className="mt-3">
-        <CCol sm={9}>
-          <h5>
+        <CCol sm={8}>
+          <h5 className="sh-summary-text">
             Employee Attendance Summary for <span>June</span>--
             <span>2022</span>
           </h5>
         </CCol>
-        <CCol
-          sm={3}
-          md={3}
-          lg={2}
-          xl={2}
-          className="d-md-flex justify-content-md-end"
-        >
+        <CCol sm={4} className="d-md-flex justify-content-md-end">
           <CInputGroup className="global-search me-0">
             <CFormInput
               placeholder="Multiple Search"
@@ -73,26 +67,22 @@ const BiometricAndShiftFilterOptions = (): JSX.Element => {
             </CButton>
           </CInputGroup>
         </CCol>
-      </CRow>
-      <CRow>
-        <CCol sm={12}>
-          <CCol sm={6}>
-            <ul>
+        <CCol sm={12} className="d-md-flex mt-2">
+          <CCol sm={9}>
+            <ul className="time-in-office-indications">
               <li>C - Casual</li>
               <li>P - Paid</li>
               <li>L - LOP</li>
               <li>H - Holiday</li>
             </ul>
           </CCol>
-          <CCol sm={6} className="d-md-flex justify-content-md-end">
-            <ul>
+          <CCol sm={3}>
+            <ul className="time-in-office-indications">
               <li>
-                <i className="fa fa-circle low-time"></i>
-                Pending
+                <i className="fa fa-circle low-time"></i>&nbsp; Pending
               </li>
               <li>
-                <i className="fa fa-circle approved"></i>
-                Approved
+                <i className="fa fa-circle approved"></i>&nbsp; Approved
               </li>
             </ul>
           </CCol>

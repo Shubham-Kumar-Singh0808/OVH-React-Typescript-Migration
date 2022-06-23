@@ -138,6 +138,7 @@ export interface ShiftConfigurationApi extends ApiBase {
   updateShiftDetail: string
   deleteShiftDetail: string
 }
+
 export interface CertificateListApi extends ApiBase {
   getAllEmployeeCertificates: string
   exportCertificateList: string
@@ -172,4 +173,8 @@ export interface VisaListApi extends ApiBase {
   getCountries: string
   getVisaTypes: string
   exportVisaList: string
+}
+
+export interface EmployeeAttendanceReportApi extends ApiBase {
+  getEmployeeAttendance: string
 }

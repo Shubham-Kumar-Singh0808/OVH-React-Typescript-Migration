@@ -5,6 +5,7 @@ import {
   CertificateListApi,
   CertificateTypeApi,
   EmployeeAssetsApi,
+  EmployeeAttendanceReportApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
@@ -206,4 +207,8 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
+}
+
+export const employeeAttendanceReportApiConfig: EmployeeAttendanceReportApi = {
+  getEmployeeAttendance: apiPrefix + '/biometric/bioAdminManager/attendance',
 }

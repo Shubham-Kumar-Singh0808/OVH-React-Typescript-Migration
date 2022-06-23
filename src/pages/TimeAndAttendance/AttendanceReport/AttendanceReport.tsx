@@ -4,6 +4,7 @@ import BiometricAndShiftFilterOptions from './BiometricAndShiftFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
 import OtherFilterOptions from './OtherFilterOptions'
 import React from 'react'
+import AttendanceReportTable from './AttendanceReportTable'
 
 const AttendanceReport = (): JSX.Element => {
   return (
@@ -51,6 +52,7 @@ const AttendanceReport = (): JSX.Element => {
         </CRow>
         <OtherFilterOptions />
         <BiometricAndShiftFilterOptions />
+        <AttendanceReportTable />
       </OCard>
     </>
   )
