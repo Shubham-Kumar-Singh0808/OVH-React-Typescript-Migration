@@ -23,6 +23,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       payrollCutoffDate: 0,
       probationPeriod: 0,
     })
+  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
   const getEmployeeCalender = useTypedSelector(
     reduxServices.employeeLeaveSettings.selectors.getEmployeeLeaveCalender,
   )
@@ -49,6 +50,26 @@ const EmployeeLeaveCalender = (): JSX.Element => {
     setEmployeeLeaveCalender((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
+  }
+
+  useEffect(() => {
+    if (
+      employeeLeaveCalender?.maxLeavesEarned &&
+      employeeLeaveCalender?.leavesPerYear &&
+      employeeLeaveCalender?.maxAccrualPerYear
+    ) {
+      setIsSaveButtonEnabled(true)
+    } else {
+      setIsSaveButtonEnabled(false)
+    }
+  }, [
+    employeeLeaveCalender?.leavesPerYear,
+    employeeLeaveCalender?.maxAccrualPerYear,
+    employeeLeaveCalender?.maxLeavesEarned,
+  ])
+
+  const handleClearDetails = () => {
+    setEmployeeLeaveCalender(getEmployeeCalender)
   }
 
   const handleSaveLeaveCalender = async () => {
@@ -246,10 +267,15 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             className="btn-ovh me-1"
             color="success"
             onClick={handleSaveLeaveCalender}
+            disabled={!isSaveButtonEnabled}
           >
             Save
           </CButton>
-          <CButton color="warning " className="btn-ovh">
+          <CButton
+            color="warning "
+            className="btn-ovh"
+            onClick={handleClearDetails}
+          >
             Cancel
           </CButton>
         </CCol>
