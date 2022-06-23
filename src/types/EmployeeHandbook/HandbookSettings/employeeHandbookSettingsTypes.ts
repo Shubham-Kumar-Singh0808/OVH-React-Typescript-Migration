@@ -20,6 +20,30 @@ export type EmployeeHandbook = {
   description: string
   pageName: string
   handCountry: EmployeeHandbookCountry[]
+  departmentName?: string
+  departmentId?: number
+  type?: string
+  sectionId?: number
+  sectionName?: string
+  country?: string
+  empCountry?: string
+}
+
+export type MockEmployeeHandbook = {
+  id: number
+  displayOrder: number
+  title: string
+  description: string
+  pageName: string
+  handCountry: EmployeeHandbookCountry[]
+  departmentName?: string
+  departmentId?: number
+  type?: string
+  sectionId?: number
+  sectionName?: string
+  country?: string
+  empCountry?: string
+  [key: string]: unknown
 }
 
 export type EmployeeHandbookListApiProps = {
@@ -32,7 +56,8 @@ export type EmployeeHandbookListResponse = {
   size: number
 }
 
-export type EmployeeHandbookListSliceState = {
+export type EmployeeHandbookSettingSliceState = {
+  employeeHandbooks: EmployeeHandbook[]
   listSize: number
   isLoading: LoadingState
 }

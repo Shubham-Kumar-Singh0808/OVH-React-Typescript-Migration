@@ -10,14 +10,12 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const EmployeeHandbookList = (): JSX.Element => {
   const dispatch = useAppDispatch()
+
   const listSize = useTypedSelector(
-    reduxServices.employeeList.selectors.listSize,
+    reduxServices.employeeHandbookSettings.selectors.listSize,
   )
   const isLoading = useTypedSelector(
-    reduxServices.employeeList.selectors.isLoading,
-  )
-  const selectedEmploymentStatus = useTypedSelector(
-    reduxServices.employeeList.selectors.selectedEmploymentStatus,
+    reduxServices.employeeHandbookSettings.selectors.isLoading,
   )
 
   const {
@@ -30,19 +28,18 @@ const EmployeeHandbookList = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(
-      reduxServices.employeeList.getEmployees({
+      reduxServices.employeeHandbookSettings.getEmployeeHandbooks({
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
-        selectionStatus: selectedEmploymentStatus,
       }),
     )
-  }, [currentPage, dispatch, pageSize, selectedEmploymentStatus])
+  }, [currentPage, dispatch, pageSize])
 
   return (
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Employee Directory"
+        title="Handbook Settings "
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >

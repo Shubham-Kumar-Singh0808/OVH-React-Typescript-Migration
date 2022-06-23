@@ -210,5 +210,5 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
 }
 
 export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
-  getEmployeeHandbookList: apiPrefix + '/handbookItem/getAll',
+  getEmployeeHandbooks: apiPrefix + '/handbookItem/getAll',
 }

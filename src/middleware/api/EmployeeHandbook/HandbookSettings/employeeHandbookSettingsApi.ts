@@ -10,11 +10,11 @@ import {
 import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-const getEmployeesHandbook = async (
+const getEmployeeHandbooks = async (
   props: EmployeeHandbookListApiProps,
 ): Promise<EmployeeHandbookListResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeHandbookSettingsApiConfig.getEmployeeHandbookList,
+    url: employeeHandbookSettingsApiConfig.getEmployeeHandbooks,
     method: AllowedHttpMethods.get,
     params: {
       endIndex: props.endIndex ?? 20,
@@ -26,7 +26,7 @@ const getEmployeesHandbook = async (
 }
 
 const employeeHandbookSettingsApi = {
-  getEmployeesHandbook,
+  getEmployeeHandbooks,
 }
 
 export default employeeHandbookSettingsApi
