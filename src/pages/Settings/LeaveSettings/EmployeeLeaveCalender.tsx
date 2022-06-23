@@ -47,9 +47,26 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setEmployeeLeaveCalender((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'maxLeavesEarned') {
+      const mobileValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeLeaveCalender((prevState) => {
+        return { ...prevState, ...{ [name]: mobileValue } }
+      })
+    } else if (name === 'leavesPerYear') {
+      const alternativeMobileValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeLeaveCalender((prevState) => {
+        return { ...prevState, ...{ [name]: alternativeMobileValue } }
+      })
+    } else if (name === 'maxAccrualPerYear') {
+      const homeCodeValue = value.replace(/[^0-9]/gi, '')
+      setEmployeeLeaveCalender((prevState) => {
+        return { ...prevState, ...{ [name]: homeCodeValue } }
+      })
+    } else {
+      setEmployeeLeaveCalender((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   useEffect(() => {

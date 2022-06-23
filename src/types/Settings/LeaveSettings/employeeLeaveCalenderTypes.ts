@@ -2,9 +2,9 @@ import { LoadingState, ValidationError } from '../../commonTypes'
 export type EmployeeSaveLeaveCalenderTypes = {
   id: string
   leaveCycleMonth: string
-  leavesPerYear: number
-  maxAccrualPerYear: number
-  maxLeavesEarned: number
+  leavesPerYear: number | string
+  maxAccrualPerYear: number | string
+  maxLeavesEarned: number | string
   payrollCutoffDate: number
   probationPeriod: number
 }
