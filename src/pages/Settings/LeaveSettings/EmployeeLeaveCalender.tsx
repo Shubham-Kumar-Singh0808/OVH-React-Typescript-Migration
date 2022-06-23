@@ -24,6 +24,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       probationPeriod: 0,
     })
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
+
   const getEmployeeCalender = useTypedSelector(
     reduxServices.employeeLeaveSettings.selectors.getEmployeeLeaveCalender,
   )
@@ -47,8 +48,10 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
+    setIsSaveButtonEnabled(true)
     if (name === 'maxLeavesEarned') {
       const mobileValue = value.replace(/[^0-9]/gi, '')
+
       setEmployeeLeaveCalender((prevState) => {
         return { ...prevState, ...{ [name]: mobileValue } }
       })
@@ -69,21 +72,19 @@ const EmployeeLeaveCalender = (): JSX.Element => {
     }
   }
 
-  useEffect(() => {
-    if (
-      employeeLeaveCalender?.maxLeavesEarned &&
-      employeeLeaveCalender?.leavesPerYear &&
-      employeeLeaveCalender?.maxAccrualPerYear
-    ) {
-      setIsSaveButtonEnabled(true)
-    } else {
-      setIsSaveButtonEnabled(false)
-    }
-  }, [
-    employeeLeaveCalender?.leavesPerYear,
-    employeeLeaveCalender?.maxAccrualPerYear,
-    employeeLeaveCalender?.maxLeavesEarned,
-  ])
+  // useEffect(() => {
+  //   if (
+  //     employeeLeaveCalender?.maxLeavesEarned &&
+  //     employeeLeaveCalender?.leavesPerYear &&
+  //     employeeLeaveCalender?.maxAccrualPerYear
+  //   ) {
+  //     setIsSaveButtonEnabled(false)
+  //   }
+  // }, [
+  //   employeeLeaveCalender?.leavesPerYear,
+  //   employeeLeaveCalender?.maxAccrualPerYear,
+  //   employeeLeaveCalender?.maxLeavesEarned,
+  // ])
 
   const handleClearDetails = () => {
     setEmployeeLeaveCalender(getEmployeeCalender)
@@ -113,7 +114,6 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       )
     }
   }
-  console.log(employeeLeaveCalender)
 
   return (
     <>
@@ -178,7 +178,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
           Max Leaves Earned (Days):
           <span
             className={
-              employeeLeaveCalender?.maxLeavesEarned
+              employeeLeaveCalender?.maxLeavesEarned > 2
                 ? 'text-white'
                 : 'text-danger'
             }
@@ -292,6 +292,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             color="warning "
             className="btn-ovh"
             onClick={handleClearDetails}
+            disabled={!isSaveButtonEnabled}
           >
             Cancel
           </CButton>
