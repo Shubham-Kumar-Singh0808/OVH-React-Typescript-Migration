@@ -6,6 +6,7 @@ import {
 import React, { useState } from 'react'
 
 import Autocomplete from 'react-autocomplete'
+import { showIsRequired } from '../../../../../utils/helper'
 
 const ReportingManager = ({
   dynamicFormLabelProps,
@@ -37,13 +38,7 @@ const ReportingManager = ({
           )}
         >
           Reporting Manager:
-          <span
-          //   className={
-          //     employeeBasicInformationEditData.curentLocation
-          //       ? 'text-white'
-          //       : 'text-danger'
-          //   }
-          >
+          <span className={showIsRequired(autoCompleteTarget as string)}>
             *
           </span>
         </CFormLabel>

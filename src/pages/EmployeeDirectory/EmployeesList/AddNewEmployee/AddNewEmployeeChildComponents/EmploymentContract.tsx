@@ -3,6 +3,7 @@ import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import React from 'react'
 import { StartEndDateChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { showIsRequired } from '../../../../../utils/helper'
 
 const EmploymentContract = ({
   dynamicFormLabelProps,
@@ -27,15 +28,6 @@ const EmploymentContract = ({
           )}
         >
           Employment Contract:
-          <span
-          //   className={
-          //     employeeBasicInformationEditData.curentLocation
-          //       ? 'text-white'
-          //       : 'text-danger'
-          //   }
-          >
-            *
-          </span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormCheck
@@ -73,15 +65,7 @@ const EmploymentContract = ({
               )}
             >
               Contract Start Date:
-              <span
-              //   className={
-              //     employeeBasicInformationEditData.curentLocation
-              //       ? 'text-white'
-              //       : 'text-danger'
-              //   }
-              >
-                *
-              </span>
+              <span className={showIsRequired(startDate)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
@@ -107,15 +91,7 @@ const EmploymentContract = ({
               )}
             >
               Contract End Date:
-              <span
-              //   className={
-              //     employeeBasicInformationEditData.curentLocation
-              //       ? 'text-white'
-              //       : 'text-danger'
-              //   }
-              >
-                *
-              </span>
+              <span className={showIsRequired(endDate)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker

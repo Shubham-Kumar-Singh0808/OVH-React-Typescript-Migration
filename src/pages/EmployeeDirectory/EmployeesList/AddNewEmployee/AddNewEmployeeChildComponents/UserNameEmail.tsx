@@ -3,6 +3,7 @@ import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import React from 'react'
 import { UsernameEmailChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { showIsRequired } from '../../../../../utils/helper'
 
 const UserNameEmail = ({
   dynamicFormLabelProps,
@@ -19,7 +20,6 @@ const UserNameEmail = ({
     onAllowedUserChangeHandler(username)
   }
 
-  console.log('isUserAllowed', isUserAllowed)
   return (
     <>
       <CRow className="mb-3">
@@ -30,9 +30,7 @@ const UserNameEmail = ({
           )}
         >
           Username
-          {/* <span
-            className={userName.length ? 'text-white' : 'text-danger'}
-          ></span> */}
+          <span className={showIsRequired(username)}>*</span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
@@ -55,15 +53,7 @@ const UserNameEmail = ({
           )}
         >
           Email
-          <span
-          //   className={
-          //     employeeBasicInformationEditData.curentLocation
-          //       ? 'text-white'
-          //       : 'text-danger'
-          //   }
-          >
-            *
-          </span>
+          <span className={showIsRequired(username)}>*</span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput

@@ -2,6 +2,7 @@ import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 
 import { FullNameChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
+import { showIsRequired } from '../../../../../utils/helper'
 
 const FullName = ({
   dynamicFormLabelProps,
@@ -12,6 +13,10 @@ const FullName = ({
   lastNameValue,
   middleNameValue,
 }: FullNameChangeHandlerProp): JSX.Element => {
+  const isFullNameRequired =
+    showIsRequired(firstNameValue) === 'text-danger' ||
+    showIsRequired(lastNameValue) === 'text-danger' ||
+    showIsRequired(middleNameValue) === 'text-danger'
   return (
     <>
       <CRow className="mb-3">
@@ -22,13 +27,7 @@ const FullName = ({
           )}
         >
           Full Name:
-          <span
-          //   className={
-          //     employeeBasicInformationEditData.curentLocation
-          //       ? 'text-white'
-          //       : 'text-danger'
-          //   }
-          >
+          <span className={isFullNameRequired ? 'text-danger' : 'text-white'}>
             *
           </span>
         </CFormLabel>

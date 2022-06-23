@@ -2,6 +2,7 @@ import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 
 import { ExperienceChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
+import { showIsRequired } from '../../../../../utils/helper'
 
 const Experience = ({
   dynamicFormLabelProps,
@@ -18,13 +19,7 @@ const Experience = ({
           )}
         >
           Experience
-          <span
-          //   className={
-          //     employeeBasicInformationEditData.curentLocation
-          //       ? 'text-white'
-          //       : 'text-danger'
-          //   }
-          >
+          <span className={showIsRequired(experienceValue >= 0 ? 'show' : '')}>
             *
           </span>
         </CFormLabel>

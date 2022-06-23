@@ -18,15 +18,6 @@ const WorkFrom = ({
           )}
         >
           Work From:
-          <span
-          //   className={
-          //     employeeBasicInformationEditData.curentLocation
-          //       ? 'text-white'
-          //       : 'text-danger'
-          //   }
-          >
-            *
-          </span>
         </CFormLabel>
         <CCol sm={3}>
           {/* <CFormSwitch
