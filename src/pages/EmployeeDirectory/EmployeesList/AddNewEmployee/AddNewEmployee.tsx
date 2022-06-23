@@ -178,7 +178,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     } else {
       dispatch(
         reduxServices.app.actions.addToast(
-          toastElement('Employee username is invalid'),
+          toastElement('Employee username is valid'),
         ),
       )
     }
