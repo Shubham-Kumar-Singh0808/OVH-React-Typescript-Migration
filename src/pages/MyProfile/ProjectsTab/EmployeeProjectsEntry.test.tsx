@@ -129,7 +129,6 @@ describe('Project Entry Health Class Testing', () => {
       </ReduxProvider>,
     )
     const projectStatus = screen.queryByTestId('project-health')
-    console.log(projectStatus)
     expect(projectStatus).toHaveClass(
       'profile-tab-label profile-tab-label-null',
     )

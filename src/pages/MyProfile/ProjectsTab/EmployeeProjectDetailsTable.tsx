@@ -11,12 +11,13 @@ import React, { useEffect, useState } from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
-  EmployeeProjectDetailInterface,
+  EmployeeProjectDetailInterface as EmployeeProjectDetailsTable,
   ProjectDetails,
 } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import EmployeeProjectDetailsEntry from './EmployeeProjectDetailsEntry'
 
 const EmployeeProjectsDetail = (
-  props: EmployeeProjectDetailInterface,
+  props: EmployeeProjectDetailsTable,
 ): JSX.Element => {
   const [projectDetails, setProjectDetails] = useState<
     ProjectDetails | undefined
@@ -35,7 +36,7 @@ const EmployeeProjectsDetail = (
   }, [dispatch, props.projectId])
 
   useEffect(() => {
-    if (allProjectDetails?.length) {
+    if (allProjectDetails) {
       allProjectDetails
         .filter(
           (allProjectDetails) =>
@@ -80,27 +81,10 @@ const EmployeeProjectsDetail = (
         </CTableHead>
         <CTableBody>
           {projectDetails ? (
-            <CTableRow>
-              <CTableDataCell scope="row">{props.projectId}</CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.empFirstName + ' ' + projectDetails.empLastName}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.desigination}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.allocation}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.endDate}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.billable ? 'Yes' : 'No'}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.isAllocated ? 'Allocated' : 'Not Allocated'}
-              </CTableDataCell>
-            </CTableRow>
+            <EmployeeProjectDetailsEntry
+              id={props.projectId}
+              projectDetails={projectDetails}
+            />
           ) : (
             <CTableRow color="default" className="text-center">
               <CTableDataCell colSpan={7}>

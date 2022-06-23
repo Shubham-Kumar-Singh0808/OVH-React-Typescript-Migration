@@ -65,6 +65,11 @@ export type EmployeeProjectDetailsTableInterface = {
   project: EmployeeProjectDetails
 }
 
+export type EmployeeProjectDetailsEntryInterface = {
+  id: number
+  projectDetails: ProjectDetails
+}
+
 export type EmployeeProjectsSliceState = {
   projectDetails: ProjectDetails[]
   employeeProjects: EmployeeProjects
