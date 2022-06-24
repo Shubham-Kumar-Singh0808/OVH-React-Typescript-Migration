@@ -1,6 +1,5 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 
-import OToast from '../../../../../components/ReusableComponent/OToast'
 import React from 'react'
 import { UsernameEmailChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../utils/helper'

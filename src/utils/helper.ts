@@ -1,6 +1,6 @@
 import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
-export const listComposer = (list: [], id: string, name: string) =>
+export const listComposer = (list: [], id: string, name: string): GetList[] =>
   list.map(
     (val) =>
       ({
