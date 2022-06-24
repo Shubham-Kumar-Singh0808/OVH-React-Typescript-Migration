@@ -39,7 +39,7 @@ Build:
 Duplications:
   <<: *only-merge_requests
   stage: checkduplicate
-  allow_failure: false
+  allow_failure: true
   before_script:
     - echo "Executing checkduplicate step"
   script:
