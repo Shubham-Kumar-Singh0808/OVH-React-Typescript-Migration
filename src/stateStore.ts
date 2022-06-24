@@ -25,6 +25,7 @@ import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
+// import employeeHandbookReducer from './reducers/EmployeeHandbook/employeeHandbookSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -50,6 +51,7 @@ export const allReducers = {
   employeeAssets: employeeAssetsReducer,
   certificateType: certificateTypeReducer,
   visaList: visaListReducer,
+  // employeeHandbook: employeeHandbookReducer,
   // add your slice reducers here
 }
 

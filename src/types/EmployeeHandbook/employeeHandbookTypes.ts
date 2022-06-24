@@ -17,7 +17,7 @@ export type Handbook = {
 }
 
 export type GetHandbooksResponse = {
-  hanbooks: Handbook[]
+  handbooks: Handbook[]
 }
 
 type HandCountry = {
@@ -26,7 +26,7 @@ type HandCountry = {
 }
 
 export type EmployeeHandbooksState = {
-  handbooksList: GetHandbooksResponse[]
+  handbooksList: Handbook[]
   isLoading: LoadingState
   error: ValidationError
 }
