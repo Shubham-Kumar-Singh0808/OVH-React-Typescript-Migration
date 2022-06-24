@@ -33,14 +33,6 @@ Eslint:
     - echo "Executing lint step"
   script:
     - npm run lint
-
-CheckDuplicateCode:
-  <<: *only-merge_requests
-  stage: check-duplicate-code
-  allow_failure: false
-  before_script:
-    - echo "Executing duplicate code block checker"
-  script:
     - npm run jscpd
 
 Test:
@@ -68,7 +60,7 @@ Sonarqube:
     - echo "Starting sonar analysis"
     - cmd.exe /C "sonar-scanner -X -Dsonar.projectKey=ovh-typescript-react-migration -Dsonar.projectName=OVHTypeScriptReactMigration -Dsonar.sources=src -Dsonar.qualitygate.wait=true -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info"
 
-deploy qa:
+deployqa:
   only:
     - qa
   stage: deployqa
