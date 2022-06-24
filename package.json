@@ -20,7 +20,7 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
-    "jscpd": "jscpd --pattern 'src/**/*.tsx'"
+    "jscpd": "jscpd --pattern 'src/**/*.tsx' --ignore-pattern 'import.*from\\s*'.*''"
   },
   "dependencies": {
     "@coreui/chartjs": "^3.0.0",
