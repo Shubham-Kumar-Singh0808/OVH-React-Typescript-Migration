@@ -40,8 +40,15 @@ Test:
   allow_failure: false
   before_script:
     - echo "Executing test step"
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   script:
     - npm run test:cov
+  artifacts:
+    when: always
+    reports:
+      cobertura: coverage/cobertura-coverage.xml
+    paths:
+      - coverage
 
 Sonarqube:
   <<: *only-merge_requests
