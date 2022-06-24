@@ -50,20 +50,20 @@ const EmployeeLeaveCalender = (): JSX.Element => {
     const { name, value } = e.target
     setIsSaveButtonEnabled(true)
     if (name === 'maxLeavesEarned') {
-      const mobileValue = value.replace(/[^0-9]/gi, '')
+      const maxLeavesEarnedValue = value.replace(/[^0-9]/gi, '')
 
       setEmployeeLeaveCalender((prevState) => {
-        return { ...prevState, ...{ [name]: mobileValue } }
+        return { ...prevState, ...{ [name]: maxLeavesEarnedValue } }
       })
     } else if (name === 'leavesPerYear') {
-      const alternativeMobileValue = value.replace(/[^0-9]/gi, '')
+      const leavesPerYearValue = value.replace(/[^0-9]/gi, '')
       setEmployeeLeaveCalender((prevState) => {
-        return { ...prevState, ...{ [name]: alternativeMobileValue } }
+        return { ...prevState, ...{ [name]: leavesPerYearValue } }
       })
     } else if (name === 'maxAccrualPerYear') {
-      const homeCodeValue = value.replace(/[^0-9]/gi, '')
+      const maxAccrualPerYearValue = value.replace(/[^0-9]/gi, '')
       setEmployeeLeaveCalender((prevState) => {
-        return { ...prevState, ...{ [name]: homeCodeValue } }
+        return { ...prevState, ...{ [name]: maxAccrualPerYearValue } }
       })
     } else {
       setEmployeeLeaveCalender((prevState) => {

@@ -7,8 +7,11 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OCard from '../../../components/ReusableComponent/OCard'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../stateStore'
 import {
   EmployeeAddLeaveCategories,
   EmployeeLeaveCategoryProps,
@@ -19,10 +22,12 @@ const AddEditLeaveCategories = ({
   backButtonHandler,
 }: EmployeeLeaveCategoryProps): JSX.Element => {
   const initialEmployeeAddLeaveCategories = {} as EmployeeAddLeaveCategories
-
-  const [employeeLeaveCategory, setEmployeeLeaveCategory] = useState(
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [employeeLeaveCategories, setEmployeeLeaveCategories] = useState(
     initialEmployeeAddLeaveCategories,
   )
+
+  const dispatch = useAppDispatch()
 
   const handleInputChange = (
     event:
@@ -31,16 +36,43 @@ const AddEditLeaveCategories = ({
   ) => {
     const { name, value } = event.target
     if (name === 'name') {
-      const name = value.replace(/^\s*/, '')
-      setEmployeeLeaveCategory((prevState) => {
-        return { ...prevState, ...{ [name]: name } }
+      const nameValue = value.replace(/[^a-zA-Z\s]$/gi, '')
+      setEmployeeLeaveCategories((prevState) => {
+        return { ...prevState, ...{ [name]: nameValue } }
       })
     } else {
-      setEmployeeLeaveCategory((values) => {
+      setEmployeeLeaveCategories((values) => {
         return { ...values, ...{ [name]: value } }
       })
     }
   }
+
+  const handleAddLeaveCategory = async () => {
+    const addLeaveCategoryResultAction = await dispatch(
+      reduxServices.employeeLeaveSettings.addEmployeeLeaveCategory(
+        employeeLeaveCategories,
+      ),
+    )
+    if (
+      reduxServices.employeeLeaveSettings.addEmployeeLeaveCategory.fulfilled.match(
+        addLeaveCategoryResultAction,
+      )
+    ) {
+      backButtonHandler()
+    }
+  }
+
+  useEffect(() => {
+    if (
+      employeeLeaveCategories?.name?.replace(/^\s*/, '') &&
+      employeeLeaveCategories.leaveType
+    ) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [employeeLeaveCategories?.name, employeeLeaveCategories.leaveType])
+
   return (
     <>
       <OCard
@@ -66,7 +98,9 @@ const AddEditLeaveCategories = ({
               Name Of Leave Category
               <span
                 className={
-                  employeeLeaveCategory?.name ? 'text-white' : 'text-danger'
+                  employeeLeaveCategories?.name?.replace(/^\s*/, '')
+                    ? 'text-white'
+                    : 'text-danger'
                 }
               >
                 *
@@ -78,7 +112,7 @@ const AddEditLeaveCategories = ({
                 id="name"
                 name="name"
                 placeholder="Leave Name"
-                value={employeeLeaveCategory?.name}
+                value={employeeLeaveCategories?.name}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -88,7 +122,9 @@ const AddEditLeaveCategories = ({
               Category:{' '}
               <span
                 className={
-                  employeeLeaveCategory.leaveType ? 'text-white' : 'text-danger'
+                  employeeLeaveCategories.leaveType
+                    ? 'text-white'
+                    : 'text-danger'
                 }
               >
                 *
@@ -101,7 +137,7 @@ const AddEditLeaveCategories = ({
                 size="sm"
                 id="leaveType"
                 name="leaveType"
-                value={employeeLeaveCategory.leaveType}
+                value={employeeLeaveCategories.leaveType}
                 onChange={handleInputChange}
               >
                 <option value={''}>select Leave Type</option>
@@ -116,8 +152,8 @@ const AddEditLeaveCategories = ({
                 color="success"
                 className="btn-ovh me-1"
                 size="sm"
-                // disabled={!isAddQualificationCategoryBtnEnabled}
-                // onClick={handleAddQualificationCategory}
+                disabled={!isAddButtonEnabled}
+                onClick={handleAddLeaveCategory}
               >
                 {confirmButtonText}
               </CButton>
@@ -125,7 +161,7 @@ const AddEditLeaveCategories = ({
                 color="warning "
                 className="btn-ovh"
                 onClick={() => {
-                  setEmployeeLeaveCategory({
+                  setEmployeeLeaveCategories({
                     name: '',
                     leaveType: '',
                   })

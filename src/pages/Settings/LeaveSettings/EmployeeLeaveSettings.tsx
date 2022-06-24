@@ -19,14 +19,11 @@ const EmployeeLeaveSettings = (): JSX.Element => {
             CFooterClassName="d-none"
           >
             <EmployeeLeaveCalender />
-            <OAddButton
-              addButtonHandler={() => setToggle('addLeaveCategoryFamily')}
-            />
-            <EmployeeLeaveCategories />
+            <EmployeeLeaveCategories setToggle={setToggle} />
           </OCard>
         </>
       )}
-      {toggle === 'addLeaveCategoryFamily' && (
+      {toggle === 'addLeaveCategory' && (
         <AddEditLeaveCategories
           backButtonHandler={() => setToggle('')}
           confirmButtonText="Add"

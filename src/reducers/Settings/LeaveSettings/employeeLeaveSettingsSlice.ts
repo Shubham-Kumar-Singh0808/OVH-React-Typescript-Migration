@@ -132,9 +132,15 @@ const employeeLeaveSettingsSlice = createSlice({
             action.payload as EmployeeLeaveCategories[]
         },
       )
-      .addMatcher(isAnyOf(deleteEmployeeLeaveCategory.fulfilled), (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(
+          deleteEmployeeLeaveCategory.fulfilled,
+          addEmployeeLeaveCategory.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
   },
 })
 

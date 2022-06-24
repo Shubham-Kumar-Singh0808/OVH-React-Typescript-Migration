@@ -9,13 +9,20 @@ import {
   CTableRow,
   CCardHeader,
   CCardBody,
+  CRow,
+  CCol,
 } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-
-const EmployeeLeaveCategories = (): JSX.Element => {
+import OAddButton from '../../../components/ReusableComponent/OAddButton'
+type EmployeeLeaveCategoriesType = {
+  setToggle: (value: string) => void
+}
+const EmployeeLeaveCategories = ({
+  setToggle,
+}: EmployeeLeaveCategoriesType): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [leaveCategoryId, setLeaveCategoryId] = useState(0)
   const getEmployeeLeaveCategories = useTypedSelector(
@@ -62,6 +69,19 @@ const EmployeeLeaveCategories = (): JSX.Element => {
         <h4 className="h4">Leave categories</h4>
       </CCardHeader>
       <CCardBody>
+        <CRow className="justify-content-end">
+          <CCol className="text-end" md={4}>
+            <CButton
+              color="info btn-ovh me-1"
+              onClick={() => {
+                setToggle('addLeaveCategory')
+              }}
+            >
+              <i className="fa fa-plus me-1"></i>Add
+            </CButton>
+          </CCol>
+        </CRow>
+
         <CTable>
           <CTableHead>
             <CTableRow>
