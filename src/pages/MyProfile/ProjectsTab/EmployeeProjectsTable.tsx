@@ -69,6 +69,11 @@ const EmployeeProjectsTable = (): JSX.Element => {
           </CTableBody>
         </CTable>
       </CCardBody>
+      <p>
+        <strong>
+          {employeeProjects && `Total Records: ${employeeProjects.Projsize}`}
+        </strong>
+      </p>
     </>
   )
 }
