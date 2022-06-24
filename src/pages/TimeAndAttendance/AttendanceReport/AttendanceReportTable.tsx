@@ -5,10 +5,19 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
+  CCol,
+  CRow,
+  CSpinner,
 } from '@coreui/react-pro'
 import React from 'react'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../stateStore'
 
 const AttendanceReportTable = (): JSX.Element => {
+  const isLoading = useTypedSelector(
+    reduxServices.employeeAttendanceReport.selectors.isLoading,
+  )
   return (
     <>
       <CTable
@@ -28,15 +37,23 @@ const AttendanceReportTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          <CTableRow>
-            <CTableDataCell scope="row">1</CTableDataCell>
-            <CTableDataCell scope="row">5</CTableDataCell>
-            <CTableDataCell scope="row">7</CTableDataCell>
-            <CTableDataCell scope="row">5</CTableDataCell>
-            <CTableDataCell scope="row">2</CTableDataCell>
-            <CTableDataCell scope="row">3</CTableDataCell>
-            <CTableDataCell scope="row">2</CTableDataCell>
-          </CTableRow>
+          {isLoading !== ApiLoadingState.loading ? (
+            <CTableRow>
+              <CTableDataCell scope="row">1</CTableDataCell>
+              <CTableDataCell scope="row">5</CTableDataCell>
+              <CTableDataCell scope="row">7</CTableDataCell>
+              <CTableDataCell scope="row">5</CTableDataCell>
+              <CTableDataCell scope="row">2</CTableDataCell>
+              <CTableDataCell scope="row">3</CTableDataCell>
+              <CTableDataCell scope="row">2</CTableDataCell>
+            </CTableRow>
+          ) : (
+            <CCol>
+              <CRow className="category-loading-spinner ms-1">
+                <CSpinner />
+              </CRow>
+            </CCol>
+          )}
         </CTableBody>
       </CTable>
     </>

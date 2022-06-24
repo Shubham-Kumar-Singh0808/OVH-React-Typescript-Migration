@@ -21,6 +21,7 @@ import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/Add
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
+import { attendanceReportService } from './TimeAndAttendance/AttendanceReport/attendanceReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -46,4 +47,5 @@ export const reduxServices = {
   employeeAssets: employeeAssetsService,
   certificateType: certificateTypeService,
   visaList: visaListService,
+  employeeAttendanceReport: attendanceReportService,
 }

@@ -69,7 +69,7 @@ const BiometricAndShiftFilterOptions = (): JSX.Element => {
         </CCol>
         <CCol sm={12} className="d-md-flex mt-2">
           <CCol sm={9}>
-            <ul className="time-in-office-indications">
+            <ul className="time-in-office-indications ps-2">
               <li>C - Casual</li>
               <li>P - Paid</li>
               <li>L - LOP</li>

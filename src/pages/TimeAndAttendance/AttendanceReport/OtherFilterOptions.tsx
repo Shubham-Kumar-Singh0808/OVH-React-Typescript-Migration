@@ -30,9 +30,9 @@ const OtherFilterOptions = (): JSX.Element => {
             }}
           />
         </CCol>
-        <CCol sm={4}>
-          <CRow className="mt-1">
-            <CCol sm={4} lg={5} className="text-end">
+        <CCol sm={6}>
+          <CRow className="mt-1 align-items-center">
+            <CCol sm={4} lg={3} className="text-end">
               <CFormLabel>Employee Status:</CFormLabel>
             </CCol>
             <CCol sm={2} className="text-end">
@@ -53,20 +53,20 @@ const OtherFilterOptions = (): JSX.Element => {
                 inline
               />
             </CCol>
-          </CRow>
-        </CCol>
-        <CCol sm={2}>
-          <CRow>
-            <CCol sm={12}>
-              <CButton color="info btn-ovh me-1">
-                <i className="fa fa-search-plus me-1"></i>
-                View
-              </CButton>
-              &nbsp;&nbsp;
-              <CButton color="info btn-ovh me-0">
-                <i className="fa fa-refresh me-1"></i>
-                Clear
-              </CButton>
+            <CCol sm={4}>
+              <CRow>
+                <CCol sm={12}>
+                  <CButton color="info btn-ovh me-1">
+                    <i className="fa fa-search-plus me-1"></i>
+                    View
+                  </CButton>
+                  &nbsp;&nbsp;
+                  <CButton color="info btn-ovh me-0">
+                    <i className="fa fa-refresh me-1"></i>
+                    Clear
+                  </CButton>
+                </CCol>
+              </CRow>
             </CCol>
           </CRow>
         </CCol>

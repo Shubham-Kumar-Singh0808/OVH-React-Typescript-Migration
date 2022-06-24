@@ -1,3 +1,5 @@
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+
 export type EmployeeBioAttendanceDtoSet = {
   id: number
   start: string
@@ -73,4 +75,22 @@ export type EmployeeAttendanceReportResponse = {
   size: number
   days: number[]
   list: EmployeeDetailsWithAttendanceReport[]
+}
+
+export type EmployeeAttendanceReportSliceState = {
+  size: number
+  days: number[]
+  employeeAttendanceReport: EmployeeDetailsWithAttendanceReport[]
+  isLoading: ApiLoadingState
+}
+
+export type EmployeeAttendanceReportApiProps = {
+  employeeId: number
+  month?: number
+  year?: number
+  startIndex?: number
+  endIndex?: number
+  status?: string
+  shiftId?: number
+  search?: string
 }
