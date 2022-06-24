@@ -1,4 +1,4 @@
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
+import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -45,13 +45,27 @@ const EmployeeHandbookList = (): JSX.Element => {
       >
         {isLoading !== ApiLoadingState.loading ? (
           <>
-            <EmployeeHandbookTable
-              paginationRange={paginationRange}
-              setPageSize={setPageSize}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              pageSize={pageSize}
-            />
+            <CRow className="justify-content-end">
+              <CCol className="text-end" md={4}>
+                <CButton color="info" className="btn-ovh me-1">
+                  <i className="fa fa-plus me-1"></i>Add Page
+                </CButton>
+                <CButton color="info" className="btn-ovh me-1">
+                  <i className="fa fa-arrow-left  me-1"></i>Back
+                </CButton>
+              </CCol>
+            </CRow>
+            <CRow className="mt-5">
+              <CCol>
+                <EmployeeHandbookTable
+                  paginationRange={paginationRange}
+                  setPageSize={setPageSize}
+                  setCurrentPage={setCurrentPage}
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                />
+              </CCol>
+            </CRow>
           </>
         ) : (
           <CCol>

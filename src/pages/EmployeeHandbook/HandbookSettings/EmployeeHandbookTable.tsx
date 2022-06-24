@@ -41,41 +41,91 @@ const EmployeeHandbookTable = (
     setCurrentPage(1)
   }
 
+  const tableHeaderCellPropSNo = {
+    width: '6%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropTitle = {
+    width: '14%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropPageName = {
+    width: '8%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropDisplayOrder = {
+    width: '8%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropCountry = {
+    width: '52%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropActions = {
+    width: '12%',
+    scope: 'col',
+  }
+
   return (
     <>
       {employeeHandbooks.length ? (
         <>
-          <CTable striped>
+          <CTable striped responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Page Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Display Order</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropSNo}>
+                  #
+                </CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropTitle}>
+                  Title
+                </CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropPageName}>
+                  Page Name
+                </CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropDisplayOrder}>
+                  Display Order
+                </CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropCountry}>
+                  Country
+                </CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropActions}>
+                  Actions
+                </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               {employeeHandbooks.map((employeeHandbook, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">{index + 1}</CTableHeaderCell>
-                    <CTableHeaderCell>
-                      {employeeHandbook.title}
-                    </CTableHeaderCell>
+                    <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                    <CTableDataCell>{employeeHandbook.title}</CTableDataCell>
                     <CTableDataCell>{employeeHandbook.pageName}</CTableDataCell>
                     <CTableDataCell>
                       {employeeHandbook.displayOrder}
                     </CTableDataCell>
-                    {employeeHandbook.handCountry.map(
-                      (country, indexNumber) => (
-                        <CTableDataCell key={indexNumber}>
-                          {country.name}
-                        </CTableDataCell>
-                      ),
-                    )}
                     <CTableDataCell>
+                      <ul
+                        className="list-inline"
+                        style={{ display: 'block', padding: 0 }}
+                      >
+                        {employeeHandbook.handCountry.map(
+                          (country, indexNumber) => (
+                            <li
+                              key={indexNumber}
+                              style={{
+                                listStyleType: 'none',
+                                marginRight: '20px',
+                                minWidth: '86px',
+                              }}
+                              className="list-inline-item"
+                            >
+                              {country.name}
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    </CTableDataCell>
+                    <CTableDataCell className="align-items-end">
                       <CButton color="info" className="btn-ovh me-1">
                         <i
                           className="fa fa-pencil-square-o"
@@ -94,7 +144,7 @@ const EmployeeHandbookTable = (
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {employeeHandbooks.length} </strong>
+                <strong>Total Records: {listSize} </strong>
               </p>
             </CCol>
             <CCol xs={3}>

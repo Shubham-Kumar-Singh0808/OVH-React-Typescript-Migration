@@ -6,11 +6,10 @@ import EmployeeHandbookTable from './EmployeeHandbookTable'
 import React from 'react'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 import userEvent from '@testing-library/user-event'
-import { EmployeeHandbook } from '../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 import stateStore from '../../../stateStore'
-import { reduxServices } from '../../../reducers/reduxServices'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import { EmployeeHandbook } from '../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 const ReduxProvider = ({
   children,
@@ -23,7 +22,7 @@ const ReduxProvider = ({
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
     expect(
-      screen.getByText(mockEmployeeHandbookList[i].title),
+      screen.findAllByText(mockEmployeeHandbookList[i].title),
     ).toBeInTheDocument()
   }
 }
@@ -62,18 +61,16 @@ describe('Employee Handbook List Table Component Testing', () => {
       </ReduxProvider>,
       {
         preloadedState: {
-          employeeHandbookList: {
-            list: mockEmployeeHandbookList as EmployeeHandbook[],
+          employeeHandbookSettings: {
+            employeeHandbooks: mockEmployeeHandbookList as EmployeeHandbook[],
             listSize: 23,
           },
         },
       },
     )
-
     expectPageSizeToBeRendered(20)
-
     await waitFor(() => {
-      userEvent.selectOptions(screen.getByRole('combobox'), ['20'])
+      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
       expect(mockSetPageSize).toHaveBeenCalledTimes(1)
       expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
     })
