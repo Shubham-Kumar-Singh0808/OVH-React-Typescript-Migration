@@ -42,6 +42,7 @@ Duplications:
   allow_failure: false
   before_script:
     - echo "Executing checkduplicate step"
+    - npm install jscpd
   script:
     - npm run jscpd
 
