@@ -24,7 +24,7 @@ Build:
     - echo "Executing build step"
   script:
     - echo "Installing npm package"
-    - npm ci
+    - npm install
 
 Eslint:
   <<: *only-merge_requests
