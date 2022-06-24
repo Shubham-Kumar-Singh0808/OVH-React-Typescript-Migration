@@ -16,7 +16,6 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import OAddButton from '../../../components/ReusableComponent/OAddButton'
 type EmployeeLeaveCategoriesType = {
   setToggle: (value: string) => void
 }

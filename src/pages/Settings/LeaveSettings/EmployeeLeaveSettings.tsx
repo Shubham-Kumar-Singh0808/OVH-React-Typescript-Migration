@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import EmployeeLeaveCalender from './EmployeeLeaveCalender'
 import EmployeeLeaveCategories from './EmployeeLeaveCategories'
 import OCard from '../../../components/ReusableComponent/OCard'
-import OAddButton from '../../../components/ReusableComponent/OAddButton'
-// import { CCardBody } from '@coreui/react-pro'
 import AddEditLeaveCategories from './AddEditLeaveCategories'
 
 const EmployeeLeaveSettings = (): JSX.Element => {
