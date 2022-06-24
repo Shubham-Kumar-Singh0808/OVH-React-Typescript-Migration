@@ -10,11 +10,11 @@ import React, { useEffect, useState } from 'react'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { EmployeeSaveLeaveCalenderTypes } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
+import { EmployeeSaveLeaveCalenderSetting } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 const EmployeeLeaveCalender = (): JSX.Element => {
   const [employeeLeaveCalender, setEmployeeLeaveCalender] =
-    useState<EmployeeSaveLeaveCalenderTypes>({
+    useState<EmployeeSaveLeaveCalenderSetting>({
       id: '1',
       leaveCycleMonth: '',
       leavesPerYear: 0,
@@ -118,7 +118,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
   return (
     <>
       <CRow className="mt-4 mb-4">
-        <h4 className="calender-title">Leave Calendar Settings</h4>
+        <h3 className="calender-title">Leave Calendar Settings</h3>
       </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel className="col-sm-3 col-form-label text-end">

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 import {
-  EmployeeSaveLeaveCalenderTypes,
+  EmployeeSaveLeaveCalenderSetting,
   EmployeeLeaveCategories,
   EmployeeLeaveCalenderTypes,
 } from '../../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
@@ -20,7 +20,7 @@ const getEmployeeLeaveCalenderSettings =
   }
 
 const saveEmployeeLeaveCalenderSettings = async (
-  employeeLeaveCalender: EmployeeSaveLeaveCalenderTypes,
+  employeeLeaveCalender: EmployeeSaveLeaveCalenderSetting,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeLeaveSettingsConfig.saveLeaveCalendarSettings,

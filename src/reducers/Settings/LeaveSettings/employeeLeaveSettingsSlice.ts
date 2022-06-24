@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
-  EmployeeSaveLeaveCalenderTypes,
+  EmployeeSaveLeaveCalenderSetting,
   LeaveSettingsState,
   EmployeeLeaveCategories,
   EmployeeLeaveCalenderTypes,
@@ -13,7 +13,7 @@ import employeeLeaveSettingsApi from '../../../middleware/api/Settings/LeaveSett
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const initialemployeeLeaveSettingsState: LeaveSettingsState = {
-  employeeSaveLeaveCalender: {} as EmployeeSaveLeaveCalenderTypes,
+  employeeSaveLeaveCalender: {} as EmployeeSaveLeaveCalenderSetting,
   employeeLeaveCalender: {} as EmployeeLeaveCalenderTypes,
   employeeLeaveCategories: [],
   isLoading: ApiLoadingState.idle,
@@ -34,7 +34,7 @@ const getEmployeeLeaveCalenderSettings = createAsyncThunk(
 
 const saveEmployeeLeaveCalenderSettings = createAsyncThunk<
   number | undefined,
-  EmployeeSaveLeaveCalenderTypes,
+  EmployeeSaveLeaveCalenderSetting,
   {
     dispatch: AppDispatch
     state: RootState
@@ -42,7 +42,7 @@ const saveEmployeeLeaveCalenderSettings = createAsyncThunk<
   }
 >(
   'leaveSettings/saveEmployeeLeaveCalenderSettings',
-  async (employeeLeaveCalender: EmployeeSaveLeaveCalenderTypes, thunkApi) => {
+  async (employeeLeaveCalender: EmployeeSaveLeaveCalenderSetting, thunkApi) => {
     try {
       return await employeeLeaveSettingsApi.saveEmployeeLeaveCalenderSettings(
         employeeLeaveCalender,
