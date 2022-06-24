@@ -59,6 +59,28 @@ const AddEditLeaveCategories = ({
       )
     ) {
       backButtonHandler()
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="leave categoryl added successfully"
+          />,
+        ),
+      )
+    } else if (
+      reduxServices.employeeLeaveSettings.addEmployeeLeaveCategory.rejected.match(
+        addLeaveCategoryResultAction,
+      ) &&
+      addLeaveCategoryResultAction.payload === 500
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="Given leave category is already added."
+          />,
+        ),
+      )
     }
   }
 
