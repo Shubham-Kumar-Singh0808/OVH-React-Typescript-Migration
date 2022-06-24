@@ -34,6 +34,15 @@ Eslint:
   script:
     - npm run lint
 
+CheckDuplicateCode:
+  <<: *only-merge_requests
+  stage: check-duplicate-code
+  allow_failure: false
+  before_script:
+    - echo "Executing duplicate code block checker"
+  script:
+    - npm run jscpd
+
 Test:
   <<: *only-merge_requests
   stage: test

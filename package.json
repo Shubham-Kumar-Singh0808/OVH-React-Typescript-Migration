@@ -19,7 +19,8 @@
     "lint": "eslint \"src/components/**/*.{js,ts,tsx}\"",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "test:cov": "npm test -- --coverage --watchAll=false"
+    "test:cov": "npm test -- --coverage --watchAll=false",
+    "jscpd": "jscpd --pattern 'src/**/*.tsx'"
   },
   "dependencies": {
     "@coreui/chartjs": "^3.0.0",
@@ -54,6 +55,7 @@
     "formik": "^2.2.9",
     "html-react-parser": "^1.4.12",
     "html-to-draftjs": "^1.5.0",
+    "jscpd": "^3.4.5",
     "moment": "^2.29.3",
     "multiselect-react-dropdown": "^2.0.22",
     "react": "^17.0.2",
