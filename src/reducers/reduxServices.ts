@@ -21,7 +21,7 @@ import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/Add
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
-import { EmployeeHandbookService } from './EmployeeHandbook/employeeHandbookSlice'
+// import { EmployeeHandbookService } from './EmployeeHandbook/employeeHandbookSlice'
 
 export const reduxServices = {
   app: appService,
@@ -47,5 +47,5 @@ export const reduxServices = {
   employeeAssets: employeeAssetsService,
   certificateType: certificateTypeService,
   visaList: visaListService,
-  EmployeeHandbook: EmployeeHandbookService,
+  // EmployeeHandbook: EmployeeHandbookService,
 }
