@@ -66,6 +66,28 @@ const getEmployeeLeaveCategories = createAsyncThunk(
   },
 )
 
+const deleteEmployeeLeaveCategory = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'leaveSettings/deleteEmployeeLeaveCategory',
+  async (leaveCategoryId, thunkApi) => {
+    try {
+      return await employeeLeaveSettingsApi.deleteEmployeeLeaveCategory(
+        leaveCategoryId,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const employeeLeaveSettingsSlice = createSlice({
   name: 'leaveSettings',
   initialState: initialemployeeLeaveSettingsState,
@@ -86,6 +108,9 @@ const employeeLeaveSettingsSlice = createSlice({
             action.payload as EmployeeLeaveCategories[]
         },
       )
+      .addMatcher(isAnyOf(deleteEmployeeLeaveCategory.fulfilled), (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
   },
 })
 
@@ -97,13 +122,14 @@ const getEmployeeLeaveCalender = (
 ): EmployeeLeaveCalenderTypes =>
   state.employeeLeaveSettings.employeeLeaveCalender
 
-export const leaveSettingsThunk = {
+const leaveSettingsThunk = {
   saveEmployeeLeaveCalenderSettings,
   getEmployeeLeaveCategories,
   getEmployeeLeaveCalenderSettings,
+  deleteEmployeeLeaveCategory,
 }
 
-export const employeeLeaveSettingsSelectors = {
+const employeeLeaveSettingsSelectors = {
   leaveCategories,
   getEmployeeLeaveCalender,
 }

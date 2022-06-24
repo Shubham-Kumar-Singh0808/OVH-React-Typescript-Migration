@@ -43,9 +43,24 @@ const getEmployeeLeaveCategories = async (): Promise<
   return response.data
 }
 
+const deleteEmployeeLeaveCategory = async (
+  leaveCategoryId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeLeaveSettingsConfig.deleteLeaveCategory,
+    method: AllowedHttpMethods.delete,
+    params: {
+      leaveCategoryId: leaveCategoryId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeLeaveSettingsApi = {
   saveEmployeeLeaveCalenderSettings,
   getEmployeeLeaveCategories,
   getEmployeeLeaveCalenderSettings,
+  deleteEmployeeLeaveCategory,
 }
 export default employeeLeaveSettingsApi
