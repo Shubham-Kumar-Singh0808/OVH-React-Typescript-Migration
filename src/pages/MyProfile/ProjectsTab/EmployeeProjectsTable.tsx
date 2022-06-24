@@ -71,7 +71,9 @@ const EmployeeProjectsTable = (): JSX.Element => {
       </CCardBody>
       <p>
         <strong>
-          {employeeProjects && `Total Records: ${employeeProjects.Projsize}`}
+          {employeeProjects.Projsize > 0
+            ? `Total Records: ${employeeProjects.Projsize}`
+            : 'No Records Found...'}
         </strong>
       </p>
     </>
