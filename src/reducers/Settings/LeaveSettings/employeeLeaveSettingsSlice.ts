@@ -4,6 +4,7 @@ import {
   LeaveSettingsState,
   EmployeeLeaveCategories,
   EmployeeLeaveCalenderTypes,
+  EmployeeAddLeaveCategories,
 } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
@@ -15,6 +16,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 const initialemployeeLeaveSettingsState: LeaveSettingsState = {
   employeeSaveLeaveCalender: {} as EmployeeSaveLeaveCalenderSetting,
   employeeLeaveCalender: {} as EmployeeLeaveCalenderTypes,
+  employeeAddLeaveCategories: {} as EmployeeAddLeaveCategories,
   employeeLeaveCategories: [],
   isLoading: ApiLoadingState.idle,
   error: 0,
@@ -88,6 +90,28 @@ const deleteEmployeeLeaveCategory = createAsyncThunk<
   },
 )
 
+const addEmployeeLeaveCategory = createAsyncThunk<
+  number | undefined,
+  EmployeeAddLeaveCategories,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'leaveSettings/addEmployeeLeaveCategory',
+  async (employeeLeaveCategory: EmployeeAddLeaveCategories, thunkApi) => {
+    try {
+      return await employeeLeaveSettingsApi.addEmployeeLeaveCategory(
+        employeeLeaveCategory,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const employeeLeaveSettingsSlice = createSlice({
   name: 'leaveSettings',
   initialState: initialemployeeLeaveSettingsState,
@@ -127,6 +151,7 @@ const leaveSettingsThunk = {
   getEmployeeLeaveCategories,
   getEmployeeLeaveCalenderSettings,
   deleteEmployeeLeaveCategory,
+  addEmployeeLeaveCategory,
 }
 
 const employeeLeaveSettingsSelectors = {

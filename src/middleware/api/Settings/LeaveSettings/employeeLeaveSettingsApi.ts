@@ -6,6 +6,7 @@ import {
   EmployeeSaveLeaveCalenderSetting,
   EmployeeLeaveCategories,
   EmployeeLeaveCalenderTypes,
+  EmployeeAddLeaveCategories,
 } from '../../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 const getEmployeeLeaveCalenderSettings =
@@ -57,10 +58,23 @@ const deleteEmployeeLeaveCategory = async (
   return response.data
 }
 
+const addEmployeeLeaveCategory = async (
+  employeeLeaveCategory: EmployeeAddLeaveCategories,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeLeaveSettingsConfig.addLeaveCategory,
+    method: AllowedHttpMethods.post,
+    data: employeeLeaveCategory,
+  })
+  const responseVisa = await axios(requestConfig)
+  return responseVisa.data
+}
+
 const employeeLeaveSettingsApi = {
   saveEmployeeLeaveCalenderSettings,
   getEmployeeLeaveCategories,
   getEmployeeLeaveCalenderSettings,
   deleteEmployeeLeaveCategory,
+  addEmployeeLeaveCategory,
 }
 export default employeeLeaveSettingsApi

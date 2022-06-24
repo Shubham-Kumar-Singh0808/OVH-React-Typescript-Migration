@@ -179,4 +179,5 @@ export interface EmployeeLeaveSettingsApi extends ApiBase {
   getEmployeeLeaveCategories: string
   getEmployeeLeaveCalenderSettings: string
   deleteLeaveCategory: string
+  addLeaveCategory: string
 }

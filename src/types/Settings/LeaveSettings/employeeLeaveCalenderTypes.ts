@@ -15,6 +15,11 @@ export type EmployeeLeaveCategories = {
   leaveType: string
 }
 
+export type EmployeeAddLeaveCategories = {
+  name: string
+  leaveType: string
+}
+
 export type EmployeeLeaveCalenderTypes = {
   id: string
   leaveCycleMonth: string
@@ -29,6 +34,12 @@ export type LeaveSettingsState = {
   employeeSaveLeaveCalender: EmployeeSaveLeaveCalenderSetting
   employeeLeaveCategories: EmployeeLeaveCategories[]
   employeeLeaveCalender: EmployeeLeaveCalenderTypes
+  employeeAddLeaveCategories: EmployeeAddLeaveCategories
   isLoading: LoadingState
   error: ValidationError
+}
+
+export type EmployeeLeaveCategoryProps = {
+  confirmButtonText: string
+  backButtonHandler: () => void
 }

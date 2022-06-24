@@ -7,9 +7,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CCardHeader,
+  CCardBody,
 } from '@coreui/react-pro'
-import { CCardHeader, CCardBody } from '@coreui/react-pro'
-import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -17,7 +17,7 @@ import OToast from '../../../components/ReusableComponent/OToast'
 
 const EmployeeLeaveCategories = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [employeeLeaveCategoryId, setLeaveCategoryId] = useState(0)
+  const [leaveCategoryId, setLeaveCategoryId] = useState(0)
   const getEmployeeLeaveCategories = useTypedSelector(
     reduxServices.employeeLeaveSettings.selectors.leaveCategories,
   )
@@ -36,7 +36,7 @@ const EmployeeLeaveCategories = (): JSX.Element => {
     setIsDeleteModalVisible(false)
     const deleteLeaveCategoryResultAction = await dispatch(
       reduxServices.employeeLeaveSettings.deleteEmployeeLeaveCategory(
-        employeeLeaveCategoryId,
+        leaveCategoryId,
       ),
     )
     if (
@@ -49,7 +49,7 @@ const EmployeeLeaveCategories = (): JSX.Element => {
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Visa Detail deleted successfully"
+            toastMessage="Leave Category deleted successfully"
           />,
         ),
       )
@@ -62,7 +62,6 @@ const EmployeeLeaveCategories = (): JSX.Element => {
         <h4 className="h4">Leave categories</h4>
       </CCardHeader>
       <CCardBody>
-        <OAddButton />
         <CTable>
           <CTableHead>
             <CTableRow>
