@@ -3,6 +3,7 @@ image: node:11.6.0
 stages:
   - build
   - lint
+  - checkduplicate
   - test
   - sonarqube
   - deployqa
@@ -33,6 +34,15 @@ Eslint:
     - echo "Executing lint step"
   script:
     - npm run lint
+    - npm run jscpd
+
+Duplications:
+  <<: *only-merge_requests
+  stage: checkduplicate
+  allow_failure: false
+  before_script:
+    - echo "Executing checkduplicate step"
+  script:
     - npm run jscpd
 
 Test:
