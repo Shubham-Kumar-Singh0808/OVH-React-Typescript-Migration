@@ -53,7 +53,8 @@ Sonarqube:
     - cmd.exe /C "sonar-scanner -X -Dsonar.projectKey=ovh-typescript-react-migration -Dsonar.projectName=OVHTypeScriptReactMigration -Dsonar.sources=src -Dsonar.qualitygate.wait=true -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info"
 
 deploy qa:
-  <<: *only-merge_requests
+  only:
+    - qa
   stage: deployqa
   script:
     - echo "Creating a war file"
