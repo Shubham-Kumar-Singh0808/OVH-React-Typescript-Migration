@@ -29,6 +29,7 @@
     "@coreui/icons-react": "2.0.0",
     "@coreui/react-chartjs": "2.0.0",
     "@coreui/react-pro": "4.0.0",
+    "@jscpd/badge-reporter": "^3.4.5",
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
