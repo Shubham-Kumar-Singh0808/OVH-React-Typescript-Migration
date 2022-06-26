@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import employeeHandbookSettingsApi from '../../../middleware/api/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsApi'
 import {
   EmployeeHandbook,
@@ -23,6 +23,26 @@ const getEmployeeHandbooks = createAsyncThunk(
   },
 )
 
+const deleteEmployeeHandbook = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeHandbookSettings/deleteEmployeeHandbook',
+  async (bookId, thunkApi) => {
+    try {
+      return await employeeHandbookSettingsApi.deleteEmployeeHandbook(bookId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialEmployeeHandbookSettingState: EmployeeHandbookSettingSliceState = {
   listSize: 0,
   isLoading: ApiLoadingState.idle,
@@ -35,9 +55,15 @@ const employeeHandbookSettingSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(isAnyOf(getEmployeeHandbooks.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(deleteEmployeeHandbook.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
       })
+      .addMatcher(
+        isAnyOf(getEmployeeHandbooks.pending, deleteEmployeeHandbook.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
       .addMatcher(isAnyOf(getEmployeeHandbooks.fulfilled), (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.employeeHandbooks = action.payload.list as EmployeeHandbook[]
@@ -57,6 +83,7 @@ const listSize = (state: RootState): number =>
 
 const employeeHandbookSettingsThunk = {
   getEmployeeHandbooks,
+  deleteEmployeeHandbook,
 }
 
 const employeeHandbookSettingSelectors = {

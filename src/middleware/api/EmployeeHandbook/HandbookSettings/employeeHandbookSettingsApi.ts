@@ -25,8 +25,26 @@ const getEmployeeHandbooks = async (
   return response.data
 }
 
+const deleteEmployeeHandbook = async (
+  bookId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeHandbookSettingsApiConfig.deleteEmployeeHandbook,
+    method: AllowedHttpMethods.delete,
+    params: {
+      bookId: bookId,
+    },
+    data: {
+      bookId: bookId,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeHandbookSettingsApi = {
   getEmployeeHandbooks,
+  deleteEmployeeHandbook,
 }
 
 export default employeeHandbookSettingsApi

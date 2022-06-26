@@ -11,14 +11,20 @@ import {
 } from '@coreui/react-pro'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import React from 'react'
+import React, { useState } from 'react'
 import { EmployeeHandbookTableProps } from '../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const EmployeeHandbookTable = (
   props: EmployeeHandbookTableProps,
 ): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [handbookId, setHandbookId] = useState(0)
+  const [toDeleteHandbook, setToDeleteHandbook] = useState('')
+
   const employeeHandbooks = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeHandbooks,
   )
@@ -66,6 +72,35 @@ const EmployeeHandbookTable = (
     scope: 'col',
   }
 
+  const toastElement = (
+    <OToast toastColor="success" toastMessage="Page deleted successfully." />
+  )
+  const handleShowDeleteModal = (bookId: number, title: string) => {
+    setHandbookId(bookId)
+    setToDeleteHandbook(title)
+    setIsDeleteModalVisible(true)
+  }
+  const dispatch = useAppDispatch()
+
+  const handleConfirmDeleteHandbook = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteHandbookResultAction = await dispatch(
+      reduxServices.employeeHandbookSettings.deleteEmployeeHandbook(handbookId),
+    )
+    if (
+      reduxServices.employeeHandbookSettings.deleteEmployeeHandbook.fulfilled.match(
+        deleteHandbookResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.employeeHandbookSettings.getEmployeeHandbooks({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(toastElement))
+    }
+  }
   return (
     <>
       {employeeHandbooks.length ? (
@@ -126,13 +161,22 @@ const EmployeeHandbookTable = (
                       </ul>
                     </CTableDataCell>
                     <CTableDataCell className="align-items-end">
-                      <CButton color="info" className="btn-ovh me-1">
+                      <CButton color="info" className="btn-ovh me-1 text-white">
                         <i
                           className="fa fa-pencil-square-o"
                           aria-hidden="true"
                         ></i>
                       </CButton>
-                      <CButton color="danger" className="btn-ovh me-1">
+                      <CButton
+                        color="danger"
+                        className="btn-ovh me-1 text-white"
+                        onClick={() =>
+                          handleShowDeleteModal(
+                            employeeHandbook.id as number,
+                            employeeHandbook.title,
+                          )
+                        }
+                      >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </CButton>
                     </CTableDataCell>
@@ -177,6 +221,17 @@ const EmployeeHandbookTable = (
           </CRow>
         </CCol>
       )}
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteHandbook}
+      >
+        {`Do you really want to delete this ${toDeleteHandbook} Handbook Item?`}
+      </OModal>
     </>
   )
 }

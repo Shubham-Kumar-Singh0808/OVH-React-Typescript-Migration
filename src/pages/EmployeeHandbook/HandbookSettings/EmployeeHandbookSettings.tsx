@@ -1,4 +1,4 @@
-import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
+import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -8,7 +8,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
-const EmployeeHandbookList = (): JSX.Element => {
+const EmployeeHandbookSettings = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const listSize = useTypedSelector(
@@ -45,27 +45,13 @@ const EmployeeHandbookList = (): JSX.Element => {
       >
         {isLoading !== ApiLoadingState.loading ? (
           <>
-            <CRow className="justify-content-end">
-              <CCol className="text-end" md={4}>
-                <CButton color="info" className="btn-ovh me-1">
-                  <i className="fa fa-plus me-1"></i>Add Page
-                </CButton>
-                <CButton color="info" className="btn-ovh me-1">
-                  <i className="fa fa-arrow-left  me-1"></i>Back
-                </CButton>
-              </CCol>
-            </CRow>
-            <CRow className="mt-5">
-              <CCol>
-                <EmployeeHandbookTable
-                  paginationRange={paginationRange}
-                  setPageSize={setPageSize}
-                  setCurrentPage={setCurrentPage}
-                  currentPage={currentPage}
-                  pageSize={pageSize}
-                />
-              </CCol>
-            </CRow>
+            <EmployeeHandbookTable
+              paginationRange={paginationRange}
+              setPageSize={setPageSize}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              pageSize={pageSize}
+            />
           </>
         ) : (
           <CCol>
@@ -79,4 +65,4 @@ const EmployeeHandbookList = (): JSX.Element => {
   )
 }
 
-export default EmployeeHandbookList
+export default EmployeeHandbookSettings
