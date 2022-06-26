@@ -105,7 +105,7 @@ const EmployeeHandbookTable = (
     <>
       {employeeHandbooks.length ? (
         <>
-          <CTable striped responsive>
+          <CTable striped responsive className="mt-5">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell {...tableHeaderCellPropSNo}>

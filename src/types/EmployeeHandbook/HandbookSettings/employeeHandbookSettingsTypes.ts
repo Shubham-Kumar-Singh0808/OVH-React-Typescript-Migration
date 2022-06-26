@@ -14,7 +14,7 @@ export type EmployeeHandbookCountry = {
 }
 
 export type EmployeeHandbook = {
-  id: number
+  id?: number
   displayOrder: number
   title: string
   description: string

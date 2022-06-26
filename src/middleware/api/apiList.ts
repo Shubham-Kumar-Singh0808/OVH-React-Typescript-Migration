@@ -212,4 +212,5 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
 export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   getEmployeeHandbooks: apiPrefix + '/handbookItem/getAll',
   deleteEmployeeHandbook: apiPrefix + '/handbookItem/delete',
+  addNewHandbook: apiPrefix + '/handbookItem/add',
 }
