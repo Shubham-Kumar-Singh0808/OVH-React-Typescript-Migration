@@ -53,7 +53,7 @@ const OtherFilterOptions = (): JSX.Element => {
                 inline
               />
             </CCol>
-            <CCol sm={4}>
+            <CCol sm={4} md={5}>
               <CRow>
                 <CCol sm={12}>
                   <CButton color="info btn-ovh me-1">

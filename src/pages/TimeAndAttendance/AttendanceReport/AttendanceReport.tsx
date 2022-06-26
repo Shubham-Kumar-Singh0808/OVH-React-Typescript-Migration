@@ -1,18 +1,20 @@
 import { CButton, CCol, CFormCheck, CRow } from '@coreui/react-pro'
+import React, { useEffect, useState } from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
+import AttendanceReportTable from './AttendanceReportTable'
 import BiometricAndShiftFilterOptions from './BiometricAndShiftFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
 import OtherFilterOptions from './OtherFilterOptions'
-import React, { useEffect, useState } from 'react'
-import AttendanceReportTable from './AttendanceReportTable'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const AttendanceReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const currentMonth = new Date().getMonth()
+  const currentMonthDate = new Date().getDate()
+  const currentMonth =
+    currentMonthDate > 24 ? new Date().getMonth() + 1 : new Date().getMonth()
   const currentYear = new Date().getFullYear()
   const previousMonth = currentMonth - 1
 
@@ -20,6 +22,10 @@ const AttendanceReport = (): JSX.Element => {
 
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
+  )
+
+  const employeeRole = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeRole,
   )
 
   const listSize = useTypedSelector(
@@ -41,15 +47,17 @@ const AttendanceReport = (): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
-    dispatch(
-      reduxServices.employeeAttendanceReport.getEmployeeAttendanceReport({
-        employeeId: Number(employeeId),
-        month: selectMonth as number,
-        year: currentYear,
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
-      }),
-    )
+    if (selectMonth !== 'others') {
+      dispatch(
+        reduxServices.employeeAttendanceReport.getEmployeeAttendanceReport({
+          employeeId: Number(employeeId),
+          month: selectMonth as number,
+          year: currentYear,
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+        }),
+      )
+    }
   }, [currentPage, currentYear, dispatch, employeeId, pageSize, selectMonth])
 
   return (
@@ -84,18 +92,27 @@ const AttendanceReport = (): JSX.Element => {
                   onChange={handleChangeSelectMonth}
                   inline
                 />
-                <CFormCheck
-                  type="radio"
-                  name="selectMonth"
-                  value={'others'}
-                  id="other"
-                  label="Other"
-                  defaultChecked={selectMonth === 'others'}
-                  onChange={handleChangeSelectMonth}
-                  inline
-                />
+                {(employeeRole === 'admin' ||
+                  employeeRole === 'HR' ||
+                  employeeRole === 'HR Manager') && (
+                  <CFormCheck
+                    type="radio"
+                    name="selectMonth"
+                    value={'others'}
+                    id="other"
+                    label="Other"
+                    defaultChecked={selectMonth === 'others'}
+                    onChange={handleChangeSelectMonth}
+                    inline
+                  />
+                )}
               </div>
               <div className="d-inline pull-right ml15">
+                <CButton color="info btn-ovh me-0">
+                  <i className="fa fa-plus me-1"></i>
+                  Click to Export Biometric Attendance
+                </CButton>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <CButton color="info btn-ovh me-0">
                   <i className="fa fa-plus me-1"></i>
                   Click to Export Attendance

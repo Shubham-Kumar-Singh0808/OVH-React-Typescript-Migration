@@ -1,22 +1,29 @@
 import {
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
   CCol,
   CRow,
   CSpinner,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
 } from '@coreui/react-pro'
-import React from 'react'
+
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
 const AttendanceReportTable = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.employeeAttendanceReport.selectors.isLoading,
+  )
+  const employeeAttendanceReport = useTypedSelector(
+    reduxServices.employeeAttendanceReport.selectors.employeeAttendanceReport,
+  )
+  const days = useTypedSelector(
+    reduxServices.employeeAttendanceReport.selectors.days,
   )
   return (
     <>
@@ -29,6 +36,9 @@ const AttendanceReportTable = (): JSX.Element => {
           <CTableRow>
             <CTableHeaderCell>ID</CTableHeaderCell>
             <CTableHeaderCell>Name</CTableHeaderCell>
+            {days.map((day, index) => {
+              return <CTableHeaderCell key={index}>{day}</CTableHeaderCell>
+            })}
             <CTableHeaderCell>Absent</CTableHeaderCell>
             <CTableHeaderCell>Late Coming</CTableHeaderCell>
             <CTableHeaderCell>Casual/Paid</CTableHeaderCell>
@@ -38,15 +48,37 @@ const AttendanceReportTable = (): JSX.Element => {
         </CTableHead>
         <CTableBody>
           {isLoading !== ApiLoadingState.loading ? (
-            <CTableRow>
-              <CTableDataCell scope="row">1</CTableDataCell>
-              <CTableDataCell scope="row">5</CTableDataCell>
-              <CTableDataCell scope="row">7</CTableDataCell>
-              <CTableDataCell scope="row">5</CTableDataCell>
-              <CTableDataCell scope="row">2</CTableDataCell>
-              <CTableDataCell scope="row">3</CTableDataCell>
-              <CTableDataCell scope="row">2</CTableDataCell>
-            </CTableRow>
+            <>
+              {employeeAttendanceReport.map(
+                (currentReportItem, reportIndex) => {
+                  return (
+                    <>
+                      <CTableRow key={reportIndex}>
+                        <CTableDataCell scope="row">
+                          {currentReportItem.id}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {currentReportItem.fullName}
+                        </CTableDataCell>
+                        {currentReportItem.bioAttendanceDtoSet.map(
+                          (bioAttendanceItem, bioAttendanceItemIndex) => {
+                            return (
+                              <React.Fragment key={bioAttendanceItemIndex}>
+                                <CTableDataCell scope="row">{}</CTableDataCell>
+                              </React.Fragment>
+                            )
+                          },
+                        )}
+                        <CTableDataCell scope="row"></CTableDataCell>
+                        <CTableDataCell scope="row"></CTableDataCell>
+                        <CTableDataCell scope="row"></CTableDataCell>
+                        <CTableDataCell scope="row"></CTableDataCell>
+                      </CTableRow>
+                    </>
+                  )
+                },
+              )}
+            </>
           ) : (
             <CCol>
               <CRow className="category-loading-spinner ms-1">
