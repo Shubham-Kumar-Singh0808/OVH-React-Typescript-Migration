@@ -6,13 +6,13 @@ import {
   EmployeeSaveLeaveCalenderSetting,
   EmployeeLeaveCategories,
   EmployeeLeaveCalenderTypes,
-  EmployeeAddLeaveCategories,
+  EmployeeAddUpdateLeaveCategories,
 } from '../../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 const getEmployeeLeaveCalenderSettings =
   async (): Promise<EmployeeLeaveCalenderTypes> => {
     const requestConfig = getAuthenticatedRequestConfig({
-      url: employeeLeaveSettingsConfig.getEmployeeLeaveCalenderSettings,
+      url: employeeLeaveSettingsConfig.getLeaveCalenderSettings,
       method: AllowedHttpMethods.get,
     })
 
@@ -36,7 +36,7 @@ const getEmployeeLeaveCategories = async (): Promise<
   EmployeeLeaveCategories[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeLeaveSettingsConfig.getEmployeeLeaveCategories,
+    url: employeeLeaveSettingsConfig.getLeaveCategories,
     method: AllowedHttpMethods.get,
   })
 
@@ -59,11 +59,23 @@ const deleteEmployeeLeaveCategory = async (
 }
 
 const addEmployeeLeaveCategory = async (
-  employeeLeaveCategory: EmployeeAddLeaveCategories,
+  employeeLeaveCategory: EmployeeAddUpdateLeaveCategories,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeLeaveSettingsConfig.addLeaveCategory,
+    url: employeeLeaveSettingsConfig.addUpdateLeaveCategory,
     method: AllowedHttpMethods.post,
+    data: employeeLeaveCategory,
+  })
+  const responseVisa = await axios(requestConfig)
+  return responseVisa.data
+}
+
+const updateEmployeeLeaveCategory = async (
+  employeeLeaveCategory: EmployeeAddUpdateLeaveCategories,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeLeaveSettingsConfig.addUpdateLeaveCategory,
+    method: AllowedHttpMethods.put,
     data: employeeLeaveCategory,
   })
   const responseVisa = await axios(requestConfig)
@@ -76,5 +88,6 @@ const employeeLeaveSettingsApi = {
   getEmployeeLeaveCalenderSettings,
   deleteEmployeeLeaveCategory,
   addEmployeeLeaveCategory,
+  updateEmployeeLeaveCategory,
 }
 export default employeeLeaveSettingsApi

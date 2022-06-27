@@ -24,7 +24,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       probationPeriod: 0,
     })
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
-
+  const [maxLeavesEarnedValueError, setmaxLeavesEarnedValueError] =
+    useState<boolean>(false)
   const getEmployeeCalender = useTypedSelector(
     reduxServices.employeeLeaveSettings.selectors.getEmployeeLeaveCalender,
   )
@@ -51,7 +52,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
     setIsSaveButtonEnabled(true)
     if (name === 'maxLeavesEarned') {
       const maxLeavesEarnedValue = value.replace(/[^0-9]/gi, '')
-
+      validateMaxLeavesEarnedValue(maxLeavesEarnedValue)
       setEmployeeLeaveCalender((prevState) => {
         return { ...prevState, ...{ [name]: maxLeavesEarnedValue } }
       })
@@ -72,19 +73,13 @@ const EmployeeLeaveCalender = (): JSX.Element => {
     }
   }
 
-  // useEffect(() => {
-  //   if (
-  //     employeeLeaveCalender?.maxLeavesEarned &&
-  //     employeeLeaveCalender?.leavesPerYear &&
-  //     employeeLeaveCalender?.maxAccrualPerYear
-  //   ) {
-  //     setIsSaveButtonEnabled(false)
-  //   }
-  // }, [
-  //   employeeLeaveCalender?.leavesPerYear,
-  //   employeeLeaveCalender?.maxAccrualPerYear,
-  //   employeeLeaveCalender?.maxLeavesEarned,
-  // ])
+  const validateMaxLeavesEarnedValue = (maxLeavesEarnedValue: string) => {
+    if (maxLeavesEarnedValue.length < 3) {
+      setmaxLeavesEarnedValueError(false)
+    } else {
+      setmaxLeavesEarnedValueError(true)
+    }
+  }
 
   const handleClearDetails = () => {
     setEmployeeLeaveCalender(getEmployeeCalender)
@@ -178,7 +173,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
           Max Leaves Earned (Days):
           <span
             className={
-              employeeLeaveCalender?.maxLeavesEarned > 2
+              employeeLeaveCalender?.maxLeavesEarned &&
+              !maxLeavesEarnedValueError
                 ? 'text-white'
                 : 'text-danger'
             }

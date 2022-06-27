@@ -15,7 +15,8 @@ export type EmployeeLeaveCategories = {
   leaveType: string
 }
 
-export type EmployeeAddLeaveCategories = {
+export type EmployeeAddUpdateLeaveCategories = {
+  id?: number
   name: string
   leaveType: string
 }
@@ -34,7 +35,7 @@ export type LeaveSettingsState = {
   employeeSaveLeaveCalender: EmployeeSaveLeaveCalenderSetting
   employeeLeaveCategories: EmployeeLeaveCategories[]
   employeeLeaveCalender: EmployeeLeaveCalenderTypes
-  employeeAddLeaveCategories: EmployeeAddLeaveCategories
+  employeeAddLeaveCategories: EmployeeAddUpdateLeaveCategories
   isLoading: LoadingState
   error: ValidationError
 }
