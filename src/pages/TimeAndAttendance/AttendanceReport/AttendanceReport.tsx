@@ -19,6 +19,8 @@ const AttendanceReport = (): JSX.Element => {
   const previousMonth = currentMonth - 1
 
   const [selectMonth, setSelectMonth] = useState<number | string>(currentMonth)
+  const [biometric, setBiometric] = useState<string>('')
+  const [searchEmployee, setSearchEmployee] = useState<string>('')
 
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
@@ -55,10 +57,19 @@ const AttendanceReport = (): JSX.Element => {
           year: currentYear,
           startIndex: pageSize * (currentPage - 1),
           endIndex: pageSize * currentPage,
+          search: searchEmployee,
         }),
       )
     }
-  }, [currentPage, currentYear, dispatch, employeeId, pageSize, selectMonth])
+  }, [
+    currentPage,
+    currentYear,
+    dispatch,
+    employeeId,
+    pageSize,
+    searchEmployee,
+    selectMonth,
+  ])
 
   return (
     <>
@@ -108,10 +119,12 @@ const AttendanceReport = (): JSX.Element => {
                 )}
               </div>
               <div className="d-inline pull-right ml15">
-                <CButton color="info btn-ovh me-0">
-                  <i className="fa fa-plus me-1"></i>
-                  Click to Export Biometric Attendance
-                </CButton>
+                {biometric === 'WithBiometric' && (
+                  <CButton color="info btn-ovh me-0">
+                    <i className="fa fa-plus me-1"></i>
+                    Click to Export Biometric Attendance
+                  </CButton>
+                )}
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <CButton color="info btn-ovh me-0">
                   <i className="fa fa-plus me-1"></i>
@@ -122,8 +135,19 @@ const AttendanceReport = (): JSX.Element => {
           </CCol>
         </CRow>
         {selectMonth === 'others' && <OtherFilterOptions />}
-        <BiometricAndShiftFilterOptions />
-        <AttendanceReportTable />
+        <BiometricAndShiftFilterOptions
+          biometric={biometric}
+          setBiometric={setBiometric}
+          employeeRole={employeeRole}
+          setSearchEmployee={setSearchEmployee}
+        />
+        <AttendanceReportTable
+          paginationRange={paginationRange}
+          setPageSize={setPageSize}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pageSize={pageSize}
+        />
       </OCard>
     </>
   )

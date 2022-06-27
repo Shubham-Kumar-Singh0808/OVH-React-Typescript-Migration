@@ -21,6 +21,7 @@ import {
   ShiftConfigurationApi,
   SideMenuApi,
   SkillApi,
+  UserAccessToFeaturesApi,
   UserRolesConfigurationApi,
   VisaListApi,
 } from '../../types/apiTypes'
@@ -211,4 +212,8 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
 
 export const employeeAttendanceReportApiConfig: EmployeeAttendanceReportApi = {
   getEmployeeAttendance: apiPrefix + '/biometric/bioAdminManager/attendance',
+}
+
+export const userApiConfig: UserAccessToFeaturesApi = {
+  getUserAccessToFeatures: apiPrefix + '/roleFeature/user',
 }

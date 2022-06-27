@@ -2,33 +2,44 @@ import {
   CButton,
   CCol,
   CFormInput,
-  CFormLabel,
   CFormSelect,
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
 
-import React from 'react'
+import React, { useState } from 'react'
+import { BiometricAndShiftFilterOptionsProps } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
 
-const BiometricAndShiftFilterOptions = (): JSX.Element => {
+const BiometricAndShiftFilterOptions = ({
+  biometric,
+  setBiometric,
+  employeeRole,
+  setSearchEmployee,
+}: BiometricAndShiftFilterOptionsProps): JSX.Element => {
+  const onBiometricHandleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setBiometric(e.target.value)
+  }
+  const [searchInput, setSearchInput] = useState<string>('')
   return (
     <>
       <CRow className="mt-3">
         <CCol sm={2} md={3} className="me-2">
-          <CFormLabel>Biometric:</CFormLabel>
+          <span>Biometric:</span>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
             id="biometric"
             data-testid="form-select1"
             name="biometric"
+            value={biometric}
+            onChange={onBiometricHandleChange}
           >
-            <option value={''}>Without Biometric</option>
-            <option value={''}>With Biometric</option>
+            <option value="WithoutBiometric">Without Biometric</option>
+            <option value="WithBiometric">With Biometric</option>
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={3}>
-          <CFormLabel>Shift:</CFormLabel>
+          <span>Shift:</span>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
@@ -47,26 +58,33 @@ const BiometricAndShiftFilterOptions = (): JSX.Element => {
             <span>2022</span>
           </h5>
         </CCol>
-        <CCol sm={4} className="d-md-flex justify-content-md-end">
-          <CInputGroup className="global-search me-0">
-            <CFormInput
-              placeholder="Multiple Search"
-              aria-label="Multiple Search"
-              aria-describedby="button-addon2"
-              value={'searchInput'}
-            />
-            <CButton
-              disabled={false}
-              data-testid="multi-search-btn"
-              className="cursor-pointer"
-              type="button"
-              color="info"
-              id="button-addon2"
-            >
-              <i className="fa fa-search"></i>
-            </CButton>
-          </CInputGroup>
-        </CCol>
+        {(employeeRole === 'admin' ||
+          employeeRole === 'HR' ||
+          employeeRole === 'HR Manager') && (
+          <CCol sm={4} className="d-md-flex justify-content-md-end">
+            <CInputGroup className="global-search me-0">
+              <CFormInput
+                placeholder="Search Employee"
+                aria-label="Search Employee"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+              <CButton
+                disabled={false}
+                data-testid="search-employee-btn"
+                className="cursor-pointer"
+                type="button"
+                color="info"
+                id="button-addon2"
+                onClick={() => {
+                  setSearchEmployee(searchInput)
+                }}
+              >
+                <i className="fa fa-search"></i>
+              </CButton>
+            </CInputGroup>
+          </CCol>
+        )}
         <CCol sm={12} className="d-md-flex mt-2">
           <CCol sm={9}>
             <ul className="time-in-office-indications ps-2">

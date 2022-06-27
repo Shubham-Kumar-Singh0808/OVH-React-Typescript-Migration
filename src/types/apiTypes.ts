@@ -178,3 +178,7 @@ export interface VisaListApi extends ApiBase {
 export interface EmployeeAttendanceReportApi extends ApiBase {
   getEmployeeAttendance: string
 }
+
+export interface UserAccessToFeaturesApi extends ApiBase {
+  getUserAccessToFeatures: string
+}

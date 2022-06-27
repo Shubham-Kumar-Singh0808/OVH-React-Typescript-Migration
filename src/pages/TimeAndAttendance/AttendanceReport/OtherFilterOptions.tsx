@@ -8,7 +8,7 @@ const OtherFilterOptions = (): JSX.Element => {
     <>
       <CRow>
         <CCol sm={3} md={1} className="text-end ms-3">
-          <CFormLabel className="mt-1 text-decoration-none">
+          <CFormLabel className="mt-2 text-decoration-none">
             Month:<span className="text-danger">*</span>
           </CFormLabel>
         </CCol>
@@ -33,10 +33,11 @@ const OtherFilterOptions = (): JSX.Element => {
         <CCol sm={6}>
           <CRow className="mt-1 align-items-center">
             <CCol sm={4} lg={3} className="text-end">
-              <CFormLabel>Employee Status:</CFormLabel>
+              <span>Employee Status:</span>
             </CCol>
             <CCol sm={2} className="text-end">
               <CFormCheck
+                className="mt-1"
                 type="radio"
                 name="employmentStatus"
                 id="active"
@@ -46,6 +47,7 @@ const OtherFilterOptions = (): JSX.Element => {
             </CCol>
             <CCol sm={2}>
               <CFormCheck
+                className="mt-1"
                 type="radio"
                 name="employmentStatus"
                 id="inActive"

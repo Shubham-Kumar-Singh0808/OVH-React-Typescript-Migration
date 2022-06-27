@@ -94,3 +94,18 @@ export type EmployeeAttendanceReportApiProps = {
   shiftId?: number
   search?: string
 }
+
+export type BiometricAndShiftFilterOptionsProps = {
+  biometric: string
+  setBiometric: (value: string) => void
+  employeeRole: string
+  setSearchEmployee: (value: string) => void
+}
+
+export type AttendanceReportTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
