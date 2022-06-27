@@ -21,7 +21,7 @@ const SkillList = ({
 }: {
   categoryId: number
   categoryType: string | undefined
-  backButtonHandler: () => void
+  backButtonHandler?: () => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(reduxServices.skill.selectors.isLoading)
