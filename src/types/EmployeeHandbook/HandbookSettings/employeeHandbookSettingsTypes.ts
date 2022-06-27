@@ -1,4 +1,4 @@
-import { LoadingState } from '../../commonTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type EmployeeHandbookTableProps = {
   paginationRange: number[]
@@ -8,9 +8,32 @@ export type EmployeeHandbookTableProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
 
-export type EmployeeHandbookCountry = {
+export type EmployeeHandbookPageProps = {
+  headerTitle: string
+  confirmButtonText: string
+  backButtonHandler: () => void
+}
+
+export type EmployeeCountry = {
   id: number
   name: string
+}
+
+export type AddNewHandbook = {
+  description: string
+  displayOrder: number
+  pageName: string
+  title: string
+  type: string
+  list?: CountryList
+}
+
+export type CountryList = {
+  list1?: number
+  list2?: number
+  list3?: number
+  list4?: number
+  list5?: number
 }
 
 export type EmployeeHandbook = {
@@ -19,7 +42,7 @@ export type EmployeeHandbook = {
   title: string
   description: string
   pageName: string
-  handCountry: EmployeeHandbookCountry[]
+  handCountry: EmployeeCountry[]
   departmentName?: string
   departmentId?: number
   type?: string
@@ -35,7 +58,7 @@ export type MockEmployeeHandbook = {
   title: string
   description: string
   pageName: string
-  handCountry: EmployeeHandbookCountry[]
+  handCountry: EmployeeCountry[]
   departmentName?: string
   departmentId?: number
   type?: string
@@ -58,6 +81,8 @@ export type EmployeeHandbookListResponse = {
 
 export type EmployeeHandbookSettingSliceState = {
   employeeHandbooks: EmployeeHandbook[]
+  employeeCountries: EmployeeCountry[]
   listSize: number
   isLoading: LoadingState
+  error: ValidationError
 }

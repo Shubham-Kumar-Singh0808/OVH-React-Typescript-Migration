@@ -3,6 +3,8 @@ import {
   employeeHandbookSettingsApiConfig,
 } from '../../apiList'
 import {
+  AddNewHandbook,
+  EmployeeCountry,
   EmployeeHandbookListApiProps,
   EmployeeHandbookListResponse,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
@@ -42,9 +44,37 @@ const deleteEmployeeHandbook = async (
   return response.data
 }
 
+const getEmployeeCountries = async (): Promise<
+  EmployeeCountry[] | undefined
+> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeHandbookSettingsApiConfig.getEmployeeCountries,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
+const addNewHandbook = async (
+  prepareObject: AddNewHandbook,
+): Promise<number | undefined> => {
+  const { list, ...restPrepareObject } = prepareObject
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeHandbookSettingsApiConfig.addNewHandbook,
+    method: AllowedHttpMethods.post,
+    params: prepareObject.list,
+    data: restPrepareObject,
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeHandbookSettingsApi = {
   getEmployeeHandbooks,
   deleteEmployeeHandbook,
+  getEmployeeCountries,
+  addNewHandbook,
 }
 
 export default employeeHandbookSettingsApi

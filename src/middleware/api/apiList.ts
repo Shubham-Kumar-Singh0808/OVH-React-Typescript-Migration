@@ -213,4 +213,5 @@ export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   getEmployeeHandbooks: apiPrefix + '/handbookItem/getAll',
   deleteEmployeeHandbook: apiPrefix + '/handbookItem/delete',
   addNewHandbook: apiPrefix + '/handbookItem/add',
+  getEmployeeCountries: apiPrefix + '/jobapplicant/getEmpCountries',
 }

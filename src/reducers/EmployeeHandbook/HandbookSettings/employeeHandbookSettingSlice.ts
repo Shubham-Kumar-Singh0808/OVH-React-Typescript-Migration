@@ -6,6 +6,8 @@ import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import employeeHandbookSettingsApi from '../../../middleware/api/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsApi'
 import {
+  AddNewHandbook,
+  EmployeeCountry,
   EmployeeHandbook,
   EmployeeHandbookListApiProps,
   EmployeeHandbookSettingSliceState,
@@ -43,10 +45,51 @@ const deleteEmployeeHandbook = createAsyncThunk<
   },
 )
 
+const getEmployeeCountries = createAsyncThunk<
+  EmployeeCountry[] | undefined,
+  void,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('employeeHandbookSettings/getEmployeeCountries', async (_, thunkApi) => {
+  try {
+    return await employeeHandbookSettingsApi.getEmployeeCountries()
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+const addNewHandbook = createAsyncThunk<
+  number | undefined,
+  AddNewHandbook,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeHandbookSettings/addNewHandbook',
+  async (addEmployeeHandbook: AddNewHandbook, thunkApi) => {
+    try {
+      return await employeeHandbookSettingsApi.addNewHandbook(
+        addEmployeeHandbook,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialEmployeeHandbookSettingState: EmployeeHandbookSettingSliceState = {
   listSize: 0,
   isLoading: ApiLoadingState.idle,
   employeeHandbooks: [],
+  employeeCountries: [],
+  error: null,
 }
 
 const employeeHandbookSettingSlice = createSlice({
@@ -55,11 +98,23 @@ const employeeHandbookSettingSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(deleteEmployeeHandbook.fulfilled, (state) => {
+      .addCase(getEmployeeCountries.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.employeeCountries = action.payload as EmployeeCountry[]
       })
       .addMatcher(
-        isAnyOf(getEmployeeHandbooks.pending, deleteEmployeeHandbook.pending),
+        isAnyOf(deleteEmployeeHandbook.fulfilled, addNewHandbook.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getEmployeeHandbooks.pending,
+          deleteEmployeeHandbook.pending,
+          getEmployeeCountries.pending,
+          addNewHandbook.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
@@ -69,6 +124,18 @@ const employeeHandbookSettingSlice = createSlice({
         state.employeeHandbooks = action.payload.list as EmployeeHandbook[]
         state.listSize = action.payload.size
       })
+      .addMatcher(
+        isAnyOf(
+          getEmployeeHandbooks.rejected,
+          getEmployeeCountries.rejected,
+          deleteEmployeeHandbook.rejected,
+          addNewHandbook.rejected,
+        ),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.failed
+          state.error = action.payload as ValidationError
+        },
+      )
   },
 })
 
@@ -81,15 +148,21 @@ const employeeHandbooks = (state: RootState): EmployeeHandbook[] =>
 const listSize = (state: RootState): number =>
   state.employeeHandbookSettings.listSize
 
+const employeeCountries = (state: RootState): EmployeeCountry[] =>
+  state.employeeHandbookSettings.employeeCountries
+
 const employeeHandbookSettingsThunk = {
   getEmployeeHandbooks,
   deleteEmployeeHandbook,
+  getEmployeeCountries,
+  addNewHandbook,
 }
 
 const employeeHandbookSettingSelectors = {
   isLoading,
   employeeHandbooks,
   listSize,
+  employeeCountries,
 }
 
 export const employeeHandbookSettingService = {
