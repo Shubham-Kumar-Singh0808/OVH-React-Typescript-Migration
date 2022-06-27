@@ -32,12 +32,14 @@ const EmployeeList = React.lazy(
 const EmployeeReport = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeeReport/EmployeeReport'),
 )
-
 const EmpDesignationReport = React.lazy(
   () =>
     import(
       './pages/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/EmployeeDesignationReport'
     ),
+)
+const VisaDetailsList = React.lazy(
+  () => import('./pages/EmployeeDirectory/VisaList/VisaList'),
 )
 
 /**
@@ -77,6 +79,11 @@ const routes = [
     path: '/employeeProfile/:employeeId',
     name: 'Employee Profile',
     component: MyProfile,
+  },
+  {
+    path: '/visaDetailsList',
+    name: 'Visa Details',
+    component: VisaDetailsList,
   },
 ]
 

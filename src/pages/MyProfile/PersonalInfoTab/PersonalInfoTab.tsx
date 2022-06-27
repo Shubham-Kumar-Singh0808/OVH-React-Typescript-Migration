@@ -359,6 +359,23 @@ const PersonalInfoTab = ({
     }
   }
 
+  const employeeMobileNumber =
+    employeeContactDetails?.mobile && employeeContactDetails?.mobile.length > 9
+      ? 'text-white'
+      : 'text-danger'
+
+  const employeePresentZipNumber =
+    employeePresenetAddressDetails?.presentZip &&
+    employeePresenetAddressDetails?.presentZip.length > 5
+      ? 'text-white'
+      : 'text-danger'
+
+  const employeeEmergencyPhoneNumber =
+    employeeEmergencyContactDetails?.emergencyPhone &&
+    employeeEmergencyContactDetails?.emergencyPhone.length > 9
+      ? 'text-white'
+      : 'text-danger'
+
   return (
     <>
       <>
@@ -405,16 +422,7 @@ const PersonalInfoTab = ({
                       'col-sm-3 col-form-label text-end',
                     )}
                   >
-                    Mobile:{' '}
-                    <span
-                      className={
-                        employeeContactDetails?.mobile
-                          ? 'text-white'
-                          : 'text-danger'
-                      }
-                    >
-                      *
-                    </span>
+                    Mobile: <span className={employeeMobileNumber}>*</span>
                   </CFormLabel>
                   <CCol sm={1}>
                     <CFormInput
@@ -580,15 +588,7 @@ const PersonalInfoTab = ({
                 <CRow className="mt-4 mb-4">
                   <CFormLabel className="col-sm-3 col-form-label text-end">
                     Mobile:{' '}
-                    <span
-                      className={
-                        employeeEmergencyContactDetails?.emergencyPhone
-                          ? 'text-white'
-                          : 'text-danger'
-                      }
-                    >
-                      *
-                    </span>
+                    <span className={employeeEmergencyPhoneNumber}>*</span>
                   </CFormLabel>
                   <CCol sm={1}>
                     <CFormInput
@@ -705,16 +705,7 @@ const PersonalInfoTab = ({
                 </CRow>
                 <CRow className="mt-4 mb-4">
                   <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Zip:{' '}
-                    <span
-                      className={
-                        employeePresenetAddressDetails?.presentZip
-                          ? 'text-white'
-                          : 'text-danger'
-                      }
-                    >
-                      *
-                    </span>
+                    Zip: <span className={employeePresentZipNumber}>*</span>
                   </CFormLabel>
                   <CCol sm={3}>
                     <CFormInput

@@ -176,3 +176,10 @@ export interface EmployeeDesignationReportApi extends ApiBase {
   getEmployeeCategoryData: string
   exportEmployeeCategoryData: string
 }
+
+export interface VisaListApi extends ApiBase {
+  getVisaList: string
+  getCountries: string
+  getVisaTypes: string
+  exportVisaList: string
+}

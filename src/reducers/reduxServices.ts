@@ -3,10 +3,15 @@ import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
 import { certificateListService } from './EmployeeDirectory/CertificatesList/certificatesListSlice'
+import { certificateTypeService } from './EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
+import { employeeAssetsService } from './MyProfile/MyAssetsTab/employeeAssetsSlice'
 import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { employeeDesignationListService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import { employeeListService } from './EmployeeDirectory/EmployeesList/employeeListSlice'
+import { employeeProjectsService } from './MyProfile/ProjectsTab/employeeProjectSlice'
 import { employeeQualificationService } from './MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationSlice'
+import { employeeReporteesService } from './MyProfile/ReporteesTab/employeeReporteesSlice'
+import { employeeReviewsService } from './MyProfile/ReviewTab/employeeReviewsSlice'
 import { employeeSkillServices } from './MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import { generalInformationService } from './MyProfile/GeneralTab/generalInformationSlice'
 import { personalInfoService } from './MyProfile/PersonalInfoTab/personalInfoTabSlice'
@@ -15,13 +20,9 @@ import { qualificationCategoryService } from './MyProfile/QualificationsTab/Qual
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import { employeeReporteesService } from './MyProfile/ReporteesTab/employeeReporteesSlice'
-import { employeeAssetsService } from './MyProfile/MyAssetsTab/employeeAssetsSlice'
-import { certificateTypeService } from './EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
-import { employeeReviewsService } from './MyProfile/ReviewTab/employeeReviewsSlice'
 import { employeeReportService } from './EmployeeDirectory/EmployeeReport/employeeReportSlice'
-import { employeeProjectsService } from './MyProfile/ProjectsTab/employeeProjectSlice'
 import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
+import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -48,4 +49,5 @@ export const reduxServices = {
   certificateType: certificateTypeService,
   employeeReports: employeeReportService,
   employeeDesignationReports: employeeDesigationReportService,
+  visaList: visaListService,
 }

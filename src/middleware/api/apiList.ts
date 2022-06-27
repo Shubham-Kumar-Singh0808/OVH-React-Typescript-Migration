@@ -4,12 +4,16 @@ import {
   CategoryApi,
   CertificateListApi,
   CertificateTypeApi,
+  EmployeeAssetsApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
   EmployeeListApi,
+  EmployeeProjectsApi,
   EmployeeQualificationCategoryApi,
   EmployeeQualificationsApi,
+  EmployeeReporteesApi,
+  EmployeeReviewsApi,
   EmployeeSkillApi,
   PersonalInfoApi,
   ProfileHistoryApi,
@@ -17,12 +21,9 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
-  EmployeeReporteesApi,
-  EmployeeAssetsApi,
-  EmployeeReviewsApi,
   EmployeeReportApi,
-  EmployeeProjectsApi,
   EmployeeDesignationReportApi,
+  VisaListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -208,6 +209,13 @@ export const employeeDesignationReportApiConfig: EmployeeDesignationReportApi =
     exportEmployeeCategoryData:
       apiPrefix + '/jobapplicant/exportEmployeeCategoryData',
   }
+
+export const visaListApiConfig: VisaListApi = {
+  getVisaList: apiPrefix + '/EmployeeSkill/getAllVisaDetails',
+  getCountries: apiPrefix + '/EmployeeSkill/getCountries',
+  getVisaTypes: apiPrefix + '/Employee/getCountryChangeList',
+  exportVisaList: apiPrefix + '/EmployeeSkill/exportEmployeeVisaList',
+}
 
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
