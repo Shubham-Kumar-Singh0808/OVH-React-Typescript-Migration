@@ -1,16 +1,17 @@
 import '@testing-library/jest-dom'
 
 import { render, screen, waitFor } from '@testing-library/react'
+
 import CertificateType from './CertificateType'
+import CertificateTypeTable from './CertificateTypeTable'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import { mockCertificateType } from '../../../../test/data/certificateTypeData'
-import stateStore from '../../../../stateStore'
-import CertificateTypeTable from './CertificateTypeTable'
-import { reduxServices } from '../../../../reducers/reduxServices'
-import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
+import { mockCertificateType } from '../../../../test/data/certificateTypeData'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import stateStore from '../../../../stateStore'
 
 const history = createMemoryHistory()
 

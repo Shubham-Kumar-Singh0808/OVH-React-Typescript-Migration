@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import { ReduxProvider } from '../Helper'
 import configureStore from 'redux-mock-store' //ES6 modules
 import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
 import menuItems from '../../middleware/MenuLinks'
@@ -16,13 +17,6 @@ import stateStore from '../../stateStore'
 const middlewares: never[] = []
 const mockStore = configureStore(middlewares)
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
 const mockUseLocationValue = {
   pathname: '/dashboard',
 }

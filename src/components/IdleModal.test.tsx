@@ -4,17 +4,10 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import IdleModal from './IdleModal'
 import { Provider } from 'react-redux'
 import React from 'react'
+import { ReduxProvider } from './Helper'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import stateStore from '../stateStore'
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('Idle Modal Testing', () => {
   test('should load IdleModal without crashing', async () => {
