@@ -31,24 +31,32 @@ function AddNewHandbook({
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
 
   useEffect(() => {
-    if (
-      addNewPage.title &&
-      addNewPage.country &&
-      addNewPage.displayOrder &&
-      addNewPage.description &&
-      addNewPage.pageName
-    ) {
+    if (addNewPage.title && addNewPage.displayOrder && addNewPage.pageName) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
   }, [
-    addNewPage.country,
-    addNewPage.description,
+    // addNewPage.country,
+    // addNewPage.description,
     addNewPage.displayOrder,
     addNewPage.pageName,
     addNewPage.title,
   ])
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    if (name === 'displayOrder') {
+      const displayOrder = Number(value.replace(/[^0-9]/gi, ''))
+      setAddNewPage((prevState) => {
+        return { ...prevState, ...{ [name]: displayOrder } }
+      })
+    } else {
+      setAddNewPage((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
+  }
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -126,7 +134,12 @@ function AddNewHandbook({
               <span className="text-danger">*</span>
             </CFormLabel>
             <CCol sm={3}>
-              <CFormInput type="text" name="title" maxLength={50} />
+              <CFormInput
+                type="text"
+                name="title"
+                maxLength={50}
+                onChange={handleInputChange}
+              />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -140,7 +153,12 @@ function AddNewHandbook({
               <span className="text-danger">*</span>
             </CFormLabel>
             <CCol sm={3}>
-              <CFormInput type="text" name="pageName" maxLength={50} />
+              <CFormInput
+                type="text"
+                name="pageName"
+                maxLength={50}
+                onChange={handleInputChange}
+              />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -154,7 +172,12 @@ function AddNewHandbook({
               <span className="text-danger">*</span>
             </CFormLabel>
             <CCol sm={3}>
-              <CFormInput type="text" name="displayOrder" maxLength={50} />
+              <CFormInput
+                type="text"
+                maxLength={2}
+                name="displayOrder"
+                onChange={handleInputChange}
+              />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
