@@ -119,6 +119,7 @@ const EmployeeLeaveCategories = ({
       )
     ) {
       dispatch(reduxServices.employeeLeaveSettings.getEmployeeLeaveCategories())
+      setIsLeaveCategoryDetailEdit(false)
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
@@ -231,7 +232,12 @@ const EmployeeLeaveCategories = ({
                       <CButton
                         color="warning"
                         className="btn-ovh me-1"
-                        // onClick={cancelCertificateTypeButtonHandler}
+                        onClick={() => {
+                          // setEditEmployeeCategoryLeaveDetails({
+                          //   name: '',
+                          //   leaveType: '',
+                          // })
+                        }}
                       >
                         <i className="fa fa-times" aria-hidden="true"></i>
                       </CButton>
