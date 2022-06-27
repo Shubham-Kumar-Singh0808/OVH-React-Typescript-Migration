@@ -87,15 +87,15 @@ const employeeDesignationReportSlice = createSlice({
 })
 
 const isLoading = (state: RootState): LoadingState =>
-  state.employeeDesignationReport.isLoading
+  state.employeeDesignationReports.isLoading
 const designations = (state: RootState): Designation[] =>
-  state.employeeDesignationReport.getAllDesignation
+  state.employeeDesignationReports.getAllDesignation
 const selectedDesignation = (state: RootState): string =>
-  state.employeeDesignationReport.selectedDesignation
+  state.employeeDesignationReports.selectedDesignation
 const listSize = (state: RootState): number =>
-  state.employeeDesignationReport.listSize
+  state.employeeDesignationReports.listSize
 const employeeDesignationReport = (state: RootState): EmployeeDesignation[] =>
-  state.employeeDesignationReport.empDesignation
+  state.employeeDesignationReports.empDesignation
 
 export const employeeDesignationReportThunk = {
   getDesignations,

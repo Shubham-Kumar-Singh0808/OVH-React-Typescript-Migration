@@ -64,16 +64,16 @@ const employeeReportSlice = createSlice({
 })
 
 const isLoading = (state: RootState): LoadingState =>
-  state.employeeReport.isLoading
+  state.employeeReports.isLoading
 const employeesReport = (state: RootState): EmployeeReport[] =>
-  state.employeeReport.employees
-const listSize = (state: RootState): number => state.employeeReport.listSize
+  state.employeeReports.employees
+const listSize = (state: RootState): number => state.employeeReports.listSize
 const selectedEmploymentStatus = (state: RootState): EmploymentStatus =>
-  state.employeeReport.selectedEmploymentStatus
+  state.employeeReports.selectedEmploymentStatus
 const selectedCategory = (state: RootState): string =>
-  state.employeeReport.selectedCategory
+  state.employeeReports.selectedCategory
 const searchEmployee = (state: RootState): string =>
-  state.employeeReport.searchEmployee
+  state.employeeReports.searchEmployee
 
 const employeeReportsThunk = {
   getEmployeeReport,

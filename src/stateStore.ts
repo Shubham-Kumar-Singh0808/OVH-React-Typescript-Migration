@@ -51,8 +51,8 @@ export const allReducers = {
   certificateList: certificateListReducer,
   employeeAssets: employeeAssetsReducer,
   certificateType: certificateTypeReducer,
-  employeeReport: employeeReportReducer,
-  employeeDesignationReport: employeeDesignationReportReducer,
+  employeeReports: employeeReportReducer,
+  employeeDesignationReports: employeeDesignationReportReducer,
   visaList: visaListReducer,
   // add your slice reducers here
 }
