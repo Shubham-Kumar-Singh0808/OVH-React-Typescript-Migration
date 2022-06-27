@@ -1,12 +1,20 @@
 import { LoadingState } from '../../commonTypes'
 
-export type EmployeeTable = {
+export type EmployeeReport = {
   id: number
-  firstName: string
-  lastName: string
-  middleName?: string | null
+  fullName: string
   emailId: string
   mobile: string
+  country?: string | null
+}
+
+export type MockEmployeeReport = {
+  id: number
+  fullName: string
+  emailId: string
+  mobile: string
+  country?: string | null
+  [key: string]: unknown
 }
 
 export enum EmploymentStatus {
@@ -15,10 +23,13 @@ export enum EmploymentStatus {
 }
 
 export type EmployeeReportSliceState = {
-  employees: EmployeeTable[]
+  employees: EmployeeReport[]
   selectedEmploymentStatus: EmploymentStatus
   listSize: number
   isLoading: LoadingState
+  country: string
+  selectedCategory: string
+  searchEmployee: string
 }
 
 export type EmployeeReportApiProps = {
@@ -26,10 +37,12 @@ export type EmployeeReportApiProps = {
   startIndex?: number
   searchStr?: string
   selectionStatus?: string
+  selectedCategory?: string
+  searchEmployee?: string
 }
 
 export type GetEmployeeResponse = {
-  emps: EmployeeTable[]
+  emps: EmployeeReport[]
   Empsize: number
 }
 
@@ -39,4 +52,9 @@ export type EmployeeReportTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
+export type EmployeeReportOptionsProps = {
+  category: string
+  setCategory: (value: string) => void
 }

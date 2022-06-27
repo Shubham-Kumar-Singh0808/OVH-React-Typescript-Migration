@@ -19,8 +19,9 @@ import { employeeReporteesService } from './MyProfile/ReporteesTab/employeeRepor
 import { employeeAssetsService } from './MyProfile/MyAssetsTab/employeeAssetsSlice'
 import { certificateTypeService } from './EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
 import { employeeReviewsService } from './MyProfile/ReviewTab/employeeReviewsSlice'
-import { employeeReportService } from './EmployeeDirectory/EmployeeReport/EmployeeReportSlice'
+import { employeeReportService } from './EmployeeDirectory/EmployeeReport/employeeReportSlice'
 import { employeeProjectsService } from './MyProfile/ProjectsTab/employeeProjectSlice'
+import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -46,4 +47,5 @@ export const reduxServices = {
   employeeAssets: employeeAssetsService,
   certificateType: certificateTypeService,
   employeeReports: employeeReportService,
+  employeeDesignationReports: employeeDesigationReportService,
 }

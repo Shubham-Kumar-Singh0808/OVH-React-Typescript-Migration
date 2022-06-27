@@ -170,3 +170,9 @@ export interface EmployeeReporteesApi extends ApiBase {
 export interface EmployeeReportApi extends ApiBase {
   getEmployeeReports: string
 }
+
+export interface EmployeeDesignationReportApi extends ApiBase {
+  getAllDesignations: string
+  getEmployeeCategoryData: string
+  exportEmployeeCategoryData: string
+}

@@ -22,6 +22,7 @@ import {
   EmployeeReviewsApi,
   EmployeeReportApi,
   EmployeeProjectsApi,
+  EmployeeDesignationReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -197,8 +198,16 @@ export const employeeReviewsApiConfig: EmployeeReviewsApi = {
 }
 
 export const employeeReportApiConfig: EmployeeReportApi = {
-  getEmployeeReports: apiPrefix + 'jobapplicant/getSelectedTypeEmployeeData',
+  getEmployeeReports: apiPrefix + '/jobapplicant/getSelectedTypeEmployeeData',
 }
+
+export const employeeDesignationReportApiConfig: EmployeeDesignationReportApi =
+  {
+    getAllDesignations: apiPrefix + '/jobapplicant/getAllDesignations',
+    getEmployeeCategoryData: apiPrefix + '/jobapplicant/EmployeesCategoryData',
+    exportEmployeeCategoryData:
+      apiPrefix + '/jobapplicant/exportEmployeeCategoryData',
+  }
 
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',

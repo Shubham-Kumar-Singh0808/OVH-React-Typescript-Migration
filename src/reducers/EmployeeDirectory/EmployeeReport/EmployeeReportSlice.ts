@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { RootState } from '../../../stateStore'
 import {
-  EmployeeTable,
+  EmployeeReport,
   EmployeeReportApiProps,
   EmployeeReportSliceState,
   EmploymentStatus,
@@ -28,6 +28,9 @@ const initialEmployeeReportState: EmployeeReportSliceState = {
   selectedEmploymentStatus: EmploymentStatus.active,
   listSize: 0,
   isLoading: ApiLoadingState.idle,
+  country: '',
+  selectedCategory: '',
+  searchEmployee: '',
 }
 
 const employeeReportSlice = createSlice({
@@ -40,6 +43,12 @@ const employeeReportSlice = createSlice({
     changeSelectedEmploymentStatus: (state, action) => {
       state.selectedEmploymentStatus = action.payload as EmploymentStatus
     },
+    changeSelectedCategory: (state, action) => {
+      state.selectedCategory = action.payload as string
+    },
+    setSearchEmployee: (state, action) => {
+      state.searchEmployee = action.payload as string
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -48,7 +57,7 @@ const employeeReportSlice = createSlice({
       })
       .addMatcher(isAnyOf(getEmployeeReport.fulfilled), (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.employees = action.payload.emps as EmployeeTable[]
+        state.employees = action.payload.emps as EmployeeReport[]
         state.listSize = action.payload.Empsize
       })
   },
@@ -56,11 +65,15 @@ const employeeReportSlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState =>
   state.employeeReport.isLoading
-const employeesReport = (state: RootState): EmployeeTable[] =>
+const employeesReport = (state: RootState): EmployeeReport[] =>
   state.employeeReport.employees
 const listSize = (state: RootState): number => state.employeeReport.listSize
 const selectedEmploymentStatus = (state: RootState): EmploymentStatus =>
   state.employeeReport.selectedEmploymentStatus
+const selectedCategory = (state: RootState): string =>
+  state.employeeReport.selectedCategory
+const searchEmployee = (state: RootState): string =>
+  state.employeeReport.searchEmployee
 
 const employeeReportsThunk = {
   getEmployeeReport,
@@ -71,6 +84,8 @@ const employeeReportSelectors = {
   employeesReport,
   listSize,
   selectedEmploymentStatus,
+  selectedCategory,
+  searchEmployee,
 }
 
 export const employeeReportService = {

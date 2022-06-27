@@ -18,7 +18,6 @@ const AppSidebarNavItems = (): JSX.Element => {
   const getSidebarMenuItems = useTypedSelector(
     (state) => state.sidebarMenu.menuItems,
   )
-  console.log(getSidebarMenuItems)
   useEffect(() => {
     if (reRenderMenu) {
       dispatch(getSidebarMenu(employeeId))

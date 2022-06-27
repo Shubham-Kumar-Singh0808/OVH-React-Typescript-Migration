@@ -24,7 +24,8 @@ import employeeProjectsReducer from './reducers/MyProfile/ProjectsTab/employeePr
 import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
 import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
-import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeReportSlice'
+import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/employeeReportSlice'
+import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -50,6 +51,7 @@ export const allReducers = {
   employeeAssets: employeeAssetsReducer,
   certificateType: certificateTypeReducer,
   employeeReport: employeeReportReducer,
+  employeeDesignationReport: employeeDesignationReportReducer,
   // add your slice reducers here
 }
 

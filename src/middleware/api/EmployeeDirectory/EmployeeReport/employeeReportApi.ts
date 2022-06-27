@@ -15,10 +15,12 @@ const getEmployeeReport = async (
     url: employeeReportApiConfig.getEmployeeReports,
     method: AllowedHttpMethods.get,
     params: {
+      country: '',
       endIndex: props.endIndex ?? 20,
-      startIndex: props.startIndex ?? 0,
-      searchStr: props.searchStr ?? '',
+      searchStr: props.searchEmployee ?? '',
       selectionStatus: props.selectionStatus ?? EmploymentStatus.active,
+      selectionType: props.selectedCategory ?? '',
+      startIndex: props.startIndex ?? 0,
     },
   })
 
