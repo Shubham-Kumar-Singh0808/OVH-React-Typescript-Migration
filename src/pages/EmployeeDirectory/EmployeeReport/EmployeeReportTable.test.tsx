@@ -27,7 +27,7 @@ describe('Employee Report Table Component Testing', () => {
       />,
       {
         preloadedState: {
-          employeeReport: {
+          employeeReports: {
             employees: mockEmployeeReport as EmployeeReport[],
             listSize: 100,
           },
