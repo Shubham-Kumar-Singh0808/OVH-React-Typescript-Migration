@@ -93,6 +93,10 @@ const EmployeeLeaveCategories = ({
     }
   }
 
+  const cancelLeaveCategoryButtonHandler = () => {
+    setIsLeaveCategoryDetailEdit(false)
+  }
+
   const editLeaveCategoryDetailsButtonHandler = (
     categoryId: number,
     name: string,
@@ -232,12 +236,7 @@ const EmployeeLeaveCategories = ({
                       <CButton
                         color="warning"
                         className="btn-ovh me-1"
-                        onClick={() => {
-                          // setEditEmployeeCategoryLeaveDetails({
-                          //   name: '',
-                          //   leaveType: '',
-                          // })
-                        }}
+                        onClick={cancelLeaveCategoryButtonHandler}
                       >
                         <i className="fa fa-times" aria-hidden="true"></i>
                       </CButton>
