@@ -50,7 +50,6 @@ const initialEmployeeDesignationReportState: EmployeeDesignationReportState = {
   isLoading: ApiLoadingState.idle,
   error: null,
 }
-
 const employeeDesignationReportSlice = createSlice({
   name: 'employeeDesignationReport',
   initialState: initialEmployeeDesignationReportState,
