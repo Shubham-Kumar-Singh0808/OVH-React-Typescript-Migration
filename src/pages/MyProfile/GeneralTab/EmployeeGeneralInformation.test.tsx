@@ -64,8 +64,6 @@ const employeeGeneralInformationSlice = () =>
 
 describe('Employee General Information Testing', () => {
   test('should render Sidebar menu without crashing', () => {
-    //   mockUseLocationValue.pathname = '/dashboard'
-    // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeGeneralInformation />

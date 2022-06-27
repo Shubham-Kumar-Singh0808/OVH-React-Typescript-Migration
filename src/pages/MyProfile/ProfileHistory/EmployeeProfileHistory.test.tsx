@@ -27,8 +27,6 @@ const ReduxProvider = ({
 
 describe('Testing Profile History Tab', () => {
   test('should render Profile History without crashing', () => {
-    //   mockUseLocationValue.pathname = '/dashboard'
-    // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeProfileHistory />
@@ -38,8 +36,6 @@ describe('Testing Profile History Tab', () => {
     expect(screen.getByText('Employee Profile History')).toBeInTheDocument()
   })
   test('should have Time Stamp', () => {
-    //   mockUseLocationValue.pathname = '/dashboard'
-    // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
         <ProfileHistoryTimeLine

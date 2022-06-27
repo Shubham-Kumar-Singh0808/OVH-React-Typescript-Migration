@@ -16,8 +16,6 @@ const ReduxProvider = ({
 }) => <Provider store={reduxStore}>{children}</Provider>
 
 test('should render Sidebar menu without crashing', () => {
-  //   mockUseLocationValue.pathname = '/dashboard'
-  // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
   render(
     <ReduxProvider reduxStore={stateStore}>
       <ProfileDetails employeeGeneralInformation={ProfileDetailsMockData} />

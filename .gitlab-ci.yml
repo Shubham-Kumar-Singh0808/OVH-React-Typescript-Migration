@@ -8,6 +8,7 @@ stages:
   - deployqa
 
 cache:
+  key: ovh-react-typescript-migration
   paths:
     - node_modules/
 
@@ -21,6 +22,10 @@ Build:
   allow_failure: false
   before_script:
     - echo "Executing build step"
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - target
   script:
     - echo "Installing npm package"
     - npm ci

@@ -90,8 +90,6 @@ describe('Sidebar Testing', () => {
     expect(actions).toEqual([expectedPayloadappSlice])
   })
   test('should render Sidebar menu without crashing', () => {
-    //   mockUseLocationValue.pathname = '/dashboard'
-    // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
         <BrowserRouter>
