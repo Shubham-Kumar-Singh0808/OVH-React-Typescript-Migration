@@ -34,9 +34,6 @@ const deleteEmployeeHandbook = async (
     params: {
       bookId: bookId,
     },
-    data: {
-      bookId: bookId,
-    },
   })
   const response = await axios(requestConfig)
   return response.data
