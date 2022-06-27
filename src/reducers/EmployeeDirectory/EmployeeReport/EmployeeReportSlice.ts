@@ -32,7 +32,6 @@ const initialEmployeeReportState: EmployeeReportSliceState = {
   selectedCategory: '',
   searchEmployee: '',
 }
-
 const employeeReportSlice = createSlice({
   name: 'employeeReport',
   initialState: initialEmployeeReportState,
