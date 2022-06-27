@@ -24,7 +24,7 @@ import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import thunkMiddleware from 'redux-thunk'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
-import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/employeeReportSlice'
+import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'
 import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
 
