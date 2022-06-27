@@ -16,7 +16,7 @@ export type Handbook = {
   empCountry: string
 }
 
-export type GetHandbooksResponse = {
+export type HandbooksListProps = {
   handbooks: Handbook[]
 }
 
