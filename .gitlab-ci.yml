@@ -1,12 +1,11 @@
-image: node:11.6.0
+image: node:16.13.1
 
 stages:
   - build
-  # - lint
-  - checkduplicate
-  # - test
-  # - sonarqube
-  # - deployqa
+  - lint
+  - test
+  - sonarqube
+  - deployqa
 
 cache:
   paths:
@@ -26,56 +25,47 @@ Build:
     - echo "Installing npm package"
     - npm install
 
-# Eslint:
-#   <<: *only-merge_requests
-#   stage: lint
-#   allow_failure: false
-#   before_script:
-#     - echo "Executing lint step"
-#   script:
-#     - npm run lint
-#     - npm run jscpd
-
-Duplications:
+Eslint:
   <<: *only-merge_requests
-  stage: checkduplicate
-  allow_failure: true
+  stage: lint
+  allow_failure: false
   before_script:
-    - echo "Executing checkduplicate step"
+    - echo "Executing lint step"
   script:
+    - npm run lint
     - npm run jscpd
 
-# Test:
-#   <<: *only-merge_requests
-#   stage: test
-#   allow_failure: false
-#   before_script:
-#     - echo "Executing test step"
-#   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
-#   script:
-#     - npm run test:cov
-#   artifacts:
-#     when: always
-#     reports:
-#       cobertura: coverage/cobertura-coverage.xml
-#     paths:
-#       - coverage
+Test:
+  <<: *only-merge_requests
+  stage: test
+  allow_failure: false
+  before_script:
+    - echo "Executing test step"
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  script:
+    - npm run test:cov
+  artifacts:
+    when: always
+    reports:
+      cobertura: coverage/cobertura-coverage.xml
+    paths:
+      - coverage
 
-# Sonarqube:
-#   <<: *only-merge_requests
-#   stage: sonarqube
-#   allow_failure: false
-#   script:
-#     - dir
-#     - echo "Starting sonar analysis"
-#     - cmd.exe /C "sonar-scanner -X -Dsonar.projectKey=ovh-typescript-react-migration -Dsonar.projectName=OVHTypeScriptReactMigration -Dsonar.sources=src -Dsonar.qualitygate.wait=true -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info"
+Sonarqube:
+  <<: *only-merge_requests
+  stage: sonarqube
+  allow_failure: false
+  script:
+    - dir
+    - echo "Starting sonar analysis"
+    - cmd.exe /C "sonar-scanner -X -Dsonar.projectKey=ovh-typescript-react-migration -Dsonar.projectName=OVHTypeScriptReactMigration -Dsonar.sources=src -Dsonar.qualitygate.wait=true -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info"
 
-# deployqa:
-#   only:
-#     - qa
-#   stage: deployqa
-#   script:
-#     - echo "Creating a war file"
-#     - mvn package
-#     - echo "Deploying to qa environment"
-#     - cmd.exe /C "echo n | psftp $QA_DEPLOY_USER@$QA_DEPLOY_HOST -pw $QA_DEPLOY_PASSWORD -P 22 -b deployScripts/deploy_qa.txt"
+deployqa:
+  only:
+    - qa
+  stage: deployqa
+  script:
+    - echo "Creating a war file"
+    - mvn package
+    - echo "Deploying to qa environment"
+    - cmd.exe /C "echo n | psftp $QA_DEPLOY_USER@$QA_DEPLOY_HOST -pw $QA_DEPLOY_PASSWORD -P 22 -b deployScripts/deploy_qa.txt"

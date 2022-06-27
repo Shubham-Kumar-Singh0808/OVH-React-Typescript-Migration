@@ -19,8 +19,7 @@
     "lint": "eslint \"src/components/**/*.{js,ts,tsx}\"",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "test:cov": "npm test -- --coverage --watchAll=false",
-    "jscpd": "jscpd --pattern 'src/**/*.tsx' --ignore-pattern 'import.*from\\s*'.*''"
+    "test:cov": "npm test -- --coverage --watchAll=false"
   },
   "dependencies": {
     "@coreui/chartjs": "^3.0.0",
