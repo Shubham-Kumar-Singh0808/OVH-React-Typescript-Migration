@@ -18,7 +18,11 @@ const ReduxProvider = ({
 describe('Employee Leave Categories Testing', () => {
   render(
     <ReduxProvider reduxStore={stateStore}>
-      <EmployeeLeaveCategories />
+      <EmployeeLeaveCategories
+        setToggle={function (value: string): void {
+          throw new Error('Function not implemented.')
+        }}
+      />
     </ReduxProvider>,
   )
   test('should render the "Leave Categories" header', () => {
@@ -29,7 +33,11 @@ describe('Employee Leave Categories Testing', () => {
   test('should render No data to display if Leave Categories is empty', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeLeaveCategories />
+        <EmployeeLeaveCategories
+          setToggle={function (value: string): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
     await waitFor(() => {
@@ -39,7 +47,11 @@ describe('Employee Leave Categories Testing', () => {
   test('should render correct number of page records', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeLeaveCategories />
+        <EmployeeLeaveCategories
+          setToggle={function (value: string): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
 
@@ -51,7 +63,11 @@ describe('Employee Leave Categories Testing', () => {
   test('should render Leave Categories component with out crashing', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeLeaveCategories />
+        <EmployeeLeaveCategories
+          setToggle={function (value: string): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
     expect(screen.getByText('Category')).toBeInTheDocument()

@@ -27,7 +27,7 @@ const EmployeeLeaveCategories = ({
   setToggle,
 }: EmployeeLeaveCategoriesProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-
+  const [isEditButtonEnabled, setIsEditButtonEnabled] = useState(false)
   const [leaveCategoryId, setLeaveCategoryId] = useState(0)
 
   const initialEmployeeEditLeaveCategories =
@@ -99,6 +99,20 @@ const EmployeeLeaveCategories = ({
   const cancelLeaveCategoryButtonHandler = () => {
     setIsLeaveCategoryDetailEdit(false)
   }
+
+  useEffect(() => {
+    if (
+      editEmployeeLeaveCategoryDetails?.name?.replace(/^\s*/, '') &&
+      editEmployeeLeaveCategoryDetails.leaveType
+    ) {
+      setIsEditButtonEnabled(true)
+    } else {
+      setIsEditButtonEnabled(false)
+    }
+  }, [
+    editEmployeeLeaveCategoryDetails.leaveType,
+    editEmployeeLeaveCategoryDetails?.name,
+  ])
 
   const editLeaveCategoryButtonHandler = (
     categoryId: number,
@@ -213,7 +227,6 @@ const EmployeeLeaveCategories = ({
                         value={editEmployeeLeaveCategoryDetails.leaveType}
                         onChange={handleEditInputChange}
                       >
-                        <option value={''}>select Leave Type</option>
                         <option value="EARNED">EARNED</option>
                         <option value="LOP">LOP</option>
                       </CFormSelect>
@@ -233,6 +246,7 @@ const EmployeeLeaveCategories = ({
                         data-testid={`sh-save-btn${index}`}
                         className="btn-ovh me-1"
                         onClick={saveLeaveCategoryButtonHandler}
+                        disabled={!isEditButtonEnabled}
                       >
                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
                       </CButton>

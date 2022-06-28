@@ -110,6 +110,10 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       )
     }
   }
+  const formLabelProps = {
+    htmlFor: 'inputNewLeaveCalender',
+    className: 'col-form-label category-label',
+  }
 
   return (
     <>
@@ -117,7 +121,10 @@ const EmployeeLeaveCalender = (): JSX.Element => {
         <h3 className="calender-title">Leave Calendar Settings</h3>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
+        <CFormLabel
+          {...formLabelProps}
+          className="col-sm-3 col-form-label text-end"
+        >
           Leave Cycle Month:
         </CFormLabel>
         <CCol sm={2}>
@@ -144,7 +151,10 @@ const EmployeeLeaveCalender = (): JSX.Element => {
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
+        <CFormLabel
+          {...formLabelProps}
+          className="col-sm-3 col-form-label text-end"
+        >
           Probation Period (Months):
         </CFormLabel>
         <CCol sm={2}>
@@ -170,7 +180,10 @@ const EmployeeLeaveCalender = (): JSX.Element => {
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
+        <CFormLabel
+          {...formLabelProps}
+          className="col-sm-3 col-form-label text-end"
+        >
           Max Leaves Earned (Days):
           <span
             className={
@@ -194,7 +207,10 @@ const EmployeeLeaveCalender = (): JSX.Element => {
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
+        <CFormLabel
+          {...formLabelProps}
+          className="col-sm-3 col-form-label text-end"
+        >
           Payroll Cutoff Date (Day):
         </CFormLabel>
         <CCol sm={2}>
@@ -230,7 +246,10 @@ const EmployeeLeaveCalender = (): JSX.Element => {
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
+        <CFormLabel
+          {...formLabelProps}
+          className="col-sm-3 col-form-label text-end"
+        >
           Number of Leaves/Year :
           <span
             className={
@@ -253,7 +272,10 @@ const EmployeeLeaveCalender = (): JSX.Element => {
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
+        <CFormLabel
+          {...formLabelProps}
+          className="col-sm-3 col-form-label text-end"
+        >
           Maximum Accrual/Year:
           <span
             className={
