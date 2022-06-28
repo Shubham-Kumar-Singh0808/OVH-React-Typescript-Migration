@@ -9,19 +9,19 @@ export type EmployeeSaveLeaveCalenderSetting = {
   probationPeriod: number
 }
 
-export type EmployeeLeaveCategories = {
+export type EmployeeLeaveCategory = {
   id: number
   name: string
   leaveType: string
 }
 
-export type EmployeeAddUpdateLeaveCategories = {
+export type EmployeeAddUpdateLeaveCategory = {
   id?: number
   name: string
   leaveType: string
 }
 
-export type EmployeeLeaveCalenderTypes = {
+export type EmployeeLeaveCalender = {
   id: string
   leaveCycleMonth: string
   leavesPerYear: number
@@ -33,9 +33,9 @@ export type EmployeeLeaveCalenderTypes = {
 
 export type LeaveSettingsState = {
   employeeSaveLeaveCalender: EmployeeSaveLeaveCalenderSetting
-  employeeLeaveCategories: EmployeeLeaveCategories[]
-  employeeLeaveCalender: EmployeeLeaveCalenderTypes
-  employeeAddLeaveCategories: EmployeeAddUpdateLeaveCategories
+  employeeLeaveCategories: EmployeeLeaveCategory[]
+  employeeLeaveCalender: EmployeeLeaveCalender
+  employeeAddLeaveCategories: EmployeeAddUpdateLeaveCategory
   isLoading: LoadingState
   error: ValidationError
 }

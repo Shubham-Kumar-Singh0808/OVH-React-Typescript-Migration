@@ -13,7 +13,7 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import {
-  EmployeeAddUpdateLeaveCategories,
+  EmployeeAddUpdateLeaveCategory,
   EmployeeLeaveCategoryProps as AddEditLeaveCategoryProps,
 } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
@@ -22,7 +22,7 @@ const AddEditLeaveCategories = ({
   backButtonHandler,
 }: AddEditLeaveCategoryProps): JSX.Element => {
   const initialEmployeeAddLeaveCategories =
-    {} as EmployeeAddUpdateLeaveCategories
+    {} as EmployeeAddUpdateLeaveCategory
 
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [employeeLeaveCategories, setEmployeeLeaveCategories] = useState(

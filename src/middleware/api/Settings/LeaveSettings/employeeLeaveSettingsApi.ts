@@ -4,13 +4,13 @@ import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 import {
   EmployeeSaveLeaveCalenderSetting,
-  EmployeeLeaveCategories,
-  EmployeeLeaveCalenderTypes,
-  EmployeeAddUpdateLeaveCategories,
+  EmployeeLeaveCategory,
+  EmployeeLeaveCalender,
+  EmployeeAddUpdateLeaveCategory,
 } from '../../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 const getEmployeeLeaveCalenderSettings =
-  async (): Promise<EmployeeLeaveCalenderTypes> => {
+  async (): Promise<EmployeeLeaveCalender> => {
     const requestConfig = getAuthenticatedRequestConfig({
       url: employeeLeaveSettingsConfig.getLeaveCalenderSettings,
       method: AllowedHttpMethods.get,
@@ -33,7 +33,7 @@ const saveEmployeeLeaveCalenderSettings = async (
 }
 
 const getEmployeeLeaveCategories = async (): Promise<
-  EmployeeLeaveCategories[]
+  EmployeeLeaveCategory[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeLeaveSettingsConfig.getLeaveCategories,
@@ -59,7 +59,7 @@ const deleteEmployeeLeaveCategory = async (
 }
 
 const addEmployeeLeaveCategory = async (
-  employeeLeaveCategory: EmployeeAddUpdateLeaveCategories,
+  employeeLeaveCategory: EmployeeAddUpdateLeaveCategory,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeLeaveSettingsConfig.addUpdateLeaveCategory,
@@ -71,7 +71,7 @@ const addEmployeeLeaveCategory = async (
 }
 
 const updateEmployeeLeaveCategory = async (
-  employeeLeaveCategory: EmployeeAddUpdateLeaveCategories,
+  employeeLeaveCategory: EmployeeAddUpdateLeaveCategory,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeLeaveSettingsConfig.addUpdateLeaveCategory,

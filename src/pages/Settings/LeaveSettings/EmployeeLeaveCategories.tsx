@@ -19,7 +19,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import {
-  EmployeeAddUpdateLeaveCategories,
+  EmployeeAddUpdateLeaveCategory,
   EmployeeLeaveCategoriesProps,
 } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
@@ -31,7 +31,7 @@ const EmployeeLeaveCategories = ({
   const [leaveCategoryId, setLeaveCategoryId] = useState(0)
 
   const initialEmployeeEditLeaveCategories =
-    {} as EmployeeAddUpdateLeaveCategories
+    {} as EmployeeAddUpdateLeaveCategory
   const [isLeaveCategoryDetailEdit, setIsLeaveCategoryDetailEdit] =
     useState<boolean>(false)
 

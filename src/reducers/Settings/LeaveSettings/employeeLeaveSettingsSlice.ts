@@ -2,9 +2,9 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeSaveLeaveCalenderSetting,
   LeaveSettingsState,
-  EmployeeLeaveCategories,
-  EmployeeLeaveCalenderTypes,
-  EmployeeAddUpdateLeaveCategories,
+  EmployeeLeaveCategory,
+  EmployeeLeaveCalender,
+  EmployeeAddUpdateLeaveCategory,
 } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
@@ -15,8 +15,8 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const initialEmployeeLeaveSettingsState: LeaveSettingsState = {
   employeeSaveLeaveCalender: {} as EmployeeSaveLeaveCalenderSetting,
-  employeeLeaveCalender: {} as EmployeeLeaveCalenderTypes,
-  employeeAddLeaveCategories: {} as EmployeeAddUpdateLeaveCategories,
+  employeeLeaveCalender: {} as EmployeeLeaveCalender,
+  employeeAddLeaveCategories: {} as EmployeeAddUpdateLeaveCategory,
   employeeLeaveCategories: [],
   isLoading: ApiLoadingState.idle,
   error: 0,
@@ -92,7 +92,7 @@ const deleteEmployeeLeaveCategory = createAsyncThunk<
 
 const addEmployeeLeaveCategory = createAsyncThunk<
   number | undefined,
-  EmployeeAddUpdateLeaveCategories,
+  EmployeeAddUpdateLeaveCategory,
   {
     dispatch: AppDispatch
     state: RootState
@@ -100,7 +100,7 @@ const addEmployeeLeaveCategory = createAsyncThunk<
   }
 >(
   'leaveSettings/addEmployeeLeaveCategory',
-  async (employeeLeaveCategory: EmployeeAddUpdateLeaveCategories, thunkApi) => {
+  async (employeeLeaveCategory: EmployeeAddUpdateLeaveCategory, thunkApi) => {
     try {
       return await employeeLeaveSettingsApi.addEmployeeLeaveCategory(
         employeeLeaveCategory,
@@ -114,7 +114,7 @@ const addEmployeeLeaveCategory = createAsyncThunk<
 
 const updateEmployeeLeaveCategory = createAsyncThunk<
   number | undefined,
-  EmployeeAddUpdateLeaveCategories,
+  EmployeeAddUpdateLeaveCategory,
   {
     dispatch: AppDispatch
     state: RootState
@@ -122,7 +122,7 @@ const updateEmployeeLeaveCategory = createAsyncThunk<
   }
 >(
   'leaveSettings/updateEmployeeLeaveCategory',
-  async (employeeLeaveCategory: EmployeeAddUpdateLeaveCategories, thunkApi) => {
+  async (employeeLeaveCategory: EmployeeAddUpdateLeaveCategory, thunkApi) => {
     try {
       return await employeeLeaveSettingsApi.updateEmployeeLeaveCategory(
         employeeLeaveCategory,
@@ -143,15 +143,14 @@ const employeeLeaveSettingsSlice = createSlice({
     builder
       .addCase(getEmployeeLeaveCalenderSettings.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.employeeLeaveCalender =
-          action.payload as EmployeeLeaveCalenderTypes
+        state.employeeLeaveCalender = action.payload as EmployeeLeaveCalender
       })
       .addMatcher(
         isAnyOf(getEmployeeLeaveCategories.fulfilled),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
           state.employeeLeaveCategories =
-            action.payload as EmployeeLeaveCategories[]
+            action.payload as EmployeeLeaveCategory[]
         },
       )
       .addMatcher(
@@ -166,15 +165,13 @@ const employeeLeaveSettingsSlice = createSlice({
   },
 })
 
-const employeeLeaveCategories = (state: RootState): EmployeeLeaveCategories[] =>
+const employeeLeaveCategories = (state: RootState): EmployeeLeaveCategory[] =>
   state.employeeLeaveSettings.employeeLeaveCategories
 
-const getEmployeeLeaveCalender = (
-  state: RootState,
-): EmployeeLeaveCalenderTypes =>
+const getEmployeeLeaveCalender = (state: RootState): EmployeeLeaveCalender =>
   state.employeeLeaveSettings.employeeLeaveCalender
 
-const leaveSettingsThunk = {
+const employeeLeaveSettingsThunk = {
   saveEmployeeLeaveCalenderSettings,
   getEmployeeLeaveCategories,
   getEmployeeLeaveCalenderSettings,
@@ -189,7 +186,7 @@ const employeeLeaveSettingsSelectors = {
 }
 
 export const employeeLeaveSettingsService = {
-  ...leaveSettingsThunk,
+  ...employeeLeaveSettingsThunk,
   actions: employeeLeaveSettingsSlice.actions,
   selectors: employeeLeaveSettingsSelectors,
 }
