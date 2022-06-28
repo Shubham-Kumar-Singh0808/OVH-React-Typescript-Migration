@@ -27,6 +27,11 @@ const EmployeeLeaveCalender = (): JSX.Element => {
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
   const [maxLeavesEarnedValueError, setMaxLeavesEarnedValueError] =
     useState<boolean>(false)
+  const [numberOfLeavesValueError, setNumberOfLeavesValueError] =
+    useState<boolean>(false)
+
+  const [maximumAccrualValueError, setMaximumAccrualValueError] =
+    useState<boolean>(false)
 
   const getEmployeeCalender = useTypedSelector(
     reduxServices.employeeLeaveSettings.selectors.getEmployeeLeaveCalender,
@@ -60,11 +65,13 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       })
     } else if (name === 'leavesPerYear') {
       const leavesPerYearValue = value.replace(/[^0-9]/gi, '')
+      validateNumberOfLeavesValue(leavesPerYearValue)
       setEmployeeLeaveCalender((prevState) => {
         return { ...prevState, ...{ [name]: leavesPerYearValue } }
       })
     } else if (name === 'maxAccrualPerYear') {
       const maxAccrualPerYearValue = value.replace(/[^0-9]/gi, '')
+      validateMaximumAccrualValue(maxAccrualPerYearValue)
       setEmployeeLeaveCalender((prevState) => {
         return { ...prevState, ...{ [name]: maxAccrualPerYearValue } }
       })
@@ -80,6 +87,22 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       setMaxLeavesEarnedValueError(false)
     } else {
       setMaxLeavesEarnedValueError(true)
+    }
+  }
+
+  const validateMaximumAccrualValue = (maxAccrualPerYear: string) => {
+    if (maxAccrualPerYear.length < 3) {
+      setMaximumAccrualValueError(false)
+    } else {
+      setMaximumAccrualValueError(true)
+    }
+  }
+
+  const validateNumberOfLeavesValue = (leavesPerYear: string) => {
+    if (leavesPerYear.length < 3) {
+      setNumberOfLeavesValueError(false)
+    } else {
+      setNumberOfLeavesValueError(true)
     }
   }
 
@@ -254,7 +277,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
           Number of Leaves/Year :
           <span
             className={
-              employeeLeaveCalender?.leavesPerYear
+              employeeLeaveCalender?.leavesPerYear && !numberOfLeavesValueError
                 ? 'text-white'
                 : 'text-danger'
             }
@@ -280,7 +303,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
           Maximum Accrual/Year:
           <span
             className={
-              employeeLeaveCalender?.maxAccrualPerYear
+              employeeLeaveCalender?.maxAccrualPerYear &&
+              !maximumAccrualValueError
                 ? 'text-white'
                 : 'text-danger'
             }
