@@ -200,6 +200,7 @@ const EmployeeLeaveCategories = ({
                   <CTableDataCell scope="row">
                     <div className="edit-time-control">
                       <CFormInput
+                        className="form-leave"
                         type="text"
                         id="name"
                         name="name"
@@ -219,6 +220,7 @@ const EmployeeLeaveCategories = ({
                   <CTableDataCell scope="row">
                     <div className="edit-time-control">
                       <CFormSelect
+                        className="form-leave"
                         data-testid="form-select"
                         aria-label="Default select example"
                         size="sm"
