@@ -164,3 +164,8 @@ export enum EmployeeStatus {
   'active' = 'Active',
   'inactive' = 'InActive',
 }
+
+export type OtherFilterOptionsProps = {
+  setFilterByEmployeeStatus: (value: string) => void
+  setFilterByDate: (value: Date | null) => void
+}

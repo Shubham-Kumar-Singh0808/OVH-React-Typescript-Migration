@@ -15,13 +15,18 @@ const AttendanceReport = (): JSX.Element => {
   const currentMonthDate = new Date().getDate()
   const currentMonth =
     currentMonthDate > 24 ? new Date().getMonth() + 1 : new Date().getMonth()
-  const currentYear = new Date().getFullYear()
   const previousMonth = currentMonth - 1
 
+  const [currentYear, setCurrentYear] = useState<number | string>(
+    new Date().getFullYear(),
+  )
   const [selectMonth, setSelectMonth] = useState<number | string>(currentMonth)
   const [biometric, setBiometric] = useState<string>('')
   const [searchEmployee, setSearchEmployee] = useState<string>('')
   const [selectShiftId, setSelectShiftId] = useState<string>('')
+  const [filterByEmployeeStatus, setFilterByEmployeeStatus] =
+    useState<string>('')
+  const [filterByDate, setFilterByDate] = useState<Date | null>()
 
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
@@ -58,6 +63,13 @@ const AttendanceReport = (): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
+    if (filterByEmployeeStatus && filterByDate) {
+      setSelectMonth(filterByDate.getMonth())
+      setCurrentYear(filterByDate.getFullYear())
+    }
+  }, [filterByDate, filterByEmployeeStatus])
+
+  useEffect(() => {
     dispatch(
       reduxServices.userAccessToFeatures.getUserAccessToFeatures(employeeId),
     )
@@ -67,11 +79,12 @@ const AttendanceReport = (): JSX.Element => {
         reduxServices.employeeAttendanceReport.getEmployeeAttendanceReport({
           employeeId: Number(employeeId),
           month: selectMonth as number,
-          year: currentYear,
+          year: currentYear as number,
           startIndex: pageSize * (currentPage - 1),
           endIndex: pageSize * currentPage,
           search: searchEmployee,
           shiftId: selectShiftId,
+          status: filterByEmployeeStatus,
         }),
       )
     }
@@ -84,6 +97,7 @@ const AttendanceReport = (): JSX.Element => {
     searchEmployee,
     selectMonth,
     selectShiftId,
+    filterByEmployeeStatus,
   ])
 
   const userAccess = userAccessToFeatures?.filter(
@@ -153,7 +167,14 @@ const AttendanceReport = (): JSX.Element => {
             </div>
           </CCol>
         </CRow>
-        {selectMonth === 'others' && <OtherFilterOptions />}
+        {(selectMonth === 'others' ||
+          (selectMonth as number) + 1 ===
+            (filterByDate?.getMonth() as number) + 1) && (
+          <OtherFilterOptions
+            setFilterByEmployeeStatus={setFilterByEmployeeStatus}
+            setFilterByDate={setFilterByDate}
+          />
+        )}
         <BiometricAndShiftFilterOptions
           biometric={biometric}
           setBiometric={setBiometric}

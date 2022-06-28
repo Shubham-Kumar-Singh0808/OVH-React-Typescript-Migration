@@ -1,12 +1,18 @@
 import { CButton, CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
+import {
+  EmployeeStatus,
+  OtherFilterOptionsProps,
+} from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
+import React, { useState } from 'react'
 
 import DatePicker from 'react-datepicker'
-import React, { useState } from 'react'
-import { EmployeeStatus } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
 
-const OtherFilterOptions = (): JSX.Element => {
+const OtherFilterOptions = ({
+  setFilterByEmployeeStatus,
+  setFilterByDate,
+}: OtherFilterOptionsProps): JSX.Element => {
   const [selectEmployeeStatus, setSelectEmployeeStatus] = useState<string>('')
-  const [selectSearchMonth, setSelectSearchMonth] = useState<Date | null>()
+  const [selectSearchDate, setSelectSearchDate] = useState<Date | null>()
 
   const onChangeEmployeeStatusHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -15,14 +21,20 @@ const OtherFilterOptions = (): JSX.Element => {
   }
 
   const onChangeSelectMonthHandler = (date: Date) => {
-    setSelectSearchMonth(date)
+    setSelectSearchDate(date)
   }
 
   const handleClear = () => {
     setSelectEmployeeStatus('')
-    setSelectSearchMonth(null)
+    setSelectSearchDate(null)
   }
-  console.log(selectSearchMonth)
+
+  const handleView = () => {
+    setFilterByEmployeeStatus(selectEmployeeStatus)
+    if (selectSearchDate) {
+      setFilterByDate(selectSearchDate)
+    }
+  }
 
   return (
     <>
@@ -30,7 +42,7 @@ const OtherFilterOptions = (): JSX.Element => {
         <CCol sm={3} md={1} className="text-end ms-3">
           <CFormLabel className="mt-2 text-decoration-none">
             Month:
-            <span className={selectSearchMonth ? 'text-white' : 'text-danger'}>
+            <span className={selectSearchDate ? 'text-white' : 'text-danger'}>
               *
             </span>
           </CFormLabel>
@@ -44,7 +56,7 @@ const OtherFilterOptions = (): JSX.Element => {
             placeholderText="mm/yyyy"
             dateFormat="MM/yyyy"
             name="selectMonth"
-            selected={selectSearchMonth}
+            selected={selectSearchDate}
             onChange={(date: Date) => {
               onChangeSelectMonthHandler(date)
             }}
@@ -86,7 +98,8 @@ const OtherFilterOptions = (): JSX.Element => {
                 <CCol sm={12}>
                   <CButton
                     color="info btn-ovh me-1"
-                    disabled={!selectEmployeeStatus || !selectSearchMonth}
+                    disabled={!selectEmployeeStatus || !selectSearchDate}
+                    onClick={handleView}
                   >
                     <i className="fa fa-search-plus me-1"></i>
                     View
@@ -94,7 +107,7 @@ const OtherFilterOptions = (): JSX.Element => {
                   &nbsp;&nbsp;
                   <CButton
                     color="info btn-ovh me-0"
-                    disabled={!selectEmployeeStatus && !selectSearchMonth}
+                    disabled={!selectEmployeeStatus && !selectSearchDate}
                     onClick={handleClear}
                   >
                     <i className="fa fa-refresh me-1"></i>
