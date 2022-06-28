@@ -61,6 +61,9 @@ const AttendanceReport = (): JSX.Element => {
         }),
       )
     }
+    dispatch(
+      reduxServices.userAccessToFeatures.getUserAccessToFeatures(employeeId),
+    )
   }, [
     currentPage,
     currentYear,

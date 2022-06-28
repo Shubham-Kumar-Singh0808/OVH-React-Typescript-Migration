@@ -11,12 +11,12 @@ import {
 } from '@coreui/react-pro'
 
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { AttendanceReportTableProps } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
 import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import OPagination from '../../../components/ReusableComponent/OPagination'
-import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
-import { AttendanceReportTableProps } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
 
 const AttendanceReportTable = ({
   paginationRange,
@@ -111,57 +111,51 @@ const AttendanceReportTable = ({
             <CTableHeaderCell>Holiday</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
-        <CTableBody>
-          {isLoading !== ApiLoadingState.loading ? (
-            <>
-              {employeeAttendanceReport.map(
-                (currentReportItem, reportIndex) => {
-                  return (
-                    <>
-                      <CTableRow key={reportIndex}>
-                        <CTableDataCell scope="row">
-                          {currentReportItem.id}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {currentReportItem.fullName}
-                        </CTableDataCell>
-                        {currentReportItem.bioAttendanceDtoSet.map(
-                          (bioAttendanceItem, bioAttendanceItemIndex) => {
-                            return (
-                              <React.Fragment key={bioAttendanceItemIndex}>
-                                <CTableDataCell
-                                  scope="row"
-                                  className="text-center"
-                                >
-                                  {attendanceStatus(
-                                    bioAttendanceItem.attendanceStatus,
-                                    bioAttendanceItem.color,
-                                    bioAttendanceItem.title,
-                                  )}
-                                </CTableDataCell>
-                              </React.Fragment>
-                            )
-                          },
-                        )}
-                        <CTableDataCell scope="row"></CTableDataCell>
-                        <CTableDataCell scope="row"></CTableDataCell>
-                        <CTableDataCell scope="row"></CTableDataCell>
-                        <CTableDataCell scope="row"></CTableDataCell>
-                        <CTableDataCell scope="row"></CTableDataCell>
-                      </CTableRow>
-                    </>
-                  )
-                },
-              )}
-            </>
-          ) : (
-            <CCol>
-              <CRow className="category-loading-spinner ms-1">
-                <CSpinner />
-              </CRow>
-            </CCol>
-          )}
-        </CTableBody>
+
+        {isLoading !== ApiLoadingState.loading ? (
+          <CTableBody>
+            {employeeAttendanceReport.map((currentReportItem, reportIndex) => {
+              return (
+                <React.Fragment key={reportIndex}>
+                  <CTableRow>
+                    <CTableDataCell scope="row">
+                      {currentReportItem.id}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {currentReportItem.fullName}
+                    </CTableDataCell>
+                    {currentReportItem.bioAttendanceDtoSet.map(
+                      (bioAttendanceItem, bioAttendanceItemIndex) => {
+                        return (
+                          <React.Fragment key={bioAttendanceItemIndex}>
+                            <CTableDataCell scope="row" className="text-center">
+                              {attendanceStatus(
+                                bioAttendanceItem.attendanceStatus,
+                                bioAttendanceItem.color,
+                                bioAttendanceItem.title,
+                              )}
+                            </CTableDataCell>
+                          </React.Fragment>
+                        )
+                      },
+                    )}
+                    <CTableDataCell scope="row"></CTableDataCell>
+                    <CTableDataCell scope="row"></CTableDataCell>
+                    <CTableDataCell scope="row"></CTableDataCell>
+                    <CTableDataCell scope="row"></CTableDataCell>
+                    <CTableDataCell scope="row"></CTableDataCell>
+                  </CTableRow>
+                </React.Fragment>
+              )
+            })}
+          </CTableBody>
+        ) : (
+          <CCol>
+            <CRow className="category-loading-spinner ms-1">
+              <CSpinner />
+            </CRow>
+          </CCol>
+        )}
       </CTable>
       <CRow>
         <CCol xs={4}>

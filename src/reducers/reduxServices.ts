@@ -1,4 +1,5 @@
 import { appService } from './appSlice'
+import { attendanceReportService } from './TimeAndAttendance/AttendanceReport/attendanceReportSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
@@ -19,9 +20,9 @@ import { profileHistoryService } from './MyProfile/ProfileHistory/profileHistory
 import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
+import { userAccessToFeaturesService } from './Settings/UserRolesConfiguration/userAccessToFeaturesSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
-import { attendanceReportService } from './TimeAndAttendance/AttendanceReport/attendanceReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -48,4 +49,5 @@ export const reduxServices = {
   certificateType: certificateTypeService,
   visaList: visaListService,
   employeeAttendanceReport: attendanceReportService,
+  userAccessToFeatures: userAccessToFeaturesService,
 }

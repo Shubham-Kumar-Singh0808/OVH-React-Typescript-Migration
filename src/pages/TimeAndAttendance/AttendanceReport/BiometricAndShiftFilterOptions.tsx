@@ -6,9 +6,11 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
-
 import React, { useState } from 'react'
+
 import { BiometricAndShiftFilterOptionsProps } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../stateStore'
 
 const BiometricAndShiftFilterOptions = ({
   biometric,
@@ -20,6 +22,11 @@ const BiometricAndShiftFilterOptions = ({
     setBiometric(e.target.value)
   }
   const [searchInput, setSearchInput] = useState<string>('')
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
   return (
     <>
       <CRow className="mt-3">
