@@ -1,8 +1,4 @@
 import {
-  ActionMapping,
-  AddDeleteRoleProps,
-} from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
-import {
   CButton,
   CCol,
   CForm,
@@ -12,7 +8,10 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-
+import {
+  ActionMapping,
+  AddDeleteRoleProps,
+} from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'

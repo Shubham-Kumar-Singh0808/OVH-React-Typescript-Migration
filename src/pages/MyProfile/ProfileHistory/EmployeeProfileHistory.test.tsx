@@ -1,13 +1,12 @@
 import { render, screen } from '@testing-library/react'
-
-import EmployeeProfileHistory from './EmployeeProfileHistory'
 import { EnhancedStore } from '@reduxjs/toolkit'
-import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
-import { ProfileUpdateData } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import { Provider } from 'react-redux'
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
+import EmployeeProfileHistory from './EmployeeProfileHistory'
+import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
+import { ProfileUpdateData } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import { mockEmployeeProfileHistoryData } from '../../../test/data/mockEmployeeProfileHistoryData'
 import stateStore from '../../../stateStore'
 

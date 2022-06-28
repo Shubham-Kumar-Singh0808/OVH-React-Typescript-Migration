@@ -1,14 +1,13 @@
 import '@testing-library/jest-dom'
 
 import { render, screen } from '@testing-library/react'
-
-import AddNewCertificateType from './AddNewCertificateType'
 import React from 'react'
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+import AddNewCertificateType from './AddNewCertificateType'
 import { ReduxProvider } from '../../../../components/Helper'
 import { employeeCertificationsApiConfig } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
 import stateStore from '../../../../stateStore'
 
 const mockTechnology = {

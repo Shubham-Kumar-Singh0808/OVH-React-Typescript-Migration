@@ -1,7 +1,6 @@
 import { JSXElementConstructor, ReactElement } from 'react'
-
-import { RootState } from '../stateStore'
 import { createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../stateStore'
 
 type AppState = {
   sidebarShow: boolean
@@ -27,7 +26,7 @@ const initialState: AppState = {
 
 const appSlice = createSlice({
   name: 'app',
-  initialState: initialState,
+  initialState,
   reducers: {
     addToast: (state, action) => {
       return { ...state, toast: action.payload }

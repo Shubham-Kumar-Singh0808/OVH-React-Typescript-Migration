@@ -7,7 +7,6 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import { CertificateType } from '../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'

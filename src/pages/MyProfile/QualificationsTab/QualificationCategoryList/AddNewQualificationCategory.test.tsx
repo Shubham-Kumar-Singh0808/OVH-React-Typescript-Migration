@@ -1,13 +1,12 @@
 import '@testing-library/jest-dom'
 
 import { getByLabelText, render, screen, waitFor } from '@testing-library/react'
-
-import AddNewQualificationCategory from './AddNewQualificationCategory'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../../stateStore'
 import userEvent from '@testing-library/user-event'
+import AddNewQualificationCategory from './AddNewQualificationCategory'
+import stateStore from '../../../../stateStore'
 
 const ReduxProvider = ({
   children,

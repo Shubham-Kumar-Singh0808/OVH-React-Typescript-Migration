@@ -1,4 +1,5 @@
 import { ValidationError } from '../../commonTypes'
+
 export type EmployeeFamilyData = {
   familyId: number
   personName: string

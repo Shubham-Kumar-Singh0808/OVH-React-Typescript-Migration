@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
-
-import Dashboard from './pages/Dashboard/Dashboard'
 import React from 'react'
+import Dashboard from './pages/Dashboard/Dashboard'
 
 test('App should render without crashing', async () => {
   render(<Dashboard />)

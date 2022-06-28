@@ -4,11 +4,11 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
+import QualificationCategoryListTable from './QualificationCategoryListTable'
+import QualificationCategoryList from './QualificationCategoryList'
 import { mockQualificationCategories } from '../../../../test/data/qualificationCategoryListData'
 import stateStore from '../../../../stateStore'
-import QualificationCategoryListTable from './QualificationCategoryListTable'
-import userEvent from '@testing-library/user-event'
-import QualificationCategoryList from './QualificationCategoryList'
 
 const ReduxProvider = ({
   children,

@@ -7,13 +7,12 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import ShiftListTable from './ShiftListTable'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
-
 import { ActionMapping } from '../../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { EmployeeShiftDetails } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import OCard from '../../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../../components/ReusableComponent/OToast'
-import ShiftListTable from './ShiftListTable'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 
 const ShiftConfiguration = (): JSX.Element => {
@@ -53,40 +52,32 @@ const ShiftConfiguration = (): JSX.Element => {
       if (employeeShiftDetails.endTimeMinutes.length === 1) {
         employeeShiftDetails.endTimeMinutes =
           '0' + employeeShiftDetails.endTimeMinutes
-      } else {
-        if (+employeeShiftDetails.endTimeMinutes > 59) {
-          employeeShiftDetails.endTimeMinutes = '59'
-        }
+      } else if (+employeeShiftDetails.endTimeMinutes > 59) {
+        employeeShiftDetails.endTimeMinutes = '59'
       }
     }
     if (employeeShiftDetails.startTimeMinutes !== undefined || '' || null) {
       if (employeeShiftDetails.startTimeMinutes.length === 1) {
         employeeShiftDetails.startTimeMinutes =
           '0' + employeeShiftDetails.startTimeMinutes
-      } else {
-        if (+employeeShiftDetails.startTimeMinutes > 59) {
-          employeeShiftDetails.startTimeMinutes = '59'
-        }
+      } else if (+employeeShiftDetails.startTimeMinutes > 59) {
+        employeeShiftDetails.startTimeMinutes = '59'
       }
     }
     if (employeeShiftDetails.startTimeHour !== undefined || '' || null) {
       if (employeeShiftDetails.startTimeHour.length === 1) {
         employeeShiftDetails.startTimeHour =
           '0' + employeeShiftDetails.startTimeHour
-      } else {
-        if (+employeeShiftDetails.startTimeHour > 23) {
-          employeeShiftDetails.startTimeHour = '23'
-        }
+      } else if (+employeeShiftDetails.startTimeHour > 23) {
+        employeeShiftDetails.startTimeHour = '23'
       }
     }
     if (employeeShiftDetails.endTimeHour !== undefined || '' || null) {
       if (employeeShiftDetails.endTimeHour.length === 1) {
         employeeShiftDetails.endTimeHour =
           '0' + employeeShiftDetails.endTimeHour
-      } else {
-        if (+employeeShiftDetails.endTimeHour > 23) {
-          employeeShiftDetails.endTimeHour = '23'
-        }
+      } else if (+employeeShiftDetails.endTimeHour > 23) {
+        employeeShiftDetails.endTimeHour = '23'
       }
     }
   }

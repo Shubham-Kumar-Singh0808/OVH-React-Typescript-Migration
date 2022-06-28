@@ -9,9 +9,9 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import EmployeeProjectsEntry from './EmployeeProjectsEntry'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import EmployeeProjectsEntry from './EmployeeProjectsEntry'
 
 const EmployeeProjectsTable = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false)

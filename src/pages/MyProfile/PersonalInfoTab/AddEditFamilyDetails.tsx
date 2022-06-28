@@ -1,8 +1,4 @@
 import {
-  AddEditEmployeeFamilyDetails,
-  EmployeeFamilyDetails,
-} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-import {
   CButton,
   CCardBody,
   CCardHeader,
@@ -14,11 +10,14 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import DatePicker from 'react-datepicker'
-import OToast from '../../../components/ReusableComponent/OToast'
 import moment from 'moment'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OToast from '../../../components/ReusableComponent/OToast'
+import {
+  AddEditEmployeeFamilyDetails,
+  EmployeeFamilyDetails,
+} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 function AddEditFamilyDetails({
@@ -114,7 +113,7 @@ function AddEditFamilyDetails({
     const prepareObject = {
       ...employeeFamily,
       ...{
-        employeeId: employeeId,
+        employeeId,
         dateOfBirth: dateOfBirth
           ? moment(dateOfBirth).format('DD/MM/YYYY')
           : undefined,
@@ -140,7 +139,7 @@ function AddEditFamilyDetails({
     const prepareObject = {
       ...employeeFamily,
       ...{
-        employeeId: employeeId,
+        employeeId,
       },
     }
     const updateFamilyMemberResultAction = await dispatch(

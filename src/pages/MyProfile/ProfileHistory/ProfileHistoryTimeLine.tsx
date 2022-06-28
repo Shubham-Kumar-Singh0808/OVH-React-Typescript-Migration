@@ -1,7 +1,6 @@
 import { CBadge, CFormLabel } from '@coreui/react-pro'
-
-import { EmployeeProfileHistoryProps } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import React from 'react'
+import { EmployeeProfileHistoryProps } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 
 const ProfileHistoryTimeLine = ({
   employeeProfileHistory,

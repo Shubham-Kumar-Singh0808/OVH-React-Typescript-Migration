@@ -8,13 +8,13 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
+import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
-import parse from 'html-react-parser'
 
 const EmployeeCertificationsTable = ({
   editCertificateButtonHandler,

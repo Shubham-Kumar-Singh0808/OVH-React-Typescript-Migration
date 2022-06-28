@@ -1,7 +1,6 @@
 import { CCol, CRow } from '@coreui/react-pro'
-
-import { ProfileDetailsProps } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import React from 'react'
+import { ProfileDetailsProps } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 
 const ProfileDetails = ({
   employeeGeneralInformation,

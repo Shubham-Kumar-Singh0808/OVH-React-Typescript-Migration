@@ -1,3 +1,5 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeReportee,
@@ -6,8 +8,6 @@ import {
   EmployeeReporteesKPI,
 } from '../../../types/MyProfile/ReporteesTab/employeeReporteesType'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import employeeReporteesApi from '../../../middleware/api/MyProfile/ReporteesTab/employeeReporteesApi'
 

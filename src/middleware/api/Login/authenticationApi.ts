@@ -1,8 +1,7 @@
-import { AllowedHttpMethods, authenticationApiConfig } from '../apiList'
-
-import { AuthenticatedUser } from '../../../types/Login/authenticationTypes'
 import axios from 'axios'
 import { encode } from 'base-64'
+import { AllowedHttpMethods, authenticationApiConfig } from '../apiList'
+import { AuthenticatedUser } from '../../../types/Login/authenticationTypes'
 import { getUnauthenticatedRequestConfig } from '../../../utils/apiUtils'
 
 const authenticateUser = async (

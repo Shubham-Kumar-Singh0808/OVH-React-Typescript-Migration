@@ -12,15 +12,15 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
+import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import parse from 'html-react-parser'
+
 const EmployeeMyAssetsTab = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [specification, setSpecification] = useState<string>('')

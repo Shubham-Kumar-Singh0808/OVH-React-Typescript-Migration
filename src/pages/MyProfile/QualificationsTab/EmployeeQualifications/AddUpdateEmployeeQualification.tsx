@@ -1,9 +1,4 @@
 import {
-  AddUpdateEmployeeQualificationProps,
-  EmployeeQualification,
-  PostGraduationAndGraduationLookUp,
-} from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
-import {
   CButton,
   CCardBody,
   CCardHeader,
@@ -13,14 +8,18 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import Multiselect from 'multiselect-react-dropdown'
+import { useFormik } from 'formik'
+import {
+  AddUpdateEmployeeQualificationProps,
+  EmployeeQualification,
+  PostGraduationAndGraduationLookUp,
+} from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useFormik } from 'formik'
 
 const AddUpdateEmployeeQualification = ({
   backButtonHandler,

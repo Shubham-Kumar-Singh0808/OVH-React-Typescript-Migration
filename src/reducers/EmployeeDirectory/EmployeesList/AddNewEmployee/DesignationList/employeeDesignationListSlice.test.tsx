@@ -1,6 +1,6 @@
+import employeeDesignationListSliceReducer from './employeeDesignationListSlice'
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import { EmployeeDesignations } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
-import employeeDesignationListSliceReducer from './employeeDesignationListSlice'
 
 describe('Employee Designation Slice Test', () => {
   it('should return the initial state when passed an empty action', () => {

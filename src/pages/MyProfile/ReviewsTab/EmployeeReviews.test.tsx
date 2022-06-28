@@ -4,10 +4,10 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
-import { mockReviewDetails } from '../../../test/data/employeeReviewsData'
 import EmployeeReviews from './EmployeeReviews'
+import stateStore from '../../../stateStore'
+import { mockReviewDetails } from '../../../test/data/employeeReviewsData'
 
 const ReduxProvider = ({
   children,

@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
-
 import { EnhancedStore } from '@reduxjs/toolkit'
-import ProfileDetails from './ProfileDetails'
-import { ProfileDetailsMockData } from '../../../middleware/ProfileDetailsData'
 import { Provider } from 'react-redux'
 import React from 'react'
+import ProfileDetails from './ProfileDetails'
+import { ProfileDetailsMockData } from '../../../middleware/ProfileDetailsData'
 import stateStore from '../../../stateStore'
 
 const ReduxProvider = ({

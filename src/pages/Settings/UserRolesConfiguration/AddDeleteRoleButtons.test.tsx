@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom'
 
 import { render, screen } from '@testing-library/react'
-
-import AddDeleteRoleButtons from './AddDeleteRoleButtons'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import AddDeleteRoleButtons from './AddDeleteRoleButtons'
 import stateStore from '../../../stateStore'
 
 const ReduxProvider = ({

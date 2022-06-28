@@ -1,14 +1,13 @@
 import '@testing-library/jest-dom'
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import UserRolesAndPermissions from './UserRolesAndPermissions'
 import { mockUserRoleSubFeatures } from '../../../test/data/UserRoleSubFeaturesData'
 import stateStore from '../../../stateStore'
-import userEvent from '@testing-library/user-event'
 
 const ReduxProvider = ({
   children,

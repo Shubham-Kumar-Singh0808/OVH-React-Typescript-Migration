@@ -64,10 +64,12 @@ export const mapFeaturesToSubFeatures = (
   })
 }
 
+// Todo: remove eslint comment and fix error
 export const renderPermissionSwitch = (
   params: AccessModifier,
   changedObject: UtilsChildFeatures | UtilsFeatures,
   selectedRole: number,
+  // eslint-disable-next-line consistent-return
 ): UtilsRenderPermissionSwitchReturn => {
   const prepareObject = {
     featureId: changedObject.featureId,

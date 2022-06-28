@@ -11,17 +11,16 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 import AddEditFamilyDetails from './AddEditFamilyDetails'
 import AddEditVisaDetails from './AddEditVisaDetails'
-import DatePicker from 'react-datepicker'
 import FamilyDetailsTable from './FamilyDetailsTable'
+import VisaDetailsTable from './VisaDetailsTable'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import OToast from '../../../components/ReusableComponent/OToast'
-import VisaDetailsTable from './VisaDetailsTable'
 import { handleActiveTabProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 
@@ -307,7 +306,7 @@ const PersonalInfoTab = ({
   const onDateChangeHandler = (date: Date, e: { name: string }) => {
     if (employeePassportDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
-      const name = e.name
+      const { name } = e
       setEmployeePassportDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
@@ -354,8 +353,8 @@ const PersonalInfoTab = ({
   }
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
-      htmlFor: htmlFor,
-      className: className,
+      htmlFor,
+      className,
     }
   }
 

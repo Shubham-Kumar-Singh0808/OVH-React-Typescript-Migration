@@ -16,7 +16,7 @@
   "scripts": {
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "lint": "eslint \"src/components/**/*.{js,ts,tsx}\"",
+    "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
@@ -92,7 +92,6 @@
     "@types/react-datepicker": "^4.4.1",
     "@types/react-router-dom": "^5.1.8",
     "auto-changelog": "~2.3.0",
-    "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-sonarjs": "^0.13.0",

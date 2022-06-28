@@ -10,12 +10,11 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
+import React, { useMemo, useState } from 'react'
 import {
   EmployeeShiftDetails,
   ShiftListTableProps,
 } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
-import React, { useMemo, useState } from 'react'
-
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../../stateStore'
@@ -58,40 +57,32 @@ const ShiftListTable = ({
       if (editEmployeeShiftDetails.endTimeMinutes.length === 1) {
         editEmployeeShiftDetails.endTimeMinutes =
           '0' + editEmployeeShiftDetails.endTimeMinutes
-      } else {
-        if (+editEmployeeShiftDetails.endTimeMinutes > 59) {
-          editEmployeeShiftDetails.endTimeMinutes = '59'
-        }
+      } else if (+editEmployeeShiftDetails.endTimeMinutes > 59) {
+        editEmployeeShiftDetails.endTimeMinutes = '59'
       }
     }
     if (editEmployeeShiftDetails.startTimeMinutes !== undefined || '' || null) {
       if (editEmployeeShiftDetails.startTimeMinutes.length === 1) {
         editEmployeeShiftDetails.startTimeMinutes =
           '0' + editEmployeeShiftDetails.startTimeMinutes
-      } else {
-        if (+editEmployeeShiftDetails.startTimeMinutes > 59) {
-          editEmployeeShiftDetails.startTimeMinutes = '59'
-        }
+      } else if (+editEmployeeShiftDetails.startTimeMinutes > 59) {
+        editEmployeeShiftDetails.startTimeMinutes = '59'
       }
     }
     if (editEmployeeShiftDetails.startTimeHour !== undefined || '' || null) {
       if (editEmployeeShiftDetails.startTimeHour.length === 1) {
         editEmployeeShiftDetails.startTimeHour =
           '0' + editEmployeeShiftDetails.startTimeHour
-      } else {
-        if (+editEmployeeShiftDetails.startTimeHour > 23) {
-          editEmployeeShiftDetails.startTimeHour = '23'
-        }
+      } else if (+editEmployeeShiftDetails.startTimeHour > 23) {
+        editEmployeeShiftDetails.startTimeHour = '23'
       }
     }
     if (editEmployeeShiftDetails.endTimeHour !== undefined || '' || null) {
       if (editEmployeeShiftDetails.endTimeHour.length === 1) {
         editEmployeeShiftDetails.endTimeHour =
           '0' + editEmployeeShiftDetails.endTimeHour
-      } else {
-        if (+editEmployeeShiftDetails.endTimeHour > 23) {
-          editEmployeeShiftDetails.endTimeHour = '23'
-        }
+      } else if (+editEmployeeShiftDetails.endTimeHour > 23) {
+        editEmployeeShiftDetails.endTimeHour = '23'
       }
     }
   }
@@ -109,11 +100,11 @@ const ShiftListTable = ({
     setEditEmployeeShiftDetails({
       id: shiftId,
       name: '',
-      startTimeHour: startTimeHour,
-      startTimeMinutes: startTimeMinutes,
-      endTimeHour: endTimeHour,
-      endTimeMinutes: endTimeMinutes,
-      graceTime: graceTime,
+      startTimeHour,
+      startTimeMinutes,
+      endTimeHour,
+      endTimeMinutes,
+      graceTime,
     })
   }
 

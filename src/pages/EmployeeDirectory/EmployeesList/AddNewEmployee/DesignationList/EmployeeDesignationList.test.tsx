@@ -1,18 +1,17 @@
 import '@testing-library/jest-dom'
 
 import { render, screen, waitFor } from '@testing-library/react'
-
-import EmployeeDesignationList from './EmployeeDesignationList'
-import EmployeeDesignationListTable from './EmployeeDesignationListTable'
-import { EmployeeDesignations } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
+import EmployeeDesignationList from './EmployeeDesignationList'
+import EmployeeDesignationListTable from './EmployeeDesignationListTable'
+import { EmployeeDesignations } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
 import employeeDesignationListSlice from '../../../../../reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
 import { mockDesignationList } from '../../../../../test/data/employeeDesignationListData'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import stateStore from '../../../../../stateStore'
-import userEvent from '@testing-library/user-event'
 
 const ReduxProvider = ({
   children,

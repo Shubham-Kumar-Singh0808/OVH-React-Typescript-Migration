@@ -1,5 +1,5 @@
-import { mockEmployeeShifts } from '../data/employeeShiftsData'
 import { rest } from 'msw'
+import { mockEmployeeShifts } from '../data/employeeShiftsData'
 import { shiftConfigurationApiConfig } from '../../middleware/api/apiList'
 
 export const employeeShiftsHandlers = [

@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom'
 
-import { render, screen } from '../../../test/testUtils'
-
-import EmployeeList from './EmployeeList'
 import React from 'react'
+import EmployeeList from './EmployeeList'
+import { render, screen } from '../../../test/testUtils'
 
 describe('Employee List Component Testing', () => {
   test('should render Personal info tab component with out crashing', async () => {

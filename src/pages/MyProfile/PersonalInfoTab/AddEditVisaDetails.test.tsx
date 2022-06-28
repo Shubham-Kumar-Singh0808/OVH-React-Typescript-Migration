@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import AddEditVisaDetails from './AddEditFamilyDetails'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import AddEditVisaDetails from './AddEditFamilyDetails'
 import stateStore from '../../../stateStore'
+
 const ReduxProvider = ({
   children,
   reduxStore,

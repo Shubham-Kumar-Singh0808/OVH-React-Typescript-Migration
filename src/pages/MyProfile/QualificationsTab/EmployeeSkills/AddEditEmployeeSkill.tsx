@@ -1,8 +1,4 @@
 import {
-  AddEditEmployeeSkillsProps,
-  AddUpdateEmployeeSkill,
-} from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
-import {
   CButton,
   CCardBody,
   CCardHeader,
@@ -13,14 +9,17 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
+import { useFormik } from 'formik'
+import {
+  AddEditEmployeeSkillsProps,
+  AddUpdateEmployeeSkill,
+} from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import CategoryList from '../../Categories/CategoryList'
 import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import SkillList from '../../Skills/SkillList'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useFormik } from 'formik'
 
 function AddEditEmployeeSkill({
   isEditSkillsDetails = false,

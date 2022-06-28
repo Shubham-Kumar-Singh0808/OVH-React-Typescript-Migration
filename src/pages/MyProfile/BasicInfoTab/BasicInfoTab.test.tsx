@@ -1,13 +1,12 @@
 import '@testing-library/jest-dom'
 
 import { queryByAttribute, render, screen } from '@testing-library/react'
-
-import BasicInfoTab from './BasicInfoTab'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
+import BasicInfoTab from './BasicInfoTab'
 import { getEmployeeGeneralInformationThunk } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import stateStore from '../../../stateStore'
 

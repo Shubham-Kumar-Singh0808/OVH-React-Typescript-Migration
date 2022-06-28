@@ -1,13 +1,12 @@
 import '@testing-library/jest-dom'
 
 import { render, screen, waitFor } from '@testing-library/react'
-
 import { EnhancedStore } from '@reduxjs/toolkit'
-import FamilyDetailsTable from './FamilyDetailsTable'
 import { Provider } from 'react-redux'
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
+import FamilyDetailsTable from './FamilyDetailsTable'
 import personalInfoTabSlice from '../../../reducers/MyProfile/PersonalInfoTab/personalInfoTabSlice'
 import stateStore from '../../../stateStore'
 

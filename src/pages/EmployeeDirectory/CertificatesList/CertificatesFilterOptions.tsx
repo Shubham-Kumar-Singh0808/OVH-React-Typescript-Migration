@@ -8,8 +8,8 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useTypedSelector } from '../../../stateStore'
 import { Link } from 'react-router-dom'
+import { useTypedSelector } from '../../../stateStore'
 import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
 import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 

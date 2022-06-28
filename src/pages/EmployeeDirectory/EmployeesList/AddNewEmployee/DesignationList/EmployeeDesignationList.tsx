@@ -1,6 +1,5 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-
 import AddEmployeeDesignation from './AddEmployeeDesignation'
 import EmployeeDesignationListTable from './EmployeeDesignationListTable'
 import OCard from '../../../../../components/ReusableComponent/OCard'

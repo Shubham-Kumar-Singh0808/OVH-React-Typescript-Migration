@@ -9,7 +9,6 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { QualificationCategory } from '../../../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'

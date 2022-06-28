@@ -1,8 +1,4 @@
 import {
-  AddEditEmployeeVisaDetails,
-  EmployeeVisaDetails,
-} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-import {
   CButton,
   CCardBody,
   CCardHeader,
@@ -14,12 +10,17 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import {
+  AddEditEmployeeVisaDetails,
+  EmployeeVisaDetails,
+} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
-import moment from 'moment'
+
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,

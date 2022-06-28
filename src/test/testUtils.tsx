@@ -6,10 +6,10 @@
 import { Provider } from 'react-redux'
 import React from 'react'
 import { Router } from 'react-router-dom'
-import { allReducers } from '../stateStore'
 import { configureStore } from '@reduxjs/toolkit'
 import { createMemoryHistory } from 'history'
 import { render as rtlRender } from '@testing-library/react'
+import { allReducers } from '../stateStore'
 
 const render = (
   ui,

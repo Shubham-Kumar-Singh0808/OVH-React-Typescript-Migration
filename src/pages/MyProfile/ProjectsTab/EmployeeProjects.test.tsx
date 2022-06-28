@@ -1,12 +1,10 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-
 import { render, screen } from '@testing-library/react'
-
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import stateStore from '../../../stateStore'
 import EmployeeProjects from './EmployeeProjects'
+import stateStore from '../../../stateStore'
 
 const ReduxProvider = ({
   children,

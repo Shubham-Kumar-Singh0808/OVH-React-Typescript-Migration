@@ -1,15 +1,14 @@
 import '@testing-library/jest-dom'
 
-import { render, screen } from '../../../test/testUtils'
-
-import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import { EnhancedStore } from '@reduxjs/toolkit'
-import ListOptions from './ListOptions'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
+import ListOptions from './ListOptions'
+import { render, screen } from '../../../test/testUtils'
+import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import { ReduxProvider } from '../../../components/Helper'
 import stateStore from '../../../stateStore'
-import userEvent from '@testing-library/user-event'
 
 describe('List Options Component Testing', () => {
   test('should render Personal info tab component with out crashing', async () => {

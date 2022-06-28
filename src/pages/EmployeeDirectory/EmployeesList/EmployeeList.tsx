@@ -1,10 +1,9 @@
 import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import EmployeeListTable from './EmployeeListTable'
 import ListOptions from './ListOptions'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'

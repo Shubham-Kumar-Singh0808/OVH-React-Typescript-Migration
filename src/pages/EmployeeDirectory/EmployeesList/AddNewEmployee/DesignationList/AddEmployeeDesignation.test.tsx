@@ -1,12 +1,11 @@
 import '@testing-library/jest-dom'
 
 import { render, screen, waitFor } from '@testing-library/react'
-
-import AddEmployeeDesignation from './AddEmployeeDesignation'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
+import AddEmployeeDesignation from './AddEmployeeDesignation'
 import { ReduxProvider } from '../../../../../components/Helper'
 import stateStore from '../../../../../stateStore'
-import userEvent from '@testing-library/user-event'
 
 const expectComponentToBeRendered = () => {
   expect(screen.getByText('Department:')).toBeInTheDocument()

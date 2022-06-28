@@ -1,14 +1,13 @@
 import '@testing-library/jest-dom'
 
 import { render, screen, waitFor } from '@testing-library/react'
-
-import { ChildFeaturesArrayProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
 import stateStore from '../../../stateStore'
-import userEvent from '@testing-library/user-event'
+import { ChildFeaturesArrayProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 
 const mockChildFeaturesArray: ChildFeaturesArrayProps = {
   childFeatures: [
