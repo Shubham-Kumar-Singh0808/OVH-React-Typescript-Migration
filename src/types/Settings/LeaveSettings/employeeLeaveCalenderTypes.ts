@@ -44,3 +44,7 @@ export type EmployeeLeaveCategoryProps = {
   confirmButtonText: string
   backButtonHandler: () => void
 }
+
+export type EmployeeLeaveCategoriesProps = {
+  setToggle: (value: string) => void
+}

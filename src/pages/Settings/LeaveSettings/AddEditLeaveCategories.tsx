@@ -14,15 +14,16 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import {
   EmployeeAddUpdateLeaveCategories,
-  EmployeeLeaveCategoryProps,
+  EmployeeLeaveCategoryProps as AddEditLeaveCategoryProps,
 } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 const AddEditLeaveCategories = ({
   confirmButtonText,
   backButtonHandler,
-}: EmployeeLeaveCategoryProps): JSX.Element => {
+}: AddEditLeaveCategoryProps): JSX.Element => {
   const initialEmployeeAddLeaveCategories =
     {} as EmployeeAddUpdateLeaveCategories
+
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [employeeLeaveCategories, setEmployeeLeaveCategories] = useState(
     initialEmployeeAddLeaveCategories,
@@ -64,7 +65,7 @@ const AddEditLeaveCategories = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="leave categoryl added successfully"
+            toastMessage="leave category added successfully"
           />,
         ),
       )

@@ -24,8 +24,9 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       probationPeriod: 0,
     })
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
-  const [maxLeavesEarnedValueError, setmaxLeavesEarnedValueError] =
+  const [maxLeavesEarnedValueError, setMaxLeavesEarnedValueError] =
     useState<boolean>(false)
+
   const getEmployeeCalender = useTypedSelector(
     reduxServices.employeeLeaveSettings.selectors.getEmployeeLeaveCalender,
   )
@@ -75,9 +76,9 @@ const EmployeeLeaveCalender = (): JSX.Element => {
 
   const validateMaxLeavesEarnedValue = (maxLeavesEarnedValue: string) => {
     if (maxLeavesEarnedValue.length < 3) {
-      setmaxLeavesEarnedValueError(false)
+      setMaxLeavesEarnedValueError(false)
     } else {
-      setmaxLeavesEarnedValueError(true)
+      setMaxLeavesEarnedValueError(true)
     }
   }
 

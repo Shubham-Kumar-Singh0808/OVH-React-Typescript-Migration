@@ -18,15 +18,18 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { EmployeeAddUpdateLeaveCategories } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
-type EmployeeLeaveCategoriesType = {
-  setToggle: (value: string) => void
-}
+import {
+  EmployeeAddUpdateLeaveCategories,
+  EmployeeLeaveCategoriesProps,
+} from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
+
 const EmployeeLeaveCategories = ({
   setToggle,
-}: EmployeeLeaveCategoriesType): JSX.Element => {
+}: EmployeeLeaveCategoriesProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+
   const [leaveCategoryId, setLeaveCategoryId] = useState(0)
+
   const initialEmployeeEditLeaveCategories =
     {} as EmployeeAddUpdateLeaveCategories
   const [isLeaveCategoryDetailEdit, setIsLeaveCategoryDetailEdit] =
@@ -97,7 +100,7 @@ const EmployeeLeaveCategories = ({
     setIsLeaveCategoryDetailEdit(false)
   }
 
-  const editLeaveCategoryDetailsButtonHandler = (
+  const editLeaveCategoryButtonHandler = (
     categoryId: number,
     name: string,
     leaveType: string,
@@ -111,7 +114,7 @@ const EmployeeLeaveCategories = ({
     })
   }
 
-  const saveLeaveCategoryDetailsButtonHandler = async () => {
+  const saveLeaveCategoryButtonHandler = async () => {
     const saveLeaveCategoryResultAction = await dispatch(
       reduxServices.employeeLeaveSettings.updateEmployeeLeaveCategory(
         editEmployeeLeaveCategoryDetails,
@@ -229,7 +232,7 @@ const EmployeeLeaveCategories = ({
                         color="success"
                         data-testid={`sh-save-btn${index}`}
                         className="btn-ovh me-1"
-                        onClick={saveLeaveCategoryDetailsButtonHandler}
+                        onClick={saveLeaveCategoryButtonHandler}
                       >
                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
                       </CButton>
@@ -248,7 +251,7 @@ const EmployeeLeaveCategories = ({
                         data-testid={`sh-edit-btn${index}`}
                         className="btn-ovh me-1"
                         onClick={() => {
-                          editLeaveCategoryDetailsButtonHandler(
+                          editLeaveCategoryButtonHandler(
                             leaveCategory.id,
                             leaveCategory.name,
                             leaveCategory.leaveType,
@@ -289,7 +292,7 @@ const EmployeeLeaveCategories = ({
           cancelButtonText="No"
           confirmButtonAction={handleConfirmDeleteLeaveCategories}
         >
-          {`Do you really want to delete this ?`}
+          {`Do you like to delete this?`}
         </OModal>
       </CCardBody>
     </>
