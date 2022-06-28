@@ -123,9 +123,8 @@ describe('Add New Leave Category Testing', () => {
       </ReduxProvider>,
     )
     userEvent.selectOptions(
-      // Find the select element.
       screen.getByRole('combobox'),
-      // Find and select the Post Graduation option.
+
       screen.getByRole('option', { name: 'LOP' }),
     )
     expect(screen.getByRole('option', { name: 'LOP' }).selected).toBe(true)
@@ -149,5 +148,19 @@ describe('Add New Leave Category Testing', () => {
       userEvent.click(screen.getByRole('button', { name: 'Add' }))
       expect(screen.getByRole('textbox')).toHaveValue('testing')
     })
+  })
+
+  test('should render 1 input components', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <AddLeaveCategories
+          confirmButtonText="Add"
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      </ReduxProvider>,
+    )
+    expect(screen.getByPlaceholderText('Leave Name')).toBeInTheDocument()
   })
 })

@@ -7,6 +7,7 @@ import React from 'react'
 import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
 import EmployeeLeaveCalender from './EmployeeLeaveCalender'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const ReduxProvider = ({
   children,
@@ -35,6 +36,7 @@ describe('Leave Calender Testing', () => {
     expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
   })
+
   it('should display the correct number of options', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -43,6 +45,7 @@ describe('Leave Calender Testing', () => {
     )
     expect(screen.getAllByRole('option').length).toBe(44)
   })
+
   test('should find add and clear buttons in the form', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -52,6 +55,7 @@ describe('Leave Calender Testing', () => {
     expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
   })
+
   test('should render add new Leave calender form without crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -59,5 +63,26 @@ describe('Leave Calender Testing', () => {
       </ReduxProvider>,
     )
     expectComponentToBeRendered()
+  })
+
+  test('should render Save and Cancel button as enabled after changing handler', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeLeaveCalender />
+      </ReduxProvider>,
+    )
+    expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+  })
+
+  test('should render Add Leave Calendar Settings Component without crashing', async () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeLeaveCalender />
+      </ReduxProvider>,
+    )
+    await stateStore.dispatch(
+      reduxServices.employeeLeaveSettings.getEmployeeLeaveCalenderSettings(),
+    )
   })
 })
