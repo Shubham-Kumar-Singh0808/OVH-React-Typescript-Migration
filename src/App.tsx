@@ -9,6 +9,7 @@ import ProtectRoute from './components/ProtectRoutes'
 import SessionTimeout from './components/SessionTimeout'
 import { getEmployeeGeneralInformationThunk } from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { reduxServices } from './reducers/reduxServices'
+import OLoadingSpinner from './components/ReusableComponent/OLoadingSpinner'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -67,7 +68,7 @@ const App = (): JSX.Element => {
 
   return (
     <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>
-      <Suspense fallback={<CSpinner color="primary" />}>
+      <Suspense fallback={<OLoadingSpinner />}>
         <Switch>
           <Route
             path="/sessionExpire"
