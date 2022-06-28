@@ -1,3 +1,6 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
 import React from 'react'
 import { render, screen } from '@testing-library/react'

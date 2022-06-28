@@ -1,5 +1,6 @@
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
@@ -18,7 +19,7 @@ const ReduxProvider = ({
 }) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('Shift List Table Component Testing', () => {
-  test('should render shift list table component', async () => {
+  test('should render shift list table component', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <ShiftListTable
@@ -42,7 +43,7 @@ describe('Shift List Table Component Testing', () => {
       )
     })
   })
-  it('should render delete employee  shift modal on clicking delete button', async () => {
+  it('should render delete employee  shift modal on clicking delete button', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <ShiftListTable

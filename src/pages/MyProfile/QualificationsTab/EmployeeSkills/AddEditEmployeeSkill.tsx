@@ -1,3 +1,6 @@
+/* eslint-disable consistent-return */
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todo: remove all the eslint and fix error
 import {
   CButton,
   CCardBody,

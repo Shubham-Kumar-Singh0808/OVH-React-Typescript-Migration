@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+// Todd: remove eslint and fix error
 import {
   CCardBody,
   CSpinner,

@@ -1,5 +1,6 @@
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { queryByAttribute, render, screen } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
@@ -42,7 +43,7 @@ describe('Basic Info Tab Testing', () => {
     expect(screen.getByText('Employee ID:')).toBeInTheDocument()
     expect(screen.getByText('INDIA')).toBeInTheDocument()
   })
-  test('should render a file upload field', async () => {
+  test('should render a file upload field', () => {
     const getById = queryByAttribute.bind(null, 'id')
 
     const component = render(

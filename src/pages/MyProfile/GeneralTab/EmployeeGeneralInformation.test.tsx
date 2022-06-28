@@ -1,5 +1,6 @@
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import * as reactRedux from 'react-redux'
 import { render, screen } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'

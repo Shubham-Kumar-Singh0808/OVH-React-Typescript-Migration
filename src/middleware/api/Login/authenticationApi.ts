@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+// Todo: remove eslint and fix the test
 import axios from 'axios'
 import { encode } from 'base-64'
 import { AllowedHttpMethods, authenticationApiConfig } from '../apiList'

@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom'
-
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { rest } from 'msw'
@@ -67,8 +66,7 @@ describe('Add New CertificateType Testing', () => {
     expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
   })
-
-  test('should render select element', async () => {
+  test('should render select element', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <AddNewCertificateType

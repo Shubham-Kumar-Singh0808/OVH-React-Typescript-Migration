@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todd: remove eslint and fix error
 import {
   CButton,
   CCardBody,

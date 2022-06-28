@@ -1,3 +1,7 @@
+/* eslint-disable consistent-return */
+/* eslint-disable require-await */
+/* eslint-disable complexity */
+// Todo: remove eslint and fix the error
 import {
   CButton,
   CCol,

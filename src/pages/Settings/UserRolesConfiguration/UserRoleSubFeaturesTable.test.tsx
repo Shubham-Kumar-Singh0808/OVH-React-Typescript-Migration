@@ -1,6 +1,8 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen, waitFor } from '@testing-library/react'
+// eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
@@ -89,7 +91,7 @@ const ReduxProvider = ({
 }) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('User Role SubFeatures Table Component Testing', () => {
-  test('should render user role sub features table component', async () => {
+  test('should render user role sub features table component', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <UserRoleSubFeaturesTable

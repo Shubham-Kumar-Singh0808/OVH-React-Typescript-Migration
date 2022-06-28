@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-
+// eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
@@ -22,7 +22,7 @@ const mockSelectedRole = {
 }
 
 describe('User Role Features Expandable Table Component Testing', () => {
-  test('should render user role features expandable table component', async () => {
+  test('should render user role features expandable table component', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <UserRoleFeaturesExpandableTable

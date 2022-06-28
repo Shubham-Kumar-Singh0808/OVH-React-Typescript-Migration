@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+// Todo: remove eslint and fix error
 import {
   CButton,
   CCol,

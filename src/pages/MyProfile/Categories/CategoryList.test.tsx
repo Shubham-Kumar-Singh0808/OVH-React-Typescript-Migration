@@ -1,5 +1,7 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { prettyDOM, render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'

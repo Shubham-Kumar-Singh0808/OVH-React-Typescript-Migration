@@ -1,3 +1,6 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable complexity */
+// Todo: remove eslint and fix errors
 import {
   CButton,
   CCardBody,

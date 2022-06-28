@@ -1,3 +1,6 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable complexity */
+// Todo: remove all eslint and fix errors
 import {
   CButton,
   CCol,
@@ -187,7 +190,7 @@ const ShiftConfiguration = (): JSX.Element => {
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
             <CButton color="info" className="btn-ovh me-1">
-              <i className="fa fa-arrow-left  me-1"></i>Back
+              <i className="fa fa-arrow-left me-1"></i>Back
             </CButton>
           </CCol>
           <CForm>

@@ -27,7 +27,7 @@ const AddNewCategory = (): JSX.Element => {
     }
   }, [newCategoryName])
 
-  const handleAddCategory = async () => {
+  const handleAddCategory = () => {
     const toAddCategoryName = newCategoryName
 
     if (

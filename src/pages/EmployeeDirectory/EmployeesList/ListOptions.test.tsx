@@ -1,3 +1,5 @@
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
 
 import { EnhancedStore } from '@reduxjs/toolkit'
@@ -11,7 +13,7 @@ import { ReduxProvider } from '../../../components/Helper'
 import stateStore from '../../../stateStore'
 
 describe('List Options Component Testing', () => {
-  test('should render Personal info tab component with out crashing', async () => {
+  test('should render Personal info tab component with out crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <ListOptions />

@@ -1,5 +1,7 @@
+/* eslint-disable import/named */
+/* eslint-disable require-await */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'

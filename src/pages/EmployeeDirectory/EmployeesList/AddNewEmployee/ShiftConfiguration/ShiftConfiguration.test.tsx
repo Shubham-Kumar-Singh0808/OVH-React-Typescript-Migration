@@ -1,3 +1,5 @@
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
 
 import { render, screen, waitFor } from '@testing-library/react'
@@ -18,7 +20,7 @@ const ReduxProvider = ({
 }) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('Shift Configuration Component Testing', () => {
-  test('should render shift configuration component', async () => {
+  test('should render shift configuration component', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <ShiftConfiguration />

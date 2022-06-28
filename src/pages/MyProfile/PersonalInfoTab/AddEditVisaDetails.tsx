@@ -1,3 +1,9 @@
+/* eslint-disable radix */
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable complexity */
+/* eslint-disable require-await */
+/* eslint-disable import/named */
+// Todd: remove all eslint and fix error
 import {
   CButton,
   CCardBody,

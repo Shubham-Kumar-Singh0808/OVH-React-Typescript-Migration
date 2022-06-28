@@ -1,3 +1,5 @@
+/* eslint-disable complexity */
+// Todd: remove eslint and fix error
 import { CBadge, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
 import { EmployeeProfileHistoryProps } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'

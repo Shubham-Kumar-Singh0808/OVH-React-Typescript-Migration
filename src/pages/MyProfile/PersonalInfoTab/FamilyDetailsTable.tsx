@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+// Todd: remove eslint and fix error
 import {
   CButton,
   CTable,
