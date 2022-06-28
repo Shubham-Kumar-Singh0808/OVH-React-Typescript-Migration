@@ -1,5 +1,6 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable complexity */
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix errors
 import {
   CButton,
@@ -943,7 +944,7 @@ const PersonalInfoTab = ({
                 <CRow>
                   <CCol md={{ span: 6, offset: 3 }}>
                     <CButton
-                      className="btn-ovh btn btn-success mt-4"
+                      className="mt-4 btn-ovh btn btn-success"
                       size="sm"
                       type="submit"
                       disabled={!saveButtonEnabled}

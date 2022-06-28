@@ -128,5 +128,5 @@ export type EmployeeVisaDetailsTableProps = {
   editVisaButtonHandler: (id: number) => void
 }
 export type handleActiveTabProps = {
-  handleActiveTab?: (id: number) => void
+  handleActiveTab: (id: number) => void
 }
