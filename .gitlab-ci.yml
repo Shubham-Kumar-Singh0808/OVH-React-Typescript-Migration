@@ -28,7 +28,7 @@ Build:
       - target
   script:
     - echo "Installing npm package"
-    - npm ci
+    - npm install
 
 Eslint:
   <<: *only-merge_requests
