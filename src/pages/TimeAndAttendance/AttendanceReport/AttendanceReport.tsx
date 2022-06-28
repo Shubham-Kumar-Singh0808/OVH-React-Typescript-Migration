@@ -21,6 +21,7 @@ const AttendanceReport = (): JSX.Element => {
   const [selectMonth, setSelectMonth] = useState<number | string>(currentMonth)
   const [biometric, setBiometric] = useState<string>('')
   const [searchEmployee, setSearchEmployee] = useState<string>('')
+  const [selectShiftId, setSelectShiftId] = useState<string>('')
 
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
@@ -32,6 +33,14 @@ const AttendanceReport = (): JSX.Element => {
 
   const listSize = useTypedSelector(
     reduxServices.employeeAttendanceReport.selectors.listSize,
+  )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const employeeShifts = useTypedSelector(
+    reduxServices.shiftConfiguration.selectors.employeeShifts,
   )
 
   const handleChangeSelectMonth = (
@@ -49,6 +58,10 @@ const AttendanceReport = (): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
+    dispatch(
+      reduxServices.userAccessToFeatures.getUserAccessToFeatures(employeeId),
+    )
+    dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
     if (selectMonth !== 'others') {
       dispatch(
         reduxServices.employeeAttendanceReport.getEmployeeAttendanceReport({
@@ -58,12 +71,10 @@ const AttendanceReport = (): JSX.Element => {
           startIndex: pageSize * (currentPage - 1),
           endIndex: pageSize * currentPage,
           search: searchEmployee,
+          shiftId: selectShiftId,
         }),
       )
     }
-    dispatch(
-      reduxServices.userAccessToFeatures.getUserAccessToFeatures(employeeId),
-    )
   }, [
     currentPage,
     currentYear,
@@ -72,7 +83,12 @@ const AttendanceReport = (): JSX.Element => {
     pageSize,
     searchEmployee,
     selectMonth,
+    selectShiftId,
   ])
+
+  const userAccess = userAccessToFeatures?.filter(
+    (feature) => feature.name === 'Shift Time',
+  )
 
   return (
     <>
@@ -143,6 +159,10 @@ const AttendanceReport = (): JSX.Element => {
           setBiometric={setBiometric}
           employeeRole={employeeRole}
           setSearchEmployee={setSearchEmployee}
+          userAccess={userAccess[0]?.viewaccess}
+          employeeShifts={employeeShifts}
+          selectShiftId={selectShiftId}
+          setSelectShiftId={setSelectShiftId}
         />
         <AttendanceReportTable
           paginationRange={paginationRange}

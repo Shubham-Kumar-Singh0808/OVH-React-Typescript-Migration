@@ -1,4 +1,5 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { EmployeeShiftDetails } from '../../EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 
 export type EmployeeBioAttendanceDtoSet = {
   id: number
@@ -70,6 +71,51 @@ export type EmployeeDetailsWithAttendanceReport = {
   anniversary: null | string
   bankInformationList: null | string
   bioAttendanceDtoSet: EmployeeBioAttendanceDtoSet[]
+  absentCount: number
+  statusName: null | string
+  emergencyContact: null | string
+  relievingDate: null | string
+  observationDTOList: null | string
+  skypeId: null | string
+  percent: null | string
+  passportNumber: null | string
+  passportExpDate: null | string
+  passportIssuedPlace: null | string
+  passportIssuedDate: null | string
+  token: null | string
+  underNoticeDate: null | string
+  candidateId: null | string
+  underNotice: null | string
+  emailId: null | string
+  empManager: null | string
+  bloodgroup: null | string
+  rbtCvPath: null | string
+  rbtCvName: null | string
+  timeSlotDTO: null | string
+  technology: null | string
+  hrAssociate: null | string
+  lateComingCount: null | string
+  passportFrontPagePath: null | string
+  passportBackPagePath: null | string
+  passportFrontPage: null | string
+  passportBackPage: null | string
+  projectManager: null | string
+  casualLeaveCount: number
+  lopLeaveCount: number
+  holidaysCount: number
+  contractExists: null | string
+  contractStartDate: null | string
+  contractEndDate: null | string
+  personalEmail: null | string
+  experience: null | string
+  companyExperience: null | string
+  updatedExperience: null | string
+  country: null | string
+  workStatus: null | string
+  comments: null | string
+  vendorId: null | string
+  vendorName: null | string
+  address: null | string
 }
 export type EmployeeAttendanceReportResponse = {
   size: number
@@ -91,7 +137,7 @@ export type EmployeeAttendanceReportApiProps = {
   startIndex?: number
   endIndex?: number
   status?: string
-  shiftId?: number
+  shiftId?: string
   search?: string
 }
 
@@ -100,6 +146,10 @@ export type BiometricAndShiftFilterOptionsProps = {
   setBiometric: (value: string) => void
   employeeRole: string
   setSearchEmployee: (value: string) => void
+  userAccess: boolean
+  employeeShifts: EmployeeShiftDetails[]
+  selectShiftId: string
+  setSelectShiftId: (value: string) => void
 }
 
 export type AttendanceReportTableProps = {
@@ -108,4 +158,9 @@ export type AttendanceReportTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
+export enum EmployeeStatus {
+  'active' = 'Active',
+  'inactive' = 'InActive',
 }

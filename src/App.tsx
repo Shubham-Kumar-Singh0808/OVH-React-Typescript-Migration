@@ -62,6 +62,9 @@ const App = (): JSX.Element => {
           employeeId,
         ),
       )
+      dispatch(
+        reduxServices.userAccessToFeatures.getUserAccessToFeatures(employeeId),
+      )
     }
   }, [authenticatedToken, dispatch, employeeId])
 

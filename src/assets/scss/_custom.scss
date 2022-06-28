@@ -148,3 +148,17 @@ th {
   width: 10;
 }
 
+.sh-date-picker {
+  background-image: url('../icons/calendar.svg');
+  /* position: relative; */
+  background-position: calc(100% - 10px);
+  background-size: 16px;
+  background-repeat: no-repeat;
+}
+.sh-date-picker:hover {
+  cursor: pointer;
+}
+
+.sh-date-picker-column{
+  width: 13% !important;
+}

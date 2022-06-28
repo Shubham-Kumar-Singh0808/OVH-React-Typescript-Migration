@@ -6,26 +6,38 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
+import { EmployeeShiftDetails } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import { BiometricAndShiftFilterOptionsProps } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
 
 const BiometricAndShiftFilterOptions = ({
   biometric,
   setBiometric,
   employeeRole,
   setSearchEmployee,
+  userAccess,
+  employeeShifts,
+  selectShiftId,
+  setSelectShiftId,
 }: BiometricAndShiftFilterOptionsProps): JSX.Element => {
   const onBiometricHandleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setBiometric(e.target.value)
   }
   const [searchInput, setSearchInput] = useState<string>('')
+  const [filteredShift, setFilteredShift] = useState<EmployeeShiftDetails[]>([])
 
-  const userAccessToFeatures = useTypedSelector(
-    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
-  )
+  const onChangeShiftHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectShiftId(e.target.value)
+    console.log(typeof e.target.value)
+  }
+
+  useEffect(() => {
+    if (selectShiftId) {
+      setFilteredShift(
+        employeeShifts.filter((shift) => shift.id === Number(selectShiftId)),
+      )
+    }
+  }, [employeeShifts, selectShiftId])
 
   return (
     <>
@@ -33,6 +45,7 @@ const BiometricAndShiftFilterOptions = ({
         <CCol sm={2} md={3} className="me-2">
           <span>Biometric:</span>
           <CFormSelect
+            className="mt-1"
             aria-label="Default select example"
             size="sm"
             id="biometric"
@@ -45,18 +58,38 @@ const BiometricAndShiftFilterOptions = ({
             <option value="WithBiometric">With Biometric</option>
           </CFormSelect>
         </CCol>
-        <CCol sm={2} md={3}>
-          <span>Shift:</span>
-          <CFormSelect
-            aria-label="Default select example"
-            size="sm"
-            id="shift"
-            data-testid="form-select2"
-            name="shift"
-          >
-            <option value={''}>All</option>
-          </CFormSelect>
-        </CCol>
+        {userAccess && (
+          <CCol sm={2} md={3}>
+            <span className="mb-1">Shift:</span>
+            <CFormSelect
+              className="mt-1"
+              aria-label="Default select example"
+              size="sm"
+              id="shift"
+              data-testid="shift-select"
+              name="shiftId"
+              value={selectShiftId}
+              onChange={onChangeShiftHandler}
+            >
+              <option value="">All</option>
+              {employeeShifts?.map((shift, index) => (
+                <option key={index} value={shift.id}>
+                  {shift.name}
+                </option>
+              ))}
+            </CFormSelect>
+          </CCol>
+        )}
+        {selectShiftId && filteredShift && (
+          <CCol sm={2} md={3} className="mt-3">
+            <CRow>
+              <span>{`In Time : ${filteredShift[0]?.startTimeHour} : ${filteredShift[0]?.startTimeMinutes}`}</span>
+            </CRow>
+            <CRow>
+              <span>{`Out Time : ${filteredShift[0]?.endTimeHour} : ${filteredShift[0]?.endTimeMinutes}`}</span>
+            </CRow>
+          </CCol>
+        )}
       </CRow>
       <CRow className="mt-3">
         <CCol sm={8}>
