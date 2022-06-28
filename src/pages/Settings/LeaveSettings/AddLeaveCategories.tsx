@@ -21,8 +21,7 @@ const AddEditLeaveCategories = ({
   confirmButtonText,
   backButtonHandler,
 }: AddEditLeaveCategoryProps): JSX.Element => {
-  const initialEmployeeAddLeaveCategories =
-    {} as EmployeeAddUpdateLeaveCategory
+  const initialEmployeeAddLeaveCategories = {} as EmployeeAddUpdateLeaveCategory
 
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [employeeLeaveCategories, setEmployeeLeaveCategories] = useState(

@@ -23,6 +23,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       payrollCutoffDate: 0,
       probationPeriod: 0,
     })
+
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
   const [maxLeavesEarnedValueError, setMaxLeavesEarnedValueError] =
     useState<boolean>(false)

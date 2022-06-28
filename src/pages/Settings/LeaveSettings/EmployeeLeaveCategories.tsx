@@ -40,7 +40,7 @@ const EmployeeLeaveCategories = ({
     setEditEmployeeCategoryLeaveDetails,
   ] = useState(initialEmployeeEditLeaveCategories)
 
-  const handleEditInputChange = (
+  const handleEditLeaveCategoryHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>,
@@ -205,7 +205,7 @@ const EmployeeLeaveCategories = ({
                         name="name"
                         placeholder="Leave Name"
                         value={editEmployeeLeaveCategoryDetails?.name}
-                        onChange={handleEditInputChange}
+                        onChange={handleEditLeaveCategoryHandler}
                       />
                     </div>
                   </CTableDataCell>
@@ -225,7 +225,7 @@ const EmployeeLeaveCategories = ({
                         id="leaveType"
                         name="leaveType"
                         value={editEmployeeLeaveCategoryDetails.leaveType}
-                        onChange={handleEditInputChange}
+                        onChange={handleEditLeaveCategoryHandler}
                       >
                         <option value="EARNED">EARNED</option>
                         <option value="LOP">LOP</option>
