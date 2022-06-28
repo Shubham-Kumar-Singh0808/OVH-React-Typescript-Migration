@@ -64,16 +64,22 @@ const employeeDesignationReportSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getAllDesignation = action.payload as Designation[]
       })
-      .addMatcher(isAnyOf(getDesignations.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addMatcher(isAnyOf(getDesignations.rejected), (state, action) => {
-        state.isLoading = ApiLoadingState.failed
-        state.error = action.payload as ValidationError
-      })
-      .addMatcher(isAnyOf(getEmployeeDesignationReport.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
+      .addMatcher(
+        isAnyOf(
+          getDesignations.rejected,
+          getEmployeeDesignationReport.rejected,
+        ),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.failed
+          state.error = action.payload as ValidationError
+        },
+      )
+      .addMatcher(
+        isAnyOf(getEmployeeDesignationReport.pending, getDesignations.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
       .addMatcher(
         isAnyOf(getEmployeeDesignationReport.fulfilled),
         (state, action) => {
