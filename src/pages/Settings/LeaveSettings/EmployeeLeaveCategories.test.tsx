@@ -41,7 +41,7 @@ describe('Employee Leave Categories Testing', () => {
       </ReduxProvider>,
     )
     await waitFor(() => {
-      expect(screen.getByText('No Records found')).toBeInTheDocument()
+      expect(screen.getByText('Total Records: 0')).toBeInTheDocument()
     })
   })
   test('should render correct number of page records', async () => {
