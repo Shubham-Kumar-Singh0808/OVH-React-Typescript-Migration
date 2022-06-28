@@ -1,9 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-
-import routes from '../routes'
-
 import { CBreadcrumb, CBreadcrumbItem } from '@coreui/react-pro'
+import routes from '../routes'
 
 type breadcrumb = {
   pathname?: string

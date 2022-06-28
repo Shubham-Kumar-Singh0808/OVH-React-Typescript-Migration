@@ -5,7 +5,6 @@ import {
   CCardHeader,
   CLink,
 } from '@coreui/react-pro'
-
 import React from 'react'
 
 const OCard = (props: {

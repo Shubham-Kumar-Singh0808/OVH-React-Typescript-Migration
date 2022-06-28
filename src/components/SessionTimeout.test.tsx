@@ -1,17 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react'
-
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
-import { ReduxProvider } from './Helper'
 import { Router } from 'react-router-dom'
-import SessionTimeout from './SessionTimeout'
 import { createMemoryHistory } from 'history'
-import stateStore from '../stateStore'
 import userEvent from '@testing-library/user-event'
+import { ReduxProvider } from './Helper'
+import SessionTimeout from './SessionTimeout'
+import stateStore from '../stateStore'
 
 describe('Session Timeout Page Testing', () => {
-  test('should load IdleModal without crashing', async () => {
+  test('should load IdleModal without crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <SessionTimeout />

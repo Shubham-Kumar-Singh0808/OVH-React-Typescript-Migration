@@ -1,16 +1,13 @@
 import { render, screen } from '@testing-library/react'
-
-import AppSidebar from './AppSidebar'
 import { BrowserRouter } from 'react-router-dom'
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
-import { ReduxProvider } from '../Helper'
 import configureStore from 'redux-mock-store' //ES6 modules
-import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
-import menuItems from '../../middleware/MenuLinks'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
+import AppSidebar from './AppSidebar'
+import { ReduxProvider } from '../Helper'
+import menuItems from '../../middleware/MenuLinks'
+import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
 import { sideMenuApiConfig } from '../../middleware/api/apiList'
 import stateStore from '../../stateStore'
 
