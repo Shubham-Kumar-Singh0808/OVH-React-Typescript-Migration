@@ -4,12 +4,12 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import React, { Suspense, useCallback, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from './stateStore'
 
-import { CSpinner } from '@coreui/react-pro'
 import ProtectRoute from './components/ProtectRoutes'
 import SessionTimeout from './components/SessionTimeout'
 import { getEmployeeGeneralInformationThunk } from './reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { reduxServices } from './reducers/reduxServices'
 import OLoadingSpinner from './components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from './types/Components/loadingScreenTypes'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -68,7 +68,7 @@ const App = (): JSX.Element => {
 
   return (
     <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>
-      <Suspense fallback={<OLoadingSpinner />}>
+      <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>
         <Switch>
           <Route
             path="/sessionExpire"
