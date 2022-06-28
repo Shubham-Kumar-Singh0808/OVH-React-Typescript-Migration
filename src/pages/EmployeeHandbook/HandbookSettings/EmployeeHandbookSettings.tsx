@@ -87,7 +87,7 @@ const EmployeeHandbookSettings = (): JSX.Element => {
       {toggle === 'addNewPageSection' && (
         <AddNewHandbook
           headerTitle="Add New Page"
-          confirmButtonText="Add"
+          confirmButtonText="Save"
           backButtonHandler={() => setToggle('')}
         />
       )}

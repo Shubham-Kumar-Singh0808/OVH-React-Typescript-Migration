@@ -26,48 +26,62 @@ function AddNewHandbook({
   backButtonHandler,
 }: EmployeeHandbookPageProps): JSX.Element {
   const initialHandbookDetails = {} as EmployeeHandbook
-  const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
   const [showEditor, setShowEditor] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
+  const [allChecked, setAllChecked] = useState<boolean>(false)
+  const [isChecked, setIsChecked] = useState([])
+  const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
 
+  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAllChecked(e.target.checked)
+  }
+
+  const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked({ ...isChecked, [e.target.name]: e.target.checked })
+  }
+
+  const dispatch = useAppDispatch()
+  const employeeCountries = useTypedSelector(
+    reduxServices.employeeHandbookSettings.selectors.employeeCountries,
+  )
   useEffect(() => {
-    if (addNewPage.title && addNewPage.displayOrder && addNewPage.pageName) {
+    if (
+      addNewPage.title &&
+      addNewPage.displayOrder &&
+      addNewPage.pageName &&
+      // addNewPage.country &&
+      addNewPage.description
+    ) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-  }, [
-    // addNewPage.country,
-    // addNewPage.description,
-    addNewPage.displayOrder,
-    addNewPage.pageName,
-    addNewPage.title,
-  ])
+  }, [addNewPage])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    if (name === 'displayOrder') {
-      const displayOrder = Number(value.replace(/[^0-9]/gi, ''))
-      setAddNewPage((prevState) => {
-        return { ...prevState, ...{ [name]: displayOrder } }
-      })
-    } else {
-      setAddNewPage((prevState) => {
-        return { ...prevState, ...{ [name]: value } }
-      })
-    }
+
+    setAddNewPage((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
   }
 
+  const handleClearInputs = () => {
+    setAddNewPage({
+      title: '',
+      pageName: '',
+      displayOrder: 0,
+      country: '',
+      handCountry: [],
+      description: '',
+    })
+  }
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
       htmlFor: htmlFor,
       className: className,
     }
   }
-  const dispatch = useAppDispatch()
-  const employeeCountries = useTypedSelector(
-    reduxServices.employeeHandbookSettings.selectors.employeeCountries,
-  )
 
   useEffect(() => {
     dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
@@ -131,12 +145,15 @@ function AddNewHandbook({
               )}
             >
               Title:
-              <span className="text-danger">*</span>
+              <span className={addNewPage.title ? 'text-white' : 'text-danger'}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
                 name="title"
+                value={addNewPage.title}
                 maxLength={50}
                 onChange={handleInputChange}
               />
@@ -150,12 +167,17 @@ function AddNewHandbook({
               )}
             >
               Page Name:
-              <span className="text-danger">*</span>
+              <span
+                className={addNewPage.pageName ? 'text-white' : 'text-danger'}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
                 name="pageName"
+                value={addNewPage.pageName}
                 maxLength={50}
                 onChange={handleInputChange}
               />
@@ -169,13 +191,23 @@ function AddNewHandbook({
               )}
             >
               Display Order:
-              <span className="text-danger">*</span>
+              <span
+                className={
+                  addNewPage.displayOrder ? 'text-white' : 'text-danger'
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                type="text"
+                type="number"
                 maxLength={2}
+                min={1}
+                max={99}
+                id="displayOrder"
                 name="displayOrder"
+                value={addNewPage.displayOrder}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -188,17 +220,21 @@ function AddNewHandbook({
               )}
             >
               Country:
-              <span className="text-danger">*</span>
+              <span
+                className={addNewPage.country ? 'text-white' : 'text-danger'}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CRow>
                 <CCol sm={3}>
                   <CFormCheck
-                    className="mt-2"
-                    id="All"
+                    id="all"
+                    name="all"
                     label="All"
-                    checked={false}
-                    // onChange={() => setBaseLocationShown(!baseLocationShown)}
+                    checked={allChecked}
+                    onChange={handleAllCheck}
                   />
                 </CCol>
               </CRow>
@@ -210,7 +246,8 @@ function AddNewHandbook({
                         className="mt-1"
                         id="trigger"
                         label={country.name}
-                        checked={false}
+                        checked={allChecked ? true : isChecked[country.id]}
+                        onChange={handleSingleCheck}
                       />
                     </CCol>
                   )
@@ -220,13 +257,20 @@ function AddNewHandbook({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Description: <span className="text-danger">*</span>
+              Description:{' '}
+              <span
+                className={
+                  addNewPage.description ? 'text-white' : 'text-danger'
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={9}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData=""
+                initData={addNewPage.description}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -247,7 +291,11 @@ function AddNewHandbook({
               >
                 {confirmButtonText}
               </CButton>
-              <CButton color="warning " className="btn-ovh text-white">
+              <CButton
+                color="warning "
+                className="btn-ovh text-white"
+                onClick={handleClearInputs}
+              >
                 Clear
               </CButton>
             </CCol>
