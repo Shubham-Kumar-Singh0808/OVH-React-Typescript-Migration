@@ -20,10 +20,6 @@ const EmployeeDesignationReport = (): JSX.Element => {
     reduxServices.employeeDesignationReports.selectors.listSize,
   )
 
-  // const selectedDesignation = useTypedSelector(
-  //   reduxServices.employeeDesignationReports.selectors.selectedDesignation,
-  // )
-
   const [designation, setDesignation] = useState<string>('')
 
   const {
