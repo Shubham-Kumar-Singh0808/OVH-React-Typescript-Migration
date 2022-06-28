@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
-import AddEditLeaveCategories from './AddEditLeaveCategories'
+import AddLeaveCategories from './AddLeaveCategories'
 
 const ReduxProvider = ({
   children,
@@ -15,34 +15,46 @@ const ReduxProvider = ({
   children: JSX.Element
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
-
 const expectComponentToBeRendered = () => {
-  expect(screen.getByText('Name Of Leave Category:')).toBeInTheDocument()
+  expect(screen.getByText('Name Of Leave Category')).toBeInTheDocument()
   expect(screen.getByText('Category:')).toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
   expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
 }
-
 describe('Add New Leave Category Testing', () => {
-  test('should render add new Leave category form without crashing', () => {
+  test('should render Add button as disabled and Clear Button not disabled initially', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <AddEditLeaveCategories
-          confirmButtonText={''}
+        <AddLeaveCategories
+          confirmButtonText="Add"
           backButtonHandler={function (): void {
             throw new Error('Function not implemented.')
           }}
         />
       </ReduxProvider>,
     )
-    expectComponentToBeRendered()
+    expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
+  })
+  it('should display the correct number of options', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <AddLeaveCategories
+          confirmButtonText="Add"
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      </ReduxProvider>,
+    )
+    expect(screen.getAllByRole('option').length).toBe(3)
   })
 
   test('should find add and clear buttons in the form', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <AddEditLeaveCategories
-          confirmButtonText={''}
+        <AddLeaveCategories
+          confirmButtonText="Add"
           backButtonHandler={function (): void {
             throw new Error('Function not implemented.')
           }}
@@ -53,51 +65,89 @@ describe('Add New Leave Category Testing', () => {
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
   })
 
-  test('should enabled add  button when input is not empty', async () => {
+  test('should correctly set default option', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <AddEditLeaveCategories
-          confirmButtonText={''}
+        <AddLeaveCategories
+          confirmButtonText="Add"
           backButtonHandler={function (): void {
             throw new Error('Function not implemented.')
           }}
         />
       </ReduxProvider>,
     )
-    userEvent.selectOptions(screen.getByTestId('form-select'), ['EARNED'])
+    expect(
+      screen.getByRole('option', { name: 'Select Leave Type' }).selected,
+    ).toBe(true)
+  })
+  test('should render add new Leave category form without crashing', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <AddLeaveCategories
+          confirmButtonText="Add"
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      </ReduxProvider>,
+    )
+    expectComponentToBeRendered()
+  })
+  test('should enabled add  button when input is not empty', async () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <AddLeaveCategories
+          confirmButtonText="Add"
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      </ReduxProvider>,
+    )
+    userEvent.selectOptions(screen.getByTestId('form-select'), ['LOP'])
     await waitFor(() => {
       userEvent.type(screen.getByRole('textbox'), 'testing')
       expect(screen.getByRole('button', { name: /Add/i })).toBeEnabled()
     })
   })
 
-  // test('should correctly set default option', () => {
-  //   render(
-  //     <ReduxProvider reduxStore={stateStore}>
-  //       <AddEditLeaveCategories
-  //         confirmButtonText={''}
-  //         backButtonHandler={function (): void {
-  //           throw new Error('Function not implemented.')
-  //         }}
-  //       />
-  //     </ReduxProvider>,
-  //   )
-  //   expect(screen.getByRole('option', { name: 'Leave Name' }).selected).toBe(
-  //     true,
-  //   )
-  // })
-  test('should display the correct number of options, including default option', () => {
+  it('should allow user to change Options', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <AddEditLeaveCategories
-          confirmButtonText={''}
+        <AddLeaveCategories
+          confirmButtonText="Add"
           backButtonHandler={function (): void {
             throw new Error('Function not implemented.')
           }}
         />
       </ReduxProvider>,
     )
-    //including heading
-    expect(screen.getAllByRole('option').length).toBe(3)
+    userEvent.selectOptions(
+      // Find the select element.
+      screen.getByRole('combobox'),
+      // Find and select the Post Graduation option.
+      screen.getByRole('option', { name: 'LOP' }),
+    )
+    expect(screen.getByRole('option', { name: 'LOP' }).selected).toBe(true)
+  })
+  test('should clear input and disable Add button after submitting and new Category Leave should be added', async () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <AddLeaveCategories
+          confirmButtonText="Add"
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      </ReduxProvider>,
+    )
+
+    expectComponentToBeRendered()
+    userEvent.selectOptions(screen.getByTestId('form-select'), ['LOP'])
+    userEvent.type(screen.getByRole('textbox'), 'testing')
+    await waitFor(() => {
+      userEvent.click(screen.getByRole('button', { name: 'Add' }))
+      expect(screen.getByRole('textbox')).toHaveValue('testing')
+    })
   })
 })

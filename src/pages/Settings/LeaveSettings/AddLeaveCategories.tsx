@@ -97,6 +97,11 @@ const AddEditLeaveCategories = ({
     }
   }, [employeeLeaveCategories?.name, employeeLeaveCategories.leaveType])
 
+  const formLabelProps = {
+    htmlFor: 'inputNewLeaveCategory',
+    className: 'col-form-label category-label',
+  }
+
   return (
     <>
       <OCard
@@ -118,7 +123,10 @@ const AddEditLeaveCategories = ({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
               Name Of Leave Category
               <span
                 className={
@@ -142,7 +150,10 @@ const AddEditLeaveCategories = ({
             </CCol>
           </CRow>
           <CRow className="mt-3 mb-3">
-            <CFormLabel className="col-sm-3 col-form-label text-end col-form-label category-label">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end col-form-label category-label"
+            >
               Category:{' '}
               <span
                 className={
@@ -164,7 +175,7 @@ const AddEditLeaveCategories = ({
                 value={employeeLeaveCategories.leaveType}
                 onChange={handleInputChange}
               >
-                <option value={''}>select Leave Type</option>
+                <option value={''}>Select Leave Type</option>
                 <option value="EARNED">EARNED</option>
                 <option value="LOP">LOP</option>
               </CFormSelect>
