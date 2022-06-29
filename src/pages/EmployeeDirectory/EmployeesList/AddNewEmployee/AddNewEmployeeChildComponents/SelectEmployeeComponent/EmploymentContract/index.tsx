@@ -17,14 +17,12 @@ const EmploymentContract = ({
     startDateValue == null ? '' : startDateValue.toLocaleDateString()
   const endDate = endDateValue == null ? '' : endDateValue.toLocaleDateString()
 
+  const classNameStyle = 'col-sm-3 col-form-label text-end'
   return (
     <>
       <CRow className="mb-3 align-items-center">
         <CFormLabel
-          {...dynamicFormLabelProps(
-            'employmentcontract',
-            'col-sm-3 col-form-label text-end',
-          )}
+          {...dynamicFormLabelProps('employmentcontract', classNameStyle)}
         >
           Employment Contract:
         </CFormLabel>
@@ -36,9 +34,7 @@ const EmploymentContract = ({
             id="employmentcontractyes"
             value="Yes"
             label="Yes"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-              onContractExistHandler('true')
-            }
+            onChange={() => onContractExistHandler('true')}
           />
           <CFormCheck
             inline
@@ -48,9 +44,7 @@ const EmploymentContract = ({
             value="No"
             label="No"
             defaultChecked
-            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-              onContractExistHandler('false')
-            }
+            onChange={() => onContractExistHandler('false')}
           />
         </CCol>
       </CRow>
@@ -58,10 +52,7 @@ const EmploymentContract = ({
         <>
           <CRow className="mb-3">
             <CFormLabel
-              {...dynamicFormLabelProps(
-                'contractstartdate',
-                'col-sm-3 col-form-label text-end',
-              )}
+              {...dynamicFormLabelProps('contractstartdate', classNameStyle)}
             >
               Contract Start Date:
               <span className={showIsRequired(startDate)}>*</span>
@@ -84,10 +75,7 @@ const EmploymentContract = ({
           </CRow>
           <CRow className="mb-3">
             <CFormLabel
-              {...dynamicFormLabelProps(
-                'contractenddate',
-                'col-sm-3 col-form-label text-end',
-              )}
+              {...dynamicFormLabelProps('contractenddate', classNameStyle)}
             >
               Contract End Date:
               <span className={showIsRequired(endDate)}>*</span>

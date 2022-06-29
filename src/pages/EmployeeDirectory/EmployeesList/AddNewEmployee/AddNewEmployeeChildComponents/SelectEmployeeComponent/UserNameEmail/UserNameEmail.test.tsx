@@ -6,7 +6,6 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import UserNameEmail from '.'
 import stateStore from '../../../../../../../stateStore'
-import { Label } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const ReduxProvider = ({
   children,

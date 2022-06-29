@@ -8,7 +8,6 @@ const UserNameEmail = ({
   usernameChangeHandler,
   onAllowedUserChangeHandler,
   username,
-  isUserAllowed,
 }: UsernameEmailChangeHandlerProp): JSX.Element => {
   const handleUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     usernameChangeHandler(e.target.value)

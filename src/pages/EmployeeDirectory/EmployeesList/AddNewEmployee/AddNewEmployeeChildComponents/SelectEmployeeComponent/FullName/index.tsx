@@ -2,6 +2,7 @@ import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React from 'react'
 import { FullNameChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../../utils/helper'
+import { TextDanger, TextWhite } from '../../../../../../../constant/ClassName'
 
 const FullName = ({
   dynamicFormLabelProps,
@@ -13,9 +14,9 @@ const FullName = ({
   middleNameValue,
 }: FullNameChangeHandlerProp): JSX.Element => {
   const isFullNameRequired =
-    showIsRequired(firstNameValue) === 'text-danger' ||
-    showIsRequired(lastNameValue) === 'text-danger' ||
-    showIsRequired(middleNameValue) === 'text-danger'
+    showIsRequired(firstNameValue) === TextDanger ||
+    showIsRequired(lastNameValue) === TextDanger ||
+    showIsRequired(middleNameValue) === TextDanger
   return (
     <>
       <CRow className="mb-3">
@@ -26,9 +27,7 @@ const FullName = ({
           )}
         >
           Full Name:
-          <span className={isFullNameRequired ? 'text-danger' : 'text-white'}>
-            *
-          </span>
+          <span className={isFullNameRequired ? TextDanger : TextWhite}>*</span>
         </CFormLabel>
         <CCol sm={9}>
           <CRow>
