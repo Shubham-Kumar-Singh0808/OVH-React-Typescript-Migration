@@ -48,16 +48,6 @@ describe('Leave Calender Testing', () => {
     expect(screen.getAllByRole('option').length).toBe(44)
   })
 
-  test('should find add and clear buttons in the form', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <EmployeeLeaveCalender />
-      </ReduxProvider>,
-    )
-    expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
-  })
-
   test('should render add new Leave calender form without crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>

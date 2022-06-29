@@ -37,16 +37,6 @@ describe('Add New Qualification Category Testing', () => {
     expectComponentToBeRendered()
   })
 
-  test('should find add and clear buttons in the form', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddNewQualificationCategory />
-      </ReduxProvider>,
-    )
-    expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
-  })
-
   test('should enabled add  button when input is not empty', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
