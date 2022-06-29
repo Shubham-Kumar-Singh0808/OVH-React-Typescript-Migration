@@ -10,8 +10,8 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 import { Link } from 'react-router-dom'
+import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 import { useTypedSelector } from '../../../stateStore'
 import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
 
@@ -104,71 +104,73 @@ const CertificatesFilterOptions = ({
   }, [getTechnologies])
 
   return (
-      <><CRow>
-      <CCol sm={2} md={1} className="text-end">
-        <CFormLabel className="mt-1">Technology:</CFormLabel>
-      </CCol>
-      <CCol sm={2}>
-        <CFormSelect
-          aria-label="Default select example"
-          size="sm"
-          id="technology"
-          data-testid="form-select1"
-          name="technology"
-          value={selectTechnology}
-          onChange={(e) => {
-            setSelectTechnology(e.target.value)
-          } }
-        >
-          <option value={''}>Select Technology</option>
-          {sortedTechnologies?.map((certificateItem, index) => (
-            <option key={index} value={certificateItem.name}>
-              {certificateItem.name}
-            </option>
-          ))}
-        </CFormSelect>
-      </CCol>
-      <CCol sm={4}>
-        <CRow>
-          <CCol sm={4} lg={5} className="text-end">
-            <CFormLabel className="mt-1">Certificate Type:</CFormLabel>
-          </CCol>
-          <CCol sm={6}>
-            <CFormSelect
-              aria-label="Default select example"
-              size="sm"
-              id="certificate"
-              data-testid="form-select2"
-              name="certificate"
-              value={selectCertificate}
-              onChange={(e) => {
-                setSelectCertificate(e.target.value)
-              } }
-            >
-              <option value={''}>Select Certificate</option>
-              {getCertificateByTechnology?.map(
-                (certificateTypeItem, index) => (
-                  <option
-                    key={index}
-                    value={certificateTypeItem.certificateType}
-                  >
-                    {certificateTypeItem.certificateType}
-                  </option>
-                )
-              )}
-            </CFormSelect>
-          </CCol>
-        </CRow>
-      </CCol>
+    <>
+      <CRow>
+        <CCol sm={2} md={1} className="text-end">
+          <CFormLabel className="mt-1">Technology:</CFormLabel>
+        </CCol>
+        <CCol sm={2}>
+          <CFormSelect
+            aria-label="Default select example"
+            size="sm"
+            id="technology"
+            data-testid="form-select1"
+            name="technology"
+            value={selectTechnology}
+            onChange={(e) => {
+              setSelectTechnology(e.target.value)
+            }}
+          >
+            <option value={''}>Select Technology</option>
+            {sortedTechnologies?.map((certificateItem, index) => (
+              <option key={index} value={certificateItem.name}>
+                {certificateItem.name}
+              </option>
+            ))}
+          </CFormSelect>
+        </CCol>
+        <CCol sm={4}>
+          <CRow>
+            <CCol sm={4} lg={5} className="text-end">
+              <CFormLabel className="mt-1">Certificate Type:</CFormLabel>
+            </CCol>
+            <CCol sm={6}>
+              <CFormSelect
+                aria-label="Default select example"
+                size="sm"
+                id="certificate"
+                data-testid="form-select2"
+                name="certificate"
+                value={selectCertificate}
+                onChange={(e) => {
+                  setSelectCertificate(e.target.value)
+                }}
+              >
+                <option value={''}>Select Certificate</option>
+                {getCertificateByTechnology?.map(
+                  (certificateTypeItem, index) => (
+                    <option
+                      key={index}
+                      value={certificateTypeItem.certificateType}
+                    >
+                      {certificateTypeItem.certificateType}
+                    </option>
+                  ),
+                )}
+              </CFormSelect>
+            </CCol>
+          </CRow>
+        </CCol>
 
-      <CCol xs={5} className="d-md-flex justify-content-md-end">
-        <Link to={`/certificateTypeList`}>
-          <CButton color="info btn-ovh me-0">
-            <i className="fa fa-plus me-1"></i>Add Certificate Type
-          </CButton>
-        </Link>
-      </CCol>
-    </CRow><CRow className="mt-5 mb-4">
+        <CCol xs={5} className="d-md-flex justify-content-md-end">
+          <Link to={`/certificateTypeList`}>
+            <CButton color="info btn-ovh me-0">
+              <i className="fa fa-plus me-1"></i>Add Certificate Type
+            </CButton>
+          </Link>
+        </CCol>
+      </CRow>
+      <CRow className="mt-5 mb-4">
         <CCol sm={{ span: 6, offset: 3 }}>
           <CButton
             className="cursor-pointer"
@@ -195,7 +197,8 @@ const CertificatesFilterOptions = ({
             <i className="fa fa-plus me-1"></i>Click to Export
           </CButton>
         </CCol>
-      </CRow><CRow className="gap-2 d-md-flex justify-content-md-end">
+      </CRow>
+      <CRow className="gap-2 d-md-flex justify-content-md-end">
         <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
           <CInputGroup className="global-search me-0">
             <CFormInput
@@ -205,7 +208,8 @@ const CertificatesFilterOptions = ({
               value={searchInput}
               onChange={(e) => {
                 setSearchInput(e.target.value)
-              } } />
+              }}
+            />
             <CButton
               disabled={!searchInput}
               data-testid="multi-search-btn"
@@ -219,7 +223,8 @@ const CertificatesFilterOptions = ({
             </CButton>
           </CInputGroup>
         </CCol>
-      </CRow></>
+      </CRow>
+    </>
   )
 }
 
