@@ -1,8 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen, waitFor } from '../../../test/testUtils'
 import userEvent from '@testing-library/user-event'
 import EmployeeReportTable from './EmployeeReportTable'
+import { render, screen, waitFor } from '../../../test/testUtils'
 import { EmployeeReport } from '../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
 import { mockEmployeeReport } from '../../../test/data/employeeReportData'
 
