@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove all the eslint and fix error

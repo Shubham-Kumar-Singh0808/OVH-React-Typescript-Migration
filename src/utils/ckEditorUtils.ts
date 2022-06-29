@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+// Todo: remove eslint and fix all the errors
 export const ckeditorConfig = {
   toolbarGroups: [
     { name: 'styles', groups: ['styles'] },
