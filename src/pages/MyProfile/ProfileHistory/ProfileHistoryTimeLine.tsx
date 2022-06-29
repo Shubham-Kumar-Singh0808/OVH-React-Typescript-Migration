@@ -1,5 +1,8 @@
+/* eslint-disable max-lines */
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable complexity */
 // Todd: remove eslint and fix error
+// Todo: remove eslint and fix all the errors
 import { CBadge, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
 import { EmployeeProfileHistoryProps } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'

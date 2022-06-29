@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable import/named */
 // Todd: remove eslint and fix error
+// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
 
 import { queryByAttribute, render } from '@testing-library/react'
@@ -9,7 +10,6 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
 import stateStore from '../../../stateStore'
-import { UploadImageInterface } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
 // import { UploadImage } from '../../../types/apiTypes'
 
 const ReduxProvider = ({
