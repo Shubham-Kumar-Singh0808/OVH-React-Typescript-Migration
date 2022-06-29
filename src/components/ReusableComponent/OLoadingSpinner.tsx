@@ -14,21 +14,17 @@ const OLoadingSpinner = (props: LoadingSpinner): JSX.Element => {
   return (
     <>
       {ReactDOM.createPortal(
-        <>
-          <div className="loading-spinner-backdrop "></div>
-        </>,
+        <div className="loading-spinner-backdrop "></div>,
         backdrop,
       )}
       {ReactDOM.createPortal(
-        <>
-          <div className="loading-spinner">
-            {props.type === LoadingType.COMPONENT ? (
-              <CSpinner color="primary" />
-            ) : (
-              <img src={loadingSpinner} alt="" />
-            )}
-          </div>
-        </>,
+        <div className="loading-spinner">
+          {props.type === LoadingType.COMPONENT ? (
+            <CSpinner color="primary" />
+          ) : (
+            <img src={loadingSpinner} alt="" />
+          )}
+        </div>,
         overlay,
       )}
     </>
