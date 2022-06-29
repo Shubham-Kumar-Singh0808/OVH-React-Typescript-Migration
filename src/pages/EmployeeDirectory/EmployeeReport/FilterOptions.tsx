@@ -54,7 +54,7 @@ const FilterOptions = ({
   return (
     <>
       <CRow>
-        <CCol sm={2} md={1} lg={1}>
+        <CCol className="mt-1" sm={2} md={1} lg={1}>
           <CFormCheck
             type="radio"
             name="employmentStatus"
@@ -68,7 +68,7 @@ const FilterOptions = ({
             inline
           />
         </CCol>
-        <CCol sm={2} md={1} lg={1}>
+        <CCol className="mt-1" sm={2} md={1} lg={1}>
           <CFormCheck
             type="radio"
             name="employmentStatus"
