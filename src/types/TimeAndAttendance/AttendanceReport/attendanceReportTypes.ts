@@ -170,3 +170,11 @@ export type OtherFilterOptionsProps = {
   setFilterByEmployeeStatus: (value: string) => void
   setFilterByDate: (value: Date | null) => void
 }
+
+export type AttendanceStatusCheckProps = {
+  status: string | null
+  textColor: string
+  title: string | null
+  lateReport?: boolean | null
+  biometric?: string
+}

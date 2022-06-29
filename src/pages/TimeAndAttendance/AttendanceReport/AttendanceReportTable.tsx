@@ -9,14 +9,16 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import React from 'react'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
-import { AttendanceReportTableProps } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
+import {
+  AttendanceReportTableProps,
+  AttendanceStatusCheckProps,
+} from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
 
 const AttendanceReportTable = ({
   paginationRange,
@@ -59,13 +61,13 @@ const AttendanceReportTable = ({
     scope: 'col',
   }
 
-  const attendanceStatus = (
-    status: string | null,
-    color: string,
-    title: string | null,
-    lateReport?: boolean | null,
-    biometric?: string,
-  ) => {
+  const attendanceStatusCheck = ({
+    status,
+    textColor,
+    title,
+    lateReport,
+    biometric,
+  }: AttendanceStatusCheckProps) => {
     if (status === 'P' && biometric !== 'WithBiometric') {
       return <i className="fa fa-check sh-attendance-icon-check"></i>
     } else if (status === 'P' && lateReport && biometric === 'WithBiometric') {
@@ -82,7 +84,7 @@ const AttendanceReportTable = ({
       status === 'A' &&
       (title === 'C' || title === 'L' || title === 'P')
     ) {
-      return <span style={{ color: color }}>{title}</span>
+      return <span style={{ color: textColor }}>{title}</span>
     } else if (status === 'A' && title === 'H') {
       return <span style={{ color: '#CC6600' }}>{title}</span>
     } else {
@@ -152,13 +154,15 @@ const AttendanceReportTable = ({
                                       scope="row"
                                       className="text-center"
                                     >
-                                      {attendanceStatus(
-                                        bioAttendanceItem.attendanceStatus,
-                                        bioAttendanceItem.color,
-                                        bioAttendanceItem.title,
-                                        bioAttendanceItem.lateReport,
-                                        isBiometric,
-                                      )}
+                                      {attendanceStatusCheck({
+                                        status:
+                                          bioAttendanceItem.attendanceStatus,
+                                        textColor: bioAttendanceItem.color,
+                                        title: bioAttendanceItem.title,
+                                        lateReport:
+                                          bioAttendanceItem.lateReport,
+                                        biometric: isBiometric,
+                                      })}
                                     </CTableDataCell>
                                   </>
                                 ) : (
@@ -167,11 +171,12 @@ const AttendanceReportTable = ({
                                       scope="row"
                                       className="text-center"
                                     >
-                                      {attendanceStatus(
-                                        bioAttendanceItem.attendanceStatus,
-                                        bioAttendanceItem.color,
-                                        bioAttendanceItem.title,
-                                      )}
+                                      {attendanceStatusCheck({
+                                        status:
+                                          bioAttendanceItem.attendanceStatus,
+                                        textColor: bioAttendanceItem.color,
+                                        title: bioAttendanceItem.title,
+                                      })}
                                     </CTableDataCell>
                                   </>
                                 )}

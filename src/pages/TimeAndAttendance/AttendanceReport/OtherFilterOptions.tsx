@@ -1,11 +1,10 @@
 import { CButton, CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
+import React, { useState } from 'react'
+import DatePicker from 'react-datepicker'
 import {
   EmployeeStatus,
   OtherFilterOptionsProps,
 } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
-import React, { useState } from 'react'
-
-import DatePicker from 'react-datepicker'
 
 const OtherFilterOptions = ({
   setFilterByEmployeeStatus,

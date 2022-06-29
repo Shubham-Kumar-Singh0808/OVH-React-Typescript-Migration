@@ -1,12 +1,11 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   UserAccessToFeatures,
   UserAccessToFeaturesSliceState,
 } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import userAccessToFeaturesApi from '../../../middleware/api/Settings/UserRolesConfiguration/userAccessToFeaturesApi'
 

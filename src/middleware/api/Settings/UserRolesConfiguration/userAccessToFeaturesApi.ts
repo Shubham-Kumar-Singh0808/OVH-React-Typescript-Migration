@@ -10,7 +10,7 @@ const getUserAccessToFeatures = async (
     url: userApiConfig.getUserAccessToFeatures,
     method: AllowedHttpMethods.get,
     params: {
-      userId: userId,
+      userId,
     },
   })
   const response = await axios(requestConfig)

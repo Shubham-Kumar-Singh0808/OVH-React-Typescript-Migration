@@ -1,11 +1,10 @@
 import { CButton, CCol, CFormCheck, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import AttendanceReportTable from './AttendanceReportTable'
 import BiometricAndShiftFilterOptions from './BiometricAndShiftFilterOptions'
-import OCard from '../../../components/ReusableComponent/OCard'
 import OtherFilterOptions from './OtherFilterOptions'
+import OCard from '../../../components/ReusableComponent/OCard'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import attendanceReportApi from '../../../middleware/api/TimeAndAttendance/AttendanceReport/attendanceReportApi'
