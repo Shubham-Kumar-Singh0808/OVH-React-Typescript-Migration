@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom'
 
 import React from 'react'
-import { render, screen } from '../../../test/testUtils'
 import EmployeeReport from './EmployeeReport'
+import { render, screen } from '../../../test/testUtils'
 
 describe('Employee Report Component Testing', () => {
+  // eslint-disable-next-line require-await
   test('should render Employee Report component without crashing', async () => {
     render(<EmployeeReport />)
 

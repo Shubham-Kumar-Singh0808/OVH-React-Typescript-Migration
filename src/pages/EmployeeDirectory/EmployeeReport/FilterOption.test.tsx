@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom'
-
 import React from 'react'
-import { render, screen } from '../../../test/testUtils'
+// eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
 import FilterOptions from './FilterOptions'
+import stateStore from '../../../stateStore'
+import { render, screen } from '../../../test/testUtils'
 import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
 
 const ReduxProvider = ({
@@ -18,6 +18,7 @@ const ReduxProvider = ({
 }) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('Fitler Options Component Testing', () => {
+  // eslint-disable-next-line require-await
   test('should render filter options component without crashing', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
