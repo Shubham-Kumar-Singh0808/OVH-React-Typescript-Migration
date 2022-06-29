@@ -212,6 +212,8 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
 
 export const employeeAttendanceReportApiConfig: EmployeeAttendanceReportApi = {
   getEmployeeAttendance: apiPrefix + '/biometric/bioAdminManager/attendance',
+  exportAttendance: apiPrefix + '/biometric/exportAttendance',
+  exportBiometricAttendance: apiPrefix + '/biometric/exportAttendance2',
 }
 
 export const userApiConfig: UserAccessToFeaturesApi = {

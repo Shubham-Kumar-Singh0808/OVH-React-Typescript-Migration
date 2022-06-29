@@ -19,6 +19,12 @@
 .atttendance-report-table > :not(caption) > * > *{
     padding: 0.25rem 0.25rem;
 }
-.sh-attendance-icon{
+.atttendance-report-table td, th {
+    vertical-align: middle !important;
+}
+.sh-attendance-icon-check{
     color: $green-success;
+}
+.sh-attendance-icon-times{
+    color: $red-fa-times
 }

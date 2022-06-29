@@ -15,7 +15,7 @@ export type EmployeeBioAttendanceDtoSet = {
   className: null | string
   timeInOffice: null | string
   hiveHours: null | string
-  lateReport: null | string
+  lateReport: null | boolean
 }
 
 export type EmployeeDetailsWithAttendanceReport = {
@@ -142,8 +142,8 @@ export type EmployeeAttendanceReportApiProps = {
 }
 
 export type BiometricAndShiftFilterOptionsProps = {
-  biometric: string
-  setBiometric: (value: string) => void
+  isBiometric: string
+  setIsBiometric: (value: string) => void
   employeeRole: string
   setSearchEmployee: (value: string) => void
   userAccess: boolean
@@ -158,6 +158,7 @@ export type AttendanceReportTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  isBiometric: string
 }
 
 export enum EmployeeStatus {

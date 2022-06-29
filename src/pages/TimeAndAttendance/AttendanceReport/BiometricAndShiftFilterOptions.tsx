@@ -11,8 +11,8 @@ import { EmployeeShiftDetails } from '../../../types/EmployeeDirectory/Employees
 import { BiometricAndShiftFilterOptionsProps } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
 
 const BiometricAndShiftFilterOptions = ({
-  biometric,
-  setBiometric,
+  isBiometric,
+  setIsBiometric,
   employeeRole,
   setSearchEmployee,
   userAccess,
@@ -21,7 +21,7 @@ const BiometricAndShiftFilterOptions = ({
   setSelectShiftId,
 }: BiometricAndShiftFilterOptionsProps): JSX.Element => {
   const onBiometricHandleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setBiometric(e.target.value)
+    setIsBiometric(e.target.value)
   }
   const [searchInput, setSearchInput] = useState<string>('')
   const [filteredShift, setFilteredShift] = useState<EmployeeShiftDetails[]>([])
@@ -51,7 +51,7 @@ const BiometricAndShiftFilterOptions = ({
             id="biometric"
             data-testid="form-select1"
             name="biometric"
-            value={biometric}
+            value={isBiometric}
             onChange={onBiometricHandleChange}
           >
             <option value="WithoutBiometric">Without Biometric</option>

@@ -24,6 +24,7 @@ const AttendanceReportTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  isBiometric,
 }: AttendanceReportTableProps): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.employeeAttendanceReport.selectors.isLoading,
@@ -62,14 +63,30 @@ const AttendanceReportTable = ({
     status: string | null,
     color: string,
     title: string | null,
+    lateReport?: boolean | null,
+    biometric?: string,
   ) => {
-    switch (status) {
-      case 'P':
-        return <i className="fa fa-check sh-attendance-icon"></i>
-      case 'A':
-        return <i className="fa fa-times"></i>
-      default:
-        return <span style={{ color: 'blue' }}>-</span>
+    if (status === 'P' && biometric !== 'WithBiometric') {
+      return <i className="fa fa-check sh-attendance-icon-check"></i>
+    } else if (status === 'P' && lateReport && biometric === 'WithBiometric') {
+      return <span style={{ color: 'red' }}>{title}</span>
+    } else if (
+      status === 'P' &&
+      lateReport === false &&
+      biometric === 'WithBiometric'
+    ) {
+      return <span style={{ color: 'black' }}>{title}</span>
+    } else if (status === 'A' && title === 'Absent') {
+      return <i className="fa fa-times sh-attendance-icon-times"></i>
+    } else if (
+      status === 'A' &&
+      (title === 'C' || title === 'L' || title === 'P')
+    ) {
+      return <span style={{ color: color }}>{title}</span>
+    } else if (status === 'A' && title === 'H') {
+      return <span style={{ color: '#CC6600' }}>{title}</span>
+    } else {
+      return <span style={{ color: 'blue' }}>-</span>
     }
   }
 
@@ -129,16 +146,35 @@ const AttendanceReportTable = ({
                           (bioAttendanceItem, bioAttendanceItemIndex) => {
                             return (
                               <React.Fragment key={bioAttendanceItemIndex}>
-                                <CTableDataCell
-                                  scope="row"
-                                  className="text-center"
-                                >
-                                  {attendanceStatus(
-                                    bioAttendanceItem.attendanceStatus,
-                                    bioAttendanceItem.color,
-                                    bioAttendanceItem.title,
-                                  )}
-                                </CTableDataCell>
+                                {isBiometric === 'WithBiometric' ? (
+                                  <>
+                                    <CTableDataCell
+                                      scope="row"
+                                      className="text-center"
+                                    >
+                                      {attendanceStatus(
+                                        bioAttendanceItem.attendanceStatus,
+                                        bioAttendanceItem.color,
+                                        bioAttendanceItem.title,
+                                        bioAttendanceItem.lateReport,
+                                        isBiometric,
+                                      )}
+                                    </CTableDataCell>
+                                  </>
+                                ) : (
+                                  <>
+                                    <CTableDataCell
+                                      scope="row"
+                                      className="text-center"
+                                    >
+                                      {attendanceStatus(
+                                        bioAttendanceItem.attendanceStatus,
+                                        bioAttendanceItem.color,
+                                        bioAttendanceItem.title,
+                                      )}
+                                    </CTableDataCell>
+                                  </>
+                                )}
                               </React.Fragment>
                             )
                           },

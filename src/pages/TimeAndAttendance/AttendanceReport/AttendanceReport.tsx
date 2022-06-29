@@ -8,6 +8,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import OtherFilterOptions from './OtherFilterOptions'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import attendanceReportApi from '../../../middleware/api/TimeAndAttendance/AttendanceReport/attendanceReportApi'
 
 const AttendanceReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -21,7 +22,7 @@ const AttendanceReport = (): JSX.Element => {
     new Date().getFullYear(),
   )
   const [selectMonth, setSelectMonth] = useState<number | string>(currentMonth)
-  const [biometric, setBiometric] = useState<string>('')
+  const [isBiometric, setIsBiometric] = useState<string>('')
   const [searchEmployee, setSearchEmployee] = useState<string>('')
   const [selectShiftId, setSelectShiftId] = useState<string>('')
   const [filterByEmployeeStatus, setFilterByEmployeeStatus] =
@@ -48,12 +49,6 @@ const AttendanceReport = (): JSX.Element => {
     reduxServices.shiftConfiguration.selectors.employeeShifts,
   )
 
-  const handleChangeSelectMonth = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setSelectMonth(event.target.value)
-  }
-
   const {
     paginationRange,
     setPageSize,
@@ -61,6 +56,57 @@ const AttendanceReport = (): JSX.Element => {
     currentPage,
     pageSize,
   } = usePagination(listSize, 20)
+
+  const handleChangeSelectMonth = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setSelectMonth(event.target.value)
+  }
+
+  const downloadFile = (
+    excelDownload: Blob | undefined,
+    downloadFormat: string,
+  ) => {
+    if (excelDownload) {
+      const url = window.URL.createObjectURL(
+        new Blob([excelDownload], {
+          type: excelDownload.type,
+        }),
+      )
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', downloadFormat)
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    }
+  }
+
+  const handleExportAttendanceReport = async () => {
+    const attendanceReportDownload =
+      await attendanceReportApi.exportAttendanceReport({
+        employeeId: Number(employeeId),
+        month: selectMonth as number,
+        year: currentYear as number,
+        search: searchEmployee,
+        shiftId: selectShiftId,
+        status: filterByEmployeeStatus,
+      })
+    downloadFile(attendanceReportDownload, 'Attendance.csv')
+  }
+
+  const handleExportBiometricAttendanceReport = async () => {
+    const biometricAttendanceReportDownload =
+      await attendanceReportApi.exportBiometricAttendanceReport({
+        employeeId: Number(employeeId),
+        month: selectMonth as number,
+        year: currentYear as number,
+        search: searchEmployee,
+        shiftId: selectShiftId,
+        status: filterByEmployeeStatus,
+      })
+    downloadFile(biometricAttendanceReportDownload, 'BiometricAttendance.csv')
+  }
 
   useEffect(() => {
     if (filterByEmployeeStatus && filterByDate) {
@@ -152,14 +198,20 @@ const AttendanceReport = (): JSX.Element => {
                 )}
               </div>
               <div className="d-inline pull-right ml15">
-                {biometric === 'WithBiometric' && (
-                  <CButton color="info btn-ovh me-0">
+                {isBiometric === 'WithBiometric' && (
+                  <CButton
+                    color="info btn-ovh me-0"
+                    onClick={handleExportBiometricAttendanceReport}
+                  >
                     <i className="fa fa-plus me-1"></i>
                     Click to Export Biometric Attendance
                   </CButton>
                 )}
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <CButton color="info btn-ovh me-0">
+                <CButton
+                  color="info btn-ovh me-0"
+                  onClick={handleExportAttendanceReport}
+                >
                   <i className="fa fa-plus me-1"></i>
                   Click to Export Attendance
                 </CButton>
@@ -176,8 +228,8 @@ const AttendanceReport = (): JSX.Element => {
           />
         )}
         <BiometricAndShiftFilterOptions
-          biometric={biometric}
-          setBiometric={setBiometric}
+          isBiometric={isBiometric}
+          setIsBiometric={setIsBiometric}
           employeeRole={employeeRole}
           setSearchEmployee={setSearchEmployee}
           userAccess={userAccess[0]?.viewaccess}
@@ -191,6 +243,7 @@ const AttendanceReport = (): JSX.Element => {
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           pageSize={pageSize}
+          isBiometric={isBiometric}
         />
       </OCard>
     </>
