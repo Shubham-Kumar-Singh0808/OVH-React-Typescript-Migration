@@ -1,14 +1,14 @@
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen, waitFor } from '@testing-library/react'
-
-import AddNewSkill from './AddNewSkill'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import { skillMockCategoryId } from '../../../test/data/skillListData'
-import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
+import AddNewSkill from './AddNewSkill'
+import stateStore from '../../../stateStore'
+import { skillMockCategoryId } from '../../../test/data/skillListData'
 
 const ReduxProvider = ({
   children,

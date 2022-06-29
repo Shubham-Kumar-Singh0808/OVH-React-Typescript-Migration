@@ -1,3 +1,5 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import {
   Employee,
   EmployeeListApiProps,
@@ -5,10 +7,7 @@ import {
   EmploymentStatus,
 } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import employeeListApi from '../../../middleware/api/EmployeeDirectory/EmployeesList/employeeListApi'
 

@@ -1,25 +1,19 @@
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
 
-import { render, screen } from '../../../test/testUtils'
-
-import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import { EnhancedStore } from '@reduxjs/toolkit'
-import ListOptions from './ListOptions'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+import ListOptions from './ListOptions'
+import { render, screen } from '../../../test/testUtils'
+import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
+import { ReduxProvider } from '../../../components/Helper'
+import stateStore from '../../../stateStore'
 
 describe('List Options Component Testing', () => {
-  test('should render Personal info tab component with out crashing', async () => {
+  test('should render Personal info tab component with out crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <ListOptions />

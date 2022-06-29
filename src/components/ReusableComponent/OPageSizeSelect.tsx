@@ -1,6 +1,5 @@
-import { CCol, CFormSelect, CRow } from '@coreui/react-pro'
-
 import React from 'react'
+import { CCol, CFormSelect, CRow } from '@coreui/react-pro'
 
 const OPageSizeSelect = ({
   handlePageSizeSelectChange,

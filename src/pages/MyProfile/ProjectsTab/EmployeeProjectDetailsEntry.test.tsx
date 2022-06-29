@@ -45,15 +45,15 @@ describe('Employee Projects Details', () => {
   })
   test('should render the correct project billable status', () => {
     let value: string
-    mockEmployeeProjectsDetail[0].billable ? (value = 'Yes') : (value = 'No')
+    if (mockEmployeeProjectsDetail[0].billable) value = 'Yes'
+    else value = 'No'
     const tableEntry = screen.getByRole('cell', { name: value })
     expect(tableEntry).toBeTruthy()
   })
   test('should render the correct project current status', () => {
     let value: string
-    mockEmployeeProjectsDetail[0].isAllocated
-      ? (value = 'Allocated')
-      : (value = 'Not Allocated')
+    if (mockEmployeeProjectsDetail[0].isAllocated) value = 'Allocated'
+    else value = 'Not Allocated'
     const tableEntry = screen.getByRole('cell', { name: value })
     expect(tableEntry).toBeTruthy()
   })

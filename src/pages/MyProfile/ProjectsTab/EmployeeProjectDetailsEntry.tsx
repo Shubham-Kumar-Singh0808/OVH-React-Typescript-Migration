@@ -1,6 +1,6 @@
 import { CTableRow, CTableDataCell } from '@coreui/react-pro'
-import { EmployeeProjectDetailsEntryInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 import React from 'react'
+import { EmployeeProjectDetailsEntryInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
 const EmployeeProjectDetailsEntry = (
   props: EmployeeProjectDetailsEntryInterface,

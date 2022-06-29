@@ -1,10 +1,9 @@
+import axios from 'axios'
 import { AllowedHttpMethods, certificateListApiConfig } from '../../apiList'
 import {
   CertificateListApiProps,
   EmployeeCertificateResponse,
 } from '../../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeesCertificates = async (

@@ -1,6 +1,6 @@
+import { rest } from 'msw'
 import { employeeAssetsApiConfig } from '../../middleware/api/apiList'
 import { mockAssetsDetails } from '../data/employeeAssetsData'
-import { rest } from 'msw'
 
 export const employeeAssetsHandlers = [
   rest.get(employeeAssetsApiConfig.getEmployeeAssets, (req, res, ctx) => {

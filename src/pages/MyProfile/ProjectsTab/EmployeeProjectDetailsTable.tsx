@@ -8,16 +8,16 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import EmployeeProjectDetailsEntry from './EmployeeProjectDetailsEntry'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
-  EmployeeProjectDetailInterface as EmployeeProjectDetailsTable,
+  EmployeeProjectDetailInterface,
   ProjectDetails,
 } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
-import EmployeeProjectDetailsEntry from './EmployeeProjectDetailsEntry'
 
 const EmployeeProjectsDetail = (
-  props: EmployeeProjectDetailsTable,
+  props: EmployeeProjectDetailInterface,
 ): JSX.Element => {
   const [projectDetails, setProjectDetails] = useState<
     ProjectDetails | undefined

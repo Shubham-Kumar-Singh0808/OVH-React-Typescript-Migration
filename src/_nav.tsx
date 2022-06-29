@@ -1,6 +1,5 @@
 import { CNavGroup, CNavItem } from '@coreui/react-pro'
 import React, { ElementType } from 'react'
-
 import CIcon from '@coreui/icons-react'
 import { cilSpeedometer } from '@coreui/icons'
 

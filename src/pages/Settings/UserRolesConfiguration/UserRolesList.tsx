@@ -1,5 +1,4 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
-
 import React from 'react'
 import { UserRolesListProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { reduxServices } from '../../../reducers/reduxServices'

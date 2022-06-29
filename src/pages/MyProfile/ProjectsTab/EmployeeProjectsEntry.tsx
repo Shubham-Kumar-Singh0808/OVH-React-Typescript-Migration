@@ -1,7 +1,7 @@
 import { CTableDataCell, CTableRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
-import { EmployeeProjectDetailsTableInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 import EmployeeProjectDetailsTable from './EmployeeProjectDetailsTable'
+import { EmployeeProjectDetailsTableInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
 const EmployeeProjectEntry = (
   props: EmployeeProjectDetailsTableInterface,
@@ -17,7 +17,7 @@ const EmployeeProjectEntry = (
     return str
       .toLowerCase()
       .split(' ')
-      .map(function (word) {
+      .map((word) => {
         return word.replace(word[0], word[0].toUpperCase())
       })
       .join(' ')

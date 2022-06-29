@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
 
 import { queryByAttribute, render } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../stateStore'
 import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
-import { UploadImage } from '../../../types/apiTypes'
+import stateStore from '../../../stateStore'
+import { UploadImageInterface } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
+// import { UploadImage } from '../../../types/apiTypes'
 
 const ReduxProvider = ({
   children,
@@ -25,9 +29,7 @@ describe('Basic Info Image Upload Crop Testing', () => {
         <BasicInfoTabImageCropper
           file={'undefined'}
           empId={0}
-          onUploadImage={function (croppedImageData: UploadImage): void {
-            throw new Error('Function not implemented.')
-          }}
+          onUploadImage={() => {}}
         />
       </ReduxProvider>,
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen } from '../../../test/testUtils'
 import EmployeeProjectsDetail from './EmployeeProjectDetailsTable'
+import { render, screen } from '../../../test/testUtils'
 import { mockEmployeeProjectsDetail } from '../../../test/data/employeeProjectsData'
 
 describe('Employee Projects Details', () => {
