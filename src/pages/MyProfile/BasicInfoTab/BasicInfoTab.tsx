@@ -380,12 +380,6 @@ const BasicInfoTab = (): JSX.Element => {
     window.location.reload()
   }
 
-  // const formik = useFormik({
-  //   initialValues: { name: '', message: '' },
-  //   onSubmit: (values) => {
-  //     console.log('Logging in ', values)
-  //   },
-  // })
   const toastElement = (
     <OToast
       toastMessage="Your changes have been saved successfully."
