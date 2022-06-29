@@ -8,6 +8,7 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import EmployeeProjectDetailsEntry from './EmployeeProjectDetailsEntry'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
@@ -35,7 +36,7 @@ const EmployeeProjectsDetail = (
   }, [dispatch, props.projectId])
 
   useEffect(() => {
-    if (allProjectDetails?.length) {
+    if (allProjectDetails) {
       allProjectDetails
         .filter(
           (allProjectDetails) =>
@@ -80,31 +81,14 @@ const EmployeeProjectsDetail = (
         </CTableHead>
         <CTableBody>
           {projectDetails ? (
-            <CTableRow>
-              <CTableDataCell scope="row">{props.projectId}</CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.empFirstName + ' ' + projectDetails.empLastName}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.desigination}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.allocation}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.endDate}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.billable ? 'Yes' : 'No'}
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                {projectDetails.isAllocated ? 'Allocated' : 'Not Allocated'}
-              </CTableDataCell>
-            </CTableRow>
+            <EmployeeProjectDetailsEntry
+              id={props.projectId}
+              projectDetails={projectDetails}
+            />
           ) : (
             <CTableRow color="default" className="text-center">
               <CTableDataCell colSpan={7}>
-                <CSpinner />
+                <CSpinner data-testid="project-loader" />
               </CTableDataCell>
             </CTableRow>
           )}

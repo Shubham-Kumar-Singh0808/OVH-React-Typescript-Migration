@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/named */
 // Todd: remove eslint and fix error
+// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
 import * as reactRedux from 'react-redux'
 import { render, screen } from '@testing-library/react'

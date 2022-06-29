@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Todo: remove eslint and fix all the errors
 import {
   CNav,
   CNavItem,
