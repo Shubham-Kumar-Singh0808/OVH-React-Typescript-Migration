@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 
-import { getByLabelText, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
