@@ -70,12 +70,21 @@ const initialCategoryState: QualificationCategorySliceState = {
   qualificationCategories: [],
   isLoading: ApiLoadingState.idle,
   error: null,
+  currentPage: 0,
+  pageSize: 0
 }
 
 const qualificationCategorySlice = createSlice({
   name: 'qualificationCategory',
   initialState: initialCategoryState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(deleteQualificationCategory.rejected, (state, action) => {
@@ -116,6 +125,9 @@ const qualificationCategories = (state: RootState): QualificationCategory[] =>
 const isError = (state: RootState): ValidationError =>
   state.qualificationCategory.error
 
+const pageFromState = (state: RootState): number => state.qualificationCategory.currentPage
+const pageSizeFromState = (state: RootState): number => state.qualificationCategory.pageSize
+
 export const qualificationCategoryThunk = {
   getQualificationCategories,
   deleteQualificationCategory,
@@ -126,6 +138,8 @@ export const qualificationCategorySelectors = {
   isLoading,
   qualificationCategories,
   isError,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const qualificationCategoryService = {

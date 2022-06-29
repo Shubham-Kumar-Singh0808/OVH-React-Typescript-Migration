@@ -22,20 +22,6 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const QualificationCategoryListTable = (): JSX.Element => {
-  const qualificationCategories = useTypedSelector(
-    reduxServices.employeeQualificationCategory.selectors
-      .qualificationCategories,
-  )
-  const dispatch = useAppDispatch()
-
-  const {
-    paginationRange,
-    setPageSize,
-    setCurrentPage,
-    currentPage,
-    pageSize,
-  } = usePagination(qualificationCategories.length, 20)
-
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [
     toDeleteQualificationCategoryName,
@@ -44,9 +30,28 @@ const QualificationCategoryListTable = (): JSX.Element => {
   const [toDeleteQualificationCategoryId, setToDeleteQualificationCategoryId] =
     useState(0)
 
-  useEffect(() => {
-    setPageSize(20)
-  }, [qualificationCategories, setPageSize, setCurrentPage])
+  const qualificationCategories = useTypedSelector(
+    reduxServices.employeeQualificationCategory.selectors
+      .qualificationCategories,
+  )
+
+  const pageFromState = useTypedSelector(
+    reduxServices.employeeQualificationCategory.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.employeeQualificationCategory.selectors.pageSizeFromState,
+  )
+
+  const dispatch = useAppDispatch()
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(qualificationCategories.length, pageSizeFromState, pageFromState)
+
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -84,6 +89,8 @@ const QualificationCategoryListTable = (): JSX.Element => {
   const handleConfirmDelete = async (id: number) => {
     setIsDeleteModalVisible(false)
 
+    dispatch(reduxServices.category.actions.setCurrentPage(currentPage))
+    dispatch(reduxServices.category.actions.setPageSize(pageSize))
     const deleteQualificationCategoryResultAction = await dispatch(
       reduxServices.employeeQualificationCategory.deleteQualificationCategory(
         id,
@@ -114,8 +121,6 @@ const QualificationCategoryListTable = (): JSX.Element => {
 
   return (
     <>
-      {qualificationCategories.length ? (
-        <>
           <CTable striped>
             <CTableHead>
               <CTableRow className="align-items-start">
@@ -167,34 +172,34 @@ const QualificationCategoryListTable = (): JSX.Element => {
                 <strong>Total Records: {qualificationCategories.length}</strong>
               </p>
             </CCol>
+            {!qualificationCategories.length && (
+          <CCol>
+            <CRow>
+              <h4 className="text-center">No data to display</h4>
+            </CRow>
+          </CCol>
+        )}
             <CCol xs={3}>
-              {qualificationCategories.length > 20 && (
-                <OPageSizeSelect
-                  handlePageSizeSelectChange={handlePageSizeSelectChange}
-                />
-              )}
-            </CCol>
-            {qualificationCategories.length > 20 && (
-              <CCol
-                xs={5}
-                className="d-grid gap-1 d-md-flex justify-content-md-end"
-              >
-                <OPagination
-                  currentPage={currentPage}
-                  pageSetter={setCurrentPage}
-                  paginationRange={paginationRange}
-                />
-              </CCol>
-            )}
-          </CRow>
-        </>
-      ) : (
-        <CCol>
-          <CRow className="category-no-data">
-            <h4 className="text-center">No data to display</h4>
-          </CRow>
+          {qualificationCategories.length > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              selectedPageSize={pageSize}
+            />
+          )}
         </CCol>
-      )}
+        {qualificationCategories.length > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+          </CRow>
       <OModal
         alignment="center"
         visible={isDeleteModalVisible}
