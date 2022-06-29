@@ -70,8 +70,8 @@ const initialCategoryState: QualificationCategorySliceState = {
   qualificationCategories: [],
   isLoading: ApiLoadingState.idle,
   error: null,
-  currentPage: 0,
-  pageSize: 0
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const qualificationCategorySlice = createSlice({
@@ -125,8 +125,10 @@ const qualificationCategories = (state: RootState): QualificationCategory[] =>
 const isError = (state: RootState): ValidationError =>
   state.qualificationCategory.error
 
-const pageFromState = (state: RootState): number => state.qualificationCategory.currentPage
-const pageSizeFromState = (state: RootState): number => state.qualificationCategory.pageSize
+const pageFromState = (state: RootState): number =>
+  state.qualificationCategory.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.qualificationCategory.pageSize
 
 export const qualificationCategoryThunk = {
   getQualificationCategories,

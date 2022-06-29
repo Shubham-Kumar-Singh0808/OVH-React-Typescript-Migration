@@ -50,8 +50,11 @@ const QualificationCategoryListTable = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(qualificationCategories.length, pageSizeFromState, pageFromState)
-
+  } = usePagination(
+    qualificationCategories.length,
+    pageSizeFromState,
+    pageFromState,
+  )
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -121,65 +124,63 @@ const QualificationCategoryListTable = (): JSX.Element => {
 
   return (
     <>
-          <CTable striped>
-            <CTableHead>
-              <CTableRow className="align-items-start">
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">
-                  Qualification Category
+      <CTable striped>
+        <CTableHead>
+          <CTableRow className="align-items-start">
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">
+              Qualification Category
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col">Qualification Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {currentPageItems.map((qualificationCategory, index) => {
+            return (
+              <CTableRow key={index}>
+                <CTableHeaderCell scope="row">
+                  {getItemNumber(index)}
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col">
-                  Qualification Name
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                <CTableDataCell>
+                  {qualificationCategory.qualificationCategory}
+                </CTableDataCell>
+                <CTableDataCell>
+                  {qualificationCategory.qualificationName}
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CButton
+                    color="danger"
+                    size="sm"
+                    onClick={() =>
+                      handleShowDeleteModal(
+                        qualificationCategory.qualificationCategory,
+                        qualificationCategory.id as number,
+                      )
+                    }
+                  >
+                    <CIcon className="text-white" icon={cilTrash} />
+                  </CButton>
+                </CTableDataCell>
               </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {currentPageItems.map((qualificationCategory, index) => {
-                return (
-                  <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">
-                      {getItemNumber(index)}
-                    </CTableHeaderCell>
-                    <CTableDataCell>
-                      {qualificationCategory.qualificationCategory}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {qualificationCategory.qualificationName}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <CButton
-                        color="danger"
-                        size="sm"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            qualificationCategory.qualificationCategory,
-                            qualificationCategory.id as number,
-                          )
-                        }
-                      >
-                        <CIcon className="text-white" icon={cilTrash} />
-                      </CButton>
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-            </CTableBody>
-          </CTable>
-          <CRow>
-            <CCol xs={4}>
-              <p>
-                <strong>Total Records: {qualificationCategories.length}</strong>
-              </p>
-            </CCol>
-            {!qualificationCategories.length && (
+            )
+          })}
+        </CTableBody>
+      </CTable>
+      <CRow>
+        <CCol xs={4}>
+          <p>
+            <strong>Total Records: {qualificationCategories.length}</strong>
+          </p>
+        </CCol>
+        {!qualificationCategories.length && (
           <CCol>
             <CRow>
               <h4 className="text-center">No data to display</h4>
             </CRow>
           </CCol>
         )}
-            <CCol xs={3}>
+        <CCol xs={3}>
           {qualificationCategories.length > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
@@ -199,7 +200,7 @@ const QualificationCategoryListTable = (): JSX.Element => {
             />
           </CCol>
         )}
-          </CRow>
+      </CRow>
       <OModal
         alignment="center"
         visible={isDeleteModalVisible}
