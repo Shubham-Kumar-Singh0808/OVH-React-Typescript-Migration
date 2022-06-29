@@ -45,7 +45,7 @@ const exportEmployeeDesignationReport = async (
     params: {
       selectionDesignation: props.selectedDesignation ?? '',
       token: localStorage.getItem('token') ?? '',
-      tenantKey: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('tenantKey') ?? '',
     },
     responseType: 'blob',
   })
