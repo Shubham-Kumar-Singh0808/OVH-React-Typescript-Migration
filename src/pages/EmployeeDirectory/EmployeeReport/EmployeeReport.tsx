@@ -11,6 +11,8 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 const EmployeeReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
+  const [category, setCategory] = useState<string>('')
+
   const isLoading = useTypedSelector(
     reduxServices.employeeReports.selectors.isLoading,
   )
@@ -23,8 +25,6 @@ const EmployeeReport = (): JSX.Element => {
   const searchEmployee = useTypedSelector(
     reduxServices.employeeReports.selectors.searchEmployee,
   )
-
-  const [category, setCategory] = useState<string>('')
 
   const {
     paginationRange,
