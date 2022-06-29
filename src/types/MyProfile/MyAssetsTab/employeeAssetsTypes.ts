@@ -15,4 +15,6 @@ export type EmployeeAssetsState = {
   employeeAssets: EmployeeAsset[]
   isLoading: LoadingState
   error: ValidationError
+  currentPage: number
+  pageSize: number
 }

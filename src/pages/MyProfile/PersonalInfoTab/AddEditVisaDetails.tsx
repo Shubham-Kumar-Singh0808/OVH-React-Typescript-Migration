@@ -138,9 +138,9 @@ function AddEditVisaDetails({
 
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
-    if (name === 'countryId' && employeeVisaDetails.countryId !== value) {
+    if (name === 'countryId') {
       setEmployeeVisaDetails((prevState) => {
-        return { ...prevState, ...{ visaTypeId: '' } }
+        return { ...prevState, ...{ [name]: value, visaTypeId: '' } }
       })
     }
     setEmployeeVisaDetails((prevState) => {
@@ -394,7 +394,7 @@ function AddEditVisaDetails({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...visaTypeProps}>
-              Visa Type:{' '}
+              Visa Type:
               <span
                 className={
                   employeeVisaDetails?.visaTypeId ? 'text-white' : 'text-danger'

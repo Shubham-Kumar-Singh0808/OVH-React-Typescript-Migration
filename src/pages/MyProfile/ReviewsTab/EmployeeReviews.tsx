@@ -176,11 +176,7 @@ const EmployeeReviews = (): JSX.Element => {
               </CTableHead>
             </CTable>
             <br />
-            <CCol xs={4}>
-              <p>
-                <strong>No Records Found... </strong>
-              </p>
-            </CCol>
+            <strong>No Records Found... </strong>
           </>
         )}
       </CCardBody>

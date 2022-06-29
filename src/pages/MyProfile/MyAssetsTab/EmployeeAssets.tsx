@@ -29,7 +29,14 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
     reduxServices.authentication.selectors.selectEmployeeId,
   )
   const employeeAssets = useTypedSelector(
-    reduxServices.employeeAssets.selectors.employeeMyAssets,
+    reduxServices.employeeAssets.selectors.employeeAssets,
+  )
+
+  const pageFromState = useTypedSelector(
+    reduxServices.employeeAssets.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.employeeAssets.selectors.pageSizeFromState,
   )
 
   const dispatch = useAppDispatch()
@@ -42,13 +49,18 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
     setSpecification(productSpecification)
   }
 
+  useEffect(() => {
+    dispatch(reduxServices.category.actions.setCurrentPage(1))
+    dispatch(reduxServices.category.actions.setPageSize(20))
+  }, [dispatch])
+
   const {
     paginationRange,
     setPageSize,
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(employeeAssets.length, 20)
+  } = usePagination(employeeAssets.length, pageSizeFromState, pageSizeFromState)
 
   useEffect(() => {
     setPageSize(20)

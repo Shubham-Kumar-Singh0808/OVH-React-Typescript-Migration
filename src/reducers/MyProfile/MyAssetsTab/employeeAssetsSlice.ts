@@ -13,6 +13,8 @@ const initialEmployeeAssetsState: EmployeeAssetsState = {
   employeeAssets: [],
   isLoading: ApiLoadingState.idle,
   error: 0,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const getEmployeeAssets = createAsyncThunk<
@@ -38,8 +40,14 @@ const getEmployeeAssets = createAsyncThunk<
 const employeeAssetsSlice = createSlice({
   name: 'employeeMyAssets',
   initialState: initialEmployeeAssetsState,
-  reducers: {},
-
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getEmployeeAssets.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
@@ -54,12 +62,19 @@ const employeeAssetsSlice = createSlice({
 const employeeAssets = (state: RootState): EmployeeAsset[] =>
   state.employeeAssets.employeeAssets
 
+const pageFromState = (state: RootState): number =>
+  state.employeeAssets.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.employeeAssets.pageSize
+
 const employeeAssetsThunk = {
   getEmployeeMyAssets: getEmployeeAssets,
 }
 
 const employeeAssetsSelectors = {
-  employeeMyAssets: employeeAssets,
+  employeeAssets,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const employeeAssetsService = {
