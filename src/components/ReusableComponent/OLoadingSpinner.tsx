@@ -22,7 +22,7 @@ const OLoadingSpinner = (props: LoadingSpinner): JSX.Element => {
           {props.type === LoadingType.COMPONENT ? (
             <CSpinner color="primary" />
           ) : (
-            <img src={loadingSpinner} alt="" />
+            <img src={loadingSpinner} alt="Loading..." />
           )}
         </div>,
         overlay,
