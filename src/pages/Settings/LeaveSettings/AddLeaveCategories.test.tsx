@@ -51,18 +51,7 @@ describe('Add New Leave Category Testing', () => {
       </ReduxProvider>,
     )
     expect(screen.getAllByRole('option').length).toBe(3)
-  })
-
-  test('should find add and clear buttons in the form', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddLeaveCategories />
-      </ReduxProvider>,
-    )
-    expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
-  })
-
+  }) 
   test('should correctly set default option', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
