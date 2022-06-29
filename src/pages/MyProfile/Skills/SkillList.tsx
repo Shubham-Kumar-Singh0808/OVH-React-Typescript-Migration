@@ -7,11 +7,10 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import AddNewSkill from './AddNewSkill'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import SkillListTable from './SkillListTable'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const SkillList = ({
@@ -21,7 +20,7 @@ const SkillList = ({
 }: {
   categoryId: number
   categoryType: string | undefined
-  backButtonHandler: () => void
+  backButtonHandler?: () => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(reduxServices.skill.selectors.isLoading)

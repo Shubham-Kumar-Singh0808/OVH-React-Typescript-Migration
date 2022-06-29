@@ -1,10 +1,11 @@
+/* eslint-disable sonarjs/no-identical-functions */
+// Todo: remove eslint and fix error
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import {
   EmployeeGeneralInformation,
   EmployeeGeneralInformationState,
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
-import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
 import employeeGeneralInformationApi from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'

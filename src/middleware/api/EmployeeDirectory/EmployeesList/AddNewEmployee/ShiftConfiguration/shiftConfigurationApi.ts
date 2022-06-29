@@ -1,10 +1,9 @@
+import axios from 'axios'
 import {
   AllowedHttpMethods,
   shiftConfigurationApiConfig,
 } from '../../../../apiList'
-
 import { EmployeeShiftDetails } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../../utils/apiUtils'
 
 const getEmployeeShifts = async (): Promise<EmployeeShiftDetails[]> => {

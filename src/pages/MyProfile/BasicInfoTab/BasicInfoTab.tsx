@@ -1,3 +1,11 @@
+/* eslint-disable max-lines */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable sonarjs/no-collapsible-if */
+/* eslint-disable require-await */
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable complexity */
+// Todo: remove eslint and fix all the errors
 import {
   CButton,
   CCol,
@@ -9,18 +17,18 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import { useFormik } from 'formik'
+import validator from 'validator'
 import DownloadCVButton from './DownloadCVButton'
+import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
-import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useFormik } from 'formik'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
-import validator from 'validator'
-import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
 import { UploadImageInterface } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
@@ -187,7 +195,7 @@ const BasicInfoTab = (): JSX.Element => {
   const onDateChangeHandler = (date: Date, e: { name: string }) => {
     if (employeeBasicInformationEditData) {
       const formatDate = moment(date).format('DD/MM/YYYY')
-      const name = e.name
+      const { name } = e
       setEmployeeBasicInformationEditData((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
@@ -311,8 +319,8 @@ const BasicInfoTab = (): JSX.Element => {
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
-      htmlFor: htmlFor,
-      className: className,
+      htmlFor,
+      className,
     }
   }
 

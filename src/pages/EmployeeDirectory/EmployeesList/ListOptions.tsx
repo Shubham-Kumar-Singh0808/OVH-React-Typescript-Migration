@@ -1,8 +1,7 @@
 import { CButton, CFormCheck } from '@coreui/react-pro'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
-import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import React from 'react'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import employeeListApi from '../../../middleware/api/EmployeeDirectory/EmployeesList/employeeListApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 

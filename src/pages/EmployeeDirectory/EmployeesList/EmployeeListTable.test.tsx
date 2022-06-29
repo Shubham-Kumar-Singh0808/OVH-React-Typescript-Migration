@@ -1,12 +1,11 @@
 import '@testing-library/jest-dom'
 
-import { render, screen, waitFor } from '../../../test/testUtils'
-
-import { Employee } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
-import EmployeeListTable from './EmployeeListTable'
 import React from 'react'
-import { mockEmployeeList } from '../../../test/data/employeeListData'
 import userEvent from '@testing-library/user-event'
+import EmployeeListTable from './EmployeeListTable'
+import { render, screen, waitFor } from '../../../test/testUtils'
+import { Employee } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
+import { mockEmployeeList } from '../../../test/data/employeeListData'
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {

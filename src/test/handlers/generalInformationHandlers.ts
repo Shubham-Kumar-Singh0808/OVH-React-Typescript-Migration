@@ -1,6 +1,6 @@
+import { rest } from 'msw'
 import { employeeGeneralInformationApiConfig } from '../../middleware/api/apiList'
 import { mockGeneralInformationData } from '../data/generalInformationData'
-import { rest } from 'msw'
 
 export const generalInformationHandlers = [
   rest.get(

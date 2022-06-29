@@ -1,3 +1,5 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
   CertificateType,
@@ -7,10 +9,7 @@ import {
   Technology,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import employeeCertificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationsApi'
 
 const initialCertificationState: CertificationSliceState = {

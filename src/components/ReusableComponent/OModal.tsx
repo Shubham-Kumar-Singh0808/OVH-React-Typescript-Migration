@@ -6,9 +6,8 @@ import {
   CModalFooter,
   CModalHeader,
 } from '@coreui/react-pro'
-
-import { ModalPropsType } from '../../types/Components/modalTypes'
 import React from 'react'
+import { ModalPropsType } from '../../types/Components/modalTypes'
 
 const OModal = ({
   visible,

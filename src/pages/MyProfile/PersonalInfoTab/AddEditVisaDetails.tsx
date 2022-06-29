@@ -1,7 +1,13 @@
-import {
-  AddEditEmployeeVisaDetails,
-  EmployeeVisaDetails,
-} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable func-style */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable radix */
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable complexity */
+/* eslint-disable require-await */
+/* eslint-disable import/named */
+// Todd: remove all eslint and fix error
+// Todo: remove eslint and fix all the errors
 import {
   CButton,
   CCardBody,
@@ -14,12 +20,17 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import {
+  AddEditEmployeeVisaDetails,
+  EmployeeVisaDetails,
+} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
-import moment from 'moment'
+
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,
