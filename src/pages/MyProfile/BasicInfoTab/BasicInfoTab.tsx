@@ -12,17 +12,17 @@ import {
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
+import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import DownloadCVButton from './DownloadCVButton'
-import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useFormik } from 'formik'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import validator from 'validator'
 import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
 import { UploadImageInterface } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
+import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -371,12 +371,12 @@ const BasicInfoTab = (): JSX.Element => {
     window.location.reload()
   }
 
-  const formik = useFormik({
-    initialValues: { name: '', message: '' },
-    onSubmit: (values) => {
-      console.log('Logging in ', values)
-    },
-  })
+  // const formik = useFormik({
+  //   initialValues: { name: '', message: '' },
+  //   onSubmit: (values) => {
+  //     console.log('Logging in ', values)
+  //   },
+  // })
   const toastElement = (
     <OToast
       toastMessage="Your changes have been saved successfully."
@@ -425,6 +425,12 @@ const BasicInfoTab = (): JSX.Element => {
   const handleAnniversary = (date: Date) => {
     setSelectedAnniversary(date)
     setAnniversaryFlag(true)
+  }
+
+  const handleDescription = (aboutMe: string) => {
+    setEmployeeBasicInformationEditData((prevState) => {
+      return { ...prevState, ...{ aboutMe: aboutMe } }
+    })
   }
 
   const dateIsValid = (date: Date) => {
@@ -959,10 +965,16 @@ const BasicInfoTab = (): JSX.Element => {
             >
               About Me:
             </CFormLabel>
-            <CCol sm={9}>
-              <OTextEditor
-                setFieldValue={(val) => formik.setFieldValue('', val)}
-                value={'Hello'}
+            <CCol sm={8}>
+              <CKEditor<{
+                onChange: CKEditorEventHandler<'change'>
+              }>
+                initData={employeeBasicInformationEditData?.aboutMe}
+                config={ckeditorConfig}
+                debug={true}
+                onChange={({ editor }) => {
+                  handleDescription(editor.getData().trim())
+                }}
               />
             </CCol>
           </CRow>

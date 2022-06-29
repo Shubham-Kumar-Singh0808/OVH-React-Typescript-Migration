@@ -41,7 +41,7 @@ function AddUpdateEmployeeCertification({
   const [completedDateFlag, setCompletedDateFlag] = useState<boolean>(false)
   const [expiryDateFlag, setExpirtyDateFlag] = useState<boolean>(false)
 
-  const [showEditor, setShowEditor] = useState<boolean>(false)
+  const [showEditor, setShowEditor] = useState<boolean>(true)
 
   const getTechnologies = useTypedSelector(
     reduxServices.employeeCertifications.selectors.technologies,
@@ -254,10 +254,15 @@ function AddUpdateEmployeeCertification({
       code: '',
       percent: 0,
       name: '',
+      description: '',
     })
     setCompletedDate('')
     setExpiryDate('')
     setError(false)
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
   }
 
   const handleAddCertificateDetails = async () => {
@@ -568,7 +573,7 @@ function AddUpdateEmployeeCertification({
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Description:
             </CFormLabel>
-            {showEditor || !isEditCertificationDetails ? (
+            {showEditor ? (
               <CCol sm={8}>
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>

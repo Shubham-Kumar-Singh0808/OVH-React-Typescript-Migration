@@ -14,13 +14,12 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
+import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import CategoryList from '../../Categories/CategoryList'
-import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import SkillList from '../../Skills/SkillList'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useFormik } from 'formik'
+import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 
 function AddEditEmployeeSkill({
   isEditSkillsDetails = false,
@@ -31,6 +30,8 @@ function AddEditEmployeeSkill({
 }: AddEditEmployeeSkillsProps): JSX.Element {
   const initialEmployeeSkillsDetails = {} as AddUpdateEmployeeSkill
   const [toggle, setToggle] = useState('')
+  const [showEditor, setShowEditor] = useState<boolean>(true)
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -61,6 +62,15 @@ function AddEditEmployeeSkill({
     }
   }, [dispatch, employeeSkill?.categoryType])
 
+  useEffect(() => {
+    if (editFetchSkillsDetails?.comments) {
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+    }
+  }, [editFetchSkillsDetails])
+
   const employeeSkillHandler = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -75,13 +85,6 @@ function AddEditEmployeeSkill({
       })
     }
   }
-
-  const formik = useFormik({
-    initialValues: { name: '', message: '' },
-    onSubmit: (values) => {
-      console.log('Logging in ', values)
-    },
-  })
 
   useEffect(() => {
     if (
@@ -111,6 +114,10 @@ function AddEditEmployeeSkill({
         id: '',
       },
     })
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
   }
 
   useEffect(() => {
@@ -149,6 +156,12 @@ function AddEditEmployeeSkill({
         )
     }
   }, [getAllCategoriesDetails])
+
+  const handleDescription = (comments: string) => {
+    setEmployeeSkill((prevState) => {
+      return { ...prevState, ...{ comments: comments } }
+    })
+  }
 
   const handleAddSkillDetails = async () => {
     const prepareObject = {
@@ -406,12 +419,22 @@ function AddEditEmployeeSkill({
                 <CFormLabel className="col-sm-3 col-form-label text-end">
                   Comments:
                 </CFormLabel>
-                <CCol sm={8}>
-                  <OTextEditor
-                    setFieldValue={(val) => formik.setFieldValue('', val)}
-                    value={employeeSkill?.comments}
-                  />
-                </CCol>
+                {showEditor ? (
+                  <CCol sm={8}>
+                    <CKEditor<{
+                      onChange: CKEditorEventHandler<'change'>
+                    }>
+                      initData={employeeSkill?.comments}
+                      config={ckeditorConfig}
+                      debug={true}
+                      onChange={({ editor }) => {
+                        handleDescription(editor.getData().trim())
+                      }}
+                    />
+                  </CCol>
+                ) : (
+                  ''
+                )}
               </CRow>
               <CRow>
                 <CCol md={{ span: 6, offset: 3 }}>
