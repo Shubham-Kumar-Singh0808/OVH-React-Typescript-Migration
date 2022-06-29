@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/named */
 // Todo: remove eslint and fix error
 import '@testing-library/jest-dom'

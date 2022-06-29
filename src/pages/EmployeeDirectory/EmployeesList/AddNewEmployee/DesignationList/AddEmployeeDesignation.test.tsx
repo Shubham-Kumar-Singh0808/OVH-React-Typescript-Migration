@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
 
 import { render, screen, waitFor } from '@testing-library/react'
@@ -38,9 +40,7 @@ describe('Add New Designation Testing', () => {
         />
       </ReduxProvider>,
     )
-    expect(
-      screen.getByRole('option', { name: 'Select Department' }).selected,
-    ).toBe(true)
+    expect(screen.getByRole('option', { name: 'Select Department' })).toBe(true)
   })
 
   test('should be in disabled mode when any of the mandatory field is not entered', async () => {
