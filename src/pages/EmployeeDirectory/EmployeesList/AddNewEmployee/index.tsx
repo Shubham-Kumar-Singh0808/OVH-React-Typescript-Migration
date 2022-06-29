@@ -22,6 +22,7 @@ import {
   GetList,
   GetProjectManager,
   GetReportManager,
+  ToggleShiftProp,
 } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EmployeeShiftDetails } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
@@ -31,7 +32,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { listComposer } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
-const AddNewEmployee = (): JSX.Element => {
+const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
@@ -439,6 +440,7 @@ const AddNewEmployee = (): JSX.Element => {
                 <CButton
                   className="btn-ovh me-1"
                   color="success"
+                  data-testid="add-new-employee"
                   onClick={handleAddEmployee}
                 >
                   Add
@@ -446,6 +448,7 @@ const AddNewEmployee = (): JSX.Element => {
                 <CButton
                   color="warning "
                   className="btn-ovh"
+                  data-testid="clear-new-employee"
                   onClick={handleClearFields}
                 >
                   Clear
