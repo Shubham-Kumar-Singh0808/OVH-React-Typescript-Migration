@@ -1,13 +1,12 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../stateStore'
 import {
   AuthenticatedUser,
   AuthenticationState,
   LoginCredentials,
 } from '../../types/Login/authenticationTypes'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import { ValidationError } from '../../types/commonTypes'
 import authenticationApi from '../../middleware/api/Login/authenticationApi'
 

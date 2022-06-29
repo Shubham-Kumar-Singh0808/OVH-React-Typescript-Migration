@@ -1,10 +1,9 @@
+import axios from 'axios'
 import { AllowedHttpMethods, qualificationsApiConfig } from '../../../apiList'
 import {
   EmployeeQualification,
   PostGraduationAndGraduationList,
 } from '../../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
 const getEmployeeQualifications = async (

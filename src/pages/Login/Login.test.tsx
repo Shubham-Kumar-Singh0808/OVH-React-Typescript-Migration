@@ -1,16 +1,16 @@
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
-
-import { correctPassword, username, wrongPassword } from '../../test/constants'
 import { render, screen, waitFor } from '@testing-library/react'
-
 import { EnhancedStore } from '@reduxjs/toolkit'
-import Login from './Login'
 import { Provider } from 'react-redux'
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import stateStore from '../../stateStore'
 import userEvent from '@testing-library/user-event'
+import Login from './Login'
+import stateStore from '../../stateStore'
+import { correctPassword, username, wrongPassword } from '../../test/constants'
 
 const tenantKeys = {
   rbt: 'Raybiztech',

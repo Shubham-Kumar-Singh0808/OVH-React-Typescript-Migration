@@ -1,6 +1,6 @@
+import { rest } from 'msw'
 import { certificateTypeApiConfig } from '../../middleware/api/apiList'
 import { mockCertificateType } from '../data/certificateTypeData'
-import { rest } from 'msw'
 
 export const certificateTypeHandlers = [
   // addCertificateType api mock

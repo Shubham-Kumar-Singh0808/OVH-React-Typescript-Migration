@@ -1,4 +1,5 @@
 import { EmployeeReview } from '../../types/MyProfile/ReviewsTab/employeeReviewsTypes'
+
 export const mockReviewDetails: EmployeeReview[] = [
   {
     id: 3,

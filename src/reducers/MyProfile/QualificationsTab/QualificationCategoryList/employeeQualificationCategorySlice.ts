@@ -1,11 +1,11 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
   QualificationCategory,
   QualificationCategorySliceState,
 } from '../../../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import employeeQualificationCategoryApi from '../../../../middleware/api/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryApi'
-import { AxiosError } from 'axios'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 

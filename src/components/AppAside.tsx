@@ -1,5 +1,4 @@
 import { CCloseButton, CSidebar, CSidebarHeader } from '@coreui/react-pro'
-
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../stateStore'

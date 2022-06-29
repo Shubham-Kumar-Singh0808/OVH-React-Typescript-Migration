@@ -1,6 +1,5 @@
-import { AllowedHttpMethods, certificateTypeApiConfig } from '../../../apiList'
-
 import axios from 'axios'
+import { AllowedHttpMethods, certificateTypeApiConfig } from '../../../apiList'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 import { CertificateType } from '../../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
 
@@ -21,8 +20,8 @@ const checkIsCertificateTypeExists = async ({
     url: certificateTypeApiConfig.checkIsCertificateTypeExists,
     method: AllowedHttpMethods.get,
     params: {
-      technologyId: technologyId,
-      certificateType: certificateType,
+      technologyId,
+      certificateType,
     },
   })
   const response = await axios(requestConfig)
@@ -37,8 +36,8 @@ const addCertificateType = async ({
     url: certificateTypeApiConfig.addCertificateType,
     method: AllowedHttpMethods.post,
     data: {
-      technologyId: technologyId,
-      certificateType: certificateType,
+      technologyId,
+      certificateType,
     },
   })
 
@@ -53,10 +52,10 @@ const deleteCertificateType = async (
     url: certificateTypeApiConfig.deleteCertificateType,
     method: AllowedHttpMethods.delete,
     params: {
-      certificateId: certificateId,
+      certificateId,
     },
     data: {
-      certificateId: certificateId,
+      certificateId,
     },
   })
   const response = await axios(requestConfig)
@@ -70,7 +69,7 @@ const getCertificateType = async (
     url: certificateTypeApiConfig.getCertificateType,
     method: AllowedHttpMethods.get,
     params: {
-      certificateId: certificateId,
+      certificateId,
     },
   })
   const response = await axios(requestConfig)

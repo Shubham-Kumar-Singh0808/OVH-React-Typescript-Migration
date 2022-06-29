@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+// eslint-disable-next-line import/named
 import { ReportHandler } from 'web-vitals'
 
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {

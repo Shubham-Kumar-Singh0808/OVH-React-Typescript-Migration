@@ -2,9 +2,8 @@ import './assets/scss/style.scss'
 
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import React, { Suspense, useCallback, useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from './stateStore'
-
 import { CSpinner } from '@coreui/react-pro'
+import { useAppDispatch, useTypedSelector } from './stateStore'
 import ProtectRoute from './components/ProtectRoutes'
 import SessionTimeout from './components/SessionTimeout'
 import { getEmployeeGeneralInformationThunk } from './reducers/MyProfile/GeneralTab/generalInformationSlice'
@@ -78,10 +77,7 @@ const App = (): JSX.Element => {
           <Route
             path="/login"
             render={() => (
-              <ProtectRoute
-                callback={(token) => (token ? false : true)}
-                redirectTo="/"
-              >
+              <ProtectRoute callback={(token) => !token} redirectTo="/">
                 <Login />
               </ProtectRoute>
             )}
@@ -89,10 +85,7 @@ const App = (): JSX.Element => {
           <Route
             path="/"
             render={() => (
-              <ProtectRoute
-                callback={(token) => (token ? true : false)}
-                redirectTo="/login"
-              >
+              <ProtectRoute callback={(token) => !!token} redirectTo="/login">
                 <DefaultLayout />
               </ProtectRoute>
             )}
