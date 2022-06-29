@@ -1,3 +1,5 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../../../stateStore'
 import {
   DesignationListSliceState,
@@ -5,10 +7,7 @@ import {
   EmployeeDesignation,
 } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
 import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import employeeDesignationListApi from '../../../../../middleware/api/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListApi'
 
 const getEmployeeDepartments = createAsyncThunk(
