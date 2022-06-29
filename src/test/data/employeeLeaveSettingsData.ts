@@ -2,6 +2,7 @@ import {
   EmployeeSaveLeaveCalenderSetting,
   EmployeeLeaveCategory,
 } from '../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
+
 export const mockLeaveCalenderSettingsType: EmployeeSaveLeaveCalenderSetting[] =
   [
     {

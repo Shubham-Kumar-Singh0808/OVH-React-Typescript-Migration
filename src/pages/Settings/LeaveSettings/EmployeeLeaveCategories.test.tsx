@@ -6,8 +6,8 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../stateStore'
 import EmployeeLeaveCategories from './EmployeeLeaveCategories'
+import stateStore from '../../../stateStore'
 
 const ReduxProvider = ({
   children,
@@ -20,7 +20,7 @@ describe('Employee Leave Categories Testing', () => {
   render(
     <ReduxProvider reduxStore={stateStore}>
       <EmployeeLeaveCategories
-        setToggle={function (value: string): void {
+        setToggle={function (__): void {
           throw new Error('Function not implemented.')
         }}
       />
@@ -35,7 +35,7 @@ describe('Employee Leave Categories Testing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeLeaveCategories
-          setToggle={function (value: string): void {
+          setToggle={function (_): void {
             throw new Error('Function not implemented.')
           }}
         />
@@ -49,7 +49,7 @@ describe('Employee Leave Categories Testing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeLeaveCategories
-          setToggle={function (value: string): void {
+          setToggle={function (_): void {
             throw new Error('Function not implemented.')
           }}
         />
@@ -65,7 +65,7 @@ describe('Employee Leave Categories Testing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeLeaveCategories
-          setToggle={function (value: string): void {
+          setToggle={function (): void {
             throw new Error('Function not implemented.')
           }}
         />

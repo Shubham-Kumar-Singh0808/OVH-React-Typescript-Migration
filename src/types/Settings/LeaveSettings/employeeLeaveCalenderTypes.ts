@@ -1,4 +1,5 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
+
 export type EmployeeSaveLeaveCalenderSetting = {
   id: string
   leaveCycleMonth: string

@@ -1,10 +1,9 @@
+import { rest } from 'msw'
 import { employeeLeaveSettingsConfig } from '../../middleware/api/apiList'
 import {
   mockLeaveCalenderSettingsType,
   mockLeaveCategoriesType,
 } from '../data/employeeLeaveSettingsData'
-
-import { rest } from 'msw'
 
 export const categoryListHandlers = [
   // addLeaveCalender api mock
