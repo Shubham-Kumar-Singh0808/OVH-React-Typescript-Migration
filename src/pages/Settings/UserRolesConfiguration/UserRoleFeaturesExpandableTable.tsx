@@ -1,3 +1,5 @@
+/* eslint-disable max-params */
+// Todo: remove eslint and fix all the errors
 import {
   CAccordion,
   CAccordionBody,

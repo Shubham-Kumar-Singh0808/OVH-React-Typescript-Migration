@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Todo: remove eslint and fix all the errors
 import React, { useEffect } from 'react'
 import { CNavGroup, CNavItem } from '@coreui/react-pro'
 import { NavLink, useLocation } from 'react-router-dom'
