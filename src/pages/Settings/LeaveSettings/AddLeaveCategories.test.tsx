@@ -1,3 +1,7 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable require-await */
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
@@ -52,12 +56,7 @@ describe('Add New Leave Category Testing', () => {
   test('should find add and clear buttons in the form', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <AddLeaveCategories
-          confirmButtonText="Add"
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
+        <AddLeaveCategories />
       </ReduxProvider>,
     )
     expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()

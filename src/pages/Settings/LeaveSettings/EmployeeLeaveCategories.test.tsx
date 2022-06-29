@@ -1,7 +1,8 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-// Todd: remove eslint and fix error
+/* eslint-disable require-await */
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
@@ -20,7 +21,7 @@ describe('Employee Leave Categories Testing', () => {
   render(
     <ReduxProvider reduxStore={stateStore}>
       <EmployeeLeaveCategories
-        setToggle={function (__): void {
+        setToggle={function (): void {
           throw new Error('Function not implemented.')
         }}
       />
@@ -35,7 +36,7 @@ describe('Employee Leave Categories Testing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeLeaveCategories
-          setToggle={function (_): void {
+          setToggle={function (): void {
             throw new Error('Function not implemented.')
           }}
         />
@@ -49,7 +50,7 @@ describe('Employee Leave Categories Testing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeLeaveCategories
-          setToggle={function (_): void {
+          setToggle={function (): void {
             throw new Error('Function not implemented.')
           }}
         />
@@ -61,7 +62,7 @@ describe('Employee Leave Categories Testing', () => {
     })
   })
 
-  test('should render Leave Categories component with out crashing', async () => {
+  test('should render Leave Categories component with out crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeLeaveCategories
