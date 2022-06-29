@@ -6,7 +6,7 @@ import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import employeeHandbookSettingsApi from '../../../middleware/api/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsApi'
 import {
-  AddNewHandbook,
+  AddNewHandbookPage,
   EmployeeCountry,
   EmployeeHandbook,
   EmployeeHandbookListApiProps,
@@ -64,7 +64,7 @@ const getEmployeeCountries = createAsyncThunk<
 
 const addNewHandbook = createAsyncThunk<
   number | undefined,
-  AddNewHandbook,
+  AddNewHandbookPage,
   {
     dispatch: AppDispatch
     state: RootState
@@ -72,7 +72,7 @@ const addNewHandbook = createAsyncThunk<
   }
 >(
   'employeeHandbookSettings/addNewHandbook',
-  async (addEmployeeHandbook: AddNewHandbook, thunkApi) => {
+  async (addEmployeeHandbook: AddNewHandbookPage, thunkApi) => {
     try {
       return await employeeHandbookSettingsApi.addNewHandbook(
         addEmployeeHandbook,

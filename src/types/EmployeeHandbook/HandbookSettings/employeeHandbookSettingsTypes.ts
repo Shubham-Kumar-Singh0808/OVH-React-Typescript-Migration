@@ -19,13 +19,12 @@ export type EmployeeCountry = {
   name: string
 }
 
-export type AddNewHandbook = {
+export type AddNewHandbookPage = {
   description: string
   displayOrder: number
   pageName: string
   title: string
-  type: string
-  list?: CountryList
+  list?: number[]
 }
 
 export type CountryList = {

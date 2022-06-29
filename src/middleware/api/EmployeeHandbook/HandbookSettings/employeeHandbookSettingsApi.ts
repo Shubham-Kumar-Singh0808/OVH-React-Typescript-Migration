@@ -3,10 +3,11 @@ import {
   employeeHandbookSettingsApiConfig,
 } from '../../apiList'
 import {
-  AddNewHandbook,
+  AddNewHandbookPage,
   EmployeeCountry,
   EmployeeHandbookListApiProps,
   EmployeeHandbookListResponse,
+  CountryList,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 import axios from 'axios'
@@ -56,13 +57,17 @@ const getEmployeeCountries = async (): Promise<
 }
 
 const addNewHandbook = async (
-  prepareObject: AddNewHandbook,
+  prepareObject: AddNewHandbookPage,
 ): Promise<number | undefined> => {
   const { list, ...restPrepareObject } = prepareObject
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeHandbookSettingsApiConfig.addNewHandbook,
     method: AllowedHttpMethods.post,
-    params: prepareObject.list,
+    params: prepareObject.list?.reduce((acc, each, index) => {
+      // const a = `list${each}`
+      acc['list'] = each
+      return acc
+    }, {} as any),
     data: restPrepareObject,
   })
 
