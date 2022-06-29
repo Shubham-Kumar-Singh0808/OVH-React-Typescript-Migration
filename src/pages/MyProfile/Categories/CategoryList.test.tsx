@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
+// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
-
 import { prettyDOM, render, screen, waitFor } from '@testing-library/react'
-
-import CategoryList from './CategoryList'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import { mockCategories } from '../../../test/data/categoryListData'
-import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
+import CategoryList from './CategoryList'
+import stateStore from '../../../stateStore'
+import { mockCategories } from '../../../test/data/categoryListData'
 
 const ReduxProvider = ({
   children,

@@ -1,8 +1,7 @@
 import { CCol, CForm, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import parse from 'html-react-parser'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 

@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
+// Todo: remove eslint and fix all the errors
 import { render, screen } from '@testing-library/react'
-
-import EmployeeProfileHistory from './EmployeeProfileHistory'
 import { EnhancedStore } from '@reduxjs/toolkit'
-import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
-import { ProfileUpdateData } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import { Provider } from 'react-redux'
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
+import EmployeeProfileHistory from './EmployeeProfileHistory'
+import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
+import { ProfileUpdateData } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import { mockEmployeeProfileHistoryData } from '../../../test/data/mockEmployeeProfileHistoryData'
 import stateStore from '../../../stateStore'
 
@@ -27,8 +30,6 @@ const ReduxProvider = ({
 
 describe('Testing Profile History Tab', () => {
   test('should render Profile History without crashing', () => {
-    //   mockUseLocationValue.pathname = '/dashboard'
-    // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeProfileHistory />
@@ -38,8 +39,6 @@ describe('Testing Profile History Tab', () => {
     expect(screen.getByText('Employee Profile History')).toBeInTheDocument()
   })
   test('should have Time Stamp', () => {
-    //   mockUseLocationValue.pathname = '/dashboard'
-    // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
         <ProfileHistoryTimeLine

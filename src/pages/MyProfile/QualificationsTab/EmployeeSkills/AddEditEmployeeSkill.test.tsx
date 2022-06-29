@@ -1,10 +1,13 @@
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import AddEditEmployeeSkill from './AddEditEmployeeSkill'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import AddEditEmployeeSkill from './AddEditEmployeeSkill'
 import stateStore from '../../../../stateStore'
+
 const ReduxProvider = ({
   children,
   reduxStore,
@@ -20,6 +23,7 @@ jest.mock('react-redux', () => ({
   }),
 }))
 describe('Add New Skill Testing', () => {
+  const errorMessage = 'Function not implemented.'
   it('should display the correct number of options', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -27,7 +31,7 @@ describe('Add New Skill Testing', () => {
           headerTitle={''}
           confirmButtonText={''}
           backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
+            throw new Error(errorMessage)
           }}
         />
       </ReduxProvider>,
@@ -41,7 +45,7 @@ describe('Add New Skill Testing', () => {
           headerTitle={''}
           confirmButtonText={''}
           backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
+            throw new Error(errorMessage)
           }}
         />
       </ReduxProvider>,
@@ -55,7 +59,7 @@ describe('Add New Skill Testing', () => {
           confirmButtonText="Update"
           headerTitle={''}
           backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
+            throw new Error(errorMessage)
           }}
         />
       </ReduxProvider>,

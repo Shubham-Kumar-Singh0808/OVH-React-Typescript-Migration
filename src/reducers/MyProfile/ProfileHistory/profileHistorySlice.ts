@@ -1,13 +1,12 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   ProfileHistoryState,
   ProfileUpdateData,
 } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import profileHistoryApi from '../../../middleware/api/MyProfile/ProfileHistory/profileHistoryApi'
 
 const getProfileHistory = createAsyncThunk<

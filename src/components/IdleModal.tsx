@@ -1,10 +1,9 @@
 import { CBadge, CModal, CModalBody } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-
-import { reduxServices } from '../reducers/reduxServices'
-import { useAppDispatch } from '../stateStore'
 import { useHistory } from 'react-router-dom'
 import { useIdleTimer } from 'react-idle-timer'
+import { reduxServices } from '../reducers/reduxServices'
+import { useAppDispatch } from '../stateStore'
 
 const IdleModal = ({
   timeout,

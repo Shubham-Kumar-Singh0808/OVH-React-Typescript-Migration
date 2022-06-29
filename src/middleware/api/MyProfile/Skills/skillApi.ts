@@ -1,15 +1,14 @@
-import { AllowedHttpMethods, skillsApiConfig } from '../../apiList'
-
-import { Skill } from '../../../../types/MyProfile/Skills/skillTypes'
 import axios from 'axios'
+import { AllowedHttpMethods, skillsApiConfig } from '../../apiList'
+import { Skill } from '../../../../types/MyProfile/Skills/skillTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getAllSkills = async (categoryId: number): Promise<Skill[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: skillsApiConfig.getSkillListForCategory,
     method: AllowedHttpMethods.get,
-    params: { categoryId: categoryId },
-    data: { categoryId: categoryId },
+    params: { categoryId },
+    data: { categoryId },
   })
 
   const response = await axios(requestConfig)
@@ -24,12 +23,12 @@ const createSkill = async (
     url: skillsApiConfig.addNewSkillForCategory,
     method: AllowedHttpMethods.get,
     params: {
-      categoryId: categoryId,
-      skillName: skillName,
+      categoryId,
+      skillName,
     },
     data: {
-      categoryId: categoryId,
-      skillName: skillName,
+      categoryId,
+      skillName,
     },
   })
 
@@ -42,10 +41,10 @@ const deleteSkill = async (skillId: number): Promise<Skill[]> => {
     url: skillsApiConfig.deleteSkillForCategory,
     method: AllowedHttpMethods.get,
     params: {
-      skillId: skillId,
+      skillId,
     },
     data: {
-      skillId: skillId,
+      skillId,
     },
   })
 

@@ -1,11 +1,10 @@
 import {} from '../../middleware/api/apiList'
 
+import { createSlice } from '@reduxjs/toolkit'
 import {
   SidebarMenu,
   ValidationError,
 } from '../../types/SidebarMenu/sidebarMenuType'
-
-import { createSlice } from '@reduxjs/toolkit'
 import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
 
 const initialSidebarMenuState = {} as SidebarMenu
