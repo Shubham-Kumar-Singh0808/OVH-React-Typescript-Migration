@@ -1,3 +1,5 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import {
   Country,
   GetVisaListApiProps,
@@ -6,10 +8,7 @@ import {
   VisaType,
 } from '../../../types/EmployeeDirectory/VisaList/visaListTypes'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import visaListApi from '../../../middleware/api/EmployeeDirectory/VisaList/visaListApi'
 

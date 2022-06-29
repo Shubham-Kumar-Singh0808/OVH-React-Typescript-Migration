@@ -1,10 +1,9 @@
 import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import CertificateDetailsExpandableTable from './CertificateDetailsExpandableTable'
 import CertificatesFilterOptions from './CertificatesFilterOptions'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'

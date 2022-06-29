@@ -1,8 +1,5 @@
-import {
-  AddUpdateEmployeeQualificationProps,
-  EmployeeQualification,
-  PostGraduationAndGraduationLookUp,
-} from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todo: remove eslint and fix error
 import {
   CButton,
   CCardBody,
@@ -13,13 +10,19 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import Multiselect from 'multiselect-react-dropdown'
+// eslint-disable-next-line import/named
+import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import {
+  AddUpdateEmployeeQualificationProps,
+  EmployeeQualification,
+  PostGraduationAndGraduationLookUp,
+} from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 
 const AddUpdateEmployeeQualification = ({
   backButtonHandler,
@@ -138,7 +141,7 @@ const AddUpdateEmployeeQualification = ({
 
   const handleDescription = (others: string) => {
     setAddQualification((prevState) => {
-      return { ...prevState, ...{ others: others } }
+      return { ...prevState, ...{ others } }
     })
   }
 

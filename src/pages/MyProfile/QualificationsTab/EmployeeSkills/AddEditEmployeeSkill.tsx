@@ -1,7 +1,6 @@
-import {
-  AddEditEmployeeSkillsProps,
-  AddUpdateEmployeeSkill,
-} from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
+/* eslint-disable consistent-return */
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todo: remove all the eslint and fix error
 import {
   CButton,
   CCardBody,
@@ -13,8 +12,13 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+// eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import {
+  AddEditEmployeeSkillsProps,
+  AddUpdateEmployeeSkill,
+} from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import CategoryList from '../../Categories/CategoryList'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import SkillList from '../../Skills/SkillList'
@@ -159,7 +163,7 @@ function AddEditEmployeeSkill({
 
   const handleDescription = (comments: string) => {
     setEmployeeSkill((prevState) => {
-      return { ...prevState, ...{ comments: comments } }
+      return { ...prevState, ...{ comments } }
     })
   }
 

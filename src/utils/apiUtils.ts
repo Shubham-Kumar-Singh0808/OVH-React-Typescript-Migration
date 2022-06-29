@@ -19,7 +19,7 @@ export const getUnauthenticatedRequestConfig = ({
     url,
     method,
     headers: {
-      tenantKey: tenantKey,
+      tenantKey,
       ...additionalHeaders,
     },
   }
@@ -61,7 +61,7 @@ export const getAuthenticatedRequestConfig = ({
     url,
     method,
     headers: {
-      tenantKey: tenantKey,
+      tenantKey,
       'X-Auth-Token': token,
       ...additionalHeaders,
     },
