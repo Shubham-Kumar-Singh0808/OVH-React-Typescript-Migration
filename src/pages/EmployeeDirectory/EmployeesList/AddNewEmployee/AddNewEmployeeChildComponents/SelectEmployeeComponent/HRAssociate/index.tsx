@@ -1,11 +1,10 @@
 import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
+import React, { useState } from 'react'
+import Autocomplete from 'react-autocomplete'
 import {
   GetHRAssociate,
   HrDataProps,
 } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import React, { useState } from 'react'
-
-import Autocomplete from 'react-autocomplete'
 import { showIsRequired } from '../../../../../../../utils/helper'
 
 // import { fakeRequest, getStates } from 'react-autocomplete'

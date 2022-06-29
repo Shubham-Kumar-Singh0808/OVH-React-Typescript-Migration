@@ -1,5 +1,4 @@
 import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
-
 import DatePicker from 'react-datepicker'
 import React from 'react'
 import { StartEndDateChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'

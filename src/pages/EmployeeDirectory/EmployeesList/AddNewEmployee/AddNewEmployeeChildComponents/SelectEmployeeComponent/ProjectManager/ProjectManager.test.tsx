@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import ProjectManager from '.'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import ProjectManager from '.'
 import stateStore from '../../../../../../../stateStore'
 
 const ReduxProvider = ({

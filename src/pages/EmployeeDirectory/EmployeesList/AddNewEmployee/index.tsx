@@ -1,11 +1,5 @@
-import {
-  AddEmployee,
-  GetHRAssociate,
-  GetList,
-  GetProjectManager,
-  GetReportManager,
-  ToggleShiftProp,
-} from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { CButton, CCol, CRow } from '@coreui/react-pro'
+import React, { useEffect, useState } from 'react'
 import {
   Birthday,
   Designation,
@@ -20,16 +14,21 @@ import {
   UserNameEmail,
   WorkFrom,
 } from './AddNewEmployeeChildComponents/index'
-import { CButton, CCol, CRow } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import EmployeeDesignationList from './DesignationList/EmployeeDesignationList'
+import ShiftConfiguration from './ShiftConfiguration/ShiftConfiguration'
+import {
+  AddEmployee,
+  GetHRAssociate,
+  GetList,
+  GetProjectManager,
+  GetReportManager,
+  ToggleShiftProp,
+} from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EmployeeShiftDetails } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import ShiftConfiguration from './ShiftConfiguration/ShiftConfiguration'
 import { listComposer } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
@@ -44,8 +43,8 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
-      htmlFor: htmlFor,
-      className: className,
+      htmlFor,
+      className,
     }
   }
 

@@ -1,6 +1,5 @@
-import { LoadingState, ValidationError } from '../../../commonTypes'
-
 import { EmployeeShiftDetails } from './ShiftConfiguration/shiftConfigurationTypes'
+import { LoadingState, ValidationError } from '../../../commonTypes'
 
 //AddNewEmployee Post API
 export type AddEmployee = {

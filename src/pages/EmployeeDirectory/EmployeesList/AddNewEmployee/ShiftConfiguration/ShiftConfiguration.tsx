@@ -10,12 +10,12 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
+import React, { useEffect, useState } from 'react'
+import ShiftListTable from './ShiftListTable'
 import {
   EmployeeShiftDetails,
   ToggleShiftProp,
 } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
-import React, { useEffect, useState } from 'react'
-import ShiftListTable from './ShiftListTable'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { ActionMapping } from '../../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import OCard from '../../../../../components/ReusableComponent/OCard'

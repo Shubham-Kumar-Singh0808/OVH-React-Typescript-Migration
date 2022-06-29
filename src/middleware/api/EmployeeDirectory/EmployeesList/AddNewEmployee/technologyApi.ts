@@ -1,7 +1,6 @@
-import { AllowedHttpMethods, addNewEmployeeAPiConfig } from '../../../apiList'
-
-import { GetAllTechnology } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import axios from 'axios'
+import { AllowedHttpMethods, addNewEmployeeAPiConfig } from '../../../apiList'
+import { GetAllTechnology } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
 const getAllTechnology = async (): Promise<GetAllTechnology[]> => {

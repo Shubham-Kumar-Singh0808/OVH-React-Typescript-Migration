@@ -1,7 +1,6 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
-
-import { FullNameChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
+import { FullNameChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../../utils/helper'
 
 const FullName = ({

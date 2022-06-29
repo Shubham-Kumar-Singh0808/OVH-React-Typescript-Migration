@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import UserNameEmail from '.'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import UserNameEmail from '.'
 import stateStore from '../../../../../../../stateStore'
 import { Label } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 

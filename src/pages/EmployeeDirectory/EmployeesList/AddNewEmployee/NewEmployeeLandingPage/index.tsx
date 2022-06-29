@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import AddNewEmployee from '..'
 import ShiftConfiguration from '../ShiftConfiguration/ShiftConfiguration'
 

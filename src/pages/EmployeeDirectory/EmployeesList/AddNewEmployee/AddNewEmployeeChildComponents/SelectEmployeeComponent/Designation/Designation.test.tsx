@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom'
 
 import { render, screen } from '@testing-library/react'
-
-import DesignationField from '.'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import DesignationField from '.'
 import stateStore from '../../../../../../../stateStore'
 
 const ReduxProvider = ({

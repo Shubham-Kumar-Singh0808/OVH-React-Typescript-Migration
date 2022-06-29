@@ -1,7 +1,6 @@
-import { AllowedHttpMethods, addNewEmployeeAPiConfig } from '../../../apiList'
-
-import { GetHrData } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import axios from 'axios'
+import { AllowedHttpMethods, addNewEmployeeAPiConfig } from '../../../apiList'
+import { GetHrData } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
 const getAllHrData = async (): Promise<GetHrData[]> => {

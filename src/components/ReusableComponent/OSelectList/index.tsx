@@ -1,5 +1,4 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
-
 import React from 'react'
 import { SelectProps } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../utils/helper'
