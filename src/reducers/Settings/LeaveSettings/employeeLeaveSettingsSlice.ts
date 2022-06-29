@@ -3,7 +3,6 @@ import {
   EmployeeSaveLeaveCalenderSetting,
   LeaveSettingsState,
   EmployeeLeaveCategory,
-  EmployeeLeaveCalender,
   EmployeeAddUpdateLeaveCategory,
 } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
@@ -15,7 +14,6 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const initialEmployeeLeaveSettingsState: LeaveSettingsState = {
   employeeSaveLeaveCalender: {} as EmployeeSaveLeaveCalenderSetting,
-  employeeLeaveCalender: {} as EmployeeLeaveCalender,
   employeeAddLeaveCategories: {} as EmployeeAddUpdateLeaveCategory,
   employeeLeaveCategories: [],
   isLoading: ApiLoadingState.idle,
@@ -143,7 +141,8 @@ const employeeLeaveSettingsSlice = createSlice({
     builder
       .addCase(getEmployeeLeaveCalenderSettings.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.employeeLeaveCalender = action.payload as EmployeeLeaveCalender
+        state.employeeSaveLeaveCalender =
+          action.payload as EmployeeSaveLeaveCalenderSetting
       })
       .addMatcher(
         isAnyOf(getEmployeeLeaveCategories.fulfilled),
@@ -168,8 +167,10 @@ const employeeLeaveSettingsSlice = createSlice({
 const employeeLeaveCategories = (state: RootState): EmployeeLeaveCategory[] =>
   state.employeeLeaveSettings.employeeLeaveCategories
 
-const getEmployeeLeaveCalender = (state: RootState): EmployeeLeaveCalender =>
-  state.employeeLeaveSettings.employeeLeaveCalender
+const getEmployeeLeaveCalender = (
+  state: RootState,
+): EmployeeSaveLeaveCalenderSetting =>
+  state.employeeLeaveSettings.employeeSaveLeaveCalender
 
 const employeeLeaveSettingsThunk = {
   saveEmployeeLeaveCalenderSettings,

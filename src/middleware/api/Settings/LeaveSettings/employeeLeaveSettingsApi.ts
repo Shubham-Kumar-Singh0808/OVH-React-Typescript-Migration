@@ -5,12 +5,11 @@ import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 import {
   EmployeeSaveLeaveCalenderSetting,
   EmployeeLeaveCategory,
-  EmployeeLeaveCalender,
   EmployeeAddUpdateLeaveCategory,
 } from '../../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 const getEmployeeLeaveCalenderSettings =
-  async (): Promise<EmployeeLeaveCalender> => {
+  async (): Promise<EmployeeSaveLeaveCalenderSetting> => {
     const requestConfig = getAuthenticatedRequestConfig({
       url: employeeLeaveSettingsConfig.getLeaveCalenderSettings,
       method: AllowedHttpMethods.get,

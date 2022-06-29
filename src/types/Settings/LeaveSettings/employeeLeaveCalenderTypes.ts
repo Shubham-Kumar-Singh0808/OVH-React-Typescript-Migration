@@ -2,7 +2,7 @@ import { LoadingState, ValidationError } from '../../commonTypes'
 export type EmployeeSaveLeaveCalenderSetting = {
   id: string
   leaveCycleMonth: string
-  leavesPerYear: number | string
+  leavesPerYear?: number | string
   maxAccrualPerYear: number | string
   maxLeavesEarned: number | string
   payrollCutoffDate: number
@@ -21,20 +21,9 @@ export type EmployeeAddUpdateLeaveCategory = {
   leaveType: string
 }
 
-export type EmployeeLeaveCalender = {
-  id: string
-  leaveCycleMonth: string
-  leavesPerYear: number
-  maxAccrualPerYear: number
-  maxLeavesEarned: number
-  payrollCutoffDate: number
-  probationPeriod: number
-}
-
 export type LeaveSettingsState = {
   employeeSaveLeaveCalender: EmployeeSaveLeaveCalenderSetting
   employeeLeaveCategories: EmployeeLeaveCategory[]
-  employeeLeaveCalender: EmployeeLeaveCalender
   employeeAddLeaveCategories: EmployeeAddUpdateLeaveCategory
   isLoading: LoadingState
   error: ValidationError
