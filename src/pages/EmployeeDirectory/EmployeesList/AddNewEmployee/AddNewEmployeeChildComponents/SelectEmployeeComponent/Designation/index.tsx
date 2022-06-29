@@ -36,7 +36,7 @@ const Designation = ({
             value={value}
             onChange={onChangeHandler}
           >
-            <option value={''}>Select Shift</option>
+            <option value={''}>Select Designation</option>
             {list?.map((item, index) => {
               const { name } = item
               return (
