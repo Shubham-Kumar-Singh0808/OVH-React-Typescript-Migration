@@ -1,3 +1,8 @@
+/* eslint-disable sonarjs/no-collapsible-if */
+/* eslint-disable require-await */
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable complexity */
+// Todo: remove eslint and fix all the errors
 import {
   CButton,
   CCol,
@@ -10,18 +15,18 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import { useFormik } from 'formik'
+import validator from 'validator'
 import DownloadCVButton from './DownloadCVButton'
+import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
-import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useFormik } from 'formik'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
-import validator from 'validator'
-import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
 import { UploadImageInterface } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
 
 const BasicInfoTab = (): JSX.Element => {
@@ -186,7 +191,7 @@ const BasicInfoTab = (): JSX.Element => {
   const onDateChangeHandler = (date: Date, e: { name: string }) => {
     if (employeeBasicInformationEditData) {
       const formatDate = moment(date).format('DD/MM/YYYY')
-      const name = e.name
+      const { name } = e
       setEmployeeBasicInformationEditData((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
@@ -310,8 +315,8 @@ const BasicInfoTab = (): JSX.Element => {
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
-      htmlFor: htmlFor,
-      className: className,
+      htmlFor,
+      className,
     }
   }
 
@@ -443,7 +448,7 @@ const BasicInfoTab = (): JSX.Element => {
           className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
           onSubmit={handleSubmitBasicDetails}
         >
-          <CRow className="justify-content-end mt-3">
+          <CRow className="mt-3 justify-content-end">
             <CCol className="text-end" md={4}>
               <DownloadCVButton className="text-decoration-none btn btn-download btn-ovh" />
             </CCol>
@@ -1000,7 +1005,7 @@ const BasicInfoTab = (): JSX.Element => {
               )}
               {uploadErrorText && (
                 <div id="error">
-                  <strong className="text-danger mt-3">
+                  <strong className="mt-3 text-danger">
                     {uploadErrorText}
                   </strong>
                 </div>
@@ -1010,7 +1015,7 @@ const BasicInfoTab = (): JSX.Element => {
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
-                className="btn-ovh btn btn-success mt-4"
+                className="mt-4 btn-ovh btn btn-success"
                 size="sm"
                 disabled={!saveButtonEnabled}
                 type="submit"

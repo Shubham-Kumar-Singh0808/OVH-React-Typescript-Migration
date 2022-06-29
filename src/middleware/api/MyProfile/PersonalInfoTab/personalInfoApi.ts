@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { AllowedHttpMethods, personalInfoApiConfig } from '../../apiList'
 import {
   EditFamilyDetailsState,
@@ -9,8 +10,6 @@ import {
   VisaCountryDetails,
   VisaDetails,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeeFamilyDetails = async (
@@ -46,7 +45,7 @@ const getEmployeeFamilyMember = async (
     url: personalInfoApiConfig.getFamilyInformation,
     method: AllowedHttpMethods.get,
     params: {
-      familyId: familyId,
+      familyId,
     },
   })
   const response = await axios(requestConfig)
@@ -72,10 +71,10 @@ const deleteEmployeeFamilyMember = async (
     url: personalInfoApiConfig.deleteFamilyMember,
     method: AllowedHttpMethods.get,
     params: {
-      familyId: familyId,
+      familyId,
     },
     data: {
-      familyId: familyId,
+      familyId,
     },
   })
   const response = await axios(requestConfig)
@@ -138,7 +137,7 @@ const getEmployeeVisa = async (id: number): Promise<EditVisaDetailsState> => {
     url: personalInfoApiConfig.getVisaInformation,
     method: AllowedHttpMethods.get,
     params: {
-      id: id,
+      id,
     },
   })
   const response = await axios(requestConfig)
@@ -183,7 +182,7 @@ const uploadVisaImage = async (
     method: AllowedHttpMethods.post,
     data: file,
     params: {
-      visaId: visaId,
+      visaId,
     },
     additionalHeaders: {
       'Content-Type': 'multipart/form-data',

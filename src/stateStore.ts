@@ -1,11 +1,12 @@
+// eslint-disable-next-line import/named
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-
+import { configureStore } from '@reduxjs/toolkit'
+import thunkMiddleware from 'redux-thunk'
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import certificateListReducer from './reducers/EmployeeDirectory/CertificatesList/certificatesListSlice'
 import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
-import { configureStore } from '@reduxjs/toolkit'
 import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
 import employeeCertificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
@@ -21,7 +22,6 @@ import profileHistoryReducer from './reducers/MyProfile/ProfileHistory/profileHi
 import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import shiftConfigurationReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
-import thunkMiddleware from 'redux-thunk'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'

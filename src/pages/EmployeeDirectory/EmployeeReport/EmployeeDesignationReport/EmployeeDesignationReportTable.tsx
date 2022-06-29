@@ -1,10 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../../components/ReusableComponent/OPagination'
-import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
-import { EmployeeDesignationReportTableProps } from '../../../../types/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportTypes'
 import {
   CCol,
   CRow,
@@ -15,6 +10,11 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
+import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../../components/ReusableComponent/OPagination'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../stateStore'
+import { EmployeeDesignationReportTableProps } from '../../../../types/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportTypes'
 
 const EmployeeDesignationReportTable = (
   props: EmployeeDesignationReportTableProps,

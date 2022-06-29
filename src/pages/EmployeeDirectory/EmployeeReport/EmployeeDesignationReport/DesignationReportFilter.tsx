@@ -1,7 +1,7 @@
 import React from 'react'
+import { CRow, CCol, CFormLabel, CFormSelect, CButton } from '@coreui/react-pro'
 import { useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { CRow, CCol, CFormLabel, CFormSelect, CButton } from '@coreui/react-pro'
 import employeeReportDesignationAPI from '../../../../middleware/api/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportApi'
 import { EmployeeDesignationOptionsProps } from '../../../../types/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportTypes'
 
@@ -19,7 +19,7 @@ const DesignationReportFilter = ({
   const handleExportEmployeeDesignationData = async () => {
     const employeeDesignationList =
       await employeeReportDesignationAPI.exportEmployeeDesignationReport({
-        selectedDesignation: selectedDesignation,
+        selectedDesignation,
       })
     downloadFile(employeeDesignationList)
   }

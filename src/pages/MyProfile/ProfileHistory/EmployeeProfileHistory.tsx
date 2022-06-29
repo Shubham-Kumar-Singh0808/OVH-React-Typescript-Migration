@@ -1,11 +1,10 @@
 import { CCardHeader, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-
-import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { useDispatch } from 'react-redux'
 import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { profileHistoryService } from '../../../reducers/MyProfile/ProfileHistory/profileHistorySlice'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useDispatch } from 'react-redux'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { useTypedSelector } from '../../../stateStore'
 

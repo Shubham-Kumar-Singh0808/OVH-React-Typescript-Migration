@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { CCol, CRow, CSpinner } from '@coreui/react-pro'
+import DesignationReportFilter from './DesignationReportFilter'
+import EmployeeDesignationReportTable from './EmployeeDesignationReportTable'
+import OCard from '../../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
-
-/** components */
-import OCard from '../../../../components/ReusableComponent/OCard'
-import DesignationReportFilter from './DesignationReportFilter'
-import EmployeeDesignationReportTable from './EmployeeDesignationReportTable'
 
 const EmployeeDesignationReport = (): JSX.Element => {
   const dispatch = useAppDispatch()

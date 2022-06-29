@@ -1,10 +1,5 @@
 import React, { useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { reduxServices } from '../../../reducers/reduxServices'
 import { Link } from 'react-router-dom'
-import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
-
-/** components */
 import {
   CCol,
   CFormLabel,
@@ -15,7 +10,12 @@ import {
   CInputGroup,
   CFormInput,
 } from '@coreui/react-pro'
-import { EmployeeReportOptionsProps } from '../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
+import {
+  EmploymentStatus,
+  EmployeeReportOptionsProps,
+} from '../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
 
 const FilterOptions = ({
   category,

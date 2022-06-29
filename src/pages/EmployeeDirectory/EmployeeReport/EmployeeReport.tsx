@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { CCol, CRow, CSpinner } from '@coreui/react-pro'
+import FilterOptions from './FilterOptions'
+import EmployeeReportTable from './EmployeeReportTable'
+import OCard from '../../../components/ReusableComponent/OCard'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-/** components */
-import OCard from '../../../components/ReusableComponent/OCard'
-import FilterOptions from './FilterOptions'
-import EmployeeReportTable from './EmployeeReportTable'
 
 const EmployeeReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -42,7 +41,7 @@ const EmployeeReport = (): JSX.Element => {
         endIndex: pageSize * currentPage,
         selectionStatus: selectedEmploymentStatus,
         selectedCategory: category,
-        searchEmployee: searchEmployee,
+        searchEmployee,
       }),
     )
   }, [

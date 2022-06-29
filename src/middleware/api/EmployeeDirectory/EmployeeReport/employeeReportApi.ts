@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 import { AllowedHttpMethods, employeeReportApiConfig } from '../../apiList'
 import {
   EmployeeReportApiProps,

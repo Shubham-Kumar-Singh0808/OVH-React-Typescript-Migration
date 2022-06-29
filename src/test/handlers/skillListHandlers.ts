@@ -1,5 +1,5 @@
-import { mockSkills } from '../data/skillListData'
 import { rest } from 'msw'
+import { mockSkills } from '../data/skillListData'
 import { skillsApiConfig } from '../../middleware/api/apiList'
 
 export const skillListHandlers = [

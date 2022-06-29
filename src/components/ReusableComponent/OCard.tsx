@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   CCard,
   CCardBody,
@@ -6,7 +5,6 @@ import {
   CCardHeader,
   CLink,
 } from '@coreui/react-pro'
-
 import React from 'react'
 
 const OCard = (props: {

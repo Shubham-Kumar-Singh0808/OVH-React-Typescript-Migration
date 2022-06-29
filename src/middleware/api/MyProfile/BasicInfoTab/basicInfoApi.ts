@@ -1,7 +1,6 @@
-import { AllowedHttpMethods, basicInfoApiConfig } from '../../apiList'
-
-import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import axios from 'axios'
+import { AllowedHttpMethods, basicInfoApiConfig } from '../../apiList'
+import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 import {
   DownloadCVInterface,
@@ -16,7 +15,7 @@ const updateDefaultPicOnGenderChange = async (
     url: basicInfoApiConfig.defaultPicByGender,
     method: AllowedHttpMethods.post,
     params: {
-      gender: gender,
+      gender,
     },
   })
   const response = await axios(requestConfig)
@@ -84,7 +83,7 @@ const downloadSampleCV = async (fileName: string): Promise<File> => {
       'Content-Type': 'application/json',
     },
     params: {
-      fileName: fileName,
+      fileName,
     },
     responseType: 'blob',
   })

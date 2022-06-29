@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-
 import AddDeleteRoleButtons from './AddDeleteRoleButtons'
-import OCard from '../../../components/ReusableComponent/OCard'
-import { SelectedRole } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import UserRoleFeaturesExpandableTable from './UserRoleFeaturesExpandableTable'
 import UserRolesList from './UserRolesList'
+import OCard from '../../../components/ReusableComponent/OCard'
+import { SelectedRole } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 
