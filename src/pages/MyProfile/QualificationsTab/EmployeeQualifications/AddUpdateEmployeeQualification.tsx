@@ -122,6 +122,7 @@ const AddUpdateEmployeeQualification = ({
       })
     }
   }
+
   const handleMultiSelect = (
     list: PostGraduationAndGraduationLookUp[],
     name: string,
