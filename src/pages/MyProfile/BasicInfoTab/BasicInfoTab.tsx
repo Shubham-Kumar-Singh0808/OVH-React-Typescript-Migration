@@ -1,3 +1,6 @@
+/* eslint-disable max-lines */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable sonarjs/no-collapsible-if */
 /* eslint-disable require-await */
 /* eslint-disable sonarjs/no-duplicate-string */

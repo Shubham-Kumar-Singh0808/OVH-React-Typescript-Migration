@@ -1,4 +1,7 @@
-import { EmployeeProjectDetails } from '../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import {
+  EmployeeProjectDetails,
+  ProjectDetails,
+} from '../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
 export const mockEmployeeProjectEntry: EmployeeProjectDetails = {
   id: 88,
@@ -50,3 +53,35 @@ export const mockEmployeeProjectEntry: EmployeeProjectDetails = {
   hiveProjectFlag: null,
   allocation: null,
 }
+
+export const mockEmployeeProjectsDetail: ProjectDetails[] = [
+  {
+    employeeId: 2014,
+    empFirstName: 'Jesury',
+    empLastName: 'Gadiane',
+    projectName: 'ABS CBN Support',
+    projectId: 88,
+    startDate: '28/06/2016',
+    endDate: '21/01/2020',
+    billable: true,
+    comments: '',
+    department: 'Development',
+    desigination: 'Software Application Developer',
+    userName: 'Jesury Gadiane',
+    isAllocated: true,
+    duration: null,
+    count: null,
+    rate: null,
+    role: null,
+    amount: null,
+    empName: null,
+    status: null,
+    monthWorkingDays: null,
+    holidays: null,
+    leaves: null,
+    totalDays: null,
+    hours: null,
+    totalValue: null,
+    allocation: '50',
+  },
+]

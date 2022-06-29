@@ -1,9 +1,13 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable func-style */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 /* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable complexity */
 /* eslint-disable require-await */
 /* eslint-disable import/named */
 // Todd: remove all eslint and fix error
+// Todo: remove eslint and fix all the errors
 import {
   CButton,
   CCardBody,

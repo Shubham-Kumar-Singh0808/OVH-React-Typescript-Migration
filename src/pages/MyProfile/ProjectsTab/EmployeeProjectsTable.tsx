@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-// Todd: remove eslint and fix error
 import {
   CCardBody,
   CSpinner,
@@ -27,8 +25,9 @@ const EmployeeProjectsTable = (): JSX.Element => {
 
   useEffect(() => {
     setIsLoading(true)
-    employeeId &&
+    if (employeeId) {
       dispatch(reduxServices.employeeProjects.getEmployeeProjects(employeeId))
+    }
   }, [dispatch, employeeId])
 
   useEffect(() => {
@@ -71,6 +70,13 @@ const EmployeeProjectsTable = (): JSX.Element => {
           </CTableBody>
         </CTable>
       </CCardBody>
+      <p>
+        <strong>
+          {employeeProjects?.Projsize > 0
+            ? `Total Records: ${employeeProjects.Projsize}`
+            : 'No Records Found...'}
+        </strong>
+      </p>
     </>
   )
 }
