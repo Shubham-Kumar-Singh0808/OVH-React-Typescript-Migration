@@ -170,10 +170,10 @@ export interface SelectDesignationProps extends DynamicFormLabelProps {
 }
 export interface SelectProps extends DynamicFormLabelProps {
   list: GetList[]
-  setValue: (value: string) => void
-  value: string
-  name: string
-  label: string
+  setValue?: (value: string) => void
+  value?: string
+  name?: string
+  label?: string
 }
 export interface CountryProps extends DynamicFormLabelProps {
   countryList: GetCountries[]

@@ -1,8 +1,8 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
 import React from 'react'
-import { SelectDesignationProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { showIsRequired } from '../../../../../utils/helper'
+import { SelectDesignationProps } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { showIsRequired } from '../../../../../../../utils/helper'
 
 const Designation = ({
   dynamicFormLabelProps,

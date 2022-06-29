@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import AddNewEmployee from './AddNewEmployee'
-import ShiftConfiguration from './ShiftConfiguration/ShiftConfiguration'
+import AddNewEmployee from '..'
+import ShiftConfiguration from '../ShiftConfiguration/ShiftConfiguration'
 
 const NewEmployeeLandingPage = (): JSX.Element => {
   const [toggleShift, setToggleShift] = useState<boolean>(true)

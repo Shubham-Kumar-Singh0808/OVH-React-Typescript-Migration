@@ -2,11 +2,11 @@ import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
 import {
   GetReportManager,
   ReportManagerProps,
-} from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+} from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React, { useState } from 'react'
 
 import Autocomplete from 'react-autocomplete'
-import { showIsRequired } from '../../../../../utils/helper'
+import { showIsRequired } from '../../../../../../../utils/helper'
 
 const ReportingManager = ({
   dynamicFormLabelProps,

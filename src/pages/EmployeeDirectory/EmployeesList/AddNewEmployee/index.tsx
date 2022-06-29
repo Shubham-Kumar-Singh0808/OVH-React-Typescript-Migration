@@ -328,6 +328,14 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               name="Gender"
               label="Select Gender"
             />
+            <OSelectList
+              dynamicFormLabelProps={dynamicFormLabelProps}
+              list={countryList}
+              setValue={onHandleCountryType}
+              value={addEmployee.country}
+              name="Country"
+              label="Select Country"
+            />
             <Birthday
               dynamicFormLabelProps={dynamicFormLabelProps}
               onDateChangeHandler={onHandleBirthday}
@@ -406,23 +414,11 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               name="JobType"
               label="Select Job Type"
             />
-            <OSelectList
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={countryList}
-              setValue={onHandleCountryType}
-              value={addEmployee.country}
-              name="Country"
-              label="Select Country"
-            />
             <Shift
               dynamicFormLabelProps={dynamicFormLabelProps}
               list={employeeShifts}
               setValue={onHandleShift}
-              value={
-                addEmployee.timeSlotDTO
-                  ? addEmployee.timeSlotDTO.name
-                  : ('' as string)
-              }
+              value={addEmployee.timeSlotDTO?.name}
               setToggleShift={() => setShiftToggle(!shiftToggle)}
               toggleValue={shiftToggle as boolean}
             />

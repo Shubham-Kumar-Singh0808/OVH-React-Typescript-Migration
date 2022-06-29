@@ -1,9 +1,9 @@
 import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
 
-import { DateChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { DateChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import DatePicker from 'react-datepicker'
 import React from 'react'
-import { showIsRequired } from '../../../../../utils/helper'
+import { showIsRequired } from '../../../../../../../utils/helper'
 
 const Birthday = ({
   dynamicFormLabelProps,

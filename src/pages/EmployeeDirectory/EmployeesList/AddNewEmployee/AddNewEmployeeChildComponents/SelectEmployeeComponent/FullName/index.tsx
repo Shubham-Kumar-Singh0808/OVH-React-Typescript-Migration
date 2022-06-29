@@ -1,8 +1,8 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 
-import { FullNameChangeHandlerProp } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { FullNameChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React from 'react'
-import { showIsRequired } from '../../../../../utils/helper'
+import { showIsRequired } from '../../../../../../../utils/helper'
 
 const FullName = ({
   dynamicFormLabelProps,

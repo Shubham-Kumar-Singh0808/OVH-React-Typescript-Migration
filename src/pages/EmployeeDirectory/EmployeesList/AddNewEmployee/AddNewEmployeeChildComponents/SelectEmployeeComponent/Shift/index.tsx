@@ -1,9 +1,9 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 
-import { EmployeeShiftDetails } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
+import { EmployeeShiftDetails } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import React from 'react'
-import { SelectShiftProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { showIsRequired } from '../../../../../utils/helper'
+import { SelectShiftProps } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { showIsRequired } from '../../../../../../../utils/helper'
 
 const Shift = ({
   dynamicFormLabelProps,

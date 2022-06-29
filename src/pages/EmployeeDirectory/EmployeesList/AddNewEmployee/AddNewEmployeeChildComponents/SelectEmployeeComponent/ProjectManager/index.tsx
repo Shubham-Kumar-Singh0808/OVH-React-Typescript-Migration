@@ -1,42 +1,41 @@
 import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
 import {
-  GetHRAssociate,
-  HrDataProps,
-} from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+  GetProjectManager,
+  ManagerProps,
+} from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import React, { useState } from 'react'
 
 import Autocomplete from 'react-autocomplete'
-import { showIsRequired } from '../../../../../utils/helper'
+import { showIsRequired } from '../../../../../../../utils/helper'
 
-// import { fakeRequest, getStates } from 'react-autocomplete'
-
-const HRAssociate = ({
+const ProjectManager = ({
   dynamicFormLabelProps,
-  hrDataList,
-  onSelectHRAssociate,
-}: HrDataProps): JSX.Element => {
+  managersList,
+  onSelectManager,
+}: ManagerProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
-
-  const onHandleSelectHRAssociate = (fullName: string) => {
+  const onHandleSelectManager = (fullName: string) => {
     setAutoCompleteTarget(fullName)
-    const managerName = hrDataList.find((value) => value.fullName === fullName)
+    const managerName = managersList.find(
+      (value) => value.fullName === fullName,
+    )
 
     const reportManager = {
       id: managerName?.id,
       fullName: managerName?.fullName,
-    } as GetHRAssociate
-    onSelectHRAssociate(reportManager)
+    } as GetProjectManager
+    onSelectManager(reportManager)
   }
   return (
     <>
       <CRow className="mb-3">
         <CFormLabel
           {...dynamicFormLabelProps(
-            'hrassociate',
+            'projectmanager',
             'col-sm-3 col-form-label text-end',
           )}
         >
-          HR Associate:
+          Project Manager:
           <span className={showIsRequired(autoCompleteTarget as string)}>
             *
           </span>
@@ -45,11 +44,11 @@ const HRAssociate = ({
           <Autocomplete
             inputProps={{
               className: 'form-control form-control-sm',
-              id: 'hr-autocomplete',
+              id: 'projectmanagers-autocomplete',
               placeholder: 'Type name here for auto fill',
             }}
             getItemValue={(item) => item.fullName}
-            items={hrDataList}
+            items={managersList}
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
               <div
@@ -79,7 +78,7 @@ const HRAssociate = ({
               item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
             }
             onChange={(e) => setAutoCompleteTarget(e.target.value)}
-            onSelect={(value) => onHandleSelectHRAssociate(value)}
+            onSelect={(value) => onHandleSelectManager(value)}
           />
         </CCol>
       </CRow>
@@ -87,4 +86,4 @@ const HRAssociate = ({
   )
 }
 
-export default HRAssociate
+export default ProjectManager
