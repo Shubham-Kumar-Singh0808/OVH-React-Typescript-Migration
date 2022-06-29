@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import EmployeeLeaveCalender from './EmployeeLeaveCalender'
 import EmployeeLeaveCategories from './EmployeeLeaveCategories'
-import OCard from '../../../components/ReusableComponent/OCard'
 import AddEditLeaveCategories from './AddLeaveCategories'
+import OCard from '../../../components/ReusableComponent/OCard'
 
 const EmployeeLeaveSettings = (): JSX.Element => {
   const [toggle, setToggle] = useState('')

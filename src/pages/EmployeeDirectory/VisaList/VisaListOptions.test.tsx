@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom'
 
+import React from 'react'
+import userEvent from '@testing-library/user-event'
+import VisaListOptions from './VisaListOptions'
 import { mockCountries, mockVisaTypes } from '../../../test/data/visaListData'
 import { render, screen, waitFor } from '../../../test/testUtils'
-
-import React from 'react'
-import VisaListOptions from './VisaListOptions'
-import userEvent from '@testing-library/user-event'
 
 const mockSetSelectCountry = jest.fn()
 const mockSetFilterByCountry = jest.fn()

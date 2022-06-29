@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todd: remove eslint and fix error
 import React, { useEffect, useState } from 'react'
 import {
   CButton,
@@ -123,8 +125,8 @@ const EmployeeLeaveCategories = ({
     setLeaveCategoryId(categoryId)
     setEditEmployeeCategoryLeaveDetails({
       id: categoryId,
-      name: name,
-      leaveType: leaveType,
+      name,
+      leaveType,
     })
   }
 

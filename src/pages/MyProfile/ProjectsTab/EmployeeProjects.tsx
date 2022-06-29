@@ -1,5 +1,4 @@
 import { CCardHeader } from '@coreui/react-pro'
-
 import React from 'react'
 import EmployeeProjectsTable from './EmployeeProjectsTable'
 

@@ -1,11 +1,10 @@
+import axios from 'axios'
 import { AllowedHttpMethods, employeeListConfig } from '../../apiList'
 import {
   EmployeeListApiProps,
   EmploymentStatus,
   GetEmployeeResponse,
 } from '../../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployees = async (

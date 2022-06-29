@@ -1,11 +1,10 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
-
 import {
   EmployeeAsset,
   EmployeeAssetsState,
 } from '../../../types/MyProfile/MyAssetsTab/employeeAssetsTypes'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import employeeAssetsApi from '../../../middleware/api/MyProfile/MyAssetsTab/employeeAssetsApi'
 import { ApiLoadingState } from '../../../middleware/api/apiList'

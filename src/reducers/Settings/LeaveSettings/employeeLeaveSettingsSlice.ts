@@ -1,3 +1,5 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeSaveLeaveCalenderSetting,
@@ -5,9 +7,6 @@ import {
   EmployeeLeaveCategory,
   EmployeeAddUpdateLeaveCategory,
 } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
-
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import employeeLeaveSettingsApi from '../../../middleware/api/Settings/LeaveSettings/employeeLeaveSettingsApi'
 import { ApiLoadingState } from '../../../middleware/api/apiList'

@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
 
 import { render, screen, waitFor } from '@testing-library/react'

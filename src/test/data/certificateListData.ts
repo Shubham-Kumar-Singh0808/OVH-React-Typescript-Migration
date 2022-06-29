@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { EmployeeCertificate } from '../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 
 export const mockCertificateList: EmployeeCertificate[] = [

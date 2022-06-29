@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todo: remove eslint and fix error
 import { SidebarMenuReturnApi } from '../../types/SidebarMenu/sidebarMenuType'
 
 export const mockSidebarData: SidebarMenuReturnApi[] = [

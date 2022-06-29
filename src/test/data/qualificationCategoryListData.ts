@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todo: remove eslint and fix error
 import { QualificationCategory } from '../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
 
 export const mockQualificationCategories: QualificationCategory[] = [

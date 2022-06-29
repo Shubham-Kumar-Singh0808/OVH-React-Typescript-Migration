@@ -1,17 +1,19 @@
+/* eslint-disable require-await */
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../stateStore'
-import EmployeeReportees from './EmployeeReportees'
-import { reduxServices } from '../../../reducers/reduxServices'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { Router } from 'react-router-dom'
-import { employeeReporteesApiConfig } from '../../../middleware/api/apiList'
 import { createMemoryHistory } from 'history'
+import EmployeeReportees from './EmployeeReportees'
+import { employeeReporteesApiConfig } from '../../../middleware/api/apiList'
+import { reduxServices } from '../../../reducers/reduxServices'
+import stateStore from '../../../stateStore'
 
 const mockReporteesDetails = {
   managerId: 1002,

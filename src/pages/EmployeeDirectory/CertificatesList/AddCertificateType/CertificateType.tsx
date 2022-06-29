@@ -1,9 +1,9 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import OCard from '../../../../components/ReusableComponent/OCard'
 import AddNewCertificateType from './AddNewCertificateType'
 import CertificateTypeTable from './CertificateTypeTable'
+import OCard from '../../../../components/ReusableComponent/OCard'
 
 const CertificateType = (): JSX.Element => {
   const [selectedTechnologyId, setSelectedTechnologyId] = useState<number>()

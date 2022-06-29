@@ -1,6 +1,5 @@
-import { AllowedHttpMethods, employeeProjectsApiConfig } from '../../apiList'
-
 import axios from 'axios'
+import { AllowedHttpMethods, employeeProjectsApiConfig } from '../../apiList'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 import { EmployeeProjects } from '../../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
@@ -11,7 +10,7 @@ const getEmployeeProjects = async (
     url: employeeProjectsApiConfig.getEmployeeProjects,
     method: AllowedHttpMethods.get,
     params: {
-      employeeid: employeeid,
+      employeeid,
       endIndex: 20,
       firstIndex: 0,
       projectStatus: 'All',
@@ -29,7 +28,7 @@ const getProjectDetails = async (
     url: employeeProjectsApiConfig.getProjectDetails,
     method: AllowedHttpMethods.get,
     params: {
-      projectId: projectId,
+      projectId,
     },
   })
   const response = await axios(requestConfig)

@@ -1,7 +1,6 @@
-import { AllowedHttpMethods, profileHistoryConfig } from '../../apiList'
-
-import { ProfileUpdateData } from '../../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import axios from 'axios'
+import { AllowedHttpMethods, profileHistoryConfig } from '../../apiList'
+import { ProfileUpdateData } from '../../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getProfileHistory = async (
@@ -11,7 +10,7 @@ const getProfileHistory = async (
     url: profileHistoryConfig.getprofileHistory,
     method: AllowedHttpMethods.get,
     params: {
-      employeeId: employeeId,
+      employeeId,
     },
   })
   const response = await axios(requestConfig)

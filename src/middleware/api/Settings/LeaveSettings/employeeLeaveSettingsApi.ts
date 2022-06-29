@@ -1,7 +1,6 @@
-import { AllowedHttpMethods, employeeLeaveSettingsConfig } from '../../apiList'
 import axios from 'axios'
+import { AllowedHttpMethods, employeeLeaveSettingsConfig } from '../../apiList'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
-
 import {
   EmployeeSaveLeaveCalenderSetting,
   EmployeeLeaveCategory,
@@ -50,7 +49,7 @@ const deleteEmployeeLeaveCategory = async (
     url: employeeLeaveSettingsConfig.deleteLeaveCategory,
     method: AllowedHttpMethods.delete,
     params: {
-      leaveCategoryId: leaveCategoryId,
+      leaveCategoryId,
     },
   })
   const response = await axios(requestConfig)
