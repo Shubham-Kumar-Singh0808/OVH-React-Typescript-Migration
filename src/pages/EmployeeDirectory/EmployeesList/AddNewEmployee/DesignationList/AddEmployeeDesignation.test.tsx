@@ -40,7 +40,9 @@ describe('Add New Designation Testing', () => {
         />
       </ReduxProvider>,
     )
-    expect(screen.getByRole('option', { name: 'Select Department' })).toBe(true)
+    expect(
+      screen.getByRole('option', { name: 'Select Department' }).selected,
+    ).toBe(true)
   })
 
   test('should be in disabled mode when any of the mandatory field is not entered', async () => {
