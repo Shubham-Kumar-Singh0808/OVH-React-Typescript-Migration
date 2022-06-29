@@ -1,15 +1,17 @@
+/* eslint-disable import/export */
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 // @ts-nocheck
+// Todo: remove eslint disable and fix error
 
 import { Provider } from 'react-redux'
 import React from 'react'
 import { Router } from 'react-router-dom'
-import { allReducers } from '../stateStore'
 import { configureStore } from '@reduxjs/toolkit'
 import { createMemoryHistory } from 'history'
 import { render as rtlRender } from '@testing-library/react'
+import { allReducers } from '../stateStore'
 
 const render = (
   ui,

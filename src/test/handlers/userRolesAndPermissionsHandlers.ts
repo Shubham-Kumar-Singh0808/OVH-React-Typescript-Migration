@@ -1,7 +1,7 @@
+import { rest } from 'msw'
 import { mockUserRoleFeatures } from '../data/UserRoleFeaturesData'
 import { mockUserRoleSubFeatures } from '../data/UserRoleSubFeaturesData'
 import { mockUserRoles } from '../data/userRolesData'
-import { rest } from 'msw'
 import { userRolesConfigurationApiConfig } from '../../middleware/api/apiList'
 
 export const userRolesAndPermissionsHandlers = [

@@ -8,7 +8,6 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-
 import { VisaListOptionsProps } from '../../../types/EmployeeDirectory/VisaList/visaListTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'

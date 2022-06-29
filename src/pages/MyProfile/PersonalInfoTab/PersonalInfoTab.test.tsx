@@ -1,13 +1,13 @@
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen } from '@testing-library/react'
-
 import { EnhancedStore } from '@reduxjs/toolkit'
-import PersonalInfoTab from './PersonalInfoTab'
 import { Provider } from 'react-redux'
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
+import PersonalInfoTab from './PersonalInfoTab'
 import { getEmployeeGeneralInformationThunk } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import stateStore from '../../../stateStore'
 

@@ -1,10 +1,5 @@
-import {
-  AccessModifier,
-  ChildFeaturesArrayProps,
-  UserRoleFeaturesExpandableTableProps,
-  UtilsChildFeatures,
-  UtilsSubFeatures,
-} from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+/* eslint-disable max-params */
+// Todo: remove eslint and fix all the errors
 import {
   CAccordion,
   CAccordionBody,
@@ -20,15 +15,21 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
+import {
+  AccessModifier,
+  ChildFeaturesArrayProps,
+  UserRoleFeaturesExpandableTableProps,
+  UtilsChildFeatures,
+  UtilsSubFeatures,
+} from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import {
   mapFeaturesToSubFeatures,
   renderPermissionSwitch,
 } from '../../../utils/rolesAndPermissionsUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableProps> =
@@ -79,9 +80,9 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
     ) => {
       setChildFeaturesModalVisibility(true)
       setChildFeaturesArray({
-        childFeatures: childFeatures,
-        index: index,
-        subFeatureItemIndex: subFeatureItemIndex,
+        childFeatures,
+        index,
+        subFeatureItemIndex,
       })
     }
 

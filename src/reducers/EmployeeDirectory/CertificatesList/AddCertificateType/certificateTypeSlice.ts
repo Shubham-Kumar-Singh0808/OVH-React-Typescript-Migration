@@ -1,6 +1,6 @@
-import { AppDispatch, RootState } from '../../../../stateStore'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
+import { AppDispatch, RootState } from '../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {

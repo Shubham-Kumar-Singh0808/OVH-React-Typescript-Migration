@@ -1,9 +1,9 @@
+import { rest } from 'msw'
 import { employeeReporteesApiConfig } from '../../middleware/api/apiList'
 import {
   mockReporteesDetails,
   mockReporteesKRAs,
 } from '../data/employeeReporteesData'
-import { rest } from 'msw'
 
 export const employeeReviewsHandlers = [
   rest.get(employeeReporteesApiConfig.getEmployeeReportees, (req, res, ctx) => {

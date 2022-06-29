@@ -1,18 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable require-await */
+// Todo remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen } from '@testing-library/react'
-
+// eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import { UserRole } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
-import UserRolesList from './UserRolesList'
-import { mockUserRoles } from '../../../test/data/userRolesData'
-import { reduxServices } from '../../../reducers/reduxServices'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
+import UserRolesList from './UserRolesList'
+import { UserRole } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import { mockUserRoles } from '../../../test/data/userRolesData'
+import { reduxServices } from '../../../reducers/reduxServices'
+import stateStore from '../../../stateStore'
 import { userRolesConfigurationApiConfig } from '../../../middleware/api/apiList'
 
 const ReduxProvider = ({

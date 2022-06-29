@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeCertificationsApiConfig,
@@ -8,8 +9,6 @@ import {
   EmployeeCertification,
   Technology,
 } from '../../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
 const getEmployeeCertificates = async (): Promise<EmployeeCertification[]> => {
@@ -37,7 +36,7 @@ const getCertificateByTechnologyName = async (
     url: employeeCertificationsApiConfig.getCertificateByTechnology,
     method: AllowedHttpMethods.get,
     params: {
-      technologyName: technologyName,
+      technologyName,
     },
   })
   const response = await axios(requestConfig)
@@ -86,10 +85,10 @@ const deleteEmployeeCertificate = async (
     url: employeeCertificationsApiConfig.deleteEmployeeCertificate,
     method: AllowedHttpMethods.delete,
     params: {
-      certificationId: certificationId,
+      certificationId,
     },
     data: {
-      certificationId: certificationId,
+      certificationId,
     },
   })
   const response = await axios(requestConfig)

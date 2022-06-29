@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom'
 
-import { render, screen, waitFor } from '../../../test/testUtils'
-
-import CertificateDetailsExpandableTable from './CertificateDetailsExpandableTable'
 import React from 'react'
-import { mockCertificateList } from '../../../test/data/certificateListData'
 import userEvent from '@testing-library/user-event'
+import CertificateDetailsExpandableTable from './CertificateDetailsExpandableTable'
+import { render, screen, waitFor } from '../../../test/testUtils'
+import { mockCertificateList } from '../../../test/data/certificateListData'
 
 const expectPageSizeToBeRendered = async (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {

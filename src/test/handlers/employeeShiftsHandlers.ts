@@ -1,5 +1,7 @@
-import { mockEmployeeShifts } from '../data/employeeShiftsData'
+/* eslint-disable sonarjs/no-identical-functions */
+// Todo: remove eslint and fix error
 import { rest } from 'msw'
+import { mockEmployeeShifts } from '../data/employeeShiftsData'
 import { shiftConfigurationApiConfig } from '../../middleware/api/apiList'
 
 export const employeeShiftsHandlers = [
@@ -21,21 +23,21 @@ export const employeeShiftsHandlers = [
     )
   }),
   // update employee shift api mock
-  rest.get(shiftConfigurationApiConfig.updateShiftDetail, (req, res, ctx) => {
-    return res(
+  rest.get(shiftConfigurationApiConfig.updateShiftDetail, (req, res, ctx) =>
+    res(
       ctx.json({
         status: 200,
         data: {},
       }),
-    )
-  }),
+    ),
+  ),
   // delete employee shift api mock
-  rest.get(shiftConfigurationApiConfig.deleteShiftDetail, (req, res, ctx) => {
-    return res(
+  rest.get(shiftConfigurationApiConfig.deleteShiftDetail, (req, res, ctx) =>
+    res(
       ctx.json({
         status: 200,
         data: {},
       }),
-    )
-  }),
+    ),
+  ),
 ]
