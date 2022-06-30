@@ -1,9 +1,8 @@
 import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
@@ -47,10 +46,10 @@ const EmployeeHandbookSettings = (): JSX.Element => {
           <>
             <CRow className="justify-content-end">
               <CCol className="text-end" md={4}>
-                <CButton color="info" className="btn-ovh me-1 text-white">
+                <CButton color="info" className="btn-ovh me-1">
                   <i className="fa fa-plus me-1"></i>Add Page
                 </CButton>
-                <CButton color="info" className="btn-ovh me-1 text-white">
+                <CButton color="info" className="btn-ovh me-1">
                   <i className="fa fa-arrow-left  me-1"></i>Back
                 </CButton>
               </CCol>

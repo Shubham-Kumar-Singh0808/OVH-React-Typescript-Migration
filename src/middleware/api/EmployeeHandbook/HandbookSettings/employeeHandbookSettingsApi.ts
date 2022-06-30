@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeHandbookSettingsApiConfig,
@@ -6,8 +7,6 @@ import {
   EmployeeHandbookListApiProps,
   EmployeeHandbookListResponse,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeeHandbooks = async (
@@ -32,7 +31,7 @@ const deleteEmployeeHandbook = async (
     url: employeeHandbookSettingsApiConfig.deleteEmployeeHandbook,
     method: AllowedHttpMethods.delete,
     params: {
-      bookId: bookId,
+      bookId,
     },
   })
   const response = await axios(requestConfig)

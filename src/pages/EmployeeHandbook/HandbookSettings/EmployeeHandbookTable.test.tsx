@@ -1,14 +1,14 @@
 import '@testing-library/jest-dom'
 
-import { render, screen, waitFor } from '../../../test/testUtils'
-
-import EmployeeHandbookTable from './EmployeeHandbookTable'
 import React from 'react'
-import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 import userEvent from '@testing-library/user-event'
-import stateStore from '../../../stateStore'
+// eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import EmployeeHandbookTable from './EmployeeHandbookTable'
+import stateStore from '../../../stateStore'
+import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
+import { render, screen, waitFor } from '../../../test/testUtils'
 import { EmployeeHandbook } from '../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 const ReduxProvider = ({
