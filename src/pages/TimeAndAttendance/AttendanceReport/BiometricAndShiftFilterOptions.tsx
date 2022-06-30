@@ -31,6 +31,12 @@ const BiometricAndShiftFilterOptions = ({
     console.log(typeof e.target.value)
   }
 
+  const handleSearchButton = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setSearchEmployee(searchInput)
+    }
+  }
+
   useEffect(() => {
     if (selectShiftId) {
       setFilteredShift(
@@ -108,6 +114,7 @@ const BiometricAndShiftFilterOptions = ({
                 aria-label="Search Employee"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={handleSearchButton}
               />
               <CButton
                 disabled={false}
