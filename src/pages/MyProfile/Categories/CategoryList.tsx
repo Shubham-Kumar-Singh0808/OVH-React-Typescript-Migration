@@ -7,12 +7,11 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
-import { AddEditEmployeeSkillsProps } from '../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import AddNewCategory from './AddNewCategory'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import CategoryListTable from './CategoryListTable'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { AddEditEmployeeSkillsProps } from '../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const CategoryList = ({

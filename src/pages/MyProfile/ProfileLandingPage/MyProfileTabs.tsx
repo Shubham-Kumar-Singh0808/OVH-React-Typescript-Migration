@@ -6,7 +6,7 @@ import {
   CTabPane,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-
+import { useParams } from 'react-router-dom'
 import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
@@ -16,12 +16,10 @@ import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import EmployeeReviews from '../ReviewsTab/EmployeeReviews'
 import TabsLabels from '../../../middleware/TabsLabels'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
-import { useParams } from 'react-router-dom'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import EmployeeProjects from '../ProjectsTab/EmployeeProjects'
-
 import EmployeeAssets from '../MyAssetsTab/EmployeeAssets'
+
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }

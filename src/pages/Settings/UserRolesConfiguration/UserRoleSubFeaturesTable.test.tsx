@@ -1,14 +1,15 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen, waitFor } from '@testing-library/react'
-
-import { ChildFeaturesArrayProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+// eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import UserRoleSubFeaturesTable from './UserRoleSubFeaturesTable'
 import stateStore from '../../../stateStore'
-import userEvent from '@testing-library/user-event'
+import { ChildFeaturesArrayProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 
 const mockChildFeaturesArray: ChildFeaturesArrayProps = {
   childFeatures: [
@@ -90,7 +91,7 @@ const ReduxProvider = ({
 }) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('User Role SubFeatures Table Component Testing', () => {
-  test('should render user role sub features table component', async () => {
+  test('should render user role sub features table component', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <UserRoleSubFeaturesTable

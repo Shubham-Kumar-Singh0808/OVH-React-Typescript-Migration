@@ -1,24 +1,17 @@
+/* eslint-disable import/named */
+// Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
-
-import { render, screen } from '../../../test/testUtils'
-
-import CertificatesFilterOptions from './CertificatesFilterOptions'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../stateStore'
 import userEvent from '@testing-library/user-event'
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+import CertificatesFilterOptions from './CertificatesFilterOptions'
+import stateStore from '../../../stateStore'
+import { ReduxProvider } from '../../../components/Helper'
+import { render, screen } from '../../../test/testUtils'
 
 describe('Certificates Filter Options Component Testing', () => {
-  test('should render certificates filter options component with out crashing', async () => {
+  test('should render certificates filter options component with out crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <CertificatesFilterOptions
@@ -38,7 +31,7 @@ describe('Certificates Filter Options Component Testing', () => {
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
   })
 
-  test('view button should disable if the technology select box does not have value', async () => {
+  test('view button should disable if the technology select box does not have value', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <CertificatesFilterOptions
@@ -56,7 +49,7 @@ describe('Certificates Filter Options Component Testing', () => {
     )
     expect(screen.getByRole('button', { name: 'View' })).not.toBeEnabled()
   })
-  test('view button should enable only if the technology select box has a value', async () => {
+  test('view button should enable only if the technology select box has a value', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <CertificatesFilterOptions
@@ -74,7 +67,7 @@ describe('Certificates Filter Options Component Testing', () => {
     )
     expect(screen.getByRole('button', { name: 'View' })).toBeEnabled()
   })
-  test('multi search button should enable only if we enter the value', async () => {
+  test('multi search button should enable only if we enter the value', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <CertificatesFilterOptions

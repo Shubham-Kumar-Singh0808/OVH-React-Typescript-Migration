@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { MockEmployee } from '../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 
 export const mockEmployeeList: MockEmployee[] = [

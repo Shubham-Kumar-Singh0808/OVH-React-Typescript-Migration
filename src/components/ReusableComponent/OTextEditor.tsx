@@ -1,10 +1,9 @@
 import { ContentState, EditorState, convertToRaw } from 'draft-js'
 import React, { useState } from 'react'
-
 import { Editor } from 'react-draft-wysiwyg'
-import { TextEditorProps } from '../../types/commonTypes'
 import draftToHtml from 'draftjs-to-html'
 import htmlToDraft from 'html-to-draftjs'
+import { TextEditorProps } from '../../types/commonTypes'
 
 export const OTextEditor = ({
   value,
@@ -13,8 +12,7 @@ export const OTextEditor = ({
   const prepareDraft = (value: string) => {
     const draft = htmlToDraft(value)
     const contentState = ContentState.createFromBlockArray(draft.contentBlocks)
-    const editorState = EditorState.createWithContent(contentState)
-    return editorState
+    return EditorState.createWithContent(contentState)
   }
 
   const [editorState, setEditorState] = useState(

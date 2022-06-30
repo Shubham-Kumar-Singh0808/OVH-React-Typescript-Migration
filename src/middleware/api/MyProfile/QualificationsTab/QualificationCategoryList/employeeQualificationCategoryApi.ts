@@ -1,9 +1,8 @@
+import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeQualificationCategoryApiConfig,
 } from '../../../apiList'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 import { QualificationCategory } from '../../../../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
 
@@ -27,8 +26,8 @@ const createQualificationCategory = async ({
     url: employeeQualificationCategoryApiConfig.createQualificationCategory,
     method: AllowedHttpMethods.post,
     data: {
-      qualificationCategory: qualificationCategory,
-      qualificationName: qualificationName,
+      qualificationCategory,
+      qualificationName,
     },
   })
 
@@ -43,10 +42,10 @@ const deleteQualificationCategory = async (
     url: employeeQualificationCategoryApiConfig.deleteQualificationCategory,
     method: AllowedHttpMethods.delete,
     params: {
-      id: id,
+      id,
     },
     data: {
-      id: id,
+      id,
     },
   })
 

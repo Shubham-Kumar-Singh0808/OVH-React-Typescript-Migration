@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+// Todo: remove eslint and fix error
 import {
   CButton,
   CCol,
@@ -8,8 +10,8 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useTypedSelector } from '../../../stateStore'
 import { Link } from 'react-router-dom'
+import { useTypedSelector } from '../../../stateStore'
 import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
 import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 
@@ -162,7 +164,7 @@ const CertificatesFilterOptions = ({
         <CCol xs={5} className="d-md-flex justify-content-md-end">
           <Link to={`/certificateTypeList`}>
             <CButton color="info btn-ovh me-0">
-              <i className="fa fa-plus  me-1"></i>Add Certificate Type
+              <i className="fa fa-plus me-1"></i>Add Certificate Type
             </CButton>
           </Link>
         </CCol>
@@ -191,7 +193,7 @@ const CertificatesFilterOptions = ({
             color="info btn-ovh me-0"
             onClick={handleExportCertificatesData}
           >
-            <i className="fa fa-plus  me-1"></i>Click to Export
+            <i className="fa fa-plus me-1"></i>Click to Export
           </CButton>
         </CCol>
       </CRow>

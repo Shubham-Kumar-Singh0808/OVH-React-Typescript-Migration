@@ -1,12 +1,11 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   Skill,
   SkillSliceState,
 } from '../../../types/MyProfile/Skills/skillTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import skillApi from '../../../middleware/api/MyProfile/Skills/skillApi'
 

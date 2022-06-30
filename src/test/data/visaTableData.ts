@@ -1,4 +1,5 @@
 import { VisaDetails } from '../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+
 export const mockVisaTableDetails: VisaDetails[] = [
   {
     id: 20,

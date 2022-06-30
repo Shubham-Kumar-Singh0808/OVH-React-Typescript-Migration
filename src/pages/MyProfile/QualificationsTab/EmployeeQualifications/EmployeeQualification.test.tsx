@@ -1,13 +1,13 @@
+/* eslint-disable import/named */
+// Remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen, waitFor } from '@testing-library/react'
-
-import EmployeeQualifications from './EmployeeQualification'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
+import EmployeeQualifications from './EmployeeQualification'
 import stateStore from '../../../../stateStore'
 
 const history = createMemoryHistory()

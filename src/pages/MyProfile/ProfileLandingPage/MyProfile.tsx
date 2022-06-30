@@ -1,10 +1,9 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
-
 import { Link } from 'react-router-dom'
-import MyProfileTabs from './MyProfileTabs'
-import OCard from '../../../components/ReusableComponent/OCard'
-import ProfileDetails from './ProfileDetails'
 import React from 'react'
+import MyProfileTabs from './MyProfileTabs'
+import ProfileDetails from './ProfileDetails'
+import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { useTypedSelector } from '../../../stateStore'
