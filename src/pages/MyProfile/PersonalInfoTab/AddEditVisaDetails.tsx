@@ -49,6 +49,7 @@ function AddEditVisaDetails({
   const [error, setError] = useState<boolean>(false)
   const [validImage, setValidImage] = useState<boolean>(true)
 
+  const [visaTypeError, setVisaTypeError] = useState(false)
   const [dateOfIssueFlag, setDateOfIssueFlag] = useState<boolean>(false)
   const [dateOfExpiryFlag, setDateOfExpiryFlag] = useState<boolean>(false)
 
@@ -142,6 +143,11 @@ function AddEditVisaDetails({
       setEmployeeVisaDetails((prevState) => {
         return { ...prevState, ...{ [name]: value, visaTypeId: '' } }
       })
+    }
+    if (value === '') {
+      setVisaTypeError(true)
+    } else {
+      setVisaTypeError(false)
     }
     setEmployeeVisaDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
@@ -412,11 +418,12 @@ function AddEditVisaDetails({
                 onChange={onChangeCountryHandler}
               >
                 <option value={''}>Select Visa</option>
-                {getVisaCountryDetails?.map((visaTypeItem, index) => (
-                  <option key={index} value={visaTypeItem.visaTypeId}>
-                    {visaTypeItem.visaType}
-                  </option>
-                ))}
+                {!visaTypeError &&
+                  getVisaCountryDetails?.map((visaTypeItem, index) => (
+                    <option key={index} value={visaTypeItem.visaTypeId}>
+                      {visaTypeItem.visaType}
+                    </option>
+                  ))}
               </CFormSelect>
             </CCol>
           </CRow>
