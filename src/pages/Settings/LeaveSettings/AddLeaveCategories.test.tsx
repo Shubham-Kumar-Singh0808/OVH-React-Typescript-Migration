@@ -51,7 +51,7 @@ describe('Add New Leave Category Testing', () => {
       </ReduxProvider>,
     )
     expect(screen.getAllByRole('option').length).toBe(3)
-  }) 
+  })
   test('should correctly set default option', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
