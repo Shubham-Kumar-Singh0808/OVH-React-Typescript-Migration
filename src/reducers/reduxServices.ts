@@ -20,6 +20,8 @@ import { qualificationCategoryService } from './MyProfile/QualificationsTab/Qual
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
+import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
 import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
 
@@ -46,6 +48,8 @@ export const reduxServices = {
   certificateList: certificateListService,
   employeeAssets: employeeAssetsService,
   certificateType: certificateTypeService,
+  employeeReports: employeeReportService,
+  employeeDesignationReports: employeeDesigationReportService,
   visaList: visaListService,
   employeeLeaveSettings: employeeLeaveSettingsService,
 }
