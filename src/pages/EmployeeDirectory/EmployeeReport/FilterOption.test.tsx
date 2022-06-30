@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import userEvent from '@testing-library/user-event'
 import FilterOptions from './FilterOptions'
 import stateStore from '../../../stateStore'
-import { render, screen } from '../../../test/testUtils'
+import { render, screen, waitFor } from '../../../test/testUtils'
 import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
 
 const ReduxProvider = ({
@@ -18,7 +18,6 @@ const ReduxProvider = ({
 }) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('Fitler Options Component Testing', () => {
-  // eslint-disable-next-line require-await
   test('should render filter options component without crashing', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -36,9 +35,11 @@ describe('Fitler Options Component Testing', () => {
       name: 'Inactive',
     }) as HTMLInputElement
 
-    userEvent.click(inactiveRadio)
+    await waitFor(() => {
+      userEvent.click(inactiveRadio)
 
-    expect(activeRadio.checked).toEqual(false)
-    expect(inactiveRadio.checked).toEqual(true)
+      expect(activeRadio.checked).toEqual(false)
+      expect(inactiveRadio.checked).toEqual(true)
+    })
   })
 })
