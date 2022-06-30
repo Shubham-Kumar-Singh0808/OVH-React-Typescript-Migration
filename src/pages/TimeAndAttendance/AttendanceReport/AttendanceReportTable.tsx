@@ -104,7 +104,7 @@ const AttendanceReportTable = ({
       <CTable
         striped
         responsive
-        className="ps-0 pe-0 atttendance-report-table mt-1"
+        className="ps-0 pe-0 attendance-report-table mt-1"
       >
         <CTableHead>
           <CTableRow>
@@ -130,124 +130,119 @@ const AttendanceReportTable = ({
             <CTableHeaderCell>Holiday</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
-        <CTableBody>
-          {isLoading !== ApiLoadingState.loading ? (
-            <>
-              {employeeAttendanceReport.map(
-                (currentReportItem, reportIndex) => {
-                  return (
-                    <>
-                      <CTableRow key={reportIndex}>
-                        <CTableDataCell scope="row">
-                          {currentReportItem.id}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {currentReportItem.fullName}
-                        </CTableDataCell>
-                        {currentReportItem.bioAttendanceDtoSet.map(
-                          (bioAttendanceItem, bioAttendanceItemIndex) => {
-                            return (
-                              <React.Fragment key={bioAttendanceItemIndex}>
-                                {isBiometric === 'WithBiometric' ? (
-                                  <>
-                                    <CTableDataCell
-                                      scope="row"
-                                      className="text-center"
-                                    >
-                                      {attendanceStatusCheck({
-                                        status:
-                                          bioAttendanceItem.attendanceStatus,
-                                        textColor: bioAttendanceItem.color,
-                                        title: bioAttendanceItem.title,
-                                        lateReport:
-                                          bioAttendanceItem.lateReport,
-                                        biometric: isBiometric,
-                                      })}
-                                    </CTableDataCell>
-                                  </>
-                                ) : (
-                                  <>
-                                    <CTableDataCell
-                                      scope="row"
-                                      className="text-center"
-                                    >
-                                      {attendanceStatusCheck({
-                                        status:
-                                          bioAttendanceItem.attendanceStatus,
-                                        textColor: bioAttendanceItem.color,
-                                        title: bioAttendanceItem.title,
-                                      })}
-                                    </CTableDataCell>
-                                  </>
-                                )}
-                              </React.Fragment>
-                            )
-                          },
-                        )}
-                        <CTableDataCell scope="row" className="text-center">
-                          {currentReportItem.absentCount}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row" className="text-center">
-                          {currentReportItem.lateComingCount === null
-                            ? 0
-                            : currentReportItem.lateComingCount}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row" className="text-center">
-                          {currentReportItem.casualLeaveCount}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row" className="text-center">
-                          {currentReportItem.lopLeaveCount}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row" className="text-center">
-                          {currentReportItem.holidaysCount}
-                        </CTableDataCell>
-                      </CTableRow>
-                    </>
-                  )
-                },
-              )}
-            </>
-          ) : (
-            <CCol>
-              <CRow className="category-loading-spinner ms-1">
-                <CSpinner />
-              </CRow>
-            </CCol>
-          )}
-        </CTableBody>
-      </CTable>
-      <CRow>
-        <CCol xs={4}>
-          <p>
-            <strong>
-              {employeeAttendanceReport?.length
-                ? `Total Records: ${listSize}`
-                : `No Records found...`}
-            </strong>
-          </p>
-        </CCol>
-        <CCol xs={3}>
-          {listSize > 20 && (
-            <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSizeSelectChange}
-              options={[20, 40, 60, 80]}
-              selectedPageSize={pageSize}
-            />
-          )}
-        </CCol>
-        {listSize > 20 && (
-          <CCol
-            xs={5}
-            className="d-grid gap-1 d-md-flex justify-content-md-end"
-          >
-            <OPagination
-              currentPage={currentPage}
-              pageSetter={setCurrentPage}
-              paginationRange={paginationRange}
-            />
+        {isLoading !== ApiLoadingState.loading ? (
+          <CTableBody>
+            {employeeAttendanceReport.map((currentReportItem, reportIndex) => {
+              return (
+                <React.Fragment key={reportIndex}>
+                  <CTableRow>
+                    <CTableDataCell scope="row">
+                      {currentReportItem.id}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {currentReportItem.fullName}
+                    </CTableDataCell>
+                    {currentReportItem.bioAttendanceDtoSet.map(
+                      (bioAttendanceItem, bioAttendanceItemIndex) => {
+                        return (
+                          <React.Fragment key={bioAttendanceItemIndex}>
+                            {isBiometric === 'WithBiometric' ? (
+                              <>
+                                <CTableDataCell
+                                  scope="row"
+                                  className="text-center"
+                                >
+                                  {attendanceStatusCheck({
+                                    status: bioAttendanceItem.attendanceStatus,
+                                    textColor: bioAttendanceItem.color,
+                                    title: bioAttendanceItem.title,
+                                    lateReport: bioAttendanceItem.lateReport,
+                                    biometric: isBiometric,
+                                  })}
+                                </CTableDataCell>
+                              </>
+                            ) : (
+                              <>
+                                <CTableDataCell
+                                  scope="row"
+                                  className="text-center"
+                                >
+                                  {attendanceStatusCheck({
+                                    status: bioAttendanceItem.attendanceStatus,
+                                    textColor: bioAttendanceItem.color,
+                                    title: bioAttendanceItem.title,
+                                  })}
+                                </CTableDataCell>
+                              </>
+                            )}
+                          </React.Fragment>
+                        )
+                      },
+                    )}
+                    <CTableDataCell scope="row" className="text-center">
+                      {currentReportItem.absentCount}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row" className="text-center">
+                      {currentReportItem.lateComingCount === null
+                        ? 0
+                        : currentReportItem.lateComingCount}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row" className="text-center">
+                      {currentReportItem.casualLeaveCount}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row" className="text-center">
+                      {currentReportItem.lopLeaveCount}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row" className="text-center">
+                      {currentReportItem.holidaysCount}
+                    </CTableDataCell>
+                  </CTableRow>
+                </React.Fragment>
+              )
+            })}
+          </CTableBody>
+        ) : (
+          <CCol>
+            <CRow className="category-loading-spinner ms-1">
+              <CSpinner />
+            </CRow>
           </CCol>
         )}
-      </CRow>
+      </CTable>
+      {isLoading !== ApiLoadingState.loading && (
+        <CRow>
+          <CCol xs={4}>
+            <p>
+              <strong>
+                {employeeAttendanceReport?.length
+                  ? `Total Records: ${listSize}`
+                  : `No Records found...`}
+              </strong>
+            </p>
+          </CCol>
+          <CCol xs={3}>
+            {listSize > 20 && (
+              <OPageSizeSelect
+                handlePageSizeSelectChange={handlePageSizeSelectChange}
+                options={[20, 40, 60, 80]}
+                selectedPageSize={pageSize}
+              />
+            )}
+          </CCol>
+          {listSize > 20 && (
+            <CCol
+              xs={5}
+              className="d-grid gap-1 d-md-flex justify-content-md-end"
+            >
+              <OPagination
+                currentPage={currentPage}
+                pageSetter={setCurrentPage}
+                paginationRange={paginationRange}
+              />
+            </CCol>
+          )}
+        </CRow>
+      )}
     </>
   )
 }

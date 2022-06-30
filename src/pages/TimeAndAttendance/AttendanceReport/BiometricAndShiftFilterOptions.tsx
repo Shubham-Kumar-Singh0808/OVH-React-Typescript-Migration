@@ -19,6 +19,8 @@ const BiometricAndShiftFilterOptions = ({
   employeeShifts,
   selectShiftId,
   setSelectShiftId,
+  selectMonth,
+  isOther,
 }: BiometricAndShiftFilterOptionsProps): JSX.Element => {
   const onBiometricHandleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setIsBiometric(e.target.value)
@@ -44,6 +46,12 @@ const BiometricAndShiftFilterOptions = ({
       )
     }
   }, [employeeShifts, selectShiftId])
+
+  useEffect(() => {
+    if (selectMonth || isOther) {
+      setSearchInput('')
+    }
+  }, [selectMonth, isOther])
 
   return (
     <>

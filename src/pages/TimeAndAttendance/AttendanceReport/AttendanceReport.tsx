@@ -20,7 +20,8 @@ const AttendanceReport = (): JSX.Element => {
   const [currentYear, setCurrentYear] = useState<number | string>(
     new Date().getFullYear(),
   )
-  const [selectMonth, setSelectMonth] = useState<number | string>(currentMonth)
+  const [selectMonth, setSelectMonth] = useState<number>(currentMonth)
+  const [isOther, setIsOther] = useState<string>('')
   const [isBiometric, setIsBiometric] = useState<string>('')
   const [searchEmployee, setSearchEmployee] = useState<string>('')
   const [selectShiftId, setSelectShiftId] = useState<string>('')
@@ -59,7 +60,16 @@ const AttendanceReport = (): JSX.Element => {
   const handleChangeSelectMonth = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setSelectMonth(event.target.value)
+    setSelectMonth(Number(event.target.value))
+    setIsOther('')
+    setFilterByEmployeeStatus('')
+    setSearchEmployee('')
+  }
+
+  const handleChangeSelectOther = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setIsOther(event.target.value)
   }
 
   const downloadFile = (
@@ -85,7 +95,7 @@ const AttendanceReport = (): JSX.Element => {
     const attendanceReportDownload =
       await attendanceReportApi.exportAttendanceReport({
         employeeId: Number(employeeId),
-        month: selectMonth as number,
+        month: selectMonth,
         year: currentYear as number,
         search: searchEmployee,
         shiftId: selectShiftId,
@@ -98,7 +108,7 @@ const AttendanceReport = (): JSX.Element => {
     const biometricAttendanceReportDownload =
       await attendanceReportApi.exportBiometricAttendanceReport({
         employeeId: Number(employeeId),
-        month: selectMonth as number,
+        month: selectMonth,
         year: currentYear as number,
         search: searchEmployee,
         shiftId: selectShiftId,
@@ -119,20 +129,18 @@ const AttendanceReport = (): JSX.Element => {
       reduxServices.userAccessToFeatures.getUserAccessToFeatures(employeeId),
     )
     dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
-    if (selectMonth !== 'others') {
-      dispatch(
-        reduxServices.employeeAttendanceReport.getEmployeeAttendanceReport({
-          employeeId: Number(employeeId),
-          month: selectMonth as number,
-          year: currentYear as number,
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          search: searchEmployee,
-          shiftId: selectShiftId,
-          status: filterByEmployeeStatus,
-        }),
-      )
-    }
+    dispatch(
+      reduxServices.employeeAttendanceReport.getEmployeeAttendanceReport({
+        employeeId: Number(employeeId),
+        month: selectMonth,
+        year: currentYear as number,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+        search: searchEmployee,
+        shiftId: selectShiftId,
+        status: filterByEmployeeStatus,
+      }),
+    )
   }, [
     currentPage,
     currentYear,
@@ -145,7 +153,7 @@ const AttendanceReport = (): JSX.Element => {
     filterByEmployeeStatus,
   ])
 
-  const userAccess = userAccessToFeatures?.filter(
+  const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Shift Time',
   )
 
@@ -190,8 +198,8 @@ const AttendanceReport = (): JSX.Element => {
                     value={'others'}
                     id="other"
                     label="Other"
-                    defaultChecked={selectMonth === 'others'}
-                    onChange={handleChangeSelectMonth}
+                    defaultChecked={isOther === 'others'}
+                    onChange={handleChangeSelectOther}
                     inline
                   />
                 )}
@@ -218,9 +226,8 @@ const AttendanceReport = (): JSX.Element => {
             </div>
           </CCol>
         </CRow>
-        {(selectMonth === 'others' ||
-          (selectMonth as number) + 1 ===
-            (filterByDate?.getMonth() as number) + 1) && (
+        {(isOther === 'others' ||
+          selectMonth + 1 === (filterByDate?.getMonth() as number) + 1) && (
           <OtherFilterOptions
             setFilterByEmployeeStatus={setFilterByEmployeeStatus}
             setFilterByDate={setFilterByDate}
@@ -231,10 +238,12 @@ const AttendanceReport = (): JSX.Element => {
           setIsBiometric={setIsBiometric}
           employeeRole={employeeRole}
           setSearchEmployee={setSearchEmployee}
-          userAccess={userAccess[0]?.viewaccess}
+          userAccess={userAccess?.viewaccess as boolean}
           employeeShifts={employeeShifts}
           selectShiftId={selectShiftId}
           setSelectShiftId={setSelectShiftId}
+          selectMonth={selectMonth}
+          isOther={isOther}
         />
         <AttendanceReportTable
           paginationRange={paginationRange}

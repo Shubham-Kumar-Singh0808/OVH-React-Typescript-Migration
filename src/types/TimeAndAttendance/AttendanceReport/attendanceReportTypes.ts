@@ -150,6 +150,8 @@ export type BiometricAndShiftFilterOptionsProps = {
   employeeShifts: EmployeeShiftDetails[]
   selectShiftId: string
   setSelectShiftId: (value: string) => void
+  selectMonth: number
+  isOther: string
 }
 
 export type AttendanceReportTableProps = {

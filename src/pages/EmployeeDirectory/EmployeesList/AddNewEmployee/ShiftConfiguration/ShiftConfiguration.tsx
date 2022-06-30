@@ -1,7 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable complexity */
-// Todo: remove all eslint and fix errors
 import {
   CButton,
   CCol,
@@ -44,14 +40,14 @@ const ShiftConfiguration = (): JSX.Element => {
         return { ...prevState, ...{ [name]: shiftName } }
       })
     } else {
-      const newValue = value.replace(/[^0-9]/gi, '')
+      const newValue = value.replace(/\D/gi, '')
       setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: newValue } }
       })
     }
   }
 
-  const hoursAndMinutesValidation = () => {
+  const minutesValidation = () => {
     if (employeeShiftDetails.endTimeMinutes !== undefined || '' || null) {
       if (employeeShiftDetails.endTimeMinutes.length === 1) {
         employeeShiftDetails.endTimeMinutes =
@@ -68,6 +64,8 @@ const ShiftConfiguration = (): JSX.Element => {
         employeeShiftDetails.startTimeMinutes = '59'
       }
     }
+  }
+  const hoursValidation = () => {
     if (employeeShiftDetails.startTimeHour !== undefined || '' || null) {
       if (employeeShiftDetails.startTimeHour.length === 1) {
         employeeShiftDetails.startTimeHour =
@@ -181,6 +179,8 @@ const ShiftConfiguration = (): JSX.Element => {
     employeeShiftDetails.startTimeHour,
     employeeShiftDetails.startTimeMinutes,
   ])
+  const textWhite = `text-white`
+  const textDanger = `text-danger`
   return (
     <>
       <OCard
@@ -199,9 +199,7 @@ const ShiftConfiguration = (): JSX.Element => {
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Name :
                 <span
-                  className={
-                    employeeShiftDetails.name ? 'text-white' : 'text-danger'
-                  }
+                  className={employeeShiftDetails.name ? textWhite : textDanger}
                 >
                   *
                 </span>
@@ -225,8 +223,8 @@ const ShiftConfiguration = (): JSX.Element => {
                   className={
                     employeeShiftDetails.startTimeHour &&
                     employeeShiftDetails.startTimeMinutes
-                      ? 'text-white'
-                      : 'text-danger'
+                      ? textWhite
+                      : textDanger
                   }
                 >
                   *
@@ -243,7 +241,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.startTimeHour}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={hoursValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -257,7 +255,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.startTimeMinutes}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={minutesValidation}
                 />
               </CCol>
             </CRow>
@@ -268,8 +266,8 @@ const ShiftConfiguration = (): JSX.Element => {
                   className={
                     employeeShiftDetails.endTimeHour &&
                     employeeShiftDetails.endTimeMinutes
-                      ? 'text-white'
-                      : 'text-danger'
+                      ? textWhite
+                      : textDanger
                   }
                 >
                   *
@@ -286,7 +284,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.endTimeHour}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={hoursValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -300,7 +298,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.endTimeMinutes}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={minutesValidation}
                 />
               </CCol>
             </CRow>
@@ -309,9 +307,7 @@ const ShiftConfiguration = (): JSX.Element => {
                 Grace period :
                 <span
                   className={
-                    employeeShiftDetails.graceTime
-                      ? 'text-white'
-                      : 'text-danger'
+                    employeeShiftDetails.graceTime ? textWhite : textDanger
                   }
                 >
                   *
