@@ -141,11 +141,20 @@ const initialCertificateTypeState: CertificateTypeSliceState = {
     technologyId: 0,
     technologyName: '',
   },
+  currentPage: 1,
+  pageSize: 20,
 }
 const certificateTypeSlice = createSlice({
   name: 'certificateType',
   initialState: initialCertificateTypeState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCertificateType.fulfilled, (state, action) => {
@@ -209,6 +218,11 @@ const editCertificateType = (state: RootState): CertificateType =>
 const isError = (state: RootState): ValidationError =>
   state.certificateType.error
 
+const pageFromState = (state: RootState): number =>
+  state.certificateType.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.certificateType.pageSize
+
 const certificateTypeThunk = {
   getCertificateTypes,
   addCertificateType,
@@ -223,6 +237,8 @@ const certificateTypeSelectors = {
   certificateTypes,
   editCertificateType,
   isError,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const certificateTypeService = {

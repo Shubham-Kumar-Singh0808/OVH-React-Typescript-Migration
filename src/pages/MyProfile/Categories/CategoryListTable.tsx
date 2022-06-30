@@ -121,17 +121,12 @@ const CategoryListTable = (): JSX.Element => {
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <p>
-            <strong>Total Records: {categories.length}</strong>
-          </p>
+          <strong>
+            {categories?.length
+              ? `Total Records: ${categories.length}`
+              : `No Records Found`}
+          </strong>
         </CCol>
-        {!categories.length && (
-          <CCol>
-            <CRow className="category-no-data">
-              <h4 className="text-center">No data to display</h4>
-            </CRow>
-          </CCol>
-        )}
         <CCol xs={3}>
           {categories.length > 20 && (
             <OPageSizeSelect

@@ -11,9 +11,9 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 import { useTypedSelector } from '../../../stateStore'
 import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
-import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 
 const CertificatesFilterOptions = ({
   selectTechnology,
@@ -55,6 +55,7 @@ const CertificatesFilterOptions = ({
     setFilterByTechnology('')
     setFilterByCertificate('')
     setMultiSearchValue('')
+    setSearchInput('')
     setIsAccordionItemShow(false)
   }
 

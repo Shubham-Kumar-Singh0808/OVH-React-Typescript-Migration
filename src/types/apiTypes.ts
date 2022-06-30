@@ -167,6 +167,16 @@ export interface EmployeeReporteesApi extends ApiBase {
   getEmployeeReporteesKPIs: string
 }
 
+export interface EmployeeReportApi extends ApiBase {
+  getEmployeeReports: string
+}
+
+export interface EmployeeDesignationReportApi extends ApiBase {
+  getAllDesignations: string
+  getEmployeeCategoryData: string
+  exportEmployeeCategoryData: string
+}
+
 export interface VisaListApi extends ApiBase {
   getVisaList: string
   getCountries: string
