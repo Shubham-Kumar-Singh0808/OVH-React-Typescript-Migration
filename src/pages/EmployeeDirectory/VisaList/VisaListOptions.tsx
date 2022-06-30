@@ -1,6 +1,7 @@
 import {
   CButton,
   CCol,
+  CForm,
   CFormInput,
   CFormLabel,
   CFormSelect,
@@ -32,8 +33,11 @@ const VisaListOptions = ({
 
   const visaTypes = useTypedSelector(reduxServices.visaList.selectors.visaTypes)
 
-  const multiSearchButtonHandler = () => {
+  const multiSearchButtonHandler = (e: React.SyntheticEvent) => {
+    e.preventDefault()
     setMultiSearchValue(searchInput)
+    setFilterByCountry(selectCountry)
+    setFilterByVisaType(selectVisaType)
     setIsAccordionItemShow(true)
   }
 
@@ -169,28 +173,30 @@ const VisaListOptions = ({
       </CRow>
       <CRow className="gap-2 d-md-flex justify-content-md-end">
         <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
-          <CInputGroup className="global-search me-0">
-            <CFormInput
-              placeholder="Multiple Search"
-              aria-label="Multiple Search"
-              aria-describedby="button-addon2"
-              value={searchInput}
-              onChange={(e) => {
-                setSearchInput(e.target.value)
-              }}
-            />
-            <CButton
-              disabled={!searchInput}
-              data-testid="multi-search-btn"
-              className="cursor-pointer"
-              type="button"
-              color="info"
-              id="button-addon2"
-              onClick={multiSearchButtonHandler}
-            >
-              <i className="fa fa-search"></i>
-            </CButton>
-          </CInputGroup>
+          <CForm onSubmit={multiSearchButtonHandler}>
+            <CInputGroup className="global-search me-0">
+              <CFormInput
+                placeholder="Multiple Search"
+                aria-label="Multiple Search"
+                aria-describedby="button-addon2"
+                value={searchInput}
+                onChange={(e) => {
+                  setSearchInput(e.target.value)
+                }}
+              />
+              <CButton
+                disabled={!searchInput}
+                data-testid="multi-search-btn"
+                className="cursor-pointer"
+                type="button"
+                color="info"
+                id="button-addon2"
+                onClick={multiSearchButtonHandler}
+              >
+                <i className="fa fa-search"></i>
+              </CButton>
+            </CInputGroup>
+          </CForm>
         </CCol>
       </CRow>
     </>
