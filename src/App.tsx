@@ -26,6 +26,13 @@ const App = (): JSX.Element => {
   )
   const dispatch = useAppDispatch()
 
+  const deviceLocale =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
+
+  console.log(deviceLocale)
+
   const loadState = useCallback(() => {
     const employeeNameFromStorage = localStorage.getItem('employeeName')
     const employeeIdFromStorage = localStorage.getItem('employeeId')

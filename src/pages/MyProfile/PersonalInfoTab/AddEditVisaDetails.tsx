@@ -36,7 +36,7 @@ function AddEditVisaDetails({
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined)
   const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState<boolean>(false)
-  const [validImage, setValidImage] = useState<boolean>(true)
+  const [invalidImage, setInvalidImage] = useState<boolean>(false)
 
   const [dateOfIssueFlag, setDateOfIssueFlag] = useState<boolean>(false)
   const [dateOfExpiryFlag, setDateOfExpiryFlag] = useState<boolean>(false)
@@ -127,6 +127,9 @@ function AddEditVisaDetails({
 
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
+    if (name === 'countryID') {
+      setIsAddButtonEnabled(false)
+    }
     if (name === 'countryId' && employeeVisaDetails.countryId !== value) {
       setEmployeeVisaDetails((prevState) => {
         return { ...prevState, ...{ visaTypeId: '' } }
@@ -204,11 +207,11 @@ function AddEditVisaDetails({
     const file = element.files
     if (!file) return
     if (Number(file[0].size) > Number(400000)) {
-      setValidImage(false)
-      setError(false)
+      setInvalidImage(true)
+      // setError(true)
     } else {
-      setValidImage(true)
-      setError(true)
+      setInvalidImage(false)
+      // setError(false)
     }
 
     setSelectedFile(file[0])
@@ -483,7 +486,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/MM/yyyy"
+                placeholderText="dd/mm/yyyy"
                 dateFormat="dd/MM/yyyy"
               />
               {error && (
@@ -529,7 +532,7 @@ function AddEditVisaDetails({
                 </CCol>
               </>
             )}
-            {!validImage && (
+            {invalidImage && (
               <>
                 <CCol sm={{ span: 6, offset: 3 }}>
                   <p className=" text-danger ">
@@ -545,7 +548,7 @@ function AddEditVisaDetails({
                 <CButton
                   className="btn-ovh me-2"
                   color="success"
-                  disabled={error}
+                  disabled={error || invalidImage}
                   onClick={handleUpdateVisaMember}
                 >
                   {confirmButtonText}
@@ -555,7 +558,7 @@ function AddEditVisaDetails({
                   <CButton
                     className="btn-ovh me-1"
                     color="success"
-                    disabled={!isAddButtonEnabled || error}
+                    disabled={!isAddButtonEnabled || error || invalidImage}
                     onClick={handleAddVisaDetails}
                   >
                     {confirmButtonText}

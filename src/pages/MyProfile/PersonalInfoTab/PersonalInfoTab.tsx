@@ -28,6 +28,7 @@ import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmploy
 const PersonalInfoTab = ({
   handleActiveTab,
 }: handleActiveTabProps): JSX.Element => {
+  const dispatch = useAppDispatch()
   const [isViewingAnotherEmployee] = useSelectedEmployee()
   const employeePersonalInformation = useTypedSelector((state) =>
     reduxServices.generalInformation.selectors.selectLoggedInEmployeeData(
@@ -36,7 +37,10 @@ const PersonalInfoTab = ({
     ),
   )
   const [toggle, setToggle] = useState('')
-  const dispatch = useAppDispatch()
+  const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
+  const [isPassportButtonEnabled, setIsPassportButtonEnabled] = useState(false)
+  const [checkBox, setCheckBox] = useState(false)
+  const [errorDate, setErrorDate] = useState<boolean>(false)
 
   const editButtonHandler = (familyId: number) => {
     setToggle('EditFamily')
@@ -111,8 +115,6 @@ const PersonalInfoTab = ({
     skypeId: employeeBasicInformation?.skypeId,
   }
 
-  const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
-  const [isPassportButtonEnabled, setIsPassportButtonEnabled] = useState(false)
   const [
     isPassportPlaceOfIssueButtonEnabled,
     setIsPassportPlaceOfIssueButtonEnabled,
@@ -137,7 +139,6 @@ const PersonalInfoTab = ({
   const [employeePassportDetails, setEmployeePassportDetails] = useState(
     selectedUserPassportDetails,
   )
-  const [checkBox, setCheckBox] = useState(false)
 
   useEffect(() => {
     if (checkBox) {
@@ -308,9 +309,53 @@ const PersonalInfoTab = ({
     if (employeePassportDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
       const name = e.name
+      validateDates(date, name)
       setEmployeePassportDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
+    }
+  }
+
+  const validateDates = (date: Date, name: string) => {
+    if (name === 'passportIssuedDate') {
+      if (employeePassportDetails.passportExpDate) {
+        const currentExpDate = employeePassportDetails.passportExpDate as string
+        const dateParts: string[] | string = currentExpDate.split('/')
+        const tempExpDate = new Date(
+          Number(dateParts[2]),
+          Number(dateParts[1]) - 1,
+          Number(dateParts[0]),
+        )
+        const newIssuedDate = date.setHours(0, 0, 0, 0)
+        const newExpDate = tempExpDate.setHours(0, 0, 0, 0)
+        if (newIssuedDate > newExpDate) {
+          setErrorDate(true)
+          setSaveButtonEnabled(false)
+        } else {
+          setErrorDate(false)
+          setSaveButtonEnabled(true)
+        }
+      }
+    } else {
+      if (employeePassportDetails.passportIssuedDate) {
+        const currentIssuedDate =
+          employeePassportDetails.passportIssuedDate as string
+        const dateParts: string[] | string = currentIssuedDate.split('/')
+        const tempIssuedDate = new Date(
+          Number(dateParts[2]),
+          Number(dateParts[1]) - 1,
+          Number(dateParts[0]),
+        )
+        const newIssuedDate = tempIssuedDate.setHours(0, 0, 0, 0)
+        const newExpDate = date.setHours(0, 0, 0, 0)
+        if (newIssuedDate > newExpDate) {
+          setErrorDate(true)
+          setSaveButtonEnabled(false)
+        } else {
+          setErrorDate(false)
+          setSaveButtonEnabled(true)
+        }
+      }
     }
   }
 
@@ -878,7 +923,7 @@ const PersonalInfoTab = ({
                       showYearDropdown
                       dropdownMode="select"
                       placeholderText="dd/mm/yyyy"
-                      name="officialBirthday"
+                      name="passportIssuedDate"
                       value={employeePassportDetails.passportIssuedDate}
                       onChange={(date: Date) =>
                         onDateChangeHandler(date, {
@@ -896,7 +941,6 @@ const PersonalInfoTab = ({
                     <DatePicker
                       id="passportExpDate"
                       className="form-control form-control-sm"
-                      minDate={new Date()}
                       peekNextMonth
                       showMonthDropdown
                       showYearDropdown
@@ -908,6 +952,11 @@ const PersonalInfoTab = ({
                         onDateChangeHandler(date, { name: 'passportExpDate' })
                       }
                     />
+                    {errorDate && (
+                      <p className="text-danger">
+                        Expiry Date should be greater than Date of Issue
+                      </p>
+                    )}
                   </CCol>
                 </CRow>
                 <CRow className="mt-4 mb-4">
