@@ -17,6 +17,8 @@ import {
 import EmployeeDesignationList from './DesignationList/EmployeeDesignationList'
 import ShiftConfiguration from './ShiftConfiguration/ShiftConfiguration'
 import {
+  GetAllReportingManagers,
+  GetHrData,
   AddEmployee,
   GetHRAssociate,
   GetList,
@@ -37,8 +39,34 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationtoggle] = useState<boolean>(false)
+  const managerValue = {} as GetAllReportingManagers
+  const hrAssociateValue = {} as GetHrData
+  const shiftValue = {} as EmployeeShiftDetails
 
-  const initEmployee = {} as AddEmployee
+  const initEmployee = {
+    contractEndDate: null,
+    contractExists: 'false',
+    contractStartDate: null,
+    country: '',
+    dateOfJoining: null,
+    departmentName: '',
+    designation: '',
+    dob: null,
+    employmentTypeName: '',
+    experience: 0,
+    firstName: '',
+    gender: '',
+    hrAssociate: hrAssociateValue,
+    jobTypeName: '',
+    lastName: '',
+    manager: managerValue,
+    projectManager: managerValue,
+    role: '',
+    technology: '',
+    timeSlotDTO: shiftValue,
+    userName: '',
+    workStatus: 'Office',
+  } as AddEmployee
   const [addEmployee, setAddEmployee] = useState(initEmployee)
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
@@ -98,6 +126,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     setAddEmployee({ ...addEmployee, contractExists: value })
   }
   const onHandleWorkfrom = (value: string) => {
+    console.log('value', value)
     setAddEmployee({ ...addEmployee, workStatus: value })
   }
   const onHandleExperience = (value: number) => {
@@ -282,6 +311,8 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     setAddEmployee(initEmployee)
   }
 
+  console.log('addEmployee', addEmployee)
+
   const handleBackButton = () => {
     setDestinationtoggle(false)
     setShiftToggle(false)
@@ -308,16 +339,16 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               usernameChangeHandler={onHandleUsername}
               onAllowedUserChangeHandler={onHandleAllowedUser}
               username={addEmployee.userName}
-              isUserAllowed={isUserExist as boolean}
+              isUserAllowed={(isUserExist as boolean) || false}
             />
             <FullName
               dynamicFormLabelProps={dynamicFormLabelProps}
               firstNameChangeHandler={onHandleFirstName}
               lastNameChangeHandler={onHandleLastName}
               middleNameChangeHandler={onHandleLastName}
-              firstNameValue={addEmployee.firstName}
-              lastNameValue={addEmployee.lastName}
-              middleNameValue={addEmployee.firstName}
+              firstNameValue={addEmployee.firstName || ''}
+              lastNameValue={addEmployee.lastName || ''}
+              middleNameValue={addEmployee.firstName || ''}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}

@@ -5,7 +5,11 @@ import { WorkFromChangeHandlerProp } from '../../../../../../../types/EmployeeDi
 const WorkFrom = ({
   dynamicFormLabelProps,
   onWorkFromHandler,
+  workFromValue,
 }: WorkFromChangeHandlerProp): JSX.Element => {
+  // const isWorkFromOffice = workFromValue !== 'Home'
+
+  console.log('isWorkFromOffice', workFromValue)
   return (
     <>
       <CRow className="mb-3 align-items-center">
@@ -33,6 +37,7 @@ const WorkFrom = ({
             value="Office"
             label="Office"
             defaultChecked
+            checked={workFromValue === 'Office'}
             onChange={() => onWorkFromHandler('Office')}
           />
           <CFormCheck
@@ -42,6 +47,7 @@ const WorkFrom = ({
             id="workfromhome"
             value="Home"
             label="Home"
+            checked={workFromValue === 'Home'}
             onChange={() => onWorkFromHandler('Home')}
           />
         </CCol>

@@ -34,6 +34,7 @@ const EmploymentContract = ({
             id="employmentcontractyes"
             value="Yes"
             label="Yes"
+            checked={isContractExist === 'true'}
             onChange={() => onContractExistHandler('true')}
           />
           <CFormCheck
@@ -43,6 +44,7 @@ const EmploymentContract = ({
             id="employmentcontractno"
             value="No"
             label="No"
+            checked={isContractExist === 'false'}
             defaultChecked
             onChange={() => onContractExistHandler('false')}
           />
