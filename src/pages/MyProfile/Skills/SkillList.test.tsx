@@ -1,7 +1,6 @@
 /* eslint-disable import/named */
 // Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
-
 import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
@@ -45,7 +44,7 @@ describe('Skill List Table Testing', () => {
     )
 
     await waitFor(() => {
-      expect(screen.getByText('No data to display')).toBeInTheDocument()
+      expect(screen.getByText('No Records Found')).toBeInTheDocument()
     })
   })
   test('should render table with data without crashing', async () => {

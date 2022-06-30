@@ -1,7 +1,7 @@
+import React from 'react'
+import { Link } from 'react-router-dom'
 import {
-  CButton,
   CCol,
-  CImage,
   CRow,
   CTable,
   CTableBody,
@@ -10,20 +10,18 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
-import React from 'react'
-import { EmployeeListTableProps } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { EmployeeReportTableProps } from '../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
 
-const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
-  const employees = useTypedSelector(
-    reduxServices.employeeList.selectors.employees,
+const EmployeeReportTable = (props: EmployeeReportTableProps): JSX.Element => {
+  const employeeReports = useTypedSelector(
+    reduxServices.employeeReports.selectors.employeesReport,
   )
   const listSize = useTypedSelector(
-    reduxServices.employeeList.selectors.listSize,
+    reduxServices.employeeReports.selectors.listSize,
   )
 
   const {
@@ -43,36 +41,22 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
 
   return (
     <>
-      {employees.length ? (
+      {employeeReports.length ? (
         <>
-          <CTable striped align="middle">
+          <CTable className="mt-4" striped>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col"></CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Email ID</CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="text-center">
-                  Mobile
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Department</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Blood Group</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Date of Joining</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Mobile</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {employees.map((employee, index) => {
+              {employeeReports.map((employee, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">
-                      <CImage
-                        src={employee.thumbPicture}
-                        className="employee-thumb"
-                      />
-                    </CTableHeaderCell>
                     <CTableDataCell>{employee.id}</CTableDataCell>
                     <CTableDataCell>
                       <Link
@@ -86,30 +70,7 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                     <CTableDataCell className="text-center">
                       {employee.mobile}
                     </CTableDataCell>
-                    <CTableDataCell>{employee.designation}</CTableDataCell>
-                    <CTableDataCell>{employee.departmentName}</CTableDataCell>
-                    <CTableDataCell>{employee.bloodgroup}</CTableDataCell>
-                    <CTableDataCell>{employee.dateOfJoining}</CTableDataCell>
                     <CTableDataCell>{employee.country}</CTableDataCell>
-                    <CTableDataCell>
-                      <Link to={`/employeeProfile/${employee.id}`}>
-                        <CButton
-                          color="info"
-                          size="sm"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-eye text-white"></i>
-                        </CButton>
-                      </Link>
-                      &nbsp;
-                      <CButton
-                        color="info"
-                        size="sm"
-                        className="btn-ovh-employee-list"
-                      >
-                        <i className="fa fa-pencil-square-o text-white"></i>
-                      </CButton>
-                    </CTableDataCell>
                   </CTableRow>
                 )
               })}
@@ -118,7 +79,7 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {employees.length}</strong>
+                <strong>Total Records: {employeeReports.length}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
@@ -145,14 +106,12 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <CCol>
-          <CRow className="category-no-data">
-            <h4 className="text-center">No data to display</h4>
-          </CRow>
-        </CCol>
+        <CRow className="mt-4">
+          <h5>No Records Found... </h5>
+        </CRow>
       )}
     </>
   )
 }
 
-export default EmployeeListTable
+export default EmployeeReportTable
