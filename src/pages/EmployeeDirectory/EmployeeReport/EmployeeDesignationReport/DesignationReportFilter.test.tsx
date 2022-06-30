@@ -5,7 +5,7 @@ import React from 'react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import DesignationReportFilter from './DesignationReportFilter'
-import { render, screen } from '../../../../test/testUtils'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 import stateStore from '../../../../stateStore'
 
 const ReduxProvider = ({
@@ -17,7 +17,6 @@ const ReduxProvider = ({
 }) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('Employee Designation Report Filter Component Testing', () => {
-  // eslint-disable-next-line require-await
   test('should render employee designation report filter component without crashing', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -27,7 +26,9 @@ describe('Employee Designation Report Filter Component Testing', () => {
         />
       </ReduxProvider>,
     )
-    expect(screen.getByText('Designation :')).toBeInTheDocument()
-    expect(screen.getByTestId('designation')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText('Designation :')).toBeInTheDocument()
+      expect(screen.getByTestId('designation')).toBeInTheDocument()
+    })
   })
 })
