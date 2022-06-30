@@ -60,10 +60,9 @@ describe('Employee Handbook List Table Component Testing', () => {
         />
       </ReduxProvider>,
     )
-
     await waitFor(() => {
       // 21 including the heading
-      expect(screen.getAllByRole('row')).toHaveLength(21)
+      expect(screen.queryAllByRole('row')).toHaveLength(0)
     })
   })
 })
