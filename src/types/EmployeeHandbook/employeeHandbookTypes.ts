@@ -6,14 +6,30 @@ export type Handbook = {
   title: string
   description: string
   pageName: string
-  departmentName: string
-  departmentId: number
+  departmentName: string | null
+  departmentId: number | null
   type: string
-  sectionId: string
-  sectionName: string
-  country: string
+  sectionId: string | null
+  sectionName: string | null
+  country: string | null
   handCountry: HandCountry[]
-  empCountry: string
+  empCountry: string | null
+}
+
+export type mockHandbook = {
+  id: number
+  displayOrder: number
+  title: string
+  description: string
+  pageName: string
+  departmentName: string | null
+  departmentId: number | null
+  type: string
+  sectionId: string | null
+  sectionName: string | null
+  country: string | null
+  handCountry: HandCountry[]
+  empCountry: string | null
 }
 
 export type HandbooksListProps = {
