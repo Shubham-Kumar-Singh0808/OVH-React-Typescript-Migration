@@ -74,6 +74,27 @@ const BasicInfoTab = (): JSX.Element => {
     realBirthday: employeeBasicInformation.realBirthday,
     anniversary: employeeBasicInformation.anniversary,
     skypeId: employeeBasicInformation.skypeId,
+    mobile: employeeBasicInformation?.mobile,
+    alternativeMobile: employeeBasicInformation?.alternativeMobile,
+    homeCode: employeeBasicInformation?.homeCode,
+    homeNumber: employeeBasicInformation?.homeNumber,
+    workCode: employeeBasicInformation?.workCode,
+    workNumber: employeeBasicInformation?.workNumber,
+    emergencyContactName: employeeBasicInformation?.emergencyContactName,
+    emergencyPhone: employeeBasicInformation?.emergencyPhone,
+    emergencyRelationShip: employeeBasicInformation?.emergencyRelationShip,
+    presentAddress: employeeBasicInformation?.presentAddress,
+    presentCity: employeeBasicInformation?.presentCity,
+    presentZip: employeeBasicInformation?.presentZip,
+    presentLandMark: employeeBasicInformation?.presentLandMark,
+    permanentAddress: employeeBasicInformation?.permanentAddress,
+    permanentCity: employeeBasicInformation?.permanentCity,
+    permanentZip: employeeBasicInformation?.permanentZip,
+    permanentLandMark: employeeBasicInformation?.permanentLandMark,
+    passportNumber: employeeBasicInformation?.passportNumber,
+    passportIssuedPlace: employeeBasicInformation?.passportIssuedPlace,
+    passportIssuedDate: employeeBasicInformation?.passportIssuedDate,
+    passportExpDate: employeeBasicInformation?.passportExpDate,
   }
 
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
@@ -293,19 +314,19 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData.realBirthday &&
       employeeBasicInformationEditData.anniversary
     ) {
-      const currentRealBirthday =
+      const typeCastedRealBirthday =
         employeeBasicInformationEditData.realBirthday.toString()
-      const currentAnniversary =
+      const typeCastedAnniversary =
         employeeBasicInformationEditData.anniversary.toString()
 
-      const newRealBirthday = new Date(
-        moment(currentRealBirthday).format('DD/MM/YYYY'),
+      const formattedRealBirthday = new Date(
+        moment(typeCastedRealBirthday).format('DD/MM/YYYY'),
       )
-      const newAnniversary = new Date(
-        moment(currentAnniversary).format('DD/MM/YYYY'),
+      const formattedAnniversary = new Date(
+        moment(typeCastedAnniversary).format('DD/MM/YYYY'),
       )
 
-      if (newRealBirthday.getTime() >= newAnniversary.getTime()) {
+      if (formattedRealBirthday.getTime() >= formattedAnniversary.getTime()) {
         setDateErrorMessage(true)
         setSaveButtonEnabled(false)
       } else {
@@ -407,10 +428,10 @@ const BasicInfoTab = (): JSX.Element => {
     const newOfficialBirthday = new Date(
       moment(tempOfficialBirthday).format('DD/MM/YYYY'),
     )
-    const newRealBirthday = new Date(
+    const formattedRealBirthday = new Date(
       moment(tempRealBirthday).format('DD/MM/YYYY'),
     )
-    if (newOfficialBirthday.getTime() !== newRealBirthday.getTime()) {
+    if (newOfficialBirthday.getTime() !== formattedRealBirthday.getTime()) {
       setRealBirthdayShown(true)
     } else {
       setRealBirthdayShown(false)
