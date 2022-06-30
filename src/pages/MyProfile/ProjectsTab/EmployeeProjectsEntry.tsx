@@ -1,6 +1,6 @@
 import { CTableDataCell, CTableRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
-import EmployeeProjectDetails from './EmployeeProjectsDetails'
+import EmployeeProjectDetailsTable from './EmployeeProjectDetailsTable'
 import { EmployeeProjectDetailsTableInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
 const EmployeeProjectEntry = (
@@ -58,7 +58,7 @@ const EmployeeProjectEntry = (
       </span>
     )
   }
-  if (props.project?.health === 'Gray' || props.project?.health === 'null') {
+  if (props.project.health === 'Gray' || props.project.health === null) {
     health = (
       <span
         data-testid="project-health"
@@ -69,6 +69,11 @@ const EmployeeProjectEntry = (
     )
   }
 
+  const projectType =
+    props.project.type === null
+      ? ' '
+      : toTitleCase(props.project.type as string)
+
   return (
     <>
       <CTableRow key={props.id}>
@@ -76,9 +81,7 @@ const EmployeeProjectEntry = (
           <i className={icon} onClick={onShowProjectDetailsHandler} />
         </CTableDataCell>
         <CTableDataCell scope="row">{props.project.projectName}</CTableDataCell>
-        <CTableDataCell scope="row">
-          {toTitleCase(props.project.type as string)}
-        </CTableDataCell>
+        <CTableDataCell scope="row">{projectType}</CTableDataCell>
         <CTableDataCell scope="row">{props.project.client}</CTableDataCell>
         <CTableDataCell scope="row">{props.project.managerName}</CTableDataCell>
         <CTableDataCell scope="row">{props.project.startdate}</CTableDataCell>
@@ -87,7 +90,7 @@ const EmployeeProjectEntry = (
       </CTableRow>
       {projectDetailsClicked && (
         <CTableDataCell colSpan={8}>
-          <EmployeeProjectDetails projectId={props.project.id as number} />
+          <EmployeeProjectDetailsTable projectId={props.project.id as number} />
         </CTableDataCell>
       )}
     </>

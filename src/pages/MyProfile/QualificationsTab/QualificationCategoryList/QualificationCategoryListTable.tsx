@@ -9,7 +9,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import CIcon from '@coreui/icons-react'
 import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'

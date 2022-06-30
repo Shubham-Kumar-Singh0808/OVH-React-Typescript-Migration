@@ -24,6 +24,8 @@ import shiftConfigurationReducer from './reducers/EmployeeDirectory/EmployeesLis
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'
+import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
 
 export const allReducers = {
@@ -49,6 +51,8 @@ export const allReducers = {
   certificateList: certificateListReducer,
   employeeAssets: employeeAssetsReducer,
   certificateType: certificateTypeReducer,
+  employeeReports: employeeReportReducer,
+  employeeDesignationReports: employeeDesignationReportReducer,
   visaList: visaListReducer,
   // add your slice reducers here
 }

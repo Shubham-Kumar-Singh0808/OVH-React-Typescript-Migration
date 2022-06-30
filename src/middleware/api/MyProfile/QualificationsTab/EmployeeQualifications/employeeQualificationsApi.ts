@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Todo: remove eslint and fix all the errors
+
 import axios from 'axios'
 import { AllowedHttpMethods, qualificationsApiConfig } from '../../../apiList'
 import {

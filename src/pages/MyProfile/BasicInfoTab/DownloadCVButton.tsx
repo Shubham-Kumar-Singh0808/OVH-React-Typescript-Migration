@@ -49,7 +49,7 @@ const DownloadCVButton = (props: DownloadCVInterface): JSX.Element => {
         }
       >
         <i className="fa fa-paperclip me-1"></i>
-        {props.fileName ? props.fileName : 'Download Sample CV File'}
+        {props.fileName ? 'Rbt Cv' : 'Download Sample CV File'}
       </ins>
     </>
   )
