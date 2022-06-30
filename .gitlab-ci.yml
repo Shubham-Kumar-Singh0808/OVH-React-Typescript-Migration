@@ -2,7 +2,7 @@ image: node:16
 
 stages:
   - build
-  - lint
+  # - lint
   - test
   - sonarqube
   - deployqa
@@ -30,14 +30,14 @@ Build:
     - echo "Installing npm package"
     - npm install
 
-Eslint:
-  <<: *only-merge_requests
-  stage: lint
-  allow_failure: false
-  before_script:
-    - echo "Executing lint step"
-  script:
-    - npm run lint
+# Eslint:
+#   <<: *only-merge_requests
+#   stage: lint
+#   allow_failure: false
+#   before_script:
+#     - echo "Executing lint step"
+#   script:
+#     - npm run lint
 
 Test:
   <<: *only-merge_requests
