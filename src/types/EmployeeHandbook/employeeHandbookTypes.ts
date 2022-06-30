@@ -20,6 +20,10 @@ export type HandbooksListProps = {
   handbooks: Handbook[]
 }
 
+export type showHandbookApiProps = {
+  pageName: string
+}
+
 type HandCountry = {
   id: number
   name: string
@@ -27,6 +31,12 @@ type HandCountry = {
 
 export type EmployeeHandbooksState = {
   handbooksList: Handbook[]
+  isLoading: LoadingState
+  error: ValidationError
+}
+
+export type showHandbookState = {
+  handbook: Handbook
   isLoading: LoadingState
   error: ValidationError
 }

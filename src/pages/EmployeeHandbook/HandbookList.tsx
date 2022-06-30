@@ -1,6 +1,6 @@
 import React from 'react'
 import { HandbooksListProps } from '../../types/EmployeeHandbook/employeeHandbookTypes'
-
+import { Link } from 'react-router-dom'
 // const handbook_data = [
 //   ' Training and Development',
 //   ' Performance Iporvement Process',
@@ -18,10 +18,13 @@ const HandbookList = ({ handbooks }: HandbooksListProps): JSX.Element => {
       <ul>
         {handbooks.map((handbook, index) => (
           <li key={index} className="handbook-item">
-            <a href="dummy" className="new-link">
+            <Link
+              to={`/showemployeehandbook/${handbook.pageName}`}
+              className="new-link"
+            >
               <i className="fa fa-eye" aria-hidden="true"></i>
               {handbook.title}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

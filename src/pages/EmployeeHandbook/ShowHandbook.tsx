@@ -1,38 +1,39 @@
 import OCard from '../../components/ReusableComponent/OCard'
+import { useParams } from 'react-router-dom'
 import React, { useEffect } from 'react'
-import HandbookList from './HandbookList'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
+import parse from 'html-react-parser'
 import { ApiLoadingState } from '../../middleware/api/apiList'
-import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
+import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 
-const EmployeeHandbook = (): JSX.Element => {
+const ShowHandbook = (): JSX.Element => {
+  const { pageName } = useParams<{ pageName: string }>()
+  console.log(pageName)
   const dispatch = useAppDispatch()
-  const handbooks = useTypedSelector(
-    reduxServices.EmployeeHandbook.selectors.handbookData,
+  const handbook = useTypedSelector(
+    reduxServices.ShowHandbook.selectors.handbookDesc,
   )
   const isLoading = useTypedSelector(
     reduxServices.EmployeeHandbook.selectors.isLoading,
   )
+  console.log('dispatch declared')
 
   useEffect(() => {
-    dispatch(reduxServices.EmployeeHandbook.getHandbooks())
-    console.log(handbooks)
-  }, [dispatch])
+    dispatch(reduxServices.ShowHandbook.showHandbook({ pageName: pageName }))
+    console.log(handbook)
+  }, [dispatch, pageName, handbook])
+
   return (
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Employee Handbook"
+        title="Display Handbook"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CButton color="info" className="hb_button" size="sm">
-          <i className="fa fa-light fa-toolbox"></i>
-          Handbook Settings
-        </CButton>
         {isLoading !== ApiLoadingState.loading ? (
-          <HandbookList handbooks={handbooks} />
+          <div>{handbook.description}</div>
         ) : (
           <CCol>
             <CRow className="category-loading-spinner">
@@ -45,4 +46,4 @@ const EmployeeHandbook = (): JSX.Element => {
   )
 }
 
-export default EmployeeHandbook
+export default ShowHandbook

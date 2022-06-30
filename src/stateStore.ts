@@ -26,6 +26,7 @@ import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
 import employeeHandbookReducer from './reducers/EmployeeHandbook/employeeHandbookSlice'
+import showHandbookReducer from './reducers/EmployeeHandbook/showHandbookSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -52,6 +53,7 @@ export const allReducers = {
   certificateType: certificateTypeReducer,
   visaList: visaListReducer,
   employeeHandbook: employeeHandbookReducer,
+  showHandbook: showHandbookReducer,
   // add your slice reducers here
 }
 

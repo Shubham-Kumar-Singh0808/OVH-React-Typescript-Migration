@@ -23,6 +23,7 @@ import {
   UserRolesConfigurationApi,
   VisaListApi,
   EmployeeHandbook,
+  DisplayHandbook,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -211,4 +212,8 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
 
 export const employeeHandbook: EmployeeHandbook = {
   getHandbooks: apiPrefix + '/handbookItem/getTotalHandbookList',
+}
+
+export const dispHandbook: DisplayHandbook = {
+  dispHandbook: apiPrefix + '/handbookitem/get',
 }

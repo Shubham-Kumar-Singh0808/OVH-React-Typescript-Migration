@@ -22,6 +22,7 @@ import { skillService } from './MyProfile/Skills/skillSlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
 import { EmployeeHandbookService } from './EmployeeHandbook/employeeHandbookSlice'
+import { ShowHandbookService } from './EmployeeHandbook/showHandbookSlice'
 
 export const reduxServices = {
   app: appService,
@@ -48,4 +49,5 @@ export const reduxServices = {
   certificateType: certificateTypeService,
   visaList: visaListService,
   EmployeeHandbook: EmployeeHandbookService,
+  ShowHandbook: ShowHandbookService,
 }
