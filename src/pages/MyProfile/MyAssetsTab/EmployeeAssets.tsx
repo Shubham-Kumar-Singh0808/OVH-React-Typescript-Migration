@@ -42,25 +42,21 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.employeeAssets.getEmployeeMyAssets(employeeId))
+    dispatch(reduxServices.category.actions.setCurrentPage(1))
+    dispatch(reduxServices.category.actions.setPageSize(20))
   }, [dispatch, employeeId])
 
   const handleModal = (productSpecification: string) => {
     setIsModalVisible(true)
     setSpecification(productSpecification)
   }
-
-  useEffect(() => {
-    dispatch(reduxServices.category.actions.setCurrentPage(1))
-    dispatch(reduxServices.category.actions.setPageSize(20))
-  }, [dispatch])
-
   const {
     paginationRange,
     setPageSize,
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(employeeAssets.length, pageSizeFromState, pageSizeFromState)
+  } = usePagination(employeeAssets.length, pageFromState, pageSizeFromState)
 
   useEffect(() => {
     setPageSize(20)
@@ -82,6 +78,11 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
     () => currentPageData(employeeAssets, currentPage, pageSize),
     [employeeAssets, currentPage, pageSize],
   )
+
+  useEffect(() => {
+    dispatch(reduxServices.category.actions.setCurrentPage(currentPage))
+    dispatch(reduxServices.category.actions.setPageSize(pageSize))
+  }, [dispatch])
 
   return (
     <>
@@ -161,6 +162,7 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
                 {employeeAssets.length > 20 && (
                   <OPageSizeSelect
                     handlePageSizeSelectChange={handlePageSizeSelectChange}
+                    selectedPageSize={pageSize}
                   />
                 )}
               </CCol>
