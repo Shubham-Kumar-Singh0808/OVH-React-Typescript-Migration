@@ -48,7 +48,7 @@ describe('Employee Handbook List Table Component Testing', () => {
     })
   })
 
-  test('should render Employee Handbook component without crashing', async () => {
+  test('should render correct number of page records', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeHandbookTable
@@ -59,20 +59,11 @@ describe('Employee Handbook List Table Component Testing', () => {
           paginationRange={[1, 2, 3]}
         />
       </ReduxProvider>,
-      {
-        preloadedState: {
-          employeeHandbookSettings: {
-            employeeHandbooks: mockEmployeeHandbookList as EmployeeHandbook[],
-            listSize: 23,
-          },
-        },
-      },
     )
-    expectPageSizeToBeRendered(20)
+
     await waitFor(() => {
-      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-      expect(mockSetPageSize).toHaveBeenCalledTimes(1)
-      expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
+      // 21 including the heading
+      expect(screen.getAllByRole('row')).toHaveLength(21)
     })
   })
 })
