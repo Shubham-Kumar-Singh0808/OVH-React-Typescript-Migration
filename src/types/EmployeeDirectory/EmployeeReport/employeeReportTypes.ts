@@ -1,69 +1,60 @@
 import { LoadingState } from '../../commonTypes'
 
-export type Employee = {
+export type EmployeeReport = {
   id: number
-  firstName: string
-  lastName: string
-  middleName?: string | null
-  designation: string
   fullName: string
-  thumbPicture: string
   emailId: string
   mobile: string
-  departmentName: string
-  bloodgroup: string
-  dateOfJoining: string
   country?: string | null
 }
 
-export type MockEmployee = {
+export type MockEmployeeReport = {
   id: number
-  firstName: string
-  lastName: string
-  middleName?: string | null
-  designation: string
   fullName: string
-  thumbPicture: string
   emailId: string
   mobile: string
-  departmentName: string
-  bloodgroup: string
-  dateOfJoining: string
   country?: string | null
   [key: string]: unknown
 }
 
 export enum EmploymentStatus {
   'active' = 'Active',
-  'contract' = 'Contract',
   'inactive' = 'InActive',
-  'resigned' = 'underNotice',
-  'pip' = 'PIP',
 }
 
-export type EmployeeListSliceState = {
-  employees: Employee[]
+export type EmployeeReportSliceState = {
+  employees: EmployeeReport[]
   selectedEmploymentStatus: EmploymentStatus
   listSize: number
   isLoading: LoadingState
+  country: string
+  selectedCategory: string
+  searchEmployee: string
 }
 
-export type EmployeeListApiProps = {
+export type EmployeeReportApiProps = {
   endIndex?: number
   startIndex?: number
   searchStr?: string
   selectionStatus?: string
+  selectedCategory?: string
+  searchEmployee?: string
 }
 
 export type GetEmployeeResponse = {
-  emps: Employee[]
+  emps: EmployeeReport[]
   Empsize: number
 }
 
-export type EmployeeListTableProps = {
+export type EmployeeReportTableProps = {
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
+export type EmployeeReportOptionsProps = {
+  category: string
+  setCategory: (value: string) => void
 }

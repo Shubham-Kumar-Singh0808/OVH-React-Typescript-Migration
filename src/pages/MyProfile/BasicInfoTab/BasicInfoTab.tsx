@@ -18,18 +18,19 @@ import {
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
+// eslint-disable-next-line import/named
+import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
-import { useFormik } from 'formik'
 import validator from 'validator'
 import DownloadCVButton from './DownloadCVButton'
 import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { OTextEditor } from '../../../components/ReusableComponent/OTextEditor'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { UploadImageInterface } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
+import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
@@ -73,6 +74,27 @@ const BasicInfoTab = (): JSX.Element => {
     realBirthday: employeeBasicInformation.realBirthday,
     anniversary: employeeBasicInformation.anniversary,
     skypeId: employeeBasicInformation.skypeId,
+    mobile: employeeBasicInformation?.mobile,
+    alternativeMobile: employeeBasicInformation?.alternativeMobile,
+    homeCode: employeeBasicInformation?.homeCode,
+    homeNumber: employeeBasicInformation?.homeNumber,
+    workCode: employeeBasicInformation?.workCode,
+    workNumber: employeeBasicInformation?.workNumber,
+    emergencyContactName: employeeBasicInformation?.emergencyContactName,
+    emergencyPhone: employeeBasicInformation?.emergencyPhone,
+    emergencyRelationShip: employeeBasicInformation?.emergencyRelationShip,
+    presentAddress: employeeBasicInformation?.presentAddress,
+    presentCity: employeeBasicInformation?.presentCity,
+    presentZip: employeeBasicInformation?.presentZip,
+    presentLandMark: employeeBasicInformation?.presentLandMark,
+    permanentAddress: employeeBasicInformation?.permanentAddress,
+    permanentCity: employeeBasicInformation?.permanentCity,
+    permanentZip: employeeBasicInformation?.permanentZip,
+    permanentLandMark: employeeBasicInformation?.permanentLandMark,
+    passportNumber: employeeBasicInformation?.passportNumber,
+    passportIssuedPlace: employeeBasicInformation?.passportIssuedPlace,
+    passportIssuedDate: employeeBasicInformation?.passportIssuedDate,
+    passportExpDate: employeeBasicInformation?.passportExpDate,
   }
 
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
@@ -292,19 +314,19 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData.realBirthday &&
       employeeBasicInformationEditData.anniversary
     ) {
-      const currentRealBirthday =
+      const typeCastedRealBirthday =
         employeeBasicInformationEditData.realBirthday.toString()
-      const currentAnniversary =
+      const typeCastedAnniversary =
         employeeBasicInformationEditData.anniversary.toString()
 
-      const newRealBirthday = new Date(
-        moment(currentRealBirthday).format('DD/MM/YYYY'),
+      const formattedRealBirthday = new Date(
+        moment(typeCastedRealBirthday).format('DD/MM/YYYY'),
       )
-      const newAnniversary = new Date(
-        moment(currentAnniversary).format('DD/MM/YYYY'),
+      const formattedAnniversary = new Date(
+        moment(typeCastedAnniversary).format('DD/MM/YYYY'),
       )
 
-      if (newRealBirthday.getTime() >= newAnniversary.getTime()) {
+      if (formattedRealBirthday.getTime() >= formattedAnniversary.getTime()) {
         setDateErrorMessage(true)
         setSaveButtonEnabled(false)
       } else {
@@ -380,12 +402,6 @@ const BasicInfoTab = (): JSX.Element => {
     window.location.reload()
   }
 
-  const formik = useFormik({
-    initialValues: { name: '', message: '' },
-    onSubmit: (values) => {
-      console.log('Logging in ', values)
-    },
-  })
   const toastElement = (
     <OToast
       toastMessage="Your changes have been saved successfully."
@@ -412,10 +428,10 @@ const BasicInfoTab = (): JSX.Element => {
     const newOfficialBirthday = new Date(
       moment(tempOfficialBirthday).format('DD/MM/YYYY'),
     )
-    const newRealBirthday = new Date(
+    const formattedRealBirthday = new Date(
       moment(tempRealBirthday).format('DD/MM/YYYY'),
     )
-    if (newOfficialBirthday.getTime() !== newRealBirthday.getTime()) {
+    if (newOfficialBirthday.getTime() !== formattedRealBirthday.getTime()) {
       setRealBirthdayShown(true)
     } else {
       setRealBirthdayShown(false)
@@ -434,6 +450,12 @@ const BasicInfoTab = (): JSX.Element => {
   const handleAnniversary = (date: Date) => {
     setSelectedAnniversary(date)
     setAnniversaryFlag(true)
+  }
+
+  const handleDescription = (aboutMe: string) => {
+    setEmployeeBasicInformationEditData((prevState) => {
+      return { ...prevState, ...{ aboutMe } }
+    })
   }
 
   const dateIsValid = (date: Date) => {
@@ -963,10 +985,16 @@ const BasicInfoTab = (): JSX.Element => {
           >
             About Me:
           </CFormLabel>
-          <CCol sm={9}>
-            <OTextEditor
-              setFieldValue={(val) => formik.setFieldValue('', val)}
-              value={'Hello'}
+          <CCol sm={8}>
+            <CKEditor<{
+              onChange: CKEditorEventHandler<'change'>
+            }>
+              initData={employeeBasicInformationEditData?.aboutMe}
+              config={ckeditorConfig}
+              debug={true}
+              onChange={({ editor }) => {
+                handleDescription(editor.getData().trim())
+              }}
             />
           </CCol>
         </CRow>
@@ -1004,7 +1032,7 @@ const BasicInfoTab = (): JSX.Element => {
             )}
             {uploadErrorText && (
               <div id="error">
-                <strong className="text-danger mt-3">{uploadErrorText}</strong>
+                <strong className="mt-3 text-danger">{uploadErrorText}</strong>
               </div>
             )}
           </CCol>
@@ -1012,7 +1040,7 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
             <CButton
-              className="btn-ovh btn btn-success mt-4"
+              className="mt-4 btn-ovh btn btn-success"
               size="sm"
               disabled={!saveButtonEnabled}
               type="submit"
