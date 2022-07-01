@@ -1,52 +1,27 @@
 image: node:16
 
 stages:
-  - build
-  # - lint
   - test
   - sonarqube
   - deployqa
 
-cache:
-  key: ovh-react-typescript-migration
-  paths:
-    - node_modules/
-
-.only-merge_requests: &only-merge_requests
-  only:
-    - merge_requests
-
-Build:
-  <<: *only-merge_requests
-  stage: build
-  allow_failure: false
-  before_script:
-    - echo "Executing build step"
-  artifacts:
-    expire_in: 1 week
-    paths:
-      - target
-  script:
-    - echo "Installing npm package"
-    - npm install
-
-# Eslint:
-#   <<: *only-merge_requests
-#   stage: lint
-#   allow_failure: false
-#   before_script:
-#     - echo "Executing lint step"
-#   script:
-#     - npm run lint
-
 Test:
-  <<: *only-merge_requests
   stage: test
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
   allow_failure: false
   before_script:
-    - echo "Executing test step"
+    - npm install
+  cache:
+    key: ovh-react-typescript-migration
+    paths:
+      - node_modules/
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   script:
+    - npm run lint
     - npm run test:cov
   artifacts:
     when: always
@@ -56,18 +31,22 @@ Test:
       - coverage
 
 Sonarqube:
-  <<: *only-merge_requests
   stage: sonarqube
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
   allow_failure: false
   script:
     - dir
     - echo "Starting sonar analysis"
     - cmd.exe /C "sonar-scanner -X -Dsonar.projectKey=ovh-typescript-react-migration -Dsonar.projectName=OVHTypeScriptReactMigration -Dsonar.sources=src -Dsonar.qualitygate.wait=true -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info"
 
-deployqa:
+Deployqa:
+  stage: deployqa
   only:
     - qa
-  stage: deployqa
   script:
     - echo "Creating a war file"
     - mvn package
