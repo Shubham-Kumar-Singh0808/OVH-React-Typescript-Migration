@@ -12,9 +12,6 @@ Test:
       - merge_requests
     variables:
       - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
-  deploy:
-    only:
-      - develop
   allow_failure: false
   cache:
     key: ovh-react-typescript-migration
