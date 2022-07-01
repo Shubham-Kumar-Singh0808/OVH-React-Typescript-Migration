@@ -296,7 +296,12 @@ const EmployeeLeaveCategories = ({
             ))}
           </CTableBody>
         </CTable>
-        {<strong>Total Records: {getEmployeeLeaveCategories?.length}</strong>}
+        <strong>
+          {getEmployeeLeaveCategories?.length
+            ? `Total Records: ${getEmployeeLeaveCategories?.length}`
+            : `No Records found`}
+        </strong>
+
         <OModal
           alignment="center"
           visible={isDeleteModalVisible}

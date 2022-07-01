@@ -29,21 +29,6 @@ describe('Employee Leave Categories Testing', () => {
     const pageTitle = screen.getByRole('heading', { name: 'Leave categories' })
     expect(pageTitle).toBeTruthy()
   })
-
-  test('should render No data to display if Leave Categories is empty', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <EmployeeLeaveCategories
-          setToggle={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    await waitFor(() => {
-      expect(screen.getByText('Total Records: 0')).toBeInTheDocument()
-    })
-  })
   test('should render correct number of page records', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -71,5 +56,19 @@ describe('Employee Leave Categories Testing', () => {
       </ReduxProvider>,
     )
     expect(screen.getByText('Category')).toBeInTheDocument()
+  })
+  test('should render no data to display if LeaveCategoryTable is empty', async () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeLeaveCategories
+          setToggle={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      </ReduxProvider>,
+    )
+    await waitFor(() => {
+      expect(screen.getByText('No Records found')).toBeInTheDocument()
+    })
   })
 })
