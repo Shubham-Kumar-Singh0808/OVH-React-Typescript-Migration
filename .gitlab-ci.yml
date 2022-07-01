@@ -1,7 +1,7 @@
 image: node:16
 
 stages:
-  - build
+  - initialization
   - test
   - sonarqube
   - deployqa
@@ -11,10 +11,11 @@ cache:
   paths:
     - node_modules/
 
-Build:
-  stage: build
+Initialization:
+  stage: initialization
   only:
     - merge_request
+    - develop
   # only:
   #   # $CI_COMMIT_BRANCH If changes are pushed to specific branch.
   #   # $CI_MERGE_REQUEST_TARGET_BRANCH_NAME When merge request is created.
@@ -31,6 +32,7 @@ Test:
   stage: test
   only:
     - merge_request
+    - develop
   # only:
   #   # $CI_COMMIT_BRANCH If changes are pushed to specific branch.
   #   # $CI_MERGE_REQUEST_TARGET_BRANCH_NAME When merge request is created.
@@ -53,6 +55,7 @@ Sonarqube:
   stage: sonarqube
   only:
     - merge_request
+    - develop
   # only:
   #   # $CI_COMMIT_BRANCH If changes are pushed to specific branch.
   #   # $CI_MERGE_REQUEST_TARGET_BRANCH_NAME When merge request is created.
