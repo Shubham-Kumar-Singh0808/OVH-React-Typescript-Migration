@@ -6,15 +6,14 @@ import { RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
   Handbook,
-  showHandbookApiProps,
   showHandbookState,
 } from '../../types/EmployeeHandbook/employeeHandbookTypes'
 
 const showHandbook = createAsyncThunk(
   'showHandbook/showHandbook',
-  async (props: showHandbookApiProps, thunkApi) => {
+  async (passedName: string, thunkApi) => {
     try {
-      return await dispHandbookApi.showHandbook(props)
+      return await dispHandbookApi.showHandbook(passedName)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

@@ -20,9 +20,7 @@ const ShowHandbook = (): JSX.Element => {
   console.log('dispatch declared')
 
   useEffect(() => {
-    dispatch(
-      reduxServices.ShowHandbook.showHandbook({ pageName: clickedpageName }),
-    )
+    dispatch(reduxServices.ShowHandbook.showHandbook(clickedpageName))
     console.log(handbook)
   }, [dispatch, clickedpageName, handbook])
 

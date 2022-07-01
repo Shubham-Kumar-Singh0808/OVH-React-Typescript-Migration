@@ -1,16 +1,13 @@
 import axios from 'axios'
-import {
-  Handbook,
-  showHandbookApiProps,
-} from '../../../types/EmployeeHandbook/employeeHandbookTypes'
+import { Handbook } from '../../../types/EmployeeHandbook/employeeHandbookTypes'
 import { getAuthenticatedRequestConfig } from '../../../utils/apiUtils'
 import { AllowedHttpMethods, dispHandbook } from '../apiList'
 
-const showHandbook = async (props: showHandbookApiProps): Promise<Handbook> => {
+const showHandbook = async (passedName: string): Promise<Handbook> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: dispHandbook.dispHandbook,
     method: AllowedHttpMethods.get,
-    params: { pageName: props.pageName },
+    params: { pageName: passedName },
   })
 
   const response = await axios(requestConfig)
