@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable func-style */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
