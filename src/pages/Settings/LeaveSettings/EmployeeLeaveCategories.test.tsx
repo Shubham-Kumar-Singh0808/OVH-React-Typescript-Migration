@@ -4,7 +4,6 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import EmployeeLeaveCategories from './EmployeeLeaveCategories'
 import stateStore from '../../../stateStore'
 
