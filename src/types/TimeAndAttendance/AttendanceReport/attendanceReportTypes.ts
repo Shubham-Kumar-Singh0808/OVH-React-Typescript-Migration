@@ -4,8 +4,8 @@ import { EmployeeShiftDetails } from '../../EmployeeDirectory/EmployeesList/AddN
 export type EmployeeBioAttendanceDtoSet = {
   id: number
   start: string
-  inTime: string
-  outTime: string
+  inTime: null | string
+  outTime: null | string
   attendanceStatus: null | string
   color: string
   rendering: null | string
@@ -94,7 +94,7 @@ export type EmployeeDetailsWithAttendanceReport = {
   timeSlotDTO: null | string
   technology: null | string
   hrAssociate: null | string
-  lateComingCount: null | string
+  lateComingCount: null | string | number
   passportFrontPagePath: null | string
   passportBackPagePath: null | string
   passportFrontPage: null | string
