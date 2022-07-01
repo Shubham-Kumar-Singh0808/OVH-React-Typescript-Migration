@@ -1,11 +1,14 @@
 import axios from 'axios'
-import { AllowedHttpMethods, addNewEmployeeAPiConfig } from '../../../apiList'
+import {
+  AllowedHttpMethods,
+  employeeCertificationsApiConfig,
+} from '../../../apiList'
 import { GetAllTechnology } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
 const getAllTechnology = async (): Promise<GetAllTechnology[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: addNewEmployeeAPiConfig.getAllTechnology,
+    url: employeeCertificationsApiConfig.getTechnologies,
     method: AllowedHttpMethods.get,
   })
 
