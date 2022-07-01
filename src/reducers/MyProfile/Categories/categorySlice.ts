@@ -1,13 +1,12 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   Category,
   CategorySliceState,
 } from '../../../types/MyProfile/Categories/categoryTypes'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import categoryApi from '../../../middleware/api/MyProfile/Categories/categoryApi'
 
 const getAllCategories = createAsyncThunk(

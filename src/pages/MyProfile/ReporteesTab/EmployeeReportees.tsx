@@ -13,12 +13,13 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { Link } from 'react-router-dom'
 import OModal from '../../../components/ReusableComponent/OModal'
-import parse from 'html-react-parser'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
+
 const EmployeeReportees = (): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isModalVisible, setIsModalVisible] = useState(false)

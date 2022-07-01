@@ -25,6 +25,7 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/idle-modal';
 @import './components/session-timeout';
 @import './components/inline-tabs-nav';
+@import './components/loading-spinner';
 @import './pages/login';
 @import './pages/qualifications-tab';
 @import './components/richtexteditor';

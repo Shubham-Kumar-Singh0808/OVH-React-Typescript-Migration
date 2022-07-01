@@ -7,7 +7,6 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-
 import React from 'react'
 import { UserRoleSubFeaturesTableProps } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 

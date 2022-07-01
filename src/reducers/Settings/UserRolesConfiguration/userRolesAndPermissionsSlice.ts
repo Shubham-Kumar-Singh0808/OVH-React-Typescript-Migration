@@ -1,3 +1,5 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   CreateUserRole,
@@ -7,10 +9,7 @@ import {
   UserRolesAndPermissionsState,
   UtilsRenderPermissionSwitchReturn,
 } from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import userRolesAndPermissionsApi from '../../../middleware/api/Settings/UserRolesConfiguration/userRolesAndPermissionsApi'
 

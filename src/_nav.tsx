@@ -1,6 +1,7 @@
+/* eslint-disable no-underscore-dangle */
+// Todo: remove eslint and fix all the errors
 import { CNavGroup, CNavItem } from '@coreui/react-pro'
 import React, { ElementType } from 'react'
-
 import CIcon from '@coreui/icons-react'
 import { cilSpeedometer } from '@coreui/icons'
 

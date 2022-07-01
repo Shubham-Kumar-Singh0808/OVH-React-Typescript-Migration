@@ -1,6 +1,6 @@
+import profileHistorySliceReducer from './profileHistorySlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { ProfileUpdateData } from '../../../types/MyProfile/ProfileHistory/profileHistoryTypes'
-import profileHistorySliceReducer from './profileHistorySlice'
 
 describe('Profile History Slice Test', () => {
   it('should return the initial state when passed an empty action', () => {

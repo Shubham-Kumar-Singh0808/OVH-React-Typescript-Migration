@@ -1,6 +1,6 @@
+import { rest } from 'msw'
 import { employeeCertificationsApiConfig } from '../../middleware/api/apiList'
 import { mockCertificationCategories } from '../data/certificationListData'
-import { rest } from 'msw'
 
 export const certificationListHandlers = [
   // getAllCertifications api mock

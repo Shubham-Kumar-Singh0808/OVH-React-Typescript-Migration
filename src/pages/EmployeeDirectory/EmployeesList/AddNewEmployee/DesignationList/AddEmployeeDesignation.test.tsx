@@ -1,33 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
 
-import {
-  fireEvent,
-  getByTestId,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react'
-import {
-  mockDepartments,
-  mockDesignationList,
-} from '../../../../../test/data/employeeDesignationListData'
-
-import AddEmployeeDesignation from './AddEmployeeDesignation'
-import { EmployeeDepartments } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
+import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
-import { reduxServices } from '../../../../../reducers/reduxServices'
-import stateStore from '../../../../../stateStore'
 import userEvent from '@testing-library/user-event'
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+import AddEmployeeDesignation from './AddEmployeeDesignation'
+import { ReduxProvider } from '../../../../../components/Helper'
+import stateStore from '../../../../../stateStore'
 
 const expectComponentToBeRendered = () => {
   expect(screen.getByText('Department:')).toBeInTheDocument()

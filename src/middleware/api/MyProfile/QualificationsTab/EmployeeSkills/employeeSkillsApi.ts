@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   AddUpdateEmployeeSkill,
   CategorySkillListItem,
@@ -9,8 +10,6 @@ import {
   employeeSkillsApiConfig,
   skillsApiConfig,
 } from '../../../apiList'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
 
 const getEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
@@ -52,7 +51,7 @@ const getEmployeeSkillInformation = async (
     url: employeeSkillsApiConfig.getEmployeeSkillInformation,
     method: AllowedHttpMethods.get,
     params: {
-      skillId: skillId,
+      skillId,
     },
   })
   const response = await axios(requestConfig)
@@ -78,10 +77,10 @@ const deleteEmployeeSkill = async (
     url: employeeSkillsApiConfig.deleteEmployeeSkill,
     method: AllowedHttpMethods.get,
     params: {
-      skillId: skillId,
+      skillId,
     },
     data: {
-      skillId: skillId,
+      skillId,
     },
   })
   const response = await axios(requestConfig)

@@ -1,5 +1,5 @@
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import certificateTypeSliceReducer from './certificateTypeSlice'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 describe('Certificate Type Slice Test', () => {
   it('should return the initial state when passed an empty action', () => {
@@ -16,6 +16,8 @@ describe('Certificate Type Slice Test', () => {
         technologyId: 0,
         technologyName: '',
       },
+      currentPage: 1,
+      pageSize: 20,
     })
   })
 })
