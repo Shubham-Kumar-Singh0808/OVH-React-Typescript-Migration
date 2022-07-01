@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 // Todd: remove eslint and fix error
 import {
   CButton,
@@ -58,21 +57,22 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
+    const replaceValue = value.replace(/[^0-9]/gi, '')
     setIsSaveButtonEnabled(true)
     if (name === 'maxLeavesEarned') {
-      const maxLeavesEarnedValue = value.replace(/[^0-9]/gi, '')
+      const maxLeavesEarnedValue = replaceValue
       validateMaxLeavesEarnedValue(maxLeavesEarnedValue)
       setEmployeeLeaveCalender((prevState) => {
         return { ...prevState, ...{ [name]: maxLeavesEarnedValue } }
       })
     } else if (name === 'leavesPerYear') {
-      const leavesPerYearValue = value.replace(/[^0-9]/gi, '')
+      const leavesPerYearValue = replaceValue
       validateNumberOfLeavesValue(leavesPerYearValue)
       setEmployeeLeaveCalender((prevState) => {
         return { ...prevState, ...{ [name]: leavesPerYearValue } }
       })
     } else if (name === 'maxAccrualPerYear') {
-      const maxAccrualPerYearValue = value.replace(/[^0-9]/gi, '')
+      const maxAccrualPerYearValue = replaceValue
       validateMaximumAccrualValue(maxAccrualPerYearValue)
       setEmployeeLeaveCalender((prevState) => {
         return { ...prevState, ...{ [name]: maxAccrualPerYearValue } }
@@ -85,10 +85,11 @@ const EmployeeLeaveCalender = (): JSX.Element => {
   }
 
   const validateMaxLeavesEarnedValue = (maxLeavesEarnedValue: string) => {
-    if (maxLeavesEarnedValue.length < 3) {
+    if (maxLeavesEarnedValue.length < 4) {
       setMaxLeavesEarnedValueError(false)
     } else {
       setMaxLeavesEarnedValueError(true)
+      setIsSaveButtonEnabled(false)
     }
   }
 
@@ -97,6 +98,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       setMaximumAccrualValueError(false)
     } else {
       setMaximumAccrualValueError(true)
+      setIsSaveButtonEnabled(false)
     }
   }
 
@@ -105,6 +107,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       setNumberOfLeavesValueError(false)
     } else {
       setNumberOfLeavesValueError(true)
+      setIsSaveButtonEnabled(false)
     }
   }
 
@@ -140,6 +143,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
     htmlFor: 'inputNewLeaveCalender',
     className: 'col-form-label category-label',
   }
+  const danger = 'text-danger'
+  const white = 'text-white'
 
   return (
     <>
@@ -215,8 +220,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             className={
               employeeLeaveCalender?.maxLeavesEarned &&
               !maxLeavesEarnedValueError
-                ? 'text-white'
-                : 'text-danger'
+                ? white
+                : danger
             }
           >
             *
@@ -280,8 +285,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
           <span
             className={
               employeeLeaveCalender?.leavesPerYear && !numberOfLeavesValueError
-                ? 'text-white'
-                : 'text-danger'
+                ? white
+                : danger
             }
           >
             *
@@ -307,8 +312,8 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             className={
               employeeLeaveCalender?.maxAccrualPerYear &&
               !maximumAccrualValueError
-                ? 'text-white'
-                : 'text-danger'
+                ? white
+                : danger
             }
           >
             *
