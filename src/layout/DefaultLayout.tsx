@@ -1,3 +1,5 @@
+import React, { useRef } from 'react'
+import { CToaster } from '@coreui/react-pro'
 import {
   AppAside,
   AppContent,
@@ -5,9 +7,6 @@ import {
   AppHeader,
   AppSidebar,
 } from '../components/index'
-import React, { useRef } from 'react'
-
-import { CToaster } from '@coreui/react-pro'
 import IdleModal from '../components/IdleModal'
 import { useTypedSelector } from '../stateStore'
 

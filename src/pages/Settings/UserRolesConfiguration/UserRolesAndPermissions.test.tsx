@@ -1,14 +1,16 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import UserRolesAndPermissions from './UserRolesAndPermissions'
 import { mockUserRoleSubFeatures } from '../../../test/data/UserRoleSubFeaturesData'
 import stateStore from '../../../stateStore'
-import userEvent from '@testing-library/user-event'
 
 const ReduxProvider = ({
   children,
@@ -52,7 +54,7 @@ describe('User Roles And Permissions Testing', () => {
       expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
     })
   })
-  it('should enable "Yes" button if the input field inside modal has value', async () => {
+  it('should enable "Yes" button if the input field inside modal has value', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <UserRolesAndPermissions />
@@ -109,7 +111,7 @@ describe('User Role Features Expandable Table Component Testing', () => {
       })
     })
   })
-  it('should render user role features expandable', async () => {
+  it('should render user role features expandable', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <UserRolesAndPermissions />

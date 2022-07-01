@@ -9,15 +9,14 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
+import React, { useMemo, useState } from 'react'
 import CIcon from '@coreui/icons-react'
+import { cilTrash } from '@coreui/icons'
 import EditCertificateType from './EditCertificateType'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
-import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../../utils/paginationUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
@@ -34,12 +33,13 @@ const CertificateTypeTable = (): JSX.Element => {
   const certificateTypes = useTypedSelector(
     reduxServices.certificateType.selectors.certificateTypes,
   )
-
+  const pageFromState = useTypedSelector(
+    reduxServices.certificateType.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.certificateType.selectors.pageSizeFromState,
+  )
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(reduxServices.certificateType.getCertificateTypes())
-  }, [dispatch])
 
   const {
     paginationRange,
@@ -47,11 +47,8 @@ const CertificateTypeTable = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(certificateTypes.length, 20)
+  } = usePagination(certificateTypes.length, pageSizeFromState, pageFromState)
 
-  useEffect(() => {
-    setPageSize(20)
-  }, [certificateTypes, setPageSize, setCurrentPage])
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -62,11 +59,6 @@ const CertificateTypeTable = (): JSX.Element => {
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-
-  const currentPageItems = useMemo(
-    () => currentPageData(certificateTypes, currentPage, pageSize),
-    [certificateTypes, currentPage, pageSize],
-  )
 
   const handleShowDeleteModal = (
     certificateTypeId: number,
@@ -87,6 +79,9 @@ const CertificateTypeTable = (): JSX.Element => {
 
   const handleConfirmDeleteCertificateType = async () => {
     setIsDeleteModalVisible(false)
+    dispatch(reduxServices.certificateType.actions.setCurrentPage(currentPage))
+    dispatch(reduxServices.certificateType.actions.setPageSize(pageSize))
+
     const deleteCertificateTypeResultAction = await dispatch(
       reduxServices.certificateType.deleteCertificateType(certificateId),
     )
@@ -114,6 +109,12 @@ const CertificateTypeTable = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.certificateType.selectors.isLoading,
   )
+
+  const currentPageItems = useMemo(
+    () => currentPageData(certificateTypes, currentPage, pageSize),
+    [certificateTypes, currentPage, pageSize],
+  )
+
   return (
     <>
       {certificateTypes.length ? (
@@ -194,13 +195,21 @@ const CertificateTypeTable = (): JSX.Element => {
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records:{certificateTypes.length}</strong>
+                <strong>Total Records: {certificateTypes.length}</strong>
               </p>
             </CCol>
+            {!certificateTypes.length && (
+              <CCol>
+                <CRow>
+                  <h4 className="text-center">No data to display</h4>
+                </CRow>
+              </CCol>
+            )}
             <CCol xs={3}>
               {certificateTypes.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  selectedPageSize={pageSize}
                 />
               )}
             </CCol>

@@ -1,4 +1,5 @@
 import { ValidationError } from '../../commonTypes'
+
 export type EmployeeFamilyData = {
   familyId: number
   personName: string
@@ -118,10 +119,10 @@ export type AddButtonProps = {
 }
 export type EmployeeFamilyDetailsTableProps = {
   editButtonHandler?: (familyId: number) => void
-  isFieldDisabled: boolean
-  striped: boolean
-  bordered: boolean
-  tableClassName: string
+  isFieldDisabled?: boolean
+  striped?: boolean
+  bordered?: boolean
+  tableClassName?: string
 }
 export type EmployeeVisaDetailsTableProps = {
   editVisaButtonHandler: (id: number) => void

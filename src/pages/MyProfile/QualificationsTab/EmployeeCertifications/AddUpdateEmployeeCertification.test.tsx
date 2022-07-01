@@ -1,11 +1,13 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
 
 import { render, screen } from '@testing-library/react'
-
-import AddUpdateEmployeeCertification from './AddUpdateEmployeeCertification'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import AddUpdateEmployeeCertification from './AddUpdateEmployeeCertification'
 import stateStore from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 

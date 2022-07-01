@@ -1,11 +1,12 @@
+// eslint-disable-next-line import/named
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-
+import { configureStore } from '@reduxjs/toolkit'
+import thunkMiddleware from 'redux-thunk'
 import appReducer from './reducers/appSlice'
 import authenticationReducer from './reducers/Login/authenticationSlice'
 import categoryReducer from './reducers/MyProfile/Categories/categorySlice'
 import certificateListReducer from './reducers/EmployeeDirectory/CertificatesList/certificatesListSlice'
 import certificateTypeReducer from './reducers/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
-import { configureStore } from '@reduxjs/toolkit'
 import employeeAssetsReducer from './reducers/MyProfile/MyAssetsTab/employeeAssetsSlice'
 import employeeCertificationReducer from './reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import employeeDesignationListReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
@@ -22,8 +23,9 @@ import qualificationCategoryReducer from './reducers/MyProfile/QualificationsTab
 import shiftConfigurationReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
-import thunkMiddleware from 'redux-thunk'
 import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
+import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'
+import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
 import employeeHandbookSettingsReducer from './reducers/EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 
@@ -50,6 +52,8 @@ export const allReducers = {
   certificateList: certificateListReducer,
   employeeAssets: employeeAssetsReducer,
   certificateType: certificateTypeReducer,
+  employeeReports: employeeReportReducer,
+  employeeDesignationReports: employeeDesignationReportReducer,
   visaList: visaListReducer,
   employeeHandbookSettings: employeeHandbookSettingsReducer,
   // add your slice reducers here

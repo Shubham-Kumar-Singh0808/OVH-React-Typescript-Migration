@@ -1,10 +1,10 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeReview,
   ReviewsTabState as EmployeeReviewsState,
 } from '../../../types/MyProfile/ReviewsTab/employeeReviewsTypes'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
 import { ValidationError } from '../../../types/commonTypes'
 import employeeReviewsApi from '../../../middleware/api/MyProfile/ReviewsTab/employeeReviewsApi'
 

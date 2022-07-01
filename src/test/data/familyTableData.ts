@@ -1,4 +1,5 @@
 import { EmployeeFamilyData } from '../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+
 export const mockFamilyTableDetails: EmployeeFamilyData[] = [
   {
     familyId: 21,

@@ -1,6 +1,5 @@
 import { CCardBody, CCardHeader } from '@coreui/react-pro'
 import React, { useState } from 'react'
-
 import AddEditEmployeeSkill from './EmployeeSkills/AddEditEmployeeSkill'
 import AddUpdateEmployeeCertification from './EmployeeCertifications/AddUpdateEmployeeCertification'
 import AddUpdateEmployeeQualification from './EmployeeQualifications/AddUpdateEmployeeQualification'

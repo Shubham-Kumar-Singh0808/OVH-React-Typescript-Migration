@@ -7,11 +7,10 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-
 import AddNewQualificationCategory from './AddNewQualificationCategory'
-import { AddUpdateEmployeeQualificationProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import QualificationCategoryListTable from './QualificationCategoryListTable'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { AddUpdateEmployeeQualificationProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
@@ -27,6 +26,12 @@ const QualificationCategoryList = ({
   useEffect(() => {
     dispatch(
       reduxServices.employeeQualificationCategory.getQualificationCategories(),
+    )
+    dispatch(
+      reduxServices.employeeQualificationCategory.actions.setCurrentPage(1),
+    )
+    dispatch(
+      reduxServices.employeeQualificationCategory.actions.setPageSize(20),
     )
   }, [dispatch])
 

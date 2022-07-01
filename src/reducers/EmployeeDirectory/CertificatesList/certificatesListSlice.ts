@@ -1,13 +1,12 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import {
   CertificateListApiProps,
   CertificatesListSliceState,
   EmployeeCertificate,
 } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
 

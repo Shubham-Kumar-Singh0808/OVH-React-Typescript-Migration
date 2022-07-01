@@ -14,12 +14,11 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
-
 import AIMLBridgeLogo from '../../assets/images/logo/ai_bridge_logo_207X65.png'
 import RayBizTechLogo from '../../assets/images/logo/raybiztech-logo.png'
 import { reduxServices } from '../../reducers/reduxServices'
-import { useHistory } from 'react-router-dom'
 
 const Login = (): JSX.Element => {
   const rbtTenantKey = 'RAYBIZTECH'

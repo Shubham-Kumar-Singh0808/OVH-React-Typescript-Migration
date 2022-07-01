@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todo: remove eslint and fix error
 import {
   AuthenticationApi,
   BasicInfoApi,
@@ -22,6 +24,8 @@ import {
   SideMenuApi,
   SkillApi,
   UserRolesConfigurationApi,
+  EmployeeReportApi,
+  EmployeeDesignationReportApi,
   VisaListApi,
 } from '../../types/apiTypes'
 
@@ -196,6 +200,18 @@ export const certificateTypeApiConfig: CertificateTypeApi = {
 export const employeeReviewsApiConfig: EmployeeReviewsApi = {
   getEmployeeReviews: apiPrefix + '/jobapplicant/getLoggedInEmployeeReviews',
 }
+
+export const employeeReportApiConfig: EmployeeReportApi = {
+  getEmployeeReports: apiPrefix + '/jobapplicant/getSelectedTypeEmployeeData',
+}
+
+export const employeeDesignationReportApiConfig: EmployeeDesignationReportApi =
+  {
+    getAllDesignations: apiPrefix + '/jobapplicant/getAllDesignations',
+    getEmployeeCategoryData: apiPrefix + '/jobapplicant/EmployeesCategoryData',
+    exportEmployeeCategoryData:
+      apiPrefix + '/jobapplicant/exportEmployeeCategoryData',
+  }
 
 export const visaListApiConfig: VisaListApi = {
   getVisaList: apiPrefix + '/EmployeeSkill/getAllVisaDetails',

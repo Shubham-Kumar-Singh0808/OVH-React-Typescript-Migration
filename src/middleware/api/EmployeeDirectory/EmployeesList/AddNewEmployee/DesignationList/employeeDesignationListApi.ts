@@ -1,13 +1,12 @@
+import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeDesignationListApiConfig,
 } from '../../../../apiList'
-
 import {
   EmployeeDepartment,
   EmployeeDesignation,
 } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../../utils/apiUtils'
 
 const getEmployeeDepartments = async (): Promise<
@@ -29,7 +28,7 @@ const getEmployeeDesignations = async (
     url: employeeDesignationListApiConfig.getEmployeeDesignations,
     method: AllowedHttpMethods.get,
     params: {
-      deptId: deptId,
+      deptId,
     },
   })
 
@@ -45,8 +44,8 @@ const addEmployeeDesignation = async ({
     url: employeeDesignationListApiConfig.addEmployeeDesignation,
     method: AllowedHttpMethods.post,
     data: {
-      departmentId: departmentId,
-      name: name,
+      departmentId,
+      name,
     },
   })
 
@@ -61,7 +60,7 @@ const deleteEmployeeDesignation = async (
     url: employeeDesignationListApiConfig.deleteEmployeeDesignation,
     method: AllowedHttpMethods.delete,
     params: {
-      designationId: designationId,
+      designationId,
     },
   })
 
