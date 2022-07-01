@@ -27,13 +27,13 @@ export type AddNewHandbookPage = {
   list?: number[]
 }
 
-export type CountryList = {
-  list1?: number
-  list2?: number
-  list3?: number
-  list4?: number
-  list5?: number
-}
+// export type CountryList = {
+//   list1?: number
+//   list2?: number
+//   list3?: number
+//   list4?: number
+//   list5?: number
+// }
 
 export type EmployeeHandbook = {
   id?: number
