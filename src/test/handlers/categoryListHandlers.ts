@@ -1,6 +1,6 @@
+import { rest } from 'msw'
 import { categoriesApiConfig } from '../../middleware/api/apiList'
 import { mockCategories } from '../data/categoryListData'
-import { rest } from 'msw'
 
 export const categoryListHandlers = [
   // addCategory api mock

@@ -1,9 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-
-import routes from '../routes'
-
 import { CBreadcrumb, CBreadcrumbItem } from '@coreui/react-pro'
+import routes from '../routes'
 
 type breadcrumb = {
   pathname?: string
@@ -31,7 +29,7 @@ const AppBreadcrumb = () => {
       breadcrumbs.push({
         pathname: currentPathname,
         name: getRouteName(currentPathname, routes),
-        active: index + 1 === array.length ? true : false,
+        active: index + 1 === array.length,
       })
       return currentPathname
     })

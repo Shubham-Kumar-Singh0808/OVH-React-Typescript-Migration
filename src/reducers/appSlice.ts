@@ -1,7 +1,6 @@
 import { JSXElementConstructor, ReactElement } from 'react'
-
-import { RootState } from '../stateStore'
 import { createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../stateStore'
 
 type AppState = {
   sidebarShow: boolean
@@ -13,6 +12,7 @@ type AppState = {
     | undefined
   reRenderMenu: boolean
   isSessionExpired: boolean
+  broswerLocale: string
 }
 
 const initialState: AppState = {
@@ -23,11 +23,12 @@ const initialState: AppState = {
   toast: undefined,
   reRenderMenu: true,
   isSessionExpired: false,
+  broswerLocale: '',
 }
 
 const appSlice = createSlice({
   name: 'app',
-  initialState: initialState,
+  initialState,
   reducers: {
     addToast: (state, action) => {
       return { ...state, toast: action.payload }
@@ -41,13 +42,18 @@ const appSlice = createSlice({
     setIsSessionExpired: (state, action) => {
       return { ...state, isSessionExpired: action.payload }
     },
+    setBroswerLocale: (state, action) => {
+      state.broswerLocale = action.payload
+    },
   },
 })
 
 const selectIsSessionExpired = (state: RootState): boolean =>
   state.app.isSessionExpired
+const currentBroswerLocale = (state: RootState): string =>
+  state.app.broswerLocale
 
-const appSelectors = { selectIsSessionExpired }
+const appSelectors = { selectIsSessionExpired, currentBroswerLocale }
 
 export const appService = { actions: appSlice.actions, selectors: appSelectors }
 

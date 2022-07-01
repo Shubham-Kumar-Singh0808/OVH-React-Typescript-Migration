@@ -1,6 +1,6 @@
+import axios from 'axios'
 import { employeeAssetsApiConfig, AllowedHttpMethods } from '../../apiList'
 import { EmployeeAsset } from '../../../../types/MyProfile/MyAssetsTab/employeeAssetsTypes'
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeeAssets = async (
@@ -10,7 +10,7 @@ const getEmployeeAssets = async (
     url: employeeAssetsApiConfig.getEmployeeAssets,
     method: AllowedHttpMethods.get,
     params: {
-      employeeId: employeeId,
+      employeeId,
     },
   })
   const response = await axios(requestConfig)

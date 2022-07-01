@@ -1,6 +1,6 @@
+import { rest } from 'msw'
 import { employeeReviewsApiConfig } from '../../middleware/api/apiList'
 import { mockReviewDetails } from '../data/employeeReviewsData'
-import { rest } from 'msw'
 
 export const employeeReviewsHandlers = [
   // getAllCertifications api mock

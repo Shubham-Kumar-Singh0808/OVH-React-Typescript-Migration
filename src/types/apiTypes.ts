@@ -18,21 +18,21 @@ export interface CategoryApi extends ApiBase {
   addCategory: string
   deleteCategory: string
 }
-export interface PersonalInfoApi extends ApiBase {
-  getFamilyDetails: string
-  getVisaDetails: string
-  getCountryDetails: string
-  getVisaTypeDetails: string
-  addNewVisaMember: string
-  getFamilyInformation: string
-  updateFamilyInformation: string
-  addNewFamilyMember: string
-  getVisaInformation: string
-  updateVisaInformation: string
-  deleteFamilyMember: string
-  deleteVisaDetail: string
-  fileUploadVisaImage: string
-}
+// export interface PersonalInfoApi extends ApiBase {
+//   getFamilyDetails: string
+//   getVisaDetails: string
+//   getCountryDetails: string
+//   getVisaTypeDetails: string
+//   addNewVisaMember: string
+//   getFamilyInformation: string
+//   updateFamilyInformation: string
+//   addNewFamilyMember: string
+//   getVisaInformation: string
+//   updateVisaInformation: string
+//   deleteFamilyMember: string
+//   deleteVisaDetail: string
+//   fileUploadVisaImage: string
+// }
 
 export interface SkillApi extends ApiBase {
   getSkillListForCategory: string
@@ -58,9 +58,9 @@ export interface EmployeeGeneralInformationApi extends ApiBase {
   getLoggedInEmployeeData: string
 }
 
-export interface PersonalInfoApi extends ApiBase {
-  getFamilyDetails: string
-}
+// export interface PersonalInfoApi extends ApiBase {
+//   getFamilyDetails: string
+// }
 export interface EmployeeQualificationsApi extends ApiBase {
   getEmployeeQualifications: string
   getPostGraduationAndGraduationLookUp: string
@@ -165,6 +165,16 @@ export interface EmployeeReporteesApi extends ApiBase {
   getEmployeeReportees: string
   getEmployeeReporteesKRAs: string
   getEmployeeReporteesKPIs: string
+}
+
+export interface EmployeeReportApi extends ApiBase {
+  getEmployeeReports: string
+}
+
+export interface EmployeeDesignationReportApi extends ApiBase {
+  getAllDesignations: string
+  getEmployeeCategoryData: string
+  exportEmployeeCategoryData: string
 }
 
 export interface VisaListApi extends ApiBase {

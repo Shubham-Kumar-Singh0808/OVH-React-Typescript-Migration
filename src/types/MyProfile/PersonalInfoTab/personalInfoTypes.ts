@@ -1,4 +1,5 @@
 import { ValidationError } from '../../commonTypes'
+
 export type EmployeeFamilyData = {
   familyId: number
   personName: string
@@ -118,14 +119,21 @@ export type AddButtonProps = {
 }
 export type EmployeeFamilyDetailsTableProps = {
   editButtonHandler?: (familyId: number) => void
-  isFieldDisabled: boolean
-  striped: boolean
-  bordered: boolean
-  tableClassName: string
+  isFieldDisabled?: boolean
+  striped?: boolean
+  bordered?: boolean
+  tableClassName?: string
 }
 export type EmployeeVisaDetailsTableProps = {
   editVisaButtonHandler: (id: number) => void
 }
 export type handleActiveTabProps = {
   handleActiveTab: (id: number) => void
+}
+
+export type cardBodyProps = {
+  isViewingAnotherEmployee: boolean | string | undefined
+  setToggle: (value: string) => void
+  editButtonHandler: (value: number) => void
+  editVisaButtonHandler: (value: number) => void
 }

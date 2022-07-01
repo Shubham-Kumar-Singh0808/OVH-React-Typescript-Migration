@@ -1,8 +1,7 @@
-import { correctPassword, username } from '../constants'
-
-import { authenticationApiConfig } from '../../middleware/api/apiList'
 import { encode } from 'base-64'
 import { rest } from 'msw'
+import { correctPassword, username } from '../constants'
+import { authenticationApiConfig } from '../../middleware/api/apiList'
 
 export const loginHandlers = [
   // login api mock

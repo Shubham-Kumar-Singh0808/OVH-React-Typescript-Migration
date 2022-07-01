@@ -1,30 +1,19 @@
-import * as reactRedux from 'react-redux'
-
-import { EnhancedStore, Store } from '@reduxjs/toolkit'
-import { Provider, useSelector } from 'react-redux'
 import { render, screen } from '@testing-library/react'
-
-import AppSidebar from './AppSidebar'
 import { BrowserRouter } from 'react-router-dom'
 import React from 'react'
 import configureStore from 'redux-mock-store' //ES6 modules
-import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
-import menuItems from '../../middleware/MenuLinks'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
+import AppSidebar from './AppSidebar'
+import { ReduxProvider } from '../Helper'
+import menuItems from '../../middleware/MenuLinks'
+import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
 import { sideMenuApiConfig } from '../../middleware/api/apiList'
 import stateStore from '../../stateStore'
 
-const middlewares = []
+const middlewares: never[] = []
 const mockStore = configureStore(middlewares)
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
 const mockUseLocationValue = {
   pathname: '/dashboard',
 }
@@ -50,7 +39,7 @@ afterEach(() => server.resetHandlers())
 const sidebarMenuSlice = () => stateStore.getState().sidebarMenu.menuItems
 
 jest.mock('react-router', () => ({
-  ...(jest.requireActual('react-router') as {}),
+  ...jest.requireActual('react-router'),
   useLocation: jest.fn().mockImplementation(() => {
     return mockUseLocationValue
   }),
@@ -92,8 +81,6 @@ describe('Sidebar Testing', () => {
     expect(actions).toEqual([expectedPayloadappSlice])
   })
   test('should render Sidebar menu without crashing', () => {
-    //   mockUseLocationValue.pathname = '/dashboard'
-    // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
         <BrowserRouter>

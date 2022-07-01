@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Todo: remove eslint and fix all the errors
+import React, { useEffect } from 'react'
 import { CNavGroup, CNavItem } from '@coreui/react-pro'
 import { NavLink, useLocation } from 'react-router-dom'
-import React, { useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
-
 import { getSidebarMenu } from '../../middleware/api/SidebarMenu/sidebarMenuApi'
 import { reduxServices } from '../../reducers/reduxServices'
 
@@ -38,7 +39,7 @@ const AppSidebarNavItems = (): JSX.Element => {
   }
   return (
     <>
-      {getSidebarMenuItems?.map((curNavItem, index) =>
+      {getSidebarMenuItems?.map((curNavItem: any, index: number) =>
         curNavItem.childmenuItems.length ? (
           <CNavGroup
             idx={String(index)}
@@ -46,16 +47,18 @@ const AppSidebarNavItems = (): JSX.Element => {
             toggler={navLink(curNavItem.menuName, curNavItem.menuclass)}
             visible={location.pathname.startsWith(curNavItem.menuurl)}
           >
-            {curNavItem.childmenuItems.map((curChildNavItem, indx) => (
-              <CNavItem key={indx}>
-                <NavLink
-                  className="nav-link"
-                  to={`/${curChildNavItem.menuUrl}`}
-                >
-                  {curChildNavItem.menuName}
-                </NavLink>
-              </CNavItem>
-            ))}
+            {curNavItem.childmenuItems.map(
+              (curChildNavItem: any, indx: number) => (
+                <CNavItem key={indx}>
+                  <NavLink
+                    className="nav-link"
+                    to={`/${curChildNavItem.menuUrl}`}
+                  >
+                    {curChildNavItem.menuName}
+                  </NavLink>
+                </CNavItem>
+              ),
+            )}
           </CNavGroup>
         ) : (
           <CNavItem key={index}>
