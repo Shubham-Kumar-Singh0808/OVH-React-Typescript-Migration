@@ -4,6 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import EmployeeLeaveCategories from './EmployeeLeaveCategories'
 import stateStore from '../../../stateStore'
 
@@ -70,5 +71,17 @@ describe('Employee Leave Categories Testing', () => {
     await waitFor(() => {
       expect(screen.getByText('No Records found')).toBeInTheDocument()
     })
+  })
+  test('should enabled add Leave category button when input is not empty', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeLeaveCategories
+          setToggle={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      </ReduxProvider>,
+    )
+    expect(screen.getByRole('button')).not.toBeDisabled()
   })
 })

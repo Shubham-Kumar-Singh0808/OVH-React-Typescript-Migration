@@ -1,5 +1,8 @@
 import axios from 'axios'
-import { AllowedHttpMethods, employeeLeaveSettingsConfig } from '../../apiList'
+import {
+  AllowedHttpMethods,
+  employeeLeaveSettingsApiConfig,
+} from '../../apiList'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 import {
   EmployeeSaveLeaveCalenderSetting,
@@ -10,7 +13,7 @@ import {
 const getEmployeeLeaveCalenderSettings =
   async (): Promise<EmployeeSaveLeaveCalenderSetting> => {
     const requestConfig = getAuthenticatedRequestConfig({
-      url: employeeLeaveSettingsConfig.getLeaveCalenderSettings,
+      url: employeeLeaveSettingsApiConfig.getLeaveCalenderSettings,
       method: AllowedHttpMethods.get,
     })
 
@@ -22,7 +25,7 @@ const saveEmployeeLeaveCalenderSettings = async (
   employeeLeaveCalender: EmployeeSaveLeaveCalenderSetting,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeLeaveSettingsConfig.saveLeaveCalendarSettings,
+    url: employeeLeaveSettingsApiConfig.saveLeaveCalendarSettings,
     method: AllowedHttpMethods.post,
     data: employeeLeaveCalender,
   })
@@ -34,7 +37,7 @@ const getEmployeeLeaveCategories = async (): Promise<
   EmployeeLeaveCategory[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeLeaveSettingsConfig.getLeaveCategories,
+    url: employeeLeaveSettingsApiConfig.getLeaveCategories,
     method: AllowedHttpMethods.get,
   })
 
@@ -46,7 +49,7 @@ const deleteEmployeeLeaveCategory = async (
   leaveCategoryId: number,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeLeaveSettingsConfig.deleteLeaveCategory,
+    url: employeeLeaveSettingsApiConfig.deleteLeaveCategory,
     method: AllowedHttpMethods.delete,
     params: {
       leaveCategoryId,
@@ -60,7 +63,7 @@ const addEmployeeLeaveCategory = async (
   employeeLeaveCategory: EmployeeAddUpdateLeaveCategory,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeLeaveSettingsConfig.addUpdateLeaveCategory,
+    url: employeeLeaveSettingsApiConfig.addUpdateLeaveCategory,
     method: AllowedHttpMethods.post,
     data: employeeLeaveCategory,
   })
@@ -72,7 +75,7 @@ const updateEmployeeLeaveCategory = async (
   employeeLeaveCategory: EmployeeAddUpdateLeaveCategory,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeLeaveSettingsConfig.addUpdateLeaveCategory,
+    url: employeeLeaveSettingsApiConfig.addUpdateLeaveCategory,
     method: AllowedHttpMethods.put,
     data: employeeLeaveCategory,
   })

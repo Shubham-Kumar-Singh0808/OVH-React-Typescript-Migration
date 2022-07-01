@@ -225,7 +225,7 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }
 
-export const employeeLeaveSettingsConfig: EmployeeLeaveSettingsApi = {
+export const employeeLeaveSettingsApiConfig: EmployeeLeaveSettingsApi = {
   saveLeaveCalendarSettings:
     apiPrefix + '/leaveSetup/bioAdmin/leaveCalendarSettings',
   getLeaveCategories: apiPrefix + '/leaveSetup/leaveCategoriesForAdmin',

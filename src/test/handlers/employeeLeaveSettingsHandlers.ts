@@ -1,5 +1,5 @@
 import { rest } from 'msw'
-import { employeeLeaveSettingsConfig } from '../../middleware/api/apiList'
+import { employeeLeaveSettingsApiConfig } from '../../middleware/api/apiList'
 import {
   mockLeaveCalenderSettingsType,
   mockLeaveCategoriesType,
@@ -8,7 +8,7 @@ import {
 export const categoryListHandlers = [
   // addLeaveCalender api mock
   rest.get(
-    employeeLeaveSettingsConfig.getLeaveCalenderSettings,
+    employeeLeaveSettingsApiConfig.getLeaveCalenderSettings,
     (req, res, ctx) => {
       return res(
         ctx.json({
@@ -19,13 +19,13 @@ export const categoryListHandlers = [
     },
   ),
   rest.get(
-    employeeLeaveSettingsConfig.getLeaveCalenderSettings,
+    employeeLeaveSettingsApiConfig.getLeaveCalenderSettings,
     (req, res, ctx) => {
       return res.once(ctx.status(200), ctx.json(mockLeaveCalenderSettingsType))
     },
   ),
   // getLeaveCategories api mock
-  rest.get(employeeLeaveSettingsConfig.getLeaveCategories, (req, res, ctx) => {
+  rest.get(employeeLeaveSettingsApiConfig.getLeaveCategories, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockLeaveCategoriesType))
   }),
 ]
