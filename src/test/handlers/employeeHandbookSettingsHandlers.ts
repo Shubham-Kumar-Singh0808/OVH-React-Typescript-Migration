@@ -1,5 +1,5 @@
-import { employeeHandbookSettingsApiConfig } from '../../middleware/api/apiList'
 import { rest } from 'msw'
+import { employeeHandbookSettingsApiConfig } from '../../middleware/api/apiList'
 import { mockEmployeeHandbookList } from '../data/employeeHandbookSettingsData'
 
 export const employeeListHandlers = [
