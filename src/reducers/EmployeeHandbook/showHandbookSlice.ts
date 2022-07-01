@@ -1,25 +1,30 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../middleware/api/apiList'
-import dispHandbookApi from '../../middleware/api/EmployeeHandbook/showHandbook'
-import { RootState } from '../../stateStore'
+import dispHandbookApi from '../../middleware/api/EmployeeHandbook/showHandbookApi'
+import { AppDispatch, RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
   Handbook,
   showHandbookState,
 } from '../../types/EmployeeHandbook/employeeHandbookTypes'
 
-const showHandbook = createAsyncThunk(
-  'showHandbook/showHandbook',
-  async (passedName: string, thunkApi) => {
-    try {
-      return await dispHandbookApi.showHandbook(passedName)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
+const showHandbook = createAsyncThunk<
+  Handbook | undefined,
+  string,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('showHandbookApi/showHandbook', async (passedName: string, thunkApi) => {
+  try {
+    return await dispHandbookApi.showHandbook(passedName)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
 
 const initialShowState: showHandbookState = {
   handbook: {} as Handbook,

@@ -97,7 +97,7 @@ const routes = [
     component: EmployeeHandbook,
   },
   {
-    path: '/showemployeehandbook/:pageName',
+    path: '/showemployeehandbook/:clickedpageName',
     name: 'Handbook',
     component: Handbook,
   },

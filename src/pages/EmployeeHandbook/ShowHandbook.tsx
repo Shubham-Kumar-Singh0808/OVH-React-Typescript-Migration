@@ -33,7 +33,7 @@ const ShowHandbook = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         {isLoading !== ApiLoadingState.loading ? (
-          <div>{handbook.description}</div>
+          <CCol>{parse(handbook.description)}</CCol>
         ) : (
           <CCol>
             <CRow className="category-loading-spinner">

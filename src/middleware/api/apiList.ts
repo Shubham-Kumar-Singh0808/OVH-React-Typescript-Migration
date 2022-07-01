@@ -231,5 +231,5 @@ export const employeeHandbook: EmployeeHandbook = {
 }
 
 export const dispHandbook: DisplayHandbook = {
-  dispHandbook: apiPrefix + '/handbookitem/get',
+  dispHandbook: apiPrefix + '/handbookItem/get',
 }
