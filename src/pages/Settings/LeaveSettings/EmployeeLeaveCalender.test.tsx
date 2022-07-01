@@ -1,6 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable require-await */
-/* eslint-disable import/named */
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
