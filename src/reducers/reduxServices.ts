@@ -23,6 +23,7 @@ import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguratio
 import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
 import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
+import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -50,4 +51,5 @@ export const reduxServices = {
   employeeReports: employeeReportService,
   employeeDesignationReports: employeeDesigationReportService,
   visaList: visaListService,
+  employeeLeaveSettings: employeeLeaveSettingsService,
 }

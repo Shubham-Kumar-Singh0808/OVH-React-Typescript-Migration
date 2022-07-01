@@ -27,6 +27,7 @@ import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfigu
 import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'
 import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
+import employeeLeaveSettingsReducer from './reducers/Settings/LeaveSettings/employeeLeaveSettingsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -54,6 +55,8 @@ export const allReducers = {
   employeeReports: employeeReportReducer,
   employeeDesignationReports: employeeDesignationReportReducer,
   visaList: visaListReducer,
+  employeeLeaveSettings: employeeLeaveSettingsReducer,
+
   // add your slice reducers here
 }
 
