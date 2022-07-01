@@ -25,7 +25,10 @@ export const categoryListHandlers = [
     },
   ),
   // getLeaveCategories api mock
-  rest.get(employeeLeaveSettingsApiConfig.getLeaveCategories, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockLeaveCategoriesType))
-  }),
+  rest.get(
+    employeeLeaveSettingsApiConfig.getLeaveCategories,
+    (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(mockLeaveCategoriesType))
+    },
+  ),
 ]
