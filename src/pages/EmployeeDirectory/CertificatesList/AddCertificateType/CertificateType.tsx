@@ -1,12 +1,21 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AddNewCertificateType from './AddNewCertificateType'
 import CertificateTypeTable from './CertificateTypeTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
 
 const CertificateType = (): JSX.Element => {
   const [selectedTechnologyId, setSelectedTechnologyId] = useState<number>()
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(reduxServices.certificateType.getCertificateTypes())
+    dispatch(reduxServices.certificateType.actions.setCurrentPage(1))
+    dispatch(reduxServices.certificateType.actions.setPageSize(20))
+  }, [dispatch])
 
   return (
     <>

@@ -17,7 +17,8 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
-import DatePicker from 'react-datepicker'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import el from 'date-fns/locale/el' // the locale you want
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
@@ -36,6 +37,7 @@ import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  registerLocale('el', el)
 
   const [isViewingAnotherEmployee] = useSelectedEmployee()
   const employeeBasicInformation = useTypedSelector((state) =>
@@ -78,6 +80,27 @@ const BasicInfoTab = (): JSX.Element => {
     realBirthday: employeeBasicInformation.realBirthday,
     anniversary: employeeBasicInformation.anniversary,
     skypeId: employeeBasicInformation.skypeId,
+    mobile: employeeBasicInformation?.mobile,
+    alternativeMobile: employeeBasicInformation?.alternativeMobile,
+    homeCode: employeeBasicInformation?.homeCode,
+    homeNumber: employeeBasicInformation?.homeNumber,
+    workCode: employeeBasicInformation?.workCode,
+    workNumber: employeeBasicInformation?.workNumber,
+    emergencyContactName: employeeBasicInformation?.emergencyContactName,
+    emergencyPhone: employeeBasicInformation?.emergencyPhone,
+    emergencyRelationShip: employeeBasicInformation?.emergencyRelationShip,
+    presentAddress: employeeBasicInformation?.presentAddress,
+    presentCity: employeeBasicInformation?.presentCity,
+    presentZip: employeeBasicInformation?.presentZip,
+    presentLandMark: employeeBasicInformation?.presentLandMark,
+    permanentAddress: employeeBasicInformation?.permanentAddress,
+    permanentCity: employeeBasicInformation?.permanentCity,
+    permanentZip: employeeBasicInformation?.permanentZip,
+    permanentLandMark: employeeBasicInformation?.permanentLandMark,
+    passportNumber: employeeBasicInformation?.passportNumber,
+    passportIssuedPlace: employeeBasicInformation?.passportIssuedPlace,
+    passportIssuedDate: employeeBasicInformation?.passportIssuedDate,
+    passportExpDate: employeeBasicInformation?.passportExpDate,
   }
 
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
@@ -169,7 +192,7 @@ const BasicInfoTab = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    const replaceValue = value.replace(/[^a-zA-Z\s]/gi, '').replace(/^\s*/, '')
+    const replaceValue = value.replace(/[^a-z\s]/gi, '').replace(/^\s*/, '')
     if (name === 'curentLocation') {
       const currentLocation = replaceValue
       setEmployeeBasicInformationEditData((prevState) => {
@@ -294,19 +317,19 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData.realBirthday &&
       employeeBasicInformationEditData.anniversary
     ) {
-      const curRealBirthday =
+      const typeCastedRealBirthday =
         employeeBasicInformationEditData.realBirthday.toString()
-      const curAnniversary =
+      const typeCastedAnniversary =
         employeeBasicInformationEditData.anniversary.toString()
 
-      const newCurrentRealBirthday = new Date(
-        moment(curRealBirthday).format('DD/MM/YYYY'),
+      const formattedRealBirthday = new Date(
+        moment(typeCastedRealBirthday).format('DD/MM/YYYY'),
       )
-      const newCurrentAnniversary = new Date(
-        moment(curAnniversary).format('DD/MM/YYYY'),
+      const formattedAnniversary = new Date(
+        moment(typeCastedAnniversary).format('DD/MM/YYYY'),
       )
 
-      if (newCurrentRealBirthday.getTime() >= newCurrentAnniversary.getTime()) {
+      if (formattedRealBirthday.getTime() >= formattedAnniversary.getTime()) {
         setDateErrorMessage(true)
         setSaveButtonEnabled(false)
       } else {
@@ -408,8 +431,10 @@ const BasicInfoTab = (): JSX.Element => {
     const newOfficialBirthday = new Date(
       moment(tempOfficialBirthday).format('DD/MM/YYYY'),
     )
-    const newRealBday = new Date(moment(tempRealBirthday).format('DD/MM/YYYY'))
-    if (newOfficialBirthday.getTime() !== newRealBday.getTime()) {
+    const formattedRealBirthday = new Date(
+      moment(tempRealBirthday).format('DD/MM/YYYY'),
+    )
+    if (newOfficialBirthday.getTime() !== formattedRealBirthday.getTime()) {
       setRealBirthdayShown(true)
     } else {
       setRealBirthdayShown(false)
@@ -649,7 +674,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
-              locale={browserLocale}
+              // locale="el"
               id="employeeOfficialBirthday"
               className="form-control form-control-sm"
               maxDate={new Date()}

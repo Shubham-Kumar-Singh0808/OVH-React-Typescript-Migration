@@ -8,6 +8,8 @@ export type QualificationCategory = {
 
 export type QualificationCategorySliceState = {
   qualificationCategories: QualificationCategory[]
+  currentPage: number
+  pageSize: number
   isLoading: LoadingState
   error: ValidationError
 }

@@ -16,6 +16,8 @@ describe('Certificate Type Slice Test', () => {
         technologyId: 0,
         technologyName: '',
       },
+      currentPage: 1,
+      pageSize: 20,
     })
   })
 })

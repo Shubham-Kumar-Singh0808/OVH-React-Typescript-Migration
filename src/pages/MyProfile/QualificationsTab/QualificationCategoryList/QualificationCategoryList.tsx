@@ -27,6 +27,12 @@ const QualificationCategoryList = ({
     dispatch(
       reduxServices.employeeQualificationCategory.getQualificationCategories(),
     )
+    dispatch(
+      reduxServices.employeeQualificationCategory.actions.setCurrentPage(1),
+    )
+    dispatch(
+      reduxServices.employeeQualificationCategory.actions.setPageSize(20),
+    )
   }, [dispatch])
 
   return (
