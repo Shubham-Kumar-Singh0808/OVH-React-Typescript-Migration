@@ -8,10 +8,7 @@ stages:
 Test:
   stage: test
   only:
-    refs:
-      - merge_requests
-    variables:
-      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+    - merge_requests
   allow_failure: false
   cache:
     key: ovh-react-typescript-migration
@@ -19,6 +16,7 @@ Test:
       - node_modules/
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   script:
+    - echo "Starting Test and Lint"
     - npm install
     - npm run lint
     - npm run test:cov
@@ -32,14 +30,16 @@ Test:
 Sonarqube:
   stage: sonarqube
   only:
-    refs:
-      - merge_requests
-    variables:
-      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+    - merge_requests
   allow_failure: false
+  cache:
+    key: ovh-react-typescript-migration
+    paths:
+      - node_modules/
   script:
-    - dir
     - echo "Starting sonar analysis"
+    - npm install
+    - dir
     - cmd.exe /C "sonar-scanner -X -Dsonar.projectKey=ovh-typescript-react-migration -Dsonar.projectName=OVHTypeScriptReactMigration -Dsonar.sources=src -Dsonar.qualitygate.wait=true -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info"
 
 Deployqa:
