@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   AllowedHttpMethods,
   userRolesConfigurationApiConfig,
@@ -9,8 +10,6 @@ import {
   UserRoleSubFeatures,
   UtilsRenderPermissionSwitchReturn,
 } from '../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getUserRoles = async (): Promise<UserRole[] | undefined> => {
@@ -46,7 +45,7 @@ const createUserRole = async ({
     method: AllowedHttpMethods.post,
     params: {
       roleName: roleInput,
-      reportingManagerFlag: reportingManagerFlag,
+      reportingManagerFlag,
     },
   })
   const response = await axios(requestConfig)
@@ -58,7 +57,7 @@ const deleteUserRole = async (roleId: number): Promise<number | undefined> => {
     url: userRolesConfigurationApiConfig.deleteUserRole,
     method: AllowedHttpMethods.post,
     params: {
-      roleId: roleId,
+      roleId,
     },
   })
   const response = await axios(requestConfig)

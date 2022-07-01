@@ -13,11 +13,10 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-
-import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../components/ReusableComponent/OPagination'
 import React from 'react'
 import parse from 'html-react-parser'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { CertificateDetailsExpandableTableProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'

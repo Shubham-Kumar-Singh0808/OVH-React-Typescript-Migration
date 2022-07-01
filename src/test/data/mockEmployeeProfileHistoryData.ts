@@ -6,6 +6,7 @@ export const mockEmployeeProfileHistoryData: ProfileUpdateData[] = [
     firstName: 'Mohd',
     lastName: 'Basheer',
     middleName: null,
+    // eslint-disable-next-line sonarjs/no-duplicate-string
     fullName: 'Mohd Basheer',
     currentLocation: 'Hyderabad',
     baseLocation: 'Hyderabad',

@@ -1,3 +1,9 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable complexity */
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable import/named */
+// Todo: remove all eslint and fix errors
 import {
   CButton,
   CCardBody,
@@ -9,16 +15,16 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
+import React, { useEffect, useState } from 'react'
+import DatePicker from 'react-datepicker'
+import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import moment from 'moment'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   EmployeeCertification,
   EmployeeCertificationProps,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
-import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import DatePicker from 'react-datepicker'
-import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import OToast from '../../../../components/ReusableComponent/OToast'
-import moment from 'moment'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 
@@ -41,7 +47,7 @@ function AddUpdateEmployeeCertification({
   const [completedDateFlag, setCompletedDateFlag] = useState<boolean>(false)
   const [expiryDateFlag, setExpirtyDateFlag] = useState<boolean>(false)
 
-  const [showEditor, setShowEditor] = useState<boolean>(false)
+  const [showEditor, setShowEditor] = useState<boolean>(true)
 
   const getTechnologies = useTypedSelector(
     reduxServices.employeeCertifications.selectors.technologies,
@@ -121,8 +127,8 @@ function AddUpdateEmployeeCertification({
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
-      htmlFor: htmlFor,
-      className: className,
+      htmlFor,
+      className,
     }
   }
 
@@ -254,10 +260,15 @@ function AddUpdateEmployeeCertification({
       code: '',
       percent: 0,
       name: '',
+      description: '',
     })
     setCompletedDate('')
     setExpiryDate('')
     setError(false)
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
   }
 
   const handleAddCertificateDetails = async () => {
@@ -266,7 +277,7 @@ function AddUpdateEmployeeCertification({
       ...{
         completedDate: moment(completedDate).format('DD/MM/YYYY'),
         expiryDate: moment(expiryDate).format('DD/MM/YYYY'),
-        employeeId: employeeId,
+        employeeId,
       },
     }
     const addCertificateResultAction = await dispatch(
@@ -306,7 +317,7 @@ function AddUpdateEmployeeCertification({
 
   const handleDescription = (description: string) => {
     setAddCertification((prevState) => {
-      return { ...prevState, ...{ description: description } }
+      return { ...prevState, ...{ description } }
     })
   }
 
@@ -568,7 +579,7 @@ function AddUpdateEmployeeCertification({
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Description:
             </CFormLabel>
-            {showEditor || !isEditCertificationDetails ? (
+            {showEditor ? (
               <CCol sm={8}>
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>

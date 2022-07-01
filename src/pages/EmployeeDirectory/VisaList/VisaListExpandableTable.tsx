@@ -13,11 +13,10 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-
+import React from 'react'
 import { CertificateDetailsExpandableTableProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
@@ -51,15 +50,14 @@ const VisaListExpandableTable = (
       {visaList.length ? (
         <>
           <CAccordion
-            alwaysOpen
-            activeItemKey={accordionItemShow}
+            {...(isAccordionItemShow && { activeItemKey: accordionItemShow })}
             flush
             className="expandable-table mb-4 mt-4"
           >
             {visaList.map((visaItem, index) => {
               return (
                 <React.Fragment key={index}>
-                  <CAccordionItem itemKey={1}>
+                  <CAccordionItem {...(isAccordionItemShow && { itemKey: 1 })}>
                     <CAccordionHeader>
                       <span
                         className="title-sm expandable-table-title"
@@ -69,7 +67,7 @@ const VisaListExpandableTable = (
                       </span>
                     </CAccordionHeader>
                     <CAccordionBody>
-                      <CTable responsive striped>
+                      <CTable align="middle" responsive striped>
                         <CTableHead color="info">
                           <CTableRow>
                             <CTableHeaderCell>#</CTableHeaderCell>

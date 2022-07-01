@@ -1,8 +1,7 @@
-import { AllowedHttpMethods, sideMenuApiConfig } from '../../api/apiList'
-
-import { SidebarMenuReturnApi } from '../../../types/SidebarMenu/sidebarMenuType'
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { AllowedHttpMethods, sideMenuApiConfig } from '../../api/apiList'
+import { SidebarMenuReturnApi } from '../../../types/SidebarMenu/sidebarMenuType'
 import { getAuthenticatedRequestConfig } from '../../../utils/apiUtils'
 
 export const getSidebarMenu = createAsyncThunk<

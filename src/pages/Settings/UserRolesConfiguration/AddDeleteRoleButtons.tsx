@@ -1,7 +1,5 @@
-import {
-  ActionMapping,
-  AddDeleteRoleProps,
-} from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+/* eslint-disable consistent-return */
+// Todo: remove eslint and fix error
 import {
   CButton,
   CCol,
@@ -12,7 +10,10 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-
+import {
+  ActionMapping,
+  AddDeleteRoleProps,
+} from '../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'

@@ -37,7 +37,8 @@ export enum EmploymentStatus {
   'active' = 'Active',
   'contract' = 'Contract',
   'inactive' = 'InActive',
-  'pip' = 'underNotice',
+  'resigned' = 'underNotice',
+  'pip' = 'PIP',
 }
 
 export type EmployeeListSliceState = {

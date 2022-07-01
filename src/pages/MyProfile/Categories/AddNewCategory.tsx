@@ -1,10 +1,9 @@
 import { CButton, CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
 import CIcon from '@coreui/icons-react'
-import OToast from '../../../components/ReusableComponent/OToast'
 import { cilPlus } from '@coreui/icons'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const AddNewCategory = (): JSX.Element => {
@@ -28,7 +27,7 @@ const AddNewCategory = (): JSX.Element => {
     }
   }, [newCategoryName])
 
-  const handleAddCategory = async () => {
+  const handleAddCategory = () => {
     const toAddCategoryName = newCategoryName
 
     if (

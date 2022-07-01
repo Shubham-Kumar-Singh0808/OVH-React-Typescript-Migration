@@ -1,5 +1,5 @@
-import { certificateListApiConfig } from '../../middleware/api/apiList'
 import { rest } from 'msw'
+import { certificateListApiConfig } from '../../middleware/api/apiList'
 import { mockCertificateList } from '../data/certificateListData'
 
 export const certificateListHandlers = [

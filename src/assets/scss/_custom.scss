@@ -31,6 +31,9 @@ body {
   line-height: 1.42857;
   -webkit-transition: all 0.15s;
   transition: all 0.15s;
+  &:hover {
+    color: $white;
+  }
 }
 .btn-download {
   background-color: $blue-btnBg;
@@ -147,4 +150,3 @@ th {
 .w-10 {
   width: 10;
 }
-

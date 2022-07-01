@@ -1,5 +1,4 @@
 import { CToast, CToastBody, CToastClose } from '@coreui/react-pro'
-
 import React from 'react'
 import { ToastPropsType } from '../../types/Components/toastTypes'
 
