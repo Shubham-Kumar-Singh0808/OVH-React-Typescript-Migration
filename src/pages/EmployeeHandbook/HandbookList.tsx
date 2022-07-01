@@ -1,6 +1,6 @@
 import React from 'react'
-import { HandbooksListProps } from '../../types/EmployeeHandbook/employeeHandbookTypes'
 import { Link } from 'react-router-dom'
+import { HandbooksListProps } from '../../types/EmployeeHandbook/employeeHandbookTypes'
 // const handbook_data = [
 //   ' Training and Development',
 //   ' Performance Iporvement Process',

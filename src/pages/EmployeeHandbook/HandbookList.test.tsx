@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 
-import { render, screen, waitFor } from '../../test/testUtils'
-import HandbookList from './HandbookList'
 import React from 'react'
+import HandbookList from './HandbookList'
+import { render, screen, waitFor } from '../../test/testUtils'
 import { mockHandbookList } from '../../test/data/handbookListData'
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
@@ -12,8 +12,8 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
 }
 
 describe('Handbook List Component Testing', () => {
-  test('should render titles of handboks without crashing', async () => {
-    render(<HandbookList handbooks={mockHandbookList} />)
+  test('should render titles of handbooks without crashing', async () => {
+    await render(<HandbookList handbooks={mockHandbookList} />)
 
     expectPageSizeToBeRendered(20)
   })

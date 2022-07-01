@@ -1,15 +1,15 @@
-import OCard from '../../components/ReusableComponent/OCard'
 import { useParams } from 'react-router-dom'
 import React, { useEffect } from 'react'
+import parse from 'html-react-parser'
+import { CCol, CRow, CSpinner } from '@coreui/react-pro'
+import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
-import parse from 'html-react-parser'
 import { ApiLoadingState } from '../../middleware/api/apiList'
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 
 const ShowHandbook = (): JSX.Element => {
-  const { pageName } = useParams<{ pageName: string }>()
-  console.log(pageName)
+  const { clickedpageName } = useParams<{ clickedpageName: string }>()
+  console.log(clickedpageName)
   const dispatch = useAppDispatch()
   const handbook = useTypedSelector(
     reduxServices.ShowHandbook.selectors.handbookDesc,
@@ -20,9 +20,11 @@ const ShowHandbook = (): JSX.Element => {
   console.log('dispatch declared')
 
   useEffect(() => {
-    dispatch(reduxServices.ShowHandbook.showHandbook({ pageName: pageName }))
+    dispatch(
+      reduxServices.ShowHandbook.showHandbook({ pageName: clickedpageName }),
+    )
     console.log(handbook)
-  }, [dispatch, pageName, handbook])
+  }, [dispatch, clickedpageName, handbook])
 
   return (
     <>

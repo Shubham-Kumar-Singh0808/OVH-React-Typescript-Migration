@@ -1,10 +1,10 @@
-import OCard from '../../components/ReusableComponent/OCard'
 import React, { useEffect } from 'react'
+import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import HandbookList from './HandbookList'
+import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
 import { ApiLoadingState } from '../../middleware/api/apiList'
-import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 
 const EmployeeHandbook = (): JSX.Element => {
   const dispatch = useAppDispatch()

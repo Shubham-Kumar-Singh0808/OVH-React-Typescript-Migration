@@ -1,5 +1,5 @@
-import { AllowedHttpMethods, employeeHandbook } from '../apiList'
 import axios from 'axios'
+import { AllowedHttpMethods, employeeHandbook } from '../apiList'
 import { getAuthenticatedRequestConfig } from '../../../utils/apiUtils'
 import { Handbook } from '../../../types/EmployeeHandbook/employeeHandbookTypes'
 
