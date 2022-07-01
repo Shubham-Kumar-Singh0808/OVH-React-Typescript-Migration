@@ -1,4 +1,5 @@
 export type EmployeeSkills = {
+  categoryTypeId: string | number
   categoryType: string
   skillType: string
   competency: string

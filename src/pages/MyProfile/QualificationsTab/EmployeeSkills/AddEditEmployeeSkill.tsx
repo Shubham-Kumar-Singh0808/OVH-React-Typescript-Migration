@@ -204,6 +204,43 @@ function AddEditEmployeeSkill({
       )
     }
   }
+  const getEmployeeSKills = useTypedSelector(
+    reduxServices.employeeSkill.selectors.employeeSkillDetails,
+  )
+
+  useEffect(() => {
+    // eslint-disable-next-line require-await
+    async function checkExistingSkillAndCategory() {
+      console.log(employeeSkill)
+      if (employeeSkill.categoryType && employeeSkill.skillType) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        getEmployeeSKills.forEach((item) => {
+          if (
+            item.categoryTypeId === employeeSkill.categoryType &&
+            item.skillType === employeeSkill.skillType
+          ) {
+            //show toast
+            dispatch(
+              reduxServices.app.actions.addToast(
+                <OToast
+                  toastColor="danger"
+                  toastMessage="Category and Skill Detail already Exist"
+                />,
+              ),
+            )
+          }
+          // return 'this'
+        })
+      }
+    }
+    checkExistingSkillAndCategory()
+  }, [
+    dispatch,
+    employeeSkill,
+    employeeSkill.categoryType,
+    employeeSkill.skillType,
+    getEmployeeSKills,
+  ])
 
   const categoryName = useMemo(() => {
     if (employeeSkill.categoryType) {
