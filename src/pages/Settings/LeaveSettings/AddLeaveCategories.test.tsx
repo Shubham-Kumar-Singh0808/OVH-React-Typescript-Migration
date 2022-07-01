@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
+// eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
@@ -27,6 +28,7 @@ describe('Add New Leave Category Testing', () => {
         <AddLeaveCategories
           confirmButtonText="Add"
           backButtonHandler={function (): void {
+            // eslint-disable-next-line sonarjs/no-duplicate-string
             throw new Error('Function not implemented.')
           }}
         />
