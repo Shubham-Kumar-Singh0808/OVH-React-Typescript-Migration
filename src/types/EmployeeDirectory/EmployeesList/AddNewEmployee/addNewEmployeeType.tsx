@@ -181,6 +181,7 @@ export interface CountryProps extends DynamicFormLabelProps {
 export interface HrDataProps extends DynamicFormLabelProps {
   hrDataList: GetHrData[]
   onSelectHRAssociate: (value: GetHRAssociate) => void
+  shouldReset: boolean
 }
 
 export interface ReportManagerProps extends DynamicFormLabelProps {
@@ -220,4 +221,11 @@ export type AddNewEmployeeState = {
   employments?: GetAllEmployment[]
   jobTypes?: GetAllJobType[]
   userType?: boolean
+}
+
+// Reset Fields
+export type ShouldResetFields = {
+  hrAssociate: boolean
+  projectManager: boolean
+  reportManager: boolean
 }

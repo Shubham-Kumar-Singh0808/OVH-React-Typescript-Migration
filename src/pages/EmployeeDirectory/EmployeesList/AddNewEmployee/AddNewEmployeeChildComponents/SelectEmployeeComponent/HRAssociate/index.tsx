@@ -1,5 +1,5 @@
 import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Autocomplete from 'react-autocomplete'
 import {
   GetHRAssociate,
@@ -7,18 +7,17 @@ import {
 } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../../utils/helper'
 
-// import { fakeRequest, getStates } from 'react-autocomplete'
-
 const HRAssociate = ({
   dynamicFormLabelProps,
   hrDataList,
   onSelectHRAssociate,
+  shouldReset,
 }: HrDataProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
 
   const onHandleSelectHRAssociate = (fullName: string) => {
     setAutoCompleteTarget(fullName)
-    const managerName = hrDataList.find((value) => value.fullName === fullName)
+    const managerName = hrDataList.find((data) => data.fullName === fullName)
 
     const reportManager = {
       id: managerName?.id,
@@ -26,6 +25,11 @@ const HRAssociate = ({
     } as GetHRAssociate
     onSelectHRAssociate(reportManager)
   }
+
+  useEffect(() => {
+    if (shouldReset) setAutoCompleteTarget('')
+  }, [shouldReset])
+
   return (
     <>
       <CRow className="mb-3">

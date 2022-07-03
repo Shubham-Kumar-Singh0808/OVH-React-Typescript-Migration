@@ -17,6 +17,7 @@ import {
 import EmployeeDesignationList from './DesignationList/EmployeeDesignationList'
 import ShiftConfiguration from './ShiftConfiguration/ShiftConfiguration'
 import {
+  ShouldResetFields,
   GetAllReportingManagers,
   GetHrData,
   AddEmployee,
@@ -39,6 +40,13 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationtoggle] = useState<boolean>(false)
+
+  const initResetFields = {
+    hrAssociate: false,
+    projectManager: false,
+    reportManager: false,
+  } as ShouldResetFields
+  const [resetFields, setResetField] = useState(initResetFields)
   const managerValue = {} as GetAllReportingManagers
   const hrAssociateValue = {} as GetHrData
   const shiftValue = {} as EmployeeShiftDetails
@@ -151,6 +159,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     })
   }
   const onHandleHRAssociate = (value: GetHRAssociate) => {
+    setResetField({ ...resetFields, hrAssociate: false })
     setAddEmployee({
       ...addEmployee,
       hrAssociate: {
@@ -309,9 +318,14 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
 
   const handleClearFields = () => {
     setAddEmployee(initEmployee)
-  }
 
-  console.log('addEmployee', addEmployee)
+    const shouldResetFields = {
+      hrAssociate: true,
+      projectManager: true,
+      reportManager: true,
+    } as ShouldResetFields
+    setResetField(shouldResetFields)
+  }
 
   const handleBackButton = () => {
     setDestinationtoggle(false)
@@ -427,6 +441,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               dynamicFormLabelProps={dynamicFormLabelProps}
               hrDataList={hrDataList}
               onSelectHRAssociate={onHandleHRAssociate}
+              shouldReset={resetFields.hrAssociate}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}

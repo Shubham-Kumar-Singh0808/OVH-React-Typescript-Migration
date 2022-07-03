@@ -28,6 +28,7 @@ const Shift = ({
     setValue(selectedShift)
   }
 
+  const shiftValue = value == null ? '' : value
   return (
     <>
       <CRow className="mb-3 align-items-center">
@@ -46,7 +47,7 @@ const Shift = ({
             size="sm"
             aria-label="shift"
             name="shift"
-            value={value}
+            value={shiftValue}
             onChange={onHandleSelectManager}
           >
             <option value={''}>Select Shift</option>

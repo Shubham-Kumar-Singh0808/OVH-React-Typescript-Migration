@@ -7,9 +7,6 @@ const WorkFrom = ({
   onWorkFromHandler,
   workFromValue,
 }: WorkFromChangeHandlerProp): JSX.Element => {
-  // const isWorkFromOffice = workFromValue !== 'Home'
-
-  console.log('isWorkFromOffice', workFromValue)
   return (
     <>
       <CRow className="mb-3 align-items-center">

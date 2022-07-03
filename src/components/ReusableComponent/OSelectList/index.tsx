@@ -16,6 +16,7 @@ const OSelect = ({
     setValue(e.target.value)
   }
 
+  const selectedValue = value == null ? '' : value
   return (
     <>
       <CRow className="mb-3">
@@ -33,7 +34,7 @@ const OSelect = ({
             size="sm"
             aria-label={name}
             name={name}
-            value={value}
+            value={selectedValue}
             onChange={onChangeHandler}
           >
             <option value={''}>{label}</option>
