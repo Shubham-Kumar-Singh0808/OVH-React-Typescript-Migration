@@ -8,6 +8,7 @@ import {
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
   TicketConfigurationSubCategories,
+  TicketConfigurationSubCategoryType,
 } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
 const TicketConfigurationOptions = (): JSX.Element => {
@@ -48,6 +49,24 @@ const TicketConfigurationOptions = (): JSX.Element => {
     if (event.target.value !== undefined) {
       setSelectedSubCategory(event.target.value as unknown as number)
       subCategoryDefault = event.target.value as unknown as number
+    }
+  }
+
+  const onViewHandler = async () => {
+    if (selectedDepartment) {
+      const prepareObject: TicketConfigurationSubCategoryType = {
+        departmentId: selectedDepartment,
+        categoryId: selectedCategory,
+        subCategoryId: selectedSubCategory,
+        endIndex: 20,
+        startIndex: 0,
+      }
+
+      await dispatch(
+        reduxServices.ticketConfiguration.getTicketConfigurationSubCategoryList(
+          prepareObject,
+        ),
+      )
     }
   }
 
@@ -130,7 +149,9 @@ const TicketConfigurationOptions = (): JSX.Element => {
                 onChange={onCategoryChange}
                 value={categoryDefault}
               >
-                <option value="0">Select Category</option>
+                <option value="0" hidden>
+                  Select Category
+                </option>
                 {categories &&
                   categories.map((category) => (
                     <option
@@ -159,7 +180,9 @@ const TicketConfigurationOptions = (): JSX.Element => {
                 onChange={onSubCategoryChange}
                 value={subCategoryDefault}
               >
-                <option value="0">Select Sub-Category</option>
+                <option value="0" hidden>
+                  Select Sub-Category
+                </option>
                 {subCategories &&
                   subCategories.map((subCategory) => (
                     <option
@@ -186,7 +209,11 @@ const TicketConfigurationOptions = (): JSX.Element => {
       <CRow className="text-center mt-1">
         <CCol sm={3}></CCol>
         <CCol sm={3} className="text-start">
-          <CButton color="success" className="btn-ovh me-1 mt-2">
+          <CButton
+            color="success"
+            onClick={onViewHandler}
+            className="btn-ovh me-1 mt-2"
+          >
             View
           </CButton>
           <CButton

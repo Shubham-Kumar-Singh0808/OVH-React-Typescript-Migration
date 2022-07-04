@@ -263,4 +263,5 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   getDepartments: apiPrefix + '/supportManagement/getDepartmentNameList',
   getCategories: apiPrefix + '/supportManagement/departmentCategoryList',
   getSubCategories: apiPrefix + '/supportManagement/subCategoryList',
+  getSubCategoryList: apiPrefix + '/supportManagement/getSearchSubCategoryList',
 }

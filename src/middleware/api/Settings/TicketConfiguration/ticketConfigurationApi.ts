@@ -5,6 +5,8 @@ import {
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
   TicketConfigurationSubCategories,
+  TicketConfigurationSubCategoryList,
+  TicketConfigurationSubCategoryType,
 } from '../../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
 const getTicketConfigurationDepartments = async (): Promise<
@@ -42,10 +44,31 @@ const getTicketConfigurationSubCategories = async (
   return response.data
 }
 
+const getTicketConfigurationSubCategoryList = async (
+  prepareObject: TicketConfigurationSubCategoryType,
+): Promise<TicketConfigurationSubCategoryList> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketConfigurationApiConfig.getSubCategoryList,
+    method: AllowedHttpMethods.post,
+    data: {
+      departmentId: prepareObject.departmentId,
+      categoryId: prepareObject.categoryId,
+      subCategoryId: prepareObject.subCategoryId,
+    },
+    params: {
+      endIndex: prepareObject.endIndex,
+      startIndex: prepareObject.startIndex,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const ticketConfigurationApi = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
   getTicketConfigurationSubCategories,
+  getTicketConfigurationSubCategoryList,
 }
 
 export default ticketConfigurationApi

@@ -2,13 +2,15 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import ticketConfigurationApi from '../../../middleware/api/Settings/TicketConfiguration/ticketConfigurationApi'
-import stateStore, { AppDispatch, RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
   TicketConfigurationState,
   TicketConfigurationSubCategories,
+  TicketConfigurationSubCategoryList,
+  TicketConfigurationSubCategoryType,
 } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
 const initialTicketConfigurationState = {} as TicketConfigurationState
@@ -69,6 +71,28 @@ const getTicketConfigurationSubCategories = createAsyncThunk<
   },
 )
 
+const getTicketConfigurationSubCategoryList = createAsyncThunk<
+  TicketConfigurationSubCategoryList | undefined,
+  TicketConfigurationSubCategoryType,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'supportManagement/supportManagement/getSearchSubCategoryList',
+  async (prepareObject, thunkApi) => {
+    try {
+      return await ticketConfigurationApi.getTicketConfigurationSubCategoryList(
+        prepareObject,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const ticketConfigurationSlice = createSlice({
   name: 'ticketConfiguration',
   initialState: initialTicketConfigurationState,
@@ -81,6 +105,14 @@ const ticketConfigurationSlice = createSlice({
         state.subCategories = [] as TicketConfigurationSubCategories[]
         state.departments = action.payload as TicketConfigurationDepartments[]
       })
+      .addCase(
+        getTicketConfigurationSubCategoryList.fulfilled,
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          state.subCategoryList =
+            action.payload as TicketConfigurationSubCategoryList
+        },
+      )
       .addCase(getTicketConfigurationCategories.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.subCategories = [] as TicketConfigurationSubCategories[]
@@ -104,9 +136,20 @@ const ticketConfigurationSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
+          getTicketConfigurationDepartments.pending,
+          getTicketConfigurationSubCategories.pending,
+          getTicketConfigurationSubCategoryList.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
           getTicketConfigurationDepartments.rejected,
           getTicketConfigurationCategories.rejected,
           getTicketConfigurationSubCategories.rejected,
+          getTicketConfigurationSubCategoryList.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -131,10 +174,16 @@ const categories = (state: RootState): TicketConfigurationCategories[] =>
 const subCategories = (state: RootState): TicketConfigurationSubCategories[] =>
   state.ticketConfiguration.subCategories
 
+const subCategoryList = (
+  state: RootState,
+): TicketConfigurationSubCategoryList =>
+  state.ticketConfiguration.subCategoryList
+
 const ticketConfigurationThunk = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
   getTicketConfigurationSubCategories,
+  getTicketConfigurationSubCategoryList,
 }
 
 const qualificationCategorySelectors = {
@@ -143,6 +192,7 @@ const qualificationCategorySelectors = {
   departments,
   categories,
   subCategories,
+  subCategoryList,
 }
 
 export const ticketConfigurationService = {

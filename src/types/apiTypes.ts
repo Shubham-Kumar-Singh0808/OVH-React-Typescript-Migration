@@ -212,4 +212,5 @@ export interface TicketConfigurationApi extends ApiBase {
   getDepartments: string
   getCategories: string
   getSubCategories: string
+  getSubCategoryList: string
 }
