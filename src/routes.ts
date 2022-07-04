@@ -41,7 +41,24 @@ const EmpDesignationReport = React.lazy(
 const VisaDetailsList = React.lazy(
   () => import('./pages/EmployeeDirectory/VisaList/VisaList'),
 )
+const EmployeeHandbookSettings = React.lazy(
+  () =>
+    import(
+      './pages/EmployeeHandbook/HandbookSettings/EmployeeHandbookSettings'
+    ),
+)
 
+const TimeInOfficeReport = React.lazy(
+  () =>
+    import('./pages/TimeAndAttendance/TimeInOfficeReport/TimeInOfficeReport'),
+)
+const LeaveSettings = React.lazy(
+  () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
+)
+
+const AddNewEmployee = React.lazy(
+  () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -84,6 +101,26 @@ const routes = [
     path: '/visaDetailsList',
     name: 'Visa Details',
     component: VisaDetailsList,
+  },
+  {
+    path: '/handbooksettings',
+    name: 'Handbook Settings',
+    component: EmployeeHandbookSettings,
+  },
+  {
+    path: '/timeInOfficeReport',
+    name: 'Time in Office Report',
+    component: TimeInOfficeReport,
+  },
+  {
+    path: '/leaveSettings',
+    name: 'Leave Settings',
+    component: LeaveSettings,
+  },
+  {
+    path: '/addNewEmployee',
+    name: 'Add New Employee',
+    component: AddNewEmployee,
   },
 ]
 

@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix error
 import {
+  AddNewEmployeeAPi,
   AuthenticationApi,
   BasicInfoApi,
   CategoryApi,
@@ -10,6 +11,7 @@ import {
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
+  EmployeeHandbookSettingsApi,
   EmployeeListApi,
   EmployeeProjectsApi,
   EmployeeQualificationCategoryApi,
@@ -26,6 +28,8 @@ import {
   EmployeeReportApi,
   EmployeeDesignationReportApi,
   VisaListApi,
+  TimeInOfficeReportApi,
+  EmployeeLeaveSettingsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -54,6 +58,7 @@ export const authenticationApiConfig: AuthenticationApi = {
 export const sideMenuApiConfig: SideMenuApi = {
   getMenuData: apiPrefix + '/roleFeature/menuItems',
 }
+
 export const userRolesConfigurationApiConfig: UserRolesConfigurationApi = {
   getUserRoles: apiPrefix + '/roleFeature/roles',
   isUserRoleExists: apiPrefix + '/roleFeature/isRoleExits',
@@ -161,6 +166,7 @@ export const employeeDesignationListApiConfig: EmployeeDesignationListApi = {
   getEmployeeDesignations: apiPrefix + '/kra/designation',
   addEmployeeDesignation: apiPrefix + '/jobapplicant/addDesignation',
   deleteEmployeeDesignation: apiPrefix + '/jobapplicant/deleteDesignation',
+  getAllEmployeeDesignation: apiPrefix + '/jobapplicant/getAllDesignations',
 }
 
 export const shiftConfigurationApiConfig: ShiftConfigurationApi = {
@@ -222,4 +228,38 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
+}
+
+export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
+  getEmployeeHandbooks: apiPrefix + '/handbookItem/getAll',
+  deleteEmployeeHandbook: apiPrefix + '/handbookItem/delete',
+}
+
+export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
+  getTimeInOfficeEmployeeReport:
+    apiPrefix + '/timeInOffice/getTimeInOfficeEmployeeReport',
+  getTimeInOfficeManagerReport:
+    apiPrefix + '/timeInOffice/getTimeInOfficeManagerReport',
+}
+
+export const employeeLeaveSettingsApiConfig: EmployeeLeaveSettingsApi = {
+  saveLeaveCalendarSettings:
+    apiPrefix + '/leaveSetup/bioAdmin/leaveCalendarSettings',
+  getLeaveCategories: apiPrefix + '/leaveSetup/leaveCategoriesForAdmin',
+  getLeaveCalenderSettings:
+    apiPrefix + '/leaveSetup/bioAdminManager/leaveCalendarSettings',
+  deleteLeaveCategory: apiPrefix + '/leaveSetup/bioAdmin/leaveCategory',
+  addUpdateLeaveCategory: apiPrefix + '/leaveSetup/bioAdmin/leaveCategory',
+}
+
+export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAllHrData: apiPrefix + '/jobapplicant/getAllHrData',
+  getAllReportingManagersData:
+    apiPrefix + '/jobapplicant/getAllReportingManagersData',
+  addNewEmployee: apiPrefix + '/jobapplicant/jobAdmin/addNewEmployee',
+  getAllemploymentType: apiPrefix + '/jobapplicant/getEmploymentType',
+  getAllJobType: apiPrefix + '/jobapplicant/getJobType',
+  getCheckIfUserExist: apiPrefix + '/Employee/isemployeeUsernameexist',
 }

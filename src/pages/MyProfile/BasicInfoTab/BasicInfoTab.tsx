@@ -478,7 +478,7 @@ const BasicInfoTab = (): JSX.Element => {
         className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
         onSubmit={handleSubmitBasicDetails}
       >
-        <CRow className="justify-content-end mt-3">
+        <CRow className="mt-3 justify-content-end">
           <CCol className="text-end" md={4}>
             <DownloadCVButton className="text-decoration-none btn btn-download btn-ovh" />
           </CCol>

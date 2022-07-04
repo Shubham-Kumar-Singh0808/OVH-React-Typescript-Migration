@@ -30,6 +30,7 @@ import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/p
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 
+// eslint-disable-next-line complexity
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,
