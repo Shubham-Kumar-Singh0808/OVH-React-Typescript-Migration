@@ -46,10 +46,7 @@ const LeaveSettings = React.lazy(
 )
 
 const AddNewEmployee = React.lazy(
-  () =>
-    import(
-      './pages/EmployeeDirectory/EmployeesList/AddNewEmployee/NewEmployeeLandingPage'
-    ),
+  () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.

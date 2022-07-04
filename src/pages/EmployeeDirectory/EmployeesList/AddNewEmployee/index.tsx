@@ -25,7 +25,6 @@ import {
   GetList,
   GetProjectManager,
   GetReportManager,
-  ToggleShiftProp,
 } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EmployeeShiftDetails } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
@@ -35,11 +34,11 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { listComposer } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
-const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
+const AddNewEmployee = () => {
   const dispatch = useAppDispatch()
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
-  const [destinationToggle, setDestinationtoggle] = useState<boolean>(false)
+  const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
 
   const initResetFields = {
     hrAssociate: false,
@@ -333,7 +332,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   }
 
   const handleBackButton = () => {
-    setDestinationtoggle(false)
+    setDestinationToggle(false)
     setShiftToggle(false)
   }
 
@@ -421,7 +420,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               list={composedDesignationList}
               setValue={onHandleDesignation}
               value={addEmployee.designation}
-              setToggleShift={() => setDestinationtoggle(!destinationToggle)}
+              setToggleShift={() => setDestinationToggle(!destinationToggle)}
               toggleValue={destinationToggle as boolean}
             />
             <OSelectList
