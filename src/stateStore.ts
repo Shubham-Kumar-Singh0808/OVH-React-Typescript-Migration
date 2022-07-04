@@ -36,6 +36,7 @@ import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfigu
 import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'
 import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
+import timeInOfficeReportReducer from './reducers/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import employeeLeaveSettingsReducer from './reducers/Settings/LeaveSettings/employeeLeaveSettingsSlice'
 
 export const allReducers = {
@@ -64,6 +65,7 @@ export const allReducers = {
   employeeReports: employeeReportReducer,
   employeeDesignationReports: employeeDesignationReportReducer,
   visaList: visaListReducer,
+  timeInOfficeReport: timeInOfficeReportReducer,
   employeeLeaveSettings: employeeLeaveSettingsReducer,
   getEmployeeDepartments: getEmployeeDepartmentsReducer,
   getAllTechnology: technologyReducer,
