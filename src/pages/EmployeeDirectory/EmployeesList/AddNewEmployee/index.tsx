@@ -63,6 +63,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     employmentTypeName: '',
     experience: 0,
     firstName: '',
+    middleName: '',
     gender: '',
     hrAssociate: hrAssociateValue,
     jobTypeName: '',
@@ -124,6 +125,9 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
   const onHandleLastName = (value: string) => {
     setAddEmployee({ ...addEmployee, lastName: value })
   }
+  const onHandleMiddleName = (value: string) => {
+    setAddEmployee({ ...addEmployee, middleName: value })
+  }
   const onHandleFirstName = (value: string) => {
     setAddEmployee({ ...addEmployee, firstName: value })
   }
@@ -134,13 +138,13 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     setAddEmployee({ ...addEmployee, contractExists: value })
   }
   const onHandleWorkfrom = (value: string) => {
-    console.log('value', value)
     setAddEmployee({ ...addEmployee, workStatus: value })
   }
   const onHandleExperience = (value: number) => {
     setAddEmployee({ ...addEmployee, experience: value })
   }
   const onHandleReportManager = (value: GetReportManager) => {
+    setResetField({ ...resetFields, reportManager: false })
     setAddEmployee({
       ...addEmployee,
       manager: {
@@ -150,6 +154,7 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
     })
   }
   const onHandleProjectManager = (value: GetProjectManager) => {
+    setResetField({ ...resetFields, projectManager: false })
     setAddEmployee({
       ...addEmployee,
       projectManager: {
@@ -359,10 +364,10 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               dynamicFormLabelProps={dynamicFormLabelProps}
               firstNameChangeHandler={onHandleFirstName}
               lastNameChangeHandler={onHandleLastName}
-              middleNameChangeHandler={onHandleLastName}
+              middleNameChangeHandler={onHandleMiddleName}
               firstNameValue={addEmployee.firstName || ''}
               lastNameValue={addEmployee.lastName || ''}
-              middleNameValue={addEmployee.firstName || ''}
+              middleNameValue={addEmployee.middleName || ''}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}
@@ -431,11 +436,13 @@ const AddNewEmployee = ({ setToggleShift }: ToggleShiftProp): JSX.Element => {
               dynamicFormLabelProps={dynamicFormLabelProps}
               reportManagersList={reportingManagersList}
               onSelectReportManager={onHandleReportManager}
+              shouldReset={resetFields.reportManager}
             />
             <ProjectManager
               dynamicFormLabelProps={dynamicFormLabelProps}
               managersList={reportingManagersList}
               onSelectManager={onHandleProjectManager}
+              shouldReset={resetFields.projectManager}
             />
             <HRAssociate
               dynamicFormLabelProps={dynamicFormLabelProps}

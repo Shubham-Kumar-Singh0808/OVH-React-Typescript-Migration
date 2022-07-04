@@ -1,5 +1,5 @@
 import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Autocomplete from 'react-autocomplete'
 import {
   GetReportManager,
@@ -11,8 +11,13 @@ const ReportingManager = ({
   dynamicFormLabelProps,
   reportManagersList,
   onSelectReportManager,
+  shouldReset,
 }: ReportManagerProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
+
+  useEffect(() => {
+    if (shouldReset) setAutoCompleteTarget('')
+  }, [shouldReset])
 
   const onHandleSelectReportManager = (fullName: string) => {
     setAutoCompleteTarget(fullName)

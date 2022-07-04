@@ -1,5 +1,5 @@
 import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Autocomplete from 'react-autocomplete'
 import {
   GetProjectManager,
@@ -11,8 +11,14 @@ const ProjectManager = ({
   dynamicFormLabelProps,
   managersList,
   onSelectManager,
+  shouldReset,
 }: ManagerProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
+
+  useEffect(() => {
+    if (shouldReset) setAutoCompleteTarget('')
+  }, [shouldReset])
+
   const onHandleSelectManager = (fullName: string) => {
     setAutoCompleteTarget(fullName)
     const managerName = managersList.find(

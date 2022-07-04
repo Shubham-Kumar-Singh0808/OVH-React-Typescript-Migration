@@ -13,6 +13,7 @@ export type AddEmployee = {
   dob: Date | null
   employmentTypeName: string
   experience: number
+  middleName: string
   firstName: string
   gender: string
   hrAssociate: GetHrData
@@ -187,10 +188,12 @@ export interface HrDataProps extends DynamicFormLabelProps {
 export interface ReportManagerProps extends DynamicFormLabelProps {
   reportManagersList: GetAllReportingManagers[]
   onSelectReportManager: (value: GetReportManager) => void
+  shouldReset: boolean
 }
 export interface ManagerProps extends DynamicFormLabelProps {
   managersList: GetAllReportingManagers[]
   onSelectManager: (value: GetProjectManager) => void
+  shouldReset: boolean
 }
 export interface EmployeeShiftProps extends DynamicFormLabelProps {
   employeeShifts: EmployeeShiftDetails[]
