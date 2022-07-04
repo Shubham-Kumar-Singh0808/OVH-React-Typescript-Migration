@@ -59,3 +59,4 @@ export const reduxServices = {
   employeeHandbookSettings: employeeHandbookSettingService,
   employeeLeaveSettings: employeeLeaveSettingsService,
   technology: technologyService,
+}
