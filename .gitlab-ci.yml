@@ -16,11 +16,8 @@ Initialization:
   only:
     - merge_request
     - develop
-  # only:
-  #   # $CI_COMMIT_BRANCH If changes are pushed to specific branch.
-  #   # $CI_MERGE_REQUEST_TARGET_BRANCH_NAME When merge request is created.
-  #   variables:
-  #     - $CI_COMMIT_BRANCH == "qa" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+    - qa
+    - master
   allow_failure: false
   before_script:
     - echo "Executing build step"
@@ -33,11 +30,8 @@ Test:
   only:
     - merge_request
     - develop
-  # only:
-  #   # $CI_COMMIT_BRANCH If changes are pushed to specific branch.
-  #   # $CI_MERGE_REQUEST_TARGET_BRANCH_NAME When merge request is created.
-  #   variables:
-  #     - $CI_COMMIT_BRANCH == "qa" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+    - qa
+    - master
   allow_failure: false
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   script:
@@ -56,11 +50,8 @@ Sonarqube:
   only:
     - merge_request
     - develop
-  # only:
-  #   # $CI_COMMIT_BRANCH If changes are pushed to specific branch.
-  #   # $CI_MERGE_REQUEST_TARGET_BRANCH_NAME When merge request is created.
-  #   variables:
-  #     - $CI_COMMIT_BRANCH == "qa" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qa" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+    - qa
+    - master
   allow_failure: false
   script:
     - echo "Starting sonar analysis"
