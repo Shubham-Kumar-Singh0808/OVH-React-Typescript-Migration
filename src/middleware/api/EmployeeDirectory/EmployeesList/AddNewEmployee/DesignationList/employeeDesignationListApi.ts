@@ -21,6 +21,18 @@ const getEmployeeDepartments = async (): Promise<
   return response.data
 }
 
+const getAllEmployeeDesignations = async (): Promise<
+  EmployeeDesignation[] | undefined
+> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeDesignationListApiConfig.getAllEmployeeDesignation,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const getEmployeeDesignations = async (
   deptId: number,
 ): Promise<EmployeeDesignation[] | undefined> => {
@@ -71,6 +83,7 @@ const deleteEmployeeDesignation = async (
 const employeeDesignationListApi = {
   getEmployeeDepartments,
   getEmployeeDesignations,
+  getAllEmployeeDesignations,
   addEmployeeDesignation,
   deleteEmployeeDesignation,
 }

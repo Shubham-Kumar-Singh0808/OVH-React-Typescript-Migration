@@ -130,6 +130,7 @@ export interface EmployeeDesignationListApi extends ApiBase {
   getEmployeeDesignations: string
   addEmployeeDesignation: string
   deleteEmployeeDesignation: string
+  getAllEmployeeDesignation: string
 }
 
 export interface ShiftConfigurationApi extends ApiBase {
@@ -190,4 +191,14 @@ export interface EmployeeLeaveSettingsApi extends ApiBase {
   getLeaveCalenderSettings: string
   deleteLeaveCategory: string
   addUpdateLeaveCategory: string
+}
+export interface AddNewEmployeeAPi extends ApiBase {
+  getEmployeeDepartments: string
+  getEmpCountries: string
+  getAllHrData: string
+  getAllReportingManagersData: string
+  addNewEmployee: string
+  getAllemploymentType: string
+  getAllJobType: string
+  getCheckIfUserExist: string
 }
