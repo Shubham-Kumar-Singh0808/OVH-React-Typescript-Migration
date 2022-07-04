@@ -283,7 +283,6 @@ const AddNewEmployee = (): JSX.Element => {
     reduxServices.userRolesAndPermissions.selectors.userRoles,
   )
   const technologyList = useTypedSelector(
-    // reduxServices.newEmployee.technologyService.selectors.technologies,
     reduxServices.technology.selectors.technologies,
   )
   const departmentsList = useTypedSelector(
