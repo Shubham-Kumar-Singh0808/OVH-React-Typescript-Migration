@@ -14,10 +14,6 @@ const EmployeeGeneralInformation = (): JSX.Element => {
     ),
   )
 
-  const browserLocale = useTypedSelector(
-    reduxServices.app.selectors.currentBroswerLocale,
-  )
-
   return (
     <>
       <CCardHeader className="mt-10 fw-semibold">
@@ -65,7 +61,6 @@ const EmployeeGeneralInformation = (): JSX.Element => {
             <dd>
               {localeDateFormat(
                 employeeGeneralInformation?.realBirthday as string,
-                browserLocale,
               )}
             </dd>
             {employeeGeneralInformation?.maritalStatus && (

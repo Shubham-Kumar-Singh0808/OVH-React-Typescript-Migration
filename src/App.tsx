@@ -26,14 +26,6 @@ const App = (): JSX.Element => {
   )
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    const deviceLocale: string =
-      navigator.languages && navigator.languages.length
-        ? navigator.languages[0]
-        : navigator.language
-    dispatch(reduxServices.app.actions.setBroswerLocale(deviceLocale))
-  })
-
   const loadState = useCallback(() => {
     const employeeNameFromStorage = localStorage.getItem('employeeName')
     const employeeIdFromStorage = localStorage.getItem('employeeId')

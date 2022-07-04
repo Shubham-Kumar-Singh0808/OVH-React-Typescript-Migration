@@ -18,7 +18,6 @@ import {
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
-import el from 'date-fns/locale/el' // the locale you want
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
@@ -37,7 +36,6 @@ import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  registerLocale('el', el)
 
   const [isViewingAnotherEmployee] = useSelectedEmployee()
   const employeeBasicInformation = useTypedSelector((state) =>
@@ -52,10 +50,6 @@ const BasicInfoTab = (): JSX.Element => {
   const authenticatedToken = useTypedSelector(
     reduxServices.authentication.selectors.selectToken,
   )
-  const browserLocale = useTypedSelector(
-    reduxServices.app.selectors.currentBroswerLocale,
-  )
-  console.log(browserLocale)
 
   const selectedUserBasicInformation = {
     id: employeeBasicInformation.id,
@@ -102,6 +96,17 @@ const BasicInfoTab = (): JSX.Element => {
     passportIssuedDate: employeeBasicInformation?.passportIssuedDate,
     passportExpDate: employeeBasicInformation?.passportExpDate,
   }
+
+  // dynamically import the locale date-fns
+  useEffect(() => {
+    const importLocale = async () => {
+      const localeToSet = await import(
+        `date-fns/locale/${navigator.languages[0]}/index`
+      )
+      registerLocale(navigator.languages[0], localeToSet)
+    }
+    importLocale()
+  }, [])
 
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
   const [realBirthdayShown, setRealBirthdayShown] = useState<boolean>(false)
@@ -674,7 +679,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
-              // locale="el"
+              locale={navigator.languages[0] || navigator.language}
               id="employeeOfficialBirthday"
               className="form-control form-control-sm"
               maxDate={new Date()}
