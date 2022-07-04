@@ -192,7 +192,7 @@ const AddNewEmployee = (): JSX.Element => {
     dispatch(
       reduxServices.newEmployee.employeeDepartmentsService.getEmployeeDepartments(),
     )
-    dispatch(reduxServices.newEmployee.technologyService.getAllTechnology())
+    dispatch(reduxServices.technology.getAllTechnology())
     dispatch(reduxServices.newEmployee.countryService.getAllCountries())
     dispatch(reduxServices.newEmployee.hrDataService.getAllHrData())
     dispatch(
@@ -283,7 +283,8 @@ const AddNewEmployee = (): JSX.Element => {
     reduxServices.userRolesAndPermissions.selectors.userRoles,
   )
   const technologyList = useTypedSelector(
-    reduxServices.newEmployee.technologyService.selectors.technologies,
+    // reduxServices.newEmployee.technologyService.selectors.technologies,
+    reduxServices.technology.selectors.technologies,
   )
   const departmentsList = useTypedSelector(
     reduxServices.newEmployee.employeeDepartmentsService.selectors
