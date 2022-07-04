@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react'
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import {
-  EmployeeHandbook,
+  AddNewHandbookPage,
   EmployeeHandbookPageProps,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -25,25 +25,61 @@ function AddNewHandbook({
   confirmButtonText,
   backButtonHandler,
 }: EmployeeHandbookPageProps): JSX.Element {
-  const initialHandbookDetails = {} as EmployeeHandbook
+  const initialHandbookDetails = {} as AddNewHandbookPage
+
   const [showEditor, setShowEditor] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [allChecked, setAllChecked] = useState<boolean>(false)
   const [isChecked, setIsChecked] = useState([])
   const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
 
-  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAllChecked(e.target.checked)
-  }
-
-  const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked({ ...isChecked, [e.target.name]: e.target.checked })
-  }
-
   const dispatch = useAppDispatch()
   const employeeCountries = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
+
+  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = e.target
+    setAllChecked(e.target.checked)
+    console.log(name, value)
+
+    if (checked) {
+      setAddNewPage((prevState) => {
+        return { ...prevState, ...{ list: [1, 2, 3, 4, 5] } }
+      })
+    } else {
+      setAddNewPage((prevState) => {
+        return { ...prevState, ...{ list: [] } }
+      })
+    }
+  }
+
+  const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target
+    const value1 = +value
+    if (addNewPage.list?.includes(value1) && !checked) {
+      setAllChecked(checked)
+
+      const list = [...addNewPage.list]
+      const index = list.indexOf(value1)
+      if (index !== undefined) {
+        list.splice(index, 1)
+        setAddNewPage((prevState) => {
+          return { ...prevState, ...{ list: list } }
+        })
+      }
+    } else if (checked && !addNewPage.list?.includes(value1)) {
+      console.log(checked)
+
+      const list = addNewPage.list || []
+      list?.push(value1)
+      if (list.length === 5) setAllChecked(checked)
+      setAddNewPage((prevState) => {
+        return { ...prevState, ...{ list: list } }
+      })
+    }
+  }
+
   useEffect(() => {
     if (
       addNewPage.title &&
@@ -71,8 +107,7 @@ function AddNewHandbook({
       title: '',
       pageName: '',
       displayOrder: 0,
-      country: '',
-      handCountry: [],
+      list: [],
       description: '',
     })
   }
@@ -100,11 +135,8 @@ function AddNewHandbook({
   )
 
   const handleAddNewHandbookPage = async () => {
-    const prepareObject = {
-      ...addNewPage,
-    }
     const addNewHandbookResultAction = await dispatch(
-      reduxServices.employeeHandbookSettings.addNewHandbook(prepareObject),
+      reduxServices.employeeHandbookSettings.addNewHandbook(addNewPage),
     )
 
     if (
@@ -220,9 +252,7 @@ function AddNewHandbook({
               )}
             >
               Country:
-              <span
-                className={addNewPage.country ? 'text-white' : 'text-danger'}
-              >
+              <span className={addNewPage.list ? 'text-white' : 'text-danger'}>
                 *
               </span>
             </CFormLabel>
@@ -246,7 +276,10 @@ function AddNewHandbook({
                         className="mt-1"
                         id="trigger"
                         label={country.name}
-                        checked={allChecked ? true : isChecked[country.id]}
+                        checked={
+                          addNewPage.list?.includes(country.id) ? true : false
+                        }
+                        value={country.id}
                         onChange={handleSingleCheck}
                       />
                     </CCol>
@@ -288,6 +321,7 @@ function AddNewHandbook({
                 className="btn-ovh me-1 text-white"
                 color="success"
                 disabled={!isButtonEnabled}
+                onClick={handleAddNewHandbookPage}
               >
                 {confirmButtonText}
               </CButton>

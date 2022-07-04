@@ -7,7 +7,6 @@ import {
   EmployeeCountry,
   EmployeeHandbookListApiProps,
   EmployeeHandbookListResponse,
-  CountryList,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 import axios from 'axios'
