@@ -32,6 +32,7 @@ const UserNameEmail = ({
         <CCol sm={3}>
           <CFormInput
             id="username"
+            data-testid="user-input"
             size="sm"
             type="text"
             name="username"

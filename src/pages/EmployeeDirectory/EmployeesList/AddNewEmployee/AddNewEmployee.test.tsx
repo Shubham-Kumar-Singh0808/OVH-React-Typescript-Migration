@@ -17,11 +17,6 @@ const ReduxProvider = ({
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
 
-const expectComponentToBeRendered = () => {
-  expect(screen.getByRole('button')).toBeInTheDocument()
-  expect(screen.getByRole('button')).toBeDisabled()
-}
-
 describe('Add New Employee Testing', () => {
   test('should render add new employee form without crashing', () => {
     render(
@@ -66,7 +61,7 @@ describe('Add New Employee Testing', () => {
         <AddNewEmployee />
       </ReduxProvider>,
     )
-    expectComponentToBeRendered()
+
     expect(screen.getByTestId('add-new-employee')).toBeDisabled()
   })
 
@@ -77,9 +72,7 @@ describe('Add New Employee Testing', () => {
       </ReduxProvider>,
     )
 
-    expectComponentToBeRendered()
-
-    userEvent.type(screen.getByRole('textbox'), 'test input..')
+    userEvent.type(screen.getByTestId('user-input'), 'test input..')
     expect(screen.getByTestId('clear-new-employee')).not.toBeDisabled()
   })
 })
