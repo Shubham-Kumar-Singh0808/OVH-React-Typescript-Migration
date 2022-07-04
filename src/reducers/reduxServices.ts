@@ -26,6 +26,7 @@ import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguratio
 import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
 import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
+import { timeInOfficeReportService } from './TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
 
 export const reduxServices = {
@@ -55,6 +56,7 @@ export const reduxServices = {
   employeeReports: employeeReportService,
   employeeDesignationReports: employeeDesigationReportService,
   visaList: visaListService,
+  timeInOfficeReport: timeInOfficeReportService,
   employeeLeaveSettings: employeeLeaveSettingsService,
   technology: technologyService,
   country: countryService,

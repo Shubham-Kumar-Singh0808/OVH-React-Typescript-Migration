@@ -41,6 +41,10 @@ const EmpDesignationReport = React.lazy(
 const VisaDetailsList = React.lazy(
   () => import('./pages/EmployeeDirectory/VisaList/VisaList'),
 )
+const TimeInOfficeReport = React.lazy(
+  () =>
+    import('./pages/TimeAndAttendance/TimeInOfficeReport/TimeInOfficeReport'),
+)
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
@@ -90,6 +94,11 @@ const routes = [
     path: '/visaDetailsList',
     name: 'Visa Details',
     component: VisaDetailsList,
+  },
+  {
+    path: '/timeInOfficeReport',
+    name: 'Time in Office Report',
+    component: TimeInOfficeReport,
   },
   {
     path: '/leaveSettings',
