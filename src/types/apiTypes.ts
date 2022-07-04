@@ -185,6 +185,11 @@ export interface VisaListApi extends ApiBase {
   exportVisaList: string
 }
 
+export interface EmployeeHandbookSettingsApi extends ApiBase {
+  getEmployeeHandbooks: string
+  deleteEmployeeHandbook: string
+}
+
 export interface TimeInOfficeReportApi extends ApiBase {
   getTimeInOfficeEmployeeReport: string
   getTimeInOfficeManagerReport: string

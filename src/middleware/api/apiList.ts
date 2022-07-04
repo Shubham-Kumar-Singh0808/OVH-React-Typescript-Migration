@@ -11,6 +11,7 @@ import {
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
+  EmployeeHandbookSettingsApi,
   EmployeeListApi,
   EmployeeProjectsApi,
   EmployeeQualificationCategoryApi,
@@ -227,6 +228,11 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
+}
+
+export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
+  getEmployeeHandbooks: apiPrefix + '/handbookItem/getAll',
+  deleteEmployeeHandbook: apiPrefix + '/handbookItem/delete',
 }
 
 export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
