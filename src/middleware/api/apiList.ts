@@ -29,6 +29,7 @@ import {
   VisaListApi,
   TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
+  TicketConfigurationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -256,4 +257,10 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getAllemploymentType: apiPrefix + '/jobapplicant/getEmploymentType',
   getAllJobType: apiPrefix + '/jobapplicant/getJobType',
   getCheckIfUserExist: apiPrefix + '/Employee/isemployeeUsernameexist',
+}
+
+export const ticketConfigurationApiConfig: TicketConfigurationApi = {
+  getDepartments: apiPrefix + '/supportManagement/getDepartmentNameList',
+  getCategories: apiPrefix + '/supportManagement/departmentCategoryList',
+  getSubCategories: apiPrefix + '/supportManagement/subCategoryList',
 }

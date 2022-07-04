@@ -207,3 +207,9 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllJobType: string
   getCheckIfUserExist: string
 }
+
+export interface TicketConfigurationApi extends ApiBase {
+  getDepartments: string
+  getCategories: string
+  getSubCategories: string
+}
