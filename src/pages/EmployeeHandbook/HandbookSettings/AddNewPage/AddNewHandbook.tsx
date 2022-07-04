@@ -7,18 +7,24 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
-
 import React, { useEffect, useState } from 'react'
+// eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import {
   AddNewHandbookPage,
+  EmployeeCountry,
   EmployeeHandbookPageProps,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import {
+  textDanger,
+  textWhite,
+  textLabel,
+} from '../../../../constant/ClassName'
 
 function AddNewHandbook({
   headerTitle,
@@ -32,6 +38,8 @@ function AddNewHandbook({
   const [allChecked, setAllChecked] = useState<boolean>(false)
   const [isChecked, setIsChecked] = useState([])
   const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
+  const countryNames = {} as EmployeeCountry[]
+  const [country, setCountry] = useState(countryNames)
 
   const dispatch = useAppDispatch()
   const employeeCountries = useTypedSelector(
@@ -41,8 +49,6 @@ function AddNewHandbook({
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target
     setAllChecked(e.target.checked)
-    console.log(name, value)
-
     if (checked) {
       setAddNewPage((prevState) => {
         return { ...prevState, ...{ list: [1, 2, 3, 4, 5] } }
@@ -56,26 +62,26 @@ function AddNewHandbook({
 
   const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target
+    console.log(value, checked)
     const value1 = +value
     if (addNewPage.list?.includes(value1) && !checked) {
       setAllChecked(checked)
-
       const list = [...addNewPage.list]
       const index = list.indexOf(value1)
       if (index !== undefined) {
         list.splice(index, 1)
         setAddNewPage((prevState) => {
-          return { ...prevState, ...{ list: list } }
+          return { ...prevState, ...{ list } }
         })
       }
     } else if (checked && !addNewPage.list?.includes(value1)) {
       console.log(checked)
-
+      // setCountry({...country,})
       const list = addNewPage.list || []
       list?.push(value1)
       if (list.length === 5) setAllChecked(checked)
       setAddNewPage((prevState) => {
-        return { ...prevState, ...{ list: list } }
+        return { ...prevState, ...{ list } }
       })
     }
   }
@@ -113,8 +119,8 @@ function AddNewHandbook({
   }
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
-      htmlFor: htmlFor,
-      className: className,
+      htmlFor,
+      className,
     }
   }
 
@@ -123,7 +129,7 @@ function AddNewHandbook({
   }, [dispatch])
   const handleDescription = (description: string) => {
     setAddNewPage((prevState) => {
-      return { ...prevState, ...{ description: description } }
+      return { ...prevState, ...{ description } }
     })
   }
 
@@ -170,14 +176,9 @@ function AddNewHandbook({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...dynamicFormLabelProps(
-                'title',
-                'col-sm-3 col-form-label text-end',
-              )}
-            >
+            <CFormLabel {...dynamicFormLabelProps('title', textLabel)}>
               Title:
-              <span className={addNewPage.title ? 'text-white' : 'text-danger'}>
+              <span className={addNewPage.title ? textWhite : textDanger}>
                 *
               </span>
             </CFormLabel>
@@ -192,16 +193,9 @@ function AddNewHandbook({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...dynamicFormLabelProps(
-                'pageName',
-                'col-sm-3 col-form-label text-end',
-              )}
-            >
+            <CFormLabel {...dynamicFormLabelProps('pageName', textLabel)}>
               Page Name:
-              <span
-                className={addNewPage.pageName ? 'text-white' : 'text-danger'}
-              >
+              <span className={addNewPage.pageName ? textWhite : textDanger}>
                 *
               </span>
             </CFormLabel>
@@ -216,17 +210,10 @@ function AddNewHandbook({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...dynamicFormLabelProps(
-                'displayOrder',
-                'col-sm-3 col-form-label text-end',
-              )}
-            >
+            <CFormLabel {...dynamicFormLabelProps('displayOrder', textLabel)}>
               Display Order:
               <span
-                className={
-                  addNewPage.displayOrder ? 'text-white' : 'text-danger'
-                }
+                className={addNewPage.displayOrder ? textWhite : textDanger}
               >
                 *
               </span>
@@ -245,14 +232,9 @@ function AddNewHandbook({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...dynamicFormLabelProps(
-                'country',
-                'col-sm-3 col-form-label text-end',
-              )}
-            >
+            <CFormLabel {...dynamicFormLabelProps('country', textLabel)}>
               Country:
-              <span className={addNewPage.list ? 'text-white' : 'text-danger'}>
+              <span className={addNewPage.list ? textWhite : textDanger}>
                 *
               </span>
             </CFormLabel>
@@ -276,9 +258,7 @@ function AddNewHandbook({
                         className="mt-1"
                         id="trigger"
                         label={country.name}
-                        checked={
-                          addNewPage.list?.includes(country.id) ? true : false
-                        }
+                        checked={!!addNewPage.list?.includes(country.id)}
                         value={country.id}
                         onChange={handleSingleCheck}
                       />
@@ -291,11 +271,7 @@ function AddNewHandbook({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Description:{' '}
-              <span
-                className={
-                  addNewPage.description ? 'text-white' : 'text-danger'
-                }
-              >
+              <span className={addNewPage.description ? textWhite : textDanger}>
                 *
               </span>
             </CFormLabel>

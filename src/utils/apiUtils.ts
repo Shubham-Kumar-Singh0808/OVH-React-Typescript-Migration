@@ -35,7 +35,7 @@ export const getAuthenticatedRequestConfig = ({
 }: {
   url: string
   method: Method
-  params?: { [key: string]: string | number | boolean | undefined }
+  params?: { [key: string]: string | number | boolean | undefined | string[] }
   data?:
     | { [key: string]: string | number | unknown }
     | unknown
@@ -47,7 +47,7 @@ export const getAuthenticatedRequestConfig = ({
   url: string
   method: Method
   headers: { tenantKey: string; [key: string]: string | number }
-  params?: { [key: string]: string | number | boolean | undefined }
+  params?: { [key: string]: string | number | boolean | undefined | string[] }
   data?:
     | { [key: string]: string | number | unknown }
     | unknown

@@ -24,7 +24,7 @@ export type AddNewHandbookPage = {
   displayOrder: number
   pageName: string
   title: string
-  list?: number[]
+  list: number[]
 }
 
 // export type CountryList = {

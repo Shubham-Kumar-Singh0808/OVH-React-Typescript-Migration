@@ -1,8 +1,7 @@
-import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { AppDispatch, RootState } from '../../../stateStore'
 import employeeHandbookSettingsApi from '../../../middleware/api/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsApi'
 import {

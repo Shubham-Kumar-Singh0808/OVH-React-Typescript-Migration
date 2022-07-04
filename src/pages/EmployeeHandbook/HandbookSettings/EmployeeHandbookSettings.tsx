@@ -1,13 +1,12 @@
 import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-
-import { ApiLoadingState } from '../../../middleware/api/apiList'
+import AddNewHandbook from './AddNewPage/AddNewHandbook'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import AddNewHandbook from './AddNewPage/AddNewHandbook'
 
 const EmployeeHandbookSettings = (): JSX.Element => {
   const [toggle, setToggle] = useState('')

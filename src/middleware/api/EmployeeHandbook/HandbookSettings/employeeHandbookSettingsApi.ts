@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeHandbookSettingsApiConfig,
@@ -8,8 +9,6 @@ import {
   EmployeeHandbookListApiProps,
   EmployeeHandbookListResponse,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeeHandbooks = async (
@@ -34,10 +33,10 @@ const deleteEmployeeHandbook = async (
     url: employeeHandbookSettingsApiConfig.deleteEmployeeHandbook,
     method: AllowedHttpMethods.delete,
     params: {
-      bookId: bookId,
+      bookId,
     },
     data: {
-      bookId: bookId,
+      bookId,
     },
   })
   const response = await axios(requestConfig)
@@ -58,16 +57,25 @@ const getEmployeeCountries = async (): Promise<
 const addNewHandbook = async (
   prepareObject: AddNewHandbookPage,
 ): Promise<number | undefined> => {
-  const { list, ...restPrepareObject } = prepareObject
+  // const { list, ...restPrepareObject } = prepareObject
+  const newVal = prepareObject.list.map((val) => `list=${val}`)
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeHandbookSettingsApiConfig.addNewHandbook,
     method: AllowedHttpMethods.post,
-    params: prepareObject.list?.reduce((acc, each, index) => {
-      // const a = `list${each}`
-      acc['list'] = each
-      return acc
-    }, {} as any),
-    data: restPrepareObject,
+    params: {
+      list: newVal,
+    },
+    // params: prepareObject.list?.reduce((acc, each, index) => {
+    //   // const a = `list${each}`
+    //   acc['list'] = each
+    //   return acc
+    // }, {} as any),
+    data: {
+      description: prepareObject.description,
+      displayOrder: prepareObject.displayOrder,
+      pageName: prepareObject.pageName,
+      title: prepareObject.title,
+    },
   })
 
   const response = await axios(requestConfig)
