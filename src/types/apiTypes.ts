@@ -190,6 +190,11 @@ export interface EmployeeHandbookSettingsApi extends ApiBase {
   deleteEmployeeHandbook: string
 }
 
+export interface TimeInOfficeReportApi extends ApiBase {
+  getTimeInOfficeEmployeeReport: string
+  getTimeInOfficeManagerReport: string
+}
+
 export interface EmployeeLeaveSettingsApi extends ApiBase {
   saveLeaveCalendarSettings: string
   getLeaveCategories: string

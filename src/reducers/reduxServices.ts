@@ -27,6 +27,7 @@ import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
 import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
 import { employeeHandbookSettingService } from './EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
+import { timeInOfficeReportService } from './TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
 
 export const reduxServices = {
@@ -57,6 +58,7 @@ export const reduxServices = {
   employeeDesignationReports: employeeDesigationReportService,
   visaList: visaListService,
   employeeHandbookSettings: employeeHandbookSettingService,
+  timeInOfficeReport: timeInOfficeReportService,
   employeeLeaveSettings: employeeLeaveSettingsService,
   technology: technologyService,
 }
