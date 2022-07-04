@@ -39,6 +39,7 @@ const AddNewEmployee = (): JSX.Element => {
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
+  const [isViewBtnEnabled, setViewBtnEnabled] = useState<boolean>(false)
 
   const initResetFields = {
     hrAssociate: false,
@@ -203,6 +204,42 @@ const AddNewEmployee = (): JSX.Element => {
     dispatch(reduxServices.newEmployee.jobTypeService.getAllJobType())
     dispatch(reduxServices.employeeDesignation.getAllEmployeeDesignations())
   }, [dispatch])
+
+  useEffect(() => {
+    if (
+      addEmployee.country !== '' &&
+      addEmployee.dateOfJoining != null &&
+      addEmployee.departmentName !== '' &&
+      addEmployee.designation !== '' &&
+      addEmployee.dob !== null &&
+      addEmployee.employmentTypeName !== '' &&
+      addEmployee.firstName !== '' &&
+      addEmployee.gender !== '' &&
+      addEmployee.lastName !== '' &&
+      addEmployee.middleName !== '' &&
+      addEmployee.hrAssociate.fullName != null &&
+      addEmployee.jobTypeName !== '' &&
+      addEmployee.manager.fullName != null &&
+      addEmployee.projectManager.fullName != null &&
+      addEmployee.role !== '' &&
+      addEmployee.technology !== '' &&
+      addEmployee.timeSlotDTO.name != null &&
+      addEmployee.userName !== '' &&
+      addEmployee.workStatus !== ''
+    ) {
+      const hasContract =
+        addEmployee.contractStartDate !== null &&
+        addEmployee.contractEndDate !== null
+
+      if (addEmployee.contractExists === 'true') {
+        setViewBtnEnabled(hasContract)
+      } else {
+        setViewBtnEnabled(true)
+      }
+    } else {
+      setViewBtnEnabled(false)
+    }
+  }, [addEmployee])
 
   const onHandleAllowedUser = async (username: string) => {
     if (username === '' || username == null) return
@@ -469,7 +506,7 @@ const AddNewEmployee = (): JSX.Element => {
               dynamicFormLabelProps={dynamicFormLabelProps}
               list={employeeShifts}
               setValue={onHandleShift}
-              value={addEmployee.timeSlotDTO?.name}
+              value={addEmployee.timeSlotDTO.name}
               setToggleShift={() => setShiftToggle(!shiftToggle)}
               toggleValue={shiftToggle as boolean}
             />
@@ -492,6 +529,7 @@ const AddNewEmployee = (): JSX.Element => {
                 <CButton
                   className="btn-ovh me-1"
                   color="success"
+                  disabled={!isViewBtnEnabled}
                   data-testid="add-new-employee"
                   onClick={handleAddEmployee}
                 >
