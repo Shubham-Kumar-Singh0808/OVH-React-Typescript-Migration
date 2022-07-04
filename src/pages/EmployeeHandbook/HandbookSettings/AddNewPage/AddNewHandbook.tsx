@@ -21,9 +21,9 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import {
-  textDanger,
-  textWhite,
-  textLabel,
+  TextDanger,
+  TextWhite,
+  TextLabelProps,
 } from '../../../../constant/ClassName'
 
 function AddNewHandbook({
@@ -47,7 +47,7 @@ function AddNewHandbook({
   )
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, checked } = e.target
+    const { checked } = e.target
     setAllChecked(e.target.checked)
     if (checked) {
       setAddNewPage((prevState) => {
@@ -100,6 +100,13 @@ function AddNewHandbook({
     }
   }, [addNewPage])
 
+  console.log(addNewPage.list)
+
+  // const values = []
+  // for (let i = 0, l = addNewPage.list.length; i < l; i++) {
+  //   values.push(`list: ${addNewPage.list[i]}`)
+  // }
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
 
@@ -176,9 +183,9 @@ function AddNewHandbook({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('title', textLabel)}>
+            <CFormLabel {...dynamicFormLabelProps('title', TextLabelProps)}>
               Title:
-              <span className={addNewPage.title ? textWhite : textDanger}>
+              <span className={addNewPage.title ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -193,9 +200,9 @@ function AddNewHandbook({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('pageName', textLabel)}>
+            <CFormLabel {...dynamicFormLabelProps('pageName', TextLabelProps)}>
               Page Name:
-              <span className={addNewPage.pageName ? textWhite : textDanger}>
+              <span className={addNewPage.pageName ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -210,10 +217,12 @@ function AddNewHandbook({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('displayOrder', textLabel)}>
+            <CFormLabel
+              {...dynamicFormLabelProps('displayOrder', TextLabelProps)}
+            >
               Display Order:
               <span
-                className={addNewPage.displayOrder ? textWhite : textDanger}
+                className={addNewPage.displayOrder ? TextWhite : TextDanger}
               >
                 *
               </span>
@@ -232,9 +241,9 @@ function AddNewHandbook({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('country', textLabel)}>
+            <CFormLabel {...dynamicFormLabelProps('country', TextLabelProps)}>
               Country:
-              <span className={addNewPage.list ? textWhite : textDanger}>
+              <span className={addNewPage.list ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -269,9 +278,9 @@ function AddNewHandbook({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel className={TextLabelProps}>
               Description:{' '}
-              <span className={addNewPage.description ? textWhite : textDanger}>
+              <span className={addNewPage.description ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>

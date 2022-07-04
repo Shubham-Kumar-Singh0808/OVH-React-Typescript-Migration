@@ -58,12 +58,13 @@ const addNewHandbook = async (
   prepareObject: AddNewHandbookPage,
 ): Promise<number | undefined> => {
   // const { list, ...restPrepareObject } = prepareObject
-  const newVal = prepareObject.list.map((val) => `list=${val}`)
+  const newVal = prepareObject.list.map((val) => `list${val}`)
+  console.log(newVal)
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeHandbookSettingsApiConfig.addNewHandbook,
     method: AllowedHttpMethods.post,
     params: {
-      list: newVal,
+      // list: newVal,
     },
     // params: prepareObject.list?.reduce((acc, each, index) => {
     //   // const a = `list${each}`
