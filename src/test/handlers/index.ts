@@ -6,6 +6,7 @@ import { employeeShiftsHandlers } from './employeeShiftsHandlers'
 import { generalInformationHandlers } from './generalInformationHandlers'
 import { loginHandlers } from './loginHandlers'
 import { skillListHandlers } from './skillListHandlers'
+import { userAccessToFeaturesHandlers } from './userAccessToFeaturesHandlers'
 import { userRolesAndPermissionsHandlers } from './userRolesAndPermissionsHandlers'
 
 export const handlers = [
@@ -18,5 +19,6 @@ export const handlers = [
   ...employeeListHandlers,
   ...certificateListHandlers,
   ...attendanceReportHandlers,
+  ...userAccessToFeaturesHandlers,
   // add your handler here
 ]
