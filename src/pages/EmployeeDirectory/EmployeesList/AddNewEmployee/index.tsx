@@ -34,7 +34,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { listComposer } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
-const AddNewEmployee = () => {
+const AddNewEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)

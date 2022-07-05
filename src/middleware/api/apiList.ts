@@ -28,6 +28,7 @@ import {
   EmployeeReportApi,
   EmployeeDesignationReportApi,
   VisaListApi,
+  TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
 } from '../../types/apiTypes'
 
@@ -234,6 +235,13 @@ export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   deleteEmployeeHandbook: apiPrefix + '/handbookItem/delete',
   addNewHandbook: apiPrefix + '/handbookItem/add',
   getEmployeeCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+}
+
+export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
+  getTimeInOfficeEmployeeReport:
+    apiPrefix + '/timeInOffice/getTimeInOfficeEmployeeReport',
+  getTimeInOfficeManagerReport:
+    apiPrefix + '/timeInOffice/getTimeInOfficeManagerReport',
 }
 
 export const employeeLeaveSettingsApiConfig: EmployeeLeaveSettingsApi = {

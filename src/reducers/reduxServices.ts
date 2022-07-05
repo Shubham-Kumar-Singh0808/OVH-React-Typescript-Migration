@@ -5,7 +5,6 @@ import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformati
 import { categoryService } from './MyProfile/Categories/categorySlice'
 import { certificateListService } from './EmployeeDirectory/CertificatesList/certificatesListSlice'
 import { certificateTypeService } from './EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
-import { countryService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/countriesSlice'
 import { employeeAssetsService } from './MyProfile/MyAssetsTab/employeeAssetsSlice'
 import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { employeeDesignationListService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'
@@ -27,7 +26,9 @@ import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
 import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
 import { employeeHandbookSettingService } from './EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
+import { timeInOfficeReportService } from './TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
+import { countryService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/countriesSlice'
 
 export const reduxServices = {
   app: appService,
@@ -60,4 +61,5 @@ export const reduxServices = {
   employeeLeaveSettings: employeeLeaveSettingsService,
   technology: technologyService,
   country: countryService,
+  timeInOfficeReport: timeInOfficeReportService,
 }
