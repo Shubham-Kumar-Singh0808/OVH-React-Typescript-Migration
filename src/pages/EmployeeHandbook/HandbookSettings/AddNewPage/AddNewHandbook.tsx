@@ -38,7 +38,7 @@ function AddNewHandbook({
   const [isChecked, setIsChecked] = useState([])
   const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
   const [error, setError] = useState<boolean>(true)
-  const [isDisplayOrderExist, setIsDisplayOrderExist] = useState<boolean>(true)
+  const [isDisplayOrderExist, setIsDisplayOrderExist] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
   const employeeHandbooks = useTypedSelector(
@@ -48,11 +48,6 @@ function AddNewHandbook({
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
 
-  const checkForDuplicateOrder = (id: string) => {
-    employeeHandbooks.map((val) => {
-      return val.displayOrder === Number(id)
-    })
-  }
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target
     setAllChecked(e.target.checked)
@@ -113,10 +108,25 @@ function AddNewHandbook({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'displayOrder') {
-      const checkResult = checkForDuplicateOrder(value)
+      const newValue = value.replace(/[\D]/gi, '')
+      setAddNewPage((prevState) => {
+        return { ...prevState, ...{ [name]: Number(newValue) } }
+      })
+      if (displayOrderExists(value)) {
+        setIsDisplayOrderExist(true)
+      } else {
+        setIsDisplayOrderExist(false)
+      }
+    } else {
+      setAddNewPage((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
     }
-    setAddNewPage((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
+  }
+
+  const displayOrderExists = (id: string) => {
+    return employeeHandbooks.find((currentHandBook) => {
+      return currentHandBook.displayOrder === Number(id)
     })
   }
 
@@ -129,11 +139,9 @@ function AddNewHandbook({
       description: '',
     })
   }
-  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
-    return {
-      htmlFor,
-      className,
-    }
+  const formLabelProps = {
+    htmlFor: 'inputNewHandbook',
+    className: 'col-form-label category-label',
   }
 
   useEffect(() => {
@@ -193,7 +201,10 @@ function AddNewHandbook({
         </CRow>
         <CForm>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('title', TextLabelProps)}>
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
               Title:
               <span className={addNewPage.title ? TextWhite : TextDanger}>
                 *
@@ -210,7 +221,10 @@ function AddNewHandbook({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('pageName', TextLabelProps)}>
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
               Page Name:
               <span className={addNewPage.pageName ? TextWhite : TextDanger}>
                 *
@@ -228,7 +242,8 @@ function AddNewHandbook({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel
-              {...dynamicFormLabelProps('displayOrder', TextLabelProps)}
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
             >
               Display Order:
               <span
@@ -239,7 +254,7 @@ function AddNewHandbook({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                type="number"
+                type="text"
                 maxLength={2}
                 min={1}
                 max={99}
@@ -256,7 +271,10 @@ function AddNewHandbook({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('country', TextLabelProps)}>
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
               Country:
               <span className={addNewPage.list ? TextWhite : TextDanger}>
                 *
