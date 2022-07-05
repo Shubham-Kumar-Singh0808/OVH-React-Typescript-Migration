@@ -190,6 +190,7 @@ export interface EmployeeHandbookSettingsApi extends ApiBase {
   addNewHandbook: string
   deleteEmployeeHandbook: string
   getEmployeeCountries: string
+  getTotalHandbookList: string
 }
 
 export interface TimeInOfficeReportApi extends ApiBase {

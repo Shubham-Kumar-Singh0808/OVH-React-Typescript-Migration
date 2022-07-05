@@ -8,6 +8,7 @@ import {
   EmployeeCountry,
   EmployeeHandbookListApiProps,
   EmployeeHandbookListResponse,
+  TotalHandbookList,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
@@ -21,6 +22,15 @@ const getEmployeeHandbooks = async (
       endIndex: props.endIndex ?? 20,
       startIndex: props.startIndex ?? 0,
     },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
+const getTotalHandbookList = async (): Promise<TotalHandbookList[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeHandbookSettingsApiConfig.getTotalHandbookList,
+    method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
   return response.data
@@ -64,7 +74,7 @@ const addNewHandbook = async (
     url: employeeHandbookSettingsApiConfig.addNewHandbook,
     method: AllowedHttpMethods.post,
     params: {
-      // list: newVal,
+      list: newVal as any,
     },
     // params: prepareObject.list?.reduce((acc, each, index) => {
     //   // const a = `list${each}`
@@ -85,6 +95,7 @@ const addNewHandbook = async (
 
 const employeeHandbookSettingsApi = {
   getEmployeeHandbooks,
+  getTotalHandbookList,
   deleteEmployeeHandbook,
   getEmployeeCountries,
   addNewHandbook,

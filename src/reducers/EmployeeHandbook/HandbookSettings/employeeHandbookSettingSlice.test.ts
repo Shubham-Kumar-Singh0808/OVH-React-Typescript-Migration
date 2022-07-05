@@ -11,6 +11,7 @@ describe('Employee Handbook Settings Slice Test', () => {
       isLoading: ApiLoadingState.idle,
       employeeHandbooks: [],
       employeeCountries: [],
+      totalHandbookList: [],
       error: null,
     })
   })

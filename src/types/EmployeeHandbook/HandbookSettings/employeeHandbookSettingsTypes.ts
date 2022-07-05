@@ -51,6 +51,22 @@ export type EmployeeHandbook = {
   empCountry?: string
 }
 
+export type TotalHandbookList = {
+  id: number
+  description: string
+  displayOrder: number
+  empCountry: string
+  handCountry: EmployeeCountry[]
+  country: null
+  departmentId: null
+  departmentName: null
+  pageName: string
+  sectionId: null
+  sectionName: null
+  title: string
+  type: string
+}
+
 export type MockEmployeeHandbook = {
   id: number
   displayOrder: number
@@ -81,6 +97,7 @@ export type EmployeeHandbookListResponse = {
 export type EmployeeHandbookSettingSliceState = {
   employeeHandbooks: EmployeeHandbook[]
   employeeCountries: EmployeeCountry[]
+  totalHandbookList: TotalHandbookList[]
   listSize: number
   isLoading: LoadingState
   error: ValidationError

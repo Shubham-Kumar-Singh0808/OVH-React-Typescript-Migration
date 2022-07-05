@@ -235,6 +235,7 @@ export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   deleteEmployeeHandbook: apiPrefix + '/handbookItem/delete',
   addNewHandbook: apiPrefix + '/handbookItem/add',
   getEmployeeCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getTotalHandbookList: apiPrefix + '/handbookItem/getTotalList',
 }
 
 export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {

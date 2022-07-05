@@ -32,22 +32,20 @@ function AddNewHandbook({
 }: EmployeeHandbookPageProps): JSX.Element {
   const initialHandbookDetails = {} as AddNewHandbookPage
 
-  const [showEditor, setShowEditor] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [allChecked, setAllChecked] = useState<boolean>(false)
-  const [isChecked, setIsChecked] = useState([])
   const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
   const [error, setError] = useState<boolean>(true)
   const [isDisplayOrderExist, setIsDisplayOrderExist] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
-  const employeeHandbooks = useTypedSelector(
-    reduxServices.employeeHandbookSettings.selectors.employeeHandbooks,
-  )
+
   const employeeCountries = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
-
+  const totalHandbookList = useTypedSelector(
+    reduxServices.employeeHandbookSettings.selectors.totalHandbookList,
+  )
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target
     setAllChecked(e.target.checked)
@@ -125,7 +123,7 @@ function AddNewHandbook({
   }
 
   const displayOrderExists = (id: string) => {
-    return employeeHandbooks.find((currentHandBook) => {
+    return totalHandbookList.find((currentHandBook) => {
       return currentHandBook.displayOrder === Number(id)
     })
   }
@@ -146,6 +144,7 @@ function AddNewHandbook({
 
   useEffect(() => {
     dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
+    dispatch(reduxServices.employeeHandbookSettings.getTotalHandbookList())
   }, [dispatch])
   const handleDescription = (description: string) => {
     if (description.length > 150) {

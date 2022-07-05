@@ -10,6 +10,7 @@ import {
   EmployeeHandbook,
   EmployeeHandbookListApiProps,
   EmployeeHandbookSettingSliceState,
+  TotalHandbookList,
 } from '../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 const getEmployeeHandbooks = createAsyncThunk(
@@ -23,6 +24,23 @@ const getEmployeeHandbooks = createAsyncThunk(
     }
   },
 )
+
+const getTotalHandbookList = createAsyncThunk<
+  TotalHandbookList[] | undefined,
+  void,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('employeeHandbookSettings/getTotalHandbookList', async (_, thunkApi) => {
+  try {
+    return await employeeHandbookSettingsApi.getTotalHandbookList()
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
 
 const deleteEmployeeHandbook = createAsyncThunk<
   number | undefined,
@@ -89,6 +107,7 @@ const initialEmployeeHandbookSettingState: EmployeeHandbookSettingSliceState = {
   employeeHandbooks: [],
   employeeCountries: [],
   error: null,
+  totalHandbookList: [],
 }
 
 const employeeHandbookSettingSlice = createSlice({
@@ -101,6 +120,10 @@ const employeeHandbookSettingSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.employeeCountries = action.payload as EmployeeCountry[]
       })
+      .addCase(getTotalHandbookList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.totalHandbookList = action.payload as TotalHandbookList[]
+      })
       .addMatcher(
         isAnyOf(deleteEmployeeHandbook.fulfilled, addNewHandbook.fulfilled),
         (state) => {
@@ -110,6 +133,7 @@ const employeeHandbookSettingSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getEmployeeHandbooks.pending,
+          getTotalHandbookList.rejected,
           deleteEmployeeHandbook.pending,
           getEmployeeCountries.pending,
           addNewHandbook.pending,
@@ -126,6 +150,7 @@ const employeeHandbookSettingSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getEmployeeHandbooks.rejected,
+          getTotalHandbookList.rejected,
           getEmployeeCountries.rejected,
           deleteEmployeeHandbook.rejected,
           addNewHandbook.rejected,
@@ -150,8 +175,12 @@ const listSize = (state: RootState): number =>
 const employeeCountries = (state: RootState): EmployeeCountry[] =>
   state.employeeHandbookSettings.employeeCountries
 
+const totalHandbookList = (state: RootState): TotalHandbookList[] =>
+  state.employeeHandbookSettings.totalHandbookList
+
 const employeeHandbookSettingsThunk = {
   getEmployeeHandbooks,
+  getTotalHandbookList,
   deleteEmployeeHandbook,
   getEmployeeCountries,
   addNewHandbook,
@@ -160,6 +189,7 @@ const employeeHandbookSettingsThunk = {
 const employeeHandbookSettingSelectors = {
   isLoading,
   employeeHandbooks,
+  totalHandbookList,
   listSize,
   employeeCountries,
 }
