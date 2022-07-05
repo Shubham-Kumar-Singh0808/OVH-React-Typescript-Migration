@@ -1,14 +1,13 @@
-import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
-import {
-  EmployeeDepartment,
-  DesignationListSliceState,
-  EmployeeDesignation,
-} from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
-import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../../../stateStore'
+import {
+  DesignationListSliceState,
+  EmployeeDepartment,
+  EmployeeDesignation,
+} from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
+import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
+import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import employeeDesignationListApi from '../../../../../middleware/api/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListApi'
 
 const getEmployeeDepartments = createAsyncThunk(
@@ -22,7 +21,17 @@ const getEmployeeDepartments = createAsyncThunk(
     }
   },
 )
-
+const getAllEmployeeDesignations = createAsyncThunk(
+  'designationList/getAllEmployeeDesignations',
+  async (_, thunkApi) => {
+    try {
+      return await employeeDesignationListApi.getAllEmployeeDesignations()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 const getEmployeeDesignations = createAsyncThunk<
   EmployeeDesignation[] | undefined,
   number,
@@ -114,6 +123,10 @@ const employeeDesignationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.employeeDesignations = action.payload as EmployeeDesignation[]
       })
+      .addCase(getAllEmployeeDesignations.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeeDesignations = action.payload as EmployeeDesignation[]
+      })
       .addMatcher(
         isAnyOf(
           addEmployeeDesignation.fulfilled,
@@ -127,6 +140,7 @@ const employeeDesignationListSlice = createSlice({
         isAnyOf(
           getEmployeeDepartments.pending,
           getEmployeeDesignations.pending,
+          getAllEmployeeDesignations.pending,
           addEmployeeDesignation.pending,
           deleteEmployeeDesignation.pending,
         ),
@@ -138,6 +152,7 @@ const employeeDesignationListSlice = createSlice({
         isAnyOf(
           getEmployeeDepartments.rejected,
           getEmployeeDesignations.rejected,
+          getAllEmployeeDesignations.rejected,
           addEmployeeDesignation.rejected,
           deleteEmployeeDesignation.rejected,
         ),
@@ -160,9 +175,13 @@ const employeeDepartments = (state: RootState): EmployeeDepartment[] =>
 const employeeDesignations = (state: RootState): EmployeeDesignation[] =>
   state.employeeDesignationList.employeeDesignations
 
+const employeeDesignationList = (state: RootState): EmployeeDesignation[] =>
+  state.employeeDesignationList.employeeDesignations
+
 const designationListThunk = {
   getEmployeeDepartments,
   getEmployeeDesignations,
+  getAllEmployeeDesignations,
   addEmployeeDesignation,
   deleteEmployeeDesignation,
 }
@@ -170,6 +189,7 @@ const designationListThunk = {
 const employeeDesignationListSelectors = {
   isLoading,
   refreshList,
+  employeeDesignationList,
   employeeDepartments,
   employeeDesignations,
 }

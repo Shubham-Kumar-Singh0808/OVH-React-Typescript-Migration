@@ -1,5 +1,6 @@
-import OCard from '../../components/ReusableComponent/OCard'
 import React from 'react'
+import OCard from '../../components/ReusableComponent/OCard'
+
 const Dashboard = (): JSX.Element => {
   return (
     <>

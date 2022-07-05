@@ -1,13 +1,14 @@
+/* eslint-disable require-await */
+/* eslint-disable import/named */
+// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
-
-import { getByLabelText, render, screen, waitFor } from '@testing-library/react'
-
-import AddNewQualificationCategory from './AddNewQualificationCategory'
+import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import stateStore from '../../../../stateStore'
 import userEvent from '@testing-library/user-event'
+import AddNewQualificationCategory from './AddNewQualificationCategory'
+import stateStore from '../../../../stateStore'
 
 const ReduxProvider = ({
   children,
@@ -25,6 +26,8 @@ const expectComponentToBeRendered = () => {
 }
 
 describe('Add New Qualification Category Testing', () => {
+  const postGraduate = 'Post Graduation'
+
   test('should render add new qualification category form without crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -34,25 +37,13 @@ describe('Add New Qualification Category Testing', () => {
     expectComponentToBeRendered()
   })
 
-  test('should find add and clear buttons in the form', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddNewQualificationCategory />
-      </ReduxProvider>,
-    )
-    expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
-  })
-
   test('should enabled add  button when input is not empty', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <AddNewQualificationCategory />
       </ReduxProvider>,
     )
-    userEvent.selectOptions(screen.getByTestId('form-select'), [
-      'Post Graduation',
-    ])
+    userEvent.selectOptions(screen.getByTestId('form-select'), [postGraduate])
     await waitFor(() => {
       userEvent.type(screen.getByRole('textbox'), 'testing')
       expect(screen.getByRole('button', { name: /Add/i })).toBeEnabled()
@@ -90,11 +81,11 @@ describe('Add New Qualification Category Testing', () => {
       // Find the select element.
       screen.getByRole('combobox'),
       // Find and select the Post Graduation option.
-      screen.getByRole('option', { name: 'Post Graduation' }),
+      screen.getByRole('option', { name: postGraduate }),
     )
-    expect(
-      screen.getByRole('option', { name: 'Post Graduation' }).selected,
-    ).toBe(true)
+    expect(screen.getByRole('option', { name: postGraduate }).selected).toBe(
+      true,
+    )
   })
   test('should clear input and disable Add button after submitting and new qualification should be added', async () => {
     render(

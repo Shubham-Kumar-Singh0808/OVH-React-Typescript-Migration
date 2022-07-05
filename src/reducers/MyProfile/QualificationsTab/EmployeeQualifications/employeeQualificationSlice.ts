@@ -1,3 +1,5 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../../stateStore'
 import {
   EmployeeQualification,
@@ -5,10 +7,7 @@ import {
   PostGraduationAndGraduationList,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { AxiosError } from 'axios'
 import employeeQualificationsApi from '../../../../middleware/api/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationsApi'
 
 const initialQualificationState = {} as EmployeeQualificationSliceState

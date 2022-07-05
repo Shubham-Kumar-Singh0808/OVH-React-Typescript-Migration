@@ -34,9 +34,9 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
     reader.readAsDataURL(file[0])
   }
 
-  const getCropData = useCallback(async () => {
+  const getCropData = useCallback(() => {
     if (typeof cropper !== 'undefined' && typeof cropper !== null) {
-      cropper.getCroppedCanvas().toBlob(async (blob: unknown | Blob) => {
+      cropper.getCroppedCanvas().toBlob((blob: unknown | Blob) => {
         const imageFile = new File([blob as Blob], 'profilePicture', {
           type: 'image/jpeg',
         })
@@ -63,11 +63,11 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
   return (
     <div>
       {imageUploaded ? (
-        <div className="basic-info-box mt-2">
+        <div className="mt-2 basic-info-box">
           <div id="uploadedImage" className="basic-info-img-preview" />
         </div>
       ) : (
-        <div id="profilePicture" className="profile-avatar mt-2">
+        <div id="profilePicture" className="mt-2 profile-avatar">
           <img className="basic-info-img" src={props.file} alt="User Profile" />
         </div>
       )}
@@ -80,13 +80,13 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
         />
         {fileTypeError && (
           <div>
-            <strong className="text-danger mt-3">{fileTypeError}</strong>
+            <strong className="mt-3 text-danger">{fileTypeError}</strong>
           </div>
         )}
         {imageUploaded && (
           <span
             onMouseLeave={getCropData}
-            className="basic-info-cropper-span mt-2"
+            className="mt-2 basic-info-cropper-span"
           >
             <Cropper
               id="cropper"

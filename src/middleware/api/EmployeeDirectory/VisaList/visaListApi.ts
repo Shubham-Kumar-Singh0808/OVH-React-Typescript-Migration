@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { AllowedHttpMethods, visaListApiConfig } from '../../apiList'
 import {
   Country,
@@ -5,8 +6,6 @@ import {
   GetVisaListResponse,
   VisaType,
 } from '../../../../types/EmployeeDirectory/VisaList/visaListTypes'
-
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getVisaList = async (

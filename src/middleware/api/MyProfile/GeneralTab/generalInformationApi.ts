@@ -1,10 +1,9 @@
+import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeGeneralInformationApiConfig,
 } from '../../apiList'
-
 import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeeGeneralInformation = async (

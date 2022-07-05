@@ -1,13 +1,12 @@
+import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeDesignationListApiConfig,
 } from '../../../../apiList'
-
 import {
   EmployeeDepartment,
   EmployeeDesignation,
 } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
-import axios from 'axios'
 import { getAuthenticatedRequestConfig } from '../../../../../../utils/apiUtils'
 
 const getEmployeeDepartments = async (): Promise<
@@ -22,6 +21,18 @@ const getEmployeeDepartments = async (): Promise<
   return response.data
 }
 
+const getAllEmployeeDesignations = async (): Promise<
+  EmployeeDesignation[] | undefined
+> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeDesignationListApiConfig.getAllEmployeeDesignation,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const getEmployeeDesignations = async (
   deptId: number,
 ): Promise<EmployeeDesignation[] | undefined> => {
@@ -29,7 +40,7 @@ const getEmployeeDesignations = async (
     url: employeeDesignationListApiConfig.getEmployeeDesignations,
     method: AllowedHttpMethods.get,
     params: {
-      deptId: deptId,
+      deptId,
     },
   })
 
@@ -45,8 +56,8 @@ const addEmployeeDesignation = async ({
     url: employeeDesignationListApiConfig.addEmployeeDesignation,
     method: AllowedHttpMethods.post,
     data: {
-      departmentId: departmentId,
-      name: name,
+      departmentId,
+      name,
     },
   })
 
@@ -61,7 +72,7 @@ const deleteEmployeeDesignation = async (
     url: employeeDesignationListApiConfig.deleteEmployeeDesignation,
     method: AllowedHttpMethods.delete,
     params: {
-      designationId: designationId,
+      designationId,
     },
   })
 
@@ -72,6 +83,7 @@ const deleteEmployeeDesignation = async (
 const employeeDesignationListApi = {
   getEmployeeDepartments,
   getEmployeeDesignations,
+  getAllEmployeeDesignations,
   addEmployeeDesignation,
   deleteEmployeeDesignation,
 }

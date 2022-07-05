@@ -1,3 +1,6 @@
+/* eslint-disable max-lines */
+/* eslint-disable sonarjs/no-duplicate-string */
+// Todo: remove eslint and fix all the errors
 import { MockEmployee } from '../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 
 export const mockEmployeeList: MockEmployee[] = [

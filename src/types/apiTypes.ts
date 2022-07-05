@@ -18,21 +18,21 @@ export interface CategoryApi extends ApiBase {
   addCategory: string
   deleteCategory: string
 }
-export interface PersonalInfoApi extends ApiBase {
-  getFamilyDetails: string
-  getVisaDetails: string
-  getCountryDetails: string
-  getVisaTypeDetails: string
-  addNewVisaMember: string
-  getFamilyInformation: string
-  updateFamilyInformation: string
-  addNewFamilyMember: string
-  getVisaInformation: string
-  updateVisaInformation: string
-  deleteFamilyMember: string
-  deleteVisaDetail: string
-  fileUploadVisaImage: string
-}
+// export interface PersonalInfoApi extends ApiBase {
+//   getFamilyDetails: string
+//   getVisaDetails: string
+//   getCountryDetails: string
+//   getVisaTypeDetails: string
+//   addNewVisaMember: string
+//   getFamilyInformation: string
+//   updateFamilyInformation: string
+//   addNewFamilyMember: string
+//   getVisaInformation: string
+//   updateVisaInformation: string
+//   deleteFamilyMember: string
+//   deleteVisaDetail: string
+//   fileUploadVisaImage: string
+// }
 
 export interface SkillApi extends ApiBase {
   getSkillListForCategory: string
@@ -58,9 +58,9 @@ export interface EmployeeGeneralInformationApi extends ApiBase {
   getLoggedInEmployeeData: string
 }
 
-export interface PersonalInfoApi extends ApiBase {
-  getFamilyDetails: string
-}
+// export interface PersonalInfoApi extends ApiBase {
+//   getFamilyDetails: string
+// }
 export interface EmployeeQualificationsApi extends ApiBase {
   getEmployeeQualifications: string
   getPostGraduationAndGraduationLookUp: string
@@ -130,6 +130,7 @@ export interface EmployeeDesignationListApi extends ApiBase {
   getEmployeeDesignations: string
   addEmployeeDesignation: string
   deleteEmployeeDesignation: string
+  getAllEmployeeDesignation: string
 }
 
 export interface ShiftConfigurationApi extends ApiBase {
@@ -167,9 +168,47 @@ export interface EmployeeReporteesApi extends ApiBase {
   getEmployeeReporteesKPIs: string
 }
 
+export interface EmployeeReportApi extends ApiBase {
+  getEmployeeReports: string
+}
+
+export interface EmployeeDesignationReportApi extends ApiBase {
+  getAllDesignations: string
+  getEmployeeCategoryData: string
+  exportEmployeeCategoryData: string
+}
+
 export interface VisaListApi extends ApiBase {
   getVisaList: string
   getCountries: string
   getVisaTypes: string
   exportVisaList: string
+}
+
+export interface EmployeeHandbookSettingsApi extends ApiBase {
+  getEmployeeHandbooks: string
+  deleteEmployeeHandbook: string
+}
+
+export interface TimeInOfficeReportApi extends ApiBase {
+  getTimeInOfficeEmployeeReport: string
+  getTimeInOfficeManagerReport: string
+}
+
+export interface EmployeeLeaveSettingsApi extends ApiBase {
+  saveLeaveCalendarSettings: string
+  getLeaveCategories: string
+  getLeaveCalenderSettings: string
+  deleteLeaveCategory: string
+  addUpdateLeaveCategory: string
+}
+export interface AddNewEmployeeAPi extends ApiBase {
+  getEmployeeDepartments: string
+  getEmpCountries: string
+  getAllHrData: string
+  getAllReportingManagersData: string
+  addNewEmployee: string
+  getAllemploymentType: string
+  getAllJobType: string
+  getCheckIfUserExist: string
 }

@@ -25,6 +25,7 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/idle-modal';
 @import './components/session-timeout';
 @import './components/inline-tabs-nav';
+@import './components/loading-spinner';
 @import './pages/login';
 @import './pages/qualifications-tab';
 @import './components/richtexteditor';
@@ -38,3 +39,5 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './pages/employeedirectory/employeeslist/addnewemployee/shiftconfiguration/shift-configuration';
 @import './components/category-list';
 @import './pages/employeedirectory/visalist/visa-list';
+@import './pages/timeandattendance/timeinofficereport/time-in-office-report';
+@import './components/autocomplete';

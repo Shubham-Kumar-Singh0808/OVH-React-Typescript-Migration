@@ -1,14 +1,13 @@
 import { CSidebar, CSidebarBrand, CSidebarNav } from '@coreui/react-pro'
-
-import AppSidebarNavItems from './AppSidebarNavItems'
+import { useDispatch } from 'react-redux'
 import CIcon from '@coreui/icons-react'
 import React from 'react'
 import SimpleBar from 'simplebar-react'
+import AppSidebarNavItems from './AppSidebarNavItems'
 import UserProfile from './UserProfile'
 import { logoNegative } from '../../assets/brand/logo-negative'
 // sidebar nav config
 import { sygnet } from '../../assets/brand/sygnet'
-import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../../stateStore'
 
 const AppSidebar = () => {

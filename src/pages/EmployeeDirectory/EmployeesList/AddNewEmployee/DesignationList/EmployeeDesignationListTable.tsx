@@ -11,15 +11,14 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
-
-import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import CIcon from '@coreui/icons-react'
+import { cilTrash } from '@coreui/icons'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
+import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../../components/ReusableComponent/OPagination'
 import OToast from '../../../../../components/ReusableComponent/OToast'
-import { cilTrash } from '@coreui/icons'
 import { currentPageData } from '../../../../../utils/paginationUtils'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { usePagination } from '../../../../../middleware/hooks/usePagination'

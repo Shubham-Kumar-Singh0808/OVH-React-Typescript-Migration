@@ -22,6 +22,10 @@ export type AddEmployeeDesignationProps = {
   setSelectedDepartmentId: (value: number) => void
 }
 
+export interface ToggleDesignationProp {
+  setToggleDesignation: (value: boolean) => void
+}
+
 export type DesignationListSliceState = {
   employeeDepartments: EmployeeDepartment[]
   employeeDesignations: EmployeeDesignation[]

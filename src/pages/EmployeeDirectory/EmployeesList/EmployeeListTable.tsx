@@ -10,12 +10,11 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-
-import { EmployeeListTableProps } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import { Link } from 'react-router-dom'
+import React from 'react'
+import { EmployeeListTableProps } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
@@ -46,7 +45,7 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
     <>
       {employees.length ? (
         <>
-          <CTable striped>
+          <CTable striped align="middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col"></CTableHeaderCell>
@@ -94,12 +93,20 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                     <CTableDataCell>{employee.country}</CTableDataCell>
                     <CTableDataCell>
                       <Link to={`/employeeProfile/${employee.id}`}>
-                        <CButton color="info" size="sm">
+                        <CButton
+                          color="info"
+                          size="sm"
+                          className="btn-ovh-employee-list"
+                        >
                           <i className="fa fa-eye text-white"></i>
                         </CButton>
                       </Link>
                       &nbsp;
-                      <CButton color="info" size="sm">
+                      <CButton
+                        color="info"
+                        size="sm"
+                        className="btn-ovh-employee-list"
+                      >
                         <i className="fa fa-pencil-square-o text-white"></i>
                       </CButton>
                     </CTableDataCell>
