@@ -55,6 +55,9 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+const MailConfiguration = React.lazy(
+  () => import('./pages/Settings/MailConfiguration/employeeEmailTemplate'),
+)
 
 const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
@@ -121,6 +124,11 @@ const routes = [
     path: '/addNewEmployee',
     name: 'Add New Employee',
     component: AddNewEmployee,
+  },
+  {
+    path: '/mailTemplates',
+    name: 'Mail Configuration',
+    component: MailConfiguration,
   },
 ]
 

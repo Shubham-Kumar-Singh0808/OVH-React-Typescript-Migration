@@ -212,3 +212,8 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllJobType: string
   getCheckIfUserExist: string
 }
+
+export interface EmployeeMailConfigurationApi extends ApiBase {
+  getEmailTemplates: string
+  getMailTemplateTypes: string
+}

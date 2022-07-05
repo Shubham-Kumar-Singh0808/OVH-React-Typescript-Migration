@@ -28,6 +28,7 @@ import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
 import { employeeHandbookSettingService } from './EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 import { timeInOfficeReportService } from './TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
+import { employeeMailConfigurationService } from './Settings/MailConfiguration/employeeMailConfigurationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -60,4 +61,5 @@ export const reduxServices = {
   timeInOfficeReport: timeInOfficeReportService,
   employeeLeaveSettings: employeeLeaveSettingsService,
   technology: technologyService,
+  employeeMailConfiguration: employeeMailConfigurationService,
 }
