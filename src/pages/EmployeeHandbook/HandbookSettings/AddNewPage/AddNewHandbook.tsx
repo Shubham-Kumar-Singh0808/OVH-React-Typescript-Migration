@@ -38,9 +38,7 @@ function AddNewHandbook({
   const [allChecked, setAllChecked] = useState<boolean>(false)
   const [isChecked, setIsChecked] = useState([])
   const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
-  const countryNames = {} as EmployeeCountry[]
-  const [country, setCountry] = useState(countryNames)
-
+  const [error, setError] = useState<boolean>(true)
   const dispatch = useAppDispatch()
   const employeeCountries = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
@@ -106,7 +104,7 @@ function AddNewHandbook({
   // for (let i = 0, l = addNewPage.list.length; i < l; i++) {
   //   values.push(`list: ${addNewPage.list[i]}`)
   // }
-  
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
 
@@ -135,6 +133,11 @@ function AddNewHandbook({
     dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
   }, [dispatch])
   const handleDescription = (description: string) => {
+    if (description.length > 150) {
+      setError(false)
+    } else {
+      setError(true)
+    }
     setAddNewPage((prevState) => {
       return { ...prevState, ...{ description } }
     })
@@ -295,9 +298,11 @@ function AddNewHandbook({
                   handleDescription(editor.getData().trim())
                 }}
               />
-              <p className="text-danger">
-                Please enter at least 150 characters.
-              </p>
+              {error && (
+                <p className="text-danger">
+                  Please enter at least 150 characters.
+                </p>
+              )}
             </CCol>
           </CRow>
           <CRow>
