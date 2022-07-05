@@ -1,3 +1,4 @@
+import { attendanceReportHandlers } from './attendanceReportHandlers'
 import { categoryListHandlers } from './categoryListHandlers'
 import { certificateListHandlers } from './certificateListHandler'
 import { employeeListHandlers } from './employeeListHandlers'
@@ -16,5 +17,6 @@ export const handlers = [
   ...employeeShiftsHandlers,
   ...employeeListHandlers,
   ...certificateListHandlers,
+  ...attendanceReportHandlers,
   // add your handler here
 ]

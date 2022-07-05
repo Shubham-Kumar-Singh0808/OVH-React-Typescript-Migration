@@ -4,48 +4,50 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AttendanceReportTable from './AttendanceReportTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
-import { mockEmployeeList } from '../../../test/data/employeeListData'
+import {
+  mockAttendanceReport,
+  mockDays,
+} from '../../../test/data/attendanceReportData'
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
-    expect(screen.getByText(mockEmployeeList[i].fullName)).toBeInTheDocument()
+    expect(
+      screen.getByText(mockAttendanceReport[i].fullName),
+    ).toBeInTheDocument()
   }
 }
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
-describe('Employee List Table Component Testing', () => {
-  test('should render Personal info tab component with out crashing', async () => {
+describe('Attendance Report Table Component Testing', () => {
+  test('should render AttendanceReport Table component with out crashing', async () => {
     render(
       <AttendanceReportTable
-        paginationRange={[1, 2, 3, 4]}
         setPageSize={mockSetPageSize}
         setCurrentPage={mockSetCurrentPage}
         currentPage={1}
         pageSize={20}
+        paginationRange={[1, 2, 3]}
         isBiometric={'WithoutBiometric'}
       />,
       {
         preloadedState: {
           employeeAttendanceReport: {
-            size: 0,
-            days: [],
-            employeeAttendanceReport: [],
+            size: 214,
+            days: mockDays,
+            employeeAttendanceReport: mockAttendanceReport,
           },
         },
       },
     )
+    mockAttendanceReport.forEach((currentReport) =>
+      expect(screen.getByText(currentReport.fullName)).toBeInTheDocument(),
+    )
 
     expectPageSizeToBeRendered(20)
-
     await waitFor(() => {
       userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-
-      //   const pageSizeSelect = screen.getByRole('option', {
-      //     name: '40',
-      //   }) as HTMLOptionElement
-      //   expect(pageSizeSelect.selected).toBe(true)
 
       expect(mockSetPageSize).toHaveBeenCalledTimes(1)
       expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
