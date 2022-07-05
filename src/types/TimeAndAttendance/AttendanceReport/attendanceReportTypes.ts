@@ -152,6 +152,7 @@ export type BiometricAndShiftFilterOptionsProps = {
   setSelectShiftId: (value: string) => void
   selectMonth: number
   isOther: string
+  filterByDate: Date
 }
 
 export type AttendanceReportTableProps = {

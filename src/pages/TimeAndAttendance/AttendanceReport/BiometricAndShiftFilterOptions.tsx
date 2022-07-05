@@ -6,7 +6,8 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import moment from 'moment'
+import React, { useEffect, useMemo, useState } from 'react'
 import { EmployeeShiftDetails } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import { BiometricAndShiftFilterOptionsProps } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
 
@@ -21,6 +22,7 @@ const BiometricAndShiftFilterOptions = ({
   setSelectShiftId,
   selectMonth,
   isOther,
+  filterByDate,
 }: BiometricAndShiftFilterOptionsProps): JSX.Element => {
   const onBiometricHandleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setIsBiometric(e.target.value)
@@ -38,6 +40,10 @@ const BiometricAndShiftFilterOptions = ({
       setSearchEmployee(searchInput)
     }
   }
+
+  const dateToUse = useMemo(() => {
+    return filterByDate ? filterByDate : new Date()
+  }, [filterByDate])
 
   useEffect(() => {
     if (selectShiftId) {
@@ -108,8 +114,8 @@ const BiometricAndShiftFilterOptions = ({
       <CRow className="mt-3">
         <CCol sm={8}>
           <h5 className="sh-summary-text">
-            Employee Attendance Summary for <span>June</span>--
-            <span>2022</span>
+            Employee Attendance Summary for{' '}
+            {moment(dateToUse).format('MMMM--YYYY')}
           </h5>
         </CCol>
         {(employeeRole === 'admin' ||

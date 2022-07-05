@@ -244,6 +244,7 @@ const AttendanceReport = (): JSX.Element => {
           setSelectShiftId={setSelectShiftId}
           selectMonth={selectMonth}
           isOther={isOther}
+          filterByDate={filterByDate as Date}
         />
         <AttendanceReportTable
           paginationRange={paginationRange}

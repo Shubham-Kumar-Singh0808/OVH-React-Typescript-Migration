@@ -71,13 +71,13 @@ const AttendanceReportTable = ({
     if (status === 'P' && biometric !== 'WithBiometric') {
       return <i className="fa fa-check sh-attendance-icon-check"></i>
     } else if (status === 'P' && lateReport && biometric === 'WithBiometric') {
-      return <span style={{ color: 'red' }}>{title}</span>
+      return <span className="sh-span-red">{title}</span>
     } else if (
       status === 'P' &&
       lateReport === false &&
       biometric === 'WithBiometric'
     ) {
-      return <span style={{ color: 'black' }}>{title}</span>
+      return <span className="sh-span-black">{title}</span>
     } else if (status === 'A' && title === 'Absent') {
       return <i className="fa fa-times sh-attendance-icon-times"></i>
     } else if (
@@ -86,9 +86,9 @@ const AttendanceReportTable = ({
     ) {
       return <span style={{ color: textColor }}>{title}</span>
     } else if (status === 'A' && title === 'H') {
-      return <span style={{ color: '#CC6600' }}>{title}</span>
+      return <span className="sh-span-orange">{title}</span>
     } else {
-      return <span style={{ color: 'blue' }}>-</span>
+      return <span className="sh-span-blue">-</span>
     }
   }
 
