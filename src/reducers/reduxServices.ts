@@ -5,7 +5,6 @@ import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformati
 import { categoryService } from './MyProfile/Categories/categorySlice'
 import { certificateListService } from './EmployeeDirectory/CertificatesList/certificatesListSlice'
 import { certificateTypeService } from './EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypeSlice'
-import { countryService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/countriesSlice'
 import { employeeAssetsService } from './MyProfile/MyAssetsTab/employeeAssetsSlice'
 import { employeeCertificateService } from './MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
 import { employeeDesignationListService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListSlice'

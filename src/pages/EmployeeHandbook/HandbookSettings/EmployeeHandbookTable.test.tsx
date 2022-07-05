@@ -5,7 +5,6 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
 import stateStore from '../../../stateStore'
-import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 import { render, screen, waitFor } from '../../../test/testUtils'
 
 const ReduxProvider = ({
@@ -15,14 +14,6 @@ const ReduxProvider = ({
   children: JSX.Element
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
-
-const expectPageSizeToBeRendered = (pageSize: number) => {
-  for (let i = 0; i < pageSize; i++) {
-    expect(
-      screen.findAllByText(mockEmployeeHandbookList[i].title),
-    ).toBeInTheDocument()
-  }
-}
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
