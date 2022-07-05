@@ -11,6 +11,10 @@ export type EmployeeShiftDetails = {
   graceTime: string
 }
 
+export interface ToggleShiftProp {
+  setToggleShift: (value: boolean) => void
+}
+
 export type ShiftConfigurationState = {
   employeeShifts: EmployeeShiftDetails[]
   isLoading: ApiLoadingState

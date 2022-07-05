@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-identical-functions */
-// Todo: remove eslint and fix error
+// TODO remove eslint and fix error
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import {

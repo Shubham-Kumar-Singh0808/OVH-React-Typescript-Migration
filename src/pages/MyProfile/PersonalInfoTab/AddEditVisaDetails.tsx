@@ -3,7 +3,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 /* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable complexity */
 /* eslint-disable require-await */
 /* eslint-disable import/named */
 // Todd: remove all eslint and fix error
@@ -31,6 +30,7 @@ import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/p
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 
+// eslint-disable-next-line complexity
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,

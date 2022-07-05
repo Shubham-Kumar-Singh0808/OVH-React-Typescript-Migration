@@ -1,3 +1,4 @@
+import addNewEmployeeService from './EmployeeDirectory/EmployeesList/AddNewEmployee'
 import { appService } from './appSlice'
 import { attendanceReportService } from './TimeAndAttendance/AttendanceReport/attendanceReportSlice'
 import { authenticationService } from './Login/authenticationSlice'
@@ -21,10 +22,14 @@ import { qualificationCategoryService } from './MyProfile/QualificationsTab/Qual
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userAccessToFeaturesService } from './Settings/UserRolesConfiguration/userAccessToFeaturesSlice'
+import { technologyService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
 import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
+import { employeeHandbookSettingService } from './EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
+import { timeInOfficeReportService } from './TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
+import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -36,6 +41,7 @@ export const reduxServices = {
   personalInformation: personalInfoService,
   userRolesAndPermissions: userRolesAndPermissionsService,
   employeeDesignation: employeeDesignationListService,
+  newEmployee: addNewEmployeeService,
   employeeCertifications: employeeCertificateService,
   employeeQualifications: employeeQualificationService,
   employeeQualificationCategory: qualificationCategoryService,
@@ -54,4 +60,8 @@ export const reduxServices = {
   visaList: visaListService,
   employeeAttendanceReport: attendanceReportService,
   userAccessToFeatures: userAccessToFeaturesService,
+  employeeHandbookSettings: employeeHandbookSettingService,
+  timeInOfficeReport: timeInOfficeReportService,
+  employeeLeaveSettings: employeeLeaveSettingsService,
+  technology: technologyService,
 }

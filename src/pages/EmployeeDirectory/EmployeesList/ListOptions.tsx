@@ -1,5 +1,6 @@
 import { CButton, CFormCheck } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import employeeListApi from '../../../middleware/api/EmployeeDirectory/EmployeesList/employeeListApi'
@@ -47,7 +48,7 @@ const ListOptions = (): JSX.Element => {
   }
 
   return (
-    <div className="mb-3">
+    <div className="mb-3 pull-right">
       <div className="d-inline">
         <CFormCheck
           type="radio"
@@ -117,10 +118,12 @@ const ListOptions = (): JSX.Element => {
           Click to Export Employee List
         </CButton>
         &nbsp; &nbsp; &nbsp;
-        <CButton color="info" className="text-white btn-ovh" size="sm">
-          <i className="fa fa-plus me-1"></i>
-          Add Employee
-        </CButton>
+        <Link to="/addNewEmployee">
+          <CButton color="info" className="text-white" size="sm">
+            <i className="fa fa-plus me-1"></i>
+            Add Employee
+          </CButton>
+        </Link>
       </div>
     </div>
   )

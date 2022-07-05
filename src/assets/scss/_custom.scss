@@ -15,9 +15,11 @@ body {
 .info-checkbox {
   background-color: $info-base;
 }
-.title-sm,
-.form-select {
+.title-sm {
   font-size: 14px;
+}
+.form-select {
+  font-size: 13px;
 }
 .form-label {
   font-weight: $font-weight-bold;
@@ -31,6 +33,9 @@ body {
   line-height: 1.42857;
   -webkit-transition: all 0.15s;
   transition: all 0.15s;
+  &:hover {
+    color: $white;
+  }
 }
 .btn-download {
   background-color: $blue-btnBg;
@@ -129,10 +134,6 @@ input.form-control,
 select.form-select {
   height: 34px;
 }
-.title-sm,
-.form-select {
-  font-size: 12px;
-}
 .table > :not(caption) > * > * {
   color: #404040;
 }
@@ -148,6 +149,21 @@ th {
   width: 10;
 }
 
+.calender-title{
+  color:$primary-base;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.form-leave{
+  font-size: 12px;
+    height: 32px;
+    border-radius: 2px;
+    box-shadow: none;
+    border: 1px solid #dcdcdc;
+    text-align: center;
+}
+
 .sh-date-picker {
   background-image: url('../icons/calendar.svg');
   /* position: relative; */
@@ -161,4 +177,8 @@ th {
 
 .sh-date-picker-column{
   width: 13% !important;
+}
+
+input.capetalized {
+  text-transform: capitalize;
 }

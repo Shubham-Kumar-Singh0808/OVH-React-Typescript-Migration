@@ -2,7 +2,7 @@ import { attendanceReportHandlers } from './attendanceReportHandlers'
 import { categoryListHandlers } from './categoryListHandlers'
 import { certificateListHandlers } from './certificateListHandler'
 import { employeeListHandlers } from './employeeListHandlers'
-import { employeeShiftsHandlers } from './employeeShiftsHandlers'
+// import { employeeShiftsHandlers } from './employeeShiftsHandlers'
 import { generalInformationHandlers } from './generalInformationHandlers'
 import { loginHandlers } from './loginHandlers'
 import { skillListHandlers } from './skillListHandlers'
@@ -15,7 +15,7 @@ export const handlers = [
   ...userRolesAndPermissionsHandlers,
   ...skillListHandlers,
   ...generalInformationHandlers,
-  ...employeeShiftsHandlers,
+  // ...employeeShiftsHandlers,
   ...employeeListHandlers,
   ...certificateListHandlers,
   ...attendanceReportHandlers,

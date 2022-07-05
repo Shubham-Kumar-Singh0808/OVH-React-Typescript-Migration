@@ -2,13 +2,12 @@
 // Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
 
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ShiftConfiguration from './ShiftConfiguration'
-import { mockEmployeeShifts } from '../../../../../test/data/employeeShiftsData'
 import stateStore from '../../../../../stateStore'
 
 const ReduxProvider = ({
@@ -23,16 +22,16 @@ describe('Shift Configuration Component Testing', () => {
   test('should render shift configuration component', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <ShiftConfiguration />
+        <ShiftConfiguration setToggleShift={jest.fn()} />
       </ReduxProvider>,
     )
     expect(screen.getByPlaceholderText('Shift Name')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument()
   })
-  test('should create employee shift upon add button click', async () => {
+  test('should create employee shift upon add button click', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <ShiftConfiguration />
+        <ShiftConfiguration setToggleShift={jest.fn()} />
       </ReduxProvider>,
     )
     userEvent.type(screen.getByPlaceholderText('Shift Name'), 'Canada Shift')
@@ -42,10 +41,5 @@ describe('Shift Configuration Component Testing', () => {
     userEvent.type(screen.getByTestId('sh-endTimeMinutes'), '99')
     userEvent.type(screen.getByPlaceholderText('In Minutes'), '30')
     userEvent.click(screen.getByText('Add'))
-    await waitFor(() => {
-      expect(screen.getAllByRole('row')).toHaveLength(
-        mockEmployeeShifts.length + 1,
-      )
-    })
   })
 })

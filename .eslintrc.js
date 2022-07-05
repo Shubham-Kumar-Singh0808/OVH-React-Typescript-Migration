@@ -50,7 +50,7 @@ module.exports = {
     // best practices
     'array-callback-return': 'error',
     'block-scoped-var': 'error',
-    complexity: 'error',
+    complexity: 'off',
     'consistent-return': 'error',
     eqeqeq: ['error', 'smart'],
     'guard-for-in': 'error',
