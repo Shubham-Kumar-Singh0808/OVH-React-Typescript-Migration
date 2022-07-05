@@ -59,6 +59,10 @@ const LeaveSettings = React.lazy(
 const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
 )
+
+const AddNewTemplate = React.lazy(
+  () => import('./pages/MailConfiguration/AddTemplate/AddNewTemplate'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -121,6 +125,11 @@ const routes = [
     path: '/addNewEmployee',
     name: 'Add New Employee',
     component: AddNewEmployee,
+  },
+  {
+    path: '/addTemplate',
+    name: 'Add Template',
+    component: AddNewTemplate,
   },
 ]
 
