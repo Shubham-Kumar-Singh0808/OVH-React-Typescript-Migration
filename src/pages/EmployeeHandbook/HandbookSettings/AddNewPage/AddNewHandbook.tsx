@@ -13,7 +13,6 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import {
   AddNewHandbookPage,
-  EmployeeCountry,
   EmployeeHandbookPageProps,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -39,11 +38,21 @@ function AddNewHandbook({
   const [isChecked, setIsChecked] = useState([])
   const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
   const [error, setError] = useState<boolean>(true)
+  const [isDisplayOrderExist, setIsDisplayOrderExist] = useState<boolean>(true)
+
   const dispatch = useAppDispatch()
+  const employeeHandbooks = useTypedSelector(
+    reduxServices.employeeHandbookSettings.selectors.employeeHandbooks,
+  )
   const employeeCountries = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
 
+  const checkForDuplicateOrder = (id: string) => {
+    employeeHandbooks.map((val) => {
+      return val.displayOrder === Number(id)
+    })
+  }
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target
     setAllChecked(e.target.checked)
@@ -60,7 +69,6 @@ function AddNewHandbook({
 
   const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target
-    console.log(value, checked)
     const value1 = +value
     if (addNewPage.list?.includes(value1) && !checked) {
       setAllChecked(checked)
@@ -73,7 +81,6 @@ function AddNewHandbook({
         })
       }
     } else if (checked && !addNewPage.list?.includes(value1)) {
-      console.log(checked)
       // setCountry({...country,})
       const list = addNewPage.list || []
       list?.push(value1)
@@ -98,8 +105,6 @@ function AddNewHandbook({
     }
   }, [addNewPage])
 
-  console.log(addNewPage.list)
-
   // const values = []
   // for (let i = 0, l = addNewPage.list.length; i < l; i++) {
   //   values.push(`list: ${addNewPage.list[i]}`)
@@ -107,7 +112,9 @@ function AddNewHandbook({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-
+    if (name === 'displayOrder') {
+      const checkResult = checkForDuplicateOrder(value)
+    }
     setAddNewPage((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
@@ -241,6 +248,11 @@ function AddNewHandbook({
                 value={addNewPage.displayOrder}
                 onChange={handleInputChange}
               />
+            </CCol>
+            <CCol sm={3}>
+              {isDisplayOrderExist && (
+                <p className={TextDanger}>Display order Already Exist</p>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
