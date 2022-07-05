@@ -4,7 +4,7 @@ export type Handbook = {
   id: number
   displayOrder: number
   title: string
-  description: string
+  description: string | null
   pageName: string
   departmentName: string | null
   departmentId: number | null
@@ -20,7 +20,7 @@ export type mockHandbook = {
   id: number
   displayOrder: number
   title: string
-  description: string
+  description: string | null
   pageName: string
   departmentName: string | null
   departmentId: number | null
@@ -34,6 +34,7 @@ export type mockHandbook = {
 
 export type HandbooksListProps = {
   handbooks: Handbook[]
+  inputText: string
 }
 
 export type showHandbookApiProps = {

@@ -1,3 +1,4 @@
+import { CListGroup, CListGroupItem } from '@coreui/react-pro'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { HandbooksListProps } from '../../types/EmployeeHandbook/employeeHandbookTypes'
@@ -12,22 +13,33 @@ import { HandbooksListProps } from '../../types/EmployeeHandbook/employeeHandboo
 //   ' Roles and Responsibilities',
 // ]
 
-const HandbookList = ({ handbooks }: HandbooksListProps): JSX.Element => {
+const HandbookList = ({
+  handbooks,
+  inputText,
+}: HandbooksListProps): JSX.Element => {
   return (
     <div>
-      <ul>
-        {handbooks.map((handbook, index) => (
-          <li key={index} className="handbook-item">
+      <CListGroup flush>
+        {handbooks
+          .filter((handbook) => {
+            if (inputText === '') {
+              return handbook
+            } else {
+              return handbook.title.toLowerCase().includes(inputText)
+            }
+          })
+          .map((handbook, index) => (
             <Link
               to={`/showemployeehandbook/${handbook.pageName}`}
               className="new-link"
+              key={index}
             >
-              <i className="fa fa-eye" aria-hidden="true"></i>
-              {handbook.title}
+              <CListGroupItem className="handbook-item">
+                {handbook.title}
+              </CListGroupItem>
             </Link>
-          </li>
-        ))}
-      </ul>
+          ))}
+      </CListGroup>
     </div>
   )
 }

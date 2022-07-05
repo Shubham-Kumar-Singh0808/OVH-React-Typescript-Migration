@@ -227,7 +227,7 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
 }
 
 export const employeeHandbook: EmployeeHandbook = {
-  getHandbooks: apiPrefix + '/handbookItem/getTotalHandbookList',
+  getHandbooks: apiPrefix + '/handbookItem/getHandbookNamesCountryWise',
 }
 
 export const dispHandbook: DisplayHandbook = {

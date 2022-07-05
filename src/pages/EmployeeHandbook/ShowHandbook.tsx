@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom'
 import React, { useEffect } from 'react'
-import parse from 'html-react-parser'
 import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
@@ -28,12 +27,15 @@ const ShowHandbook = (): JSX.Element => {
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Display Handbook"
+        title={`${handbook.title}`}
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         {isLoading !== ApiLoadingState.loading ? (
-          <CCol>{parse(handbook.description)}</CCol>
+          // <CCol>{parse(handbook.description as string)}</CCol>
+          <div
+            dangerouslySetInnerHTML={{ __html: handbook.description as string }}
+          />
         ) : (
           <CCol>
             <CRow className="category-loading-spinner">
