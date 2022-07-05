@@ -22,3 +22,8 @@ export type EmployeeMailconfigurationState = {
   isLoading: LoadingState
   error: ValidationError
 }
+
+export type EmployeeGetEmailTemplateProps = {
+  searchText: string
+  type: number
+}

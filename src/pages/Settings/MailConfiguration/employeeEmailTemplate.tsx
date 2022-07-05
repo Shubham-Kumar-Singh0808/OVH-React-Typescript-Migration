@@ -64,7 +64,7 @@ const employeeEmailTemplate = (): JSX.Element => {
         </CRow>
         <br></br>
         <br></br>
-        <EmployeeEmailTemplateTable />
+        <EmployeeEmailTemplateTable searchText={''} type={0} />
       </OCard>
     </>
   )

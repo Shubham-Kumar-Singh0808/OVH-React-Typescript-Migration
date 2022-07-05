@@ -4,9 +4,22 @@ import {
   CTableRow,
   CTableHeaderCell,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { EmployeeGetEmailTemplateProps } from '../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
 
-const employeeEmailTemplateTable = () => {
+const employeeEmailTemplateTable = (props: EmployeeGetEmailTemplateProps) => {
+  const employeeEmailtemplate = useTypedSelector(
+    reduxServices.employeeMailConfiguration.selectors.employeeMailTemplate,
+  )
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(
+      reduxServices.employeeMailConfiguration.getEmployeeEmailTemplate(props),
+    )
+  }, [dispatch])
+
   return (
     <>
       <CTable striped>
