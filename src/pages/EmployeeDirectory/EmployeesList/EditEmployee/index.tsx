@@ -453,14 +453,14 @@ const EditEmployee = (): JSX.Element => {
             className="btn-ovh me-1"
             color="success"
             disabled={!isViewBtnEnabled}
-            data-testid="add-new-employee"
+            data-testid="edit-employee"
           >
             Update
           </CButton>
           <CButton
             color="warning "
             className="btn-ovh"
-            data-testid="clear-new-employee"
+            data-testid="clear-employee"
             onClick={handleClearFields}
           >
             Clear
