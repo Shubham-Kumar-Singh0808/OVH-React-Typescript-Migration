@@ -28,6 +28,7 @@ export type EmployeeReporteesKPI = {
   name: string
   description: string
 }
+
 export type ReporteesState = {
   employeeReportees: EmployeeReportee[]
   employeeReporteesKRAs: EmployeeReporteesKRA[]

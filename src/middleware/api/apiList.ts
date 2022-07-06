@@ -172,6 +172,7 @@ export const employeeReporteesApiConfig: EmployeeReporteesApi = {
   getEmployeeReportees: apiPrefix + '/jobapplicant/getReportiesUnderManager',
   getEmployeeReporteesKRAs: apiPrefix + '/kra/kraForIndividual',
   getEmployeeReporteesKPIs: apiPrefix + '/kra/kpisForIndividualKra',
+  exportReporteesList: apiPrefix + '/Employee/exportReporteeList',
 }
 
 export const certificateListApiConfig: CertificateListApi = {

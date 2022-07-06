@@ -49,9 +49,25 @@ const getEmployeeReporteesKPIs = async (
   return response.data
 }
 
+const exportEmployeeReporteesData = async (): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeReporteesApiConfig.exportReporteesList,
+    method: AllowedHttpMethods.get,
+    params: {
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeReporteesApi = {
   getEmployeeReportees,
   getEmployeeReporteesKRAs,
   getEmployeeReporteesKPIs,
+  exportEmployeeReporteesData,
 }
 export default employeeReporteesApi

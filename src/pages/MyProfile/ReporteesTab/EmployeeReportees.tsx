@@ -19,6 +19,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
+import employeeReporteesApi from '../../../middleware/api/MyProfile/ReporteesTab/employeeReporteesApi'
 
 const EmployeeReportees = (): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
@@ -70,11 +71,39 @@ const EmployeeReportees = (): JSX.Element => {
     setIsIconVisible(true)
   }
 
+  const handleExportReporteesData = async () => {
+    const employeeListDownload =
+      await employeeReporteesApi.exportEmployeeReporteesData()
+
+    downloadFile(employeeListDownload)
+  }
+
+  const downloadFile = (cvDownload: Blob | undefined) => {
+    if (cvDownload) {
+      const url = window.URL.createObjectURL(
+        new Blob([cvDownload], {
+          type: cvDownload.type,
+        }),
+      )
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'ReporteesList.csv')
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    }
+  }
+
   return (
     <>
       <CRow className="justify-content-end">
         <CCol className="text-end" md={4}>
-          <CButton color="info btn-ovh me-1" className="text-white" size="sm">
+          <CButton
+            color="info btn-ovh me-1"
+            className="text-white"
+            size="sm"
+            onClick={handleExportReporteesData}
+          >
             <i className="fa fa-plus me-1"></i>Click to Export
           </CButton>
         </CCol>
