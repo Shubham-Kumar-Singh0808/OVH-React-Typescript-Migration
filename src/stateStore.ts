@@ -39,6 +39,7 @@ import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice
 import employeeHandbookSettingsReducer from './reducers/EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 import timeInOfficeReportReducer from './reducers/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import employeeLeaveSettingsReducer from './reducers/Settings/LeaveSettings/employeeLeaveSettingsSlice'
+import hiveActivityReportReducer from './reducers/TimeAndAttendance/HiveActivityReport/hiveActivityReportSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -78,6 +79,7 @@ export const allReducers = {
   newEmployee: newEmployeeReducer,
   getJobTypes: getAllJobTypeReducer,
   checkUserExist: checkUserExistReducer,
+  hiveActivityReport: hiveActivityReportReducer,
   // add your slice reducers here
 }
 

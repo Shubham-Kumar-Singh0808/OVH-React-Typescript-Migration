@@ -212,3 +212,9 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllJobType: string
   getCheckIfUserExist: string
 }
+
+export interface HiveActivityReportApi extends ApiBase {
+  getEmployeeHiveActivityReport: string
+  getManagerHiveActivityReport: string
+  getSearchHiveTime: string
+}

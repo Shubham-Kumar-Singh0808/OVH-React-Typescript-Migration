@@ -1,5 +1,6 @@
 import React from 'react'
 import HiveReportOptions from './HiveReportOptions'
+import EmployeeHiveActivityReport from './EmployeeHiveActivityReport'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const HiveActivityReport = (): JSX.Element => {
@@ -12,6 +13,7 @@ const HiveActivityReport = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <HiveReportOptions />
+        <EmployeeHiveActivityReport />
       </OCard>
     </>
   )
