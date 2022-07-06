@@ -12,8 +12,13 @@ const ReportingManager = ({
   reportManagersList,
   onSelectReportManager,
   shouldReset,
+  reportValue,
 }: ReportManagerProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
+
+  useEffect(() => {
+    setAutoCompleteTarget(reportValue)
+  }, [reportValue])
 
   useEffect(() => {
     if (shouldReset) setAutoCompleteTarget('')

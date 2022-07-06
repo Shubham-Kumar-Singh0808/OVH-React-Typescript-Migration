@@ -474,18 +474,21 @@ const AddNewEmployee = (): JSX.Element => {
               reportManagersList={reportingManagersList}
               onSelectReportManager={onHandleReportManager}
               shouldReset={resetFields.reportManager}
+              reportValue={addEmployee.manager.fullName}
             />
             <ProjectManager
               dynamicFormLabelProps={dynamicFormLabelProps}
               managersList={reportingManagersList}
               onSelectManager={onHandleProjectManager}
               shouldReset={resetFields.projectManager}
+              projectValue={addEmployee.projectManager.fullName}
             />
             <HRAssociate
               dynamicFormLabelProps={dynamicFormLabelProps}
               hrDataList={hrDataList}
               onSelectHRAssociate={onHandleHRAssociate}
               shouldReset={resetFields.hrAssociate}
+              hrValue={addEmployee.hrAssociate.fullName}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}

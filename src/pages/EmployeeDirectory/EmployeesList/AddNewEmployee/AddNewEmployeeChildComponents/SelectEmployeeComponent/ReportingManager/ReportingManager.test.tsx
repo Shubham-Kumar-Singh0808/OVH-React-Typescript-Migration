@@ -23,6 +23,8 @@ describe('Add Employee ReportingManager Component', () => {
           reportManagersList={[]}
           onSelectReportManager={jest.fn()}
           dynamicFormLabelProps={jest.fn()}
+          shouldReset={false}
+          reportValue={''}
         />
       </ReduxProvider>,
     )
