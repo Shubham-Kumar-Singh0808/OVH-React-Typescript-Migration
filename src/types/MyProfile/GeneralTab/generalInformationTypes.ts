@@ -60,3 +60,18 @@ export type EmployeeGeneralInformationState = {
   error: ValidationError
   isLoading: boolean
 }
+
+export type EmployeeContactInformation = {
+  mobile: string | undefined
+  alternativeMobile: string | undefined
+  homeCode: string | undefined
+  homeNumber: string | undefined
+  workCode: string | undefined
+  workNumber: string | undefined
+}
+
+export type EmployeeEmergencyContactInformation = {
+  emergencyContactName: string | undefined
+  emergencyPhone: string | undefined
+  emergencyRelationShip: string | undefined
+}
