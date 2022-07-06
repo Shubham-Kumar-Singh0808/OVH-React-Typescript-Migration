@@ -41,6 +41,7 @@ import userAccessToFeaturesReducer from './reducers/Settings/UserRolesConfigurat
 import employeeHandbookSettingsReducer from './reducers/EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 import timeInOfficeReportReducer from './reducers/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import employeeLeaveSettingsReducer from './reducers/Settings/LeaveSettings/employeeLeaveSettingsSlice'
+import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
 
 export const allReducers = {
   app: appReducer,
@@ -82,6 +83,7 @@ export const allReducers = {
   newEmployee: newEmployeeReducer,
   getJobTypes: getAllJobTypeReducer,
   checkUserExist: checkUserExistReducer,
+  employee: employeeReducer,
   // add your slice reducers here
 }
 

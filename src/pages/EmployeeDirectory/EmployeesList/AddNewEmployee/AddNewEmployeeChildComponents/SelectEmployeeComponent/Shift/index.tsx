@@ -11,10 +11,11 @@ const Shift = ({
   setToggleShift,
   value,
   toggleValue,
+  isAddDisable,
 }: SelectShiftProps): JSX.Element => {
   const onHandleSelectManager = (e: { target: { value: string } }) => {
     const name = e.target.value
-    const shift = list.find((value) => value.name === name)
+    const shift = list.find((schedule) => schedule.name === name)
 
     const selectedShift = {
       id: shift?.id,
@@ -61,15 +62,17 @@ const Shift = ({
             })}
           </CFormSelect>
         </CCol>
-        <CCol sm={3}>
-          <CButton
-            color="info"
-            className="btn-ovh me-1"
-            onClick={() => setToggleShift(!toggleValue)}
-          >
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
-        </CCol>
+        {!isAddDisable && (
+          <CCol sm={3}>
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              onClick={() => setToggleShift(!toggleValue)}
+            >
+              <i className="fa fa-plus me-1"></i>Add
+            </CButton>
+          </CCol>
+        )}
       </CRow>
     </>
   )

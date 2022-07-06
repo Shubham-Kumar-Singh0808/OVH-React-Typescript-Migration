@@ -160,6 +160,7 @@ export interface SelectShiftProps extends DynamicFormLabelProps {
   setToggleShift: (value: boolean) => void
   value: string
   toggleValue: boolean
+  isAddDisable: boolean
 }
 export interface SelectDesignationProps extends DynamicFormLabelProps {
   list: GetList[]
@@ -167,6 +168,7 @@ export interface SelectDesignationProps extends DynamicFormLabelProps {
   setToggleShift: (value: boolean) => void
   value: string
   toggleValue: boolean
+  isAddDisable: boolean
 }
 export interface SelectProps extends DynamicFormLabelProps {
   list: GetList[]

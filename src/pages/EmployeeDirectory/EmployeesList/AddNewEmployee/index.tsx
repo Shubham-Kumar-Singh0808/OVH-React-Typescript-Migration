@@ -459,6 +459,7 @@ const AddNewEmployee = (): JSX.Element => {
               value={addEmployee.designation}
               setToggleShift={() => setDestinationToggle(!destinationToggle)}
               toggleValue={destinationToggle as boolean}
+              isAddDisable={false}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}
@@ -509,6 +510,7 @@ const AddNewEmployee = (): JSX.Element => {
               value={addEmployee.timeSlotDTO.name}
               setToggleShift={() => setShiftToggle(!shiftToggle)}
               toggleValue={shiftToggle as boolean}
+              isAddDisable={false}
             />
             <EmploymentContract
               dynamicFormLabelProps={dynamicFormLabelProps}
