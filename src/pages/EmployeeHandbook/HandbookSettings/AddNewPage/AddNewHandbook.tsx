@@ -89,7 +89,7 @@ function AddNewHandbook({
       addNewPage.title &&
       addNewPage.displayOrder &&
       addNewPage.pageName &&
-      // addNewPage.country &&
+      addNewPage.list &&
       addNewPage.description
     ) {
       setIsButtonEnabled(true)
@@ -98,17 +98,12 @@ function AddNewHandbook({
     }
   }, [addNewPage])
 
-  // const values = []
-  // for (let i = 0, l = addNewPage.list.length; i < l; i++) {
-  //   values.push(`list: ${addNewPage.list[i]}`)
-  // }
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'displayOrder') {
       const newValue = value.replace(/[\D]/gi, '')
       setAddNewPage((prevState) => {
-        return { ...prevState, ...{ [name]: Number(newValue) } }
+        return { ...prevState, ...{ [name]: newValue } }
       })
       if (displayOrderExists(value)) {
         setIsDisplayOrderExist(true)
@@ -132,9 +127,10 @@ function AddNewHandbook({
     setAddNewPage({
       title: '',
       pageName: '',
-      displayOrder: 0,
+      displayOrder: '',
       list: [],
       description: '',
+      type: '',
     })
   }
   const formLabelProps = {
@@ -163,7 +159,12 @@ function AddNewHandbook({
       toastColor="success"
     />
   )
-
+  const WarningToastMessage = (
+    <OToast
+      toastColor="danger"
+      toastMessage="Please Enter Unique Title, Pagename, Add Countries."
+    />
+  )
   const handleAddNewHandbookPage = async () => {
     const addNewHandbookResultAction = await dispatch(
       reduxServices.employeeHandbookSettings.addNewHandbook(addNewPage),
@@ -176,6 +177,13 @@ function AddNewHandbook({
     ) {
       backButtonHandler()
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    } else if (
+      reduxServices.employeeHandbookSettings.addNewHandbook.rejected.match(
+        addNewHandbookResultAction,
+      ) &&
+      addNewHandbookResultAction.payload === 404
+    ) {
+      dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
     }
   }
 
@@ -339,7 +347,11 @@ function AddNewHandbook({
               <CButton
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isButtonEnabled}
+                disabled={
+                  isButtonEnabled
+                    ? isButtonEnabled && isDisplayOrderExist
+                    : !isButtonEnabled
+                }
                 onClick={handleAddNewHandbookPage}
               >
                 {confirmButtonText}

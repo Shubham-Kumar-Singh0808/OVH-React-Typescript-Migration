@@ -29,13 +29,17 @@ export const getAuthenticatedRequestConfig = ({
   url,
   method,
   params,
+  paramsSerializer,
   data,
   additionalHeaders,
   responseType,
 }: {
   url: string
   method: Method
-  params?: { [key: string]: string | number | boolean | undefined }
+  params?: {
+    [key: string]: string | number | boolean | undefined | number[]
+  }
+  paramsSerializer?: any
   data?:
     | { [key: string]: string | number | unknown }
     | unknown
@@ -47,7 +51,10 @@ export const getAuthenticatedRequestConfig = ({
   url: string
   method: Method
   headers: { tenantKey: string; [key: string]: string | number }
-  params?: { [key: string]: string | number | boolean | undefined }
+  params?: {
+    [key: string]: string | number | boolean | undefined | number[]
+  }
+  paramsSerializer?: any
   data?:
     | { [key: string]: string | number | unknown }
     | unknown
@@ -66,6 +73,7 @@ export const getAuthenticatedRequestConfig = ({
       ...additionalHeaders,
     },
     params,
+    paramsSerializer,
     responseType,
     data,
   }

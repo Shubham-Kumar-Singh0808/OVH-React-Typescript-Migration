@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 import {
   AllowedHttpMethods,
   employeeHandbookSettingsApiConfig,
@@ -67,25 +68,18 @@ const getEmployeeCountries = async (): Promise<
 const addNewHandbook = async (
   prepareObject: AddNewHandbookPage,
 ): Promise<number | undefined> => {
-  // const { list, ...restPrepareObject } = prepareObject
-  const newVal = prepareObject.list.map((val) => `list${val}`)
-  console.log(newVal)
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeHandbookSettingsApiConfig.addNewHandbook,
     method: AllowedHttpMethods.post,
-    params: {
-      list: newVal as any,
-    },
-    // params: prepareObject.list?.reduce((acc, each, index) => {
-    //   // const a = `list${each}`
-    //   acc['list'] = each
-    //   return acc
-    // }, {} as any),
+    params: { list: prepareObject.list },
+    paramsSerializer: (params: any) =>
+      qs.stringify(params, { arrayFormat: 'repeat' }),
     data: {
       description: prepareObject.description,
       displayOrder: prepareObject.displayOrder,
       pageName: prepareObject.pageName,
       title: prepareObject.title,
+      type: 'HandBook',
     },
   })
 
