@@ -28,8 +28,8 @@ const getEmployeeEmailTemplate = async (
     url: employeeMailConfigurationApiConfig.getEmailTemplates,
     method: AllowedHttpMethods.get,
     params: {
-      searchText: props.searchText,
-      type: props.type,
+      searchText: props.templateName,
+      type: props.templateTypeId,
     },
   })
   const response = await axios(requestConfig)

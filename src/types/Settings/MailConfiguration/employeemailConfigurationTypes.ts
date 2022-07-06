@@ -2,9 +2,9 @@ import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type EmployeeGetEmailTemplate = {
   id: number
-  templateName: string
+  templateName?: string
   template: string
-  templateTypeId: number
+  templateTypeId?: number | string
   templateType: string
   assetTypeId: null
   assetType: string
@@ -18,12 +18,12 @@ export type EmployeeGetMailTemplateTypes = {
 
 export type EmployeeMailconfigurationState = {
   employeeGetEmailTemplate: EmployeeGetEmailTemplate[]
-  employeegetMailTemplateTypes: EmployeeGetMailTemplateTypes[]
+  employeeGetMailTemplateTypes: EmployeeGetMailTemplateTypes[]
   isLoading: LoadingState
   error: ValidationError
 }
 
 export type EmployeeGetEmailTemplateProps = {
-  searchText: string
-  type: number
+  templateName?: string
+  templateTypeId?: number | string
 }

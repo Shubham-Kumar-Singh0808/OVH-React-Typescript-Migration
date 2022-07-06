@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { AppDispatch, RootState } from '../../../stateStore'
+import { RootState } from '../../../stateStore'
 import {
   EmployeeGetEmailTemplate,
   EmployeeGetEmailTemplateProps,
   EmployeeGetMailTemplateTypes,
-  EmployeeMailconfigurationState,
+  EmployeeMailconfigurationState as EmployeeMailConfigurationState,
 } from '../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
@@ -24,7 +24,7 @@ const getEmployeeMailTemplateTypes = createAsyncThunk(
 )
 
 const getEmployeeEmailTemplate = createAsyncThunk(
-  'certificateList/getEmployeesCertificates',
+  'mailConfiguration/getEmployeeEmailTemplate',
   async (props: EmployeeGetEmailTemplateProps, thunkApi) => {
     try {
       return await employeeMailConfigurationApi.getEmployeeEmailTemplate(props)
@@ -35,22 +35,22 @@ const getEmployeeEmailTemplate = createAsyncThunk(
   },
 )
 
-const initialMailconfigurationState: EmployeeMailconfigurationState = {
+const initialMailConfigurationState: EmployeeMailConfigurationState = {
   employeeGetEmailTemplate: [],
   isLoading: ApiLoadingState.idle,
-  employeegetMailTemplateTypes: [],
+  employeeGetMailTemplateTypes: [],
   error: null,
 }
 
 const employeeMailConfigurationSlice = createSlice({
   name: 'mailConfiguration',
-  initialState: initialMailconfigurationState,
+  initialState: initialMailConfigurationState,
   reducers: {},
 
   extraReducers: (builder) => {
     builder.addCase(getEmployeeMailTemplateTypes.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.employeegetMailTemplateTypes =
+      state.employeeGetMailTemplateTypes =
         action.payload as EmployeeGetMailTemplateTypes[]
     })
     builder.addCase(getEmployeeEmailTemplate.fulfilled, (state, action) => {
@@ -67,7 +67,7 @@ const employeeMailConfigurationSlice = createSlice({
 const employeeMailTemplateTypes = (
   state: RootState,
 ): EmployeeGetMailTemplateTypes[] =>
-  state.employeeMailConfiguration.employeegetMailTemplateTypes
+  state.employeeMailConfiguration.employeeGetMailTemplateTypes
 
 const employeeMailTemplate = (state: RootState): EmployeeGetEmailTemplate[] =>
   state.employeeMailConfiguration.employeeGetEmailTemplate
