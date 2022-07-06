@@ -74,7 +74,6 @@ function AddNewHandbook({
         })
       }
     } else if (checked && !addNewPage.list?.includes(value1)) {
-      // setCountry({...country,})
       const list = addNewPage.list || []
       list?.push(value1)
       if (list.length === 5) setAllChecked(checked)

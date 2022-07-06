@@ -1,5 +1,6 @@
 import { CButton, CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import AddNewHandbook from './AddNewPage/AddNewHandbook'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -58,9 +59,11 @@ const EmployeeHandbookSettings = (): JSX.Element => {
                     >
                       <i className="fa fa-plus me-1"></i>Add Page
                     </CButton>
-                    <CButton color="info" className="btn-ovh me-1 text-white">
-                      <i className="fa fa-arrow-left  me-1"></i>Back
-                    </CButton>
+                    <Link to={`/EmployeeHandbook`}>
+                      <CButton color="info" className="btn-ovh me-1 text-white">
+                        <i className="fa fa-arrow-left  me-1"></i>Back
+                      </CButton>
+                    </Link>
                   </CCol>
                 </CRow>
                 <CRow className="mt-4">
