@@ -51,7 +51,8 @@ const ContactNumberDetails = (props: {
     useState(selectedUserEmergencyContactDetails)
 
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
-
+  const phoneValueRegexReplace = /[^0-9]/gi
+  const contactNameRegexReplace = /[^a-zA-Z\s]/gi
   const onChangeEmergencyContactDetailsHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -59,7 +60,7 @@ const ContactNumberDetails = (props: {
   ) => {
     const { name, value } = e.target
     if (name === 'emergencyPhone') {
-      const emergencyPhoneValue = value.replace(/[^0-9]/gi, '')
+      const emergencyPhoneValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeEmergencyContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: emergencyPhoneValue } }
       })
@@ -67,7 +68,10 @@ const ContactNumberDetails = (props: {
         return !prevState
       })
     } else if (name === 'emergencyContactName') {
-      const emergencyContactNameValue = value.replace(/[^a-zA-Z\s]/gi, '')
+      const emergencyContactNameValue = value.replace(
+        contactNameRegexReplace,
+        '',
+      )
       setEmployeeEmergencyContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: emergencyContactNameValue } }
       })
@@ -92,7 +96,7 @@ const ContactNumberDetails = (props: {
   ) => {
     const { name, value } = e.target
     if (name === 'mobile') {
-      const mobileValue = value.replace(/[^0-9]/gi, '')
+      const mobileValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: mobileValue } }
       })
@@ -100,7 +104,7 @@ const ContactNumberDetails = (props: {
         return !prevState
       })
     } else if (name === 'alternativeMobile') {
-      const alternativeMobileValue = value.replace(/[^0-9]/gi, '')
+      const alternativeMobileValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: alternativeMobileValue } }
       })
@@ -108,7 +112,7 @@ const ContactNumberDetails = (props: {
         return !prevState
       })
     } else if (name === 'homeCode') {
-      const homeCodeValue = value.replace(/[^0-9]/gi, '')
+      const homeCodeValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: homeCodeValue } }
       })
@@ -116,7 +120,7 @@ const ContactNumberDetails = (props: {
         return !prevState
       })
     } else if (name === 'homeNumber') {
-      const homeNumberValue = value.replace(/[^0-9]/gi, '')
+      const homeNumberValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: homeNumberValue } }
       })
@@ -124,7 +128,7 @@ const ContactNumberDetails = (props: {
         return !prevState
       })
     } else if (name === 'workCode') {
-      const workCodeValue = value.replace(/[^0-9]/gi, '')
+      const workCodeValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: workCodeValue } }
       })
@@ -132,7 +136,7 @@ const ContactNumberDetails = (props: {
         return !prevState
       })
     } else if (name === 'workNumber') {
-      const workNumberValue = value.replace(/[^0-9]/gi, '')
+      const workNumberValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: workNumberValue } }
       })
