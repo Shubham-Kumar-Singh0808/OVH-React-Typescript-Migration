@@ -195,6 +195,8 @@ const EditEmployee = (): JSX.Element => {
         technology: selectedEmployeeData.technology,
         timeSlotDTO: selectedEmployeeData.timeSlotDTO,
         workStatus: selectedEmployeeData.workStatus,
+        firstName: selectedEmployeeData.firstName,
+        lastName: selectedEmployeeData.lastName,
       })
     }
   }, [selectedEmployeeData])
@@ -320,7 +322,7 @@ const EditEmployee = (): JSX.Element => {
         >
           Employee Name:
         </CFormLabel>
-        <CCol sm={3}>Test 1 2 3</CCol>
+        <CCol sm={3}>{`${addEmployee.firstName} ${addEmployee.lastName}`}</CCol>
       </CRow>
       <OSelectList
         dynamicFormLabelProps={dynamicFormLabelProps}
@@ -426,7 +428,7 @@ const EditEmployee = (): JSX.Element => {
       <WorkFrom
         dynamicFormLabelProps={dynamicFormLabelProps}
         onWorkFromHandler={onHandleWorkfrom}
-        workFromValue={addEmployee.workStatus}
+        workFromValue={addEmployee.workStatus as string}
       />
       <CRow className="mb-3 align-items-center">
         <CCol sm={{ span: 6, offset: 3 }}>
