@@ -11,6 +11,7 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
+  CLink,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
@@ -43,8 +44,8 @@ const employeeEmailTemplate = (): JSX.Element => {
   const handleTicketConfiguration = () => {
     dispatch(
       reduxServices.employeeMailConfiguration.getEmployeeEmailTemplate({
-        templateName: employeeTemplate.templateName,
-        templateTypeId: employeeTemplate.templateTypeId,
+        templateName: employeeTemplate?.templateName,
+        templateTypeId: employeeTemplate?.templateTypeId,
       }),
     )
   }
@@ -117,11 +118,11 @@ const employeeEmailTemplate = (): JSX.Element => {
               <i className="fa fa-plus me-1"></i>Add Template
             </CButton>
           </CCol>
-          <CCol>
+          {/* <CCol>
             <CButton color="info btn-ovh me-1" className="text-white">
               <i className="fa fa-plus me-1"></i>Click to Export
             </CButton>
-          </CCol>
+          </CCol> */}
         </CRow>
         <br></br>
         <br></br>
@@ -137,31 +138,39 @@ const employeeEmailTemplate = (): JSX.Element => {
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {employeeEmailTemplates?.map((emailTemplate, index) => (
-              <CTableRow key={index}>
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  {emailTemplate.templateType}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {emailTemplate.templateName}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {parse(emailTemplate.assetType)}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {emailTemplate.template}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  <CButton color="info btn-ovh me-2">
-                    <i className="fa fa-pencil-square-o"></i>
-                  </CButton>
-                  <CButton color="danger btn-ovh me-2">
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            ))}
+            {employeeEmailTemplates.map((emailTemplate, index) => {
+              const descriptionLimit =
+                emailTemplate.template && emailTemplate.template.length > 30
+                  ? `${emailTemplate.template.substring(0, 30)}...`
+                  : emailTemplate.template
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {emailTemplate.templateType}
+                  </CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {emailTemplate.templateName}
+                  </CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {emailTemplate.assetType}
+                  </CTableDataCell>
+                  <CTableDataCell scope="row">
+                    <CLink className="cursor-pointer text-decoration-none text-primary">
+                      {parse(descriptionLimit)}
+                    </CLink>
+                  </CTableDataCell>
+                  <CTableDataCell scope="row">
+                    <CButton color="info btn-ovh me-2">
+                      <i className="fa fa-pencil-square-o"></i>
+                    </CButton>
+                    <CButton color="danger btn-ovh me-2">
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
           </CTableBody>
         </CTable>
       </OCard>
