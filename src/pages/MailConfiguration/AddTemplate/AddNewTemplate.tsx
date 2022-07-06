@@ -14,10 +14,16 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../stateStore'
 
 function AddNewTemplate(): JSX.Element {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [addNewTemplate, setAddNewTemplate] = useState()
+
+  const getTemplateTypes = useTypedSelector(
+    reduxServices.addNewMailTemplate.selectors.templateTypes,
+  )
 
   const formLabelProps = {
     htmlFor: 'inputNewTemplate',
@@ -62,6 +68,11 @@ function AddNewTemplate(): JSX.Element {
                 name="type"
               >
                 <option value={''}>Select Type</option>
+                {getTemplateTypes?.map((template, index) => (
+                  <option key={index} value={template.id}>
+                    {template.name}
+                  </option>
+                ))}
               </CFormSelect>
             </CCol>
             <CCol>

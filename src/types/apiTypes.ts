@@ -212,3 +212,7 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllJobType: string
   getCheckIfUserExist: string
 }
+
+export interface AddNewTemplateApi extends ApiBase {
+  getMailTemplateType: string
+}
