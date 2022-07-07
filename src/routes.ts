@@ -63,9 +63,10 @@ const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
 )
 
-// const AddNewTemplate = React.lazy(
-//   () => import('./pages/MailConfiguration/AddTemplate/AddNewTemplate'),
-// )
+const AddNewTemplate = React.lazy(
+  () =>
+    import('./pages/Settings/MailConfiguration/AddTemplate/AddNewMailTemplate'),
+)
 
 const EditEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
@@ -133,11 +134,11 @@ const routes = [
     name: 'Add New Employee',
     component: AddNewEmployee,
   },
-  // {
-  //   path: '/addTemplate',
-  //   name: 'Add Template',
-  //   component: AddNewTemplate,
-  // },
+  {
+    path: '/addTemplate',
+    name: 'Add Template',
+    component: AddNewTemplate,
+  },
   {
     path: '/editEmployee/:employeeId',
     name: 'Edit Employee',
