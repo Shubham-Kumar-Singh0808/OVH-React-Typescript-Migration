@@ -14,7 +14,7 @@ const Shift = ({
   isAddDisable,
 }: SelectShiftProps): JSX.Element => {
   const initShift = {} as EmployeeShiftDetails
-  const [val, setVal] = useState(initShift)
+  const [defaultValue, setDefaultValue] = useState(initShift)
   const onHandleSelectManager = (e: { target: { value: string } }) => {
     const name = e.target.value
     const shift = list.find((schedule) => schedule.name === name)
@@ -43,7 +43,7 @@ const Shift = ({
         endTimeMinutes: shift?.endTimeMinutes,
         graceTime: shift?.graceTime,
       } as EmployeeShiftDetails
-      setVal(selectedShift)
+      setDefaultValue(selectedShift)
     }
   }, [value])
 
@@ -65,7 +65,7 @@ const Shift = ({
             size="sm"
             aria-label="shift"
             name="shift"
-            value={val.name}
+            value={defaultValue.name}
             onChange={onHandleSelectManager}
           >
             <option value={''}>Select Shift</option>
@@ -91,9 +91,10 @@ const Shift = ({
           </CCol>
         ) : (
           <CCol sm={3}>
-            In Time : {val.startTimeHour}:{val.startTimeMinutes}
+            In Time : {defaultValue.startTimeHour}:
+            {defaultValue.startTimeMinutes}
             <br></br>
-            Out Time : {val.endTimeHour}:{val.endTimeMinutes}
+            Out Time : {defaultValue.endTimeHour}:{defaultValue.endTimeMinutes}
           </CCol>
         )}
       </CRow>

@@ -44,7 +44,6 @@ export type EditEmployeeState = {
   error?: ValidationError
   isLoading: LoadingState
   editEmployee: EditEmployeeTypes
-  listSize: number
   employments?: GetAllEmployment[]
   jobTypes?: GetAllJobType[]
   userType?: boolean

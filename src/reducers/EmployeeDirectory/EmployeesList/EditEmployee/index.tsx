@@ -14,10 +14,6 @@ import {
 const initialEmployeeState = {
   isLoading: ApiLoadingState.idle,
 } as EditEmployeeState
-// const initialEmployeeState: EditEmployeeState = {
-//   listSize: 0,
-//   isLoading: ApiLoadingState.idle,
-// }
 
 const getSelectedEmployeeInformation = createAsyncThunk<
   EditEmployeeTypes | undefined,
