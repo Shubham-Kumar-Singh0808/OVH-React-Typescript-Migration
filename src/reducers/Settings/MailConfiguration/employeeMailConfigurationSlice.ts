@@ -11,11 +11,11 @@ import { ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
 
-const getEmployeeMailTemplateTypes = createAsyncThunk(
+const getMailTemplateTypes = createAsyncThunk(
   'mailConfiguration/getEmployeeMailTemplateTypes',
   async (_, thunkApi) => {
     try {
-      return await employeeMailConfigurationApi.getEmployeeMailTemplateTypes()
+      return await employeeMailConfigurationApi.getMailTemplateTypes()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -48,7 +48,7 @@ const employeeMailConfigurationSlice = createSlice({
   reducers: {},
 
   extraReducers: (builder) => {
-    builder.addCase(getEmployeeMailTemplateTypes.fulfilled, (state, action) => {
+    builder.addCase(getMailTemplateTypes.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
       state.employeeGetMailTemplateTypes =
         action.payload as EmployeeGetMailTemplateTypes[]
@@ -58,7 +58,7 @@ const employeeMailConfigurationSlice = createSlice({
       state.employeeGetEmailTemplate =
         action.payload as unknown as EmployeeGetEmailTemplate[]
     })
-    builder.addCase(getEmployeeMailTemplateTypes.pending, (state) => {
+    builder.addCase(getMailTemplateTypes.pending, (state) => {
       state.isLoading = ApiLoadingState.loading
     })
   },
@@ -73,7 +73,7 @@ const employeeMailTemplate = (state: RootState): EmployeeGetEmailTemplate[] =>
   state.employeeMailConfiguration.employeeGetEmailTemplate
 
 const employeeMailConfigurationThunk = {
-  getEmployeeMailTemplateTypes,
+  getMailTemplateTypes,
   getEmployeeEmailTemplate,
 }
 

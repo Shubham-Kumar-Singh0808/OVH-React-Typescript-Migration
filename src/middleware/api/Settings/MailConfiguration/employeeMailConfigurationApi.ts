@@ -10,7 +10,7 @@ import {
 } from '../../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-const getEmployeeMailTemplateTypes = async (): Promise<
+const getMailTemplateTypes = async (): Promise<
   EmployeeGetMailTemplateTypes[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -37,7 +37,7 @@ const getEmployeeEmailTemplate = async (
 }
 
 const employeeMailConfigurationApi = {
-  getEmployeeMailTemplateTypes,
+  getMailTemplateTypes,
   getEmployeeEmailTemplate,
 }
 

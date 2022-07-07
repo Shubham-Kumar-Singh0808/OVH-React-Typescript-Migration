@@ -34,9 +34,7 @@ const employeeEmailTemplate = (): JSX.Element => {
   )
 
   useEffect(() => {
-    dispatch(
-      reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
-    )
+    dispatch(reduxServices.employeeMailConfiguration.getMailTemplateTypes())
   }, [dispatch])
 
   console.log(employeeEmailTemplates)
@@ -140,8 +138,8 @@ const employeeEmailTemplate = (): JSX.Element => {
           <CTableBody>
             {employeeEmailTemplates.map((emailTemplate, index) => {
               const descriptionLimit =
-                emailTemplate.template && emailTemplate.template.length > 30
-                  ? `${emailTemplate.template.substring(0, 30)}...`
+                emailTemplate.template && emailTemplate.template.length > 25
+                  ? `${emailTemplate.template.substring(0, 25)}...`
                   : emailTemplate.template
               return (
                 <CTableRow key={index}>
