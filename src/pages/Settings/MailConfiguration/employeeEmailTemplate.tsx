@@ -24,6 +24,7 @@ import OModal from '../../../components/ReusableComponent/OModal'
 const employeeEmailTemplate = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [emailTemplateModel, setEmailTemplateModel] = useState<string>('')
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
   const initialEmployeeEmailTemplate = {} as EmployeeGetEmailTemplate
   const [employeeTemplate, setEmployeeTemplate] = useState(
@@ -66,7 +67,28 @@ const employeeEmailTemplate = (): JSX.Element => {
     setIsModalVisible(true)
     setEmailTemplateModel(productSpecification)
   }
+
+  useEffect(() => {
+    if (employeeTemplate.templateTypeId || employeeTemplate.templateName) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [employeeTemplate.templateTypeId, employeeTemplate.templateName])
   console.log(employeeTemplate)
+
+  const handleClearDetails = () => {
+    setEmployeeTemplate({
+      templateName: '',
+      template: '',
+      templateTypeId: '',
+      templateType: '',
+      assetType: '',
+      assetTypeId: '',
+      email: '',
+      id: '',
+    })
+  }
   return (
     <>
       <OCard
@@ -112,10 +134,15 @@ const employeeEmailTemplate = (): JSX.Element => {
               className="btn-ovh me-1"
               color="success"
               onClick={handleTicketConfiguration}
+              disabled={!isAddButtonEnabled}
             >
               <i className="fa fa-search"></i>Search
             </CButton>
-            <CButton color="warning " className="btn-ovh">
+            <CButton
+              color="warning "
+              className="btn-ovh"
+              onClick={handleClearDetails}
+            >
               Clear
             </CButton>
           </CCol>
@@ -192,6 +219,11 @@ const employeeEmailTemplate = (): JSX.Element => {
             </OModal>
           </CTableBody>
         </CTable>
+        <strong>
+          {employeeEmailTemplates?.length
+            ? `Total Records: ${employeeEmailTemplates?.length}`
+            : `No Records found...`}
+        </strong>
       </OCard>
     </>
   )
