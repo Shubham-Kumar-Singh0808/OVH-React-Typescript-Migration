@@ -31,6 +31,7 @@ import {
   TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
   EmployeeMailConfigurationApi,
+  AddNewTemplateApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -270,3 +271,8 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
     getEmailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
     getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
   }
+
+export const addNewTemplateAPiConfig: AddNewTemplateApi = {
+  getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
+  addNewMailTemplate: apiPrefix + 'mailTemplates/addMailTemplate',
+}

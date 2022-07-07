@@ -8,22 +8,50 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { AddNewTemplate } from '../../../../types/Settings/MailConfiguration/AddTemplate/addMailTemplateTypes'
 
 function AddNewMailTemplate(): JSX.Element {
+  const initialMailTemplateDetails = {} as AddNewTemplate
   const [showEditor, setShowEditor] = useState<boolean>(true)
-  const [addNewTemplate, setAddNewTemplate] = useState()
-
+  const [addNewTemplate, setAddNewTemplate] = useState(
+    initialMailTemplateDetails,
+  )
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false)
+  const dispatch = useAppDispatch()
   const getTemplateTypes = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplateTypes,
   )
+
+  useEffect(() => {
+    dispatch(reduxServices.employeeMailConfiguration.getMailTemplateTypes())
+    dispatch(reduxServices.addNewMailTemplate.getAssetTypes())
+  }, [dispatch])
+
+  const getAssetTypes = useTypedSelector(
+    reduxServices.addNewMailTemplate.selectors.assetTypes,
+  )
+
+  useEffect(() => {
+    if (
+      addNewTemplate.assetTypeId &&
+      addNewTemplate.template &&
+      addNewTemplate.templateName &&
+      addNewTemplate.email &&
+      addNewTemplate.templateTypeId
+    ) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [addNewTemplate])
 
   const formLabelProps = {
     htmlFor: 'inputNewTemplate',
@@ -86,6 +114,42 @@ function AddNewMailTemplate(): JSX.Element {
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
+              Asset Type: <span className="text-danger">*</span>
+            </CFormLabel>
+            <CCol sm={4}>
+              <CFormSelect
+                data-testid="form-select"
+                aria-label="Default select example"
+                size="sm"
+                id="assetType"
+                name="assetType"
+              >
+                <option value={''}>Select Type</option>
+                {getAssetTypes?.map((assetType, index) => (
+                  <option key={index} value={assetType.id}>
+                    {assetType.assetType}
+                  </option>
+                ))}
+              </CFormSelect>
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-2 col-form-label text-end"
+            >
+              Email:
+              <span className="text-danger">*</span>
+            </CFormLabel>
+            <CCol sm={4}>
+              <CFormInput type="text" name="email" maxLength={50} />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-2 col-form-label text-end"
+            >
               Title:
               <span className="text-danger">*</span>
             </CFormLabel>
@@ -123,7 +187,11 @@ function AddNewMailTemplate(): JSX.Element {
               className="col-sm-2 col-form-label text-end"
             ></CFormLabel>
             <CCol sm={4}>
-              <CButton className="btn-ovh me-1 text-white" color="success">
+              <CButton
+                className="btn-ovh me-1 text-white"
+                color="success"
+                disabled={!isButtonEnabled}
+              >
                 Add
               </CButton>
               <CButton color="warning " className="btn-ovh text-white">

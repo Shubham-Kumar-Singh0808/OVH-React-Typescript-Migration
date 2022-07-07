@@ -29,6 +29,7 @@ import { employeeHandbookSettingService } from './EmployeeHandbook/HandbookSetti
 import { timeInOfficeReportService } from './TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
 import { employeeMailConfigurationService } from './Settings/MailConfiguration/employeeMailConfigurationSlice'
+import { addTemplateService } from './Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 
 export const reduxServices = {
   app: appService,
@@ -62,4 +63,5 @@ export const reduxServices = {
   employeeLeaveSettings: employeeLeaveSettingsService,
   technology: technologyService,
   employeeMailConfiguration: employeeMailConfigurationService,
+  addNewMailTemplate: addTemplateService,
 }
