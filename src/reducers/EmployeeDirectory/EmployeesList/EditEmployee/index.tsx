@@ -5,13 +5,19 @@ import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import employeeGeneralInformationApi from '../../../../middleware/api/EmployeeDirectory/EmployeesList/EditEmployee'
 import { AppDispatch, RootState } from '../../../../stateStore'
-import { ValidationError } from '../../../../types/commonTypes'
+import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import {
   EditEmployeeTypes,
   EditEmployeeState,
 } from '../../../../types/EmployeeDirectory/EmployeesList/EditEmployee'
 
-const initialEmployeeState = {} as EditEmployeeState
+const initialEmployeeState = {
+  isLoading: ApiLoadingState.idle,
+} as EditEmployeeState
+// const initialEmployeeState: EditEmployeeState = {
+//   listSize: 0,
+//   isLoading: ApiLoadingState.idle,
+// }
 
 const getSelectedEmployeeInformation = createAsyncThunk<
   EditEmployeeTypes | undefined,
@@ -68,6 +74,7 @@ export const { setEmployee, clearError } = employeeSlice.actions
 
 const selectEmployeeData = (state: RootState): EditEmployeeTypes =>
   state.employee.editEmployee
+const isLoading = (state: RootState): LoadingState => state.employee.isLoading
 
 export const getEmployeeThunk = {
   getSelectedEmployeeInformation,
@@ -75,6 +82,7 @@ export const getEmployeeThunk = {
 
 export const employeeSelectors = {
   selectEmployeeData,
+  isLoading,
 }
 export const employeeService = {
   ...getEmployeeThunk,

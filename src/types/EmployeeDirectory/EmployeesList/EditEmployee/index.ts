@@ -41,9 +41,10 @@ export type EditEmployeeState = {
   countries?: GetCountries[]
   hrData?: GetHrData[]
   reportingManagers?: GetAllReportingManagers[]
-  error: ValidationError
+  error?: ValidationError
   isLoading: LoadingState
   editEmployee: EditEmployeeTypes
+  listSize: number
   employments?: GetAllEmployment[]
   jobTypes?: GetAllJobType[]
   userType?: boolean

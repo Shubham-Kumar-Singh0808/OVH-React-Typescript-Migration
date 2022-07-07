@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { CRow, CCol, CButton, CFormLabel } from '@coreui/react-pro'
+import { CRow, CCol, CButton, CFormLabel, CSpinner } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -25,6 +25,7 @@ import {
 } from '../AddNewEmployee/AddNewEmployeeChildComponents'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { EditEmployeeTypes } from '../../../../types/EmployeeDirectory/EmployeesList/EditEmployee'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const EditEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -268,6 +269,9 @@ const EditEmployee = (): JSX.Element => {
   const employeeDesignationList = useTypedSelector(
     reduxServices.employeeDesignation.selectors.employeeDesignationList,
   )
+  const isLoading = useTypedSelector(reduxServices.employee.selectors.isLoading)
+
+  console.log(isLoading)
 
   // Start - Compose data
   const composedDepartmentList = listComposer(
@@ -313,160 +317,158 @@ const EditEmployee = (): JSX.Element => {
       CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
     >
-      <CRow className="mb-3">
-        <CFormLabel
-          {...dynamicFormLabelProps(
-            'birthday',
-            'col-sm-3 col-form-label text-end',
-          )}
-        >
-          Employee Name:
-        </CFormLabel>
-        <CCol
-          sm={3}
-        >{`${editEmployee.firstName} ${editEmployee.lastName}`}</CCol>
-      </CRow>
-      <OSelectList
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        list={composedDepartmentList}
-        setValue={onHandleDepartment}
-        value={editEmployee.departmentName}
-        name="Department"
-        label="Select Department"
-      />
-      <OSelectList
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        list={composedTechnologyList}
-        setValue={onHandleTechnology}
-        value={editEmployee.technology}
-        name="Technology"
-        label="Select Technology"
-      />
-      <Designation
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        list={composedDesignationList}
-        setValue={onHandleDesignation}
-        value={editEmployee.designation}
-        setToggleShift={() => setDestinationToggle(!destinationToggle)}
-        toggleValue={destinationToggle}
-        isAddDisable={true}
-      />
-      <OSelectList
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        list={composedUserRoles}
-        setValue={onHandleUserRole}
-        value={editEmployee.role}
-        name="Role"
-        label="Select Role"
-      />
-      <ReportingManager
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        reportManagersList={reportingManagersList}
-        onSelectReportManager={onHandleReportManager}
-        shouldReset={resetFields.reportManager}
-        reportValue={
-          editEmployee.manager?.fullName
-            ? editEmployee.manager.fullName
-            : `${editEmployee.manager?.firstName} ${editEmployee.manager?.lastName}`
-        }
-      />
-      <ProjectManager
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        managersList={reportingManagersList}
-        onSelectManager={onHandleProjectManager}
-        shouldReset={resetFields.projectManager}
-        projectValue={
-          editEmployee.manager?.fullName
-            ? editEmployee.manager.fullName
-            : `${editEmployee.manager?.firstName} ${editEmployee.manager?.lastName}`
-        }
-      />
-      <HRAssociate
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        hrDataList={hrDataList}
-        onSelectHRAssociate={onHandleHRAssociate}
-        shouldReset={resetFields.hrAssociate}
-        hrValue={
-          editEmployee.hrAssociate?.fullName
-            ? editEmployee.hrAssociate.fullName
-            : `${editEmployee.hrAssociate?.firstName} ${editEmployee.hrAssociate?.lastName}`
-        }
-      />
-      <OSelectList
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        list={composedEmploymentList}
-        setValue={onHandleEmployeeType}
-        value={editEmployee.employmentTypeName}
-        name="EmploymentType"
-        label="Select Employment Type"
-      />
-      <OSelectList
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        list={composedJobTypes}
-        setValue={onHandleJobType}
-        value={editEmployee.jobTypeName}
-        name="JobType"
-        label="Select Job Type"
-      />
-      <OSelectList
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        list={countryList}
-        setValue={onHandleCountryType}
-        value={editEmployee.country}
-        name="Country"
-        label="Select Country"
-      />
-      <Shift
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        list={employeeShifts}
-        setValue={onHandleShift}
-        value={editEmployee.timeSlotDTO.name}
-        setToggleShift={() => setShiftToggle(!shiftToggle)}
-        toggleValue={shiftToggle as boolean}
-        isAddDisable={true}
-      />
-      <OSelectList
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        list={countryList}
-        setValue={onHandleCountryType}
-        value={editEmployee.country}
-        name="Employee Status"
-        label="Select Employee Status"
-      />
-      <EmploymentContract
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        onStartDateChangeHandler={onHandleStartDate}
-        onEndDateChangeHandler={onHandleEndDate}
-        onContractExistHandler={onHandleContractExist}
-        startDateValue={editEmployee.contractStartDate as Date}
-        endDateValue={editEmployee.contractEndDate as Date}
-        isContractExist={editEmployee.contractExists}
-      />
-      <WorkFrom
-        dynamicFormLabelProps={dynamicFormLabelProps}
-        onWorkFromHandler={onHandleWorkfrom}
-        workFromValue={editEmployee.workStatus as string}
-      />
-      <CRow className="mb-3 align-items-center">
-        <CCol sm={{ span: 6, offset: 3 }}>
-          <CButton
-            className="btn-ovh me-1"
-            color="success"
-            disabled={!isViewBtnEnabled}
-            data-testid="edit-employee"
-          >
-            Update
-          </CButton>
-          <CButton
-            color="warning "
-            className="btn-ovh"
-            data-testid="clear-employee"
-            onClick={handleClearFields}
-          >
-            Clear
-          </CButton>
+      {isLoading === ApiLoadingState.succeeded ? (
+        <>
+          <CRow className="mb-3">
+            <CFormLabel
+              {...dynamicFormLabelProps(
+                'birthday',
+                'col-sm-3 col-form-label text-end',
+              )}
+            >
+              Employee Name:
+            </CFormLabel>
+            <CCol
+              sm={3}
+            >{`${editEmployee.firstName} ${editEmployee.lastName}`}</CCol>
+          </CRow>
+          <OSelectList
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={composedDepartmentList}
+            setValue={onHandleDepartment}
+            value={editEmployee.departmentName}
+            name="Department"
+            label="Select Department"
+          />
+          <OSelectList
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={composedTechnologyList}
+            setValue={onHandleTechnology}
+            value={editEmployee.technology}
+            name="Technology"
+            label="Select Technology"
+          />
+          <Designation
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={composedDesignationList}
+            setValue={onHandleDesignation}
+            value={editEmployee.designation}
+            setToggleShift={() => setDestinationToggle(!destinationToggle)}
+            toggleValue={destinationToggle}
+            isAddDisable={true}
+          />
+          <OSelectList
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={composedUserRoles}
+            setValue={onHandleUserRole}
+            value={editEmployee.role}
+            name="Role"
+            label="Select Role"
+          />
+          <ReportingManager
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            reportManagersList={reportingManagersList}
+            onSelectReportManager={onHandleReportManager}
+            shouldReset={resetFields.reportManager}
+            reportValue={`${editEmployee.manager?.firstName} ${editEmployee.manager?.lastName}`}
+          />
+          <ProjectManager
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            managersList={reportingManagersList}
+            onSelectManager={onHandleProjectManager}
+            shouldReset={resetFields.projectManager}
+            projectValue={`${editEmployee.manager?.firstName} ${editEmployee.manager?.lastName}`}
+          />
+          <HRAssociate
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            hrDataList={hrDataList}
+            onSelectHRAssociate={onHandleHRAssociate}
+            shouldReset={resetFields.hrAssociate}
+            hrValue={`${editEmployee.hrAssociate?.firstName} ${editEmployee.hrAssociate?.lastName}`}
+          />
+          <OSelectList
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={composedEmploymentList}
+            setValue={onHandleEmployeeType}
+            value={editEmployee.employmentTypeName}
+            name="EmploymentType"
+            label="Select Employment Type"
+          />
+          <OSelectList
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={composedJobTypes}
+            setValue={onHandleJobType}
+            value={editEmployee.jobTypeName}
+            name="JobType"
+            label="Select Job Type"
+          />
+          <OSelectList
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={countryList}
+            setValue={onHandleCountryType}
+            value={editEmployee.country}
+            name="Country"
+            label="Select Country"
+          />
+          <Shift
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={employeeShifts}
+            setValue={onHandleShift}
+            value={editEmployee.timeSlotDTO.name}
+            setToggleShift={() => setShiftToggle(!shiftToggle)}
+            toggleValue={shiftToggle}
+            isAddDisable={true}
+          />
+          <OSelectList
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={countryList}
+            setValue={onHandleCountryType}
+            value={editEmployee.country}
+            name="Employee Status"
+            label="Select Employee Status"
+          />
+          <EmploymentContract
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            onStartDateChangeHandler={onHandleStartDate}
+            onEndDateChangeHandler={onHandleEndDate}
+            onContractExistHandler={onHandleContractExist}
+            startDateValue={editEmployee.contractStartDate as Date}
+            endDateValue={editEmployee.contractEndDate as Date}
+            isContractExist={editEmployee.contractExists}
+          />
+          <WorkFrom
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            onWorkFromHandler={onHandleWorkfrom}
+            workFromValue={editEmployee.workStatus}
+          />
+          <CRow className="mb-3 align-items-center">
+            <CCol sm={{ span: 6, offset: 3 }}>
+              <CButton
+                className="btn-ovh me-1"
+                color="success"
+                disabled={!isViewBtnEnabled}
+                data-testid="edit-employee"
+              >
+                Update
+              </CButton>
+              <CButton
+                color="warning "
+                className="btn-ovh"
+                data-testid="clear-employee"
+                onClick={handleClearFields}
+              >
+                Clear
+              </CButton>
+            </CCol>
+          </CRow>
+        </>
+      ) : (
+        <CCol>
+          <CRow className="category-loading-spinner">
+            <CSpinner />
+          </CRow>
         </CCol>
-      </CRow>
+      )}
     </OCard>
   )
 }

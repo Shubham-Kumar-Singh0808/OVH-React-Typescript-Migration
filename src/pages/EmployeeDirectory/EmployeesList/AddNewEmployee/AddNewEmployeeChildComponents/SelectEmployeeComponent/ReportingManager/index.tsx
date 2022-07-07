@@ -60,6 +60,7 @@ const ReportingManager = ({
             }}
             getItemValue={(item) => item.fullName}
             items={reportManagersList}
+            data-testid="report-input"
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
               <div
