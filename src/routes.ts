@@ -56,7 +56,7 @@ const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
 const MailConfiguration = React.lazy(
-  () => import('./pages/Settings/MailConfiguration/employeeEmailTemplate'),
+  () => import('./pages/Settings/MailConfiguration/EmployeeEmailTemplate'),
 )
 
 const AddNewEmployee = React.lazy(

@@ -48,7 +48,6 @@ const employeeEmailTemplate = (): JSX.Element => {
   }, [dispatch])
 
   const handleTicketConfiguration = () => {
-    console.log(employeeTemplate.templateTypeId)
     dispatch(
       reduxServices.employeeMailConfiguration.getEmployeeEmailTemplate({
         templateName: employeeTemplate.templateName,
@@ -67,9 +66,9 @@ const employeeEmailTemplate = (): JSX.Element => {
     })
   }
 
-  const handleModal = (productSpecification: string) => {
+  const handleModal = (emailTemplate: string) => {
     setIsModalVisible(true)
-    setEmailTemplateModel(productSpecification)
+    setEmailTemplateModel(emailTemplate)
   }
 
   useEffect(() => {
@@ -196,7 +195,11 @@ const employeeEmailTemplate = (): JSX.Element => {
                   <CTableDataCell scope="row">
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
-                      onClick={() => handleModal(emailTemplate.template)}
+                      onClick={() =>
+                        handleModal(
+                          emailTemplate.templateName && emailTemplate.template,
+                        )
+                      }
                     >
                       {parse(descriptionLimit)}
                     </CLink>
