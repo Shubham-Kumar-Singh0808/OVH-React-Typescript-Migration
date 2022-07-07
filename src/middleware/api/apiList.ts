@@ -274,5 +274,5 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
 
 export const addNewTemplateAPiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
-  addNewMailTemplate: apiPrefix + 'mailTemplates/addMailTemplate',
+  addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
 }

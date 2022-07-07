@@ -17,6 +17,7 @@ import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { AddNewTemplate } from '../../../../types/Settings/MailConfiguration/AddTemplate/addMailTemplateTypes'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 function AddNewMailTemplate(): JSX.Element {
   const initialMailTemplateDetails = {} as AddNewTemplate
@@ -58,11 +59,44 @@ function AddNewMailTemplate(): JSX.Element {
     className: 'col-form-label category-label',
   }
 
-  //   const handleDescription = (description: string) => {
-  //     setAddNewTemplate((prevState) => {
-  //       return { ...prevState, ...{ description } }
-  //     })
-  //   }
+  const handleDescription = (template: string) => {
+    setAddNewTemplate((prevState) => {
+      return { ...prevState, ...{ template } }
+    })
+  }
+
+  const handleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const { name, value } = event.target
+    console.log(name)
+    setAddNewTemplate((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
+  }
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="Mail Template added successfully"
+      toastColor="success"
+    />
+  )
+
+  const handleAddNewHandbookPage = async () => {
+    const addNewTemplateResultAction = await dispatch(
+      reduxServices.addNewMailTemplate.addNewMailTemplate(addNewTemplate),
+    )
+
+    if (
+      reduxServices.addNewMailTemplate.addNewMailTemplate.fulfilled.match(
+        addNewTemplateResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    }
+  }
 
   return (
     <>
@@ -92,8 +126,10 @@ function AddNewMailTemplate(): JSX.Element {
                 data-testid="form-select"
                 aria-label="Default select example"
                 size="sm"
-                id="type"
-                name="type"
+                id="templateTypeId"
+                name="templateTypeId"
+                value={addNewTemplate?.templateTypeId}
+                onChange={handleInputChange}
               >
                 <option value={''}>Select Type</option>
                 {getTemplateTypes?.map((templateType, index) => (
@@ -122,7 +158,9 @@ function AddNewMailTemplate(): JSX.Element {
                 aria-label="Default select example"
                 size="sm"
                 id="assetType"
-                name="assetType"
+                name="assetTypeId"
+                value={addNewTemplate?.assetTypeId}
+                onChange={handleInputChange}
               >
                 <option value={''}>Select Type</option>
                 {getAssetTypes?.map((assetType, index) => (
@@ -142,7 +180,13 @@ function AddNewMailTemplate(): JSX.Element {
               <span className="text-danger">*</span>
             </CFormLabel>
             <CCol sm={4}>
-              <CFormInput type="text" name="email" maxLength={50} />
+              <CFormInput
+                type="text"
+                name="email"
+                value={addNewTemplate?.email}
+                maxLength={50}
+                onChange={handleInputChange}
+              />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -154,7 +198,13 @@ function AddNewMailTemplate(): JSX.Element {
               <span className="text-danger">*</span>
             </CFormLabel>
             <CCol sm={4}>
-              <CFormInput type="text" name="title" maxLength={50} />
+              <CFormInput
+                type="text"
+                name="templateName"
+                value={addNewTemplate?.templateName}
+                maxLength={50}
+                onChange={handleInputChange}
+              />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -169,11 +219,11 @@ function AddNewMailTemplate(): JSX.Element {
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
-                  initData={''}
+                  initData={addNewTemplate?.template}
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
-                    //   handleDescription(editor.getData().trim())
+                    handleDescription(editor.getData().trim())
                   }}
                 />
               </CCol>
@@ -188,13 +238,13 @@ function AddNewMailTemplate(): JSX.Element {
             ></CFormLabel>
             <CCol sm={4}>
               <CButton
-                className="btn-ovh me-1 text-white"
+                className="btn-ovh me-1"
                 color="success"
-                disabled={!isButtonEnabled}
+                onClick={handleAddNewHandbookPage}
               >
                 Add
               </CButton>
-              <CButton color="warning " className="btn-ovh text-white">
+              <CButton color="warning " className="btn-ovh me-1">
                 Clear
               </CButton>
             </CCol>
