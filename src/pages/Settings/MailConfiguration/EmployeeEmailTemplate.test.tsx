@@ -74,4 +74,21 @@ describe('email Template List Table Testing', () => {
     )
     expect(screen.getByText('Template')).toBeInTheDocument()
   })
+  test('should render Type and Search Text empty button as disabled initially', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeEmailTemplate />
+      </ReduxProvider>,
+    )
+    expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument()
+  })
+  // eslint-disable-next-line sonarjs/no-identical-functions
+  test('should render Email Template clear button as Enabled initially', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeEmailTemplate />
+      </ReduxProvider>,
+    )
+    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
+  })
 })
