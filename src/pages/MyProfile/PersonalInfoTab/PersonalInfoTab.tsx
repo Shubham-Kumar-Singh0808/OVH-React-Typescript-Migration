@@ -167,6 +167,24 @@ const PersonalInfoTab = ({
     employeePresenetAddressDetails.presentZip,
   ])
 
+  useEffect(() => {
+    if (
+      employeePassportDetails?.passportNumber &&
+      employeePassportDetails?.passportIssuedPlace &&
+      employeePassportDetails?.passportIssuedDate &&
+      employeePassportDetails?.passportExpDate
+    ) {
+      setSaveButtonEnabled(true)
+    } else {
+      setSaveButtonEnabled(false)
+    }
+  }, [
+    employeePassportDetails?.passportNumber,
+    employeePassportDetails?.passportIssuedPlace,
+    employeePassportDetails?.passportIssuedDate,
+    employeePassportDetails?.passportExpDate,
+  ])
+
   const onChangePresenetAddressHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -205,32 +223,33 @@ const PersonalInfoTab = ({
     backImage: File | null,
   ) => {
     setEmployeePassportDetails(passportDetails)
-    setFrontUpload(frontImage)
-    setBackUpload(backImage)
+    if (frontImage) {
+      setFrontUpload(frontImage)
+    } else if (backImage) {
+      setBackUpload(backImage)
+    }
   }
 
-  // const uploadFile = async () => {
-  //   let passportFront = null
-  //   let passportBack = null
-  //   if (frontUpload) {
-  //     const frontImage = new FormData()
-  //     frontImage.append('file1', frontUpload, frontUpload.name)
-  //     passportFront = frontImage as FormData
-  //   }
-  //   if (backUpload) {
-  //     const backImage = new FormData()
-  //     backImage.append('file1', backUpload, backUpload.name)
-  //     passportBack = backImage as FormData
-  //   }
-  //   const prepareObject: EmployeePassportImage = {
-  //     empId: employeeId,
-  //     file1: passportFront,
-  //     file2: passportBack,
-  //   }
-  //   await dispatch(
-  //     reduxServices.personalInformation.uploadEmployeePassport(prepareObject),
-  //   )
-  // }
+  const uploadFile = async () => {
+    let passport = null
+    const passportFormData = new FormData()
+    if (frontUpload) {
+      passportFormData.append('file1', frontUpload, frontUpload.name)
+    }
+    if (backUpload) {
+      passportFormData.append('file2', backUpload, backUpload.name)
+    }
+
+    passport = passportFormData as FormData
+    const prepareObject: EmployeePassportImage = {
+      empId: employeeId,
+      file1: passport,
+    }
+
+    await dispatch(
+      reduxServices.personalInformation.uploadEmployeePassport(prepareObject),
+    )
+  }
 
   const handleSubmitPersonalInfoDetails = async (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -247,6 +266,10 @@ const PersonalInfoTab = ({
         id: employeePersonalInformation.id,
       }),
     )
+
+    if (frontUpload || backUpload) {
+      await uploadFile()
+    }
 
     if (
       reduxServices.basicInformation.updateEmployeeBasicInformation.fulfilled.match(

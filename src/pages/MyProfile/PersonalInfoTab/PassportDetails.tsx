@@ -5,7 +5,6 @@ import {
   CFormLabel,
   CCol,
   CFormInput,
-  CButton,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -14,9 +13,6 @@ import {
   EmployeeGeneralInformation,
   EmployeePassportDetails,
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
-import { EmployeePassportImage } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 export const PassportDetails = (props: {
   employeeDetails: EmployeeGeneralInformation
@@ -45,8 +41,7 @@ export const PassportDetails = (props: {
   const [employeePassportDetails, setEmployeePassportDetails] = useState(
     selectedUserPassportDetails,
   )
-  const [error, setError] = useState<boolean>(false)
-  const [validImage, setValidImage] = useState<boolean>(true)
+
   const [frontUpload, setFrontUpload] = useState<File | null>(null)
   const [backUpload, setBackUpload] = useState<File | null>(null)
 
@@ -59,6 +54,7 @@ export const PassportDetails = (props: {
     setEmployeePassportDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
+    props.handlePassportChange(employeePassportDetails, null, null)
   }
   const onDateChangeHandler = (date: Date, e: { name: string }) => {
     if (employeePassportDetails) {
@@ -67,20 +63,18 @@ export const PassportDetails = (props: {
       setEmployeePassportDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
+      props.handlePassportChange(employeePassportDetails, null, null)
     }
   }
 
-  const dispatch = useAppDispatch()
-
-  const employeeId = useTypedSelector(
-    reduxServices.authentication.selectors.selectEmployeeId,
-  )
-
-  // useEffect(() => {
-  //   if (frontUpload) {
-  //     props.handlePassportChange(employeePassportDetails, frontUpload, null)
-  //   }
-  // }, [frontUpload, backUpload])
+  useEffect(() => {
+    if (frontUpload) {
+      props.handlePassportChange(employeePassportDetails, frontUpload, null)
+    }
+    if (backUpload) {
+      props.handlePassportChange(employeePassportDetails, null, backUpload)
+    }
+  }, [frontUpload, backUpload])
 
   useEffect(() => {
     if (employeePassportDetails?.passportNumber) {
@@ -102,11 +96,7 @@ export const PassportDetails = (props: {
     const file = element.files
     if (!file || !element.name) return
     if (Number(file[0].size) > Number(400000)) {
-      setValidImage(false)
-      setError(false)
-    } else {
-      setValidImage(true)
-      setError(true)
+      return
     }
 
     if (element.name === 'file') {
@@ -114,26 +104,6 @@ export const PassportDetails = (props: {
     } else {
       setBackUpload(file[0])
     }
-  }
-
-  const uploadFile = async () => {
-    let passport = null
-    const passportFormData = new FormData()
-    if (frontUpload) {
-      passportFormData.append('file1', frontUpload, frontUpload.name)
-    }
-    if (backUpload) {
-      passportFormData.append('file2', backUpload, backUpload.name)
-    }
-
-    passport = passportFormData as FormData
-    const prepareObject: EmployeePassportImage = {
-      empId: employeeId,
-      file1: passport,
-    }
-    await dispatch(
-      reduxServices.personalInformation.uploadEmployeePassport(prepareObject),
-    )
   }
 
   return (
@@ -240,7 +210,7 @@ export const PassportDetails = (props: {
             />
             <div className="mt-2">
               <img
-                className="basic-info-img"
+                className="mt-2 basic-info-box"
                 src={props.employeeDetails.passportFrontPagePath}
                 alt="User Profile"
               />{' '}
@@ -267,22 +237,11 @@ export const PassportDetails = (props: {
             />
             <div className="mt-2">
               <img
-                className="basic-info-img"
+                className="mt-2 basic-info-box"
                 src={props.employeeDetails.passportBackPagePath}
                 alt="User Profile"
               />{' '}
             </div>
-          </CCol>
-        </CRow>
-        <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
-              className="mt-1 ms-2 btn-ovh btn btn-success"
-              size="sm"
-              onClick={uploadFile}
-            >
-              Save
-            </CButton>
           </CCol>
         </CRow>
       </CCardBody>
