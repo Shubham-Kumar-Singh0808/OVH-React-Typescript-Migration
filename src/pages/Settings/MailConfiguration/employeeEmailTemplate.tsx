@@ -23,16 +23,22 @@ import OModal from '../../../components/ReusableComponent/OModal'
 
 const employeeEmailTemplate = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
+
   const [emailTemplateModel, setEmailTemplateModel] = useState<string>('')
+
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+
   const dispatch = useAppDispatch()
+
   const initialEmployeeEmailTemplate = {} as EmployeeGetEmailTemplate
   const [employeeTemplate, setEmployeeTemplate] = useState(
     initialEmployeeEmailTemplate,
   )
+
   const employeeEmailTemplates = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplate,
   )
+
   const employeeEmailTemplateType = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplateTypes,
   )
@@ -40,8 +46,6 @@ const employeeEmailTemplate = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.employeeMailConfiguration.getMailTemplateTypes())
   }, [dispatch])
-
-  console.log(employeeEmailTemplates)
 
   const handleTicketConfiguration = () => {
     console.log(employeeTemplate.templateTypeId)
@@ -75,7 +79,6 @@ const employeeEmailTemplate = (): JSX.Element => {
       setIsAddButtonEnabled(false)
     }
   }, [employeeTemplate.templateTypeId, employeeTemplate.templateName])
-  console.log(employeeTemplate)
 
   const handleClearDetails = () => {
     setEmployeeTemplate({
@@ -89,6 +92,7 @@ const employeeEmailTemplate = (): JSX.Element => {
       id: '',
     })
   }
+
   return (
     <>
       <OCard
