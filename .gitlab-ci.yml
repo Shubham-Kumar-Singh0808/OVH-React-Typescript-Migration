@@ -1,23 +1,41 @@
 image: node:16
 
 stages:
+  - initialization
   - test
   - sonarqube
   - deployqa
 
+cache:
+  key: ovh-react-typescript-migration
+  paths:
+    - node_modules/
+
+Initialization:
+  stage: initialization
+  only:
+    - merge_request
+    - develop
+    - qa
+    - master
+  allow_failure: false
+  before_script:
+    - echo "Executing build step"
+  script:
+    - echo "Installing npm package"
+    - npm install
+
 Test:
   stage: test
   only:
-    - merge_requests
+    - merge_request
+    - develop
+    - qa
+    - master
   allow_failure: false
-  cache:
-    key: ovh-react-typescript-migration
-    paths:
-      - node_modules/
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   script:
     - echo "Starting Test and Lint"
-    - npm install
     - npm run lint
     - npm run test:cov
   artifacts:
@@ -30,15 +48,13 @@ Test:
 Sonarqube:
   stage: sonarqube
   only:
-    - merge_requests
+    - merge_request
+    - develop
+    - qa
+    - master
   allow_failure: false
-  cache:
-    key: ovh-react-typescript-migration
-    paths:
-      - node_modules/
   script:
     - echo "Starting sonar analysis"
-    - npm install
     - dir
     - cmd.exe /C "sonar-scanner -X -Dsonar.projectKey=ovh-typescript-react-migration -Dsonar.projectName=OVHTypeScriptReactMigration -Dsonar.sources=src -Dsonar.qualitygate.wait=true -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info"
 

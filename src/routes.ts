@@ -47,7 +47,28 @@ const EmployeeHandbook = React.lazy(
 const Handbook = React.lazy(
   () => import('./pages/EmployeeHandbook/ShowHandbook'),
 )
+const EmployeeHandbookSettings = React.lazy(
+  () =>
+    import(
+      './pages/EmployeeHandbook/HandbookSettings/EmployeeHandbookSettings'
+    ),
+)
 
+const TimeInOfficeReport = React.lazy(
+  () =>
+    import('./pages/TimeAndAttendance/TimeInOfficeReport/TimeInOfficeReport'),
+)
+const LeaveSettings = React.lazy(
+  () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
+)
+
+const AddNewEmployee = React.lazy(
+  () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
+)
+
+const EditEmployee = React.lazy(
+  () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -100,6 +121,31 @@ const routes = [
     path: '/showemployeehandbook/:clickedpageName',
     name: 'Handbook',
     component: Handbook,
+  },
+  {
+    path: '/handbooksettings',
+    name: 'Handbook Settings',
+    component: EmployeeHandbookSettings,
+  },
+  {
+    path: '/timeInOfficeReport',
+    name: 'Time in Office Report',
+    component: TimeInOfficeReport,
+  },
+  {
+    path: '/leaveSettings',
+    name: 'Leave Settings',
+    component: LeaveSettings,
+  },
+  {
+    path: '/addNewEmployee',
+    name: 'Add New Employee',
+    component: AddNewEmployee,
+  },
+  {
+    path: '/editEmployee/:employeeId',
+    name: 'Edit Employee',
+    component: EditEmployee,
   },
 ]
 

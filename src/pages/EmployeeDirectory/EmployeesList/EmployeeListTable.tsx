@@ -102,13 +102,15 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                         </CButton>
                       </Link>
                       &nbsp;
-                      <CButton
-                        color="info"
-                        size="sm"
-                        className="btn-ovh-employee-list"
-                      >
-                        <i className="fa fa-pencil-square-o text-white"></i>
-                      </CButton>
+                      <Link to={`/editEmployee/${employee.id}`}>
+                        <CButton
+                          color="info"
+                          size="sm"
+                          className="btn-ovh-employee-list"
+                        >
+                          <i className="fa fa-pencil-square-o text-white"></i>
+                        </CButton>
+                      </Link>
                     </CTableDataCell>
                   </CTableRow>
                 )

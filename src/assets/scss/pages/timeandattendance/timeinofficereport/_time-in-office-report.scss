@@ -1,0 +1,34 @@
+.time-in-office-header {
+  color: $primary-base;
+  font-weight: 300 !important;
+  font-size: 14px !important;
+}
+
+.radio-container {
+  margin-bottom: 20px;
+}
+
+.color-for-time-hyphen {
+  color: blue !important;
+}
+
+.color-for-time-total {
+  color: green !important;
+}
+
+.time-in-office-table > :not(caption) > * > * {
+  padding: 0.5rem 0.1rem !important;
+}
+
+.time-in-office-header {
+  display: flex;
+  align-items: center;
+
+  h5 {
+    margin-bottom: 0 !important;
+  }
+}
+
+.time-in-office-report-options {
+  margin-bottom: 10px;
+}
