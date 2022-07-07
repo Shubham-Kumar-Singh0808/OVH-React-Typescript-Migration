@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { CRow, CCol, CButton, CFormLabel, CSpinner } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -321,6 +321,15 @@ const EditEmployee = (): JSX.Element => {
     >
       {isLoading === ApiLoadingState.succeeded ? (
         <>
+          <CRow className="justify-content-end">
+            <CCol className="text-end" md={4}>
+              <Link to="/employeeList">
+                <CButton color="info" className="btn-ovh me-1">
+                  <i className="fa fa-arrow-left me-1"></i>Back
+                </CButton>
+              </Link>
+            </CCol>
+          </CRow>
           <CRow className="mb-3">
             <CFormLabel
               {...dynamicFormLabelProps(
