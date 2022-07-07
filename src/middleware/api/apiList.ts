@@ -30,6 +30,7 @@ import {
   VisaListApi,
   TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
+  EmployeeMailConfigurationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -263,3 +264,9 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getAllJobType: apiPrefix + '/jobapplicant/getJobType',
   getCheckIfUserExist: apiPrefix + '/Employee/isemployeeUsernameexist',
 }
+
+export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
+  {
+    getEmailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
+    getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+  }
