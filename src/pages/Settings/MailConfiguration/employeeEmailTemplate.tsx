@@ -133,7 +133,7 @@ const employeeEmailTemplate = (): JSX.Element => {
               onChange={onChangeEmailTemplateHandler}
             />
           </CCol>
-          <CCol>
+          <CCol sm={2}>
             <CButton
               className="btn-ovh me-1"
               color="success"
@@ -150,16 +150,14 @@ const employeeEmailTemplate = (): JSX.Element => {
               Clear
             </CButton>
           </CCol>
-          <CCol>
+          <CCol sm={3}>
             <CButton color="info btn-ovh me-1" className="text-white">
               <i className="fa fa-plus me-1"></i>Add Template
             </CButton>
-          </CCol>
-          {/* <CCol>
             <CButton color="info btn-ovh me-1" className="text-white">
               <i className="fa fa-plus me-1"></i>Click to Export
             </CButton>
-          </CCol> */}
+          </CCol>
         </CRow>
         <br></br>
         <br></br>
