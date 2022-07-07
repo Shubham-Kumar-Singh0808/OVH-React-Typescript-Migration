@@ -56,7 +56,7 @@ const employeeMailConfigurationSlice = createSlice({
     builder.addCase(getEmployeeEmailTemplate.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
       state.employeeGetEmailTemplate =
-        action.payload as unknown as EmployeeGetEmailTemplate[]
+        action.payload as EmployeeGetEmailTemplate[]
     })
     builder.addCase(getMailTemplateTypes.pending, (state) => {
       state.isLoading = ApiLoadingState.loading

@@ -19,8 +19,11 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { EmployeeGetEmailTemplate } from '../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
+import OModal from '../../../components/ReusableComponent/OModal'
 
 const employeeEmailTemplate = (): JSX.Element => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [emailTemplateModel, setEmailTemplateModel] = useState<string>('')
   const dispatch = useAppDispatch()
   const initialEmployeeEmailTemplate = {} as EmployeeGetEmailTemplate
   const [employeeTemplate, setEmployeeTemplate] = useState(
@@ -40,14 +43,14 @@ const employeeEmailTemplate = (): JSX.Element => {
   console.log(employeeEmailTemplates)
 
   const handleTicketConfiguration = () => {
+    console.log(employeeTemplate.templateTypeId)
     dispatch(
       reduxServices.employeeMailConfiguration.getEmployeeEmailTemplate({
-        templateName: employeeTemplate?.templateName,
-        templateTypeId: employeeTemplate?.templateTypeId,
+        templateName: employeeTemplate.templateName,
+        templateTypeId: employeeTemplate.templateTypeId,
       }),
     )
   }
-
   const onChangeEmailTemplateHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -57,6 +60,11 @@ const employeeEmailTemplate = (): JSX.Element => {
     setEmployeeTemplate((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
+  }
+
+  const handleModal = (productSpecification: string) => {
+    setIsModalVisible(true)
+    setEmailTemplateModel(productSpecification)
   }
   console.log(employeeTemplate)
   return (
@@ -154,7 +162,10 @@ const employeeEmailTemplate = (): JSX.Element => {
                     {emailTemplate.assetType}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    <CLink className="cursor-pointer text-decoration-none text-primary">
+                    <CLink
+                      className="cursor-pointer text-decoration-none text-primary"
+                      onClick={() => handleModal(emailTemplate.template)}
+                    >
                       {parse(descriptionLimit)}
                     </CLink>
                   </CTableDataCell>
@@ -169,6 +180,16 @@ const employeeEmailTemplate = (): JSX.Element => {
                 </CTableRow>
               )
             })}
+            <OModal
+              modalSize="lg"
+              alignment="center"
+              modalFooterClass="d-none"
+              modalHeaderClass="d-none"
+              visible={isModalVisible}
+              setVisible={setIsModalVisible}
+            >
+              <div dangerouslySetInnerHTML={{ __html: emailTemplateModel }} />
+            </OModal>
           </CTableBody>
         </CTable>
       </OCard>
