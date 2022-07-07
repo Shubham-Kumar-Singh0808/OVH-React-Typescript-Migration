@@ -1,15 +1,32 @@
+ul{
+    counter-reset: hb_list;
+}
+
 .handbook-item{
-    padding-top: 20px;
-    padding-left: 5px;
+    padding-top: 12px;
+    padding-left: 0px;
+    padding-right: 0px;
     height: 70px;
-    text-indent: 30px;
-    font-size: large;
-    color: gray;
+    font-size: 18px;
+    color: #33343D;
+    border: 0px;
+    border-bottom: 1px solid #E7E8F2;
+    margin-left: 48px;
+    margin-right: 60px;
+
+    &:before{
+        counter-increment: hb_list;
+        font-weight: bold;
+        font-size: 28px;
+        color: #043D86;
+        margin-right: 47px;
+        padding-top: 20px;
+        content: counter(hb_list, decimal-leading-zero);
+    }
 
     &:hover{
-        opacity: 1;
-        transform: scale(1);
-        outline: #404040;
+    background-color: rgb(231, 231, 231);
+    transition-duration: 0.15s, 0.15s
     }
 }
 
@@ -22,21 +39,18 @@ a {
 
 .hb_button{
     color: white;
-    margin-right: 2px;
-    // margin-left: 1100px;
+    margin-right: 0px;
+    margin-left: -8px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .handbook-search{
-    width: 500px;
-    margin-bottom: 10px;
+    width: 50%;
+    margin-left: 44px;
 }
 
-.input-group{
-    margin-bottom: 10px !important;
-    margin-right: 50px !important;
-}
-
-.search-div{
-    overflow: hidden;
-    white-space: nowrap;
+.input-handbook{
+    border-bottom-left-radius: 2% !important    ;
+    border-top-left-radius: 2% !important;
 }

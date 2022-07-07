@@ -40,19 +40,28 @@ const EmployeeHandbook = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <div className="search-div">
-          <CInputGroup className="mb-4 handbook-search">
-            <CFormInput
-              placeholder="Search Handbook"
-              aria-label="Search Handbook"
-              onChange={inputHandler}
-            />
-          </CInputGroup>
-          <CButton color="info" className="hb_button" size="sm">
-            <i className="fa fa-light fa-toolbox"></i>
-            Handbook Settings
-          </CButton>
-        </div>
+        <CRow className="justify-content-between">
+          <CCol md={6}>
+            <CInputGroup className="global-search mb-4 handbook-search">
+              <CFormInput
+                placeholder="Search Handbook"
+                aria-label="Search Handbook"
+                onChange={inputHandler}
+                className="input-handbook"
+              />
+              <CButton type="button" color="info" id="button-addon2">
+                <i className="fa fa-search"></i>
+              </CButton>
+            </CInputGroup>
+          </CCol>
+          <CCol md={2}>
+            <CButton color="info" className="hb_button" size="sm">
+              <i className="fa fa-light fa-toolbox"></i>
+              Handbook Settings
+            </CButton>
+          </CCol>
+        </CRow>
+
         {isLoading !== ApiLoadingState.loading ? (
           <HandbookList handbooks={handbooks} inputText={inputText} />
         ) : (
