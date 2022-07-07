@@ -45,7 +45,11 @@ const initialMailConfigurationState: EmployeeMailConfigurationState = {
 const employeeMailConfigurationSlice = createSlice({
   name: 'mailConfiguration',
   initialState: initialMailConfigurationState,
-  reducers: {},
+  reducers: {
+    clearEmployeeEmailTemplate: (state) => {
+      state.employeeGetEmailTemplate = []
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getMailTemplateTypes.fulfilled, (state, action) => {

@@ -91,6 +91,9 @@ const employeeEmailTemplate = (): JSX.Element => {
       email: '',
       id: '',
     })
+    dispatch(
+      reduxServices.employeeMailConfiguration.actions.clearEmployeeEmailTemplate(),
+    )
   }
 
   return (
