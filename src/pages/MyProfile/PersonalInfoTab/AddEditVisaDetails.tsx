@@ -39,6 +39,7 @@ function AddEditVisaDetails({
   const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState<boolean>(false)
   const [inValidImage, setInvalidImage] = useState<boolean>(false)
+  const [clearVisaType, setClearVisaType] = useState<boolean>(false)
 
   const [dateOfIssueFlag, setDateOfIssueFlag] = useState<boolean>(false)
   const [dateOfExpiryFlag, setDateOfExpiryFlag] = useState<boolean>(false)
@@ -131,10 +132,13 @@ function AddEditVisaDetails({
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     if (name === 'countryId' && employeeVisaDetails.countryId !== value) {
-      setIsAddButtonEnabled(false)
+      setClearVisaType(true)
       setEmployeeVisaDetails((prevState) => {
         return { ...prevState, ...{ visaTypeId: '' } }
       })
+    }
+    if (name === 'visaTypeId') {
+      setClearVisaType(false)
     }
     setEmployeeVisaDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
@@ -331,6 +335,7 @@ function AddEditVisaDetails({
   }
   const normalText = 'text-white'
   const dangerText = 'text-danger'
+  const span6 = { span: 6, offset: 3 }
 
   return (
     <>
@@ -508,7 +513,7 @@ function AddEditVisaDetails({
               />
             </CCol>
             {selectedFile || getEditVisaDetails?.visaDetailsData ? (
-              <CCol sm={{ span: 6, offset: 3 }}>
+              <CCol sm={span6}>
                 <img
                   src={selectImageFile}
                   alt=""
@@ -518,7 +523,7 @@ function AddEditVisaDetails({
             ) : (
               <>
                 <div className="w-100"></div>
-                <CCol sm={{ span: 6, offset: 3 }}>
+                <CCol sm={span6}>
                   <p className=" text-info ">
                     Note: Please upload less than 400KB size image.
                   </p>
@@ -527,7 +532,7 @@ function AddEditVisaDetails({
             )}
             {inValidImage && (
               <>
-                <CCol sm={{ span: 6, offset: 3 }}>
+                <CCol sm={span6}>
                   <p className=" text-danger ">
                     Please upload less than 400KB size image.
                   </p>
@@ -536,12 +541,12 @@ function AddEditVisaDetails({
             )}
           </CRow>
           <CRow>
-            <CCol md={{ span: 6, offset: 3 }}>
+            <CCol md={span6}>
               {isEditVisaDetails || employeeVisaDetails?.visaDetailsData ? (
                 <CButton
                   className="btn-ovh me-2"
                   color="success"
-                  disabled={error || inValidImage}
+                  disabled={clearVisaType || error || inValidImage}
                   onClick={handleUpdateVisaMember}
                 >
                   {confirmButtonText}
