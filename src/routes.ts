@@ -60,8 +60,12 @@ const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
 )
 
-const AddNewTemplate = React.lazy(
-  () => import('./pages/MailConfiguration/AddTemplate/AddNewTemplate'),
+// const AddNewTemplate = React.lazy(
+//   () => import('./pages/MailConfiguration/AddTemplate/AddNewTemplate'),
+// )
+
+const EditEmployee = React.lazy(
+  () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -126,10 +130,15 @@ const routes = [
     name: 'Add New Employee',
     component: AddNewEmployee,
   },
+  // {
+  //   path: '/addTemplate',
+  //   name: 'Add Template',
+  //   component: AddNewTemplate,
+  // },
   {
-    path: '/addTemplate',
-    name: 'Add Template',
-    component: AddNewTemplate,
+    path: '/editEmployee/:employeeId',
+    name: 'Edit Employee',
+    component: EditEmployee,
   },
 ]
 
