@@ -130,6 +130,7 @@ export interface EmployeeDesignationListApi extends ApiBase {
   getEmployeeDesignations: string
   addEmployeeDesignation: string
   deleteEmployeeDesignation: string
+  getAllEmployeeDesignation: string
 }
 
 export interface ShiftConfigurationApi extends ApiBase {
@@ -182,4 +183,32 @@ export interface VisaListApi extends ApiBase {
   getCountries: string
   getVisaTypes: string
   exportVisaList: string
+}
+
+export interface EmployeeHandbookSettingsApi extends ApiBase {
+  getEmployeeHandbooks: string
+  deleteEmployeeHandbook: string
+}
+
+export interface TimeInOfficeReportApi extends ApiBase {
+  getTimeInOfficeEmployeeReport: string
+  getTimeInOfficeManagerReport: string
+}
+
+export interface EmployeeLeaveSettingsApi extends ApiBase {
+  saveLeaveCalendarSettings: string
+  getLeaveCategories: string
+  getLeaveCalenderSettings: string
+  deleteLeaveCategory: string
+  addUpdateLeaveCategory: string
+}
+export interface AddNewEmployeeAPi extends ApiBase {
+  getEmployeeDepartments: string
+  getEmpCountries: string
+  getAllHrData: string
+  getAllReportingManagersData: string
+  addNewEmployee: string
+  getAllemploymentType: string
+  getAllJobType: string
+  getCheckIfUserExist: string
 }

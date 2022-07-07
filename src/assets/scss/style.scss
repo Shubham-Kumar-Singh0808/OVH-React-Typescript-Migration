@@ -39,3 +39,5 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './pages/employeedirectory/employeeslist/addnewemployee/shiftconfiguration/shift-configuration';
 @import './components/category-list';
 @import './pages/employeedirectory/visalist/visa-list';
+@import './pages/timeandattendance/timeinofficereport/time-in-office-report';
+@import './components/autocomplete';
