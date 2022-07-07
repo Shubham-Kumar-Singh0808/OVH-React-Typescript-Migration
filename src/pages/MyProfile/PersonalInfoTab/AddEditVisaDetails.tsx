@@ -21,6 +21,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
 
 function AddEditVisaDetails({
   isEditVisaDetails = false,
@@ -333,8 +334,6 @@ function AddEditVisaDetails({
     className: 'col-sm-3 col-form-label text-end',
     htmlFor: 'Visa Type',
   }
-  const normalText = 'text-white'
-  const dangerText = 'text-danger'
   const span6 = { span: 6, offset: 3 }
 
   return (
@@ -363,7 +362,7 @@ function AddEditVisaDetails({
               Country:
               <span
                 className={
-                  employeeVisaDetails?.countryId ? normalText : dangerText
+                  employeeVisaDetails?.countryId ? TextWhite : TextDanger
                 }
               >
                 *
@@ -393,7 +392,7 @@ function AddEditVisaDetails({
               Visa Type:{' '}
               <span
                 className={
-                  employeeVisaDetails?.visaTypeId ? normalText : dangerText
+                  employeeVisaDetails?.visaTypeId ? TextWhite : TextDanger
                 }
               >
                 *
@@ -422,8 +421,8 @@ function AddEditVisaDetails({
               <span
                 className={
                   employeeVisaDetails.dateOfIssue || dateOfIssue
-                    ? normalText
-                    : dangerText
+                    ? TextWhite
+                    : TextDanger
                 }
               >
                 *
@@ -459,8 +458,8 @@ function AddEditVisaDetails({
               <span
                 className={
                   employeeVisaDetails.dateOfExpire || dateOfExpire
-                    ? normalText
-                    : dangerText
+                    ? TextWhite
+                    : TextDanger
                 }
               >
                 *
