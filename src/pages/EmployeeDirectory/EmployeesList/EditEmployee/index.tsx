@@ -29,7 +29,11 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const EditEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const { employeeId } = useParams<{ employeeId?: string }>()
+  const [getID, setID] = useState<string>()
+  const { employeeId } = useParams<{ employeeId: string }>()
+  useEffect(() => {
+    setID(employeeId)
+  }, [employeeId])
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
@@ -168,12 +172,10 @@ const EditEmployee = (): JSX.Element => {
   }, [dispatch])
 
   useEffect(() => {
-    if (employeeId) {
-      dispatch(
-        reduxServices.employee.getSelectedEmployeeInformation(employeeId),
-      )
+    if (getID) {
+      dispatch(reduxServices.employee.getSelectedEmployeeInformation(getID))
     }
-  }, [dispatch, employeeId])
+  }, [dispatch, getID])
 
   const selectedEmployeeData = useTypedSelector((state) =>
     reduxServices.employee.selectors.selectEmployeeData(state),

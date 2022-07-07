@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { EmployeeShiftDetails } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import { SelectShiftProps } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../../utils/helper'
-import { useTypedSelector } from '../../../../../../../stateStore'
-import { reduxServices } from '../../../../../../../reducers/reduxServices'
 
 const Shift = ({
   dynamicFormLabelProps,
