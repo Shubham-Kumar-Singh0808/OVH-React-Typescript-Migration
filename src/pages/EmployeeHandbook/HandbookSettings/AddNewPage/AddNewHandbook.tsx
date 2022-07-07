@@ -37,7 +37,7 @@ function AddNewHandbook({
   const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
   const [error, setError] = useState<boolean>(true)
   const [isDisplayOrderExist, setIsDisplayOrderExist] = useState<boolean>(false)
-
+  const [showEditor, setShowEditor] = useState<boolean>(true)
   const dispatch = useAppDispatch()
 
   const employeeCountries = useTypedSelector(
@@ -131,6 +131,10 @@ function AddNewHandbook({
       description: '',
       type: '',
     })
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
   }
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -323,23 +327,27 @@ function AddNewHandbook({
                 *
               </span>
             </CFormLabel>
-            <CCol sm={9}>
-              <CKEditor<{
-                onChange: CKEditorEventHandler<'change'>
-              }>
-                initData={addNewPage.description}
-                config={ckeditorConfig}
-                debug={true}
-                onChange={({ editor }) => {
-                  handleDescription(editor.getData().trim())
-                }}
-              />
-              {error && (
-                <p className="text-danger">
-                  Please enter at least 150 characters.
-                </p>
-              )}
-            </CCol>
+            {showEditor ? (
+              <CCol sm={9}>
+                <CKEditor<{
+                  onChange: CKEditorEventHandler<'change'>
+                }>
+                  initData={addNewPage.description}
+                  config={ckeditorConfig}
+                  debug={true}
+                  onChange={({ editor }) => {
+                    handleDescription(editor.getData().trim())
+                  }}
+                />
+                {error && (
+                  <p className="text-danger">
+                    Please enter at least 150 characters.
+                  </p>
+                )}
+              </CCol>
+            ) : (
+              ''
+            )}
           </CRow>
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
