@@ -1,4 +1,4 @@
-import { EmployeeGetMailTemplate } from '../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
+import { EmployeeGetMailTemplate } from '../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
 
 export const mockEmailTemplate: EmployeeGetMailTemplate[] = [
   {

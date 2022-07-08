@@ -62,6 +62,10 @@ const MailConfiguration = React.lazy(
 const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
 )
+
+const EditEmployee = React.lazy(
+  () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -129,6 +133,11 @@ const routes = [
     path: '/mailTemplates',
     name: 'Mail Configuration',
     component: MailConfiguration,
+  },
+  {
+    path: '/editEmployee/:employeeId',
+    name: 'Edit Employee',
+    component: EditEmployee,
   },
 ]
 

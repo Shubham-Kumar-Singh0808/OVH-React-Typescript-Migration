@@ -7,7 +7,7 @@ import {
   EmployeeGetMailTemplate,
   EmployeeGetEmailTemplateProps,
   EmployeeGetMailTemplateTypes,
-} from '../../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
+} from '../../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeeMailTemplateTypes = async (): Promise<

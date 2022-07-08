@@ -23,7 +23,7 @@ const expectComponentToBeRendered = () => {
 }
 
 describe('email Template List Table Testing', () => {
-  test('should render No data to display if Reviews is empty', async () => {
+  test('should render No data to display if Mail template is empty', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeEmailTemplate />

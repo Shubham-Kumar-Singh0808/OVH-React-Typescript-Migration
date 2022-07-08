@@ -18,7 +18,7 @@ import parse from 'html-react-parser'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { EmployeeGetMailTemplate } from '../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
+import { EmployeeGetMailTemplate } from '../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
 

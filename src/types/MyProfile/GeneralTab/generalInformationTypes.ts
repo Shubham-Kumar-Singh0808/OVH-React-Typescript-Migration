@@ -50,6 +50,8 @@ export type EmployeeGeneralInformation = {
   passportIssuedPlace?: string
   passportIssuedDate?: string
   passportExpDate?: string
+  passportFrontPagePath?: string
+  passportBackPagePath?: string
 }
 export type ProfileDetailsProps = {
   employeeGeneralInformation: EmployeeGeneralInformation
@@ -59,4 +61,28 @@ export type EmployeeGeneralInformationState = {
   selectedEmployeeInformation: EmployeeGeneralInformation
   error: ValidationError
   isLoading: boolean
+}
+
+export type EmployeeContactInformation = {
+  mobile: string | undefined
+  alternativeMobile: string | undefined
+  homeCode: string | undefined
+  homeNumber: string | undefined
+  workCode: string | undefined
+  workNumber: string | undefined
+}
+
+export type EmployeeEmergencyContactInformation = {
+  emergencyContactName: string | undefined
+  emergencyPhone: string | undefined
+  emergencyRelationShip: string | undefined
+}
+
+export type EmployeePassportDetails = {
+  passportNumber: string | undefined
+  passportIssuedPlace: string | undefined
+  passportIssuedDate: string | undefined
+  passportExpDate: string | undefined
+  passportFrontPagePath: string | undefined
+  passportBackPagePath: string | undefined
 }
