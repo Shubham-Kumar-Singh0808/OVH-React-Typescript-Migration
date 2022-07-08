@@ -441,7 +441,7 @@ function AddEditVisaDetails({
                 *
               </span>
             </CFormLabel>
-            <CCol sm={3}>
+            <CCol sm={3} data-testid="dateOfIssuedInput">
               <DatePicker
                 className="form-control"
                 name="dateOfIssue"
@@ -466,7 +466,7 @@ function AddEditVisaDetails({
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4" data-testid="dateOfExiryInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Expire :
               <span

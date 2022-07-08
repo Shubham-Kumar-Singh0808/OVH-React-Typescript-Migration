@@ -476,7 +476,7 @@ function AddUpdateEmployeeCertification({
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4" data-testid="completedDateInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Completed Date:
               <span
@@ -514,7 +514,7 @@ function AddUpdateEmployeeCertification({
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4" data-testid="expiryDateInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Expiry Date :
             </CFormLabel>

@@ -299,7 +299,7 @@ function AddEditFamilyDetails({
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Birth :
             </CFormLabel>
