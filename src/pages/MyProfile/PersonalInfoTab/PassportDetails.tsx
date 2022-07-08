@@ -47,21 +47,21 @@ export const PassportDetails = (props: {
   const [backUpload, setBackUpload] = useState<File | null>(null)
 
   const onChangePassportInformationHandler = (
-    e:
+    changedValue:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const { name, value } = e.target
+    const { name, value } = changedValue.target
     setEmployeePassportDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
     if (props.handlePassportChange)
       props.handlePassportChange(employeePassportDetails, null, null)
   }
-  const onDateChangeHandler = (date: Date, e: { name: string }) => {
+  const onDateChangeHandler = (date: Date, changedValue: { name: string }) => {
     if (employeePassportDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
-      const { name } = e
+      const { name } = changedValue
       setEmployeePassportDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
