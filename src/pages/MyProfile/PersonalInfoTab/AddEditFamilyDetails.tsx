@@ -1,5 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
-// Todd: remove eslint and fix error
 import {
   CButton,
   CCardBody,
@@ -21,6 +19,10 @@ import {
   EmployeeFamilyDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
+import {
+  reformatDate,
+  dateFormatPerLocale,
+} from '../../../utils/dateFormatUtils'
 
 function AddEditFamilyDetails({
   isEditFamilyDetails = false,
@@ -36,12 +38,14 @@ function AddEditFamilyDetails({
   const [employeeFamily, setEmployeeFamily] = useState(
     initialEmployeeFamilyDetails,
   )
-  const [dateOfBirth, setDateOfBirth] = useState<Date | string>()
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-
   const fetchEditFamilyDetails = useTypedSelector(
     reduxServices.personalInformation.selectors.employeeFamilyMember,
   )
+
+  const [dateOfBirth, setDateOfBirth] = useState<Date | string>()
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [dateFormat, setDateFormat] = useState<string>('')
+
   useEffect(() => {
     if (isEditFamilyDetails) {
       setEmployeeFamily(fetchEditFamilyDetails)
@@ -59,7 +63,7 @@ function AddEditFamilyDetails({
         return { ...prevState, ...{ [name]: contactValue } }
       })
     } else if (name === 'personName') {
-      const personValue = value.replace(/[^a-zA-Z\s]$/gi, '')
+      const personValue = value.replace(/[^a-z\s]$/gi, '')
       setEmployeeFamily((prevState) => {
         return { ...prevState, ...{ [name]: personValue } }
       })
@@ -162,16 +166,17 @@ function AddEditFamilyDetails({
       )
     }
   }
+  const defaultFormLabel = 'col-sm-3 col-form-label text-end'
   const nameProps = {
-    className: 'col-sm-3 col-form-label text-end',
+    className: defaultFormLabel,
     htmlFor: 'Name',
   }
   const relationShipProps = {
-    className: 'col-sm-3 col-form-label text-end',
+    className: defaultFormLabel,
     htmlFor: 'Relationship',
   }
   const contactNumberProps = {
-    className: 'col-sm-3 col-form-label text-end',
+    className: defaultFormLabel,
     htmlFor: 'ContactNumber',
   }
 

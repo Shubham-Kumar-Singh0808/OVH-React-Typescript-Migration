@@ -1,11 +1,4 @@
-/* eslint-disable max-lines */
-/* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable sonarjs/no-collapsible-if */
-/* eslint-disable require-await */
-/* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable complexity */
-// Todo: remove eslint and fix all the errors
 import {
   CButton,
   CCol,
@@ -17,7 +10,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
-import DatePicker, { registerLocale } from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
@@ -33,9 +26,19 @@ import { UploadImageInterface } from '../../../types/MyProfile/BasicInfoTab/basi
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import {
+  reformatDate,
+  dateFormatPerLocale,
+} from '../../../utils/dateFormatUtils'
 
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
+
+  const [dateFormat, setDateFormat] = useState<string>('')
 
   const [isViewingAnotherEmployee] = useSelectedEmployee()
   const employeeBasicInformation = useTypedSelector((state) =>
@@ -97,17 +100,6 @@ const BasicInfoTab = (): JSX.Element => {
     passportExpDate: employeeBasicInformation?.passportExpDate,
   }
 
-  // dynamically import the locale date-fns
-  useEffect(() => {
-    const importLocale = async () => {
-      const localeToSet = await import(
-        `date-fns/locale/${navigator.languages[0]}/index`
-      )
-      registerLocale(navigator.languages[0], localeToSet)
-    }
-    importLocale()
-  }, [])
-
   const [baseLocationShown, setBaseLocationShown] = useState<boolean>(false)
   const [realBirthdayShown, setRealBirthdayShown] = useState<boolean>(false)
   const [emailError, setEmailError] = useState<boolean>(false)
@@ -121,57 +113,49 @@ const BasicInfoTab = (): JSX.Element => {
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
   const [selectedProfilePicture, setSelectedProfilePicture] =
     useState<UploadImageInterface>()
-
   const [officialBday, setOfficialBday] = useState<Date>()
   const [realBday, setRealBday] = useState<Date>()
   const [selectedAnniversary, setSelectedAnniversary] = useState<Date>()
-
   const [officialBdyFlag, setOfficialBdayFlag] = useState(false)
   const [realBdayFlag, setRealBdayFlag] = useState(false)
   const [anniversaryFlag, setAnniversaryFlag] = useState(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const currentOfficialBday =
-    employeeBasicInformationEditData.officialBirthday as string
-  const officialBdayParts: string[] | string =
-    employeeBasicInformationEditData.officialBirthday
-      ? currentOfficialBday.split('/')
-      : ''
-  const newOfficialBday = employeeBasicInformationEditData.officialBirthday
-    ? new Date(
-        Number(officialBdayParts[2]),
-        Number(officialBdayParts[1]) - 1,
-        Number(officialBdayParts[0]),
-      )
-    : (officialBday as Date)
+  useEffect(() => {
+    const localeDateFormat = dateFormatPerLocale.filter(
+      (lang) => lang.label === navigator.languages[0],
+    )
+    setDateFormat(localeDateFormat[0].format)
+  }, [])
 
-  const currentRealBirthday =
-    employeeBasicInformationEditData.realBirthday as string
-  const realBdayParts: string[] | string =
-    employeeBasicInformationEditData.realBirthday
-      ? currentRealBirthday.split('/')
-      : ''
-  const newRealBirthday = employeeBasicInformationEditData.realBirthday
-    ? new Date(
-        Number(realBdayParts[2]),
-        Number(realBdayParts[1]) - 1,
-        Number(realBdayParts[0]),
-      )
-    : (realBday as Date)
+  const commonFormatDate = 'DD/MM/YYYY'
+  const dateFormmatted = (date: string) => {
+    const tempDateFormat = reformatDate(date as string)
+    return tempDateFormat.toLocaleDateString(deviceLocale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+  }
 
-  const currentAnniversary =
-    employeeBasicInformationEditData.anniversary as string
-  const anniversaryParts: string[] | string =
-    employeeBasicInformationEditData.anniversary
-      ? currentAnniversary.split('/')
-      : ''
-  const newAnniversary = employeeBasicInformationEditData.anniversary
-    ? new Date(
-        Number(anniversaryParts[2]),
-        Number(anniversaryParts[1]) - 1,
-        Number(anniversaryParts[0]),
-      )
-    : (selectedAnniversary as Date)
+  let newOfficialBday = new Date()
+  if (employeeBasicInformationEditData.officialBirthday) {
+    const currentOfficialBday =
+      employeeBasicInformationEditData.officialBirthday as string
+    newOfficialBday = reformatDate(currentOfficialBday)
+  }
+  let newRealBirthday = new Date()
+  if (employeeBasicInformationEditData.realBirthday) {
+    const currentRealBirthday =
+      employeeBasicInformationEditData.realBirthday as string
+    newRealBirthday = reformatDate(currentRealBirthday)
+  }
+  let newAnniversary = new Date()
+  if (employeeBasicInformationEditData.anniversary) {
+    const currentAnniversary =
+      employeeBasicInformationEditData.anniversary as string
+    newAnniversary = reformatDate(currentAnniversary)
+  }
 
   const validateEmail = (email: string) => {
     if (validator.isEmail(email)) {
@@ -189,7 +173,6 @@ const BasicInfoTab = (): JSX.Element => {
     },
     [],
   )
-
   // onchange handler for input fields
   const handleChange = (
     e:
@@ -220,36 +203,31 @@ const BasicInfoTab = (): JSX.Element => {
       })
     }
   }
-
   // onchange handler for date pickers
   const onDateChangeHandler = (date: Date, e: { name: string }) => {
     if (employeeBasicInformationEditData) {
-      const formatDate = moment(date).format('DD/MM/YYYY')
+      const formatDate = moment(date).format(commonFormatDate)
       const { name } = e
       setEmployeeBasicInformationEditData((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
     }
   }
-
   // change CV to upload state value
-  const onChangeCVHandler = async (element: HTMLInputElement) => {
+  const onChangeCVHandler = (element: HTMLInputElement) => {
     const file = element.files
     const acceptedFileTypes = ['pdf', 'doc', 'docx']
     let extension = ''
     if (!file) return
-
     if (file) {
       extension = file[0].name.split('.').pop() as string
     }
-
     if (file[0].size > 2048000) {
       setUploadErrorText(
         'File size exceeded. Please upload a file less than 2MB.',
       )
       return
     }
-
     if (!acceptedFileTypes.includes(extension)) {
       setUploadErrorText(
         'Wrong file format chosen. Please choose either doc, docx, or pdf.',
@@ -328,12 +306,11 @@ const BasicInfoTab = (): JSX.Element => {
         employeeBasicInformationEditData.anniversary.toString()
 
       const formattedRealBirthday = new Date(
-        moment(typeCastedRealBirthday).format('DD/MM/YYYY'),
+        moment(typeCastedRealBirthday).format(commonFormatDate),
       )
       const formattedAnniversary = new Date(
-        moment(typeCastedAnniversary).format('DD/MM/YYYY'),
+        moment(typeCastedAnniversary).format(commonFormatDate),
       )
-
       if (formattedRealBirthday.getTime() >= formattedAnniversary.getTime()) {
         setDateErrorMessage(true)
         setSaveButtonEnabled(false)
@@ -356,18 +333,17 @@ const BasicInfoTab = (): JSX.Element => {
 
   // change on gender the defaultPic api should call
   useEffect(() => {
-    if (employeeBasicInformationEditData.gender) {
-      if (
-        !employeeBasicInformationEditData.rbtCvName?.includes(
-          employeeBasicInformation.id as unknown as string,
-        )
-      ) {
-        dispatch(
-          employeeBasicInformationThunk.updateEmployeeDefaultPicOnGenderChange(
-            employeeBasicInformationEditData.gender,
-          ),
-        )
-      }
+    if (
+      employeeBasicInformationEditData.gender &&
+      !employeeBasicInformationEditData.rbtCvName?.includes(
+        employeeBasicInformation.id as unknown as string,
+      )
+    ) {
+      dispatch(
+        employeeBasicInformationThunk.updateEmployeeDefaultPicOnGenderChange(
+          employeeBasicInformationEditData.gender,
+        ),
+      )
     }
   }, [
     dispatch,
@@ -393,7 +369,6 @@ const BasicInfoTab = (): JSX.Element => {
         prepareObject,
       ),
     )
-
     if (cvToUpload) {
       const formData = new FormData()
       formData.append('file', cvToUpload, cvToUpload.name)
@@ -434,10 +409,10 @@ const BasicInfoTab = (): JSX.Element => {
       employeeBasicInformationEditData?.realBirthday?.toString()
 
     const newOfficialBirthday = new Date(
-      moment(tempOfficialBirthday).format('DD/MM/YYYY'),
+      moment(tempOfficialBirthday).format(commonFormatDate),
     )
     const formattedRealBirthday = new Date(
-      moment(tempRealBirthday).format('DD/MM/YYYY'),
+      moment(tempRealBirthday).format(commonFormatDate),
     )
     if (newOfficialBirthday.getTime() !== formattedRealBirthday.getTime()) {
       setRealBirthdayShown(true)
@@ -459,7 +434,6 @@ const BasicInfoTab = (): JSX.Element => {
     setSelectedAnniversary(date)
     setAnniversaryFlag(true)
   }
-
   const handleDescription = (aboutMe: string) => {
     setEmployeeBasicInformationEditData((prevState) => {
       return { ...prevState, ...{ aboutMe } }
@@ -469,6 +443,10 @@ const BasicInfoTab = (): JSX.Element => {
   const dateIsValid = (date: Date) => {
     return !Number.isNaN(new Date(date).getTime())
   }
+
+  const commonFormLabel = 'col-sm-3 col-form-label text-end'
+  const normalText = 'text-white'
+  const dangerText = 'text-danger'
 
   return (
     <>
@@ -484,12 +462,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeeId',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
+          <CFormLabel {...dynamicFormLabelProps('employeeId', commonFormLabel)}>
             Employee ID:
           </CFormLabel>
           <CCol sm={2}>
@@ -500,10 +473,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeeEmailId',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('employeeEmailId', commonFormLabel)}
           >
             Email ID:
           </CFormLabel>
@@ -515,10 +485,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeeFullName',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('employeeFullName', commonFormLabel)}
           >
             Full Name:
           </CFormLabel>
@@ -532,15 +499,15 @@ const BasicInfoTab = (): JSX.Element => {
           <CFormLabel
             {...dynamicFormLabelProps(
               'employeeCurrentLocation',
-              'col-sm-3 col-form-label text-end',
+              commonFormLabel,
             )}
           >
             Current Location:
             <span
               className={
                 employeeBasicInformationEditData.curentLocation
-                  ? 'text-white'
-                  : 'text-danger'
+                  ? normalText
+                  : dangerText
               }
             >
               *
@@ -570,15 +537,15 @@ const BasicInfoTab = (): JSX.Element => {
             <CFormLabel
               {...dynamicFormLabelProps(
                 'employeeBaseLocation',
-                'col-sm-3 col-form-label text-end',
+                commonFormLabel,
               )}
             >
               Base Location:
               <span
                 className={
                   employeeBasicInformationEditData.baseLocation
-                    ? 'text-white'
-                    : 'text-danger'
+                    ? normalText
+                    : dangerText
                 }
               >
                 *
@@ -599,10 +566,7 @@ const BasicInfoTab = (): JSX.Element => {
         )}
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeeGender',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('employeeGender', commonFormLabel)}
           >
             Gender:
           </CFormLabel>
@@ -622,17 +586,14 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeeBloodGroup',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('employeeBloodGroup', commonFormLabel)}
           >
             Blood group:
             <span
               className={
                 employeeBasicInformationEditData.bloodgroup
-                  ? 'text-white'
-                  : 'text-danger'
+                  ? normalText
+                  : dangerText
               }
             >
               *
@@ -663,15 +624,15 @@ const BasicInfoTab = (): JSX.Element => {
           <CFormLabel
             {...dynamicFormLabelProps(
               'employeeOfficialBirthday',
-              'col-sm-3 col-form-label text-end',
+              commonFormLabel,
             )}
           >
             Official Birthday:
             <span
               className={
                 employeeBasicInformationEditData.officialBirthday
-                  ? 'text-white'
-                  : 'text-danger'
+                  ? normalText
+                  : dangerText
               }
             >
               *
@@ -679,7 +640,6 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
-              locale={navigator.languages[0] || navigator.language}
               id="employeeOfficialBirthday"
               className="form-control form-control-sm"
               maxDate={new Date()}
@@ -687,9 +647,12 @@ const BasicInfoTab = (): JSX.Element => {
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              placeholderText="dd/mm/yyyy"
+              placeholderText={dateFormat}
+              dateFormat={dateFormat}
               name="officialBirthday"
-              value={employeeBasicInformationEditData.officialBirthday}
+              value={dateFormmatted(
+                employeeBasicInformationEditData.officialBirthday as string,
+              )}
               selected={
                 !officialBdyFlag && dateIsValid(newOfficialBday)
                   ? newOfficialBday
@@ -715,15 +678,15 @@ const BasicInfoTab = (): JSX.Element => {
             <CFormLabel
               {...dynamicFormLabelProps(
                 'employeeRealBirthday',
-                'col-sm-3 col-form-label text-end',
+                commonFormLabel,
               )}
             >
               Real Birthday:
               <span
                 className={
                   employeeBasicInformationEditData.realBirthday
-                    ? 'text-white'
-                    : 'text-danger'
+                    ? normalText
+                    : dangerText
                 }
               >
                 *
@@ -738,10 +701,12 @@ const BasicInfoTab = (): JSX.Element => {
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-                dateFormat="dd/mm/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
                 name="realBirthday"
-                value={employeeBasicInformationEditData.realBirthday}
+                value={dateFormmatted(
+                  employeeBasicInformationEditData.realBirthday as string,
+                )}
                 selected={
                   !realBdayFlag && dateIsValid(newRealBirthday)
                     ? newRealBirthday
@@ -757,17 +722,14 @@ const BasicInfoTab = (): JSX.Element => {
         )}
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeeMaritalStatus',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('employeeMaritalStatus', commonFormLabel)}
           >
             Marital Status:
             <span
               className={
                 employeeBasicInformationEditData.maritalStatus
-                  ? 'text-white'
-                  : 'text-danger'
+                  ? normalText
+                  : dangerText
               }
             >
               *
@@ -791,17 +753,14 @@ const BasicInfoTab = (): JSX.Element => {
         {employeeBasicInformationEditData.maritalStatus === 'Married' && (
           <CRow className="mt-3 ">
             <CFormLabel
-              {...dynamicFormLabelProps(
-                'employeeAnniversary',
-                'col-sm-3 col-form-label text-end',
-              )}
+              {...dynamicFormLabelProps('employeeAnniversary', commonFormLabel)}
             >
               Anniversary:
               <span
                 className={
                   employeeBasicInformationEditData.anniversary
-                    ? 'text-white'
-                    : 'text-danger'
+                    ? normalText
+                    : dangerText
                 }
               >
                 *
@@ -815,9 +774,12 @@ const BasicInfoTab = (): JSX.Element => {
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
                 name="anniversary"
-                value={employeeBasicInformationEditData.anniversary}
+                value={dateFormmatted(
+                  employeeBasicInformationEditData.anniversary as string,
+                )}
                 selected={
                   !anniversaryFlag && dateIsValid(newAnniversary)
                     ? newAnniversary
@@ -837,12 +799,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CRow>
         )}
         <CRow className="mt-3 ">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'department',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
+          <CFormLabel {...dynamicFormLabelProps('department', commonFormLabel)}>
             Department:
           </CFormLabel>
           <CCol sm={2}>
@@ -853,10 +810,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'reportingManager',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('reportingManager', commonFormLabel)}
           >
             Reporting Manager:
           </CFormLabel>
@@ -868,10 +822,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'employmentType',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('employmentType', commonFormLabel)}
           >
             Employment Type:
           </CFormLabel>
@@ -882,12 +833,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'jobType',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
+          <CFormLabel {...dynamicFormLabelProps('jobType', commonFormLabel)}>
             Job Type:
           </CFormLabel>
           <CCol sm={2}>
@@ -897,12 +843,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'country',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
+          <CFormLabel {...dynamicFormLabelProps('country', commonFormLabel)}>
             Country:
           </CFormLabel>
           <CCol sm={2}>
@@ -913,17 +854,14 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeePersonalEmail',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('employeePersonalEmail', commonFormLabel)}
           >
             Personal Email:
             <span
               className={
                 employeeBasicInformationEditData.personalEmail && !emailError
-                  ? 'text-white'
-                  : 'text-danger'
+                  ? normalText
+                  : dangerText
               }
             >
               *
@@ -943,10 +881,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeeSkypeID',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('employeeSkypeID', commonFormLabel)}
           >
             Skype ID:
           </CFormLabel>
@@ -966,7 +901,7 @@ const BasicInfoTab = (): JSX.Element => {
           <CFormLabel
             {...dynamicFormLabelProps(
               'employeeProfilePicture',
-              'col-sm-3 col-form-label text-end',
+              commonFormLabel,
             )}
           >
             Profile Picture:
@@ -980,12 +915,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'aboutMe',
-              'col-sm-3 col-form-label text-end',
-            )}
-          >
+          <CFormLabel {...dynamicFormLabelProps('aboutMe', commonFormLabel)}>
             About Me:
           </CFormLabel>
           <CCol sm={8}>
@@ -1003,10 +933,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'uploadRBTCV',
-              'col-sm-3 col-form-label text-end',
-            )}
+            {...dynamicFormLabelProps('uploadRBTCV', commonFormLabel)}
           >
             Upload RBT CV:
           </CFormLabel>

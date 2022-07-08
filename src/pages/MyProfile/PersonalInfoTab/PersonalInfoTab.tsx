@@ -1,7 +1,5 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable complexity */
 /* eslint-disable max-lines */
-// Todo: remove eslint and fix errors
 import {
   CButton,
   CCardBody,
@@ -25,6 +23,7 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import { handleActiveTabProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
+import { supportedLocales } from '../../../utils/dateFormatUtils'
 
 const PersonalInfoTab = ({
   handleActiveTab,
@@ -127,7 +126,6 @@ const PersonalInfoTab = ({
   const [employeeContactDetails, setEmployeeContactDetails] = useState(
     selectedUserContactDetails,
   )
-
   const [employeeEmergencyContactDetails, setEmployeeEmergencyContactDetails] =
     useState(selectedUserEmergencyContactDetails)
 
@@ -377,7 +375,6 @@ const PersonalInfoTab = ({
         id: employeePersonalInformation.id,
       }),
     )
-
     if (
       reduxServices.basicInformation.updateEmployeeBasicInformation.fulfilled.match(
         resultAction,
@@ -396,7 +393,6 @@ const PersonalInfoTab = ({
           employeeId,
         ),
       )
-
       handleActiveTab(1)
     }
   }
@@ -410,18 +406,15 @@ const PersonalInfoTab = ({
   const whiteText = 'text-white'
   const dangerText = 'text-danger'
   const formLabelSm3TextEnd = 'col-sm-3 col-form-label text-end'
-
   const employeeMobileNumber =
     employeeContactDetails?.mobile && employeeContactDetails?.mobile.length > 9
       ? whiteText
       : dangerText
-
   const employeePresentZipNumber =
     employeePresenetAddressDetails?.presentZip &&
     employeePresenetAddressDetails?.presentZip.length > 5
       ? whiteText
       : dangerText
-
   const employeeEmergencyPhoneNumber =
     employeeEmergencyContactDetails?.emergencyPhone &&
     employeeEmergencyContactDetails?.emergencyPhone.length > 9
@@ -430,597 +423,578 @@ const PersonalInfoTab = ({
 
   return (
     <>
-      <>
-        {toggle === '' && (
-          <>
+      {toggle === '' && (
+        <>
+          <CCardHeader>
+            <h4 className="h4">Family Details</h4>
+          </CCardHeader>
+          <PersonalInfoCardBody
+            isViewingAnotherEmployee={isViewingAnotherEmployee}
+            setToggle={setToggle}
+            editButtonHandler={editButtonHandler}
+            editVisaButtonHandler={editVisaButtonHandler}
+          />
+          <CForm>
             <CCardHeader>
-              <h4 className="h4">Family Details</h4>
+              <h4 className="h4">Contact Details</h4>
             </CCardHeader>
-            <PersonalInfoCardBody
-              isViewingAnotherEmployee={isViewingAnotherEmployee}
-              setToggle={setToggle}
-              editButtonHandler={editButtonHandler}
-              editVisaButtonHandler={editVisaButtonHandler}
-            />
-            <CForm>
-              <CCardHeader>
-                <h4 className="h4">Contact Details</h4>
-              </CCardHeader>
-              <CCardBody>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel
-                    {...dynamicFormLabelProps(
-                      'employeeId',
-                      formLabelSm3TextEnd,
-                    )}
-                  >
-                    Mobile: <span className={employeeMobileNumber}>*</span>
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      placeholder="98xxxxxxxx"
-                      size="sm"
-                      name="mobile"
-                      onChange={onChangeContactDetailsHandler}
-                      value={employeeContactDetails.mobile}
-                      maxLength={10}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel
-                    {...dynamicFormLabelProps(
-                      'employeeId',
-                      formLabelSm3TextEnd,
-                    )}
-                  >
-                    Alternative Mobile:
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="alternativeMobile"
-                      placeholder="98xxxxxxxx"
-                      value={employeeContactDetails.alternativeMobile}
-                      onChange={onChangeContactDetailsHandler}
-                      maxLength={10}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel
-                    {...dynamicFormLabelProps(
-                      'employeeId',
-                      formLabelSm3TextEnd,
-                    )}
-                  >
-                    Home:
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={2}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="homeCode"
-                      value={employeeContactDetails.homeCode}
-                      onChange={onChangeContactDetailsHandler}
-                      maxLength={4}
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="homeNumber"
-                      onChange={onChangeContactDetailsHandler}
-                      value={employeeContactDetails.homeNumber}
-                      maxLength={8}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel
-                    {...dynamicFormLabelProps(
-                      'employeeId',
-                      formLabelSm3TextEnd,
-                    )}
-                  >
-                    Work:
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={2}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      onChange={onChangeContactDetailsHandler}
-                      value={employeeContactDetails.workCode}
-                      name="workCode"
-                      maxLength={4}
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="workNumber"
-                      onChange={onChangeContactDetailsHandler}
-                      value={employeeContactDetails.workNumber}
-                      maxLength={8}
-                    />
-                  </CCol>
-                </CRow>
-              </CCardBody>
-              <CCardHeader>
-                <h4 className="h4">Emergency Contact</h4>
-              </CCardHeader>
-              <CCardBody>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Name:{' '}
-                    <span
-                      className={
-                        employeeEmergencyContactDetails?.emergencyContactName
-                          ? whiteText
-                          : dangerText
-                      }
-                    >
-                      *
-                    </span>
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="emergencyContactName"
-                      id="emergencyContactName"
-                      placeholder="Name"
-                      onChange={onChangeEmergencyContactDetailsHandler}
-                      value={
-                        employeeEmergencyContactDetails.emergencyContactName
-                      }
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Mobile:{' '}
-                    <span className={employeeEmergencyPhoneNumber}>*</span>
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      id="Mobile"
-                      placeholder="9xxxxxxxxx"
-                      size="sm"
-                      name="emergencyPhone"
-                      onChange={onChangeEmergencyContactDetailsHandler}
-                      value={employeeEmergencyContactDetails.emergencyPhone}
-                      maxLength={10}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Relationship:
-                    <span
-                      className={
-                        employeeEmergencyContactDetails?.emergencyRelationShip
-                          ? whiteText
-                          : dangerText
-                      }
-                    >
-                      *
-                    </span>
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormSelect
-                      aria-label="Relationship"
-                      name="emergencyRelationShip"
-                      id="Relationship"
-                      size="sm"
-                      onChange={onChangeEmergencyContactDetailsHandler}
-                      value={
-                        employeeEmergencyContactDetails.emergencyRelationShip
-                      }
-                    >
-                      <option value={''}>Select Relationship</option>
-                      <option value="Brother">Brother</option>
-                      <option value="Daughter">Daughter</option>
-                      <option value="Father">Father</option>
-                      <option value="Friend">Friend</option>
-                      <option value="Husband">Husband</option>
-                      <option value="Mother">Mother</option>
-                      <option value="Sister">Sister</option>
-                      <option value="Son">Son</option>
-                      <option value="Wife">Wife</option>
-                      <option value="Other">Other</option>
-                    </CFormSelect>
-                  </CCol>
-                </CRow>
-              </CCardBody>
-              <CCardHeader>
-                <h4 className="h4">Present Address</h4>
-              </CCardHeader>
-              <CCardBody>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Address:
-                    <span
-                      className={
-                        employeePresenetAddressDetails?.presentAddress
-                          ? whiteText
-                          : dangerText
-                      }
-                    >
-                      *
-                    </span>
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      name="presentAddress"
-                      placeholder="Address"
-                      size="sm"
-                      onChange={onChangePresenetAddressHandler}
-                      value={employeePresenetAddressDetails.presentAddress}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    City/Town:{' '}
-                    <span
-                      className={
-                        employeePresenetAddressDetails?.presentCity
-                          ? whiteText
-                          : dangerText
-                      }
-                    >
-                      *
-                    </span>
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      placeholder="City/Town"
-                      size="sm"
-                      name="presentCity"
-                      onChange={onChangePresenetAddressHandler}
-                      value={employeePresenetAddressDetails.presentCity}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Zip: <span className={employeePresentZipNumber}>*</span>
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      placeholder="Zip"
-                      size="sm"
-                      name="presentZip"
-                      onChange={onChangePresenetAddressHandler}
-                      value={employeePresenetAddressDetails.presentZip}
-                      maxLength={6}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Landmark:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      placeholder="Landmark"
-                      size="sm"
-                      name="presentLandMark"
-                      onChange={onChangePresenetAddressHandler}
-                      value={employeePresenetAddressDetails.presentLandMark}
-                    />
-                  </CCol>
-                </CRow>
-              </CCardBody>
-              <CCardHeader>
-                <h4 className="h4">Permanent Address</h4>
-              </CCardHeader>
-              <CCardBody>
-                <CRow className="mt-4 mb-4">
-                  <CFormCheck
-                    id="flexCheckDefault"
-                    label="Same as Present Address"
-                    onClick={() => setCheckBox(!checkBox)}
+            <CCardBody>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel
+                  {...dynamicFormLabelProps('employeeId', formLabelSm3TextEnd)}
+                >
+                  Mobile: <span className={employeeMobileNumber}>*</span>
+                </CFormLabel>
+                <CCol sm={1}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    placeholder="+91"
+                    aria-label="Disabled input example"
+                    disabled
                   />
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Address:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      disabled={checkBox}
-                      type="text"
-                      placeholder=" Address"
-                      size="sm"
-                      name="permanentAddress"
-                      onChange={onChangePermanentAddressHandler}
-                      value={
-                        checkBox
-                          ? employeePresenetAddressDetails.presentAddress
-                          : employeePermanentAddressDetails.permanentAddress
-                      }
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    City/Town:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      disabled={checkBox}
-                      placeholder=" City/Town"
-                      size="sm"
-                      name="permanentCity"
-                      onChange={onChangePermanentAddressHandler}
-                      value={
-                        checkBox
-                          ? employeePresenetAddressDetails.presentCity
-                          : employeePermanentAddressDetails.permanentCity
-                      }
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>Zip:</CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      placeholder=" Zip"
-                      size="sm"
-                      disabled={checkBox}
-                      name="permanentZip"
-                      onChange={onChangePermanentAddressHandler}
-                      value={
-                        checkBox
-                          ? employeePresenetAddressDetails.presentZip
-                          : employeePermanentAddressDetails.permanentZip
-                      }
-                      maxLength={6}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Landmark:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      disabled={checkBox}
-                      placeholder="Landmark"
-                      size="sm"
-                      name="permanentLandMark"
-                      onChange={onChangePermanentAddressHandler}
-                      value={
-                        checkBox
-                          ? employeePresenetAddressDetails.presentLandMark
-                          : employeePermanentAddressDetails.permanentLandMark
-                      }
-                    />
-                  </CCol>
-                </CRow>
-              </CCardBody>
-              <CCardHeader>
-                <h4 className="h4">Passport Details</h4>
-              </CCardHeader>
-              <CCardBody>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Number:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      placeholder="Passport Number"
-                      size="sm"
-                      name="passportNumber"
-                      onChange={onChangePassportInformationHandler}
-                      value={employeePassportDetails.passportNumber}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Place of Issue:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="Place"
-                      name="passportIssuedPlace"
-                      aria-label="Disabled input example"
-                      disabled={!isPassportButtonEnabled}
-                      onChange={onChangePassportInformationHandler}
-                      value={employeePassportDetails.passportIssuedPlace}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Date of Issue :
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <DatePicker
-                      id="passportIssuedDate"
-                      className="form-control form-control-sm"
-                      maxDate={new Date()}
-                      peekNextMonth
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      placeholderText="dd/mm/yyyy"
-                      name="passportIssuedDate"
-                      value={employeePassportDetails.passportIssuedDate}
-                      onChange={(date: Date) =>
-                        onDateChangeHandler(date, {
-                          name: 'passportIssuedDate',
-                        })
-                      }
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Date of Expiry:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <DatePicker
-                      id="passportExpDate"
-                      className="form-control form-control-sm"
-                      peekNextMonth
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      placeholderText="dd/mm/yyyy"
-                      name="passportExpDate"
-                      value={employeePassportDetails.passportExpDate}
-                      onChange={(date: Date) =>
-                        onDateChangeHandler(date, { name: 'passportExpDate' })
-                      }
-                    />
-                    {errorDate && (
-                      <p className="text-danger">
-                        Expiry Date should be greater than Date of Issue
-                      </p>
-                    )}
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Upload Passport Front Copy:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="file"
-                      name="file"
-                      className="form-control form-control-sm"
-                      id="exampleFormControlFile2"
-                      disabled={!isPassportPlaceOfIssueButtonEnabled}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className={formLabelSm3TextEnd}>
-                    Upload Passport Back Copy:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="file"
-                      name="file"
-                      className="form-control form-control-sm"
-                      id="exampleFormControlFile2"
-                      disabled={!isPassportPlaceOfIssueButtonEnabled}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow>
-                  <CCol md={{ span: 6, offset: 3 }}>
-                    <CButton
-                      className="mt-4 btn-ovh btn btn-success"
-                      size="sm"
-                      type="submit"
-                      disabled={!saveButtonEnabled}
-                      onClick={handleSubmitPersonalInfoDetails}
-                    >
-                      Save
-                    </CButton>
-                  </CCol>
-                </CRow>
-              </CCardBody>
-            </CForm>
-          </>
-        )}
-        {toggle === 'AddFamily' && (
-          <AddEditFamilyDetails
-            headerTitle="Add Family Member"
-            confirmButtonText="Add"
-            backButtonHandler={() => setToggle('')}
-          />
-        )}
-        {toggle === 'EditFamily' && (
-          <AddEditFamilyDetails
-            headerTitle="Edit Family Member"
-            confirmButtonText="Update"
-            backButtonHandler={() => setToggle('')}
-            isEditFamilyDetails={true}
-          />
-        )}
-
-        {toggle === 'AddVisa' && (
-          <AddEditVisaDetails
-            backButtonHandler={() => setToggle('')}
-            headerTitle="Add Visa Details"
-            confirmButtonText="Add"
-          />
-        )}
-        {toggle === 'EditVisa' && (
-          <AddEditVisaDetails
-            headerTitle="Edit Visa Details"
-            confirmButtonText="Update"
-            backButtonHandler={() => setToggle('')}
-            isEditVisaDetails={true}
-          />
-        )}
-      </>
+                </CCol>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    placeholder="98xxxxxxxx"
+                    size="sm"
+                    name="mobile"
+                    onChange={onChangeContactDetailsHandler}
+                    value={employeeContactDetails.mobile}
+                    maxLength={10}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel
+                  {...dynamicFormLabelProps('employeeId', formLabelSm3TextEnd)}
+                >
+                  Alternative Mobile:
+                </CFormLabel>
+                <CCol sm={1}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    placeholder="+91"
+                    aria-label="Disabled input example"
+                    disabled
+                  />
+                </CCol>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    name="alternativeMobile"
+                    placeholder="98xxxxxxxx"
+                    value={employeeContactDetails.alternativeMobile}
+                    onChange={onChangeContactDetailsHandler}
+                    maxLength={10}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel
+                  {...dynamicFormLabelProps('employeeId', formLabelSm3TextEnd)}
+                >
+                  Home:
+                </CFormLabel>
+                <CCol sm={1}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    placeholder="+91"
+                    aria-label="Disabled input example"
+                    disabled
+                  />
+                </CCol>
+                <CCol sm={2}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    name="homeCode"
+                    value={employeeContactDetails.homeCode}
+                    onChange={onChangeContactDetailsHandler}
+                    maxLength={4}
+                  />
+                </CCol>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    name="homeNumber"
+                    onChange={onChangeContactDetailsHandler}
+                    value={employeeContactDetails.homeNumber}
+                    maxLength={8}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel
+                  {...dynamicFormLabelProps('employeeId', formLabelSm3TextEnd)}
+                >
+                  Work:
+                </CFormLabel>
+                <CCol sm={1}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    placeholder="+91"
+                    aria-label="Disabled input example"
+                    disabled
+                  />
+                </CCol>
+                <CCol sm={2}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    onChange={onChangeContactDetailsHandler}
+                    value={employeeContactDetails.workCode}
+                    name="workCode"
+                    maxLength={4}
+                  />
+                </CCol>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    name="workNumber"
+                    onChange={onChangeContactDetailsHandler}
+                    value={employeeContactDetails.workNumber}
+                    maxLength={8}
+                  />
+                </CCol>
+              </CRow>
+            </CCardBody>
+            <CCardHeader>
+              <h4 className="h4">Emergency Contact</h4>
+            </CCardHeader>
+            <CCardBody>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Name:{' '}
+                  <span
+                    className={
+                      employeeEmergencyContactDetails?.emergencyContactName
+                        ? whiteText
+                        : dangerText
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    name="emergencyContactName"
+                    id="emergencyContactName"
+                    placeholder="Name"
+                    onChange={onChangeEmergencyContactDetailsHandler}
+                    value={employeeEmergencyContactDetails.emergencyContactName}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Mobile:{' '}
+                  <span className={employeeEmergencyPhoneNumber}>*</span>
+                </CFormLabel>
+                <CCol sm={1}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    placeholder="+91"
+                    aria-label="Disabled input example"
+                    disabled
+                  />
+                </CCol>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    id="Mobile"
+                    placeholder="9xxxxxxxxx"
+                    size="sm"
+                    name="emergencyPhone"
+                    onChange={onChangeEmergencyContactDetailsHandler}
+                    value={employeeEmergencyContactDetails.emergencyPhone}
+                    maxLength={10}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Relationship:
+                  <span
+                    className={
+                      employeeEmergencyContactDetails?.emergencyRelationShip
+                        ? whiteText
+                        : dangerText
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormSelect
+                    aria-label="Relationship"
+                    name="emergencyRelationShip"
+                    id="Relationship"
+                    size="sm"
+                    onChange={onChangeEmergencyContactDetailsHandler}
+                    value={
+                      employeeEmergencyContactDetails.emergencyRelationShip
+                    }
+                  >
+                    <option value={''}>Select Relationship</option>
+                    <option value="Brother">Brother</option>
+                    <option value="Daughter">Daughter</option>
+                    <option value="Father">Father</option>
+                    <option value="Friend">Friend</option>
+                    <option value="Husband">Husband</option>
+                    <option value="Mother">Mother</option>
+                    <option value="Sister">Sister</option>
+                    <option value="Son">Son</option>
+                    <option value="Wife">Wife</option>
+                    <option value="Other">Other</option>
+                  </CFormSelect>
+                </CCol>
+              </CRow>
+            </CCardBody>
+            <CCardHeader>
+              <h4 className="h4">Present Address</h4>
+            </CCardHeader>
+            <CCardBody>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Address:
+                  <span
+                    className={
+                      employeePresenetAddressDetails?.presentAddress
+                        ? whiteText
+                        : dangerText
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    name="presentAddress"
+                    placeholder="Address"
+                    size="sm"
+                    onChange={onChangePresenetAddressHandler}
+                    value={employeePresenetAddressDetails.presentAddress}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  City/Town:{' '}
+                  <span
+                    className={
+                      employeePresenetAddressDetails?.presentCity
+                        ? whiteText
+                        : dangerText
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    placeholder="City/Town"
+                    size="sm"
+                    name="presentCity"
+                    onChange={onChangePresenetAddressHandler}
+                    value={employeePresenetAddressDetails.presentCity}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Zip: <span className={employeePresentZipNumber}>*</span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    placeholder="Zip"
+                    size="sm"
+                    name="presentZip"
+                    onChange={onChangePresenetAddressHandler}
+                    value={employeePresenetAddressDetails.presentZip}
+                    maxLength={6}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Landmark:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    placeholder="Landmark"
+                    size="sm"
+                    name="presentLandMark"
+                    onChange={onChangePresenetAddressHandler}
+                    value={employeePresenetAddressDetails.presentLandMark}
+                  />
+                </CCol>
+              </CRow>
+            </CCardBody>
+            <CCardHeader>
+              <h4 className="h4">Permanent Address</h4>
+            </CCardHeader>
+            <CCardBody>
+              <CRow className="mt-4 mb-4">
+                <CFormCheck
+                  id="flexCheckDefault"
+                  label="Same as Present Address"
+                  onClick={() => setCheckBox(!checkBox)}
+                />
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Address:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    disabled={checkBox}
+                    type="text"
+                    placeholder=" Address"
+                    size="sm"
+                    name="permanentAddress"
+                    onChange={onChangePermanentAddressHandler}
+                    value={
+                      checkBox
+                        ? employeePresenetAddressDetails.presentAddress
+                        : employeePermanentAddressDetails.permanentAddress
+                    }
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  City/Town:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    disabled={checkBox}
+                    placeholder=" City/Town"
+                    size="sm"
+                    name="permanentCity"
+                    onChange={onChangePermanentAddressHandler}
+                    value={
+                      checkBox
+                        ? employeePresenetAddressDetails.presentCity
+                        : employeePermanentAddressDetails.permanentCity
+                    }
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>Zip:</CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    placeholder=" Zip"
+                    size="sm"
+                    disabled={checkBox}
+                    name="permanentZip"
+                    onChange={onChangePermanentAddressHandler}
+                    value={
+                      checkBox
+                        ? employeePresenetAddressDetails.presentZip
+                        : employeePermanentAddressDetails.permanentZip
+                    }
+                    maxLength={6}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Landmark:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    disabled={checkBox}
+                    placeholder="Landmark"
+                    size="sm"
+                    name="permanentLandMark"
+                    onChange={onChangePermanentAddressHandler}
+                    value={
+                      checkBox
+                        ? employeePresenetAddressDetails.presentLandMark
+                        : employeePermanentAddressDetails.permanentLandMark
+                    }
+                  />
+                </CCol>
+              </CRow>
+            </CCardBody>
+            <CCardHeader>
+              <h4 className="h4">Passport Details</h4>
+            </CCardHeader>
+            <CCardBody>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>Number:</CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    placeholder="Passport Number"
+                    size="sm"
+                    name="passportNumber"
+                    onChange={onChangePassportInformationHandler}
+                    value={employeePassportDetails.passportNumber}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Place of Issue:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="text"
+                    size="sm"
+                    placeholder="Place"
+                    name="passportIssuedPlace"
+                    aria-label="Disabled input example"
+                    disabled={!isPassportButtonEnabled}
+                    onChange={onChangePassportInformationHandler}
+                    value={employeePassportDetails.passportIssuedPlace}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Date of Issue :
+                </CFormLabel>
+                <CCol sm={3}>
+                  <DatePicker
+                    id="passportIssuedDate"
+                    className="form-control form-control-sm"
+                    maxDate={new Date()}
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="dd/mm/yyyy"
+                    name="passportIssuedDate"
+                    value={employeePassportDetails.passportIssuedDate}
+                    onChange={(date: Date) =>
+                      onDateChangeHandler(date, {
+                        name: 'passportIssuedDate',
+                      })
+                    }
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Date of Expiry:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <DatePicker
+                    id="passportExpDate"
+                    className="form-control form-control-sm"
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="dd/mm/yyyy"
+                    name="passportExpDate"
+                    value={employeePassportDetails.passportExpDate}
+                    onChange={(date: Date) =>
+                      onDateChangeHandler(date, { name: 'passportExpDate' })
+                    }
+                  />
+                  {errorDate && (
+                    <p className="text-danger">
+                      Expiry Date should be greater than Date of Issue
+                    </p>
+                  )}
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Upload Passport Front Copy:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="file"
+                    name="file"
+                    className="form-control form-control-sm"
+                    id="exampleFormControlFile2"
+                    disabled={!isPassportPlaceOfIssueButtonEnabled}
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className={formLabelSm3TextEnd}>
+                  Upload Passport Back Copy:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    type="file"
+                    name="file"
+                    className="form-control form-control-sm"
+                    id="exampleFormControlFile2"
+                    disabled={!isPassportPlaceOfIssueButtonEnabled}
+                  />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol md={{ span: 6, offset: 3 }}>
+                  <CButton
+                    className="mt-4 btn-ovh btn btn-success"
+                    size="sm"
+                    type="submit"
+                    disabled={!saveButtonEnabled}
+                    onClick={handleSubmitPersonalInfoDetails}
+                  >
+                    Save
+                  </CButton>
+                </CCol>
+              </CRow>
+            </CCardBody>
+          </CForm>
+        </>
+      )}
+      {toggle === 'AddFamily' && (
+        <AddEditFamilyDetails
+          headerTitle="Add Family Member"
+          confirmButtonText="Add"
+          backButtonHandler={() => setToggle('')}
+        />
+      )}
+      {toggle === 'EditFamily' && (
+        <AddEditFamilyDetails
+          headerTitle="Edit Family Member"
+          confirmButtonText="Update"
+          backButtonHandler={() => setToggle('')}
+          isEditFamilyDetails={true}
+        />
+      )}
+      {toggle === 'AddVisa' && (
+        <AddEditVisaDetails
+          backButtonHandler={() => setToggle('')}
+          headerTitle="Add Visa Details"
+          confirmButtonText="Add"
+        />
+      )}
+      {toggle === 'EditVisa' && (
+        <AddEditVisaDetails
+          headerTitle="Edit Visa Details"
+          confirmButtonText="Update"
+          backButtonHandler={() => setToggle('')}
+          isEditVisaDetails={true}
+        />
+      )}
     </>
   )
 }

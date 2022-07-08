@@ -1,12 +1,4 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable func-style */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable radix */
-/* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable require-await */
-/* eslint-disable import/named */
-// Todd: remove all eslint and fix error
-// Todo: remove eslint and fix all the errors
 import {
   CButton,
   CCardBody,
@@ -29,8 +21,11 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
+import {
+  reformatDate,
+  dateFormatPerLocale,
+} from '../../../utils/dateFormatUtils'
 
-// eslint-disable-next-line complexity
 function AddEditVisaDetails({
   isEditVisaDetails = false,
   headerTitle,
@@ -48,6 +43,8 @@ function AddEditVisaDetails({
   const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState<boolean>(false)
   const [invalidImage, setInvalidImage] = useState<boolean>(false)
+  const [clearVisaType, setClearVisaType] = useState<boolean>(false)
+  const [dateFormat, setDateFormat] = useState<string>('')
 
   const [dateOfIssueFlag, setDateOfIssueFlag] = useState<boolean>(false)
   const [dateOfExpiryFlag, setDateOfExpiryFlag] = useState<boolean>(false)
@@ -66,30 +63,38 @@ function AddEditVisaDetails({
   )
 
   const dispatch = useAppDispatch()
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
 
-  const currentDateOfIssue = employeeVisaDetails.dateOfIssue as string
-  const dateIssueParts: string[] | string = employeeVisaDetails.dateOfIssue
-    ? currentDateOfIssue.split('/')
-    : ''
-  const newDateOfIssue = employeeVisaDetails.dateOfIssue
-    ? new Date(
-        Number(dateIssueParts[2]),
-        Number(dateIssueParts[1]) - 1,
-        Number(dateIssueParts[0]),
-      )
-    : new Date()
+  useEffect(() => {
+    const localeDateFormat = dateFormatPerLocale.filter(
+      (lang) => lang.label === navigator.languages[0],
+    )
+    setDateFormat(localeDateFormat[0].format)
+  }, [])
 
-  const currentDateOfExpiry = employeeVisaDetails.dateOfExpire as string
-  const dateExpiryPart: string[] | string = employeeVisaDetails.dateOfExpire
-    ? currentDateOfExpiry.split('/')
-    : ''
-  const newDateOfExpiry = employeeVisaDetails.dateOfExpire
-    ? new Date(
-        Number(dateExpiryPart[2]),
-        Number(dateExpiryPart[1]) - 1,
-        Number(dateExpiryPart[0]),
-      )
-    : new Date()
+  const commonFormatDate = 'DD/MM/YYYY'
+  const dateFormmatted = (date: string) => {
+    const tempDateFormat = reformatDate(date as string)
+    return tempDateFormat.toLocaleDateString(deviceLocale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+  }
+
+  let newDateOfIssue = new Date()
+  let newDateOfExpiry = new Date()
+  if (employeeVisaDetails.dateOfIssue) {
+    const currentDateOfIssue = employeeVisaDetails.dateOfIssue as string
+    newDateOfIssue = reformatDate(currentDateOfIssue)
+  }
+  if (employeeVisaDetails.dateOfExpire) {
+    const currentDateOfExpiry = employeeVisaDetails.dateOfExpire as string
+    newDateOfExpiry = reformatDate(currentDateOfExpiry)
+  }
 
   useEffect(() => {
     dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
@@ -138,13 +143,14 @@ function AddEditVisaDetails({
 
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
-    if (name === 'countryID') {
-      setIsAddButtonEnabled(false)
-    }
     if (name === 'countryId' && employeeVisaDetails.countryId !== value) {
+      setClearVisaType(true)
       setEmployeeVisaDetails((prevState) => {
         return { ...prevState, ...{ visaTypeId: '' } }
       })
+    }
+    if (name === 'visaTypeId') {
+      setClearVisaType(false)
     }
     setEmployeeVisaDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
@@ -170,7 +176,7 @@ function AddEditVisaDetails({
     validateDates(date, newDateExpiry)
 
     if (isEditVisaDetails) {
-      const formatDate = moment(date).format('DD/MM/YYYY')
+      const formatDate = moment(date).format(commonFormatDate)
       const name = 'dateOfIssue'
       setEmployeeVisaDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
@@ -184,9 +190,7 @@ function AddEditVisaDetails({
 
   const onChangeDateOfExpireHandler = (date: Date) => {
     const currentDateIssue = isEditVisaDetails
-      ? employeeVisaDetails.dateOfIssue
-        ? (employeeVisaDetails.dateOfIssue as string)
-        : (dateOfIssue as string)
+      ? (employeeVisaDetails.dateOfIssue as string)
       : (dateOfIssue as string)
 
     const dateParts: string[] | string = employeeVisaDetails.dateOfExpire
@@ -202,7 +206,7 @@ function AddEditVisaDetails({
 
     validateDates(newDateIssue, date)
     if (isEditVisaDetails) {
-      const formatDate = moment(date).format('DD/MM/YYYY')
+      const formatDate = moment(date).format(commonFormatDate)
       const name = 'dateOfExpire'
       setEmployeeVisaDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
@@ -214,15 +218,13 @@ function AddEditVisaDetails({
     setDateOfExpiryFlag(true)
   }
 
-  const onChangeFileEventHandler = async (element: HTMLInputElement) => {
+  const onChangeFileEventHandler = (element: HTMLInputElement) => {
     const file = element.files
     if (!file) return
     if (Number(file[0].size) > Number(400000)) {
       setInvalidImage(true)
-      // setError(true)
     } else {
       setInvalidImage(false)
-      // setError(false)
     }
 
     setSelectedFile(file[0])
@@ -258,8 +260,8 @@ function AddEditVisaDetails({
   const handleAddVisaDetails = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
-      dateOfIssue: moment(dateOfIssue).format('DD/MM/YYYY'),
-      dateOfExpire: moment(dateOfExpire).format('DD/MM/YYYY'),
+      dateOfIssue: moment(dateOfIssue).format(commonFormatDate),
+      dateOfExpire: moment(dateOfExpire).format(commonFormatDate),
     }
     const addVisaMemberResultAction = await dispatch(
       reduxServices.personalInformation.addEmployeeVisa(prepareObject),
@@ -271,11 +273,16 @@ function AddEditVisaDetails({
     ) {
       if (selectedFile) {
         const newAddedVisaID = await personalInfoApi.getEmployeeVisaDetails(
-          parseInt(employeeId),
+          Number(employeeId),
         )
         const lastArrayIndex: number = newAddedVisaID.length - 1
 
-        await uploadFile(newAddedVisaID[lastArrayIndex].id)
+        const formData = new FormData()
+        formData.append('file', selectedFile, selectedFile.name)
+        const visaId = newAddedVisaID[lastArrayIndex].id
+        const file = formData as FormData
+
+        await personalInfoApi.uploadVisaImage(visaId, file)
       }
       dispatch(
         dispatch(
@@ -301,7 +308,12 @@ function AddEditVisaDetails({
       )
     ) {
       if (selectedFile) {
-        await uploadFile(employeeVisaDetails.id as number)
+        const formData = new FormData()
+        formData.append('file', selectedFile, selectedFile.name)
+        const visaId = employeeVisaDetails.id as number
+        const file = formData as FormData
+
+        await personalInfoApi.uploadVisaImage(visaId, file)
       }
       dispatch(
         reduxServices.app.actions.addToast(
@@ -324,17 +336,6 @@ function AddEditVisaDetails({
     }
   }
 
-  const uploadFile = async function (id: number) {
-    if (selectedFile) {
-      const formData = new FormData()
-      formData.append('file', selectedFile, selectedFile.name)
-      const visaId = id
-      const file = formData as FormData
-
-      await personalInfoApi.uploadVisaImage(visaId, file)
-    }
-  }
-
   const formLabelProps = {
     htmlFor: 'Country',
     className: 'col-sm-3 col-form-label text-end',
@@ -344,6 +345,8 @@ function AddEditVisaDetails({
     className: 'col-sm-3 col-form-label text-end',
     htmlFor: 'Visa Type',
   }
+  const normalText = 'text-white'
+  const dangerText = 'text-danger'
   return (
     <>
       <CCardHeader>
@@ -370,7 +373,7 @@ function AddEditVisaDetails({
               Country:
               <span
                 className={
-                  employeeVisaDetails?.countryId ? 'text-white' : 'text-danger'
+                  employeeVisaDetails?.countryId ? normalText : dangerText
                 }
               >
                 *
@@ -400,7 +403,7 @@ function AddEditVisaDetails({
               Visa Type:{' '}
               <span
                 className={
-                  employeeVisaDetails?.visaTypeId ? 'text-white' : 'text-danger'
+                  employeeVisaDetails?.visaTypeId ? normalText : dangerText
                 }
               >
                 *
@@ -429,8 +432,8 @@ function AddEditVisaDetails({
               <span
                 className={
                   employeeVisaDetails.dateOfIssue || dateOfIssue
-                    ? 'text-white'
-                    : 'text-danger'
+                    ? normalText
+                    : dangerText
                 }
               >
                 *
@@ -443,13 +446,11 @@ function AddEditVisaDetails({
                 maxDate={new Date()}
                 value={
                   (dateOfIssue as string) ||
-                  (employeeVisaDetails?.dateOfIssue as string)
+                  dateFormmatted(employeeVisaDetails.dateOfIssue as string)
                 }
                 selected={
-                  !dateOfIssueFlag
-                    ? employeeVisaDetails.dateOfIssue
-                      ? newDateOfIssue
-                      : (dateOfIssue as Date)
+                  !dateOfIssueFlag && employeeVisaDetails.dateOfIssue
+                    ? newDateOfIssue
                     : (dateOfIssue as Date)
                 }
                 onChange={onChangeDateOfIssueHandler}
@@ -458,8 +459,8 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-                dateFormat="dd/MM/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
               />
             </CCol>
           </CRow>
@@ -469,8 +470,8 @@ function AddEditVisaDetails({
               <span
                 className={
                   employeeVisaDetails.dateOfExpire || dateOfExpire
-                    ? 'text-white'
-                    : 'text-danger'
+                    ? normalText
+                    : dangerText
                 }
               >
                 *
@@ -482,13 +483,11 @@ function AddEditVisaDetails({
                 name="dateOfExpire"
                 value={
                   (dateOfExpire as string) ||
-                  (employeeVisaDetails?.dateOfExpire as string)
+                  dateFormmatted(employeeVisaDetails?.dateOfExpire as string)
                 }
                 selected={
-                  !dateOfExpiryFlag
-                    ? employeeVisaDetails?.dateOfExpire
-                      ? newDateOfExpiry
-                      : (dateOfExpire as Date)
+                  !dateOfExpiryFlag && employeeVisaDetails?.dateOfExpire
+                    ? newDateOfExpiry
                     : (dateOfExpire as Date)
                 }
                 onChange={onChangeDateOfExpireHandler}
@@ -497,8 +496,8 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-                dateFormat="dd/MM/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
               />
               {error && (
                 <p className="text-danger">
@@ -559,7 +558,7 @@ function AddEditVisaDetails({
                 <CButton
                   className="btn-ovh me-2"
                   color="success"
-                  disabled={error || invalidImage}
+                  disabled={clearVisaType || error || invalidImage}
                   onClick={handleUpdateVisaMember}
                 >
                   {confirmButtonText}
