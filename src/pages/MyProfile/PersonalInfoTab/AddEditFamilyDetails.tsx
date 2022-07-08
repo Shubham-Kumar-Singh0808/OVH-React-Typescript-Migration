@@ -45,6 +45,34 @@ function AddEditFamilyDetails({
   const [dateOfBirth, setDateOfBirth] = useState<Date | string>()
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [dateFormat, setDateFormat] = useState<string>('')
+  const [dateOfBirthFlag, setDateOfBirthFlag] = useState<boolean>(false)
+
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
+
+  useEffect(() => {
+    const localeDateFormat = dateFormatPerLocale.filter(
+      (lang) => lang.label === navigator.languages[0],
+    )
+    setDateFormat(localeDateFormat[0].format)
+  }, [])
+
+  const dateFormmatted = (date: string) => {
+    const tempDateFormat = reformatDate(date as string)
+    return tempDateFormat.toLocaleDateString(deviceLocale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+  }
+  console.log(dateOfBirth)
+  let newDateOfBirth = new Date()
+  if (employeeFamily.dateOfBirth) {
+    const currentDateOfBirth = employeeFamily.dateOfBirth as string
+    newDateOfBirth = reformatDate(currentDateOfBirth)
+  }
 
   useEffect(() => {
     if (isEditFamilyDetails) {
@@ -80,9 +108,11 @@ function AddEditFamilyDetails({
       setEmployeeFamily((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
+      setDateOfBirth(date)
     } else {
       setDateOfBirth(date)
     }
+    setDateOfBirthFlag(true)
   }
   useEffect(() => {
     if (
@@ -278,19 +308,23 @@ function AddEditFamilyDetails({
                 className="form-control"
                 name="dateOfBirth"
                 maxDate={new Date()}
-                selected={dateOfBirth as Date}
-                onChange={(date: Date) => onDateChangeHandler(date)}
-                id="dateOfBirth"
                 value={
                   (dateOfBirth as string) ||
-                  (employeeFamily?.dateOfBirth as string)
+                  dateFormmatted(employeeFamily?.dateOfBirth as string)
                 }
+                selected={
+                  !dateOfBirthFlag && employeeFamily.dateOfBirth
+                    ? newDateOfBirth
+                    : (dateOfBirth as Date)
+                }
+                onChange={(date: Date) => onDateChangeHandler(date)}
+                id="dateOfBirth"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-                dateFormat="dd/MM/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
               />
             </CCol>
           </CRow>

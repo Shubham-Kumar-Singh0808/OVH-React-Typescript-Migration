@@ -1,4 +1,5 @@
 /* eslint-disable sonarjs/cognitive-complexity */
+// todo: remove eslint and fix all errors
 import {
   CButton,
   CCol,
@@ -641,6 +642,7 @@ const BasicInfoTab = (): JSX.Element => {
           <CCol sm={3}>
             <DatePicker
               id="employeeOfficialBirthday"
+              data-testId="officialBirthdayInput"
               className="form-control form-control-sm"
               maxDate={new Date()}
               peekNextMonth
@@ -716,6 +718,7 @@ const BasicInfoTab = (): JSX.Element => {
                   onDateChangeHandler(date, { name: 'realBirthday' })
                   handleRealBday(date)
                 }}
+                data-testId="realBirthday"
               />
             </CCol>
           </CRow>
@@ -789,6 +792,7 @@ const BasicInfoTab = (): JSX.Element => {
                   onDateChangeHandler(date, { name: 'anniversary' })
                   handleAnniversary(date)
                 }}
+                data-testId="anniversary"
               />
               {dateErrorMessage && (
                 <p className="text-danger">

@@ -1,4 +1,5 @@
 /* eslint-disable sonarjs/cognitive-complexity */
+// todo: remove eslint and fix all errors
 import {
   CButton,
   CCardBody,
