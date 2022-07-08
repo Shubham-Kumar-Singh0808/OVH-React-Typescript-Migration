@@ -25,6 +25,7 @@ import {
   reformatDate,
   dateFormatPerLocale,
 } from '../../../utils/dateFormatUtils'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
 
 function AddEditVisaDetails({
   isEditVisaDetails = false,
@@ -42,7 +43,7 @@ function AddEditVisaDetails({
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined)
   const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState<boolean>(false)
-  const [invalidImage, setInvalidImage] = useState<boolean>(false)
+  const [inValidImage, setInvalidImage] = useState<boolean>(false)
   const [clearVisaType, setClearVisaType] = useState<boolean>(false)
   const [dateFormat, setDateFormat] = useState<string>('')
 
@@ -205,6 +206,7 @@ function AddEditVisaDetails({
       : new Date(dateOfIssue as string)
 
     validateDates(newDateIssue, date)
+
     if (isEditVisaDetails) {
       const formatDate = moment(date).format(commonFormatDate)
       const name = 'dateOfExpire'
@@ -340,13 +342,12 @@ function AddEditVisaDetails({
     htmlFor: 'Country',
     className: 'col-sm-3 col-form-label text-end',
   }
-
   const visaTypeProps = {
     className: 'col-sm-3 col-form-label text-end',
     htmlFor: 'Visa Type',
   }
-  const normalText = 'text-white'
-  const dangerText = 'text-danger'
+  const span6 = { span: 6, offset: 3 }
+
   return (
     <>
       <CCardHeader>
@@ -373,7 +374,7 @@ function AddEditVisaDetails({
               Country:
               <span
                 className={
-                  employeeVisaDetails?.countryId ? normalText : dangerText
+                  employeeVisaDetails?.countryId ? TextWhite : TextDanger
                 }
               >
                 *
@@ -403,7 +404,7 @@ function AddEditVisaDetails({
               Visa Type:{' '}
               <span
                 className={
-                  employeeVisaDetails?.visaTypeId ? normalText : dangerText
+                  employeeVisaDetails?.visaTypeId ? TextWhite : TextDanger
                 }
               >
                 *
@@ -432,8 +433,8 @@ function AddEditVisaDetails({
               <span
                 className={
                   employeeVisaDetails.dateOfIssue || dateOfIssue
-                    ? normalText
-                    : dangerText
+                    ? TextWhite
+                    : TextDanger
                 }
               >
                 *
@@ -470,8 +471,8 @@ function AddEditVisaDetails({
               <span
                 className={
                   employeeVisaDetails.dateOfExpire || dateOfExpire
-                    ? normalText
-                    : dangerText
+                    ? TextWhite
+                    : TextDanger
                 }
               >
                 *
@@ -525,7 +526,7 @@ function AddEditVisaDetails({
               />
             </CCol>
             {selectedFile || getEditVisaDetails?.visaDetailsData ? (
-              <CCol sm={{ span: 6, offset: 3 }}>
+              <CCol sm={span6}>
                 <img
                   src={selectImageFile}
                   alt=""
@@ -535,16 +536,16 @@ function AddEditVisaDetails({
             ) : (
               <>
                 <div className="w-100"></div>
-                <CCol sm={{ span: 6, offset: 3 }}>
+                <CCol sm={span6}>
                   <p className=" text-info ">
                     Note: Please upload less than 400KB size image.
                   </p>
                 </CCol>
               </>
             )}
-            {invalidImage && (
+            {inValidImage && (
               <>
-                <CCol sm={{ span: 6, offset: 3 }}>
+                <CCol sm={span6}>
                   <p className=" text-danger ">
                     Please upload less than 400KB size image.
                   </p>
@@ -553,12 +554,12 @@ function AddEditVisaDetails({
             )}
           </CRow>
           <CRow>
-            <CCol md={{ span: 6, offset: 3 }}>
+            <CCol md={span6}>
               {isEditVisaDetails || employeeVisaDetails?.visaDetailsData ? (
                 <CButton
                   className="btn-ovh me-2"
                   color="success"
-                  disabled={clearVisaType || error || invalidImage}
+                  disabled={clearVisaType || error || inValidImage}
                   onClick={handleUpdateVisaMember}
                 >
                   {confirmButtonText}
@@ -568,7 +569,7 @@ function AddEditVisaDetails({
                   <CButton
                     className="btn-ovh me-1"
                     color="success"
-                    disabled={!isAddButtonEnabled || error || invalidImage}
+                    disabled={!isAddButtonEnabled || error || inValidImage}
                     onClick={handleAddVisaDetails}
                   >
                     {confirmButtonText}
