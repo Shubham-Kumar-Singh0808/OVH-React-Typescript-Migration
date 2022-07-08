@@ -56,7 +56,7 @@ const employeeEmailTemplate = (): JSX.Element => {
     )
   }, [dispatch])
 
-  const handleTicketConfiguration = () => {
+  const handleEmailTemplate = () => {
     dispatch(
       reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
         templateName: employeeTemplate.templateName,
@@ -177,7 +177,7 @@ const employeeEmailTemplate = (): JSX.Element => {
             <CButton
               className="btn-ovh me-1"
               color="success"
-              onClick={handleTicketConfiguration}
+              onClick={handleEmailTemplate}
               disabled={!isAddButtonEnabled}
             >
               <i className="fa fa-search"></i>Search
