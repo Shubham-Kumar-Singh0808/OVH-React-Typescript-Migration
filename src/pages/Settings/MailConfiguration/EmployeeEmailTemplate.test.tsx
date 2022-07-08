@@ -6,6 +6,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import EmployeeEmailTemplate from './EmployeeEmailTemplate'
 import stateStore from '../../../stateStore'
 
@@ -16,6 +17,12 @@ const ReduxProvider = ({
   children: JSX.Element
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
+
+const expectComponentToBeRendered = () => {
+  expect(screen.getByText('Type:')).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
+  expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
+}
 
 describe('email Template List Table Testing', () => {
   test('should render No data to display if Reviews is empty', async () => {
@@ -90,5 +97,44 @@ describe('email Template List Table Testing', () => {
       </ReduxProvider>,
     )
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
+  })
+  test('should render Email Template form without crashing', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeEmailTemplate />
+      </ReduxProvider>,
+    )
+    expectComponentToBeRendered()
+  })
+  test('should enabled add  button when input is not empty', async () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeEmailTemplate />
+      </ReduxProvider>,
+    )
+    await waitFor(() => {
+      userEvent.type(screen.getByRole('textbox'), 'testing')
+      expect(screen.getByRole('button', { name: /Search/i })).toBeEnabled()
+    })
+  })
+  // eslint-disable-next-line sonarjs/no-identical-functions
+  test('should correctly Click on clear button the dropdown should be empty', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeEmailTemplate />
+      </ReduxProvider>,
+    )
+    expect(screen.getByRole('option', { name: 'Select Type' }).selected).toBe(
+      true,
+    )
+  })
+
+  test('should render 1 input components', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeEmailTemplate />
+      </ReduxProvider>,
+    )
+    expect(screen.getByPlaceholderText('Search Text')).toBeInTheDocument()
   })
 })
