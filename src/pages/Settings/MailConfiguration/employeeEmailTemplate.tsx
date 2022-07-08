@@ -15,6 +15,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
+import { Link } from 'react-router-dom'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -112,9 +113,11 @@ const employeeEmailTemplate = (): JSX.Element => {
             </CButton>
           </CCol>
           <CCol>
-            <CButton color="info btn-ovh me-1" className="text-white">
-              <i className="fa fa-plus me-1"></i>Add Template
-            </CButton>
+            <Link to={`/addTemplate`}>
+              <CButton color="info btn-ovh me-1" className="text-white">
+                <i className="fa fa-plus me-1"></i>Add Template
+              </CButton>
+            </Link>
           </CCol>
           {/* <CCol>
             <CButton color="info btn-ovh me-1" className="text-white">

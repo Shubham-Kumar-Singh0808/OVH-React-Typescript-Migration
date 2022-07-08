@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import validator from 'validator'
+import { Link } from 'react-router-dom'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
@@ -162,9 +163,11 @@ function AddNewMailTemplate(): JSX.Element {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton color="info" className="btn-ovh me-1">
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
+            <Link to={`/mailTemplates`}>
+              <CButton color="info" className="btn-ovh me-1">
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
         <CForm>
