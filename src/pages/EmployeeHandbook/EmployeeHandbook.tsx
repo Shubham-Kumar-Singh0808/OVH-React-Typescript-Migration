@@ -7,6 +7,7 @@ import {
   CRow,
   CSpinner,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import HandbookList from './HandbookList'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
@@ -30,7 +31,6 @@ const EmployeeHandbook = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.EmployeeHandbook.getHandbooks())
-    console.log(handbooks)
   }, [dispatch])
   return (
     <>
@@ -56,8 +56,9 @@ const EmployeeHandbook = (): JSX.Element => {
           </CCol>
           <CCol md={2}>
             <CButton color="info" className="hb_button" size="sm">
-              <i className="fa fa-light fa-toolbox"></i>
-              Handbook Settings
+              <Link to={`/handbooksettings`} className="hb_button">
+                Handbook Settings
+              </Link>
             </CButton>
           </CCol>
         </CRow>

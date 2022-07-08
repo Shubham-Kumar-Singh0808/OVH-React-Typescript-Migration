@@ -13,8 +13,8 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
 
 describe('Handbook List Component Testing', () => {
   test('should render titles of handbooks without crashing', async () => {
-    await render(<HandbookList handbooks={mockHandbookList} />)
+    await render(<HandbookList handbooks={mockHandbookList} inputText={''} />)
 
-    expectPageSizeToBeRendered(20)
+    expectPageSizeToBeRendered(7)
   })
 })

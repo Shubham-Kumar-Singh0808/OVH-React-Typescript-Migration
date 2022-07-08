@@ -1,41 +1,67 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import React, { useEffect } from 'react'
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
+import { CCol, CRow, CSpinner, CButton } from '@coreui/react-pro'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
 import { ApiLoadingState } from '../../middleware/api/apiList'
+import { Handbook } from '../../types/EmployeeHandbook/employeeHandbookTypes'
 
 const ShowHandbook = (): JSX.Element => {
   const { clickedpageName } = useParams<{ clickedpageName: string }>()
-  console.log(clickedpageName)
   const dispatch = useAppDispatch()
-  const handbook = useTypedSelector(
+  let handbook = useTypedSelector(
     reduxServices.ShowHandbook.selectors.handbookDesc,
   )
   const isLoading = useTypedSelector(
-    reduxServices.EmployeeHandbook.selectors.isLoading,
+    reduxServices.ShowHandbook.selectors.isLoading,
   )
-  console.log('dispatch declared')
 
   useEffect(() => {
     dispatch(reduxServices.ShowHandbook.showHandbook(clickedpageName))
-    console.log(handbook)
-  }, [dispatch, clickedpageName, handbook])
+    return () => {
+      handbook = {} as Handbook
+    }
+  }, [clickedpageName])
 
   return (
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title={`${handbook.title}`}
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
+        CHeaderClassName="d-none"
       >
         {isLoading !== ApiLoadingState.loading ? (
-          // <CCol>{parse(handbook.description as string)}</CCol>
-          <div
-            dangerouslySetInnerHTML={{ __html: handbook.description as string }}
-          />
+          <>
+            <OCard
+              className="mb-4 myprofile-wrapper"
+              title={`${handbook.title}`}
+              CBodyClassName="ps-0 pe-0"
+              CFooterClassName="d-none"
+            >
+              <CRow className="justify-content-end">
+                <CCol className="text-end" md={4}>
+                  <Link to={'/employeehandbook'}>
+                    <CButton
+                      data-testid="back-button"
+                      color="info"
+                      className="btn-ovh me-1"
+                    >
+                      <i className="fa fa-arrow-left me-1"></i>Back
+                    </CButton>
+                  </Link>
+                </CCol>
+              </CRow>
+              <CRow className="mt-5">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: handbook.description as string,
+                  }}
+                />
+              </CRow>
+            </OCard>
+          </>
         ) : (
           <CCol>
             <CRow className="category-loading-spinner">
