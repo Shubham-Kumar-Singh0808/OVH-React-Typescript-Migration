@@ -27,3 +27,8 @@ export type EmployeeGetEmailTemplateProps = {
   templateName: string | undefined
   templateTypeId: number | string | undefined
 }
+
+export type EmployeeGetEmailTemplateModelProps = {
+  emailTemplate: string
+  emailTemplateName: string
+}

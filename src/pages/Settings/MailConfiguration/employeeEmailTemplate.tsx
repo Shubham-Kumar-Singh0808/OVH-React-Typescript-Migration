@@ -18,15 +18,21 @@ import parse from 'html-react-parser'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { EmployeeGetMailTemplate } from '../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
+import {
+  EmployeeGetEmailTemplateModelProps,
+  EmployeeGetMailTemplate,
+} from '../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
 
 const employeeEmailTemplate = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const [emailTemplateModel, setEmailTemplateModel] = useState<string>('')
-
+  const [emailTemplateModel, setEmailTemplateModel] =
+    useState<EmployeeGetEmailTemplateModelProps>({
+      emailTemplate: '',
+      emailTemplateName: '',
+    })
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -69,9 +75,12 @@ const employeeEmailTemplate = (): JSX.Element => {
     })
   }
 
-  const handleModal = (emailTemplate: string) => {
+  const handleModal = (emailTemplateName: string, emailTemplate: string) => {
     setIsModalVisible(true)
-    setEmailTemplateModel(emailTemplate)
+    setEmailTemplateModel({
+      emailTemplate,
+      emailTemplateName,
+    })
   }
 
   useEffect(() => {
@@ -232,7 +241,8 @@ const employeeEmailTemplate = (): JSX.Element => {
                       className="cursor-pointer text-decoration-none text-primary"
                       onClick={() =>
                         handleModal(
-                          emailTemplate.templateName && emailTemplate.template,
+                          emailTemplate.templateName,
+                          emailTemplate.template,
                         )
                       }
                     >
@@ -258,7 +268,16 @@ const employeeEmailTemplate = (): JSX.Element => {
               visible={isModalVisible}
               setVisible={setIsModalVisible}
             >
-              <div dangerouslySetInnerHTML={{ __html: emailTemplateModel }} />
+              <>
+                <h4 className="model-text">
+                  {emailTemplateModel.emailTemplateName}
+                </h4>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: emailTemplateModel.emailTemplate,
+                  }}
+                />
+              </>
             </OModal>
           </CTableBody>
         </CTable>
