@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/named */
-// Todo: remove eslint and fix all the errors
+// Todo: Vinesh // remove eslint and fix all the errors
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
