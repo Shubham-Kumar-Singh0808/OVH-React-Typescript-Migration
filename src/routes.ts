@@ -27,7 +27,7 @@ const CertificateTypeList = React.lazy(
     ),
 )
 const EmployeeList = React.lazy(
-  () => import('./pages/EmployeeDirectory/EmployeesList/EmployeeList'),
+  () => import('./pages/EmployeeDirectory/EmployeesList'),
 )
 const EmployeeReport = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeeReport/EmployeeReport'),

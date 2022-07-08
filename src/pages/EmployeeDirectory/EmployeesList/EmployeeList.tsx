@@ -7,8 +7,12 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
-const EmployeeList = (): JSX.Element => {
+const EmployeeList = ({
+  createaccess,
+  updateaccess,
+}: UserAccessToFeatures): JSX.Element => {
   const dispatch = useAppDispatch()
   const listSize = useTypedSelector(
     reduxServices.employeeList.selectors.listSize,
@@ -48,13 +52,14 @@ const EmployeeList = (): JSX.Element => {
       >
         {isLoading !== ApiLoadingState.loading ? (
           <>
-            <ListOptions />
+            <ListOptions createaccess={createaccess} />
             <EmployeeListTable
               paginationRange={paginationRange}
               setPageSize={setPageSize}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
               pageSize={pageSize}
+              updateaccess={updateaccess}
             />
           </>
         ) : (

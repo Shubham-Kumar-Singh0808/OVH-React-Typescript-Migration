@@ -32,6 +32,7 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
     setPageSize,
     currentPage,
     setCurrentPage,
+    updateaccess,
   } = props
 
   const handlePageSizeSelectChange = (
@@ -60,7 +61,9 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                 <CTableHeaderCell scope="col">Blood Group</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Date of Joining</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                {updateaccess && (
+                  <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                )}
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -91,27 +94,29 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                     <CTableDataCell>{employee.bloodgroup}</CTableDataCell>
                     <CTableDataCell>{employee.dateOfJoining}</CTableDataCell>
                     <CTableDataCell>{employee.country}</CTableDataCell>
-                    <CTableDataCell>
-                      <Link to={`/employeeProfile/${employee.id}`}>
-                        <CButton
-                          color="info"
-                          size="sm"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-eye text-white"></i>
-                        </CButton>
-                      </Link>
-                      &nbsp;
-                      <Link to={`/editEmployee/${employee.id}`}>
-                        <CButton
-                          color="info"
-                          size="sm"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-pencil-square-o text-white"></i>
-                        </CButton>
-                      </Link>
-                    </CTableDataCell>
+                    {updateaccess && (
+                      <CTableDataCell>
+                        <Link to={`/employeeProfile/${employee.id}`}>
+                          <CButton
+                            color="info"
+                            size="sm"
+                            className="btn-ovh-employee-list"
+                          >
+                            <i className="text-white fa fa-eye"></i>
+                          </CButton>
+                        </Link>
+                        &nbsp;
+                        <Link to={`/editEmployee/${employee.id}`}>
+                          <CButton
+                            color="info"
+                            size="sm"
+                            className="btn-ovh-employee-list"
+                          >
+                            <i className="text-white fa fa-pencil-square-o"></i>
+                          </CButton>
+                        </Link>
+                      </CTableDataCell>
+                    )}
                   </CTableRow>
                 )
               })}
@@ -135,7 +140,7 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
             {listSize > 20 && (
               <CCol
                 xs={5}
-                className="d-grid gap-1 d-md-flex justify-content-md-end"
+                className="gap-1 d-grid d-md-flex justify-content-md-end"
               >
                 <OPagination
                   currentPage={currentPage}

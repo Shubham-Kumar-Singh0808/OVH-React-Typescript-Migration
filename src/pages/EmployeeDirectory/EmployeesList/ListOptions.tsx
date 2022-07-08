@@ -6,8 +6,9 @@ import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList
 import employeeListApi from '../../../middleware/api/EmployeeDirectory/EmployeesList/employeeListApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { downloadFile } from '../../../utils/helper'
+import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
-const ListOptions = (): JSX.Element => {
+const ListOptions = ({ createaccess }: UserAccessToFeatures): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const selectedEmploymentStatus = useTypedSelector(
