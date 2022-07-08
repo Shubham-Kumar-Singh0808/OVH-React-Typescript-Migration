@@ -1,6 +1,6 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
-export type EmployeeGetMailTemplate = {
+export type EmployeeMailTemplate = {
   id: number | string
   templateName: string
   template: string
@@ -11,14 +11,14 @@ export type EmployeeGetMailTemplate = {
   email: null | string
 }
 
-export type EmployeeGetMailTemplateType = {
+export type EmployeeMailTemplateType = {
   id: string
   name: string
 }
 
 export type EmployeeMailConfigurationState = {
-  employeeGetEmailTemplate: EmployeeGetMailTemplate[]
-  employeeGetMailTemplateTypes: EmployeeGetMailTemplateType[]
+  employeeGetEmailTemplate: EmployeeMailTemplate[]
+  employeeGetMailTemplateTypes: EmployeeMailTemplateType[]
   isLoading: LoadingState
   error: ValidationError
 }

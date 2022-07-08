@@ -136,12 +136,21 @@ describe('email Template List Table Testing', () => {
     )
     expect(screen.getByPlaceholderText('Search Text')).toBeInTheDocument()
   })
-  test('should render add new employee form without crashing', () => {
+  test('should clear input and disable button after submitting ', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <EmployeeEmailTemplate />
       </ReduxProvider>,
     )
-    expect(screen.getByText('Email Templates')).toBeInTheDocument()
+
+    expectComponentToBeRendered()
+
+    userEvent.type(screen.getByRole('textbox'), '')
+    await waitFor(() => {
+      userEvent.click(screen.getByRole('button', { name: /Search/i }))
+
+      expect(screen.getByRole('textbox')).toHaveValue('')
+      expect(screen.getByRole('button', { name: /Search/i })).toBeDisabled()
+    })
   })
 })

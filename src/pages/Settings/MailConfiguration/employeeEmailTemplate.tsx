@@ -20,7 +20,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import {
   EmployeeGetEmailTemplateModelProps,
-  EmployeeGetMailTemplate,
+  EmployeeMailTemplate,
 } from '../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
@@ -37,7 +37,7 @@ const employeeEmailTemplate = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
 
-  const initialEmployeeEmailTemplate = {} as EmployeeGetMailTemplate
+  const initialEmployeeEmailTemplate = {} as EmployeeMailTemplate
   const [employeeTemplate, setEmployeeTemplate] = useState(
     initialEmployeeEmailTemplate,
   )

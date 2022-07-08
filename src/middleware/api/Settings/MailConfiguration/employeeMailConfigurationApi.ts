@@ -4,14 +4,14 @@ import {
   AllowedHttpMethods,
 } from '../../apiList'
 import {
-  EmployeeGetMailTemplate,
+  EmployeeMailTemplate,
   EmployeeGetEmailTemplateProps,
-  EmployeeGetMailTemplateType,
+  EmployeeMailTemplateType,
 } from '../../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
 const getEmployeeMailTemplateTypes = async (): Promise<
-  EmployeeGetMailTemplateType[]
+  EmployeeMailTemplateType[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeMailConfigurationApiConfig.getMailTemplateTypes,
@@ -23,7 +23,7 @@ const getEmployeeMailTemplateTypes = async (): Promise<
 
 const getEmployeeMailTemplate = async (
   props: EmployeeGetEmailTemplateProps,
-): Promise<EmployeeGetMailTemplate[]> => {
+): Promise<EmployeeMailTemplate[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeMailConfigurationApiConfig.getMailTemplates,
     method: AllowedHttpMethods.get,
