@@ -77,7 +77,6 @@ function AddEditVisaDetails({
     setDateFormat(localeDateFormat[0].format)
   }, [])
 
-  const commonFormatDate = 'DD/MM/YYYY' //format for validation
   const dateFormmatted = (date: string) => {
     if (date) {
       const tempDateFormat = reformatDate(date as string)
@@ -146,6 +145,8 @@ function AddEditVisaDetails({
       setEmployeeVisaDetails(getEditVisaDetails)
     }
   }, [isEditVisaDetails, getEditVisaDetails])
+
+  const commonFormatDate = 'DD/MM/YYYY' //format saved in DB
 
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target

@@ -93,7 +93,7 @@ function AddUpdateEmployeeCertification({
     }
   }, [dispatch, addCertification?.technology])
 
-  const commonFormatDate = 'DD/MM/YYYY' //format for validation
+  const commonFormatDate = 'DD/MM/YYYY' //format saved in DB
   const dateFormmatted = (date: string) => {
     if (date) {
       const tempDateFormat = reformatDate(date as string)

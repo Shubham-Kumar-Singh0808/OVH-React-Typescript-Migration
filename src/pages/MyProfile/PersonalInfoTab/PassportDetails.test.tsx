@@ -6,16 +6,17 @@ import { render, screen, waitFor } from '../../../test/testUtils'
 import { employeePersonalInfoData } from '../../../test/data/employeePersonalInfoData'
 import { dateFormatPerLocale } from '../../../utils/dateFormatUtils'
 
+const deviceLocale: string =
+  navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language
+const localeDateFormat = dateFormatPerLocale.filter(
+  (lang) => lang.label === deviceLocale,
+)
+const dateFormat = localeDateFormat[0].format
+
 describe('Employee Passport Details', () => {
   describe('Without data', () => {
-    const deviceLocale: string =
-      navigator.languages && navigator.languages.length
-        ? navigator.languages[0]
-        : navigator.language
-    const localeDateFormat = dateFormatPerLocale.filter(
-      (lang) => lang.label === navigator.languages[0],
-    )
-    const dateFormat = localeDateFormat[0].format
     beforeEach(() => {
       render(<PassportDetails />)
     })
@@ -80,7 +81,7 @@ describe('Employee Passport Details', () => {
       )
       userEvent.type(
         issuedDateInput[1],
-        new Date('12/20/2021').toLocaleDateString(deviceLocale, {
+        new Date('12/21/2022').toLocaleDateString(deviceLocale, {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
