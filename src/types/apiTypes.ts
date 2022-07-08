@@ -103,6 +103,7 @@ export interface PersonalInfoApi extends ApiBase {
   deleteFamilyMember: string
   deleteVisaDetail: string
   fileUploadVisaImage: string
+  fileUploadPassportImage: string
 }
 
 export interface ProfileHistoryApi extends ApiBase {

@@ -90,6 +90,7 @@ export const personalInfoApiConfig: PersonalInfoApi = {
   deleteFamilyMember: apiPrefix + '/Employee/deleteFamilymember',
   deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
   fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
+  fileUploadPassportImage: apiPrefix + '/fileUpload/uploadPassPortFrontImage',
 }
 
 export const skillsApiConfig: SkillApi = {
