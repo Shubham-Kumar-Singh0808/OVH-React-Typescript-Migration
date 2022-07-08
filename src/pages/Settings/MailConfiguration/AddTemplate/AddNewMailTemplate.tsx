@@ -187,7 +187,7 @@ function AddNewMailTemplate(): JSX.Element {
             </CFormLabel>
             <CCol sm={4}>
               <CFormSelect
-                data-testid="form-select"
+                data-testid="form-select-type"
                 aria-label="Default select example"
                 size="sm"
                 id="templateTypeId"
@@ -227,7 +227,7 @@ function AddNewMailTemplate(): JSX.Element {
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormSelect
-                    data-testid="form-select"
+                    data-testid="form-select-asset-type"
                     aria-label="Default select example"
                     size="sm"
                     id="assetType"
