@@ -12,8 +12,13 @@ const ReportingManager = ({
   reportManagersList,
   onSelectReportManager,
   shouldReset,
+  reportValue,
 }: ReportManagerProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
+
+  useEffect(() => {
+    setAutoCompleteTarget(reportValue)
+  }, [reportValue])
 
   useEffect(() => {
     if (shouldReset) setAutoCompleteTarget('')
@@ -55,6 +60,7 @@ const ReportingManager = ({
             }}
             getItemValue={(item) => item.fullName}
             items={reportManagersList}
+            data-testid="report-input"
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
               <div

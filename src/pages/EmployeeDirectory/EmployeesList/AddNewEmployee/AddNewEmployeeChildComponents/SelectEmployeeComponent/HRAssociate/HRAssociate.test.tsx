@@ -23,6 +23,8 @@ describe('Add Employee HRAssociate Component', () => {
           hrDataList={[]}
           onSelectHRAssociate={jest.fn()}
           dynamicFormLabelProps={jest.fn()}
+          shouldReset={false}
+          hrValue={''}
         />
       </ReduxProvider>,
     )

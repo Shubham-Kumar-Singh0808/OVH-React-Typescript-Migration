@@ -39,6 +39,7 @@ const AddNewEmployee = (): JSX.Element => {
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
+  const [isViewBtnEnabled, setViewBtnEnabled] = useState<boolean>(false)
 
   const initResetFields = {
     hrAssociate: false,
@@ -191,7 +192,7 @@ const AddNewEmployee = (): JSX.Element => {
     dispatch(
       reduxServices.newEmployee.employeeDepartmentsService.getEmployeeDepartments(),
     )
-    dispatch(reduxServices.newEmployee.technologyService.getAllTechnology())
+    dispatch(reduxServices.technology.getAllTechnology())
     dispatch(reduxServices.newEmployee.countryService.getAllCountries())
     dispatch(reduxServices.newEmployee.hrDataService.getAllHrData())
     dispatch(
@@ -203,6 +204,42 @@ const AddNewEmployee = (): JSX.Element => {
     dispatch(reduxServices.newEmployee.jobTypeService.getAllJobType())
     dispatch(reduxServices.employeeDesignation.getAllEmployeeDesignations())
   }, [dispatch])
+
+  useEffect(() => {
+    if (
+      addEmployee.country !== '' &&
+      addEmployee.dateOfJoining != null &&
+      addEmployee.departmentName !== '' &&
+      addEmployee.designation !== '' &&
+      addEmployee.dob !== null &&
+      addEmployee.employmentTypeName !== '' &&
+      addEmployee.firstName !== '' &&
+      addEmployee.gender !== '' &&
+      addEmployee.lastName !== '' &&
+      addEmployee.middleName !== '' &&
+      addEmployee.hrAssociate.fullName != null &&
+      addEmployee.jobTypeName !== '' &&
+      addEmployee.manager.fullName != null &&
+      addEmployee.projectManager.fullName != null &&
+      addEmployee.role !== '' &&
+      addEmployee.technology !== '' &&
+      addEmployee.timeSlotDTO.name != null &&
+      addEmployee.userName !== '' &&
+      addEmployee.workStatus !== ''
+    ) {
+      const hasContract =
+        addEmployee.contractStartDate !== null &&
+        addEmployee.contractEndDate !== null
+
+      if (addEmployee.contractExists === 'true') {
+        setViewBtnEnabled(hasContract)
+      } else {
+        setViewBtnEnabled(true)
+      }
+    } else {
+      setViewBtnEnabled(false)
+    }
+  }, [addEmployee])
 
   const onHandleAllowedUser = async (username: string) => {
     if (username === '' || username == null) return
@@ -246,7 +283,7 @@ const AddNewEmployee = (): JSX.Element => {
     reduxServices.userRolesAndPermissions.selectors.userRoles,
   )
   const technologyList = useTypedSelector(
-    reduxServices.newEmployee.technologyService.selectors.technologies,
+    reduxServices.technology.selectors.technologies,
   )
   const departmentsList = useTypedSelector(
     reduxServices.newEmployee.employeeDepartmentsService.selectors
@@ -422,6 +459,7 @@ const AddNewEmployee = (): JSX.Element => {
               value={addEmployee.designation}
               setToggleShift={() => setDestinationToggle(!destinationToggle)}
               toggleValue={destinationToggle as boolean}
+              isAddDisable={false}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}
@@ -436,18 +474,21 @@ const AddNewEmployee = (): JSX.Element => {
               reportManagersList={reportingManagersList}
               onSelectReportManager={onHandleReportManager}
               shouldReset={resetFields.reportManager}
+              reportValue={addEmployee.manager.fullName}
             />
             <ProjectManager
               dynamicFormLabelProps={dynamicFormLabelProps}
               managersList={reportingManagersList}
               onSelectManager={onHandleProjectManager}
               shouldReset={resetFields.projectManager}
+              projectValue={addEmployee.projectManager.fullName}
             />
             <HRAssociate
               dynamicFormLabelProps={dynamicFormLabelProps}
               hrDataList={hrDataList}
               onSelectHRAssociate={onHandleHRAssociate}
               shouldReset={resetFields.hrAssociate}
+              hrValue={addEmployee.hrAssociate.fullName}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}
@@ -469,9 +510,10 @@ const AddNewEmployee = (): JSX.Element => {
               dynamicFormLabelProps={dynamicFormLabelProps}
               list={employeeShifts}
               setValue={onHandleShift}
-              value={addEmployee.timeSlotDTO?.name}
+              value={addEmployee.timeSlotDTO.name}
               setToggleShift={() => setShiftToggle(!shiftToggle)}
               toggleValue={shiftToggle as boolean}
+              isAddDisable={false}
             />
             <EmploymentContract
               dynamicFormLabelProps={dynamicFormLabelProps}
@@ -492,6 +534,7 @@ const AddNewEmployee = (): JSX.Element => {
                 <CButton
                   className="btn-ovh me-1"
                   color="success"
+                  disabled={!isViewBtnEnabled}
                   data-testid="add-new-employee"
                   onClick={handleAddEmployee}
                 >

@@ -1,5 +1,5 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { EmployeeShiftDetails } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import { SelectShiftProps } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../../utils/helper'
@@ -11,10 +11,13 @@ const Shift = ({
   setToggleShift,
   value,
   toggleValue,
+  isAddDisable,
 }: SelectShiftProps): JSX.Element => {
+  const initShift = {} as EmployeeShiftDetails
+  const [defaultValue, setDefaultValue] = useState(initShift)
   const onHandleSelectManager = (e: { target: { value: string } }) => {
     const name = e.target.value
-    const shift = list.find((value) => value.name === name)
+    const shift = list.find((schedule) => schedule.name === name)
 
     const selectedShift = {
       id: shift?.id,
@@ -28,7 +31,22 @@ const Shift = ({
     setValue(selectedShift)
   }
 
-  const shiftValue = value == null ? '' : value
+  useEffect(() => {
+    if (value != null) {
+      const shift = list.find((schedule) => schedule.name === value)
+      const selectedShift = {
+        id: shift?.id,
+        name: shift?.name,
+        startTimeHour: shift?.startTimeHour,
+        startTimeMinutes: shift?.startTimeMinutes,
+        endTimeHour: shift?.endTimeHour,
+        endTimeMinutes: shift?.endTimeMinutes,
+        graceTime: shift?.graceTime,
+      } as EmployeeShiftDetails
+      setDefaultValue(selectedShift)
+    }
+  }, [value])
+
   return (
     <>
       <CRow className="mb-3 align-items-center">
@@ -47,7 +65,7 @@ const Shift = ({
             size="sm"
             aria-label="shift"
             name="shift"
-            value={shiftValue}
+            value={defaultValue.name}
             onChange={onHandleSelectManager}
           >
             <option value={''}>Select Shift</option>
@@ -61,15 +79,24 @@ const Shift = ({
             })}
           </CFormSelect>
         </CCol>
-        <CCol sm={3}>
-          <CButton
-            color="info"
-            className="btn-ovh me-1"
-            onClick={() => setToggleShift(!toggleValue)}
-          >
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
-        </CCol>
+        {!isAddDisable ? (
+          <CCol sm={3}>
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              onClick={() => setToggleShift(!toggleValue)}
+            >
+              <i className="fa fa-plus me-1"></i>Add
+            </CButton>
+          </CCol>
+        ) : (
+          <CCol sm={3}>
+            In Time : {defaultValue.startTimeHour}:
+            {defaultValue.startTimeMinutes}
+            <br></br>
+            Out Time : {defaultValue.endTimeHour}:{defaultValue.endTimeMinutes}
+          </CCol>
+        )}
       </CRow>
     </>
   )
