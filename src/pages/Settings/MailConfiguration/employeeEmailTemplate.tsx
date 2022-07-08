@@ -182,15 +182,15 @@ const employeeEmailTemplate = (): JSX.Element => {
             </CButton>
           </CCol>
           <CCol sm={3}>
-            <CButton color="info btn-ovh me-1" className="text-white">
-              <i className="fa fa-plus me-1"></i>Add Template
-            </CButton>
             <CButton
               color="info btn-ovh me-1"
               className="text-white"
               onClick={handleExportMailTemplateData}
             >
               <i className="fa fa-plus me-1"></i>Click to Export
+            </CButton>
+            <CButton color="info btn-ovh me-1" className="text-white">
+              <i className="fa fa-plus me-1"></i>Add Template
             </CButton>
           </CCol>
         </CRow>
