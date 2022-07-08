@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix errors
 import {
@@ -11,22 +9,29 @@ import {
   CFormCheck,
   CFormInput,
   CFormLabel,
-  CFormSelect,
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
 import AddEditFamilyDetails from './AddEditFamilyDetails'
 import AddEditVisaDetails from './AddEditVisaDetails'
 import FamilyDetailsTable from './FamilyDetailsTable'
 import VisaDetailsTable from './VisaDetailsTable'
+import ContactNumberDetails from './ContactNumberDetails'
+import { PassportDetails } from './PassportDetails'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { handleActiveTabProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import {
+  EmployeePassportImage,
+  handleActiveTabProps,
+} from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
+import {
+  EmployeeContactInformation,
+  EmployeeEmergencyContactInformation,
+  EmployeePassportDetails,
+} from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 
 const PersonalInfoTab = ({
   handleActiveTab,
@@ -54,20 +59,6 @@ const PersonalInfoTab = ({
   const employeeBasicInformation = useTypedSelector(
     reduxServices.generalInformation.selectors.selectLoggedInEmployeeData,
   )
-  const selectedUserContactDetails = {
-    mobile: employeePersonalInformation?.mobile,
-    alternativeMobile: employeePersonalInformation?.alternativeMobile,
-    homeCode: employeePersonalInformation?.homeCode,
-    homeNumber: employeePersonalInformation?.homeNumber,
-    workCode: employeePersonalInformation?.workCode,
-    workNumber: employeePersonalInformation?.workNumber,
-  }
-
-  const selectedUserEmergencyContactDetails = {
-    emergencyContactName: employeePersonalInformation?.emergencyContactName,
-    emergencyPhone: employeePersonalInformation?.emergencyPhone,
-    emergencyRelationShip: employeePersonalInformation?.emergencyRelationShip,
-  }
 
   const selectedUserPresenetAddressDetails = {
     presentAddress: employeePersonalInformation?.presentAddress,
@@ -81,13 +72,6 @@ const PersonalInfoTab = ({
     permanentCity: employeePersonalInformation?.permanentCity,
     permanentZip: employeePersonalInformation?.permanentZip,
     permanentLandMark: employeePersonalInformation?.permanentLandMark,
-  }
-
-  const selectedUserPassportDetails = {
-    passportNumber: employeePersonalInformation?.passportNumber,
-    passportIssuedPlace: employeePersonalInformation?.passportIssuedPlace,
-    passportIssuedDate: employeePersonalInformation?.passportIssuedDate,
-    passportExpDate: employeePersonalInformation?.passportExpDate,
   }
 
   const selectedUserBasicInformation = {
@@ -115,21 +99,16 @@ const PersonalInfoTab = ({
   }
 
   const [saveButtonEnabled, setSaveButtonEnabled] = useState(false)
-  const [isPassportButtonEnabled, setIsPassportButtonEnabled] = useState(false)
-  const [
-    isPassportPlaceOfIssueButtonEnabled,
-    setIsPassportPlaceOfIssueButtonEnabled,
-  ] = useState(false)
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
 
-  const [employeeContactDetails, setEmployeeContactDetails] = useState(
-    selectedUserContactDetails,
-  )
+  const [employeeContactDetails, setEmployeeContactDetails] = useState<
+    EmployeeContactInformation | undefined
+  >()
 
   const [employeeEmergencyContactDetails, setEmployeeEmergencyContactDetails] =
-    useState(selectedUserEmergencyContactDetails)
+    useState<EmployeeEmergencyContactInformation | undefined>()
 
   const [employeePresenetAddressDetails, setEmployeePresenetAddressDetails] =
     useState(selectedUserPresenetAddressDetails)
@@ -137,9 +116,12 @@ const PersonalInfoTab = ({
   const [employeePermanentAddressDetails, setEmployeePermanentAddressDetails] =
     useState(selectedUserPermanentAddressDetails)
 
-  const [employeePassportDetails, setEmployeePassportDetails] = useState(
-    selectedUserPassportDetails,
-  )
+  const [frontUpload, setFrontUpload] = useState<File | null>(null)
+  const [backUpload, setBackUpload] = useState<File | null>(null)
+
+  const [employeePassportDetails, setEmployeePassportDetails] = useState<
+    EmployeePassportDetails | undefined
+  >(undefined)
   const [checkBox, setCheckBox] = useState(false)
 
   useEffect(() => {
@@ -162,8 +144,10 @@ const PersonalInfoTab = ({
   useEffect(() => {
     if (
       employeeContactDetails?.mobile &&
+      employeeContactDetails.mobile.length > 9 &&
       employeeEmergencyContactDetails?.emergencyContactName &&
       employeeEmergencyContactDetails?.emergencyPhone &&
+      employeeEmergencyContactDetails?.emergencyPhone.length > 9 &&
       employeeEmergencyContactDetails?.emergencyRelationShip &&
       employeePresenetAddressDetails.presentAddress &&
       employeePresenetAddressDetails.presentCity &&
@@ -183,87 +167,27 @@ const PersonalInfoTab = ({
     employeePresenetAddressDetails.presentZip,
   ])
 
-  const onChangeContactDetailsHandler = (
-    e:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { name, value } = e.target
-    if (name === 'mobile') {
-      const mobileValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: mobileValue } }
-      })
-    } else if (name === 'alternativeMobile') {
-      const alternativeMobileValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: alternativeMobileValue } }
-      })
-    } else if (name === 'homeCode') {
-      const homeCodeValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: homeCodeValue } }
-      })
-    } else if (name === 'homeNumber') {
-      const homeNumberValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: homeNumberValue } }
-      })
-    } else if (name === 'workCode') {
-      const workCodeValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: workCodeValue } }
-      })
-    } else if (name === 'workNumber') {
-      const workNumberValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: workNumberValue } }
-      })
-    } else {
-      setEmployeeContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: value } }
-      })
-    }
-  }
-
   useEffect(() => {
-    if (employeePassportDetails?.passportNumber) {
-      setIsPassportButtonEnabled(true)
+    if (
+      employeePassportDetails?.passportNumber &&
+      employeePassportDetails?.passportIssuedPlace &&
+      employeePassportDetails?.passportIssuedDate &&
+      employeePassportDetails?.passportExpDate &&
+      frontUpload &&
+      backUpload
+    ) {
+      setSaveButtonEnabled(true)
     } else {
-      setIsPassportButtonEnabled(false)
+      setSaveButtonEnabled(false)
     }
-  }, [employeePassportDetails?.passportNumber])
-
-  useEffect(() => {
-    if (employeePassportDetails?.passportIssuedPlace) {
-      setIsPassportPlaceOfIssueButtonEnabled(true)
-    } else {
-      setIsPassportPlaceOfIssueButtonEnabled(false)
-    }
-  }, [employeePassportDetails?.passportIssuedPlace])
-
-  const onChangeEmergencyContactDetailsHandler = (
-    e:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { name, value } = e.target
-    if (name === 'emergencyPhone') {
-      const emergencyPhoneValue = value.replace(/[^0-9]/gi, '')
-      setEmployeeEmergencyContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: emergencyPhoneValue } }
-      })
-    } else if (name === 'emergencyContactName') {
-      const emergencyContactNameValue = value.replace(/[^a-zA-Z\s]/gi, '')
-      setEmployeeEmergencyContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: emergencyContactNameValue } }
-      })
-    } else {
-      setEmployeeEmergencyContactDetails((prevState) => {
-        return { ...prevState, ...{ [name]: value } }
-      })
-    }
-  }
+  }, [
+    employeePassportDetails?.passportNumber,
+    employeePassportDetails?.passportIssuedPlace,
+    employeePassportDetails?.passportIssuedDate,
+    employeePassportDetails?.passportExpDate,
+    frontUpload,
+    backUpload,
+  ])
 
   const onChangePresenetAddressHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -297,24 +221,38 @@ const PersonalInfoTab = ({
     }
   }
 
-  const onChangePassportInformationHandler = (
-    e:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
+  const onPassportDetailsChangedHandler = (
+    passportDetails: EmployeePassportDetails,
+    frontImage: File | null,
+    backImage: File | null,
   ) => {
-    const { name, value } = e.target
-    setEmployeePassportDetails((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
-  }
-  const onDateChangeHandler = (date: Date, e: { name: string }) => {
-    if (employeePassportDetails) {
-      const formatDate = moment(date).format('DD/MM/YYYY')
-      const { name } = e
-      setEmployeePassportDetails((prevState) => {
-        return { ...prevState, ...{ [name]: formatDate } }
-      })
+    setEmployeePassportDetails(passportDetails)
+    if (frontImage) {
+      setFrontUpload(frontImage)
+    } else if (backImage) {
+      setBackUpload(backImage)
     }
+  }
+
+  const uploadFile = async () => {
+    let passport = null
+    const passportFormData = new FormData()
+    if (frontUpload) {
+      passportFormData.append('file1', frontUpload, frontUpload.name)
+    }
+    if (backUpload) {
+      passportFormData.append('file2', backUpload, backUpload.name)
+    }
+
+    passport = passportFormData as FormData
+    const prepareObject: EmployeePassportImage = {
+      empId: employeeId,
+      file1: passport,
+    }
+
+    await dispatch(
+      reduxServices.personalInformation.uploadEmployeePassport(prepareObject),
+    )
   }
 
   const handleSubmitPersonalInfoDetails = async (
@@ -332,6 +270,10 @@ const PersonalInfoTab = ({
         id: employeePersonalInformation.id,
       }),
     )
+
+    if (frontUpload || backUpload) {
+      await uploadFile()
+    }
 
     if (
       reduxServices.basicInformation.updateEmployeeBasicInformation.fulfilled.match(
@@ -355,29 +297,25 @@ const PersonalInfoTab = ({
       handleActiveTab(1)
     }
   }
-  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
-    return {
-      htmlFor,
-      className,
-    }
-  }
-
-  const employeeMobileNumber =
-    employeeContactDetails?.mobile && employeeContactDetails?.mobile.length > 9
-      ? 'text-white'
-      : 'text-danger'
-
   const employeePresentZipNumber =
     employeePresenetAddressDetails?.presentZip &&
     employeePresenetAddressDetails?.presentZip.length > 5
       ? 'text-white'
       : 'text-danger'
 
-  const employeeEmergencyPhoneNumber =
-    employeeEmergencyContactDetails?.emergencyPhone &&
-    employeeEmergencyContactDetails?.emergencyPhone.length > 9
-      ? 'text-white'
-      : 'text-danger'
+  const changeContactDetailsHandler = (data: EmployeeContactInformation) => {
+    setEmployeeContactDetails(() => {
+      return { ...data }
+    })
+  }
+
+  const changeEmergencyContactDetailsHandler = (
+    data: EmployeeEmergencyContactInformation,
+  ) => {
+    setEmployeeEmergencyContactDetails(() => {
+      return { ...data }
+    })
+  }
 
   return (
     <>
@@ -414,246 +352,13 @@ const PersonalInfoTab = ({
               <VisaDetailsTable editVisaButtonHandler={editVisaButtonHandler} />
             </CCardBody>
             <CForm>
-              <CCardHeader>
-                <h4 className="h4">Contact Details</h4>
-              </CCardHeader>
-              <CCardBody>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel
-                    {...dynamicFormLabelProps(
-                      'employeeId',
-                      'col-sm-3 col-form-label text-end',
-                    )}
-                  >
-                    Mobile: <span className={employeeMobileNumber}>*</span>
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      placeholder="98xxxxxxxx"
-                      size="sm"
-                      name="mobile"
-                      onChange={onChangeContactDetailsHandler}
-                      value={employeeContactDetails.mobile}
-                      maxLength={10}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel
-                    {...dynamicFormLabelProps(
-                      'employeeId',
-                      'col-sm-3 col-form-label text-end',
-                    )}
-                  >
-                    Alternative Mobile:
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="alternativeMobile"
-                      placeholder="98xxxxxxxx"
-                      value={employeeContactDetails.alternativeMobile}
-                      onChange={onChangeContactDetailsHandler}
-                      maxLength={10}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel
-                    {...dynamicFormLabelProps(
-                      'employeeId',
-                      'col-sm-3 col-form-label text-end',
-                    )}
-                  >
-                    Home:
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={2}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="homeCode"
-                      value={employeeContactDetails.homeCode}
-                      onChange={onChangeContactDetailsHandler}
-                      maxLength={4}
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="homeNumber"
-                      onChange={onChangeContactDetailsHandler}
-                      value={employeeContactDetails.homeNumber}
-                      maxLength={8}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel
-                    {...dynamicFormLabelProps(
-                      'employeeId',
-                      'col-sm-3 col-form-label text-end',
-                    )}
-                  >
-                    Work:
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={2}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      onChange={onChangeContactDetailsHandler}
-                      value={employeeContactDetails.workCode}
-                      name="workCode"
-                      maxLength={4}
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="workNumber"
-                      onChange={onChangeContactDetailsHandler}
-                      value={employeeContactDetails.workNumber}
-                      maxLength={8}
-                    />
-                  </CCol>
-                </CRow>
-              </CCardBody>
-              <CCardHeader>
-                <h4 className="h4">Emergency Contact</h4>
-              </CCardHeader>
-              <CCardBody>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Name:{' '}
-                    <span
-                      className={
-                        employeeEmergencyContactDetails?.emergencyContactName
-                          ? 'text-white'
-                          : 'text-danger'
-                      }
-                    >
-                      *
-                    </span>
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      name="emergencyContactName"
-                      id="emergencyContactName"
-                      placeholder="Name"
-                      onChange={onChangeEmergencyContactDetailsHandler}
-                      value={
-                        employeeEmergencyContactDetails.emergencyContactName
-                      }
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Mobile:{' '}
-                    <span className={employeeEmergencyPhoneNumber}>*</span>
-                  </CFormLabel>
-                  <CCol sm={1}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="+91"
-                      aria-label="Disabled input example"
-                      disabled
-                    />
-                  </CCol>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      id="Mobile"
-                      placeholder="9xxxxxxxxx"
-                      size="sm"
-                      name="emergencyPhone"
-                      onChange={onChangeEmergencyContactDetailsHandler}
-                      value={employeeEmergencyContactDetails.emergencyPhone}
-                      maxLength={10}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Relationship:
-                    <span
-                      className={
-                        employeeEmergencyContactDetails?.emergencyRelationShip
-                          ? 'text-white'
-                          : 'text-danger'
-                      }
-                    >
-                      *
-                    </span>
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormSelect
-                      aria-label="Relationship"
-                      name="emergencyRelationShip"
-                      id="Relationship"
-                      size="sm"
-                      onChange={onChangeEmergencyContactDetailsHandler}
-                      value={
-                        employeeEmergencyContactDetails.emergencyRelationShip
-                      }
-                    >
-                      <option value={''}>Select Relationship</option>
-                      <option value="Brother">Brother</option>
-                      <option value="Daughter">Daughter</option>
-                      <option value="Father">Father</option>
-                      <option value="Friend">Friend</option>
-                      <option value="Husband">Husband</option>
-                      <option value="Mother">Mother</option>
-                      <option value="Sister">Sister</option>
-                      <option value="Son">Son</option>
-                      <option value="Wife">Wife</option>
-                      <option value="Other">Other</option>
-                    </CFormSelect>
-                  </CCol>
-                </CRow>
-              </CCardBody>
+              <ContactNumberDetails
+                employeeDetails={employeeBasicInformation}
+                changeContactDetails={changeContactDetailsHandler}
+                changeEmergencyContactDetails={
+                  changeEmergencyContactDetailsHandler
+                }
+              />
               <CCardHeader>
                 <h4 className="h4">Present Address</h4>
               </CCardHeader>
@@ -831,131 +536,24 @@ const PersonalInfoTab = ({
                   </CCol>
                 </CRow>
               </CCardBody>
-              <CCardHeader>
-                <h4 className="h4">Passport Details</h4>
-              </CCardHeader>
-              <CCardBody>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Number:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      placeholder="Passport Number"
-                      size="sm"
-                      name="passportNumber"
-                      onChange={onChangePassportInformationHandler}
-                      value={employeePassportDetails.passportNumber}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Place of Issue:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="text"
-                      size="sm"
-                      placeholder="Place"
-                      name="passportIssuedPlace"
-                      aria-label="Disabled input example"
-                      disabled={!isPassportButtonEnabled}
-                      onChange={onChangePassportInformationHandler}
-                      value={employeePassportDetails.passportIssuedPlace}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Date of Issue :
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <DatePicker
-                      id="passportIssuedDate"
-                      className="form-control form-control-sm"
-                      maxDate={new Date()}
-                      peekNextMonth
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      placeholderText="dd/mm/yyyy"
-                      name="officialBirthday"
-                      value={employeePassportDetails.passportIssuedDate}
-                      onChange={(date: Date) =>
-                        onDateChangeHandler(date, {
-                          name: 'passportIssuedDate',
-                        })
-                      }
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Date of Expiry:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <DatePicker
-                      id="passportExpDate"
-                      className="form-control form-control-sm"
-                      minDate={new Date()}
-                      peekNextMonth
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      placeholderText="dd/mm/yyyy"
-                      name="passportExpDate"
-                      value={employeePassportDetails.passportExpDate}
-                      onChange={(date: Date) =>
-                        onDateChangeHandler(date, { name: 'passportExpDate' })
-                      }
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Upload Passport Front Copy:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="file"
-                      name="file"
-                      className="form-control form-control-sm"
-                      id="exampleFormControlFile2"
-                      disabled={!isPassportPlaceOfIssueButtonEnabled}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-4 mb-4">
-                  <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Upload Passport Back Copy:
-                  </CFormLabel>
-                  <CCol sm={3}>
-                    <CFormInput
-                      type="file"
-                      name="file"
-                      className="form-control form-control-sm"
-                      id="exampleFormControlFile2"
-                      disabled={!isPassportPlaceOfIssueButtonEnabled}
-                    />
-                  </CCol>
-                </CRow>
-                <CRow>
-                  <CCol md={{ span: 6, offset: 3 }}>
-                    <CButton
-                      className="mt-4 btn-ovh btn btn-success"
-                      size="sm"
-                      type="submit"
-                      disabled={!saveButtonEnabled}
-                      onClick={handleSubmitPersonalInfoDetails}
-                    >
-                      Save
-                    </CButton>
-                  </CCol>
-                </CRow>
-              </CCardBody>
+              <PassportDetails
+                employeeDetails={employeeBasicInformation}
+                handlePassportChange={onPassportDetailsChangedHandler}
+              />
             </CForm>
+            <CRow>
+              <CCol md={{ span: 6, offset: 3 }}>
+                <CButton
+                  className="mt-1 ms-2 btn-ovh btn btn-success"
+                  size="sm"
+                  type="submit"
+                  disabled={!saveButtonEnabled}
+                  onClick={handleSubmitPersonalInfoDetails}
+                >
+                  Save
+                </CButton>
+              </CCol>
+            </CRow>
           </>
         )}
         {toggle === 'AddFamily' && (

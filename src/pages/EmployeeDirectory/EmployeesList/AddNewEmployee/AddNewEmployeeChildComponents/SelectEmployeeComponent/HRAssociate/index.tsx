@@ -12,6 +12,7 @@ const HRAssociate = ({
   hrDataList,
   onSelectHRAssociate,
   shouldReset,
+  hrValue,
 }: HrDataProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
 
@@ -25,6 +26,10 @@ const HRAssociate = ({
     } as GetHRAssociate
     onSelectHRAssociate(reportManager)
   }
+
+  useEffect(() => {
+    setAutoCompleteTarget(hrValue)
+  }, [hrValue])
 
   useEffect(() => {
     if (shouldReset) setAutoCompleteTarget('')

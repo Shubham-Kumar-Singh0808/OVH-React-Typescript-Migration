@@ -47,6 +47,9 @@ const EmployeeHandbook = React.lazy(
 const Handbook = React.lazy(
   () => import('./pages/EmployeeHandbook/ShowHandbook'),
 )
+const AttendanceReport = React.lazy(
+  () => import('./pages/TimeAndAttendance/AttendanceReport/AttendanceReport'),
+)
 const EmployeeHandbookSettings = React.lazy(
   () =>
     import(
@@ -121,6 +124,11 @@ const routes = [
     path: '/showemployeehandbook/:clickedpageName',
     name: 'Handbook',
     component: Handbook,
+  },
+  {
+    path: '/attendancesummary',
+    name: 'Attendance Summary',
+    component: AttendanceReport,
   },
   {
     path: '/handbooksettings',

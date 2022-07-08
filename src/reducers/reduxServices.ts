@@ -1,5 +1,6 @@
 import addNewEmployeeService from './EmployeeDirectory/EmployeesList/AddNewEmployee'
 import { appService } from './appSlice'
+import { attendanceReportService } from './TimeAndAttendance/AttendanceReport/attendanceReportSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
@@ -20,6 +21,7 @@ import { profileHistoryService } from './MyProfile/ProfileHistory/profileHistory
 import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
+import { userAccessToFeaturesService } from './Settings/UserRolesConfiguration/userAccessToFeaturesSlice'
 import { technologyService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
@@ -30,6 +32,7 @@ import { ShowHandbookService } from './EmployeeHandbook/showHandbookSlice'
 import { employeeHandbookSettingService } from './EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 import { timeInOfficeReportService } from './TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
+import { employeeService } from './EmployeeDirectory/EmployeesList/EditEmployee'
 
 export const reduxServices = {
   app: appService,
@@ -60,8 +63,11 @@ export const reduxServices = {
   visaList: visaListService,
   EmployeeHandbook: EmployeeHandbookService,
   ShowHandbook: ShowHandbookService,
+  employeeAttendanceReport: attendanceReportService,
+  userAccessToFeatures: userAccessToFeaturesService,
   employeeHandbookSettings: employeeHandbookSettingService,
   timeInOfficeReport: timeInOfficeReportService,
   employeeLeaveSettings: employeeLeaveSettingsService,
   technology: technologyService,
+  employee: employeeService,
 }

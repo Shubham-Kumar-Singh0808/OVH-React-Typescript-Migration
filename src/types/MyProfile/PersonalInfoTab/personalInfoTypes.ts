@@ -130,3 +130,8 @@ export type EmployeeVisaDetailsTableProps = {
 export type handleActiveTabProps = {
   handleActiveTab: (id: number) => void
 }
+
+export type EmployeePassportImage = {
+  empId: number | string
+  file1: FormData | null
+}
