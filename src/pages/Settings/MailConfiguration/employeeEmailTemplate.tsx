@@ -170,15 +170,17 @@ const employeeEmailTemplate = (): JSX.Element => {
               <CTableHeaderCell scope="col">Type</CTableHeaderCell>
               <CTableHeaderCell scope="col">Title</CTableHeaderCell>
               <CTableHeaderCell scope="col">Type</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Template</CTableHeaderCell>
+              <CTableHeaderCell scope="col" className="w-25">
+                Template
+              </CTableHeaderCell>
               <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
             {employeeEmailTemplates.map((emailTemplate, index) => {
               const descriptionLimit =
-                emailTemplate.template && emailTemplate.template.length > 25
-                  ? `${emailTemplate.template.substring(0, 25)}...`
+                emailTemplate.template && emailTemplate.template.length > 15
+                  ? `${emailTemplate.template.substring(0, 15)}...`
                   : emailTemplate.template
               return (
                 <CTableRow key={index}>
