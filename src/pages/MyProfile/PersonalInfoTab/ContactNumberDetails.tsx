@@ -15,9 +15,9 @@ import {
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 
 const ContactNumberDetails = (props: {
-  employeeDetails: EmployeeGeneralInformation
-  changeContactDetails: (contactDetails: EmployeeContactInformation) => void
-  changeEmergencyContactDetails: (
+  employeeDetails?: EmployeeGeneralInformation
+  changeContactDetails?: (contactDetails: EmployeeContactInformation) => void
+  changeEmergencyContactDetails?: (
     emergencyContactDetails: EmployeeEmergencyContactInformation,
   ) => void
 }): JSX.Element => {
@@ -86,7 +86,8 @@ const ContactNumberDetails = (props: {
         return !prevState
       })
     }
-    props.changeEmergencyContactDetails(employeeEmergencyContactDetails)
+    if (props.changeEmergencyContactDetails)
+      props.changeEmergencyContactDetails(employeeEmergencyContactDetails)
   }
 
   const onChangeContactDetailsHandler = (
@@ -154,7 +155,7 @@ const ContactNumberDetails = (props: {
   }
 
   useEffect(() => {
-    if (isUpdated) {
+    if (isUpdated && props.changeContactDetails) {
       props.changeContactDetails(employeeContactDetails)
       setIsUpdated((prevState) => {
         return !prevState
@@ -163,7 +164,7 @@ const ContactNumberDetails = (props: {
   }, [employeeContactDetails, isUpdated])
 
   useEffect(() => {
-    if (isUpdated) {
+    if (isUpdated && props.changeEmergencyContactDetails) {
       props.changeEmergencyContactDetails(employeeEmergencyContactDetails)
       setIsUpdated((prevState) => {
         return !prevState
@@ -193,7 +194,10 @@ const ContactNumberDetails = (props: {
       </CCardHeader>
       <CCardBody>
         <CRow className="mt-4 mb-4">
-          <CFormLabel {...dynamicFormLabelProps('employeeId', formLabelClass)}>
+          <CFormLabel
+            data-testId="mobileNumberLabel"
+            {...dynamicFormLabelProps('employeeId', formLabelClass)}
+          >
             Mobile: <span className={employeeMobileNumber}>*</span>
           </CFormLabel>
           <CCol sm={1}>
@@ -201,6 +205,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               placeholder="+91"
+              data-testId="mobileNumberPlaceholder"
               aria-label="Disabled input example"
               disabled
             />
@@ -211,6 +216,7 @@ const ContactNumberDetails = (props: {
               placeholder="98xxxxxxxx"
               size="sm"
               name="mobile"
+              data-testId="mobileNumberInput"
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.mobile}
               maxLength={10}
@@ -218,7 +224,10 @@ const ContactNumberDetails = (props: {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel {...dynamicFormLabelProps('employeeId', formLabelClass)}>
+          <CFormLabel
+            data-testId="altNumberLabel"
+            {...dynamicFormLabelProps('employeeId', formLabelClass)}
+          >
             Alternative Mobile:
           </CFormLabel>
           <CCol sm={1}>
@@ -226,6 +235,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               placeholder="+91"
+              data-testId="altNumberPlaceholder"
               aria-label="Disabled input example"
               disabled
             />
@@ -234,6 +244,7 @@ const ContactNumberDetails = (props: {
             <CFormInput
               type="text"
               size="sm"
+              data-testId="altNumberInput"
               name="alternativeMobile"
               placeholder="98xxxxxxxx"
               value={employeeContactDetails.alternativeMobile}
@@ -243,13 +254,17 @@ const ContactNumberDetails = (props: {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel {...dynamicFormLabelProps('employeeId', formLabelClass)}>
+          <CFormLabel
+            data-testId="homeNumberLabel"
+            {...dynamicFormLabelProps('employeeId', formLabelClass)}
+          >
             Home:
           </CFormLabel>
           <CCol sm={1}>
             <CFormInput
               type="text"
               size="sm"
+              data-testId="homeNumberPlaceholder"
               placeholder="+91"
               aria-label="Disabled input example"
               disabled
@@ -260,6 +275,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               name="homeCode"
+              data-testId="homeCodeInput"
               value={employeeContactDetails.homeCode}
               onChange={onChangeContactDetailsHandler}
               maxLength={4}
@@ -270,6 +286,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               name="homeNumber"
+              data-testId="homeNumberInput"
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.homeNumber}
               maxLength={8}
@@ -277,7 +294,10 @@ const ContactNumberDetails = (props: {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel {...dynamicFormLabelProps('employeeId', formLabelClass)}>
+          <CFormLabel
+            data-testId="workNumberLabel"
+            {...dynamicFormLabelProps('employeeId', formLabelClass)}
+          >
             Work:
           </CFormLabel>
           <CCol sm={1}>
@@ -285,6 +305,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               placeholder="+91"
+              data-testId="workNumberPlaceholder"
               aria-label="Disabled input example"
               disabled
             />
@@ -293,6 +314,7 @@ const ContactNumberDetails = (props: {
             <CFormInput
               type="text"
               size="sm"
+              data-testId="workCodeInput"
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.workCode}
               name="workCode"
@@ -303,6 +325,7 @@ const ContactNumberDetails = (props: {
             <CFormInput
               type="text"
               size="sm"
+              data-testId="workNumberInput"
               name="workNumber"
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.workNumber}
@@ -316,7 +339,10 @@ const ContactNumberDetails = (props: {
       </CCardHeader>
       <CCardBody>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className={formLabelClass}>
+          <CFormLabel
+            data-testId="emergencyContactNameLabel"
+            className={formLabelClass}
+          >
             Name:{' '}
             <span
               className={
@@ -334,6 +360,7 @@ const ContactNumberDetails = (props: {
               size="sm"
               name="emergencyContactName"
               id="emergencyContactName"
+              data-testId="emergencyContactNameInput"
               placeholder="Name"
               onChange={onChangeEmergencyContactDetailsHandler}
               value={employeeEmergencyContactDetails.emergencyContactName}
@@ -341,13 +368,17 @@ const ContactNumberDetails = (props: {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className={formLabelClass}>
+          <CFormLabel
+            data-testId="emergencyMobileLabel"
+            className={formLabelClass}
+          >
             Mobile: <span className={employeeEmergencyPhoneNumber}>*</span>
           </CFormLabel>
           <CCol sm={1}>
             <CFormInput
               type="text"
               size="sm"
+              data-testId="emergencyMobilePlaceholder"
               placeholder="+91"
               aria-label="Disabled input example"
               disabled
@@ -358,6 +389,7 @@ const ContactNumberDetails = (props: {
               type="text"
               id="Mobile"
               placeholder="9xxxxxxxxx"
+              data-testId="emergencyMobileInput"
               size="sm"
               name="emergencyPhone"
               onChange={onChangeEmergencyContactDetailsHandler}
@@ -367,7 +399,10 @@ const ContactNumberDetails = (props: {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className={formLabelClass}>
+          <CFormLabel
+            data-testId="relationshipLabel"
+            className={formLabelClass}
+          >
             Relationship:
             <span
               className={
@@ -383,6 +418,7 @@ const ContactNumberDetails = (props: {
             <CFormSelect
               aria-label="Relationship"
               name="emergencyRelationShip"
+              data-testId="relationShipSelect"
               id="Relationship"
               size="sm"
               onChange={onChangeEmergencyContactDetailsHandler}
