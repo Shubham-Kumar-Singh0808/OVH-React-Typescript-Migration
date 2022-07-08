@@ -15,8 +15,8 @@ import {
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 
 export const PassportDetails = (props: {
-  employeeDetails: EmployeeGeneralInformation
-  handlePassportChange: (
+  employeeDetails?: EmployeeGeneralInformation
+  handlePassportChange?: (
     passportDetails: EmployeePassportDetails,
     frontImage: File | null,
     backImage: File | null,
@@ -28,6 +28,7 @@ export const PassportDetails = (props: {
     isPassportPlaceOfIssueButtonEnabled,
     setIsPassportPlaceOfIssueButtonEnabled,
   ] = useState<boolean>(false)
+  const [isDateSelected, setIsDateSelected] = useState<boolean>(false)
 
   const selectedUserPassportDetails = {
     passportNumber: props.employeeDetails?.passportNumber,
@@ -54,7 +55,8 @@ export const PassportDetails = (props: {
     setEmployeePassportDetails((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
-    props.handlePassportChange(employeePassportDetails, null, null)
+    if (props.handlePassportChange)
+      props.handlePassportChange(employeePassportDetails, null, null)
   }
   const onDateChangeHandler = (date: Date, e: { name: string }) => {
     if (employeePassportDetails) {
@@ -63,24 +65,38 @@ export const PassportDetails = (props: {
       setEmployeePassportDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
-      props.handlePassportChange(employeePassportDetails, null, null)
+      if (props.handlePassportChange)
+        props.handlePassportChange(employeePassportDetails, null, null)
     }
   }
 
   useEffect(() => {
-    if (frontUpload) {
+    if (frontUpload && props.handlePassportChange) {
       props.handlePassportChange(employeePassportDetails, frontUpload, null)
     }
-    if (backUpload) {
+    if (backUpload && props.handlePassportChange) {
       props.handlePassportChange(employeePassportDetails, null, backUpload)
     }
   }, [frontUpload, backUpload])
+
+  useEffect(() => {
+    if (
+      employeePassportDetails?.passportIssuedDate &&
+      employeePassportDetails?.passportExpDate
+    )
+      setIsDateSelected(true)
+  }, [
+    employeePassportDetails?.passportIssuedDate,
+    employeePassportDetails?.passportExpDate,
+  ])
 
   useEffect(() => {
     if (employeePassportDetails?.passportNumber) {
       setIsPassportButtonEnabled(true)
     } else {
       setIsPassportButtonEnabled(false)
+      setIsDateSelected(false)
+      setIsPassportPlaceOfIssueButtonEnabled(false)
     }
   }, [employeePassportDetails?.passportNumber])
 
@@ -113,7 +129,10 @@ export const PassportDetails = (props: {
       </CCardHeader>
       <CCardBody>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel
+            className="col-sm-3 col-form-label text-end"
+            data-testid="passportNumber"
+          >
             Number:
           </CFormLabel>
           <CCol sm={3}>
@@ -122,12 +141,13 @@ export const PassportDetails = (props: {
               placeholder="Passport Number"
               size="sm"
               name="passportNumber"
+              data-testid="passportNumberInput"
               onChange={onChangePassportInformationHandler}
               value={employeePassportDetails.passportNumber}
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-4 mb-4" data-testid="passportIssue">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Place of Issue:
           </CFormLabel>
@@ -136,6 +156,7 @@ export const PassportDetails = (props: {
               type="text"
               size="sm"
               placeholder="Place"
+              data-testid="placeOfIssueInput"
               name="passportIssuedPlace"
               aria-label="Disabled input example"
               disabled={!isPassportButtonEnabled}
@@ -144,7 +165,7 @@ export const PassportDetails = (props: {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-4 mb-4" data-testid="passportIssuedDate">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Date of Issue :
           </CFormLabel>
@@ -153,12 +174,14 @@ export const PassportDetails = (props: {
               id="passportIssuedDate"
               className="form-control form-control-sm"
               maxDate={new Date()}
+              data-testid="dateOfIssueInput"
               peekNextMonth
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
               placeholderText="dd/mm/yyyy"
-              name="officialBirthday"
+              name="passportIssuedDate"
+              disabled={!isPassportPlaceOfIssueButtonEnabled}
               value={employeePassportDetails.passportIssuedDate}
               onChange={(date: Date) =>
                 onDateChangeHandler(date, {
@@ -168,7 +191,7 @@ export const PassportDetails = (props: {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-4 mb-4" data-testid="passportExpDate">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Date of Expiry:
           </CFormLabel>
@@ -178,11 +201,13 @@ export const PassportDetails = (props: {
               className="form-control form-control-sm"
               minDate={new Date()}
               peekNextMonth
+              data-testid="expiryDateInput"
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
               placeholderText="dd/mm/yyyy"
               name="passportExpDate"
+              disabled={!isPassportPlaceOfIssueButtonEnabled}
               value={employeePassportDetails.passportExpDate}
               onChange={(date: Date) =>
                 onDateChangeHandler(date, { name: 'passportExpDate' })
@@ -190,7 +215,7 @@ export const PassportDetails = (props: {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-4 mb-4" data-testid="frontUpload">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Upload Passport Front Copy:
           </CFormLabel>
@@ -200,24 +225,26 @@ export const PassportDetails = (props: {
               name="file"
               accept="image/*,"
               className="form-control form-control-sm"
-              id="exampleFormControlFile2"
-              disabled={!isPassportPlaceOfIssueButtonEnabled}
+              data-testid="frontUploadInput"
+              id="exampleFormControlFile1"
+              disabled={!isDateSelected}
               onChange={(file1: SyntheticEvent) =>
                 onChangeFileEventHandler(
                   file1.currentTarget as HTMLInputElement,
                 )
               }
             />
-            <div className="mt-2">
-              <img
-                className="mt-2 basic-info-box"
-                src={props.employeeDetails.passportFrontPagePath}
-                alt="User Profile"
-              />{' '}
-            </div>
+            {props.employeeDetails?.passportFrontPagePath && (
+              <div className="mt-2" data-testId="frontImagePreview">
+                <img
+                  className="mt-2 basic-info-img"
+                  src={props.employeeDetails?.passportFrontPagePath}
+                />{' '}
+              </div>
+            )}
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-4 mb-4" data-testid="backUpload">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Upload Passport Back Copy:
           </CFormLabel>
@@ -226,22 +253,24 @@ export const PassportDetails = (props: {
               type="file"
               name="file2"
               accept="image/*,"
+              data-testid="backUploadInput"
               className="form-control form-control-sm"
               id="exampleFormControlFile2"
-              disabled={!isPassportPlaceOfIssueButtonEnabled}
+              disabled={!isDateSelected}
               onChange={(file2: SyntheticEvent) =>
                 onChangeFileEventHandler(
                   file2.currentTarget as HTMLInputElement,
                 )
               }
             />
-            <div className="mt-2">
-              <img
-                className="mt-2 basic-info-box"
-                src={props.employeeDetails.passportBackPagePath}
-                alt="User Profile"
-              />{' '}
-            </div>
+            {props.employeeDetails?.passportBackPagePath && (
+              <div className="mt-2" data-testId="backImagePreview">
+                <img
+                  className="mt-2 basic-info-img"
+                  src={props.employeeDetails?.passportBackPagePath}
+                />{' '}
+              </div>
+            )}
           </CCol>
         </CRow>
       </CCardBody>

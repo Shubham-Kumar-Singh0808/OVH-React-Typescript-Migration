@@ -172,7 +172,9 @@ const PersonalInfoTab = ({
       employeePassportDetails?.passportNumber &&
       employeePassportDetails?.passportIssuedPlace &&
       employeePassportDetails?.passportIssuedDate &&
-      employeePassportDetails?.passportExpDate
+      employeePassportDetails?.passportExpDate &&
+      frontUpload &&
+      backUpload
     ) {
       setSaveButtonEnabled(true)
     } else {
@@ -183,6 +185,8 @@ const PersonalInfoTab = ({
     employeePassportDetails?.passportIssuedPlace,
     employeePassportDetails?.passportIssuedDate,
     employeePassportDetails?.passportExpDate,
+    frontUpload,
+    backUpload,
   ])
 
   const onChangePresenetAddressHandler = (

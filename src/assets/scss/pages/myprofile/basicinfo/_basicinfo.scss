@@ -18,12 +18,13 @@
 }
 
 &-img{
-  width: 120;
-  height: 120;
+  width: 120px;
+  height: 120px;
 }
 
 &-passport{
-  width: 120;
-  height: 100;
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
 }
 }
