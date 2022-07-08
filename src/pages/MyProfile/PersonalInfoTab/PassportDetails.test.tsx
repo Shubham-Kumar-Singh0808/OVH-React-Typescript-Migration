@@ -4,9 +4,18 @@ import userEvent from '@testing-library/user-event'
 import { PassportDetails } from './PassportDetails'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { employeePersonalInfoData } from '../../../test/data/employeePersonalInfoData'
+import { dateFormatPerLocale } from '../../../utils/dateFormatUtils'
 
 describe('Employee Passport Details', () => {
   describe('Without data', () => {
+    const deviceLocale: string =
+      navigator.languages && navigator.languages.length
+        ? navigator.languages[0]
+        : navigator.language
+    const localeDateFormat = dateFormatPerLocale.filter(
+      (lang) => lang.label === navigator.languages[0],
+    )
+    const dateFormat = localeDateFormat[0].format
     beforeEach(() => {
       render(<PassportDetails />)
     })
@@ -60,9 +69,23 @@ describe('Employee Passport Details', () => {
       expect(placeOfIssueInput).not.toBeDisabled()
       userEvent.type(placeOfIssueInput, '123123123')
       expect(placeOfIssueInput).toHaveValue('123123123')
-      const issuedDateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
-      userEvent.type(issuedDateInput[0], '12/20/2021')
-      userEvent.type(issuedDateInput[1], '12/20/2024')
+      const issuedDateInput = screen.getAllByPlaceholderText(dateFormat)
+      userEvent.type(
+        issuedDateInput[0],
+        new Date('12/20/2021').toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
+      )
+      userEvent.type(
+        issuedDateInput[1],
+        new Date('12/20/2021').toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
+      )
       const frontUploadInput = screen.getByTestId('frontUploadInput')
       expect(frontUploadInput).not.toBeDisabled()
       const backUploadInput = screen.getByTestId('backUploadInput')
