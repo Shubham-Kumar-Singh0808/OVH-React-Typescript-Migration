@@ -64,8 +64,8 @@ const ContactNumberDetails = (props: {
       setEmployeeEmergencyContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: emergencyPhoneValue } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     } else if (name === 'emergencyContactName') {
       const emergencyContactNameValue = value.replace(
@@ -75,19 +75,17 @@ const ContactNumberDetails = (props: {
       setEmployeeEmergencyContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: emergencyContactNameValue } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     } else {
       setEmployeeEmergencyContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: value } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     }
-    if (props.changeEmergencyContactDetails)
-      props.changeEmergencyContactDetails(employeeEmergencyContactDetails)
   }
 
   const onChangeContactDetailsHandler = (
@@ -101,55 +99,55 @@ const ContactNumberDetails = (props: {
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: mobileValue } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     } else if (name === 'alternativeMobile') {
       const alternativeMobileValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: alternativeMobileValue } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     } else if (name === 'homeCode') {
       const homeCodeValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: homeCodeValue } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     } else if (name === 'homeNumber') {
       const homeNumberValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: homeNumberValue } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     } else if (name === 'workCode') {
       const workCodeValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: workCodeValue } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     } else if (name === 'workNumber') {
       const workNumberValue = value.replace(phoneValueRegexReplace, '')
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: workNumberValue } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     } else {
       setEmployeeContactDetails((prevState) => {
         return { ...prevState, ...{ [name]: value } }
       })
-      setIsUpdated((prevState) => {
-        return !prevState
+      setIsUpdated(() => {
+        return true
       })
     }
   }
