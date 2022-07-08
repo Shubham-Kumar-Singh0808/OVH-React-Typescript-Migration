@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/named */
-// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
@@ -81,6 +79,7 @@ describe('email Template List Table Testing', () => {
     )
     expect(screen.getByText('Template')).toBeInTheDocument()
   })
+  // eslint-disable-next-line sonarjs/no-identical-functions
   test('should render Type and Search Text empty button as disabled initially', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
@@ -136,5 +135,13 @@ describe('email Template List Table Testing', () => {
       </ReduxProvider>,
     )
     expect(screen.getByPlaceholderText('Search Text')).toBeInTheDocument()
+  })
+  test('should render add new employee form without crashing', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeEmailTemplate />
+      </ReduxProvider>,
+    )
+    expect(screen.getByText('Email Templates')).toBeInTheDocument()
   })
 })
