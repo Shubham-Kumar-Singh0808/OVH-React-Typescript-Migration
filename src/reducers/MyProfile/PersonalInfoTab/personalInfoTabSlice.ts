@@ -6,6 +6,7 @@ import {
   EditVisaDetailsState,
   EmployeeFamilyData,
   EmployeeFamilyDetails,
+  EmployeePassportImage,
   EmployeeVisaDetails,
   GetCountryDetails,
   PersonalInfoTabState,
@@ -248,6 +249,25 @@ const deleteEmployeeVisa = createAsyncThunk<
   }
 })
 
+const uploadEmployeePassport = createAsyncThunk<
+  number | undefined,
+  EmployeePassportImage,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'personalInfoTab/passportFileUpload',
+  async (prepareObject: EmployeePassportImage, thunkApi) => {
+    try {
+      return await personalInfoApi.uploadPassportImages(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 const personalInfoTabSlice = createSlice({
   name: 'personalInfoTab',
   initialState: initialPersonalInfoTabState,
@@ -349,6 +369,7 @@ export const personalInfoThunk = {
   getEmployeeVisa,
   updateEmployeeVisa,
   deleteEmployeeVisa,
+  uploadEmployeePassport,
 }
 export const personalInfoSelectors = {
   familyDetails,

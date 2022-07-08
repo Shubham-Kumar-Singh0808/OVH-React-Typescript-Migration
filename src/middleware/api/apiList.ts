@@ -8,6 +8,7 @@ import {
   CertificateListApi,
   CertificateTypeApi,
   EmployeeAssetsApi,
+  EmployeeAttendanceReportApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
@@ -24,6 +25,7 @@ import {
   ShiftConfigurationApi,
   SideMenuApi,
   SkillApi,
+  UserAccessToFeaturesApi,
   UserRolesConfigurationApi,
   EmployeeReportApi,
   EmployeeDesignationReportApi,
@@ -88,6 +90,7 @@ export const personalInfoApiConfig: PersonalInfoApi = {
   deleteFamilyMember: apiPrefix + '/Employee/deleteFamilymember',
   deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
   fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
+  fileUploadPassportImage: apiPrefix + '/fileUpload/uploadPassPortFrontImage',
 }
 
 export const skillsApiConfig: SkillApi = {
@@ -228,6 +231,16 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
+}
+
+export const employeeAttendanceReportApiConfig: EmployeeAttendanceReportApi = {
+  getEmployeeAttendance: apiPrefix + '/biometric/bioAdminManager/attendance',
+  exportAttendance: apiPrefix + '/biometric/exportAttendance',
+  exportBiometricAttendance: apiPrefix + '/biometric/exportAttendance2',
+}
+
+export const userApiConfig: UserAccessToFeaturesApi = {
+  getUserAccessToFeatures: apiPrefix + '/roleFeature/user',
 }
 
 export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {

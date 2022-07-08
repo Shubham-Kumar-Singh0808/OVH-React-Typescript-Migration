@@ -23,6 +23,8 @@ describe('Add Employee ProjectManager Component', () => {
           managersList={[]}
           onSelectManager={jest.fn()}
           dynamicFormLabelProps={jest.fn()}
+          shouldReset={false}
+          projectValue={''}
         />
       </ReduxProvider>,
     )
