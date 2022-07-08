@@ -1,5 +1,6 @@
 import addNewEmployeeService from './EmployeeDirectory/EmployeesList/AddNewEmployee'
 import { appService } from './appSlice'
+import { attendanceReportService } from './TimeAndAttendance/AttendanceReport/attendanceReportSlice'
 import { authenticationService } from './Login/authenticationSlice'
 import { basicInformationService } from './MyProfile/BasicInfoTab/basicInformatiomSlice'
 import { categoryService } from './MyProfile/Categories/categorySlice'
@@ -20,6 +21,7 @@ import { profileHistoryService } from './MyProfile/ProfileHistory/profileHistory
 import { qualificationCategoryService } from './MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategorySlice'
 import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationSlice'
 import { skillService } from './MyProfile/Skills/skillSlice'
+import { userAccessToFeaturesService } from './Settings/UserRolesConfiguration/userAccessToFeaturesSlice'
 import { technologyService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
 import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
@@ -56,6 +58,8 @@ export const reduxServices = {
   employeeReports: employeeReportService,
   employeeDesignationReports: employeeDesigationReportService,
   visaList: visaListService,
+  employeeAttendanceReport: attendanceReportService,
+  userAccessToFeatures: userAccessToFeaturesService,
   employeeHandbookSettings: employeeHandbookSettingService,
   timeInOfficeReport: timeInOfficeReportService,
   employeeLeaveSettings: employeeLeaveSettingsService,
