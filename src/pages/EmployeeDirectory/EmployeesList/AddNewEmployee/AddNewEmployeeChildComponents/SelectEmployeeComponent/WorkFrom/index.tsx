@@ -7,49 +7,45 @@ const WorkFrom = ({
   onWorkFromHandler,
   workFromValue,
 }: WorkFromChangeHandlerProp): JSX.Element => {
+  const workStatus = !!(
+    workFromValue == null ||
+    workFromValue === '' ||
+    workFromValue.toLowerCase() === 'office'
+  )
   return (
-    <>
-      <CRow className="mb-3 align-items-center">
-        <CFormLabel
-          {...dynamicFormLabelProps(
-            'workfrom',
-            'col-sm-3 col-form-label text-end',
-          )}
-        >
-          Work From:
-        </CFormLabel>
-        <CCol sm={3}>
-          {/* <CFormSwitch
-            size="lg"
-            label="No"
-            id="formSwitchCheckCheckedDisabled"
-            defaultChecked
-          /> */}
-
-          <CFormCheck
-            inline
-            type="radio"
-            name="workfrom"
-            id="workfromoffice"
-            value="Office"
-            label="Office"
-            defaultChecked
-            checked={workFromValue === 'Office'}
-            onChange={() => onWorkFromHandler('Office')}
-          />
-          <CFormCheck
-            inline
-            type="radio"
-            name="workfrom"
-            id="workfromhome"
-            value="Home"
-            label="Home"
-            checked={workFromValue === 'Home'}
-            onChange={() => onWorkFromHandler('Home')}
-          />
-        </CCol>
-      </CRow>
-    </>
+    <CRow className="mb-3 align-items-center">
+      <CFormLabel
+        {...dynamicFormLabelProps(
+          'workfrom',
+          'col-sm-3 col-form-label text-end',
+        )}
+      >
+        Work From:
+      </CFormLabel>
+      <CCol sm={3}>
+        <CFormCheck
+          inline
+          type="radio"
+          name="workfrom"
+          id="workfromoffice"
+          value="Office"
+          label="Office"
+          defaultChecked
+          checked={workStatus}
+          onChange={() => onWorkFromHandler('Office')}
+        />
+        <CFormCheck
+          inline
+          type="radio"
+          name="workfrom"
+          id="workfromhome"
+          value="Home"
+          label="Home"
+          checked={!workStatus}
+          onChange={() => onWorkFromHandler('Home')}
+        />
+      </CCol>
+    </CRow>
   )
 }
 

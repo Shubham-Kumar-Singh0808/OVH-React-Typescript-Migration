@@ -459,6 +459,7 @@ const AddNewEmployee = (): JSX.Element => {
               value={addEmployee.designation}
               setToggleShift={() => setDestinationToggle(!destinationToggle)}
               toggleValue={destinationToggle as boolean}
+              isAddDisable={false}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}
@@ -473,18 +474,21 @@ const AddNewEmployee = (): JSX.Element => {
               reportManagersList={reportingManagersList}
               onSelectReportManager={onHandleReportManager}
               shouldReset={resetFields.reportManager}
+              reportValue={addEmployee.manager.fullName}
             />
             <ProjectManager
               dynamicFormLabelProps={dynamicFormLabelProps}
               managersList={reportingManagersList}
               onSelectManager={onHandleProjectManager}
               shouldReset={resetFields.projectManager}
+              projectValue={addEmployee.projectManager.fullName}
             />
             <HRAssociate
               dynamicFormLabelProps={dynamicFormLabelProps}
               hrDataList={hrDataList}
               onSelectHRAssociate={onHandleHRAssociate}
               shouldReset={resetFields.hrAssociate}
+              hrValue={addEmployee.hrAssociate.fullName}
             />
             <OSelectList
               dynamicFormLabelProps={dynamicFormLabelProps}
@@ -509,6 +513,7 @@ const AddNewEmployee = (): JSX.Element => {
               value={addEmployee.timeSlotDTO.name}
               setToggleShift={() => setShiftToggle(!shiftToggle)}
               toggleValue={shiftToggle as boolean}
+              isAddDisable={false}
             />
             <EmploymentContract
               dynamicFormLabelProps={dynamicFormLabelProps}

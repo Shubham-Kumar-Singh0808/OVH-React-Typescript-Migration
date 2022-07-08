@@ -1,0 +1,42 @@
+.time-in-office-indications{
+    display: flex;
+    li {
+        margin-right: 14px;
+        list-style: none;
+    }
+    .low-time{
+        color: $danger-pending;
+    }
+    .approved{
+        color: $purple-approved;
+    }
+}
+.sh-summary-text{
+    color: $primary-base;
+    font-weight: 400 !important;
+    font-size: 14px;
+}
+.attendance-report-table > :not(caption) > * > *{
+    padding: 0.25rem 0.25rem;
+}
+.attendance-report-table td, th {
+    vertical-align: middle !important;
+}
+.sh-attendance-icon-check{
+    color: $green-success;
+}
+.sh-attendance-icon-times{
+    color: $red-fa-times
+}
+.sh-span-red{
+    color:$danger-error
+}
+.sh-span-black{
+    color:$black
+}
+.sh-span-blue{
+    color:$dark-blue
+}
+.sh-span-orange{
+    color:$orange-Holidays
+}
