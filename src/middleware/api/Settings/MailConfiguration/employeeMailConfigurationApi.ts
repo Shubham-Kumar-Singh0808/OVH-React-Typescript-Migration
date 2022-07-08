@@ -4,13 +4,13 @@ import {
   AllowedHttpMethods,
 } from '../../apiList'
 import {
-  EmployeeGetEmailTemplate,
+  EmployeeGetMailTemplate,
   EmployeeGetEmailTemplateProps,
   EmployeeGetMailTemplateTypes,
-} from '../../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
+} from '../../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
-const getMailTemplateTypes = async (): Promise<
+const getEmployeeMailTemplateTypes = async (): Promise<
   EmployeeGetMailTemplateTypes[]
 > => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -21,11 +21,11 @@ const getMailTemplateTypes = async (): Promise<
   return response.data
 }
 
-const getEmployeeEmailTemplate = async (
+const getEmployeeMailTemplate = async (
   props: EmployeeGetEmailTemplateProps,
-): Promise<EmployeeGetEmailTemplate[]> => {
+): Promise<EmployeeGetMailTemplate[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeMailConfigurationApiConfig.getEmailTemplates,
+    url: employeeMailConfigurationApiConfig.getMailTemplates,
     method: AllowedHttpMethods.get,
     params: {
       searchText: props.templateName ?? '',
@@ -36,9 +36,28 @@ const getEmployeeEmailTemplate = async (
   return response.data
 }
 
+const exportEmployeeMailTemplateData = async (
+  props: EmployeeGetEmailTemplateProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeMailConfigurationApiConfig.exportMailTemplatesList,
+    method: AllowedHttpMethods.get,
+    params: {
+      searchText: props.templateName ?? '',
+      type: props.templateTypeId ?? '',
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeMailConfigurationApi = {
-  getMailTemplateTypes,
-  getEmployeeEmailTemplate,
+  getEmployeeMailTemplateTypes,
+  getEmployeeMailTemplate,
+  exportEmployeeMailTemplateData,
 }
 
 export default employeeMailConfigurationApi

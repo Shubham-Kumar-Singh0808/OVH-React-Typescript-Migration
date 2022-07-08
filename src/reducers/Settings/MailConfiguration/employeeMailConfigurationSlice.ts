@@ -2,20 +2,20 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import {
-  EmployeeGetEmailTemplate,
+  EmployeeGetMailTemplate,
   EmployeeGetEmailTemplateProps,
   EmployeeGetMailTemplateTypes,
-  EmployeeMailconfigurationState as EmployeeMailConfigurationState,
-} from '../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
+  EmployeeMailConfigurationState,
+} from '../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
 
-const getMailTemplateTypes = createAsyncThunk(
+const getEmployeeMailTemplateTypes = createAsyncThunk(
   'mailConfiguration/getEmployeeMailTemplateTypes',
   async (_, thunkApi) => {
     try {
-      return await employeeMailConfigurationApi.getMailTemplateTypes()
+      return await employeeMailConfigurationApi.getEmployeeMailTemplateTypes()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -23,11 +23,11 @@ const getMailTemplateTypes = createAsyncThunk(
   },
 )
 
-const getEmployeeEmailTemplate = createAsyncThunk(
+const getEmployeeMailTemplate = createAsyncThunk(
   'mailConfiguration/getEmployeeEmailTemplate',
   async (props: EmployeeGetEmailTemplateProps, thunkApi) => {
     try {
-      return await employeeMailConfigurationApi.getEmployeeEmailTemplate(props)
+      return await employeeMailConfigurationApi.getEmployeeMailTemplate(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -52,17 +52,17 @@ const employeeMailConfigurationSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(getMailTemplateTypes.fulfilled, (state, action) => {
+    builder.addCase(getEmployeeMailTemplateTypes.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
       state.employeeGetMailTemplateTypes =
         action.payload as EmployeeGetMailTemplateTypes[]
     })
-    builder.addCase(getEmployeeEmailTemplate.fulfilled, (state, action) => {
+    builder.addCase(getEmployeeMailTemplate.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
       state.employeeGetEmailTemplate =
-        action.payload as EmployeeGetEmailTemplate[]
+        action.payload as EmployeeGetMailTemplate[]
     })
-    builder.addCase(getMailTemplateTypes.pending, (state) => {
+    builder.addCase(getEmployeeMailTemplateTypes.pending, (state) => {
       state.isLoading = ApiLoadingState.loading
     })
   },
@@ -73,12 +73,12 @@ const employeeMailTemplateTypes = (
 ): EmployeeGetMailTemplateTypes[] =>
   state.employeeMailConfiguration.employeeGetMailTemplateTypes
 
-const employeeMailTemplate = (state: RootState): EmployeeGetEmailTemplate[] =>
+const employeeMailTemplate = (state: RootState): EmployeeGetMailTemplate[] =>
   state.employeeMailConfiguration.employeeGetEmailTemplate
 
 const employeeMailConfigurationThunk = {
-  getMailTemplateTypes,
-  getEmployeeEmailTemplate,
+  getEmployeeMailTemplateTypes,
+  getEmployeeMailTemplate,
 }
 
 const employeeMailConfigurationSelectors = {

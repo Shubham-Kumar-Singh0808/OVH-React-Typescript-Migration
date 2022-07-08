@@ -214,6 +214,7 @@ export interface AddNewEmployeeAPi extends ApiBase {
 }
 
 export interface EmployeeMailConfigurationApi extends ApiBase {
-  getEmailTemplates: string
+  getMailTemplates: string
   getMailTemplateTypes: string
+  exportMailTemplatesList: string
 }

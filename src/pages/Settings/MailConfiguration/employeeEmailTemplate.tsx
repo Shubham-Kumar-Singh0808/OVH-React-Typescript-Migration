@@ -18,8 +18,9 @@ import parse from 'html-react-parser'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { EmployeeGetEmailTemplate } from '../../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
+import { EmployeeGetMailTemplate } from '../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
+import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
 
 const employeeEmailTemplate = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -30,32 +31,34 @@ const employeeEmailTemplate = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
 
-  const initialEmployeeEmailTemplate = {} as EmployeeGetEmailTemplate
+  const initialEmployeeEmailTemplate = {} as EmployeeGetMailTemplate
   const [employeeTemplate, setEmployeeTemplate] = useState(
     initialEmployeeEmailTemplate,
   )
 
-  const employeeEmailTemplates = useTypedSelector(
+  const employeeMailTemplates = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplate,
   )
 
-  const employeeEmailTemplateType = useTypedSelector(
+  const employeeMailTemplateType = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplateTypes,
   )
 
   useEffect(() => {
-    dispatch(reduxServices.employeeMailConfiguration.getMailTemplateTypes())
+    dispatch(
+      reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
+    )
   }, [dispatch])
 
   const handleTicketConfiguration = () => {
     dispatch(
-      reduxServices.employeeMailConfiguration.getEmployeeEmailTemplate({
+      reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
         templateName: employeeTemplate.templateName,
         templateTypeId: employeeTemplate.templateTypeId,
       }),
     )
   }
-  const onChangeEmailTemplateHandler = (
+  const onChangeMailTemplateHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>,
@@ -95,6 +98,32 @@ const employeeEmailTemplate = (): JSX.Element => {
     )
   }
 
+  const handleExportMailTemplateData = async () => {
+    const employeeMailTemplateDownload =
+      await employeeMailConfigurationApi.exportEmployeeMailTemplateData({
+        templateName: employeeTemplate.templateName,
+        templateTypeId: employeeTemplate.templateTypeId,
+      })
+
+    downloadFile(employeeMailTemplateDownload)
+  }
+
+  const downloadFile = (cvDownload: Blob | undefined) => {
+    if (cvDownload) {
+      const url = window.URL.createObjectURL(
+        new Blob([cvDownload], {
+          type: cvDownload.type,
+        }),
+      )
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'MailTemplateList.csv')
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    }
+  }
+
   return (
     <>
       <OCard
@@ -115,10 +144,10 @@ const employeeEmailTemplate = (): JSX.Element => {
               data-testid="form-select1"
               name="templateTypeId"
               value={employeeTemplate.templateTypeId}
-              onChange={onChangeEmailTemplateHandler}
+              onChange={onChangeMailTemplateHandler}
             >
               <option value={''}>Select Type</option>
-              {employeeEmailTemplateType?.map((templateType, index) => (
+              {employeeMailTemplateType?.map((templateType, index) => (
                 <option key={index} value={templateType.id}>
                   {templateType.name}
                 </option>
@@ -132,7 +161,7 @@ const employeeEmailTemplate = (): JSX.Element => {
               name="templateName"
               placeholder="Search Text"
               value={employeeTemplate.templateName}
-              onChange={onChangeEmailTemplateHandler}
+              onChange={onChangeMailTemplateHandler}
             />
           </CCol>
           <CCol sm={2}>
@@ -156,7 +185,11 @@ const employeeEmailTemplate = (): JSX.Element => {
             <CButton color="info btn-ovh me-1" className="text-white">
               <i className="fa fa-plus me-1"></i>Add Template
             </CButton>
-            <CButton color="info btn-ovh me-1" className="text-white">
+            <CButton
+              color="info btn-ovh me-1"
+              className="text-white"
+              onClick={handleExportMailTemplateData}
+            >
               <i className="fa fa-plus me-1"></i>Click to Export
             </CButton>
           </CCol>
@@ -177,7 +210,7 @@ const employeeEmailTemplate = (): JSX.Element => {
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {employeeEmailTemplates.map((emailTemplate, index) => {
+            {employeeMailTemplates.map((emailTemplate, index) => {
               const descriptionLimit =
                 emailTemplate.template && emailTemplate.template.length > 15
                   ? `${emailTemplate.template.substring(0, 15)}...`
@@ -230,8 +263,8 @@ const employeeEmailTemplate = (): JSX.Element => {
           </CTableBody>
         </CTable>
         <strong>
-          {employeeEmailTemplates?.length
-            ? `Total Records: ${employeeEmailTemplates?.length}`
+          {employeeMailTemplates?.length
+            ? `Total Records: ${employeeMailTemplates?.length}`
             : `No Records found...`}
         </strong>
       </OCard>
