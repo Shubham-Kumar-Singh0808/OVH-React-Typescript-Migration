@@ -17,6 +17,7 @@ import { ActionMapping } from '../../../../../types/Settings/UserRolesConfigurat
 import OCard from '../../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
+import { TextDanger, TextWhite } from '../../../../../constant/ClassName'
 
 const ShiftConfiguration = ({
   setToggleShift,
@@ -184,8 +185,6 @@ const ShiftConfiguration = ({
     employeeShiftDetails.startTimeHour,
     employeeShiftDetails.startTimeMinutes,
   ])
-  const textWhite = `text-white`
-  const textDanger = `text-danger`
   return (
     <>
       <OCard
@@ -208,7 +207,7 @@ const ShiftConfiguration = ({
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Name :
                 <span
-                  className={employeeShiftDetails.name ? textWhite : textDanger}
+                  className={employeeShiftDetails.name ? TextWhite : TextDanger}
                 >
                   *
                 </span>
@@ -232,8 +231,8 @@ const ShiftConfiguration = ({
                   className={
                     employeeShiftDetails.startTimeHour &&
                     employeeShiftDetails.startTimeMinutes
-                      ? textWhite
-                      : textDanger
+                      ? TextWhite
+                      : TextDanger
                   }
                 >
                   *
@@ -275,8 +274,8 @@ const ShiftConfiguration = ({
                   className={
                     employeeShiftDetails.endTimeHour &&
                     employeeShiftDetails.endTimeMinutes
-                      ? textWhite
-                      : textDanger
+                      ? TextWhite
+                      : TextDanger
                   }
                 >
                   *
@@ -316,7 +315,7 @@ const ShiftConfiguration = ({
                 Grace period :
                 <span
                   className={
-                    employeeShiftDetails.graceTime ? textWhite : textDanger
+                    employeeShiftDetails.graceTime ? TextWhite : TextDanger
                   }
                 >
                   *
