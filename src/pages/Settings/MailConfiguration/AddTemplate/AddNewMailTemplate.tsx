@@ -2,7 +2,6 @@ import {
   CButton,
   CCol,
   CForm,
-  CFormCheck,
   CFormInput,
   CFormLabel,
   CFormSelect,
@@ -11,6 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import validator from 'validator'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
@@ -26,6 +26,8 @@ function AddNewMailTemplate(): JSX.Element {
     initialMailTemplateDetails,
   )
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
+  const [showAssetType, setShowAssetType] = useState<boolean>(false)
+  const [emailError, setEmailError] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const getTemplateTypes = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplateTypes,
@@ -40,17 +42,41 @@ function AddNewMailTemplate(): JSX.Element {
     reduxServices.addNewMailTemplate.selectors.assetTypes,
   )
 
-  useEffect(() => {
-    if (
-      addNewTemplate.assetTypeId &&
-      addNewTemplate.template &&
-      addNewTemplate.templateName &&
-      addNewTemplate.email &&
-      addNewTemplate.templateTypeId
-    ) {
-      setIsButtonEnabled(true)
+  const validateEmail = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailError(false)
     } else {
-      setIsButtonEnabled(false)
+      setEmailError(true)
+    }
+  }
+
+  useEffect(() => {
+    if (showAssetType) {
+      if (
+        addNewTemplate.assetTypeId &&
+        addNewTemplate.template &&
+        addNewTemplate.templateName &&
+        addNewTemplate.email &&
+        addNewTemplate.templateTypeId
+      ) {
+        setIsButtonEnabled(true)
+      } else {
+        setIsButtonEnabled(false)
+      }
+    }
+    if (!showAssetType) {
+      if (
+        addNewTemplate.template &&
+        addNewTemplate.templateName &&
+        addNewTemplate.templateTypeId
+      ) {
+        setIsButtonEnabled(true)
+      } else {
+        setIsButtonEnabled(false)
+      }
+    }
+    if (addNewTemplate.email) {
+      validateEmail(addNewTemplate.email)
     }
   }, [addNewTemplate])
 
@@ -71,11 +97,25 @@ function AddNewMailTemplate(): JSX.Element {
       | React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const { name, value } = event.target
-    console.log(name)
-    setAddNewTemplate((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'email') {
+      const personalEmail = value
+      validateEmail(personalEmail)
+      setAddNewTemplate((prevState) => {
+        return { ...prevState, ...{ [name]: personalEmail } }
+      })
+    } else {
+      setAddNewTemplate((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
+  useEffect(() => {
+    if (Number(addNewTemplate.templateTypeId) === 11) {
+      setShowAssetType(true)
+    } else {
+      setShowAssetType(false)
+    }
+  })
 
   const successToastMessage = (
     <OToast
@@ -96,6 +136,20 @@ function AddNewMailTemplate(): JSX.Element {
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
+  }
+
+  const handleClearInputs = () => {
+    setAddNewTemplate({
+      templateTypeId: 0,
+      templateName: '',
+      template: '',
+      email: '',
+      assetTypeId: '',
+    })
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
   }
 
   return (
@@ -119,7 +173,14 @@ function AddNewMailTemplate(): JSX.Element {
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Type: <span className="text-danger">*</span>
+              Type:{' '}
+              <span
+                className={
+                  addNewTemplate.templateTypeId ? TextWhite : TextDanger
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={4}>
               <CFormSelect
@@ -145,57 +206,84 @@ function AddNewMailTemplate(): JSX.Element {
               </CButton>
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-2 col-form-label text-end"
-            >
-              Asset Type: <span className="text-danger">*</span>
-            </CFormLabel>
-            <CCol sm={4}>
-              <CFormSelect
-                data-testid="form-select"
-                aria-label="Default select example"
-                size="sm"
-                id="assetType"
-                name="assetTypeId"
-                value={addNewTemplate?.assetTypeId}
-                onChange={handleInputChange}
-              >
-                <option value={''}>Select Type</option>
-                {getAssetTypes?.map((assetType, index) => (
-                  <option key={index} value={assetType.id}>
-                    {assetType.assetType}
-                  </option>
-                ))}
-              </CFormSelect>
-            </CCol>
-          </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-2 col-form-label text-end"
-            >
-              Email:
-              <span className="text-danger">*</span>
-            </CFormLabel>
-            <CCol sm={4}>
-              <CFormInput
-                type="text"
-                name="email"
-                value={addNewTemplate?.email}
-                maxLength={50}
-                onChange={handleInputChange}
-              />
-            </CCol>
-          </CRow>
+          {showAssetType ? (
+            <>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel
+                  {...formLabelProps}
+                  className="col-sm-2 col-form-label text-end"
+                >
+                  Asset Type:{' '}
+                  <span
+                    className={
+                      addNewTemplate.assetTypeId ? TextWhite : TextDanger
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={4}>
+                  <CFormSelect
+                    data-testid="form-select"
+                    aria-label="Default select example"
+                    size="sm"
+                    id="assetType"
+                    name="assetTypeId"
+                    value={addNewTemplate?.assetTypeId}
+                    onChange={handleInputChange}
+                  >
+                    <option value={''}>Select Type</option>
+                    {getAssetTypes?.map((assetType, index) => (
+                      <option key={index} value={assetType.id}>
+                        {assetType.assetType}
+                      </option>
+                    ))}
+                  </CFormSelect>
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel
+                  {...formLabelProps}
+                  className="col-sm-2 col-form-label text-end"
+                >
+                  Email:
+                  <span
+                    className={addNewTemplate.email ? TextWhite : TextDanger}
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={4}>
+                  <CFormInput
+                    type="text"
+                    name="email"
+                    value={addNewTemplate?.email}
+                    maxLength={50}
+                    onChange={handleInputChange}
+                  />
+                  {emailError && (
+                    <p className={TextDanger}>
+                      Enter a valid Email address. For multiple mail ids use ,
+                      without space!!
+                    </p>
+                  )}
+                </CCol>
+              </CRow>
+            </>
+          ) : (
+            <></>
+          )}
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
               Title:
-              <span className="text-danger">*</span>
+              <span
+                className={addNewTemplate.templateName ? TextWhite : TextDanger}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={4}>
               <CFormInput
@@ -212,7 +300,12 @@ function AddNewMailTemplate(): JSX.Element {
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Template: <span className="text-danger">*</span>
+              Template:{' '}
+              <span
+                className={addNewTemplate.template ? TextWhite : TextDanger}
+              >
+                *
+              </span>
             </CFormLabel>
             {showEditor ? (
               <CCol sm={10}>
@@ -240,11 +333,16 @@ function AddNewMailTemplate(): JSX.Element {
               <CButton
                 className="btn-ovh me-1"
                 color="success"
+                disabled={!isButtonEnabled}
                 onClick={handleAddNewHandbookPage}
               >
                 Add
               </CButton>
-              <CButton color="warning " className="btn-ovh me-1">
+              <CButton
+                color="warning "
+                className="btn-ovh me-1"
+                onClick={handleClearInputs}
+              >
                 Clear
               </CButton>
             </CCol>

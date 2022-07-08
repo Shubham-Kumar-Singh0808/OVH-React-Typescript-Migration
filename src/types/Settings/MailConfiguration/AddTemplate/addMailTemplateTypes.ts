@@ -13,8 +13,8 @@ export type AddNewTemplate = {
   templateTypeId: number
   templateName: string
   template: string
-  email: string
-  assetTypeId: string
+  email?: string
+  assetTypeId?: string | number
 }
 export type AddTemplateSliceState = {
   getAllLookups: AssetTypeResponse
