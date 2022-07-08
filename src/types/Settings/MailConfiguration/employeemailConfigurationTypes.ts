@@ -11,14 +11,14 @@ export type EmployeeGetMailTemplate = {
   email: null | string
 }
 
-export type EmployeeGetMailTemplateTypes = {
+export type EmployeeGetMailTemplateType = {
   id: string
   name: string
 }
 
 export type EmployeeMailConfigurationState = {
   employeeGetEmailTemplate: EmployeeGetMailTemplate[]
-  employeeGetMailTemplateTypes: EmployeeGetMailTemplateTypes[]
+  employeeGetMailTemplateTypes: EmployeeGetMailTemplateType[]
   isLoading: LoadingState
   error: ValidationError
 }

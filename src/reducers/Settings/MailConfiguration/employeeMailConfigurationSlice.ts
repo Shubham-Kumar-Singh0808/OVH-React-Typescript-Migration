@@ -4,7 +4,7 @@ import { RootState } from '../../../stateStore'
 import {
   EmployeeGetMailTemplate,
   EmployeeGetEmailTemplateProps,
-  EmployeeGetMailTemplateTypes,
+  EmployeeGetMailTemplateType,
   EmployeeMailConfigurationState,
 } from '../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
 import { ValidationError } from '../../../types/commonTypes'
@@ -55,7 +55,7 @@ const employeeMailConfigurationSlice = createSlice({
     builder.addCase(getEmployeeMailTemplateTypes.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
       state.employeeGetMailTemplateTypes =
-        action.payload as EmployeeGetMailTemplateTypes[]
+        action.payload as EmployeeGetMailTemplateType[]
     })
     builder.addCase(getEmployeeMailTemplate.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
@@ -70,7 +70,7 @@ const employeeMailConfigurationSlice = createSlice({
 
 const employeeMailTemplateTypes = (
   state: RootState,
-): EmployeeGetMailTemplateTypes[] =>
+): EmployeeGetMailTemplateType[] =>
   state.employeeMailConfiguration.employeeGetMailTemplateTypes
 
 const employeeMailTemplate = (state: RootState): EmployeeGetMailTemplate[] =>
