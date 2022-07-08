@@ -12,8 +12,13 @@ const ProjectManager = ({
   managersList,
   onSelectManager,
   shouldReset,
+  projectValue,
 }: ManagerProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
+
+  useEffect(() => {
+    setAutoCompleteTarget(projectValue)
+  }, [projectValue])
 
   useEffect(() => {
     if (shouldReset) setAutoCompleteTarget('')
@@ -25,11 +30,11 @@ const ProjectManager = ({
       (value) => value.fullName === fullName,
     )
 
-    const reportManager = {
+    const projectManager = {
       id: managerName?.id,
       fullName: managerName?.fullName,
     } as GetProjectManager
-    onSelectManager(reportManager)
+    onSelectManager(projectManager)
   }
   return (
     <>
