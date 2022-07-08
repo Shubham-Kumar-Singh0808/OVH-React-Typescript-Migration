@@ -38,8 +38,17 @@ export type GetHiveActivityReportProps = {
 }
 
 export type HiveActivityReportSliceState = {
+  selectedDate: string
   selectedView: SelectedView
   managerHiveActivityReport: GetManagerHiveActivityReportResponse
   employeeHiveActivityReport: EmployeeHiveReport
   isLoading: ApiLoadingState
+}
+
+export type ManagerHiveActivityReportProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
