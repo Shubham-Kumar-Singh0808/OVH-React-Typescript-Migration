@@ -5,6 +5,7 @@ import {
   EditVisaDetailsState,
   EmployeeFamilyData,
   EmployeeFamilyDetails,
+  EmployeePassportImage,
   EmployeeVisaDetails,
   GetCountryDetails,
   VisaCountryDetails,
@@ -191,6 +192,24 @@ const uploadVisaImage = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
+const uploadPassportImages = async (
+  prepareObject: EmployeePassportImage,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: personalInfoApiConfig.fileUploadPassportImage,
+    method: AllowedHttpMethods.post,
+    data: prepareObject.file1,
+    params: {
+      empId: prepareObject.empId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
 const personalInfoApi = {
   getEmployeeFamilyDetails,
   addEmployeeFamilyMember,
@@ -205,5 +224,6 @@ const personalInfoApi = {
   updateEmployeeVisa,
   deleteEmployeeVisa,
   uploadVisaImage,
+  uploadPassportImages,
 }
 export default personalInfoApi
