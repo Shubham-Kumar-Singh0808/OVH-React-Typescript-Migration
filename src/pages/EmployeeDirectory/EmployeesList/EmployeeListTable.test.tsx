@@ -50,4 +50,96 @@ describe('Employee List Table Component Testing', () => {
       expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
     })
   })
+
+  test('should be able to see table action header if updateaccess is true', () => {
+    render(
+      <EmployeeListTable
+        setCurrentPage={mockSetCurrentPage}
+        setPageSize={mockSetPageSize}
+        currentPage={1}
+        pageSize={20}
+        paginationRange={[1, 2, 3]}
+        updateaccess={true}
+      />,
+      {
+        preloadedState: {
+          employeeList: {
+            employees: mockEmployeeList as Employee[],
+            listSize: 183,
+          },
+        },
+      },
+    )
+
+    expect(screen.getByTestId('action-header')).toBeInTheDocument()
+  })
+
+  test('should not be able to see table action header if updateaccess is false', () => {
+    render(
+      <EmployeeListTable
+        setCurrentPage={mockSetCurrentPage}
+        setPageSize={mockSetPageSize}
+        currentPage={1}
+        pageSize={20}
+        paginationRange={[1, 2, 3]}
+        updateaccess={false}
+      />,
+      {
+        preloadedState: {
+          employeeList: {
+            employees: mockEmployeeList as Employee[],
+            listSize: 183,
+          },
+        },
+      },
+    )
+
+    expect(screen.getByTestId('no-action-header')).toBeInTheDocument()
+  })
+
+  test('should be able to see table action cell if updateaccess is true', () => {
+    render(
+      <EmployeeListTable
+        setCurrentPage={mockSetCurrentPage}
+        setPageSize={mockSetPageSize}
+        currentPage={1}
+        pageSize={20}
+        paginationRange={[1, 2, 3]}
+        updateaccess={true}
+      />,
+      {
+        preloadedState: {
+          employeeList: {
+            employees: mockEmployeeList as Employee[],
+            listSize: 183,
+          },
+        },
+      },
+    )
+
+    expect(screen.getByTestId('action-cell')).toBeInTheDocument()
+  })
+
+  test('should not be able to see table action cell if updateaccess is false', () => {
+    render(
+      <EmployeeListTable
+        setCurrentPage={mockSetCurrentPage}
+        setPageSize={mockSetPageSize}
+        currentPage={1}
+        pageSize={20}
+        paginationRange={[1, 2, 3]}
+        updateaccess={false}
+      />,
+      {
+        preloadedState: {
+          employeeList: {
+            employees: mockEmployeeList as Employee[],
+            listSize: 183,
+          },
+        },
+      },
+    )
+
+    expect(screen.getByTestId('no-action-cell')).toBeInTheDocument()
+  })
 })

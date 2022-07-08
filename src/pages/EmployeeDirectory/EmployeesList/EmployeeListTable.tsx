@@ -61,8 +61,12 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                 <CTableHeaderCell scope="col">Blood Group</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Date of Joining</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                {updateaccess && (
-                  <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                {updateaccess ? (
+                  <CTableHeaderCell scope="col" data-testid="action-header">
+                    Actions
+                  </CTableHeaderCell>
+                ) : (
+                  <div data-testid="no-action-header"></div>
                 )}
               </CTableRow>
             </CTableHead>
@@ -94,8 +98,8 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                     <CTableDataCell>{employee.bloodgroup}</CTableDataCell>
                     <CTableDataCell>{employee.dateOfJoining}</CTableDataCell>
                     <CTableDataCell>{employee.country}</CTableDataCell>
-                    {updateaccess && (
-                      <CTableDataCell>
+                    {updateaccess ? (
+                      <CTableDataCell data-testid="action-cell">
                         <Link to={`/employeeProfile/${employee.id}`}>
                           <CButton
                             color="info"
@@ -116,6 +120,8 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                           </CButton>
                         </Link>
                       </CTableDataCell>
+                    ) : (
+                      <div data-testid="no-action-cell"></div>
                     )}
                   </CTableRow>
                 )
