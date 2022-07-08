@@ -12,7 +12,7 @@ export type EmployeeMailTemplate = {
 }
 
 export type EmployeeMailTemplateType = {
-  id: string
+  id: string | number
   name: string
 }
 
