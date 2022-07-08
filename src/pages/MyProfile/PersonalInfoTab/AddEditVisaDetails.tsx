@@ -79,12 +79,16 @@ function AddEditVisaDetails({
 
   const commonFormatDate = 'DD/MM/YYYY' //format for validation
   const dateFormmatted = (date: string) => {
-    const tempDateFormat = reformatDate(date as string)
-    return tempDateFormat.toLocaleDateString(deviceLocale, {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    })
+    if (date) {
+      const tempDateFormat = reformatDate(date as string)
+      return tempDateFormat.toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    } else {
+      return ''
+    }
   }
 
   let newDateOfIssue = new Date()

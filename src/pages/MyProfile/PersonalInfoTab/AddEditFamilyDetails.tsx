@@ -60,14 +60,18 @@ function AddEditFamilyDetails({
   }, [])
 
   const dateFormmatted = (date: string) => {
-    const tempDateFormat = reformatDate(date as string)
-    return tempDateFormat.toLocaleDateString(deviceLocale, {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    })
+    if (date) {
+      const tempDateFormat = reformatDate(date as string)
+      return tempDateFormat.toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    } else {
+      return ''
+    }
   }
-  console.log(dateOfBirth)
+
   let newDateOfBirth = new Date()
   if (employeeFamily.dateOfBirth) {
     const currentDateOfBirth = employeeFamily.dateOfBirth as string
