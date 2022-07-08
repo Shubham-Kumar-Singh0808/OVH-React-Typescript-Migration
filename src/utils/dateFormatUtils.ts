@@ -35,35 +35,6 @@ export const reformatDate = (date: string) => {
     : new Date()
 }
 
-export const supportedLocales = [
-  'ar-DZ',
-  'ar-EG',
-  'ar-MA',
-  'ar-SA',
-  'ar-TN',
-  'de-AT',
-  'en-AU',
-  'en-CA',
-  'en-GB',
-  'en-IE',
-  'en-IN',
-  'en-NZ',
-  'en-US',
-  'en-ZA',
-  'fa-IR',
-  'fr-CA',
-  'fr-CH',
-  'ja-Hira',
-  'fil',
-  'nl-BE',
-  'pt-BR',
-  'sr-Latn',
-  'uz-Cyrl',
-  'zh-CN',
-  'zh-HK',
-  'zh-TW',
-]
-
 const format1 = 'yyyy/MM/dd'
 const format2 = 'dd/MM/yyyy'
 const format3 = 'dd-MM-yyyy'

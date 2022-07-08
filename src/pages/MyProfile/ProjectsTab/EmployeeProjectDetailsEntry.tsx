@@ -1,6 +1,7 @@
 import { CTableRow, CTableDataCell } from '@coreui/react-pro'
 import React from 'react'
 import { EmployeeProjectDetailsEntryInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const EmployeeProjectDetailsEntry = (
   props: EmployeeProjectDetailsEntryInterface,
@@ -20,7 +21,7 @@ const EmployeeProjectDetailsEntry = (
         {props.projectDetails.allocation}
       </CTableDataCell>
       <CTableDataCell scope="row">
-        {props.projectDetails.endDate}
+        {localeDateFormat(props.projectDetails.endDate as string)}
       </CTableDataCell>
       <CTableDataCell scope="row">
         {props.projectDetails.billable ? 'Yes' : 'No'}

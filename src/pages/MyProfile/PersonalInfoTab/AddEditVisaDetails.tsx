@@ -77,7 +77,7 @@ function AddEditVisaDetails({
     setDateFormat(localeDateFormat[0].format)
   }, [])
 
-  const commonFormatDate = 'DD/MM/YYYY'
+  const commonFormatDate = 'DD/MM/YYYY' //format for validation
   const dateFormmatted = (date: string) => {
     const tempDateFormat = reformatDate(date as string)
     return tempDateFormat.toLocaleDateString(deviceLocale, {

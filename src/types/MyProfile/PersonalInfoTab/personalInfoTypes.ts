@@ -137,3 +137,8 @@ export type cardBodyProps = {
   editButtonHandler: (value: number) => void
   editVisaButtonHandler: (value: number) => void
 }
+
+export type EmployeePassportImage = {
+  empId: number | string
+  file1: FormData | null
+}
