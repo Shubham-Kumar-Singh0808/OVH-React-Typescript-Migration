@@ -163,7 +163,7 @@ const HiveReportOptions = ({
       )}
       {isDatePickerVisible && (
         <>
-          <CRow>
+          <CRow className="mt-2">
             <CCol sm={3} md={1} className="text-end ms-3">
               <CFormLabel className="mt-2 text-decoration-none">
                 Month:
@@ -215,11 +215,10 @@ const HiveReportOptions = ({
           </CRow>
         </>
       )}
-      <CRow className="mt-3">
+      <CRow className="mt-4">
         <CCol sm={8}>
           <h5 className="sh-summary-text">
-            Employee Attendance Summary for{' '}
-            {moment(dateToUse).format('MMMM--YYYY')}
+            Hive Activity Summary for {moment(dateToUse).format('MMMM--YYYY')}
           </h5>
         </CCol>
         {selectedView !== 'Me' && (

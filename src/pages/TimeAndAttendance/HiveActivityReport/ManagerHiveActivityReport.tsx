@@ -1,5 +1,6 @@
 import {
   CCol,
+  CLink,
   CRow,
   CTable,
   CTableBody,
@@ -8,16 +9,26 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
+import HiveActivityDetailsTable from './HiveActivityDetailsTable'
+import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import { ManagerHiveActivityReportProps } from '../../../types/TimeAndAttendance/HiveActivityReport/hiveActivityReportTypes'
+import {
+  ActivityTimes,
+  ManagerHiveActivityReportProps,
+} from '../../../types/TimeAndAttendance/HiveActivityReport/hiveActivityReportTypes'
 
 const ManagerHiveActivityReport = (
   props: ManagerHiveActivityReportProps,
 ): JSX.Element => {
+  const [hiveReportModalVisibility, setHiveReportModalVisibility] =
+    useState<boolean>(false)
+  const [hiveActivityTimes, setHiveActivityTimes] = useState<ActivityTimes[]>(
+    [],
+  )
   const managerHiveActivityReport = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerHiveActivityReport,
   )
@@ -40,6 +51,25 @@ const ManagerHiveActivityReport = (
     setCurrentPage(1)
   }
 
+  const handleShowModal = (activityTimes: ActivityTimes[]) => {
+    setHiveReportModalVisibility(true)
+    setHiveActivityTimes(activityTimes)
+  }
+
+  const tableHeaderCellPropsDays = {
+    width: '3%',
+    scope: 'col',
+    className: 'text-center',
+  }
+  const tableHeaderCellPropsName = {
+    width: '8%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropsID = {
+    width: '4%',
+    scope: 'col',
+  }
+
   return (
     <>
       {managerHiveActivityReport.list.length ? (
@@ -47,21 +77,21 @@ const ManagerHiveActivityReport = (
           <CTable striped className="time-in-office-table">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                {managerHiveActivityReport.list[0].activityTimes.map(
-                  (currentActivity, activityIndex) => {
-                    return (
-                      <CTableHeaderCell
-                        className="text-center"
-                        key={activityIndex}
-                        scope="col"
-                      >
-                        {currentActivity.dayofMonth}
+                <CTableHeaderCell {...tableHeaderCellPropsName}>
+                  ID
+                </CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropsID}>
+                  Name
+                </CTableHeaderCell>
+                {Array.from({ length: 31 }, (_, index) => {
+                  return (
+                    <React.Fragment key={index}>
+                      <CTableHeaderCell {...tableHeaderCellPropsDays}>
+                        {index + 1}
                       </CTableHeaderCell>
-                    )
-                  },
-                )}
+                    </React.Fragment>
+                  )
+                })}
                 <CTableHeaderCell className="text-center" scope="col">
                   Total
                 </CTableHeaderCell>
@@ -70,15 +100,36 @@ const ManagerHiveActivityReport = (
             <CTableBody>
               {managerHiveActivityReport.list.map(
                 (employeeRecord, employeeRecordIndex) => {
+                  const sortedActivityTimes = employeeRecord.activityTimes
+                    ?.slice()
+                    .sort(
+                      (activityItem1, activityItem2) =>
+                        activityItem1.dayofMonth - activityItem2.dayofMonth,
+                    )
                   return (
                     <CTableRow key={employeeRecordIndex}>
                       <CTableDataCell>{employeeRecord.id}</CTableDataCell>
                       <CTableDataCell>{`${employeeRecord.firstName} ${employeeRecord.lastName}`}</CTableDataCell>
-                      {employeeRecord.activityTimes.map((value, index) => {
+                      {sortedActivityTimes.map((value, index) => {
                         return (
-                          <CTableDataCell className="text-center" key={index}>
-                            {value.hours}
-                          </CTableDataCell>
+                          <React.Fragment key={index}>
+                            {value.hours === '-' ? (
+                              <CTableDataCell className="text-center cursor-pointer sh-hive-activity-data-cell">
+                                {value.hours}
+                              </CTableDataCell>
+                            ) : (
+                              <CTableDataCell className="text-center">
+                                <CLink
+                                  className="cursor-pointer sh-hive-activity-link"
+                                  onClick={() => {
+                                    handleShowModal(sortedActivityTimes)
+                                  }}
+                                >
+                                  {value.hours}
+                                </CLink>
+                              </CTableDataCell>
+                            )}
+                          </React.Fragment>
                         )
                       })}
                       <CTableDataCell className="text-center">
@@ -121,11 +172,21 @@ const ManagerHiveActivityReport = (
         </>
       ) : (
         <CCol>
-          <CRow className="category-no-data">
-            <h4 className="text-center">No Records Found...</h4>
+          <CRow className="mt-4">
+            <h5>No Records Found... </h5>
           </CRow>
         </CCol>
       )}
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        visible={hiveReportModalVisibility}
+        setVisible={setHiveReportModalVisibility}
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+      >
+        <HiveActivityDetailsTable />
+      </OModal>
     </>
   )
 }
