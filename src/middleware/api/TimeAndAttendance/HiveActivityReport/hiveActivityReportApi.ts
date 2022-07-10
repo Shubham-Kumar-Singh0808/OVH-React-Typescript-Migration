@@ -58,10 +58,29 @@ const getSearchHiveActivityReport = async (
   return response.data
 }
 
+const exportHiveActivityReport = async (
+  date: string,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: hiveActivityReportApiConfig.exportHiveReport,
+    method: AllowedHttpMethods.get,
+    params: {
+      hiveDate: date,
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('tenantKey') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const hiveActivityReportApi = {
   getEmployeeHiveActivityReport,
   getManagerHiveActivityReport,
   getSearchHiveActivityReport,
+  exportHiveActivityReport,
 }
 
 export default hiveActivityReportApi

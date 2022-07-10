@@ -283,4 +283,5 @@ export const hiveActivityReportApiConfig: HiveActivityReportApi = {
     apiPrefix + '/timeActivity/employeeHiveReports',
   getManagerHiveActivityReport: apiPrefix + '/timeActivity/managerHiveReports',
   getSearchHiveTime: apiPrefix + '/timeActivity/searchHiveTime',
+  exportHiveReport: apiPrefix + '/timeActivity/exportHiveReport',
 }

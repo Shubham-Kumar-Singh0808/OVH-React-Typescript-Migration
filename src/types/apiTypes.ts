@@ -230,4 +230,5 @@ export interface HiveActivityReportApi extends ApiBase {
   getEmployeeHiveActivityReport: string
   getManagerHiveActivityReport: string
   getSearchHiveTime: string
+  exportHiveReport: string
 }
