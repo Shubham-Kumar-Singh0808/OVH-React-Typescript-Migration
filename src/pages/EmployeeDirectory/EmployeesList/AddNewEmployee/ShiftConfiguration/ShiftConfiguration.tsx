@@ -1,7 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable complexity */
-// Todo: remove all eslint and fix errors
 import {
   CButton,
   CCol,
@@ -21,6 +17,7 @@ import { ActionMapping } from '../../../../../types/Settings/UserRolesConfigurat
 import OCard from '../../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
+import { TextDanger, TextWhite } from '../../../../../constant/ClassName'
 
 const ShiftConfiguration = ({
   setToggleShift,
@@ -49,14 +46,14 @@ const ShiftConfiguration = ({
         return { ...prevState, ...{ [name]: shiftName } }
       })
     } else {
-      const newValue = value.replace(/[^0-9]/gi, '')
+      const newValue = value.replace(/\D/gi, '')
       setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: newValue } }
       })
     }
   }
 
-  const hoursAndMinutesValidation = () => {
+  const minutesValidation = () => {
     if (employeeShiftDetails.endTimeMinutes !== undefined || '' || null) {
       if (employeeShiftDetails.endTimeMinutes.length === 1) {
         employeeShiftDetails.endTimeMinutes =
@@ -73,6 +70,8 @@ const ShiftConfiguration = ({
         employeeShiftDetails.startTimeMinutes = '59'
       }
     }
+  }
+  const hoursValidation = () => {
     if (employeeShiftDetails.startTimeHour !== undefined || '' || null) {
       if (employeeShiftDetails.startTimeHour.length === 1) {
         employeeShiftDetails.startTimeHour =
@@ -208,9 +207,7 @@ const ShiftConfiguration = ({
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Name :
                 <span
-                  className={
-                    employeeShiftDetails.name ? 'text-white' : 'text-danger'
-                  }
+                  className={employeeShiftDetails.name ? TextWhite : TextDanger}
                 >
                   *
                 </span>
@@ -234,8 +231,8 @@ const ShiftConfiguration = ({
                   className={
                     employeeShiftDetails.startTimeHour &&
                     employeeShiftDetails.startTimeMinutes
-                      ? 'text-white'
-                      : 'text-danger'
+                      ? TextWhite
+                      : TextDanger
                   }
                 >
                   *
@@ -252,7 +249,7 @@ const ShiftConfiguration = ({
                   maxLength={2}
                   value={employeeShiftDetails.startTimeHour}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={hoursValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -266,7 +263,7 @@ const ShiftConfiguration = ({
                   maxLength={2}
                   value={employeeShiftDetails.startTimeMinutes}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={minutesValidation}
                 />
               </CCol>
             </CRow>
@@ -277,8 +274,8 @@ const ShiftConfiguration = ({
                   className={
                     employeeShiftDetails.endTimeHour &&
                     employeeShiftDetails.endTimeMinutes
-                      ? 'text-white'
-                      : 'text-danger'
+                      ? TextWhite
+                      : TextDanger
                   }
                 >
                   *
@@ -295,7 +292,7 @@ const ShiftConfiguration = ({
                   maxLength={2}
                   value={employeeShiftDetails.endTimeHour}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={hoursValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -309,7 +306,7 @@ const ShiftConfiguration = ({
                   maxLength={2}
                   value={employeeShiftDetails.endTimeMinutes}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={minutesValidation}
                 />
               </CCol>
             </CRow>
@@ -318,9 +315,7 @@ const ShiftConfiguration = ({
                 Grace period :
                 <span
                   className={
-                    employeeShiftDetails.graceTime
-                      ? 'text-white'
-                      : 'text-danger'
+                    employeeShiftDetails.graceTime ? TextWhite : TextDanger
                   }
                 >
                   *

@@ -41,6 +41,9 @@ const EmpDesignationReport = React.lazy(
 const VisaDetailsList = React.lazy(
   () => import('./pages/EmployeeDirectory/VisaList/VisaList'),
 )
+const AttendanceReport = React.lazy(
+  () => import('./pages/TimeAndAttendance/AttendanceReport/AttendanceReport'),
+)
 const EmployeeHandbookSettings = React.lazy(
   () =>
     import(
@@ -113,6 +116,11 @@ const routes = [
     path: '/visaDetailsList',
     name: 'Visa Details',
     component: VisaDetailsList,
+  },
+  {
+    path: '/attendancesummary',
+    name: 'Attendance Summary',
+    component: AttendanceReport,
   },
   {
     path: '/handbooksettings',
