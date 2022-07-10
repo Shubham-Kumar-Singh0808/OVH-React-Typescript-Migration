@@ -26,6 +26,14 @@ const ReduxProvider = ({
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
 
+const expectComponentToBeRendered = () => {
+  expect(screen.queryByText('Type:')).toBeInTheDocument()
+  expect(screen.queryByText('Title:')).toBeInTheDocument()
+  expect(screen.queryByText('Template:')).toBeInTheDocument()
+  expect(screen.getByTestId('btn-save')).toBeDisabled()
+  expect(screen.getByTestId('btn-clear')).toBeEnabled()
+}
+
 describe('Add Template Component Testing', () => {
   test('should render Add Mail Template Component without crashing', () => {
     const history = createMemoryHistory()
@@ -183,6 +191,43 @@ describe('Add Template Component Testing', () => {
     await waitFor(() => {
       // check if a redirect happens after clicking Back button to Email Templates Page
       expect(history.location.pathname).toBe('/mailTemplates')
+    })
+  })
+  test('should enabled add button when input is not empty', () => {
+    const history = createMemoryHistory()
+    render(
+      <Router history={history}>
+        <ReduxProvider reduxStore={stateStore}>
+          <AddNewMailTemplate />
+        </ReduxProvider>
+      </Router>,
+    )
+    expectComponentToBeRendered()
+
+    userEvent.type(screen.getByRole('textbox'), 'testing')
+    expect(screen.getByTestId('btn-clear')).not.toBeDisabled()
+
+    userEvent.clear(screen.getByRole('textbox'))
+    expect(screen.getByTestId('btn-save')).toBeDisabled()
+  })
+  test('should clear input and disable button after submitting and new template should be added', async () => {
+    const history = createMemoryHistory()
+    render(
+      <Router history={history}>
+        <ReduxProvider reduxStore={stateStore}>
+          <AddNewMailTemplate />
+        </ReduxProvider>
+      </Router>,
+    )
+
+    expectComponentToBeRendered()
+
+    userEvent.type(screen.getByRole('textbox'), 'testing')
+    await waitFor(() => {
+      userEvent.click(screen.getByTestId('btn-clear'))
+
+      expect(screen.getByRole('textbox')).toHaveValue('')
+      expect(screen.getByTestId('btn-save')).toBeDisabled()
     })
   })
 })
