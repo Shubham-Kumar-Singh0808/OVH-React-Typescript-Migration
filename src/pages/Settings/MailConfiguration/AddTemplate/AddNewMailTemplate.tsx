@@ -258,16 +258,17 @@ function AddNewMailTemplate(): JSX.Element {
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormInput
-                    type="text"
+                    type="email"
+                    data-testid="email-address"
                     name="email"
                     value={addNewTemplate?.email}
                     maxLength={50}
                     onChange={handleInputChange}
                   />
                   {emailError && (
-                    <p className={TextDanger}>
-                      Enter a valid Email address. For multiple mail ids use ,
-                      without space!!
+                    <p data-testid="error-msg" className={TextDanger}>
+                      Enter a valid Email address.For multiple mail ids
+                      use,without space!!
                     </p>
                   )}
                 </CCol>
@@ -311,7 +312,7 @@ function AddNewMailTemplate(): JSX.Element {
               </span>
             </CFormLabel>
             {showEditor ? (
-              <CCol sm={10}>
+              <CCol sm={10} data-testid="ckEditor-component">
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
@@ -334,6 +335,7 @@ function AddNewMailTemplate(): JSX.Element {
             ></CFormLabel>
             <CCol sm={4}>
               <CButton
+                data-testid="btn-save"
                 className="btn-ovh me-1"
                 color="success"
                 disabled={!isButtonEnabled}
@@ -342,6 +344,7 @@ function AddNewMailTemplate(): JSX.Element {
                 Add
               </CButton>
               <CButton
+                data-testid="btn-clear"
                 color="warning "
                 className="btn-ovh me-1"
                 onClick={handleClearInputs}

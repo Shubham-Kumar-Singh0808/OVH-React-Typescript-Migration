@@ -23,7 +23,11 @@ describe('DesignationList Table Testing', () => {
     // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeDesignationList />
+        <EmployeeDesignationList
+          setToggleDesignation={function (value: boolean): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </ReduxProvider>,
     )
     expect(screen.getByText('Designation List')).toBeInTheDocument()
@@ -35,7 +39,7 @@ describe('DesignationList Table Testing', () => {
       </ReduxProvider>,
     )
     await waitFor(() => {
-      expect(screen.getByText('No Records Found')).toBeInTheDocument()
+      expect(screen.queryByText('No Records Found')).toBeInTheDocument()
     })
   })
 })
