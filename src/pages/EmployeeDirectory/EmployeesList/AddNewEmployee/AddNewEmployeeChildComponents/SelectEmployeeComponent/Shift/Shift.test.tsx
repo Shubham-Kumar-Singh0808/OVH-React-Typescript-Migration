@@ -26,6 +26,7 @@ describe('Add Employee Shift Component', () => {
           value={''}
           toggleValue={false}
           dynamicFormLabelProps={jest.fn()}
+          isAddDisable={false}
         />
       </ReduxProvider>,
     )

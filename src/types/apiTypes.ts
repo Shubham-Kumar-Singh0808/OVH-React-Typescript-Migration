@@ -103,6 +103,7 @@ export interface PersonalInfoApi extends ApiBase {
   deleteFamilyMember: string
   deleteVisaDetail: string
   fileUploadVisaImage: string
+  fileUploadPassportImage: string
 }
 
 export interface ProfileHistoryApi extends ApiBase {
@@ -139,6 +140,7 @@ export interface ShiftConfigurationApi extends ApiBase {
   updateShiftDetail: string
   deleteShiftDetail: string
 }
+
 export interface CertificateListApi extends ApiBase {
   getAllEmployeeCertificates: string
   exportCertificateList: string
@@ -185,6 +187,16 @@ export interface VisaListApi extends ApiBase {
   exportVisaList: string
 }
 
+export interface EmployeeAttendanceReportApi extends ApiBase {
+  getEmployeeAttendance: string
+  exportAttendance: string
+  exportBiometricAttendance: string
+}
+
+export interface UserAccessToFeaturesApi extends ApiBase {
+  getUserAccessToFeatures: string
+}
+
 export interface EmployeeHandbookSettingsApi extends ApiBase {
   getEmployeeHandbooks: string
   addNewHandbook: string
@@ -205,6 +217,7 @@ export interface EmployeeLeaveSettingsApi extends ApiBase {
   deleteLeaveCategory: string
   addUpdateLeaveCategory: string
 }
+
 export interface AddNewEmployeeAPi extends ApiBase {
   getEmployeeDepartments: string
   getEmpCountries: string
