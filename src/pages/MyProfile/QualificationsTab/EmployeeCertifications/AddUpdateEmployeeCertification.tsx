@@ -1,6 +1,3 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable complexity */
-/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable import/named */
 // Todo: remove all eslint and fix errors
@@ -27,6 +24,11 @@ import {
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import {
+  reformatDate,
+  dateFormatPerLocale,
+} from '../../../../utils/dateFormatUtils'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 
 function AddUpdateEmployeeCertification({
   isEditCertificationDetails = false,
@@ -43,6 +45,7 @@ function AddUpdateEmployeeCertification({
   const [completedDate, setCompletedDate] = useState<Date | string>()
   const [expiryDate, setExpiryDate] = useState<Date | string>()
   const [error, setError] = useState<boolean>(false)
+  const [dateFormat, setDateFormat] = useState<string>('')
 
   const [completedDateFlag, setCompletedDateFlag] = useState<boolean>(false)
   const [expiryDateFlag, setExpirtyDateFlag] = useState<boolean>(false)
@@ -63,6 +66,17 @@ function AddUpdateEmployeeCertification({
   )
 
   const dispatch = useAppDispatch()
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
+
+  useEffect(() => {
+    const localeDateFormat = dateFormatPerLocale.filter(
+      (lang) => lang.label === navigator.languages[0],
+    )
+    setDateFormat(localeDateFormat[0].format)
+  }, [])
 
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
@@ -79,29 +93,30 @@ function AddUpdateEmployeeCertification({
     }
   }, [dispatch, addCertification?.technology])
 
-  const currentCompletedDate = addCertification.completedDate as string
-  const completedDateParts: string[] | string = addCertification.completedDate
-    ? currentCompletedDate.split('/')
-    : ''
-  const newCompletedDate = addCertification.completedDate
-    ? new Date(
-        Number(completedDateParts[2]),
-        Number(completedDateParts[1]) - 1,
-        Number(completedDateParts[0]),
-      )
-    : new Date()
+  const commonFormatDate = 'DD/MM/YYYY' //format saved in DB
+  const dateFormmatted = (date: string) => {
+    if (date) {
+      const tempDateFormat = reformatDate(date as string)
+      return tempDateFormat.toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    } else {
+      return ''
+    }
+  }
 
-  const currentExpiryDate = addCertification.expiryDate as string
-  const expirtyDateParts: string[] | string = addCertification.expiryDate
-    ? currentExpiryDate.split('/')
-    : ''
-  const newExpiryDate = addCertification.expiryDate
-    ? new Date(
-        Number(expirtyDateParts[2]),
-        Number(expirtyDateParts[1]) - 1,
-        Number(expirtyDateParts[0]),
-      )
-    : new Date()
+  let newCompletedDate = new Date()
+  let newExpiryDate = new Date()
+  if (addCertification.completedDate) {
+    const currentCompletedDate = addCertification.completedDate as string
+    newCompletedDate = reformatDate(currentCompletedDate)
+  }
+  if (addCertification.expiryDate) {
+    const currentExpiryDate = addCertification.expiryDate as string
+    newExpiryDate = reformatDate(currentExpiryDate)
+  }
 
   const successToastMessage = (
     <OToast
@@ -151,7 +166,7 @@ function AddUpdateEmployeeCertification({
     validateDates(date, newDateExpiry)
 
     if (isEditCertificationDetails) {
-      const formatDate = moment(date).format('DD/MM/YYYY')
+      const formatDate = moment(date).format(commonFormatDate)
       const name = 'completedDate'
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
@@ -180,7 +195,7 @@ function AddUpdateEmployeeCertification({
     validateDates(newDateCompleted, date)
 
     if (isEditCertificationDetails) {
-      const formatDate = moment(date).format('DD/MM/YYYY')
+      const formatDate = moment(date).format(commonFormatDate)
       const name = 'expiryDate'
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
@@ -275,8 +290,8 @@ function AddUpdateEmployeeCertification({
     const prepareObject = {
       ...addCertification,
       ...{
-        completedDate: moment(completedDate).format('DD/MM/YYYY'),
-        expiryDate: moment(expiryDate).format('DD/MM/YYYY'),
+        completedDate: moment(completedDate).format(commonFormatDate),
+        expiryDate: moment(expiryDate).format(commonFormatDate),
         employeeId,
       },
     }
@@ -331,6 +346,8 @@ function AddUpdateEmployeeCertification({
     }
   }
 
+  const formLabel = 'col-sm-3 col-form-label text-end'
+
   return (
     <>
       <CCardHeader>
@@ -352,17 +369,12 @@ function AddUpdateEmployeeCertification({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...{
-                ...dynamicFormLabelProps(
-                  'technology',
-                  'col-sm-3 col-form-label text-end',
-                ),
+                ...dynamicFormLabelProps('technology', formLabel),
               }}
             >
               Technology:
               <span
-                className={
-                  addCertification.technology ? 'text-white' : 'text-danger'
-                }
+                className={addCertification.technology ? TextWhite : TextDanger}
               >
                 *
               </span>
@@ -387,18 +399,13 @@ function AddUpdateEmployeeCertification({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...{
-                ...dynamicFormLabelProps(
-                  'certificateType',
-                  'col-sm-3 col-form-label text-end',
-                ),
+                ...dynamicFormLabelProps('certificateType', formLabel),
               }}
             >
               CertificateType:{' '}
               <span
                 className={
-                  addCertification.certificateType
-                    ? 'text-white'
-                    : 'text-danger'
+                  addCertification.certificateType ? TextWhite : TextDanger
                 }
               >
                 *
@@ -430,16 +437,11 @@ function AddUpdateEmployeeCertification({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...{
-                ...dynamicFormLabelProps(
-                  'certification',
-                  'col-sm-3 col-form-label text-end',
-                ),
+                ...dynamicFormLabelProps('certification', formLabel),
               }}
             >
               Certification:
-              <span
-                className={addCertification.name ? 'text-white' : 'text-danger'}
-              >
+              <span className={addCertification.name ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -458,16 +460,11 @@ function AddUpdateEmployeeCertification({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...{
-                ...dynamicFormLabelProps(
-                  'registrationNumber',
-                  'col-sm-3 col-form-label text-end',
-                ),
+                ...dynamicFormLabelProps('registrationNumber', formLabel),
               }}
             >
               Registration No:
-              <span
-                className={addCertification.code ? 'text-white' : 'text-danger'}
-              >
+              <span className={addCertification.code ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -483,14 +480,14 @@ function AddUpdateEmployeeCertification({
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4" data-testid="completedDateInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Completed Date:
               <span
                 className={
                   addCertification?.completedDate || completedDate
-                    ? 'text-white'
-                    : 'text-danger'
+                    ? TextWhite
+                    : TextDanger
                 }
               >
                 *
@@ -503,13 +500,11 @@ function AddUpdateEmployeeCertification({
                 maxDate={new Date()}
                 value={
                   (completedDate as string) ||
-                  (addCertification?.completedDate as string)
+                  dateFormmatted(addCertification?.completedDate as string)
                 }
                 selected={
-                  !completedDateFlag
-                    ? addCertification.completedDate
-                      ? newCompletedDate
-                      : (completedDate as Date)
+                  !completedDateFlag && addCertification.completedDate
+                    ? newCompletedDate
                     : (completedDate as Date)
                 }
                 onChange={onChangeDateOfCompletionHandler}
@@ -518,12 +513,12 @@ function AddUpdateEmployeeCertification({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-                dateFormat="dd/MM/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4" data-testid="expiryDateInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Expiry Date :
             </CFormLabel>
@@ -533,13 +528,11 @@ function AddUpdateEmployeeCertification({
                 name="expiryDate"
                 value={
                   (expiryDate as string) ||
-                  (addCertification?.expiryDate as string)
+                  dateFormmatted(addCertification?.expiryDate as string)
                 }
                 selected={
-                  !expiryDateFlag
-                    ? addCertification.expiryDate
-                      ? newExpiryDate
-                      : (expiryDate as Date)
+                  !expiryDateFlag && addCertification.expiryDate
+                    ? newExpiryDate
                     : (expiryDate as Date)
                 }
                 onChange={onChangeDateOfExpireHandler}
@@ -548,18 +541,13 @@ function AddUpdateEmployeeCertification({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-                dateFormat="dd/MM/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...dynamicFormLabelProps(
-                'percentage',
-                'col-sm-3 col-form-label text-end',
-              )}
-            >
+            <CFormLabel {...dynamicFormLabelProps('percentage', formLabel)}>
               Percentage:
             </CFormLabel>
             <CCol sm={3}>

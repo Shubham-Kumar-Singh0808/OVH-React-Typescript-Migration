@@ -1,0 +1,56 @@
+ul{
+    counter-reset: hb_list;
+}
+
+.handbook-item{
+    padding-top: 12px;
+    padding-left: 0px;
+    padding-right: 0px;
+    height: 70px;
+    font-size: 18px;
+    color: $handbook-item;
+    border: 0px;
+    border-bottom: 1px solid $handbook-item-border;
+    margin-left: 48px;
+    margin-right: 60px;
+
+    &:before{
+        counter-increment: hb_list;
+        font-weight: bold;
+        font-size: 28px;
+        color: $handbook-bullet;
+        margin-right: 47px;
+        padding-top: 20px;
+        content: counter(hb_list, decimal-leading-zero);
+    }
+
+    &:hover{
+    background-color: $off-white;
+    transition-duration: 0.15s, 0.15s
+    }
+}
+
+a {
+    text-decoration: none;
+    color: $gray-900;
+    outline: 0;
+    cursor: pointer;
+}
+
+.hb_button{
+    color: $white;
+    margin-right: 0px;
+    margin-left: -8px;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+.handbook-search{
+    width: 50%;
+    margin-left: 44px;
+}
+
+.input-handbook{
+    border-bottom-left-radius: 2% !important    ;
+    border-top-left-radius: 2% !important;
+}

@@ -7,6 +7,7 @@
 // scss-docs-start gray-color-variables
 // $white:     #fff !default;
 // $gray-base: #3c4b64 !default;
+$white: rgb(255, 255, 255);
 $gray-100: #f9f9f9 !default;
 $gray-200: #d8dbe0 !default;
 // $gray-300:  #c4c9d0 !default;
@@ -18,6 +19,9 @@ $gray-400: #b1b7c1 !default;
 $gray-900: #404040 !default;
 // $black:     #000015 !default;
 $black:     black !default;
+$off-white: rgb(231, 231, 231);
+$handbook-item: #33343D;
+$handbook-item-border: #E7E8F2; 
 // scss-docs-end gray-color-variables
 
 // fusv-disable
@@ -52,6 +56,7 @@ $blue-btnHover: #24ace5;
 $blue-btnHoverBorder: #1ba9e4;
 $blue-employeeList: #428bca;
 $dark-blue: blue;
+$handbook-bullet:  #043D86;
 // $indigo:  #6610f2 !default;
 // $purple:  #6f42c1 !default;
 // $pink:    #d63384 !default;

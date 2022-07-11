@@ -1,4 +1,5 @@
 /* eslint-disable sonarjs/cognitive-complexity */
+// todo: remove eslint and fix all errors
 import {
   CButton,
   CCardBody,
@@ -21,6 +22,10 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
+import {
+  reformatDate,
+  dateFormatPerLocale,
+} from '../../../utils/dateFormatUtils'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 
 function AddEditVisaDetails({
@@ -41,6 +46,7 @@ function AddEditVisaDetails({
   const [error, setError] = useState<boolean>(false)
   const [inValidImage, setInvalidImage] = useState<boolean>(false)
   const [clearVisaType, setClearVisaType] = useState<boolean>(false)
+  const [dateFormat, setDateFormat] = useState<string>('')
 
   const [dateOfIssueFlag, setDateOfIssueFlag] = useState<boolean>(false)
   const [dateOfExpiryFlag, setDateOfExpiryFlag] = useState<boolean>(false)
@@ -59,31 +65,41 @@ function AddEditVisaDetails({
   )
 
   const dispatch = useAppDispatch()
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
 
-  const commonFormatDate = 'DD/MM/YYYY'
-  const currentDateOfIssue = employeeVisaDetails.dateOfIssue as string
-  const dateIssueParts: string[] | string = employeeVisaDetails.dateOfIssue
-    ? currentDateOfIssue.split('/')
-    : ''
-  const newDateOfIssue = employeeVisaDetails.dateOfIssue
-    ? new Date(
-        Number(dateIssueParts[2]),
-        Number(dateIssueParts[1]) - 1,
-        Number(dateIssueParts[0]),
-      )
-    : new Date()
+  useEffect(() => {
+    const localeDateFormat = dateFormatPerLocale.filter(
+      (lang) => lang.label === navigator.languages[0],
+    )
+    setDateFormat(localeDateFormat[0].format)
+  }, [])
 
-  const currentDateOfExpiry = employeeVisaDetails.dateOfExpire as string
-  const dateExpiryPart: string[] | string = employeeVisaDetails.dateOfExpire
-    ? currentDateOfExpiry.split('/')
-    : ''
-  const newDateOfExpiry = employeeVisaDetails.dateOfExpire
-    ? new Date(
-        Number(dateExpiryPart[2]),
-        Number(dateExpiryPart[1]) - 1,
-        Number(dateExpiryPart[0]),
-      )
-    : new Date()
+  const dateFormmatted = (date: string) => {
+    if (date) {
+      const tempDateFormat = reformatDate(date as string)
+      return tempDateFormat.toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    } else {
+      return ''
+    }
+  }
+
+  let newDateOfIssue = new Date()
+  let newDateOfExpiry = new Date()
+  if (employeeVisaDetails.dateOfIssue) {
+    const currentDateOfIssue = employeeVisaDetails.dateOfIssue as string
+    newDateOfIssue = reformatDate(currentDateOfIssue)
+  }
+  if (employeeVisaDetails.dateOfExpire) {
+    const currentDateOfExpiry = employeeVisaDetails.dateOfExpire as string
+    newDateOfExpiry = reformatDate(currentDateOfExpiry)
+  }
 
   useEffect(() => {
     dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
@@ -129,6 +145,8 @@ function AddEditVisaDetails({
       setEmployeeVisaDetails(getEditVisaDetails)
     }
   }, [isEditVisaDetails, getEditVisaDetails])
+
+  const commonFormatDate = 'DD/MM/YYYY' //format saved in DB
 
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -428,14 +446,14 @@ function AddEditVisaDetails({
                 *
               </span>
             </CFormLabel>
-            <CCol sm={3}>
+            <CCol sm={3} data-testid="dateOfIssuedInput">
               <DatePicker
                 className="form-control"
                 name="dateOfIssue"
                 maxDate={new Date()}
                 value={
                   (dateOfIssue as string) ||
-                  (employeeVisaDetails?.dateOfIssue as string)
+                  dateFormmatted(employeeVisaDetails.dateOfIssue as string)
                 }
                 selected={
                   !dateOfIssueFlag && employeeVisaDetails.dateOfIssue
@@ -448,11 +466,12 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4" data-testid="dateOfExiryInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Expire :
               <span
@@ -471,7 +490,7 @@ function AddEditVisaDetails({
                 name="dateOfExpire"
                 value={
                   (dateOfExpire as string) ||
-                  (employeeVisaDetails?.dateOfExpire as string)
+                  dateFormmatted(employeeVisaDetails?.dateOfExpire as string)
                 }
                 selected={
                   !dateOfExpiryFlag && employeeVisaDetails?.dateOfExpire
@@ -484,7 +503,8 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
               />
               {error && (
                 <p className="text-danger">
