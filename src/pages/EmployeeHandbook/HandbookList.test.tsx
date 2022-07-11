@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom'
-
 import React from 'react'
 import HandbookList from './HandbookList'
-import { render, screen, waitFor } from '../../test/testUtils'
+import { render, screen } from '../../test/testUtils'
 import { mockHandbookList } from '../../test/data/handbookListData'
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
