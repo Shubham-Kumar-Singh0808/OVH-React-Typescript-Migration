@@ -3,6 +3,7 @@ import React from 'react'
 import EmployeeProjectsEntry from './EmployeeProjectsEntry'
 import { render, screen } from '../../../test/testUtils'
 import { mockEmployeeProjectEntry } from '../../../test/data/employeeProjectsData'
+import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const getProjectHealth = () => {
   return screen.queryByTestId('project-health')
@@ -32,13 +33,13 @@ describe('Employee Projects Testing', () => {
   })
   test('should show the correct project start date', () => {
     const projectStartDate = screen.getByRole('cell', {
-      name: mockEmployeeProjectEntry.startdate as string,
+      name: localeDateFormat(mockEmployeeProjectEntry.startdate as string),
     })
     expect(projectStartDate).toBeTruthy()
   })
   test('should show the correct project end date', () => {
     const projectEndDate = screen.getByRole('cell', {
-      name: mockEmployeeProjectEntry.enddate as string,
+      name: localeDateFormat(mockEmployeeProjectEntry.enddate as string),
     })
     expect(projectEndDate).toBeTruthy()
   })
