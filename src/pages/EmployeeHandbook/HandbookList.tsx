@@ -2,16 +2,6 @@ import { CListGroup, CListGroupItem } from '@coreui/react-pro'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { HandbooksListProps } from '../../types/EmployeeHandbook/employeeHandbookTypes'
-// const handbook_data = [
-//   ' Training and Development',
-//   ' Performance Iporvement Process',
-//   ' Awards',
-//   ' Help Desk',
-//   ' Joining Formailities',
-//   ' Information for New Joinee',
-//   ' Service Award Felicitation',
-//   ' Roles and Responsibilities',
-// ]
 
 const HandbookList = ({
   handbooks,
