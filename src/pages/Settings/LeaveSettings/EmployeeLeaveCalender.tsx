@@ -94,7 +94,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
   }
 
   const validateMaximumAccrualValue = (maxAccrualPerYear: string) => {
-    if (maxAccrualPerYear.length < 3) {
+    if (maxAccrualPerYear.length < 4) {
       setMaximumAccrualValueError(false)
     } else {
       setMaximumAccrualValueError(true)
@@ -103,7 +103,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
   }
 
   const validateNumberOfLeavesValue = (leavesPerYear: string) => {
-    if (leavesPerYear.length < 3) {
+    if (leavesPerYear.length < 4) {
       setNumberOfLeavesValueError(false)
     } else {
       setNumberOfLeavesValueError(true)
