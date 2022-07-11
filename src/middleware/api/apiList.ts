@@ -30,6 +30,8 @@ import {
   EmployeeReportApi,
   EmployeeDesignationReportApi,
   VisaListApi,
+  EmployeeHandbook,
+  DisplayHandbook,
   TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
 } from '../../types/apiTypes'
@@ -231,6 +233,14 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
+}
+
+export const employeeHandbook: EmployeeHandbook = {
+  getHandbooks: apiPrefix + '/handbookItem/getHandbookNamesCountryWise',
+}
+
+export const dispHandbook: DisplayHandbook = {
+  dispHandbook: apiPrefix + '/handbookItem/get',
 }
 
 export const employeeAttendanceReportApiConfig: EmployeeAttendanceReportApi = {

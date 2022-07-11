@@ -1,4 +1,7 @@
-import { MockEmployeeHandbook } from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
+import {
+  EmployeeCountry,
+  MockEmployeeHandbook,
+} from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
   {
@@ -83,5 +86,28 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       },
     ],
     empCountry: 'INDIA',
+  },
+]
+
+export const mockCountries: EmployeeCountry[] = [
+  {
+    id: 1,
+    name: 'AUSTRALIA',
+  },
+  {
+    id: 2,
+    name: 'INDIA',
+  },
+  {
+    id: 3,
+    name: 'USA',
+  },
+  {
+    id: 4,
+    name: 'CANADA',
+  },
+  {
+    id: 5,
+    name: 'PHILIPPINES',
   },
 ]

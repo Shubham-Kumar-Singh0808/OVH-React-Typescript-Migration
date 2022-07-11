@@ -222,6 +222,7 @@ function AddNewHandbook({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                data-testid="title-input"
                 type="text"
                 name="title"
                 value={addNewPage.title}
@@ -242,6 +243,7 @@ function AddNewHandbook({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                data-testid="pagename-input"
                 type="text"
                 name="pageName"
                 value={addNewPage.pageName}
@@ -264,6 +266,7 @@ function AddNewHandbook({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                data-testid="displayOrder-input"
                 type="text"
                 maxLength={2}
                 min={1}
@@ -294,6 +297,7 @@ function AddNewHandbook({
               <CRow>
                 <CCol sm={3}>
                   <CFormCheck
+                    data-testid="all-input"
                     id="all"
                     name="all"
                     label="All"
@@ -307,6 +311,7 @@ function AddNewHandbook({
                   return (
                     <CCol sm={3} key={index} className="me-4">
                       <CFormCheck
+                        data-testId="ch-countries"
                         className="mt-1"
                         id="trigger"
                         label={country.name}
@@ -328,7 +333,7 @@ function AddNewHandbook({
               </span>
             </CFormLabel>
             {showEditor ? (
-              <CCol sm={9}>
+              <CCol sm={9} data-testId="description-input">
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
@@ -352,6 +357,7 @@ function AddNewHandbook({
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
+                data-testId="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
                 disabled={
@@ -364,6 +370,7 @@ function AddNewHandbook({
                 {confirmButtonText}
               </CButton>
               <CButton
+                data-testId="clear-btn"
                 color="warning "
                 className="btn-ovh text-white"
                 onClick={handleClearInputs}

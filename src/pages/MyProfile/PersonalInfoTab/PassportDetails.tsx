@@ -1,3 +1,4 @@
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import {
   CCardHeader,
   CCardBody,
@@ -8,7 +9,10 @@ import {
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import {
+  reformatDate,
+  dateFormatPerLocale,
+} from '../../../utils/dateFormatUtils'
 import {
   EmployeeGeneralInformation,
   EmployeePassportDetails,
@@ -28,7 +32,13 @@ export const PassportDetails = (props: {
     isPassportPlaceOfIssueButtonEnabled,
     setIsPassportPlaceOfIssueButtonEnabled,
   ] = useState<boolean>(false)
+  const [dateFormat, setDateFormat] = useState<string>('')
   const [isDateSelected, setIsDateSelected] = useState<boolean>(false)
+  const [passportIssuedDate, setPassportIssuedDate] = useState<Date | string>()
+  const [passportExpDate, setPassportExpDate] = useState<Date | string>()
+  const [passportIssuedDateFlag, setPassportIssuedDateFlag] =
+    useState<boolean>(false)
+  const [passportExpDatFlag, setPassportExpDatFlag] = useState<boolean>(false)
 
   const selectedUserPassportDetails = {
     passportNumber: props.employeeDetails?.passportNumber,
@@ -46,6 +56,44 @@ export const PassportDetails = (props: {
   const [frontUpload, setFrontUpload] = useState<File | null>(null)
   const [backUpload, setBackUpload] = useState<File | null>(null)
 
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
+
+  useEffect(() => {
+    const localeDateFormat = dateFormatPerLocale.filter(
+      (lang) => lang.label === navigator.languages[0],
+    )
+    setDateFormat(localeDateFormat[0].format)
+  }, [])
+
+  const dateFormmatted = (date: string) => {
+    if (date) {
+      const tempDateFormat = reformatDate(date as string)
+      return tempDateFormat.toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    } else {
+      return ''
+    }
+  }
+
+  let newPassportIssuedDate = new Date()
+  let newPassportExpDate = new Date()
+  if (employeePassportDetails.passportIssuedDate) {
+    const currentIssueDate =
+      employeePassportDetails.passportIssuedDate as string
+    newPassportIssuedDate = reformatDate(currentIssueDate)
+  }
+  if (employeePassportDetails.passportExpDate) {
+    const currentDateOfExpiry =
+      employeePassportDetails.passportExpDate as string
+    newPassportExpDate = reformatDate(currentDateOfExpiry)
+  }
+
   const onChangePassportInformationHandler = (
     changedValue:
       | React.ChangeEvent<HTMLSelectElement>
@@ -58,6 +106,7 @@ export const PassportDetails = (props: {
     if (props.handlePassportChange)
       props.handlePassportChange(employeePassportDetails, null, null)
   }
+
   const onDateChangeHandler = (date: Date, changedValue: { name: string }) => {
     if (employeePassportDetails) {
       const formatDate = moment(date).format('DD/MM/YYYY')
@@ -65,6 +114,14 @@ export const PassportDetails = (props: {
       setEmployeePassportDetails((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
+      if (name === 'passportIssuedDate') {
+        setPassportIssuedDate(date)
+        setPassportIssuedDateFlag(true)
+      }
+      if (name === 'passportExpDate') {
+        setPassportExpDate(date)
+        setPassportExpDatFlag(true)
+      }
       if (props.handlePassportChange)
         props.handlePassportChange(employeePassportDetails, null, null)
     }
@@ -179,10 +236,19 @@ export const PassportDetails = (props: {
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              placeholderText="dd/mm/yyyy"
+              placeholderText={dateFormat}
+              dateFormat={dateFormat}
               name="passportIssuedDate"
               disabled={!isPassportPlaceOfIssueButtonEnabled}
-              value={employeePassportDetails.passportIssuedDate}
+              value={dateFormmatted(
+                employeePassportDetails.passportIssuedDate as string,
+              )}
+              selected={
+                !passportIssuedDateFlag &&
+                employeePassportDetails?.passportIssuedDate
+                  ? newPassportIssuedDate
+                  : (passportIssuedDate as Date)
+              }
               onChange={(date: Date) =>
                 onDateChangeHandler(date, {
                   name: 'passportIssuedDate',
@@ -205,10 +271,18 @@ export const PassportDetails = (props: {
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              placeholderText="dd/mm/yyyy"
+              placeholderText={dateFormat}
+              dateFormat={dateFormat}
               name="passportExpDate"
+              selected={
+                !passportExpDatFlag && employeePassportDetails?.passportExpDate
+                  ? newPassportExpDate
+                  : (passportExpDate as Date)
+              }
               disabled={!isPassportPlaceOfIssueButtonEnabled}
-              value={employeePassportDetails.passportExpDate}
+              value={dateFormmatted(
+                employeePassportDetails.passportExpDate as string,
+              )}
               onChange={(date: Date) =>
                 onDateChangeHandler(date, { name: 'passportExpDate' })
               }
