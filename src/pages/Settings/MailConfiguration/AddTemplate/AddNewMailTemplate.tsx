@@ -291,6 +291,7 @@ function AddNewMailTemplate(): JSX.Element {
             </CFormLabel>
             <CCol sm={4}>
               <CFormInput
+                data-testid="title-input"
                 type="text"
                 name="templateName"
                 value={addNewTemplate?.templateName}

@@ -1,22 +1,16 @@
+import React from 'react'
 import '@testing-library/jest-dom'
-import {
-  fireEvent,
-  queryByTestId,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 // eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import userEvent from '@testing-library/user-event'
 import AddNewMailTemplate from './AddNewMailTemplate'
-import stateStore from '../../../../stateStore'
 import { mockTemplateTypes } from '../../../../test/data/addMailTemplateData'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import stateStore from '../../../../stateStore'
 
 const ReduxProvider = ({
   children,
@@ -26,36 +20,33 @@ const ReduxProvider = ({
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
 
-const expectComponentToBeRendered = () => {
-  expect(screen.queryByText('Type:')).toBeInTheDocument()
-  expect(screen.queryByText('Title:')).toBeInTheDocument()
-  expect(screen.queryByText('Template:')).toBeInTheDocument()
-  expect(screen.getByTestId('btn-save')).toBeDisabled()
-  expect(screen.getByTestId('btn-clear')).toBeEnabled()
-}
-
 describe('Add Template Component Testing', () => {
-  test('should render Add Mail Template Component without crashing', () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
-    expect(screen.getByText('Add Template')).toBeInTheDocument()
+  describe('without data', () => {
+    beforeEach(() => {
+      render(<AddNewMailTemplate />)
+    })
+    test('should render "AddTemplate" title', () => {
+      const mailTemplateTitle = screen.getByRole('heading', {
+        name: 'Add Template',
+      })
+      expect(mailTemplateTitle).toBeTruthy()
+    })
+    test('should render Template Type dropdown', () => {
+      const templateType = screen.queryByTestId('form-select-type')
+      expect(templateType).toBeTruthy()
+    })
+    test('should render title input', () => {
+      const title = screen.findByTestId('title-input')
+      expect(title).toBeTruthy()
+    })
+    test('should render Template richtext editor', () => {
+      const templateDescription = screen.findByTestId('ckEditor-component')
+      expect(templateDescription).toBeTruthy()
+    })
   })
 
-  it('should fetch asset types dropdown data and email input field', async () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
+  it('should fetch asset types dropdown data and email input field', () => {
+    render(<AddNewMailTemplate />)
     screen.debug()
     mockTemplateTypes.forEach(async (type) => {
       await waitFor(() => {
@@ -68,82 +59,63 @@ describe('Add Template Component Testing', () => {
     })
   })
   it('should render Add button as enabled and Clear Button as disabled', () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
+    render(<AddNewMailTemplate />)
     expect(screen.getByTestId('btn-save')).toBeDisabled()
     expect(screen.getByTestId('btn-clear')).toBeEnabled()
   })
 
-  it('should fetch template types dropdown data', () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
-    screen.debug()
-    mockTemplateTypes.forEach(async (type) => {
-      await waitFor(() => {
-        expect(screen.queryAllByText(type.name)).toBeDefined()
-      })
+  test('render email input', () => {
+    render(<AddNewMailTemplate />, {
+      preloadedState: {
+        employeeMailConfiguration: {
+          employeeGetMailTemplateTypes: mockTemplateTypes,
+        },
+      },
+    })
+    userEvent.selectOptions(screen.getByTestId('form-select-type'), '11')
+    const inputEl = screen.getByTestId('email-address')
+    expect(inputEl).toBeInTheDocument()
+    expect(inputEl).toHaveAttribute('type', 'email')
+  })
+  test('pass valid email to test email input field', async () => {
+    render(<AddNewMailTemplate />, {
+      preloadedState: {
+        employeeMailConfiguration: {
+          employeeGetMailTemplateTypes: mockTemplateTypes,
+        },
+      },
+    })
+    userEvent.selectOptions(screen.getByTestId('form-select-type'), '11')
+    const inputEl = screen.getByTestId('email-address')
+    userEvent.type(inputEl, 'test@mail.com')
+    await waitFor(() => {
+      expect(screen.getByTestId('email-address')).toHaveValue('test@mail.com')
+      expect(screen.queryByTestId('error-msg')).not.toBeInTheDocument()
     })
   })
 
-  test('render email input', () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
-    const inputEl = screen.queryByTestId('email-address')
-    expect(inputEl).toBeDefined()
-  })
+  test('pass invalid email to test input value', async () => {
+    render(<AddNewMailTemplate />, {
+      preloadedState: {
+        employeeMailConfiguration: {
+          employeeGetMailTemplateTypes: mockTemplateTypes,
+        },
+      },
+    })
+    userEvent.selectOptions(screen.getByTestId('form-select-type'), '11')
 
-  test('pass valid email to test email input field', () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
-    expect(screen.queryByTestId('error-msg')).not.toBeInTheDocument()
+    const inputEl = screen.getByTestId('email-address')
+    userEvent.type(inputEl, 'test')
+    await waitFor(() => {
+      expect(screen.getByTestId('email-address')).toHaveValue('test')
+      expect(screen.queryByTestId('error-msg')).toBeInTheDocument()
+      expect(screen.queryByTestId('error-msg')?.textContent).toEqual(
+        'Enter a valid Email address.For multiple mail ids use,without space!!',
+      )
+    })
   })
-
-  test('pass invalid email to test input value', () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
-    screen.debug()
-    expect(screen.queryByTestId('error-msg')).not.toBeTruthy()
-  })
-
   test('should clear input and disable button after submitting ', async () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
+    render(<AddNewMailTemplate />)
     userEvent.type(screen.getByRole('combobox'), '')
     await waitFor(() => {
       userEvent.click(screen.getByRole('button', { name: /clear/i }))
@@ -151,14 +123,7 @@ describe('Add Template Component Testing', () => {
     })
   })
   test('renders the <CKEditor> component ', () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
+    render(<AddNewMailTemplate />)
     const htmlElement = document.querySelector(
       '[data-testid="ckEditor-component"]',
     )
@@ -168,42 +133,12 @@ describe('Add Template Component Testing', () => {
     expect(nonExistantElement).not.toBeInTheDocument()
   })
   test('should fetch Asset types data and put it in the store', async () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
+    render(<AddNewMailTemplate />)
     await stateStore.dispatch(reduxServices.addNewMailTemplate.getAssetTypes())
   })
-  test('should redirect to /mailTemplates when user clicks on Back Button', async () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
-    userEvent.click(screen.getByRole('button', { name: /Back/i }))
-    await waitFor(() => {
-      // check if a redirect happens after clicking Back button to Email Templates Page
-      expect(history.location.pathname).toBe('/mailTemplates')
-    })
-  })
-  test('should enabled add button when input is not empty', () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
-    expectComponentToBeRendered()
 
+  test('should enabled add button when input is not empty', () => {
+    render(<AddNewMailTemplate />)
     userEvent.type(screen.getByRole('textbox'), 'testing')
     expect(screen.getByTestId('btn-clear')).not.toBeDisabled()
 
@@ -211,16 +146,7 @@ describe('Add Template Component Testing', () => {
     expect(screen.getByTestId('btn-save')).toBeDisabled()
   })
   test('should clear input and disable button after submitting and new template should be added', async () => {
-    const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewMailTemplate />
-        </ReduxProvider>
-      </Router>,
-    )
-
-    expectComponentToBeRendered()
+    render(<AddNewMailTemplate />)
 
     userEvent.type(screen.getByRole('textbox'), 'testing')
     await waitFor(() => {
@@ -228,6 +154,37 @@ describe('Add Template Component Testing', () => {
 
       expect(screen.getByRole('textbox')).toHaveValue('')
       expect(screen.getByTestId('btn-save')).toBeDisabled()
+    })
+  })
+  test('should render template types dropdown without crashing..', async () => {
+    render(<AddNewMailTemplate />, {
+      preloadedState: {
+        employeeMailConfiguration: {
+          employeeGetMailTemplateTypes: mockTemplateTypes,
+        },
+      },
+    })
+    await waitFor(() => {
+      userEvent.selectOptions(screen.getByTestId('form-select-type'), '33')
+      expect(screen.getByTestId('title-input')).toBeInTheDocument()
+    })
+  })
+
+  describe('Page redirection', () => {
+    test('should redirect to /mailTemplates when user clicks on Back Button', async () => {
+      const history = createMemoryHistory()
+      render(
+        <Router history={history}>
+          <ReduxProvider reduxStore={stateStore}>
+            <AddNewMailTemplate />
+          </ReduxProvider>
+        </Router>,
+      )
+      userEvent.click(screen.getByRole('button', { name: /Back/i }))
+      await waitFor(() => {
+        // check if a redirect happens after clicking Back button to Email Templates Page
+        expect(history.location.pathname).toBe('/mailTemplates')
+      })
     })
   })
 })

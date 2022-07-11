@@ -2,10 +2,6 @@ import { EmployeeGetMailTemplateTypes } from '../../types/Settings/MailConfigura
 
 export const mockTemplateTypes: EmployeeGetMailTemplateTypes[] = [
   {
-    id: 2,
-    name: 'jk ,k',
-  },
-  {
     id: 3,
     name: 'Project Management',
   },
@@ -63,10 +59,6 @@ export const mockTemplateTypes: EmployeeGetMailTemplateTypes[] = [
   },
   {
     id: 30,
-    name: 'test',
-  },
-  {
-    id: 31,
     name: 'test',
   },
   {
