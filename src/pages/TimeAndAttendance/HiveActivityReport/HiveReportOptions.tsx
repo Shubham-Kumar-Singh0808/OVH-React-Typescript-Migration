@@ -36,6 +36,9 @@ const HiveReportOptions = ({
   const currentMonthDate = moment().subtract(1, 'months').format('M/YYYY')
   const previousMonthDate = moment().subtract(2, 'months').format('M/YYYY')
 
+  const employeeRole = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeRole,
+  )
   const selectedDate = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.selectedDate,
   )
@@ -133,28 +136,32 @@ const HiveReportOptions = ({
                 onChange={handleSelectMonthRadio}
               />
             </div>
-            <div className="d-inline pull-right ml15">
-              <CFormCheck
-                type="radio"
-                name="viewOptions"
-                value="Me"
-                id="Me"
-                label="Me"
-                inline
-                defaultChecked={selectedView === 'Me'}
-                onChange={handleSelectView}
-              />
-              <CFormCheck
-                type="radio"
-                name="viewOptions"
-                value="All"
-                id="All"
-                label="All"
-                inline
-                defaultChecked={selectedView === 'All'}
-                onChange={handleSelectView}
-              />
-            </div>
+            {(employeeRole === 'admin' ||
+              employeeRole === 'HR' ||
+              employeeRole === 'HR Manager') && (
+              <div className="d-inline pull-right ml15">
+                <CFormCheck
+                  type="radio"
+                  name="viewOptions"
+                  value="Me"
+                  id="Me"
+                  label="Me"
+                  inline
+                  defaultChecked={selectedView === 'Me'}
+                  onChange={handleSelectView}
+                />
+                <CFormCheck
+                  type="radio"
+                  name="viewOptions"
+                  value="All"
+                  id="All"
+                  label="All"
+                  inline
+                  defaultChecked={selectedView === 'All'}
+                  onChange={handleSelectView}
+                />
+              </div>
+            )}
           </div>
         </CCol>
       </CRow>

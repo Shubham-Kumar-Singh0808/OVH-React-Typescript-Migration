@@ -11,7 +11,6 @@ import hiveActivityReportApi from '../../../middleware/api/TimeAndAttendance/Hiv
 
 const HiveActivityReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  // const [searchValue, setSearchValue] = useState<string>('')
   const [startDate, setStartDate] = useState<Date>()
   const [filterByDate, setFilterByDate] = useState<Date>()
 
