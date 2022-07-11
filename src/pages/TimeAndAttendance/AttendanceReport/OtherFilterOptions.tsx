@@ -1,6 +1,7 @@
 import { CButton, CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import DatePicker from 'react-datepicker'
+import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import {
   EmployeeStatus,
   OtherFilterOptionsProps,
@@ -41,9 +42,7 @@ const OtherFilterOptions = ({
         <CCol sm={3} md={1} className="text-end ms-3">
           <CFormLabel className="mt-2 text-decoration-none">
             Month:
-            <span className={selectSearchDate ? 'text-white' : 'text-danger'}>
-              *
-            </span>
+            <span className={selectSearchDate ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
         </CCol>
         <CCol sm={1} className="text-end pe-2 ms-3 sh-date-picker-column">

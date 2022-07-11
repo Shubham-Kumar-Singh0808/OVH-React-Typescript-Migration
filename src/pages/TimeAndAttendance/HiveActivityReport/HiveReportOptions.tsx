@@ -8,21 +8,26 @@ import {
   CInputGroup,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const HiveReportOptions = ({
-  setSearchValue,
   startDate,
   setStartDate,
   viewButtonHandler,
+  filterByDate,
+  handleExportHiveActivityReport,
+  handleSearchHiveActivityReport,
 }: {
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>
   startDate: Date | undefined
   setStartDate: React.Dispatch<React.SetStateAction<Date | undefined>>
   viewButtonHandler: () => void
+  filterByDate: Date | undefined
+  handleExportHiveActivityReport: () => void
+  handleSearchHiveActivityReport: (value: string) => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -39,8 +44,8 @@ const HiveReportOptions = ({
   )
 
   const dateToUse = useMemo(() => {
-    return startDate ? startDate : new Date()
-  }, [startDate])
+    return filterByDate ? filterByDate : new Date()
+  }, [filterByDate])
 
   const handleSelectMonthRadio = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -76,10 +81,17 @@ const HiveReportOptions = ({
     setStartDate(undefined)
   }
 
-  const searchButtonHandler = (e: React.SyntheticEvent) => {
-    e.preventDefault()
-    setSearchValue(searchInput)
+  const searchButtonHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearchHiveActivityReport(searchInput)
+    }
   }
+
+  useEffect(() => {
+    if (filterByDate || selectedView || selectedDate) {
+      setSearchInput('')
+    }
+  }, [filterByDate, selectedView, selectedDate])
 
   return (
     <>
@@ -153,7 +165,7 @@ const HiveReportOptions = ({
               color="info"
               className="text-white btn-ovh pull-right"
               size="sm"
-              // onClick={handleExportAttendance}
+              onClick={handleExportHiveActivityReport}
             >
               <i className="fa fa-plus me-1"></i>
               Click to Export Attendance
@@ -164,10 +176,10 @@ const HiveReportOptions = ({
       {isDatePickerVisible && (
         <>
           <CRow className="mt-2">
-            <CCol sm={3} md={1} className="text-end ms-3">
+            <CCol sm={3} md={1} className="text-end">
               <CFormLabel className="mt-2 text-decoration-none">
                 Month:
-                <span>*</span>
+                <span className={startDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
             <CCol sm={2} className="text-end pe-2 ms-3 sh-date-picker-column">
@@ -231,7 +243,7 @@ const HiveReportOptions = ({
                 onChange={(e) => {
                   setSearchInput(e.target.value)
                 }}
-                // onKeyDown={handleSearchButton}
+                onKeyDown={searchButtonHandler}
               />
               <CButton
                 disabled={false}
@@ -240,7 +252,9 @@ const HiveReportOptions = ({
                 type="button"
                 color="info"
                 id="button-addon2"
-                onClick={searchButtonHandler}
+                onClick={() => {
+                  handleSearchHiveActivityReport(searchInput)
+                }}
               >
                 <i className="fa fa-search"></i>
               </CButton>

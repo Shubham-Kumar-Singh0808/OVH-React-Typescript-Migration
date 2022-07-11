@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import moment from 'moment'
 import HiveReportOptions from './HiveReportOptions'
 import EmployeeHiveActivityReport from './EmployeeHiveActivityReport'
 import ManagerHiveActivityReport from './ManagerHiveActivityReport'
@@ -8,13 +7,17 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import hiveActivityReportApi from '../../../middleware/api/TimeAndAttendance/HiveActivityReport/hiveActivityReportApi'
 
 const HiveActivityReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [searchValue, setSearchValue] = useState<string>('')
+  // const [searchValue, setSearchValue] = useState<string>('')
   const [startDate, setStartDate] = useState<Date>()
-  const [isViewClicked, setIsViewClicked] = useState(false)
+  const [filterByDate, setFilterByDate] = useState<Date>()
 
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
   const selectedDate = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.selectedDate,
   )
@@ -36,12 +39,11 @@ const HiveActivityReport = (): JSX.Element => {
     pageSize,
   } = usePagination(listSize, 20)
 
-  useEffect(() => {
-    const dateToUse =
-      startDate && isViewClicked
-        ? moment(startDate).format('MM/yyyy')
-        : selectedDate
+  const dateToUse = filterByDate
+    ? filterByDate?.getMonth() + '/' + filterByDate.getFullYear()
+    : selectedDate
 
+  useEffect(() => {
     if (selectedView === 'Me') {
       dispatch(
         reduxServices.hiveActivityReport.getEmployeeHiveActivityReport({
@@ -62,13 +64,49 @@ const HiveActivityReport = (): JSX.Element => {
     selectedView,
     currentPage,
     pageSize,
-    searchValue,
-    isViewClicked,
+    filterByDate,
     dispatch,
   ])
 
+  const handleSearchHiveActivityReport = (searchValue: string) => {
+    dispatch(
+      reduxServices.hiveActivityReport.getSearchHiveActivityReport({
+        endIndex: pageSize * currentPage,
+        date: dateToUse,
+        loggedInEmployeeId: Number(employeeId),
+        searchText: searchValue,
+        startIndex: pageSize * (currentPage - 1),
+      }),
+    )
+  }
+
+  const downloadFile = (
+    excelDownload: Blob | undefined,
+    downloadFormat: string,
+  ) => {
+    if (excelDownload) {
+      const url = window.URL.createObjectURL(
+        new Blob([excelDownload], {
+          type: excelDownload.type,
+        }),
+      )
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', downloadFormat)
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    }
+  }
+
+  const handleExportHiveActivityReport = async () => {
+    const hiveActivityReportDownload =
+      await hiveActivityReportApi.exportHiveActivityReport(dateToUse)
+    downloadFile(hiveActivityReportDownload, 'HiveReport.csv')
+  }
+
   const viewButtonHandler = () => {
-    setIsViewClicked(true)
+    setFilterByDate(startDate)
   }
 
   return (
@@ -80,10 +118,12 @@ const HiveActivityReport = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <HiveReportOptions
-          setSearchValue={setSearchValue}
           startDate={startDate}
           setStartDate={setStartDate}
           viewButtonHandler={viewButtonHandler}
+          filterByDate={filterByDate}
+          handleExportHiveActivityReport={handleExportHiveActivityReport}
+          handleSearchHiveActivityReport={handleSearchHiveActivityReport}
         />
         {selectedView === 'Me' && isLoading === ApiLoadingState.succeeded && (
           <EmployeeHiveActivityReport />

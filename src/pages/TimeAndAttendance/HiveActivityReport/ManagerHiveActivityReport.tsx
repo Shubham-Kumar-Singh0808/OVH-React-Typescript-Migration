@@ -16,19 +16,14 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import {
-  ActivityTimes,
-  ManagerHiveActivityReportProps,
-} from '../../../types/TimeAndAttendance/HiveActivityReport/hiveActivityReportTypes'
+import { ManagerHiveActivityReportProps } from '../../../types/TimeAndAttendance/HiveActivityReport/hiveActivityReportTypes'
 
 const ManagerHiveActivityReport = (
   props: ManagerHiveActivityReportProps,
 ): JSX.Element => {
   const [hiveReportModalVisibility, setHiveReportModalVisibility] =
     useState<boolean>(false)
-  const [hiveActivityTimes, setHiveActivityTimes] = useState<ActivityTimes[]>(
-    [],
-  )
+
   const managerHiveActivityReport = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerHiveActivityReport,
   )
@@ -51,9 +46,8 @@ const ManagerHiveActivityReport = (
     setCurrentPage(1)
   }
 
-  const handleShowModal = (activityTimes: ActivityTimes[]) => {
+  const handleShowModal = () => {
     setHiveReportModalVisibility(true)
-    setHiveActivityTimes(activityTimes)
   }
 
   const tableHeaderCellPropsDays = {
@@ -122,7 +116,7 @@ const ManagerHiveActivityReport = (
                                 <CLink
                                   className="cursor-pointer sh-hive-activity-link"
                                   onClick={() => {
-                                    handleShowModal(sortedActivityTimes)
+                                    handleShowModal()
                                   }}
                                 >
                                   {value.hours}
