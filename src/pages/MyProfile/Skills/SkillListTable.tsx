@@ -127,18 +127,12 @@ const SkillListTable = (): JSX.Element => {
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <p>
-            <strong>Total Records: {skills.length}</strong>
-          </p>
+          <strong>
+            {skills?.length
+              ? `Total Records: ${skills.length}`
+              : `No Records Found`}
+          </strong>
         </CCol>
-
-        {!skills.length && (
-          <CCol>
-            <CRow className="category-no-data">
-              <h4 className="text-center">No data to display</h4>
-            </CRow>
-          </CCol>
-        )}
         <CCol xs={3}>
           {skills.length > 20 && (
             <OPageSizeSelect

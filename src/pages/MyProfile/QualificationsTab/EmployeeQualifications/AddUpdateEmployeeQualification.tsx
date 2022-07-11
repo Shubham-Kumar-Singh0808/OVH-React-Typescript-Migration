@@ -12,17 +12,18 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import Multiselect from 'multiselect-react-dropdown'
-import { useFormik } from 'formik'
+// eslint-disable-next-line import/named
+import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import {
   AddUpdateEmployeeQualificationProps,
   EmployeeQualification,
   PostGraduationAndGraduationLookUp,
 } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { OTextEditor } from '../../../../components/ReusableComponent/OTextEditor'
-import OToast from '../../../../components/ReusableComponent/OToast'
-import QualificationCategoryList from '../QualificationCategoryList/QualificationCategoryList'
-import { reduxServices } from '../../../../reducers/reduxServices'
 
 const AddUpdateEmployeeQualification = ({
   backButtonHandler,
@@ -35,6 +36,7 @@ const AddUpdateEmployeeQualification = ({
   )
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [toggle, setToggle] = useState('')
+  const [showEditor, setShowEditor] = useState<boolean>(true)
 
   const actionMapping = {
     added: 'added',
@@ -73,7 +75,9 @@ const AddUpdateEmployeeQualification = ({
       setIsButtonEnabled(false)
     }
   }, [addQualification])
+
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(
       reduxServices.employeeQualifications.getPgLookUpAndGraduationLookUpItems(),
@@ -86,17 +90,19 @@ const AddUpdateEmployeeQualification = ({
   }, [dispatch, employeeId])
 
   useEffect(() => {
+    if (getEmployeeQualificationDetails?.others) {
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+    }
+  }, [getEmployeeQualificationDetails])
+
+  useEffect(() => {
     if (isEmployeeQualificationExist) {
       setAddQualification(getEmployeeQualificationDetails)
     }
   }, [isEmployeeQualificationExist, getEmployeeQualificationDetails])
-
-  const formik = useFormik({
-    initialValues: { name: '', message: '' },
-    onSubmit: (values) => {
-      console.log('Logging in ', values)
-    },
-  })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -116,6 +122,7 @@ const AddUpdateEmployeeQualification = ({
       })
     }
   }
+
   const handleMultiSelect = (
     list: PostGraduationAndGraduationLookUp[],
     name: string,
@@ -131,6 +138,12 @@ const AddUpdateEmployeeQualification = ({
   ) => {
     setAddQualification((prevState) => {
       return { ...prevState, ...{ [name]: selectedList } }
+    })
+  }
+
+  const handleDescription = (others: string) => {
+    setAddQualification((prevState) => {
+      return { ...prevState, ...{ others } }
     })
   }
 
@@ -317,12 +330,22 @@ const AddUpdateEmployeeQualification = ({
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Other:
               </CFormLabel>
-              <CCol sm={8}>
-                <OTextEditor
-                  setFieldValue={(val) => formik.setFieldValue('', val)}
-                  value={addQualification.others}
-                />
-              </CCol>
+              {showEditor ? (
+                <CCol sm={8}>
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={addQualification?.others}
+                    config={ckeditorConfig}
+                    debug={true}
+                    onChange={({ editor }) => {
+                      handleDescription(editor.getData().trim())
+                    }}
+                  />
+                </CCol>
+              ) : (
+                ''
+              )}
             </CRow>
             {addQualification.id ? (
               <CRow>

@@ -103,6 +103,7 @@ export interface PersonalInfoApi extends ApiBase {
   deleteFamilyMember: string
   deleteVisaDetail: string
   fileUploadVisaImage: string
+  fileUploadPassportImage: string
 }
 
 export interface ProfileHistoryApi extends ApiBase {
@@ -130,6 +131,7 @@ export interface EmployeeDesignationListApi extends ApiBase {
   getEmployeeDesignations: string
   addEmployeeDesignation: string
   deleteEmployeeDesignation: string
+  getAllEmployeeDesignation: string
 }
 
 export interface ShiftConfigurationApi extends ApiBase {
@@ -138,6 +140,7 @@ export interface ShiftConfigurationApi extends ApiBase {
   updateShiftDetail: string
   deleteShiftDetail: string
 }
+
 export interface CertificateListApi extends ApiBase {
   getAllEmployeeCertificates: string
   exportCertificateList: string
@@ -168,9 +171,58 @@ export interface EmployeeReporteesApi extends ApiBase {
   exportReporteesList: string
 }
 
+export interface EmployeeReportApi extends ApiBase {
+  getEmployeeReports: string
+}
+
+export interface EmployeeDesignationReportApi extends ApiBase {
+  getAllDesignations: string
+  getEmployeeCategoryData: string
+  exportEmployeeCategoryData: string
+}
+
 export interface VisaListApi extends ApiBase {
   getVisaList: string
   getCountries: string
   getVisaTypes: string
   exportVisaList: string
+}
+
+export interface EmployeeAttendanceReportApi extends ApiBase {
+  getEmployeeAttendance: string
+  exportAttendance: string
+  exportBiometricAttendance: string
+}
+
+export interface UserAccessToFeaturesApi extends ApiBase {
+  getUserAccessToFeatures: string
+}
+
+export interface EmployeeHandbookSettingsApi extends ApiBase {
+  getEmployeeHandbooks: string
+  deleteEmployeeHandbook: string
+}
+
+export interface TimeInOfficeReportApi extends ApiBase {
+  getTimeInOfficeEmployeeReport: string
+  getTimeInOfficeManagerReport: string
+}
+
+export interface EmployeeLeaveSettingsApi extends ApiBase {
+  saveLeaveCalendarSettings: string
+  getLeaveCategories: string
+  getLeaveCalenderSettings: string
+  deleteLeaveCategory: string
+  addUpdateLeaveCategory: string
+}
+
+export interface AddNewEmployeeAPi extends ApiBase {
+  getEmployeeDepartments: string
+  getEmpCountries: string
+  getAllHrData: string
+  getAllReportingManagersData: string
+  addNewEmployee: string
+  getAllemploymentType: string
+  getAllJobType: string
+  getCheckIfUserExist: string
 }

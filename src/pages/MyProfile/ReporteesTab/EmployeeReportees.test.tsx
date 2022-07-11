@@ -63,7 +63,7 @@ describe('Employee Reportees Testing', () => {
       <EmployeeReportees />
     </ReduxProvider>,
   )
-  test('should render the "Project Report" header', () => {
+  test('should render the "Reportees" header', () => {
     const pageTitle = screen.getByRole('heading', { name: 'Manager Reportees' })
     expect(pageTitle).toBeTruthy()
   })

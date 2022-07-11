@@ -10,13 +10,14 @@
 $gray-100: #f9f9f9 !default;
 $gray-200: #d8dbe0 !default;
 // $gray-300:  #c4c9d0 !default;
-// $gray-400:  #b1b7c1 !default;
+$gray-400: #b1b7c1 !default;
 // $gray-500:  #9da5b1 !default;
 // $gray-600:  #8a93a2 !default;
 // $gray-700:  #768192 !default;
 // $gray-800:  #636f83 !default;
 $gray-900: #404040 !default;
 // $black:     #000015 !default;
+$black:     black !default;
 // scss-docs-end gray-color-variables
 
 // fusv-disable
@@ -50,10 +51,13 @@ $blue-btnBorder: #2db0e6;
 $blue-btnHover: #24ace5;
 $blue-btnHoverBorder: #1ba9e4;
 $blue-employeeList: #428bca;
+$dark-blue: blue;
 // $indigo:  #6610f2 !default;
 // $purple:  #6f42c1 !default;
 // $pink:    #d63384 !default;
 $red: #e9573f !default;
+$red-fa-times: #d9534f;
+$orange-Holidays: #CC6600;
 // $orange:  #fd7e14 !default;
 // $yellow:  #ffc107 !default;
 // $green:   #198754 !default;
@@ -110,6 +114,7 @@ $info-base: #3f8bd1 !default;
 // $danger-dark:  #d93737 !default;
 $danger-base: #e9573f !default;
 $danger-error: red;
+$danger-pending: #d43f3a;
 // $danger-50:    #f2a9a9 !default;
 // $danger-25:    #f9d4d4 !default;
 
@@ -177,6 +182,7 @@ $danger-error: red;
 // $indigo-800: shade-color($indigo, 60%) !default;
 // $indigo-900: shade-color($indigo, 80%) !default;
 
+$purple-approved: #000099;
 // $purple-100: tint-color($purple, 80%) !default;
 // $purple-200: tint-color($purple, 60%) !default;
 // $purple-300: tint-color($purple, 40%) !default;
@@ -226,7 +232,7 @@ $danger-error: red;
 // $yellow-700: shade-color($yellow, 40%) !default;
 // $yellow-800: shade-color($yellow, 60%) !default;
 // $yellow-900: shade-color($yellow, 80%) !default;
-
+$green-success: #5cb85c;
 // $green-100: tint-color($green, 80%) !default;
 // $green-200: tint-color($green, 60%) !default;
 // $green-300: tint-color($green, 40%) !default;

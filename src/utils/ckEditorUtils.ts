@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-// Todo: remove eslint and fix all the errors
 export const ckeditorConfig = {
   toolbarGroups: [
     { name: 'styles', groups: ['styles'] },
@@ -23,7 +22,7 @@ export const ckeditorConfig = {
     { name: 'about', groups: ['about'] },
   ],
   format_tags: 'p;h1;h2;h3;h4;h5;h6;pre',
-  extraPlugins: 'justify, uploadimage',
+  extraPlugins: 'justify, uploadimage, tableresize',
   filebrowserUploadMethod: 'form',
   filebrowserUploadUrl: '/uploader/upload',
   removeButtons:

@@ -1,5 +1,6 @@
 import { CButton, CFormCheck } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import employeeListApi from '../../../middleware/api/EmployeeDirectory/EmployeesList/employeeListApi'
@@ -47,7 +48,7 @@ const ListOptions = (): JSX.Element => {
   }
 
   return (
-    <div className="pull-right mb-3">
+    <div className="mb-3 pull-right">
       <div className="d-inline">
         <CFormCheck
           type="radio"
@@ -86,6 +87,18 @@ const ListOptions = (): JSX.Element => {
         <CFormCheck
           type="radio"
           name="employmentStatus"
+          value={EmploymentStatus.resigned}
+          id="employmentUnderNotice"
+          label="Resigned"
+          defaultChecked={
+            selectedEmploymentStatus === EmploymentStatus.resigned
+          }
+          onChange={handleChangeSelectedEmploymentStatus}
+          inline
+        />
+        <CFormCheck
+          type="radio"
+          name="employmentStatus"
           value={EmploymentStatus.pip}
           id="employmentUnderNotice"
           label="PIP"
@@ -94,10 +107,10 @@ const ListOptions = (): JSX.Element => {
           inline
         />
       </div>
-      <div className="d-inline ml15">
+      <div className="d-inline ml15 pull-right">
         <CButton
           color="info"
-          className="text-white"
+          className="text-white btn-ovh"
           size="sm"
           onClick={handleExportEmployeeData}
         >
@@ -105,10 +118,12 @@ const ListOptions = (): JSX.Element => {
           Click to Export Employee List
         </CButton>
         &nbsp; &nbsp; &nbsp;
-        <CButton color="info" className="text-white" size="sm">
-          <i className="fa fa-plus me-1"></i>
-          Add Employee
-        </CButton>
+        <Link to="/addNewEmployee">
+          <CButton color="info" className="text-white" size="sm">
+            <i className="fa fa-plus me-1"></i>
+            Add Employee
+          </CButton>
+        </Link>
       </div>
     </div>
   )

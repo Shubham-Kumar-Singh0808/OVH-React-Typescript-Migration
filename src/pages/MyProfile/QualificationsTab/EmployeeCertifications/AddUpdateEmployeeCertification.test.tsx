@@ -43,6 +43,14 @@ describe('Add Certification Testing', () => {
       reduxServices.employeeCertifications.getEmployeeCertificates(),
     )
   })
+  test('should render completed date input', () => {
+    const completedDate = screen.findByTestId('completedDateInput')
+    expect(completedDate).toBeTruthy()
+  })
+  test('should render expiry date input', () => {
+    const expiryDate = screen.findByTestId('expiryDateInput')
+    expect(expiryDate).toBeTruthy()
+  })
   test('should render Add button as disabled and Clear Button not disabled initially', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>

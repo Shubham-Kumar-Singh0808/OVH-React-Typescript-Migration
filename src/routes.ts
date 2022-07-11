@@ -29,10 +29,43 @@ const CertificateTypeList = React.lazy(
 const EmployeeList = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/EmployeeList'),
 )
+const EmployeeReport = React.lazy(
+  () => import('./pages/EmployeeDirectory/EmployeeReport/EmployeeReport'),
+)
+const EmpDesignationReport = React.lazy(
+  () =>
+    import(
+      './pages/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/EmployeeDesignationReport'
+    ),
+)
 const VisaDetailsList = React.lazy(
   () => import('./pages/EmployeeDirectory/VisaList/VisaList'),
 )
+const AttendanceReport = React.lazy(
+  () => import('./pages/TimeAndAttendance/AttendanceReport/AttendanceReport'),
+)
+const EmployeeHandbookSettings = React.lazy(
+  () =>
+    import(
+      './pages/EmployeeHandbook/HandbookSettings/EmployeeHandbookSettings'
+    ),
+)
 
+const TimeInOfficeReport = React.lazy(
+  () =>
+    import('./pages/TimeAndAttendance/TimeInOfficeReport/TimeInOfficeReport'),
+)
+const LeaveSettings = React.lazy(
+  () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
+)
+
+const AddNewEmployee = React.lazy(
+  () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
+)
+
+const EditEmployee = React.lazy(
+  () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -57,6 +90,16 @@ const routes = [
   },
   { path: '/employeeList', name: 'Employee List', component: EmployeeList },
   {
+    path: '/empReport',
+    name: 'Employee Report',
+    component: EmployeeReport,
+  },
+  {
+    path: '/report2',
+    name: 'Employee Designation List Report',
+    component: EmpDesignationReport,
+  },
+  {
     path: '/employeeProfile/:employeeId',
     name: 'Employee Profile',
     component: MyProfile,
@@ -65,6 +108,36 @@ const routes = [
     path: '/visaDetailsList',
     name: 'Visa Details',
     component: VisaDetailsList,
+  },
+  {
+    path: '/attendancesummary',
+    name: 'Attendance Summary',
+    component: AttendanceReport,
+  },
+  {
+    path: '/handbooksettings',
+    name: 'Handbook Settings',
+    component: EmployeeHandbookSettings,
+  },
+  {
+    path: '/timeInOfficeReport',
+    name: 'Time in Office Report',
+    component: TimeInOfficeReport,
+  },
+  {
+    path: '/leaveSettings',
+    name: 'Leave Settings',
+    component: LeaveSettings,
+  },
+  {
+    path: '/addNewEmployee',
+    name: 'Add New Employee',
+    component: AddNewEmployee,
+  },
+  {
+    path: '/editEmployee/:employeeId',
+    name: 'Edit Employee',
+    component: EditEmployee,
   },
 ]
 

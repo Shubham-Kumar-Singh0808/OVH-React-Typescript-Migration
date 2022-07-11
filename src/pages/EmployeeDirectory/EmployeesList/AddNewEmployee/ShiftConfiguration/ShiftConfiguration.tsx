@@ -1,7 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable complexity */
-// Todo: remove all eslint and fix errors
 import {
   CButton,
   CCol,
@@ -12,14 +8,20 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import ShiftListTable from './ShiftListTable'
+import {
+  EmployeeShiftDetails,
+  ToggleShiftProp,
+} from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { ActionMapping } from '../../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
-import { EmployeeShiftDetails } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import OCard from '../../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
+import { TextDanger, TextWhite } from '../../../../../constant/ClassName'
 
-const ShiftConfiguration = (): JSX.Element => {
+const ShiftConfiguration = ({
+  setToggleShift,
+}: ToggleShiftProp): JSX.Element => {
   const employeeShifts = useTypedSelector(
     reduxServices.shiftConfiguration.selectors.employeeShifts,
   )
@@ -44,14 +46,14 @@ const ShiftConfiguration = (): JSX.Element => {
         return { ...prevState, ...{ [name]: shiftName } }
       })
     } else {
-      const newValue = value.replace(/[^0-9]/gi, '')
+      const newValue = value.replace(/\D/gi, '')
       setEmployeeShiftDetails((prevState) => {
         return { ...prevState, ...{ [name]: newValue } }
       })
     }
   }
 
-  const hoursAndMinutesValidation = () => {
+  const minutesValidation = () => {
     if (employeeShiftDetails.endTimeMinutes !== undefined || '' || null) {
       if (employeeShiftDetails.endTimeMinutes.length === 1) {
         employeeShiftDetails.endTimeMinutes =
@@ -68,6 +70,8 @@ const ShiftConfiguration = (): JSX.Element => {
         employeeShiftDetails.startTimeMinutes = '59'
       }
     }
+  }
+  const hoursValidation = () => {
     if (employeeShiftDetails.startTimeHour !== undefined || '' || null) {
       if (employeeShiftDetails.startTimeHour.length === 1) {
         employeeShiftDetails.startTimeHour =
@@ -156,9 +160,9 @@ const ShiftConfiguration = (): JSX.Element => {
     }
   }
 
-  useEffect(() => {
-    dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
+  // }, [dispatch])
 
   useEffect(() => {
     if (
@@ -190,7 +194,11 @@ const ShiftConfiguration = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton color="info" className="btn-ovh me-1">
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              onClick={() => setToggleShift(true)}
+            >
               <i className="fa fa-arrow-left me-1"></i>Back
             </CButton>
           </CCol>
@@ -199,9 +207,7 @@ const ShiftConfiguration = (): JSX.Element => {
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Name :
                 <span
-                  className={
-                    employeeShiftDetails.name ? 'text-white' : 'text-danger'
-                  }
+                  className={employeeShiftDetails.name ? TextWhite : TextDanger}
                 >
                   *
                 </span>
@@ -225,8 +231,8 @@ const ShiftConfiguration = (): JSX.Element => {
                   className={
                     employeeShiftDetails.startTimeHour &&
                     employeeShiftDetails.startTimeMinutes
-                      ? 'text-white'
-                      : 'text-danger'
+                      ? TextWhite
+                      : TextDanger
                   }
                 >
                   *
@@ -243,7 +249,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.startTimeHour}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={hoursValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -257,7 +263,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.startTimeMinutes}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={minutesValidation}
                 />
               </CCol>
             </CRow>
@@ -268,8 +274,8 @@ const ShiftConfiguration = (): JSX.Element => {
                   className={
                     employeeShiftDetails.endTimeHour &&
                     employeeShiftDetails.endTimeMinutes
-                      ? 'text-white'
-                      : 'text-danger'
+                      ? TextWhite
+                      : TextDanger
                   }
                 >
                   *
@@ -286,7 +292,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.endTimeHour}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={hoursValidation}
                 />
               </CCol>
               <CCol sm={1}>
@@ -300,7 +306,7 @@ const ShiftConfiguration = (): JSX.Element => {
                   maxLength={2}
                   value={employeeShiftDetails.endTimeMinutes}
                   onChange={onchangeInputHandler}
-                  onBlur={hoursAndMinutesValidation}
+                  onBlur={minutesValidation}
                 />
               </CCol>
             </CRow>
@@ -309,9 +315,7 @@ const ShiftConfiguration = (): JSX.Element => {
                 Grace period :
                 <span
                   className={
-                    employeeShiftDetails.graceTime
-                      ? 'text-white'
-                      : 'text-danger'
+                    employeeShiftDetails.graceTime ? TextWhite : TextDanger
                   }
                 >
                   *
