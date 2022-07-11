@@ -57,7 +57,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    const replaceValue = value.replace(/[^1-9]/gi, '')
+    const replaceValue = value.replace(/[^0-9]/gi, '')
     setIsSaveButtonEnabled(true)
     if (name === 'maxLeavesEarned') {
       const maxLeavesEarnedValue = replaceValue
