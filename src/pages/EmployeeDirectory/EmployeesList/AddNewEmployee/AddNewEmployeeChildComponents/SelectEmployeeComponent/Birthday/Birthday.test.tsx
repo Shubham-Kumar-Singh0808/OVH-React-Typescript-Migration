@@ -28,11 +28,11 @@ describe('Add Employee Birthday Component', () => {
     expect(screen.getByPlaceholderText('Select birth date')).toBeInTheDocument()
   })
 
-  test('should be able to render Birthday label"', () => {
+  test('should be able to render Birthday label', () => {
     expect(screen.getByText('Birthday:')).toBeInTheDocument()
   })
 
-  test('should render date picker label', () => {
+  test('should render date picker', () => {
     const dateInput = screen.findByTestId('date-picker')
     expect(dateInput).toBeTruthy()
   })
