@@ -17,6 +17,7 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
+import { localeDateFormat } from '../../../../utils/dateFormatUtils'
 
 const EmployeeCertificationsTable = ({
   editCertificateButtonHandler,
@@ -149,11 +150,11 @@ const EmployeeCertificationsTable = ({
                 {certificateItem.code}
               </CTableDataCell>
               <CTableDataCell scope="row">
-                {certificateItem.completedDate}
+                {localeDateFormat(certificateItem.completedDate as string)}
               </CTableDataCell>
               <CTableDataCell scope="row">
                 {certificateItem.expiryDate
-                  ? certificateItem.expiryDate
+                  ? localeDateFormat(certificateItem.expiryDate as string)
                   : 'N/A'}
               </CTableDataCell>
               <CTableDataCell scope="row">
