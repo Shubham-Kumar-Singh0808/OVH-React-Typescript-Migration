@@ -85,7 +85,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
   }
 
   const validateMaxLeavesEarnedValue = (maxLeavesEarnedValue: string) => {
-    if (maxLeavesEarnedValue.length < 4 && maxLeavesEarnedValue.length === 0) {
+    if (maxLeavesEarnedValue.length < 4) {
       setMaxLeavesEarnedValueError(false)
     } else {
       setMaxLeavesEarnedValueError(true)
@@ -94,7 +94,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
   }
 
   const validateMaximumAccrualValue = (maxAccrualPerYear: string) => {
-    if (maxAccrualPerYear.length < 4 && maxAccrualPerYear.length === 0) {
+    if (maxAccrualPerYear.length < 4) {
       setMaximumAccrualValueError(false)
     } else {
       setMaximumAccrualValueError(true)
@@ -103,7 +103,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
   }
 
   const validateNumberOfLeavesValue = (leavesPerYear: string) => {
-    if (leavesPerYear.length < 4 && leavesPerYear.length === 0) {
+    if (leavesPerYear.length < 4) {
       setNumberOfLeavesValueError(false)
     } else {
       setNumberOfLeavesValueError(true)
