@@ -186,7 +186,7 @@ const EmployeeLeaveCategories = ({
             </CButton>
           </CCol>
         </CRow>
-        <CTable>
+        <CTable striped>
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">Category</CTableHeaderCell>
