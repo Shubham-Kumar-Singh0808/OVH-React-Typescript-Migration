@@ -80,8 +80,8 @@ const EmployeeMyAssetsTab = (): JSX.Element => {
   )
 
   useEffect(() => {
-    dispatch(reduxServices.category.actions.setCurrentPage(currentPage))
-    dispatch(reduxServices.category.actions.setPageSize(pageSize))
+    dispatch(reduxServices.employeeAssets.actions.setCurrentPage(currentPage))
+    dispatch(reduxServices.employeeAssets.actions.setPageSize(pageSize))
   }, [dispatch])
 
   return (

@@ -12,7 +12,7 @@ import {
   CButton,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -20,6 +20,10 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import employeeReporteesApi from '../../../middleware/api/MyProfile/ReporteesTab/employeeReporteesApi'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
+import { currentPageData } from '../../../utils/paginationUtils'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const EmployeeReportees = (): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
@@ -43,6 +47,14 @@ const EmployeeReportees = (): JSX.Element => {
     reduxServices.employeeReportees.selectors.employeeReporteesKPIs,
   )
 
+  const pageFromState = useTypedSelector(
+    reduxServices.employeeAssets.selectors.pageFromState,
+  )
+
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.employeeAssets.selectors.pageSizeFromState,
+  )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(
@@ -50,12 +62,48 @@ const EmployeeReportees = (): JSX.Element => {
         isViewingAnotherEmployee ? selectedEmployeeId : empID,
       ),
     )
+    dispatch(reduxServices.category.actions.setCurrentPage(1))
+    dispatch(reduxServices.category.actions.setPageSize(20))
   }, [dispatch, empID, isViewingAnotherEmployee, selectedEmployeeId])
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(employeeReportees.length, pageFromState, pageSizeFromState)
+
+  useEffect(() => {
+    setPageSize(20)
+    setCurrentPage(1)
+  }, [employeeReportees, setPageSize, setCurrentPage])
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const currentPageItems = useMemo(
+    () => currentPageData(employeeReportees, currentPage, pageSize),
+    [employeeReportees, currentPage, pageSize],
+  )
 
   const handleModal = (personId: number) => {
     setIsModalVisible(true)
     dispatch(reduxServices.employeeReportees.getEmployeeReporteesKRAs(personId))
   }
+
+  useEffect(() => {
+    dispatch(reduxServices.employeeAssets.actions.setCurrentPage(currentPage))
+    dispatch(reduxServices.employeeAssets.actions.setPageSize(pageSize))
+  }, [dispatch])
 
   const tableHeaderCellProps = {
     scope: 'col',
@@ -111,68 +159,123 @@ const EmployeeReportees = (): JSX.Element => {
       <CCardHeader>
         <h4 className="h4">Manager Reportees</h4>
       </CCardHeader>
-      <CCardBody>
-        <CTable striped>
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell scope="col">#</CTableHeaderCell>
-              <CTableHeaderCell {...tableHeaderCellProps}>
-                Manager
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Reportee</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mobile No.</CTableHeaderCell>
-              <CTableHeaderCell scope="col">
-                Reportee Project Name & Allocation %
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">KRAs</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            {employeeReportees.length > 0 &&
-              employeeReportees?.map((reportee, index) => (
-                <CTableRow key={index}>
-                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                  <CTableDataCell scope="row">
-                    <Link
-                      to={`/employeeProfile/${reportee.managerId}`}
-                      className="employee-name"
-                    >
-                      {reportee.managerName}
-                    </Link>
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    <Link
-                      to={`/employeeProfile/${reportee.reporteeId}`}
-                      className="employee-name"
-                    >
-                      {reportee.reporteeName}
-                    </Link>
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {reportee.mobile || 'N/A'}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {reportee.allcoationDetails || 'N/A'}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    <CLink
-                      className="cursor-pointer text-decoration-none text-primary"
-                      onClick={() => handleModal(reportee.reporteeId)}
-                    >
-                      Click for KRAs
-                    </CLink>
-                  </CTableDataCell>
+      <br />
+      <CCardBody className="ps-0 pe-0">
+        {employeeReportees.length ? (
+          <>
+            <CTable striped>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell {...tableHeaderCellProps}>
+                    Manager
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Reportee</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Mobile No.</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">
+                    Reportee Project Name & Allocation %
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">KRAs</CTableHeaderCell>
                 </CTableRow>
-              ))}
-          </CTableBody>
-        </CTable>
-        <CCol xs={4}>
-          <strong>
-            {employeeReportees?.length
-              ? `Total Records: ${employeeReportees?.length}`
-              : `No Records found`}
-          </strong>
-        </CCol>
+              </CTableHead>
+
+              <CTableBody>
+                {currentPageItems.length > 0 &&
+                  currentPageItems?.map((reportee, index) => (
+                    <CTableRow key={index}>
+                      <CTableDataCell scope="row">
+                        {' '}
+                        {getItemNumber(index)}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        <Link
+                          to={`/employeeProfile/${reportee.managerId}`}
+                          className="employee-name"
+                        >
+                          {reportee.managerName}
+                        </Link>
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        <Link
+                          to={`/employeeProfile/${reportee.reporteeId}`}
+                          className="employee-name"
+                        >
+                          {reportee.reporteeName}
+                        </Link>
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {reportee.mobile || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {reportee.allcoationDetails || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        <CLink
+                          className="cursor-pointer text-decoration-none text-primary"
+                          onClick={() => handleModal(reportee.reporteeId)}
+                        >
+                          Click for KRAs
+                        </CLink>
+                      </CTableDataCell>
+                    </CTableRow>
+                  ))}
+              </CTableBody>
+            </CTable>
+            <br />
+            <CRow>
+              <CCol xs={4}>
+                <p>
+                  <strong>Total Records: {employeeReportees.length}</strong>
+                </p>
+              </CCol>
+              <CCol xs={3}>
+                {employeeReportees.length > 20 && (
+                  <OPageSizeSelect
+                    handlePageSizeSelectChange={handlePageSizeSelectChange}
+                    selectedPageSize={pageSize}
+                  />
+                )}
+              </CCol>
+              {employeeReportees.length > 20 && (
+                <CCol
+                  xs={5}
+                  className="d-grid gap-2 d-md-flex justify-content-md-end"
+                >
+                  <OPagination
+                    currentPage={currentPage}
+                    pageSetter={setCurrentPage}
+                    paginationRange={paginationRange}
+                  />
+                </CCol>
+              )}
+            </CRow>
+          </>
+        ) : (
+          <>
+            <CTable striped>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell {...tableHeaderCellProps}>
+                    Manager
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Reportee</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Mobile No.</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">
+                    Reportee Project Name & Allocation %
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">KRAs</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+            </CTable>
+            <br />
+            <CCol xs={4}>
+              <p>
+                <strong>No Records Found... </strong>
+              </p>
+            </CCol>
+          </>
+        )}
         <OModal
           modalSize="lg"
           alignment="center"

@@ -35,4 +35,6 @@ export type ReporteesState = {
   employeeReporteesKPIs: EmployeeReporteesKPI[]
   isLoading: LoadingState
   error: ValidationError
+  currentPage: number
+  pageSize: number
 }
