@@ -21,7 +21,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import {
   EmployeeGetEmailTemplateModelProps,
   EmployeeMailTemplate,
-} from '../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
+} from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
 

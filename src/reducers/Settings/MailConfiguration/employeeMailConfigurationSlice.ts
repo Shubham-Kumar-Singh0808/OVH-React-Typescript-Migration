@@ -6,7 +6,7 @@ import {
   EmployeeGetEmailTemplateProps,
   EmployeeMailTemplateType,
   EmployeeMailConfigurationState,
-} from '../../../types/Settings/MailConfiguration/employeeMailConfigurationTypes'
+} from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
