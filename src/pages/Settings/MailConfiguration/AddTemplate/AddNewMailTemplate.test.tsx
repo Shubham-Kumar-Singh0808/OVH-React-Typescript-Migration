@@ -11,6 +11,7 @@ import { mockTemplateTypes } from '../../../../test/data/addMailTemplateData'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import stateStore from '../../../../stateStore'
+import { emailAddress, templateType } from '../../../../test/constants'
 
 const ReduxProvider = ({
   children,
@@ -32,7 +33,6 @@ describe('Add Template Component Testing', () => {
       expect(mailTemplateTitle).toBeTruthy()
     })
     test('should render Template Type dropdown', () => {
-      const templateType = screen.queryByTestId('form-select-type')
       expect(templateType).toBeTruthy()
     })
     test('should render title input', () => {
@@ -72,8 +72,8 @@ describe('Add Template Component Testing', () => {
         },
       },
     })
-    userEvent.selectOptions(screen.getByTestId('form-select-type'), '11')
-    const inputEl = screen.getByTestId('email-address')
+    userEvent.selectOptions(screen.getByTestId(templateType), '11')
+    const inputEl = screen.getByTestId(emailAddress)
     expect(inputEl).toBeInTheDocument()
     expect(inputEl).toHaveAttribute('type', 'email')
   })
@@ -85,11 +85,11 @@ describe('Add Template Component Testing', () => {
         },
       },
     })
-    userEvent.selectOptions(screen.getByTestId('form-select-type'), '11')
-    const inputEl = screen.getByTestId('email-address')
+    userEvent.selectOptions(screen.getByTestId(templateType), '11')
+    const inputEl = screen.getByTestId(emailAddress)
     userEvent.type(inputEl, 'test@mail.com')
     await waitFor(() => {
-      expect(screen.getByTestId('email-address')).toHaveValue('test@mail.com')
+      expect(screen.getByTestId(emailAddress)).toHaveValue('test@mail.com')
       expect(screen.queryByTestId('error-msg')).not.toBeInTheDocument()
     })
   })
