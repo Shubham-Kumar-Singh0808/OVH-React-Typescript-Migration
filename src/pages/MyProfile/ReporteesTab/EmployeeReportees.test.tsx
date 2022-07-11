@@ -75,17 +75,6 @@ describe('Employee Reportees Testing', () => {
     expect(mockReporteesDetails.reporteeName).toHaveLength(9)
   })
 
-  test('should render No data to display if Reportees is empty', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <EmployeeReportees />
-      </ReduxProvider>,
-    )
-    await waitFor(() => {
-      expect(screen.getByText('No Records found')).toBeInTheDocument()
-    })
-  })
-
   test('should render correct number of page records', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
