@@ -8,7 +8,6 @@ import EmployeeEmailTemplate from './EmployeeEmailTemplate'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import stateStore from '../../../stateStore'
 import { templateType } from '../../../test/constants'
-import { mockLeaveCategoriesType } from '../../../test/data/employeeLeaveSettingsData'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const ReduxProvider = ({
