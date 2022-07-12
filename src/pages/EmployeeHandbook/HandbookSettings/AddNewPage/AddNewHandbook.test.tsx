@@ -8,14 +8,9 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import AddNewHandbook from './AddNewHandbook'
 import { mockCountries } from '../../../../test/data/employeeHandbookSettingsData'
-import {
-  fireEvent,
-  getByTestId,
-  render,
-  screen,
-  waitFor,
-} from '../../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import stateStore from '../../../../stateStore'
+import { pageTitle, pageName, displayOrder } from '../../../../test/constants'
 
 const ReduxProvider = ({
   children,
@@ -43,16 +38,16 @@ describe('Add New Page Component Testing', () => {
       expect(addNewPage).toBeTruthy()
     })
     test('should render title input', () => {
-      const titleInput = screen.findByTestId('title-input')
+      const titleInput = screen.findByTestId(pageTitle)
       expect(titleInput).toBeTruthy()
     })
     test('should render PageName input', () => {
-      const pageNameInput = screen.findByTestId('pagename-input')
+      const pageNameInput = screen.findByTestId(pageName)
       expect(pageNameInput).toBeTruthy()
     })
     test('should render display order input', () => {
-      const displayOrder = screen.findByTestId('displayOrder-input')
-      expect(displayOrder).toBeTruthy()
+      const displayOrderInput = screen.findByTestId(displayOrder)
+      expect(displayOrderInput).toBeTruthy()
     })
     test('should render All countries checkbox', () => {
       const allCountries = screen.findByTestId('all-input')
@@ -72,14 +67,12 @@ describe('Add New Page Component Testing', () => {
     })
   })
   describe('Add New Handbook testing', () => {
-    test('Without data', async () => {
+    test('should render countries checkbox ', async () => {
       render(
         <AddNewHandbook
           headerTitle={''}
           confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
+          backButtonHandler={jest.fn()}
         />,
         {
           preloadedState: {
@@ -94,7 +87,44 @@ describe('Add New Page Component Testing', () => {
         expect(screen.getByText('AUSTRALIA')).toBeInTheDocument()
       })
     })
-    test('should redirect to /mailTemplates when user clicks on Back Button', async () => {
+    test('should render all checkbox ', () => {
+      render(
+        <AddNewHandbook
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={jest.fn()}
+        />,
+      )
+      const checkbox = screen.getByTestId('all-input')
+      fireEvent.click(checkbox)
+      expect(checkbox).toBeChecked()
+    })
+    test('Checkbox changes value', async () => {
+      render(
+        <AddNewHandbook
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={jest.fn()}
+        />,
+        {
+          preloadedState: {
+            employeeHandbookSettings: {
+              employeeCountries: mockCountries,
+            },
+          },
+        },
+      )
+      const checkbox = fireEvent.change(
+        screen.getAllByTestId('ch-countries')[1],
+        {
+          target: { checked: true },
+        },
+      )
+      await waitFor(() => {
+        expect(checkbox).toBe(true)
+      })
+    })
+    test('should redirect to /handbook when user clicks on Back Button', async () => {
       const history = createMemoryHistory()
       render(
         <Router history={history}>
@@ -113,6 +143,30 @@ describe('Add New Page Component Testing', () => {
         expect(history.location.pathname).toBe('/')
       })
     })
+    // test('should enable button after inputs given by the user', async () => {
+    //   render(
+    //     <AddNewHandbook
+    //       headerTitle={''}
+    //       confirmButtonText={''}
+    //       backButtonHandler={jest.fn()}
+    //     />,
+    //   )
+    //   const titleInput = screen.getByTestId('title-input')
+    //   userEvent.type(titleInput, 'titleTest')
+    //   expect(titleInput).toHaveValue('titleTest')
+
+    //   const pageNameInput = screen.getByTestId('pageName-input')
+    //   userEvent.type(pageNameInput, 'pageNameTest')
+    //   expect(pageNameInput).toHaveValue('pageNameTest')
+
+    //   const displayOrderInput = screen.getByTestId('displayOrder-input')
+    //   userEvent.type(displayOrderInput, '25')
+    //   expect(displayOrderInput).toHaveValue('25')
+    //   await waitFor(() => {
+    //     userEvent.click(screen.getByTestId('save-btn'))
+    //     expect(screen.getByTestId('save-btn')).toBeEnabled()
+    //   })
+    // })
     test('should clear input and disable button after submitting ', async () => {
       render(
         <AddNewHandbook
@@ -121,22 +175,40 @@ describe('Add New Page Component Testing', () => {
           backButtonHandler={jest.fn()}
         />,
       )
-      const titleInput = screen.getByTestId('title-input')
+      const titleInput = screen.getByTestId(pageTitle)
       userEvent.type(titleInput, 'titleTest')
       expect(titleInput).toHaveValue('titleTest')
-
-      const pageNameInput = screen.getByTestId('pagename-input')
+      const pageNameInput = screen.getByTestId(pageName)
       userEvent.type(pageNameInput, 'pageNameTest')
       expect(pageNameInput).toHaveValue('pageNameTest')
-
-      const displayOrder = screen.getByTestId('displayOrder-input')
-      userEvent.type(displayOrder, '25')
-      expect(displayOrder).toHaveValue('25')
+      const displayOrderInput = screen.getByTestId(displayOrder)
+      userEvent.type(displayOrderInput, '25')
+      expect(displayOrderInput).toHaveValue('25')
+      const description = screen.getByTestId('description-input')
+      userEvent.type(description, 'testing')
+      expect(description).toBeTruthy()
+      userEvent.click(screen.getByTestId('clear-btn'))
       await waitFor(() => {
-        userEvent.click(screen.getByTestId('clear-btn'))
         expect(titleInput).toHaveValue('')
         expect(pageNameInput).toHaveValue('')
-        expect(displayOrder).toHaveValue('')
+        expect(displayOrderInput).toHaveValue('')
+        expect(description).toBeUndefined()
+      })
+    })
+    test('pass description to test input value', async () => {
+      render(
+        <AddNewHandbook
+          headerTitle={''}
+          confirmButtonText={''}
+          backButtonHandler={jest.fn()}
+        />,
+      )
+      const inputEl = screen.getByTestId('description-input')
+      userEvent.type(inputEl, 'test')
+      await waitFor(() => {
+        expect(screen.queryByTestId('error-msg')?.textContent).toEqual(
+          'Please enter at least 150 characters.',
+        )
       })
     })
   })

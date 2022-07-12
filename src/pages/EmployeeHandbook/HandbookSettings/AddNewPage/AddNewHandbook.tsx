@@ -243,7 +243,7 @@ function AddNewHandbook({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="pagename-input"
+                data-testid="pageName-input"
                 type="text"
                 name="pageName"
                 value={addNewPage.pageName}
@@ -345,7 +345,7 @@ function AddNewHandbook({
                   }}
                 />
                 {error && (
-                  <p className="text-danger">
+                  <p className="text-danger" data-testId="error-msg">
                     Please enter at least 150 characters.
                   </p>
                 )}
