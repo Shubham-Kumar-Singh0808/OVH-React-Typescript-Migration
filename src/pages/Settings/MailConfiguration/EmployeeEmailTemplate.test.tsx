@@ -138,6 +138,7 @@ describe('email Template List Table Testing', () => {
     )
     expect(screen.getByPlaceholderText('Search Text')).toBeInTheDocument()
   })
+  // eslint-disable-next-line sonarjs/no-duplicate-string
   test('should clear input and disable button after submitting ', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
