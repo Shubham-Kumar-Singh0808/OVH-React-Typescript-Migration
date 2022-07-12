@@ -1,12 +1,15 @@
 /* eslint-disable import/named */
 import '@testing-library/jest-dom'
-import { render, screen, waitFor } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EmployeeEmailTemplate from './EmployeeEmailTemplate'
+import { render, screen, waitFor } from '../../../test/testUtils'
 import stateStore from '../../../stateStore'
+import { templateType } from '../../../test/constants'
+import { mockLeaveCategoriesType } from '../../../test/data/employeeLeaveSettingsData'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const ReduxProvider = ({
   children,
@@ -152,5 +155,31 @@ describe('email Template List Table Testing', () => {
       expect(screen.getByRole('textbox')).toHaveValue('')
       expect(screen.getByRole('button', { name: /Search/i })).toBeDisabled()
     })
+  })
+  test('should render Template Type dropdown', () => {
+    expect(templateType).toBeTruthy()
+  })
+  test('should clear input and disable button after submitting ', async () => {
+    render(<EmployeeEmailTemplate />)
+    userEvent.type(screen.getByRole('combobox'), '')
+    await waitFor(() => {
+      userEvent.click(screen.getByRole('button', { name: /clear/i }))
+      expect(screen.getByRole('textbox')).toHaveValue('')
+    })
+  })
+  test('should fetch Email template types data and put it in the store', async () => {
+    render(<EmployeeEmailTemplate />)
+    await stateStore.dispatch(
+      reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
+    )
+  })
+  test('should fetch Email template data and put it in the store', async () => {
+    render(<EmployeeEmailTemplate />)
+    await stateStore.dispatch(
+      reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
+        templateName: '',
+        templateTypeId: '',
+      }),
+    )
   })
 })
