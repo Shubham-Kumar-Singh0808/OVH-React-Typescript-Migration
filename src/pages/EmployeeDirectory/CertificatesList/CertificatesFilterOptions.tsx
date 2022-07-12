@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-// Todo: remove eslint and fix error
 import {
   CButton,
   CCol,
@@ -9,7 +7,7 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 import { useTypedSelector } from '../../../stateStore'
@@ -93,16 +91,6 @@ const CertificatesFilterOptions = ({
     }
   }
 
-  const sortedTechnologies = useMemo(() => {
-    if (getTechnologies) {
-      return getTechnologies
-        .slice()
-        .sort((technology1, technology2) =>
-          technology1.name.localeCompare(technology2.name),
-        )
-    }
-  }, [getTechnologies])
-
   return (
     <>
       <CRow>
@@ -122,11 +110,16 @@ const CertificatesFilterOptions = ({
             }}
           >
             <option value={''}>Select Technology</option>
-            {sortedTechnologies?.map((certificateItem, index) => (
-              <option key={index} value={certificateItem.name}>
-                {certificateItem.name}
-              </option>
-            ))}
+            {getTechnologies
+              ?.slice()
+              .sort((technology1, technology2) =>
+                technology1.name.localeCompare(technology2.name),
+              )
+              .map((certificateItem, index) => (
+                <option key={index} value={certificateItem.name}>
+                  {certificateItem.name}
+                </option>
+              ))}
           </CFormSelect>
         </CCol>
         <CCol sm={4}>
