@@ -63,7 +63,7 @@ describe('Add Employee Designation Component', () => {
     })
   })
 
-  describe('should render Employee Designation Component with out crashing', () => {
+  describe('should render Employee Designation Component with the List of Designation', () => {
     beforeEach(() => {
       const composedDesignationList = listComposer(
         mockDesignationList as [],
