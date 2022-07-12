@@ -166,6 +166,7 @@ const employeeEmailTemplate = (): JSX.Element => {
           <CCol sm={4}>
             <CFormInput
               type="text"
+              data-testId="title-input"
               id="templateName"
               name="templateName"
               placeholder="Search Text"
@@ -186,6 +187,7 @@ const employeeEmailTemplate = (): JSX.Element => {
               color="warning "
               className="btn-ovh"
               onClick={handleClearDetails}
+              data-testId="clear-btn"
             >
               Clear
             </CButton>

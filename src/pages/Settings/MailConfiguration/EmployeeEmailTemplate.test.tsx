@@ -181,4 +181,16 @@ describe('email Template List Table Testing', () => {
       }),
     )
   })
+
+  test('should clear input and disable button after submitting ', async () => {
+    render(<EmployeeEmailTemplate />)
+    const titleInput = screen.getByTestId('title-input')
+    userEvent.type(titleInput, 'titleTest')
+    expect(titleInput).toHaveValue('titleTest')
+
+    await waitFor(() => {
+      userEvent.click(screen.getByTestId('clear-btn'))
+      expect(titleInput).toHaveValue('')
+    })
+  })
 })
