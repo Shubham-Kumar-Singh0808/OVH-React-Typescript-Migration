@@ -35,6 +35,6 @@ describe('Add Experience Component', () => {
     const numberInput = screen.getByTestId('experienceForm')
     userEvent.type(numberInput, '1231231231')
 
-    expect(screen.getByTestId('experienceForm')).toHaveValue('1231231231')
+    expect(screen.getByTestId('experienceForm')).toHaveValue(1231231231)
   })
 })
