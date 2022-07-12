@@ -32,6 +32,8 @@ import { ShowHandbookService } from './EmployeeHandbook/showHandbookSlice'
 import { employeeHandbookSettingService } from './EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 import { timeInOfficeReportService } from './TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
+import { employeeMailConfigurationService } from './Settings/MailConfiguration/employeeMailConfigurationSlice'
+import { addTemplateService } from './Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import { employeeService } from './EmployeeDirectory/EmployeesList/EditEmployee'
 
 export const reduxServices = {
@@ -69,5 +71,7 @@ export const reduxServices = {
   timeInOfficeReport: timeInOfficeReportService,
   employeeLeaveSettings: employeeLeaveSettingsService,
   technology: technologyService,
+  employeeMailConfiguration: employeeMailConfigurationService,
+  addNewMailTemplate: addTemplateService,
   employee: employeeService,
 }
