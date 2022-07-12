@@ -8,6 +8,8 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import hiveActivityReportApi from '../../../middleware/api/TimeAndAttendance/HiveActivityReport/hiveActivityReportApi'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 
 const HiveActivityReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -124,17 +126,25 @@ const HiveActivityReport = (): JSX.Element => {
           handleExportHiveActivityReport={handleExportHiveActivityReport}
           handleSearchHiveActivityReport={handleSearchHiveActivityReport}
         />
-        {selectedView === 'Me' && isLoading === ApiLoadingState.succeeded && (
-          <EmployeeHiveActivityReport />
-        )}
-        {selectedView === 'All' && isLoading === ApiLoadingState.succeeded && (
-          <ManagerHiveActivityReport
-            paginationRange={paginationRange}
-            setPageSize={setPageSize}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
+        {isLoading !== ApiLoadingState.loading ? (
+          <>
+            {selectedView === 'Me' &&
+              isLoading === ApiLoadingState.succeeded && (
+                <EmployeeHiveActivityReport />
+              )}
+            {selectedView === 'All' &&
+              isLoading === ApiLoadingState.succeeded && (
+                <ManagerHiveActivityReport
+                  paginationRange={paginationRange}
+                  setPageSize={setPageSize}
+                  setCurrentPage={setCurrentPage}
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                />
+              )}
+          </>
+        ) : (
+          <OLoadingSpinner type={LoadingType.PAGE} />
         )}
       </OCard>
     </>
