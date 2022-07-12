@@ -21,6 +21,7 @@ const FullName = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
+          data-testId="fullnameLabel"
           {...dynamicFormLabelProps(
             'fullname:',
             'col-sm-3 col-form-label text-end',
@@ -37,6 +38,7 @@ const FullName = ({
                 size="sm"
                 type="text"
                 name="firstname"
+                data-testId="firstname"
                 placeholder="First Name"
                 className="capetalized"
                 value={firstNameValue}
@@ -51,6 +53,7 @@ const FullName = ({
                 type="text"
                 name="middlename"
                 placeholder="Middle Name"
+                data-testId="middlename"
                 className="capetalized"
                 value={middleNameValue}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
@@ -64,6 +67,7 @@ const FullName = ({
                 type="text"
                 name="lastname"
                 placeholder="Last Name"
+                data-testId="lastname"
                 className="capetalized"
                 value={lastNameValue}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>

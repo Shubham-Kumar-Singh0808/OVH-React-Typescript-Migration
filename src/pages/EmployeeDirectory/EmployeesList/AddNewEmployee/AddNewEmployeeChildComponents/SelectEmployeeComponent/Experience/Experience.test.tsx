@@ -1,32 +1,41 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
-import Experience from '.'
-import stateStore from '../../../../../../../stateStore'
+import userEvent from '@testing-library/user-event'
+import ExperienceField from '.'
+import { screen, render } from '../../../../../../../test/testUtils'
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
-
-describe('Add Employee Experience Component', () => {
-  test('should be able to render Experience without crashing', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <Experience
+describe('Add Experience Component', () => {
+  describe('if isAddDisable is false', () => {
+    beforeEach(() => {
+      render(
+        <ExperienceField
           onExperienceHandler={jest.fn()}
           experienceValue={0}
           dynamicFormLabelProps={jest.fn()}
-        />
-      </ReduxProvider>,
-    )
+        />,
+      )
+    })
 
-    screen.debug()
+    test('should be able to render Experience Component without crashing', () => {
+      screen.debug()
+    })
+
+    test('should be able to render Experience Component Title', () => {
+      expect(screen.getByText('Experience:')).toBeInTheDocument()
+    })
+
+    test('should be able to render Experience Component label', () => {
+      expect(screen.getByTestId('experienceLabel')).toBeTruthy()
+    })
+
+    test('should be able to render Experience Component placeholder', () => {
+      expect(screen.getByPlaceholderText('Experience')).toBeInTheDocument()
+    })
+
+    test('should be able to enter Experience Component', () => {
+      const numberInput = screen.getByTestId('experienceForm')
+      userEvent.type(numberInput, '1231231231')
+      expect(numberInput).toHaveValue('1231231231')
+    })
   })
 })
