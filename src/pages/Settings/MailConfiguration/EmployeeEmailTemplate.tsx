@@ -58,12 +58,18 @@ const employeeEmailTemplate = (): JSX.Element => {
   }, [dispatch])
 
   const handleEmailTemplate = () => {
-    dispatch(
-      reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
-        templateName: employeeTemplate.templateName,
-        templateTypeId: employeeTemplate.templateTypeId,
-      }),
-    )
+    if (employeeTemplate.templateTypeId || employeeTemplate.templateName) {
+      dispatch(
+        reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
+          templateName: employeeTemplate.templateName,
+          templateTypeId: employeeTemplate.templateTypeId,
+        }),
+      )
+    } else {
+      dispatch(
+        reduxServices.employeeMailConfiguration.actions.clearEmployeeEmailTemplate(),
+      )
+    }
   }
   const onChangeMailTemplateHandler = (
     e:
@@ -221,74 +227,85 @@ const employeeEmailTemplate = (): JSX.Element => {
               <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
-          <CTableBody>
-            {employeeMailTemplates.map((emailTemplate, index) => {
-              const descriptionLimit =
-                emailTemplate.template && emailTemplate.template.length > 15
-                  ? `${emailTemplate.template.substring(0, 15)}...`
-                  : emailTemplate.template
-              return (
-                <CTableRow key={index}>
-                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {emailTemplate.templateType}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {emailTemplate.templateName}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {emailTemplate.assetType}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    <CLink
-                      className="cursor-pointer text-decoration-none text-primary"
-                      onClick={() =>
-                        handleModal(
-                          emailTemplate.templateName,
-                          emailTemplate.template,
-                        )
-                      }
-                    >
-                      {parse(descriptionLimit)}
-                    </CLink>
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    <CButton color="info btn-ovh me-2">
-                      <i className="fa fa-pencil-square-o"></i>
-                    </CButton>
-                    <CButton color="danger btn-ovh me-2">
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
-                  </CTableDataCell>
-                </CTableRow>
-              )
-            })}
-            <OModal
-              modalSize="lg"
-              alignment="center"
-              modalFooterClass="d-none"
-              modalHeaderClass="d-none"
-              visible={isModalVisible}
-              setVisible={setIsModalVisible}
-            >
-              <>
-                <h4 className="model-text">
-                  {emailTemplateModel.emailTemplateName}
-                </h4>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: emailTemplateModel.emailTemplate,
-                  }}
-                />
-              </>
-            </OModal>
-          </CTableBody>
+          {employeeTemplate.templateTypeId || employeeTemplate.templateName ? (
+            <>
+              <CTableBody>
+                {employeeMailTemplates?.map((emailTemplate, index) => {
+                  const descriptionLimit =
+                    emailTemplate.template && emailTemplate.template.length > 15
+                      ? `${emailTemplate.template.substring(0, 15)}...`
+                      : emailTemplate.template
+                  return (
+                    <CTableRow key={index}>
+                      <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {emailTemplate.templateType}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {emailTemplate.templateName}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {emailTemplate.assetType}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        <CLink
+                          className="cursor-pointer text-decoration-none text-primary"
+                          onClick={() =>
+                            handleModal(
+                              emailTemplate.templateName,
+                              emailTemplate.template,
+                            )
+                          }
+                        >
+                          {parse(descriptionLimit)}
+                        </CLink>
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        <CButton color="info btn-ovh me-2">
+                          <i className="fa fa-pencil-square-o"></i>
+                        </CButton>
+                        <CButton color="danger btn-ovh me-2">
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
+
+                <OModal
+                  modalSize="lg"
+                  alignment="center"
+                  modalFooterClass="d-none"
+                  modalHeaderClass="d-none"
+                  visible={isModalVisible}
+                  setVisible={setIsModalVisible}
+                >
+                  <>
+                    <h4 className="model-text">
+                      {emailTemplateModel.emailTemplateName}
+                    </h4>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: emailTemplateModel.emailTemplate,
+                      }}
+                    />
+                  </>
+                </OModal>
+              </CTableBody>
+              <br></br>
+              <strong>
+                {employeeMailTemplates?.length
+                  ? `Total Records: ${employeeMailTemplates?.length}`
+                  : `No Records found...`}
+              </strong>
+            </>
+          ) : (
+            <>
+              <br></br>
+              <strong>No Records found...</strong>
+            </>
+          )}
         </CTable>
-        <strong>
-          {employeeMailTemplates?.length
-            ? `Total Records: ${employeeMailTemplates?.length}`
-            : `No Records found...`}
-        </strong>
       </OCard>
     </>
   )
