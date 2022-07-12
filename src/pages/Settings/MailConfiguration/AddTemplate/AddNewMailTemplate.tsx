@@ -35,7 +35,9 @@ function AddNewMailTemplate(): JSX.Element {
   )
 
   useEffect(() => {
-    dispatch(reduxServices.employeeMailConfiguration.getMailTemplateTypes())
+    dispatch(
+      reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
+    )
     dispatch(reduxServices.addNewMailTemplate.getAssetTypes())
   }, [dispatch])
 
