@@ -1,5 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
-// Todd: remove eslint and fix error
 import {
   CButton,
   CCardBody,
@@ -21,6 +19,10 @@ import {
   EmployeeFamilyDetails,
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
+import {
+  reformatDate,
+  dateFormatPerLocale,
+} from '../../../utils/dateFormatUtils'
 
 function AddEditFamilyDetails({
   isEditFamilyDetails = false,
@@ -36,12 +38,46 @@ function AddEditFamilyDetails({
   const [employeeFamily, setEmployeeFamily] = useState(
     initialEmployeeFamilyDetails,
   )
-  const [dateOfBirth, setDateOfBirth] = useState<Date | string>()
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-
   const fetchEditFamilyDetails = useTypedSelector(
     reduxServices.personalInformation.selectors.employeeFamilyMember,
   )
+
+  const [dateOfBirth, setDateOfBirth] = useState<Date | string>()
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [dateFormat, setDateFormat] = useState<string>('')
+  const [dateOfBirthFlag, setDateOfBirthFlag] = useState<boolean>(false)
+
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
+
+  useEffect(() => {
+    const localeDateFormat = dateFormatPerLocale.filter(
+      (lang) => lang.label === navigator.languages[0],
+    )
+    setDateFormat(localeDateFormat[0].format)
+  }, [])
+
+  const dateFormmatted = (date: string) => {
+    if (date) {
+      const tempDateFormat = reformatDate(date as string)
+      return tempDateFormat.toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    } else {
+      return ''
+    }
+  }
+
+  let newDateOfBirth = new Date()
+  if (employeeFamily.dateOfBirth) {
+    const currentDateOfBirth = employeeFamily.dateOfBirth as string
+    newDateOfBirth = reformatDate(currentDateOfBirth)
+  }
+
   useEffect(() => {
     if (isEditFamilyDetails) {
       setEmployeeFamily(fetchEditFamilyDetails)
@@ -59,7 +95,7 @@ function AddEditFamilyDetails({
         return { ...prevState, ...{ [name]: contactValue } }
       })
     } else if (name === 'personName') {
-      const personValue = value.replace(/[^a-zA-Z\s]$/gi, '')
+      const personValue = value.replace(/[^a-z\s]$/gi, '')
       setEmployeeFamily((prevState) => {
         return { ...prevState, ...{ [name]: personValue } }
       })
@@ -76,9 +112,11 @@ function AddEditFamilyDetails({
       setEmployeeFamily((prevState) => {
         return { ...prevState, ...{ [name]: formatDate } }
       })
+      setDateOfBirth(date)
     } else {
       setDateOfBirth(date)
     }
+    setDateOfBirthFlag(true)
   }
   useEffect(() => {
     if (
@@ -162,16 +200,17 @@ function AddEditFamilyDetails({
       )
     }
   }
+  const defaultFormLabel = 'col-sm-3 col-form-label text-end'
   const nameProps = {
-    className: 'col-sm-3 col-form-label text-end',
+    className: defaultFormLabel,
     htmlFor: 'Name',
   }
   const relationShipProps = {
-    className: 'col-sm-3 col-form-label text-end',
+    className: defaultFormLabel,
     htmlFor: 'Relationship',
   }
   const contactNumberProps = {
-    className: 'col-sm-3 col-form-label text-end',
+    className: defaultFormLabel,
     htmlFor: 'ContactNumber',
   }
 
@@ -264,7 +303,7 @@ function AddEditFamilyDetails({
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Date of Birth :
             </CFormLabel>
@@ -273,19 +312,23 @@ function AddEditFamilyDetails({
                 className="form-control"
                 name="dateOfBirth"
                 maxDate={new Date()}
-                selected={dateOfBirth as Date}
-                onChange={(date: Date) => onDateChangeHandler(date)}
-                id="dateOfBirth"
                 value={
                   (dateOfBirth as string) ||
-                  (employeeFamily?.dateOfBirth as string)
+                  dateFormmatted(employeeFamily?.dateOfBirth as string)
                 }
+                selected={
+                  !dateOfBirthFlag && employeeFamily.dateOfBirth
+                    ? newDateOfBirth
+                    : (dateOfBirth as Date)
+                }
+                onChange={(date: Date) => onDateChangeHandler(date)}
+                id="dateOfBirth"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-                dateFormat="dd/MM/yyyy"
+                placeholderText={dateFormat}
+                dateFormat={dateFormat}
               />
             </CCol>
           </CRow>

@@ -59,11 +59,15 @@ export type GetCountries = {
 export type GetHrData = {
   id: number
   fullName: string
+  firstName?: string
+  lastName?: string
 }
 
 export type GetAllReportingManagers = {
   id: number
   fullName: string
+  firstName?: string
+  lastName?: string
 }
 
 export type EmployeeShift = {
@@ -160,6 +164,7 @@ export interface SelectShiftProps extends DynamicFormLabelProps {
   setToggleShift: (value: boolean) => void
   value: string
   toggleValue: boolean
+  isAddDisable: boolean
 }
 export interface SelectDesignationProps extends DynamicFormLabelProps {
   list: GetList[]
@@ -167,6 +172,7 @@ export interface SelectDesignationProps extends DynamicFormLabelProps {
   setToggleShift: (value: boolean) => void
   value: string
   toggleValue: boolean
+  isAddDisable: boolean
 }
 export interface SelectProps extends DynamicFormLabelProps {
   list: GetList[]
@@ -183,17 +189,20 @@ export interface HrDataProps extends DynamicFormLabelProps {
   hrDataList: GetHrData[]
   onSelectHRAssociate: (value: GetHRAssociate) => void
   shouldReset: boolean
+  hrValue: string
 }
 
 export interface ReportManagerProps extends DynamicFormLabelProps {
   reportManagersList: GetAllReportingManagers[]
   onSelectReportManager: (value: GetReportManager) => void
   shouldReset: boolean
+  reportValue: string
 }
 export interface ManagerProps extends DynamicFormLabelProps {
   managersList: GetAllReportingManagers[]
   onSelectManager: (value: GetProjectManager) => void
   shouldReset: boolean
+  projectValue: string
 }
 export interface EmployeeShiftProps extends DynamicFormLabelProps {
   employeeShifts: EmployeeShiftDetails[]

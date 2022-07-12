@@ -19,6 +19,7 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const VisaListExpandableTable = (
   props: CertificateDetailsExpandableTableProps,
@@ -93,10 +94,14 @@ const VisaListExpandableTable = (
                                     {currentVisa.visaType || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currentVisa.dateOfIssue || 'N/A'}
+                                    {localeDateFormat(
+                                      currentVisa.dateOfIssue as string,
+                                    ) || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currentVisa.dateOfExpire || 'N/A'}
+                                    {localeDateFormat(
+                                      currentVisa.dateOfExpire as string,
+                                    ) || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     {currentVisa.visaDetailsData ? (

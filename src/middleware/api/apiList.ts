@@ -8,6 +8,7 @@ import {
   CertificateListApi,
   CertificateTypeApi,
   EmployeeAssetsApi,
+  EmployeeAttendanceReportApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
@@ -24,13 +25,17 @@ import {
   ShiftConfigurationApi,
   SideMenuApi,
   SkillApi,
+  UserAccessToFeaturesApi,
   UserRolesConfigurationApi,
   EmployeeReportApi,
   EmployeeDesignationReportApi,
   VisaListApi,
+  EmployeeHandbook,
+  DisplayHandbook,
   TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
   EmployeeMailConfigurationApi,
+  AddNewTemplateApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -232,6 +237,24 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }
 
+export const employeeHandbook: EmployeeHandbook = {
+  getHandbooks: apiPrefix + '/handbookItem/getHandbookNamesCountryWise',
+}
+
+export const dispHandbook: DisplayHandbook = {
+  dispHandbook: apiPrefix + '/handbookItem/get',
+}
+
+export const employeeAttendanceReportApiConfig: EmployeeAttendanceReportApi = {
+  getEmployeeAttendance: apiPrefix + '/biometric/bioAdminManager/attendance',
+  exportAttendance: apiPrefix + '/biometric/exportAttendance',
+  exportBiometricAttendance: apiPrefix + '/biometric/exportAttendance2',
+}
+
+export const userApiConfig: UserAccessToFeaturesApi = {
+  getUserAccessToFeatures: apiPrefix + '/roleFeature/user',
+}
+
 export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   getEmployeeHandbooks: apiPrefix + '/handbookItem/getAll',
   deleteEmployeeHandbook: apiPrefix + '/handbookItem/delete',
@@ -272,3 +295,8 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
     getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
     exportMailTemplatesList: apiPrefix + '/mailTemplates/exportMailTemplates',
   }
+
+export const addNewTemplateAPiConfig: AddNewTemplateApi = {
+  getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
+  addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
+}

@@ -131,6 +131,13 @@ export type handleActiveTabProps = {
   handleActiveTab: (id: number) => void
 }
 
+export type cardBodyProps = {
+  isViewingAnotherEmployee: boolean | string | undefined
+  setToggle: (value: string) => void
+  editButtonHandler: (value: number) => void
+  editVisaButtonHandler: (value: number) => void
+}
+
 export type EmployeePassportImage = {
   empId: number | string
   file1: FormData | null

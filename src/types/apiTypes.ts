@@ -140,6 +140,7 @@ export interface ShiftConfigurationApi extends ApiBase {
   updateShiftDetail: string
   deleteShiftDetail: string
 }
+
 export interface CertificateListApi extends ApiBase {
   getAllEmployeeCertificates: string
   exportCertificateList: string
@@ -186,6 +187,24 @@ export interface VisaListApi extends ApiBase {
   exportVisaList: string
 }
 
+export interface EmployeeHandbook extends ApiBase {
+  getHandbooks: string
+}
+
+export interface DisplayHandbook extends ApiBase {
+  dispHandbook: string
+}
+
+export interface EmployeeAttendanceReportApi extends ApiBase {
+  getEmployeeAttendance: string
+  exportAttendance: string
+  exportBiometricAttendance: string
+}
+
+export interface UserAccessToFeaturesApi extends ApiBase {
+  getUserAccessToFeatures: string
+}
+
 export interface EmployeeHandbookSettingsApi extends ApiBase {
   getEmployeeHandbooks: string
   deleteEmployeeHandbook: string
@@ -203,6 +222,7 @@ export interface EmployeeLeaveSettingsApi extends ApiBase {
   deleteLeaveCategory: string
   addUpdateLeaveCategory: string
 }
+
 export interface AddNewEmployeeAPi extends ApiBase {
   getEmployeeDepartments: string
   getEmpCountries: string
@@ -218,4 +238,9 @@ export interface EmployeeMailConfigurationApi extends ApiBase {
   getMailTemplates: string
   getMailTemplateTypes: string
   exportMailTemplatesList: string
+}
+
+export interface AddNewTemplateApi extends ApiBase {
+  getAssetTypes: string
+  addNewMailTemplate: string
 }
