@@ -9,7 +9,7 @@ describe('Add Experience Component', () => {
     render(
       <ExperienceField
         onExperienceHandler={jest.fn()}
-        experienceValue={0}
+        experienceValue={1231231231}
         dynamicFormLabelProps={jest.fn()}
       />,
     )

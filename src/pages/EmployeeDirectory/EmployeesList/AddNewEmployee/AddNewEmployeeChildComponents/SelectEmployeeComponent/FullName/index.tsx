@@ -38,7 +38,7 @@ const FullName = ({
                 size="sm"
                 type="text"
                 name="firstname"
-                data-testId="firstnameForm"
+                data-testId="firstnameform"
                 placeholder="First Name"
                 className="capetalized"
                 value={firstNameValue}
@@ -53,7 +53,7 @@ const FullName = ({
                 type="text"
                 name="middlename"
                 placeholder="Middle Name"
-                data-testId="middlenameForm"
+                data-testId="middlenameform"
                 className="capetalized"
                 value={middleNameValue}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
@@ -67,7 +67,7 @@ const FullName = ({
                 type="text"
                 name="lastname"
                 placeholder="Last Name"
-                data-testId="lastnameForm"
+                data-testId="lastnameform"
                 className="capetalized"
                 value={lastNameValue}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
