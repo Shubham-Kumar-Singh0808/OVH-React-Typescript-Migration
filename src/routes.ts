@@ -41,6 +41,12 @@ const EmpDesignationReport = React.lazy(
 const VisaDetailsList = React.lazy(
   () => import('./pages/EmployeeDirectory/VisaList/VisaList'),
 )
+const EmployeeHandbook = React.lazy(
+  () => import('./pages/EmployeeHandbook/EmployeeHandbook'),
+)
+const Handbook = React.lazy(
+  () => import('./pages/EmployeeHandbook/ShowHandbook'),
+)
 const AttendanceReport = React.lazy(
   () => import('./pages/TimeAndAttendance/AttendanceReport/AttendanceReport'),
 )
@@ -58,6 +64,9 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+const MailConfiguration = React.lazy(
+  () => import('./pages/Settings/MailConfiguration/employeeEmailTemplate'),
+)
 
 const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
@@ -66,6 +75,11 @@ const AddNewEmployee = React.lazy(
 const HiveActivityReport = React.lazy(
   () =>
     import('./pages/TimeAndAttendance/HiveActivityReport/HiveActivityReport'),
+)
+
+const AddNewTemplate = React.lazy(
+  () =>
+    import('./pages/Settings/MailConfiguration/AddTemplate/AddNewMailTemplate'),
 )
 
 const EditEmployee = React.lazy(
@@ -115,6 +129,16 @@ const routes = [
     component: VisaDetailsList,
   },
   {
+    path: '/employeehandbook',
+    name: 'Employee Handbook',
+    component: EmployeeHandbook,
+  },
+  {
+    path: '/showemployeehandbook/:clickedpageName',
+    name: 'Handbook',
+    component: Handbook,
+  },
+  {
     path: '/attendancesummary',
     name: 'Attendance Summary',
     component: AttendanceReport,
@@ -145,9 +169,19 @@ const routes = [
     component: HiveActivityReport,
   },
   {
+    path: '/addTemplate',
+    name: 'Add Template',
+    component: AddNewTemplate,
+  },
+  {
     path: '/editEmployee/:employeeId',
     name: 'Edit Employee',
     component: EditEmployee,
+  },
+  {
+    path: '/mailTemplates',
+    name: 'Mail Configuration',
+    component: MailConfiguration,
   },
 ]
 

@@ -30,9 +30,13 @@ import {
   EmployeeReportApi,
   EmployeeDesignationReportApi,
   VisaListApi,
+  EmployeeHandbook,
+  DisplayHandbook,
   TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
   HiveActivityReportApi,
+  EmployeeMailConfigurationApi,
+  AddNewTemplateApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -234,6 +238,14 @@ export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }
 
+export const employeeHandbook: EmployeeHandbook = {
+  getHandbooks: apiPrefix + '/handbookItem/getHandbookNamesCountryWise',
+}
+
+export const dispHandbook: DisplayHandbook = {
+  dispHandbook: apiPrefix + '/handbookItem/get',
+}
+
 export const employeeAttendanceReportApiConfig: EmployeeAttendanceReportApi = {
   getEmployeeAttendance: apiPrefix + '/biometric/bioAdminManager/attendance',
   exportAttendance: apiPrefix + '/biometric/exportAttendance',
@@ -284,4 +296,15 @@ export const hiveActivityReportApiConfig: HiveActivityReportApi = {
   getManagerHiveActivityReport: apiPrefix + '/timeActivity/managerHiveReports',
   getSearchHiveTime: apiPrefix + '/timeActivity/searchHiveTime',
   exportHiveReport: apiPrefix + '/timeActivity/exportHiveReport',
+}
+
+export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
+  {
+    getEmailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
+    getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+  }
+
+export const addNewTemplateAPiConfig: AddNewTemplateApi = {
+  getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
+  addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
 }

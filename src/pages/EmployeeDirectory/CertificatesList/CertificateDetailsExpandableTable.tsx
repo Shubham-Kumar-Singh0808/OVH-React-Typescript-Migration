@@ -20,6 +20,7 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { CertificateDetailsExpandableTableProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
+import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const CertificateDetailsExpandableTable = (
   props: CertificateDetailsExpandableTableProps,
@@ -119,10 +120,14 @@ const CertificateDetailsExpandableTable = (
                                     {currentCertificate.code || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currentCertificate.completedDate || 'N/A'}
+                                    {localeDateFormat(
+                                      currentCertificate.completedDate as string,
+                                    ) || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {currentCertificate.expiryDate || 'N/A'}
+                                    {localeDateFormat(
+                                      currentCertificate.expiryDate as string,
+                                    ) || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     {currentCertificate.percent || 'N/A'}

@@ -187,6 +187,14 @@ export interface VisaListApi extends ApiBase {
   exportVisaList: string
 }
 
+export interface EmployeeHandbook extends ApiBase {
+  getHandbooks: string
+}
+
+export interface DisplayHandbook extends ApiBase {
+  dispHandbook: string
+}
+
 export interface EmployeeAttendanceReportApi extends ApiBase {
   getEmployeeAttendance: string
   exportAttendance: string
@@ -231,4 +239,13 @@ export interface HiveActivityReportApi extends ApiBase {
   getManagerHiveActivityReport: string
   getSearchHiveTime: string
   exportHiveReport: string
+}
+export interface EmployeeMailConfigurationApi extends ApiBase {
+  getEmailTemplates: string
+  getMailTemplateTypes: string
+}
+
+export interface AddNewTemplateApi extends ApiBase {
+  getAssetTypes: string
+  addNewMailTemplate: string
 }

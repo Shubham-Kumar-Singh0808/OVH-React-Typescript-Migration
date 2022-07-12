@@ -36,12 +36,16 @@ import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfigu
 import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'
 import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
+import employeeHandbookReducer from './reducers/EmployeeHandbook/employeeHandbookSlice'
+import showHandbookReducer from './reducers/EmployeeHandbook/showHandbookSlice'
 import attendanceReportReducer from './reducers/TimeAndAttendance/AttendanceReport/attendanceReportSlice'
 import userAccessToFeaturesReducer from './reducers/Settings/UserRolesConfiguration/userAccessToFeaturesSlice'
 import employeeHandbookSettingsReducer from './reducers/EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 import timeInOfficeReportReducer from './reducers/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import employeeLeaveSettingsReducer from './reducers/Settings/LeaveSettings/employeeLeaveSettingsSlice'
 import hiveActivityReportReducer from './reducers/TimeAndAttendance/HiveActivityReport/hiveActivityReportSlice'
+import employeeMailConfigurationReducer from './reducers/Settings/MailConfiguration/employeeMailConfigurationSlice'
+import addNewTemplateReducer from './reducers/Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
 
 export const allReducers = {
@@ -70,6 +74,8 @@ export const allReducers = {
   employeeReports: employeeReportReducer,
   employeeDesignationReports: employeeDesignationReportReducer,
   visaList: visaListReducer,
+  employeeHandbook: employeeHandbookReducer,
+  showHandbook: showHandbookReducer,
   employeeAttendanceReport: attendanceReportReducer,
   userAccessToFeatures: userAccessToFeaturesReducer,
   employeeHandbookSettings: employeeHandbookSettingsReducer,
@@ -85,6 +91,8 @@ export const allReducers = {
   getJobTypes: getAllJobTypeReducer,
   checkUserExist: checkUserExistReducer,
   hiveActivityReport: hiveActivityReportReducer,
+  employeeMailConfiguration: employeeMailConfigurationReducer,
+  addMailTemplate: addNewTemplateReducer,
   employee: employeeReducer,
   // add your slice reducers here
 }
@@ -102,7 +110,6 @@ const stateStore = configureStore({
 export type RootState = ReturnType<typeof stateStore.getState>
 export type AppDispatch = typeof stateStore.dispatch
 
-// eslint-disable-next-line
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
 

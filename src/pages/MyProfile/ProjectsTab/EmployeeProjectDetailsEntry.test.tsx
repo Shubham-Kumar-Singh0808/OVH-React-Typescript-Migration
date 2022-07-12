@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import EmployeeProjectDetailsEntry from './EmployeeProjectDetailsEntry'
 import { mockEmployeeProjectsDetail } from '../../../test/data/employeeProjectsData'
+import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 describe('Employee Projects Details', () => {
   beforeEach(() => {
@@ -39,7 +40,7 @@ describe('Employee Projects Details', () => {
   })
   test('should render the correct project enddate', () => {
     const tableEntry = screen.getByRole('cell', {
-      name: mockEmployeeProjectsDetail[0].endDate,
+      name: localeDateFormat(mockEmployeeProjectsDetail[0].endDate),
     })
     expect(tableEntry).toBeTruthy()
   })
