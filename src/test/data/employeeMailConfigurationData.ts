@@ -9,7 +9,7 @@ export const mockEmailTemplate: EmployeeMailTemplate[] = [
     templateName: 'old',
     template: 'tyhu',
     templateTypeId: 5,
-    templateType: 'Support Management',
+    templateType: 'Conference Room Booking',
     assetTypeId: null,
     assetType: 'N/A',
     email: null,
@@ -37,7 +37,7 @@ export const mockTemplateTypes: EmployeeMailTemplateType[] = [
   },
   {
     id: 5,
-    name: 'Support Management',
+    name: 'testing',
   },
   {
     id: 6,
