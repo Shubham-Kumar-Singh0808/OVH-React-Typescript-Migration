@@ -153,6 +153,8 @@ function AddNewMailTemplate(): JSX.Element {
     }, 100)
   }
 
+  const isAsteriskShow = addNewTemplate.assetTypeId ? TextWhite : TextDanger
+
   return (
     <>
       <OCard
@@ -216,14 +218,7 @@ function AddNewMailTemplate(): JSX.Element {
                   {...formLabelProps}
                   className="col-sm-2 col-form-label text-end"
                 >
-                  Asset Type:{' '}
-                  <span
-                    className={
-                      addNewTemplate.assetTypeId ? TextWhite : TextDanger
-                    }
-                  >
-                    *
-                  </span>
+                  Asset Type: <span className={isAsteriskShow}>*</span>
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormSelect
@@ -250,11 +245,7 @@ function AddNewMailTemplate(): JSX.Element {
                   className="col-sm-2 col-form-label text-end"
                 >
                   Email:
-                  <span
-                    className={addNewTemplate.email ? TextWhite : TextDanger}
-                  >
-                    *
-                  </span>
+                  <span className={isAsteriskShow}>*</span>
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormInput

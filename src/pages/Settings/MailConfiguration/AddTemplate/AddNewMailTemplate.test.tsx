@@ -39,7 +39,7 @@ describe('Add Template Component Testing', () => {
       const title = screen.findByTestId('title-input')
       expect(title).toBeTruthy()
     })
-    test('should render Template richtext editor', () => {
+    test('should render Template rich text editor', () => {
       const templateDescription = screen.findByTestId('ckEditor-component')
       expect(templateDescription).toBeTruthy()
     })
@@ -127,10 +127,10 @@ describe('Add Template Component Testing', () => {
     const htmlElement = document.querySelector(
       '[data-testid="ckEditor-component"]',
     )
-    const nonExistantElement = document.querySelector('ckEditor-component')
+    const nonExistElement = document.querySelector('ckEditor-component')
 
     expect(htmlElement).toBeInTheDocument()
-    expect(nonExistantElement).not.toBeInTheDocument()
+    expect(nonExistElement).not.toBeInTheDocument()
   })
   test('should fetch Asset types data and put it in the store', async () => {
     render(<AddNewMailTemplate />)
