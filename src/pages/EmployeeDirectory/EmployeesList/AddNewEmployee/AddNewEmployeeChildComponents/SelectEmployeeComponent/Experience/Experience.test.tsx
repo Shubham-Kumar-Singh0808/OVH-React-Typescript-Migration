@@ -1,5 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
 import ExperienceField from '.'
 import { screen, render } from '../../../../../../../test/testUtils'
 
@@ -30,12 +31,10 @@ describe('Add Experience Component', () => {
     expect(screen.getByPlaceholderText('Experience')).toBeInTheDocument()
   })
 
-  // test('should be able to enter Experience Component', async () => {
-  //   const numberInput = screen.getByTestId('experienceForm')
-  //   userEvent.type(numberInput, '1231231231')
+  test('should be able to enter Experience Component', () => {
+    const numberInput = screen.getByTestId('experienceForm')
+    userEvent.type(numberInput, '1231231231')
 
-  //   await waitFor(() => {
-  //     expect(screen.getByTestId('experienceForm')).toHaveValue('1231231231')
-  //   })
-  // })
+    expect(screen.getByTestId('experienceForm')).toHaveValue('1231231231')
+  })
 })
