@@ -1,14 +1,14 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type EmployeeMailTemplate = {
-  id: number | string
+  id?: number | string
   templateName: string
   template: string
   templateTypeId: number | string
-  templateType: string
-  assetTypeId: null | string
-  assetType: string
-  email: null | string
+  templateType?: string
+  assetTypeId?: null | string
+  assetType?: string
+  email?: null | string
 }
 
 export type EmployeeMailTemplateType = {
@@ -32,3 +32,8 @@ export type EmployeeGetEmailTemplateModelProps = {
   emailTemplate: string
   emailTemplateName: string
 }
+
+// export type EmployeeClearMailTemplate = {
+//   templateName: string
+//   templateTypeId: number | string
+// }

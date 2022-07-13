@@ -5,48 +5,26 @@ import {
   CFormLabel,
   CFormSelect,
   CRow,
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
-  CLink,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
-import parse from 'html-react-parser'
 import { Link } from 'react-router-dom'
+import EmployeeEmailTemplateTable from './EmployeeEmailTemplateTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import {
-  EmployeeGetEmailTemplateModelProps,
-  EmployeeMailTemplate,
-} from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
-import OModal from '../../../components/ReusableComponent/OModal'
+import { EmployeeMailTemplate } from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
 
 const employeeEmailTemplate = (): JSX.Element => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
-
-  const [emailTemplateModel, setEmailTemplateModel] =
-    useState<EmployeeGetEmailTemplateModelProps>({
-      emailTemplate: '',
-      emailTemplateName: '',
-    })
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const dispatch = useAppDispatch()
+  console.log()
 
   const initialEmployeeEmailTemplate = {} as EmployeeMailTemplate
   const [employeeTemplate, setEmployeeTemplate] = useState(
     initialEmployeeEmailTemplate,
   )
-
-  const employeeMailTemplates = useTypedSelector(
-    reduxServices.employeeMailConfiguration.selectors.employeeMailTemplate,
-  )
-
   const employeeMailTemplateType = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplateTypes,
   )
@@ -58,14 +36,12 @@ const employeeEmailTemplate = (): JSX.Element => {
   }, [dispatch])
 
   const handleEmailTemplate = () => {
-    if (employeeTemplate.templateTypeId || employeeTemplate.templateName) {
-      dispatch(
-        reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
-          templateName: employeeTemplate.templateName,
-          templateTypeId: employeeTemplate.templateTypeId,
-        }),
-      )
-    }
+    dispatch(
+      reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
+        templateName: employeeTemplate.templateName,
+        templateTypeId: employeeTemplate.templateTypeId,
+      }),
+    )
   }
   const onChangeMailTemplateHandler = (
     e:
@@ -75,14 +51,6 @@ const employeeEmailTemplate = (): JSX.Element => {
     const { name, value } = e.target
     setEmployeeTemplate((prevState) => {
       return { ...prevState, ...{ [name]: value } }
-    })
-  }
-
-  const handleModal = (emailTemplateName: string, emailTemplate: string) => {
-    setIsModalVisible(true)
-    setEmailTemplateModel({
-      emailTemplate,
-      emailTemplateName,
     })
   }
 
@@ -99,11 +67,6 @@ const employeeEmailTemplate = (): JSX.Element => {
       templateName: '',
       template: '',
       templateTypeId: '',
-      templateType: '',
-      assetType: '',
-      assetTypeId: '',
-      email: '',
-      id: '',
     })
     dispatch(
       reduxServices.employeeMailConfiguration.actions.clearEmployeeEmailTemplate(),
@@ -210,98 +173,7 @@ const employeeEmailTemplate = (): JSX.Element => {
         </CRow>
         <br></br>
         <br></br>
-        <CTable striped>
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell scope="col">S.No</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Type</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Type</CTableHeaderCell>
-              <CTableHeaderCell scope="col" className="w-25">
-                Template
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          {employeeTemplate.templateTypeId || employeeTemplate.templateName ? (
-            <>
-              <CTableBody>
-                {employeeMailTemplates?.map((emailTemplate, index) => {
-                  const descriptionLimit =
-                    emailTemplate.template && emailTemplate.template.length > 15
-                      ? `${emailTemplate.template.substring(0, 15)}...`
-                      : emailTemplate.template
-                  return (
-                    <CTableRow key={index}>
-                      <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {emailTemplate.templateType}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {emailTemplate.templateName}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {emailTemplate.assetType}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        <CLink
-                          className="cursor-pointer text-decoration-none text-primary"
-                          onClick={() =>
-                            handleModal(
-                              emailTemplate.templateName,
-                              emailTemplate.template,
-                            )
-                          }
-                        >
-                          {parse(descriptionLimit)}
-                        </CLink>
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        <CButton color="info btn-ovh me-2">
-                          <i className="fa fa-pencil-square-o"></i>
-                        </CButton>
-                        <CButton color="danger btn-ovh me-2">
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTableDataCell>
-                    </CTableRow>
-                  )
-                })}
-
-                <OModal
-                  modalSize="lg"
-                  alignment="center"
-                  modalFooterClass="d-none"
-                  modalHeaderClass="d-none"
-                  visible={isModalVisible}
-                  setVisible={setIsModalVisible}
-                >
-                  <>
-                    <h4 className="model-text">
-                      {emailTemplateModel.emailTemplateName}
-                    </h4>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: emailTemplateModel.emailTemplate,
-                      }}
-                    />
-                  </>
-                </OModal>
-              </CTableBody>
-              <br></br>
-              <strong>
-                {employeeMailTemplates?.length
-                  ? `Total Records: ${employeeMailTemplates?.length}`
-                  : `No Records found...`}
-              </strong>
-            </>
-          ) : (
-            <>
-              <br></br>
-              <strong>No Records found...</strong>
-            </>
-          )}
-        </CTable>
+        <EmployeeEmailTemplateTable employeeTemplate={employeeTemplate} />
       </OCard>
     </>
   )
