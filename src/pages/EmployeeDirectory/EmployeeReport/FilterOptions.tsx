@@ -20,13 +20,19 @@ import {
 const FilterOptions = ({
   category,
   setCategory,
+  country,
+  setCountry,
+  searchInput,
+  setSearchInput,
 }: EmployeeReportOptionsProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const [searchInput, setSearchInput] = useState<string>('')
-
   const selectedEmploymentStatus = useTypedSelector(
     reduxServices.employeeReports.selectors.selectedEmploymentStatus,
+  )
+
+  const countries = useTypedSelector(
+    reduxServices.employeeReports.selectors.countries,
   )
 
   const categoryOptions = [
@@ -36,6 +42,8 @@ const FilterOptions = ({
     { label: 'External Vendor', value: 'External Vendor' },
     { label: 'Employment Contract', value: 'Employment Contract' },
   ]
+
+  console.log(countries)
 
   const handleEmployeeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
@@ -51,10 +59,26 @@ const FilterOptions = ({
     )
   }
 
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.employeeReports.actions.setSearchEmployee(searchInput),
+      )
+    }
+  }
+
   return (
     <>
       <CRow>
-        <CCol className="mt-1" sm={2} md={1} lg={1}>
+        <CCol
+          className="mt-1"
+          sm={2}
+          md={1}
+          lg={1}
+          data-testid="activeFilterStatus"
+        >
           <CFormCheck
             type="radio"
             name="employmentStatus"
@@ -68,7 +92,13 @@ const FilterOptions = ({
             inline
           />
         </CCol>
-        <CCol className="mt-1" sm={2} md={1} lg={1}>
+        <CCol
+          className="mt-1"
+          sm={2}
+          md={1}
+          lg={1}
+          data-testid="inactiveFilterStatus"
+        >
           <CFormCheck
             type="radio"
             name="employmentStatus"
@@ -83,13 +113,14 @@ const FilterOptions = ({
           />
         </CCol>
         <CCol sm={2} md={2} lg={1}>
-          <CFormLabel className="mt-1">Select :</CFormLabel>
+          <CFormLabel className="mt-1">Select:</CFormLabel>
         </CCol>
-        <CCol sm={4} md={2} lg={2}>
+        <CCol sm={4} md={2} lg={2} data-testid="categoryFilter">
           <CFormSelect
             aria-label="Default select example"
             name="category"
             id="category"
+            data-testid="form-select1"
             value={category}
             onChange={(e) => {
               setCategory(e.target.value)
@@ -102,7 +133,32 @@ const FilterOptions = ({
             ))}
           </CFormSelect>
         </CCol>
-        <CCol className="d-md-flex justify-content-end">
+        <CCol sm={2} md={2} lg={1}>
+          <CFormLabel className="mt-1">Country:</CFormLabel>
+        </CCol>
+        <CCol sm={2} md={2} lg={2} data-testid="countryFilter">
+          <CFormSelect
+            aria-label="Default select example"
+            name="country"
+            id="country"
+            data-testid="form-select2"
+            value={country}
+            onChange={(e) => {
+              setCountry(e.target.value)
+            }}
+          >
+            <option>Select Country</option>
+            {countries?.map((opt, index) => (
+              <option key={index} value={opt.id}>
+                {opt.name}
+              </option>
+            ))}
+          </CFormSelect>
+        </CCol>
+        <CCol
+          className="d-md-flex justify-content-end"
+          data-testid="designationLinkButton"
+        >
           <Link to={`/report2`}>
             <CButton color="info btn-ovh me-0">
               <i className="fa fa-eye  me-1"></i>Employee Designation info
@@ -112,19 +168,22 @@ const FilterOptions = ({
       </CRow>
       <CRow className="gap-2 d-md-flex justify-content-md-end mt-4">
         <CCol sm={6} md={4} lg={5} xl={4} xxl={4}>
-          <CInputGroup className="global-search me-0">
+          <CInputGroup className="global-search me-0" data-testid="searchField">
             <CFormInput
+              data-testid="searchInput"
               placeholder="Search"
               aria-label="Search"
               aria-describedby="button-addon2"
               value={searchInput}
+              name="searchEmployeeInput"
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
+              onKeyUp={handleSearchByEnter}
             />
             <CButton
               disabled={!searchInput}
-              data-testid="multi-search-btn"
+              data-testid="search-btn1"
               className="cursor-pointer"
               type="button"
               color="info"

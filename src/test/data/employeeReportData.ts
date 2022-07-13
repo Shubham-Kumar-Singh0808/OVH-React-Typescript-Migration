@@ -1,5 +1,39 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { MockEmployeeReport } from '../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
+import {
+  Category,
+  Country,
+  MockEmployeeReport,
+} from '../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
+
+export const mockCategory: Category[] = [
+  { label: 'Working from Home', value: 'Home' },
+  { label: 'Working from Office', value: 'Office' },
+  { label: 'External Vendor', value: 'External Vendor' },
+  { label: 'Employment Contract', value: 'Employment Contract' },
+]
+
+export const mockCountries: Country[] = [
+  {
+    id: 1,
+    name: 'AUSTRALIA',
+  },
+  {
+    id: 2,
+    name: 'INDIA',
+  },
+  {
+    id: 3,
+    name: 'USA',
+  },
+  {
+    id: 4,
+    name: 'CANADA',
+  },
+  {
+    id: 5,
+    name: 'PHILIPPINES',
+  },
+]
 
 export const mockEmployeeReport: MockEmployeeReport[] = [
   {
