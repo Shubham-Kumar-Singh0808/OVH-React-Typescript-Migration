@@ -1,7 +1,9 @@
-import axios from 'axios'
 import { AllowedHttpMethods, addNewEmployeeAPiConfig } from '../../../apiList'
 import { GetAllEmployment } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../utils/apiUtils'
 
 const getEmploymentTypes = async (): Promise<GetAllEmployment[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -9,7 +11,7 @@ const getEmploymentTypes = async (): Promise<GetAllEmployment[]> => {
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

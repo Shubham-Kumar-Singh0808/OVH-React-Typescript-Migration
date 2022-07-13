@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeHandbookSettingsApiConfig,
@@ -7,7 +6,10 @@ import {
   EmployeeHandbookListApiProps,
   EmployeeHandbookListResponse,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getEmployeeHandbooks = async (
   props: EmployeeHandbookListApiProps,
@@ -20,7 +22,7 @@ const getEmployeeHandbooks = async (
       startIndex: props.startIndex ?? 0,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -34,7 +36,7 @@ const deleteEmployeeHandbook = async (
       bookId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

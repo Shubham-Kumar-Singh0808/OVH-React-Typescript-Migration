@@ -1,10 +1,12 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   shiftConfigurationApiConfig,
 } from '../../../../apiList'
 import { EmployeeShiftDetails } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
-import { getAuthenticatedRequestConfig } from '../../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../../utils/apiUtils'
 
 const getEmployeeShifts = async (): Promise<EmployeeShiftDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -12,7 +14,7 @@ const getEmployeeShifts = async (): Promise<EmployeeShiftDetails[]> => {
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -25,7 +27,7 @@ const createEmployeeTimeSlot = async (
     data: employeeShiftDetails,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -38,7 +40,7 @@ const updateEmployeeShiftDetail = async (
     data: employeeShiftDetails,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -53,7 +55,7 @@ const deleteEmployeeShiftDetail = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
