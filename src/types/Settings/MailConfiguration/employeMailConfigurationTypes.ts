@@ -33,7 +33,6 @@ export type EmployeeGetEmailTemplateModelProps = {
   emailTemplateName: string
 }
 
-// export type EmployeeClearMailTemplate = {
-//   templateName: string
-//   templateTypeId: number | string
-// }
+export type EmployeeEmailTemplateTableProps = {
+  employeeTemplate: EmployeeMailTemplate
+}

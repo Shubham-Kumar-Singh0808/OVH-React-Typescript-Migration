@@ -15,12 +15,9 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import {
   EmployeeGetEmailTemplateModelProps,
-  EmployeeMailTemplate,
+  EmployeeEmailTemplateTableProps,
 } from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 
-type EmployeeEmailTemplateTableProps = {
-  employeeTemplate: EmployeeMailTemplate
-}
 const EmployeeEmailTemplateTable = ({
   employeeTemplate,
 }: EmployeeEmailTemplateTableProps) => {
