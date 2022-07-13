@@ -63,7 +63,7 @@ const UserNameEmail = ({
             value={username}
             disabled
           />
-          <strong>@aibridgeml.com</strong>
+          <strong>@raybiztech.com</strong>
         </CCol>
       </CRow>
     </>

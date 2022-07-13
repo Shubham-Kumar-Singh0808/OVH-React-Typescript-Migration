@@ -24,6 +24,16 @@ const EmploymentContract = ({
     isContractExist === '' ||
     isContractExist.toLowerCase() === 'true'
   )
+
+  const isDateCorrect = (startValue: Date, endValue: Date): boolean => {
+    if (startValue == null || endValue == null) return false
+
+    const start = new Date(startValue)
+    const end = new Date(endValue)
+
+    return start > end
+  }
+
   return (
     <>
       <CRow className="mb-3 align-items-center">
@@ -106,6 +116,13 @@ const EmploymentContract = ({
               />
               <span></span>
             </CCol>
+            {isDateCorrect(startDateValue, endDateValue) && (
+              <CCol sm={3}>
+                <p style={{ color: 'red' }}>
+                  <b>End date should be greater than Start date</b>
+                </p>
+              </CCol>
+            )}
           </CRow>
         </>
       ) : (
