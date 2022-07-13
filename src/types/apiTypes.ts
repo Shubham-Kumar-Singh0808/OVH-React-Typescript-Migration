@@ -172,6 +172,7 @@ export interface EmployeeReporteesApi extends ApiBase {
 
 export interface EmployeeReportApi extends ApiBase {
   getEmployeeReports: string
+  getCountries: string
 }
 
 export interface EmployeeDesignationReportApi extends ApiBase {
