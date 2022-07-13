@@ -43,8 +43,6 @@ const FilterOptions = ({
     { label: 'Employment Contract', value: 'Employment Contract' },
   ]
 
-  console.log(countries)
-
   const handleEmployeeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       reduxServices.employeeReports.actions.changeSelectedEmploymentStatus(
