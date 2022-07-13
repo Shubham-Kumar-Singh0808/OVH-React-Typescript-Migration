@@ -30,8 +30,12 @@ import {
   EmployeeReportApi,
   EmployeeDesignationReportApi,
   VisaListApi,
+  EmployeeHandbook,
+  DisplayHandbook,
   TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
+  EmployeeMailConfigurationApi,
+  AddNewTemplateApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -211,6 +215,7 @@ export const employeeReviewsApiConfig: EmployeeReviewsApi = {
 
 export const employeeReportApiConfig: EmployeeReportApi = {
   getEmployeeReports: apiPrefix + '/jobapplicant/getSelectedTypeEmployeeData',
+  getCountries: apiPrefix + '/jobapplicant/getEmpCountries',
 }
 
 export const employeeDesignationReportApiConfig: EmployeeDesignationReportApi =
@@ -231,6 +236,14 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
+}
+
+export const employeeHandbook: EmployeeHandbook = {
+  getHandbooks: apiPrefix + '/handbookItem/getHandbookNamesCountryWise',
+}
+
+export const dispHandbook: DisplayHandbook = {
+  dispHandbook: apiPrefix + '/handbookItem/get',
 }
 
 export const employeeAttendanceReportApiConfig: EmployeeAttendanceReportApi = {
@@ -275,4 +288,15 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getAllemploymentType: apiPrefix + '/jobapplicant/getEmploymentType',
   getAllJobType: apiPrefix + '/jobapplicant/getJobType',
   getCheckIfUserExist: apiPrefix + '/Employee/isemployeeUsernameexist',
+}
+
+export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
+  {
+    getEmailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
+    getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+  }
+
+export const addNewTemplateAPiConfig: AddNewTemplateApi = {
+  getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
+  addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
 }

@@ -2,6 +2,7 @@ import { AllowedHttpMethods, employeeReportApiConfig } from '../../apiList'
 import {
   EmployeeReportApiProps,
   EmploymentStatus,
+  Country,
   GetEmployeeResponse,
 } from '../../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
 import {
@@ -16,7 +17,7 @@ const getEmployeeReport = async (
     url: employeeReportApiConfig.getEmployeeReports,
     method: AllowedHttpMethods.get,
     params: {
-      country: '',
+      country: props.country ?? '',
       endIndex: props.endIndex ?? 20,
       searchStr: props.searchEmployee ?? '',
       selectionStatus: props.selectionStatus ?? EmploymentStatus.active,
@@ -29,8 +30,19 @@ const getEmployeeReport = async (
   return response.data
 }
 
+const getCountries = async (): Promise<Country[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeReportApiConfig.getCountries,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeReportApi = {
   getEmployeeReport,
+  getCountries,
 }
 
 export default employeeReportApi

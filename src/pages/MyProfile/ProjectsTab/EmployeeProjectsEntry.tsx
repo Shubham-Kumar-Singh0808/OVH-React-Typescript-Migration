@@ -2,6 +2,7 @@ import { CTableDataCell, CTableRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import EmployeeProjectDetailsTable from './EmployeeProjectDetailsTable'
 import { EmployeeProjectDetailsTableInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const EmployeeProjectEntry = (
   props: EmployeeProjectDetailsTableInterface,
@@ -84,8 +85,12 @@ const EmployeeProjectEntry = (
         <CTableDataCell scope="row">{projectType}</CTableDataCell>
         <CTableDataCell scope="row">{props.project.client}</CTableDataCell>
         <CTableDataCell scope="row">{props.project.managerName}</CTableDataCell>
-        <CTableDataCell scope="row">{props.project.startdate}</CTableDataCell>
-        <CTableDataCell scope="row">{props.project.enddate}</CTableDataCell>
+        <CTableDataCell scope="row">
+          {localeDateFormat(props.project.startdate as string)}
+        </CTableDataCell>
+        <CTableDataCell scope="row">
+          {localeDateFormat(props.project.enddate as string)}
+        </CTableDataCell>
         <CTableDataCell scope="row">{health}</CTableDataCell>
       </CTableRow>
       {projectDetailsClicked && (

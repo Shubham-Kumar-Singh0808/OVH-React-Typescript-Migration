@@ -187,6 +187,7 @@ export interface EmployeeReporteesApi extends ApiBase {
 
 export interface EmployeeReportApi extends ApiBase {
   getEmployeeReports: string
+  getCountries: string
 }
 
 export interface EmployeeDesignationReportApi extends ApiBase {
@@ -200,6 +201,14 @@ export interface VisaListApi extends ApiBase {
   getCountries: string
   getVisaTypes: string
   exportVisaList: string
+}
+
+export interface EmployeeHandbook extends ApiBase {
+  getHandbooks: string
+}
+
+export interface DisplayHandbook extends ApiBase {
+  dispHandbook: string
 }
 
 export interface EmployeeAttendanceReportApi extends ApiBase {
@@ -239,4 +248,14 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllemploymentType: string
   getAllJobType: string
   getCheckIfUserExist: string
+}
+
+export interface EmployeeMailConfigurationApi extends ApiBase {
+  getEmailTemplates: string
+  getMailTemplateTypes: string
+}
+
+export interface AddNewTemplateApi extends ApiBase {
+  getAssetTypes: string
+  addNewMailTemplate: string
 }

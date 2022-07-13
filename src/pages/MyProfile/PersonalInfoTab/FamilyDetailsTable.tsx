@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-// Todd: remove eslint and fix error
 import {
   CButton,
   CTable,
@@ -16,6 +14,7 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
+import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const FamilyDetailsTable = ({
   editButtonHandler,
@@ -33,6 +32,7 @@ const FamilyDetailsTable = ({
   const getEmployeeFamilyData = useTypedSelector(
     reduxServices.personalInformation.selectors.familyDetails,
   )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -90,6 +90,7 @@ const FamilyDetailsTable = ({
           sortNode1.personName.localeCompare(sortNode2.personName),
         )
     }
+    return []
   }, [getEmployeeFamilyData])
 
   const shouldDisplayHeaders = !isViewingAnotherEmployee ? (
@@ -163,7 +164,7 @@ const FamilyDetailsTable = ({
               </CTableDataCell>
               {!isFieldDisabled || !isViewingAnotherEmployee ? (
                 <CTableDataCell scope="row">
-                  {family.dateOfBirth || 'N/A'}
+                  {localeDateFormat(family.dateOfBirth as string) || 'N/A'}
                 </CTableDataCell>
               ) : (
                 <></>

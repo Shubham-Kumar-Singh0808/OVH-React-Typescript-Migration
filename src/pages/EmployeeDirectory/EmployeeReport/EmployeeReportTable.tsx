@@ -67,9 +67,7 @@ const EmployeeReportTable = (props: EmployeeReportTableProps): JSX.Element => {
                       </Link>
                     </CTableDataCell>
                     <CTableDataCell>{employee.emailId}</CTableDataCell>
-                    <CTableDataCell className="text-center">
-                      {employee.mobile}
-                    </CTableDataCell>
+                    <CTableDataCell>{employee.mobile}</CTableDataCell>
                     <CTableDataCell>{employee.country}</CTableDataCell>
                   </CTableRow>
                 )
