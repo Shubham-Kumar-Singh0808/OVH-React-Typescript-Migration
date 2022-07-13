@@ -30,7 +30,6 @@ const FilterOptions = ({
   const selectedEmploymentStatus = useTypedSelector(
     reduxServices.employeeReports.selectors.selectedEmploymentStatus,
   )
-
   const countries = useTypedSelector(
     reduxServices.employeeReports.selectors.countries,
   )
