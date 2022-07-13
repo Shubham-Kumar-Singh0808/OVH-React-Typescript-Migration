@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 /* eslint-disable sonarjs/no-duplicate-string */
-// Todo: remove eslint and fix all the errors
 import { EmployeeCertificate } from '../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 
 export const mockCertificateList: EmployeeCertificate[] = [

@@ -6,11 +6,14 @@ export const certificateListHandlers = [
   //getAllEmployeeCertificates api mock
   rest.get(
     certificateListApiConfig.getAllEmployeeCertificates,
-    (req, res, ctx) => {
+    (_req, res, ctx) => {
       return res(
         ctx.json({
           status: 200,
-          data: { list: mockCertificateList },
+          data: {
+            list: mockCertificateList,
+            listsize: mockCertificateList.length,
+          },
         }),
       )
     },

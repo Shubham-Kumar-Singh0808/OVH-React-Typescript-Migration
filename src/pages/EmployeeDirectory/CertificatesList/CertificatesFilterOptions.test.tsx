@@ -1,17 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable import/named */
-// Todd: remove eslint and fix error
-// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import CertificatesFilterOptions from './CertificatesFilterOptions'
 import stateStore from '../../../stateStore'
 import { ReduxProvider } from '../../../components/Helper'
-import { render, screen } from '../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
+import {
+  mockCertificateByTechnology,
+  mockTechnologies,
+} from '../../../test/data/employeeTechnologiesData'
+import { mockCertificateList } from '../../../test/data/certificateListData'
 
+const searchInputTestId = 'multi-search-btn'
 describe('Certificates Filter Options Component Testing', () => {
   test('should render certificates filter options component with out crashing', () => {
     render(
@@ -85,8 +85,125 @@ describe('Certificates Filter Options Component Testing', () => {
         />
       </ReduxProvider>,
     )
-    expect(screen.getByTestId('multi-search-btn')).not.toBeEnabled()
+    expect(screen.getByTestId(searchInputTestId)).not.toBeEnabled()
     userEvent.type(screen.getByPlaceholderText('Multiple Search'), 'Java')
-    expect(screen.getByTestId('multi-search-btn')).toBeEnabled()
+    expect(screen.getByTestId(searchInputTestId)).toBeEnabled()
+  })
+})
+
+const mockSetSelectTechnology = jest.fn()
+const mockSetFilterByTechnology = jest.fn()
+const mockSetFilterByCertificate = jest.fn()
+const mockSetMultiSearchValue = jest.fn()
+const mockSetIsAccordionItemShow = jest.fn()
+
+describe('Certificates Filter Options Component Testing', () => {
+  describe('Certificates Filter Options component without value', () => {
+    beforeEach(() => {
+      render(
+        <CertificatesFilterOptions
+          selectTechnology={''}
+          setSelectTechnology={mockSetSelectTechnology}
+          setFilterByTechnology={mockSetFilterByTechnology}
+          setFilterByCertificate={mockSetFilterByCertificate}
+          setMultiSearchValue={mockSetMultiSearchValue}
+          filterByTechnology={''}
+          filterByCertificate={''}
+          multiSearchValue={''}
+          setIsAccordionItemShow={mockSetIsAccordionItemShow}
+        />,
+      )
+    })
+    test('should render labels', () => {
+      expect(screen.getByText('Technology:')).toBeInTheDocument()
+      expect(screen.getByText('Certificate Type:')).toBeInTheDocument()
+    })
+    test('should render selectTechnology', () => {
+      const technologyFilter = screen.findByTestId('selectTechnology')
+      expect(technologyFilter).toBeTruthy()
+    })
+    test('should render selectCertificate', () => {
+      const certificateFilter = screen.findByTestId('selectCertificate')
+      expect(certificateFilter).toBeTruthy()
+    })
+    test('should render Add Certificate Type', () => {
+      const addCertificateTypeBtn = screen.getByText('Add Certificate Type')
+      expect(addCertificateTypeBtn).toBeTruthy()
+    })
+    test('should render search input field', () => {
+      const searchComponent = screen.getByTestId('searchField')
+      expect(searchComponent).toBeTruthy()
+    })
+  })
+
+  describe('Technology Field', () => {
+    beforeEach(() => {
+      render(
+        <CertificatesFilterOptions
+          selectTechnology={''}
+          setSelectTechnology={mockSetSelectTechnology}
+          setFilterByTechnology={mockSetFilterByTechnology}
+          setFilterByCertificate={mockSetFilterByCertificate}
+          setMultiSearchValue={mockSetMultiSearchValue}
+          filterByTechnology={''}
+          filterByCertificate={''}
+          multiSearchValue={''}
+          setIsAccordionItemShow={mockSetIsAccordionItemShow}
+        />,
+        {
+          preloadedState: {
+            employeeCertificates: {
+              getAllTechnologies: mockTechnologies,
+              typeOfCertificate: mockCertificateByTechnology,
+            },
+            certificateList: {
+              employeeCertificationList: mockCertificateList,
+              listSize: 45,
+            },
+          },
+        },
+      )
+    })
+    test('technology select element value should equal to option selected ', () => {
+      const technologyDropdown = screen.getByTestId('selectTechnology')
+      userEvent.selectOptions(technologyDropdown, ['Java'])
+      expect(mockSetSelectTechnology).toBeCalledWith('Java')
+      expect(technologyDropdown).toBeInTheDocument()
+    })
+    test('after view button click it should should call mockSetSelectTechnology function', () => {
+      const technologyDropdown = screen.getByTestId('selectTechnology')
+      userEvent.selectOptions(technologyDropdown, ['.Net'])
+      userEvent.click(screen.getByRole('button', { name: 'View' }))
+      expect(mockSetSelectTechnology).toBeCalledWith('.Net')
+    })
+    test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', async () => {
+      const searchInput = screen.getByTestId('searchField')
+      userEvent.type(searchInput, 'Java')
+      userEvent.click(screen.getByTestId(searchInputTestId))
+      await waitFor(() => {
+        expect(mockSetMultiSearchValue).toBeCalledWith('Java')
+      })
+    })
+    test('upon providing search text and then clicking enter key it should call a function ', async () => {
+      const searchInput = screen.getByTestId('searchField')
+      userEvent.type(searchInput, 'Java')
+      fireEvent.keyDown(searchInput, { key: 'Enter', keyCode: 13 })
+      await waitFor(() => {
+        expect(mockSetMultiSearchValue).toBeCalledTimes(1)
+      })
+    })
+    test('upon clicking clear button it should clear the select element values ', async () => {
+      const technologyDropdown = screen.getByTestId('selectTechnology')
+      userEvent.selectOptions(technologyDropdown, ['Java'])
+      await waitFor(() => {
+        const certificateFilter = screen.getByTestId('selectCertificate')
+        userEvent.selectOptions(certificateFilter, ['JavaTesting'])
+        userEvent.click(screen.getByRole('button', { name: 'Clear' }))
+        expect(technologyDropdown).toHaveValue('')
+        expect(certificateFilter).toHaveValue('')
+        expect(mockSetFilterByTechnology).toBeCalledWith('')
+        expect(mockSetFilterByCertificate).toBeCalledWith('')
+      })
+    })
   })
 })

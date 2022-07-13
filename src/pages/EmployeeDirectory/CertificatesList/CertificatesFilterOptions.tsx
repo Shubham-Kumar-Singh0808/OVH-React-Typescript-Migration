@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
 import { useTypedSelector } from '../../../stateStore'
 import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
+import { downloadFile } from '../../../utils/helper'
 
 const CertificatesFilterOptions = ({
   selectTechnology,
@@ -36,14 +37,23 @@ const CertificatesFilterOptions = ({
     (state) => state.employeeCertificates.typeOfCertificate,
   )
 
+  const handleSearchButton = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setMultiSearchValue(searchInput)
+      setFilterByTechnology(selectTechnology)
+      setIsAccordionItemShow(true)
+    }
+  }
   const multiSearchButtonHandler = () => {
     setMultiSearchValue(searchInput)
+    setFilterByTechnology(selectTechnology)
     setIsAccordionItemShow(true)
   }
 
   const viewButtonHandler = () => {
     setFilterByTechnology(selectTechnology)
     setFilterByCertificate(selectCertificate)
+    setMultiSearchValue(searchInput)
     setIsAccordionItemShow(true)
   }
 
@@ -72,23 +82,7 @@ const CertificatesFilterOptions = ({
         selectedCertificate: filterByCertificate,
         multipleSearch: multiSearchValue,
       })
-    downloadFile(certificateListDownload)
-  }
-
-  const downloadFile = (excelDownload: Blob | undefined) => {
-    if (excelDownload) {
-      const url = window.URL.createObjectURL(
-        new Blob([excelDownload], {
-          type: excelDownload.type,
-        }),
-      )
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', 'CertificatesList.csv')
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
-    }
+    downloadFile(certificateListDownload, 'CertificatesList.csv')
   }
 
   return (
@@ -102,7 +96,7 @@ const CertificatesFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="technology"
-            data-testid="form-select1"
+            data-testid="selectTechnology"
             name="technology"
             value={selectTechnology}
             onChange={(e) => {
@@ -132,7 +126,7 @@ const CertificatesFilterOptions = ({
                 aria-label="Default select example"
                 size="sm"
                 id="certificate"
-                data-testid="form-select2"
+                data-testid="selectCertificate"
                 name="certificate"
                 value={selectCertificate}
                 onChange={(e) => {
@@ -195,6 +189,7 @@ const CertificatesFilterOptions = ({
         <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
           <CInputGroup className="global-search me-0">
             <CFormInput
+              data-testid="searchField"
               placeholder="Multiple Search"
               aria-label="Multiple Search"
               aria-describedby="button-addon2"
@@ -202,6 +197,7 @@ const CertificatesFilterOptions = ({
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
+              onKeyDown={handleSearchButton}
             />
             <CButton
               disabled={!searchInput}
