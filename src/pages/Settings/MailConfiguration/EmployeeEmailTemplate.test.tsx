@@ -25,27 +25,6 @@ const expectComponentToBeRendered = () => {
 }
 
 describe('email Template List Table Testing', () => {
-  // test('should render No data to display if Mail template is empty', async () => {
-  //   render(
-  //     <ReduxProvider reduxStore={stateStore}>
-  //       <EmployeeEmailTemplate />
-  //     </ReduxProvider>,
-  //   )
-  //   await waitFor(() => {
-  //     expect(screen.getByText('No Records found...')).toBeInTheDocument()
-  //   })
-  // })
-  // test('should render correct number of page records', async () => {
-  //   render(
-  //     <ReduxProvider reduxStore={stateStore}>
-  //       <EmployeeEmailTemplate />
-  //     </ReduxProvider>,
-  //   )
-
-  //   await waitFor(() => {
-  //     expect(screen.getAllByRole('row')).toHaveLength(1)
-  //   })
-  // })
   it('should display the correct number of options', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
