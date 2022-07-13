@@ -58,14 +58,14 @@ const employeeEmailTemplate = (): JSX.Element => {
   }, [dispatch])
 
   const handleEmailTemplate = () => {
-    // if (employeeTemplate.templateTypeId || employeeTemplate.templateName) {
-    dispatch(
-      reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
-        templateName: employeeTemplate.templateName,
-        templateTypeId: employeeTemplate.templateTypeId,
-      }),
-    )
-    // }
+    if (employeeTemplate.templateTypeId || employeeTemplate.templateName) {
+      dispatch(
+        reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
+          templateName: employeeTemplate.templateName,
+          templateTypeId: employeeTemplate.templateTypeId,
+        }),
+      )
+    }
   }
   const onChangeMailTemplateHandler = (
     e:
