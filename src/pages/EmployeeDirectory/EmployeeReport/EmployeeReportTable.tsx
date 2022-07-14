@@ -77,7 +77,7 @@ const EmployeeReportTable = (props: EmployeeReportTableProps): JSX.Element => {
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {employeeReports.length}</strong>
+                <strong>Total Records: {listSize}</strong>
               </p>
             </CCol>
             <CCol xs={3}>

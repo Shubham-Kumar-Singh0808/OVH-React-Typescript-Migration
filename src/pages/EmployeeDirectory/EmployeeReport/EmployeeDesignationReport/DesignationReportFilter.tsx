@@ -50,12 +50,12 @@ const DesignationReportFilter = ({
         <CCol lg={6}>
           <CRow>
             <CCol sm={4} md={4} lg={4}>
-              <CFormLabel className="mt-1">Designation :</CFormLabel>
+              <CFormLabel className="mt-1">Designation:</CFormLabel>
             </CCol>
-            <CCol sm={6} md={6} lg={6}>
+            <CCol sm={6} md={6} lg={6} data-testid="designationFilter">
               <CFormSelect
                 aria-label="Default select example"
-                data-testid="designation"
+                data-testid="designationSelect"
                 name="designation"
                 id="designation"
                 value={designation}
@@ -75,8 +75,12 @@ const DesignationReportFilter = ({
         </CCol>
         <CCol lg={6} className="gap-2 d-md-flex justify-content-md-end">
           <CRow>
-            <CCol>
-              <CButton color="info btn-ovh me-1" onClick={handleBack}>
+            <CCol data-testid="backBtn">
+              <CButton
+                data-testid="goToThisPage"
+                color="info btn-ovh me-1"
+                onClick={handleBack}
+              >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
             </CCol>
@@ -84,7 +88,11 @@ const DesignationReportFilter = ({
         </CCol>
       </CRow>
       <CRow className="mt-2">
-        <CCol lg={12} className="gap-2 d-md-flex justify-content-end">
+        <CCol
+          lg={12}
+          className="gap-2 d-md-flex justify-content-end"
+          data-testid="exportBtn"
+        >
           <CButton
             color="info"
             className="text-white"

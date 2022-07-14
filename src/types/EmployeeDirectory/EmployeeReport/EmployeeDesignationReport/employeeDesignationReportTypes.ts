@@ -49,3 +49,10 @@ export type EmployeeDesignationOptionsProps = {
   designation: string
   setDesignation: (value: string) => void
 }
+
+export type mockEmpDepartment = {
+  departmentId: number
+  departmentName: string
+  supportManagementFlag: boolean
+  allocationSupportFlag: boolean
+}
