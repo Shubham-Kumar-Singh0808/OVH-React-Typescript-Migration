@@ -4,6 +4,7 @@ import { useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import employeeReportDesignationAPI from '../../../../middleware/api/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportApi'
 import { EmployeeDesignationOptionsProps } from '../../../../types/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportTypes'
+import { downloadFile } from '../../../../utils/helper'
 
 const DesignationReportFilter = ({
   designation,
@@ -21,23 +22,7 @@ const DesignationReportFilter = ({
       await employeeReportDesignationAPI.exportEmployeeDesignationReport({
         selectedDesignation,
       })
-    downloadFile(employeeDesignationList)
-  }
-
-  const downloadFile = (cvDownload: Blob | undefined) => {
-    if (cvDownload) {
-      const url = window.URL.createObjectURL(
-        new Blob([cvDownload], {
-          type: cvDownload.type,
-        }),
-      )
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', 'EmployeeDesignationListReport.csv')
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
-    }
+    downloadFile(employeeDesignationList, 'EmployeeDesignationListReport.csv')
   }
 
   const handleBack = () => {
@@ -80,6 +65,7 @@ const DesignationReportFilter = ({
                 data-testid="goToThisPage"
                 color="info btn-ovh me-1"
                 onClick={handleBack}
+                value="back"
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
