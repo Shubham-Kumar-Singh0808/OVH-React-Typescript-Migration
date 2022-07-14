@@ -6,6 +6,9 @@ export const wrongPassword = 'wrongPassword'
 export const emailAddress = 'email-address'
 export const templateType = 'form-select-type'
 
-// HR associate
+// HR associate component
 export const selectedHRAssociate = 'Omer Mohsin'
 export const hRAssociatePlaceHolder = 'Type name here for auto fill'
+
+// Project Manager component
+export const selectedProjectManager = 'Omer Mohsin'

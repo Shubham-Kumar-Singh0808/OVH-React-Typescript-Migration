@@ -59,7 +59,7 @@ const HRAssociate = ({
               placeholder: 'Type name here for auto fill',
             }}
             getItemValue={(item) => item.fullName}
-            data-testid="autocomplete"
+            data-testid="hrautocomplete"
             items={hrDataList}
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
