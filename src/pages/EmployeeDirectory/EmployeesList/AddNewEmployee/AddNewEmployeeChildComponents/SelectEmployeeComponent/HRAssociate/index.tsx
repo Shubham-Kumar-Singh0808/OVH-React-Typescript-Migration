@@ -17,6 +17,7 @@ const HRAssociate = ({
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
 
   const onHandleSelectHRAssociate = (fullName: string) => {
+    console.log('$#######')
     setAutoCompleteTarget(fullName)
     const managerName = hrDataList.find((data) => data.fullName === fullName)
 
@@ -39,6 +40,7 @@ const HRAssociate = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
+          data-testid="hrLabel"
           {...dynamicFormLabelProps(
             'hrassociate',
             'col-sm-3 col-form-label text-end',
@@ -52,11 +54,12 @@ const HRAssociate = ({
         <CCol sm={3}>
           <Autocomplete
             inputProps={{
-              className: 'form-control form-control-sm',
+              className: 'form-control form-control-sm hr-autocomplete',
               id: 'hr-autocomplete',
               placeholder: 'Type name here for auto fill',
             }}
             getItemValue={(item) => item.fullName}
+            data-testid="autocomplete"
             items={hrDataList}
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
@@ -72,6 +75,7 @@ const HRAssociate = ({
             )}
             renderItem={(item, isHighlighted) => (
               <div
+                data-testid="option"
                 className={
                   isHighlighted
                     ? 'autocomplete-dropdown-item active'

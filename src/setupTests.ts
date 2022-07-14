@@ -7,6 +7,8 @@ import '@testing-library/jest-dom'
 import { MessageChannel } from 'worker_threads'
 import { cleanup } from '@testing-library/react'
 import { createMocks } from 'react-idle-timer'
+import Enzyme from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
 import { server } from './test/server'
 
 // Establish API mocking before all tests.
@@ -25,3 +27,5 @@ afterAll(() => {
   server.close()
   cleanup()
 })
+
+Enzyme.configure({ adapter: new Adapter() })
