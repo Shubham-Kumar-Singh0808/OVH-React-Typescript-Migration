@@ -20,7 +20,6 @@ const employeeEmailTemplate = (): JSX.Element => {
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const dispatch = useAppDispatch()
-  console.log()
 
   const initialEmployeeEmailTemplate = {} as EmployeeMailTemplate
   const [employeeTemplate, setEmployeeTemplate] = useState(
