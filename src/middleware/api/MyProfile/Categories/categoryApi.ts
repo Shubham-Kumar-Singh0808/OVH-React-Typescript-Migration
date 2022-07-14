@@ -1,7 +1,9 @@
-import axios from 'axios'
 import { AllowedHttpMethods, categoriesApiConfig } from '../../apiList'
 import { Category } from '../../../../types/MyProfile/Categories/categoryTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getAllCategories = async (): Promise<Category[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -9,7 +11,7 @@ const getAllCategories = async (): Promise<Category[]> => {
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -25,7 +27,7 @@ const createCategory = async (categoryName: string): Promise<Category[]> => {
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -41,7 +43,7 @@ const deleteCategory = async (categoryId: number): Promise<Category[]> => {
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

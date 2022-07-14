@@ -8,11 +8,11 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
-import moment from 'moment'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { currentMonthDate, previousMonthDate } from '../../../utils/helper'
 
 const ReportOptions = ({
   setSearchValue,
@@ -29,9 +29,6 @@ const ReportOptions = ({
   const [searchInput, setSearchInput] = useState<string>('')
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false)
 
-  const currentMonthDate = moment().subtract(1, 'months').format('M/YYYY')
-  const previousMonthDate = moment().subtract(2, 'months').format('M/YYYY')
-
   const selectedDate = useTypedSelector(
     reduxServices.timeInOfficeReport.selectors.selectedDate,
   )
@@ -39,9 +36,9 @@ const ReportOptions = ({
     reduxServices.timeInOfficeReport.selectors.selectedView,
   )
 
-  const dateToUse = useMemo(() => {
-    return startDate ? startDate : new Date()
-  }, [startDate])
+  const monthDisplay = useTypedSelector(
+    reduxServices.timeInOfficeReport.selectors.monthDisplay,
+  )
 
   const handleSelectMonthRadio = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -145,42 +142,6 @@ const ReportOptions = ({
           />
         </CCol>
       </CRow>
-      {isDatePickerVisible && (
-        <CRow className="time-in-office-report-options">
-          <CFormLabel className="col-sm-1 col-form-label">Month:</CFormLabel>
-          <CCol sm={2}>
-            <ReactDatePicker
-              selected={startDate}
-              onChange={(date: Date) => setStartDate(date)}
-              dateFormat="MM/yyyy"
-              showMonthYearPicker
-              showFullMonthYearPicker
-              showFourColumnMonthYearPicker
-              placeholderText="mm/yyyy"
-            />
-          </CCol>
-          <CCol>
-            <CButton
-              className="cursor-pointer"
-              disabled={!startDate}
-              color="info btn-ovh me-1"
-              onClick={viewButtonHandler}
-              data-testid="form-button1"
-            >
-              <i className="fa fa-search-plus text-white"></i> View
-            </CButton>
-            <CButton
-              className="cursor-pointer"
-              disabled={!startDate}
-              color="info btn-ovh me-1"
-              onClick={clearButtonHandler}
-              data-testid="form-button2"
-            >
-              <i className="fa fa-refresh text-white"></i> Clear
-            </CButton>
-          </CCol>
-        </CRow>
-      )}
       <CRow className="time-in-office-report-options">
         {selectedView !== 'Me' && (
           <CCol md={12}>
@@ -196,19 +157,59 @@ const ReportOptions = ({
           </CCol>
         )}
       </CRow>
+      {isDatePickerVisible && (
+        <CRow className="mb-20">
+          <CFormLabel className="col-sm-1 col-form-label text-center">
+            Month:
+            <span className={startDate ? 'text-white' : 'text-danger'}>*</span>
+          </CFormLabel>
+          <CCol sm={2} className="time-in-datepicker-col">
+            <ReactDatePicker
+              selected={startDate}
+              onChange={(date: Date) => setStartDate(date)}
+              dateFormat="MM/yyyy"
+              showMonthYearPicker
+              showFourColumnMonthYearPicker
+              placeholderText="mm/yyyy"
+              todayButton="Today"
+            />
+          </CCol>
+          <CCol>
+            <CButton
+              className="cursor-pointer"
+              disabled={!startDate}
+              color="info btn-ovh me-1 text-white"
+              onClick={viewButtonHandler}
+              data-testid="form-button1"
+            >
+              <i className="fa fa-search-plus text-white"></i> View
+            </CButton>
+            <CButton
+              className="cursor-pointer"
+              disabled={!startDate}
+              color="info btn-ovh me-1 text-white"
+              onClick={clearButtonHandler}
+              data-testid="form-button2"
+            >
+              <i className="fa fa-refresh text-white"></i> Clear
+            </CButton>
+          </CCol>
+        </CRow>
+      )}
       <CRow className="time-in-office-report-options">
         <CCol sm={9} className="time-in-office-header">
           <h5 className="time-in-office-header">
-            Time in Office for {moment(dateToUse).format('MMMM-YYYY')}
+            Time in Office for {monthDisplay}
           </h5>
         </CCol>
         {selectedView !== 'Me' && (
-          <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
+          <CCol sm={6} md={3}>
             <CForm onSubmit={searchButtonHandler}>
               <CInputGroup className="global-search me-0">
                 <CFormInput
                   placeholder="Multiple Search"
                   aria-label="Multiple Search"
+                  className="time-in-office-search-field"
                   aria-describedby="button-addon2"
                   value={searchInput}
                   onChange={(e) => {

@@ -1,25 +1,17 @@
-import '@testing-library/jest-dom'
-
-import { render, screen } from '@testing-library/react'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
+import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
 import DesignationField from '.'
-import stateStore from '../../../../../../../stateStore'
+import { screen, render } from '../../../../../../../test/testUtils'
+import { listComposer } from '../../../../../../../utils/helper'
+import { mockDesignationList } from '../../../../../../../test/data/employeeDesignationListData'
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+const mockSetIsAccordionItemShow = jest.fn()
 
 describe('Add Employee Designation Component', () => {
-  test('should be able to render Designation without crashing', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
+  describe('if isAddDisable is false', () => {
+    beforeEach(() => {
+      render(
         <DesignationField
           list={[]}
           setValue={jest.fn()}
@@ -27,16 +19,33 @@ describe('Add Employee Designation Component', () => {
           value={''}
           toggleValue={false}
           dynamicFormLabelProps={jest.fn()}
-        />
-      </ReduxProvider>,
-    )
+          isAddDisable={true}
+        />,
+      )
+    })
 
-    screen.debug()
+    test('should be able to render Employee Designation Component without crashing', () => {
+      screen.debug()
+    })
+
+    test('should be able to render Employee Designation Component Title', () => {
+      expect(screen.getByText('Designation:')).toBeInTheDocument()
+    })
+
+    test('should be able to render Employee Designation Component label', () => {
+      expect(screen.getByTestId('designationLabel')).toBeTruthy()
+    })
+
+    test('should be able to correctly set default option', () => {
+      expect(
+        screen.getByRole('option', { name: 'Select Designation' }).selected,
+      ).toBeTruthy()
+    })
   })
 
-  test('should be able to correctly set default option', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
+  describe('if isAddDisable is true', () => {
+    beforeEach(() => {
+      render(
         <DesignationField
           list={[]}
           setValue={jest.fn()}
@@ -44,11 +53,45 @@ describe('Add Employee Designation Component', () => {
           value={''}
           toggleValue={false}
           dynamicFormLabelProps={jest.fn()}
-        />
-      </ReduxProvider>,
-    )
-    expect(
-      screen.getByRole('option', { name: 'Select Designation' }).selected,
-    ).toBe(true)
+          isAddDisable={false}
+        />,
+      )
+    })
+
+    test('should be able to see ADD button if isAddDisable is "true"', () => {
+      expect(screen.getByTestId('designationButton')).toBeInTheDocument()
+    })
+  })
+
+  describe('should render Employee Designation Component with the List of Designation', () => {
+    beforeEach(() => {
+      const composedDesignationList = listComposer(
+        mockDesignationList as [],
+        'id',
+        'name',
+      )
+
+      render(
+        <DesignationField
+          list={composedDesignationList}
+          setValue={mockSetIsAccordionItemShow}
+          setToggleShift={jest.fn()}
+          value={''}
+          toggleValue={false}
+          dynamicFormLabelProps={jest.fn()}
+          isAddDisable={false}
+        />,
+      )
+    })
+
+    test('should be able to render Employee Designation Component without crashing', () => {
+      screen.debug()
+    })
+
+    test('should render Employee Designation Component List Options with out crashing', () => {
+      const designationSelector = screen.getByTestId('form-select')
+      userEvent.selectOptions(designationSelector, ['Accounts & Finance'])
+      expect(mockSetIsAccordionItemShow).toBeCalledWith('Accounts & Finance')
+    })
   })
 })

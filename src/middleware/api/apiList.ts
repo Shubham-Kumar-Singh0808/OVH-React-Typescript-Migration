@@ -216,6 +216,7 @@ export const employeeReviewsApiConfig: EmployeeReviewsApi = {
 
 export const employeeReportApiConfig: EmployeeReportApi = {
   getEmployeeReports: apiPrefix + '/jobapplicant/getSelectedTypeEmployeeData',
+  getCountries: apiPrefix + '/jobapplicant/getEmpCountries',
 }
 
 export const employeeDesignationReportApiConfig: EmployeeDesignationReportApi =

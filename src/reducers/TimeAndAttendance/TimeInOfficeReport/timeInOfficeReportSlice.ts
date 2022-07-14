@@ -48,6 +48,7 @@ const initialTimeInOfficeReportSliceState: TimeInOfficeReportSliceState = {
     inOfficeDTOs: [],
   },
   isLoading: ApiLoadingState.idle,
+  monthDisplay: moment(new Date()).format('MMMM-YYYY'),
 }
 
 const timeInOfficeReportSlice = createSlice({
@@ -59,6 +60,9 @@ const timeInOfficeReportSlice = createSlice({
     },
     setSelectedView: (state, action) => {
       state.selectedView = action.payload
+    },
+    setMonthDisplay: (state, action) => {
+      state.monthDisplay = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -102,6 +106,8 @@ const selectedView = (state: RootState): SelectedView =>
   state.timeInOfficeReport.selectedView
 const managerReportSize = (state: RootState): number =>
   state.timeInOfficeReport.timeInOfficeManagerReport.size
+const monthDisplay = (state: RootState): string =>
+  state.timeInOfficeReport.monthDisplay
 
 const timeInOfficeReportThunk = {
   getTimeInOfficeEmployeeReport,
@@ -115,6 +121,7 @@ const timeInOfficeReportSelectors = {
   selectedDate,
   selectedView,
   managerReportSize,
+  monthDisplay,
 }
 
 export const timeInOfficeReportService = {

@@ -1,7 +1,9 @@
-import axios from 'axios'
 import { AllowedHttpMethods, skillsApiConfig } from '../../apiList'
 import { Skill } from '../../../../types/MyProfile/Skills/skillTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getAllSkills = async (categoryId: number): Promise<Skill[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -11,7 +13,7 @@ const getAllSkills = async (categoryId: number): Promise<Skill[]> => {
     data: { categoryId },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -32,7 +34,7 @@ const createSkill = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -48,7 +50,7 @@ const deleteSkill = async (skillId: number): Promise<Skill[]> => {
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

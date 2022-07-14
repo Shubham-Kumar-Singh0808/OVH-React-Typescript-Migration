@@ -17,6 +17,7 @@ const Birthday = ({
           'birthday',
           'col-sm-3 col-form-label text-end',
         )}
+        data-testid="date-picker-title"
       >
         Birthday:
         <span className={showIsRequired(date)}>*</span>
@@ -24,6 +25,7 @@ const Birthday = ({
       <CCol sm={3}>
         <DatePicker
           id="birthday"
+          data-testid="date-picker"
           className="form-control form-control-sm sh-date-picker"
           maxDate={new Date()}
           peekNextMonth

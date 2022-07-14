@@ -1,11 +1,14 @@
-import axios from 'axios'
 import { AllowedHttpMethods, employeeReportApiConfig } from '../../apiList'
 import {
   EmployeeReportApiProps,
   EmploymentStatus,
+  Country,
   GetEmployeeResponse,
 } from '../../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getEmployeeReport = async (
   props: EmployeeReportApiProps,
@@ -14,7 +17,7 @@ const getEmployeeReport = async (
     url: employeeReportApiConfig.getEmployeeReports,
     method: AllowedHttpMethods.get,
     params: {
-      country: '',
+      country: props.country ?? '',
       endIndex: props.endIndex ?? 20,
       searchStr: props.searchEmployee ?? '',
       selectionStatus: props.selectionStatus ?? EmploymentStatus.active,
@@ -23,12 +26,23 @@ const getEmployeeReport = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getCountries = async (): Promise<Country[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeReportApiConfig.getCountries,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
 const employeeReportApi = {
   getEmployeeReport,
+  getCountries,
 }
 
 export default employeeReportApi
