@@ -94,6 +94,7 @@ const employeeEmailTemplate = (): JSX.Element => {
       link.href = url
       link.setAttribute('download', 'MailTemplateList.csv')
       document.body.appendChild(link)
+
       link.click()
       link.remove()
     }

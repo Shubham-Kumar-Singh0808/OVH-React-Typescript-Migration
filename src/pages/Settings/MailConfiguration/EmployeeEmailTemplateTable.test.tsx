@@ -49,4 +49,16 @@ describe('email Template List Table Testing', () => {
       expect(screen.getAllByRole('row')).toHaveLength(1)
     })
   })
+  test('should render hive activity details table component without crashing', () => {
+    render(
+      <EmployeeEmailTemplateTable
+        employeeTemplate={{
+          templateName: '',
+          template: '',
+          templateTypeId: '',
+        }}
+      />,
+    )
+    expect(screen.getByText('Title')).toBeInTheDocument()
+  })
 })
