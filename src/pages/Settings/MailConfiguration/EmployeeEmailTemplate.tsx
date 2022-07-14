@@ -62,6 +62,14 @@ const employeeEmailTemplate = (): JSX.Element => {
     }
   }, [employeeTemplate.templateTypeId, employeeTemplate.templateName])
 
+  useEffect(() => {
+    if (window.location.pathname === '/mailTemplates') {
+      dispatch(
+        reduxServices.employeeMailConfiguration.actions.clearEmployeeEmailTemplate(),
+      )
+    }
+  }, [])
+
   const handleClearDetails = () => {
     setEmployeeTemplate({
       templateName: '',
