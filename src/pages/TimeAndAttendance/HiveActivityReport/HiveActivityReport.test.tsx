@@ -59,7 +59,7 @@ describe('Hive Activity Report Testing', () => {
       expect(screen.getByRole('button', { name: 'Clear' })).toBeEnabled()
     })
     userEvent.click(screen.getByRole('button', { name: 'View' }))
-    expect(screen.getByText('2')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'View' })).toBeEnabled()
   })
   test('search input testing', async () => {
     render(<HiveActivityReport />, {
