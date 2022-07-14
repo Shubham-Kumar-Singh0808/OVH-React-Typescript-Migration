@@ -120,7 +120,7 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {employees.length}</strong>
+                <strong>Total Records: {listSize}</strong>
               </p>
             </CCol>
             <CCol xs={3}>

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeDesignationReportApiConfig,
@@ -8,14 +7,17 @@ import {
   GetEmployeeDesignationResponse,
   Designation,
 } from '../../../../../types/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportTypes'
-import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../utils/apiUtils'
 
 const getDesignations = async (): Promise<Designation[] | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeDesignationReportApiConfig.getAllDesignations,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -32,7 +34,7 @@ const getEmployeeDesignationReport = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -50,7 +52,7 @@ const exportEmployeeDesignationReport = async (
     responseType: 'blob',
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

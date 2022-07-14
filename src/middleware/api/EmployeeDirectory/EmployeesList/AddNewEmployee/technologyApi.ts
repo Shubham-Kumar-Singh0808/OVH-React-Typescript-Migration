@@ -1,10 +1,12 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeCertificationsApiConfig,
 } from '../../../apiList'
 import { GetAllTechnology } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../utils/apiUtils'
 
 const getAllTechnology = async (): Promise<GetAllTechnology[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -12,7 +14,7 @@ const getAllTechnology = async (): Promise<GetAllTechnology[]> => {
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

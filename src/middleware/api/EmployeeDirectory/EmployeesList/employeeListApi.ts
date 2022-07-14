@@ -1,11 +1,13 @@
-import axios from 'axios'
 import { AllowedHttpMethods, employeeListConfig } from '../../apiList'
 import {
   EmployeeListApiProps,
   EmploymentStatus,
   GetEmployeeResponse,
 } from '../../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getEmployees = async (
   props: EmployeeListApiProps,
@@ -21,7 +23,7 @@ const getEmployees = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -40,7 +42,7 @@ const exportEmployeeData = async (
     responseType: 'blob',
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

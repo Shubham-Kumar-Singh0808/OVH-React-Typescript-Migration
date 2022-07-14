@@ -1,3 +1,18 @@
+import { Method, ResponseType } from 'axios'
+
+export type AuthenticatedRequestConfig = {
+  url: string
+  method: Method
+  headers: { tenantKey: string; [key: string]: string | number }
+  params?: { [key: string]: string | number | boolean | undefined }
+  data?:
+    | { [key: string]: string | number | unknown }
+    | unknown
+    | string
+    | number
+  responseType?: ResponseType
+}
+
 export interface ApiBase {
   get?: string
   insert?: string

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { AllowedHttpMethods, employeeReportApiConfig } from '../../apiList'
 import {
   EmployeeReportApiProps,
@@ -6,7 +5,10 @@ import {
   Country,
   GetEmployeeResponse,
 } from '../../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getEmployeeReport = async (
   props: EmployeeReportApiProps,
@@ -24,7 +26,7 @@ const getEmployeeReport = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -34,7 +36,7 @@ const getCountries = async (): Promise<Country[]> => {
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

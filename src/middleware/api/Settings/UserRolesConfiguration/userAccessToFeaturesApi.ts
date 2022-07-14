@@ -1,6 +1,8 @@
-import axios from 'axios'
 import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 import { AllowedHttpMethods, userApiConfig } from '../../apiList'
 
 const getUserAccessToFeatures = async (
@@ -13,7 +15,7 @@ const getUserAccessToFeatures = async (
       userId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
