@@ -1,0 +1,8 @@
+.sh-hive-activity-link, .sh-hive-activity-data-cell{
+    text-decoration: none;
+    color: $primary-75 !important;
+    &:hover {
+        text-decoration: underline;
+        color: $primary-75 !important;
+    }
+}

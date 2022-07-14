@@ -250,6 +250,12 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getCheckIfUserExist: string
 }
 
+export interface HiveActivityReportApi extends ApiBase {
+  getEmployeeHiveActivityReport: string
+  getManagerHiveActivityReport: string
+  getSearchHiveTime: string
+  exportHiveReport: string
+}
 export interface EmployeeMailConfigurationApi extends ApiBase {
   getEmailTemplates: string
   getMailTemplateTypes: string

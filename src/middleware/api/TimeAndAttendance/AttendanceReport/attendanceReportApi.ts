@@ -55,6 +55,7 @@ const exportAttendanceReport = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+
 const exportBiometricAttendanceReport = async (
   props: EmployeeAttendanceReportApiProps,
 ): Promise<Blob | undefined> => {
