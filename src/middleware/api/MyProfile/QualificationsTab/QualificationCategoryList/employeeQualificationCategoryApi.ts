@@ -1,9 +1,11 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeQualificationCategoryApiConfig,
 } from '../../../apiList'
-import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../utils/apiUtils'
 import { QualificationCategory } from '../../../../../types/MyProfile/QualificationsTab/QualificationCategoryList/employeeQualificationCategoryTypes'
 
 const getQualificationCategories = async (): Promise<
@@ -14,7 +16,7 @@ const getQualificationCategories = async (): Promise<
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -31,7 +33,7 @@ const createQualificationCategory = async ({
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -49,7 +51,7 @@ const deleteQualificationCategory = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

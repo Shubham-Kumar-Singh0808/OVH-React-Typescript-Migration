@@ -1,6 +1,34 @@
-/* eslint-disable sonarjs/no-duplicate-string */
-import { MockEmployeeReport } from '../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
+import {
+  Country,
+  MockEmployeeReport,
+} from '../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
 
+export const mockCountries: Country[] = [
+  {
+    id: 1,
+    name: 'AUSTRALIA',
+  },
+  {
+    id: 2,
+    name: 'INDIA',
+  },
+  {
+    id: 3,
+    name: 'USA',
+  },
+  {
+    id: 4,
+    name: 'CANADA',
+  },
+  {
+    id: 5,
+    name: 'PHILIPPINES',
+  },
+]
+
+const commonDateOfJoining = '12 Oct 2009'
+const commonEmailId = 'test@raybiztech.com'
+const commontEmpManager = 'Ajay Gupta'
 export const mockEmployeeReport: MockEmployeeReport[] = [
   {
     id: 1001,
@@ -50,7 +78,7 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     skillList: null,
     userName: null,
     alternativeMobile: null,
-    dateOfJoining: '12 Oct 2009',
+    dateOfJoining: commonDateOfJoining,
     informationList: null,
     anniversary: null,
     bankInformationList: null,
@@ -71,8 +99,8 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     underNoticeDate: 'N/A',
     candidateId: null,
     underNotice: null,
-    emailId: 'test@raybiztech.com',
-    empManager: 'Ajay Gupta',
+    emailId: commonEmailId,
+    empManager: commontEmpManager,
     bloodgroup: '',
     rbtCvPath: null,
     rbtCvName: null,
@@ -150,7 +178,7 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     skillList: null,
     userName: null,
     alternativeMobile: null,
-    dateOfJoining: '12 Oct 2009',
+    dateOfJoining: commonDateOfJoining,
     informationList: null,
     anniversary: null,
     bankInformationList: null,
@@ -171,7 +199,7 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     underNoticeDate: 'N/A',
     candidateId: null,
     underNotice: null,
-    emailId: 'test@raybiztech.com',
+    emailId: commonEmailId,
     empManager: 'Vinesh Merugu',
     bloodgroup: 'O+',
     rbtCvPath: null,
@@ -271,8 +299,8 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     underNoticeDate: 'N/A',
     candidateId: null,
     underNotice: null,
-    emailId: 'test@raybiztech.com',
-    empManager: 'Ajay Gupta',
+    emailId: commonEmailId,
+    empManager: commontEmpManager,
     bloodgroup: 'N/A',
     rbtCvPath: null,
     rbtCvName: null,
@@ -350,7 +378,7 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     skillList: null,
     userName: null,
     alternativeMobile: null,
-    dateOfJoining: '12 Oct 2009',
+    dateOfJoining: commonDateOfJoining,
     informationList: null,
     anniversary: null,
     bankInformationList: null,
@@ -371,7 +399,7 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     underNoticeDate: 'N/A',
     candidateId: null,
     underNotice: null,
-    emailId: 'test@raybiztech.com',
+    emailId: commonEmailId,
     empManager: 'Ajay Ray',
     bloodgroup: 'B+',
     rbtCvPath: null,
@@ -471,8 +499,8 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     underNoticeDate: 'N/A',
     candidateId: null,
     underNotice: null,
-    emailId: 'test@raybiztech.com',
-    empManager: 'Ajay Gupta',
+    emailId: commonEmailId,
+    empManager: commontEmpManager,
     bloodgroup: 'O-',
     rbtCvPath: null,
     rbtCvName: null,
@@ -571,8 +599,8 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     underNoticeDate: 'N/A',
     candidateId: null,
     underNotice: null,
-    emailId: 'test@raybiztech.com',
-    empManager: 'Ajay Gupta',
+    emailId: commonEmailId,
+    empManager: commontEmpManager,
     bloodgroup: 'O+',
     rbtCvPath: null,
     rbtCvName: null,
@@ -671,8 +699,8 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     underNoticeDate: 'N/A',
     candidateId: null,
     underNotice: null,
-    emailId: 'test@raybiztech.com',
-    empManager: 'Ajay Gupta',
+    emailId: commonEmailId,
+    empManager: commontEmpManager,
     bloodgroup: 'AB+',
     rbtCvPath: null,
     rbtCvName: null,
@@ -771,7 +799,7 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     underNoticeDate: 'N/A',
     candidateId: null,
     underNotice: null,
-    emailId: 'test@raybiztech.com',
+    emailId: commonEmailId,
     empManager: 'Ajay Ray',
     bloodgroup: 'B+',
     rbtCvPath: null,
@@ -871,7 +899,7 @@ export const mockEmployeeReport: MockEmployeeReport[] = [
     underNoticeDate: 'N/A',
     candidateId: null,
     underNotice: null,
-    emailId: 'test@raybiztech.com',
+    emailId: commonEmailId,
     empManager: 'Ajay Ray',
     bloodgroup: 'N/A',
     rbtCvPath: null,

@@ -12,6 +12,8 @@ const EmployeeReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [category, setCategory] = useState<string>('')
+  const [country, setCountry] = useState<string>()
+  const [searchInput, setSearchInput] = useState<string>('')
 
   const isLoading = useTypedSelector(
     reduxServices.employeeReports.selectors.isLoading,
@@ -35,6 +37,10 @@ const EmployeeReport = (): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
+    dispatch(reduxServices.employeeReports.getCountries())
+  }, [dispatch])
+
+  useEffect(() => {
     dispatch(
       reduxServices.employeeReports.getEmployeeReport({
         startIndex: pageSize * (currentPage - 1),
@@ -42,6 +48,7 @@ const EmployeeReport = (): JSX.Element => {
         selectionStatus: selectedEmploymentStatus,
         selectedCategory: category,
         searchEmployee,
+        country,
       }),
     )
   }, [
@@ -51,6 +58,7 @@ const EmployeeReport = (): JSX.Element => {
     selectedEmploymentStatus,
     category,
     searchEmployee,
+    country,
   ])
 
   return (
@@ -63,7 +71,14 @@ const EmployeeReport = (): JSX.Element => {
       >
         {isLoading !== ApiLoadingState.loading ? (
           <>
-            <FilterOptions category={category} setCategory={setCategory} />
+            <FilterOptions
+              category={category}
+              setCategory={setCategory}
+              country={country}
+              setCountry={setCountry}
+              searchInput={searchInput}
+              setSearchInput={setSearchInput}
+            />
             <EmployeeReportTable
               paginationRange={paginationRange}
               setPageSize={setPageSize}

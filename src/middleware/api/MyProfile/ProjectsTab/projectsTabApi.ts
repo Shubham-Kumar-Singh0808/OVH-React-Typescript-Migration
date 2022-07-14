@@ -1,6 +1,8 @@
-import axios from 'axios'
 import { AllowedHttpMethods, employeeProjectsApiConfig } from '../../apiList'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 import { EmployeeProjects } from '../../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
 const getEmployeeProjects = async (
@@ -17,7 +19,7 @@ const getEmployeeProjects = async (
       type: 'All',
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -31,7 +33,7 @@ const getProjectDetails = async (
       projectId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

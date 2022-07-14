@@ -1,7 +1,5 @@
 import { CButton, CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilPlus } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -53,7 +51,7 @@ const AddNewCategory = (): JSX.Element => {
 
   return (
     <>
-      <CRow>
+      <CRow className="mb-35">
         <CCol sm={4} className="new-category-col">
           <CFormLabel {...formLabelProps}>Category:</CFormLabel>
         </CCol>
@@ -69,12 +67,12 @@ const AddNewCategory = (): JSX.Element => {
         <CCol sm={4} className="d-flex align-items-center new-category-col">
           <CButton
             color="info"
-            className="px-4 text-white"
+            className="text-white btn-ovh"
             size="sm"
             disabled={!isAddCategoryBtnEnabled}
             onClick={handleAddCategory}
           >
-            <CIcon icon={cilPlus} />
+            <i className="fa fa-plus me-1"></i>
             Add Category
           </CButton>
         </CCol>

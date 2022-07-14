@@ -22,12 +22,22 @@ export enum EmploymentStatus {
   'inactive' = 'InActive',
 }
 
+export type Category = {
+  label: string
+  value: string
+}
+
+export type Country = {
+  id: number
+  name: string
+}
+
 export type EmployeeReportSliceState = {
   employees: EmployeeReport[]
   selectedEmploymentStatus: EmploymentStatus
   listSize: number
   isLoading: LoadingState
-  country: string
+  country: Country[]
   selectedCategory: string
   searchEmployee: string
 }
@@ -39,6 +49,7 @@ export type EmployeeReportApiProps = {
   selectionStatus?: string
   selectedCategory?: string
   searchEmployee?: string
+  country?: string
 }
 
 export type GetEmployeeResponse = {
@@ -57,4 +68,8 @@ export type EmployeeReportTableProps = {
 export type EmployeeReportOptionsProps = {
   category: string
   setCategory: (value: string) => void
+  country: string | undefined
+  setCountry: (value: string) => void
+  searchInput: string
+  setSearchInput: (value: string) => void
 }

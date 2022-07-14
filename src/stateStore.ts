@@ -43,6 +43,7 @@ import userAccessToFeaturesReducer from './reducers/Settings/UserRolesConfigurat
 import employeeHandbookSettingsReducer from './reducers/EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 import timeInOfficeReportReducer from './reducers/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import employeeLeaveSettingsReducer from './reducers/Settings/LeaveSettings/employeeLeaveSettingsSlice'
+import hiveActivityReportReducer from './reducers/TimeAndAttendance/HiveActivityReport/hiveActivityReportSlice'
 import employeeMailConfigurationReducer from './reducers/Settings/MailConfiguration/employeeMailConfigurationSlice'
 import addNewTemplateReducer from './reducers/Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
@@ -89,6 +90,7 @@ export const allReducers = {
   newEmployee: newEmployeeReducer,
   getJobTypes: getAllJobTypeReducer,
   checkUserExist: checkUserExistReducer,
+  hiveActivityReport: hiveActivityReportReducer,
   employeeMailConfiguration: employeeMailConfigurationReducer,
   addMailTemplate: addNewTemplateReducer,
   employee: employeeReducer,
@@ -108,6 +110,7 @@ const stateStore = configureStore({
 export type RootState = ReturnType<typeof stateStore.getState>
 export type AppDispatch = typeof stateStore.dispatch
 
+// eslint-disable-next-line
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
 

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { AllowedHttpMethods, visaListApiConfig } from '../../apiList'
 import {
   Country,
@@ -6,7 +5,10 @@ import {
   GetVisaListResponse,
   VisaType,
 } from '../../../../types/EmployeeDirectory/VisaList/visaListTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getVisaList = async (
   props: GetVisaListApiProps,
@@ -23,7 +25,7 @@ const getVisaList = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -33,7 +35,7 @@ const getCountries = async (): Promise<Country[]> => {
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -46,7 +48,7 @@ const getVisaTypes = async (countryId: number): Promise<VisaType[]> => {
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -65,7 +67,7 @@ const exportVisaList = async (
     responseType: 'blob',
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
