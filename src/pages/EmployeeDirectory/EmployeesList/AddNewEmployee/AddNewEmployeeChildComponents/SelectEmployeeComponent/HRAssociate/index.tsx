@@ -17,7 +17,6 @@ const HRAssociate = ({
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
 
   const onHandleSelectHRAssociate = (fullName: string) => {
-    console.log('$#######')
     setAutoCompleteTarget(fullName)
     const managerName = hrDataList.find((data) => data.fullName === fullName)
 
