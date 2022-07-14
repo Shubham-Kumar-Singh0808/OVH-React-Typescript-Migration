@@ -14,6 +14,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { EmployeeMailTemplate } from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
+import { downloadFile } from '../../../utils/helper'
 
 const employeeEmailTemplate = (): JSX.Element => {
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
@@ -88,26 +89,8 @@ const employeeEmailTemplate = (): JSX.Element => {
         templateTypeId: employeeTemplate.templateTypeId,
       })
 
-    downloadFile(employeeMailTemplateDownload)
+    downloadFile(employeeMailTemplateDownload, 'MailTemplateList.csv')
   }
-
-  const downloadFile = (cvDownload: Blob | undefined) => {
-    if (cvDownload) {
-      const url = window.URL.createObjectURL(
-        new Blob([cvDownload], {
-          type: cvDownload.type,
-        }),
-      )
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', 'MailTemplateList.csv')
-      document.body.appendChild(link)
-
-      link.click()
-      link.remove()
-    }
-  }
-
   return (
     <>
       <OCard
