@@ -2,8 +2,6 @@
 // Todo: remove eslint and fix error
 import { CButton, CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilPlus } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -53,7 +51,7 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
 
   return (
     <>
-      <CRow>
+      <CRow className="mb-35">
         <CCol sm={4} className="new-category-col">
           <CFormLabel {...formLabelProps}>Skill:</CFormLabel>
         </CCol>
@@ -69,12 +67,12 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
         <CCol sm={4} className="d-flex align-items-center new-category-col">
           <CButton
             color="info"
-            className="px-4 text-white"
+            className="text-white btn-ovh"
             size="sm"
             disabled={!isAddSkillBtnEnabled}
             onClick={handleAddSkill}
           >
-            <CIcon icon={cilPlus} />
+            <i className="fa fa-plus me-1"></i>
             Add Skill
           </CButton>
         </CCol>

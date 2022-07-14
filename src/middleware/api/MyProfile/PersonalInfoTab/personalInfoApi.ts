@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { AllowedHttpMethods, personalInfoApiConfig } from '../../apiList'
 import {
   EditFamilyDetailsState,
@@ -11,7 +10,10 @@ import {
   VisaCountryDetails,
   VisaDetails,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getEmployeeFamilyDetails = async (
   employeeId: number | string | undefined,
@@ -23,7 +25,7 @@ const getEmployeeFamilyDetails = async (
       loggedInEmpId: employeeId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -35,7 +37,7 @@ const addEmployeeFamilyMember = async (
     method: AllowedHttpMethods.post,
     data: employeeFamily,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -49,7 +51,7 @@ const getEmployeeFamilyMember = async (
       familyId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -61,7 +63,7 @@ const updateEmployeeFamilyMember = async (
     method: AllowedHttpMethods.post,
     data: employeeFamily,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -78,7 +80,7 @@ const deleteEmployeeFamilyMember = async (
       familyId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -92,7 +94,7 @@ const getEmployeeVisaDetails = async (
       loggedInEmpId: employeeId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -103,7 +105,7 @@ const getEmployeeCountryDetails = async (): Promise<
     url: personalInfoApiConfig.getCountryDetails,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -117,7 +119,7 @@ const getEmployeeVisaType = async (
       id: countryId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -129,7 +131,7 @@ const addEmployeeVisa = async (
     method: AllowedHttpMethods.post,
     data: employeeVisaDetails,
   })
-  const responseVisa = await axios(requestConfig)
+  const responseVisa = await useAxios(requestConfig)
   return responseVisa.data
 }
 
@@ -141,7 +143,7 @@ const getEmployeeVisa = async (id: number): Promise<EditVisaDetailsState> => {
       id,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -153,7 +155,7 @@ const updateEmployeeVisa = async (
     method: AllowedHttpMethods.put,
     data: employeeVisaDetails,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -170,7 +172,7 @@ const deleteEmployeeVisa = async (
       visaID: visaId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -189,7 +191,7 @@ const uploadVisaImage = async (
       'Content-Type': 'multipart/form-data',
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -207,7 +209,7 @@ const uploadPassportImages = async (
       'Content-Type': 'multipart/form-data',
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 const personalInfoApi = {

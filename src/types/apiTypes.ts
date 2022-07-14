@@ -1,3 +1,18 @@
+import { Method, ResponseType } from 'axios'
+
+export type AuthenticatedRequestConfig = {
+  url: string
+  method: Method
+  headers: { tenantKey: string; [key: string]: string | number }
+  params?: { [key: string]: string | number | boolean | undefined }
+  data?:
+    | { [key: string]: string | number | unknown }
+    | unknown
+    | string
+    | number
+  responseType?: ResponseType
+}
+
 export interface ApiBase {
   get?: string
   insert?: string
@@ -235,6 +250,12 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getCheckIfUserExist: string
 }
 
+export interface HiveActivityReportApi extends ApiBase {
+  getEmployeeHiveActivityReport: string
+  getManagerHiveActivityReport: string
+  getSearchHiveTime: string
+  exportHiveReport: string
+}
 export interface EmployeeMailConfigurationApi extends ApiBase {
   getEmailTemplates: string
   getMailTemplateTypes: string

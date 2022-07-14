@@ -34,6 +34,7 @@ import {
   DisplayHandbook,
   TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
+  HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
 } from '../../types/apiTypes'
@@ -288,6 +289,14 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getAllemploymentType: apiPrefix + '/jobapplicant/getEmploymentType',
   getAllJobType: apiPrefix + '/jobapplicant/getJobType',
   getCheckIfUserExist: apiPrefix + '/Employee/isemployeeUsernameexist',
+}
+
+export const hiveActivityReportApiConfig: HiveActivityReportApi = {
+  getEmployeeHiveActivityReport:
+    apiPrefix + '/timeActivity/employeeHiveReports',
+  getManagerHiveActivityReport: apiPrefix + '/timeActivity/managerHiveReports',
+  getSearchHiveTime: apiPrefix + '/timeActivity/searchHiveTime',
+  exportHiveReport: apiPrefix + '/timeActivity/exportHiveReport',
 }
 
 export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
