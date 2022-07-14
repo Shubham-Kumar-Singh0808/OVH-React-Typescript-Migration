@@ -36,7 +36,7 @@ const getCountries = async (): Promise<Country[]> => {
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
