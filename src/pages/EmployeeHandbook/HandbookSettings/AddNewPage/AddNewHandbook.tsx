@@ -279,7 +279,9 @@ function AddNewHandbook({
             </CCol>
             <CCol sm={3}>
               {isDisplayOrderExist && (
-                <p className={TextDanger}>Display order Already Exist</p>
+                <p className={TextDanger} data-testid="display-order-exists">
+                  Display order Already Exist
+                </p>
               )}
             </CCol>
           </CRow>
@@ -297,7 +299,7 @@ function AddNewHandbook({
               <CRow>
                 <CCol sm={3}>
                   <CFormCheck
-                    data-testid="all-input"
+                    data-testid="ch-All"
                     id="all"
                     name="all"
                     label="All"
@@ -311,7 +313,7 @@ function AddNewHandbook({
                   return (
                     <CCol sm={3} key={index} className="me-4">
                       <CFormCheck
-                        data-testId="ch-countries"
+                        data-testid={`ch-countries${index}`}
                         className="mt-1"
                         id="trigger"
                         label={country.name}

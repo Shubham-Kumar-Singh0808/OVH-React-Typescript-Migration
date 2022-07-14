@@ -1,6 +1,7 @@
 import {
   EmployeeCountry,
   MockEmployeeHandbook,
+  TotalHandbookList,
 } from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
@@ -109,5 +110,224 @@ export const mockCountries: EmployeeCountry[] = [
   {
     id: 5,
     name: 'PHILIPPINES',
+  },
+]
+
+export const mockHandbookList: TotalHandbookList[] = [
+  {
+    id: 114,
+    displayOrder: 1,
+    title: 'test',
+    description:
+      '<h3 style="color: rgb(0, 0, 0);">The standard Lorem Ipsum passage, used since the 1500s</h3><p style="text-align: justify;color: rgb(0, 0, 0);">&#34;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&#34;</p><h3 style="color: rgb(0, 0, 0);">Section 1.10.32 of &#34;de Finibus Bonorum et Malorum&#34;, written by Cicero in 45 BC</h3><p style="text-align: justify;color: rgb(0, 0, 0);">&#34;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>',
+    pageName: 'testttt',
+    departmentName: null,
+    departmentId: null,
+    type: 'HandBook',
+    sectionId: null,
+    sectionName: null,
+    country: null,
+    handCountry: [
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+      {
+        id: 3,
+        name: 'USA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 117,
+    displayOrder: 2,
+    title: 'test',
+    description:
+      '<h3 style="color: rgb(0, 0, 0);">The standard Lorem Ipsum passage, used since the 1500s</h3><p style="text-align: justify;color: rgb(0, 0, 0);">&#34;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&#34;</p><h3 style="color: rgb(0, 0, 0);">Section 1.10.32 of &#34;de Finibus Bonorum et Malorum&#34;, written by Cicero in 45 BC</h3><p style="text-align: justify;color: rgb(0, 0, 0);">&#34;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?&#34;</p>',
+    pageName: 'testtt',
+    departmentName: null,
+    departmentId: null,
+    type: 'HandBook',
+    sectionId: null,
+    sectionName: null,
+    country: null,
+    handCountry: [
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+      {
+        id: 3,
+        name: 'USA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 121,
+    displayOrder: 3,
+    title: 'test1',
+    description:
+      'split the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every listsplit the array to string and replace &amp; in every list',
+    pageName: 'refsd',
+    departmentName: null,
+    departmentId: null,
+    type: 'HandBook',
+    sectionId: null,
+    sectionName: null,
+    country: null,
+    handCountry: [
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+      {
+        id: 3,
+        name: 'USA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 120,
+    displayOrder: 4,
+    title: 'test2',
+    description:
+      '<h2 style="color: rgb(0, 0, 0);">What is Lorem Ipsum?</h2><p style="text-align: justify;color: rgb(0, 0, 0);"><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>',
+    pageName: 'test2page',
+    departmentName: null,
+    departmentId: null,
+    type: 'HandBook',
+    sectionId: null,
+    sectionName: null,
+    country: null,
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 126,
+    displayOrder: 5,
+    title: 'title1',
+    description:
+      '<h2 style="color: rgb(0, 0, 0);">Where can I get some?</h2><p style="text-align: justify;color: rgb(0, 0, 0);">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>',
+    pageName: 'page2',
+    departmentName: null,
+    departmentId: null,
+    type: 'HandBook',
+    sectionId: null,
+    sectionName: null,
+    country: null,
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+      {
+        id: 5,
+        name: 'PHILIPPINES',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 122,
+    displayOrder: 8,
+    title: 'ujreufbejke',
+    description:
+      'hxgsv xkcidubc;fo hibkj xiudhwhfjmhsmhjcmhvc mnx ,zmnk hxgsv xkcidubc;fo hibkj xiudhwhfjmhsmhjcmhvc mnx ,zmnkhxgsv xkcidubc;fo hibkj xiudhwhfjmhsmhjcmhvc mnx ,zmnkhxgsv xkcidubc;fo hibkj xiudhwhfjmhsmhjcmhvc mnx ,zmnkhxgsv xkcidubc;fo hibkj xiudhwhfjmhsmhjcmhvc mnx ,zmnk',
+    pageName: 'erfefreverv',
+    departmentName: null,
+    departmentId: null,
+    type: 'HandBook',
+    sectionId: null,
+    sectionName: null,
+    country: null,
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+      {
+        id: 3,
+        name: 'USA',
+      },
+      {
+        id: 4,
+        name: 'CANADA',
+      },
+      {
+        id: 5,
+        name: 'PHILIPPINES',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 33,
+    displayOrder: 9,
+    title: 'Employment Types and Compensation Policy',
+    description:
+      '<p><b>Employment Categories </b></p>&#10;<p>Based on the conditions of association agreed at the time of  employment, the  associates of Ray Business Technologies are classified  into the following  categories:</p>&#10;<ul>&#10;    <li><strong>Full-Time</strong></li>&#10;    <li><strong>Part-Time</strong></li>&#10;    <li><strong>Temporary / Contract/ Consultant</strong> </li></ul>&#10;<p><strong>Regular Full Time Associates</strong></p>&#10;<p>Unless otherwise specified at the time of  hire, you are denominated a  “regular full-time” employee. A regular full-time  employee is normally  scheduled to work and do work a schedule of 40 hours or  more per week.  As a regular full-time employee, you are eligible for the  employee  benefits described in this handbook.</p><p>&#10;An employee duly appointed by  the Managing Director of the Company, who  works the standard working hours of  the Company each week and is on  the Payroll of Ray Business Technologies and is  an Full-time employee</p>&#10;<p><strong>Part-Time</strong> <strong>Associates</strong></p><p>&#10;Associates duly appointed by the Company who work a regular  schedule of  less than 40 hours per week and are on the Payroll of Ray Business   Technologies are Part time employees.</p>&#10;<p><strong>Temporary / Contractual Staff</strong> </p>&#10;<p>There are times when the Company needs temporary staff to meet project   commitments. Temporary/Contract staffs are identified at the time of  hire and  are generally employed for specified short periods; however,  such assignments  may be extended. If you are a temporary employee, you  are not on the company’s  payroll and not eligible for employee benefits  except where mandated by  applicable law. The company or you may  terminate a temporary/contract employment  at any time as specified in  the contract terms.</p>&#10;<p><b>Compensation</b></p>&#10;<p>Ray Business Technologies strives to provide competitive compensation   packages that will motivate and reward employees for excellence in  performance.  While a package is uniquely designed to meet the needs of  each individual  employee, the company follows a common compensation  levels.</p>&#10;<p>The salient  features of the company’s philosophy on compensation are:<br/>&#10; </p>&#10;<ul>&#10;    <li>Each employee is compensated according to his/her level of  performance and  contribution to the Company. Any individual’s  compensation is determined by  considering the performance, the range  for that job, and the pay of peers.</li>&#10;    <li>Compensation levels are reviewed annually. There may also be  intermediate  revisions in certain cases where the Management deems  necessary.</li>&#10;    <li>Variable component will not be paid to the employees who have resigned.</li>&#10;    <li>The company will be guided by independently consulted Legal and  Tax  advisories on all issues relating to the deduction of Tax at  source. Ray  Business Technologies will ensure that the appropriate  legal dues are deducted  from all employees. However, employees are  requested to comply with the required  documentation procedures to  ensure that all deductions are accurate.</li>&#10;    <li>Salaries would be paid by the 7th day of every month.</li>&#10;</ul>&#10;<p><b> Any changes in the amendments, HR department will be notifying all the associates through email.</b></p><p><b>test</b></p>',
+    pageName: 'EmployeeCategoriesCodyu',
+    departmentName: null,
+    departmentId: null,
+    type: 'HandBook',
+    sectionId: null,
+    sectionName: null,
+    country: null,
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+      {
+        id: 5,
+        name: 'PHILIPPINES',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 22,
+    displayOrder: 10,
+    title: 'Joining Formalities',
+    description:
+      '<p>Ray Business Technologies welcomes all employees and hopes that each  employee enjoys             the challenging and performance oriented  atmosphere and looks forward to each and             every employee’s  commitment and contribution to making Ray Business Technologies              a very successful and proud company.</p>&#10;<p> </p>&#10;<p>The company recognizes that there is a period of training and  adjustment by both             the employee and the Company whenever a  new employee begins. Your first 6 months             of continuous  employment at the Company is considered a period of probation. During              this period, your supervisor will monitor your performance and  provide informal             review(s) of your performance. You are  encouraged to meet with your supervisor as             frequently as  required to discuss your performance and take feedback to enable you              to become a valuable member of the team. At this time, as  always, you are encouraged             to make suggestions to improve  the company’s effectiveness and operations.</p>&#10;<p> </p>&#10;<p>On completion of your probationary period, you are deemed a confirmed  employee,             unless your supervisor feels that an extension of  your probationary period would             be beneficial to help you to  become a more effective member of the Ray Business              Technologies team. In this case your period of probation may be extended  by an additional             3 months. You will be intimated in  writing, in case your probation is extended.</p>&#10;<p> </p>&#10;<p><b>Personal Particulars</b><br/>&#10;<br/>&#10;The personal information you provide to the Company in connection with  your recruitment             and subsequent employment will be used for  the purpose of administering your employment             with the  Company and the Company’s human resources generally.</p>&#10;<p> </p>&#10;<p>The Company may give out some of this information to other parties  authorized by             law to receive it. You have the right to  access and correct personal data the Company             has which  relates to you. Any request for personal data access and/or correction              should be addressed to the Human Resources Department.</p>&#10;<p> </p>&#10;<p>The Company needs to maintain data on your personal information,  details of dependents             and banking particulars. As soon as  you join us, you are to complete your particulars             in the  JOINING REPORT,  PERSONAL INFORMATION SHEET and NDA.</p>&#10;<p>Note : Changes to the particulars provided at the time of joining is  to be notified             to us immediately (Eg.: changes to your  residence, bank account, marital status             or number of  dependants etc.)</p>&#10;<p><br/>&#10;<b>Submissions<br/>&#10;</b></p>&#10;<p>You are required to provide the following items on joining :</p>&#10;<p> </p>&#10;<ul>&#10;    <li>Copies of Certificates of Educational Qualifications</li>&#10;    <li>Copies of Certificates of Additional Courses</li>&#10;    <li>Service Certificates of previous employment</li>&#10;    <li>Relieving certificate from your previous employer</li>&#10;    <li>Previous Pay slips and Form 16s</li>&#10;    <li>Bank account numbers</li><li>Aadhar Card photocopy<br/></li>&#10;    <li>Photographs and Address proof</li>&#10;</ul>&#10;<p><br/>&#10;<b>Travel Related Documentation</b><br/>&#10;<br/>&#10;Proofs of your identity and qualifications so that we are able to  facilitate travel             plans that may arise based on Project  requirements, we also acquire documents necessary             for  potential overseas assignments etc.             <br/>&#10;<br/>&#10;Please ensure that the following documents are submitted within 2 weeks of joining:<br/>&#10; </p>&#10;<ul>&#10;    <li>Copy of your passport (if available)</li>&#10;    <li>Tax declaration forms</li>&#10;</ul>&#10;<p> </p>&#10;<p>Please intimate us in writing with attached copies if there is any  change to your             passport or if you acquire additional  qualifications.</p>&#10;<p><br/>&#10;<br/>&#10;<b>Other Submissions</b></p>&#10;<p>The following additional details are required for tax calculations:</p>&#10;<p> </p>&#10;<ul>&#10;    <li>Insurance policy details</li>&#10;    <li>Tax estimate/ Savings declaration form</li>&#10;</ul>&#10;<p><b>             <br/>&#10;Allocations</b></p>&#10;<p>Upon joining you will have access to company property. The company  provides you             with an Access Card and Identity Card for  security purposes that enables access             to the office. You are  not to misrepresent, misuse, share and / or transfer of the              card.</p>&#10;<p> </p>&#10;<p>You will be allocated a system &amp; other tools necessary to complete your job             efficiently and effectively.</p><p><br/></p><p><span><b>Any changes in the amendments, HR department will be notifying all the  associates through email.</b></span><br/></p>',
+    pageName: 'JoiningFormalities',
+    departmentName: null,
+    departmentId: null,
+    type: 'HandBook',
+    sectionId: null,
+    sectionName: null,
+    country: null,
+    handCountry: [
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
   },
 ]
