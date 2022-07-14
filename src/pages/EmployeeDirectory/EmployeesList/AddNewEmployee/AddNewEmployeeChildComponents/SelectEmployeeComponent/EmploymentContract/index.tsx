@@ -18,6 +18,12 @@ const EmploymentContract = ({
   const endDate = endDateValue == null ? '' : endDateValue.toLocaleDateString()
 
   const classNameStyle = 'col-sm-3 col-form-label text-end'
+
+  const isExist = !!(
+    isContractExist == null ||
+    isContractExist === '' ||
+    isContractExist.toLowerCase() === 'true'
+  )
   return (
     <>
       <CRow className="mb-3 align-items-center">
@@ -34,7 +40,7 @@ const EmploymentContract = ({
             id="employmentcontractyes"
             value="Yes"
             label="Yes"
-            checked={isContractExist === 'true'}
+            checked={isExist}
             onChange={() => onContractExistHandler('true')}
           />
           <CFormCheck
@@ -44,7 +50,7 @@ const EmploymentContract = ({
             id="employmentcontractno"
             value="No"
             label="No"
-            checked={isContractExist === 'false'}
+            checked={!isExist}
             defaultChecked
             onChange={() => onContractExistHandler('false')}
           />
@@ -68,6 +74,7 @@ const EmploymentContract = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
+                data-testid="start-date-picker"
                 placeholderText="Select start date"
                 name="contractstartdate"
                 value={startDate}
@@ -92,6 +99,7 @@ const EmploymentContract = ({
                 showYearDropdown
                 dropdownMode="select"
                 placeholderText="Select end date"
+                data-testid="end-date-picker"
                 name="contractenddate"
                 value={endDate}
                 onChange={(date: Date) => onEndDateChangeHandler(date)}

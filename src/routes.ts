@@ -41,6 +41,15 @@ const EmpDesignationReport = React.lazy(
 const VisaDetailsList = React.lazy(
   () => import('./pages/EmployeeDirectory/VisaList/VisaList'),
 )
+const EmployeeHandbook = React.lazy(
+  () => import('./pages/EmployeeHandbook/EmployeeHandbook'),
+)
+const Handbook = React.lazy(
+  () => import('./pages/EmployeeHandbook/ShowHandbook'),
+)
+const AttendanceReport = React.lazy(
+  () => import('./pages/TimeAndAttendance/AttendanceReport/AttendanceReport'),
+)
 const EmployeeHandbookSettings = React.lazy(
   () =>
     import(
@@ -55,9 +64,26 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+const MailConfiguration = React.lazy(
+  () => import('./pages/Settings/MailConfiguration/employeeEmailTemplate'),
+)
 
 const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
+)
+
+const HiveActivityReport = React.lazy(
+  () =>
+    import('./pages/TimeAndAttendance/HiveActivityReport/HiveActivityReport'),
+)
+
+const AddNewTemplate = React.lazy(
+  () =>
+    import('./pages/Settings/MailConfiguration/AddTemplate/AddNewMailTemplate'),
+)
+
+const EditEmployee = React.lazy(
+  () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -103,6 +129,21 @@ const routes = [
     component: VisaDetailsList,
   },
   {
+    path: '/employeehandbook',
+    name: 'Employee Handbook',
+    component: EmployeeHandbook,
+  },
+  {
+    path: '/showemployeehandbook/:clickedpageName',
+    name: 'Handbook',
+    component: Handbook,
+  },
+  {
+    path: '/attendancesummary',
+    name: 'Attendance Summary',
+    component: AttendanceReport,
+  },
+  {
     path: '/handbooksettings',
     name: 'Handbook Settings',
     component: EmployeeHandbookSettings,
@@ -121,6 +162,26 @@ const routes = [
     path: '/addNewEmployee',
     name: 'Add New Employee',
     component: AddNewEmployee,
+  },
+  {
+    path: '/hiveReport',
+    name: 'Hive Activity Report',
+    component: HiveActivityReport,
+  },
+  {
+    path: '/addTemplate',
+    name: 'Add Template',
+    component: AddNewTemplate,
+  },
+  {
+    path: '/editEmployee/:employeeId',
+    name: 'Edit Employee',
+    component: EditEmployee,
+  },
+  {
+    path: '/mailTemplates',
+    name: 'Mail Configuration',
+    component: MailConfiguration,
   },
 ]
 

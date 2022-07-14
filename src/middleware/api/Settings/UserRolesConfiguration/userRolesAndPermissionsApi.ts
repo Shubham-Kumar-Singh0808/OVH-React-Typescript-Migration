@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   userRolesConfigurationApiConfig,
@@ -10,7 +9,10 @@ import {
   UserRoleSubFeatures,
   UtilsRenderPermissionSwitchReturn,
 } from '../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getUserRoles = async (): Promise<UserRole[] | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -18,7 +20,7 @@ const getUserRoles = async (): Promise<UserRole[] | undefined> => {
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -32,7 +34,7 @@ const checkIsRoleExists = async (
       roleName: roleInput,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -48,7 +50,7 @@ const createUserRole = async ({
       reportingManagerFlag,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -60,7 +62,7 @@ const deleteUserRole = async (roleId: number): Promise<number | undefined> => {
       roleId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -71,7 +73,7 @@ const getUserRoleSubFeatures = async (): Promise<
     url: userRolesConfigurationApiConfig.getSubFeatures,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -85,7 +87,7 @@ const getUserFeaturesUnderRole = async (
       roleId: selectedRoleId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 const updateAssignPermissions = async (
@@ -96,7 +98,7 @@ const updateAssignPermissions = async (
     method: AllowedHttpMethods.post,
     data: prepareObject,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

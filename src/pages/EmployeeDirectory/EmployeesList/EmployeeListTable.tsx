@@ -102,13 +102,15 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                         </CButton>
                       </Link>
                       &nbsp;
-                      <CButton
-                        color="info"
-                        size="sm"
-                        className="btn-ovh-employee-list"
-                      >
-                        <i className="fa fa-pencil-square-o text-white"></i>
-                      </CButton>
+                      <Link to={`/editEmployee/${employee.id}`}>
+                        <CButton
+                          color="info"
+                          size="sm"
+                          className="btn-ovh-employee-list"
+                        >
+                          <i className="fa fa-pencil-square-o text-white"></i>
+                        </CButton>
+                      </Link>
                     </CTableDataCell>
                   </CTableRow>
                 )
@@ -118,7 +120,7 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {employees.length}</strong>
+                <strong>Total Records: {listSize}</strong>
               </p>
             </CCol>
             <CCol xs={3}>

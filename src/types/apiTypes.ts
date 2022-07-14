@@ -1,3 +1,18 @@
+import { Method, ResponseType } from 'axios'
+
+export type AuthenticatedRequestConfig = {
+  url: string
+  method: Method
+  headers: { tenantKey: string; [key: string]: string | number }
+  params?: { [key: string]: string | number | boolean | undefined }
+  data?:
+    | { [key: string]: string | number | unknown }
+    | unknown
+    | string
+    | number
+  responseType?: ResponseType
+}
+
 export interface ApiBase {
   get?: string
   insert?: string
@@ -103,6 +118,7 @@ export interface PersonalInfoApi extends ApiBase {
   deleteFamilyMember: string
   deleteVisaDetail: string
   fileUploadVisaImage: string
+  fileUploadPassportImage: string
 }
 
 export interface ProfileHistoryApi extends ApiBase {
@@ -139,6 +155,7 @@ export interface ShiftConfigurationApi extends ApiBase {
   updateShiftDetail: string
   deleteShiftDetail: string
 }
+
 export interface CertificateListApi extends ApiBase {
   getAllEmployeeCertificates: string
   exportCertificateList: string
@@ -170,6 +187,7 @@ export interface EmployeeReporteesApi extends ApiBase {
 
 export interface EmployeeReportApi extends ApiBase {
   getEmployeeReports: string
+  getCountries: string
 }
 
 export interface EmployeeDesignationReportApi extends ApiBase {
@@ -183,6 +201,24 @@ export interface VisaListApi extends ApiBase {
   getCountries: string
   getVisaTypes: string
   exportVisaList: string
+}
+
+export interface EmployeeHandbook extends ApiBase {
+  getHandbooks: string
+}
+
+export interface DisplayHandbook extends ApiBase {
+  dispHandbook: string
+}
+
+export interface EmployeeAttendanceReportApi extends ApiBase {
+  getEmployeeAttendance: string
+  exportAttendance: string
+  exportBiometricAttendance: string
+}
+
+export interface UserAccessToFeaturesApi extends ApiBase {
+  getUserAccessToFeatures: string
 }
 
 export interface EmployeeHandbookSettingsApi extends ApiBase {
@@ -202,6 +238,7 @@ export interface EmployeeLeaveSettingsApi extends ApiBase {
   deleteLeaveCategory: string
   addUpdateLeaveCategory: string
 }
+
 export interface AddNewEmployeeAPi extends ApiBase {
   getEmployeeDepartments: string
   getEmpCountries: string
@@ -211,4 +248,20 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllemploymentType: string
   getAllJobType: string
   getCheckIfUserExist: string
+}
+
+export interface HiveActivityReportApi extends ApiBase {
+  getEmployeeHiveActivityReport: string
+  getManagerHiveActivityReport: string
+  getSearchHiveTime: string
+  exportHiveReport: string
+}
+export interface EmployeeMailConfigurationApi extends ApiBase {
+  getEmailTemplates: string
+  getMailTemplateTypes: string
+}
+
+export interface AddNewTemplateApi extends ApiBase {
+  getAssetTypes: string
+  addNewMailTemplate: string
 }

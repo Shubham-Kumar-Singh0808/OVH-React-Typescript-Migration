@@ -119,7 +119,7 @@ const ListOptions = (): JSX.Element => {
         </CButton>
         &nbsp; &nbsp; &nbsp;
         <Link to="/addNewEmployee">
-          <CButton color="info" className="text-white" size="sm">
+          <CButton color="info" className="text-white btn-ovh" size="sm">
             <i className="fa fa-plus me-1"></i>
             Add Employee
           </CButton>

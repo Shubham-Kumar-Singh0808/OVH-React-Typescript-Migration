@@ -16,6 +16,7 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
+import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const VisaDetailsTable = ({
   editVisaButtonHandler,
@@ -30,6 +31,7 @@ const VisaDetailsTable = ({
   const getEmployeeVisaData = useTypedSelector(
     reduxServices.personalInformation.selectors.visaDetails,
   )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -105,10 +107,10 @@ const VisaDetailsTable = ({
               </CTableDataCell>
               <CTableDataCell scope="row">{visaItem.visaType}</CTableDataCell>
               <CTableDataCell scope="row">
-                {visaItem.dateOfIssue}
+                {localeDateFormat(visaItem.dateOfIssue as string)}
               </CTableDataCell>
               <CTableDataCell scope="row">
-                {visaItem.dateOfExpire}
+                {localeDateFormat(visaItem.dateOfExpire as string)}
               </CTableDataCell>
               {!isViewingAnotherEmployee ? (
                 <CTableDataCell scope="row">

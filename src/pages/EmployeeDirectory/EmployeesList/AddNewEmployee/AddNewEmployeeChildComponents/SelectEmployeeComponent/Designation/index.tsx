@@ -10,6 +10,7 @@ const Designation = ({
   setToggleShift,
   value,
   toggleValue,
+  isAddDisable,
 }: SelectDesignationProps): JSX.Element => {
   const onChangeHandler = (e: { target: { value: string } }) => {
     setValue(e.target.value)
@@ -19,6 +20,7 @@ const Designation = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
+          data-testId="designationLabel"
           {...dynamicFormLabelProps(
             'designation',
             'col-sm-3 col-form-label text-end',
@@ -32,6 +34,7 @@ const Designation = ({
             id="designation"
             size="sm"
             aria-label="designation"
+            data-testid="form-select"
             name="designation"
             value={value}
             onChange={onChangeHandler}
@@ -47,15 +50,18 @@ const Designation = ({
             })}
           </CFormSelect>
         </CCol>
-        <CCol sm={3}>
-          <CButton
-            color="info"
-            className="btn-ovh me-1"
-            onClick={() => setToggleShift(!toggleValue)}
-          >
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
-        </CCol>
+        {!isAddDisable && (
+          <CCol sm={3}>
+            <CButton
+              data-testId="designationButton"
+              color="info"
+              className="btn-ovh me-1"
+              onClick={() => setToggleShift(!toggleValue)}
+            >
+              <i className="fa fa-plus me-1"></i>Add
+            </CButton>
+          </CCol>
+        )}
       </CRow>
     </>
   )

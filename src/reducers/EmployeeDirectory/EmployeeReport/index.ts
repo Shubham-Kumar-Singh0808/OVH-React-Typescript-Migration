@@ -6,6 +6,7 @@ import {
   EmployeeReportApiProps,
   EmployeeReportSliceState,
   EmploymentStatus,
+  Country,
 } from '../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
@@ -23,12 +24,24 @@ const getEmployeeReport = createAsyncThunk(
   },
 )
 
+const getCountries = createAsyncThunk(
+  'category/getCountries',
+  async (_, thunkApi) => {
+    try {
+      return await employeeReportApi.getCountries()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialEmployeeReportState: EmployeeReportSliceState = {
   employees: [],
   selectedEmploymentStatus: EmploymentStatus.active,
   listSize: 0,
   isLoading: ApiLoadingState.idle,
-  country: '',
+  country: [],
   selectedCategory: '',
   searchEmployee: '',
 }
@@ -52,9 +65,15 @@ const employeeReportSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addMatcher(isAnyOf(getEmployeeReport.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getCountries.fulfilled, (state, action) => {
+        state.country = action.payload
       })
+      .addMatcher(
+        isAnyOf(getEmployeeReport.pending, getCountries.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
       .addMatcher(isAnyOf(getEmployeeReport.fulfilled), (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.employees = action.payload.emps as EmployeeReport[]
@@ -74,9 +93,11 @@ const selectedCategory = (state: RootState): string =>
   state.employeeReports.selectedCategory
 const searchEmployee = (state: RootState): string =>
   state.employeeReports.searchEmployee
+const countries = (state: RootState): Country[] => state.employeeReports.country
 
 const employeeReportsThunk = {
   getEmployeeReport,
+  getCountries,
 }
 
 const employeeReportSelectors = {
@@ -86,6 +107,7 @@ const employeeReportSelectors = {
   selectedEmploymentStatus,
   selectedCategory,
   searchEmployee,
+  countries,
 }
 
 export const employeeReportService = {

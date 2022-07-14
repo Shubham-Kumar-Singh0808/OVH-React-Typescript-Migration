@@ -37,4 +37,12 @@ describe('Add New Visa member Testing', () => {
     )
     expect(screen.getAllByRole('option').length).toBe(11)
   })
+  test('should render date of issued input', () => {
+    const dateOfIssued = screen.findByTestId('dateOfIssuedInput')
+    expect(dateOfIssued).toBeTruthy()
+  })
+  test('should render date of expiry input', () => {
+    const dateOfExpiry = screen.findByTestId('dateOfExiryInput')
+    expect(dateOfExpiry).toBeTruthy()
+  })
 })

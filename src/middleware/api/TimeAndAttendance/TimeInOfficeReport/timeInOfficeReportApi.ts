@@ -1,10 +1,12 @@
-import axios from 'axios'
 import {
   GetTimeInOfficeEmployeeReportProps,
   GetTimeInOfficeEmployeeReportResponse,
   GetTimeInOfficeManagerReportResponse,
 } from '../../../../types/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 import { AllowedHttpMethods, timeInOfficeReportApiConfig } from '../../apiList'
 
 const getTimeInOfficeEmployeeReport = async (
@@ -19,7 +21,7 @@ const getTimeInOfficeEmployeeReport = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -38,7 +40,7 @@ const getTimeInOfficeManagerReport = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

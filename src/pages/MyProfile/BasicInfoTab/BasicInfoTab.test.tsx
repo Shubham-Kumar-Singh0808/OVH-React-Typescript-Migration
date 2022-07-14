@@ -1,7 +1,7 @@
-/* eslint-disable import/named */
 // Todd: remove eslint and fix error
 import '@testing-library/jest-dom'
 import { queryByAttribute, render, screen } from '@testing-library/react'
+// eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
@@ -42,6 +42,23 @@ describe('Basic Info Tab Testing', () => {
     )
     expect(screen.getByText('Employee ID:')).toBeInTheDocument()
     expect(screen.getByText('INDIA')).toBeInTheDocument()
+  })
+  test('should render all field', () => {
+    const getById = queryByAttribute.bind(null, 'id')
+
+    const component = render(
+      <ReduxProvider reduxStore={stateStore}>
+        <BasicInfoTab />
+      </ReduxProvider>,
+    )
+    const officialBday = getById(
+      component.container,
+      'employeeOfficialBirthday',
+    )
+    expect(officialBday).toBeTruthy()
+
+    const realBirthday = getById(component.container, 'employeeRealBirthday')
+    expect(realBirthday).toBeTruthy()
   })
   test('should render a file upload field', () => {
     const getById = queryByAttribute.bind(null, 'id')

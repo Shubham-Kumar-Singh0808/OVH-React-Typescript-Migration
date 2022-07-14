@@ -24,6 +24,10 @@ jest.mock('react-redux', () => ({
   }),
 }))
 describe('Add New Family member Testing', () => {
+  test('should render date of birth input', () => {
+    const dateOfBirth = screen.findByTestId('dateOfBirthInput')
+    expect(dateOfBirth).toBeTruthy()
+  })
   test('should render add Family Member button as disabled initially', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>

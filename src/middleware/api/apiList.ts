@@ -8,6 +8,7 @@ import {
   CertificateListApi,
   CertificateTypeApi,
   EmployeeAssetsApi,
+  EmployeeAttendanceReportApi,
   EmployeeCertificationsApi,
   EmployeeDesignationListApi,
   EmployeeGeneralInformationApi,
@@ -24,12 +25,18 @@ import {
   ShiftConfigurationApi,
   SideMenuApi,
   SkillApi,
+  UserAccessToFeaturesApi,
   UserRolesConfigurationApi,
   EmployeeReportApi,
   EmployeeDesignationReportApi,
   VisaListApi,
+  EmployeeHandbook,
+  DisplayHandbook,
   TimeInOfficeReportApi,
   EmployeeLeaveSettingsApi,
+  HiveActivityReportApi,
+  EmployeeMailConfigurationApi,
+  AddNewTemplateApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -88,6 +95,7 @@ export const personalInfoApiConfig: PersonalInfoApi = {
   deleteFamilyMember: apiPrefix + '/Employee/deleteFamilymember',
   deleteVisaDetail: apiPrefix + '/Employee/deleteVisaDetail',
   fileUploadVisaImage: apiPrefix + '/fileUpload/uploadVisaImage',
+  fileUploadPassportImage: apiPrefix + '/fileUpload/uploadPassPortFrontImage',
 }
 
 export const skillsApiConfig: SkillApi = {
@@ -208,6 +216,7 @@ export const employeeReviewsApiConfig: EmployeeReviewsApi = {
 
 export const employeeReportApiConfig: EmployeeReportApi = {
   getEmployeeReports: apiPrefix + '/jobapplicant/getSelectedTypeEmployeeData',
+  getCountries: apiPrefix + '/jobapplicant/getEmpCountries',
 }
 
 export const employeeDesignationReportApiConfig: EmployeeDesignationReportApi =
@@ -228,6 +237,24 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
+}
+
+export const employeeHandbook: EmployeeHandbook = {
+  getHandbooks: apiPrefix + '/handbookItem/getHandbookNamesCountryWise',
+}
+
+export const dispHandbook: DisplayHandbook = {
+  dispHandbook: apiPrefix + '/handbookItem/get',
+}
+
+export const employeeAttendanceReportApiConfig: EmployeeAttendanceReportApi = {
+  getEmployeeAttendance: apiPrefix + '/biometric/bioAdminManager/attendance',
+  exportAttendance: apiPrefix + '/biometric/exportAttendance',
+  exportBiometricAttendance: apiPrefix + '/biometric/exportAttendance2',
+}
+
+export const userApiConfig: UserAccessToFeaturesApi = {
+  getUserAccessToFeatures: apiPrefix + '/roleFeature/user',
 }
 
 export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
@@ -262,4 +289,23 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getAllemploymentType: apiPrefix + '/jobapplicant/getEmploymentType',
   getAllJobType: apiPrefix + '/jobapplicant/getJobType',
   getCheckIfUserExist: apiPrefix + '/Employee/isemployeeUsernameexist',
+}
+
+export const hiveActivityReportApiConfig: HiveActivityReportApi = {
+  getEmployeeHiveActivityReport:
+    apiPrefix + '/timeActivity/employeeHiveReports',
+  getManagerHiveActivityReport: apiPrefix + '/timeActivity/managerHiveReports',
+  getSearchHiveTime: apiPrefix + '/timeActivity/searchHiveTime',
+  exportHiveReport: apiPrefix + '/timeActivity/exportHiveReport',
+}
+
+export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
+  {
+    getEmailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
+    getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+  }
+
+export const addNewTemplateAPiConfig: AddNewTemplateApi = {
+  getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
+  addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
 }

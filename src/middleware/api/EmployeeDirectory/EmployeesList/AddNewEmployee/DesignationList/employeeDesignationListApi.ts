@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeDesignationListApiConfig,
@@ -7,7 +6,10 @@ import {
   EmployeeDepartment,
   EmployeeDesignation,
 } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
-import { getAuthenticatedRequestConfig } from '../../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../../utils/apiUtils'
 
 const getEmployeeDepartments = async (): Promise<
   EmployeeDepartment[] | undefined
@@ -17,7 +19,7 @@ const getEmployeeDepartments = async (): Promise<
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -29,7 +31,7 @@ const getAllEmployeeDesignations = async (): Promise<
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -44,7 +46,7 @@ const getEmployeeDesignations = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -61,7 +63,7 @@ const addEmployeeDesignation = async ({
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -76,7 +78,7 @@ const deleteEmployeeDesignation = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
