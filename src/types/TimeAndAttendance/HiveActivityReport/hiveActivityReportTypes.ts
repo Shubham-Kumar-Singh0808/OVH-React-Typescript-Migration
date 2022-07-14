@@ -7,7 +7,7 @@ export type ActivityTimes = {
   dayofMonth: number
   projectDate: null | string
   pDate: null | string
-  empId: null | string
+  empId: null | string | number
   sprintName: null | string
   taskId: null | string
   startDate: null | string

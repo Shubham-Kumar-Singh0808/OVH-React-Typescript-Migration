@@ -3,6 +3,7 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import HiveActivityReport from './HiveActivityReport'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
+import { mockSearchHiveTime } from '../../../test/data/hiveActivityEmployeeManagerReportData'
 
 describe('Hive Activity Report Component Testing', () => {
   test('should render hive activity report component with out crashing', () => {
@@ -17,7 +18,7 @@ describe('Hive Activity Report Component Testing', () => {
           authenticatedUser: {
             employeeName: 'venkata',
             employeeId: 1978,
-            userName: 'venkata kolla',
+            userName: 'Pramodh kolla',
             role: 'admin',
           },
         },
@@ -32,7 +33,7 @@ describe('Hive Activity Report Component Testing', () => {
     })
   })
 })
-describe('Hive Activity Report Component Testing', () => {
+describe('Hive Activity Report Testing', () => {
   test('should enable view button upon selection of date', async () => {
     render(<HiveActivityReport />, {
       preloadedState: {
@@ -59,5 +60,30 @@ describe('Hive Activity Report Component Testing', () => {
     })
     userEvent.click(screen.getByRole('button', { name: 'View' }))
     expect(screen.getByText('2')).toBeInTheDocument()
+  })
+  test('search input testing', async () => {
+    render(<HiveActivityReport />, {
+      preloadedState: {
+        authentication: {
+          authenticatedUser: {
+            employeeName: 'venkata',
+            employeeId: 1978,
+            userName: 'venkata kolla',
+            role: 'admin',
+          },
+          hiveActivityReport: {
+            managerHiveActivityReport: mockSearchHiveTime,
+          },
+        },
+      },
+    })
+    const allRadioButton = screen.getByLabelText('All') as HTMLInputElement
+    fireEvent.click(allRadioButton)
+    const searchButton = screen.getByTestId('search-employee-btn')
+    userEvent.type(screen.getByPlaceholderText('Search Employee'), 'sunny')
+    userEvent.click(searchButton)
+    await waitFor(() => {
+      expect(searchButton).toBeEnabled()
+    })
   })
 })

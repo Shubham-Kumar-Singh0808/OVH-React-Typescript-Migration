@@ -3,6 +3,7 @@ import { hiveActivityReportApiConfig } from '../../middleware/api/apiList'
 import {
   mockEmployeeHiveActivityReport,
   mockManagerHiveActivityReport,
+  mockSearchHiveTime,
 } from '../data/hiveActivityEmployeeManagerReportData'
 
 export const hiveActivityReportHandlers = [
@@ -31,11 +32,19 @@ export const hiveActivityReportHandlers = [
     },
   ),
 
-  rest.get(hiveActivityReportApiConfig.exportHiveReport, (_req, res, ctx) => {
+  rest.get(hiveActivityReportApiConfig.getSearchHiveTime, (_req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,
-        data: 'HiveActivityReport.csv',
+        data: mockSearchHiveTime,
+      }),
+    )
+  }),
+
+  rest.get(hiveActivityReportApiConfig.exportHiveReport, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        data: mockManagerHiveActivityReport,
       }),
     )
   }),

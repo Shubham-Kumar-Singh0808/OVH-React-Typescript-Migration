@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import HiveReportOptions from './HiveReportOptions'
 import { fireEvent, render, screen } from '../../../test/testUtils'
 
+const mockHandleSearchHiveActivityReport = jest.fn()
 describe('Hive Report Options Component Testing', () => {
   test('should render hive report options component with out crashing', () => {
     render(
@@ -57,7 +58,7 @@ describe('Hive Report Options Component Testing', () => {
         viewButtonHandler={jest.fn()}
         filterByDate={undefined}
         handleExportHiveActivityReport={jest.fn()}
-        handleSearchHiveActivityReport={jest.fn()}
+        handleSearchHiveActivityReport={mockHandleSearchHiveActivityReport}
       />,
       {
         preloadedState: {
@@ -75,8 +76,11 @@ describe('Hive Report Options Component Testing', () => {
     const allRadioButton = screen.getByLabelText('All') as HTMLInputElement
     fireEvent.click(allRadioButton)
     expect(screen.getByPlaceholderText('Search Employee')).toBeInTheDocument()
-    expect(screen.getByTestId('search-employee-btn')).toBeInTheDocument()
-    userEvent.type(screen.getByPlaceholderText('Search Employee'), 'test')
-    expect(screen.getByTestId('search-employee-btn')).toBeEnabled()
+    const searchButton = screen.getByTestId('search-employee-btn')
+    expect(searchButton).toBeInTheDocument()
+    userEvent.type(screen.getByPlaceholderText('Search Employee'), 'kumar')
+    expect(searchButton).toBeEnabled()
+    userEvent.click(searchButton)
+    expect(mockHandleSearchHiveActivityReport).toHaveBeenCalledTimes(1)
   })
 })

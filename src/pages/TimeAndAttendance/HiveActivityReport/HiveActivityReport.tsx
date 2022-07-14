@@ -8,6 +8,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import hiveActivityReportApi from '../../../middleware/api/TimeAndAttendance/HiveActivityReport/hiveActivityReportApi'
+import { downloadFile } from '../../../utils/helper'
 
 const HiveActivityReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -77,25 +78,6 @@ const HiveActivityReport = (): JSX.Element => {
         startIndex: pageSize * (currentPage - 1),
       }),
     )
-  }
-
-  const downloadFile = (
-    excelDownload: Blob | undefined,
-    downloadFormat: string,
-  ) => {
-    if (excelDownload) {
-      const url = window.URL.createObjectURL(
-        new Blob([excelDownload], {
-          type: excelDownload.type,
-        }),
-      )
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', downloadFormat)
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
-    }
   }
 
   const handleExportHiveActivityReport = async () => {
