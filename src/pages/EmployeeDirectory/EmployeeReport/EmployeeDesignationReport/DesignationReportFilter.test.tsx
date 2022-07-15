@@ -5,7 +5,7 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import DesignationReportFilter from './DesignationReportFilter'
 // import * as goToThisPage from './goToThisPage'
-import { render, screen } from '../../../../test/testUtils'
+import { render, screen, fireEvent } from '../../../../test/testUtils'
 import { mockDesignation } from '../../../../test/data/employeeDesignationReportData'
 
 const mockSetDesignation = jest.fn()

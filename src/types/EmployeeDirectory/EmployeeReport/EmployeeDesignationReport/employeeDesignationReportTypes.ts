@@ -12,6 +12,19 @@ export type EmployeeDesignation = {
   country: string | null
 }
 
+export type MockEmployeeDesignation = {
+  id: number
+  fullName: string
+  emailId: string
+  mobile: string
+  bloodgroup: string
+  departmentName: string
+  designation: string
+  contractStartDate: string | null
+  country: string | null
+  [key: string]: unknown
+}
+
 export type EmployeeDesignationReportApiProps = {
   endIndex?: number
   startIndex?: number
