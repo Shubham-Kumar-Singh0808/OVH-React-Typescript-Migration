@@ -256,6 +256,8 @@ const AddNewEmployee = (): JSX.Element => {
           alreadyExistToastMessage('Employee username is already exists!'),
         ),
       )
+
+      setAddEmployee({ ...addEmployee, userName: '' })
     } else {
       dispatch(
         reduxServices.app.actions.addToast(
