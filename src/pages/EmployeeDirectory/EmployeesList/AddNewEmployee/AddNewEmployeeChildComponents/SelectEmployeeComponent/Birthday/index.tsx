@@ -32,7 +32,8 @@ const Birthday = ({
           showMonthDropdown
           showYearDropdown
           dropdownMode="select"
-          placeholderText="Select birth date"
+          dateFormat="dd/mm/yy"
+          placeholderText="dd/mm/yy"
           name="birthday"
           value={date}
           onChange={(date: Date) => onDateChangeHandler(date)}
