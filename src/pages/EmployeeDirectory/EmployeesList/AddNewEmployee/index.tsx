@@ -456,7 +456,7 @@ const AddNewEmployee = (): JSX.Element => {
               setValue={onHandleTechnology}
               value={addEmployee.technology}
               name="Technology"
-              label="Select Technology"
+              label="Select"
             />
             <Designation
               dynamicFormLabelProps={dynamicFormLabelProps}
