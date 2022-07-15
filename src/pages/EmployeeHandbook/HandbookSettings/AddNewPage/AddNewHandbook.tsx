@@ -89,7 +89,7 @@ function AddNewHandbook({
       addNewPage.displayOrder &&
       addNewPage.pageName &&
       addNewPage.list &&
-      addNewPage.description
+      addNewPage.description?.length > 150
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -117,7 +117,7 @@ function AddNewHandbook({
   }
 
   const displayOrderExists = (id: string) => {
-    return totalHandbookList.find((currentHandBook) => {
+    return totalHandbookList?.find((currentHandBook) => {
       return currentHandBook.displayOrder === Number(id)
     })
   }
@@ -335,7 +335,7 @@ function AddNewHandbook({
               </span>
             </CFormLabel>
             {showEditor ? (
-              <CCol sm={9} data-testId="description-input">
+              <CCol sm={9}>
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
