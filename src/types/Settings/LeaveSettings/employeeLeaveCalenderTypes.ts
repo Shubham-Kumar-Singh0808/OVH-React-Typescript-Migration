@@ -6,8 +6,8 @@ export type EmployeeSaveLeaveCalenderSetting = {
   leavesPerYear?: number | string
   maxAccrualPerYear: number | string
   maxLeavesEarned: number | string
-  payrollCutoffDate: number
-  probationPeriod: number
+  payrollCutoffDate: number | string
+  probationPeriod: number | string
 }
 
 export type EmployeeLeaveCategory = {
