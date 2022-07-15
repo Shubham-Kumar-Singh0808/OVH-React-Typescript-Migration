@@ -74,6 +74,7 @@ const EmploymentContract = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
+                data-testid="start-date-picker"
                 placeholderText="Select start date"
                 name="contractstartdate"
                 value={startDate}
@@ -98,6 +99,7 @@ const EmploymentContract = ({
                 showYearDropdown
                 dropdownMode="select"
                 placeholderText="Select end date"
+                data-testid="end-date-picker"
                 name="contractenddate"
                 value={endDate}
                 onChange={(date: Date) => onEndDateChangeHandler(date)}

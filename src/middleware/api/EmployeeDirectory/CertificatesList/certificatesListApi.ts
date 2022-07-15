@@ -1,10 +1,12 @@
-import axios from 'axios'
 import { AllowedHttpMethods, certificateListApiConfig } from '../../apiList'
 import {
   CertificateListApiProps,
   EmployeeCertificateResponse,
 } from '../../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getEmployeesCertificates = async (
   props: CertificateListApiProps,
@@ -21,7 +23,7 @@ const getEmployeesCertificates = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -40,7 +42,7 @@ const exportCertificatesData = async (
     responseType: 'blob',
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

@@ -1,9 +1,11 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeLeaveSettingsApiConfig,
 } from '../../apiList'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 import {
   EmployeeSaveLeaveCalenderSetting,
   EmployeeLeaveCategory,
@@ -17,7 +19,7 @@ const getEmployeeLeaveCalenderSettings =
       method: AllowedHttpMethods.get,
     })
 
-    const response = await axios(requestConfig)
+    const response = await useAxios(requestConfig)
     return response.data
   }
 
@@ -29,7 +31,7 @@ const saveEmployeeLeaveCalenderSettings = async (
     method: AllowedHttpMethods.post,
     data: employeeLeaveCalender,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -41,7 +43,7 @@ const getEmployeeLeaveCategories = async (): Promise<
     method: AllowedHttpMethods.get,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -55,7 +57,7 @@ const deleteEmployeeLeaveCategory = async (
       leaveCategoryId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -67,7 +69,7 @@ const addEmployeeLeaveCategory = async (
     method: AllowedHttpMethods.post,
     data: employeeLeaveCategory,
   })
-  const responseVisa = await axios(requestConfig)
+  const responseVisa = await useAxios(requestConfig)
   return responseVisa.data
 }
 
@@ -79,7 +81,7 @@ const updateEmployeeLeaveCategory = async (
     method: AllowedHttpMethods.put,
     data: employeeLeaveCategory,
   })
-  const responseVisa = await axios(requestConfig)
+  const responseVisa = await useAxios(requestConfig)
   return responseVisa.data
 }
 

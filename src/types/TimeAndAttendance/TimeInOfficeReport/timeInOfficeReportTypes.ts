@@ -40,6 +40,7 @@ export type TimeInOfficeReportSliceState = {
   timeInOfficeEmployeeReport: GetTimeInOfficeEmployeeReportResponse
   timeInOfficeManagerReport: GetTimeInOfficeManagerReportResponse
   isLoading: ApiLoadingState
+  monthDisplay: string
 }
 
 export type ManagerTimeInOfficeReportProps = {

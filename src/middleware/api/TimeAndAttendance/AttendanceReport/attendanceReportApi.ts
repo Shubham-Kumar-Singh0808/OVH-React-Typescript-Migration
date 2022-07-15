@@ -1,9 +1,11 @@
-import axios from 'axios'
 import {
   EmployeeAttendanceReportApiProps,
   EmployeeAttendanceReportResponse,
 } from '../../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 import {
   AllowedHttpMethods,
   employeeAttendanceReportApiConfig,
@@ -27,7 +29,7 @@ const getEmployeeAttendanceReport = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -50,9 +52,10 @@ const exportAttendanceReport = async (
     responseType: 'blob',
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
+
 const exportBiometricAttendanceReport = async (
   props: EmployeeAttendanceReportApiProps,
 ): Promise<Blob | undefined> => {
@@ -72,7 +75,7 @@ const exportBiometricAttendanceReport = async (
     responseType: 'blob',
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

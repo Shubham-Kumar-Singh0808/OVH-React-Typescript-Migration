@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // Todo: remove eslint and fix all the errors
 
-import axios from 'axios'
 import { AllowedHttpMethods, qualificationsApiConfig } from '../../../apiList'
 import {
   EmployeeQualification,
   PostGraduationAndGraduationList,
 } from '../../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
-import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../utils/apiUtils'
 
 const getEmployeeQualifications = async (
   employeeId: string | number | undefined,
@@ -19,7 +21,7 @@ const getEmployeeQualifications = async (
       empID: employeeId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -29,7 +31,7 @@ const getPgLookUpAndGraduationLookUpItems =
       url: qualificationsApiConfig.getPostGraduationAndGraduationLookUp,
       method: AllowedHttpMethods.get,
     })
-    const response = await axios(requestConfig)
+    const response = await useAxios(requestConfig)
     return response.data
   }
 
@@ -42,7 +44,7 @@ const addEmployeeQualifications = async (
     method: AllowedHttpMethods.post,
     data: { ...addQualificationRest },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 const updateEmployeeQualifications = async (
@@ -56,7 +58,7 @@ const updateEmployeeQualifications = async (
     },
     data: addQualification,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

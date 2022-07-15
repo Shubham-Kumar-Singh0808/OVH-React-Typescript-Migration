@@ -1,7 +1,9 @@
-import axios from 'axios'
 import { AllowedHttpMethods, basicInfoApiConfig } from '../../apiList'
 import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 import {
   DownloadCVInterface,
   UploadCVInterface,
@@ -18,7 +20,7 @@ const updateDefaultPicOnGenderChange = async (
       gender,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -36,7 +38,7 @@ const uploadEmployeeCV = async (
       'Content-Type': 'multipart/form-data',
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -54,7 +56,7 @@ const uploadEmployeeProfilePicture = async (
       'Content-Type': 'multipart/form-data',
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -71,7 +73,7 @@ const downloadEmployeeCV = async (
     },
     responseType: 'blob',
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -87,7 +89,7 @@ const downloadSampleCV = async (fileName: string): Promise<File> => {
     },
     responseType: 'blob',
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -99,7 +101,7 @@ const updateEmployeeBasicInformation = async (
     method: AllowedHttpMethods.post,
     data: prepareObject,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

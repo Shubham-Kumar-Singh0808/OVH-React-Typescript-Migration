@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeCertificationsApiConfig,
@@ -9,14 +8,17 @@ import {
   EmployeeCertification,
   Technology,
 } from '../../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
-import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../utils/apiUtils'
 
 const getEmployeeCertificates = async (): Promise<EmployeeCertification[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeCertificationsApiConfig.getEmployeeCertificates,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -25,7 +27,7 @@ const getTechnologies = async (): Promise<Technology[] | undefined> => {
     url: employeeCertificationsApiConfig.getTechnologies,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -39,7 +41,7 @@ const getCertificateByTechnologyName = async (
       technologyName,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -51,7 +53,7 @@ const createEmployeeCertification = async (
     method: AllowedHttpMethods.post,
     data: employeeCertificateDetails,
   })
-  const responseVisa = await axios(requestConfig)
+  const responseVisa = await useAxios(requestConfig)
   return responseVisa.data
 }
 
@@ -62,7 +64,7 @@ const getEmployeeCertificate = async (
     url: `${employeeCertificationsApiConfig.getEmployeeCertificate}/${id}`,
     method: AllowedHttpMethods.get,
   })
-  const responseVisa = await axios(requestConfig)
+  const responseVisa = await useAxios(requestConfig)
   return responseVisa.data
 }
 
@@ -74,7 +76,7 @@ const updateEmployeeCertificate = async (
     method: AllowedHttpMethods.put,
     data: certificateDetails,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -91,7 +93,7 @@ const deleteEmployeeCertificate = async (
       certificationId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -105,7 +107,7 @@ const getEmployeeCertificateById = async (
       empId: employeeId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
