@@ -66,7 +66,7 @@ const ManagerHiveActivityReport = (
 
   return (
     <>
-      {managerHiveActivityReport.list.length ? (
+      {managerHiveActivityReport.list?.length ? (
         <>
           <CTable striped className="time-in-office-table">
             <CTableHead>
