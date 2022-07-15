@@ -26,7 +26,7 @@ const UserNameEmail = ({
             'col-sm-3 col-form-label text-end',
           )}
         >
-          Username
+          Username:
           <span className={showIsRequired(username)}>*</span>
         </CFormLabel>
         <CCol sm={3}>
@@ -50,7 +50,7 @@ const UserNameEmail = ({
             'col-sm-3 col-form-label text-end',
           )}
         >
-          Email
+          Email:
           <span className={showIsRequired(username)}>*</span>
         </CFormLabel>
         <CCol sm={3}>
