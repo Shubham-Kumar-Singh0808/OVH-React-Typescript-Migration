@@ -23,11 +23,7 @@ describe('DesignationList Table Testing', () => {
     // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeDesignationList
-          setToggleDesignation={function (value: boolean): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
+        <EmployeeDesignationList setToggleDesignation={jest.fn()} />
       </ReduxProvider>,
     )
     expect(screen.getByText('Designation List')).toBeInTheDocument()
