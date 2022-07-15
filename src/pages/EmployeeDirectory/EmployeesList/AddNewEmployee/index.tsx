@@ -1,5 +1,6 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Birthday,
   Designation,
@@ -36,6 +37,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 
 const AddNewEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const history = useHistory()
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
@@ -344,6 +346,8 @@ const AddNewEmployee = (): JSX.Element => {
           toastElement('New employee is successfully added'),
         ),
       )
+
+      history.push('/employeeList')
     } else {
       dispatch(reduxServices.app.actions.addToast('Failed to add new employee'))
     }
