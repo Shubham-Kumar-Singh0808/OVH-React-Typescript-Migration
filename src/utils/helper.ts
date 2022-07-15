@@ -16,7 +16,7 @@ export const showIsRequired = (value: string): string =>
 export const downloadFile = (
   excelDownload: Blob | undefined,
   downloadFormat: string,
-) => {
+): void => {
   if (excelDownload) {
     const url = window.URL.createObjectURL(
       new Blob([excelDownload], {
