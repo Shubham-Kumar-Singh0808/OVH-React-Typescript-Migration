@@ -71,6 +71,7 @@ const ShiftConfiguration = ({
       }
     }
   }
+
   const hoursValidation = () => {
     if (employeeShiftDetails.startTimeHour !== undefined || '' || null) {
       if (employeeShiftDetails.startTimeHour.length === 1) {
@@ -159,10 +160,6 @@ const ShiftConfiguration = ({
       })
     }
   }
-
-  // useEffect(() => {
-  //   dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
-  // }, [dispatch])
 
   useEffect(() => {
     if (

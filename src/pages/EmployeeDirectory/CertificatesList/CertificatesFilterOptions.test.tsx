@@ -136,7 +136,7 @@ describe('Certificates Filter Options Component Testing', () => {
     })
   })
 
-  describe('Technology Field', () => {
+  describe('Certificates Filter Options component with data', () => {
     beforeEach(() => {
       render(
         <CertificatesFilterOptions

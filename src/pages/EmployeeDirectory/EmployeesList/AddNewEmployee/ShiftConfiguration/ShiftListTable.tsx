@@ -1,8 +1,3 @@
-/* eslint-disable max-params */
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable consistent-return */
-/* eslint-disable require-await */
-// Todo: remove eslint and fix the error
 import {
   CButton,
   CCol,
@@ -15,7 +10,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import {
   EmployeeShiftDetails,
   ShiftListTableProps,
@@ -51,13 +46,13 @@ const ShiftListTable = ({
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    const newValue = value.replace(/[^0-9]/gi, '')
+    const newValue = value.replace(/\D/gi, '')
     setEditEmployeeShiftDetails((prevState) => {
       return { ...prevState, ...{ [name]: newValue } }
     })
   }
 
-  const editHoursAndMinutesValidation = () => {
+  const editMinutesValidation = () => {
     if (editEmployeeShiftDetails.endTimeMinutes !== undefined || '' || null) {
       if (editEmployeeShiftDetails.endTimeMinutes.length === 1) {
         editEmployeeShiftDetails.endTimeMinutes =
@@ -74,6 +69,9 @@ const ShiftListTable = ({
         editEmployeeShiftDetails.startTimeMinutes = '59'
       }
     }
+  }
+
+  const editHoursValidation = () => {
     if (editEmployeeShiftDetails.startTimeHour !== undefined || '' || null) {
       if (editEmployeeShiftDetails.startTimeHour.length === 1) {
         editEmployeeShiftDetails.startTimeHour =
@@ -93,23 +91,18 @@ const ShiftListTable = ({
   }
 
   const editShiftDetailsButtonHandler = (
-    shiftId: number,
-    startTimeHour: string,
-    startTimeMinutes: string,
-    endTimeHour: string,
-    endTimeMinutes: string,
-    graceTime: string,
+    shiftDetailsProps: EmployeeShiftDetails,
   ): void => {
     setIsShiftDetailEdit(true)
-    setSelectShiftId(shiftId)
+    setSelectShiftId(shiftDetailsProps.id)
     setEditEmployeeShiftDetails({
-      id: shiftId,
-      name: '',
-      startTimeHour,
-      startTimeMinutes,
-      endTimeHour,
-      endTimeMinutes,
-      graceTime,
+      id: shiftDetailsProps.id,
+      name: shiftDetailsProps.name,
+      startTimeHour: shiftDetailsProps.startTimeHour,
+      startTimeMinutes: shiftDetailsProps.startTimeMinutes,
+      endTimeHour: shiftDetailsProps.endTimeHour,
+      endTimeMinutes: shiftDetailsProps.endTimeMinutes,
+      graceTime: shiftDetailsProps.graceTime,
     })
   }
 
@@ -134,10 +127,7 @@ const ShiftListTable = ({
     }
   }
 
-  const deleteShiftDetailButtonHandler = async (
-    shiftId: number,
-    name: string,
-  ) => {
+  const deleteShiftDetailButtonHandler = (shiftId: number, name: string) => {
     setDeleteShiftModalVisibility(true)
     setSelectShiftId(shiftId)
     setSelectShiftName(name)
@@ -162,16 +152,6 @@ const ShiftListTable = ({
       )
     }
   }
-
-  const sortedEmployeeShifts = useMemo(() => {
-    if (employeeShifts) {
-      return employeeShifts
-        .slice()
-        .sort((employeeShift1, employeeShift2) =>
-          employeeShift1.name.localeCompare(employeeShift2.name),
-        )
-    }
-  }, [employeeShifts])
 
   const tableHeaderCellPropsSNo = {
     width: '6%',
@@ -220,155 +200,161 @@ const ShiftListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {sortedEmployeeShifts?.map((employeeShift, index) => {
-            return (
-              <CTableRow key={index}>
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  {employeeShift.name}
-                </CTableDataCell>
-                {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
+          {employeeShifts
+            .slice()
+            .sort((employeeShift1, employeeShift2) =>
+              employeeShift1.name.localeCompare(employeeShift2.name),
+            )
+            ?.map((employeeShift, index) => {
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
                   <CTableDataCell scope="row">
-                    <div className="d-flex align-items-center">
-                      <div className="edit-time-control sh-left">
-                        <CFormInput
-                          id="startTimeHour"
-                          data-testid={`sh-startTimeHour-input${index}`}
-                          size="sm"
-                          type="text"
-                          name="startTimeHour"
-                          maxLength={2}
-                          value={editEmployeeShiftDetails.startTimeHour}
-                          onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={editHoursAndMinutesValidation}
-                        />
-                      </div>
-                      <div className="edit-time-control">
-                        <CFormInput
-                          id="startTimeMinutes"
-                          data-testid={`sh-startTimeMinutes-input${index}`}
-                          size="sm"
-                          type="text"
-                          name="startTimeMinutes"
-                          maxLength={2}
-                          value={editEmployeeShiftDetails.startTimeMinutes}
-                          onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={editHoursAndMinutesValidation}
-                        />
-                      </div>
-                    </div>
+                    {employeeShift.name}
                   </CTableDataCell>
-                ) : (
-                  <CTableDataCell scope="row">
-                    {`${employeeShift.startTimeHour}:${employeeShift.startTimeMinutes}`}
-                  </CTableDataCell>
-                )}
-                {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
-                  <CTableDataCell scope="row">
-                    <div className="d-flex align-items-center">
-                      <div className="edit-time-control sh-left">
-                        <CFormInput
-                          id="endTimeHour"
-                          data-testid={`sh-endTimeHour-input${index}`}
-                          size="sm"
-                          type="text"
-                          name="endTimeHour"
-                          maxLength={2}
-                          value={editEmployeeShiftDetails.endTimeHour}
-                          onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={editHoursAndMinutesValidation}
-                        />
-                      </div>
-                      <div className="edit-time-control">
-                        <CFormInput
-                          id="endTimeMinutes"
-                          data-testid={`sh-endTimeMinutes-input${index}`}
-                          size="sm"
-                          type="text"
-                          name="endTimeMinutes"
-                          maxLength={2}
-                          value={editEmployeeShiftDetails.endTimeMinutes}
-                          onChange={editEmployeeShiftOnchangeHandler}
-                          onBlur={editHoursAndMinutesValidation}
-                        />
-                      </div>
-                    </div>
-                  </CTableDataCell>
-                ) : (
-                  <CTableDataCell scope="row">{`${employeeShift.endTimeHour}:${employeeShift.endTimeMinutes}`}</CTableDataCell>
-                )}
-
-                {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
-                  <CTableDataCell scope="row">
-                    <div className="edit-time-control">
-                      <CFormInput
-                        id="graceTime"
-                        data-testid={`sh-graceTime-input${index}`}
-                        size="sm"
-                        type="text"
-                        name="graceTime"
-                        maxLength={3}
-                        value={editEmployeeShiftDetails.graceTime}
-                        onChange={editEmployeeShiftOnchangeHandler}
-                      />
-                    </div>
-                  </CTableDataCell>
-                ) : (
-                  <CTableDataCell scope="row">
-                    {employeeShift.graceTime}
-                  </CTableDataCell>
-                )}
-
-                <CTableDataCell scope="row">
                   {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
-                    <CButton
-                      color="success"
-                      data-testid={`sh-save-btn${index}`}
-                      className="btn-ovh me-1"
-                      onClick={saveShiftDetailsButtonHandler}
-                    >
-                      <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                    </CButton>
+                    <CTableDataCell scope="row">
+                      <div className="d-flex align-items-center">
+                        <div className="edit-time-control sh-left">
+                          <CFormInput
+                            id="startTimeHour"
+                            data-testid={`sh-startTimeHour-input${index}`}
+                            size="sm"
+                            type="text"
+                            name="startTimeHour"
+                            maxLength={2}
+                            value={editEmployeeShiftDetails.startTimeHour}
+                            onChange={editEmployeeShiftOnchangeHandler}
+                            onBlur={editHoursValidation}
+                          />
+                        </div>
+                        <div className="edit-time-control">
+                          <CFormInput
+                            id="startTimeMinutes"
+                            data-testid={`sh-startTimeMinutes-input${index}`}
+                            size="sm"
+                            type="text"
+                            name="startTimeMinutes"
+                            maxLength={2}
+                            value={editEmployeeShiftDetails.startTimeMinutes}
+                            onChange={editEmployeeShiftOnchangeHandler}
+                            onBlur={editMinutesValidation}
+                          />
+                        </div>
+                      </div>
+                    </CTableDataCell>
                   ) : (
+                    <CTableDataCell scope="row">
+                      {`${employeeShift.startTimeHour}:${employeeShift.startTimeMinutes}`}
+                    </CTableDataCell>
+                  )}
+                  {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
+                    <CTableDataCell scope="row">
+                      <div className="d-flex align-items-center">
+                        <div className="edit-time-control sh-left">
+                          <CFormInput
+                            id="endTimeHour"
+                            data-testid={`sh-endTimeHour-input${index}`}
+                            size="sm"
+                            type="text"
+                            name="endTimeHour"
+                            maxLength={2}
+                            value={editEmployeeShiftDetails.endTimeHour}
+                            onChange={editEmployeeShiftOnchangeHandler}
+                            onBlur={editHoursValidation}
+                          />
+                        </div>
+                        <div className="edit-time-control">
+                          <CFormInput
+                            id="endTimeMinutes"
+                            data-testid={`sh-endTimeMinutes-input${index}`}
+                            size="sm"
+                            type="text"
+                            name="endTimeMinutes"
+                            maxLength={2}
+                            value={editEmployeeShiftDetails.endTimeMinutes}
+                            onChange={editEmployeeShiftOnchangeHandler}
+                            onBlur={editMinutesValidation}
+                          />
+                        </div>
+                      </div>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell scope="row">{`${employeeShift.endTimeHour}:${employeeShift.endTimeMinutes}`}</CTableDataCell>
+                  )}
+
+                  {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
+                    <CTableDataCell scope="row">
+                      <div className="edit-time-control">
+                        <CFormInput
+                          id="graceTime"
+                          data-testid={`sh-graceTime-input${index}`}
+                          size="sm"
+                          type="text"
+                          name="graceTime"
+                          maxLength={3}
+                          value={editEmployeeShiftDetails.graceTime}
+                          onChange={editEmployeeShiftOnchangeHandler}
+                        />
+                      </div>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell scope="row">
+                      {employeeShift.graceTime}
+                    </CTableDataCell>
+                  )}
+
+                  <CTableDataCell scope="row">
+                    {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
+                      <CButton
+                        color="success"
+                        data-testid={`sh-save-btn${index}`}
+                        className="btn-ovh me-1"
+                        onClick={saveShiftDetailsButtonHandler}
+                      >
+                        <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                      </CButton>
+                    ) : (
+                      <CButton
+                        color="info"
+                        data-testid={`sh-edit-btn${index}`}
+                        className="btn-ovh me-1"
+                        onClick={() => {
+                          editShiftDetailsButtonHandler({
+                            id: employeeShift.id,
+                            name: '',
+                            startTimeHour: employeeShift.startTimeHour,
+                            startTimeMinutes: employeeShift.startTimeMinutes,
+                            endTimeHour: employeeShift.endTimeHour,
+                            endTimeMinutes: employeeShift.endTimeMinutes,
+                            graceTime: employeeShift.graceTime,
+                          })
+                        }}
+                      >
+                        <i
+                          className="fa fa-pencil-square-o"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    )}
+
                     <CButton
-                      color="info"
-                      data-testid={`sh-edit-btn${index}`}
+                      color="danger"
+                      data-testid={`sh-delete-btn${index}`}
                       className="btn-ovh me-1"
                       onClick={() => {
-                        editShiftDetailsButtonHandler(
+                        deleteShiftDetailButtonHandler(
                           employeeShift.id,
-                          employeeShift.startTimeHour,
-                          employeeShift.startTimeMinutes,
-                          employeeShift.endTimeHour,
-                          employeeShift.endTimeMinutes,
-                          employeeShift.graceTime,
+                          employeeShift.name,
                         )
                       }}
                     >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
-                  )}
-
-                  <CButton
-                    color="danger"
-                    data-testid={`sh-delete-btn${index}`}
-                    className="btn-ovh me-1"
-                    onClick={() => {
-                      deleteShiftDetailButtonHandler(
-                        employeeShift.id,
-                        employeeShift.name,
-                      )
-                    }}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
       <CRow>
