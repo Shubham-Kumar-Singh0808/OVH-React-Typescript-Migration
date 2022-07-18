@@ -381,184 +381,195 @@ const AddNewEmployee = (): JSX.Element => {
 
   return (
     <>
-      <OCard
-        className="mb-4"
-        title="Add New Employee"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        {shiftToggle && (
-          <ShiftConfiguration setToggleShift={handleBackButton} />
-        )}
-        {destinationToggle && (
-          <EmployeeDesignationList setToggleDesignation={handleBackButton} />
-        )}
-        {!shiftToggle && !destinationToggle ? (
-          <>
-            <UserNameEmail
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              usernameChangeHandler={onHandleUsername}
-              onAllowedUserChangeHandler={onHandleAllowedUser}
-              username={addEmployee.userName}
-              isUserAllowed={(isUserExist as boolean) || false}
-            />
-            <FullName
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              firstNameChangeHandler={onHandleFirstName}
-              lastNameChangeHandler={onHandleLastName}
-              middleNameChangeHandler={onHandleMiddleName}
-              firstNameValue={addEmployee.firstName || ''}
-              lastNameValue={addEmployee.lastName || ''}
-              middleNameValue={addEmployee.middleName || ''}
-            />
-            <OSelectList
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={composedGenderList}
-              setValue={onHandleGender}
-              value={addEmployee.gender}
-              name="Gender"
-              label="Select Gender"
-            />
-            <OSelectList
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={countryList}
-              setValue={onHandleCountryType}
-              value={addEmployee.country}
-              name="Country"
-              label="Select Country"
-            />
-            <Birthday
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              onDateChangeHandler={onHandleBirthday}
-              dateValue={addEmployee.dob}
-            />
-            <JoinedDate
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              onDateChangeHandler={onHandleJoinDate}
-              dateValue={addEmployee.dateOfJoining}
-            />
-            <Experience
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              onExperienceHandler={onHandleExperience}
-              experienceValue={addEmployee.experience}
-            />
-            <OSelectList
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={composedDepartmentList}
-              setValue={onHandleDepartment}
-              value={addEmployee.departmentName}
-              name="Department"
-              label="Select Department"
-            />
-            <OSelectList
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={composedTechnologyList}
-              setValue={onHandleTechnology}
-              value={addEmployee.technology}
-              name="Technology"
-              label="Select"
-            />
-            <Designation
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={composedDesignationList}
-              setValue={onHandleDesignation}
-              value={addEmployee.designation}
-              setToggleShift={() => setDestinationToggle(!destinationToggle)}
-              toggleValue={destinationToggle as boolean}
-              isAddDisable={false}
-            />
-            <OSelectList
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={composedUserRoles}
-              setValue={onHandleUserRole}
-              value={addEmployee.role}
-              name="Role"
-              label="Select Role"
-            />
-            <ReportingManager
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              reportManagersList={reportingManagersList}
-              onSelectReportManager={onHandleReportManager}
-              shouldReset={resetFields.reportManager}
-              reportValue={addEmployee.manager.fullName}
-            />
-            <ProjectManager
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              managersList={reportingManagersList}
-              onSelectManager={onHandleProjectManager}
-              shouldReset={resetFields.projectManager}
-              projectValue={addEmployee.projectManager.fullName}
-            />
-            <HRAssociate
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              hrDataList={hrDataList}
-              onSelectHRAssociate={onHandleHRAssociate}
-              shouldReset={resetFields.hrAssociate}
-              hrValue={addEmployee.hrAssociate.fullName}
-            />
-            <OSelectList
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={composedEmploymentList}
-              setValue={onHandleEmployeeType}
-              value={addEmployee.employmentTypeName}
-              name="EmploymentType"
-              label="Select Employment Type"
-            />
-            <OSelectList
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={composedJobTypes}
-              setValue={onHandleJobType}
-              value={addEmployee.jobTypeName}
-              name="JobType"
-              label="Select Job Type"
-            />
-            <Shift
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              list={employeeShifts}
-              setValue={onHandleShift}
-              value={addEmployee.timeSlotDTO.name}
-              setToggleShift={() => setShiftToggle(!shiftToggle)}
-              toggleValue={shiftToggle as boolean}
-              isAddDisable={false}
-            />
-            <EmploymentContract
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              onStartDateChangeHandler={onHandleStartDate}
-              onEndDateChangeHandler={onHandleEndDate}
-              onContractExistHandler={onHandleContractExist}
-              startDateValue={addEmployee.contractStartDate as Date}
-              endDateValue={addEmployee.contractEndDate as Date}
-              isContractExist={addEmployee.contractExists}
-            />
-            <WorkFrom
-              dynamicFormLabelProps={dynamicFormLabelProps}
-              onWorkFromHandler={onHandleWorkfrom}
-              workFromValue={addEmployee.workStatus}
-            />
-            <CRow className="mb-3 align-items-center">
-              <CCol sm={{ span: 6, offset: 3 }}>
-                <CButton
-                  className="btn-ovh me-1"
-                  color="success"
-                  disabled={!isViewBtnEnabled}
-                  data-testid="add-new-employee"
-                  onClick={handleAddEmployee}
-                >
-                  Add
-                </CButton>
-                <CButton
-                  color="warning "
-                  className="btn-ovh"
-                  data-testid="clear-new-employee"
-                  onClick={handleClearFields}
-                >
-                  Clear
-                </CButton>
-              </CCol>
-            </CRow>
-          </>
-        ) : null}
-      </OCard>
+      {shiftToggle && <ShiftConfiguration setToggleShift={handleBackButton} />}
+      {destinationToggle && (
+        <EmployeeDesignationList setToggleDesignation={handleBackButton} />
+      )}
+      {!shiftToggle && !destinationToggle ? (
+        <OCard
+          className="mb-4 myprofile-wrapper"
+          title="Add New Employee"
+          CFooterClassName="d-none"
+        >
+          <CRow>
+            <CCol
+              xs={12}
+              className="gap-2 d-md-flex justify-content-md-end pe-0"
+            >
+              <CButton
+                data-testid="back-btn"
+                color="info btn-ovh me-1"
+                onClick={() => history.push('/employeeList')}
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </CCol>
+            <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
+              <UserNameEmail
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                usernameChangeHandler={onHandleUsername}
+                onAllowedUserChangeHandler={onHandleAllowedUser}
+                username={addEmployee.userName}
+                isUserAllowed={(isUserExist as boolean) || false}
+              />
+              <FullName
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                firstNameChangeHandler={onHandleFirstName}
+                lastNameChangeHandler={onHandleLastName}
+                middleNameChangeHandler={onHandleMiddleName}
+                firstNameValue={addEmployee.firstName || ''}
+                lastNameValue={addEmployee.lastName || ''}
+                middleNameValue={addEmployee.middleName || ''}
+              />
+              <OSelectList
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                list={composedGenderList}
+                setValue={onHandleGender}
+                value={addEmployee.gender}
+                name="Gender"
+                label="Select Gender"
+              />
+              <OSelectList
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                list={countryList}
+                setValue={onHandleCountryType}
+                value={addEmployee.country}
+                name="Country"
+                label="Select Country"
+              />
+              <Birthday
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                onDateChangeHandler={onHandleBirthday}
+                dateValue={addEmployee.dob}
+              />
+              <JoinedDate
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                onDateChangeHandler={onHandleJoinDate}
+                dateValue={addEmployee.dateOfJoining}
+              />
+              <Experience
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                onExperienceHandler={onHandleExperience}
+                experienceValue={addEmployee.experience}
+              />
+              <OSelectList
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                list={composedDepartmentList}
+                setValue={onHandleDepartment}
+                value={addEmployee.departmentName}
+                name="Department"
+                label="Select Department"
+              />
+              <OSelectList
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                list={composedTechnologyList}
+                setValue={onHandleTechnology}
+                value={addEmployee.technology}
+                name="Technology"
+                label="Select"
+              />
+              <Designation
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                list={composedDesignationList}
+                setValue={onHandleDesignation}
+                value={addEmployee.designation}
+                setToggleShift={() => setDestinationToggle(!destinationToggle)}
+                toggleValue={destinationToggle as boolean}
+                isAddDisable={false}
+              />
+              <OSelectList
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                list={composedUserRoles}
+                setValue={onHandleUserRole}
+                value={addEmployee.role}
+                name="Role"
+                label="Select Role"
+              />
+              <ReportingManager
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                reportManagersList={reportingManagersList}
+                onSelectReportManager={onHandleReportManager}
+                shouldReset={resetFields.reportManager}
+                reportValue={addEmployee.manager.fullName}
+              />
+              <ProjectManager
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                managersList={reportingManagersList}
+                onSelectManager={onHandleProjectManager}
+                shouldReset={resetFields.projectManager}
+                projectValue={addEmployee.projectManager.fullName}
+              />
+              <HRAssociate
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                hrDataList={hrDataList}
+                onSelectHRAssociate={onHandleHRAssociate}
+                shouldReset={resetFields.hrAssociate}
+                hrValue={addEmployee.hrAssociate.fullName}
+              />
+              <OSelectList
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                list={composedEmploymentList}
+                setValue={onHandleEmployeeType}
+                value={addEmployee.employmentTypeName}
+                name="EmploymentType"
+                label="Select Employment Type"
+              />
+              <OSelectList
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                list={composedJobTypes}
+                setValue={onHandleJobType}
+                value={addEmployee.jobTypeName}
+                name="JobType"
+                label="Select Job Type"
+              />
+              <Shift
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                list={employeeShifts}
+                setValue={onHandleShift}
+                value={addEmployee.timeSlotDTO.name}
+                setToggleShift={() => setShiftToggle(!shiftToggle)}
+                toggleValue={shiftToggle as boolean}
+                isAddDisable={false}
+              />
+              <EmploymentContract
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                onStartDateChangeHandler={onHandleStartDate}
+                onEndDateChangeHandler={onHandleEndDate}
+                onContractExistHandler={onHandleContractExist}
+                startDateValue={addEmployee.contractStartDate as Date}
+                endDateValue={addEmployee.contractEndDate as Date}
+                isContractExist={addEmployee.contractExists}
+              />
+              <WorkFrom
+                dynamicFormLabelProps={dynamicFormLabelProps}
+                onWorkFromHandler={onHandleWorkfrom}
+                workFromValue={addEmployee.workStatus}
+              />
+              <CRow className="mb-3 align-items-center">
+                <CCol sm={{ span: 6, offset: 3 }}>
+                  <CButton
+                    className="btn-ovh me-1"
+                    color="success"
+                    disabled={!isViewBtnEnabled}
+                    data-testid="add-new-employee"
+                    onClick={handleAddEmployee}
+                  >
+                    Add
+                  </CButton>
+                  <CButton
+                    color="warning "
+                    className="btn-ovh"
+                    data-testid="clear-new-employee"
+                    onClick={handleClearFields}
+                  >
+                    Clear
+                  </CButton>
+                </CCol>
+              </CRow>
+            </CCol>
+          </CRow>
+        </OCard>
+      ) : null}
     </>
   )
 }
