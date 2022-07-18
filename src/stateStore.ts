@@ -43,6 +43,9 @@ import userAccessToFeaturesReducer from './reducers/Settings/UserRolesConfigurat
 import employeeHandbookSettingsReducer from './reducers/EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 import timeInOfficeReportReducer from './reducers/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import employeeLeaveSettingsReducer from './reducers/Settings/LeaveSettings/employeeLeaveSettingsSlice'
+import hiveActivityReportReducer from './reducers/TimeAndAttendance/HiveActivityReport/hiveActivityReportSlice'
+import employeeMailConfigurationReducer from './reducers/Settings/MailConfiguration/employeeMailConfigurationSlice'
+import addNewTemplateReducer from './reducers/Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
 
 export const allReducers = {
@@ -87,6 +90,9 @@ export const allReducers = {
   newEmployee: newEmployeeReducer,
   getJobTypes: getAllJobTypeReducer,
   checkUserExist: checkUserExistReducer,
+  hiveActivityReport: hiveActivityReportReducer,
+  employeeMailConfiguration: employeeMailConfigurationReducer,
+  addMailTemplate: addNewTemplateReducer,
   employee: employeeReducer,
   // add your slice reducers here
 }

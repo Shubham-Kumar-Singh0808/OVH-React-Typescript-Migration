@@ -23,7 +23,7 @@ describe('DesignationList Table Testing', () => {
     // useSelectorMock.mockReturnValue({ mockUseSelectorValue })
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeDesignationList />
+        <EmployeeDesignationList setToggleDesignation={jest.fn()} />
       </ReduxProvider>,
     )
     expect(screen.getByText('Designation List')).toBeInTheDocument()
@@ -35,7 +35,7 @@ describe('DesignationList Table Testing', () => {
       </ReduxProvider>,
     )
     await waitFor(() => {
-      expect(screen.getByText('No Records Found')).toBeInTheDocument()
+      expect(screen.queryByText('No Records Found')).toBeInTheDocument()
     })
   })
 })

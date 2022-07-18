@@ -1,8 +1,10 @@
-import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AllowedHttpMethods, sideMenuApiConfig } from '../../api/apiList'
 import { SidebarMenuReturnApi } from '../../../types/SidebarMenu/sidebarMenuType'
-import { getAuthenticatedRequestConfig } from '../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../utils/apiUtils'
 
 export const getSidebarMenu = createAsyncThunk<
   SidebarMenuReturnApi[],
@@ -15,6 +17,6 @@ export const getSidebarMenu = createAsyncThunk<
       loggedInEmpId: employeeId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data as SidebarMenuReturnApi[]
 })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import moment from 'moment'
 import ReportOptions from './ReportOptions'
 import EmployeeTimeInOfficeReport from './EmployeeTimeInOfficeReport'
@@ -8,6 +8,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import { currentMonthDate } from '../../../utils/helper'
 
 const TimeInOfficeReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -39,39 +40,60 @@ const TimeInOfficeReport = (): JSX.Element => {
     pageSize,
   } = usePagination(listSize, 20)
 
-  useEffect(() => {
-    const dateToUse =
-      startDate && isViewClicked
-        ? moment(startDate).format('MM/yyyy')
-        : selectedDate
+  const fetchDataHandler = useCallback(
+    (dateToUse: string) => {
+      if (selectedView === 'Me') {
+        dispatch(
+          reduxServices.timeInOfficeReport.getTimeInOfficeEmployeeReport({
+            date: dateToUse,
+            loggedInEmployeeId: Number(employeeId),
+          }),
+        )
+      } else if (selectedView === 'All') {
+        dispatch(
+          reduxServices.timeInOfficeReport.getTimeInOfficeManagerReport({
+            date: dateToUse,
+            loggedInEmployeeId: Number(employeeId),
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+            search: searchValue,
+          }),
+        )
+      }
 
-    if (selectedView === 'Me') {
+      const monthToDisplay =
+        dateToUse === currentMonthDate
+          ? moment().format('MMMM-YYYY')
+          : moment().subtract(1, 'months').format('MMMM-YYYY')
+
       dispatch(
-        reduxServices.timeInOfficeReport.getTimeInOfficeEmployeeReport({
-          date: dateToUse,
-          loggedInEmployeeId: Number(employeeId),
-        }),
+        reduxServices.timeInOfficeReport.actions.setMonthDisplay(
+          monthToDisplay,
+        ),
       )
-    } else if (selectedView === 'All') {
+    },
+    [employeeId, pageSize, currentPage, searchValue, dispatch],
+  )
+
+  useEffect(() => {
+    if (selectedDate) {
+      fetchDataHandler(selectedDate)
+    }
+  }, [selectedDate, fetchDataHandler])
+
+  useEffect(() => {
+    if (isViewClicked) {
+      fetchDataHandler(moment(startDate).format('MM/yyyy'))
+      dispatch(reduxServices.timeInOfficeReport.actions.setSelectedDate(''))
       dispatch(
-        reduxServices.timeInOfficeReport.getTimeInOfficeManagerReport({
-          date: dateToUse,
-          loggedInEmployeeId: Number(employeeId),
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          search: searchValue,
-        }),
+        reduxServices.timeInOfficeReport.actions.setMonthDisplay(
+          moment(startDate).format('MMMM-YYYY'),
+        ),
       )
     }
-  }, [
-    selectedDate,
-    selectedView,
-    currentPage,
-    pageSize,
-    searchValue,
-    isViewClicked,
-    dispatch,
-  ])
+
+    setIsViewClicked(false)
+  }, [isViewClicked, fetchDataHandler])
 
   const viewButtonHandler = () => {
     setIsViewClicked(true)
@@ -80,7 +102,7 @@ const TimeInOfficeReport = (): JSX.Element => {
   return (
     <>
       <OCard
-        className="mb-4 myprofile-wrapper"
+        className="mb-4 myprofile-wrapper time-in-office-report-card"
         title="Time in Office Report"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import qs from 'qs'
 import {
   AllowedHttpMethods,
@@ -11,7 +10,10 @@ import {
   EmployeeHandbookListResponse,
   TotalHandbookList,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getEmployeeHandbooks = async (
   props: EmployeeHandbookListApiProps,
@@ -24,7 +26,7 @@ const getEmployeeHandbooks = async (
       startIndex: props.startIndex ?? 0,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -33,7 +35,7 @@ const getTotalHandbookList = async (): Promise<TotalHandbookList[]> => {
     url: employeeHandbookSettingsApiConfig.getTotalHandbookList,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -50,7 +52,7 @@ const deleteEmployeeHandbook = async (
       bookId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -61,7 +63,7 @@ const getEmployeeCountries = async (): Promise<
     url: employeeHandbookSettingsApiConfig.getEmployeeCountries,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -83,7 +85,7 @@ const addNewHandbook = async (
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

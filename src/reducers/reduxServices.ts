@@ -33,6 +33,9 @@ import { employeeHandbookSettingService } from './EmployeeHandbook/HandbookSetti
 import { timeInOfficeReportService } from './TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportSlice'
 import { employeeLeaveSettingsService } from './Settings/LeaveSettings/employeeLeaveSettingsSlice'
 import { countryService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/countriesSlice'
+import { hiveActivityReportService } from './TimeAndAttendance/HiveActivityReport/hiveActivityReportSlice'
+import { employeeMailConfigurationService } from './Settings/MailConfiguration/employeeMailConfigurationSlice'
+import { addTemplateService } from './Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import { employeeService } from './EmployeeDirectory/EmployeesList/EditEmployee'
 
 export const reduxServices = {
@@ -71,5 +74,8 @@ export const reduxServices = {
   technology: technologyService,
   country: countryService,
   timeInOfficeReport: timeInOfficeReportService,
+  hiveActivityReport: hiveActivityReportService,
+  employeeMailConfiguration: employeeMailConfigurationService,
+  addNewMailTemplate: addTemplateService,
   employee: employeeService,
 }

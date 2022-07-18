@@ -1,3 +1,19 @@
+import { Method, ResponseType } from 'axios'
+
+export type AuthenticatedRequestConfig = {
+  url: string
+  method: Method
+  headers: { tenantKey: string; [key: string]: string | number }
+  params?: { [key: string]: string | number | boolean | undefined | number[] }
+  paramsSerializer: any
+  data?:
+    | { [key: string]: string | number | unknown }
+    | unknown
+    | string
+    | number
+  responseType?: ResponseType
+}
+
 export interface ApiBase {
   get?: string
   insert?: string
@@ -172,6 +188,7 @@ export interface EmployeeReporteesApi extends ApiBase {
 
 export interface EmployeeReportApi extends ApiBase {
   getEmployeeReports: string
+  getCountries: string
 }
 
 export interface EmployeeDesignationReportApi extends ApiBase {
@@ -206,11 +223,11 @@ export interface UserAccessToFeaturesApi extends ApiBase {
 }
 
 export interface EmployeeHandbookSettingsApi extends ApiBase {
-  getEmployeeHandbooks: string
-  addNewHandbook: string
-  deleteEmployeeHandbook: string
-  getEmployeeCountries: string
   getTotalHandbookList: string
+  getEmployeeCountries: string
+  addNewHandbook: string
+  getEmployeeHandbooks: string
+  deleteEmployeeHandbook: string
 }
 
 export interface TimeInOfficeReportApi extends ApiBase {
@@ -235,4 +252,20 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllemploymentType: string
   getAllJobType: string
   getCheckIfUserExist: string
+}
+
+export interface HiveActivityReportApi extends ApiBase {
+  getEmployeeHiveActivityReport: string
+  getManagerHiveActivityReport: string
+  getSearchHiveTime: string
+  exportHiveReport: string
+}
+export interface EmployeeMailConfigurationApi extends ApiBase {
+  getEmailTemplates: string
+  getMailTemplateTypes: string
+}
+
+export interface AddNewTemplateApi extends ApiBase {
+  getAssetTypes: string
+  addNewMailTemplate: string
 }

@@ -64,9 +64,22 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+const MailConfiguration = React.lazy(
+  () => import('./pages/Settings/MailConfiguration/employeeEmailTemplate'),
+)
 
 const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
+)
+
+const HiveActivityReport = React.lazy(
+  () =>
+    import('./pages/TimeAndAttendance/HiveActivityReport/HiveActivityReport'),
+)
+
+const AddNewTemplate = React.lazy(
+  () =>
+    import('./pages/Settings/MailConfiguration/AddTemplate/AddNewMailTemplate'),
 )
 
 const EditEmployee = React.lazy(
@@ -151,9 +164,24 @@ const routes = [
     component: AddNewEmployee,
   },
   {
+    path: '/hiveReport',
+    name: 'Hive Activity Report',
+    component: HiveActivityReport,
+  },
+  {
+    path: '/addTemplate',
+    name: 'Add Template',
+    component: AddNewTemplate,
+  },
+  {
     path: '/editEmployee/:employeeId',
     name: 'Edit Employee',
     component: EditEmployee,
+  },
+  {
+    path: '/mailTemplates',
+    name: 'Mail Configuration',
+    component: MailConfiguration,
   },
 ]
 

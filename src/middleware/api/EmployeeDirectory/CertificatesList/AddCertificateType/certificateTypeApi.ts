@@ -1,6 +1,8 @@
-import axios from 'axios'
 import { AllowedHttpMethods, certificateTypeApiConfig } from '../../../apiList'
-import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../utils/apiUtils'
 import { CertificateType } from '../../../../../types/EmployeeDirectory/CertificatesList/AddCertificateType/certificateTypes'
 
 const getCertificateTypes = async (): Promise<CertificateType[]> => {
@@ -8,7 +10,7 @@ const getCertificateTypes = async (): Promise<CertificateType[]> => {
     url: certificateTypeApiConfig.getCertificateTypes,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -24,7 +26,7 @@ const checkIsCertificateTypeExists = async ({
       certificateType,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -41,7 +43,7 @@ const addCertificateType = async ({
     },
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -58,7 +60,7 @@ const deleteCertificateType = async (
       certificateId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -72,7 +74,7 @@ const getCertificateType = async (
       certificateId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -85,7 +87,7 @@ const updateCertificateType = async (
     data: certificateTypeDetails,
   })
 
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

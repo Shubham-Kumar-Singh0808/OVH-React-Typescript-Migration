@@ -41,6 +41,7 @@ const ReportingManager = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
+          data-testid="rmLabel"
           {...dynamicFormLabelProps(
             'reportingmanager',
             'col-sm-3 col-form-label text-end',
@@ -75,6 +76,7 @@ const ReportingManager = ({
             )}
             renderItem={(item, isHighlighted) => (
               <div
+                data-testid="option"
                 className={
                   isHighlighted
                     ? 'autocomplete-dropdown-item active'

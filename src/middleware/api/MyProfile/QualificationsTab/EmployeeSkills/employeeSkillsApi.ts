@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   AddUpdateEmployeeSkill,
   CategorySkillListItem,
@@ -10,14 +9,17 @@ import {
   employeeSkillsApiConfig,
   skillsApiConfig,
 } from '../../../apiList'
-import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../utils/apiUtils'
 
 const getEmployeeSkills = async (): Promise<EmployeeSkills[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeSkillsApiConfig.getEmployeeSkills,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -29,7 +31,7 @@ const getCategorySkills = async (
     method: AllowedHttpMethods.get,
     params: { categoryId: categoryType },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -41,7 +43,7 @@ const addEmployeeSkill = async (
     method: AllowedHttpMethods.post,
     data: employeeSkill,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 const getEmployeeSkillInformation = async (
@@ -54,7 +56,7 @@ const getEmployeeSkillInformation = async (
       skillId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -66,7 +68,7 @@ const updateEmployeeSkill = async (
     method: AllowedHttpMethods.post,
     data: employeeSkill,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -83,7 +85,7 @@ const deleteEmployeeSkill = async (
       skillId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -97,7 +99,7 @@ const getEmployeeSkillsById = async (
       empId: employeeId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

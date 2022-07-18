@@ -1,6 +1,8 @@
-import axios from 'axios'
 import { AllowedHttpMethods, addNewEmployeeAPiConfig } from '../../../apiList'
-import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../../utils/apiUtils'
 
 const checkIsUserExists = async (userName: string): Promise<boolean> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -10,7 +12,7 @@ const checkIsUserExists = async (userName: string): Promise<boolean> => {
       userName,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 

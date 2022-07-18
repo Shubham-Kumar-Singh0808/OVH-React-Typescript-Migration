@@ -1,11 +1,11 @@
-export const localeDateFormat = (date: string) => {
+export const localeDateFormat = (date: string): string => {
   if (date) {
     const deviceLocale: string =
       navigator.languages && navigator.languages.length
         ? navigator.languages[0]
         : navigator.language
 
-    const tempDate = date as string
+    const tempDate = date
     const dateParts: string[] | string = date ? tempDate.split('/') : ''
     const newDate = date
       ? new Date(
@@ -25,13 +25,13 @@ export const localeDateFormat = (date: string) => {
   }
 }
 
-export const reformatDate = (date: string) => {
-  const dateparts: string[] | string = date ? date.split('/') : ''
+export const reformatDate = (date: string): Date => {
+  const dateParts: string[] | string = date ? date.split('/') : ''
   return date
     ? new Date(
-        Number(dateparts[2]),
-        Number(dateparts[1]) - 1,
-        Number(dateparts[0]),
+        Number(dateParts[2]),
+        Number(dateParts[1]) - 1,
+        Number(dateParts[0]),
       )
     : new Date()
 }
@@ -89,6 +89,7 @@ export const dateFormatPerLocale = [
   { label: 'dsb-DE', format: format5 },
   { label: 'dv-MV', format: 'dd/MM/yy' },
   { label: 'el-GR', format: 'd/M/yyyy' },
+  { label: 'en', format: format2 },
   { label: 'en-029', format: format6 },
   { label: 'en-AU', format: 'd/MM/yyyy' },
   { label: 'en-BZ', format: format2 },

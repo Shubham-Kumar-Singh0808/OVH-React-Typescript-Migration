@@ -1,10 +1,12 @@
-import axios from 'axios'
 import {
   AllowedHttpMethods,
   employeeGeneralInformationApiConfig,
 } from '../../apiList'
 import { EmployeeGeneralInformation } from '../../../../types/MyProfile/GeneralTab/generalInformationTypes'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 
 const getEmployeeGeneralInformation = async (
   employeeId: string,
@@ -16,7 +18,7 @@ const getEmployeeGeneralInformation = async (
       loggedInEmpId: employeeId,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
