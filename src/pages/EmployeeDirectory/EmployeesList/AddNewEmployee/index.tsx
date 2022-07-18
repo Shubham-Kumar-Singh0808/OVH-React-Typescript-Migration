@@ -63,7 +63,7 @@ const AddNewEmployee = (): JSX.Element => {
     designation: '',
     dob: null,
     employmentTypeName: '',
-    experience: 0,
+    experience: '',
     firstName: '',
     middleName: '',
     gender: '',

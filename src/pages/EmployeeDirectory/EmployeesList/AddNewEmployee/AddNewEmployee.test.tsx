@@ -112,7 +112,6 @@ describe('Add New Employee Testing', () => {
     const username = screen.getByTestId(userInputId)
     userEvent.type(username, 'dog')
     expect(username).toHaveValue('dog')
-    // userEvent.type(screen.getByTestId(userInputId), 'test input..')
 
     const firstName = screen.getByPlaceholderText('First Name')
     userEvent.type(firstName, 'Gwapo')

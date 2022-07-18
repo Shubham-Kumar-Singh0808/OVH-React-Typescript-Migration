@@ -12,7 +12,7 @@ export type AddEmployee = {
   designation: string
   dob: Date | null
   employmentTypeName: string
-  experience: number
+  experience: number | string
   middleName: string
   firstName: string
   gender: string
@@ -107,7 +107,7 @@ export interface DynamicFormLabelProps {
 
 export interface ExperienceChangeHandlerProp extends DynamicFormLabelProps {
   onExperienceHandler: (experience: number) => void
-  experienceValue: number
+  experienceValue: number | string
 }
 
 export interface WorkFromChangeHandlerProp extends DynamicFormLabelProps {
