@@ -70,7 +70,7 @@ describe('Add Employee Shift Component', () => {
     })
 
     test('should render Employee Shift Component List Options with out crashing', () => {
-      const shiftSelector = screen.getByTestId('form-select')
+      const shiftSelector = screen.getByTestId('formShift')
       userEvent.selectOptions(shiftSelector, ['Canada Shift'])
       expect(mockSetIsAccordionItemShow).toBeCalledWith({
         endTimeHour: '09',

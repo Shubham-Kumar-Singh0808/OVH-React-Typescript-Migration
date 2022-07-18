@@ -25,7 +25,7 @@ const Birthday = ({
       <CCol sm={3}>
         <DatePicker
           id="birthday"
-          data-testid="date-picker"
+          data-testid="birthday-date-picker"
           className="form-control form-control-sm sh-date-picker"
           maxDate={new Date()}
           peekNextMonth

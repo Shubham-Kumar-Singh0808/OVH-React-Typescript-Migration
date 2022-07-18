@@ -61,7 +61,7 @@ describe('Add Employee OSelectList Component', () => {
     })
 
     test('should render Employee OSelectList Component List Options with out crashing', () => {
-      const OSelectListSelector = screen.getByTestId('form-select')
+      const OSelectListSelector = screen.getByTestId('formTest Name')
       userEvent.selectOptions(OSelectListSelector, ['Accounts & Finance'])
       expect(mockSetIsAccordionItemShow).toBeCalledWith('Accounts & Finance')
     })

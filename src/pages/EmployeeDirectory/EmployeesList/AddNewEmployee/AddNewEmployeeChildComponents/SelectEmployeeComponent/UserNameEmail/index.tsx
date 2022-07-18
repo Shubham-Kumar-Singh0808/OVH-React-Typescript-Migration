@@ -56,6 +56,7 @@ const UserNameEmail = ({
         <CCol sm={3}>
           <CFormInput
             id="email"
+            data-testid="user-email-input"
             size="sm"
             type="text"
             name="email"

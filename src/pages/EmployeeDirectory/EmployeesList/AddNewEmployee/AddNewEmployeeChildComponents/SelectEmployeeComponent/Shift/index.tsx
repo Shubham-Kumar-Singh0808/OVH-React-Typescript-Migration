@@ -64,7 +64,7 @@ const Shift = ({
           <CFormSelect
             id="shift"
             size="sm"
-            data-testid="form-select"
+            data-testid="formShift"
             aria-label="shift"
             name="shift"
             value={defaultValue.name}
