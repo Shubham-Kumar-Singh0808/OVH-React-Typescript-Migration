@@ -82,17 +82,38 @@ const EmployeeApplyLeave = (): JSX.Element => {
         toDate: moment(toDate).format(commonFormatDate),
       },
     }
-    const addCertificateResultAction = await dispatch(
+    const applyLeaveResultAction = await dispatch(
       reduxServices.employeeApplyLeave.employeeLeaveApply(prepareObject),
     )
-
     if (
       reduxServices.employeeApplyLeave.employeeLeaveApply.fulfilled.match(
-        addCertificateResultAction,
+        applyLeaveResultAction,
       )
     ) {
-      // dispatch(reduxServices.app.actions.addToast(successToastMessage))
-      console.log('hello')
+      // backButtonHandler()
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Leave applied successfully"
+          />,
+        ),
+      )
+    } else if (
+      reduxServices.employeeApplyLeave.employeeLeaveApply.rejected.match(
+        applyLeaveResultAction,
+      ) &&
+      applyLeaveResultAction.payload === 302
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Leave already applied on mentioned date."
+          />,
+        ),
+      )
     }
   }
 
