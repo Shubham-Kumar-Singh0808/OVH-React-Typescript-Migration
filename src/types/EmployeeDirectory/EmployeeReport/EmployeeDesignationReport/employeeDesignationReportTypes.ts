@@ -51,6 +51,8 @@ export type EmployeeDesignationReportState = {
 }
 
 export type EmployeeDesignationReportTableProps = {
+  designation: string
+  setDesignation: (value: string) => void
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
