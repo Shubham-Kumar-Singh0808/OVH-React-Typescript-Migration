@@ -1,5 +1,5 @@
 import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { WorkFromChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const WorkFrom = ({
@@ -7,14 +7,25 @@ const WorkFrom = ({
   onWorkFromHandler,
   workFromValue,
 }: WorkFromChangeHandlerProp): JSX.Element => {
-  const workStatus = !!(
-    workFromValue == null ||
-    workFromValue === '' ||
-    workFromValue.toLowerCase() === 'office'
-  )
+  const [isActive, setIsActive] = useState(false)
+
+  useEffect(() => {
+    setIsActive(
+      workFromValue == null ||
+        workFromValue === '' ||
+        workFromValue.toLowerCase() === 'office',
+    )
+  }, [workFromValue])
+
+  const handleOnChange = (value: string) => {
+    onWorkFromHandler(value)
+    setIsActive(value === 'Office')
+  }
+
   return (
     <CRow className="mb-3 align-items-center">
       <CFormLabel
+        data-testId="workFromLabel"
         {...dynamicFormLabelProps(
           'workfrom',
           'col-sm-3 col-form-label text-end',
@@ -26,23 +37,25 @@ const WorkFrom = ({
         <CFormCheck
           inline
           type="radio"
-          name="workfrom"
+          name="office"
           id="workfromoffice"
+          data-testId="workfromoffice"
           value="Office"
           label="Office"
           defaultChecked
-          checked={workStatus}
-          onChange={() => onWorkFromHandler('Office')}
+          checked={isActive}
+          onChange={() => handleOnChange('Office')}
         />
         <CFormCheck
           inline
           type="radio"
-          name="workfrom"
+          name="home"
           id="workfromhome"
+          data-testId="workfromhome"
           value="Home"
           label="Home"
-          checked={!workStatus}
-          onChange={() => onWorkFromHandler('Home')}
+          checked={!isActive}
+          onChange={() => handleOnChange('Home')}
         />
       </CCol>
     </CRow>
