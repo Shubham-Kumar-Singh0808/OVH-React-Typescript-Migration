@@ -61,23 +61,4 @@ describe('email Template List Table Testing', () => {
     )
     expect(screen.getByText('Title')).toBeInTheDocument()
   })
-  test('should render table with data without crashing', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <EmployeeEmailTemplateTable
-          employeeTemplate={{
-            templateName: '',
-            template: '',
-            templateTypeId: '',
-          }}
-        />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('Total Records: ' + mockEmailTemplate.length),
-      ).toBeInTheDocument()
-    })
-  })
 })
