@@ -96,6 +96,19 @@ const EmployeeApplyLeave = (): JSX.Element => {
     }
   }
 
+  const handleClearInputFields = () => {
+    setApplyLeave({
+      employeeComments: '',
+      leaveCategoryName: '',
+    })
+    setFromDate('')
+    setToDate('')
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+  }
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -213,7 +226,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
             data-testid="btn-clear"
             color="warning "
             className="btn-ovh me-1"
-            // onClick={handleClearInputs}
+            onClick={handleClearInputFields}
           >
             Clear
           </CButton>
