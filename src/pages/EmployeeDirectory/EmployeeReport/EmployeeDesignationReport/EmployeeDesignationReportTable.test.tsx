@@ -25,31 +25,6 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
     ).toBeInTheDocument()
   }
 }
-// describe('test', () => {
-//   test('test table', () => {
-//     render(
-//       <EmployeeDesignationReportTable
-//         designation={''}
-//         setDesignation={jest.fn()}
-//         paginationRange={[1, 2, 3]}
-//         currentPage={1}
-//         setCurrentPage={mockSetCurrentPage}
-//         pageSize={1}
-//         setPageSize={mockSetPageSize}
-//       />,
-//       {
-//         preloadedState: {
-//           employeeDesignationReports: {
-//             isLoading: false,
-//             // getAllDesignation: mockDesignation,
-//             empDesignation: mockEmpDesignationReport as EmployeeDesignation[],
-//             listSize: 33,
-//           },
-//         },
-//       },
-//     )
-//   })
-// })
 
 describe('Employee Designation Report Table Component Testing', () => {
   describe('Filter Options without value', () => {
@@ -113,7 +88,6 @@ describe('Employee Designation Report Table Component Testing', () => {
       userEvent.selectOptions(designationDropdown, ['Software Engineer'])
       expect(mockSetDesignation).toBeCalledWith('Software Engineer')
 
-      // console.log(screen.getByRole('combobox'))
       await waitFor(() => {
         userEvent.selectOptions(screen.getByTestId('paginationTestID'), ['40'])
         expect(screen.getByText('Raju Sriramoju')).toBeInTheDocument()
