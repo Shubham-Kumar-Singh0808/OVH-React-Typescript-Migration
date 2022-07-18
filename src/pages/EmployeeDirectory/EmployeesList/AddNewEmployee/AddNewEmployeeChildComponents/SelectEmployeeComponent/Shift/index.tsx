@@ -51,6 +51,7 @@ const Shift = ({
     <>
       <CRow className="mb-3 align-items-center">
         <CFormLabel
+          data-tesId="shiftLabel"
           {...dynamicFormLabelProps(
             'shift',
             'col-sm-3 col-form-label text-end',
@@ -63,6 +64,7 @@ const Shift = ({
           <CFormSelect
             id="shift"
             size="sm"
+            data-testid="form-select"
             aria-label="shift"
             name="shift"
             value={defaultValue.name}
@@ -82,6 +84,7 @@ const Shift = ({
         {!isAddDisable ? (
           <CCol sm={3}>
             <CButton
+              data-testId="shiftButton"
               color="info"
               className="btn-ovh me-1"
               onClick={() => setToggleShift(!toggleValue)}

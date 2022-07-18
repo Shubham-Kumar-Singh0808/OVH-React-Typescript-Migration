@@ -192,6 +192,7 @@ const HiveReportOptions = ({
             <CCol sm={2} className="text-end pe-2 ms-3 sh-date-picker-column">
               <ReactDatePicker
                 id="employeeRealBirthday"
+                data-testid="sh-date-picker"
                 className="form-control form-control-sm sh-date-picker"
                 maxDate={new Date()}
                 showMonthYearPicker
