@@ -40,8 +40,8 @@ describe('DesignationList Table Testing', () => {
     test('should not render the loading spinner when designation is not empty', () => {
       expect(screen.findByTestId('designation-list-loader')).toMatchObject({})
     })
-    test('background color should be red', () => {
-      expect(screen.getByTestId('btn-delete1')).toHaveClass(
+    test('should render delete button', () => {
+      expect(screen.getByTestId('btn-delete2')).toHaveClass(
         'btn btn-danger btn-sm',
       )
     })
@@ -85,6 +85,24 @@ describe('DesignationList Table Testing', () => {
       expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Next >')).toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).toHaveAttribute('disabled')
+    })
+    it('should render Delete modal on clicking delete button from Actions', async () => {
+      const deleteButtonElement = screen.getByTestId('btn-delete1')
+      userEvent.click(deleteButtonElement)
+      await waitFor(() => {
+        expect(screen.getByText('Delete Designation')).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
+      })
+    })
+    it('should close the modal on clicking No button from the popup', async () => {
+      const deleteButtonElement = screen.getByTestId('btn-delete6')
+      userEvent.click(deleteButtonElement)
+      const yesButtonElement = screen.getByRole('button', { name: 'Yes' })
+      userEvent.click(yesButtonElement)
+      await waitFor(() => {
+        expect(screen.getAllByRole('row')).toHaveLength(22)
+      })
     })
   })
 })
