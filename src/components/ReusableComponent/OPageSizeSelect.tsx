@@ -19,6 +19,7 @@ const OPageSizeSelect = ({
       </CCol>
       <CCol xs="auto">
         <CFormSelect
+          data-testid="paginationTestID"
           size="sm"
           className="mb-3"
           onChange={handlePageSizeSelectChange}

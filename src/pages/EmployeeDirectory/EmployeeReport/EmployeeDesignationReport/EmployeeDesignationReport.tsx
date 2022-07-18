@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { CCol, CRow, CSpinner } from '@coreui/react-pro'
-import DesignationReportFilter from './DesignationReportFilter'
 import EmployeeDesignationReportTable from './EmployeeDesignationReportTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -64,11 +63,9 @@ const EmployeeDesignationReport = (): JSX.Element => {
       >
         {isLoading !== ApiLoadingState.loading ? (
           <>
-            <DesignationReportFilter
+            <EmployeeDesignationReportTable
               designation={designation}
               setDesignation={setDesignation}
-            />
-            <EmployeeDesignationReportTable
               paginationRange={paginationRange}
               setPageSize={setPageSize}
               setCurrentPage={setCurrentPage}
