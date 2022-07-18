@@ -16,7 +16,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const initialEmployeeLeaveApply = {} as EmployeeLeaveApply
   const [applyLeave, setApplyLeave] = useState(initialEmployeeLeaveApply)
-
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -95,6 +95,14 @@ const EmployeeApplyLeave = (): JSX.Element => {
       console.log('hello')
     }
   }
+
+  useEffect(() => {
+    if (applyLeave.leaveCategoryName && fromDate && toDate) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [applyLeave.leaveCategoryName, fromDate, toDate])
 
   const handleClearInputFields = () => {
     setApplyLeave({
@@ -217,7 +225,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
             data-testid="btn-save"
             className="btn-ovh me-1"
             color="success"
-            // disabled={!isButtonEnabled}
+            disabled={!isButtonEnabled}
             onClick={handleApplyLeave}
           >
             Apply
