@@ -2,10 +2,10 @@ import { LoadingState, ValidationError } from '../commonTypes'
 
 export type EmployeeLeaveApply = {
   employeeComments: string
-  employeeId: number
+  employeeId?: number | string
   fromDate?: string
   id?: string
-  leaveAppliedOn: string
+  leaveAppliedOn?: string | number | Date
   leaveCategoryName: string
   toDate?: string
 }

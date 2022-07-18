@@ -29,7 +29,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
   }, [dispatch, employeeId])
 
   const [fromDate, setFromDate] = useState<Date | string>()
-  const [dateOfTo, setDateOfTo] = useState<Date | string>()
+  const [toDate, setToDate] = useState<Date | string>()
   const onDateChangeDateOfFromHandler = (date: Date) => {
     const formatDate = moment(date).format(commonFormatDate)
     const name = 'fromDate'
@@ -42,16 +42,16 @@ const EmployeeApplyLeave = (): JSX.Element => {
   const onChangeDateToHandler = (date: Date) => {
     console.log(date)
     const formatDate = moment(date).format(commonFormatDate)
-    const name = 'dateOfTo'
+    const name = 'toDate'
     setApplyLeave((prevState) => {
       return { ...prevState, ...{ [name]: formatDate } }
     })
-    setDateOfTo(date)
+    setToDate(date)
   }
 
-  const handleDescription = (template: string) => {
+  const handleDescription = (employeeComments: string) => {
     setApplyLeave((prevState) => {
-      return { ...prevState, ...{ template } }
+      return { ...prevState, ...{ employeeComments } }
     })
   }
 
@@ -69,6 +69,32 @@ const EmployeeApplyLeave = (): JSX.Element => {
   }
 
   const commonFormatDate = 'DD/MM/YYYY'
+  const currentDate = new Date().setHours(0, 0, 0, 0)
+
+  const handleApplyLeave = async () => {
+    const prepareObject = {
+      ...applyLeave,
+      ...{
+        employeeId,
+        leaveAppliedOn: moment(currentDate).format(commonFormatDate),
+        id: '',
+        fromDate: moment(fromDate).format(commonFormatDate),
+        toDate: moment(toDate).format(commonFormatDate),
+      },
+    }
+    const addCertificateResultAction = await dispatch(
+      reduxServices.employeeApplyLeave.employeeLeaveApply(prepareObject),
+    )
+
+    if (
+      reduxServices.employeeApplyLeave.employeeLeaveApply.fulfilled.match(
+        addCertificateResultAction,
+      )
+    ) {
+      // dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      console.log('hello')
+    }
+  }
 
   return (
     <OCard
@@ -96,7 +122,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
           >
             <option value={''}>Select a Leave</option>
             {employeeLeaveType?.map((countriesItem, index) => (
-              <option key={index} value={countriesItem.id}>
+              <option key={index} value={countriesItem.name}>
                 {countriesItem.name}
               </option>
             ))}
@@ -134,15 +160,15 @@ const EmployeeApplyLeave = (): JSX.Element => {
         <CCol sm={3}>
           <DatePicker
             className="form-control"
-            name="dateOfTo"
-            maxDate={new Date()}
-            id="dateOfTo"
+            name="toDate"
+            id="toDate"
+            minDate={new Date()}
             peekNextMonth
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
-            value={dateOfTo as string}
-            selected={dateOfTo as Date}
+            value={toDate as string}
+            selected={toDate as Date}
             onChange={(date: Date) => onChangeDateToHandler(date)}
           />
         </CCol>
@@ -179,7 +205,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
             className="btn-ovh me-1"
             color="success"
             // disabled={!isButtonEnabled}
-            // onClick={handleApplyLeave}
+            onClick={handleApplyLeave}
           >
             Apply
           </CButton>
