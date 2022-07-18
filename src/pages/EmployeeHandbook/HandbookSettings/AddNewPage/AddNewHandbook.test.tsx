@@ -6,6 +6,7 @@ import { Router } from 'react-router-dom'
 // eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import { CKEditor } from 'ckeditor4-react'
 import AddNewHandbook from './AddNewHandbook'
 import {
   createEvent,
@@ -20,7 +21,11 @@ import {
   pageName,
   displayOrder,
   description,
-  descriptionData,
+  ch_1,
+  ch_5,
+  ch_2,
+  ch_3,
+  ch_4,
 } from '../../../../test/constants'
 import {
   mockCountries,
@@ -81,8 +86,9 @@ describe('Add New Page Component Testing', () => {
       expect(clearButton).toBeEnabled()
     })
   })
-  describe('Add New Handbook testing', () => {
-    test('should render countries checkbox ', async () => {
+
+  describe('Add New Handbook With Countries', () => {
+    beforeEach(() => {
       render(
         <AddNewHandbook
           headerTitle={''}
@@ -97,13 +103,74 @@ describe('Add New Page Component Testing', () => {
           },
         },
       )
-      fireEvent.click(screen.getByTestId('ch-countries3'))
+    })
+    test('pass description to test input value', () => {
+      render(
+        <CKEditor
+          initData={
+            process.env.JEST_WORKER_ID !== undefined && (
+              <p>
+                Contrary to popular belief, Lorem Ipsum is not simply random
+                text. It has roots in a piece of classical Latin literature from
+                45 BC, making it over 2000 years old. Richard McClintock, a
+                Latin professor at Hampden-Sydney College in Virginia, looked up
+                one of the more obscure Latin words, consectetur, from a Lorem
+                Ipsum passage, and going through the cites of the word in
+                classical literature, discovered the undoubtable source. Lorem
+                Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus
+                Bonorum et Majorem (The Extremes of Good and Evil) by Cicero,
+                written in 45 BC. This book is a treatise on the theory of
+                ethics, very popular
+              </p>
+            )
+          }
+        />,
+      )
+    })
+    test('should render countries checkbox ', async () => {
+      fireEvent.click(screen.getByTestId(ch_1))
+      fireEvent.click(screen.getByTestId(ch_2))
+      fireEvent.click(screen.getByTestId(ch_3))
+      fireEvent.click(screen.getByTestId(ch_4))
+      fireEvent.click(screen.getByTestId(ch_5))
       await waitFor(() => {
         expect(screen.getByText('CANADA')).toBeInTheDocument()
+        expect(screen.getByText('INDIA')).toBeInTheDocument()
+        expect(screen.getByText('AUSTRALIA')).toBeInTheDocument()
+        expect(screen.getByText('PHILIPPINES')).toBeInTheDocument()
+        expect(screen.getByText('USA')).toBeInTheDocument()
       })
     })
 
-    test('should render countries checkbox ', async () => {
+    test('Checkbox changes value', async () => {
+      fireEvent.click(screen.getByTestId('ch-All'))
+      const checkCanada = screen.getByTestId(ch_3)
+      expect(checkCanada).toBeTruthy()
+      await waitFor(() => {
+        expect(checkCanada).toBeChecked()
+      })
+    })
+
+    test('Checkbox changes value', async () => {
+      const cbAll = screen.getByTestId('ch-All')
+      const checkbox1 = fireEvent.click(screen.getByTestId('ch-countries0'))
+      const checkbox2 = fireEvent.click(screen.getByTestId('ch-countries1'))
+      const checkbox3 = fireEvent.click(screen.getByTestId('ch-countries2'))
+      const checkbox4 = fireEvent.click(screen.getByTestId('ch-countries3'))
+      const checkbox5 = fireEvent.click(screen.getByTestId('ch-countries4'))
+      expect(checkbox1).toBe(true)
+      expect(checkbox2).toBe(true)
+      expect(checkbox3).toBe(true)
+      expect(checkbox4).toBe(true)
+      expect(checkbox5).toBe(true)
+      await waitFor(() => {
+        expect(cbAll).toBeChecked()
+      })
+    })
+  })
+
+  describe('Add New Handbook With Data', () => {
+    beforeEach(() => {
       render(
         <AddNewHandbook
           headerTitle={''}
@@ -119,6 +186,9 @@ describe('Add New Page Component Testing', () => {
           },
         },
       )
+    })
+
+    test('should render countries checkbox ', async () => {
       const displayOrderInput = screen.getByTestId(displayOrder)
       userEvent.type(displayOrderInput, '4')
       expect(displayOrderInput).toHaveValue('4')
@@ -129,66 +199,7 @@ describe('Add New Page Component Testing', () => {
       })
     })
 
-    test('Checkbox changes value', async () => {
-      render(
-        <AddNewHandbook
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={jest.fn()}
-        />,
-        {
-          preloadedState: {
-            employeeHandbookSettings: {
-              employeeCountries: mockCountries,
-            },
-          },
-        },
-      )
-      fireEvent.click(screen.getByTestId('ch-All'))
-      const checkCanada = screen.getByTestId('ch-countries2')
-      expect(checkCanada).toBeTruthy()
-      await waitFor(() => {
-        expect(checkCanada).toBeChecked()
-      })
-    })
-
-    test('Checkbox changes value', async () => {
-      render(
-        <AddNewHandbook
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={jest.fn()}
-        />,
-        {
-          preloadedState: {
-            employeeHandbookSettings: {
-              employeeCountries: mockCountries,
-            },
-          },
-        },
-      )
-      const checkbox = fireEvent.click(screen.getByTestId('ch-countries1'))
-      await waitFor(() => {
-        expect(checkbox).toBe(true)
-      })
-    })
-
-    test('selecting checkbox', async () => {
-      render(
-        <AddNewHandbook
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={jest.fn()}
-        />,
-        {
-          preloadedState: {
-            employeeHandbookSettings: {
-              employeeCountries: mockCountries,
-              totalHandbookList: mockHandbookList,
-            },
-          },
-        },
-      )
+    test('Unselecting checkbox', async () => {
       screen.debug()
       const cbAll = screen.getByTestId('ch-All')
       const cb1 = screen.getByTestId('ch-countries0')
@@ -211,117 +222,117 @@ describe('Add New Page Component Testing', () => {
         expect(cb5).not.toBeChecked()
       })
     })
-
-    // test('should allow user to submit the form ', async () => {
-    //   render(
-    //     <AddNewHandbook
-    //       headerTitle="Add New Page"
-    //       confirmButtonText="Save"
-    //       backButtonHandler={jest.fn()}
-    //     />,
-    //     {
-    //       preloadedState: {
-    //         employeeHandbookSettings: {
-    //           employeeCountries: mockCountries,
-    //         },
-    //       },
-    //     },
-    //   )
-    //   const titleInput = screen.getByTestId(pageTitle)
-    //   userEvent.type(titleInput, 'titleTest')
-    //   expect(titleInput).toHaveValue('titleTest')
-    //   const pageNameInput = screen.getByTestId(pageName)
-    //   userEvent.type(pageNameInput, 'pageNameTest')
-    //   expect(pageNameInput).toHaveValue('pageNameTest')
-
-    //   const displayOrderInput = screen.getByTestId(displayOrder)
-    //   userEvent.type(displayOrderInput, '96')
-    //   expect(displayOrderInput).toHaveValue('96')
-
-    // const descriptionInput = screen.getByTestId(description)
-    // fireEvent.change(descriptionInput, { target: { value: descriptionData } })
-
-    //   const selectCountry = screen.getByTestId('ch-countries3')
-    //   fireEvent.click(selectCountry)
-    //   expect(selectCountry).toBeChecked()
-    //   const btnSave = screen.getByTestId('save-btn')
-    //   expect(btnSave).toBeInTheDocument()
-    //   await waitFor(() => {
-    //     expect(btnSave).toBeEnabled()
-    //   })
-    // })
-    test('should redirect to /handbook when user clicks on Back Button', async () => {
-      const history = createMemoryHistory()
-      render(
-        <Router history={history}>
-          <ReduxProvider reduxStore={stateStore}>
-            <AddNewHandbook
-              headerTitle={''}
-              confirmButtonText={''}
-              backButtonHandler={jest.fn()}
-            />
-          </ReduxProvider>
-        </Router>,
-      )
-      userEvent.click(screen.getByRole('button', { name: /Back/i }))
-      await waitFor(() => {
-        // check if a redirect happens after clicking Back button to handbook settings Page
-        expect(history.location.pathname).toBeTruthy()
-      })
-    })
-
-    test('should clear input and disable button after submitting ', async () => {
-      render(
-        <AddNewHandbook
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={jest.fn()}
-        />,
-      )
-      const titleInput = screen.getByTestId(pageTitle)
-      userEvent.type(titleInput, 'titleTest')
-      expect(titleInput).toHaveValue('titleTest')
-      const pageNameInput = screen.getByTestId(pageName)
-      userEvent.type(pageNameInput, 'pageNameTest')
-      expect(pageNameInput).toHaveValue('pageNameTest')
-      const displayOrderInput = screen.getByTestId(displayOrder)
-      userEvent.type(displayOrderInput, '25')
-      expect(displayOrderInput).toHaveValue('25')
-      // const descriptionInput = screen.getByTestId(description)
-      // userEvent.type(descriptionInput, 'testing')
-      // expect(description).toBeTruthy()
-      userEvent.click(screen.getByTestId('clear-btn'))
-      await waitFor(() => {
-        expect(titleInput).toHaveValue('')
-        expect(pageNameInput).toHaveValue('')
-        expect(displayOrderInput).toHaveValue('')
-        expect(description).toBeDefined()
-      })
-    })
-    // test('pass description to test input value', async () => {
-    //   render(
-    //     <AddNewHandbook
-    //       headerTitle={''}
-    //       confirmButtonText={''}
-    //       backButtonHandler={jest.fn()}
-    //     />,
-    //     {
-    //       preloadedState: {
-    //         employeeHandbookSettings: {
-    //           employeeCountries: mockCountries,
-    //           totalHandbookList: mockHandbookList,
-    //         },
-    //       },
-    //     },
-    //   )
-    //   const descriptionInput = screen.getByTestId(description)
-    //   userEvent.type(descriptionInput, 'testing')
-    //   expect(descriptionInput).toBeTruthy()
-    //   await waitFor(() => {
-    //     expect(
-    //       screen.getByText('Please enter at least 150 characters.'),
-    //     ).toBeInTheDocument()
-    //   })
-    // })
   })
+
+  // test('should allow user to submit the form ', async () => {
+  //   render(
+  //     <AddNewHandbook
+  //       headerTitle="Add New Page"
+  //       confirmButtonText="Save"
+  //       backButtonHandler={jest.fn()}
+  //     />,
+  //     {
+  //       preloadedState: {
+  //         employeeHandbookSettings: {
+  //           employeeCountries: mockCountries,
+  //         },
+  //       },
+  //     },
+  //   )
+  //   const titleInput = screen.getByTestId(pageTitle)
+  //   userEvent.type(titleInput, 'titleTest')
+  //   expect(titleInput).toHaveValue('titleTest')
+  //   const pageNameInput = screen.getByTestId(pageName)
+  //   userEvent.type(pageNameInput, 'pageNameTest')
+  //   expect(pageNameInput).toHaveValue('pageNameTest')
+
+  //   const displayOrderInput = screen.getByTestId(displayOrder)
+  //   userEvent.type(displayOrderInput, '96')
+  //   expect(displayOrderInput).toHaveValue('96')
+
+  // const descriptionInput = screen.getByTestId(description)
+  // fireEvent.change(descriptionInput, { target: { value: descriptionData } })
+
+  //   const selectCountry = screen.getByTestId('ch-countries3')
+  //   fireEvent.click(selectCountry)
+  //   expect(selectCountry).toBeChecked()
+  //   const btnSave = screen.getByTestId('save-btn')
+  //   expect(btnSave).toBeInTheDocument()
+  //   await waitFor(() => {
+  //     expect(btnSave).toBeEnabled()
+  //   })
+  // })
+  test('should redirect to /handbook when user clicks on Back Button', async () => {
+    const history = createMemoryHistory()
+    render(
+      <Router history={history}>
+        <ReduxProvider reduxStore={stateStore}>
+          <AddNewHandbook
+            headerTitle={''}
+            confirmButtonText={''}
+            backButtonHandler={jest.fn()}
+          />
+        </ReduxProvider>
+      </Router>,
+    )
+    userEvent.click(screen.getByRole('button', { name: /Back/i }))
+    await waitFor(() => {
+      // check if a redirect happens after clicking Back button to handbook settings Page
+      expect(history.location.pathname).toBeTruthy()
+    })
+  })
+
+  test('should clear input and disable button after submitting ', async () => {
+    render(
+      <AddNewHandbook
+        headerTitle={''}
+        confirmButtonText={''}
+        backButtonHandler={jest.fn()}
+      />,
+    )
+    const titleInput = screen.getByTestId(pageTitle)
+    userEvent.type(titleInput, 'titleTest')
+    expect(titleInput).toHaveValue('titleTest')
+    const pageNameInput = screen.getByTestId(pageName)
+    userEvent.type(pageNameInput, 'pageNameTest')
+    expect(pageNameInput).toHaveValue('pageNameTest')
+    const displayOrderInput = screen.getByTestId(displayOrder)
+    userEvent.type(displayOrderInput, '25')
+    expect(displayOrderInput).toHaveValue('25')
+    // const descriptionInput = screen.getByTestId(description)
+    // userEvent.type(descriptionInput, 'testing')
+    // expect(description).toBeTruthy()
+    userEvent.click(screen.getByTestId('clear-btn'))
+    await waitFor(() => {
+      expect(titleInput).toHaveValue('')
+      expect(pageNameInput).toHaveValue('')
+      expect(displayOrderInput).toHaveValue('')
+      expect(description).toBeDefined()
+    })
+  })
+  // test('pass description to test input value', async () => {
+  //   render(
+  //     <AddNewHandbook
+  //       headerTitle={''}
+  //       confirmButtonText={''}
+  //       backButtonHandler={jest.fn()}
+  //     />,
+  //     {
+  //       preloadedState: {
+  //         employeeHandbookSettings: {
+  //           employeeCountries: mockCountries,
+  //           totalHandbookList: mockHandbookList,
+  //         },
+  //       },
+  //     },
+  //   )
+  //   const descriptionInput = screen.getByTestId(description)
+  //   userEvent.type(descriptionInput, 'testing')
+  //   expect(descriptionInput).toBeTruthy()
+  //   await waitFor(() => {
+  //     expect(
+  //       screen.getByText('Please enter at least 150 characters.'),
+  //     ).toBeInTheDocument()
+  //   })
+  // })
 })
