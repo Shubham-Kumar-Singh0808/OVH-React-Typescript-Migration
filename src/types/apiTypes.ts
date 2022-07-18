@@ -265,3 +265,8 @@ export interface AddNewTemplateApi extends ApiBase {
   getAssetTypes: string
   addNewMailTemplate: string
 }
+
+export interface ApplyleaveApi extends ApiBase {
+  getLeaveType: string
+  applyLeave: string
+}
