@@ -6,6 +6,7 @@ import React from 'react'
 import EmployeeEmailTemplateTable from './EmployeeEmailTemplateTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import stateStore from '../../../stateStore'
+import { mockEmailTemplate } from '../../../test/data/employeeMailConfigurationData'
 
 const ReduxProvider = ({
   children,
@@ -14,7 +15,6 @@ const ReduxProvider = ({
   children: JSX.Element
   reduxStore: EnhancedStore
 }) => <Provider store={reduxStore}>{children}</Provider>
-
 describe('email Template List Table Testing', () => {
   test('should render No data to display if Mail template is empty', async () => {
     render(
@@ -60,5 +60,24 @@ describe('email Template List Table Testing', () => {
       />,
     )
     expect(screen.getByText('Title')).toBeInTheDocument()
+  })
+  test('should render table with data without crashing', async () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeEmailTemplateTable
+          employeeTemplate={{
+            templateName: '',
+            template: '',
+            templateTypeId: '',
+          }}
+        />
+      </ReduxProvider>,
+    )
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Total Records: ' + mockEmailTemplate.length),
+      ).toBeInTheDocument()
+    })
   })
 })

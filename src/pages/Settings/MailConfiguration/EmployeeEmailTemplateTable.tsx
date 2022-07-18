@@ -74,6 +74,7 @@ const EmployeeEmailTemplateTable = ({
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     <CLink
+                      data-testid="mail-link"
                       className="cursor-pointer text-decoration-none text-primary"
                       onClick={() =>
                         handleModal(
@@ -106,9 +107,9 @@ const EmployeeEmailTemplateTable = ({
               setVisible={setIsModalVisible}
             >
               <>
-                <h4 className="model-text">
+                <h5 className="model-text">
                   {emailTemplateModel.emailTemplateName}
-                </h4>
+                </h5>
                 <div
                   dangerouslySetInnerHTML={{
                     __html: emailTemplateModel.emailTemplate,
