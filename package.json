@@ -23,6 +23,9 @@
     "lint-fix": "eslint . --fix"
   },
   "dependencies": {
+    "@automapper/classes": "^8.5.1",
+    "@automapper/core": "^8.5.1",
+    "@automapper/pojos": "^8.5.1",
     "@coreui/chartjs": "^3.0.0",
     "@coreui/coreui-pro": "^4.0.4",
     "@coreui/icons": "^2.1.0",
@@ -87,6 +90,7 @@
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.4.1",
+    "reflect-metadata": "^0.1.13",
     "simplebar-react": "^2.3.5",
     "typescript": "^4.1.2",
     "validator": "^13.7.0",
