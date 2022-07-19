@@ -62,8 +62,8 @@ describe('Add Employee OSelectList Component', () => {
 
     test('should render Employee OSelectList Component List Options with out crashing', () => {
       const OSelectListSelector = screen.getByTestId('formTest Name')
-      userEvent.selectOptions(OSelectListSelector, ['Accounts & Finance'])
-      expect(mockSetIsAccordionItemShow).toBeCalledWith('Accounts & Finance')
+      userEvent.selectOptions(OSelectListSelector, ['Technical Architect'])
+      expect(mockSetIsAccordionItemShow).toBeCalledWith('Technical Architect')
     })
 
     test('should be able to correctly set default option', () => {
