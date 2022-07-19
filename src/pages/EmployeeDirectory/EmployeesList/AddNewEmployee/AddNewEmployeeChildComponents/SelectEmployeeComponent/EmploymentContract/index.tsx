@@ -1,6 +1,6 @@
 import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StartEndDateChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../../utils/helper'
 
@@ -19,11 +19,30 @@ const EmploymentContract = ({
 
   const classNameStyle = 'col-sm-3 col-form-label text-end'
 
-  const isExist = !!(
-    isContractExist == null ||
-    isContractExist === '' ||
-    isContractExist.toLowerCase() === 'true'
-  )
+  const [isActive, setIsActive] = useState(false)
+
+  useEffect(() => {
+    setIsActive(
+      isContractExist == null ||
+        isContractExist === '' ||
+        isContractExist.toLowerCase() === 'true',
+    )
+  }, [isContractExist])
+
+  const handleOnChange = (value: string) => {
+    onContractExistHandler(value)
+    setIsActive(value === 'Office')
+  }
+
+  const isDateCorrect = (startValue: Date, endValue: Date): boolean => {
+    if (startValue == null || endValue == null) return false
+
+    const start = new Date(startValue)
+    const end = new Date(endValue)
+
+    return start > end
+  }
+
   return (
     <>
       <CRow className="mb-3 align-items-center">
@@ -40,8 +59,8 @@ const EmploymentContract = ({
             id="employmentcontractyes"
             value="Yes"
             label="Yes"
-            checked={isExist}
-            onChange={() => onContractExistHandler('true')}
+            checked={isActive}
+            onChange={() => handleOnChange('true')}
           />
           <CFormCheck
             inline
@@ -50,9 +69,9 @@ const EmploymentContract = ({
             id="employmentcontractno"
             value="No"
             label="No"
-            checked={!isExist}
+            checked={!isActive}
             defaultChecked
-            onChange={() => onContractExistHandler('false')}
+            onChange={() => handleOnChange('false')}
           />
         </CCol>
       </CRow>
@@ -75,7 +94,8 @@ const EmploymentContract = ({
                 showYearDropdown
                 dropdownMode="select"
                 data-testid="start-date-picker"
-                placeholderText="Select start date"
+                placeholderText="dd/mm/yy"
+                dateFormat="dd/mm/yy"
                 name="contractstartdate"
                 value={startDate}
                 onChange={(date: Date) => onStartDateChangeHandler(date)}
@@ -98,7 +118,8 @@ const EmploymentContract = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="Select end date"
+                placeholderText="dd/mm/yy"
+                dateFormat="dd/mm/yy"
                 data-testid="end-date-picker"
                 name="contractenddate"
                 value={endDate}
@@ -106,6 +127,13 @@ const EmploymentContract = ({
               />
               <span></span>
             </CCol>
+            {isDateCorrect(startDateValue, endDateValue) && (
+              <CCol sm={3}>
+                <p style={{ color: 'red' }}>
+                  <b>End date should be greater than Start date</b>
+                </p>
+              </CCol>
+            )}
           </CRow>
         </>
       ) : (
