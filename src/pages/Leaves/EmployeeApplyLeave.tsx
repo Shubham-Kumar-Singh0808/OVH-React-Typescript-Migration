@@ -157,6 +157,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
         <CCol sm={3}>
           <CFormSelect
             aria-label="leaveCategoryName"
+            data-testid="form-select-type"
             name="leaveCategoryName"
             id="leaveCategoryName"
             value={applyLeave.leaveCategoryName}
@@ -181,6 +182,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
         <CCol sm={3}>
           <DatePicker
             className="form-control"
+            data-testid="date-picker"
             name="fromDate"
             maxDate={new Date()}
             id="fromDate"
@@ -202,6 +204,8 @@ const EmployeeApplyLeave = (): JSX.Element => {
         <CCol sm={3}>
           <DatePicker
             className="form-control"
+            data-testid="date-picker"
+            placeholderText="Select to date"
             name="toDate"
             id="toDate"
             minDate={new Date()}
