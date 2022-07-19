@@ -8,24 +8,18 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { CKEditor } from 'ckeditor4-react'
 import AddNewHandbook from './AddNewHandbook'
-import {
-  createEvent,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '../../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import stateStore from '../../../../stateStore'
 import {
   pageTitle,
   pageName,
   displayOrder,
   description,
-  ch_1,
-  ch_5,
-  ch_2,
-  ch_3,
-  ch_4,
+  cB1,
+  cB2,
+  cB3,
+  cB4,
+  cB5,
 } from '../../../../test/constants'
 import {
   mockCountries,
@@ -73,10 +67,6 @@ describe('Add New Page Component Testing', () => {
       const allCountries = screen.findByTestId('ch-All')
       expect(allCountries).toBeTruthy()
     })
-    // test('should render description rich text editor', () => {
-    //   const descriptionInput = screen.getByTestId(description)
-    //   expect(descriptionInput).toBeTruthy()
-    // })
     test('should have add button disabled initially', () => {
       const saveButton = screen.getByTestId('save-btn')
       expect(saveButton).toBeDisabled()
@@ -112,13 +102,13 @@ describe('Add New Page Component Testing', () => {
               <p>
                 Contrary to popular belief, Lorem Ipsum is not simply random
                 text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 years old. Richard McClintock, a
+                45 BC, making it over 2000 years old. Richard McFlintlock, a
                 Latin professor at Hampden-Sydney College in Virginia, looked up
                 one of the more obscure Latin words, consectetur, from a Lorem
                 Ipsum passage, and going through the cites of the word in
-                classical literature, discovered the undoubtable source. Lorem
-                Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus
-                Bonorum et Majorem (The Extremes of Good and Evil) by Cicero,
+                classical literature, discovered the uncountable source. Lorem
+                Ipsum comes from sections 1.10.32 and 1.10.33 of de Finials
+                Bonjour et Majorem (The Extremes of Good and Evil) by Cicero,
                 written in 45 BC. This book is a treatise on the theory of
                 ethics, very popular
               </p>
@@ -128,11 +118,11 @@ describe('Add New Page Component Testing', () => {
       )
     })
     test('should render countries checkbox ', async () => {
-      fireEvent.click(screen.getByTestId(ch_1))
-      fireEvent.click(screen.getByTestId(ch_2))
-      fireEvent.click(screen.getByTestId(ch_3))
-      fireEvent.click(screen.getByTestId(ch_4))
-      fireEvent.click(screen.getByTestId(ch_5))
+      fireEvent.click(screen.getByTestId(cB1))
+      fireEvent.click(screen.getByTestId(cB2))
+      fireEvent.click(screen.getByTestId(cB3))
+      fireEvent.click(screen.getByTestId(cB4))
+      fireEvent.click(screen.getByTestId(cB5))
       await waitFor(() => {
         expect(screen.getByText('CANADA')).toBeInTheDocument()
         expect(screen.getByText('INDIA')).toBeInTheDocument()
@@ -144,7 +134,7 @@ describe('Add New Page Component Testing', () => {
 
     test('Checkbox changes value', async () => {
       fireEvent.click(screen.getByTestId('ch-All'))
-      const checkCanada = screen.getByTestId(ch_3)
+      const checkCanada = screen.getByTestId(cB3)
       expect(checkCanada).toBeTruthy()
       await waitFor(() => {
         expect(checkCanada).toBeChecked()
@@ -224,44 +214,6 @@ describe('Add New Page Component Testing', () => {
     })
   })
 
-  // test('should allow user to submit the form ', async () => {
-  //   render(
-  //     <AddNewHandbook
-  //       headerTitle="Add New Page"
-  //       confirmButtonText="Save"
-  //       backButtonHandler={jest.fn()}
-  //     />,
-  //     {
-  //       preloadedState: {
-  //         employeeHandbookSettings: {
-  //           employeeCountries: mockCountries,
-  //         },
-  //       },
-  //     },
-  //   )
-  //   const titleInput = screen.getByTestId(pageTitle)
-  //   userEvent.type(titleInput, 'titleTest')
-  //   expect(titleInput).toHaveValue('titleTest')
-  //   const pageNameInput = screen.getByTestId(pageName)
-  //   userEvent.type(pageNameInput, 'pageNameTest')
-  //   expect(pageNameInput).toHaveValue('pageNameTest')
-
-  //   const displayOrderInput = screen.getByTestId(displayOrder)
-  //   userEvent.type(displayOrderInput, '96')
-  //   expect(displayOrderInput).toHaveValue('96')
-
-  // const descriptionInput = screen.getByTestId(description)
-  // fireEvent.change(descriptionInput, { target: { value: descriptionData } })
-
-  //   const selectCountry = screen.getByTestId('ch-countries3')
-  //   fireEvent.click(selectCountry)
-  //   expect(selectCountry).toBeChecked()
-  //   const btnSave = screen.getByTestId('save-btn')
-  //   expect(btnSave).toBeInTheDocument()
-  //   await waitFor(() => {
-  //     expect(btnSave).toBeEnabled()
-  //   })
-  // })
   test('should redirect to /handbook when user clicks on Back Button', async () => {
     const history = createMemoryHistory()
     render(
@@ -299,9 +251,6 @@ describe('Add New Page Component Testing', () => {
     const displayOrderInput = screen.getByTestId(displayOrder)
     userEvent.type(displayOrderInput, '25')
     expect(displayOrderInput).toHaveValue('25')
-    // const descriptionInput = screen.getByTestId(description)
-    // userEvent.type(descriptionInput, 'testing')
-    // expect(description).toBeTruthy()
     userEvent.click(screen.getByTestId('clear-btn'))
     await waitFor(() => {
       expect(titleInput).toHaveValue('')
@@ -310,29 +259,4 @@ describe('Add New Page Component Testing', () => {
       expect(description).toBeDefined()
     })
   })
-  // test('pass description to test input value', async () => {
-  //   render(
-  //     <AddNewHandbook
-  //       headerTitle={''}
-  //       confirmButtonText={''}
-  //       backButtonHandler={jest.fn()}
-  //     />,
-  //     {
-  //       preloadedState: {
-  //         employeeHandbookSettings: {
-  //           employeeCountries: mockCountries,
-  //           totalHandbookList: mockHandbookList,
-  //         },
-  //       },
-  //     },
-  //   )
-  //   const descriptionInput = screen.getByTestId(description)
-  //   userEvent.type(descriptionInput, 'testing')
-  //   expect(descriptionInput).toBeTruthy()
-  //   await waitFor(() => {
-  //     expect(
-  //       screen.getByText('Please enter at least 150 characters.'),
-  //     ).toBeInTheDocument()
-  //   })
-  // })
 })
