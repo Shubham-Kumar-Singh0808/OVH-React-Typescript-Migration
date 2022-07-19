@@ -134,6 +134,7 @@ const EmployeeEmailTemplateTable = ({
                     </CButton>
                     <CButton
                       color="danger btn-ovh me-2"
+                      data-testid={`btn-delete${index}`}
                       onClick={() => handleShowDeleteModal(emailTemplate.id)}
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
@@ -180,6 +181,7 @@ const EmployeeEmailTemplateTable = ({
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Template"
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
