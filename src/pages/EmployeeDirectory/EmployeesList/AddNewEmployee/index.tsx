@@ -379,7 +379,6 @@ const AddNewEmployee = (): JSX.Element => {
     setShiftToggle(false)
   }
 
-  console.log('addEmployee', addEmployee)
   return (
     <>
       {shiftToggle && <ShiftConfiguration setToggleShift={handleBackButton} />}
