@@ -76,6 +76,7 @@ describe('Leave Apply Component Testing', () => {
     const dateInput = screen.findByTestId('date-picker')
     expect(dateInput).toBeTruthy()
   })
+
   test('should be able to select date"', () => {
     const dateInput = screen.getAllByPlaceholderText('Select to date')
     userEvent.type(
