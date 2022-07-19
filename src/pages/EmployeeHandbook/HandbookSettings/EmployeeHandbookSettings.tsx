@@ -70,7 +70,7 @@ const EmployeeHandbookSettings = (): JSX.Element => {
         ) : (
           <CCol>
             <CRow>
-              <CSpinner />
+              <CSpinner data-testid="handbookSettings-loader" />
             </CRow>
           </CCol>
         )}
