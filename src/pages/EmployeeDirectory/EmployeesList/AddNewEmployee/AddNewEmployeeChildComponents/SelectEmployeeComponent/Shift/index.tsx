@@ -49,7 +49,7 @@ const Shift = ({
 
   return (
     <>
-      <CRow className="mb-3 align-items-center">
+      <CRow className="mb-3">
         <CFormLabel
           data-tesId="shiftLabel"
           {...dynamicFormLabelProps(
@@ -64,7 +64,7 @@ const Shift = ({
           <CFormSelect
             id="shift"
             size="sm"
-            data-testid="form-select"
+            data-testid="formShift"
             aria-label="shift"
             name="shift"
             value={defaultValue.name}
@@ -82,16 +82,27 @@ const Shift = ({
           </CFormSelect>
         </CCol>
         {!isAddDisable ? (
-          <CCol sm={3}>
-            <CButton
-              data-testId="shiftButton"
-              color="info"
-              className="btn-ovh me-1"
-              onClick={() => setToggleShift(!toggleValue)}
-            >
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
-          </CCol>
+          <>
+            <CCol sm={1}>
+              <CButton
+                data-testId="shiftButton"
+                color="info"
+                className="btn-ovh me-1"
+                onClick={() => setToggleShift(!toggleValue)}
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </CCol>
+            {defaultValue.name && (
+              <div className="shift-info">
+                In Time : {defaultValue.startTimeHour}:
+                {defaultValue.startTimeMinutes}
+                <br></br>
+                Out Time : {defaultValue.endTimeHour}:
+                {defaultValue.endTimeMinutes}
+              </div>
+            )}
+          </>
         ) : (
           <CCol sm={3}>
             In Time : {defaultValue.startTimeHour}:

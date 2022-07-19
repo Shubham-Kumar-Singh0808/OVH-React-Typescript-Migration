@@ -24,8 +24,8 @@ describe('Add Employee Birthday Component', () => {
     screen.debug()
   })
 
-  test('should be able to see place holder "Select birth date"', () => {
-    expect(screen.getByPlaceholderText('Select birth date')).toBeInTheDocument()
+  test('should be able to see place holder "dd/mm/yy"', () => {
+    expect(screen.getByPlaceholderText('dd/mm/yy')).toBeInTheDocument()
   })
 
   test('should be able to render Birthday label', () => {
@@ -38,7 +38,7 @@ describe('Add Employee Birthday Component', () => {
   })
 
   test('should be able to select date"', () => {
-    const dateInput = screen.getAllByPlaceholderText('Select birth date')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {

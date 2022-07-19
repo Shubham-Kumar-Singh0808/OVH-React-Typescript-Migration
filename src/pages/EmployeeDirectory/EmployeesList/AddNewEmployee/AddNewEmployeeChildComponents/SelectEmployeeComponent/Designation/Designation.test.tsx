@@ -89,7 +89,7 @@ describe('Add Employee Designation Component', () => {
     })
 
     test('should render Employee Designation Component List Options with out crashing', () => {
-      const designationSelector = screen.getByTestId('form-select')
+      const designationSelector = screen.getByTestId('formDesignation')
       userEvent.selectOptions(designationSelector, ['Accounts & Finance'])
       expect(mockSetIsAccordionItemShow).toBeCalledWith('Accounts & Finance')
     })

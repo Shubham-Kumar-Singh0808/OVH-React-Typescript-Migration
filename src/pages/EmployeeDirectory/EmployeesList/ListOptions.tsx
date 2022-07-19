@@ -5,6 +5,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import employeeListApi from '../../../middleware/api/EmployeeDirectory/EmployeesList/employeeListApi'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { downloadFile } from '../../../utils/helper'
 
 const ListOptions = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -28,23 +29,7 @@ const ListOptions = (): JSX.Element => {
       searchStr: '',
       selectionStatus: selectedEmploymentStatus,
     })
-    downloadFile(employeeListDownload)
-  }
-
-  const downloadFile = (cvDownload: Blob | undefined) => {
-    if (cvDownload) {
-      const url = window.URL.createObjectURL(
-        new Blob([cvDownload], {
-          type: cvDownload.type,
-        }),
-      )
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', 'EmployeeList.csv')
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
-    }
+    downloadFile(employeeListDownload, 'EmployeeList.csv')
   }
 
   return (
@@ -113,6 +98,7 @@ const ListOptions = (): JSX.Element => {
           className="text-white btn-ovh"
           size="sm"
           onClick={handleExportEmployeeData}
+          data-testid="employee-export-btn"
         >
           <i className="fa fa-plus me-1"></i>
           Click to Export Employee List
