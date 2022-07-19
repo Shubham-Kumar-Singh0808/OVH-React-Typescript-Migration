@@ -233,8 +233,8 @@ function AddUpdateEmployeeCertification({
         return { ...prevState, ...{ [name]: certificate } }
       })
     } else if (name === 'percent') {
-      let percentValue = Number(value.replace(/[^0-9]/g, ''))
-      if (percentValue > 100) percentValue = 100
+      let percentValue = value.replace(/[^0-9]/g, '')
+      if (Number(percentValue) > 100) percentValue = '100'
       setAddCertification((prevState) => {
         return { ...prevState, ...{ [name]: percentValue } }
       })
@@ -553,6 +553,7 @@ function AddUpdateEmployeeCertification({
                 type="text"
                 id="percentage"
                 name="percent"
+                max={100}
                 value={addCertification?.percent}
                 placeholder="100"
                 onChange={handleInputChange}
