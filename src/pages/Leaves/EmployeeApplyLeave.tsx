@@ -183,6 +183,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
           <DatePicker
             className="form-control"
             data-testid="date-picker"
+            placeholderText="Select to date"
             name="fromDate"
             maxDate={new Date()}
             id="fromDate"

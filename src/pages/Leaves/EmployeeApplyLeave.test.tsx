@@ -1,21 +1,9 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
 import EmployeeApplyLeave from './EmployeeApplyLeave'
 import { render, screen, waitFor } from '../../test/testUtils'
-import { reduxServices } from '../../reducers/reduxServices'
-import stateStore from '../../stateStore'
-import { mockLeaveType } from '../../test/data/employeeLeaveApplyData'
 
-const deviceLocale: string =
-  navigator.languages && navigator.languages.length
-    ? navigator.languages[0]
-    : navigator.language
 describe('Leave Apply Component Testing', () => {
   describe('without data', () => {
     beforeEach(() => {
@@ -75,17 +63,5 @@ describe('Leave Apply Component Testing', () => {
   test('should render date picker', () => {
     const dateInput = screen.findByTestId('date-picker')
     expect(dateInput).toBeTruthy()
-  })
-
-  test('should be able to select date"', () => {
-    const dateInput = screen.getAllByPlaceholderText('Select to date')
-    userEvent.type(
-      dateInput[0],
-      new Date('12/20/2021').toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }),
-    )
   })
 })
