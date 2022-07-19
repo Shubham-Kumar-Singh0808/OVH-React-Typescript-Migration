@@ -3,7 +3,7 @@ import { MockEmployeeHandbook } from '../../types/EmployeeHandbook/HandbookSetti
 export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
   {
     id: 1,
-    displayOrder: 1,
+    displayOrder: 61,
     title: 'testing',
     description:
       'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span >: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
@@ -53,7 +53,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
   },
   {
     id: 3,
-    displayOrder: 3,
+    displayOrder: 53,
     title: 'Employment Types and Compensation Policy',
     description:
       '<p><b>Employment Categories </b></p>&#10;<p>Based on the conditions of association </b></p>',

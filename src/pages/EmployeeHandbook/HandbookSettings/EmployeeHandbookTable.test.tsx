@@ -8,7 +8,7 @@ import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSet
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
     expect(
-      screen.getByText(mockEmployeeHandbookList[i].displayOrder),
+      screen.getAllByText(mockEmployeeHandbookList[i].displayOrder),
     ).toBeInTheDocument()
   }
 }
@@ -84,7 +84,9 @@ describe('Employee Handbook List Table Component Testing', () => {
       },
     )
     mockEmployeeHandbookList.forEach((handbook) =>
-      expect(screen.getAllByText(handbook.displayOrder)).toBeInTheDocument(),
+      expect(screen.getAllByText(handbook.title)[0]).toEqual(
+        '<td>testing</td>',
+      ),
     )
 
     expectPageSizeToBeRendered(20)

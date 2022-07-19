@@ -64,11 +64,11 @@ const EmployeeHandbookTable = (
     scope: 'col',
   }
   const tableHeaderCellPropDisplayOrder = {
-    width: '8%',
+    width: '10%',
     scope: 'col',
   }
   const tableHeaderCellPropCountry = {
-    width: '52%',
+    width: '50%',
     scope: 'col',
   }
   const tableHeaderCellPropActions = {
@@ -237,7 +237,7 @@ const EmployeeHandbookTable = (
         confirmButtonAction={handleConfirmDeleteHandbook}
       >
         {`Do you really want to delete this "${(
-          <strong>{toDeleteHandbook}</strong>
+          <b>{toDeleteHandbook}</b>
         )}" Handbook Item?`}
       </OModal>
     </>
