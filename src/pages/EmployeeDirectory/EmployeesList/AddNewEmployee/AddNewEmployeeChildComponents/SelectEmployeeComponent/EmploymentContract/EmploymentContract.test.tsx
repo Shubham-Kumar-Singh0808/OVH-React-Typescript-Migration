@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EmploymentContract from '.'
-import { render, screen } from '../../../../../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../../../../../test/testUtils'
 
 const deviceLocale: string =
   navigator.languages && navigator.languages.length
@@ -25,18 +25,10 @@ describe('Add Employment Contract Component', () => {
       )
     })
 
-    test('should be able to render Employment Contract without crashing', () => {
-      screen.debug()
-    })
-
-    test('should be able to see place holder "Select start date"', () => {
-      expect(
-        screen.getByPlaceholderText('Select start date'),
-      ).toBeInTheDocument()
-    })
-
-    test('should be able to see place holder "Select end date"', () => {
-      expect(screen.getByPlaceholderText('Select end date')).toBeInTheDocument()
+    test('should be able to see place holder "Select start date" and "Select end date"', () => {
+      const input = screen.getAllByPlaceholderText('dd/mm/yy')
+      expect(input[0]).toBeInTheDocument()
+      expect(input[1]).toBeInTheDocument()
     })
 
     test('should be able to render Employment Contract label', () => {
@@ -54,7 +46,7 @@ describe('Add Employment Contract Component', () => {
     })
 
     test('should be able to select start date"', () => {
-      const dateInput = screen.getAllByPlaceholderText('Select start date')
+      const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
       userEvent.type(
         dateInput[0],
         new Date('12/20/2021').toLocaleDateString(deviceLocale, {
@@ -65,8 +57,8 @@ describe('Add Employment Contract Component', () => {
       )
     })
 
-    test('should be able to select end date"', () => {
-      const dateInput = screen.getAllByPlaceholderText('Select end date')
+    test('should be able to select end date', () => {
+      const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
       userEvent.type(
         dateInput[0],
         new Date('12/22/2021').toLocaleDateString(deviceLocale, {
@@ -75,6 +67,23 @@ describe('Add Employment Contract Component', () => {
           day: '2-digit',
         }),
       )
+    })
+
+    test('Radio button should be true if isContractExist is "true"', () => {
+      const activeRadio = screen.getByRole('radio', {
+        name: 'Yes',
+      }) as HTMLInputElement
+
+      const inactiveRadio = screen.getByRole('radio', {
+        name: 'No',
+      }) as HTMLInputElement
+
+      expect(activeRadio.checked).toEqual(true)
+      expect(inactiveRadio.checked).toEqual(false)
+
+      fireEvent.click(inactiveRadio)
+
+      expect(activeRadio.checked).toEqual(false)
     })
   })
 
@@ -99,6 +108,19 @@ describe('Add Employment Contract Component', () => {
 
     test('should not render the start date', () => {
       expect(screen.findByTestId('end-date-picker')).toMatchObject({})
+    })
+
+    test('Radio button should be false if isContractExist is "False"', () => {
+      const activeRadio = screen.getByRole('radio', {
+        name: 'Yes',
+      }) as HTMLInputElement
+
+      const inactiveRadio = screen.getByRole('radio', {
+        name: 'No',
+      }) as HTMLInputElement
+
+      expect(activeRadio.checked).toEqual(false)
+      expect(inactiveRadio.checked).toEqual(true)
     })
   })
 })
