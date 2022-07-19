@@ -31,5 +31,7 @@ export type DesignationListSliceState = {
   employeeDesignations: EmployeeDesignation[]
   refreshList: boolean
   isLoading: LoadingState
+  currentPage: number
+  pageSize: number
   error: ValidationError
 }
