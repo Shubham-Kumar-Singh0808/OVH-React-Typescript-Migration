@@ -23,16 +23,20 @@ const EmployeeEmailTemplateTable = ({
   employeeTemplate,
 }: EmployeeEmailTemplateTableProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
+
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteTemplateId, setToDeleteTemplateId] = useState(0)
+
   const [emailTemplateModel, setEmailTemplateModel] =
     useState<EmployeeGetEmailTemplateModelProps>({
       emailTemplate: '',
       emailTemplateName: '',
     })
+
   const employeeMailTemplates = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplate,
   )
+
   const dispatch = useAppDispatch()
   const handleModal = (emailTemplateName: string, emailTemplate: string) => {
     setIsModalVisible(true)
@@ -75,6 +79,7 @@ const EmployeeEmailTemplateTable = ({
       )
     }
   }
+
   return (
     <CTable striped>
       <CTableHead>
