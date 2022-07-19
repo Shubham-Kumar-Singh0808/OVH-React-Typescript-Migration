@@ -144,7 +144,6 @@ describe('Category List Table Testing', () => {
 
     await waitFor(() => {
       userEvent.click(screen.getByText('Next >', { exact: true }))
-
       expect(screen.getByRole('rowheader', { name: '40' })).toBeInTheDocument()
       expect(screen.queryByRole('rowheader', { name: '41' })).toBeNull()
     })

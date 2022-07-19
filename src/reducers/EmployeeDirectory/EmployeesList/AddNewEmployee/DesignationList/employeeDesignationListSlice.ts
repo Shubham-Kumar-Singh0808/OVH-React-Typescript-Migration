@@ -103,6 +103,8 @@ const initialDesignationState: DesignationListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   employeeDesignations: [],
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const employeeDesignationListSlice = createSlice({
@@ -169,6 +171,11 @@ const isLoading = (state: RootState): LoadingState =>
 const refreshList = (state: RootState): boolean =>
   state.employeeDesignationList.refreshList
 
+const pageFromState = (state: RootState): number =>
+  state.employeeDesignationList.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.employeeDesignationList.pageSize
+
 const employeeDepartments = (state: RootState): EmployeeDepartment[] =>
   state.employeeDesignationList.employeeDepartments
 
@@ -192,6 +199,8 @@ const employeeDesignationListSelectors = {
   employeeDesignationList,
   employeeDepartments,
   employeeDesignations,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const employeeDesignationListService = {
