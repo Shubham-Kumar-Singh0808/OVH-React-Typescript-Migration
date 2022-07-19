@@ -97,7 +97,6 @@ describe('Email Template component with data', () => {
       expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
     })
   })
-
  
   it('should close the modal on clicking No button from the popup', async () => {
     const deleteButtonElement = screen.getByTestId('btn-delete0')
@@ -107,6 +106,13 @@ describe('Email Template component with data', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('row')).toHaveLength(3)
     })
+  })
+  it('should render template modal on clicking link from Actions', async () => {
+    const deleteButtonElement = screen.getByTestId('mail-lin0')
+    userEvent.click(deleteButtonElement)    
+    await waitFor(() => {
+      expect(screen.getByText('Template model')).toBeInTheDocument()
+      })
   })
 })
 })

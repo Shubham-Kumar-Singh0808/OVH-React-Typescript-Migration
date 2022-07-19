@@ -116,8 +116,8 @@ const EmployeeEmailTemplateTable = ({
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     <CLink
-                      data-testid="mail-link"
-                      className="cursor-pointer text-decoration-none text-primary"
+                     data-testid={`mail-lin${index}`}                      
+                     className="cursor-pointer text-decoration-none text-primary"
                       onClick={() =>
                         handleModal(
                           emailTemplate.templateName,
@@ -147,6 +147,7 @@ const EmployeeEmailTemplateTable = ({
             <OModal
               modalSize="lg"
               alignment="center"
+              modalTitle="Template model"
               modalFooterClass="d-none"
               modalHeaderClass="d-none"
               visible={isModalVisible}
