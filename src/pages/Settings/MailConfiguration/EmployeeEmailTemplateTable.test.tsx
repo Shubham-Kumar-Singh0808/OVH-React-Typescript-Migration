@@ -65,37 +65,32 @@ describe('email Template List Table Testing', () => {
     )
     expect(screen.getByText('Title')).toBeInTheDocument()
   })
-})
 describe('Email Template component with data', () => {
   beforeEach(() => {
-    render(
-      <EmployeeEmailTemplateTable
-        employeeTemplate={{
-          id: 0,
-          templateName: '',
-          template: '',
-          templateTypeId: '',
-        }}
-      />,
-      {
-        preloadedState: {
-          employeeMailConfiguration: {
-            employeeGetEmailTemplate: mockEmailTemplate,
-          },
+    render(<EmployeeEmailTemplateTable
+      employeeTemplate={{
+        id: 70,
+        templateName: 'old',
+        template: 'tyhu',
+        templateTypeId: '5',
+      }}
+    />, {
+      preloadedState: {
+        employeeMailConfiguration: {
+          employeeGetEmailTemplate: mockEmailTemplate,
         },
       },
-    )
+    })
   })
   test('should render delete button', () => {
-    expect(screen.getByTestId('btn-delete2')).toHaveClass(
-      'btn btn-danger btn-sm',
+    expect(screen.getByTestId('btn-delete0')).toHaveClass(
+      'btn btn-danger btn-ovh me-2',
     )
   })
-  // eslint-disable-next-line sonarjs/no-identical-functions
+ 
   it('should render Delete modal on clicking delete button from Actions', async () => {
     const deleteButtonElement = screen.getByTestId('btn-delete1')
-    userEvent.click(deleteButtonElement)
-    // eslint-disable-next-line sonarjs/no-identical-functions
+    userEvent.click(deleteButtonElement)    
     await waitFor(() => {
       expect(screen.getByText('Delete Template')).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
@@ -103,14 +98,15 @@ describe('Email Template component with data', () => {
     })
   })
 
-  // eslint-disable-next-line sonarjs/no-identical-functions
+ 
   it('should close the modal on clicking No button from the popup', async () => {
-    const deleteButtonElement = screen.getByTestId('btn-delete6')
+    const deleteButtonElement = screen.getByTestId('btn-delete0')
     userEvent.click(deleteButtonElement)
     const yesButtonElement = screen.getByRole('button', { name: 'Yes' })
     userEvent.click(yesButtonElement)
     await waitFor(() => {
-      expect(screen.getAllByRole('row')).toHaveLength(1)
+      expect(screen.getAllByRole('row')).toHaveLength(3)
     })
   })
+})
 })

@@ -133,9 +133,9 @@ const EmployeeEmailTemplateTable = ({
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
                     <CButton
-                      color="danger btn-ovh me-2"
-                      data-testid={`btn-delete${index}`}
-                      onClick={() => handleShowDeleteModal(emailTemplate.id)}
+                    data-testid={`btn-delete${index}`}
+                     color="danger btn-ovh me-2"                  
+                     onClick={() => handleShowDeleteModal(emailTemplate.id)}
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
