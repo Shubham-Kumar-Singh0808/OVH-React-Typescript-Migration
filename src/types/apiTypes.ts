@@ -260,6 +260,7 @@ export interface EmployeeMailConfigurationApi extends ApiBase {
   getMailTemplates: string
   getMailTemplateTypes: string
   exportMailTemplatesList: string
+  deleteMailTemplate: string
 }
 
 export interface AddNewTemplateApi extends ApiBase {

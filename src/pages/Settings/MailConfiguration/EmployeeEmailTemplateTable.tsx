@@ -10,19 +10,21 @@ import {
   CLink,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import {
   EmployeeGetEmailTemplateModelProps,
   EmployeeEmailTemplateTableProps,
 } from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const EmployeeEmailTemplateTable = ({
   employeeTemplate,
 }: EmployeeEmailTemplateTableProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteTemplateId, setToDeleteTemplateId] = useState(0)
   const [emailTemplateModel, setEmailTemplateModel] =
     useState<EmployeeGetEmailTemplateModelProps>({
       emailTemplate: '',
@@ -31,12 +33,47 @@ const EmployeeEmailTemplateTable = ({
   const employeeMailTemplates = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplate,
   )
+  const dispatch = useAppDispatch()
   const handleModal = (emailTemplateName: string, emailTemplate: string) => {
     setIsModalVisible(true)
     setEmailTemplateModel({
       emailTemplate,
       emailTemplateName,
     })
+  }
+
+  const handleShowDeleteModal = (templateId: number) => {
+    setToDeleteTemplateId(templateId)
+    setIsDeleteModalVisible(true)
+  }
+
+  const handleConfirmDeleteEmailTemplateDetails = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteFamilyMemberResultAction = await dispatch(
+      reduxServices.employeeMailConfiguration.deleteMailTemplate(
+        toDeleteTemplateId,
+      ),
+    )
+    if (
+      reduxServices.employeeMailConfiguration.deleteMailTemplate.fulfilled.match(
+        deleteFamilyMemberResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
+          templateName: employeeTemplate.templateName,
+          templateTypeId: employeeTemplate.templateTypeId,
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Email template deleted successfully"
+          />,
+        ),
+      )
+    }
   }
   return (
     <CTable striped>
@@ -90,7 +127,10 @@ const EmployeeEmailTemplateTable = ({
                     <CButton color="info btn-ovh me-2">
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
-                    <CButton color="danger btn-ovh me-2">
+                    <CButton
+                      color="danger btn-ovh me-2"
+                      onClick={() => handleShowDeleteModal(emailTemplate.id)}
+                    >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
                   </CTableDataCell>
@@ -131,6 +171,17 @@ const EmployeeEmailTemplateTable = ({
           <strong>No Records found...</strong>
         </>
       )}
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteEmailTemplateDetails}
+      >
+        {`Do you really want to delete this Meeting Update Template?`}
+      </OModal>
     </CTable>
   )
 }

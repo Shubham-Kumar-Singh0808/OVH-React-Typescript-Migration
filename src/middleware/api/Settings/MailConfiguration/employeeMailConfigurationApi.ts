@@ -54,10 +54,23 @@ const exportEmployeeMailTemplateData = async (
   return response.data
 }
 
+const deleteMailTemplate = async (id: number): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeMailConfigurationApiConfig.deleteMailTemplate,
+    method: AllowedHttpMethods.delete,
+    params: {
+      id,
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeMailConfigurationApi = {
   getEmployeeMailTemplateTypes,
   getEmployeeMailTemplate,
   exportEmployeeMailTemplateData,
+  deleteMailTemplate,
 }
 
 export default employeeMailConfigurationApi

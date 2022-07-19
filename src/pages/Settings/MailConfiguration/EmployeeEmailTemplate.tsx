@@ -72,6 +72,7 @@ const employeeEmailTemplate = (): JSX.Element => {
 
   const handleClearDetails = () => {
     setEmployeeTemplate({
+      id: 0,
       templateName: '',
       template: '',
       templateTypeId: '',

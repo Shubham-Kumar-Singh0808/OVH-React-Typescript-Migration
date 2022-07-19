@@ -304,6 +304,7 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
     getMailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
     getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
     exportMailTemplatesList: apiPrefix + '/mailTemplates/exportMailTemplates',
+    deleteMailTemplate: apiPrefix + '/mailTemplates/deleteMailTemplate',
   }
 
 export const addNewTemplateAPiConfig: AddNewTemplateApi = {

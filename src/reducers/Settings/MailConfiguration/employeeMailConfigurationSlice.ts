@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeMailTemplate,
   EmployeeGetEmailTemplateProps,
@@ -34,6 +34,23 @@ const getEmployeeMailTemplate = createAsyncThunk(
     }
   },
 )
+
+const deleteMailTemplate = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('mailConfiguration/deleteMailTemplate', async (id, thunkApi) => {
+  try {
+    return await employeeMailConfigurationApi.deleteMailTemplate(id)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
 
 const initialMailConfigurationState: EmployeeMailConfigurationState = {
   employeeGetEmailTemplate: [],
@@ -78,6 +95,7 @@ const employeeMailTemplate = (state: RootState): EmployeeMailTemplate[] =>
 const employeeMailConfigurationThunk = {
   getEmployeeMailTemplateTypes,
   getEmployeeMailTemplate,
+  deleteMailTemplate,
 }
 
 const employeeMailConfigurationSelectors = {

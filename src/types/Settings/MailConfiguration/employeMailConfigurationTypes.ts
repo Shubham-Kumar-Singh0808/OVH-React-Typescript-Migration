@@ -1,7 +1,7 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type EmployeeMailTemplate = {
-  id?: number | string
+  id: number
   templateName: string
   template: string
   templateTypeId: number | string
