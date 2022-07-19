@@ -167,15 +167,22 @@ const EmployeeHandbookTable = (
                       </ul>
                     </CTableDataCell>
                     <CTableDataCell className="align-items-end">
-                      <CButton color="info" className="btn-ovh me-1 text-white">
+                      <CButton
+                        size="sm"
+                        color="info"
+                        className="btn-ovh me-1"
+                        data-testid={`handbook-edit-btn${index}`}
+                      >
                         <i
                           className="fa fa-pencil-square-o"
                           aria-hidden="true"
                         ></i>
                       </CButton>
                       <CButton
+                        size="sm"
+                        data-testid={`handbook-delete-btn${index}`}
                         color="danger"
-                        className="btn-ovh me-1 text-white"
+                        className="btn-ovh me-1"
                         onClick={() =>
                           handleShowDeleteModal(
                             employeeHandbook.id as number,
@@ -228,17 +235,18 @@ const EmployeeHandbookTable = (
         </CCol>
       )}
       <OModal
-        alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Handbook"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteHandbook}
       >
-        {`Do you really want to delete this "${(
-          <b>{toDeleteHandbook}</b>
-        )}" Handbook Item?`}
+        <>
+          Do you really want to delete this <strong>{toDeleteHandbook}</strong>{' '}
+          Handbook Item?
+        </>
       </OModal>
     </>
   )
