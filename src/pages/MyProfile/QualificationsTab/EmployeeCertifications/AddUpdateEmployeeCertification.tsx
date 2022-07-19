@@ -1,6 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable import/named */
-// Todo: remove all eslint and fix errors
 import {
   CButton,
   CCardBody,
@@ -14,6 +11,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
+// eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -273,7 +271,7 @@ function AddUpdateEmployeeCertification({
       certificateType: '',
       technology: '',
       code: '',
-      percent: 0,
+      percent: '',
       name: '',
       description: '',
     })
@@ -552,13 +550,12 @@ function AddUpdateEmployeeCertification({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                type="text"
                 id="percentage"
                 name="percent"
                 value={addCertification?.percent}
                 placeholder="100"
                 onChange={handleInputChange}
-                min={0}
-                max={100}
                 maxLength={3}
               />
             </CCol>

@@ -47,6 +47,10 @@ const EmployeeHandbookTable = (
     setCurrentPage(1)
   }
 
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   const tableHeaderCellPropSNo = {
     width: '6%',
     scope: 'col',
@@ -105,7 +109,7 @@ const EmployeeHandbookTable = (
     <>
       {employeeHandbooks.length ? (
         <>
-          <CTable striped responsive>
+          <CTable striped responsive align="middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell {...tableHeaderCellPropSNo}>
@@ -132,7 +136,9 @@ const EmployeeHandbookTable = (
               {employeeHandbooks.map((employeeHandbook, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {getItemNumber(index)}
+                    </CTableDataCell>
                     <CTableDataCell>{employeeHandbook.title}</CTableDataCell>
                     <CTableDataCell>{employeeHandbook.pageName}</CTableDataCell>
                     <CTableDataCell>
@@ -230,7 +236,9 @@ const EmployeeHandbookTable = (
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteHandbook}
       >
-        {`Do you really want to delete this ${toDeleteHandbook} Handbook Item?`}
+        {`Do you really want to delete this "${(
+          <strong>{toDeleteHandbook}</strong>
+        )}" Handbook Item?`}
       </OModal>
     </>
   )
