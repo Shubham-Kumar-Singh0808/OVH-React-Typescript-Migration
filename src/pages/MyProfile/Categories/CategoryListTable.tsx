@@ -104,6 +104,7 @@ const CategoryListTable = (): JSX.Element => {
                   <CButton
                     color="danger"
                     size="sm"
+                    data-testid={`category-delete-btn${index}`}
                     onClick={() =>
                       handleShowDeleteModal(
                         category.categoryType,
