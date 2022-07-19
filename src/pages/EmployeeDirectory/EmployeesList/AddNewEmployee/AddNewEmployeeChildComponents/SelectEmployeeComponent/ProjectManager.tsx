@@ -11,6 +11,7 @@ const ProjectManager = ({
   dynamicFormLabelProps,
   managersList,
   onSelectManager,
+  isRequired,
   shouldReset,
   projectValue,
 }: ManagerProps): JSX.Element => {
@@ -47,9 +48,11 @@ const ProjectManager = ({
           )}
         >
           Project Manager:
-          <span className={showIsRequired(autoCompleteTarget as string)}>
-            *
-          </span>
+          {isRequired && (
+            <span className={showIsRequired(autoCompleteTarget as string)}>
+              *
+            </span>
+          )}
         </CFormLabel>
         <CCol sm={3}>
           <Autocomplete

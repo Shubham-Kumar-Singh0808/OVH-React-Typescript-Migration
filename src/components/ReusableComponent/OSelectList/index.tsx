@@ -9,6 +9,7 @@ const OSelect = ({
   setValue,
   value,
   name,
+  isRequired,
   label,
 }: SelectProps): JSX.Element => {
   const onChangeHandler = (e: { target: { value: string } }) => {
@@ -27,7 +28,10 @@ const OSelect = ({
             'col-sm-3 col-form-label text-end',
           )}
         >
-          {name}:<span className={showIsRequired(value as string)}>*</span>
+          {name}:
+          {isRequired && (
+            <span className={showIsRequired(value as string)}>*</span>
+          )}
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect

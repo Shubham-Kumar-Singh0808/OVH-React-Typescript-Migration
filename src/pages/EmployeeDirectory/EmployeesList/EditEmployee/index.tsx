@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
 import { CRow, CCol, CButton, CFormLabel, CSpinner } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -8,6 +8,7 @@ import {
   GetAllReportingManagers,
   GetHRAssociate,
   GetHrData,
+  GetList,
   GetProjectManager,
   GetReportManager,
   ShouldResetFields,
@@ -26,9 +27,12 @@ import {
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { EditEmployeeTypes } from '../../../../types/EmployeeDirectory/EmployeesList/EditEmployee'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const history = useHistory()
+
   const [getID, setID] = useState<string>()
   const { employeeId } = useParams<{ employeeId: string }>()
   useEffect(() => {
@@ -273,8 +277,6 @@ const EditEmployee = (): JSX.Element => {
   )
   const isLoading = useTypedSelector(reduxServices.employee.selectors.isLoading)
 
-  console.log(isLoading)
-
   // Start - Compose data
   const composedDepartmentList = listComposer(
     departmentsList as [],
@@ -299,17 +301,92 @@ const EditEmployee = (): JSX.Element => {
     'id',
     'employmentType',
   )
+
+  const employeeStatus: GetList[] = [
+    { id: 1, name: 'Active' },
+    { id: 2, name: 'Inactive' },
+    { id: 3, name: 'UnderNotice' },
+  ]
   // End - compose data
 
-  const handleClearFields = () => {
-    setEditEmployee(initEmployee)
+  const successToastMessage = (
+    <OToast
+      toastMessage="Certificate type added successfully"
+      toastColor="success"
+    />
+  )
 
-    const shouldResetFields = {
-      hrAssociate: true,
-      projectManager: true,
-      reportManager: true,
-    } as ShouldResetFields
-    setResetField(shouldResetFields)
+  const alreadyExistToastMessage = (
+    <OToast
+      toastMessage="This CertificateType is already exists"
+      toastColor="danger"
+    />
+  )
+  // POST method
+  const handleEditEmployee = async () => {
+    // console.log('editEmployee', editEmployee)
+
+    const testPayload = { ...selectedEmployeeData, ...editEmployee }
+    // const testPayload = {
+    //   contractEndDate: null,
+    //   contractExists: 'false',
+    //   contractStartDate: null,
+    //   country: 'INDEA',
+    //   departmentName: '',
+    //   designation: '',
+    //   employmentTypeName: '',
+    //   hrAssociate: hrAssociateValue,
+    //   jobTypeName: '',
+    //   manager: managerValue,
+    //   projectManager: managerValue,
+    //   role: '',
+    //   technology: '',
+    //   timeSlotDTO: shiftValue,
+    //   workStatus: '',
+    // } as EditEmployeeTypes
+
+    // contractEndDate: Date | null
+    // contractExists: string
+    // contractStartDate: Date | null
+    // country: string
+    // dateOfJoining?: Date | null
+    // departmentName: string
+    // designation: string
+    // dob?: Date | null
+    // employmentTypeName: string
+    // experience?: number
+    // middleName?: string
+    // firstName?: string
+    // gender?: string
+    // hrAssociate: GetHrData
+    // jobTypeName: string
+    // lastName?: string
+    // manager: GetAllReportingManagers
+    // projectManager: GetAllReportingManagers
+    // role: string
+    // technology: string
+    // timeSlotDTO: EmployeeShiftDetails
+    // workStatus: string
+
+    const newEmployeeResponse = await dispatch(
+      reduxServices.employee.updateEmployeeDetails(testPayload),
+    )
+
+    if (
+      reduxServices.employee.updateEmployeeDetails.fulfilled.match(
+        newEmployeeResponse,
+      )
+    ) {
+      await dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      // dispatch(reduxServices.app.actions.addToast(toastElement))
+
+      history.push('/employeeList')
+      console.log('isLoading', isLoading, selectedEmployeeData)
+    } else {
+      await dispatch(
+        reduxServices.app.actions.addToast(alreadyExistToastMessage),
+      )
+    }
   }
 
   return (
@@ -344,6 +421,7 @@ const EditEmployee = (): JSX.Element => {
             >{`${editEmployee.firstName} ${editEmployee.lastName}`}</CCol>
           </CRow>
           <OSelectList
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={composedDepartmentList}
             setValue={onHandleDepartment}
@@ -352,12 +430,13 @@ const EditEmployee = (): JSX.Element => {
             label="Select Department"
           />
           <OSelectList
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={composedTechnologyList}
             setValue={onHandleTechnology}
             value={editEmployee.technology}
             name="Technology"
-            label="Select Technology"
+            label="Select"
           />
           <Designation
             dynamicFormLabelProps={dynamicFormLabelProps}
@@ -367,8 +446,10 @@ const EditEmployee = (): JSX.Element => {
             setToggleShift={() => setDestinationToggle(!destinationToggle)}
             toggleValue={destinationToggle}
             isAddDisable={true}
+            isRequired={false}
           />
           <OSelectList
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={composedUserRoles}
             setValue={onHandleUserRole}
@@ -377,6 +458,7 @@ const EditEmployee = (): JSX.Element => {
             label="Select Role"
           />
           <ReportingManager
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             reportManagersList={reportingManagersList}
             onSelectReportManager={onHandleReportManager}
@@ -384,6 +466,7 @@ const EditEmployee = (): JSX.Element => {
             reportValue={`${editEmployee.manager?.firstName} ${editEmployee.manager?.lastName}`}
           />
           <ProjectManager
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             managersList={reportingManagersList}
             onSelectManager={onHandleProjectManager}
@@ -391,6 +474,7 @@ const EditEmployee = (): JSX.Element => {
             projectValue={`${editEmployee.manager?.firstName} ${editEmployee.manager?.lastName}`}
           />
           <HRAssociate
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             hrDataList={hrDataList}
             onSelectHRAssociate={onHandleHRAssociate}
@@ -398,14 +482,16 @@ const EditEmployee = (): JSX.Element => {
             hrValue={`${editEmployee.hrAssociate?.firstName} ${editEmployee.hrAssociate?.lastName}`}
           />
           <OSelectList
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={composedEmploymentList}
             setValue={onHandleEmployeeType}
             value={editEmployee.employmentTypeName}
             name="EmploymentType"
-            label="Select Employment Type"
+            label="Select Type"
           />
           <OSelectList
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={composedJobTypes}
             setValue={onHandleJobType}
@@ -414,6 +500,7 @@ const EditEmployee = (): JSX.Element => {
             label="Select Job Type"
           />
           <OSelectList
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={countryList}
             setValue={onHandleCountryType}
@@ -422,6 +509,7 @@ const EditEmployee = (): JSX.Element => {
             label="Select Country"
           />
           <Shift
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={employeeShifts}
             setValue={onHandleShift}
@@ -431,14 +519,16 @@ const EditEmployee = (): JSX.Element => {
             isAddDisable={true}
           />
           <OSelectList
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
-            list={countryList}
+            list={employeeStatus}
             setValue={onHandleCountryType}
             value={editEmployee.country}
             name="Employee Status"
             label="Select Employee Status"
           />
           <EmploymentContract
+            isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             onStartDateChangeHandler={onHandleStartDate}
             onEndDateChangeHandler={onHandleEndDate}
@@ -457,18 +547,11 @@ const EditEmployee = (): JSX.Element => {
               <CButton
                 className="btn-ovh me-1"
                 color="success"
-                disabled={!isViewBtnEnabled}
+                // disabled={!isViewBtnEnabled}
                 data-testid="edit-employee"
+                onClick={handleEditEmployee}
               >
                 Update
-              </CButton>
-              <CButton
-                color="warning "
-                className="btn-ovh"
-                data-testid="clear-employee"
-                onClick={handleClearFields}
-              >
-                Clear
               </CButton>
             </CCol>
           </CRow>

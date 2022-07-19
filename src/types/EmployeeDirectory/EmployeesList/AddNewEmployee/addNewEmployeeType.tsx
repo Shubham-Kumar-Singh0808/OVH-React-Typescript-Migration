@@ -143,6 +143,7 @@ export interface StartEndDateChangeHandlerProp extends DynamicFormLabelProps {
   startDateValue: Date
   endDateValue: Date
   isContractExist: string
+  isRequired: boolean
 }
 
 export interface UserNameProps extends DynamicFormLabelProps {
@@ -165,6 +166,7 @@ export interface SelectShiftProps extends DynamicFormLabelProps {
   value: string
   toggleValue: boolean
   isAddDisable: boolean
+  isRequired: boolean
 }
 export interface SelectDesignationProps extends DynamicFormLabelProps {
   list: GetList[]
@@ -173,6 +175,7 @@ export interface SelectDesignationProps extends DynamicFormLabelProps {
   value: string
   toggleValue: boolean
   isAddDisable: boolean
+  isRequired: boolean
 }
 export interface SelectProps extends DynamicFormLabelProps {
   list: GetList[]
@@ -180,6 +183,7 @@ export interface SelectProps extends DynamicFormLabelProps {
   value?: string
   name?: string
   label?: string
+  isRequired: boolean
 }
 export interface CountryProps extends DynamicFormLabelProps {
   countryList: GetCountries[]
@@ -190,6 +194,7 @@ export interface HrDataProps extends DynamicFormLabelProps {
   onSelectHRAssociate: (value: GetHRAssociate) => void
   shouldReset: boolean
   hrValue: string
+  isRequired: boolean
 }
 
 export interface ReportManagerProps extends DynamicFormLabelProps {
@@ -197,12 +202,14 @@ export interface ReportManagerProps extends DynamicFormLabelProps {
   onSelectReportManager: (value: GetReportManager) => void
   shouldReset: boolean
   reportValue: string
+  isRequired: boolean
 }
 export interface ManagerProps extends DynamicFormLabelProps {
   managersList: GetAllReportingManagers[]
   onSelectManager: (value: GetProjectManager) => void
   shouldReset: boolean
   projectValue: string
+  isRequired: boolean
 }
 export interface EmployeeShiftProps extends DynamicFormLabelProps {
   employeeShifts: EmployeeShiftDetails[]

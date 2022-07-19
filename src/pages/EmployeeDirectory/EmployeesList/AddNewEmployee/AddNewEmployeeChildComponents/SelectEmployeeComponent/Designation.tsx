@@ -9,6 +9,7 @@ const Designation = ({
   setValue,
   setToggleShift,
   value,
+  isRequired,
   toggleValue,
   isAddDisable,
 }: SelectDesignationProps): JSX.Element => {
@@ -27,7 +28,7 @@ const Designation = ({
           )}
         >
           Designation:
-          <span className={showIsRequired(value)}>*</span>
+          {isRequired && <span className={showIsRequired(value)}>*</span>}
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect

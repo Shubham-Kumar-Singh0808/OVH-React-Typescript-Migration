@@ -9,6 +9,7 @@ const Shift = ({
   list,
   setValue,
   setToggleShift,
+  isRequired,
   value,
   toggleValue,
   isAddDisable,
@@ -61,7 +62,7 @@ const Shift = ({
           )}
         >
           Shift:
-          <span className={showIsRequired(value)}>*</span>
+          {isRequired && <span className={showIsRequired(value)}>*</span>}
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect

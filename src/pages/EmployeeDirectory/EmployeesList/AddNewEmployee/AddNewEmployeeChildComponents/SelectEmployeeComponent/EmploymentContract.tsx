@@ -10,6 +10,7 @@ const EmploymentContract = ({
   onStartDateChangeHandler,
   onEndDateChangeHandler,
   isContractExist,
+  isRequired,
   startDateValue,
   endDateValue,
 }: StartEndDateChangeHandlerProp): JSX.Element => {
@@ -82,7 +83,9 @@ const EmploymentContract = ({
               {...dynamicFormLabelProps('contractstartdate', classNameStyle)}
             >
               Contract Start Date:
-              <span className={showIsRequired(startDate)}>*</span>
+              {isRequired && (
+                <span className={showIsRequired(startDate)}>*</span>
+              )}
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
@@ -107,7 +110,7 @@ const EmploymentContract = ({
               {...dynamicFormLabelProps('contractenddate', classNameStyle)}
             >
               Contract End Date:
-              <span className={showIsRequired(endDate)}>*</span>
+              {isRequired && <span className={showIsRequired(endDate)}>*</span>}
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker

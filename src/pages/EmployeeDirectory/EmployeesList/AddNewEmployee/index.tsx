@@ -422,6 +422,7 @@ const AddNewEmployee = (): JSX.Element => {
                 middleNameValue={addEmployee.middleName || ''}
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedGenderList}
                 setValue={onHandleGender}
@@ -430,6 +431,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Gender"
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={countryList}
                 setValue={onHandleCountryType}
@@ -453,6 +455,7 @@ const AddNewEmployee = (): JSX.Element => {
                 experienceValue={addEmployee.experience}
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedDepartmentList}
                 setValue={onHandleDepartment}
@@ -461,6 +464,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Department"
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedTechnologyList}
                 setValue={onHandleTechnology}
@@ -469,6 +473,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select"
               />
               <Designation
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedDesignationList}
                 setValue={onHandleDesignation}
@@ -478,6 +483,7 @@ const AddNewEmployee = (): JSX.Element => {
                 isAddDisable={false}
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedUserRoles}
                 setValue={onHandleUserRole}
@@ -486,6 +492,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Role"
               />
               <ReportingManager
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 reportManagersList={reportingManagersList}
                 onSelectReportManager={onHandleReportManager}
@@ -493,6 +500,7 @@ const AddNewEmployee = (): JSX.Element => {
                 reportValue={addEmployee.manager.fullName}
               />
               <ProjectManager
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 managersList={reportingManagersList}
                 onSelectManager={onHandleProjectManager}
@@ -500,6 +508,7 @@ const AddNewEmployee = (): JSX.Element => {
                 projectValue={addEmployee.projectManager.fullName}
               />
               <HRAssociate
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 hrDataList={hrDataList}
                 onSelectHRAssociate={onHandleHRAssociate}
@@ -507,6 +516,7 @@ const AddNewEmployee = (): JSX.Element => {
                 hrValue={addEmployee.hrAssociate.fullName}
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedEmploymentList}
                 setValue={onHandleEmployeeType}
@@ -515,6 +525,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Employment Type"
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedJobTypes}
                 setValue={onHandleJobType}
@@ -523,6 +534,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Job Type"
               />
               <Shift
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={employeeShifts}
                 setValue={onHandleShift}
@@ -532,6 +544,7 @@ const AddNewEmployee = (): JSX.Element => {
                 isAddDisable={false}
               />
               <EmploymentContract
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 onStartDateChangeHandler={onHandleStartDate}
                 onEndDateChangeHandler={onHandleEndDate}
