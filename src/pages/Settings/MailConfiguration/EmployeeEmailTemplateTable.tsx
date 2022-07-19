@@ -153,9 +153,9 @@ const EmployeeEmailTemplateTable = ({
               setVisible={setIsModalVisible}
             >
               <>
-                <h5 className="model-text">
+                <h4 className="model-text">
                   {emailTemplateModel.emailTemplateName}
-                </h5>
+                </h4>
                 <div
                   dangerouslySetInnerHTML={{
                     __html: emailTemplateModel.emailTemplate,

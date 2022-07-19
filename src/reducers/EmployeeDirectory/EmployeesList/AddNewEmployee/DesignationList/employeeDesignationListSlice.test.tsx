@@ -12,6 +12,8 @@ describe('Employee Designation Slice Test', () => {
       isLoading: ApiLoadingState.idle,
       error: null,
       employeeDesignations: [],
+      currentPage: 1,
+      pageSize: 20,
     })
   })
 })

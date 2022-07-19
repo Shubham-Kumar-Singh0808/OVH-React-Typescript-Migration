@@ -36,5 +36,8 @@ describe('List Options Component Testing', () => {
 
     expect(activeRadio.checked).toEqual(false)
     expect(inactiveRadio.checked).toEqual(true)
+
+    const exportBtn = screen.getByTestId('employee-export-btn')
+    userEvent.click(exportBtn)
   })
 })

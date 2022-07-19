@@ -10,7 +10,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import CIcon from '@coreui/icons-react'
 import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
@@ -33,6 +33,12 @@ const EmployeeDesignationListTable = ({
   const isLoading = useTypedSelector(
     reduxServices.employeeDesignation.selectors.isLoading,
   )
+  const pageFromState = useTypedSelector(
+    reduxServices.employeeDesignation.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.employeeDesignation.selectors.pageSizeFromState,
+  )
   const dispatch = useAppDispatch()
   const {
     paginationRange,
@@ -40,15 +46,15 @@ const EmployeeDesignationListTable = ({
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(employeeDesignations.length, 20)
+  } = usePagination(
+    employeeDesignations.length,
+    pageSizeFromState,
+    pageFromState,
+  )
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteDesignationName, setDeleteDesignationName] = useState('')
   const [deleteDesignationId, setDeleteDesignationId] = useState(0)
-
-  useEffect(() => {
-    setPageSize(20)
-  }, [employeeDesignations, setPageSize, setCurrentPage])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -121,7 +127,7 @@ const EmployeeDesignationListTable = ({
     [employeeDesignations, currentPage, pageSize],
   )
 
-  const mappedEmployeeDesignations = selectedDepartmentId ? (
+  const getAllDesignations = selectedDepartmentId ? (
     <CTableBody>
       {currentPageItems?.map((designation, index) => (
         <CTableRow key={index}>
@@ -132,6 +138,7 @@ const EmployeeDesignationListTable = ({
           <CTableDataCell>{designation.name}</CTableDataCell>
           <CTableDataCell>
             <CButton
+              data-testid={`btn-delete${index}`}
               color="danger"
               size="sm"
               onClick={() =>
@@ -169,7 +176,7 @@ const EmployeeDesignationListTable = ({
                 </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
-            {mappedEmployeeDesignations}
+            {getAllDesignations}
           </CTable>
           <CRow>
             <CCol xs={4}>
@@ -181,6 +188,7 @@ const EmployeeDesignationListTable = ({
               {employeeDesignations.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  selectedPageSize={pageSize}
                 />
               )}
             </CCol>
@@ -201,7 +209,7 @@ const EmployeeDesignationListTable = ({
       ) : (
         <CCol>
           <CRow>
-            <CSpinner />
+            <CSpinner data-testid="designation-list-loader" />
           </CRow>
         </CCol>
       )}
