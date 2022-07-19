@@ -52,6 +52,7 @@ describe('email Template List Table Testing', () => {
       expect(screen.getAllByRole('row')).toHaveLength(1)
     })
   })
+
   test('should render Email Template details table component without crashing', () => {
     render(
       <EmployeeEmailTemplateTable
@@ -82,6 +83,7 @@ describe('Email Template component with data', () => {
       },
     })
   })
+
   test('should render delete button', () => {
     expect(screen.getByTestId('btn-delete0')).toHaveClass(
       'btn btn-danger btn-ovh me-2',
@@ -107,6 +109,7 @@ describe('Email Template component with data', () => {
       expect(screen.getAllByRole('row')).toHaveLength(3)
     })
   })
+  
   it('should render template modal on clicking link from Actions', async () => {
     const deleteButtonElement = screen.getByTestId('mail-lin0')
     userEvent.click(deleteButtonElement)    
