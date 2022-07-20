@@ -19,9 +19,7 @@ const Experience = ({
           )}
         >
           Experience:
-          <span className={showIsRequired(experienceValue >= 0 ? 'show' : '')}>
-            *
-          </span>
+          <span className={showIsRequired(String(experienceValue))}>*</span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
@@ -31,7 +29,6 @@ const Experience = ({
             name="experience"
             placeholder="Experience"
             data-testId="experienceForm"
-            min="0"
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
               onExperienceHandler(Number(e.target.value))
             }

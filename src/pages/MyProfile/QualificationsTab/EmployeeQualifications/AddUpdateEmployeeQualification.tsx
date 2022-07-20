@@ -212,7 +212,8 @@ const AddUpdateEmployeeQualification = ({
                   employeeRole === 'HR' ||
                   employeeRole === 'HR Manager') && (
                   <CButton
-                    color="info btn-ovh me-1"
+                    color="info"
+                    className="btn-ovh me-1 text-white"
                     onClick={
                       (addButtonHandler = () =>
                         setToggle('addQualificationDetailListSection'))
@@ -221,7 +222,11 @@ const AddUpdateEmployeeQualification = ({
                     <i className="fa fa-plus me-1"></i>Add
                   </CButton>
                 )}
-                <CButton color="info btn-ovh me-1" onClick={backButtonHandler}>
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1 text-white"
+                  onClick={backButtonHandler}
+                >
                   <i className="fa fa-arrow-left  me-1"></i>Back
                 </CButton>
               </CCol>

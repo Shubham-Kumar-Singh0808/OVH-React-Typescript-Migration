@@ -89,6 +89,7 @@ const ReportOptions = ({
             value="option1"
             id="monthCurrent"
             label="Current Month"
+            data-testid="select-month-current"
             inline
             defaultChecked={selectedDate === currentMonthDate}
             onChange={handleSelectMonthRadio}
@@ -99,6 +100,7 @@ const ReportOptions = ({
             value="option2"
             id="monthPrevious"
             label="Previous Month"
+            data-testid="select-month-previous"
             inline
             defaultChecked={selectedDate === previousMonthDate}
             onChange={handleSelectMonthRadio}
@@ -109,6 +111,7 @@ const ReportOptions = ({
             value="option3"
             id="monthOther"
             label="Other"
+            data-testid="select-month-other"
             inline
             defaultChecked={
               selectedDate !== currentMonthDate &&
@@ -128,6 +131,7 @@ const ReportOptions = ({
             defaultChecked={selectedView === 'All'}
             onChange={handleSelectView}
             className="pull-right"
+            data-testid="select-view-all"
           />
           <CFormCheck
             type="radio"
@@ -139,6 +143,7 @@ const ReportOptions = ({
             defaultChecked={selectedView === 'Me'}
             onChange={handleSelectView}
             className="pull-right"
+            data-testid="select-view-me"
           />
         </CCol>
       </CRow>
@@ -172,6 +177,7 @@ const ReportOptions = ({
               showFourColumnMonthYearPicker
               placeholderText="mm/yyyy"
               todayButton="Today"
+              data-testid="date-picker-input"
             />
           </CCol>
           <CCol>
@@ -209,6 +215,7 @@ const ReportOptions = ({
                 <CFormInput
                   placeholder="Multiple Search"
                   aria-label="Multiple Search"
+                  data-testid="multi-search-input"
                   className="time-in-office-search-field"
                   aria-describedby="button-addon2"
                   value={searchInput}
