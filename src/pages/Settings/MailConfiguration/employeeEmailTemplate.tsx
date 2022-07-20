@@ -16,7 +16,7 @@ import { EmployeeMailTemplate } from '../../../types/Settings/MailConfiguration/
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
 import { downloadFile } from '../../../utils/helper'
 
-const employeeEmailTemplate = (): JSX.Element => {
+const EmployeeEmailTemplate = (): JSX.Element => {
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -170,4 +170,4 @@ const employeeEmailTemplate = (): JSX.Element => {
     </>
   )
 }
-export default employeeEmailTemplate
+export default EmployeeEmailTemplate

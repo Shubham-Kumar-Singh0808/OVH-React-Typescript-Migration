@@ -63,6 +63,7 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+
 const MailConfiguration = React.lazy(
   () => import('./pages/Settings/MailConfiguration/EmailConfigTemplate'),
 )
