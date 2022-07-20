@@ -1,16 +1,25 @@
-.text-dark-blue{
-    color: $blue;
+.text-dark-blue {
+  color: $blue;
 }
 
 .ovh-multiselect .chip,
-.ovh-multiselect .singleChip, .highlightOption {
+.ovh-multiselect .singleChip,
+.highlightOption {
   white-space: break-spaces;
   width: 100%;
   justify-content: space-between;
-  background-color: $primary-75  !important;
+  background-color: $primary-75 !important;
 }
-.multiSelectContainer li{
-  &:hover{
+.multiSelectContainer li {
+  &:hover {
     background-color: $primary-75 !important;
+  }
+}
+.descriptionField {
+  table tr {
+    border: 1px solid;
+  }
+  table td {
+    border: 1px solid;
   }
 }

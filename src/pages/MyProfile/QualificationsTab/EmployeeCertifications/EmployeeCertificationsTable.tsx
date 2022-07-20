@@ -1,7 +1,4 @@
-/* eslint-disable consistent-return */
-// Todo: remove eslint and fix error
 import {
-  CButton,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -11,6 +8,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import parse from 'html-react-parser'
+import TableActions from './TableActions'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import OModal from '../../../../components/ReusableComponent/OModal'
@@ -81,6 +79,8 @@ const EmployeeCertificationsTable = ({
         .sort((sortNode1, sortNode2) =>
           sortNode1.name.localeCompare(sortNode2.name),
         )
+    } else {
+      return []
     }
   }, [employeeCertificates])
 
@@ -160,12 +160,18 @@ const EmployeeCertificationsTable = ({
               <CTableDataCell scope="row">
                 {certificateItem.percent ? certificateItem.percent : 'N/A'}
               </CTableDataCell>
-              <CTableDataCell scope="row">
+              <CTableDataCell scope="row" className="descriptionField">
                 {certificateItem.description
                   ? parse(certificateItem.description)
                   : 'N/A'}
               </CTableDataCell>
-              {!isViewingAnotherEmployee ? (
+              <TableActions
+                certificateItemId={certificateItem.id}
+                isViewingAnotherEmployee={isViewingAnotherEmployee}
+                editCertificateButtonHandler={editCertificateButtonHandler}
+                handleShowDeleteModal={handleShowDeleteModal}
+              />
+              {/* {!isViewingAnotherEmployee ? (
                 <CTableDataCell scope="row">
                   <CButton
                     color="info"
@@ -188,7 +194,7 @@ const EmployeeCertificationsTable = ({
                 </CTableDataCell>
               ) : (
                 <></>
-              )}
+              )} */}
             </CTableRow>
           ))}
         </CTableBody>

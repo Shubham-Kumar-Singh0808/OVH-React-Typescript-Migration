@@ -23,6 +23,23 @@ export type EmployeeCertification = {
   skill?: null
 }
 
+export type MockEmployeeCertification = {
+  id?: number | string
+  technologyId?: string
+  technologyName?: string
+  employeeId?: number | string
+  certificateType: string
+  technology: string
+  code: string
+  completedDate?: string
+  expiryDate?: string
+  percent: number | string
+  description?: string | null
+  name: string
+  skill?: null
+  [key: string]: unknown
+}
+
 export type EditEmployeeCertificate = {
   id: number
   certificateType: string
@@ -59,4 +76,11 @@ export type CertificationSliceState = {
   editCertificateDetails: EditEmployeeCertificate
   isLoading: LoadingState
   error: ValidationError
+}
+
+export type TableActionsType = {
+  certificateItemId: string | number | undefined
+  isViewingAnotherEmployee: boolean
+  editCertificateButtonHandler: (id: number) => void
+  handleShowDeleteModal: (id: number) => void
 }
