@@ -34,9 +34,12 @@ const ProjectManager = ({
     const projectManager = {
       id: managerName?.id,
       fullName: managerName?.fullName,
+      lastName: managerName?.lastName,
+      firstName: managerName?.firstName,
     } as GetProjectManager
     onSelectManager(projectManager)
   }
+
   return (
     <>
       <CRow className="mb-3">

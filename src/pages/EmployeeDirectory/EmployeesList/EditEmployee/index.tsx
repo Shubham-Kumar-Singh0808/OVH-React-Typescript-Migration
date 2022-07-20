@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
-import { CRow, CCol, CButton, CFormLabel, CSpinner } from '@coreui/react-pro'
+import { CRow, CCol, CButton, CFormLabel } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -27,7 +27,8 @@ import {
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { EditEmployeeTypes } from '../../../../types/EmployeeDirectory/EmployeesList/EditEmployee'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import OToast from '../../../../components/ReusableComponent/OToast'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 
 const EditEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -41,7 +42,6 @@ const EditEmployee = (): JSX.Element => {
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
-  const [isViewBtnEnabled, setViewBtnEnabled] = useState<boolean>(false)
 
   const initResetFields = {
     hrAssociate: false,
@@ -55,10 +55,11 @@ const EditEmployee = (): JSX.Element => {
 
   const initEmployee = {
     contractEndDate: null,
-    contractExists: 'false',
+    contractExists: false,
     contractStartDate: null,
     country: '',
     departmentName: '',
+    statusName: '',
     designation: '',
     employmentTypeName: '',
     hrAssociate: hrAssociateValue,
@@ -106,11 +107,14 @@ const EditEmployee = (): JSX.Element => {
   const onHandleEndDate = (value: Date) => {
     setEditEmployee({ ...editEmployee, contractEndDate: value })
   }
-  const onHandleContractExist = (value: string) => {
+  const onHandleContractExist = (value: boolean) => {
     setEditEmployee({ ...editEmployee, contractExists: value })
   }
   const onHandleWorkfrom = (value: string) => {
     setEditEmployee({ ...editEmployee, workStatus: value })
+  }
+  const onHandleEmployeeStatus = (value: string) => {
+    setEditEmployee({ ...editEmployee, statusName: value })
   }
 
   const onHandleReportManager = (value: GetReportManager) => {
@@ -120,6 +124,8 @@ const EditEmployee = (): JSX.Element => {
       manager: {
         id: value.id,
         fullName: value.fullName,
+        firstName: value.firstName,
+        lastName: value.lastName,
       },
     })
   }
@@ -130,6 +136,8 @@ const EditEmployee = (): JSX.Element => {
       projectManager: {
         id: value.id,
         fullName: value.fullName,
+        firstName: value.firstName,
+        lastName: value.lastName,
       },
     })
   }
@@ -140,6 +148,8 @@ const EditEmployee = (): JSX.Element => {
       hrAssociate: {
         id: value.id,
         fullName: value.fullName,
+        firstName: value.firstName,
+        lastName: value.lastName,
       },
     })
   }
@@ -187,15 +197,16 @@ const EditEmployee = (): JSX.Element => {
   useEffect(() => {
     if (selectedEmployeeData != null) {
       setEditEmployee({
-        contractEndDate: null,
-        contractExists: 'false',
-        contractStartDate: null,
+        contractEndDate: selectedEmployeeData.contractEndDate,
+        contractExists: selectedEmployeeData.contractExists,
+        contractStartDate: selectedEmployeeData.contractStartDate,
         country: selectedEmployeeData.country,
         departmentName: selectedEmployeeData.departmentName,
         designation: selectedEmployeeData.designation,
         employmentTypeName: selectedEmployeeData.employmentTypeName,
         hrAssociate: selectedEmployeeData.hrAssociate,
         jobTypeName: selectedEmployeeData.jobTypeName,
+        statusName: selectedEmployeeData.statusName,
         manager: selectedEmployeeData.manager,
         projectManager: selectedEmployeeData.projectManager,
         role: selectedEmployeeData.role,
@@ -207,41 +218,6 @@ const EditEmployee = (): JSX.Element => {
       })
     }
   }, [selectedEmployeeData])
-
-  useEffect(() => {
-    if (
-      editEmployee.country !== '' &&
-      editEmployee.dateOfJoining != null &&
-      editEmployee.departmentName !== '' &&
-      editEmployee.designation !== '' &&
-      editEmployee.dob !== null &&
-      editEmployee.employmentTypeName !== '' &&
-      editEmployee.firstName !== '' &&
-      editEmployee.gender !== '' &&
-      editEmployee.lastName !== '' &&
-      editEmployee.middleName !== '' &&
-      editEmployee.hrAssociate.fullName != null &&
-      editEmployee.jobTypeName !== '' &&
-      editEmployee.manager.fullName != null &&
-      editEmployee.projectManager.fullName != null &&
-      editEmployee.role !== '' &&
-      editEmployee.technology !== '' &&
-      editEmployee.timeSlotDTO.name != null &&
-      editEmployee.workStatus !== ''
-    ) {
-      const hasContract =
-        editEmployee.contractStartDate !== null &&
-        editEmployee.contractEndDate !== null
-
-      if (editEmployee.contractExists === 'true') {
-        setViewBtnEnabled(hasContract)
-      } else {
-        setViewBtnEnabled(true)
-      }
-    } else {
-      setViewBtnEnabled(false)
-    }
-  }, [editEmployee])
 
   const countryList = useTypedSelector(
     reduxServices.newEmployee.countryService.selectors.countriesList,
@@ -309,67 +285,12 @@ const EditEmployee = (): JSX.Element => {
   ]
   // End - compose data
 
-  const successToastMessage = (
-    <OToast
-      toastMessage="Certificate type added successfully"
-      toastColor="success"
-    />
-  )
-
-  const alreadyExistToastMessage = (
-    <OToast
-      toastMessage="This CertificateType is already exists"
-      toastColor="danger"
-    />
-  )
   // POST method
   const handleEditEmployee = async () => {
-    // console.log('editEmployee', editEmployee)
-
-    const testPayload = { ...selectedEmployeeData, ...editEmployee }
-    // const testPayload = {
-    //   contractEndDate: null,
-    //   contractExists: 'false',
-    //   contractStartDate: null,
-    //   country: 'INDEA',
-    //   departmentName: '',
-    //   designation: '',
-    //   employmentTypeName: '',
-    //   hrAssociate: hrAssociateValue,
-    //   jobTypeName: '',
-    //   manager: managerValue,
-    //   projectManager: managerValue,
-    //   role: '',
-    //   technology: '',
-    //   timeSlotDTO: shiftValue,
-    //   workStatus: '',
-    // } as EditEmployeeTypes
-
-    // contractEndDate: Date | null
-    // contractExists: string
-    // contractStartDate: Date | null
-    // country: string
-    // dateOfJoining?: Date | null
-    // departmentName: string
-    // designation: string
-    // dob?: Date | null
-    // employmentTypeName: string
-    // experience?: number
-    // middleName?: string
-    // firstName?: string
-    // gender?: string
-    // hrAssociate: GetHrData
-    // jobTypeName: string
-    // lastName?: string
-    // manager: GetAllReportingManagers
-    // projectManager: GetAllReportingManagers
-    // role: string
-    // technology: string
-    // timeSlotDTO: EmployeeShiftDetails
-    // workStatus: string
+    const payload = { ...selectedEmployeeData, ...editEmployee }
 
     const newEmployeeResponse = await dispatch(
-      reduxServices.employee.updateEmployeeDetails(testPayload),
+      reduxServices.employee.updateEmployeeDetails(payload),
     )
 
     if (
@@ -377,21 +298,13 @@ const EditEmployee = (): JSX.Element => {
         newEmployeeResponse,
       )
     ) {
-      await dispatch(reduxServices.app.actions.addToast(successToastMessage))
-      // dispatch(reduxServices.app.actions.addToast(toastElement))
-
       history.push('/employeeList')
-      console.log('isLoading', isLoading, selectedEmployeeData)
-    } else {
-      await dispatch(
-        reduxServices.app.actions.addToast(alreadyExistToastMessage),
-      )
     }
   }
 
   return (
     <OCard
-      className="mb-4"
+      className="mb-4 myprofile-wrapper"
       title="Edit Employee"
       CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
@@ -416,10 +329,23 @@ const EditEmployee = (): JSX.Element => {
             >
               Employee Name:
             </CFormLabel>
-            <CCol
-              sm={3}
-            >{`${editEmployee.firstName} ${editEmployee.lastName}`}</CCol>
+            <CCol sm={3}>
+              <CFormLabel className="col-sm-3 col-form-label">
+                <h5
+                  style={{ width: '257px' }}
+                >{`${editEmployee.firstName} ${editEmployee.lastName}`}</h5>
+              </CFormLabel>
+            </CCol>
           </CRow>
+          <OSelectList
+            isRequired={false}
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={countryList}
+            setValue={onHandleCountryType}
+            value={editEmployee.country}
+            name="Country"
+            label="Select Country"
+          />
           <OSelectList
             isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
@@ -471,7 +397,7 @@ const EditEmployee = (): JSX.Element => {
             managersList={reportingManagersList}
             onSelectManager={onHandleProjectManager}
             shouldReset={resetFields.projectManager}
-            projectValue={`${editEmployee.manager?.firstName} ${editEmployee.manager?.lastName}`}
+            projectValue={`${editEmployee.projectManager?.firstName} ${editEmployee.projectManager?.lastName}`}
           />
           <HRAssociate
             isRequired={false}
@@ -479,7 +405,7 @@ const EditEmployee = (): JSX.Element => {
             hrDataList={hrDataList}
             onSelectHRAssociate={onHandleHRAssociate}
             shouldReset={resetFields.hrAssociate}
-            hrValue={`${editEmployee.hrAssociate?.firstName} ${editEmployee.hrAssociate?.lastName}`}
+            hrValue={editEmployee.hrAssociate?.fullName}
           />
           <OSelectList
             isRequired={false}
@@ -499,21 +425,12 @@ const EditEmployee = (): JSX.Element => {
             name="JobType"
             label="Select Job Type"
           />
-          <OSelectList
-            isRequired={false}
-            dynamicFormLabelProps={dynamicFormLabelProps}
-            list={countryList}
-            setValue={onHandleCountryType}
-            value={editEmployee.country}
-            name="Country"
-            label="Select Country"
-          />
           <Shift
             isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={employeeShifts}
             setValue={onHandleShift}
-            value={editEmployee.timeSlotDTO.name}
+            value={editEmployee.timeSlotDTO?.name}
             setToggleShift={() => setShiftToggle(!shiftToggle)}
             toggleValue={shiftToggle}
             isAddDisable={true}
@@ -522,8 +439,8 @@ const EditEmployee = (): JSX.Element => {
             isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={employeeStatus}
-            setValue={onHandleCountryType}
-            value={editEmployee.country}
+            setValue={onHandleEmployeeStatus}
+            value={editEmployee.statusName}
             name="Employee Status"
             label="Select Employee Status"
           />
@@ -547,7 +464,6 @@ const EditEmployee = (): JSX.Element => {
               <CButton
                 className="btn-ovh me-1"
                 color="success"
-                // disabled={!isViewBtnEnabled}
                 data-testid="edit-employee"
                 onClick={handleEditEmployee}
               >
@@ -557,11 +473,7 @@ const EditEmployee = (): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <CCol>
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.COMPONENT} />
       )}
     </OCard>
   )

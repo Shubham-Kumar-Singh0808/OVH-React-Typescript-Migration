@@ -9,10 +9,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
-const EmployeeList = ({
-  createaccess,
-  updateaccess,
-}: UserAccessToFeatures): JSX.Element => {
+const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   const dispatch = useAppDispatch()
   const listSize = useTypedSelector(
     reduxServices.employeeList.selectors.listSize,
@@ -52,7 +49,7 @@ const EmployeeList = ({
       >
         {isLoading !== ApiLoadingState.loading ? (
           <>
-            <ListOptions createaccess={createaccess} />
+            <ListOptions />
             <EmployeeListTable
               paginationRange={paginationRange}
               setPageSize={setPageSize}

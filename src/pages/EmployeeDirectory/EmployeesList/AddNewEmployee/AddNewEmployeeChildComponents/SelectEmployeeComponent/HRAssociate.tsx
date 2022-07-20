@@ -24,6 +24,8 @@ const HRAssociate = ({
     const reportManager = {
       id: managerName?.id,
       fullName: managerName?.fullName,
+      firstName: managerName?.firstName,
+      lastName: managerName?.lastName,
     } as GetHRAssociate
     onSelectHRAssociate(reportManager)
   }

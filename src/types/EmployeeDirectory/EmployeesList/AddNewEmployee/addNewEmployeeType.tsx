@@ -4,7 +4,7 @@ import { LoadingState, ValidationError } from '../../../commonTypes'
 //AddNewEmployee Post API
 export type AddEmployee = {
   contractEndDate: Date | null
-  contractExists: string
+  contractExists: boolean
   contractStartDate: Date | null
   country: string
   dateOfJoining: Date | null
@@ -66,8 +66,8 @@ export type GetHrData = {
 export type GetAllReportingManagers = {
   id: number
   fullName: string
-  firstName?: string
-  lastName?: string
+  firstName: string
+  lastName: string
 }
 
 export type EmployeeShift = {
@@ -88,16 +88,22 @@ export type GetList = {
 export type GetReportManager = {
   id: number
   fullName: string
+  firstName: string
+  lastName: string
 }
 
 export type GetProjectManager = {
   id: number
   fullName: string
+  firstName: string
+  lastName: string
 }
 
 export type GetHRAssociate = {
   id: number
   fullName: string
+  firstName?: string
+  lastName?: string
 }
 
 //AddNewEmployee functions and Props types for child components
@@ -139,10 +145,10 @@ export interface DateChangeHandlerProp extends DynamicFormLabelProps {
 export interface StartEndDateChangeHandlerProp extends DynamicFormLabelProps {
   onStartDateChangeHandler: (start: Date) => void
   onEndDateChangeHandler: (end: Date) => void
-  onContractExistHandler: (isDisable: string) => void
+  onContractExistHandler: (isDisable: boolean) => void
   startDateValue: Date
   endDateValue: Date
-  isContractExist: string
+  isContractExist: boolean
   isRequired: boolean
 }
 

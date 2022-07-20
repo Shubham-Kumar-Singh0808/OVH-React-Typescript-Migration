@@ -23,16 +23,13 @@ const EmploymentContract = ({
   const [isActive, setIsActive] = useState(false)
 
   useEffect(() => {
-    setIsActive(
-      isContractExist == null ||
-        isContractExist === '' ||
-        isContractExist.toLowerCase() === 'true',
-    )
+    setIsActive(isContractExist)
   }, [isContractExist])
 
   const handleOnChange = (value: string) => {
-    onContractExistHandler(value)
-    setIsActive(value === 'Office')
+    const isExist = value === 'Office'
+    onContractExistHandler(isExist)
+    setIsActive(isExist)
   }
 
   const isDateCorrect = (startValue: Date, endValue: Date): boolean => {
@@ -76,7 +73,7 @@ const EmploymentContract = ({
           />
         </CCol>
       </CRow>
-      {isContractExist === 'true' ? (
+      {isContractExist ? (
         <>
           <CRow className="mb-3">
             <CFormLabel

@@ -55,7 +55,7 @@ const AddNewEmployee = (): JSX.Element => {
 
   const initEmployee = {
     contractEndDate: null,
-    contractExists: 'false',
+    contractExists: false,
     contractStartDate: null,
     country: '',
     dateOfJoining: null,
@@ -136,7 +136,7 @@ const AddNewEmployee = (): JSX.Element => {
   const onHandleUsername = (value: string) => {
     setAddEmployee({ ...addEmployee, userName: value })
   }
-  const onHandleContractExist = (value: string) => {
+  const onHandleContractExist = (value: boolean) => {
     setAddEmployee({ ...addEmployee, contractExists: value })
   }
   const onHandleWorkfrom = (value: string) => {
@@ -152,6 +152,8 @@ const AddNewEmployee = (): JSX.Element => {
       manager: {
         id: value.id,
         fullName: value.fullName,
+        firstName: value.firstName,
+        lastName: value.lastName,
       },
     })
   }
@@ -162,6 +164,8 @@ const AddNewEmployee = (): JSX.Element => {
       projectManager: {
         id: value.id,
         fullName: value.fullName,
+        firstName: value.firstName,
+        lastName: value.lastName,
       },
     })
   }
@@ -233,7 +237,7 @@ const AddNewEmployee = (): JSX.Element => {
         addEmployee.contractStartDate !== null &&
         addEmployee.contractEndDate !== null
 
-      if (addEmployee.contractExists === 'true') {
+      if (addEmployee.contractExists) {
         setViewBtnEnabled(hasContract)
       } else {
         setViewBtnEnabled(true)

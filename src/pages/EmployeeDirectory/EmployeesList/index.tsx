@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import EmployeeList from './EmployeeList'
 import { reduxServices } from '../../../reducers/reduxServices'

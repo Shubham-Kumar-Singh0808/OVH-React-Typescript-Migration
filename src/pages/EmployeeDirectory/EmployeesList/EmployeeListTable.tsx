@@ -18,22 +18,20 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
-const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
+const EmployeeListTable = ({
+  paginationRange,
+  pageSize,
+  setPageSize,
+  currentPage,
+  setCurrentPage,
+  updateaccess,
+}: EmployeeListTableProps): JSX.Element => {
   const employees = useTypedSelector(
     reduxServices.employeeList.selectors.employees,
   )
   const listSize = useTypedSelector(
     reduxServices.employeeList.selectors.listSize,
   )
-
-  const {
-    paginationRange,
-    pageSize,
-    setPageSize,
-    currentPage,
-    setCurrentPage,
-    updateaccess,
-  } = props
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,

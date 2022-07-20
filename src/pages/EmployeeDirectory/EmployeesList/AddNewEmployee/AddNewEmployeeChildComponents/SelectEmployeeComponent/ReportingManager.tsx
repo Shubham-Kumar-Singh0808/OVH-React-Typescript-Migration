@@ -34,6 +34,8 @@ const ReportingManager = ({
     const reportManager = {
       id: managerName?.id,
       fullName: managerName?.fullName,
+      lastName: managerName?.lastName,
+      firstName: managerName?.firstName,
     } as GetReportManager
     onSelectReportManager(reportManager)
   }

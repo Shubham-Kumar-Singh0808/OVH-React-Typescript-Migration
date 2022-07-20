@@ -12,7 +12,7 @@ import { EmployeeShiftDetails } from '../AddNewEmployee/ShiftConfiguration/shift
 
 export type EditEmployeeTypes = {
   contractEndDate: Date | null
-  contractExists: string
+  contractExists: boolean
   contractStartDate: Date | null
   country: string
   dateOfJoining?: Date | null
@@ -21,6 +21,7 @@ export type EditEmployeeTypes = {
   dob?: Date | null
   employmentTypeName: string
   experience?: number
+  statusName: string
   middleName?: string
   firstName?: string
   gender?: string
