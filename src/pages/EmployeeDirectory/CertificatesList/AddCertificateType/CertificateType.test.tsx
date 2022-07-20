@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable import/named */
-// Todd: remove eslint and fix error
-// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
+// eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'

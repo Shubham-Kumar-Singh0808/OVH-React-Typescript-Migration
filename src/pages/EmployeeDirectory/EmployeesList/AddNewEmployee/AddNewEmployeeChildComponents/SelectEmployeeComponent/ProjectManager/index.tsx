@@ -40,6 +40,7 @@ const ProjectManager = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
+          data-testid="pmLabel"
           {...dynamicFormLabelProps(
             'projectmanager',
             'col-sm-3 col-form-label text-end',
@@ -59,6 +60,7 @@ const ProjectManager = ({
             }}
             getItemValue={(item) => item.fullName}
             items={managersList}
+            data-testid="pmautocomplete"
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
               <div
@@ -73,6 +75,7 @@ const ProjectManager = ({
             )}
             renderItem={(item, isHighlighted) => (
               <div
+                data-testid="option"
                 className={
                   isHighlighted
                     ? 'autocomplete-dropdown-item active'

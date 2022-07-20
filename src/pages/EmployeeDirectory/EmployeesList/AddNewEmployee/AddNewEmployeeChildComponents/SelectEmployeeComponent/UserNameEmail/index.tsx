@@ -26,7 +26,7 @@ const UserNameEmail = ({
             'col-sm-3 col-form-label text-end',
           )}
         >
-          Username
+          Username:
           <span className={showIsRequired(username)}>*</span>
         </CFormLabel>
         <CCol sm={3}>
@@ -50,12 +50,13 @@ const UserNameEmail = ({
             'col-sm-3 col-form-label text-end',
           )}
         >
-          Email
+          Email:
           <span className={showIsRequired(username)}>*</span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
             id="email"
+            data-testid="user-email-input"
             size="sm"
             type="text"
             name="email"
@@ -63,7 +64,7 @@ const UserNameEmail = ({
             value={username}
             disabled
           />
-          <strong>@aibridgeml.com</strong>
+          <strong>@raybiztech.com</strong>
         </CCol>
       </CRow>
     </>

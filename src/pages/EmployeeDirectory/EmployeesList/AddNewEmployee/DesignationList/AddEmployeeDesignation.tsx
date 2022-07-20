@@ -125,7 +125,7 @@ const AddEmployeeDesignation = ({
   return (
     <>
       <CRow>
-        <CCol sm={6} md={1} className="text-end">
+        <CCol sm={6} md={1} className="designation-mandatory text-end">
           <CFormLabel
             {...{
               ...dynamicFormLabelProps('department', 'col-form-label'),
