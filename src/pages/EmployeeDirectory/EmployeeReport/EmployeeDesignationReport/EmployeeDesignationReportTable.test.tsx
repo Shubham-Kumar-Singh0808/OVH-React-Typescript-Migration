@@ -1,13 +1,11 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import '@testing-library/jest-dom'
-// eslint-disable-next-line import/named
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import EmployeeDesignationReportTable from './EmployeeDesignationReportTable'
 import { render, screen, waitFor } from '../../../../test/testUtils'
-// import stateStore from '../../../../stateStore'
 import { EmployeeDesignation } from '../../../../types/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportTypes'
 import {
   mockDesignation,
