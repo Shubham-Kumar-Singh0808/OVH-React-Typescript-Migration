@@ -261,8 +261,10 @@ export interface HiveActivityReportApi extends ApiBase {
   exportHiveReport: string
 }
 export interface EmployeeMailConfigurationApi extends ApiBase {
-  getEmailTemplates: string
+  getMailTemplates: string
   getMailTemplateTypes: string
+  exportMailTemplatesList: string
+  deleteMailTemplate: string
 }
 
 export interface AddNewTemplateApi extends ApiBase {
