@@ -1,4 +1,8 @@
-import { MockEmployeeHandbook } from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
+import {
+  EmployeeCountry,
+  MockEmployeeHandbook,
+  TotalHandbookList,
+} from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
   {

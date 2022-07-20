@@ -1,4 +1,4 @@
-import { LoadingState } from '../../commonTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type EmployeeHandbookTableProps = {
   paginationRange: number[]
@@ -8,18 +8,33 @@ export type EmployeeHandbookTableProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
 
-export type EmployeeHandbookCountry = {
+export type EmployeeHandbookPageProps = {
+  headerTitle: string
+  confirmButtonText: string
+  backButtonHandler: () => void
+}
+
+export type EmployeeCountry = {
   id: number
   name: string
 }
 
+export type AddNewHandbookPage = {
+  description: string
+  displayOrder: string
+  pageName: string
+  title: string
+  list: number[]
+  type: string
+}
+
 export type EmployeeHandbook = {
-  id: number
+  id?: number
   displayOrder: number
   title: string
   description: string
   pageName: string
-  handCountry: EmployeeHandbookCountry[]
+  handCountry: EmployeeCountry[]
   departmentName?: string
   departmentId?: number
   type?: string
@@ -29,13 +44,29 @@ export type EmployeeHandbook = {
   empCountry?: string
 }
 
+export type TotalHandbookList = {
+  id: number
+  description: string
+  displayOrder: number
+  empCountry: string
+  handCountry: EmployeeCountry[]
+  country: null
+  departmentId: null
+  departmentName: null
+  pageName: string
+  sectionId: null
+  sectionName: null
+  title: string
+  type: string
+}
+
 export type MockEmployeeHandbook = {
   id: number
   displayOrder: number
   title: string
   description: string
   pageName: string
-  handCountry: EmployeeHandbookCountry[]
+  handCountry: EmployeeCountry[]
   departmentName?: string
   departmentId?: number
   type?: string
@@ -58,6 +89,9 @@ export type EmployeeHandbookListResponse = {
 
 export type EmployeeHandbookSettingSliceState = {
   employeeHandbooks: EmployeeHandbook[]
+  employeeCountries: EmployeeCountry[]
+  totalHandbookList: TotalHandbookList[]
   listSize: number
   isLoading: LoadingState
+  error: ValidationError
 }
