@@ -3,6 +3,10 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import EmployeeApplyLeave from './EmployeeApplyLeave'
 import { render, screen, waitFor } from '../../test/testUtils'
+import {
+  mockLeaveApply,
+  mockLeaveType,
+} from '../../test/data/employeeLeaveApplyData'
 
 describe('Leave Apply Component Testing', () => {
   describe('without data', () => {
@@ -12,18 +16,21 @@ describe('Leave Apply Component Testing', () => {
     test('should be able to render applyLeave without crashing', () => {
       screen.debug()
     })
+
     test('should render "Apply For Leave" title', () => {
-      const mailTemplateTitle = screen.getByRole('heading', {
+      const applyLeaveTitle = screen.getByRole('heading', {
         name: 'Apply For Leave',
       })
-      expect(mailTemplateTitle).toBeTruthy()
+      expect(applyLeaveTitle).toBeTruthy()
     })
   })
+
   test('should render Template rich text editor', () => {
     const Comments = screen.findByTestId('ckEditor-component')
     expect(Comments).toBeTruthy()
   })
-  it('should render Apply button as enabled and Clear Button as disabled', () => {
+
+  it('should render intially Apply button as disabled and Clear Button as enabled', () => {
     render(<EmployeeApplyLeave />)
     expect(screen.getByTestId('btn-save')).toBeDisabled()
     expect(screen.getByTestId('btn-clear')).toBeEnabled()
@@ -35,6 +42,7 @@ describe('Leave Apply Component Testing', () => {
       userEvent.click(screen.getByRole('button', { name: /clear/i }))
     })
   })
+
   test('renders the <CKEditor> component ', () => {
     render(<EmployeeApplyLeave />)
     const htmlElement = document.querySelector(
@@ -45,23 +53,71 @@ describe('Leave Apply Component Testing', () => {
     expect(htmlElement).toBeInTheDocument()
     expect(nonExistElement).not.toBeInTheDocument()
   })
+
   test('should enabled Apply button when input is not empty', () => {
     render(<EmployeeApplyLeave />)
     expect(screen.getByTestId('btn-clear')).not.toBeDisabled()
     expect(screen.getByTestId('btn-save')).toBeDisabled()
   })
+
   it('should display the correct number of options', () => {
     render(<EmployeeApplyLeave />)
     expect(screen.getAllByRole('option').length).toBe(1)
   })
+
   test('should correctly set default option', () => {
     render(<EmployeeApplyLeave />)
     expect(
       screen.getByRole('option', { name: 'Select a Leave' }).selected,
     ).toBe(true)
   })
-  test('should render date picker', () => {
+
+  test('should render to  date picker', () => {
     const dateInput = screen.findByTestId('date-picker')
     expect(dateInput).toBeTruthy()
+  })
+})
+
+test('should render from date picker', () => {
+  const dateInput = screen.findByTestId('date-picker-to-date')
+  expect(dateInput).toBeTruthy()
+})
+
+const deviceLocale: string =
+  navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language
+describe('LeaveApply component with data', () => {
+  beforeEach(() => {
+    render(<EmployeeApplyLeave />, {
+      preloadedState: {
+        employeeLeaveApply: {
+          employeeLeaveApply: mockLeaveApply,
+        },
+      },
+    })
+  })
+  test('should be able to select date"', () => {
+    const dateInput = screen.getAllByPlaceholderText('Select date')
+    userEvent.type(
+      dateInput[0],
+      new Date('12/20/2021').toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }),
+    )
+  })
+  it('should fetch leave types dropdown data and email input field', () => {
+    render(<EmployeeApplyLeave />)
+    screen.debug()
+    mockLeaveType.forEach(async (type) => {
+      await waitFor(() => {
+        expect(screen.queryAllByText(type.name)).toBeDefined()
+      })
+      await waitFor(() => {
+        expect(screen.queryByText('Leave Type')).toBeDefined()
+      })
+    })
   })
 })

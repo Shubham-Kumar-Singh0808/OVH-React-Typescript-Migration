@@ -1,4 +1,7 @@
-import { EmployeeLeaveType } from '../../types/Leaves/employeeApplyLeaves'
+import {
+  EmployeeLeaveApply,
+  EmployeeLeaveType,
+} from '../../types/Leaves/employeeApplyLeaves'
 
 export const mockLeaveType: EmployeeLeaveType[] = [
   {
@@ -72,3 +75,12 @@ export const mockLeaveType: EmployeeLeaveType[] = [
     leaveType: 'LOP',
   },
 ]
+export const mockLeaveApply: EmployeeLeaveApply = {
+  employeeComments: 'tuy thy',
+  employeeId: 1985,
+  fromDate: '19/07/2022',
+  id: '',
+  leaveAppliedOn: '20/07/2022',
+  leaveCategoryName: 'Leave',
+  toDate: '21/07/2022',
+}
