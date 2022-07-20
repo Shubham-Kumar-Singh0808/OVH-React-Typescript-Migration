@@ -214,7 +214,7 @@ const ShiftListTable = ({
                   </CTableDataCell>
                   {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                     <CTableDataCell scope="row">
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center sh-edit-shift">
                         <div className="edit-time-control sh-left">
                           <CFormInput
                             id="startTimeHour"
@@ -250,7 +250,7 @@ const ShiftListTable = ({
                   )}
                   {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                     <CTableDataCell scope="row">
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center sh-edit-shift">
                         <div className="edit-time-control sh-left">
                           <CFormInput
                             id="endTimeHour"
@@ -285,7 +285,7 @@ const ShiftListTable = ({
 
                   {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                     <CTableDataCell scope="row">
-                      <div className="edit-time-control">
+                      <div className="edit-time-control sh-div-grace-time">
                         <CFormInput
                           id="graceTime"
                           data-testid={`sh-graceTime-input${index}`}
@@ -374,8 +374,8 @@ const ShiftListTable = ({
         confirmButtonAction={confirmDeleteShiftButtonHandler}
       >
         <p>
-          Are you sure you want to delete this
-          <strong>{` ${selectShiftName}`}</strong> Role ?
+          Do you really want to delete this
+          <strong>{` ${selectShiftName}`}</strong> shift ?
         </p>
       </OModal>
     </>

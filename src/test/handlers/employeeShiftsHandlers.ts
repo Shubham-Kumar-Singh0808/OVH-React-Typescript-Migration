@@ -14,7 +14,7 @@ export const employeeShiftsHandlers = [
     return res(ctx.status(200), ctx.json(mockEmployeeShifts))
   }),
   // create employee shift api mock
-  rest.get(shiftConfigurationApiConfig.addTimeSlot, (_req, res, ctx) => {
+  rest.post(shiftConfigurationApiConfig.addTimeSlot, (_req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,
@@ -23,7 +23,7 @@ export const employeeShiftsHandlers = [
     )
   }),
   // update employee shift api mock
-  rest.get(shiftConfigurationApiConfig.updateShiftDetail, (_req, res, ctx) =>
+  rest.put(shiftConfigurationApiConfig.updateShiftDetail, (_req, res, ctx) =>
     res(
       ctx.json({
         status: 200,
@@ -32,11 +32,11 @@ export const employeeShiftsHandlers = [
     ),
   ),
   // delete employee shift api mock
-  rest.get(shiftConfigurationApiConfig.deleteShiftDetail, (_req, res, ctx) =>
+  rest.delete(shiftConfigurationApiConfig.deleteShiftDetail, (_req, res, ctx) =>
     res(
       ctx.json({
         status: 200,
-        data: {},
+        data: null,
       }),
     ),
   ),
