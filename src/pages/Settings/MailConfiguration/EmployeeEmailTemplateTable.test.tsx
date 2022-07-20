@@ -66,56 +66,59 @@ describe('email Template List Table Testing', () => {
     )
     expect(screen.getByText('Title')).toBeInTheDocument()
   })
-describe('Email Template component with data', () => {
-  beforeEach(() => {
-    render(<EmployeeEmailTemplateTable
-      employeeTemplate={{
-        id: 70,
-        templateName: 'old',
-        template: 'tyhu',
-        templateTypeId: '5',
-      }}
-    />, {
-      preloadedState: {
-        employeeMailConfiguration: {
-          employeeGetEmailTemplate: mockEmailTemplate,
+  describe('Email Template component with data', () => {
+    beforeEach(() => {
+      render(
+        <EmployeeEmailTemplateTable
+          employeeTemplate={{
+            id: 70,
+            templateName: 'old',
+            template: 'tyhu',
+            templateTypeId: '5',
+          }}
+        />,
+        {
+          preloadedState: {
+            employeeMailConfiguration: {
+              employeeGetEmailTemplate: mockEmailTemplate,
+            },
+          },
         },
-      },
+      )
     })
-  })
 
-  test('should render delete button', () => {
-    expect(screen.getByTestId('btn-delete0')).toHaveClass(
-      'btn btn-danger btn-ovh me-2',
-    )
-  })
- 
-  it('should render Delete modal on clicking delete button from Actions', async () => {
-    const deleteButtonElement = screen.getByTestId('btn-delete1')
-    userEvent.click(deleteButtonElement)    
-    await waitFor(() => {
-      expect(screen.getByText('Delete Template')).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
+    test('should render delete button', () => {
+      expect(screen.getByTestId('btn-delete0')).toHaveClass(
+        'btn btn-danger btn-ovh me-2',
+      )
     })
-  })
- 
-  it('should close the modal on clicking No button from the popup', async () => {
-    const deleteButtonElement = screen.getByTestId('btn-delete0')
-    userEvent.click(deleteButtonElement)
-    const yesButtonElement = screen.getByRole('button', { name: 'Yes' })
-    userEvent.click(yesButtonElement)
-    await waitFor(() => {
-      expect(screen.getAllByRole('row')).toHaveLength(3)
-    })
-  })
-  
-  it('should render template modal on clicking link from Actions', async () => {
-    const deleteButtonElement = screen.getByTestId('mail-lin0')
-    userEvent.click(deleteButtonElement)    
-    await waitFor(() => {
-      expect(screen.getByText('Template model')).toBeInTheDocument()
+
+    it('should render Delete modal on clicking delete button from Actions', async () => {
+      const deleteButtonElement = screen.getByTestId('btn-delete1')
+      userEvent.click(deleteButtonElement)
+      await waitFor(() => {
+        expect(screen.getByText('Delete Template')).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
       })
+    })
+
+    it('should close the modal on clicking No button from the popup', async () => {
+      const deleteButtonElement = screen.getByTestId('btn-delete0')
+      userEvent.click(deleteButtonElement)
+      const yesButtonElement = screen.getByRole('button', { name: 'Yes' })
+      userEvent.click(yesButtonElement)
+      await waitFor(() => {
+        expect(screen.getAllByRole('row')).toHaveLength(3)
+      })
+    })
+
+    it('should render template modal on clicking link from Actions', async () => {
+      const deleteButtonElement = screen.getByTestId('mail-lin0')
+      userEvent.click(deleteButtonElement)
+      await waitFor(() => {
+        expect(screen.getByText('Template model')).toBeInTheDocument()
+      })
+    })
   })
-})
 })

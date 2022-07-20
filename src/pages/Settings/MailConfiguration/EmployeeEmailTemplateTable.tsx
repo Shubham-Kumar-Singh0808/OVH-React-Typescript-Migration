@@ -116,8 +116,8 @@ const EmployeeEmailTemplateTable = ({
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     <CLink
-                     data-testid={`mail-lin${index}`}                      
-                     className="cursor-pointer text-decoration-none text-primary"
+                      data-testid={`mail-lin${index}`}
+                      className="cursor-pointer text-decoration-none text-primary"
                       onClick={() =>
                         handleModal(
                           emailTemplate.templateName,
@@ -133,9 +133,9 @@ const EmployeeEmailTemplateTable = ({
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
                     <CButton
-                    data-testid={`btn-delete${index}`}
-                     color="danger btn-ovh me-2"                  
-                     onClick={() => handleShowDeleteModal(emailTemplate.id)}
+                      data-testid={`btn-delete${index}`}
+                      color="danger btn-ovh me-2"
+                      onClick={() => handleShowDeleteModal(emailTemplate.id)}
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
