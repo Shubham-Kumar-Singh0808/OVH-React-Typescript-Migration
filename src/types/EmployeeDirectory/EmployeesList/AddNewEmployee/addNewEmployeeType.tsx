@@ -195,7 +195,7 @@ export interface StatusProps extends DynamicFormLabelProps {
   list: GetList[]
   setStatusValue: (value: string) => void
   setStatusDateValue: (value: Date) => void
-  dateValue: Date
+  dateValue: Date | null
   value: string
   isRequired: boolean
 }

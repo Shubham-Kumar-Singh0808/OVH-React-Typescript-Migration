@@ -11,7 +11,6 @@ import {
   GetList,
   GetProjectManager,
   GetReportManager,
-  Label,
   ShouldResetFields,
 } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { listComposer } from '../../../../utils/helper'
@@ -179,11 +178,11 @@ const EditEmployee = (): JSX.Element => {
     if (
       editEmployee.designation !== '' &&
       editEmployee.role !== '' &&
-      editEmployee.manager.fullName != null &&
-      editEmployee.hrAssociate.fullName != null &&
+      editEmployee.manager != null &&
+      editEmployee.hrAssociate != null &&
       editEmployee.employmentTypeName !== '' &&
       editEmployee.jobTypeName !== '' &&
-      editEmployee.timeSlotDTO.name != null
+      editEmployee.timeSlotDTO != null
     ) {
       const hasContract =
         editEmployee.contractStartDate !== null &&
@@ -225,6 +224,7 @@ const EditEmployee = (): JSX.Element => {
   const selectedEmployeeData = useTypedSelector((state) =>
     reduxServices.employee.selectors.selectEmployeeData(state),
   )
+
   useEffect(() => {
     if (selectedEmployeeData != null) {
       setEditEmployee({

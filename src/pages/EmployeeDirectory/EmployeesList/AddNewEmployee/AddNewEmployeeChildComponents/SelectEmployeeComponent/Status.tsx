@@ -13,7 +13,7 @@ const Status = ({
   dateValue,
   isRequired,
 }: StatusProps): JSX.Element => {
-  const dateToString = dateValue == null ? '' : dateValue.toLocaleDateString()
+  const dateToString = dateValue == null ? '' : dateValue.toLocaleString()
 
   const onChangeHandler = (e: { target: { value: string } }) => {
     setStatusValue(e.target.value)
