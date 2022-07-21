@@ -19,7 +19,7 @@ describe('Add Employment Contract Component', () => {
           onContractExistHandler={jest.fn()}
           startDateValue={new Date()}
           endDateValue={new Date()}
-          isContractExist={true}
+          isContractExist={'true'}
           dynamicFormLabelProps={jest.fn()}
         />,
       )
@@ -96,7 +96,7 @@ describe('Add Employment Contract Component', () => {
           onContractExistHandler={jest.fn()}
           startDateValue={new Date()}
           endDateValue={new Date()}
-          isContractExist={false}
+          isContractExist={'false'}
           dynamicFormLabelProps={jest.fn()}
         />,
       )
