@@ -40,7 +40,6 @@ const EmployeeApplyLeave = (): JSX.Element => {
   }
 
   const onChangeDateToHandler = (date: Date) => {
-    console.log(date)
     const formatDate = moment(date).format(commonFormatDate)
     const name = 'toDate'
     setApplyLeave((prevState) => {
@@ -198,7 +197,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
           <DatePicker
             className="form-control"
             data-testid="date-picker"
-            placeholderText="Select date"
+            placeholderText="dd/mm/yy"
             name="fromDate"
             maxDate={new Date()}
             id="fromDate"
@@ -221,7 +220,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
           <DatePicker
             className="form-control"
             data-testid="date-picker-to-date"
-            placeholderText="Select to date"
+            placeholderText="dd/mm/yy"
             name="toDate"
             id="toDate"
             minDate={new Date()}
