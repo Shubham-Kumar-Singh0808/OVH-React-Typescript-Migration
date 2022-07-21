@@ -1,0 +1,30 @@
+import React from 'react'
+import '@testing-library/jest-dom'
+import TableActions from './TableActions'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
+
+const mockEditCertBtn = jest.fn()
+// const mockShowDeleteBtn = jest.fn()
+
+describe('Table Actions Component testing', () => {
+  test('should render actions without crashing', () => {
+    render(
+      <TableActions
+        certificateItemId={409}
+        isViewingAnotherEmployee={false}
+        editCertificateButtonHandler={mockEditCertBtn}
+        // handleShowDeleteModal={mockShowDeleteBtn}
+        setCertificateId={jest.fn()}
+        setIsDeleteModalVisible={jest.fn()}
+      />,
+    )
+
+    const editBtn = screen.getByTestId('edotCertBtn')
+    expect(editBtn).toBeTruthy()
+    fireEvent.click(editBtn)
+
+    const alerBtn = screen.getByTestId('showAlertBtn')
+    expect(alerBtn).toBeTruthy()
+    fireEvent.click(alerBtn)
+  })
+})

@@ -82,5 +82,7 @@ export type TableActionsType = {
   certificateItemId: string | number | undefined
   isViewingAnotherEmployee: boolean
   editCertificateButtonHandler: (id: number) => void
-  handleShowDeleteModal: (id: number) => void
+  // handleShowDeleteModal: (id: number) => void
+  setCertificateId: (id: number) => void
+  setIsDeleteModalVisible: (value: boolean) => void
 }

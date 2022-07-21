@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+// Todo: remove eslint and fix error
 import {
   CTable,
   CTableBody,
@@ -51,10 +53,7 @@ const EmployeeCertificationsTable = ({
       toastMessage="Certificate deleted successfully"
     />
   )
-  const handleShowDeleteModal = (certificationId: number) => {
-    setCertificateId(certificationId)
-    setIsDeleteModalVisible(true)
-  }
+
   const handleConfirmDeleteCertificate = async () => {
     setIsDeleteModalVisible(false)
     const deleteCertificateResultAction = await dispatch(
@@ -79,8 +78,6 @@ const EmployeeCertificationsTable = ({
         .sort((sortNode1, sortNode2) =>
           sortNode1.name.localeCompare(sortNode2.name),
         )
-    } else {
-      return []
     }
   }, [employeeCertificates])
 
@@ -169,32 +166,10 @@ const EmployeeCertificationsTable = ({
                 certificateItemId={certificateItem.id}
                 isViewingAnotherEmployee={isViewingAnotherEmployee}
                 editCertificateButtonHandler={editCertificateButtonHandler}
-                handleShowDeleteModal={handleShowDeleteModal}
+                setCertificateId={setCertificateId}
+                setIsDeleteModalVisible={setIsDeleteModalVisible}
+                // handleShowDeleteModal={handleShowDeleteModal}
               />
-              {/* {!isViewingAnotherEmployee ? (
-                <CTableDataCell scope="row">
-                  <CButton
-                    color="info"
-                    className="btn-ovh me-1"
-                    onClick={() =>
-                      editCertificateButtonHandler(certificateItem.id as number)
-                    }
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    className="btn-ovh me-1"
-                    onClick={() =>
-                      handleShowDeleteModal(certificateItem.id as number)
-                    }
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
-                </CTableDataCell>
-              ) : (
-                <></>
-              )} */}
             </CTableRow>
           ))}
         </CTableBody>

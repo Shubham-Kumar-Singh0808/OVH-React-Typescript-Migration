@@ -1,5 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
+import * as reactRedux from 'react-redux'
 import EmployeeCertificationsTable from './EmployeeCertificationsTable'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { EmployeeCertification } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
@@ -39,8 +40,6 @@ describe('Employee Certification Table Component Testing', () => {
           },
         },
       )
-      // const editBtn = screen.getByTestId('editCertificationBtn')
-      // expect(editBtn).toBeInTheDocument()
       expect(screen.getByText('Description')).toBeInTheDocument()
       await waitFor(() => {
         expect(screen.getByText('qweert')).toBeInTheDocument()

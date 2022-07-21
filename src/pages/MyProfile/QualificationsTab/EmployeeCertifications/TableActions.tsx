@@ -6,13 +6,21 @@ const TableActions = ({
   certificateItemId,
   isViewingAnotherEmployee,
   editCertificateButtonHandler,
-  handleShowDeleteModal,
+  // handleShowDeleteModal,
+  setCertificateId,
+  setIsDeleteModalVisible,
 }: TableActionsType) => {
+  const handleShowDeleteModal = (certificationId: number) => {
+    setCertificateId(certificationId)
+    setIsDeleteModalVisible(true)
+  }
+
   return (
     <>
       {!isViewingAnotherEmployee ? (
         <CTableDataCell scope="row">
           <CButton
+            data-testid="edotCertBtn"
             color="info"
             className="btn-ovh me-1"
             onClick={() =>
@@ -22,6 +30,7 @@ const TableActions = ({
             <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
           </CButton>
           <CButton
+            data-testid="showAlertBtn"
             color="danger"
             className="btn-ovh me-1"
             onClick={() => handleShowDeleteModal(certificateItemId as number)}
