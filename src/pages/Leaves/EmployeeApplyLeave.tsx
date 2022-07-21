@@ -221,6 +221,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
           <DatePicker
             className="form-control"
             data-testid="date-picker-to-date"
+            placeholderText="Select to date"
             name="toDate"
             id="toDate"
             minDate={new Date()}

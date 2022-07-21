@@ -2,7 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import EmployeeApplyLeave from './EmployeeApplyLeave'
-import { render, screen, waitFor } from '../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../test/testUtils'
 import {
   mockLeaveApply,
   mockLeaveType,
@@ -98,6 +98,17 @@ describe('LeaveApply component with data', () => {
       }),
     )
   })
+  test('should be able to select date"', () => {
+    const dateInput = screen.getAllByPlaceholderText('Select to date')
+    userEvent.type(
+      dateInput[0],
+      new Date('20/20/2021').toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }),
+    )
+  })
   it('should fetch leave types dropdown data ', () => {
     render(<EmployeeApplyLeave />)
     screen.debug()
@@ -128,5 +139,22 @@ describe('LeaveApply component with data', () => {
   test('should render Template rich text editor', () => {
     const Comments = screen.findByTestId('ckEditor-component')
     expect(Comments).toBeTruthy()
+  })
+})
+
+describe('LeaveType component with data', () => {
+  beforeEach(() => {
+    render(<EmployeeApplyLeave />, {
+      preloadedState: {
+        employeeLeaveApply: {
+          employeeLeaveType: mockLeaveType,
+        },
+      },
+    })
+  })
+  test('should select dropdown value', () => {
+    const LeaveTypeSelectListSelector = screen.getByTestId('form-select')
+    userEvent.selectOptions(LeaveTypeSelectListSelector, ['LOP'])
+    expect(LeaveTypeSelectListSelector).toHaveValue('LOP')
   })
 })
