@@ -119,7 +119,7 @@ const CertificateTypeTable = (): JSX.Element => {
     <>
       {certificateTypes.length ? (
         <>
-          <CTable responsive>
+          <CTable striped responsive>
             <CTableHead>
               <CTableRow className="align-items-start">
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -157,7 +157,9 @@ const CertificateTypeTable = (): JSX.Element => {
                           {!isEditCertificateType && (
                             <>
                               <CButton
+                                data-testid={`btn-edit${index}`}
                                 color="info"
+                                size="sm"
                                 className="btn-ovh me-1"
                                 onClick={() => {
                                   editCertificateTypeButtonHandler(
@@ -171,6 +173,7 @@ const CertificateTypeTable = (): JSX.Element => {
                                 ></i>
                               </CButton>
                               <CButton
+                                data-testid={`btn-delete${index}`}
                                 color="danger"
                                 size="sm"
                                 onClick={() =>
@@ -241,8 +244,10 @@ const CertificateTypeTable = (): JSX.Element => {
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalHeaderClass="d-none"
+        modalTitle="Delete Certificate Type"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={handleConfirmDeleteCertificateType}
       >
         {`Do you really want to delete this ${toDeleteCertificate} Certificate ?`}
