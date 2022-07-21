@@ -24,10 +24,8 @@ describe('Add Employee JoinDate Component', () => {
     screen.debug()
   })
 
-  test('should be able to see place holder "Select joined date"', () => {
-    expect(
-      screen.getByPlaceholderText('Select joined date'),
-    ).toBeInTheDocument()
+  test('should be able to see place holder "dd/mm/yy"', () => {
+    expect(screen.getByPlaceholderText('dd/mm/yy')).toBeInTheDocument()
   })
 
   test('should be able to render JoinDate label', () => {
@@ -40,7 +38,7 @@ describe('Add Employee JoinDate Component', () => {
   })
 
   test('should be able to select date"', () => {
-    const dateInput = screen.getAllByPlaceholderText('Select joined date')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {

@@ -1,4 +1,3 @@
-// Todd: remove eslint and fix error
 import {
   CButton,
   CCol,
@@ -14,18 +13,14 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmployeeSaveLeaveCalenderSetting } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 
 const EmployeeLeaveCalender = (): JSX.Element => {
-  const [employeeLeaveCalender, setEmployeeLeaveCalender] =
-    useState<EmployeeSaveLeaveCalenderSetting>({
-      id: '1',
-      leaveCycleMonth: '',
-      leavesPerYear: 0,
-      maxAccrualPerYear: 0,
-      maxLeavesEarned: 0,
-      payrollCutoffDate: 0,
-      probationPeriod: 0,
-    })
+  const initLeaveCalendar = {} as EmployeeSaveLeaveCalenderSetting
 
-  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
+  const [employeeLeaveCalender, setEmployeeLeaveCalender] =
+    useState(initLeaveCalendar)
+
+  const [isCancelButtonEnabled, setIsCancelButtonEnabled] = useState(false)
+  const [isEdited, setIsEdited] = useState(false)
+  const [isSaveButtonDisable, setIsSaveButtonDisable] = useState(true)
   const [maxLeavesEarnedValueError, setMaxLeavesEarnedValueError] =
     useState<boolean>(false)
   const [numberOfLeavesValueError, setNumberOfLeavesValueError] =
@@ -38,6 +33,23 @@ const EmployeeLeaveCalender = (): JSX.Element => {
     reduxServices.employeeLeaveSettings.selectors.getEmployeeLeaveCalender,
   )
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (Object.keys(employeeLeaveCalender).length === 0 || !isEdited) return
+
+    if (
+      employeeLeaveCalender.leaveCycleMonth !== '' &&
+      employeeLeaveCalender.leavesPerYear !== '' &&
+      employeeLeaveCalender.maxAccrualPerYear !== '' &&
+      employeeLeaveCalender.maxLeavesEarned !== '' &&
+      employeeLeaveCalender.payrollCutoffDate !== '' &&
+      employeeLeaveCalender.probationPeriod !== ''
+    ) {
+      setIsSaveButtonDisable(false)
+    } else {
+      setIsSaveButtonDisable(true)
+    }
+  }, [employeeLeaveCalender])
 
   useEffect(() => {
     dispatch(
@@ -58,7 +70,9 @@ const EmployeeLeaveCalender = (): JSX.Element => {
   ) => {
     const { name, value } = e.target
     const replaceValue = value.replace(/[^0-9]/gi, '')
-    setIsSaveButtonEnabled(true)
+
+    setIsEdited(true)
+    setIsCancelButtonEnabled(true)
     if (name === 'maxLeavesEarned') {
       const maxLeavesEarnedValue = replaceValue
       validateMaxLeavesEarnedValue(maxLeavesEarnedValue)
@@ -89,7 +103,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       setMaxLeavesEarnedValueError(false)
     } else {
       setMaxLeavesEarnedValueError(true)
-      setIsSaveButtonEnabled(false)
+      setIsCancelButtonEnabled(false)
     }
   }
 
@@ -98,7 +112,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       setMaximumAccrualValueError(false)
     } else {
       setMaximumAccrualValueError(true)
-      setIsSaveButtonEnabled(false)
+      setIsCancelButtonEnabled(false)
     }
   }
 
@@ -107,7 +121,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       setNumberOfLeavesValueError(false)
     } else {
       setNumberOfLeavesValueError(true)
-      setIsSaveButtonEnabled(false)
+      setIsCancelButtonEnabled(false)
     }
   }
 
@@ -335,7 +349,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             className="btn-ovh me-1"
             color="success"
             onClick={handleSaveLeaveCalender}
-            disabled={!isSaveButtonEnabled}
+            disabled={isSaveButtonDisable}
           >
             Save
           </CButton>
@@ -343,7 +357,7 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             color="warning "
             className="btn-ovh"
             onClick={handleClearDetails}
-            disabled={!isSaveButtonEnabled}
+            disabled={!isCancelButtonEnabled}
           >
             Cancel
           </CButton>

@@ -261,6 +261,9 @@ export const userApiConfig: UserAccessToFeaturesApi = {
 export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   getEmployeeHandbooks: apiPrefix + '/handbookItem/getAll',
   deleteEmployeeHandbook: apiPrefix + '/handbookItem/delete',
+  addNewHandbook: apiPrefix + '/handbookItem/add',
+  getEmployeeCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getTotalHandbookList: apiPrefix + '/handbookItem/getTotalList',
 }
 
 export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
@@ -302,8 +305,10 @@ export const hiveActivityReportApiConfig: HiveActivityReportApi = {
 
 export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
   {
-    getEmailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
+    getMailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
     getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+    exportMailTemplatesList: apiPrefix + '/mailTemplates/exportMailTemplates',
+    deleteMailTemplate: apiPrefix + '/mailTemplates/deleteMailTemplate',
   }
 
 export const addNewTemplateAPiConfig: AddNewTemplateApi = {
