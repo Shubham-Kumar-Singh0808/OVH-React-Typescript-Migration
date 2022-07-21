@@ -25,11 +25,6 @@ describe('Leave Apply Component Testing', () => {
     })
   })
 
-  test('should render Template rich text editor', () => {
-    const Comments = screen.findByTestId('ckEditor-component')
-    expect(Comments).toBeTruthy()
-  })
-
   it('should render intially Apply button as disabled and Clear Button as enabled', () => {
     render(<EmployeeApplyLeave />)
     expect(screen.getByTestId('btn-save')).toBeDisabled()
@@ -60,11 +55,6 @@ describe('Leave Apply Component Testing', () => {
     expect(screen.getByTestId('btn-save')).toBeDisabled()
   })
 
-  it('should display the correct number of options', () => {
-    render(<EmployeeApplyLeave />)
-    expect(screen.getAllByRole('option').length).toBe(1)
-  })
-
   test('should correctly set default option', () => {
     render(<EmployeeApplyLeave />)
     expect(
@@ -72,15 +62,15 @@ describe('Leave Apply Component Testing', () => {
     ).toBe(true)
   })
 
+  it('should display the correct number of options', () => {
+    render(<EmployeeApplyLeave />)
+    expect(screen.getAllByRole('option').length).toBe(1)
+  })
+
   test('should render to  date picker', () => {
     const dateInput = screen.findByTestId('date-picker')
     expect(dateInput).toBeTruthy()
   })
-})
-
-test('should render from date picker', () => {
-  const dateInput = screen.findByTestId('date-picker-to-date')
-  expect(dateInput).toBeTruthy()
 })
 
 const deviceLocale: string =
@@ -108,7 +98,7 @@ describe('LeaveApply component with data', () => {
       }),
     )
   })
-  it('should fetch leave types dropdown data and email input field', () => {
+  it('should fetch leave types dropdown data ', () => {
     render(<EmployeeApplyLeave />)
     screen.debug()
     mockLeaveType.forEach(async (type) => {
@@ -119,5 +109,24 @@ describe('LeaveApply component with data', () => {
         expect(screen.queryByText('Leave Type')).toBeDefined()
       })
     })
+  })
+  test('should render clear button', () => {
+    const clearButton = screen.getByTestId('btn-clear')
+    expect(clearButton).toBeEnabled()
+  })
+
+  test('should render from date picker', () => {
+    const dateInput = screen.findByTestId('date-picker-to-date')
+    expect(dateInput).toBeTruthy()
+  })
+
+  it('should display the correct number of options', () => {
+    render(<EmployeeApplyLeave />)
+    expect(screen.getAllByRole('option').length).toBe(2)
+  })
+
+  test('should render Template rich text editor', () => {
+    const Comments = screen.findByTestId('ckEditor-component')
+    expect(Comments).toBeTruthy()
   })
 })

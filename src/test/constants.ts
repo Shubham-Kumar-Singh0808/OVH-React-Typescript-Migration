@@ -14,7 +14,6 @@ export const cB4 = 'ch-countries3'
 export const cB5 = 'ch-countries4'
 export const emailAddress = 'email-address'
 export const templateType = 'form-select-type'
-
 // HR associate component
 export const selectedHRAssociate = 'Omer Mohsin'
 export const hRAssociatePlaceHolder = 'Type name here for auto fill'
