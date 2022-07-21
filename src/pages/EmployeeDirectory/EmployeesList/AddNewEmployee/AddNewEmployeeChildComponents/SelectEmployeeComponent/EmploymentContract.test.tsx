@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import EmploymentContract from '.'
-import { fireEvent, render, screen } from '../../../../../../../test/testUtils'
+import EmploymentContract from './EmploymentContract'
+import { fireEvent, render, screen } from '../../../../../../test/testUtils'
 
 const deviceLocale: string =
   navigator.languages && navigator.languages.length
@@ -19,7 +19,7 @@ describe('Add Employment Contract Component', () => {
           onContractExistHandler={jest.fn()}
           startDateValue={new Date()}
           endDateValue={new Date()}
-          isContractExist={'true'}
+          isContractExist={true}
           dynamicFormLabelProps={jest.fn()}
         />,
       )
@@ -96,7 +96,7 @@ describe('Add Employment Contract Component', () => {
           onContractExistHandler={jest.fn()}
           startDateValue={new Date()}
           endDateValue={new Date()}
-          isContractExist={'false'}
+          isContractExist={false}
           dynamicFormLabelProps={jest.fn()}
         />,
       )

@@ -1,7 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import WorkFrom from '.'
-import { screen, render, fireEvent } from '../../../../../../../test/testUtils'
+import WorkFrom from './WorkFrom'
+import { screen, render, fireEvent } from '../../../../../../test/testUtils'
 
 describe('Add WorkFrom Component', () => {
   describe('WorkFrom Component with empty value', () => {

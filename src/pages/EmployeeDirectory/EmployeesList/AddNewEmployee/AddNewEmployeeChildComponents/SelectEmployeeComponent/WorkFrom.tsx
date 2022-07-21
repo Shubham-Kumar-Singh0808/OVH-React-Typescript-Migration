@@ -1,6 +1,6 @@
 import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { WorkFromChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { WorkFromChangeHandlerProp } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const WorkFrom = ({
   dynamicFormLabelProps,

@@ -1,12 +1,12 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import HRAssociateField from '.'
-import { screen, render, fireEvent } from '../../../../../../../test/testUtils'
-import { mockEmployeeHRAssociateList } from '../../../../../../../test/data/employeeHRAssociateData'
+import HRAssociateField from './HRAssociate'
+import { screen, render, fireEvent } from '../../../../../../test/testUtils'
+import { mockEmployeeHRAssociateList } from '../../../../../../test/data/employeeHRAssociateData'
 import {
   hRAssociatePlaceHolder,
   selectedHRAssociate,
-} from '../../../../../../../test/constants'
+} from '../../../../../../test/constants'
 
 describe('Add HRAssociate Component', () => {
   describe('Empty value of  HRAssociate Component', () => {

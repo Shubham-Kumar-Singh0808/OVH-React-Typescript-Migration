@@ -1,8 +1,8 @@
 import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import React, { useEffect, useState } from 'react'
-import { StartEndDateChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { showIsRequired } from '../../../../../../../utils/helper'
+import { StartEndDateChangeHandlerProp } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { showIsRequired } from '../../../../../../utils/helper'
 
 const EmploymentContract = ({
   dynamicFormLabelProps,
@@ -22,16 +22,13 @@ const EmploymentContract = ({
   const [isActive, setIsActive] = useState(false)
 
   useEffect(() => {
-    setIsActive(
-      isContractExist == null ||
-        isContractExist === '' ||
-        isContractExist.toLowerCase() === 'true',
-    )
+    setIsActive(isContractExist)
   }, [isContractExist])
 
   const handleOnChange = (value: string) => {
-    onContractExistHandler(value)
-    setIsActive(value === 'Office')
+    const isOffice = value === 'office'
+    onContractExistHandler(isOffice)
+    setIsActive(isOffice)
   }
 
   const isDateCorrect = (startValue: Date, endValue: Date): boolean => {
@@ -60,7 +57,7 @@ const EmploymentContract = ({
             value="Yes"
             label="Yes"
             checked={isActive}
-            onChange={() => handleOnChange('true')}
+            onChange={() => handleOnChange('office')}
           />
           <CFormCheck
             inline
@@ -71,11 +68,11 @@ const EmploymentContract = ({
             label="No"
             checked={!isActive}
             defaultChecked
-            onChange={() => handleOnChange('false')}
+            onChange={() => handleOnChange('home')}
           />
         </CCol>
       </CRow>
-      {isContractExist === 'true' ? (
+      {isContractExist ? (
         <>
           <CRow className="mb-3">
             <CFormLabel

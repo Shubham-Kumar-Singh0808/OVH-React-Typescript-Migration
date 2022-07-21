@@ -1,9 +1,9 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import ShiftField from '.'
-import { screen, render } from '../../../../../../../test/testUtils'
-import { mockShifts } from '../../../../../../../test/data/employeeDesignationListData'
+import ShiftField from './Shift'
+import { screen, render } from '../../../../../../test/testUtils'
+import { mockShifts } from '../../../../../../test/data/employeeDesignationListData'
 
 const mockSetIsAccordionItemShow = jest.fn()
 

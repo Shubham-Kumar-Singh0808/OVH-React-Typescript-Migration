@@ -1,10 +1,10 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import DesignationField from '.'
-import { screen, render } from '../../../../../../../test/testUtils'
-import { listComposer } from '../../../../../../../utils/helper'
-import { mockDesignationList } from '../../../../../../../test/data/employeeDesignationListData'
+import DesignationField from './Designation'
+import { screen, render } from '../../../../../../test/testUtils'
+import { listComposer } from '../../../../../../utils/helper'
+import { mockDesignationList } from '../../../../../../test/data/employeeDesignationListData'
 
 const mockSetIsAccordionItemShow = jest.fn()
 

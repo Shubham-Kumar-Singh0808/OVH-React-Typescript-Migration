@@ -4,8 +4,8 @@ import { fireEvent, render, screen } from '@testing-library/react'
 // eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import UserNameEmail from '.'
-import stateStore from '../../../../../../../stateStore'
+import UserNameEmail from './UserNameEmail'
+import stateStore from '../../../../../../stateStore'
 
 const ReduxProvider = ({
   children,

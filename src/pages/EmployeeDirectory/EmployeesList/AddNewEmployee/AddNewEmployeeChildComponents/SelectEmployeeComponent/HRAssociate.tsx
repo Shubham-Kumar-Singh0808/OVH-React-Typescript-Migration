@@ -4,8 +4,8 @@ import Autocomplete from 'react-autocomplete'
 import {
   GetHRAssociate,
   HrDataProps,
-} from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { showIsRequired } from '../../../../../../../utils/helper'
+} from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { showIsRequired } from '../../../../../../utils/helper'
 
 const HRAssociate = ({
   dynamicFormLabelProps,

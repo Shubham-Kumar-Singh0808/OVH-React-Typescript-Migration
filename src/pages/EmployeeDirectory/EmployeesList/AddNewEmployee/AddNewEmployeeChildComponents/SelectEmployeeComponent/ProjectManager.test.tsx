@@ -1,46 +1,46 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import ReportingManager from '.'
-import { screen, render, fireEvent } from '../../../../../../../test/testUtils'
-import { mockProjectManagerList } from '../../../../../../../test/data/projectManagerData'
-import { selectedProjectManager } from '../../../../../../../test/constants'
+import ProjectManager from './ProjectManager'
+import { screen, render, fireEvent } from '../../../../../../test/testUtils'
+import { mockProjectManagerList } from '../../../../../../test/data/projectManagerData'
+import { selectedProjectManager } from '../../../../../../test/constants'
 
-describe('Add ReportManager Component', () => {
-  describe('Empty value of  ReportManager Component', () => {
+describe('Add ProjectManager Component', () => {
+  describe('Empty value of  ProjectManager Component', () => {
     beforeEach(() => {
       render(
-        <ReportingManager
-          reportManagersList={[]}
-          onSelectReportManager={jest.fn()}
+        <ProjectManager
+          managersList={[]}
+          onSelectManager={jest.fn()}
           dynamicFormLabelProps={jest.fn()}
           shouldReset={false}
-          reportValue={''}
+          projectValue={''}
         />,
       )
     })
 
-    test('should be able to render ReportManager Component Title', () => {
-      expect(screen.getByText('Reporting Manager:')).toBeInTheDocument()
+    test('should be able to render ProjectManager Component Title', () => {
+      expect(screen.getByText('Project Manager:')).toBeInTheDocument()
     })
 
-    test('should be able to render ReportManager Component label', () => {
-      expect(screen.getByTestId('rmLabel')).toBeTruthy()
+    test('should be able to render ProjectManager Component label', () => {
+      expect(screen.getByTestId('pmLabel')).toBeTruthy()
     })
 
-    test('should be able to render ReportManager Component placeholder', () => {
+    test('should be able to render ProjectManager Component placeholder', () => {
       expect(screen.getByRole('combobox')).toBeInTheDocument()
     })
   })
 
-  describe('Should be able to select ReportManager Component value', () => {
+  describe('Should be able to select ProjectManager Component value', () => {
     beforeEach(() => {
       render(
-        <ReportingManager
-          reportManagersList={mockProjectManagerList}
-          onSelectReportManager={jest.fn()}
+        <ProjectManager
+          managersList={mockProjectManagerList}
+          onSelectManager={jest.fn()}
           dynamicFormLabelProps={jest.fn()}
           shouldReset={false}
-          reportValue={selectedProjectManager}
+          projectValue={selectedProjectManager}
         />,
       )
     })
@@ -64,13 +64,13 @@ describe('Add ReportManager Component', () => {
     })
   })
 
-  describe('Should be able to reset ReportManager Component value', () => {
+  describe('Should be able to reset ProjectManager Component value', () => {
     beforeEach(() => {
       render(
-        <ReportingManager
-          reportManagersList={mockProjectManagerList}
-          onSelectReportManager={jest.fn()}
-          reportValue={'aaa'}
+        <ProjectManager
+          managersList={mockProjectManagerList}
+          onSelectManager={jest.fn()}
+          projectValue={'aaa'}
           dynamicFormLabelProps={jest.fn()}
           shouldReset={false}
         />,
@@ -95,12 +95,12 @@ describe('Add ReportManager Component', () => {
   describe('onSelect Test', () => {
     beforeEach(() => {
       render(
-        <ReportingManager
-          reportManagersList={mockProjectManagerList}
-          onSelectReportManager={jest.fn()}
+        <ProjectManager
+          managersList={mockProjectManagerList}
+          onSelectManager={jest.fn()}
           dynamicFormLabelProps={jest.fn()}
           shouldReset={false}
-          reportValue={'test'}
+          projectValue={'test'}
         />,
       )
     })

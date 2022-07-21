@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import JoinDate from '.'
-import { render, screen } from '../../../../../../../test/testUtils'
+import JoinDate from './JoinedDate'
+import { render, screen } from '../../../../../../test/testUtils'
 
 const deviceLocale: string =
   navigator.languages && navigator.languages.length

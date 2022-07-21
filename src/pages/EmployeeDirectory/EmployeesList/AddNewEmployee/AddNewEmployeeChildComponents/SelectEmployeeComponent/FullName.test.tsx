@@ -1,8 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import FullNameField from '.'
-import { screen, render } from '../../../../../../../test/testUtils'
+import FullNameField from './FullName'
+import { screen, render } from '../../../../../../test/testUtils'
 
 describe('Add FullName Component', () => {
   describe('FullName Component with empty value', () => {

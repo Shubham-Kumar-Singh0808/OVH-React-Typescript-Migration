@@ -4,7 +4,7 @@ import { LoadingState, ValidationError } from '../../../commonTypes'
 //AddNewEmployee Post API
 export type AddEmployee = {
   contractEndDate: Date | null
-  contractExists: string
+  contractExists: boolean
   contractStartDate: Date | null
   country: string
   dateOfJoining: Date | null
@@ -139,10 +139,10 @@ export interface DateChangeHandlerProp extends DynamicFormLabelProps {
 export interface StartEndDateChangeHandlerProp extends DynamicFormLabelProps {
   onStartDateChangeHandler: (start: Date) => void
   onEndDateChangeHandler: (end: Date) => void
-  onContractExistHandler: (isDisable: string) => void
+  onContractExistHandler: (isDisable: boolean) => void
   startDateValue: Date
   endDateValue: Date
-  isContractExist: string
+  isContractExist: boolean
 }
 
 export interface UserNameProps extends DynamicFormLabelProps {

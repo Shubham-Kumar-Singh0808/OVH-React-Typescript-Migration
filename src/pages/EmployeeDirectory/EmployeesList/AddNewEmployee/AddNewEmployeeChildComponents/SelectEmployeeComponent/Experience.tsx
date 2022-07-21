@@ -1,7 +1,7 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React from 'react'
-import { ExperienceChangeHandlerProp } from '../../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { showIsRequired } from '../../../../../../../utils/helper'
+import { ExperienceChangeHandlerProp } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { showIsRequired } from '../../../../../../utils/helper'
 
 const Experience = ({
   dynamicFormLabelProps,

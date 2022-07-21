@@ -1,8 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import ExperienceField from '.'
-import { screen, render } from '../../../../../../../test/testUtils'
+import ExperienceField from './Experience'
+import { screen, render } from '../../../../../../test/testUtils'
 
 describe('Add Experience Component', () => {
   beforeEach(() => {
