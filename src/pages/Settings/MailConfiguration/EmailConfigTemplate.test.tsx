@@ -23,7 +23,6 @@ const expectComponentToBeRendered = () => {
   expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
   expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
 }
-
 describe('email Template List Table Testing', () => {
   it('should display the correct number of options', () => {
     render(
