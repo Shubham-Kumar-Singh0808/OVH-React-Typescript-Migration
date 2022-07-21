@@ -128,7 +128,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
           <OToast
             toastColor="danger"
             toastMessage="            
-            Leave Application Cannot Process.."
+            Leave Application Cannot Process."
           />,
         ),
       )
