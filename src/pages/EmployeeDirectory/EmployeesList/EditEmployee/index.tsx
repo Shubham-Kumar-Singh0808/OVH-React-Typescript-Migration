@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
-import { CRow, CCol, CButton, CFormLabel } from '@coreui/react-pro'
+import { CRow, CCol, CButton, CFormLabel, CSpinner } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -28,8 +28,6 @@ import {
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { EditEmployeeTypes } from '../../../../types/EmployeeDirectory/EmployeesList/EditEmployee'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
-import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 
 const EditEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -105,6 +103,7 @@ const EditEmployee = (): JSX.Element => {
     setEditEmployee({ ...editEmployee, jobTypeName: value })
   }
   const onHandleStartDate = (value: Date) => {
+    console.log('value', value)
     setEditEmployee({ ...editEmployee, contractStartDate: value })
   }
   const onHandleEndDate = (value: Date) => {
@@ -342,7 +341,6 @@ const EditEmployee = (): JSX.Element => {
     }
   }
 
-  console.log(editEmployee)
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -515,7 +513,11 @@ const EditEmployee = (): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <OLoadingSpinner type={LoadingType.COMPONENT} />
+        <CCol>
+          <CRow className="category-loading-spinner">
+            <CSpinner />
+          </CRow>
+        </CCol>
       )}
     </OCard>
   )

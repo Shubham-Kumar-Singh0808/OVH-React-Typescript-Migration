@@ -41,7 +41,6 @@ const EmploymentContract = ({
     return start > end
   }
 
-  console.log('isActive', isActive)
   return (
     <>
       <CRow className="mb-3 align-items-center">
