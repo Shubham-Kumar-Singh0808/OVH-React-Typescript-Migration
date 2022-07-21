@@ -11,6 +11,7 @@ import {
   GetList,
   GetProjectManager,
   GetReportManager,
+  Label,
   ShouldResetFields,
 } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { listComposer } from '../../../../utils/helper'
@@ -23,6 +24,7 @@ import {
   ReportingManager,
   Shift,
   WorkFrom,
+  Status,
 } from '../AddNewEmployee/AddNewEmployeeChildComponents'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { EditEmployeeTypes } from '../../../../types/EmployeeDirectory/EmployeesList/EditEmployee'
@@ -42,6 +44,7 @@ const EditEmployee = (): JSX.Element => {
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
+  const [isViewBtnEnabled, setViewBtnEnabled] = useState<boolean>(false)
 
   const initResetFields = {
     hrAssociate: false,
@@ -57,6 +60,7 @@ const EditEmployee = (): JSX.Element => {
     contractEndDate: null,
     contractExists: false,
     contractStartDate: null,
+    relievingDate: null,
     country: '',
     departmentName: '',
     statusName: '',
@@ -116,6 +120,9 @@ const EditEmployee = (): JSX.Element => {
   const onHandleEmployeeStatus = (value: string) => {
     setEditEmployee({ ...editEmployee, statusName: value })
   }
+  const onHandlerelievingDate = (value: Date) => {
+    setEditEmployee({ ...editEmployee, relievingDate: value })
+  }
 
   const onHandleReportManager = (value: GetReportManager) => {
     setResetField({ ...resetFields, reportManager: false })
@@ -169,6 +176,30 @@ const EditEmployee = (): JSX.Element => {
   }
 
   useEffect(() => {
+    if (
+      editEmployee.designation !== '' &&
+      editEmployee.role !== '' &&
+      editEmployee.manager.fullName != null &&
+      editEmployee.hrAssociate.fullName != null &&
+      editEmployee.employmentTypeName !== '' &&
+      editEmployee.jobTypeName !== '' &&
+      editEmployee.timeSlotDTO.name != null
+    ) {
+      const hasContract =
+        editEmployee.contractStartDate !== null &&
+        editEmployee.contractEndDate !== null
+
+      if (editEmployee.contractExists) {
+        setViewBtnEnabled(hasContract)
+      } else {
+        setViewBtnEnabled(true)
+      }
+    } else {
+      setViewBtnEnabled(false)
+    }
+  }, [editEmployee])
+
+  useEffect(() => {
     dispatch(
       reduxServices.newEmployee.employeeDepartmentsService.getEmployeeDepartments(),
     )
@@ -213,6 +244,7 @@ const EditEmployee = (): JSX.Element => {
         technology: selectedEmployeeData.technology,
         timeSlotDTO: selectedEmployeeData.timeSlotDTO,
         workStatus: selectedEmployeeData.workStatus,
+        relievingDate: selectedEmployeeData.relievingDate,
         firstName: selectedEmployeeData.firstName,
         lastName: selectedEmployeeData.lastName,
       })
@@ -372,10 +404,10 @@ const EditEmployee = (): JSX.Element => {
             setToggleShift={() => setDestinationToggle(!destinationToggle)}
             toggleValue={destinationToggle}
             isAddDisable={true}
-            isRequired={false}
+            isRequired={true}
           />
           <OSelectList
-            isRequired={false}
+            isRequired={true}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={composedUserRoles}
             setValue={onHandleUserRole}
@@ -384,7 +416,7 @@ const EditEmployee = (): JSX.Element => {
             label="Select Role"
           />
           <ReportingManager
-            isRequired={false}
+            isRequired={true}
             dynamicFormLabelProps={dynamicFormLabelProps}
             reportManagersList={reportingManagersList}
             onSelectReportManager={onHandleReportManager}
@@ -400,7 +432,7 @@ const EditEmployee = (): JSX.Element => {
             projectValue={`${editEmployee.projectManager?.firstName} ${editEmployee.projectManager?.lastName}`}
           />
           <HRAssociate
-            isRequired={false}
+            isRequired={true}
             dynamicFormLabelProps={dynamicFormLabelProps}
             hrDataList={hrDataList}
             onSelectHRAssociate={onHandleHRAssociate}
@@ -417,7 +449,7 @@ const EditEmployee = (): JSX.Element => {
             label="Select Type"
           />
           <OSelectList
-            isRequired={false}
+            isRequired={true}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={composedJobTypes}
             setValue={onHandleJobType}
@@ -426,7 +458,7 @@ const EditEmployee = (): JSX.Element => {
             label="Select Job Type"
           />
           <Shift
-            isRequired={false}
+            isRequired={true}
             dynamicFormLabelProps={dynamicFormLabelProps}
             list={employeeShifts}
             setValue={onHandleShift}
@@ -435,17 +467,17 @@ const EditEmployee = (): JSX.Element => {
             toggleValue={shiftToggle}
             isAddDisable={true}
           />
-          <OSelectList
-            isRequired={false}
-            dynamicFormLabelProps={dynamicFormLabelProps}
+          <Status
             list={employeeStatus}
-            setValue={onHandleEmployeeStatus}
+            setStatusValue={onHandleEmployeeStatus}
+            setStatusDateValue={onHandlerelievingDate}
+            dateValue={editEmployee.relievingDate as Date}
             value={editEmployee.statusName}
-            name="Employee Status"
-            label="Select Employee Status"
+            isRequired={true}
+            dynamicFormLabelProps={dynamicFormLabelProps}
           />
           <EmploymentContract
-            isRequired={false}
+            isRequired={true}
             dynamicFormLabelProps={dynamicFormLabelProps}
             onStartDateChangeHandler={onHandleStartDate}
             onEndDateChangeHandler={onHandleEndDate}
@@ -465,6 +497,7 @@ const EditEmployee = (): JSX.Element => {
                 className="btn-ovh me-1"
                 color="success"
                 data-testid="edit-employee"
+                disabled={!isViewBtnEnabled}
                 onClick={handleEditEmployee}
               >
                 Update

@@ -16,6 +16,7 @@ export type EditEmployeeTypes = {
   contractStartDate: Date | null
   country: string
   dateOfJoining?: Date | null
+  relievingDate: Date | null
   departmentName: string
   designation: string
   dob?: Date | null

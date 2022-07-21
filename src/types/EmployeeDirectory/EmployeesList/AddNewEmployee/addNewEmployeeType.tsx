@@ -191,6 +191,14 @@ export interface SelectProps extends DynamicFormLabelProps {
   label?: string
   isRequired: boolean
 }
+export interface StatusProps extends DynamicFormLabelProps {
+  list: GetList[]
+  setStatusValue: (value: string) => void
+  setStatusDateValue: (value: Date) => void
+  dateValue: Date
+  value: string
+  isRequired: boolean
+}
 export interface CountryProps extends DynamicFormLabelProps {
   countryList: GetCountries[]
 }

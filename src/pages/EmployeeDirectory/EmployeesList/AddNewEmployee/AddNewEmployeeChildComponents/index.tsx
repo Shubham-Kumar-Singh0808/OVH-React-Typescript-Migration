@@ -10,6 +10,7 @@ import ReportingManager from './SelectEmployeeComponent/ReportingManager'
 import Shift from './SelectEmployeeComponent/Shift'
 import UserNameEmail from './SelectEmployeeComponent/UserNameEmail'
 import WorkFrom from './SelectEmployeeComponent/WorkFrom'
+import Status from './SelectEmployeeComponent/Status'
 
 export {
   FullName,
@@ -24,4 +25,5 @@ export {
   Shift,
   EmploymentContract,
   WorkFrom,
+  Status,
 }
