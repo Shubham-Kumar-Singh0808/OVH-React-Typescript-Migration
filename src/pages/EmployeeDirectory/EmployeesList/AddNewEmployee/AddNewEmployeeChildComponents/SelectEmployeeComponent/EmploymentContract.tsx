@@ -27,7 +27,7 @@ const EmploymentContract = ({
   }, [isContractExist])
 
   const handleOnChange = (value: string) => {
-    const isExist = value === 'Office'
+    const isExist = value.toLowerCase() === 'office'
     onContractExistHandler(isExist)
     setIsActive(isExist)
   }
@@ -41,6 +41,7 @@ const EmploymentContract = ({
     return start > end
   }
 
+  console.log('isActive', isActive)
   return (
     <>
       <CRow className="mb-3 align-items-center">
@@ -55,21 +56,19 @@ const EmploymentContract = ({
             type="radio"
             name="employmentcontract"
             id="employmentcontractyes"
-            value="Yes"
             label="Yes"
             checked={isActive}
-            onChange={() => handleOnChange('true')}
+            onChange={() => handleOnChange('office')}
           />
           <CFormCheck
             inline
             type="radio"
             name="employmentcontract"
             id="employmentcontractno"
-            value="No"
             label="No"
             checked={!isActive}
             defaultChecked
-            onChange={() => handleOnChange('false')}
+            onChange={() => handleOnChange('home')}
           />
         </CCol>
       </CRow>
