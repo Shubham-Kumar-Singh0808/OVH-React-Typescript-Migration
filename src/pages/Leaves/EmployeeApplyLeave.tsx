@@ -17,13 +17,17 @@ const EmployeeApplyLeave = (): JSX.Element => {
   const initialEmployeeLeaveApply = {} as EmployeeLeaveApply
   const [applyLeave, setApplyLeave] = useState(initialEmployeeLeaveApply)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+
   const employeeLeaveType = useTypedSelector(
     reduxServices.employeeApplyLeave.selectors.employeeLeaveType,
   )
+
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(reduxServices.employeeApplyLeave.getEmployeeLeaveType(employeeId))
   }, [dispatch, employeeId])

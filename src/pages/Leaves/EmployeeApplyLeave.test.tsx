@@ -2,7 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import EmployeeApplyLeave from './EmployeeApplyLeave'
-import { fireEvent, render, screen, waitFor } from '../../test/testUtils'
+import { render, screen, waitFor } from '../../test/testUtils'
 import {
   mockLeaveApply,
   mockLeaveType,
@@ -77,6 +77,7 @@ const deviceLocale: string =
   navigator.languages && navigator.languages.length
     ? navigator.languages[0]
     : navigator.language
+
 describe('LeaveApply component with data', () => {
   beforeEach(() => {
     render(<EmployeeApplyLeave />, {
@@ -88,21 +89,10 @@ describe('LeaveApply component with data', () => {
     })
   })
   test('should be able to select date"', () => {
-    const dateInput = screen.getAllByPlaceholderText('Select date')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }),
-    )
-  })
-  test('should be able to select date"', () => {
-    const dateInput = screen.getAllByPlaceholderText('Select to date')
-    userEvent.type(
-      dateInput[0],
-      new Date('20/20/2021').toLocaleDateString(deviceLocale, {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',

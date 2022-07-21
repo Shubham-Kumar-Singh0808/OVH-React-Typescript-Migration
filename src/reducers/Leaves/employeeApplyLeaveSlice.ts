@@ -55,6 +55,7 @@ const employeeLeaveApply = createAsyncThunk<
     }
   },
 )
+
 const employeeLeaveApplySlice = createSlice({
   name: 'leaves',
   initialState: initialEmployeeApplyLeaveState,
@@ -70,6 +71,7 @@ const employeeLeaveApplySlice = createSlice({
     })
   },
 })
+
 const employeeLeaveType = (state: RootState): EmployeeLeaveType[] =>
   state.employeeLeaveApply.employeeLeaveType
 
@@ -77,9 +79,11 @@ const employeeApplyLeaveThunk = {
   getEmployeeLeaveType,
   employeeLeaveApply,
 }
+
 const employeeApplyLeaveSelectors = {
   employeeLeaveType,
 }
+
 export const employeeLeaveApplyServices = {
   ...employeeApplyLeaveThunk,
   actions: employeeLeaveApplySlice.actions,

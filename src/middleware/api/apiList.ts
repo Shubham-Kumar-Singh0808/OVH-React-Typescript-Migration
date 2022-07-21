@@ -37,7 +37,7 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
-  ApplyleaveApi,
+  ApplyLeaveApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -316,7 +316,7 @@ export const addNewTemplateAPiConfig: AddNewTemplateApi = {
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
 }
 
-export const applyLeaveAPiConfig: ApplyleaveApi = {
+export const applyLeaveAPiConfig: ApplyLeaveApi = {
   getLeaveType: apiPrefix + '/leaveSetup/leaveCategories',
   applyLeave: apiPrefix + '/leave/apply',
 }

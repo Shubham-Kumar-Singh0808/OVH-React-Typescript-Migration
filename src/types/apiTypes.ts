@@ -272,7 +272,7 @@ export interface AddNewTemplateApi extends ApiBase {
   addNewMailTemplate: string
 }
 
-export interface ApplyleaveApi extends ApiBase {
+export interface ApplyLeaveApi extends ApiBase {
   getLeaveType: string
   applyLeave: string
 }
