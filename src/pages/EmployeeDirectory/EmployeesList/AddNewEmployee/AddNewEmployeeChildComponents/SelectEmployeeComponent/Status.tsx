@@ -13,7 +13,8 @@ const Status = ({
   dateValue,
   isRequired,
 }: StatusProps): JSX.Element => {
-  const dateToString = dateValue == null ? '' : dateValue.toLocaleString()
+  const dateToString =
+    dateValue instanceof Date ? dateValue.toLocaleDateString() : ''
 
   const onChangeHandler = (e: { target: { value: string } }) => {
     setStatusValue(e.target.value)
@@ -24,7 +25,7 @@ const Status = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
-          data-testId="selectLabel"
+          data-testid="selectLabel"
           {...dynamicFormLabelProps(
             'technology',
             'col-sm-3 col-form-label text-end',
@@ -61,7 +62,7 @@ const Status = ({
               'col-sm-3 col-form-label text-end',
             )}
           >
-            Contract Start Date:
+            Relieving Date:
             {isRequired && (
               <span className={showIsRequired(dateToString)}>*</span>
             )}

@@ -117,9 +117,17 @@ const EditEmployee = (): JSX.Element => {
     setEditEmployee({ ...editEmployee, workStatus: value })
   }
   const onHandleEmployeeStatus = (value: string) => {
-    setEditEmployee({ ...editEmployee, statusName: value })
+    if (value.toLocaleLowerCase() !== 'inactive') {
+      setEditEmployee({
+        ...editEmployee,
+        statusName: value,
+        relievingDate: null,
+      })
+    } else {
+      setEditEmployee({ ...editEmployee, statusName: value })
+    }
   }
-  const onHandlerelievingDate = (value: Date) => {
+  const onHandleRelievingDate = (value: Date) => {
     setEditEmployee({ ...editEmployee, relievingDate: value })
   }
 
@@ -334,6 +342,7 @@ const EditEmployee = (): JSX.Element => {
     }
   }
 
+  console.log(editEmployee)
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -470,7 +479,7 @@ const EditEmployee = (): JSX.Element => {
           <Status
             list={employeeStatus}
             setStatusValue={onHandleEmployeeStatus}
-            setStatusDateValue={onHandlerelievingDate}
+            setStatusDateValue={onHandleRelievingDate}
             dateValue={editEmployee.relievingDate as Date}
             value={editEmployee.statusName}
             isRequired={true}

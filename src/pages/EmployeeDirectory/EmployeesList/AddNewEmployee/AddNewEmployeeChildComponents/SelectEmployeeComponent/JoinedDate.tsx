@@ -9,7 +9,8 @@ const DateOfJoining = ({
   onDateChangeHandler,
   dateValue,
 }: DateChangeHandlerProp): JSX.Element => {
-  const date = dateValue == null ? '' : dateValue.toLocaleDateString()
+  const date = dateValue instanceof Date ? dateValue.toLocaleDateString() : ''
+
   return (
     <>
       <CRow className="mb-3">

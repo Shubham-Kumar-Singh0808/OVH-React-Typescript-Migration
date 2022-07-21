@@ -21,7 +21,7 @@ const Designation = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
-          data-testId="designationLabel"
+          data-testid="designationLabel"
           {...dynamicFormLabelProps(
             'designation',
             'col-sm-3 col-form-label text-end',
@@ -54,7 +54,7 @@ const Designation = ({
         {!isAddDisable && (
           <CCol sm={3}>
             <CButton
-              data-testId="designationButton"
+              data-testid="designationButton"
               color="info"
               className="btn-ovh me-1"
               onClick={() => setToggleShift(!toggleValue)}
