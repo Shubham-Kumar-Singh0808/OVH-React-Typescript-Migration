@@ -4,7 +4,7 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import EmployeeEmailTemplateTable from './EmployeeEmailTemplateTable'
+import EmailConfigTemplateTable from './EmailConfigTemplateTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import stateStore from '../../../stateStore'
 import { mockEmailTemplate } from '../../../test/data/employeeMailConfigurationData'
@@ -20,7 +20,7 @@ describe('email Template List Table Testing', () => {
   test('should render No data to display if Mail template is empty', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeEmailTemplateTable
+        <EmailConfigTemplateTable
           employeeTemplate={{
             id: 0,
             templateName: '',
@@ -37,7 +37,7 @@ describe('email Template List Table Testing', () => {
   test('should render correct number of page records', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeEmailTemplateTable
+        <EmailConfigTemplateTable
           employeeTemplate={{
             id: 0,
             templateName: '',
@@ -55,7 +55,7 @@ describe('email Template List Table Testing', () => {
 
   test('should render Email Template details table component without crashing', () => {
     render(
-      <EmployeeEmailTemplateTable
+      <EmailConfigTemplateTable
         employeeTemplate={{
           id: 0,
           templateName: '',
@@ -69,7 +69,7 @@ describe('email Template List Table Testing', () => {
   describe('Email Template component with data', () => {
     beforeEach(() => {
       render(
-        <EmployeeEmailTemplateTable
+        <EmailConfigTemplateTable
           employeeTemplate={{
             id: 70,
             templateName: 'old',

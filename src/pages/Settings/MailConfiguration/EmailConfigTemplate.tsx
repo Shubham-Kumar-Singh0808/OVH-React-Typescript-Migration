@@ -8,7 +8,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import EmployeeEmailTemplateTable from './EmployeeEmailTemplateTable'
+import EmployeeEmailTemplateTable from './EmailConfigTemplateTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -16,7 +16,7 @@ import { EmployeeMailTemplate } from '../../../types/Settings/MailConfiguration/
 import employeeMailConfigurationApi from '../../../middleware/api/Settings/MailConfiguration/employeeMailConfigurationApi'
 import { downloadFile } from '../../../utils/helper'
 
-const employeeEmailTemplate = (): JSX.Element => {
+const EmailConfigTemplate = (): JSX.Element => {
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -170,4 +170,4 @@ const employeeEmailTemplate = (): JSX.Element => {
     </>
   )
 }
-export default employeeEmailTemplate
+export default EmailConfigTemplate
