@@ -39,8 +39,8 @@ function AddEditVisaDetails({
     initialEmployeeVisaDetails,
   )
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  const [dateOfIssue, setDateOfIssue] = useState<Date | string>()
-  const [dateOfExpire, setDateOfExpire] = useState<Date | string>()
+  const [dateOfIssue, setDateOfIssue] = useState<Date>()
+  const [dateOfExpire, setDateOfExpire] = useState<Date>()
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined)
   const [imageUrl, setImageUrl] = useState<string>()
   const [error, setError] = useState<boolean>(false)
@@ -90,16 +90,16 @@ function AddEditVisaDetails({
     }
   }
 
-  let newDateOfIssue = new Date()
-  let newDateOfExpiry = new Date()
-  if (employeeVisaDetails.dateOfIssue) {
-    const currentDateOfIssue = employeeVisaDetails.dateOfIssue as string
-    newDateOfIssue = reformatDate(currentDateOfIssue)
-  }
-  if (employeeVisaDetails.dateOfExpire) {
-    const currentDateOfExpiry = employeeVisaDetails.dateOfExpire as string
-    newDateOfExpiry = reformatDate(currentDateOfExpiry)
-  }
+  const newDateOfIssue = new Date()
+  const newDateOfExpiry = new Date()
+  // if (employeeVisaDetails.dateOfIssue) {
+  //   const currentDateOfIssue = employeeVisaDetails.dateOfIssue as string
+  //   newDateOfIssue = reformatDate(currentDateOfIssue)
+  // }
+  // if (employeeVisaDetails.dateOfExpire) {
+  //   const currentDateOfExpiry = employeeVisaDetails.dateOfExpire as string
+  //   newDateOfExpiry = reformatDate(currentDateOfExpiry)
+  // }
 
   useEffect(() => {
     dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
@@ -150,7 +150,7 @@ function AddEditVisaDetails({
 
   const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
-    if (name === 'countryId' && employeeVisaDetails.countryId !== value) {
+    if (name === 'countryId' && employeeVisaDetails?.countryId !== value) {
       setClearVisaType(true)
       setEmployeeVisaDetails((prevState) => {
         return { ...prevState, ...{ visaTypeId: '' } }
@@ -452,8 +452,9 @@ function AddEditVisaDetails({
                 name="dateOfIssue"
                 maxDate={new Date()}
                 value={
-                  (dateOfIssue as string) ||
-                  dateFormmatted(employeeVisaDetails.dateOfIssue as string)
+                  dateOfIssue?.toLocaleString() ||
+                  employeeVisaDetails.dateOfIssue?.toLocaleString()
+                  // dateFormmatted(employeeVisaDetails.dateOfIssue as string)
                 }
                 selected={
                   !dateOfIssueFlag && employeeVisaDetails.dateOfIssue
@@ -489,8 +490,8 @@ function AddEditVisaDetails({
                 className="form-control"
                 name="dateOfExpire"
                 value={
-                  (dateOfExpire as string) ||
-                  dateFormmatted(employeeVisaDetails?.dateOfExpire as string)
+                  dateOfExpire?.toLocaleString() ||
+                  employeeVisaDetails.dateOfExpire?.toLocaleString()
                 }
                 selected={
                   !dateOfExpiryFlag && employeeVisaDetails?.dateOfExpire

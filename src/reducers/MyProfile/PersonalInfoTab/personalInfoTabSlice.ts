@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
+import { classes } from '@automapper/classes'
+import { createMapper } from '@automapper/core'
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EditFamilyDetailsState,
@@ -15,6 +17,12 @@ import {
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
+import {
+  EmployeeVisaDetailsModel,
+  EmployeeVisaDetailsDto,
+} from '../../../models/VisaDetailsModel'
+
+const mapper = createMapper({ strategyInitializer: classes() })
 
 const initialPersonalInfoTabState: PersonalInfoTabState = {
   employeeFamilyDetails: [],
@@ -116,7 +124,31 @@ const addEmployeeVisa = createAsyncThunk<
   'addEditFamilyDetails/addEmployeeVisa',
   async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
-      return await personalInfoApi.addEmployeeVisa(employeeVisaDetails)
+      const visaDetailsModel = new EmployeeVisaDetailsModel()
+      visaDetailsModel.id = Number(employeeVisaDetails.id)
+      visaDetailsModel.empId = Number(employeeVisaDetails.empId)
+      visaDetailsModel.empName = employeeVisaDetails.empName
+      visaDetailsModel.visaTypeId = employeeVisaDetails.visaTypeId
+      visaDetailsModel.visaType = employeeVisaDetails.visaType
+      visaDetailsModel.countryId = employeeVisaDetails.countryId
+      visaDetailsModel.countryName = employeeVisaDetails.countryName
+      visaDetailsModel.dateOfIssue = employeeVisaDetails.dateOfIssue as Date
+      visaDetailsModel.dateOfExpire = employeeVisaDetails.dateOfExpire as Date
+      visaDetailsModel.createdBy = employeeVisaDetails.createdBy
+      visaDetailsModel.updatedBy = employeeVisaDetails.updatedBy
+      visaDetailsModel.createdDate = employeeVisaDetails.createdDate as Date
+      visaDetailsModel.updatedDate = employeeVisaDetails.updatedDate as Date
+      visaDetailsModel.visaDetailsPath = employeeVisaDetails.visaDetailsPath
+      visaDetailsModel.visaDetailsData = employeeVisaDetails.visaDetailsData
+      visaDetailsModel.visaThumbPicture = employeeVisaDetails.visaThumbPicture
+
+      const visaDetailsDto = mapper.map(
+        visaDetailsModel,
+        EmployeeVisaDetailsModel,
+        EmployeeVisaDetailsDto,
+      )
+
+      return await personalInfoApi.addEmployeeVisa(visaDetailsDto)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

@@ -1,3 +1,4 @@
+import { classes, AutoMap } from '@automapper/classes'
 import { ValidationError } from '../../commonTypes'
 
 export type EmployeeFamilyData = {
@@ -44,23 +45,54 @@ export type VisaCountryDetails = {
   countryId: number | string
   countryName: string
 }
-export type EmployeeVisaDetails = {
-  id?: number | string
-  empId: number | string
-  empName: string | number
-  visaTypeId: number | string
+export class EmployeeVisaDetails {
+  @AutoMap()
+  id?: number
+
+  @AutoMap()
+  empId: number
+
+  @AutoMap()
+  empName: string
+
+  @AutoMap()
+  visaTypeId: number
+
+  @AutoMap()
   visaType?: string
-  countryId: number | string
+
+  @AutoMap()
+  countryId: number
+
+  @AutoMap()
   countryName?: string
-  dateOfIssue?: string | Date | number
-  dateOfExpire?: string | Date | number
+
+  @AutoMap()
+  dateOfIssue?: Date
+
+  @AutoMap()
+  dateOfExpire?: Date
+
+  @AutoMap()
   createdBy?: string
+
+  @AutoMap()
   updatedBy?: string
-  createdDate?: string | number
-  updatedDate?: string
+
+  @AutoMap()
+  createdDate?: Date
+
+  @AutoMap()
+  updatedDate?: Date
+
+  @AutoMap()
   visaDetailsPath?: string
+
+  @AutoMap()
   visaDetailsData?: string
-  visaThumbPicture?: string | number
+
+  @AutoMap()
+  visaThumbPicture?: string
 }
 
 export type EmployeeVisaDetailsButton = {
