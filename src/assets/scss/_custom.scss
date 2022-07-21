@@ -33,10 +33,14 @@ body {
   line-height: 1.42857;
   -webkit-transition: all 0.15s;
   transition: all 0.15s;
-  &:hover {
+  &:disabled,
+  &:active,
+  &:hover,
+  &:focus {
     color: $white;
   }
 }
+
 .btn-download {
   background-color: $blue-btnBg;
   border-color: $blue-btnBorder;
@@ -149,19 +153,19 @@ th {
   width: 10;
 }
 
-.calender-title{
-  color:$primary-base;
+.calender-title {
+  color: $primary-base;
   font-size: 18px;
   font-weight: normal;
 }
 
-.form-leave{
+.form-leave {
   font-size: 12px;
-    height: 32px;
-    border-radius: 2px;
-    box-shadow: none;
-    border: 1px solid #dcdcdc;
-    text-align: center;
+  height: 32px;
+  border-radius: 2px;
+  box-shadow: none;
+  border: 1px solid #dcdcdc;
+  text-align: center;
 }
 
 .sh-date-picker {
@@ -175,10 +179,17 @@ th {
   cursor: pointer;
 }
 
-.sh-date-picker-column{
+.sh-date-picker-column {
   width: 13% !important;
 }
 
 input.capetalized {
   text-transform: capitalize;
+}
+.model-text {
+  color:$blue-employeeEmailTemplateText;
+}
+
+.shift-info {
+  display: contents;
 }

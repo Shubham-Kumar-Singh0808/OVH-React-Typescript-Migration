@@ -1,18 +1,20 @@
-import { MockEmployeeHandbook } from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
+import {
+  EmployeeCountry,
+  MockEmployeeHandbook,
+  TotalHandbookList,
+} from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
   {
-    id: 78,
-    displayOrder: 3,
+    id: 1,
+    displayOrder: 61,
     title: 'testing',
     description:
-      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span><span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span><span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span><span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span><span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span><span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span><span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span><span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span><span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
-    pageName: 'testedddd',
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span >: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testedddeedasd',
     departmentName: '',
     departmentId: 0,
     type: 'HandBook',
-    sectionId: 0,
-    sectionName: '',
     country: '',
     handCountry: [
       {
@@ -27,17 +29,15 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     empCountry: 'INDIA',
   },
   {
-    id: 40,
-    displayOrder: 6,
+    id: 2,
+    displayOrder: 2,
     title: 'Roles and Responsibilities',
     description:
-      '<p><span style="color: rgb(0, 0, 128);"><strong>All Ray Business Technologies Pvt Ltd Associates have well-defined roles, responsibilities and career path within organization. We encourage you to speak to Human Resource Department and get more clarity if you have any concerns.</strong></span></p>&#10;<p><span style="color: rgb(0, 0, 128);"><strong>We welcome you to the exciting world of Ray Business Technologies Pvt Ltd.</strong></span></p>&#10;<p><strong>Vice President – Technology(s) &amp; Delivery</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Providing leadership in ensuring appropriate technology usage</li>&#10;    <li>Identify and oversee business process driven technology improvements</li>&#10;    <li>Recommends, develops, integrates, administers, and evaluates policies, procedures, and standards needed to provide flexible and cost-effective IT services</li>&#10;    <li>Solves IT business issues while managing  IT costs and risks</li>&#10;    <li>Identifies and evaluates new technology developments and gauges applicability to business processes by providing the Solution Architecture that satisfies business goals and objectives.</li>&#10;    <li>Ensure to take various measures are taken in maintaining the company’s confidential information in terms of technology.</li>&#10;    <li>Plan, schedule, track and manage overall Delivery execution.</li>&#10;    <li>Effective management of Delivery metrics such as effort, schedule, product and process quality etc.</li>&#10;    <li>Manage Delivery teams effectively and get the best out of them.</li>&#10;    <li>Maintain good relationship with the clients while successfully managing the schedule</li>&#10;    <li>Identify process and product improvement opportunities.</li>&#10;    <li>Successful Delivery issue resolution (internal and external).</li>&#10;    <li>Effective risk management and reporting to Sr. VP – Operations  </li>&#10;    <li>Client interaction &amp; communication</li>&#10;    <li>Team &amp; people management</li>&#10;    <li>Acts as the managing point of contact for the client for all aspects of activity in the engagement.</li>&#10;    <li>Communicates with Delivery managers and business sponsors to prioritize and schedule delivery based on resource allocation.</li>&#10;    <li>Ensures Delivery is staffed and tracked appropriately and conform to the development methodology.</li>&#10;    <li>Ensures Standard Operating Procedures (SOPs) and other guidelines/procedures are followed for internal and external change requests.</li>&#10;    <li>Proposes Delivery for process improvement, technical enhancements, and cost savings efforts</li>&#10;    <li>Assists client in organizational structures for optimum Delivery.</li>&#10;    <li>Will be responsible to manage, lead and motivate high potential Resources.</li>&#10;    <li>Developing engagement proposals and detailed engagement plans and schedules.</li>&#10;    <li>Negotiate with clients during pre-contract signing, through contract closure and during all phases of engagements in between.</li>&#10;    <li>Able to work with international customers on an ongoing basis.</li>&#10;    <li>Ensuring practice and engagement success including quality, financial performance and delivery to the customer.</li>&#10;    <li>Manage a varied staff that will include employees, and subcontractors.</li>&#10;    <li>Ensuring Practice and engagement compliance, training, testing and marketing requirements have been met.</li>&#10;    <li>To work along with the Sales team and plan for resource capabilities based on the Sales Pipeline.</li>&#10;    <li>Management of the customer expectations.</li>&#10;    <li>Technical and Delivery Management Leadership</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Vice President – Finance</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Assist in performing all tasks necessary to achieve the organization\'s mission and help execute staff succession and growth plans.</li>&#10;    <li>Train the Finance Unit and other staff on raising awareness and knowledge of financial management matters.</li>&#10;    <li>Work with the MD/CEO on the strategic vision including fostering and cultivating stakeholder relationships on city, state, and national levels, as well as assisting in the development and negotiation of contracts.</li>&#10;    <li>Participate in developing new business, specifically: assist the CEO and COO in identifying new funding opportunities, the drafting of prospective programmatic budgets, and determining cost effectiveness of prospective service delivery.</li>&#10;    <li>Assess the benefits of all prospective contracts and advise the Executive Team on programmatic design and implementation matters.</li>&#10;    <li>Ensure adequate controls are installed and that substantiating documentation is approved and available such that all purchases may pass independent and governmental audits.</li>&#10;    <li>Provide the COO with an operating budget. Work with the COO to ensure programmatic success through cost analysis support, and compliance with all contractual and programmatic requirements.</li>&#10;    <li>Oversee the management and coordination of all fiscal reporting activities for the organization including: organizational revenue/expense and balance sheet reports, reports to funding agencies, development and monitoring of organizational and contract/grant budgets.</li>&#10;    <li>Oversee all purchasing and payroll activity for staff and participants.</li>&#10;    <li>Develop and maintain systems of internal controls to safeguard financial assets of the organization and oversee Government awards and programs.</li>&#10;    <li>Attend Board and Subcommittee meetings; including being the lead staff on the Audit/Finance Committee.</li>&#10;    <li>Monitor banking activities of the organization.</li>&#10;    <li>Ensure adequate cash flow to meet the organization\'s needs.</li>&#10;    <li>Serve as one of the trustees and oversee administration and financial reporting of the organization\'s Savings and Retirement Plan.</li>&#10;    <li>Investigate cost-effective benefit plans and other fringe benefits which the organization may offer employees and potential employees with the goal of attracting and retaining qualified individuals.</li>&#10;    <li>Oversee the production of monthly reports including reconciliations with funders and pension plan requirements, as well as financial statements and cash flow projections for use by Executive management, as well as the Audit/Finance Committee and Board of Directors.</li>&#10;    <li>Assist in the design, implementation, and timely calculations of wage incentives, commissions, and salaries for the staff.</li>&#10;    <li>Oversee Accounts Payable and Accounts Receivable and ensure a disaster recovery plan is in place.</li>&#10;    <li>Oversee business insurance plans and health care coverage analysis.</li>&#10;    <li>Oversee the maintenance of the inventory of all fixed assets, including assets purchased with government funds (computers, etc.) assuring all are in accordance with federal regulations.</li>&#10;</ul>&#10;<p><br/>&#10;<strong><br/>&#10;Vice President – Sales, Marketing &amp; Alliances</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Develops and implements strategic marketing plans and sales plans and forecasts to achieve corporate objectives for products and services.</li>&#10;    <li>Develops and manages sales/marketing operating budgets.</li>&#10;    <li>Plans and oversees advertising and promotion activities including print, online, electronic media, and direct mail.</li>&#10;    <li>Develops and recommends product positioning, packaging, and pricing strategy to produce the highest possible long-term market share.</li>&#10;    <li>Achieves satisfactory profit/loss ratio and market share in relation to preset standards and industry and economic trends.</li>&#10;    <li>Ensures effective control of marketing results, and takes corrective action to guarantee that achievement of marketing objectives falls within designated budgets.</li>&#10;    <li>Oversees and evaluates market research and adjusts marketing strategy to meet changing market and competitive conditions.</li>&#10;    <li>Monitors competitor products, sales and marketing activities.</li>&#10;    <li>Establishes and maintains relationships with industry influencers and key strategic partners.</li>&#10;    <li>Guides preparation of marketing activity reports and presents to executive management.</li>&#10;    <li>Establishes and maintains a consistent corporate image throughout all product lines, promotional materials, and events.</li>&#10;    <li>Directs sales forecasting activities and sets performance goals accordingly.</li>&#10;    <li>Directs staffing, training, and performance evaluations to develop and control sales and marketing programs.</li>&#10;    <li>Directs market channel development activity and coordinates sales distribution by establishing sales territories, quotas, and goals.</li>&#10;    <li>Represents company at trade association meetings to promote product.</li>&#10;    <li>Meets with key clients, assisting sales representative with maintaining relationships and negotiating and closing deals.</li>&#10;    <li>Coordinates liaison between sales department and other sales related units.</li>&#10;    <li>Analyzes and controls expenditures of division to conform to budgetary requirements.</li>&#10;    <li>Assists other departments within organization to prepare manuals and technical publications.</li>&#10;    <li>Prepares periodic sales report showing sales volume, potential sales, and areas of proposed client base expansion.</li>&#10;    <li>Reviews and analyzes sales performances against programs, quotes and plans to determine effectiveness.</li>&#10;    <li>Directs product research and development.</li>&#10;    <li>Manages and directs staff including recruitment, selection and development to achieve Company goals and objectives.</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Vice President – HR &amp; Operations</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Responsible for senior level decision making and both day to day management and strategic direction of the Organization</li>&#10;    <li>Develop and implement an annual agenda for HR strategy in line with the business plan. Ensure HR plans support the needs of the business but are also flexible enough to cope with changes in the organization, as and when they occur</li>&#10;    <li>Provide information and reports on data such as staff turnover, references, cost per hire, training hours per person, etc.</li>&#10;    <li>Annually reviews and makes recommendations to Executive Management for improvement of company’s policies, procedures, and practices on personnel matters.</li>&#10;    <li>Maintains knowledge of industry trends and employment legislation and insures Agency\'s compliance.</li>&#10;    <li>Communicates Company HR policies and procedures and insure proper compliance is followed</li>&#10;    <li>Provide advice on and administer maternity and paternity leave cases. Responsible for resource planning for maternity re-joiners</li>&#10;    <li>Conduct training needs analysis and designs and implement a training plan with input from business heads. Manage costs to budget.</li>&#10;    <li>Ensure all staff receive appraisals in accordance with company policy and monitor probationary periods</li>&#10;    <li>Co-ordinate recruitment throughout the company through management of a recruitment team/HR team. Build relationships with recruiters, draft briefs, set up interviews where necessary. Interview senior hires when necessary</li>&#10;    <li>Deal with any performance or grievance issues in a legally compliant and professional way</li>&#10;    <li>Ensure all policies and procedures are up to date and legally compliant.</li>&#10;    <li>Maintain a succession plan for all departments</li>&#10;    <li>Involvement in all redundancy consultations</li>&#10;    <li>Ensure payroll is completed accurately and to deadline</li>&#10;    <li>Conduct occupational health referrals and providing pastoral support and advice to employees</li>&#10;    <li>organizational and space planning</li>&#10;    <li>Employee safety, welfare, wellness and health planning and Implementation ?</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Sr. Project Manager – Technology(s)</strong></p>&#10;<p><br/>&#10;The project manager in the offshore team is the Owner of the Project and would typically perform the following activities:</p>&#10;<ul>&#10;    <li>Managing projects</li>&#10;    <li>Delegating projects responsibilities</li>&#10;    <li>Managing Projects teams</li>&#10;    <li>Mentoring Teams</li>&#10;    <li>Preparing contracts and Proposals</li>&#10;    <li>Creating work specifications</li>&#10;    <li>Producing project plans</li>&#10;    <li>Evaluating work progression and quality</li>&#10;    <li>Negotiating with service providers and contractors</li>&#10;    <li>Supervising junior project managers</li>&#10;    <li>Networking with industry professionals</li>&#10;    <li>Interface with the onsite team/Client</li>&#10;    <li>Responsible for all Project management activities</li>&#10;    <li>Responsible for the offshore team and/or onsite team</li>&#10;    <li>Reports/Submits the project status to all the stakeholders</li>&#10;    <li>Implementing production, productivity, quality, and customer-service standards</li>&#10;    <li>Resolving problems and monitoring audits</li>&#10;    <li>Enhances department and organization reputation by accepting ownership for accomplishing new and different requests; exploring opportunities to add value to job accomplishments.</li>&#10;    <li>Co-ordinates with VP &amp; Head ensuring the project compliance with project plan</li>&#10;    <li>Responsible for the process implementation and improvement</li>&#10;    <li>People management</li>&#10;    <li>Conduct in-project appraisal</li>&#10;    <li>Accountable in ensuring the confidentiality of the company’s and clients’ information for the specific project they work on.</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Project Lead / Tech Lead </strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Leads planning, organizing and implementing software application projects.</li>&#10;    <li>Manages application delivery</li>&#10;    <li>Follows company’s SDLC and project management methodology, ensuring that all required steps are followed, all required deliverables are produced, and all approvals are obtained.</li>&#10;    <li>Responsible for Scope, Schedule and Quality of project deliverables</li>&#10;    <li>Participates in  Application Architecture discussion and plan</li>&#10;    <li>Identify project specific training needs.</li>&#10;    <li>Accountable for directing work effort of staff assigned to project or program</li>&#10;    <li>Owns project/program issue, resolution, and risk management.</li>&#10;    <li>Manages and oversees the full system development process, and turnover to production.</li>&#10;    <li>Conducts project meetings and is responsible for project planning, tracking and analysis.</li>&#10;    <li>Maintains regular contact with clients.</li>&#10;    <li>Coordinates and reports on project progress and accomplishments.</li>&#10;    <li>Provides technical and analytical support and guidance to project team members.</li>&#10;    <li>Assists in developing vendor statements of work, deliverables and Service Level Agreements.</li>&#10;    <li>Co-ordinates with Project Manager on Client Communication</li>&#10;    <li>Resource and people management</li>&#10;    <li>Mentoring Developers on OOPS/Web Projects desired</li>&#10;    <li>Conducts formal/informal training and learning sessions</li>&#10;    <li>Follows the security guidelines as per the Quality norms while accessing the client’s information of the assigned project.</li>&#10;</ul>&#10;<p> <br/>&#10;<br/>&#10;<strong>Senior Software Engineer</strong><br/>&#10;<br/><b>&#10;Responsibilities</b> </p>&#10;<ul>&#10;    <li>Implements software development tools and frameworks.</li>&#10;    <li>Design, code, test, and maintain software.</li>&#10;    <li>Follows established software development standards and best practices.</li>&#10;    <li>Leverage and enhance continuous build and deployment tools.</li>&#10;    <li>Leverage and follow Agile software development practices and techniques.</li>&#10;    <li>Responding promptly and professionally to bug reports.</li>&#10;    <li>Expected to conduct system analysis and development, with limited support from professional staff, to keep our systems current with changing technologies.</li>&#10;    <li>Analyze system specifications and translate system requirements to task specifications for junior programmers.</li>&#10;    <li>Responsible for analysis of current software applications including performance, diagnosis and troubleshooting of problem programs, and designing solutions to problematic programming.</li>&#10;    <li>Responsible for developing new software applications and proofing the software applications to develop needed changes to assure production of a quality product.</li>&#10;    <li>Writes, edits, and debugs new software applications for assigned projects, including necessary records and desired output.</li>&#10;    <li>Tests new programs to ensure that logic and syntax are correct, and that program results are accurate; assists lower-level programmers with programming assignments.</li>&#10;    <li>Document code consistently throughout the development process by listing a description of the program, special instructions, and any changes made in database tables on procedural, modular and database level.</li>&#10;    <li>Responsible for reading, understanding, and utilizing all part and assembly prints, forms, spreadsheets, bills of material, specification sheets, and technical references.</li>&#10;    <li>Responsible for utilizing tools and equipment involved in performance of essential functions of programming including measuring instruments.</li>&#10;    <li>Search, summarize and keep the team abreast of strategic information from all sources</li>&#10;    <li>Maintains client databases</li>&#10;    <li>Should contribute to writing proposals or papers.</li>&#10;    <li>Making presentations to customer or client audiences or professional peers.</li>&#10;    <li>Maintain positive client interactions.</li>&#10;    <li>Strong and effective inter-personal and communication skills and the ability to interact professionally with a diverse group of clients and staff.</li>&#10;    <li>Responsible for communicating with engineers and manufacturer\'s technical support staff regarding programming needs and performance.</li>&#10;    <li>Provide feedback to analysis/training staff about performance considerations / usability issues concerning software specifications and implementation.</li>&#10;    <li>Research and recommend software tools to management.</li>&#10;    <li>Provide assistance to testers and support personnel as needed to determine system problems.</li>&#10;    <li>Provide recommendations to management concerning issues of programmer productivity and software development management.</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Software Engineer</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b> </p>&#10;<ul>&#10;    <li>Reviewing &amp; Understanding Software Application Requirements</li>&#10;    <li>Develop software, architecture, specifications and technical interfaces.</li>&#10;    <li>Develop user interfaces and client displays</li>&#10;    <li>Develop, deliver and test software prototypes.</li>&#10;    <li>Build flexible data models and seamless integration points.</li>&#10;    <li>Innovate and develop high-value technology solutions to streamline processes.</li>&#10;    <li>Initiate and drive major changes in programs, procedures and methodology.</li>&#10;    <li>Coordinate with other developers and software professionals.</li>&#10;    <li>Working closely with Module Lead and providing updates</li>&#10;    <li>Coordinate software system installation and monitor equipment functioning to ensure specifications are met</li>&#10;    <li>Testing the product in controlled, real situations before going live</li>&#10;    <li>Maintaining the systems once they are up and running</li>&#10;    <li>Follows the security guidelines as per the ISMS norms while accessing the client’s information of the assigned project.</li>&#10;</ul>&#10;<p><br/>&#10; <br/>&#10;<strong><br/>&#10;Manager/Executive - Finance</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Responsible for senior level decision making and both day to day management and strategic direction of the Organization</li>&#10;    <li>Providing and interpreting financial information</li>&#10;    <li>Monitoring and interpreting cash flows and predicting future trends</li>&#10;    <li>Analyzing change and advising accordingly</li>&#10;    <li>Formulating strategic and long-term business plans</li>&#10;    <li>Researching and reporting on factors influencing business performance</li>&#10;    <li>Helping Associates with Financial advice and Concerns</li>&#10;    <li>Filing Taxes on time</li>&#10;    <li>Understands business dynamics and be prepared for all transactional activities</li>&#10;    <li>Developing financial management mechanisms that minimize financial risk</li>&#10;    <li>Conducting reviews and evaluations for cost-reduction opportunities</li>&#10;    <li>Managing company\'s financial accounting, monitoring and reporting systems</li>&#10;    <li>Liaising with auditors to ensure annual monitoring is carried out</li>&#10;    <li>Developing external relationships with appropriate contacts, e.g. auditors, solicitors, bankers and statutory</li>&#10;    <li>Producing accurate financial reports to specific deadlines</li>&#10;    <li>Managing budgets</li>&#10;    <li>Arranging new sources of finance for a company\'s debt facilities</li>&#10;    <li>Supervising staff</li>&#10;    <li>Keeping abreast of changes in financial regulations and legislation.</li>&#10;</ul>&#10;<p><br/>&#10;<strong><br/>&#10;Manager - Testing</strong></p>&#10;<p> </p>&#10;<ul>&#10;    <li>Test Manager is the authority of all functional activities with relation to testing and he is expected to update the details of the output to Head of Projects. Test Manager ensures that all-testing standards, guidelines and policies are practiced and strictly adhered to, across the Undertaken projects. Ensures that all testing resources are utilized at optimum levels.</li>&#10;</ul>&#10;<p><br/>&#10;The Senior Test Manager / Test Manager ensures:</p>&#10;<ul>&#10;    <li>Test plans are managed and controlled.</li>&#10;    <li>Test plan should be reviewed and ratified before base lining</li>&#10;    <li>Test resources performance is monitored constantly.   </li>&#10;    <li>All test resources have adequate testing knowledge.</li>&#10;    <li>Project Test schedules are adhered to standards and policies</li>&#10;    <li>Possible risks are identified in advance, risk impact is analyzed and mitigation is planned.</li>&#10;    <li>Change request management is planned, executed and recorded.</li>&#10;    <li>Smooth inter and intra group co-ordination functions.</li>&#10;    <li>All defects are tracked, analyzed and fixed.</li>&#10;    <li>Tracks Teams effort  in time sheets and the same assessed for Effort and Schedule variance with the base lined Test Team plan</li>&#10;    <li>Collect and Analyze the Testing Metrics to meet the objectives</li>&#10;    <li>Prepare the RCA and CAPA report for variances</li>&#10;    <li>Accountable in ensuring the confidentiality of the company’s and clients’ information for the specific project they work on.</li>&#10;</ul>&#10;<p>  <br/>&#10;<br/>&#10;<strong>Test Lead</strong></p>&#10;<ul>&#10;    <li>Test Lead takes care of all the test activities performed in his team and makes the Test Manager aware of status of the work undertaken by the team. Test Leader holds the responsibility of all test functions and also ensures that all testing standards, guidelines and policies are strictly adhered and practiced in the undertaken project. He is also expected to ensure that all testing resources are properly utilized</li>&#10;</ul>&#10;<p>The Test Team Leader ensures:</p>&#10;<ul>&#10;    <li>Test plans are prepared managed and controlled.</li>&#10;    <li>All test processes are religiously practiced.</li>&#10;    <li>All test resources have adequate testing knowledge and practiced.</li>&#10;    <li>All defects are tracked, analyzed and fixed.</li>&#10;    <li>All test reports are escalated to the Test Manager.</li>&#10;    <li>Possible risks are identified in advance, risk impact is analyzed and mitigation is planned.</li>&#10;    <li>Identify and define the Test Bed / Environment to ensure quality of application software and products</li>&#10;    <li>Reviews and approves resource allocation work matrix for his/her module</li>&#10;    <li>Monitor all planned test cases are properly designed and implemented.</li>&#10;    <li>All planned test cases, RTM, Module impact charts  are properly reviewed and executed</li>&#10;    <li>Review effort and severity index to the base lined test cases</li>&#10;    <li>Test Repository is managed and controlled</li>&#10;    <li>All testing processes are in place and control mechanisms are strictly followed.</li>&#10;    <li>Change request management is planned, executed and recorded.</li>&#10;    <li>Smooth inter and intra group co-ordination functions.</li>&#10;    <li>Process compliance and  improvement  suggestions for a project</li>&#10;    <li>Plan, monitor &amp; execute regression and adhoc testing</li>&#10;    <li>Defect Summary &amp; Analysis report  is recorded and escalated to Test Manager and Project Manager</li>&#10;    <li>Test Closure and Project Closure</li>&#10;    <li>Should follow the security guidelines as per the ISMS norms while accessing the client’s information of the assigned project.</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Senior Test Engineer</strong></p>&#10;<ul>&#10;    <li>Senior Test engineer takes care of all the test activities performed in his module and makes the Test Leader aware of status of the work undertaken by the team. Senior Test engineer holds the responsibility of all test functions in his/her module and also ensures that all testing standards, guidelines and policies are strictly adhered and practiced in the undertaken project.</li>&#10;</ul>&#10;<p>The Senior Test Engineer ensures:</p>&#10;<ul>&#10;    <li>All test processes are religiously practiced.</li>&#10;    <li>Complete requirement collection, validation and analysis</li>&#10;    <li>Acts as an point of contact for that module and mentors, nurtures his module members</li>&#10;    <li>Conducts brain storming sessions and knowledge transfers for a particular module</li>&#10;    <li>Identifies and escalates possible risks in his/her module to the Test Leader</li>&#10;    <li>Prepares resource allocation work matrix for his/her module</li>&#10;    <li>Creates Module impact charts</li>&#10;    <li>Creates Requirement Traceability Matrix</li>&#10;    <li>Creates Test Scenarios for a module</li>&#10;    <li>Involves in test cases designing and base lining along with the Test Leader</li>&#10;    <li>Reviews effort and severity index to the base lined test cases</li>&#10;    <li>Performs all the test cases peer reviews and escalates to the Test Leader</li>&#10;    <li>Executes test cases and performs black box /white box/grey box testing of the application</li>&#10;    <li>All testing processes are in place and control mechanisms are strictly followed.</li>&#10;    <li>Smooth inter and intra group co-ordination functions in his/her module</li>&#10;    <li>Process compliance and  adherence for a project</li>&#10;    <li>Performs  smoke, regression, retesting  and adhoc testing</li>&#10;    <li>Reports, retests defects and assists in successful defect closure</li>&#10;    <li>All test reports are reviewed and escalated to the Test Leader</li>&#10;    <li>Involves in Test Closure</li>&#10;    <li>Should follow the security guidelines as per the ISMS norms while accessing the client’s information of the assigned project.</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Test Engineer</strong></p>&#10;<ul>&#10;    <li>Test Engineer is expected to ensure that all testing standards, guidelines and policies are strictly adhered and practiced in projects. Test Engineer carries out the testing process and all encountered defects are recorded and tracked. Test Engineer ensures that defects are fixed and controlled.</li>&#10;</ul>&#10;<p><br/>&#10;The Test Engineer ensures:</p>&#10;<ul>&#10;    <li>Test life cycle process is religiously practiced.</li>&#10;    <li>Complete requirement collection, validation and analysis</li>&#10;    <li>Involves in brain storming sessions and knowledge transfers with respect to the requirements for a project</li>&#10;    <li>Possible risks are identified in advance and escalate to the Module Leader.</li>&#10;    <li>Assists Module Leader  in creation of  Module impact charts</li>&#10;    <li>Assists Module Leader  in creation  Requirement Traceability Matrix</li>&#10;    <li>Validates the Test scenario document and adds his/her inputs to it</li>&#10;    <li>Involves in detailed test cases designing and base lining</li>&#10;    <li>Assign effort and severity index to the base lined test cases</li>&#10;    <li>Executes test cases and performs black box /white box/grey box testing of the application</li>&#10;    <li>All testing processes are in place and control mechanisms are strictly followed.</li>&#10;    <li>Smooth inter and intra group co-ordination functions in his/her module</li>&#10;    <li>Process compliance and  adherence for a project</li>&#10;    <li>Performs  smoke, regression, retesting  and adhoc testing</li>&#10;    <li>All test reports are prepared  and escalated to the Module  Leader</li>&#10;    <li>Reports, retests defects and assists in successful defect closure</li>&#10;    <li>Involves in Test Closure</li>&#10;    <li>Should follow the security guidelines as per the ISMS norms while accessing the client’s information of the assigned project.</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Vice President - Corporate Communication </strong><strong><br/>&#10;</strong><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Create communications plans for internal and external announcements including creative campaigns, new hires, acquisitions and more.</li>&#10;    <li>Create a niche company position and develop the brand</li>&#10;    <li>Devises key messages, timelines, press releases and other materials to facilitate dissemination of news.</li>&#10;    <li>Establish and grow relationships with key reporters in the advertising and marketing industries to boost company PR coverage.</li>&#10;    <li>Establish and grow relationships with key account people</li>&#10;    <li>Unearth interesting stories about our people and culture and promote internally and externally.</li>&#10;    <li>Support new business, human resources, creative department and others in reviewing and editing internal communications.</li>&#10;    <li>Identify traditional and unique opportunities for the company to tell its story.</li>&#10;    <li>Drafts communications from senior management</li>&#10;    <li>Assist in the creation of department and executive presentations including merchandizing materials used as new-business tools and reports.  </li>&#10;    <li>Oversee the planning and execution of internal and external events.</li>&#10;    <li>Develops Communication Policy</li>&#10;    <li>Media &amp; Investor relations</li>&#10;    <li>Crisis Communication</li>&#10;    <li>Corporate Citizenship &amp; Ethics</li>&#10;    <li>Executive Communication Issues</li>&#10;    <li>Building a Communication Culture</li>&#10;    <li>Leadership and Communication</li>&#10;    <li>Ensuring confidentiality of the company information to be maintained while dealing with Public</li>&#10;</ul>&#10;<p><br/>&#10;<strong><br/>&#10;<br/>&#10;Sr. Usability Engineer - Corporate Communication </strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Develop Creative Ideas for Company’s Digital and Advertising Needs</li>&#10;    <li>Plan and conduct high quality full-life cycle usability engineering programs for a specific product/line including user requirements gathering and validation and design evaluation</li>&#10;    <li>Coordinate and track implementation of recommendations among designers and developers</li>&#10;    <li>Independently carry out all aspects of usability research, including planning, justification, recruitment, logistics, conducting evaluations, analyzing results, documenting issues, and proposing and prioritizing recommendations</li>&#10;    <li>Co-lead with Marketing Strategy team members discovery research and requirements gathering; support site strategies, and deliver competitive UX analysis, and personas and scenarios, or other user experience research as applicable</li>&#10;    <li>Contribute as a collaborative team member with creative direction, designers, project management, strategists, and technologists to create impactful designs that support business, brand, and customer</li>&#10;    <li>Work with visual designers and developers to ensure interaction design intent is met, and have the flexibility to innovatively adapt original designs when needed</li>&#10;    <li>Lead interaction design strategy from a piece of rich content to a native app to a website, and steward UX strategy through design and development</li>&#10;    <li>Create customer journeys, experience maps, ecosystem diagrams that account for different users, channels, screen and customer journeys within multiple contexts</li>&#10;    <li>Produce graphical sketches, prototypes, wireframes, storyboards, scenarios, flow diagrams, and site maps to effectively communicate design intent</li>&#10;    <li>Estimate Interaction Design department efforts involved in scoping and selling a project/new business, and ensure best practice tools and deliverables are being applied</li>&#10;    <li>Manage and mentor junior members of a growing Usability team</li>&#10;    <li>Maintain subject matter leadership and professional development through active participation in global or local Interaction Design community groups</li>&#10;    <li>Reports to the  Manager – Corporate Communication</li>&#10;    <li>Strong command of search engine research and reporting resources and best practices</li>&#10;    <li>Coordinate with product teams to gather requirements and to ensure UI standards are understood and followed</li>&#10;    <li>Deliver UI recommendations in the form of documentation, page designs, story-boards, or a moderate level of prototyping.</li>&#10;    <li>Champion Usability principles to developers and product managers</li>&#10;    <li>Co-author portions of UI Standards</li>&#10;    <li>Produce specifications describing user characteristics, user needs, and user interface requirements for product development</li>&#10;    <li>Develop usability test plans and materials</li>&#10;    <li>Employ user research methodologies to identify user requirements</li>&#10;    <li>Planning and conducting contextual research, analyzing data, interpreting results, and presenting research findings to product development teams</li>&#10;    <li>Quickly learn new business areas in software solutions</li>&#10;</ul>&#10;<p>           <br/>&#10;<br/>&#10;<strong>Manager - Human Resources</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Leads and directs the Human Resource team to deliver a comprehensive HR service to the company</li>&#10;    <li>Measure employee satisfaction and identify areas that require improvement</li>&#10;    <li>Coaching managers on performance management issues and processes</li>&#10;    <li>Providing guidance on development for managers and their teams</li>&#10;    <li>Implementing the training and development agenda; identify areas that need attention and improvement</li>&#10;    <li>Managing talent and succession planning; taking overall responsibility for recruitment activity and campaigns</li>&#10;    <li>Reward advise and support employees on company benefits</li>&#10;    <li>implementation of new HR  policies, procedures and processes</li>&#10;    <li>Ensure all company policies and procedures are up to date in line with current employment law. Ensure line managers are up to date with changes to any policies.</li>&#10;    <li>Working with senior managers, coaching them and advising on all people issues</li>&#10;    <li>Deal with complex disciplinary/grievance and HR issues, using HR and company knowledge evidencing appropriate decision making skills</li>&#10;    <li>Crafting of business and people solutions</li>&#10;    <li>Managing priorities between casework and projects</li>&#10;    <li>Managing HR budgets</li>&#10;    <li>Maintains the work structure by updating job requirements and job descriptions for all positions.</li>&#10;    <li>Contributes to team effort by accomplishing related results as needed.</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Sr. HR Executive</strong></p>&#10;<p><b><br/>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Maintains organization staff by establishing a recruiting, testing, and interviewing program; counseling managers on candidate selection; conducting and analyzing exit interviews; recommending changes.</li>&#10;    <li>Prepares employees for assignments by establishing and conducting orientation and training programs.</li>&#10;    <li>Maintains a pay plan by conducting periodic pay surveys; scheduling and conducting job evaluations; preparing pay budgets; monitoring and scheduling individual pay actions; recommending, planning, and implementing pay structure revisions.</li>&#10;    <li>Maintains historical human resource records by designing a filing and retrieval system; keeping past and current records.</li>&#10;    <li>Completes human resource operational requirements by scheduling and assigning employees; following up on work results.</li>&#10;    <li>Joining formalities</li>&#10;    <li>Employee Record creation, maintenance and tracking</li>&#10;    <li>Leaves tracking and record</li>&#10;    <li>Induction and Training coordination</li>&#10;    <li>Performance - Review coordination</li>&#10;    <li>Separation coordination etc</li>&#10;    <li>Coordinating and organizing various Employee events</li>&#10;    <li>Following the ISMS norms, in terms of confidentiality and security of information, while handling the employee information</li>&#10;</ul>&#10;<p><br/>&#10;<strong><br/>&#10;HR Executive  </strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>All Core HR Activities</li>&#10;    <li>New hire orientation with Inductions.</li>&#10;    <li>Implementing the training and development agenda; identify areas that need attention and improvement. One Soft Skills training every quarter. Drive an effective Learning and development agenda that impacts the employees and the businesses.</li>&#10;    <li>One motivational / educational email daily to all employees</li>&#10;    <li>Associates’ events every second Friday  </li>&#10;    <li>Have an updated repository of Job descriptions for all roles in the organization along with measurable performance indicators for each role</li>&#10;    <li>Communicate with employees and business heads for better alignment on project allocations</li>&#10;    <li>Handles dynamics at the workplace and help employees to overcome crisis situation</li>&#10;    <li>Managing HR budgets</li>&#10;    <li>Deals with complex disciplinary/grievance and HR issues, using HR and company knowledge evidencing appropriate decision making skills</li>&#10;    <li>Ensures all company policies and procedures are up to date in line with current employment law. Ensure line managers are up to date with changes to any policies.</li>&#10;    <li>Plans for employee’s performance appraisal; develop tools for appraisal, job evaluation and development.</li>&#10;    <li>Management development , succession planning, leadership development, organizational design</li>&#10;    <li>Motivational Posters development</li>&#10;    <li>Competency Building / Mapping</li>&#10;    <li>Participate in Recruitment</li>&#10;    <li>All new recruitment activities, CVs database backup - Prepare a centralized document of all recruitment agencies and universities with contact number and Notes</li>&#10;    <li>Following the ISMS norms, in terms of confidentiality and security of information, while handling the employee information</li>&#10;</ul>&#10;<p> <br/>&#10;<br/>&#10;<strong><br/>&#10;Talent Acquisition Team or Recruitment Head</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Coordinate with the departmental heads to understand the resource required for the company.</li>&#10;    <li>Assign the requirements to the recruiters and track the inflow of employees.</li>&#10;    <li>Track the resource requisitions raised by the Project Managers and ensure the closures.</li>&#10;    <li>Ensure to recruit such people for the company, who adds value.</li>&#10;    <li>Ensuring that his/her team is following the required measures in maintaining the recruitment information with security and confidentiality.</li>&#10;</ul>&#10;<p><br/>&#10;<strong>IT Recruiters</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Candidate searching through Job Portals</li>&#10;    <li>Understanding of the Job Description received from the hiring managers and Job Analysis.</li>&#10;    <li>Sourcing and searching of profiles as per the JDs</li>&#10;    <li>Initial Interviews/ screening of candidates (profiles) short-listed by the technical panel</li>&#10;    <li>Interview VP &amp; Head coordination till case closure</li>&#10;    <li>Hired candidate management till the day of on-boarding</li>&#10;    <li>Maintenance of recruitment information with confidentiality and security</li>&#10;</ul>&#10;<p><br/>&#10;<strong><br/>&#10;Manager - Facilities and Administration </strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<p><br/>&#10;General Administration</p>&#10;<ul>&#10;    <li>Housekeeping Maintenance.</li>&#10;    <li>Infrastructure Maintenance related to Air condition and electrical.</li>&#10;    <li>Building Access and ID card Maintenance.</li>&#10;    <li>Vendor Management.</li>&#10;    <li>Procurement and Distribution of Stationary and House Keeping material.</li>&#10;    <li>Arrangement of Staff Welfare and Pantry Management.</li>&#10;    <li>Attendance Management.</li>&#10;    <li>Fulfillment of User’s Request</li>&#10;    <li>Receiving Requests for purchase.</li>&#10;    <li>Verifying the requirement whether approved or disapproved.</li>&#10;    <li>Collection of information for requested item’s status of availability with the approved vendor list.</li>&#10;    <li>If required Identification of New Vendor.</li>&#10;    <li>Preparation of Purchase Order.</li>&#10;    <li>Request for Payment after reviewed by Purchase Committee.</li>&#10;    <li>Documentation.</li>&#10;    <li>Verification of Item delivered along with user requested for</li>&#10;</ul>&#10;<p> <br/>&#10;Confidentiality &amp; Security</p>&#10;<ul>&#10;    <li>Setting up procedures in handling the various tasks of the department that ensures confidentiality of the company and departmental information</li>&#10;    <li>Ensure that the set procedure is followed by the team in the day to day activities</li>&#10;    <li>Mention various measures to be taken in maintaining the purchased stock securely</li>&#10;    <li>Ensure all the vendor related documents and the employee related documents are secured </li>&#10;</ul>&#10;<p><br/>&#10;<strong>Manager - Network &amp; Systems Administration </strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<p> </p>&#10;<ul>&#10;    <li>Planning, Execution, Supervision and Management of all required NW and Systems Infrastructure.</li>&#10;    <li>Leads Enterprise Network (both system and Voice), Security and Desktop Management. Always meet stringent     deadlines and achieves business results.</li>&#10;    <li>Ensures Optimization of Network and Application performance</li>&#10;    <li>Ensure a highly secure Network</li>&#10;    <li>Procure all IT and infrastructure related components</li>&#10;    <li>Ensure availability of Up-to-date and adequate hardware technology to serve business requirements</li>&#10;    <li>Layouts Enterprise-wide connectivity plans, Network DR planning, alternate and failsafe routing strategies</li>&#10;    <li>Results oriented with an organized approach to operational performance with the ability to set high standards and encourage adherence to processes and systems.</li>&#10;    <li>Active Member of Corporate Procurement Committee</li>&#10;    <li>Migrate to a highly competitive, cost-efficient network leveraging emerging technologies.</li>&#10;    <li>Accountable in ensuring the electronic information maintenance with high security and confidentiality for all departments; and the data maintenance with all in compliance with ISMS norms.</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Sr Executive – Network &amp; Systems Administration</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<p> </p>&#10;<ul>&#10;    <li>Manages all Enterprise Network (both system and Voice), Security and Desktop Management. Always meet stringent deadlines and achieves business results.</li>&#10;    <li>Ensures Optimization of Network and Application performance</li>&#10;    <li>Ensure a highly secure Network</li>&#10;    <li>Regular Network and Systems related awareness emails</li>&#10;    <li>Collect information to analyze and evaluate existing systems</li>&#10;    <li>Reporting of any intrusions</li>&#10;    <li>Regular Backup of all online data</li>&#10;    <li>Troubleshoot and resolve hardware, software, and connectivity problems, including user access and configurations</li>&#10;    <li>Record and maintain hardware and software inventories, site and/or server licensing, and user access and security.</li>&#10;    <li>Research, plan, install, configure, troubleshoot, maintain and upgrade operating systems, weekly</li>&#10;    <li>Research, plan, install, configure, troubleshoot, maintain and upgrade hardware and software interfaces with the operating system</li>&#10;    <li>Prepare detailed flow charts and diagrams existing systems capabilities and processes.</li>&#10;    <li>Research and recommend hardware and software development, purchase, and use.</li>&#10;    <li>Install, configure, and upgrade desktop hardware and peripherals to include; network cards, printers, modems, mice and add-in boards.</li>&#10;    <li>Document system problems and resolutions for future reference.</li>&#10;    <li>Other duties as assigned.</li>&#10;</ul>&#10;<p> <br/>&#10;<strong><br/>&#10;Learning &amp; Development Team</strong></p>&#10;<p><b><br/>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Establish and maintain a Training and Development institution for the organization.</li>&#10;    <li>Formulate a Training and Development Policy that meets the training needs of the organization.</li>&#10;    <li>Identify training and development needs within the organization through job analysis, appraisal schemes and regular consultation with Project Managers.</li>&#10;    <li>Design training and development programs based on organization needs.</li>&#10;    <li>Consider the costs of the training and development programs that are being planned and to keep within budgets.</li>&#10;    <li>Work in a team to produce training and development programs that are satisfactory to all relevant parties such as Project Managers, Team Leaders.</li>&#10;    <li>Plan, design and organize training sessions.</li>&#10;    <li>Produce training materials for in-house courses.</li>&#10;    <li>Manage the delivery of training and development programs.</li>&#10;    <li>Deliver training in a manner that is easily understandable to trainees and in a way that motivates them.</li>&#10;    <li>Monitor and review the progress of trainees by using questionnaires and by having discussions with Project Managers.</li>&#10;    <li>Ensure that statutory training requirements are met.</li>&#10;    <li>Evaluate the training and development programs.</li>&#10;    <li>Continually amend the training and development programs as necessary, in order to adapt to the changes that occur in the work environment.</li>&#10;    <li>Help Project Managers/Team Leaders to solve specific training problems either on a one-to- one basis or in groups.</li>&#10;    <li>Ensure Software Development Life Cycle (SDLC) processes are followed across all the projects with perfect documentation.</li>&#10;    <li>Ensuring various measures to be taken in the day to day operations for the maintenance of the Training related documents with security.</li>&#10;    <li>Maintenance of confidentiality about the company information while dealing with the vendors for Training.</li>&#10;</ul>&#10;<p><br/>&#10;<br/>&#10;<strong>Senior Manager - Sales </strong></p>&#10;<p><b><br/>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Identifying and striking strategic alliances and partners for diversifying the offerings and widening the product &amp; market base.</li>&#10;    <li>Initiating contacts with major consulting companies for their IT needs.</li>&#10;    <li>Getting into vendor ship with direct clients for their project and staffing solution needs.</li>&#10;    <li>Presales related activities like Systems Requirement Studies, RFP’s, Value Propositions and Business proposals</li>&#10;    <li>Actively involving in scouting and sourcing clients directly through proactive marketing strategies.</li>&#10;    <li>Identifying and nurturing the prospects through effective “Account Management” strategies.</li>&#10;    <li>Involved in developing the business prospect’s databases in all the horizontal and vertical markets.</li>&#10;    <li>Identifying and widening the market base.</li>&#10;    <li>Responsible to build Second Line Leadership</li>&#10;    <li>Identifies business opportunities by identifying prospects and evaluating their position in the industry; researching and analyzing sales options.</li>&#10;    <li>Sells IT Services and Solutions by establishing contact and developing relationships with prospects; recommending solutions.</li>&#10;    <li>Maintains relationships with clients by providing support, information, and guidance; researching and recommending new opportunities; recommending profit and service improvements.</li>&#10;    <li>Identifies services and Solutions improvements or new products by remaining current on industry trends, market activities, and competitors.</li>&#10;    <li>Prepares reports by collecting, analyzing, and summarizing information.</li>&#10;    <li>Maintains quality service by establishing and enforcing organization standards.</li>&#10;    <li>Maintains professional and technical knowledge by attending educational workshops; reviewing professional publications; establishing personal networks; benchmarking state-of-the-art practices; participating in professional societies.</li>&#10;    <li>Contributes to team effort by accomplishing related results as needed.</li>&#10;    <li>Monitor the scope of business globally, and in setting a process to enhance the business prospective to the company.</li>&#10;    <li>Building strategies for each account globally identified for a potential large account and map the potential clients in terms of generating an Account plan.</li>&#10;    <li>Participates in Sales Meetings with the sales group.</li>&#10;    <li>Maintains the confidentiality of the company data while dealing with the clients.</li>&#10;</ul>&#10;<p><b>SQA </b></p><p><b>Responsibilities</b></p><ul type="disc"><li class="MsoNormal"><span>Coordinate with SEPG team to get inputs for the process changes </span></li><li class="MsoNormal"><span>Provide support to modify process documents </span></li><li class="MsoNormal"><span>Conduct joint reviews with SEPG team to review the updated Process documents </span></li><li class="MsoNormal"><span>Plan for QMS release Conduct QMS Trainings Develop deployment Plan </span></li><li class="MsoNormal"><span>Help project teams on tailor the QMS Process </span></li><li class="MsoNormal"><span>Provide facilitation to Project Managers </span></li><li class="MsoNormal"><span>Provide deployment status to management </span></li><li class="MsoNormal"><span>Develop &amp; Publish audit calendar </span></li><li class="MsoNormal"><span>Conduct Internal Audit Communicate audit status to teams &amp; management </span></li><li class="MsoNormal"><span>Coordinate with project teams in creating PIID (Practice implementation Indicator description) </span></li><li class="MsoNormal"><span>Review PIIDs for all the appraisal projects </span></li><li class="MsoNormal"><span>Conduct Mock interviews to the teams </span></li><li class="MsoNormal"><span>Helps projects for the closure of pre appraisal </span></li><li class="MsoNormal"><span>Support organization in successful conduct of Final appraisal</span></li></ul><p>&#10;<strong><br/>&#10;Manager/Executive  - Sales</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Prospecting and generating new business, both from existing and new customers in domains of Software services and Solutions</li>&#10;    <li>Coordinating with all the pre - sales activity to ensure consistently high quality of proposals to the prospects</li>&#10;    <li>Establish the credibility within the account at the right levels to win the trust and the respect of the client.</li>&#10;    <li>Develop statement of work for engagements and client\'s sign-off. In some cases, this may be delegated to the Project Manager from the delivery center. The SOW is mandatory for every major phase of every project.</li>&#10;    <li>Putting the right contractual processes in place - development agreements, contracts, statement of work, etc.</li>&#10;    <li>Ensuring the maintenance of confidentiality of the company data while dealing with the clients.</li>&#10;    <li>Ensuring the information he/she deals with is maintained with high security</li>&#10;    <li>Prospecting of companies from the database &amp; Lead generations through Cold calling &amp; e-mails</li>&#10;    <li>Lead qualifications, promotions to opportunities and validations of the leads</li>&#10;    <li>Educate the prospects about the company through cold calling and e-mails</li>&#10;    <li>Sets up Conference Calls for the Sales Managers to follow-up on the warm lead</li>&#10;    <li>Handle Conference calls with the customers (warm leads) generated by the team</li>&#10;</ul>&#10;<p><br/>&#10;<strong><br/>&#10;Senior Manager - Pre-Sales </strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Works collaboratively with various teams on proposals, responses to RFPs, RFIs, Tenders and other pre-sales material.</li>&#10;    <li>Owns the entire presales process right from definition, execution, continuous improvement and developing process aids. Reports into VP-delivery.</li>&#10;    <li>Develops understanding of the business case for Application, Project requirements, and drive clarity of scope.</li>&#10;    <li>Acts as the single-point-of-contact for the entire proposal cycle.</li>&#10;    <li>Conducts user requirements analysis to match customer needs to software packages</li>&#10;    <li>Undertakes tasks requiring technical analysis, diagnosis and problem solving to qualify the product/solution fit and define support needs.</li>&#10;    <li>Strategies the response with VP – delivery, arrive at the proposal structure, develop activity plan, and review with the sales team and VP delivery.</li>&#10;    <li>Working closely with Delivery teams, solution architects and support services depending on specific expertise and information needed from them, for the proposal.</li>&#10;    <li>Conducts research on the clients, market, vendor competition, possible tie-ups and Go-to-market strategies that will be required to develop a sound response strategy and content.</li>&#10;    <li>Develops reusable artifacts and collaterals that is required for producing consistent, comprehensive story on our capabilities, to put into effective use in the proposals</li>&#10;    <li>Conducts win-loss analysis on all the proposals.</li>&#10;    <li>Proactively works with sales teams to understand the market and client dynamics.</li>&#10;    <li>Managing the company as well the clients’ information with high security.</li></ul><p><strong><br/></strong></p><p>&#10;<strong>Technical Writer</strong></p>&#10;<p><br/><b>&#10;Responsibilities</b></p>&#10;<ul>&#10;    <li>Developing documentations for large projects. The ability to install and configure the software and use it to perform the functions described in the documentation.</li>&#10;    <li>Understanding of Software development Process</li>&#10;    <li>Strong experience using Microsoft Office and Adobe Acrobat.</li>&#10;    <li>Experience using content management/collaborative authoring tools a plus.</li>&#10;    <li>Excellent oral and written communication skills as well as the ability to succeed as an individual contributor having good amount of IT industry knowledge.</li>&#10;    <li>Ensuring security in maintenance of the documents</li>&#10;</ul>&#10;<p> </p>',
+      '<p><span style="color: rgb(0, 0, 128);"><strong>All Ray Business Technologies Pvt Technolod peripherals to include; network cards, printers, modems, mice and add-in boards.</li>&#10',
     pageName: 'RolesandResponsibilities',
     departmentName: '',
     departmentId: 0,
     type: 'HandBook',
-    sectionId: 0,
-    sectionName: '',
     country: '',
     handCountry: [
       {
@@ -56,17 +56,15 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     empCountry: 'INDIA',
   },
   {
-    id: 33,
-    displayOrder: 9,
+    id: 3,
+    displayOrder: 53,
     title: 'Employment Types and Compensation Policy',
     description:
-      '<p><b>Employment Categories </b></p>&#10;<p>Based on the conditions of association agreed at the time of  employment, the  associates of Ray Business Technologies are classified  into the following  categories:</p>&#10;<ul>&#10;    <li><strong>Full-Time</strong></li>&#10;    <li><strong>Part-Time</strong></li>&#10;    <li><strong>Temporary / Contract/ Consultant</strong> </li></ul>&#10;<p><strong>Regular Full Time Associates</strong></p>&#10;<p>Unless otherwise specified at the time of  hire, you are denominated a  “regular full-time” employee. A regular full-time  employee is normally  scheduled to work and do work a schedule of 40 hours or  more per week.  As a regular full-time employee, you are eligible for the  employee  benefits described in this handbook.</p><p>&#10;An employee duly appointed by  the Managing Director of the Company, who  works the standard working hours of  the Company each week and is on  the Payroll of Ray Business Technologies and is  an Full-time employee</p>&#10;<p><strong>Part-Time</strong> <strong>Associates</strong></p><p>&#10;Associates duly appointed by the Company who work a regular  schedule of  less than 40 hours per week and are on the Payroll of Ray Business   Technologies are Part time employees.</p>&#10;<p><strong>Temporary / Contractual Staff</strong> </p>&#10;<p>There are times when the Company needs temporary staff to meet project   commitments. Temporary/Contract staffs are identified at the time of  hire and  are generally employed for specified short periods; however,  such assignments  may be extended. If you are a temporary employee, you  are not on the company’s  payroll and not eligible for employee benefits  except where mandated by  applicable law. The company or you may  terminate a temporary/contract employment  at any time as specified in  the contract terms.</p>&#10;<p><b>Compensation</b></p>&#10;<p>Ray Business Technologies strives to provide competitive compensation   packages that will motivate and reward employees for excellence in  performance.  While a package is uniquely designed to meet the needs of  each individual  employee, the company follows a common compensation  levels.</p>&#10;<p>The salient  features of the company’s philosophy on compensation are:<br/>&#10; </p>&#10;<ul>&#10;    <li>Each employee is compensated according to his/her level of  performance and  contribution to the Company. Any individual’s  compensation is determined by  considering the performance, the range  for that job, and the pay of peers.</li>&#10;    <li>Compensation levels are reviewed annually. There may also be  intermediate  revisions in certain cases where the Management deems  necessary.</li>&#10;    <li>Variable component will not be paid to the employees who have resigned.</li>&#10;    <li>The company will be guided by independently consulted Legal and  Tax  advisories on all issues relating to the deduction of Tax at  source. Ray  Business Technologies will ensure that the appropriate  legal dues are deducted  from all employees. However, employees are  requested to comply with the required  documentation procedures to  ensure that all deductions are accurate.</li>&#10;    <li>Salaries would be paid by the 7th day of every month.</li>&#10;</ul>&#10;<p><b> Any changes in the amendments, HR department will be notifying all the associates through email.</b></p><p><b>test</b></p>',
+      '<p><b>Employment Categories </b></p>&#10;<p>Based on the conditions of association </b></p>',
     pageName: 'EmployeeCategoriesCodyu',
     departmentName: '',
     departmentId: 0,
     type: 'HandBook',
-    sectionId: 0,
-    sectionName: '',
     country: '',
     handCountry: [
       {
@@ -80,6 +78,925 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 5,
         name: 'PHILIPPINES',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 4,
+    displayOrder: 4,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span st81, 165);">&#34;span><span style="color: rgb(0, 0, 0);">: <65);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddrrdd4',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 5,
+    displayOrder: 5,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="c65);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddddasd3',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 6,
+    displayOrder: 6,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 2;">&#34;type&#34;</span><span stspan><span style="color:34;HandBook&#34;</span>',
+    pageName: 'testedddd32',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 7,
+    displayOrder: 7,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span sty><s style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'tested23ddd',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 8,
+    displayOrder: 8,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span s rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testedddde',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 9,
+    displayOrder: 9,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'teeestedddd',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 10,
+    displayOrder: 3,
+    title: 'testing',
+    description:
+      'ghndyhhhn165);">&#34;s rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'rg',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 11,
+    displayOrder: 11,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<spanr: rgb(4, 81, 165);">&#34;s</spa<span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddddfds',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 12,
+    displayOrder: 12,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span lor: rgb(0, 0, 0);">: </span><span style"color: r(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testgredddd',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 13,
+    displayOrder: 13,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rb(63, 21, 21);">&#3;type&#34;</span><span , 165">&#34; rgb(0, 0, 0);">: </spn><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddhfdd',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 14,
+    displayOrder: 14,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span olor: rgb(0, 0, 0);">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddddsdd',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 15,
+    displayOrder: 15,
+    title: 'testing',
+    description: 'ghndyhhhnnnnnn<span style="colospan>',
+    pageName: 'testeddddrrt',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 16,
+    displayOrder: 16,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="colostyle="co165);">&#34;HandBook&#34;</span>',
+    pageName: 'ggfss',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 17,
+    displayOrder: 17,
+    title: 'testing',
+    description: 'ghndyhhhnnnnnn<span style="&#34;</span>',
+    pageName: 'testedddd332',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 18,
+    displayOrder: 18,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color:dBook&#34;</span>',
+    pageName: 'testedddd67',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 19,
+    displayOrder: 19,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnn style="color: rgb(163, 21, 21);"tyle="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testedddd76',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 20,
+    displayOrder: 20,
+    title: 'testing',
+    description: 'ghndyhhhnnnnnn&#34;</span>',
+    pageName: 'testedddd767',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 21,
+    displayOrder: 21,
+    title: 'testing',
+    description: 'ghndyhhhnnnnnn<span style=;</span>',
+    pageName: 'testeddddrfss',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 22,
+    displayOrder: 22,
+    title: 'Roles and Responsibilities',
+    description:
+      '<prong>We welcomf Ray Business Technolod peripherals to include; nnd add-in boards.</li>&#10',
+    pageName: 'RolesandResponsibilities',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+      {
+        id: 3,
+        name: 'USA',
+      },
+      {
+        id: 5,
+        name: 'PHILIPPINES',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 23,
+    displayOrder: 23,
+    title: 'Employment Types and Compensation Policy',
+    description: '<p><b>Empl></p>',
+    pageName: 'EmployeeCategoriesCodyu',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+      {
+        id: 5,
+        name: 'PHILIPPINES',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 24,
+    displayOrder: 24,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span le="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddddtdee',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 25,
+    displayOrder: 25,
+    title: 'testing',
+    description:
+      'pan style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgbook&#34;</span>',
+    pageName: 'testeddddbfss',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 26,
+    displayOrder: 26,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 2;">&#34;type&#34;</span><span 0,>&#34;HandBook&#34;</span>',
+    pageName: 'testeddddbcxvsd',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 27,
+    displayOrder: 27,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 20, 0 </span><s style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testedddddgsf',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 28,
+    displayOrder: 28,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<;type&#34;</span><span style="color: rgb(0, 0, 0);">: </, 0);">: </span><span stycolor: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddddsdfzx',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 29,
+    displayOrder: 29,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span 0;">: </span><span style="color: rgb(>',
+    pageName: 'fdsdfer',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 30,
+    displayOrder: 30,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span style="color: rgb(0, 0, 0);">: </span><span style="color: b(4, 81, 165);">&#34;',
+    pageName: 'testeddddrd',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 31,
+    displayOrder: 31,
+    title: 'testing',
+    description: 'ghndyhhhnnnnnn<span stylan>',
+    pageName: 'fdsderwr',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 32,
+    displayOrder: 32,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnn4;type&#34;</span><span  </span><span style"colorandBook&#34;</span>',
+    pageName: 'testeddddvvv',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 33,
+    displayOrder: 33,
+    title: 'testing',
+    description:
+      'ghnd:&#34;span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddddbbds',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 34,
+    displayOrder: 34,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddddfdssszx',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 35,
+    displayOrder: 35,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span stgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'dffdsfasd',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 36,
+    displayOrder: 36,
+    title: 'testing',
+    description:
+      'ghn;">: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testeddddvdss',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 37,
+    displayOrder: 37,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span "color: rgb(4, 81, /span>',
+    pageName: 'gdsdsdf',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 38,
+    displayOrder: 38,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34/span>',
+    pageName: 'testeddddggss',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 39,
+    displayOrder: 39,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnn style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span ;</span>',
+    pageName: 'testeddddfss',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 40,
+    displayOrder: 40,
+    title: 'testing',
+    description: 'ghndyhhhn&#34;type&#34;</span><span an>',
+    pageName: 'testedddddf',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 41,
+    displayOrder: 41,
+    title: 'testing',
+    description: 'ghndyhhh, 21, 21);">&#34;type&#34;</span><span an>',
+    pageName: 'testeddddfwsa',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 42,
+    displayOrder: 42,
+    title: 'testing',
+    description: 'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#3',
+    pageName: 'testeddddfds',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
+      },
+    ],
+    empCountry: 'INDIA',
+  },
+  {
+    id: 43,
+    displayOrder: 43,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn<span sty 21, 21);">&#34;type&#34;</span><span an>',
+    pageName: 'testeddddfds',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [
+      {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
+        id: 2,
+        name: 'INDIA',
       },
     ],
     empCountry: 'INDIA',

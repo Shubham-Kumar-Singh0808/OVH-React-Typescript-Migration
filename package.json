@@ -74,6 +74,7 @@
     "msw": "^0.39.2",
     "multiselect-react-dropdown": "^2.0.22",
     "prop-types": "^15.8.1",
+    "qs": "^6.11.0",
     "react": "^17.0.2",
     "react-autocomplete": "^1.8.1",
     "react-cropper": "^2.1.8",
@@ -99,6 +100,7 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
     "@types/jest": "^27.5.0",
+    "@types/qs": "^6.9.7",
     "@types/react-datepicker": "^4.4.1",
     "@types/react-router-dom": "^5.1.8",
     "auto-changelog": "~2.3.0",

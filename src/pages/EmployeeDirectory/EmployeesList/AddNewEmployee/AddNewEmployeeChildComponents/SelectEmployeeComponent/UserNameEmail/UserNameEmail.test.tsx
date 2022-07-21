@@ -1,6 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 // eslint-disable-next-line import/named
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
@@ -30,5 +30,26 @@ describe('Add Employee UserNameEmail Component', () => {
     )
 
     screen.debug()
+  })
+
+  test('should be able to call onChange', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <UserNameEmail
+          usernameChangeHandler={jest.fn()}
+          onAllowedUserChangeHandler={jest.fn()}
+          username={'dog'}
+          isUserAllowed={false}
+          dynamicFormLabelProps={jest.fn()}
+        />
+      </ReduxProvider>,
+    )
+
+    const username = screen.getByPlaceholderText('User Name')
+    fireEvent.change(username, 'dog')
+    expect(username).toHaveValue('dog')
+
+    const email = screen.getByTestId('user-email-input')
+    expect(email).toHaveValue('dog')
   })
 })

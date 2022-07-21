@@ -21,6 +21,7 @@ const OSelect = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
+          data-testId="selectLabel"
           {...dynamicFormLabelProps(
             'technology',
             'col-sm-3 col-form-label text-end',
@@ -33,6 +34,7 @@ const OSelect = ({
             id={name}
             size="sm"
             aria-label={name}
+            data-testid={`form${name}`}
             name={name}
             value={selectedValue}
             onChange={onChangeHandler}
