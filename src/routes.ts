@@ -65,7 +65,7 @@ const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
 const MailConfiguration = React.lazy(
-  () => import('./pages/Settings/MailConfiguration/employeeEmailTemplate'),
+  () => import('./pages/Settings/MailConfiguration/EmployeeEmailTemplate'),
 )
 
 const AddNewEmployee = React.lazy(
@@ -164,6 +164,11 @@ const routes = [
     component: AddNewEmployee,
   },
   {
+    path: '/mailTemplates',
+    name: 'Mail Configuration',
+    component: MailConfiguration,
+  },
+  {
     path: '/hiveReport',
     name: 'Hive Activity Report',
     component: HiveActivityReport,
@@ -177,11 +182,6 @@ const routes = [
     path: '/editEmployee/:employeeId',
     name: 'Edit Employee',
     component: EditEmployee,
-  },
-  {
-    path: '/mailTemplates',
-    name: 'Mail Configuration',
-    component: MailConfiguration,
   },
 ]
 

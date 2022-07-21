@@ -182,6 +182,9 @@ th {
 input.capetalized {
   text-transform: capitalize;
 }
+.model-text {
+  color:$blue-employeeEmailTemplateText;
+}
 
 .shift-info {
   display: contents;
