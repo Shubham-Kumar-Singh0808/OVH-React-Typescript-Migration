@@ -199,7 +199,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
         </CFormLabel>
         <CCol sm={3}>
           <DatePicker
-            className="form-control"
+            className="form-control form-control-sm sh-date-picker"
             data-testid="date-picker"
             placeholderText="dd/mm/yy"
             name="fromDate"
@@ -222,7 +222,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
         </CFormLabel>
         <CCol sm={3}>
           <DatePicker
-            className="form-control"
+            className="form-control form-control-sm sh-date-picker"
             data-testid="date-picker-to-date"
             placeholderText="dd/mm/yy"
             name="toDate"
