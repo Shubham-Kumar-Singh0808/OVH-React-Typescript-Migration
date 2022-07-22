@@ -47,7 +47,7 @@ const AddNewMailTemplateType = () => {
   return (
     <>
       <CRow className="mb-35">
-        <CCol sm={4} className="new-category-col">
+        <CCol sm={3} className="col-sm-3 col-form-label text-end">
           <CFormLabel {...formLabelProps}>Template Type:</CFormLabel>
         </CCol>
         <CCol sm={4} className="new-category-col">
@@ -59,7 +59,7 @@ const AddNewMailTemplateType = () => {
             placeholder={'Template Type'}
           />
         </CCol>
-        <CCol sm={4} className="d-flex align-items-center new-category-col">
+        <CCol sm={3} className="d-flex align-items-center new-category-col">
           <CButton
             color="info"
             className="text-white btn-ovh"

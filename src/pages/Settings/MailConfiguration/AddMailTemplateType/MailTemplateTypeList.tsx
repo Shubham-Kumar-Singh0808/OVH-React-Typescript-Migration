@@ -13,6 +13,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { AddEditEmployeeSkillsProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
+import OCard from '../../../../components/ReusableComponent/OCard'
 
 const MailTemplateTypeList = ({
   backButtonHandler,
@@ -31,24 +32,34 @@ const MailTemplateTypeList = ({
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CCardHeader>
-            <h4 className="h4">Add Template Type</h4>
-          </CCardHeader>
-          <CCardBody className="ps-0 pe-0">
-            <CRow>
-              <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
-                <CButton color="info btn-ovh me-1" onClick={backButtonHandler}>
-                  <i className="fa fa-arrow-left  me-1"></i>Back
-                </CButton>
-              </CCol>
-              <CCol xs={12}>
-                <AddNewMailTemplateType />
-              </CCol>
-              <CCol xs={12}>
-                <MailTemplateTypeTable />
-              </CCol>
-            </CRow>
-          </CCardBody>
+          <OCard
+            className="mb-4 myprofile-wrapper"
+            title="Add Template Type"
+            CBodyClassName="ps-0 pe-0"
+            CFooterClassName="d-none"
+          >
+            <CCardBody className="ps-0 pe-0">
+              <CRow>
+                <CCol
+                  xs={12}
+                  className="gap-2 d-md-flex justify-content-md-end"
+                >
+                  <CButton
+                    color="info btn-ovh me-1"
+                    onClick={backButtonHandler}
+                  >
+                    <i className="fa fa-arrow-left  me-1"></i>Back
+                  </CButton>
+                </CCol>
+                <CCol xs={12}>
+                  <AddNewMailTemplateType />
+                </CCol>
+                <CCol xs={12}>
+                  <MailTemplateTypeTable />
+                </CCol>
+              </CRow>
+            </CCardBody>
+          </OCard>
         </>
       ) : (
         <CCol>
