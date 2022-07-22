@@ -319,6 +319,6 @@ export const addNewTemplateAPiConfig: AddNewTemplateApi = {
 export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
   getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
   addNewMailTemplateType: apiPrefix + '/mailTemplates/addMailTemplateType',
-  deleteMailTemplateType: apiPrefix + '/mailTemplates/deleteMailTemplateType',
   updateMailTemplateType: apiPrefix + '/mailTemplates/updateMailTemplateType',
+  deleteMailTemplateType: apiPrefix + '/mailTemplates/deleteMailTemplateType',
 }

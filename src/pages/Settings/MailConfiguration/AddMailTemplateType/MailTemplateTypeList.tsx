@@ -20,13 +20,13 @@ const MailTemplateTypeList = ({
 }: AddEditEmployeeSkillsProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(
-    reduxServices.addNewmailTemplateType.selectors.isLoading,
+    reduxServices.addNewMailTemplateType.selectors.isLoading,
   )
 
   useEffect(() => {
-    dispatch(reduxServices.addNewmailTemplateType.getMailTemplateTypes())
-    dispatch(reduxServices.addNewmailTemplateType.actions.setCurrentPage(1))
-    dispatch(reduxServices.addNewmailTemplateType.actions.setPageSize(20))
+    dispatch(reduxServices.addNewMailTemplateType.getMailTemplateTypes())
+    dispatch(reduxServices.addNewMailTemplateType.actions.setCurrentPage(1))
+    dispatch(reduxServices.addNewMailTemplateType.actions.setPageSize(20))
   }, [dispatch])
   return (
     <>

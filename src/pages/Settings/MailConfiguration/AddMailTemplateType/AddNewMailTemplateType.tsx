@@ -21,22 +21,22 @@ const AddNewMailTemplateType = () => {
 
   const toastElement = (
     <OToast
-      toastMessage="Template Type successfully added"
-      toastColor="danger"
+      toastMessage="Mail template type added successfully"
+      toastColor="success"
     />
   )
 
   const handleAddTemplateType = async () => {
-    const addFamilyMemberResultAction = await dispatch(
-      reduxServices.addNewmailTemplateType.addMailTemplateType(newTemplateType),
+    const addTemplateTypeResultAction = await dispatch(
+      reduxServices.addNewMailTemplateType.addMailTemplateType(newTemplateType),
     )
     if (
-      reduxServices.addNewmailTemplateType.addMailTemplateType.fulfilled.match(
-        addFamilyMemberResultAction,
+      reduxServices.addNewMailTemplateType.addMailTemplateType.fulfilled.match(
+        addTemplateTypeResultAction,
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
-      dispatch(reduxServices.addNewmailTemplateType.getMailTemplateTypes())
+      dispatch(reduxServices.addNewMailTemplateType.getMailTemplateTypes())
       setNewTemplateType('')
     }
   }

@@ -79,5 +79,5 @@ export const reduxServices = {
   employeeMailConfiguration: employeeMailConfigurationService,
   addNewMailTemplate: addTemplateService,
   employee: employeeService,
-  addNewmailTemplateType: mailTemplateTypeService,
+  addNewMailTemplateType: mailTemplateTypeService,
 }

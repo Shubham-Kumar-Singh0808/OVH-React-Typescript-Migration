@@ -33,7 +33,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
   const [templateId, setTemplateId] = useState(0)
 
   const mailTemplateTypes = useTypedSelector(
-    reduxServices.addNewmailTemplateType.selectors.mailTemplateType,
+    reduxServices.addNewMailTemplateType.selectors.mailTemplateType,
   )
   console.log(mailTemplateTypes)
   const pageFromState = useTypedSelector(
@@ -64,7 +64,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
   }
 
   useEffect(() => {
-    dispatch(reduxServices.addNewmailTemplateType.getMailTemplateTypes())
+    dispatch(reduxServices.addNewMailTemplateType.getMailTemplateTypes())
   }, [dispatch])
 
   const getItemNumber = (index: number) => {
@@ -84,18 +84,18 @@ const MailTemplateTypeTable = (): JSX.Element => {
   const handleConfirmDeleteFamilyDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(
-      reduxServices.addNewmailTemplateType.deleteMailTemplateType(
+      reduxServices.addNewMailTemplateType.deleteMailTemplateType(
         toDeleteMailTemplateTypeId,
       ),
     )
     dispatch(reduxServices.category.actions.setCurrentPage(currentPage))
     dispatch(reduxServices.category.actions.setPageSize(pageSize))
     if (
-      reduxServices.addNewmailTemplateType.deleteMailTemplateType.fulfilled.match(
+      reduxServices.addNewMailTemplateType.deleteMailTemplateType.fulfilled.match(
         deleteFamilyMemberResultAction,
       )
     ) {
-      dispatch(reduxServices.addNewmailTemplateType.getMailTemplateTypes())
+      dispatch(reduxServices.addNewMailTemplateType.getMailTemplateTypes())
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
@@ -109,16 +109,16 @@ const MailTemplateTypeTable = (): JSX.Element => {
 
   const saveMailTemplateButtonHandler = async () => {
     const saveMailTemplateTypeResultAction = await dispatch(
-      reduxServices.addNewmailTemplateType.updateMailTemplateType(
+      reduxServices.addNewMailTemplateType.updateMailTemplateType(
         editTemplateTypeDetails,
       ),
     )
     if (
-      reduxServices.addNewmailTemplateType.updateMailTemplateType.fulfilled.match(
+      reduxServices.addNewMailTemplateType.updateMailTemplateType.fulfilled.match(
         saveMailTemplateTypeResultAction,
       )
     ) {
-      dispatch(reduxServices.addNewmailTemplateType.getMailTemplateTypes())
+      dispatch(reduxServices.addNewMailTemplateType.getMailTemplateTypes())
       setIsLeaveCategoryDetailEdit(false)
       dispatch(
         reduxServices.app.actions.addToast(
