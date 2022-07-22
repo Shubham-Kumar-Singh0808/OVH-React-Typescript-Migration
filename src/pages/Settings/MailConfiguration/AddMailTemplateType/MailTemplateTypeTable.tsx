@@ -24,8 +24,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { MailTemplateType } from '../../../../types/Settings/MailConfiguration/AddMailTemplateType/addTemplateType'
 
 const MailTemplateTypeTable = (): JSX.Element => {
-  const [isLeaveCategoryDetailEdit, setIsLeaveCategoryDetailEdit] =
-    useState<boolean>(false)
+  const [isMailTemplateEdit, setIsMailTemplateEdit] = useState<boolean>(false)
   const initialMailTemplateType = {} as MailTemplateType
   const [editTemplateTypeDetails, setEditTemplateTypeDetails] = useState(
     initialMailTemplateType,
@@ -35,7 +34,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
   const mailTemplateTypes = useTypedSelector(
     reduxServices.addNewMailTemplateType.selectors.mailTemplateType,
   )
-  console.log(mailTemplateTypes)
+
   const pageFromState = useTypedSelector(
     reduxServices.category.selectors.pageFromState,
   )
@@ -81,18 +80,20 @@ const MailTemplateTypeTable = (): JSX.Element => {
     setToDeleteMailTemplateTypeId(id)
   }
 
-  const handleConfirmDeleteFamilyDetails = async () => {
+  const handleConfirmDeleteMailTemplateType = async () => {
     setIsDeleteModalVisible(false)
-    const deleteFamilyMemberResultAction = await dispatch(
+    const deleteMailTemplateTypeResultAction = await dispatch(
       reduxServices.addNewMailTemplateType.deleteMailTemplateType(
         toDeleteMailTemplateTypeId,
       ),
     )
-    dispatch(reduxServices.category.actions.setCurrentPage(currentPage))
-    dispatch(reduxServices.category.actions.setPageSize(pageSize))
+    dispatch(
+      reduxServices.addNewMailTemplateType.actions.setCurrentPage(currentPage),
+    )
+    dispatch(reduxServices.addNewMailTemplateType.actions.setPageSize(pageSize))
     if (
       reduxServices.addNewMailTemplateType.deleteMailTemplateType.fulfilled.match(
-        deleteFamilyMemberResultAction,
+        deleteMailTemplateTypeResultAction,
       )
     ) {
       dispatch(reduxServices.addNewMailTemplateType.getMailTemplateTypes())
@@ -100,7 +101,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Family Detail deleted successfully"
+            toastMessage="Template Type deleted successfully"
           />,
         ),
       )
@@ -119,12 +120,12 @@ const MailTemplateTypeTable = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.addNewMailTemplateType.getMailTemplateTypes())
-      setIsLeaveCategoryDetailEdit(false)
+      setIsMailTemplateEdit(false)
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Leave Category has been modified."
+            toastMessage="Template Type has been modified."
           />,
         ),
       )
@@ -132,7 +133,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
   }
 
   const editTemplateTypeButtonHandler = (id: number, name: string): void => {
-    setIsLeaveCategoryDetailEdit(true)
+    setIsMailTemplateEdit(true)
     setTemplateId(id)
     setEditTemplateTypeDetails({
       id,
@@ -151,7 +152,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
   }
 
   const cancelMailTemplateTypeButtonHandler = () => {
-    setIsLeaveCategoryDetailEdit(false)
+    setIsMailTemplateEdit(false)
   }
 
   return (
@@ -176,7 +177,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
               <CTableHeaderCell scope="row">
                 {getItemNumber(index)}
               </CTableHeaderCell>
-              {isLeaveCategoryDetailEdit && templateType.id === templateId ? (
+              {isMailTemplateEdit && templateType.id === templateId ? (
                 <CTableDataCell scope="row">
                   <div className="edit-time-control">
                     <CFormInput
@@ -193,14 +194,13 @@ const MailTemplateTypeTable = (): JSX.Element => {
                 <CTableDataCell scope="row">{templateType.name}</CTableDataCell>
               )}
               <CTableDataCell scope="row">
-                {isLeaveCategoryDetailEdit && templateType.id === templateId ? (
+                {isMailTemplateEdit && templateType.id === templateId ? (
                   <>
                     <CButton
                       color="success"
                       data-testid={`sh-save-btn${index}`}
                       className="btn-ovh me-1"
                       onClick={saveMailTemplateButtonHandler}
-                      // disabled={!isEditButtonEnabled}
                     >
                       <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     </CButton>
@@ -291,9 +291,9 @@ const MailTemplateTypeTable = (): JSX.Element => {
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
-        confirmButtonAction={handleConfirmDeleteFamilyDetails}
+        confirmButtonAction={handleConfirmDeleteMailTemplateType}
       >
-        {`Do you really want to delete this ?`}
+        {`Do you really want to delete s Type ?`}
       </OModal>
     </>
   )
