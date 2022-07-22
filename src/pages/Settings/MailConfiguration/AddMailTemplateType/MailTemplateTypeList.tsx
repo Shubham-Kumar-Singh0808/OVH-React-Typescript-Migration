@@ -51,7 +51,7 @@ const MailTemplateTypeList = ({
                     <i className="fa fa-arrow-left  me-1"></i>Back
                   </CButton>
                 </CCol>
-                <CCol xs={12}>
+                <CCol xs={12} className="mt-4 mb-4">
                   <AddNewMailTemplateType />
                 </CCol>
                 <CCol xs={12}>

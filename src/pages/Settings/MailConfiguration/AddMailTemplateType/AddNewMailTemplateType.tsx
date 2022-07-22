@@ -36,6 +36,8 @@ const AddNewMailTemplateType = () => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
+      dispatch(reduxServices.addNewmailTemplateType.getMailTemplateTypes())
+      setNewTemplateType('')
     }
   }
 
@@ -43,14 +45,20 @@ const AddNewMailTemplateType = () => {
     htmlFor: 'inputNewTemplateType',
     className: 'col-form-label category-label',
   }
+  const danger = 'text-danger'
+  const white = 'text-white'
 
   return (
     <>
-      <CRow className="mb-35">
-        <CCol sm={3} className="col-sm-3 col-form-label text-end">
-          <CFormLabel {...formLabelProps}>Template Type:</CFormLabel>
-        </CCol>
-        <CCol sm={4} className="new-category-col">
+      <CRow className="mt-0 mb-0">
+        <CFormLabel
+          {...formLabelProps}
+          className="col-sm-2 col-form-label text-end"
+        >
+          Template Type:
+          <span className={newTemplateType ? white : danger}>*</span>
+        </CFormLabel>
+        <CCol sm={4}>
           <CFormInput
             type="text"
             id="inputNewTemplateType"
@@ -59,7 +67,7 @@ const AddNewMailTemplateType = () => {
             placeholder={'Template Type'}
           />
         </CCol>
-        <CCol sm={3} className="d-flex align-items-center new-category-col">
+        <CCol>
           <CButton
             color="info"
             className="text-white btn-ovh"

@@ -1,8 +1,8 @@
 import { LoadingState } from '../../../commonTypes'
 
 export type MailTemplateType = {
-  id: 5
-  name: 'Support Management'
+  id: number
+  name: string
 }
 
 export type MailTemplateTypeState = {

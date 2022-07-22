@@ -1,6 +1,7 @@
 import {
   CButton,
   CCol,
+  CFormInput,
   CRow,
   CTable,
   CTableBody,
@@ -9,7 +10,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import CIcon from '@coreui/icons-react'
 import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -20,11 +21,21 @@ import { currentPageData } from '../../../../utils/paginationUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { MailTemplateType } from '../../../../types/Settings/MailConfiguration/AddMailTemplateType/addTemplateType'
 
 const MailTemplateTypeTable = (): JSX.Element => {
+  const [isLeaveCategoryDetailEdit, setIsLeaveCategoryDetailEdit] =
+    useState<boolean>(false)
+  const initialMailTemplateType = {} as MailTemplateType
+  const [editTemplateTypeDetails, setEditTemplateTypeDetails] = useState(
+    initialMailTemplateType,
+  )
+  const [templateId, setTemplateId] = useState(0)
+
   const mailTemplateTypes = useTypedSelector(
     reduxServices.addNewmailTemplateType.selectors.mailTemplateType,
   )
+  console.log(mailTemplateTypes)
   const pageFromState = useTypedSelector(
     reduxServices.category.selectors.pageFromState,
   )
@@ -51,6 +62,10 @@ const MailTemplateTypeTable = (): JSX.Element => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
+
+  useEffect(() => {
+    dispatch(reduxServices.addNewmailTemplateType.getMailTemplateTypes())
+  }, [dispatch])
 
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
@@ -92,6 +107,53 @@ const MailTemplateTypeTable = (): JSX.Element => {
     }
   }
 
+  const saveMailTemplateButtonHandler = async () => {
+    const saveMailTemplateTypeResultAction = await dispatch(
+      reduxServices.addNewmailTemplateType.updateMailTemplateType(
+        editTemplateTypeDetails,
+      ),
+    )
+    if (
+      reduxServices.addNewmailTemplateType.updateMailTemplateType.fulfilled.match(
+        saveMailTemplateTypeResultAction,
+      )
+    ) {
+      dispatch(reduxServices.addNewmailTemplateType.getMailTemplateTypes())
+      setIsLeaveCategoryDetailEdit(false)
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Leave Category has been modified."
+          />,
+        ),
+      )
+    }
+  }
+
+  const editTemplateTypeButtonHandler = (id: number, name: string): void => {
+    setIsLeaveCategoryDetailEdit(true)
+    setTemplateId(id)
+    setEditTemplateTypeDetails({
+      id,
+      name,
+    })
+  }
+
+  const handleEditMailTemplateHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+
+    setEditTemplateTypeDetails((values) => {
+      return { ...values, ...{ [name]: value } }
+    })
+  }
+
+  const cancelMailTemplateTypeButtonHandler = () => {
+    setIsLeaveCategoryDetailEdit(false)
+  }
+
   return (
     <>
       <CTable striped>
@@ -109,26 +171,88 @@ const MailTemplateTypeTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentPageItems.map((category, index) => {
-            return (
-              <CTableRow key={index}>
-                <CTableHeaderCell scope="row">
-                  {getItemNumber(index)}
-                </CTableHeaderCell>
-                <CTableDataCell>{category.name}</CTableDataCell>
-                <CTableDataCell>
-                  <CButton
-                    color="danger"
-                    size="sm"
-                    data-testid={`category-delete-btn${index}`}
-                    onClick={() => handleShowDeleteModal(category.id)}
-                  >
-                    <CIcon className="text-white" icon={cilTrash} />
-                  </CButton>
+          {currentPageItems.map((templateType, index) => (
+            <CTableRow key={index}>
+              <CTableHeaderCell scope="row">
+                {getItemNumber(index)}
+              </CTableHeaderCell>
+              {isLeaveCategoryDetailEdit && templateType.id === templateId ? (
+                <CTableDataCell scope="row">
+                  <div className="edit-time-control">
+                    <CFormInput
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={editTemplateTypeDetails.name}
+                      onChange={handleEditMailTemplateHandler}
+                      placeholder={'Template Type'}
+                    />
+                  </div>
                 </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+              ) : (
+                <CTableDataCell scope="row">{templateType.name}</CTableDataCell>
+              )}
+              <CTableDataCell scope="row">
+                {isLeaveCategoryDetailEdit && templateType.id === templateId ? (
+                  <>
+                    <CButton
+                      color="success"
+                      data-testid={`sh-save-btn${index}`}
+                      className="btn-ovh me-1"
+                      onClick={saveMailTemplateButtonHandler}
+                      // disabled={!isEditButtonEnabled}
+                    >
+                      <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                    </CButton>
+                    <CButton
+                      color="warning"
+                      className="btn-ovh me-1"
+                      onClick={cancelMailTemplateTypeButtonHandler}
+                    >
+                      <i className="fa fa-times" aria-hidden="true"></i>
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      size="sm"
+                      data-testid={`category-delete-btn${index}`}
+                      onClick={() => handleShowDeleteModal(templateType.id)}
+                    >
+                      <CIcon className="text-white" icon={cilTrash} />
+                    </CButton>
+                  </>
+                ) : (
+                  <>
+                    <CButton
+                      color="info"
+                      data-testid={`sh-edit-btn${index}`}
+                      className="btn-ovh me-1"
+                      onClick={() => {
+                        editTemplateTypeButtonHandler(
+                          templateType.id,
+                          templateType.name,
+                        )
+                      }}
+                    >
+                      <i
+                        className="fa fa-pencil-square-o"
+                        aria-hidden="true"
+                      ></i>
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      size="sm"
+                      data-testid={`category-delete-btn${index}`}
+                      onClick={() => handleShowDeleteModal(templateType.id)}
+                    >
+                      <CIcon className="text-white" icon={cilTrash} />
+                    </CButton>
+                  </>
+                )}
+              </CTableDataCell>
+
+              <></>
+            </CTableRow>
+          ))}
         </CTableBody>
       </CTable>
       <CRow>

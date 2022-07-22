@@ -55,6 +55,26 @@ const deleteMailTemplateType = createAsyncThunk<
   }
 })
 
+const updateMailTemplateType = createAsyncThunk<
+  number | undefined,
+  MailTemplateType,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'emailTemplate/updateMailTemplateType',
+  async (templateType: MailTemplateType, thunkApi) => {
+    try {
+      return await mailTemplateTypeApi.updateMailTemplateType(templateType)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialMailTemplateTypeState: MailTemplateTypeState = {
   mailTemplateType: [],
   isLoading: ApiLoadingState.idle,
@@ -112,6 +132,7 @@ const mailTemplateTypeThunk = {
   getMailTemplateTypes,
   addMailTemplateType,
   deleteMailTemplateType,
+  updateMailTemplateType,
 }
 
 const mailTemplateSelectors = {

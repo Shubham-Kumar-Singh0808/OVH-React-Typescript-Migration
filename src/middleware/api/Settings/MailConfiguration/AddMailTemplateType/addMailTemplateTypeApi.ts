@@ -10,7 +10,7 @@ import { MailTemplateType } from '../../../../../types/Settings/MailConfiguratio
 
 const getMailTemplateTypes = async (): Promise<MailTemplateType[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: addNewMailTemplateTypeAPiConfig.addNewMailTemplateType,
+    url: addNewMailTemplateTypeAPiConfig.getMailTemplateTypes,
     method: AllowedHttpMethods.get,
   })
 
@@ -24,11 +24,23 @@ const addMailTemplateType = async (
   const requestConfig = getAuthenticatedRequestConfig({
     url: addNewMailTemplateTypeAPiConfig.addNewMailTemplateType,
     method: AllowedHttpMethods.post,
-    params: {
+    data: {
       name,
     },
   })
 
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateMailTemplateType = async (
+  mailTemplateType: MailTemplateType,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: addNewMailTemplateTypeAPiConfig.updateMailTemplateType,
+    method: AllowedHttpMethods.put,
+    data: mailTemplateType,
+  })
   const response = await useAxios(requestConfig)
   return response.data
 }
@@ -38,7 +50,7 @@ const deleteMailTemplateType = async (
 ): Promise<MailTemplateType[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: addNewMailTemplateTypeAPiConfig.deleteMailTemplateType,
-    method: AllowedHttpMethods.get,
+    method: AllowedHttpMethods.delete,
     params: {
       id,
     },
@@ -52,6 +64,7 @@ const mailTemplateTypeApi = {
   getMailTemplateTypes,
   deleteMailTemplateType,
   addMailTemplateType,
+  updateMailTemplateType,
 }
 
 export default mailTemplateTypeApi
