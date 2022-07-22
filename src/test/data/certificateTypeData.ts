@@ -146,6 +146,102 @@ export const mockCertificateType: CertificateType[] = [
     technologyName: '.Net',
     certificateType: 'MVC Certificate',
   },
+  {
+    id: 51,
+    technologyId: 52,
+    technologyName: '.Nettes',
+    certificateType: 'MVC sda',
+  },
+  {
+    id: 112,
+    technologyId: 121,
+    technologyName: '.sda',
+    certificateType: 'asdfasd',
+  },
+  {
+    id: 151,
+    technologyId: 62,
+    technologyName: '.dsae',
+    certificateType: 'MVC dgdfsa',
+  },
+  {
+    id: 55,
+    technologyId: 672,
+    technologyName: '.sdljkl',
+    certificateType: 'asda',
+  },
+  {
+    id: 77,
+    technologyId: 123,
+    technologyName: '.sdaQWWE',
+    certificateType: 'GDS Certificate',
+  },
+  {
+    id: 78,
+    technologyId: 872,
+    technologyName: '.ASDF',
+    certificateType: 'MVC ASD',
+  },
+  {
+    id: 79,
+    technologyId: 92,
+    technologyName: '.DFGD',
+    certificateType: 'MVC DFGDSS',
+  },
+  {
+    id: 80,
+    technologyId: 244,
+    technologyName: '.SDFSDFASE',
+    certificateType: 'MVC ASDSD',
+  },
+  {
+    id: 81,
+    technologyId: 452,
+    technologyName: '.DSFRY',
+    certificateType: 'MVC YGS',
+  },
+  {
+    id: 82,
+    technologyId: 253,
+    technologyName: '.NSDAet',
+    certificateType: 'ASDS Certificate',
+  },
+  {
+    id: 83,
+    technologyId: 556,
+    technologyName: '.NetASD',
+    certificateType: 'SDAAA Certificate',
+  },
+  {
+    id: 84,
+    technologyId: 243,
+    technologyName: '.ZXCZXX',
+    certificateType: 'MVC ZXAAAS',
+  },
+  {
+    id: 85,
+    technologyId: 554,
+    technologyName: '.DGFGAAA',
+    certificateType: 'MVDSDFC aSS',
+  },
+  {
+    id: 86,
+    technologyId: 332,
+    technologyName: '.SDFGDAAAS',
+    certificateType: 'MDASVC DASDW',
+  },
+  {
+    id: 87,
+    technologyId: 442,
+    technologyName: '.NFDGet',
+    certificateType: 'SDGTT Certificate',
+  },
+  {
+    id: 88,
+    technologyId: 665,
+    technologyName: '.DFGSAAAA',
+    certificateType: 'MVC CSFDFFFF',
+  },
 ]
 
 export const mockAllTechnology: Technology[] = [

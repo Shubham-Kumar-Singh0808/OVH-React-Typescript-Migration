@@ -47,6 +47,10 @@ const EmployeeHandbookTable = (
     setCurrentPage(1)
   }
 
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   const tableHeaderCellPropSNo = {
     width: '6%',
     scope: 'col',
@@ -60,11 +64,11 @@ const EmployeeHandbookTable = (
     scope: 'col',
   }
   const tableHeaderCellPropDisplayOrder = {
-    width: '8%',
+    width: '10%',
     scope: 'col',
   }
   const tableHeaderCellPropCountry = {
-    width: '52%',
+    width: '50%',
     scope: 'col',
   }
   const tableHeaderCellPropActions = {
@@ -105,7 +109,7 @@ const EmployeeHandbookTable = (
     <>
       {employeeHandbooks.length ? (
         <>
-          <CTable striped responsive className="mt-5">
+          <CTable striped responsive align="middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell {...tableHeaderCellPropSNo}>
@@ -132,7 +136,9 @@ const EmployeeHandbookTable = (
               {employeeHandbooks.map((employeeHandbook, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {getItemNumber(index)}
+                    </CTableDataCell>
                     <CTableDataCell>{employeeHandbook.title}</CTableDataCell>
                     <CTableDataCell>{employeeHandbook.pageName}</CTableDataCell>
                     <CTableDataCell>
@@ -161,15 +167,22 @@ const EmployeeHandbookTable = (
                       </ul>
                     </CTableDataCell>
                     <CTableDataCell className="align-items-end">
-                      <CButton color="info" className="btn-ovh me-1 text-white">
+                      <CButton
+                        size="sm"
+                        color="info"
+                        className="btn-ovh me-1"
+                        data-testid={`handbook-edit-btn${index}`}
+                      >
                         <i
                           className="fa fa-pencil-square-o"
                           aria-hidden="true"
                         ></i>
                       </CButton>
                       <CButton
+                        size="sm"
+                        data-testid={`handbook-delete-btn${index}`}
                         color="danger"
-                        className="btn-ovh me-1 text-white"
+                        className="btn-ovh me-1"
                         onClick={() =>
                           handleShowDeleteModal(
                             employeeHandbook.id as number,
@@ -222,15 +235,18 @@ const EmployeeHandbookTable = (
         </CCol>
       )}
       <OModal
-        alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Handbook"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteHandbook}
       >
-        {`Do you really want to delete this ${toDeleteHandbook} Handbook Item?`}
+        <>
+          Do you really want to delete this <strong>{toDeleteHandbook}</strong>{' '}
+          Handbook Item?
+        </>
       </OModal>
     </>
   )
