@@ -14,6 +14,7 @@ import moment from 'moment'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { Technology } from '../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const ScheduledInterviewsFilterOptions = ({
   getTechnologies,
@@ -29,6 +30,9 @@ const ScheduledInterviewsFilterOptions = ({
   setFilterByAllFromDate,
   filterByAllToDate,
   setFilterByAllToDate,
+  setIsTheadShow,
+  setCandidateTheadShow,
+  candidateTheadShow,
 }: {
   getTechnologies: Technology[]
   setSearchValue: React.Dispatch<React.SetStateAction<string>>
@@ -38,11 +42,14 @@ const ScheduledInterviewsFilterOptions = ({
   setFilterByInterviewStatus: React.Dispatch<React.SetStateAction<string>>
   setFilterByAllFromDate: React.Dispatch<React.SetStateAction<string>>
   setFilterByAllToDate: React.Dispatch<React.SetStateAction<string>>
+  setIsTheadShow: React.Dispatch<React.SetStateAction<boolean>>
+  setCandidateTheadShow: React.Dispatch<React.SetStateAction<boolean>>
   filterByInterviewStatus: string
   filterByMeFromDate: string
   filterByMeToDate: string
   filterByAllFromDate: string
   filterByAllToDate: string
+  candidateTheadShow: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -59,13 +66,21 @@ const ScheduledInterviewsFilterOptions = ({
   const [scheduledCandidatesToDate, setScheduledCandidatesToDate] =
     useState<string>(filterByAllToDate)
   const [isViewBtnEnabled, setIsViewBtnEnabled] = useState<boolean>(false)
+
   const selectedView = useTypedSelector(
     reduxServices.scheduledInterviews.selectors.selectedView,
   )
+
   const employeeRole = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeRole,
   )
+
+  const isLoading = useTypedSelector(
+    reduxServices.scheduledInterviews.selectors.isLoading,
+  )
+
   const commonFormatDate = 'DD/MM/YYYY'
+
   const onChangeTechnologyHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -86,10 +101,12 @@ const ScheduledInterviewsFilterOptions = ({
       setFilterByInterviewStatus(selectInterviewStatus)
       setFilterByMeFromDate(scheduledInterviewFromDate)
       setFilterByMeToDate(scheduledInterviewToDate)
+      setIsTheadShow(true)
     } else {
       setFilterByTechnology(selectTechnology)
       setFilterByAllFromDate(scheduledCandidatesFromDate)
       setFilterByAllToDate(scheduledCandidatesToDate)
+      setIsTheadShow(true)
     }
   }
 
@@ -100,11 +117,19 @@ const ScheduledInterviewsFilterOptions = ({
       setScheduledInterviewFromDate('')
       setScheduledInterviewToDate('')
       setSearchInput('')
-    } else {
+      setIsTheadShow(false)
+      dispatch(
+        reduxServices.scheduledInterviews.actions.clearScheduledCandidatesForEmployee(),
+      )
+    } else if (selectedView === 'All') {
       setScheduledCandidatesFromDate('')
       setScheduledCandidatesToDate('')
       setSelectTechnology('')
       setSearchInput('')
+      setCandidateTheadShow(false)
+      dispatch(
+        reduxServices.scheduledInterviews.actions.clearScheduledCandidates(),
+      )
     }
   }
 
@@ -115,18 +140,33 @@ const ScheduledInterviewsFilterOptions = ({
       setSearchValue(searchInput)
     }
   }
+
   const searchButtonHandler = (e: React.SyntheticEvent) => {
     e.preventDefault()
     setSearchValue(searchInput)
   }
 
   useEffect(() => {
-    if (scheduledInterviewFromDate && scheduledInterviewToDate) {
-      setIsViewBtnEnabled(true)
-    } else {
-      setIsViewBtnEnabled(false)
+    if (selectedView === 'Me') {
+      if (scheduledInterviewFromDate && scheduledInterviewToDate) {
+        setIsViewBtnEnabled(true)
+      } else {
+        setIsViewBtnEnabled(false)
+      }
+    } else if (selectedView === 'All') {
+      if (scheduledCandidatesFromDate && scheduledCandidatesToDate) {
+        setIsViewBtnEnabled(true)
+      } else {
+        setIsViewBtnEnabled(false)
+      }
     }
-  }, [scheduledInterviewFromDate, scheduledInterviewToDate])
+  }, [
+    selectedView,
+    scheduledInterviewFromDate,
+    scheduledInterviewToDate,
+    scheduledCandidatesFromDate,
+    scheduledCandidatesToDate,
+  ])
 
   return (
     <>
@@ -346,44 +386,50 @@ const ScheduledInterviewsFilterOptions = ({
         <>
           <CRow className="mt-3">
             <CCol sm={12} className="d-md-flex justify-content-md-end">
-              <CButton color="info" className="btn-ovh pull-right" size="sm">
+              <CButton
+                color="info"
+                className="text-decoration-none btn btn-download btn-ovh pull-right"
+                size="sm"
+              >
                 <i className="fa fa-paperclip me-1"></i>
                 Export Schedule List
               </CButton>
             </CCol>
           </CRow>
-          <CRow className="mt-3">
-            <CCol
-              sm={{ span: 4, offset: 8 }}
-              xs={12}
-              md={{ span: 5, offset: 7 }}
-              lg={{ span: 4, offset: 8 }}
-              className="d-md-flex justify-content-md-end"
-            >
-              <CInputGroup className="global-search me-0">
-                <CFormInput
-                  placeholder="Search by name"
-                  aria-label="Search by name"
-                  value={searchInput}
-                  onChange={(e) => {
-                    setSearchInput(e.target.value)
-                  }}
-                  onKeyDown={searchButtonHandlerOnKeyDown}
-                />
-                <CButton
-                  disabled={false}
-                  data-testid="search-btn"
-                  className="cursor-pointer"
-                  type="button"
-                  color="info"
-                  id="button-addon"
-                  onClick={searchButtonHandler}
-                >
-                  <i className="fa fa-search"></i>
-                </CButton>
-              </CInputGroup>
-            </CCol>
-          </CRow>
+          {candidateTheadShow && isLoading === ApiLoadingState.succeeded && (
+            <CRow className="mt-3">
+              <CCol
+                sm={{ span: 4, offset: 8 }}
+                xs={12}
+                md={{ span: 5, offset: 7 }}
+                lg={{ span: 4, offset: 8 }}
+                className="d-md-flex justify-content-md-end"
+              >
+                <CInputGroup className="global-search me-0">
+                  <CFormInput
+                    placeholder="Search by name"
+                    aria-label="Search by name"
+                    value={searchInput}
+                    onChange={(e) => {
+                      setSearchInput(e.target.value)
+                    }}
+                    onKeyDown={searchButtonHandlerOnKeyDown}
+                  />
+                  <CButton
+                    disabled={false}
+                    data-testid="search-btn"
+                    className="cursor-pointer"
+                    type="button"
+                    color="info"
+                    id="button-addon"
+                    onClick={searchButtonHandler}
+                  >
+                    <i className="fa fa-search"></i>
+                  </CButton>
+                </CInputGroup>
+              </CCol>
+            </CRow>
+          )}
         </>
       )}
     </>

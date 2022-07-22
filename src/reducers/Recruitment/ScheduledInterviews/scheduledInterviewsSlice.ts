@@ -51,6 +51,12 @@ const scheduledInterviewsSlice = createSlice({
     setSelectedView: (state, action) => {
       state.selectedView = action.payload
     },
+    clearScheduledCandidatesForEmployee: (state) => {
+      state.scheduledCandidatesForEmployee = { list: [], size: 0 }
+    },
+    clearScheduledCandidates: (state) => {
+      state.scheduledCandidates = { list: [], size: 0 }
+    },
   },
   extraReducers: (builder) => {
     builder

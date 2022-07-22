@@ -12,25 +12,11 @@ import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const ScheduledInterviews = (): JSX.Element => {
-  const getTechnologies = useTypedSelector(
-    (state) => state.employeeCertificates.getAllTechnologies,
-  )
-
-  const selectedView = useTypedSelector(
-    reduxServices.scheduledInterviews.selectors.selectedView,
-  )
-
-  const isLoading = useTypedSelector(
-    reduxServices.scheduledInterviews.selectors.isLoading,
-  )
-
-  const scheduledCandidatesListSize = useTypedSelector(
-    reduxServices.scheduledInterviews.selectors.scheduledCandidatesListSize,
-  )
-
   const dispatch = useAppDispatch()
   const commonFormatDate = 'DD/MM/YYYY'
   const [searchValue, setSearchValue] = useState<string>('')
+  const [isTheadShow, setIsTheadShow] = useState<boolean>(true)
+  const [candidateTheadShow, setCandidateTheadShow] = useState<boolean>(true)
   const [filterByInterviewStatus, setFilterByInterviewStatus] =
     useState<string>('pending')
   const [filterByTechnology, setFilterByTechnology] = useState<string>('')
@@ -45,6 +31,22 @@ const ScheduledInterviews = (): JSX.Element => {
   )
   const [filterByAllToDate, setFilterByAllToDate] = useState<string>(
     moment(new Date()).format(commonFormatDate),
+  )
+
+  const getTechnologies = useTypedSelector(
+    (state) => state.employeeCertificates.getAllTechnologies,
+  )
+
+  const selectedView = useTypedSelector(
+    reduxServices.scheduledInterviews.selectors.selectedView,
+  )
+
+  const isLoading = useTypedSelector(
+    reduxServices.scheduledInterviews.selectors.isLoading,
+  )
+
+  const scheduledCandidatesListSize = useTypedSelector(
+    reduxServices.scheduledInterviews.selectors.scheduledCandidatesListSize,
   )
 
   const {
@@ -122,6 +124,9 @@ const ScheduledInterviews = (): JSX.Element => {
           setFilterByAllFromDate={setFilterByAllFromDate}
           filterByAllToDate={filterByAllToDate}
           setFilterByAllToDate={setFilterByAllToDate}
+          setIsTheadShow={setIsTheadShow}
+          setCandidateTheadShow={setCandidateTheadShow}
+          candidateTheadShow={candidateTheadShow}
         />
         {isLoading !== ApiLoadingState.loading ? (
           <>
@@ -133,6 +138,7 @@ const ScheduledInterviews = (): JSX.Element => {
                   setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
                   pageSize={pageSize}
+                  isTheadShow={isTheadShow}
                 />
               )}
             {selectedView === 'All' &&
@@ -143,6 +149,7 @@ const ScheduledInterviews = (): JSX.Element => {
                   setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
                   pageSize={pageSize}
+                  isTheadShow={candidateTheadShow}
                 />
               )}
           </>
