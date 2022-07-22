@@ -117,7 +117,7 @@ describe('Employee List Table Component Testing', () => {
       },
     )
 
-    expect(screen.getByTestId('action-cell')).toBeInTheDocument()
+    expect(screen.getAllByTestId('action-cell')).toBeInTheDocument()
   })
 
   test('should not be able to see table action cell if updateaccess is false', () => {
@@ -140,6 +140,6 @@ describe('Employee List Table Component Testing', () => {
       },
     )
 
-    expect(screen.getByTestId('no-action-cell')).toBeInTheDocument()
+    expect(screen.getAllByTestId('no-action-cell')).toBeInTheDocument()
   })
 })
