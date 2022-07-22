@@ -47,6 +47,7 @@ import hiveActivityReportReducer from './reducers/TimeAndAttendance/HiveActivity
 import employeeMailConfigurationReducer from './reducers/Settings/MailConfiguration/employeeMailConfigurationSlice'
 import addNewTemplateReducer from './reducers/Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
+import addMailTemplateTypeReducer from './reducers/Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -94,6 +95,7 @@ export const allReducers = {
   employeeMailConfiguration: employeeMailConfigurationReducer,
   addMailTemplate: addNewTemplateReducer,
   employee: employeeReducer,
+  addMailTemplateType: addMailTemplateTypeReducer,
   // add your slice reducers here
 }
 

@@ -271,3 +271,10 @@ export interface AddNewTemplateApi extends ApiBase {
   getAssetTypes: string
   addNewMailTemplate: string
 }
+
+export interface AddNewMailTemplateTypeApi extends ApiBase {
+  getMailTemplateTypes: string
+  addNewMailTemplateType: string
+  deleteMailTemplateType: string
+  updateMailTemplateType: string
+}

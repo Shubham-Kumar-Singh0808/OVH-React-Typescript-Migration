@@ -37,6 +37,7 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
+  AddNewMailTemplateTypeApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -313,4 +314,11 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
 export const addNewTemplateAPiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
+}
+
+export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
+  getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+  addNewMailTemplateType: apiPrefix + '/mailTemplates/addMailTemplateType',
+  deleteMailTemplateType: apiPrefix + '/mailTemplates/deleteMailTemplateType',
+  updateMailTemplateType: apiPrefix + '/mailTemplates/updateMailTemplateType',
 }
