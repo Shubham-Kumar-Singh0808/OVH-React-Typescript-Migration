@@ -52,7 +52,7 @@ const PersonalInfoTab = ({
       reduxServices.personalInformation.getEmployeeFamilyMember(familyId),
     )
   }
-  const editVisaButtonHandler = (id: number) => {
+  const editVisaButtonHandler = (id: bigint) => {
     setToggle('EditVisa')
     dispatch(reduxServices.personalInformation.getEmployeeVisa(id))
   }

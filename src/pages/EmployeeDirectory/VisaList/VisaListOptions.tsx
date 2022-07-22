@@ -135,7 +135,7 @@ const VisaListOptions = ({
               >
                 <option value={''}>Select Visa</option>
                 {visaTypes?.map((visaType, index) => (
-                  <option key={index} value={visaType.visaTypeId}>
+                  <option key={index} value={visaType.visaTypeId.toString()}>
                     {visaType.visaType}
                   </option>
                 ))}

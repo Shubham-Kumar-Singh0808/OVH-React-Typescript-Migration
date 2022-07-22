@@ -94,14 +94,10 @@ const VisaListExpandableTable = (
                                     {currentVisa.visaType || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {localeDateFormat(
-                                      currentVisa.dateOfIssue as string,
-                                    ) || 'N/A'}
+                                    {currentVisa.dateOfIssue || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    {localeDateFormat(
-                                      currentVisa.dateOfExpire as string,
-                                    ) || 'N/A'}
+                                    {currentVisa.dateOfExpire || 'N/A'}
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     {currentVisa.visaDetailsData ? (

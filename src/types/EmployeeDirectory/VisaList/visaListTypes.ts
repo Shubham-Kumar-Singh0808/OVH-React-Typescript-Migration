@@ -4,33 +4,33 @@ export type GetVisaListApiProps = {
   startIndex?: number
   endIndex?: number
   multipleSearch?: string
-  countryId?: string
-  visaTypeId?: string
+  countryId?: number | string
+  visaTypeId?: number | string
 }
 
 export type VisaDetailsDto = {
-  id: number
-  empId: number
+  id: bigint
+  empId: bigint
   empName: string
-  visaTypeId: number
+  visaTypeId?: bigint
   visaType: string
-  countryId: number
+  countryId: bigint
   countryName: string
-  dateOfIssue: string
-  dateOfExpire: string
+  dateOfIssue: Date
+  dateOfExpire: Date
   createdBy: string
   updatedBy?: string
-  createdDate: string
-  updatedDate?: string
+  createdDate: Date
+  updatedDate?: Date
   visaDetailsPath?: string
   visaDetailsData?: string
   visaThumbPicture?: string
 }
 
 export type VisaListItem = {
-  id?: number | string
+  id: bigint
   empName: string
-  empId: number
+  empId: bigint
   visaDetailsDtos: VisaDetailsDto[]
 }
 
@@ -45,9 +45,9 @@ export type Country = {
 }
 
 export type VisaType = {
-  visaTypeId: number
+  visaTypeId: bigint
   visaType: string
-  countryId: number
+  countryId: bigint
   countryName: string
 }
 

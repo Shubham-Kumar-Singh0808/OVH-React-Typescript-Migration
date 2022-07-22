@@ -38,7 +38,7 @@ export const getAuthenticatedRequestConfig = ({
   url: string
   method: Method
   params?: {
-    [key: string]: string | number | boolean | undefined | number[]
+    [key: string]: string | number | boolean | bigint | undefined | number[]
   }
   paramsSerializer?: any
   data?:

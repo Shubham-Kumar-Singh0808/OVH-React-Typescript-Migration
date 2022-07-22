@@ -1,4 +1,4 @@
-import { classes, AutoMap } from '@automapper/classes'
+import { AutoMap } from '@automapper/classes'
 import { ValidationError } from '../../commonTypes'
 
 export type EmployeeFamilyData = {
@@ -16,20 +16,20 @@ export type PersonalInfoTabState = {
   SubCountries: GetCountryDetails
   SubVisa: VisaCountryDetails[]
   editFamilyDetails: EditFamilyDetailsState
-  editVisaDetails: EditVisaDetailsState
+  editVisaDetails: EmployeeVisaDetails
   isLoading: boolean
   error: ValidationError
 }
 export type VisaDetails = {
-  id: number
-  empId: number | string
+  id: bigint
+  empId: bigint
   empName: string
-  visaTypeId: number
+  visaTypeId?: bigint
   visaType: string
-  countryId: number
+  countryId?: bigint
   countryName: string
-  dateOfIssue: string
-  dateOfExpire: string
+  dateOfIssue: Date
+  dateOfExpire: Date
 }
 export type EmployeeCountryDetails = {
   id: number
@@ -40,38 +40,38 @@ export type GetCountryDetails = {
   countries: EmployeeCountryDetails[]
 }
 export type VisaCountryDetails = {
-  visaTypeId: number | string
+  visaTypeId?: bigint
   visaType: string
-  countryId: number | string
+  countryId?: bigint
   countryName: string
 }
 export class EmployeeVisaDetails {
   @AutoMap()
-  id?: number
+  id: bigint
 
   @AutoMap()
-  empId: number
+  empId: bigint
 
   @AutoMap()
   empName: string
 
   @AutoMap()
-  visaTypeId: number
+  visaTypeId?: bigint
 
   @AutoMap()
-  visaType?: string
+  visaType: string
 
   @AutoMap()
-  countryId: number
+  countryId?: bigint
 
   @AutoMap()
   countryName?: string
 
   @AutoMap()
-  dateOfIssue?: Date
+  dateOfIssue: Date
 
   @AutoMap()
-  dateOfExpire?: Date
+  dateOfExpire: Date
 
   @AutoMap()
   createdBy?: string
@@ -127,24 +127,6 @@ export type AddEditEmployeeVisaDetails = {
   confirmButtonText: string
   backButtonHandler: () => void
 }
-export type EditVisaDetailsState = {
-  id: number
-  empId: number
-  empName: string
-  visaTypeId: number
-  visaType: string
-  countryId: number
-  countryName: string
-  dateOfIssue?: string | Date | number
-  dateOfExpire?: string | Date | number
-  createdBy: string
-  updatedBy: string
-  createdDate?: string | number
-  updatedDate: string
-  visaDetailsPath: string
-  visaDetailsData: string
-  visaThumbPicture?: string | number
-}
 
 export type AddButtonProps = {
   addButtonHandler: () => void
@@ -157,7 +139,7 @@ export type EmployeeFamilyDetailsTableProps = {
   tableClassName?: string
 }
 export type EmployeeVisaDetailsTableProps = {
-  editVisaButtonHandler: (id: number) => void
+  editVisaButtonHandler: (id: bigint) => void
 }
 export type handleActiveTabProps = {
   handleActiveTab: (id: number) => void

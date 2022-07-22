@@ -4,7 +4,9 @@ export type AuthenticatedRequestConfig = {
   url: string
   method: Method
   headers: { tenantKey: string; [key: string]: string | number }
-  params?: { [key: string]: string | number | boolean | undefined | number[] }
+  params?: {
+    [key: string]: string | number | boolean | bigint | undefined | number[]
+  }
   paramsSerializer: any
   data?:
     | { [key: string]: string | number | unknown }

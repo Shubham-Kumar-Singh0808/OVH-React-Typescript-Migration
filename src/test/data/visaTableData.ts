@@ -2,14 +2,14 @@ import { VisaDetails } from '../../types/MyProfile/PersonalInfoTab/personalInfoT
 
 export const mockVisaTableDetails: VisaDetails[] = [
   {
-    id: 20,
-    empId: 98,
+    id: BigInt(20),
+    empId: BigInt(98),
     empName: 'vinesh',
     countryName: 'AUSTRALIA',
     visaType: 'Business Visa',
-    dateOfIssue: '02/03/2022',
-    dateOfExpire: '23/03/2022',
-    visaTypeId: 2,
-    countryId: 6,
+    dateOfIssue: new Date('02/03/2022'),
+    dateOfExpire: new Date('23/03/2022'),
+    visaTypeId: BigInt(2),
+    countryId: BigInt(6),
   },
 ]

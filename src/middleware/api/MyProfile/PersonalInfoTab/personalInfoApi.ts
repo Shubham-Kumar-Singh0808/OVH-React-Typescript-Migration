@@ -1,7 +1,6 @@
 import { AllowedHttpMethods, personalInfoApiConfig } from '../../apiList'
 import {
   EditFamilyDetailsState,
-  EditVisaDetailsState,
   EmployeeFamilyData,
   EmployeeFamilyDetails,
   EmployeePassportImage,
@@ -85,7 +84,7 @@ const deleteEmployeeFamilyMember = async (
 }
 
 const getEmployeeVisaDetails = async (
-  employeeId: number | string | undefined,
+  employeeId: bigint | undefined,
 ): Promise<VisaDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.getVisaDetails,
@@ -110,7 +109,7 @@ const getEmployeeCountryDetails = async (): Promise<
 }
 
 const getEmployeeVisaType = async (
-  countryId: number | string,
+  countryId: bigint,
 ): Promise<VisaCountryDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.getVisaTypeDetails,
@@ -135,7 +134,7 @@ const addEmployeeVisa = async (
   return responseVisa.data
 }
 
-const getEmployeeVisa = async (id: number): Promise<EditVisaDetailsState> => {
+const getEmployeeVisa = async (id: bigint): Promise<EmployeeVisaDetails> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.getVisaInformation,
     method: AllowedHttpMethods.get,
@@ -160,8 +159,8 @@ const updateEmployeeVisa = async (
 }
 
 const deleteEmployeeVisa = async (
-  visaId: number,
-): Promise<number | undefined> => {
+  visaId: bigint,
+): Promise<bigint | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.deleteVisaDetail,
     method: AllowedHttpMethods.get,
@@ -177,9 +176,9 @@ const deleteEmployeeVisa = async (
 }
 
 const uploadVisaImage = async (
-  visaId: number,
+  visaId: bigint,
   file: FormData,
-): Promise<number | undefined> => {
+): Promise<bigint | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.fileUploadVisaImage,
     method: AllowedHttpMethods.post,

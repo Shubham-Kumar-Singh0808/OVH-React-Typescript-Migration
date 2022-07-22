@@ -13,7 +13,6 @@ import {
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
-import moment from 'moment'
 import {
   AddEditEmployeeVisaDetails,
   EmployeeVisaDetails,
@@ -22,10 +21,6 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
-import {
-  reformatDate,
-  dateFormatPerLocale,
-} from '../../../utils/dateFormatUtils'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 
 function AddEditVisaDetails({
@@ -46,7 +41,6 @@ function AddEditVisaDetails({
   const [error, setError] = useState<boolean>(false)
   const [inValidImage, setInvalidImage] = useState<boolean>(false)
   const [clearVisaType, setClearVisaType] = useState<boolean>(false)
-  const [dateFormat, setDateFormat] = useState<string>('')
 
   const [dateOfIssueFlag, setDateOfIssueFlag] = useState<boolean>(false)
   const [dateOfExpiryFlag, setDateOfExpiryFlag] = useState<boolean>(false)
@@ -70,43 +64,15 @@ function AddEditVisaDetails({
       ? navigator.languages[0]
       : navigator.language
 
-  useEffect(() => {
-    const localeDateFormat = dateFormatPerLocale.filter(
-      (lang) => lang.label === navigator.languages[0],
-    )
-    setDateFormat(localeDateFormat[0].format)
-  }, [])
-
-  const dateFormmatted = (date: string) => {
-    if (date) {
-      const tempDateFormat = reformatDate(date as string)
-      return tempDateFormat.toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    } else {
-      return ''
-    }
-  }
-
   const newDateOfIssue = new Date()
   const newDateOfExpiry = new Date()
-  // if (employeeVisaDetails.dateOfIssue) {
-  //   const currentDateOfIssue = employeeVisaDetails.dateOfIssue as string
-  //   newDateOfIssue = reformatDate(currentDateOfIssue)
-  // }
-  // if (employeeVisaDetails.dateOfExpire) {
-  //   const currentDateOfExpiry = employeeVisaDetails.dateOfExpire as string
-  //   newDateOfExpiry = reformatDate(currentDateOfExpiry)
-  // }
 
   useEffect(() => {
     dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
     if (employeeVisaDetails?.countryId) {
       dispatch(
         reduxServices.personalInformation.getEmployeeVisaType(
-          employeeVisaDetails?.countryId,
+          employeeVisaDetails.countryId,
         ),
       )
     }
@@ -146,14 +112,17 @@ function AddEditVisaDetails({
     }
   }, [isEditVisaDetails, getEditVisaDetails])
 
-  const commonFormatDate = 'DD/MM/YYYY' //format saved in DB
-
-  const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeCountryHandler = (e: {
+    target: { name: string; value: string }
+  }) => {
     const { name, value } = e.target
-    if (name === 'countryId' && employeeVisaDetails?.countryId !== value) {
+    if (
+      name === 'countryId' &&
+      employeeVisaDetails?.countryId !== BigInt(value)
+    ) {
       setClearVisaType(true)
-      setEmployeeVisaDetails((prevState) => {
-        return { ...prevState, ...{ visaTypeId: '' } }
+      setEmployeeVisaDetails((prevState: EmployeeVisaDetails) => {
+        return { ...prevState, ...{ visaTypeId: undefined } }
       })
     }
     if (name === 'visaTypeId') {
@@ -165,28 +134,17 @@ function AddEditVisaDetails({
   }
 
   const onChangeDateOfIssueHandler = (date: Date) => {
+    console.log(date)
     const currentDateExpiry = isEditVisaDetails
-      ? (employeeVisaDetails.dateOfExpire as string)
-      : (dateOfExpire as string)
+      ? employeeVisaDetails.dateOfExpire
+      : new Date()
 
-    const dateParts: string[] | string = employeeVisaDetails.dateOfExpire
-      ? currentDateExpiry.split('/')
-      : ''
-    const newDateExpiry = employeeVisaDetails.dateOfExpire
-      ? new Date(
-          Number(dateParts[2]),
-          Number(dateParts[1]) - 1,
-          Number(dateParts[0]),
-        )
-      : new Date(dateOfExpire as Date)
-
-    validateDates(date, newDateExpiry)
+    validateDates(date, currentDateExpiry)
 
     if (isEditVisaDetails) {
-      const formatDate = moment(date).format(commonFormatDate)
       const name = 'dateOfIssue'
-      setEmployeeVisaDetails((prevState) => {
-        return { ...prevState, ...{ [name]: formatDate } }
+      setEmployeeVisaDetails((prevState: EmployeeVisaDetails) => {
+        return { ...prevState, ...{ [name]: date } }
       })
       setDateOfIssue(date)
     } else {
@@ -197,27 +155,26 @@ function AddEditVisaDetails({
 
   const onChangeDateOfExpireHandler = (date: Date) => {
     const currentDateIssue = isEditVisaDetails
-      ? (employeeVisaDetails.dateOfIssue as string)
-      : (dateOfIssue as string)
+      ? employeeVisaDetails.dateOfIssue
+      : new Date()
 
-    const dateParts: string[] | string = employeeVisaDetails.dateOfExpire
-      ? currentDateIssue.split('/')
-      : ''
-    const newDateIssue: number | Date = employeeVisaDetails.dateOfExpire
-      ? new Date(
-          Number(dateParts[2]),
-          Number(dateParts[1]) - 1,
-          Number(dateParts[0]),
-        )
-      : new Date(dateOfIssue as string)
+    // const dateParts: string[] | string = employeeVisaDetails.dateOfExpire
+    //   ? currentDateIssue.split('/')
+    //   : ''
+    // const newDateIssue: number | Date = employeeVisaDetails.dateOfExpire
+    //   ? new Date(
+    //       Number(dateParts[2]),
+    //       Number(dateParts[1]) - 1,
+    //       Number(dateParts[0]),
+    //     )
+    //   : new Date(dateOfIssue as string)
 
-    validateDates(newDateIssue, date)
+    validateDates(currentDateIssue, date)
 
     if (isEditVisaDetails) {
-      const formatDate = moment(date).format(commonFormatDate)
       const name = 'dateOfExpire'
-      setEmployeeVisaDetails((prevState) => {
-        return { ...prevState, ...{ [name]: formatDate } }
+      setEmployeeVisaDetails((prevState: EmployeeVisaDetails) => {
+        return { ...prevState, ...{ [name]: date } }
       })
       setDateOfExpire(date)
     } else {
@@ -239,16 +196,9 @@ function AddEditVisaDetails({
   }
 
   const handleClearDetails = () => {
-    setEmployeeVisaDetails({
-      id: '',
-      empId: '',
-      empName: '',
-      visaTypeId: '',
-      visaType: '',
-      countryId: '',
-    })
-    setDateOfIssue('')
-    setDateOfExpire('')
+    setEmployeeVisaDetails(initialEmployeeVisaDetails)
+    setDateOfIssue(initialEmployeeVisaDetails.dateOfIssue)
+    setDateOfExpire(initialEmployeeVisaDetails.dateOfExpire)
     setError(false)
     setImageUrl('')
   }
@@ -268,8 +218,10 @@ function AddEditVisaDetails({
   const handleAddVisaDetails = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
-      dateOfIssue: moment(dateOfIssue).format(commonFormatDate),
-      dateOfExpire: moment(dateOfExpire).format(commonFormatDate),
+      // dateOfIssue,
+      // dateOfExpire,
+      // dateOfIssue: moment(dateOfIssue).format(commonFormatDate),
+      // dateOfExpire: moment(dateOfExpire).format(commonFormatDate),
     }
     const addVisaMemberResultAction = await dispatch(
       reduxServices.personalInformation.addEmployeeVisa(prepareObject),
@@ -281,7 +233,7 @@ function AddEditVisaDetails({
     ) {
       if (selectedFile) {
         const newAddedVisaID = await personalInfoApi.getEmployeeVisaDetails(
-          Number(employeeId),
+          BigInt(employeeId),
         )
         const lastArrayIndex: number = newAddedVisaID.length - 1
 
@@ -318,7 +270,7 @@ function AddEditVisaDetails({
       if (selectedFile) {
         const formData = new FormData()
         formData.append('file', selectedFile, selectedFile.name)
-        const visaId = employeeVisaDetails.id as number
+        const visaId = employeeVisaDetails.id
         const file = formData as FormData
 
         await personalInfoApi.uploadVisaImage(visaId, file)
@@ -333,6 +285,8 @@ function AddEditVisaDetails({
   }
 
   const validateDates = (startDate: Date, endDate: Date) => {
+    console.log(startDate)
+    console.log(endDate)
     const newStartDate = startDate.setHours(0, 0, 0, 0)
     const newEndtDate = endDate.setHours(0, 0, 0, 0)
     if (newStartDate > newEndtDate) {
@@ -391,10 +345,10 @@ function AddEditVisaDetails({
                 aria-label="Default select example"
                 name="countryId"
                 id="Country"
-                value={employeeVisaDetails?.countryId}
+                value={employeeVisaDetails?.countryId?.toString()}
                 onChange={onChangeCountryHandler}
               >
-                <option value={''}>Select Country</option>
+                <option>Select Country</option>
                 {getEmployeeCountryDetails?.countries?.map(
                   (countriesItem, index) => (
                     <option key={index} value={countriesItem.id}>
@@ -421,12 +375,15 @@ function AddEditVisaDetails({
                 aria-label="Default select example"
                 name="visaTypeId"
                 id="Visa Type"
-                value={employeeVisaDetails?.visaTypeId}
+                value={employeeVisaDetails?.visaTypeId?.toString()}
                 onChange={onChangeCountryHandler}
               >
-                <option value={''}>Select Visa</option>
+                <option>Select Visa</option>
                 {getVisaCountryDetails?.map((visaTypeItem, index) => (
-                  <option key={index} value={visaTypeItem.visaTypeId}>
+                  <option
+                    key={index}
+                    value={visaTypeItem.visaTypeId?.toString()}
+                  >
                     {visaTypeItem.visaType}
                   </option>
                 ))}
@@ -452,14 +409,15 @@ function AddEditVisaDetails({
                 name="dateOfIssue"
                 maxDate={new Date()}
                 value={
-                  dateOfIssue?.toLocaleString() ||
-                  employeeVisaDetails.dateOfIssue?.toLocaleString()
-                  // dateFormmatted(employeeVisaDetails.dateOfIssue as string)
+                  dateOfIssue?.toLocaleDateString(deviceLocale) ||
+                  employeeVisaDetails.dateOfIssue?.toLocaleDateString(
+                    deviceLocale,
+                  )
                 }
                 selected={
                   !dateOfIssueFlag && employeeVisaDetails.dateOfIssue
                     ? newDateOfIssue
-                    : (dateOfIssue as Date)
+                    : dateOfIssue
                 }
                 onChange={onChangeDateOfIssueHandler}
                 id="dateOfIssue"
@@ -467,8 +425,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
-                dateFormat={dateFormat}
+                placeholderText="dd/mm/yyyy"
               />
             </CCol>
           </CRow>
@@ -490,13 +447,15 @@ function AddEditVisaDetails({
                 className="form-control"
                 name="dateOfExpire"
                 value={
-                  dateOfExpire?.toLocaleString() ||
-                  employeeVisaDetails.dateOfExpire?.toLocaleString()
+                  dateOfExpire?.toLocaleDateString(deviceLocale) ||
+                  employeeVisaDetails.dateOfExpire?.toLocaleDateString(
+                    deviceLocale,
+                  )
                 }
                 selected={
                   !dateOfExpiryFlag && employeeVisaDetails?.dateOfExpire
                     ? newDateOfExpiry
-                    : (dateOfExpire as Date)
+                    : dateOfExpire
                 }
                 onChange={onChangeDateOfExpireHandler}
                 id="dateOfExpire"
@@ -504,8 +463,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
-                dateFormat={dateFormat}
+                placeholderText="dd/mm/yyyy"
               />
               {error && (
                 <p className="text-danger">

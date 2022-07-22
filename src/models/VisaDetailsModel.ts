@@ -5,88 +5,37 @@ import {
   namingConventions,
   CamelCaseNamingConvention,
 } from '@automapper/core'
+import { EmployeeVisaDetails } from '../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 
 const mapper = createMapper({ strategyInitializer: classes() })
 
-// the data of a user from the database
-export class EmployeeVisaDetailsModel {
-  @AutoMap()
-  id?: number
-
-  @AutoMap()
-  empId: number | string
-
-  @AutoMap()
-  empName: string | number
-
-  @AutoMap()
-  visaTypeId: number | string
-
-  @AutoMap()
-  visaType?: string
-
-  @AutoMap()
-  countryId: number | string
-
-  @AutoMap()
-  countryName?: string
-
-  @AutoMap()
-  dateOfIssue?: Date
-
-  @AutoMap()
-  dateOfExpire?: Date
-
-  @AutoMap()
-  createdBy?: string
-
-  @AutoMap()
-  updatedBy?: string
-
-  @AutoMap()
-  createdDate?: Date
-
-  @AutoMap()
-  updatedDate?: Date
-
-  @AutoMap()
-  visaDetailsPath?: string
-
-  @AutoMap()
-  visaDetailsData?: string
-
-  @AutoMap()
-  visaThumbPicture?: string | number
-}
-
-// the shape of the user data that you want to return from the method
 export class EmployeeVisaDetailsDto {
   @AutoMap()
-  id?: number
+  id: bigint
 
   @AutoMap()
-  empId: number | string
+  empId: bigint
 
   @AutoMap()
-  empName: string | number
+  empName: string
 
   @AutoMap()
-  visaTypeId: number | string
+  visaTypeId: bigint
 
   @AutoMap()
-  visaType?: string
+  visaType: string
 
   @AutoMap()
-  countryId: number | string
+  countryId: bigint
 
   @AutoMap()
   countryName?: string
 
   @AutoMap()
-  dateOfIssue?: Date
+  dateOfIssue: Date
 
   @AutoMap()
-  dateOfExpire?: Date
+  dateOfExpire: Date
 
   @AutoMap()
   createdBy?: string
@@ -107,12 +56,12 @@ export class EmployeeVisaDetailsDto {
   visaDetailsData?: string
 
   @AutoMap()
-  visaThumbPicture?: string | number
+  visaThumbPicture?: string
 }
 
 createMap(
   mapper, //  mapper
-  EmployeeVisaDetailsModel, // source
+  EmployeeVisaDetails, // source
   EmployeeVisaDetailsDto, // destination
   namingConventions(new CamelCaseNamingConvention()),
 )

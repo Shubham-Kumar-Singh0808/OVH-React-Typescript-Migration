@@ -28,21 +28,21 @@ export const mockCountries: Country[] = [
 
 export const mockVisaTypes: VisaType[] = [
   {
-    visaTypeId: 6,
+    visaTypeId: BigInt(6),
     visaType: 'Business Visa',
-    countryId: 1,
+    countryId: BigInt(1),
     countryName: 'AUSTRALIA',
   },
   {
-    visaTypeId: 7,
+    visaTypeId: BigInt(7),
     visaType: 'Short Term Work Permit',
-    countryId: 1,
+    countryId: BigInt(1),
     countryName: 'AUSTRALIA',
   },
   {
-    visaTypeId: 8,
+    visaTypeId: BigInt(8),
     visaType: 'Permanent Resident',
-    countryId: 1,
+    countryId: BigInt(1),
     countryName: 'AUSTRALIA',
   },
 ]

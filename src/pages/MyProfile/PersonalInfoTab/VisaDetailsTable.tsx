@@ -23,7 +23,7 @@ const VisaDetailsTable = ({
 }: EmployeeVisaDetailsTableProps): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
+  const [toDeleteVisaId, setToDeleteVisaId] = useState<bigint>()
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -37,12 +37,14 @@ const VisaDetailsTable = ({
   useEffect(() => {
     dispatch(
       reduxServices.personalInformation.getEmployeeVisaDetails(
-        isViewingAnotherEmployee ? selectedEmployeeId : employeeId,
+        isViewingAnotherEmployee
+          ? BigInt(selectedEmployeeId as string)
+          : BigInt(employeeId),
       ),
     )
   }, [dispatch, employeeId, isViewingAnotherEmployee, selectedEmployeeId])
 
-  const handleShowDeleteModal = (visaId: number) => {
+  const handleShowDeleteModal = (visaId: bigint) => {
     setToDeleteVisaId(visaId)
     setIsDeleteModalVisible(true)
   }
@@ -50,7 +52,9 @@ const VisaDetailsTable = ({
   const handleConfirmDeleteVisaDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(
-      reduxServices.personalInformation.deleteEmployeeVisa(toDeleteVisaId),
+      reduxServices.personalInformation.deleteEmployeeVisa(
+        toDeleteVisaId as bigint,
+      ),
     )
     if (
       reduxServices.personalInformation.deleteEmployeeVisa.fulfilled.match(
@@ -58,7 +62,9 @@ const VisaDetailsTable = ({
       )
     ) {
       dispatch(
-        reduxServices.personalInformation.getEmployeeVisaDetails(employeeId),
+        reduxServices.personalInformation.getEmployeeVisaDetails(
+          BigInt(employeeId),
+        ),
       )
       dispatch(
         reduxServices.app.actions.addToast(
@@ -107,10 +113,10 @@ const VisaDetailsTable = ({
               </CTableDataCell>
               <CTableDataCell scope="row">{visaItem.visaType}</CTableDataCell>
               <CTableDataCell scope="row">
-                {localeDateFormat(visaItem.dateOfIssue as string)}
+                {visaItem.dateOfIssue}
               </CTableDataCell>
               <CTableDataCell scope="row">
-                {localeDateFormat(visaItem.dateOfExpire as string)}
+                {visaItem.dateOfExpire}
               </CTableDataCell>
               {!isViewingAnotherEmployee ? (
                 <CTableDataCell scope="row">

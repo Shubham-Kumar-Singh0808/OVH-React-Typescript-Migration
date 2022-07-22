@@ -5,7 +5,7 @@ import { createMapper } from '@automapper/core'
 import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EditFamilyDetailsState,
-  EditVisaDetailsState,
+  // EditVisaDetailsState,
   EmployeeFamilyData,
   EmployeeFamilyDetails,
   EmployeePassportImage,
@@ -17,10 +17,7 @@ import {
 } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import personalInfoApi from '../../../middleware/api/MyProfile/PersonalInfoTab/personalInfoApi'
-import {
-  EmployeeVisaDetailsModel,
-  EmployeeVisaDetailsDto,
-} from '../../../models/VisaDetailsModel'
+import { EmployeeVisaDetailsDto } from '../../../models/VisaDetailsModel'
 
 const mapper = createMapper({ strategyInitializer: classes() })
 
@@ -30,7 +27,7 @@ const initialPersonalInfoTabState: PersonalInfoTabState = {
   SubCountries: {} as GetCountryDetails,
   SubVisa: [],
   editFamilyDetails: {} as EditFamilyDetailsState,
-  editVisaDetails: {} as EditVisaDetailsState,
+  editVisaDetails: {} as EmployeeVisaDetails,
   isLoading: false,
   error: 0,
 }
@@ -57,7 +54,7 @@ const getEmployeeFamilyDetails = createAsyncThunk<
 
 const getEmployeeVisaDetails = createAsyncThunk<
   VisaDetails[] | undefined,
-  string | number | undefined,
+  bigint | undefined,
   {
     dispatch: AppDispatch
     state: RootState
@@ -65,7 +62,7 @@ const getEmployeeVisaDetails = createAsyncThunk<
   }
 >(
   'personalInfoTab/getEmployeeVisaDetails',
-  async (employeeId: string | number | undefined, thunkApi) => {
+  async (employeeId: bigint | undefined, thunkApi) => {
     try {
       return await personalInfoApi.getEmployeeVisaDetails(employeeId)
     } catch (error) {
@@ -94,7 +91,7 @@ const getEmployeeCountryDetails = createAsyncThunk<
 
 const getEmployeeVisaType = createAsyncThunk<
   VisaCountryDetails[] | undefined,
-  string | number,
+  bigint,
   {
     dispatch: AppDispatch
     state: RootState
@@ -102,7 +99,7 @@ const getEmployeeVisaType = createAsyncThunk<
   }
 >(
   'personalInfoTab/getEmployeeVisaType',
-  async (countryId: string | number, thunkApi) => {
+  async (countryId: bigint, thunkApi) => {
     try {
       return await personalInfoApi.getEmployeeVisaType(countryId)
     } catch (error) {
@@ -124,27 +121,27 @@ const addEmployeeVisa = createAsyncThunk<
   'addEditFamilyDetails/addEmployeeVisa',
   async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
-      const visaDetailsModel = new EmployeeVisaDetailsModel()
-      visaDetailsModel.id = Number(employeeVisaDetails.id)
-      visaDetailsModel.empId = Number(employeeVisaDetails.empId)
-      visaDetailsModel.empName = employeeVisaDetails.empName
-      visaDetailsModel.visaTypeId = employeeVisaDetails.visaTypeId
-      visaDetailsModel.visaType = employeeVisaDetails.visaType
-      visaDetailsModel.countryId = employeeVisaDetails.countryId
-      visaDetailsModel.countryName = employeeVisaDetails.countryName
-      visaDetailsModel.dateOfIssue = employeeVisaDetails.dateOfIssue as Date
-      visaDetailsModel.dateOfExpire = employeeVisaDetails.dateOfExpire as Date
-      visaDetailsModel.createdBy = employeeVisaDetails.createdBy
-      visaDetailsModel.updatedBy = employeeVisaDetails.updatedBy
-      visaDetailsModel.createdDate = employeeVisaDetails.createdDate as Date
-      visaDetailsModel.updatedDate = employeeVisaDetails.updatedDate as Date
-      visaDetailsModel.visaDetailsPath = employeeVisaDetails.visaDetailsPath
-      visaDetailsModel.visaDetailsData = employeeVisaDetails.visaDetailsData
-      visaDetailsModel.visaThumbPicture = employeeVisaDetails.visaThumbPicture
+      // const visaDetailsModel = new EmployeeVisaDetails()
+      // visaDetailsModel.id = employeeVisaDetails.id
+      // visaDetailsModel.empId = employeeVisaDetails.empId
+      // visaDetailsModel.empName = employeeVisaDetails.empName
+      // visaDetailsModel.visaTypeId = employeeVisaDetails.visaTypeId
+      // visaDetailsModel.visaType = employeeVisaDetails.visaType
+      // visaDetailsModel.countryId = employeeVisaDetails.countryId
+      // visaDetailsModel.countryName = employeeVisaDetails.countryName
+      // visaDetailsModel.dateOfIssue = employeeVisaDetails.dateOfIssue
+      // visaDetailsModel.dateOfExpire = employeeVisaDetails.dateOfExpire
+      // visaDetailsModel.createdBy = employeeVisaDetails.createdBy
+      // visaDetailsModel.updatedBy = employeeVisaDetails.updatedBy
+      // visaDetailsModel.createdDate = employeeVisaDetails.createdDate
+      // visaDetailsModel.updatedDate = employeeVisaDetails.updatedDate
+      // visaDetailsModel.visaDetailsPath = employeeVisaDetails.visaDetailsPath
+      // visaDetailsModel.visaDetailsData = employeeVisaDetails.visaDetailsData
+      // visaDetailsModel.visaThumbPicture = employeeVisaDetails.visaThumbPicture
 
       const visaDetailsDto = mapper.map(
-        visaDetailsModel,
-        EmployeeVisaDetailsModel,
+        employeeVisaDetails,
+        EmployeeVisaDetails,
         EmployeeVisaDetailsDto,
       )
 
@@ -214,14 +211,14 @@ const addEmployeeFamilyMember = createAsyncThunk<
 )
 
 const getEmployeeVisa = createAsyncThunk<
-  EditVisaDetailsState | undefined,
-  number,
+  EmployeeVisaDetails | undefined,
+  bigint,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
->('personalInfoTab/getEmployeeVisa', async (id: number, thunkApi) => {
+>('personalInfoTab/getEmployeeVisa', async (id: bigint, thunkApi) => {
   try {
     return await personalInfoApi.getEmployeeVisa(id)
   } catch (error) {
@@ -265,8 +262,8 @@ const deleteEmployeeFamilyMember = createAsyncThunk<
   }
 })
 const deleteEmployeeVisa = createAsyncThunk<
-  number | undefined,
-  number,
+  bigint | undefined,
+  bigint,
   {
     dispatch: AppDispatch
     state: RootState
@@ -330,8 +327,7 @@ const personalInfoTabSlice = createSlice({
       })
       .addCase(getEmployeeVisa.fulfilled, (state, action) => {
         state.isLoading = false
-        state.editVisaDetails =
-          action.payload as unknown as EditVisaDetailsState
+        state.editVisaDetails = action.payload as unknown as EmployeeVisaDetails
       })
       .addMatcher(
         isAnyOf(
@@ -382,7 +378,7 @@ const countryDetails = (state: RootState): GetCountryDetails =>
 const visaTypeDetails = (state: RootState): VisaCountryDetails[] =>
   state.personalInfoDetails.SubVisa
 
-const employeeVisaDetails = (state: RootState): EditVisaDetailsState =>
+const employeeVisaDetails = (state: RootState): EmployeeVisaDetails =>
   state.personalInfoDetails.editVisaDetails
 
 const employeeFamilyMember = (state: RootState): EditFamilyDetailsState =>
