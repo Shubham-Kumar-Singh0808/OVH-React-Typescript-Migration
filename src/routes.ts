@@ -85,6 +85,10 @@ const AddNewTemplate = React.lazy(
 const EditEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
 )
+
+const ScheduledInterview = React.lazy(
+  () => import('./pages/Recruitment/ScheduledInterviews/ScheduledInterviews'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -182,6 +186,11 @@ const routes = [
     path: '/editEmployee/:employeeId',
     name: 'Edit Employee',
     component: EditEmployee,
+  },
+  {
+    path: '/candidateSearch',
+    name: 'Scheduled Interviews',
+    component: ScheduledInterview,
   },
 ]
 

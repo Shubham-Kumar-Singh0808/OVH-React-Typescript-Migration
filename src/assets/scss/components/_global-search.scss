@@ -1,10 +1,13 @@
 .global-search {
   input.form-control {
-    min-width: 245px;
+    min-width: 200px;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     font-size: 0.75rem;
     color: $gray-900;
+    @media(min-width: 1200px){
+      min-width: 245px;
+    }
     &:focus{
       box-shadow: none;
     }

@@ -37,6 +37,7 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
+  ScheduledInterviewsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -313,4 +314,11 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
 export const addNewTemplateAPiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
+}
+
+export const scheduledInterviewsAPiConfig: ScheduledInterviewsApi = {
+  searchScheduledCandidatesForEmployee:
+    apiPrefix + '/jobapplicant/searchScheduledCandidatesForEmployee',
+  searchScheduledCandidates:
+    apiPrefix + '/jobapplicant/searchScheduledCandidates',
 }
