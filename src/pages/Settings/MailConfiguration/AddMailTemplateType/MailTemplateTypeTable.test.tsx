@@ -15,6 +15,7 @@ describe('Mail Template Table Component Testing', () => {
         },
       },
     })
+
     const deleteBtn = screen.getByTestId('btn-delete0')
     userEvent.click(deleteBtn)
     expect(screen.getByText('Delete TemplateType'))

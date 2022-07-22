@@ -183,6 +183,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
                     <CFormInput
                       type="text"
                       id="name"
+                      data-testId="template-input"
                       name="name"
                       value={editTemplateTypeDetails.name}
                       onChange={handleEditMailTemplateHandler}
