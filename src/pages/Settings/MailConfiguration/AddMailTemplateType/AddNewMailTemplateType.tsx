@@ -60,6 +60,7 @@ const AddNewMailTemplateType = () => {
         </CFormLabel>
         <CCol sm={4}>
           <CFormInput
+            data-testid="template-input"
             type="text"
             id="inputNewTemplateType"
             value={newTemplateType}
@@ -69,6 +70,7 @@ const AddNewMailTemplateType = () => {
         </CCol>
         <CCol>
           <CButton
+            data-testid="btn-add"
             color="info"
             className="text-white btn-ovh"
             size="sm"

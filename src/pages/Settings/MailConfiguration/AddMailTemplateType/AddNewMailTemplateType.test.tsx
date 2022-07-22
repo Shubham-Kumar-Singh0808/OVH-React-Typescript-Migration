@@ -1,43 +1,31 @@
 /* eslint-disable import/named */
 import '@testing-library/jest-dom'
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AddNewMailTemplateType from './AddNewMailTemplateType'
 import { render, screen, waitFor } from '../../../../test/testUtils'
-import stateStore from '../../../../stateStore'
+import { mockMailTemplateTypes } from '../../../../test/data/addMailTemplateTypeData'
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
-
-const expectComponentToBeRendered = () => {
-  expect(screen.getByLabelText('Template Type:')).toBeInTheDocument()
-  expect(screen.getByRole('button')).toBeInTheDocument()
-  expect(screen.getByRole('button')).toBeDisabled()
-}
-
-describe('Add New Category Testing', () => {
-  test('should render add Family Member button as disabled initially', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddNewMailTemplateType />
-      </ReduxProvider>,
-    )
-    expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument()
+describe('Add New TemplateType component with data', () => {
+  beforeEach(() => {
+    render(<AddNewMailTemplateType />, {
+      preloadedState: {
+        addMailTemplateType: {
+          mailTemplateType: mockMailTemplateTypes,
+        },
+      },
+    })
+  })
+  test('should render input field and button as disabled initially', () => {
+    expect(screen.getByTestId('template-input')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
   })
 
-  test('should render 1 input components', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddNewMailTemplateType />
-      </ReduxProvider>,
-    )
-    expect(screen.getByPlaceholderText('Template Type')).toBeInTheDocument()
+  test('should clear input and disable button after submitting and new template type should be added', async () => {
+    expect(screen.getByTestId('btn-add')).toBeDisabled()
+    userEvent.type(screen.getByTestId('template-input'), 'testing')
+    await waitFor(() => {
+      expect(screen.getByTestId('btn-add')).toBeEnabled()
+    })
   })
 })
