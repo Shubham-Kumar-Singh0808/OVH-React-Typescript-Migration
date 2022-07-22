@@ -214,7 +214,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
                     <CButton
                       color="danger"
                       size="sm"
-                      data-testid={`category-delete-btn${index}`}
+                      data-testid={`btn-delete${index}`}
                       onClick={() => handleShowDeleteModal(templateType.id)}
                     >
                       <CIcon className="text-white" icon={cilTrash} />
@@ -241,7 +241,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
                     <CButton
                       color="danger"
                       size="sm"
-                      data-testid={`category-delete-btn${index}`}
+                      data-testid={`btn-delete${index}`}
                       onClick={() => handleShowDeleteModal(templateType.id)}
                     >
                       <CIcon className="text-white" icon={cilTrash} />
@@ -286,6 +286,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
       </CRow>
       <OModal
         alignment="center"
+        modalTitle="Delete TemplateType"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalHeaderClass="d-none"

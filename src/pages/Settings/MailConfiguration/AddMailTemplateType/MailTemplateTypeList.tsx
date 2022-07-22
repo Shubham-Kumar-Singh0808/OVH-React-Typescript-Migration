@@ -49,7 +49,7 @@ const MailTemplateTypeList = ({
         </>
       ) : (
         <CCol>
-          <CRow className="category-loading-spinner">
+          <CRow className="MailTemplate-loading-spinner">
             <CSpinner />
           </CRow>
         </CCol>
