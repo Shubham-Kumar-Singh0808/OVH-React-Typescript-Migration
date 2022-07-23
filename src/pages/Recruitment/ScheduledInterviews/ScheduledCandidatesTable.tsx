@@ -7,6 +7,8 @@ import {
   CCol,
   CRow,
   CTableDataCell,
+  CBadge,
+  CLink,
 } from '@coreui/react-pro'
 import React from 'react'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -47,6 +49,62 @@ const ScheduledCandidatesTable = (props: {
     reduxServices.scheduledInterviews.selectors.scheduledCandidates,
   )
 
+  const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
+    if (interviewStatus === 'NEW') {
+      return (
+        <CBadge className="rounded-pill" color="info">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === 'IN_PROCESS') {
+      return (
+        <CBadge className="rounded-pill sh-badge-light">{'IN PROGRESS'}</CBadge>
+      )
+    } else if (interviewStatus === ('HOLD' || 'CANCEL')) {
+      return (
+        <CBadge className="rounded-pill" color="warning">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (
+      interviewStatus === ('REJECTED' || 'DID_NOT_JOIN' || 'OFFER_CANCELLED')
+    ) {
+      return (
+        <CBadge className="rounded-pill" color="danger">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === ('OFFERED' || 'COMPLETED')) {
+      return (
+        <CBadge className="rounded-pill" color="success">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === 'RESCHEDULED') {
+      return (
+        <CBadge className="rounded-pill sh-badge-light">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === 'NO_SHOW') {
+      return (
+        <CBadge className="rounded-pill" color="danger">
+          {'NO SHOW'}
+        </CBadge>
+      )
+    }
+    return <></>
+  }
+
+  const tableHeaderCellPropsId = {
+    width: '2%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropsName = {
+    width: '8%',
+    scope: 'col',
+  }
+
   return (
     <>
       {isTheadShow && (
@@ -62,8 +120,12 @@ const ScheduledCandidatesTable = (props: {
           >
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell>#</CTableHeaderCell>
-                <CTableHeaderCell>Name</CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropsId}>
+                  #
+                </CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropsName}>
+                  Name
+                </CTableHeaderCell>
                 <CTableHeaderCell>Experience</CTableHeaderCell>
                 <CTableHeaderCell>Skills</CTableHeaderCell>
                 <CTableHeaderCell>Mobile</CTableHeaderCell>
@@ -83,43 +145,45 @@ const ScheduledCandidatesTable = (props: {
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        {currentCandidate.candidateName}
+                      <CTableDataCell>
+                        <CLink className="cursor-pointer sh-Interview-Table-link">
+                          {currentCandidate.candidateName}
+                        </CLink>
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      <CTableDataCell>
                         {currentCandidate.experiance}
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        {currentCandidate.skills}
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      <CTableDataCell>{currentCandidate.skills}</CTableDataCell>
+                      <CTableDataCell>
                         {currentCandidate.mobileNumber}
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      <CTableDataCell>
                         {currentCandidate.sourceName}
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      <CTableDataCell>
                         {currentCandidate.interviewers}
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      <CTableDataCell>
                         {currentCandidate.recruiter}
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      <CTableDataCell>
                         {currentCandidate.interviewDate}
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      <CTableDataCell>
                         {currentCandidate.interviewTime}
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      <CTableDataCell>
                         {formatInterviewModeText(
                           currentCandidate.interviewMode,
                         )}
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      <CTableDataCell>
                         {currentCandidate.interviewRound}
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        {currentCandidate.interviewStatus}
+                      <CTableDataCell>
+                        {formatInterviewStatusText(
+                          currentCandidate.interviewStatus,
+                        )}
                       </CTableDataCell>
                     </CTableRow>
                   )

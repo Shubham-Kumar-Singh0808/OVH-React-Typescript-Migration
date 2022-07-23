@@ -1,5 +1,5 @@
 .sh-scheduledInterviewsTable th {
-border-style: none;
+    border-style: none;
 }
 .sh-Interview-Table-link {
     color: $blue-employeeList;
@@ -11,7 +11,14 @@ border-style: none;
 }
 .badge{
     font-size: 100%;
-    color: rgb(255, 255, 255);
+    color: black;
     font-weight: 400;
     padding: 3px 24px;
+}
+.sh-badge-light {
+background-color: $badge-light;
+}
+.table {
+    vertical-align: middle !important;
+    text-align: center;
 }

@@ -262,7 +262,6 @@ const ScheduledInterviewsFilterOptions = ({
                 id="from-date"
                 data-testid="scheduledInterviewsFromDate"
                 className="form-control form-control-sm sh-date-picker"
-                maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -288,7 +287,6 @@ const ScheduledInterviewsFilterOptions = ({
                 id="from-date"
                 data-testid="scheduledInterviewsToDate"
                 className="form-control form-control-sm sh-date-picker"
-                maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -317,7 +315,6 @@ const ScheduledInterviewsFilterOptions = ({
                 id="from-date"
                 data-testid="scheduledCandidatesFromDate"
                 className="form-control form-control-sm sh-date-picker"
-                maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -343,7 +340,6 @@ const ScheduledInterviewsFilterOptions = ({
                 id="from-date"
                 data-testid="scheduledCandidatesToDate"
                 className="form-control form-control-sm sh-date-picker"
-                maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown

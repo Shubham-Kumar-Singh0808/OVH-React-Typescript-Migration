@@ -99,6 +99,9 @@ const selectedView = (state: RootState): SelectedView =>
 const scheduledCandidatesListSize = (state: RootState): number =>
   state.scheduledInterviews.scheduledCandidates.size
 
+const scheduledCandidatesForEmployeeListSize = (state: RootState): number =>
+  state.scheduledInterviews.scheduledCandidatesForEmployee.size
+
 const scheduledInterviewsThunk = {
   getScheduledCandidatesForEmployee,
   getScheduledCandidates,
@@ -109,6 +112,7 @@ const scheduledInterviewsSelectors = {
   scheduledCandidatesForEmployee,
   scheduledCandidates,
   scheduledCandidatesListSize,
+  scheduledCandidatesForEmployeeListSize,
   selectedView,
 }
 
