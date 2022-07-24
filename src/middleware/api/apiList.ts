@@ -321,4 +321,6 @@ export const scheduledInterviewsAPiConfig: ScheduledInterviewsApi = {
     apiPrefix + '/jobapplicant/searchScheduledCandidatesForEmployee',
   searchScheduledCandidates:
     apiPrefix + '/jobapplicant/searchScheduledCandidates',
+  downloadScheduleCandidates:
+    apiPrefix + '/jobapplicant/downloadScheduleCandidates',
 }

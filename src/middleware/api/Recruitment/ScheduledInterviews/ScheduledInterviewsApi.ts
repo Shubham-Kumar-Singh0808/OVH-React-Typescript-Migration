@@ -47,9 +47,32 @@ const getScheduledCandidates = async (
   return response.data
 }
 
+const exportScheduledCandidatesList = async (props: {
+  fromDate: string
+  toDate: string
+  skill: string
+}): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: scheduledInterviewsAPiConfig.downloadScheduleCandidates,
+    method: AllowedHttpMethods.get,
+    params: {
+      fromDate: props.fromDate,
+      toDate: props.toDate,
+      skill: props.skill,
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('tenantKey') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const scheduledInterviewsApi = {
   getScheduledCandidatesForEmployee,
   getScheduledCandidates,
+  exportScheduledCandidatesList,
 }
 
 export default scheduledInterviewsApi

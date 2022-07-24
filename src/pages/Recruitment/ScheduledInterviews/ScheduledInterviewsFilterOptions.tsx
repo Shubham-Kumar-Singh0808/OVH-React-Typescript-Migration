@@ -33,6 +33,7 @@ const ScheduledInterviewsFilterOptions = ({
   setIsTheadShow,
   setCandidateTheadShow,
   candidateTheadShow,
+  handleExportScheduleList,
 }: {
   getTechnologies: Technology[]
   setSearchValue: React.Dispatch<React.SetStateAction<string>>
@@ -50,10 +51,13 @@ const ScheduledInterviewsFilterOptions = ({
   filterByAllFromDate: string
   filterByAllToDate: string
   candidateTheadShow: boolean
+  handleExportScheduleList: () => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [searchInput, setSearchInput] = useState<string>('')
   const [selectTechnology, setSelectTechnology] = useState<string>('')
+  const [interviewDateError, setInterviewDateError] = useState<boolean>(false)
+  const [candidateDateError, setCandidateDateError] = useState<boolean>(false)
   const [selectInterviewStatus, setSelectInterviewStatus] = useState<string>(
     filterByInterviewStatus,
   )
@@ -145,6 +149,36 @@ const ScheduledInterviewsFilterOptions = ({
     e.preventDefault()
     setSearchValue(searchInput)
   }
+
+  useEffect(() => {
+    const tempFromDate = new Date(
+      moment(scheduledInterviewFromDate.toString()).format(commonFormatDate),
+    )
+    const tempToDate = new Date(
+      moment(scheduledInterviewToDate.toString()).format(commonFormatDate),
+    )
+    const newFromDate = new Date(
+      moment(scheduledCandidatesFromDate.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(scheduledCandidatesToDate.toString()).format(commonFormatDate),
+    )
+    if (tempToDate.getTime() < tempFromDate.getTime()) {
+      setInterviewDateError(true)
+    } else {
+      setInterviewDateError(false)
+    }
+    if (newToDate.getTime() < newFromDate.getTime()) {
+      setCandidateDateError(true)
+    } else {
+      setCandidateDateError(false)
+    }
+  }, [
+    scheduledInterviewFromDate,
+    scheduledInterviewToDate,
+    scheduledCandidatesFromDate,
+    scheduledCandidatesToDate,
+  ])
 
   useEffect(() => {
     if (selectedView === 'Me') {
@@ -303,6 +337,15 @@ const ScheduledInterviewsFilterOptions = ({
               />
             </CCol>
           </CRow>
+          {interviewDateError && (
+            <CRow className="mt-2">
+              <CCol sm={{ span: 6, offset: 2 }}>
+                <span className="text-danger">
+                  To date should be greater than From date
+                </span>
+              </CCol>
+            </CRow>
+          )}
         </>
       ) : (
         <>
@@ -356,6 +399,15 @@ const ScheduledInterviewsFilterOptions = ({
               />
             </CCol>
           </CRow>
+          {candidateDateError && (
+            <CRow className="mt-2">
+              <CCol sm={{ span: 6, offset: 2 }}>
+                <span className="text-danger">
+                  To date should be greater than From date
+                </span>
+              </CCol>
+            </CRow>
+          )}
         </>
       )}
       <CRow className="mt-3">
@@ -386,6 +438,7 @@ const ScheduledInterviewsFilterOptions = ({
                 color="info"
                 className="text-decoration-none btn btn-download btn-ovh pull-right"
                 size="sm"
+                onClick={handleExportScheduleList}
               >
                 <i className="fa fa-paperclip me-1"></i>
                 Export Schedule List

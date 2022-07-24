@@ -274,4 +274,5 @@ export interface AddNewTemplateApi extends ApiBase {
 export interface ScheduledInterviewsApi extends ApiBase {
   searchScheduledCandidatesForEmployee: string
   searchScheduledCandidates: string
+  downloadScheduleCandidates: string
 }

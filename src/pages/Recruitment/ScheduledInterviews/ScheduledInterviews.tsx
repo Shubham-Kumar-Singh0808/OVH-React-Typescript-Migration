@@ -10,6 +10,8 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import scheduledInterviewsApi from '../../../middleware/api/Recruitment/ScheduledInterviews/ScheduledInterviewsApi'
+import { downloadFile } from '../../../utils/helper'
 
 const ScheduledInterviews = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -98,6 +100,16 @@ const ScheduledInterviews = (): JSX.Element => {
     dispatch,
   ])
 
+  const handleExportScheduleList = async () => {
+    const interviewScheduleListDownload =
+      await scheduledInterviewsApi.exportScheduledCandidatesList({
+        fromDate: filterByAllFromDate,
+        toDate: filterByAllToDate,
+        skill: filterByTechnology,
+      })
+    downloadFile(interviewScheduleListDownload, 'ScheduledCandidates.csv')
+  }
+
   return (
     <>
       <OCard
@@ -127,6 +139,7 @@ const ScheduledInterviews = (): JSX.Element => {
           setIsTheadShow={setIsTheadShow}
           setCandidateTheadShow={setCandidateTheadShow}
           candidateTheadShow={candidateTheadShow}
+          handleExportScheduleList={handleExportScheduleList}
         />
         {isLoading !== ApiLoadingState.loading ? (
           <>
