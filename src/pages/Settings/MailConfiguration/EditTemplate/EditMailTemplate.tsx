@@ -62,6 +62,12 @@ const EditMailTemplate = ({
     ) {
       backButtonHandler()
       dispatch(
+        reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
+          templateName: editEmployeeTemplate.templateName,
+          templateTypeId: editEmployeeTemplate.templateTypeId,
+        }),
+      )
+      dispatch(
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"

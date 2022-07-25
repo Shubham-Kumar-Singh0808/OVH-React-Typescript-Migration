@@ -224,11 +224,7 @@ const EmailConfigTemplate = (): JSX.Element => {
         <EditMailTemplate
           backButtonHandler={() => setToggle('')}
           editEmployeeTemplate={editEmployeeTemplate}
-          setEditEmployeeTemplate={function (
-            value: SetStateAction<EditEmployeeMailTemplate>,
-          ): void {
-            throw new Error('Function not implemented.')
-          }}
+          setEditEmployeeTemplate={setEditEmployeeTemplate}
         />
       )}
     </>
