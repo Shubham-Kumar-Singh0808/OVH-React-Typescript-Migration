@@ -1,6 +1,7 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import moment from 'moment'
 import {
   Birthday,
   Designation,
@@ -34,6 +35,7 @@ import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { listComposer } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { dateFormat } from '../../../../constant/DateFarmat'
 
 const AddNewEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -54,14 +56,14 @@ const AddNewEmployee = (): JSX.Element => {
   const shiftValue = {} as EmployeeShiftDetails
 
   const initEmployee = {
-    contractEndDate: null,
+    contractEndDate: '',
     contractExists: false,
-    contractStartDate: null,
+    contractStartDate: '',
     country: '',
-    dateOfJoining: null,
+    dateOfJoining: '',
     departmentName: '',
     designation: '',
-    dob: null,
+    dob: '',
     employmentTypeName: '',
     experience: '',
     firstName: '',
@@ -110,19 +112,29 @@ const AddNewEmployee = (): JSX.Element => {
     setAddEmployee({ ...addEmployee, country: value })
   }
   const onHandleBirthday = (value: Date) => {
-    setAddEmployee({ ...addEmployee, dob: value })
+    setAddEmployee({ ...addEmployee, dob: moment(value).format(dateFormat) })
   }
   const onHandleJoinDate = (value: Date) => {
-    setAddEmployee({ ...addEmployee, dateOfJoining: value })
+    console.log('value', value)
+    setAddEmployee({
+      ...addEmployee,
+      dateOfJoining: moment(value).format(dateFormat),
+    })
   }
   const onHandleJobType = (value: string) => {
     setAddEmployee({ ...addEmployee, jobTypeName: value })
   }
   const onHandleStartDate = (value: Date) => {
-    setAddEmployee({ ...addEmployee, contractStartDate: value })
+    setAddEmployee({
+      ...addEmployee,
+      contractStartDate: moment(value).format(dateFormat),
+    })
   }
   const onHandleEndDate = (value: Date) => {
-    setAddEmployee({ ...addEmployee, contractEndDate: value })
+    setAddEmployee({
+      ...addEmployee,
+      contractEndDate: moment(value).format(dateFormat),
+    })
   }
   const onHandleLastName = (value: string) => {
     setAddEmployee({ ...addEmployee, lastName: value })
@@ -214,10 +226,10 @@ const AddNewEmployee = (): JSX.Element => {
   useEffect(() => {
     if (
       addEmployee.country !== '' &&
-      addEmployee.dateOfJoining != null &&
+      addEmployee.dateOfJoining !== '' &&
       addEmployee.departmentName !== '' &&
       addEmployee.designation !== '' &&
-      addEmployee.dob !== null &&
+      addEmployee.dob !== '' &&
       addEmployee.employmentTypeName !== '' &&
       addEmployee.firstName !== '' &&
       addEmployee.gender !== '' &&
@@ -234,8 +246,8 @@ const AddNewEmployee = (): JSX.Element => {
       addEmployee.workStatus !== ''
     ) {
       const hasContract =
-        addEmployee.contractStartDate !== null &&
-        addEmployee.contractEndDate !== null
+        addEmployee.contractStartDate !== '' &&
+        addEmployee.contractEndDate !== ''
 
       if (addEmployee.contractExists) {
         setViewBtnEnabled(hasContract)
@@ -553,8 +565,8 @@ const AddNewEmployee = (): JSX.Element => {
                 onStartDateChangeHandler={onHandleStartDate}
                 onEndDateChangeHandler={onHandleEndDate}
                 onContractExistHandler={onHandleContractExist}
-                startDateValue={addEmployee.contractStartDate as Date}
-                endDateValue={addEmployee.contractEndDate as Date}
+                startDateValue={addEmployee.contractStartDate}
+                endDateValue={addEmployee.contractEndDate}
                 isContractExist={addEmployee.contractExists}
               />
               <WorkFrom

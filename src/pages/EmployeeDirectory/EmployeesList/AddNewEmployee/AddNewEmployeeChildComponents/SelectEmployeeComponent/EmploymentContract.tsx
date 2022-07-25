@@ -1,8 +1,10 @@
 import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { StartEndDateChangeHandlerProp } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../utils/helper'
+import { dateFormat } from '../../../../../../constant/DateFarmat'
 
 const EmploymentContract = ({
   dynamicFormLabelProps,
@@ -14,9 +16,8 @@ const EmploymentContract = ({
   startDateValue,
   endDateValue,
 }: StartEndDateChangeHandlerProp): JSX.Element => {
-  const startDate =
-    startDateValue == null ? '' : startDateValue.toLocaleDateString()
-  const endDate = endDateValue == null ? '' : endDateValue.toLocaleDateString()
+  const startDate = moment(startDateValue, dateFormat).format(dateFormat)
+  const endDate = moment(endDateValue, dateFormat).format(dateFormat)
 
   const classNameStyle = 'col-sm-3 col-form-label text-end'
 
@@ -32,8 +33,8 @@ const EmploymentContract = ({
     setIsActive(isExist)
   }
 
-  const isDateCorrect = (startValue: Date, endValue: Date): boolean => {
-    if (startValue == null || endValue == null) return false
+  const isDateCorrect = (startValue: string, endValue: string): boolean => {
+    if (startValue === '' || endValue === '') return false
 
     const start = new Date(startValue)
     const end = new Date(endValue)
@@ -93,7 +94,6 @@ const EmploymentContract = ({
                 dropdownMode="select"
                 data-testid="start-date-picker"
                 placeholderText="dd/mm/yy"
-                dateFormat="dd/mm/yy"
                 name="contractstartdate"
                 value={startDate}
                 onChange={(date: Date) => onStartDateChangeHandler(date)}
@@ -117,7 +117,6 @@ const EmploymentContract = ({
                 showYearDropdown
                 dropdownMode="select"
                 placeholderText="dd/mm/yy"
-                dateFormat="dd/mm/yy"
                 data-testid="end-date-picker"
                 name="contractenddate"
                 value={endDate}

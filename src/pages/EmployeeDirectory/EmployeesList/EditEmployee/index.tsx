@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
 import { CRow, CCol, CButton, CFormLabel, CSpinner } from '@coreui/react-pro'
+import moment from 'moment'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -28,6 +29,7 @@ import {
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { EditEmployeeTypes } from '../../../../types/EmployeeDirectory/EmployeesList/EditEmployee'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { dateFormat } from '../../../../constant/DateFarmat'
 
 const EditEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -54,10 +56,10 @@ const EditEmployee = (): JSX.Element => {
   const shiftValue = {} as EmployeeShiftDetails
 
   const initEmployee = {
-    contractEndDate: null,
+    contractEndDate: '',
+    contractStartDate: '',
     contractExists: false,
-    contractStartDate: null,
-    relievingDate: null,
+    relievingDate: '',
     country: '',
     departmentName: '',
     statusName: '',
@@ -103,11 +105,16 @@ const EditEmployee = (): JSX.Element => {
     setEditEmployee({ ...editEmployee, jobTypeName: value })
   }
   const onHandleStartDate = (value: Date) => {
-    console.log('value', value)
-    setEditEmployee({ ...editEmployee, contractStartDate: value })
+    setEditEmployee({
+      ...editEmployee,
+      contractStartDate: moment(value).format(dateFormat),
+    })
   }
   const onHandleEndDate = (value: Date) => {
-    setEditEmployee({ ...editEmployee, contractEndDate: value })
+    setEditEmployee({
+      ...editEmployee,
+      contractEndDate: moment(value).format(dateFormat),
+    })
   }
   const onHandleContractExist = (value: boolean) => {
     setEditEmployee({ ...editEmployee, contractExists: value })
@@ -116,18 +123,13 @@ const EditEmployee = (): JSX.Element => {
     setEditEmployee({ ...editEmployee, workStatus: value })
   }
   const onHandleEmployeeStatus = (value: string) => {
-    if (value.toLocaleLowerCase() !== 'inactive') {
-      setEditEmployee({
-        ...editEmployee,
-        statusName: value,
-        relievingDate: null,
-      })
-    } else {
-      setEditEmployee({ ...editEmployee, statusName: value })
-    }
+    setEditEmployee({ ...editEmployee, statusName: value })
   }
   const onHandleRelievingDate = (value: Date) => {
-    setEditEmployee({ ...editEmployee, relievingDate: value })
+    setEditEmployee({
+      ...editEmployee,
+      relievingDate: moment(value).format(dateFormat),
+    })
   }
 
   const onHandleReportManager = (value: GetReportManager) => {
@@ -192,8 +194,8 @@ const EditEmployee = (): JSX.Element => {
       editEmployee.timeSlotDTO != null
     ) {
       const hasContract =
-        editEmployee.contractStartDate !== null &&
-        editEmployee.contractEndDate !== null
+        editEmployee.contractStartDate !== '' &&
+        editEmployee.contractEndDate !== ''
 
       if (editEmployee.contractExists) {
         setViewBtnEnabled(hasContract)
@@ -478,7 +480,7 @@ const EditEmployee = (): JSX.Element => {
             list={employeeStatus}
             setStatusValue={onHandleEmployeeStatus}
             setStatusDateValue={onHandleRelievingDate}
-            dateValue={editEmployee.relievingDate as Date}
+            dateValue={editEmployee.relievingDate}
             value={editEmployee.statusName}
             isRequired={true}
             dynamicFormLabelProps={dynamicFormLabelProps}
@@ -489,8 +491,8 @@ const EditEmployee = (): JSX.Element => {
             onStartDateChangeHandler={onHandleStartDate}
             onEndDateChangeHandler={onHandleEndDate}
             onContractExistHandler={onHandleContractExist}
-            startDateValue={editEmployee.contractStartDate as Date}
-            endDateValue={editEmployee.contractEndDate as Date}
+            startDateValue={editEmployee.contractStartDate}
+            endDateValue={editEmployee.contractEndDate}
             isContractExist={editEmployee.contractExists}
           />
           <WorkFrom

@@ -9,8 +9,6 @@ const DateOfJoining = ({
   onDateChangeHandler,
   dateValue,
 }: DateChangeHandlerProp): JSX.Element => {
-  const date = dateValue instanceof Date ? dateValue.toLocaleDateString() : ''
-
   return (
     <>
       <CRow className="mb-3">
@@ -21,7 +19,7 @@ const DateOfJoining = ({
           )}
         >
           Date of Joining:
-          <span className={showIsRequired(date)}>*</span>
+          <span className={showIsRequired(dateValue)}>*</span>
         </CFormLabel>
         <CCol sm={3}>
           <DatePicker
@@ -35,7 +33,7 @@ const DateOfJoining = ({
             dateFormat="dd/mm/yy"
             placeholderText="dd/mm/yy"
             name="joinedDate"
-            value={date}
+            value={dateValue}
             onChange={(date: Date) => onDateChangeHandler(date)}
           />
         </CCol>

@@ -13,9 +13,6 @@ const Status = ({
   dateValue,
   isRequired,
 }: StatusProps): JSX.Element => {
-  const dateToString =
-    dateValue instanceof Date ? dateValue.toLocaleDateString() : ''
-
   const onChangeHandler = (e: { target: { value: string } }) => {
     setStatusValue(e.target.value)
   }
@@ -63,9 +60,7 @@ const Status = ({
             )}
           >
             Relieving Date:
-            {isRequired && (
-              <span className={showIsRequired(dateToString)}>*</span>
-            )}
+            {isRequired && <span className={showIsRequired(dateValue)}>*</span>}
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
@@ -80,7 +75,7 @@ const Status = ({
               placeholderText="dd/mm/yy"
               dateFormat="dd/mm/yy"
               name="statusDate"
-              value={dateToString}
+              value={dateValue}
               onChange={(date: Date) => setStatusDateValue(date)}
             />
           </CCol>

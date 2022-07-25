@@ -55,7 +55,7 @@ const Shift = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
-          data-tesId="shiftLabel"
+          data-tesid="shiftLabel"
           {...dynamicFormLabelProps(
             'shift',
             'col-sm-3 col-form-label text-end',
