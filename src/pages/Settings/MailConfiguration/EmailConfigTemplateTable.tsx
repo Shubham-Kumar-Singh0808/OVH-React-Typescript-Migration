@@ -22,7 +22,6 @@ import OToast from '../../../components/ReusableComponent/OToast'
 const EmployeeEmailTemplateTable = ({
   employeeTemplate,
   editTemplateButtonHandler,
-  editEmployeeTemplate,
 }: EmployeeEmailTemplateTableProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -134,14 +133,14 @@ const EmployeeEmailTemplateTable = ({
                       color="info btn-ovh me-2"
                       onClick={() => {
                         editTemplateButtonHandler(
-                          editEmployeeTemplate.id,
-                          editEmployeeTemplate.templateName,
-                          editEmployeeTemplate.template,
-                          editEmployeeTemplate.templateTypeId,
-                          editEmployeeTemplate.templateType,
-                          editEmployeeTemplate.assetTypeId,
-                          editEmployeeTemplate.assetType,
-                          editEmployeeTemplate.email,
+                          emailTemplate.id,
+                          emailTemplate.templateName,
+                          emailTemplate.template,
+                          emailTemplate.templateTypeId,
+                          emailTemplate.templateType,
+                          emailTemplate.assetTypeId,
+                          emailTemplate.assetType,
+                          emailTemplate.email,
                         )
                       }}
                     >

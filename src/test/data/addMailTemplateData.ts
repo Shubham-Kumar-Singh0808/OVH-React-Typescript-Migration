@@ -1,6 +1,6 @@
-import { EmployeeGetMailTemplateTypes } from '../../types/Settings/MailConfiguration/employeemailConfigurationTypes'
+import { EmployeeMailTemplateType } from '../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 
-export const mockTemplateTypes: EmployeeGetMailTemplateTypes[] = [
+export const mockTemplateTypes: EmployeeMailTemplateType[] = [
   {
     id: 3,
     name: 'Project Management',

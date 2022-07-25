@@ -6,7 +6,7 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, SetStateAction } from 'react'
 import { Link } from 'react-router-dom'
 import EmployeeEmailTemplateTable from './EmailConfigTemplateTable'
 import EditMailTemplate from './EditTemplate/EditMailTemplate'
@@ -30,7 +30,7 @@ const EmailConfigTemplate = (): JSX.Element => {
   const [employeeTemplate, setEmployeeTemplate] = useState(
     initialEmployeeEmailTemplate,
   )
-
+  const [selectTemplateId, setSelectTemplateId] = useState<number>(0)
   const [editEmployeeTemplate, setEditEmployeeTemplate] =
     useState<EditEmployeeMailTemplate>({
       id: 0,
@@ -45,7 +45,7 @@ const EmailConfigTemplate = (): JSX.Element => {
   const employeeMailTemplateType = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplateTypes,
   )
-
+  // console.log(editEmployeeTemplate)
   useEffect(() => {
     dispatch(
       reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
@@ -62,18 +62,19 @@ const EmailConfigTemplate = (): JSX.Element => {
   }
 
   const editTemplateButtonHandler = (
-    id: number,
+    templateId: number,
     templateName: string,
     template: string,
     templateTypeId: number,
     templateType: string,
-    assetTypeId: null | string,
+    assetTypeId: string,
     assetType: string,
-    email: null | string,
+    email: string,
   ) => {
     setToggle('editTemplate')
+    setSelectTemplateId(templateId)
     setEditEmployeeTemplate({
-      id,
+      id: templateId,
       templateName,
       template,
       templateTypeId,
@@ -115,7 +116,11 @@ const EmailConfigTemplate = (): JSX.Element => {
       id: 0,
       templateName: '',
       template: '',
-      templateTypeId: '',
+      templateTypeId: 0,
+      templateType: '',
+      assetTypeId: '',
+      assetType: '',
+      email: '',
     })
     dispatch(
       reduxServices.employeeMailConfiguration.actions.clearEmployeeEmailTemplate(),
@@ -218,8 +223,12 @@ const EmailConfigTemplate = (): JSX.Element => {
       {toggle === 'editTemplate' && (
         <EditMailTemplate
           backButtonHandler={() => setToggle('')}
-          headerTitle={''}
-          confirmButtonText={''}
+          editEmployeeTemplate={editEmployeeTemplate}
+          setEditEmployeeTemplate={function (
+            value: SetStateAction<EditEmployeeMailTemplate>,
+          ): void {
+            throw new Error('Function not implemented.')
+          }}
         />
       )}
     </>

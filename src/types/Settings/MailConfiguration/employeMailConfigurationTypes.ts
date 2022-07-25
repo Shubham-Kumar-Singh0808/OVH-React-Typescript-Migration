@@ -4,11 +4,11 @@ export type EmployeeMailTemplate = {
   id: number
   templateName: string
   template: string
-  templateTypeId: number | string
-  templateType?: string
-  assetTypeId?: null | string
-  assetType?: string
-  email?: null | string
+  templateTypeId: number
+  templateType: string
+  assetTypeId: string
+  assetType: string
+  email: string
 }
 
 export type EditEmployeeMailTemplate = {
@@ -17,9 +17,9 @@ export type EditEmployeeMailTemplate = {
   template: string
   templateTypeId: number
   templateType: string
-  assetTypeId: null | string
+  assetTypeId: string
   assetType: string
-  email: null | string
+  email: string
 }
 
 export type EmployeeMailTemplateType = {
@@ -53,8 +53,16 @@ export type EmployeeEmailTemplateTableProps = {
     template: string,
     templateTypeId: number,
     templateType: string,
-    assetTypeId: null | string,
+    assetTypeId: string,
     assetType: string,
-    email: null | string,
+    email: string,
   ) => void
+}
+
+export type EditTemplateProps = {
+  backButtonHandler: () => void
+  editEmployeeTemplate: EditEmployeeMailTemplate
+  setEditEmployeeTemplate: React.Dispatch<
+    React.SetStateAction<EditEmployeeMailTemplate>
+  >
 }
