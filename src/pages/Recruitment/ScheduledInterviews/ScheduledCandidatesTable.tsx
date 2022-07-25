@@ -23,15 +23,19 @@ const ScheduledCandidatesTable = (props: {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
-  isTheadShow: boolean
+  candidateTheadShow: boolean
 }): JSX.Element => {
+  const scheduledCandidates = useTypedSelector(
+    reduxServices.scheduledInterviews.selectors.scheduledCandidates,
+  )
+
   const {
     paginationRange,
     pageSize,
     setPageSize,
     currentPage,
     setCurrentPage,
-    isTheadShow,
+    candidateTheadShow,
   } = props
 
   const handlePageSizeSelectChange = (
@@ -44,10 +48,6 @@ const ScheduledCandidatesTable = (props: {
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-
-  const scheduledCandidates = useTypedSelector(
-    reduxServices.scheduledInterviews.selectors.scheduledCandidates,
-  )
 
   const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
     if (interviewStatus === 'NEW') {
@@ -107,7 +107,7 @@ const ScheduledCandidatesTable = (props: {
 
   return (
     <>
-      {isTheadShow && (
+      {candidateTheadShow && (
         <>
           <CTable
             striped

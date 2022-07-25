@@ -101,7 +101,7 @@ const ScheduledInterviewsTable = (props: {
   return (
     <>
       {isTheadShow && (
-        <>
+        <CRow>
           <CTable
             striped
             responsive
@@ -208,7 +208,7 @@ const ScheduledInterviewsTable = (props: {
               </CRow>
             </CCol>
           )}
-        </>
+        </CRow>
       )}
     </>
   )

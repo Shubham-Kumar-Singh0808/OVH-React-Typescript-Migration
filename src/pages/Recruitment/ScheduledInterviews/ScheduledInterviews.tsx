@@ -1,38 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import moment from 'moment'
-import ScheduledInterviewsTable from './ScheduledInterviewsTable'
-import ScheduledCandidatesTable from './ScheduledCandidatesTable'
+import {
+  CCol,
+  CFormCheck,
+  CFormLabel,
+  CFormSelect,
+  CRow,
+} from '@coreui/react-pro'
+import ScheduledCandidatesFilterOptions from './ScheduledCandidatesFilterOptions'
 import ScheduledInterviewsFilterOptions from './ScheduledInterviewsFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
-import { usePagination } from '../../../middleware/hooks/usePagination'
-import scheduledInterviewsApi from '../../../middleware/api/Recruitment/ScheduledInterviews/ScheduledInterviewsApi'
-import { downloadFile } from '../../../utils/helper'
 
 const ScheduledInterviews = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const commonFormatDate = 'DD/MM/YYYY'
-  const [searchValue, setSearchValue] = useState<string>('')
-  const [isTheadShow, setIsTheadShow] = useState<boolean>(true)
-  const [candidateTheadShow, setCandidateTheadShow] = useState<boolean>(true)
+  const [selectTechnology, setSelectTechnology] = useState<string>('')
+  const [filterByTechnology, setFilterByTechnology] = useState<string>('')
   const [filterByInterviewStatus, setFilterByInterviewStatus] =
     useState<string>('pending')
-  const [filterByTechnology, setFilterByTechnology] = useState<string>('')
-  const [filterByMeFromDate, setFilterByMeFromDate] = useState<string>(
-    moment(new Date()).clone().startOf('month').format(commonFormatDate),
-  )
-  const [filterByMeToDate, setFilterByMeToDate] = useState<string>(
-    moment(new Date()).clone().endOf('month').format(commonFormatDate),
-  )
-  const [filterByAllFromDate, setFilterByAllFromDate] = useState<string>(
-    moment(new Date()).format(commonFormatDate),
-  )
-  const [filterByAllToDate, setFilterByAllToDate] = useState<string>(
-    moment(new Date()).format(commonFormatDate),
+  const [selectInterviewStatus, setSelectInterviewStatus] = useState<string>(
+    filterByInterviewStatus,
   )
 
   const getTechnologies = useTypedSelector(
@@ -43,71 +30,20 @@ const ScheduledInterviews = (): JSX.Element => {
     reduxServices.scheduledInterviews.selectors.selectedView,
   )
 
-  const isLoading = useTypedSelector(
-    reduxServices.scheduledInterviews.selectors.isLoading,
+  const employeeRole = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeRole,
   )
-
-  const scheduledCandidatesListSize = useTypedSelector(
-    reduxServices.scheduledInterviews.selectors.scheduledCandidatesListSize,
-  )
-
-  const {
-    paginationRange,
-    setPageSize,
-    setCurrentPage,
-    currentPage,
-    pageSize,
-  } = usePagination(scheduledCandidatesListSize, 20)
 
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getTechnologies())
   }, [dispatch])
 
-  useEffect(() => {
-    if (selectedView === 'Me') {
-      dispatch(
-        reduxServices.scheduledInterviews.getScheduledCandidatesForEmployee({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          fromDate: filterByMeFromDate,
-          toDate: filterByMeToDate,
-          status: filterByInterviewStatus,
-        }),
-      )
-    } else if (selectedView === 'All') {
-      dispatch(
-        reduxServices.scheduledInterviews.getScheduledCandidates({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          fromDate: filterByAllFromDate,
-          toDate: filterByAllToDate,
-          search: searchValue,
-          skill: filterByTechnology,
-        }),
-      )
-    }
-  }, [
-    searchValue,
-    filterByTechnology,
-    filterByMeToDate,
-    filterByMeFromDate,
-    filterByInterviewStatus,
-    filterByAllFromDate,
-    filterByMeToDate,
-    selectedView,
-    currentPage,
-    pageSize,
-    dispatch,
-  ])
-
-  const handleExportScheduleList = async () => {
-    const interviewScheduleListDownload =
-      await scheduledInterviewsApi.exportScheduledCandidatesList({
-        fromDate: filterByAllFromDate,
-        toDate: filterByAllToDate,
-        skill: filterByTechnology,
-      })
-    downloadFile(interviewScheduleListDownload, 'ScheduledCandidates.csv')
+  const handleSelectView = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      reduxServices.scheduledInterviews.actions.setSelectedView(
+        event.target.value,
+      ),
+    )
   }
 
   return (
@@ -122,53 +58,106 @@ const ScheduledInterviews = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <ScheduledInterviewsFilterOptions
-          getTechnologies={getTechnologies}
-          setSearchValue={setSearchValue}
-          setFilterByTechnology={setFilterByTechnology}
-          filterByMeFromDate={filterByMeFromDate}
-          setFilterByMeFromDate={setFilterByMeFromDate}
-          filterByMeToDate={filterByMeToDate}
-          setFilterByMeToDate={setFilterByMeToDate}
-          filterByInterviewStatus={filterByInterviewStatus}
-          setFilterByInterviewStatus={setFilterByInterviewStatus}
-          filterByAllFromDate={filterByAllFromDate}
-          setFilterByAllFromDate={setFilterByAllFromDate}
-          filterByAllToDate={filterByAllToDate}
-          setFilterByAllToDate={setFilterByAllToDate}
-          setIsTheadShow={setIsTheadShow}
-          setCandidateTheadShow={setCandidateTheadShow}
-          candidateTheadShow={candidateTheadShow}
-          handleExportScheduleList={handleExportScheduleList}
-        />
-        {isLoading !== ApiLoadingState.loading ? (
-          <>
-            {selectedView === 'Me' &&
-              isLoading === ApiLoadingState.succeeded && (
-                <ScheduledInterviewsTable
-                  paginationRange={paginationRange}
-                  setPageSize={setPageSize}
-                  setCurrentPage={setCurrentPage}
-                  currentPage={currentPage}
-                  pageSize={pageSize}
-                  isTheadShow={isTheadShow}
-                />
-              )}
-            {selectedView === 'All' &&
-              isLoading === ApiLoadingState.succeeded && (
-                <ScheduledCandidatesTable
-                  paginationRange={paginationRange}
-                  setPageSize={setPageSize}
-                  setCurrentPage={setCurrentPage}
-                  currentPage={currentPage}
-                  pageSize={pageSize}
-                  isTheadShow={candidateTheadShow}
-                />
-              )}
-          </>
-        ) : (
-          <OLoadingSpinner type={LoadingType.PAGE} />
-        )}
+        <CRow>
+          {selectedView === 'Me' ? (
+            <>
+              <CCol sm={2} md={2} className="text-end">
+                <CFormLabel className="mt-1">Interview Status:</CFormLabel>
+              </CCol>
+              <CCol sm={3}>
+                <CFormSelect
+                  aria-label="Default select example"
+                  size="sm"
+                  id="interviewStatus"
+                  data-testid="interviewStatusSelect"
+                  name="interviewStatus"
+                  value={selectInterviewStatus}
+                  onChange={(e) => {
+                    setSelectInterviewStatus(e.target.value)
+                  }}
+                >
+                  <option value={'pending'}>Pending</option>
+                  <option value={'completed'}>Completed</option>
+                </CFormSelect>
+              </CCol>
+            </>
+          ) : (
+            <>
+              <CCol sm={2} md={2} className="text-end">
+                <CFormLabel className="mt-1">Technology:</CFormLabel>
+              </CCol>
+              <CCol sm={3}>
+                <CFormSelect
+                  aria-label="Default select example"
+                  size="sm"
+                  id="selectTechnology"
+                  data-testid="selectTechnology"
+                  name="selectTechnology"
+                  value={selectTechnology}
+                  onChange={(e) => {
+                    setSelectTechnology(e.target.value)
+                  }}
+                >
+                  <option value={''}>Select Technology</option>
+                  {getTechnologies
+                    .slice()
+                    .sort((technology1, technology2) =>
+                      technology1.name.localeCompare(technology2.name),
+                    )
+                    ?.map((certificateItem, index) => (
+                      <option key={index} value={certificateItem.name}>
+                        {certificateItem.name}
+                      </option>
+                    ))}
+                </CFormSelect>
+              </CCol>
+            </>
+          )}
+          {(employeeRole === 'admin' ||
+            employeeRole === 'HR' ||
+            employeeRole === 'HR Manager') && (
+            <CCol sm={6} className="d-md-flex justify-content-md-end ms-5">
+              <CFormCheck
+                type="radio"
+                name="viewOptions"
+                value="Me"
+                id="Me"
+                label="Me"
+                inline
+                defaultChecked={selectedView === 'Me'}
+                onChange={handleSelectView}
+              />
+              <CFormCheck
+                type="radio"
+                name="viewOptions"
+                value="All"
+                id="All"
+                label="All"
+                inline
+                defaultChecked={selectedView === 'All'}
+                onChange={handleSelectView}
+              />
+            </CCol>
+          )}
+        </CRow>
+        <>
+          {selectedView === 'Me' && (
+            <ScheduledInterviewsFilterOptions
+              selectInterviewStatus={selectInterviewStatus}
+              filterByInterviewStatus={filterByInterviewStatus}
+              setFilterByInterviewStatus={setFilterByInterviewStatus}
+              setSelectInterviewStatus={setSelectInterviewStatus}
+            />
+          )}
+          {selectedView === 'All' && (
+            <ScheduledCandidatesFilterOptions
+              filterByTechnology={filterByTechnology}
+              setFilterByTechnology={setFilterByTechnology}
+              selectTechnology={selectTechnology}
+              setSelectTechnology={setSelectTechnology}
+            />
+          )}
+        </>
       </OCard>
     </>
   )
