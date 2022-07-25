@@ -355,7 +355,11 @@ const EditEmployee = (): JSX.Element => {
           <CRow className="justify-content-end">
             <CCol className="text-end" md={4}>
               <Link to="/employeeList">
-                <CButton color="info" className="btn-ovh me-1">
+                <CButton
+                  data-testid="back-btn"
+                  color="info"
+                  className="btn-ovh me-1"
+                >
                   <i className="fa fa-arrow-left me-1"></i>Back
                 </CButton>
               </Link>
@@ -515,7 +519,7 @@ const EditEmployee = (): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <CCol>
+        <CCol data-testid="spinner">
           <CRow className="category-loading-spinner">
             <CSpinner />
           </CRow>
