@@ -11,6 +11,17 @@ export type EmployeeMailTemplate = {
   email?: null | string
 }
 
+export type EditEmployeeMailTemplate = {
+  id: number
+  templateName: string
+  template: string
+  templateTypeId: number
+  templateType: string
+  assetTypeId: null | string
+  assetType: string
+  email: null | string
+}
+
 export type EmployeeMailTemplateType = {
   id: string | number
   name: string
@@ -35,4 +46,15 @@ export type EmployeeGetEmailTemplateModelProps = {
 
 export type EmployeeEmailTemplateTableProps = {
   employeeTemplate: EmployeeMailTemplate
+  editEmployeeTemplate: EditEmployeeMailTemplate
+  editTemplateButtonHandler: (
+    id: number,
+    templateName: string,
+    template: string,
+    templateTypeId: number,
+    templateType: string,
+    assetTypeId: null | string,
+    assetType: string,
+    email: null | string,
+  ) => void
 }

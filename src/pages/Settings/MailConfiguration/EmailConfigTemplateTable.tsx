@@ -21,6 +21,8 @@ import OToast from '../../../components/ReusableComponent/OToast'
 
 const EmployeeEmailTemplateTable = ({
   employeeTemplate,
+  editTemplateButtonHandler,
+  editEmployeeTemplate,
 }: EmployeeEmailTemplateTableProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -79,7 +81,6 @@ const EmployeeEmailTemplateTable = ({
       )
     }
   }
-
   return (
     <CTable striped>
       <CTableHead>
@@ -129,7 +130,21 @@ const EmployeeEmailTemplateTable = ({
                     </CLink>
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    <CButton color="info btn-ovh me-2">
+                    <CButton
+                      color="info btn-ovh me-2"
+                      onClick={() => {
+                        editTemplateButtonHandler(
+                          editEmployeeTemplate.id,
+                          editEmployeeTemplate.templateName,
+                          editEmployeeTemplate.template,
+                          editEmployeeTemplate.templateTypeId,
+                          editEmployeeTemplate.templateType,
+                          editEmployeeTemplate.assetTypeId,
+                          editEmployeeTemplate.assetType,
+                          editEmployeeTemplate.email,
+                        )
+                      }}
+                    >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
                     <CButton
