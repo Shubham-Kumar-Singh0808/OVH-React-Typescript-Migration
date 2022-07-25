@@ -115,7 +115,6 @@ const AddNewEmployee = (): JSX.Element => {
     setAddEmployee({ ...addEmployee, dob: moment(value).format(dateFormat) })
   }
   const onHandleJoinDate = (value: Date) => {
-    console.log('value', value)
     setAddEmployee({
       ...addEmployee,
       dateOfJoining: moment(value).format(dateFormat),
