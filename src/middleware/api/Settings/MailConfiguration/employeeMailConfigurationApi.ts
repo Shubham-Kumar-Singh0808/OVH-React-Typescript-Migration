@@ -7,6 +7,7 @@ import {
   EmployeeMailTemplate,
   EmployeeGetEmailTemplateProps,
   EmployeeMailTemplateType,
+  EditEmployeeMailTemplate,
 } from '../../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
@@ -66,10 +67,24 @@ const deleteMailTemplate = async (id: number): Promise<number | undefined> => {
   return response.data
 }
 
+const updateMailTemplate = async (
+  prepareObject: EditEmployeeMailTemplate,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeMailConfigurationApiConfig.updateMailTemplate,
+    method: AllowedHttpMethods.put,
+    data: prepareObject,
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeMailConfigurationApi = {
   getEmployeeMailTemplateTypes,
   getEmployeeMailTemplate,
   exportEmployeeMailTemplateData,
+  updateMailTemplate,
   deleteMailTemplate,
 }
 

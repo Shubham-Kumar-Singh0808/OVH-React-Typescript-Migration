@@ -6,6 +6,7 @@ import {
   EmployeeGetEmailTemplateProps,
   EmployeeMailTemplateType,
   EmployeeMailConfigurationState,
+  EditEmployeeMailTemplate,
 } from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
@@ -28,6 +29,26 @@ const getEmployeeMailTemplate = createAsyncThunk(
   async (props: EmployeeGetEmailTemplateProps, thunkApi) => {
     try {
       return await employeeMailConfigurationApi.getEmployeeMailTemplate(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateMailTemplate = createAsyncThunk<
+  number | undefined,
+  EditEmployeeMailTemplate,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'mailConfiguration/updateMailTemplate',
+  async (editTemplate: EditEmployeeMailTemplate, thunkApi) => {
+    try {
+      return await employeeMailConfigurationApi.updateMailTemplate(editTemplate)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -96,6 +117,7 @@ const employeeMailConfigurationThunk = {
   getEmployeeMailTemplateTypes,
   getEmployeeMailTemplate,
   deleteMailTemplate,
+  updateMailTemplate,
 }
 
 const employeeMailConfigurationSelectors = {

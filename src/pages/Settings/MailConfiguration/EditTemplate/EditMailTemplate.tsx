@@ -19,6 +19,9 @@ import {
   EditEmployeeMailTemplate,
   EditTemplateProps,
 } from '../../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
+import { useAppDispatch } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditMailTemplate = ({
   backButtonHandler,
@@ -30,7 +33,7 @@ const EditMailTemplate = ({
     htmlFor: 'inputNewTemplate',
     className: 'col-form-label category-label',
   }
-
+  const dispatch = useAppDispatch()
   useEffect(() => {
     if (Number(editEmployeeTemplate.templateTypeId) === 11) {
       setShowAssetType(true)
@@ -45,6 +48,30 @@ const EditMailTemplate = ({
       return { ...prevState, ...{ template } }
     })
   }
+
+  const handleUpdateMailTemplate = async () => {
+    const updateMailTemplateResultAction = await dispatch(
+      reduxServices.employeeMailConfiguration.updateMailTemplate(
+        editEmployeeTemplate,
+      ),
+    )
+    if (
+      reduxServices.employeeMailConfiguration.updateMailTemplate.fulfilled.match(
+        updateMailTemplateResultAction,
+      )
+    ) {
+      backButtonHandler()
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Mail Template updated successfully"
+          />,
+        ),
+      )
+    }
+  }
+
   return (
     <>
       <OCard
@@ -185,8 +212,7 @@ const EditMailTemplate = ({
               <CButton
                 className="btn-ovh me-2"
                 color="success"
-                // disabled={!isAddButtonEnabled}
-                // onClick={handleUpdateSkill}
+                onClick={handleUpdateMailTemplate}
               >
                 Update
               </CButton>
