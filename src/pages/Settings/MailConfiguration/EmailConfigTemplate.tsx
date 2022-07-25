@@ -6,7 +6,7 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState, useEffect, SetStateAction } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import EmployeeEmailTemplateTable from './EmailConfigTemplateTable'
 import EditMailTemplate from './EditTemplate/EditMailTemplate'
@@ -30,7 +30,6 @@ const EmailConfigTemplate = (): JSX.Element => {
   const [employeeTemplate, setEmployeeTemplate] = useState(
     initialEmployeeEmailTemplate,
   )
-  const [selectTemplateId, setSelectTemplateId] = useState<number>(0)
   const [editEmployeeTemplate, setEditEmployeeTemplate] =
     useState<EditEmployeeMailTemplate>({
       id: 0,
@@ -45,7 +44,7 @@ const EmailConfigTemplate = (): JSX.Element => {
   const employeeMailTemplateType = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplateTypes,
   )
-  // console.log(editEmployeeTemplate)
+
   useEffect(() => {
     dispatch(
       reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
@@ -72,7 +71,6 @@ const EmailConfigTemplate = (): JSX.Element => {
     email: string,
   ) => {
     setToggle('editTemplate')
-    setSelectTemplateId(templateId)
     setEditEmployeeTemplate({
       id: templateId,
       templateName,

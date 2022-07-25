@@ -11,7 +11,6 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
@@ -29,10 +28,6 @@ const EditMailTemplate = ({
   setEditEmployeeTemplate,
 }: EditTemplateProps): JSX.Element => {
   const [showAssetType, setShowAssetType] = useState<boolean>(false)
-  const formLabelProps = {
-    htmlFor: 'inputNewTemplate',
-    className: 'col-form-label category-label',
-  }
   const dispatch = useAppDispatch()
   useEffect(() => {
     if (Number(editEmployeeTemplate.templateTypeId) === 11) {
@@ -42,7 +37,6 @@ const EditMailTemplate = ({
     }
   })
 
-  console.log(editEmployeeTemplate)
   const handleDescription = (template: string) => {
     setEditEmployeeTemplate((prevState: EditEmployeeMailTemplate) => {
       return { ...prevState, ...{ template } }
@@ -78,6 +72,10 @@ const EditMailTemplate = ({
     }
   }
 
+  const formLabelProps = {
+    htmlFor: 'inputNewTemplate',
+    className: 'col-form-label category-label',
+  }
   return (
     <>
       <OCard
