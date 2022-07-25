@@ -49,49 +49,19 @@ const ScheduledInterviewsTable = (props: {
     reduxServices.scheduledInterviews.selectors.scheduledCandidatesForEmployee,
   )
 
-  const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
-    if (interviewStatus === 'NEW') {
+  const formatInterviewStatusText = (
+    interviewStatus: string | null,
+  ): JSX.Element => {
+    if (interviewStatus === 'pending') {
       return (
-        <CBadge className="rounded-pill" color="info">
+        <CBadge className="rounded-pill pb-1" color="warning">
           {interviewStatus}
         </CBadge>
       )
-    } else if (interviewStatus === 'IN_PROCESS') {
+    } else if (interviewStatus === 'completed') {
       return (
-        <CBadge className="rounded-pill" color="warning">
-          {'Pending'}
-        </CBadge>
-      )
-    } else if (interviewStatus === ('HOLD' || 'CANCEL')) {
-      return (
-        <CBadge className="rounded-pill" color="warning">
+        <CBadge className="rounded-pill pb-1" color="success">
           {interviewStatus}
-        </CBadge>
-      )
-    } else if (
-      interviewStatus === ('REJECTED' || 'DID_NOT_JOIN' || 'OFFER_CANCELLED')
-    ) {
-      return (
-        <CBadge className="rounded-pill" color="danger">
-          {interviewStatus}
-        </CBadge>
-      )
-    } else if (interviewStatus === ('OFFERED' || 'COMPLETED')) {
-      return (
-        <CBadge className="rounded-pill" color="success">
-          {'Completed'}
-        </CBadge>
-      )
-    } else if (interviewStatus === 'RESCHEDULED') {
-      return (
-        <CBadge className="rounded-pill sh-badge-light">
-          {interviewStatus}
-        </CBadge>
-      )
-    } else if (interviewStatus === 'NO_SHOW') {
-      return (
-        <CBadge className="rounded-pill" color="danger">
-          {'NO SHOW'}
         </CBadge>
       )
     }
@@ -157,9 +127,7 @@ const ScheduledInterviewsTable = (props: {
                           {currentCandidate.interviewRound}
                         </CTableDataCell>
                         <CTableDataCell className="text-center sh-interview-badge">
-                          {formatInterviewStatusText(
-                            currentCandidate.interviewStatus,
-                          )}
+                          {formatInterviewStatusText(currentCandidate.status)}
                         </CTableDataCell>
                       </CTableRow>
                     )

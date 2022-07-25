@@ -7,7 +7,7 @@ export type CandidateInterviewInformation = {
   interviewersDTOList: null
   interviewDate: string
   interviewTime: string
-  interviewComments: string
+  interviewComments: null | string
   interviewRound: string
   interviewStatus: string
   candidateName: string
@@ -22,11 +22,11 @@ export type CandidateInterviewInformation = {
   cycleDTOs: null | string
   interviewResultStatus: null
   description: null
-  skypeId: null
+  skypeId: null | string
   proactiveComments: null
   communicationComments: null
   excellenceComments: null
-  updatedBy: null
+  updatedBy: null | string
   recruiter: null | string
   reason: null
   ctc: null

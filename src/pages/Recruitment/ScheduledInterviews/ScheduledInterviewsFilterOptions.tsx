@@ -1,4 +1,4 @@
-import { CCol, CRow, CFormLabel, CButton } from '@coreui/react-pro'
+import { CCol, CRow, CFormLabel, CButton, CSpinner } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
@@ -6,9 +6,7 @@ import ScheduledInterviewsTable from './ScheduledInterviewsTable'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const ScheduledInterviewsFilterOptions = (props: {
   selectInterviewStatus: string
@@ -218,7 +216,9 @@ const ScheduledInterviewsFilterOptions = (props: {
           isTheadShow={isTheadShow}
         />
       ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
+        <>
+          <CSpinner />
+        </>
       )}
     </>
   )

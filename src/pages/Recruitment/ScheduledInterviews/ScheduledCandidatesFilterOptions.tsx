@@ -5,6 +5,7 @@ import {
   CFormLabel,
   CFormInput,
   CInputGroup,
+  CSpinner,
 } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
@@ -16,8 +17,6 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { downloadFile } from '../../../utils/helper'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const ScheduledCandidatesFilterOptions = (props: {
   filterByTechnology: string
@@ -300,7 +299,9 @@ const ScheduledCandidatesFilterOptions = (props: {
           candidateTheadShow={candidateTheadShow}
         />
       ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
+        <>
+          <CSpinner />
+        </>
       )}
     </>
   )
