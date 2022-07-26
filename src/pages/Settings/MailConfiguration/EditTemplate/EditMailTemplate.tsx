@@ -218,6 +218,7 @@ const EditMailTemplate = ({
                 className="btn-ovh me-2"
                 color="success"
                 onClick={handleUpdateMailTemplate}
+                data-testid="btn-update"
               >
                 Update
               </CButton>
