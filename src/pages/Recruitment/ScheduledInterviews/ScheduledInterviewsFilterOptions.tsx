@@ -148,14 +148,18 @@ const ScheduledInterviewsFilterOptions = (props: {
             dropdownMode="select"
             placeholderText="dd/mm/yy"
             name="scheduledInterviewsFromDate"
-            value={new Date(scheduledInterviewFromDate).toLocaleDateString(
-              deviceLocale,
-              {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-              },
-            )}
+            value={
+              scheduledInterviewFromDate
+                ? new Date(scheduledInterviewFromDate).toLocaleDateString(
+                    deviceLocale,
+                    {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    },
+                  )
+                : ''
+            }
             onChange={(date: Date) =>
               setScheduledInterviewFromDate(
                 moment(date).format(commonFormatDate),
@@ -180,14 +184,18 @@ const ScheduledInterviewsFilterOptions = (props: {
             dateFormat="dd/mm/yy"
             placeholderText="dd/mm/yy"
             name="scheduledInterviewsToDate"
-            value={new Date(scheduledInterviewToDate).toLocaleDateString(
-              deviceLocale,
-              {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-              },
-            )}
+            value={
+              scheduledInterviewToDate
+                ? new Date(scheduledInterviewToDate).toLocaleDateString(
+                    deviceLocale,
+                    {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    },
+                  )
+                : ''
+            }
             onChange={(date: Date) =>
               setScheduledInterviewToDate(moment(date).format(commonFormatDate))
             }

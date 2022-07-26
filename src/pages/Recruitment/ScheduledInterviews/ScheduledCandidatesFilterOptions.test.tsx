@@ -77,7 +77,7 @@ describe('Scheduled Candidates Filter Options Component Testing', () => {
       const clearButtonElement = screen.getByRole('button', { name: 'Clear' })
       userEvent.click(clearButtonElement)
       const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
-      expect(fromDatePickerElement[0]).toHaveValue('Invalid Date')
+      expect(fromDatePickerElement[0]).toHaveValue('')
     })
     test('should render data upon view button click', async () => {
       const viewButtonElement = screen.getByRole('button', { name: 'View' })

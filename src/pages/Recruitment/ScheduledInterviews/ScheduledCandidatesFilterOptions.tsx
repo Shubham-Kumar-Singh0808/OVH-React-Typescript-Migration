@@ -182,14 +182,18 @@ const ScheduledCandidatesFilterOptions = (props: {
             dropdownMode="select"
             placeholderText="dd/mm/yy"
             name="scheduledCandidatesFromDate"
-            value={new Date(scheduledCandidatesFromDate).toLocaleDateString(
-              deviceLocale,
-              {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-              },
-            )}
+            value={
+              scheduledCandidatesFromDate
+                ? new Date(scheduledCandidatesFromDate).toLocaleDateString(
+                    deviceLocale,
+                    {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    },
+                  )
+                : ''
+            }
             onChange={(date: Date) =>
               setScheduledCandidatesFromDate(
                 moment(date).format(commonFormatDate),
@@ -213,14 +217,18 @@ const ScheduledCandidatesFilterOptions = (props: {
             dropdownMode="select"
             placeholderText="dd/mm/yy"
             name="scheduledCandidatesToDate"
-            value={new Date(scheduledCandidatesToDate).toLocaleDateString(
-              deviceLocale,
-              {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-              },
-            )}
+            value={
+              scheduledCandidatesToDate
+                ? new Date(scheduledCandidatesToDate).toLocaleDateString(
+                    deviceLocale,
+                    {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    },
+                  )
+                : ''
+            }
             onChange={(date: Date) =>
               setScheduledCandidatesToDate(
                 moment(date).format(commonFormatDate),
