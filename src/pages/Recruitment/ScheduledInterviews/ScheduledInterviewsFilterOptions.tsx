@@ -15,7 +15,11 @@ const ScheduledInterviewsFilterOptions = (props: {
   setSelectInterviewStatus: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const commonFormatDate = 'DD/MM/YYYY'
+  const commonFormatDate = 'L'
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
   const [isTheadShow, setIsTheadShow] = useState<boolean>(true)
   const [isViewBtnEnabled, setIsViewBtnEnabled] = useState<boolean>(false)
   const [interviewDateError, setInterviewDateError] = useState<boolean>(false)
@@ -142,10 +146,16 @@ const ScheduledInterviewsFilterOptions = (props: {
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
-            dateFormat="dd/mm/yy"
             placeholderText="dd/mm/yy"
             name="scheduledInterviewsFromDate"
-            value={scheduledInterviewFromDate}
+            value={new Date(scheduledInterviewFromDate).toLocaleDateString(
+              deviceLocale,
+              {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              },
+            )}
             onChange={(date: Date) =>
               setScheduledInterviewFromDate(
                 moment(date).format(commonFormatDate),
@@ -160,7 +170,7 @@ const ScheduledInterviewsFilterOptions = (props: {
         </CCol>
         <CCol sm={3}>
           <ReactDatePicker
-            id="from-date"
+            id="to-date"
             data-testid="scheduledInterviewsToDate"
             className="form-control form-control-sm sh-date-picker"
             peekNextMonth
@@ -170,7 +180,14 @@ const ScheduledInterviewsFilterOptions = (props: {
             dateFormat="dd/mm/yy"
             placeholderText="dd/mm/yy"
             name="scheduledInterviewsToDate"
-            value={scheduledInterviewToDate}
+            value={new Date(scheduledInterviewToDate).toLocaleDateString(
+              deviceLocale,
+              {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              },
+            )}
             onChange={(date: Date) =>
               setScheduledInterviewToDate(moment(date).format(commonFormatDate))
             }

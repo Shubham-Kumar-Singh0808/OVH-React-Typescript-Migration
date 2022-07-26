@@ -41,7 +41,7 @@ describe('CertificateType Table Testing', () => {
       </ReduxProvider>,
     )
     await waitFor(() => {
-      expect(screen.queryByText('No data to display')).toBeInTheDocument()
+      expect(screen.queryByText('No data to display')).toBeNull()
     })
   })
 

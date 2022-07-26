@@ -25,7 +25,11 @@ const ScheduledCandidatesFilterOptions = (props: {
   setSelectTechnology: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const commonFormatDate = 'DD/MM/YYYY'
+  const commonFormatDate = 'L'
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
   const [filterBySearchValue, setFilterBySearchValue] = useState<string>('')
   const [searchInput, setSearchInput] = useState<string>('')
   const [isViewBtnEnabled, setIsViewBtnEnabled] = useState<boolean>(false)
@@ -176,10 +180,16 @@ const ScheduledCandidatesFilterOptions = (props: {
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
-            dateFormat="dd/mm/yy"
             placeholderText="dd/mm/yy"
             name="scheduledCandidatesFromDate"
-            value={scheduledCandidatesFromDate}
+            value={new Date(scheduledCandidatesFromDate).toLocaleDateString(
+              deviceLocale,
+              {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              },
+            )}
             onChange={(date: Date) =>
               setScheduledCandidatesFromDate(
                 moment(date).format(commonFormatDate),
@@ -201,10 +211,16 @@ const ScheduledCandidatesFilterOptions = (props: {
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
-            dateFormat="dd/mm/yy"
             placeholderText="dd/mm/yy"
             name="scheduledCandidatesToDate"
-            value={scheduledCandidatesToDate}
+            value={new Date(scheduledCandidatesToDate).toLocaleDateString(
+              deviceLocale,
+              {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              },
+            )}
             onChange={(date: Date) =>
               setScheduledCandidatesToDate(
                 moment(date).format(commonFormatDate),

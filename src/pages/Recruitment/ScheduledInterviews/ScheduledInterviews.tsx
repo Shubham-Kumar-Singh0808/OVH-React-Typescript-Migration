@@ -100,7 +100,7 @@ const ScheduledInterviews = (): JSX.Element => {
                 >
                   <option value={''}>Select Technology</option>
                   {getTechnologies
-                    .slice()
+                    ?.slice()
                     .sort((technology1, technology2) =>
                       technology1.name.localeCompare(technology2.name),
                     )

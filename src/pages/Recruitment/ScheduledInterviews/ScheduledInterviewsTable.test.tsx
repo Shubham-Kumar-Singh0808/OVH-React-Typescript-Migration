@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import ScheduledCandidatesTable from './ScheduledCandidatesTable'
+import ScheduledInterviewsTable from './ScheduledInterviewsTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockScheduledCandidatesData } from '../../../test/data/scheduledInterviewsData'
 
@@ -17,21 +17,22 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
-describe('Scheduled Candidates Table Component Testing', () => {
-  test('should render scheduled candidates table component without crashing', async () => {
+describe('Scheduled Interviews Table Component Testing', () => {
+  test('should render scheduled interviews table component without crashing', async () => {
     render(
-      <ScheduledCandidatesTable
+      <ScheduledInterviewsTable
         setCurrentPage={mockSetCurrentPage}
         setPageSize={mockSetPageSize}
         currentPage={1}
         pageSize={20}
         paginationRange={[1, 2, 3]}
-        candidateTheadShow={true}
+        isTheadShow={true}
       />,
       {
         preloadedState: {
           scheduledInterviews: {
             scheduledCandidates: mockScheduledCandidatesData,
+            scheduledCandidatesForEmployee: mockScheduledCandidatesData,
           },
         },
       },
