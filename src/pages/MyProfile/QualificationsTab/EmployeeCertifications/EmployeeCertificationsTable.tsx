@@ -13,8 +13,8 @@ import parse from 'html-react-parser'
 import TableActions from './TableActions'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
-import OModal from '../../../../components/ReusableComponent/OModal'
-import OToast from '../../../../components/ReusableComponent/OToast'
+// import OModal from '../../../../components/ReusableComponent/OModal'
+// import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 import { localeDateFormat } from '../../../../utils/dateFormatUtils'
@@ -47,29 +47,29 @@ const EmployeeCertificationsTable = ({
     }
   }, [dispatch, isViewingAnotherEmployee, selectedEmployeeId])
 
-  const toastElement = (
-    <OToast
-      toastColor="success"
-      toastMessage="Certificate deleted successfully"
-    />
-  )
+  // const toastElement = (
+  //   <OToast
+  //     toastColor="success"
+  //     toastMessage="Certificate deleted successfully"
+  //   />
+  // )
 
-  const handleConfirmDeleteCertificate = async () => {
-    setIsDeleteModalVisible(false)
-    const deleteCertificateResultAction = await dispatch(
-      reduxServices.employeeCertifications.deleteEmployeeCertificate(
-        certificateId,
-      ),
-    )
-    if (
-      reduxServices.employeeCertifications.deleteEmployeeCertificate.fulfilled.match(
-        deleteCertificateResultAction,
-      )
-    ) {
-      dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
-      dispatch(reduxServices.app.actions.addToast(toastElement))
-    }
-  }
+  // const handleConfirmDeleteCertificate = async () => {
+  //   setIsDeleteModalVisible(false)
+  //   const deleteCertificateResultAction = await dispatch(
+  //     reduxServices.employeeCertifications.deleteEmployeeCertificate(
+  //       certificateId,
+  //     ),
+  //   )
+  //   if (
+  //     reduxServices.employeeCertifications.deleteEmployeeCertificate.fulfilled.match(
+  //       deleteCertificateResultAction,
+  //     )
+  //   ) {
+  //     dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
+  //     dispatch(reduxServices.app.actions.addToast(toastElement))
+  //   }
+  // }
 
   const sortedCertificateDetails = useMemo(() => {
     if (employeeCertificates) {
@@ -166,7 +166,9 @@ const EmployeeCertificationsTable = ({
                 certificateItemId={certificateItem.id}
                 isViewingAnotherEmployee={isViewingAnotherEmployee}
                 editCertificateButtonHandler={editCertificateButtonHandler}
+                certificateId={certificateId}
                 setCertificateId={setCertificateId}
+                isDeleteModalVisible={isDeleteModalVisible}
                 setIsDeleteModalVisible={setIsDeleteModalVisible}
                 // handleShowDeleteModal={handleShowDeleteModal}
               />
@@ -179,17 +181,6 @@ const EmployeeCertificationsTable = ({
           ? `Total Records: ${employeeCertificates.length}`
           : `No Records Found`}
       </strong>
-      <OModal
-        alignment="center"
-        visible={isDeleteModalVisible}
-        setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        confirmButtonAction={handleConfirmDeleteCertificate}
-      >
-        {`Do you really want to delete this ?`}
-      </OModal>
     </>
   )
 }

@@ -1,12 +1,9 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import * as reactRedux from 'react-redux'
 import EmployeeCertificationsTable from './EmployeeCertificationsTable'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { EmployeeCertification } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import { mockEmployeeCertifications } from '../../../../test/data/employeeCertificationData'
-// import { employeeCertificationThunk } from '../../../../reducers/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationSlice'
-// import { RootState } from '../../../../stateStore'
 
 const mockEditHandler = jest.fn()
 
@@ -41,6 +38,7 @@ describe('Employee Certification Table Component Testing', () => {
         },
       )
       expect(screen.getByText('Description')).toBeInTheDocument()
+
       await waitFor(() => {
         expect(screen.getByText('qweert')).toBeInTheDocument()
       })

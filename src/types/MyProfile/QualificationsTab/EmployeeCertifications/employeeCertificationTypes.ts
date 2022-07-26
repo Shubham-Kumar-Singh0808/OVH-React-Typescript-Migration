@@ -83,6 +83,8 @@ export type TableActionsType = {
   isViewingAnotherEmployee: boolean
   editCertificateButtonHandler: (id: number) => void
   // handleShowDeleteModal: (id: number) => void
+  certificateId: number
   setCertificateId: (id: number) => void
+  isDeleteModalVisible: boolean
   setIsDeleteModalVisible: (value: boolean) => void
 }
