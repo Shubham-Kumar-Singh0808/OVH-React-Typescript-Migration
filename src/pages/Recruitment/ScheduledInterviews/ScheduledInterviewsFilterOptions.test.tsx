@@ -85,7 +85,7 @@ describe('Scheduled Interviews Filter Options Component Testing', () => {
       const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
       expect(fromDatePickerElement[0]).toHaveValue('Invalid Date')
     })
-    test('should ', async () => {
+    test('should render data upon view button click ', async () => {
       const viewButtonElement = screen.getByRole('button', { name: 'View' })
       const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
       fireEvent.click(fromDatePickerElement[0])
