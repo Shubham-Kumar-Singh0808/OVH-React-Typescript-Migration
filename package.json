@@ -23,9 +23,6 @@
     "lint-fix": "eslint . --fix"
   },
   "dependencies": {
-    "@automapper/classes": "^8.5.1",
-    "@automapper/core": "^8.5.1",
-    "@automapper/pojos": "^8.5.1",
     "@coreui/chartjs": "^3.0.0",
     "@coreui/coreui-pro": "^4.0.4",
     "@coreui/icons": "^2.1.0",
