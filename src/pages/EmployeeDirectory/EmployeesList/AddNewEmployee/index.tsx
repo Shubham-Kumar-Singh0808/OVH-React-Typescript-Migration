@@ -35,7 +35,7 @@ import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { listComposer } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { dateFormat } from '../../../../constant/DateFarmat'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const AddNewEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()

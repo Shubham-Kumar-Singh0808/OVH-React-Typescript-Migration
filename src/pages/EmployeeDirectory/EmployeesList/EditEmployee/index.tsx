@@ -29,7 +29,7 @@ import {
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { EditEmployeeTypes } from '../../../../types/EmployeeDirectory/EmployeesList/EditEmployee'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { dateFormat } from '../../../../constant/DateFarmat'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const EditEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -119,7 +119,7 @@ const EditEmployee = (): JSX.Element => {
   const onHandleContractExist = (value: boolean) => {
     setEditEmployee({ ...editEmployee, contractExists: value })
   }
-  const onHandleWorkfrom = (value: string) => {
+  const onHandleWorkFrom = (value: string) => {
     setEditEmployee({ ...editEmployee, workStatus: value })
   }
   const onHandleEmployeeStatus = (value: string) => {
@@ -501,7 +501,7 @@ const EditEmployee = (): JSX.Element => {
           />
           <WorkFrom
             dynamicFormLabelProps={dynamicFormLabelProps}
-            onWorkFromHandler={onHandleWorkfrom}
+            onWorkFromHandler={onHandleWorkFrom}
             workFromValue={editEmployee.workStatus}
           />
           <CRow className="mb-3 align-items-center">

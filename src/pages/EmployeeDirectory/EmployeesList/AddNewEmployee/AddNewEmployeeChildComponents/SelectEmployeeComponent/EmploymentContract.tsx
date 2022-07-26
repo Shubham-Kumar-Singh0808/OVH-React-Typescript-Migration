@@ -4,7 +4,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { StartEndDateChangeHandlerProp } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../utils/helper'
-import { dateFormat } from '../../../../../../constant/DateFarmat'
+import { dateFormat } from '../../../../../../constant/DateFormat'
 
 const EmploymentContract = ({
   dynamicFormLabelProps,
