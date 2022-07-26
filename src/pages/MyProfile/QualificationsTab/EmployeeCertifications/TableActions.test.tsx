@@ -1,7 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import TableActions from './TableActions'
-import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../../test/testUtils'
 
 const mockEditCertBtn = jest.fn()
 // const mockShowDeleteBtn = jest.fn()

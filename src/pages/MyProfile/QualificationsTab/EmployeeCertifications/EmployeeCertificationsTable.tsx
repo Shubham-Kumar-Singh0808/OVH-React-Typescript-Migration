@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-// Todo: remove eslint and fix error
 import {
   CTable,
   CTableBody,
@@ -52,7 +50,7 @@ const EmployeeCertificationsTable = ({
         .sort((sortNode1, sortNode2) =>
           sortNode1.name.localeCompare(sortNode2.name),
         )
-    }
+    } else return []
   }, [employeeCertificates])
 
   const tableDataCellProps = {
