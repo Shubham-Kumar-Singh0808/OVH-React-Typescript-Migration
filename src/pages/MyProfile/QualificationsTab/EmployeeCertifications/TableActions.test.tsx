@@ -4,7 +4,6 @@ import TableActions from './TableActions'
 import { fireEvent, render, screen } from '../../../../test/testUtils'
 
 const mockEditCertBtn = jest.fn()
-// const mockShowDeleteBtn = jest.fn()
 
 describe('Table Actions Component testing', () => {
   test('should render actions without crashing', () => {
