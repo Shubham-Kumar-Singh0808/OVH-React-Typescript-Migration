@@ -1,8 +1,5 @@
 import React, { SetStateAction } from 'react'
 import '@testing-library/jest-dom'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import EditMailTemplate from './EditMailTemplate'
 import { render, screen } from '../../../../test/testUtils'
 import { EditEmployeeMailTemplate } from '../../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
