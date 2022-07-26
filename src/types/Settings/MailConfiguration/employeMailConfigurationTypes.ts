@@ -61,6 +61,7 @@ export type EmployeeEmailTemplateTableProps = {
 
 export type EditTemplateProps = {
   backButtonHandler: () => void
+  employeeTemplate: EmployeeMailTemplate
   editEmployeeTemplate: EditEmployeeMailTemplate
   setEditEmployeeTemplate: React.Dispatch<
     React.SetStateAction<EditEmployeeMailTemplate>

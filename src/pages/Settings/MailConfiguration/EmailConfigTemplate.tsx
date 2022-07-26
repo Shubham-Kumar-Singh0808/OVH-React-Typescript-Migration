@@ -223,6 +223,7 @@ const EmailConfigTemplate = (): JSX.Element => {
           backButtonHandler={() => setToggle('')}
           editEmployeeTemplate={editEmployeeTemplate}
           setEditEmployeeTemplate={setEditEmployeeTemplate}
+          employeeTemplate={employeeTemplate}
         />
       )}
     </>

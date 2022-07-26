@@ -25,6 +25,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 const EditMailTemplate = ({
   backButtonHandler,
   editEmployeeTemplate,
+  employeeTemplate,
   setEditEmployeeTemplate,
 }: EditTemplateProps): JSX.Element => {
   const [showAssetType, setShowAssetType] = useState<boolean>(false)
@@ -57,8 +58,8 @@ const EditMailTemplate = ({
       backButtonHandler()
       dispatch(
         reduxServices.employeeMailConfiguration.getEmployeeMailTemplate({
-          templateName: editEmployeeTemplate.templateName,
-          templateTypeId: editEmployeeTemplate.templateTypeId,
+          templateName: employeeTemplate.templateName,
+          templateTypeId: employeeTemplate.templateTypeId,
         }),
       )
       dispatch(
