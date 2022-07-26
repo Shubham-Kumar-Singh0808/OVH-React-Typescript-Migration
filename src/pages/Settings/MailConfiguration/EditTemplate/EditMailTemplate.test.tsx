@@ -10,6 +10,7 @@ describe('Add Template Component Testing', () => {
       render(
         <EditMailTemplate
           backButtonHandler={function (): void {
+            // eslint-disable-next-line sonarjs/no-duplicate-string
             throw new Error('Function not implemented.')
           }}
           employeeTemplate={{
