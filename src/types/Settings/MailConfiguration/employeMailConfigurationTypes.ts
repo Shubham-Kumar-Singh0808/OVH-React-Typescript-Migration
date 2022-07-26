@@ -11,17 +11,6 @@ export type EmployeeMailTemplate = {
   email: string
 }
 
-export type EditEmployeeMailTemplate = {
-  id: number
-  templateName: string
-  template: string
-  templateTypeId: number
-  templateType: string
-  assetTypeId: string
-  assetType: string
-  email: string
-}
-
 export type EmployeeMailTemplateType = {
   id: string | number
   name: string
@@ -32,6 +21,17 @@ export type EmployeeMailConfigurationState = {
   employeeGetMailTemplateTypes: EmployeeMailTemplateType[]
   isLoading: LoadingState
   error: ValidationError
+}
+
+export type EditEmployeeMailTemplate = {
+  id: number
+  templateName: string
+  template: string
+  templateTypeId: number
+  templateType: string
+  assetTypeId: string
+  assetType: string
+  email: string
 }
 
 export type EmployeeGetEmailTemplateProps = {
