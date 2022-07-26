@@ -1,0 +1,20 @@
+.calendar-box {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.calendar-header {
+  margin-bottom: 0px !important;
+  margin-top: 15px;
+}
+
+.fc-day-sat,
+.fc-day-sun {
+  background-color: #d6d6d6 !important;
+  color: #000;
+}
+
+th.fc-day-sat,
+th.fc-day-sun {
+  background-color: #5fa2dd !important;
+}

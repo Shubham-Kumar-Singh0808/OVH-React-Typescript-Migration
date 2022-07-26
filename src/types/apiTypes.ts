@@ -271,3 +271,7 @@ export interface AddNewTemplateApi extends ApiBase {
   getAssetTypes: string
   addNewMailTemplate: string
 }
+
+export interface MyAttendanceApi extends ApiBase {
+  getMyAttendance: string
+}
