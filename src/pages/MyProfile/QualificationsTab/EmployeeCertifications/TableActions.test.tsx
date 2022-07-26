@@ -13,7 +13,6 @@ describe('Table Actions Component testing', () => {
         certificateItemId={409}
         isViewingAnotherEmployee={false}
         editCertificateButtonHandler={mockEditCertBtn}
-        // handleShowDeleteModal={mockShowDeleteBtn}
         setCertificateId={jest.fn()}
         setIsDeleteModalVisible={jest.fn()}
         certificateId={0}

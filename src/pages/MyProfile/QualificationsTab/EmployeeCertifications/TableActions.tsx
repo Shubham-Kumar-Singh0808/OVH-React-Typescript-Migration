@@ -10,7 +10,6 @@ const TableActions = ({
   certificateItemId,
   isViewingAnotherEmployee,
   editCertificateButtonHandler,
-  // handleShowDeleteModal,
   certificateId,
   setCertificateId,
   isDeleteModalVisible,
