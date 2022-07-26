@@ -9,7 +9,7 @@ import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmploy
 import { useTypedSelector } from '../../../stateStore'
 
 const MyProfile = (): JSX.Element => {
-  const [isViewingAnotherEmployee] = useSelectedEmployee()
+  const [isViewingAnotherEmployee, employeeId] = useSelectedEmployee()
   const employeeGeneralInformation = useTypedSelector((state) =>
     reduxServices.generalInformation.selectors.selectLoggedInEmployeeData(
       state,
@@ -28,9 +28,11 @@ const MyProfile = (): JSX.Element => {
         {isViewingAnotherEmployee ? (
           <CRow className="justify-content-end">
             <CCol className="text-end" md={4}>
-              <CButton color="info" className="btn-ovh me-1">
-                <i className="fa fa-pencil-square-o  me-1"></i>Edit
-              </CButton>
+              <Link to={`/editEmployee/${employeeId}`}>
+                <CButton color="info" className="btn-ovh me-1">
+                  <i className="fa fa-pencil-square-o  me-1"></i>Edit
+                </CButton>
+              </Link>
               <Link to={'/employeeList'}>
                 <CButton color="info" className="btn-ovh me-1">
                   <i className="fa fa-arrow-left  me-1"></i>Back

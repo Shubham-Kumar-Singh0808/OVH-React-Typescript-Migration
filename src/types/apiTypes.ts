@@ -252,6 +252,7 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllemploymentType: string
   getAllJobType: string
   getCheckIfUserExist: string
+  editEmployee: string
 }
 
 export interface HiveActivityReportApi extends ApiBase {
@@ -277,4 +278,8 @@ export interface AddNewMailTemplateTypeApi extends ApiBase {
   addNewMailTemplateType: string
   deleteMailTemplateType: string
   updateMailTemplateType: string
+}
+
+export interface MyAttendanceApi extends ApiBase {
+  getMyAttendance: string
 }
