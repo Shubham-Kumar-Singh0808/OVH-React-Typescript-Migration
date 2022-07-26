@@ -29,4 +29,12 @@ describe('Handbook Settings Component Testing', () => {
     )
     expect(screen.getByText('Handbook Settings')).toBeInTheDocument()
   })
+  it('should show the loader when handbook table is empty ', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeHandbookSettings />
+      </ReduxProvider>,
+    )
+    expect(screen.findByTestId('handbookSettings-loader')).toBeTruthy()
+  })
 })
