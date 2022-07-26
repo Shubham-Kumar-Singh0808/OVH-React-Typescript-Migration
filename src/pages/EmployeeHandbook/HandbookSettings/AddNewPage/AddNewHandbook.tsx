@@ -347,7 +347,7 @@ function AddNewHandbook({
                   }}
                 />
                 {error && (
-                  <p className="text-danger" data-testId="error-msg">
+                  <p className="text-danger" data-testid="error-msg">
                     Please enter at least 150 characters.
                   </p>
                 )}
@@ -359,7 +359,7 @@ function AddNewHandbook({
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
-                data-testId="save-btn"
+                data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
                 disabled={
@@ -372,7 +372,7 @@ function AddNewHandbook({
                 {confirmButtonText}
               </CButton>
               <CButton
-                data-testId="clear-btn"
+                data-testid="clear-btn"
                 color="warning "
                 className="btn-ovh text-white"
                 onClick={handleClearInputs}

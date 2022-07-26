@@ -1,6 +1,7 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import moment from 'moment'
 import {
   Birthday,
   Designation,
@@ -34,6 +35,7 @@ import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { listComposer } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const AddNewEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -54,14 +56,14 @@ const AddNewEmployee = (): JSX.Element => {
   const shiftValue = {} as EmployeeShiftDetails
 
   const initEmployee = {
-    contractEndDate: null,
-    contractExists: 'false',
-    contractStartDate: null,
+    contractEndDate: '',
+    contractExists: false,
+    contractStartDate: '',
     country: '',
-    dateOfJoining: null,
+    dateOfJoining: '',
     departmentName: '',
     designation: '',
-    dob: null,
+    dob: '',
     employmentTypeName: '',
     experience: '',
     firstName: '',
@@ -110,19 +112,28 @@ const AddNewEmployee = (): JSX.Element => {
     setAddEmployee({ ...addEmployee, country: value })
   }
   const onHandleBirthday = (value: Date) => {
-    setAddEmployee({ ...addEmployee, dob: value })
+    setAddEmployee({ ...addEmployee, dob: moment(value).format(dateFormat) })
   }
   const onHandleJoinDate = (value: Date) => {
-    setAddEmployee({ ...addEmployee, dateOfJoining: value })
+    setAddEmployee({
+      ...addEmployee,
+      dateOfJoining: moment(value).format(dateFormat),
+    })
   }
   const onHandleJobType = (value: string) => {
     setAddEmployee({ ...addEmployee, jobTypeName: value })
   }
   const onHandleStartDate = (value: Date) => {
-    setAddEmployee({ ...addEmployee, contractStartDate: value })
+    setAddEmployee({
+      ...addEmployee,
+      contractStartDate: moment(value).format(dateFormat),
+    })
   }
   const onHandleEndDate = (value: Date) => {
-    setAddEmployee({ ...addEmployee, contractEndDate: value })
+    setAddEmployee({
+      ...addEmployee,
+      contractEndDate: moment(value).format(dateFormat),
+    })
   }
   const onHandleLastName = (value: string) => {
     setAddEmployee({ ...addEmployee, lastName: value })
@@ -136,7 +147,7 @@ const AddNewEmployee = (): JSX.Element => {
   const onHandleUsername = (value: string) => {
     setAddEmployee({ ...addEmployee, userName: value })
   }
-  const onHandleContractExist = (value: string) => {
+  const onHandleContractExist = (value: boolean) => {
     setAddEmployee({ ...addEmployee, contractExists: value })
   }
   const onHandleWorkfrom = (value: string) => {
@@ -152,6 +163,8 @@ const AddNewEmployee = (): JSX.Element => {
       manager: {
         id: value.id,
         fullName: value.fullName,
+        firstName: value.firstName,
+        lastName: value.lastName,
       },
     })
   }
@@ -162,6 +175,8 @@ const AddNewEmployee = (): JSX.Element => {
       projectManager: {
         id: value.id,
         fullName: value.fullName,
+        firstName: value.firstName,
+        lastName: value.lastName,
       },
     })
   }
@@ -210,10 +225,10 @@ const AddNewEmployee = (): JSX.Element => {
   useEffect(() => {
     if (
       addEmployee.country !== '' &&
-      addEmployee.dateOfJoining != null &&
+      addEmployee.dateOfJoining !== '' &&
       addEmployee.departmentName !== '' &&
       addEmployee.designation !== '' &&
-      addEmployee.dob !== null &&
+      addEmployee.dob !== '' &&
       addEmployee.employmentTypeName !== '' &&
       addEmployee.firstName !== '' &&
       addEmployee.gender !== '' &&
@@ -230,10 +245,10 @@ const AddNewEmployee = (): JSX.Element => {
       addEmployee.workStatus !== ''
     ) {
       const hasContract =
-        addEmployee.contractStartDate !== null &&
-        addEmployee.contractEndDate !== null
+        addEmployee.contractStartDate !== '' &&
+        addEmployee.contractEndDate !== ''
 
-      if (addEmployee.contractExists === 'true') {
+      if (addEmployee.contractExists) {
         setViewBtnEnabled(hasContract)
       } else {
         setViewBtnEnabled(true)
@@ -422,6 +437,7 @@ const AddNewEmployee = (): JSX.Element => {
                 middleNameValue={addEmployee.middleName || ''}
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedGenderList}
                 setValue={onHandleGender}
@@ -430,6 +446,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Gender"
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={countryList}
                 setValue={onHandleCountryType}
@@ -453,6 +470,7 @@ const AddNewEmployee = (): JSX.Element => {
                 experienceValue={addEmployee.experience}
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedDepartmentList}
                 setValue={onHandleDepartment}
@@ -461,6 +479,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Department"
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedTechnologyList}
                 setValue={onHandleTechnology}
@@ -469,6 +488,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select"
               />
               <Designation
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedDesignationList}
                 setValue={onHandleDesignation}
@@ -478,6 +498,7 @@ const AddNewEmployee = (): JSX.Element => {
                 isAddDisable={false}
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedUserRoles}
                 setValue={onHandleUserRole}
@@ -486,6 +507,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Role"
               />
               <ReportingManager
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 reportManagersList={reportingManagersList}
                 onSelectReportManager={onHandleReportManager}
@@ -493,6 +515,7 @@ const AddNewEmployee = (): JSX.Element => {
                 reportValue={addEmployee.manager.fullName}
               />
               <ProjectManager
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 managersList={reportingManagersList}
                 onSelectManager={onHandleProjectManager}
@@ -500,6 +523,7 @@ const AddNewEmployee = (): JSX.Element => {
                 projectValue={addEmployee.projectManager.fullName}
               />
               <HRAssociate
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 hrDataList={hrDataList}
                 onSelectHRAssociate={onHandleHRAssociate}
@@ -507,6 +531,7 @@ const AddNewEmployee = (): JSX.Element => {
                 hrValue={addEmployee.hrAssociate.fullName}
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedEmploymentList}
                 setValue={onHandleEmployeeType}
@@ -515,6 +540,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Employment Type"
               />
               <OSelectList
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedJobTypes}
                 setValue={onHandleJobType}
@@ -523,6 +549,7 @@ const AddNewEmployee = (): JSX.Element => {
                 label="Select Job Type"
               />
               <Shift
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={employeeShifts}
                 setValue={onHandleShift}
@@ -532,12 +559,13 @@ const AddNewEmployee = (): JSX.Element => {
                 isAddDisable={false}
               />
               <EmploymentContract
+                isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 onStartDateChangeHandler={onHandleStartDate}
                 onEndDateChangeHandler={onHandleEndDate}
                 onContractExistHandler={onHandleContractExist}
-                startDateValue={addEmployee.contractStartDate as Date}
-                endDateValue={addEmployee.contractEndDate as Date}
+                startDateValue={addEmployee.contractStartDate}
+                endDateValue={addEmployee.contractEndDate}
                 isContractExist={addEmployee.contractExists}
               />
               <WorkFrom

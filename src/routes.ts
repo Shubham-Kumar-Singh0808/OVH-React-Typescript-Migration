@@ -27,7 +27,7 @@ const CertificateTypeList = React.lazy(
     ),
 )
 const EmployeeList = React.lazy(
-  () => import('./pages/EmployeeDirectory/EmployeesList/EmployeeList'),
+  () => import('./pages/EmployeeDirectory/EmployeesList'),
 )
 const EmployeeReport = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeeReport/EmployeeReport'),
@@ -63,6 +63,7 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+
 const MailConfiguration = React.lazy(
   () => import('./pages/Settings/MailConfiguration/EmailConfigTemplate'),
 )
