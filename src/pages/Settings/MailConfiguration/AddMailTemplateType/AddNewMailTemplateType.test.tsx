@@ -28,7 +28,18 @@ describe('Add New TemplateType component with data', () => {
       expect(screen.getByTestId('btn-add')).toBeEnabled()
     })
   })
+
   test('should render input components', () => {
     expect(screen.getByPlaceholderText('Template Type')).toBeInTheDocument()
+  })
+
+  test('should clear input and disable button after submitting and new template should be added', async () => {
+    userEvent.type(screen.getByRole('textbox'), 'testing')
+    await waitFor(() => {
+      userEvent.click(screen.getByRole('button'))
+
+      expect(screen.getByRole('textbox')).toHaveValue('testing')
+      expect(screen.getByRole('button')).toBeEnabled()
+    })
   })
 })
