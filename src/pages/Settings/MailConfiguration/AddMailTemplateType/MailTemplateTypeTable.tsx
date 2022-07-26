@@ -157,18 +157,12 @@ const MailTemplateTypeTable = (): JSX.Element => {
 
   return (
     <>
-      <CTable striped>
+      <CTable striped className="mail-template">
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col" className="w-25">
-              S.No
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="w-50">
-              Template Type
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="w-25">
-              Action
-            </CTableHeaderCell>
+            <CTableHeaderCell scope="col">S.No</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Template Type</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Action</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -206,6 +200,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
                       <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     </CButton>
                     <CButton
+                      data-testid={`btn-remove${index}`}
                       color="warning"
                       className="btn-ovh me-1"
                       onClick={cancelMailTemplateTypeButtonHandler}

@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import MailTemplateTypeTable from './MailTemplateTypeTable'
-import { render, screen, waitFor } from '../../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import { mockMailTemplateTypes } from '../../../../test/data/addMailTemplateTypeData'
 
 describe('Mail Template Table Component Testing', () => {
@@ -55,6 +55,16 @@ describe('Mail Template component with data', () => {
     // userEvent.type(screen.getByTestId('template-input'), 'testing')
     await waitFor(() => {
       expect(screen.getByTestId('sh-edit-btn1')).toBeEnabled()
+    })
+  })
+  test('should edit and save employee template details upon edit and save button click respectively', async () => {
+    const editButtonElement = screen.getByTestId(`sh-edit-btn1`)
+    await fireEvent.click(editButtonElement)
+    userEvent.type(screen.getByTestId(`template-input`), 'testing')
+    const saveButtonElement = screen.getByTestId(`sh-save-btn1`)
+    await fireEvent.click(saveButtonElement)
+    await waitFor(() => {
+      expect(screen.getByTestId(`template-input`)).toHaveValue('testing')
     })
   })
 })
