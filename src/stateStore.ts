@@ -48,6 +48,7 @@ import employeeMailConfigurationReducer from './reducers/Settings/MailConfigurat
 import addNewTemplateReducer from './reducers/Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
 import scheduledInterviewsReducer from './reducers/Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
+import myAttendanceReducer from './reducers/TimeAndAttendance/MyAttendance/myAttendanceSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -96,6 +97,7 @@ export const allReducers = {
   addMailTemplate: addNewTemplateReducer,
   employee: employeeReducer,
   scheduledInterviews: scheduledInterviewsReducer,
+  myAttendance: myAttendanceReducer,
   // add your slice reducers here
 }
 

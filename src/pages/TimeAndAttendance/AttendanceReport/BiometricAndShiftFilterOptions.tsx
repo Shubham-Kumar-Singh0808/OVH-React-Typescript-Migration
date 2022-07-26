@@ -32,7 +32,6 @@ const BiometricAndShiftFilterOptions = ({
 
   const onChangeShiftHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectShiftId(e.target.value)
-    console.log(typeof e.target.value)
   }
 
   const handleSearchButton = (event: React.KeyboardEvent<HTMLInputElement>) => {

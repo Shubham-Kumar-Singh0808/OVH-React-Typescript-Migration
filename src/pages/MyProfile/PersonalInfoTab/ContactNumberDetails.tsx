@@ -193,7 +193,7 @@ const ContactNumberDetails = (props: {
       <CCardBody>
         <CRow className="mt-4 mb-4">
           <CFormLabel
-            data-testId="mobileNumberLabel"
+            data-testid="mobileNumberLabel"
             {...dynamicFormLabelProps('employeeId', formLabelClass)}
           >
             Mobile: <span className={employeeMobileNumber}>*</span>
@@ -203,7 +203,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               placeholder="+91"
-              data-testId="mobileNumberPlaceholder"
+              data-testid="mobileNumberPlaceholder"
               aria-label="Disabled input example"
               disabled
             />
@@ -214,7 +214,7 @@ const ContactNumberDetails = (props: {
               placeholder="98xxxxxxxx"
               size="sm"
               name="mobile"
-              data-testId="mobileNumberInput"
+              data-testid="mobileNumberInput"
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.mobile}
               maxLength={10}
@@ -223,7 +223,7 @@ const ContactNumberDetails = (props: {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel
-            data-testId="altNumberLabel"
+            data-testid="altNumberLabel"
             {...dynamicFormLabelProps('employeeId', formLabelClass)}
           >
             Alternative Mobile:
@@ -233,7 +233,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               placeholder="+91"
-              data-testId="altNumberPlaceholder"
+              data-testid="altNumberPlaceholder"
               aria-label="Disabled input example"
               disabled
             />
@@ -242,7 +242,7 @@ const ContactNumberDetails = (props: {
             <CFormInput
               type="text"
               size="sm"
-              data-testId="altNumberInput"
+              data-testid="altNumberInput"
               name="alternativeMobile"
               placeholder="98xxxxxxxx"
               value={employeeContactDetails.alternativeMobile}
@@ -253,7 +253,7 @@ const ContactNumberDetails = (props: {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel
-            data-testId="homeNumberLabel"
+            data-testid="homeNumberLabel"
             {...dynamicFormLabelProps('employeeId', formLabelClass)}
           >
             Home:
@@ -262,7 +262,7 @@ const ContactNumberDetails = (props: {
             <CFormInput
               type="text"
               size="sm"
-              data-testId="homeNumberPlaceholder"
+              data-testid="homeNumberPlaceholder"
               placeholder="+91"
               aria-label="Disabled input example"
               disabled
@@ -273,7 +273,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               name="homeCode"
-              data-testId="homeCodeInput"
+              data-testid="homeCodeInput"
               value={employeeContactDetails.homeCode}
               onChange={onChangeContactDetailsHandler}
               maxLength={4}
@@ -284,7 +284,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               name="homeNumber"
-              data-testId="homeNumberInput"
+              data-testid="homeNumberInput"
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.homeNumber}
               maxLength={8}
@@ -293,7 +293,7 @@ const ContactNumberDetails = (props: {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel
-            data-testId="workNumberLabel"
+            data-testid="workNumberLabel"
             {...dynamicFormLabelProps('employeeId', formLabelClass)}
           >
             Work:
@@ -303,7 +303,7 @@ const ContactNumberDetails = (props: {
               type="text"
               size="sm"
               placeholder="+91"
-              data-testId="workNumberPlaceholder"
+              data-testid="workNumberPlaceholder"
               aria-label="Disabled input example"
               disabled
             />
@@ -312,7 +312,7 @@ const ContactNumberDetails = (props: {
             <CFormInput
               type="text"
               size="sm"
-              data-testId="workCodeInput"
+              data-testid="workCodeInput"
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.workCode}
               name="workCode"
@@ -323,7 +323,7 @@ const ContactNumberDetails = (props: {
             <CFormInput
               type="text"
               size="sm"
-              data-testId="workNumberInput"
+              data-testid="workNumberInput"
               name="workNumber"
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.workNumber}
@@ -338,7 +338,7 @@ const ContactNumberDetails = (props: {
       <CCardBody>
         <CRow className="mt-4 mb-4">
           <CFormLabel
-            data-testId="emergencyContactNameLabel"
+            data-testid="emergencyContactNameLabel"
             className={formLabelClass}
           >
             Name:{' '}
@@ -358,7 +358,7 @@ const ContactNumberDetails = (props: {
               size="sm"
               name="emergencyContactName"
               id="emergencyContactName"
-              data-testId="emergencyContactNameInput"
+              data-testid="emergencyContactNameInput"
               placeholder="Name"
               onChange={onChangeEmergencyContactDetailsHandler}
               value={employeeEmergencyContactDetails.emergencyContactName}
@@ -367,7 +367,7 @@ const ContactNumberDetails = (props: {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel
-            data-testId="emergencyMobileLabel"
+            data-testid="emergencyMobileLabel"
             className={formLabelClass}
           >
             Mobile: <span className={employeeEmergencyPhoneNumber}>*</span>
@@ -376,7 +376,7 @@ const ContactNumberDetails = (props: {
             <CFormInput
               type="text"
               size="sm"
-              data-testId="emergencyMobilePlaceholder"
+              data-testid="emergencyMobilePlaceholder"
               placeholder="+91"
               aria-label="Disabled input example"
               disabled
@@ -387,7 +387,7 @@ const ContactNumberDetails = (props: {
               type="text"
               id="Mobile"
               placeholder="9xxxxxxxxx"
-              data-testId="emergencyMobileInput"
+              data-testid="emergencyMobileInput"
               size="sm"
               name="emergencyPhone"
               onChange={onChangeEmergencyContactDetailsHandler}
@@ -398,7 +398,7 @@ const ContactNumberDetails = (props: {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel
-            data-testId="relationshipLabel"
+            data-testid="relationshipLabel"
             className={formLabelClass}
           >
             Relationship:
@@ -416,7 +416,7 @@ const ContactNumberDetails = (props: {
             <CFormSelect
               aria-label="Relationship"
               name="emergencyRelationShip"
-              data-testId="relationShipSelect"
+              data-testid="relationShipSelect"
               id="Relationship"
               size="sm"
               onChange={onChangeEmergencyContactDetailsHandler}

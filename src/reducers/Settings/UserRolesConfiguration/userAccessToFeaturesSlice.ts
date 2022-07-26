@@ -6,7 +6,7 @@ import {
   UserAccessToFeaturesSliceState,
 } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { ValidationError } from '../../../types/commonTypes'
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import userAccessToFeaturesApi from '../../../middleware/api/Settings/UserRolesConfiguration/userAccessToFeaturesApi'
 
 const getUserAccessToFeatures = createAsyncThunk<
@@ -53,12 +53,16 @@ const userAccessToFeaturesSlice = createSlice({
 const userAccessToFeatures = (state: RootState): UserAccessToFeatures[] =>
   state.userAccessToFeatures.userAccessToFeatures
 
+const isLoading = (state: RootState): LoadingState =>
+  state.userAccessToFeatures.isLoading
+
 const userAccessToFeaturesThunk = {
   getUserAccessToFeatures,
 }
 
 const userAccessToFeaturesSelectors = {
   userAccessToFeatures,
+  isLoading,
 }
 
 export const userAccessToFeaturesService = {

@@ -54,11 +54,11 @@ const isLoading = (state: RootState): LoadingState =>
 const technologies = (state: RootState): GetAllTechnology[] =>
   state.getAllTechnology.technologies as GetAllTechnology[]
 
-const getAllTechnologyThunk = {
+export const getAllTechnologyThunk = {
   getAllTechnology,
 }
 
-const technologiesSelectors = {
+export const technologiesSelectors = {
   isLoading,
   technologies,
 }
