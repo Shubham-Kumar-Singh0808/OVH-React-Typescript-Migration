@@ -28,4 +28,7 @@ describe('Add New TemplateType component with data', () => {
       expect(screen.getByTestId('btn-add')).toBeEnabled()
     })
   })
+  test('should render input components', () => {
+    expect(screen.getByPlaceholderText('Template Type')).toBeInTheDocument()
+  })
 })
