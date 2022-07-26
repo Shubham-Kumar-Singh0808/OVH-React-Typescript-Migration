@@ -157,7 +157,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
 
   return (
     <>
-      <CTable striped className="mail-template">
+      <CTable striped className="mail-template-table">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">S.No</CTableHeaderCell>

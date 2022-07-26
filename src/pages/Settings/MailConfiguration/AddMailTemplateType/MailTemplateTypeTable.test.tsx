@@ -64,7 +64,20 @@ describe('Mail Template component with data', () => {
     const saveButtonElement = screen.getByTestId(`sh-save-btn1`)
     await fireEvent.click(saveButtonElement)
     await waitFor(() => {
-      expect(screen.getByTestId(`template-input`)).toHaveValue('testing')
+      expect(screen.getByTestId(`template-input`)).toHaveValue('testtesting')
+    })
+  })
+  test('should validate input data after edit button click', async () => {
+    const editButtonElement = screen.getByTestId(`sh-edit-btn1`)
+    await fireEvent.click(editButtonElement)
+    await waitFor(async () => {
+      userEvent.type(screen.getByTestId(`template-input`), 'testing2')
+      const saveButtonElement = screen.getByTestId(`sh-save-btn1`)
+      await fireEvent.click(saveButtonElement)
+
+      expect(screen.getByTestId(`template-input`)).toHaveValue(
+        'test2testing2testing2testing2testing2testing2',
+      )
     })
   })
 })
