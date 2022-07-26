@@ -94,4 +94,20 @@ describe('Add Certification Testing', () => {
     )
     expect(screen.getAllByRole('option').length).toBe(2)
   })
+  it('should correctly set default option', () => {
+    render(
+      <ReduxProvider reduxStore={stateStore}>
+        <AddUpdateEmployeeCertification
+          confirmButtonText="Add"
+          headerTitle="Add Certification"
+          backButtonHandler={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      </ReduxProvider>,
+    )
+    expect(
+      screen.getByRole('option', { name: 'Select Technology' }).selected,
+    ).toBe(true)
+  })
 })
