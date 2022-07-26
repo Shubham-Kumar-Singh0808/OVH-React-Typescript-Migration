@@ -9,6 +9,7 @@ const Designation = ({
   setValue,
   setToggleShift,
   value,
+  isRequired,
   toggleValue,
   isAddDisable,
 }: SelectDesignationProps): JSX.Element => {
@@ -20,14 +21,14 @@ const Designation = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
-          data-testId="designationLabel"
+          data-testid="designationLabel"
           {...dynamicFormLabelProps(
             'designation',
             'col-sm-3 col-form-label text-end',
           )}
         >
           Designation:
-          <span className={showIsRequired(value)}>*</span>
+          {isRequired && <span className={showIsRequired(value)}>*</span>}
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect
@@ -53,7 +54,7 @@ const Designation = ({
         {!isAddDisable && (
           <CCol sm={3}>
             <CButton
-              data-testId="designationButton"
+              data-testid="designationButton"
               color="info"
               className="btn-ovh me-1"
               onClick={() => setToggleShift(!toggleValue)}

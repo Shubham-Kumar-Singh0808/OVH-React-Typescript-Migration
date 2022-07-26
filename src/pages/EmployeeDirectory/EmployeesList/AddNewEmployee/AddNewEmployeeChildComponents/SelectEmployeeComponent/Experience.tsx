@@ -12,7 +12,7 @@ const Experience = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
-          data-testId="experienceLabel"
+          data-testid="experienceLabel"
           {...dynamicFormLabelProps(
             'experience',
             'col-sm-3 col-form-label text-end',
@@ -28,7 +28,7 @@ const Experience = ({
             type="number"
             name="experience"
             placeholder="Experience"
-            data-testId="experienceForm"
+            data-testid="experienceForm"
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
               onExperienceHandler(Number(e.target.value))
             }

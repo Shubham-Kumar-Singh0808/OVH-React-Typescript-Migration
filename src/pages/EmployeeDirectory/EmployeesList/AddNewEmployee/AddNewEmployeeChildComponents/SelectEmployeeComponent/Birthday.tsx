@@ -9,7 +9,6 @@ const Birthday = ({
   onDateChangeHandler,
   dateValue,
 }: DateChangeHandlerProp): JSX.Element => {
-  const date = dateValue == null ? '' : dateValue.toLocaleDateString()
   return (
     <CRow className="mb-3">
       <CFormLabel
@@ -20,7 +19,7 @@ const Birthday = ({
         data-testid="date-picker-title"
       >
         Birthday:
-        <span className={showIsRequired(date)}>*</span>
+        <span className={showIsRequired(dateValue)}>*</span>
       </CFormLabel>
       <CCol sm={3}>
         <DatePicker
@@ -35,7 +34,7 @@ const Birthday = ({
           dateFormat="dd/mm/yy"
           placeholderText="dd/mm/yy"
           name="birthday"
-          value={date}
+          value={dateValue}
           onChange={(date: Date) => onDateChangeHandler(date)}
         />
       </CCol>
