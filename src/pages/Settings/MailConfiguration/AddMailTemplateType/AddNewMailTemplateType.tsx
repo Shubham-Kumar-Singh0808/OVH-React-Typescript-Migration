@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
+import { showIsRequired } from '../../../../utils/helper'
 
 const AddNewMailTemplateType = () => {
   const dispatch = useAppDispatch()
@@ -45,9 +46,6 @@ const AddNewMailTemplateType = () => {
     htmlFor: 'inputNewTemplateType',
     className: 'col-form-label category-label',
   }
-  const danger = 'text-danger'
-  const white = 'text-white'
-
   return (
     <>
       <CRow className="mt-0 mb-0">
@@ -56,7 +54,7 @@ const AddNewMailTemplateType = () => {
           className="col-sm-2 col-form-label text-end"
         >
           Template Type:
-          <span className={newTemplateType ? white : danger}>*</span>
+          <span className={showIsRequired(newTemplateType)}>*</span>
         </CFormLabel>
         <CCol sm={4}>
           <CFormInput

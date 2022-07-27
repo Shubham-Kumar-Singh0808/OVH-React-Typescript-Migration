@@ -25,7 +25,7 @@ describe('Add New TemplateType component with data', () => {
     expect(screen.getByPlaceholderText('Template Type')).toBeInTheDocument()
   })
 
-  test('should clear input and disable button after submitting and new template should be added', async () => {
+  test('should user giving input and enabled button after submitting and new template should be added', async () => {
     userEvent.type(screen.getByRole('textbox'), 'testing')
     await waitFor(() => {
       userEvent.click(screen.getByRole('button'))
