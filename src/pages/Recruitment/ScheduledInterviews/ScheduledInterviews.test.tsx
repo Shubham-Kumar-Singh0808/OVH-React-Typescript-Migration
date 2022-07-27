@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ScheduledInterviews from './ScheduledInterviews'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import { cleanup, render, screen } from '../../../test/testUtils'
 import { mockTechnologies } from '../../../test/data/employeeTechnologiesData'
 
 describe('Scheduled Interviews Component Testing', () => {
@@ -29,6 +29,7 @@ describe('Scheduled Interviews Component Testing', () => {
         },
       })
     })
+    afterEach(cleanup)
     test('should render scheduled candidates screen upon All radio button select', () => {
       const allRadioButton = screen.getByLabelText('All') as HTMLInputElement
       userEvent.click(allRadioButton)
