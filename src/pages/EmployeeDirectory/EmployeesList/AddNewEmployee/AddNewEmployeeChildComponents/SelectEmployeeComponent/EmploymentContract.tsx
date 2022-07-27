@@ -16,30 +16,31 @@ const EmploymentContract = ({
   startDateValue,
   endDateValue,
 }: StartEndDateChangeHandlerProp): JSX.Element => {
-  const startDate = moment(startDateValue, dateFormat).format(dateFormat)
-  const endDate = moment(endDateValue, dateFormat).format(dateFormat)
-
   const classNameStyle = 'col-sm-3 col-form-label text-end'
 
   const [isActive, setIsActive] = useState(false)
+  const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
 
   useEffect(() => {
     setIsActive(isContractExist)
   }, [isContractExist])
 
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(startDateValue, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(endDateValue, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+
+    setIsGreaterThanStart(moment(end).isBefore(start))
+  }, [startDateValue, endDateValue])
+
   const handleOnChange = (value: string) => {
     const isExist = value.toLowerCase() === 'office'
     onContractExistHandler(isExist)
     setIsActive(isExist)
-  }
-
-  const isDateCorrect = (startValue: string, endValue: string): boolean => {
-    if (startValue === '' || endValue === '') return false
-
-    const start = new Date(startValue)
-    const end = new Date(endValue)
-
-    return start > end
   }
 
   return (
@@ -72,7 +73,7 @@ const EmploymentContract = ({
           />
         </CCol>
       </CRow>
-      {isContractExist ? (
+      {isContractExist && (
         <>
           <CRow className="mb-3">
             <CFormLabel
@@ -80,7 +81,7 @@ const EmploymentContract = ({
             >
               Contract Start Date:
               {isRequired && (
-                <span className={showIsRequired(startDate)}>*</span>
+                <span className={showIsRequired(startDateValue)}>*</span>
               )}
             </CFormLabel>
             <CCol sm={3}>
@@ -94,8 +95,9 @@ const EmploymentContract = ({
                 dropdownMode="select"
                 data-testid="start-date-picker"
                 placeholderText="dd/mm/yy"
+                dateFormat="dd/mm/yy"
                 name="contractstartdate"
-                value={startDate}
+                value={startDateValue}
                 onChange={(date: Date) => onStartDateChangeHandler(date)}
               />
             </CCol>
@@ -105,7 +107,9 @@ const EmploymentContract = ({
               {...dynamicFormLabelProps('contractenddate', classNameStyle)}
             >
               Contract End Date:
-              {isRequired && <span className={showIsRequired(endDate)}>*</span>}
+              {isRequired && (
+                <span className={showIsRequired(endDateValue)}>*</span>
+              )}
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
@@ -118,13 +122,14 @@ const EmploymentContract = ({
                 dropdownMode="select"
                 placeholderText="dd/mm/yy"
                 data-testid="end-date-picker"
+                dateFormat="dd/mm/yy"
                 name="contractenddate"
-                value={endDate}
+                value={endDateValue}
                 onChange={(date: Date) => onEndDateChangeHandler(date)}
               />
               <span></span>
             </CCol>
-            {isDateCorrect(startDateValue, endDateValue) && (
+            {isGreaterThanStart && (
               <CCol sm={3}>
                 <p style={{ color: 'red' }}>
                   <b>End date should be greater than Start date</b>
@@ -133,8 +138,6 @@ const EmploymentContract = ({
             )}
           </CRow>
         </>
-      ) : (
-        <></>
       )}
     </>
   )
