@@ -44,15 +44,12 @@ const AddNewMailTemplateType = () => {
 
   const formLabelProps = {
     htmlFor: 'inputNewTemplateType',
-    className: 'col-form-label category-label',
+    className: 'col-sm-2 col-form-label text-end',
   }
   return (
     <>
       <CRow className="mt-0 mb-0">
-        <CFormLabel
-          {...formLabelProps}
-          className="col-sm-2 col-form-label text-end"
-        >
+        <CFormLabel {...formLabelProps}>
           Template Type:
           <span className={showIsRequired(newTemplateType)}>*</span>
         </CFormLabel>

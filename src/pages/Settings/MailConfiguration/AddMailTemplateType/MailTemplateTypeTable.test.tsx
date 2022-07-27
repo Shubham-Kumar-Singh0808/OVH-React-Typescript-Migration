@@ -52,7 +52,6 @@ describe('Mail Template component with data', () => {
   })
   test('should clear input and disable button after submitting and edit template type should be updated', async () => {
     expect(screen.getByTestId('sh-edit-btn1')).toBeEnabled()
-    // userEvent.type(screen.getByTestId('template-input'), 'testing')
     await waitFor(() => {
       expect(screen.getByTestId('sh-edit-btn1')).toBeEnabled()
     })
@@ -76,7 +75,7 @@ describe('Mail Template component with data', () => {
       await fireEvent.click(saveButtonElement)
 
       expect(screen.getByTestId(`template-input`)).toHaveValue(
-        'test2testing2testing2testing2testing2testing2',
+        'test2testing2testing2testing2',
       )
     })
   })
