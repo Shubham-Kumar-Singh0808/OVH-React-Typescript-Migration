@@ -37,6 +37,7 @@ import { hiveActivityReportService } from './TimeAndAttendance/HiveActivityRepor
 import { employeeMailConfigurationService } from './Settings/MailConfiguration/employeeMailConfigurationSlice'
 import { addTemplateService } from './Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import { employeeService } from './EmployeeDirectory/EmployeesList/EditEmployee'
+import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
 
 export const reduxServices = {
@@ -79,5 +80,6 @@ export const reduxServices = {
   employeeMailConfiguration: employeeMailConfigurationService,
   addNewMailTemplate: addTemplateService,
   employee: employeeService,
+  addNewMailTemplateType: mailTemplateTypeService,
   myAttendance: myAttendanceService,
 }

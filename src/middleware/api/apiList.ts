@@ -37,6 +37,7 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
+  AddNewMailTemplateTypeApi,
   MyAttendanceApi,
 } from '../../types/apiTypes'
 
@@ -315,6 +316,13 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
 export const addNewTemplateAPiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
+}
+
+export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
+  getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+  addNewMailTemplateType: apiPrefix + '/mailTemplates/addMailTemplateType',
+  updateMailTemplateType: apiPrefix + '/mailTemplates/updateMailTemplateType',
+  deleteMailTemplateType: apiPrefix + '/mailTemplates/deleteMailTemplateType',
 }
 
 export const myAttendanceApiConfig: MyAttendanceApi = {
