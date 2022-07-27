@@ -25,28 +25,26 @@ const MailTemplateTypeList = ({
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (
-        <>
-          <OCard
-            className="mb-4 myprofile-wrapper"
-            title="Add Template Type"
-            CBodyClassName="ps-0 pe-0"
-            CFooterClassName="d-none"
-          >
-            <CRow>
-              <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
-                <CButton color="info btn-ovh me-1" onClick={backButtonHandler}>
-                  <i className="fa fa-arrow-left  me-1"></i>Back
-                </CButton>
-              </CCol>
-              <CCol xs={12} className="mt-4 mb-4">
-                <AddNewMailTemplateType />
-              </CCol>
-              <CCol xs={12}>
-                <MailTemplateTypeTable />
-              </CCol>
-            </CRow>
-          </OCard>
-        </>
+        <OCard
+          className="mb-4 myprofile-wrapper"
+          title="Add Template Type"
+          CBodyClassName="ps-0 pe-0"
+          CFooterClassName="d-none"
+        >
+          <CRow>
+            <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
+              <CButton color="info btn-ovh me-1" onClick={backButtonHandler}>
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </CCol>
+            <CCol xs={12} className="mt-4 mb-4">
+              <AddNewMailTemplateType />
+            </CCol>
+            <CCol xs={12}>
+              <MailTemplateTypeTable />
+            </CCol>
+          </CRow>
+        </OCard>
       ) : (
         <CCol>
           <CRow className="MailTemplate-loading-spinner">

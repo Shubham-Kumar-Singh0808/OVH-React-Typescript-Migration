@@ -44,16 +44,10 @@ describe('Mail Template component with data', () => {
   it('should close the modal on clicking No button from the popup', async () => {
     const deleteButtonElement = screen.getByTestId('btn-delete0')
     userEvent.click(deleteButtonElement)
-    const yesButtonElement = screen.getByRole('button', { name: 'Yes' })
+    const yesButtonElement = screen.getByRole('button', { name: 'No' })
     userEvent.click(yesButtonElement)
     await waitFor(() => {
       expect(screen.getAllByRole('row')).toHaveLength(21)
-    })
-  })
-  test('should clear input and disable button after submitting and edit template type should be updated', async () => {
-    expect(screen.getByTestId('sh-edit-btn1')).toBeEnabled()
-    await waitFor(() => {
-      expect(screen.getByTestId('sh-edit-btn1')).toBeEnabled()
     })
   })
   test('should edit and save employee template details upon edit and save button click respectively', async () => {

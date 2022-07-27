@@ -73,7 +73,7 @@ describe('Mail Template component with data', () => {
     })
   })
 
-  test('should render correct number of 40 page records', () => {
+  test('should render correct number of page records base from data', () => {
     userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
     const pageSizeSelect = screen.getByRole('option', {
       name: '40',
@@ -81,7 +81,9 @@ describe('Mail Template component with data', () => {
     expect(pageSizeSelect.selected).toBe(true)
 
     // 42 including the heading
-    expect(screen.getAllByRole('row')).toHaveLength(26)
+    expect(screen.getAllByRole('row')).toHaveLength(
+      mockMailTemplateTypes.length + 1,
+    )
   })
 
   test('should render first page data only', () => {
