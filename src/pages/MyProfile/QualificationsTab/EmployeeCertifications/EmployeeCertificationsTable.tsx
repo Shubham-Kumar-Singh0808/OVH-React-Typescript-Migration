@@ -21,6 +21,7 @@ const EmployeeCertificationsTable = ({
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [certificateId, setCertificateId] = useState(0)
+
   const employeeCertificates = useTypedSelector((state) =>
     reduxServices.employeeCertifications.selectors.employeeCertificates(
       state,
