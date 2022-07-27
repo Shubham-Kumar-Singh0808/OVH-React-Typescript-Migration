@@ -1,12 +1,12 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import EmployeeApplyLeave from './EmployeeApplyLeave'
-import { render, screen, waitFor } from '../../test/testUtils'
+import EmployeeApplyLeave from '../EmployeeApplyLeave'
+import { render, screen, waitFor } from '../../../test/testUtils'
 import {
   mockLeaveApply,
   mockLeaveType,
-} from '../../test/data/employeeLeaveApplyData'
+} from '../../../test/data/employeeLeaveApplyData'
 
 describe('Leave Apply Component Testing', () => {
   describe('without data', () => {

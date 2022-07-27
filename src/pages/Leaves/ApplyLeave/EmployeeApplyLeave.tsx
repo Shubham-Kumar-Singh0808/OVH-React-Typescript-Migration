@@ -4,13 +4,13 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import { useAppDispatch, useTypedSelector } from '../../stateStore'
-import OCard from '../../components/ReusableComponent/OCard'
-import { EmployeeLeaveApply } from '../../types/Leaves/employeeApplyLeaves'
-import { TextDanger, TextWhite } from '../../constant/ClassName'
-import { ckeditorConfig } from '../../utils/ckEditorUtils'
-import { reduxServices } from '../../reducers/reduxServices'
-import OToast from '../../components/ReusableComponent/OToast'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OCard from '../../../components/ReusableComponent/OCard'
+import { EmployeeLeaveApply } from '../../../types/Leaves/employeeApplyLeaves'
+import { TextDanger, TextWhite } from '../../../constant/ClassName'
+import { ckeditorConfig } from '../../../utils/ckEditorUtils'
+import { reduxServices } from '../../../reducers/reduxServices'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const EmployeeApplyLeave = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)

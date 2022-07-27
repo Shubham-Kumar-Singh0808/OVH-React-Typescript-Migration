@@ -80,7 +80,9 @@ const AddNewTemplate = React.lazy(
   () =>
     import('./pages/Settings/MailConfiguration/AddTemplate/AddNewMailTemplate'),
 )
-const ApplyLeave = React.lazy(() => import('./pages/Leaves/EmployeeApplyLeave'))
+const ApplyLeave = React.lazy(
+  () => import('./pages/Leaves/ApplyLeave/EmployeeApplyLeave'),
+)
 
 const EditEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
