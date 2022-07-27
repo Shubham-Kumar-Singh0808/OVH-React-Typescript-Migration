@@ -48,6 +48,7 @@ const OModal = ({
         <CModalBody className={modalBodyClass}>{children}</CModalBody>
         <CModalFooter className={modalFooterClass}>
           <CButton
+            data-testid="modalConfirmBtn"
             color="warning btn-ovh"
             disabled={isConfirmButtonDisabled}
             onClick={confirmButtonAction}
