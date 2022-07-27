@@ -6,13 +6,13 @@ import {
   getAuthenticatedRequestConfig,
   useAxios,
 } from '../../../../utils/apiUtils'
-import { AllowedHttpMethods, scheduledInterviewsAPiConfig } from '../../apiList'
+import { AllowedHttpMethods, scheduledInterviewsApiConfig } from '../../apiList'
 
 const getScheduledCandidatesForEmployee = async (
   props: GetSearchScheduledCandidatesProps,
 ): Promise<GetSearchScheduledCandidatesResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: scheduledInterviewsAPiConfig.searchScheduledCandidatesForEmployee,
+    url: scheduledInterviewsApiConfig.searchScheduledCandidatesForEmployee,
     method: AllowedHttpMethods.get,
     params: {
       endIndex: props.endIndex ?? 20,
@@ -31,7 +31,7 @@ const getScheduledCandidates = async (
   props: GetSearchScheduledCandidatesProps,
 ): Promise<GetSearchScheduledCandidatesResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: scheduledInterviewsAPiConfig.searchScheduledCandidates,
+    url: scheduledInterviewsApiConfig.searchScheduledCandidates,
     method: AllowedHttpMethods.get,
     params: {
       endIndex: props.endIndex ?? 20,
@@ -53,7 +53,7 @@ const exportScheduledCandidatesList = async (props: {
   skill: string
 }): Promise<Blob | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: scheduledInterviewsAPiConfig.downloadScheduleCandidates,
+    url: scheduledInterviewsApiConfig.downloadScheduleCandidates,
     method: AllowedHttpMethods.get,
     params: {
       fromDate: props.fromDate,

@@ -68,8 +68,19 @@ const ScheduledInterviewsFilterOptions = (props: {
         reduxServices.scheduledInterviews.getScheduledCandidatesForEmployee({
           startIndex: pageSize * (currentPage - 1),
           endIndex: pageSize * currentPage,
-          fromDate: filterByMeFromDate,
-          toDate: filterByMeToDate,
+          fromDate: new Date(filterByMeFromDate).toLocaleDateString(
+            deviceLocale,
+            {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            },
+          ),
+          toDate: new Date(filterByMeToDate).toLocaleDateString(deviceLocale, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          }),
           status: filterByInterviewStatus,
         }),
       )
@@ -216,7 +227,7 @@ const ScheduledInterviewsFilterOptions = (props: {
           <CButton
             className="cursor-pointer"
             color="success btn-ovh me-1"
-            disabled={!isViewBtnEnabled}
+            disabled={!isViewBtnEnabled || interviewDateError}
             onClick={viewButtonHandler}
           >
             View

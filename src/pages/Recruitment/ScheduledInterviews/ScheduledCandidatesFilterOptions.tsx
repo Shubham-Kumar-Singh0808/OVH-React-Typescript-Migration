@@ -78,8 +78,19 @@ const ScheduledCandidatesFilterOptions = (props: {
         reduxServices.scheduledInterviews.getScheduledCandidates({
           startIndex: pageSize * (currentPage - 1),
           endIndex: pageSize * currentPage,
-          fromDate: filterByAllFromDate,
-          toDate: filterByAllToDate,
+          fromDate: new Date(filterByAllFromDate).toLocaleDateString(
+            deviceLocale,
+            {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            },
+          ),
+          toDate: new Date(filterByAllToDate).toLocaleDateString(deviceLocale, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          }),
           search: filterBySearchValue,
           skill: filterByTechnology,
         }),
@@ -145,8 +156,19 @@ const ScheduledCandidatesFilterOptions = (props: {
   const handleExportScheduleList = async () => {
     const interviewScheduleListDownload =
       await scheduledInterviewsApi.exportScheduledCandidatesList({
-        fromDate: filterByAllFromDate,
-        toDate: filterByAllToDate,
+        fromDate: new Date(filterByAllFromDate).toLocaleDateString(
+          deviceLocale,
+          {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          },
+        ),
+        toDate: new Date(filterByAllToDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
         skill: filterByTechnology,
       })
     downloadFile(interviewScheduleListDownload, 'ScheduledCandidates.csv')
@@ -251,7 +273,7 @@ const ScheduledCandidatesFilterOptions = (props: {
           <CButton
             className="cursor-pointer"
             color="success btn-ovh me-1"
-            disabled={!isViewBtnEnabled}
+            disabled={!isViewBtnEnabled || candidateDateError}
             onClick={viewButtonHandler}
           >
             View

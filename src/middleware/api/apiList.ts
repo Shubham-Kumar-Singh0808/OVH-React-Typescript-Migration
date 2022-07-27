@@ -313,12 +313,12 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
     deleteMailTemplate: apiPrefix + '/mailTemplates/deleteMailTemplate',
   }
 
-export const addNewTemplateAPiConfig: AddNewTemplateApi = {
+export const addNewTemplateApiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
 }
 
-export const scheduledInterviewsAPiConfig: ScheduledInterviewsApi = {
+export const scheduledInterviewsApiConfig: ScheduledInterviewsApi = {
   searchScheduledCandidatesForEmployee:
     apiPrefix + '/jobapplicant/searchScheduledCandidatesForEmployee',
   searchScheduledCandidates:

@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 import {
   employeeCertificationsApiConfig,
-  scheduledInterviewsAPiConfig,
+  scheduledInterviewsApiConfig,
 } from '../../middleware/api/apiList'
 import { mockTechnologies } from '../data/employeeTechnologiesData'
 import {
@@ -12,7 +12,7 @@ import {
 export const scheduledInterviewsHandlers = [
   // scheduled candidates api mock
   rest.get(
-    scheduledInterviewsAPiConfig.searchScheduledCandidates,
+    scheduledInterviewsApiConfig.searchScheduledCandidates,
     (_req, res, ctx) => {
       return res(
         ctx.json({
@@ -24,7 +24,7 @@ export const scheduledInterviewsHandlers = [
   ),
   // scheduled candidates for employee api mock
   rest.get(
-    scheduledInterviewsAPiConfig.searchScheduledCandidatesForEmployee,
+    scheduledInterviewsApiConfig.searchScheduledCandidatesForEmployee,
     (_req, res, ctx) => {
       return res(
         ctx.json({
