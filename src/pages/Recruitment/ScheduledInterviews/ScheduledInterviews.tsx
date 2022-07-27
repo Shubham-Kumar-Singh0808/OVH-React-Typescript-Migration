@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   CCol,
   CFormCheck,
@@ -45,6 +45,17 @@ const ScheduledInterviews = (): JSX.Element => {
       ),
     )
   }
+
+  const sortedTechnologies = useMemo(() => {
+    if (getTechnologies) {
+      return getTechnologies
+        .slice()
+        .sort((technology1, technology2) =>
+          technology1.name.localeCompare(technology2.name),
+        )
+    }
+    return getTechnologies
+  }, [getTechnologies])
 
   return (
     <>
@@ -99,16 +110,11 @@ const ScheduledInterviews = (): JSX.Element => {
                   }}
                 >
                   <option value={''}>Select Technology</option>
-                  {getTechnologies
-                    ?.slice()
-                    ?.sort((technology1, technology2) =>
-                      technology1.name.localeCompare(technology2.name),
-                    )
-                    ?.map((certificateItem, index) => (
-                      <option key={index} value={certificateItem.name}>
-                        {certificateItem.name}
-                      </option>
-                    ))}
+                  {sortedTechnologies?.map((certificateItem, index) => (
+                    <option key={index} value={certificateItem.name}>
+                      {certificateItem.name}
+                    </option>
+                  ))}
                 </CFormSelect>
               </CCol>
             </>
