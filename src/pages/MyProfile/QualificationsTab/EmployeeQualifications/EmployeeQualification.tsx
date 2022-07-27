@@ -70,7 +70,11 @@ const EmployeeQualifications = (): JSX.Element => {
           <CCol sm={3} className="text-dark-blue text-end">
             Others :
           </CCol>
-          <CCol sm={6} className="ps-0 text-dark" data-testid="others">
+          <CCol
+            sm={6}
+            className="ps-0 text-dark othersField"
+            data-testid="others"
+          >
             {(employeeQualification?.others &&
               parse(employeeQualification?.others)) ||
               'N/A'}

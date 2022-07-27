@@ -4,7 +4,8 @@ export type AuthenticatedRequestConfig = {
   url: string
   method: Method
   headers: { tenantKey: string; [key: string]: string | number }
-  params?: { [key: string]: string | number | boolean | undefined }
+  params?: { [key: string]: string | number | boolean | undefined | number[] }
+  paramsSerializer: any
   data?:
     | { [key: string]: string | number | unknown }
     | unknown
@@ -222,6 +223,9 @@ export interface UserAccessToFeaturesApi extends ApiBase {
 }
 
 export interface EmployeeHandbookSettingsApi extends ApiBase {
+  getTotalHandbookList: string
+  getEmployeeCountries: string
+  addNewHandbook: string
   getEmployeeHandbooks: string
   deleteEmployeeHandbook: string
 }
@@ -248,6 +252,7 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllemploymentType: string
   getAllJobType: string
   getCheckIfUserExist: string
+  editEmployee: string
 }
 
 export interface HiveActivityReportApi extends ApiBase {
@@ -257,11 +262,24 @@ export interface HiveActivityReportApi extends ApiBase {
   exportHiveReport: string
 }
 export interface EmployeeMailConfigurationApi extends ApiBase {
-  getEmailTemplates: string
+  getMailTemplates: string
   getMailTemplateTypes: string
+  exportMailTemplatesList: string
+  deleteMailTemplate: string
 }
 
 export interface AddNewTemplateApi extends ApiBase {
   getAssetTypes: string
   addNewMailTemplate: string
+}
+
+export interface AddNewMailTemplateTypeApi extends ApiBase {
+  getMailTemplateTypes: string
+  addNewMailTemplateType: string
+  deleteMailTemplateType: string
+  updateMailTemplateType: string
+}
+
+export interface MyAttendanceApi extends ApiBase {
+  getMyAttendance: string
 }

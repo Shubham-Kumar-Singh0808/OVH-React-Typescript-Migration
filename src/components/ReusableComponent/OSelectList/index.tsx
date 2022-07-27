@@ -9,6 +9,7 @@ const OSelect = ({
   setValue,
   value,
   name,
+  isRequired,
   label,
 }: SelectProps): JSX.Element => {
   const onChangeHandler = (e: { target: { value: string } }) => {
@@ -21,18 +22,23 @@ const OSelect = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
+          data-testId="selectLabel"
           {...dynamicFormLabelProps(
             'technology',
             'col-sm-3 col-form-label text-end',
           )}
         >
-          {name}:<span className={showIsRequired(value as string)}>*</span>
+          {name}:
+          {isRequired && (
+            <span className={showIsRequired(value as string)}>*</span>
+          )}
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect
             id={name}
             size="sm"
             aria-label={name}
+            data-testid={`form${name}`}
             name={name}
             value={selectedValue}
             onChange={onChangeHandler}

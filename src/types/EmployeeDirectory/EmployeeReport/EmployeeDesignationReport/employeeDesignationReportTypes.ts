@@ -12,6 +12,19 @@ export type EmployeeDesignation = {
   country: string | null
 }
 
+export type MockEmployeeDesignation = {
+  id: number
+  fullName: string
+  emailId: string
+  mobile: string
+  bloodgroup: string
+  departmentName: string
+  designation: string
+  contractStartDate: string | null
+  country: string | null
+  [key: string]: unknown
+}
+
 export type EmployeeDesignationReportApiProps = {
   endIndex?: number
   startIndex?: number
@@ -38,6 +51,8 @@ export type EmployeeDesignationReportState = {
 }
 
 export type EmployeeDesignationReportTableProps = {
+  designation: string
+  setDesignation: (value: string) => void
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
@@ -48,4 +63,11 @@ export type EmployeeDesignationReportTableProps = {
 export type EmployeeDesignationOptionsProps = {
   designation: string
   setDesignation: (value: string) => void
+}
+
+export type mockEmpDepartment = {
+  departmentId: number
+  departmentName: string
+  supportManagementFlag: boolean
+  allocationSupportFlag: boolean
 }

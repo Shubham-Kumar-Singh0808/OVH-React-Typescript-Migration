@@ -27,7 +27,7 @@ const CertificateTypeList = React.lazy(
     ),
 )
 const EmployeeList = React.lazy(
-  () => import('./pages/EmployeeDirectory/EmployeesList/EmployeeList'),
+  () => import('./pages/EmployeeDirectory/EmployeesList'),
 )
 const EmployeeReport = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeeReport/EmployeeReport'),
@@ -56,7 +56,6 @@ const EmployeeHandbookSettings = React.lazy(
       './pages/EmployeeHandbook/HandbookSettings/EmployeeHandbookSettings'
     ),
 )
-
 const TimeInOfficeReport = React.lazy(
   () =>
     import('./pages/TimeAndAttendance/TimeInOfficeReport/TimeInOfficeReport'),
@@ -64,27 +63,28 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
-const MailConfiguration = React.lazy(
-  () => import('./pages/Settings/MailConfiguration/employeeEmailTemplate'),
-)
 
+const MailConfiguration = React.lazy(
+  () => import('./pages/Settings/MailConfiguration/EmailConfigTemplate'),
+)
 const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
 )
-
 const HiveActivityReport = React.lazy(
   () =>
     import('./pages/TimeAndAttendance/HiveActivityReport/HiveActivityReport'),
 )
-
 const AddNewTemplate = React.lazy(
   () =>
     import('./pages/Settings/MailConfiguration/AddTemplate/AddNewMailTemplate'),
 )
-
 const EditEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
 )
+const MyAttedance = React.lazy(
+  () => import('./pages/TimeAndAttendance/MyAttendance/MyAttendance'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -164,6 +164,11 @@ const routes = [
     component: AddNewEmployee,
   },
   {
+    path: '/mailTemplates',
+    name: 'Mail Configuration',
+    component: MailConfiguration,
+  },
+  {
     path: '/hiveReport',
     name: 'Hive Activity Report',
     component: HiveActivityReport,
@@ -179,9 +184,9 @@ const routes = [
     component: EditEmployee,
   },
   {
-    path: '/mailTemplates',
-    name: 'Mail Configuration',
-    component: MailConfiguration,
+    path: '/employeeattendance',
+    name: 'Employee Attendance',
+    component: MyAttedance,
   },
 ]
 

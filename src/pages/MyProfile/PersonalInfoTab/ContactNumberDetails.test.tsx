@@ -2,8 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import ContactNumberDetails from './ContactNumberDetails'
-import { render, screen, waitFor } from '../../../test/testUtils'
-import { employeePersonalInfoData } from '../../../test/data/employeePersonalInfoData'
+import { render, screen } from '../../../test/testUtils'
 
 describe('Employee Passport Details', () => {
   describe('Without data', () => {

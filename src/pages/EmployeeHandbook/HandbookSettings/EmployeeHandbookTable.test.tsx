@@ -1,56 +1,87 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
+import userEvent from '@testing-library/user-event'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
-import stateStore from '../../../stateStore'
 import { render, screen, waitFor } from '../../../test/testUtils'
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
-describe('Employee Handbook List Table Component Testing', () => {
-  test('should render no data to display if table is empty', async () => {
+describe('Employee Handbook Settings', () => {
+  beforeEach(() => {
     render(
-      <ReduxProvider reduxStore={stateStore}>
-        <EmployeeHandbookTable
-          setCurrentPage={mockSetCurrentPage}
-          setPageSize={mockSetPageSize}
-          currentPage={1}
-          pageSize={20}
-          paginationRange={[1, 2, 3]}
-        />
-      </ReduxProvider>,
+      <EmployeeHandbookTable
+        setCurrentPage={mockSetCurrentPage}
+        setPageSize={mockSetPageSize}
+        currentPage={1}
+        pageSize={20}
+        paginationRange={[1, 2, 3]}
+      />,
+      {
+        preloadedState: {
+          employeeHandbookSettings: {
+            employeeHandbooks: mockEmployeeHandbookList,
+            listSize: 43,
+          },
+        },
+      },
     )
+  })
+  test('should render the correct headers', () => {
+    expect(screen.getByRole('columnheader', { name: '#' })).toBeTruthy()
+    expect(screen.getByRole('columnheader', { name: 'Title' })).toBeTruthy()
+    expect(screen.getByRole('columnheader', { name: 'Page Name' })).toBeTruthy()
+    expect(
+      screen.getByRole('columnheader', { name: 'Display Order' }),
+    ).toBeTruthy()
+    expect(screen.getByRole('columnheader', { name: 'Country' })).toBeTruthy()
+    expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
+  })
+  test('should render correct number of page records', () => {
+    // 21 including the heading
+    expect(screen.queryAllByRole('row')).toHaveLength(44)
+  })
+  test('should render delete button', () => {
+    expect(screen.getByTestId('handbook-edit-btn0')).toHaveClass(
+      'btn btn-info btn-sm',
+    )
+  })
+  test('should render delete button', () => {
+    expect(screen.getByTestId('handbook-delete-btn0')).toHaveClass(
+      'btn btn-danger btn-sm',
+    )
+  })
+  it('should render Delete modal on clicking delete button from Actions', async () => {
+    const deleteButtonElement = screen.getByTestId('handbook-delete-btn1')
+    userEvent.click(deleteButtonElement)
     await waitFor(() => {
-      expect(screen.queryByText('No data to display')).toBeInTheDocument()
+      expect(screen.getByText('Delete Handbook')).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
     })
   })
-
-  test('should render correct number of page records', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <EmployeeHandbookTable
-          setCurrentPage={mockSetCurrentPage}
-          setPageSize={mockSetPageSize}
-          currentPage={1}
-          pageSize={20}
-          paginationRange={[1, 2, 3]}
-        />
-      </ReduxProvider>,
-    )
+  it('should close the modal on clicking No button from the popup', async () => {
+    const deleteButtonElement = screen.getByTestId('handbook-delete-btn4')
+    userEvent.click(deleteButtonElement)
+    const yesButtonElement = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(yesButtonElement)
     await waitFor(() => {
-      // 21 including the heading
-      expect(screen.queryAllByRole('row')).toHaveLength(0)
+      expect(screen.getAllByRole('row')).toHaveLength(44)
     })
+  })
+})
+test('should render no data to display if table is empty', async () => {
+  render(
+    <EmployeeHandbookTable
+      setCurrentPage={mockSetCurrentPage}
+      setPageSize={mockSetPageSize}
+      currentPage={1}
+      pageSize={20}
+      paginationRange={[1, 2, 3]}
+    />,
+  )
+  await waitFor(() => {
+    expect(screen.queryByText('No data to display')).toBeInTheDocument()
   })
 })

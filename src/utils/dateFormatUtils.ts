@@ -89,6 +89,7 @@ export const dateFormatPerLocale = [
   { label: 'dsb-DE', format: format5 },
   { label: 'dv-MV', format: 'dd/MM/yy' },
   { label: 'el-GR', format: 'd/M/yyyy' },
+  { label: 'en', format: format2 },
   { label: 'en-029', format: format6 },
   { label: 'en-AU', format: 'd/MM/yyyy' },
   { label: 'en-BZ', format: format2 },

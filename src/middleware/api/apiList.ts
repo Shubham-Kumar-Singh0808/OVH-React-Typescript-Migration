@@ -37,6 +37,8 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
+  AddNewMailTemplateTypeApi,
+  MyAttendanceApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -260,6 +262,9 @@ export const userApiConfig: UserAccessToFeaturesApi = {
 export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   getEmployeeHandbooks: apiPrefix + '/handbookItem/getAll',
   deleteEmployeeHandbook: apiPrefix + '/handbookItem/delete',
+  addNewHandbook: apiPrefix + '/handbookItem/add',
+  getEmployeeCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getTotalHandbookList: apiPrefix + '/handbookItem/getTotalList',
 }
 
 export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
@@ -286,6 +291,7 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getAllReportingManagersData:
     apiPrefix + '/jobapplicant/getAllReportingManagersData',
   addNewEmployee: apiPrefix + '/jobapplicant/jobAdmin/addNewEmployee',
+  editEmployee: apiPrefix + '/jobapplicant/jobAdmin/editEmployee',
   getAllemploymentType: apiPrefix + '/jobapplicant/getEmploymentType',
   getAllJobType: apiPrefix + '/jobapplicant/getJobType',
   getCheckIfUserExist: apiPrefix + '/Employee/isemployeeUsernameexist',
@@ -301,11 +307,24 @@ export const hiveActivityReportApiConfig: HiveActivityReportApi = {
 
 export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
   {
-    getEmailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
+    getMailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
     getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+    exportMailTemplatesList: apiPrefix + '/mailTemplates/exportMailTemplates',
+    deleteMailTemplate: apiPrefix + '/mailTemplates/deleteMailTemplate',
   }
 
 export const addNewTemplateAPiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
+}
+
+export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
+  getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+  addNewMailTemplateType: apiPrefix + '/mailTemplates/addMailTemplateType',
+  updateMailTemplateType: apiPrefix + '/mailTemplates/updateMailTemplateType',
+  deleteMailTemplateType: apiPrefix + '/mailTemplates/deleteMailTemplateType',
+}
+
+export const myAttendanceApiConfig: MyAttendanceApi = {
+  getMyAttendance: apiPrefix + '/biometric/myAttendence',
 }

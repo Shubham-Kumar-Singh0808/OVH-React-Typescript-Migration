@@ -17,15 +17,22 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { AddNewTemplate } from '../../../../types/Settings/MailConfiguration/AddTemplate/addMailTemplateTypes'
+import {
+  AddMailTemplateProps,
+  AddNewTemplate,
+} from '../../../../types/Settings/MailConfiguration/AddTemplate/addMailTemplateTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import MailTemplateTypeList from '../AddMailTemplateType/MailTemplateTypeList'
 
-function AddNewMailTemplate(): JSX.Element {
+function AddNewMailTemplate({
+  addButtonHandler,
+}: AddMailTemplateProps): JSX.Element {
   const initialMailTemplateDetails = {} as AddNewTemplate
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [addNewTemplate, setAddNewTemplate] = useState(
     initialMailTemplateDetails,
   )
+  const [toggle, setToggle] = useState('')
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [showAssetType, setShowAssetType] = useState<boolean>(false)
   const [emailError, setEmailError] = useState<boolean>(false)
@@ -35,7 +42,9 @@ function AddNewMailTemplate(): JSX.Element {
   )
 
   useEffect(() => {
-    dispatch(reduxServices.employeeMailConfiguration.getMailTemplateTypes())
+    dispatch(
+      reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
+    )
     dispatch(reduxServices.addNewMailTemplate.getAssetTypes())
   }, [dispatch])
 
@@ -157,196 +166,215 @@ function AddNewMailTemplate(): JSX.Element {
 
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title="Add Template"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <Link to={`/mailTemplates`}>
-              <CButton color="info" className="btn-ovh me-1">
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </Link>
-          </CCol>
-        </CRow>
-        <CForm>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-2 col-form-label text-end"
-            >
-              Type:{' '}
-              <span
-                className={
-                  addNewTemplate.templateTypeId ? TextWhite : TextDanger
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={4}>
-              <CFormSelect
-                data-testid="form-select-type"
-                aria-label="Default select example"
-                size="sm"
-                id="templateTypeId"
-                name="templateTypeId"
-                value={addNewTemplate?.templateTypeId}
-                onChange={handleInputChange}
-              >
-                <option value={''}>Select Type</option>
-                {getTemplateTypes?.map((templateType, index) => (
-                  <option key={index} value={templateType.id}>
-                    {templateType.name}
-                  </option>
-                ))}
-              </CFormSelect>
-            </CCol>
-            <CCol>
-              <CButton color="info btn-ovh me-1" size="sm">
-                <i className="fa fa-plus me-1"></i>Add
-              </CButton>
-            </CCol>
-          </CRow>
-          {showAssetType ? (
-            <>
+      {toggle === '' && (
+        <>
+          <OCard
+            className="mb-4 myprofile-wrapper"
+            title="Add Template"
+            CBodyClassName="ps-0 pe-0"
+            CFooterClassName="d-none"
+          >
+            <CRow className="justify-content-end">
+              <CCol className="text-end" md={4}>
+                <Link to={`/mailTemplates`}>
+                  <CButton color="info" className="btn-ovh me-1">
+                    <i className="fa fa-arrow-left  me-1"></i>Back
+                  </CButton>
+                </Link>
+              </CCol>
+            </CRow>
+            <CForm>
               <CRow className="mt-4 mb-4">
                 <CFormLabel
                   {...formLabelProps}
                   className="col-sm-2 col-form-label text-end"
                 >
-                  Asset Type: <span className={isAsteriskShow}>*</span>
+                  Type:{' '}
+                  <span
+                    className={
+                      addNewTemplate.templateTypeId ? TextWhite : TextDanger
+                    }
+                  >
+                    *
+                  </span>
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormSelect
-                    data-testid="form-select-asset-type"
+                    data-testid="form-select-type"
                     aria-label="Default select example"
                     size="sm"
-                    id="assetType"
-                    name="assetTypeId"
-                    value={addNewTemplate?.assetTypeId}
+                    id="templateTypeId"
+                    name="templateTypeId"
+                    value={addNewTemplate?.templateTypeId}
                     onChange={handleInputChange}
                   >
                     <option value={''}>Select Type</option>
-                    {getAssetTypes?.map((assetType, index) => (
-                      <option key={index} value={assetType.id}>
-                        {assetType.assetType}
+                    {getTemplateTypes?.map((templateType, index) => (
+                      <option key={index} value={templateType.id}>
+                        {templateType.name}
                       </option>
                     ))}
                   </CFormSelect>
                 </CCol>
+                <CCol>
+                  <CButton
+                    color="info btn-ovh me-1"
+                    size="sm"
+                    onClick={
+                      (addButtonHandler = () => setToggle('mailTemplateType'))
+                    }
+                  >
+                    <i className="fa fa-plus me-1"></i>Add
+                  </CButton>
+                </CCol>
+              </CRow>
+              {showAssetType ? (
+                <>
+                  <CRow className="mt-4 mb-4">
+                    <CFormLabel
+                      {...formLabelProps}
+                      className="col-sm-2 col-form-label text-end"
+                    >
+                      Asset Type: <span className={isAsteriskShow}>*</span>
+                    </CFormLabel>
+                    <CCol sm={4}>
+                      <CFormSelect
+                        data-testid="form-select-asset-type"
+                        aria-label="Default select example"
+                        size="sm"
+                        id="assetType"
+                        name="assetTypeId"
+                        value={addNewTemplate?.assetTypeId}
+                        onChange={handleInputChange}
+                      >
+                        <option value={''}>Select Type</option>
+                        {getAssetTypes?.map((assetType, index) => (
+                          <option key={index} value={assetType.id}>
+                            {assetType.assetType}
+                          </option>
+                        ))}
+                      </CFormSelect>
+                    </CCol>
+                  </CRow>
+                  <CRow className="mt-4 mb-4">
+                    <CFormLabel
+                      {...formLabelProps}
+                      className="col-sm-2 col-form-label text-end"
+                    >
+                      Email:
+                      <span className={isAsteriskShow}>*</span>
+                    </CFormLabel>
+                    <CCol sm={4}>
+                      <CFormInput
+                        type="email"
+                        data-testid="email-address"
+                        name="email"
+                        value={addNewTemplate?.email}
+                        maxLength={50}
+                        onChange={handleInputChange}
+                      />
+                      {emailError && (
+                        <p data-testid="error-msg" className={TextDanger}>
+                          Enter a valid Email address.For multiple mail ids
+                          use,without space!!
+                        </p>
+                      )}
+                    </CCol>
+                  </CRow>
+                </>
+              ) : (
+                <></>
+              )}
+              <CRow className="mt-4 mb-4">
+                <CFormLabel
+                  {...formLabelProps}
+                  className="col-sm-2 col-form-label text-end"
+                >
+                  Title:
+                  <span
+                    className={
+                      addNewTemplate.templateName ? TextWhite : TextDanger
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={4}>
+                  <CFormInput
+                    data-testid="title-input"
+                    type="text"
+                    name="templateName"
+                    value={addNewTemplate?.templateName}
+                    maxLength={50}
+                    onChange={handleInputChange}
+                  />
+                </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel
                   {...formLabelProps}
                   className="col-sm-2 col-form-label text-end"
                 >
-                  Email:
-                  <span className={isAsteriskShow}>*</span>
+                  Template:{' '}
+                  <span
+                    className={addNewTemplate.template ? TextWhite : TextDanger}
+                  >
+                    *
+                  </span>
                 </CFormLabel>
+                {showEditor ? (
+                  <CCol sm={10} data-testid="ckEditor-component">
+                    <CKEditor<{
+                      onChange: CKEditorEventHandler<'change'>
+                    }>
+                      initData={addNewTemplate?.template}
+                      config={ckeditorConfig}
+                      debug={true}
+                      onChange={({ editor }) => {
+                        handleDescription(editor.getData().trim())
+                      }}
+                    />
+                  </CCol>
+                ) : (
+                  ''
+                )}
+              </CRow>
+              <CRow>
+                <CFormLabel
+                  {...formLabelProps}
+                  className="col-sm-2 col-form-label text-end"
+                ></CFormLabel>
                 <CCol sm={4}>
-                  <CFormInput
-                    type="email"
-                    data-testid="email-address"
-                    name="email"
-                    value={addNewTemplate?.email}
-                    maxLength={50}
-                    onChange={handleInputChange}
-                  />
-                  {emailError && (
-                    <p data-testid="error-msg" className={TextDanger}>
-                      Enter a valid Email address.For multiple mail ids
-                      use,without space!!
-                    </p>
-                  )}
+                  <CButton
+                    data-testid="btn-save"
+                    className="btn-ovh me-1"
+                    color="success"
+                    disabled={!isButtonEnabled}
+                    onClick={handleAddNewHandbookPage}
+                  >
+                    Add
+                  </CButton>
+                  <CButton
+                    data-testid="btn-clear"
+                    color="warning "
+                    className="btn-ovh me-1"
+                    onClick={handleClearInputs}
+                  >
+                    Clear
+                  </CButton>
                 </CCol>
               </CRow>
-            </>
-          ) : (
-            <></>
-          )}
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-2 col-form-label text-end"
-            >
-              Title:
-              <span
-                className={addNewTemplate.templateName ? TextWhite : TextDanger}
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={4}>
-              <CFormInput
-                data-testid="title-input"
-                type="text"
-                name="templateName"
-                value={addNewTemplate?.templateName}
-                maxLength={50}
-                onChange={handleInputChange}
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-2 col-form-label text-end"
-            >
-              Template:{' '}
-              <span
-                className={addNewTemplate.template ? TextWhite : TextDanger}
-              >
-                *
-              </span>
-            </CFormLabel>
-            {showEditor ? (
-              <CCol sm={10} data-testid="ckEditor-component">
-                <CKEditor<{
-                  onChange: CKEditorEventHandler<'change'>
-                }>
-                  initData={addNewTemplate?.template}
-                  config={ckeditorConfig}
-                  debug={true}
-                  onChange={({ editor }) => {
-                    handleDescription(editor.getData().trim())
-                  }}
-                />
-              </CCol>
-            ) : (
-              ''
-            )}
-          </CRow>
-          <CRow>
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-2 col-form-label text-end"
-            ></CFormLabel>
-            <CCol sm={4}>
-              <CButton
-                data-testid="btn-save"
-                className="btn-ovh me-1"
-                color="success"
-                disabled={!isButtonEnabled}
-                onClick={handleAddNewHandbookPage}
-              >
-                Add
-              </CButton>
-              <CButton
-                data-testid="btn-clear"
-                color="warning "
-                className="btn-ovh me-1"
-                onClick={handleClearInputs}
-              >
-                Clear
-              </CButton>
-            </CCol>
-          </CRow>
-        </CForm>
-      </OCard>
+            </CForm>
+          </OCard>
+        </>
+      )}
+      {toggle === 'mailTemplateType' && (
+        <MailTemplateTypeList
+          backButtonHandler={() => setToggle('')}
+          headerTitle={''}
+          confirmButtonText={''}
+        />
+      )}
     </>
   )
 }
