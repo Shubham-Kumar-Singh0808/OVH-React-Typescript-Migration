@@ -4,7 +4,8 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ScheduledInterviews from './ScheduledInterviews'
 import { render, screen, waitFor } from '../../../test/testUtils'
-import { mockTechnologies } from '../../../test/data/employeeTechnologiesData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { mockAllTechnology } from '../../../test/data/certificateTypeData'
 
 describe('Scheduled Interviews Component Testing', () => {
   test('should render scheduled interviews component with out crashing', () => {
@@ -23,8 +24,9 @@ describe('Scheduled Interviews Component Testing', () => {
               role: 'admin',
             },
           },
-          employeeCertificates: {
-            getAllTechnologies: mockTechnologies,
+          getAllTechnology: {
+            isLoading: ApiLoadingState.succeeded,
+            technologies: mockAllTechnology,
           },
         },
       })
