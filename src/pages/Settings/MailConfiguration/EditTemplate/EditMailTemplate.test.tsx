@@ -1,8 +1,9 @@
 import React, { SetStateAction } from 'react'
 import '@testing-library/jest-dom'
 import EditMailTemplate from './EditMailTemplate'
-import { render, screen } from '../../../../test/testUtils'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 import { EditEmployeeMailTemplate } from '../../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
+import { mockTemplateTypes } from '../../../../test/data/employeeMailConfigurationData'
 
 describe('Add Template Component Testing', () => {
   describe('without data', () => {
@@ -130,5 +131,49 @@ describe('Add Template Component Testing', () => {
 
     expect(htmlElement).toBeInTheDocument()
     expect(nonExistElement).not.toBeInTheDocument()
+  })
+  it('should fetch asset types dropdown data and email input field', () => {
+    render(
+      <EditMailTemplate
+        backButtonHandler={function (): void {
+          throw new Error('Function not implemented.')
+        }}
+        employeeTemplate={{
+          id: 0,
+          templateName: '',
+          template: '',
+          templateTypeId: 0,
+          templateType: '',
+          assetTypeId: '',
+          assetType: '',
+          email: '',
+        }}
+        editEmployeeTemplate={{
+          id: 0,
+          templateName: '',
+          template: '',
+          templateTypeId: 0,
+          templateType: '',
+          assetTypeId: '',
+          assetType: '',
+          email: '',
+        }}
+        setEditEmployeeTemplate={function (
+          value: SetStateAction<EditEmployeeMailTemplate>,
+        ): void {
+          throw new Error('Function not implemented.')
+        }}
+      />,
+    )
+    screen.debug()
+    mockTemplateTypes.forEach(async (type) => {
+      await waitFor(() => {
+        expect(screen.queryAllByText(type.name)).toBeDefined()
+      })
+      await waitFor(() => {
+        expect(screen.queryByText('Asset Type')).toBeDefined()
+        expect(screen.queryByText('Email')).toBeDefined()
+      })
+    })
   })
 })
