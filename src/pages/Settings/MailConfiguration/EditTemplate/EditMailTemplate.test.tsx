@@ -10,10 +10,7 @@ describe('Add Template Component Testing', () => {
     beforeEach(() => {
       render(
         <EditMailTemplate
-          backButtonHandler={function (): void {
-            // eslint-disable-next-line sonarjs/no-duplicate-string
-            throw new Error('Function not implemented.')
-          }}
+          backButtonHandler={jest.fn}
           employeeTemplate={{
             id: 0,
             templateName: '',
@@ -34,11 +31,7 @@ describe('Add Template Component Testing', () => {
             assetType: '',
             email: '',
           }}
-          setEditEmployeeTemplate={function (
-            value: SetStateAction<EditEmployeeMailTemplate>,
-          ): void {
-            throw new Error('Function not implemented.')
-          }}
+          setEditEmployeeTemplate={jest.fn}
         />,
       )
     })
@@ -59,9 +52,7 @@ describe('Add Template Component Testing', () => {
   it('should render Add button as enabled and Clear Button as disabled', () => {
     render(
       <EditMailTemplate
-        backButtonHandler={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        backButtonHandler={jest.fn}
         employeeTemplate={{
           id: 0,
           templateName: '',
@@ -82,11 +73,7 @@ describe('Add Template Component Testing', () => {
           assetType: '',
           email: '',
         }}
-        setEditEmployeeTemplate={function (
-          value: SetStateAction<EditEmployeeMailTemplate>,
-        ): void {
-          throw new Error('Function not implemented.')
-        }}
+        setEditEmployeeTemplate={jest.fn}
       />,
     )
     expect(screen.getByTestId('btn-update')).toBeEnabled()
@@ -94,9 +81,7 @@ describe('Add Template Component Testing', () => {
   test('renders the <CKEditor> component ', () => {
     render(
       <EditMailTemplate
-        backButtonHandler={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        backButtonHandler={jest.fn}
         employeeTemplate={{
           id: 0,
           templateName: '',
@@ -117,11 +102,7 @@ describe('Add Template Component Testing', () => {
           assetType: '',
           email: '',
         }}
-        setEditEmployeeTemplate={function (
-          value: SetStateAction<EditEmployeeMailTemplate>,
-        ): void {
-          throw new Error('Function not implemented.')
-        }}
+        setEditEmployeeTemplate={jest.fn}
       />,
     )
     const htmlElement = document.querySelector(
@@ -135,9 +116,7 @@ describe('Add Template Component Testing', () => {
   it('should fetch asset types dropdown data and email input field', () => {
     render(
       <EditMailTemplate
-        backButtonHandler={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        backButtonHandler={jest.fn}
         employeeTemplate={{
           id: 0,
           templateName: '',
@@ -158,11 +137,7 @@ describe('Add Template Component Testing', () => {
           assetType: '',
           email: '',
         }}
-        setEditEmployeeTemplate={function (
-          value: SetStateAction<EditEmployeeMailTemplate>,
-        ): void {
-          throw new Error('Function not implemented.')
-        }}
+        setEditEmployeeTemplate={jest.fn}
       />,
     )
     screen.debug()
