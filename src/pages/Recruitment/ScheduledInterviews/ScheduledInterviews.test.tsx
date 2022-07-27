@@ -3,9 +3,8 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ScheduledInterviews from './ScheduledInterviews'
-import { render, screen } from '../../../test/testUtils'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { mockAllTechnology } from '../../../test/data/certificateTypeData'
+import { render, screen, waitFor } from '../../../test/testUtils'
+import { mockTechnologies } from '../../../test/data/employeeTechnologiesData'
 
 describe('Scheduled Interviews Component Testing', () => {
   test('should render scheduled interviews component with out crashing', () => {
@@ -24,9 +23,8 @@ describe('Scheduled Interviews Component Testing', () => {
               role: 'admin',
             },
           },
-          getAllTechnology: {
-            isLoading: ApiLoadingState.succeeded,
-            technologies: mockAllTechnology,
+          employeeCertificates: {
+            getAllTechnologies: mockTechnologies,
           },
         },
       })
@@ -38,7 +36,7 @@ describe('Scheduled Interviews Component Testing', () => {
 
       const technologySelector = screen.getByTestId('selectTechnology')
       userEvent.selectOptions(technologySelector, ['Java'])
-      expect(technologySelector).toHaveValue('Java')
+      expect(technologySelector).toHaveValue()
     })
   })
 })

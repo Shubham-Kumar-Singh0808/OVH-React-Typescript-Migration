@@ -23,7 +23,7 @@ const ScheduledInterviews = (): JSX.Element => {
   )
 
   useEffect(() => {
-    dispatch(reduxServices.technology.getAllTechnology())
+    dispatch(reduxServices.employeeCertifications.getTechnologies())
   }, [dispatch])
 
   const selectedView = useTypedSelector(
@@ -34,8 +34,8 @@ const ScheduledInterviews = (): JSX.Element => {
     reduxServices.authentication.selectors.selectEmployeeRole,
   )
 
-  const technologyList = useTypedSelector(
-    reduxServices.technology.selectors.technologies,
+  const getTechnologies = useTypedSelector(
+    reduxServices.employeeCertifications.selectors.technologies,
   )
 
   const handleSelectView = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,15 +47,15 @@ const ScheduledInterviews = (): JSX.Element => {
   }
 
   const sortedTechnologies = useMemo(() => {
-    if (technologyList) {
-      return technologyList
+    if (getTechnologies) {
+      return getTechnologies
         .slice()
         .sort((technology1, technology2) =>
           technology1.name.localeCompare(technology2.name),
         )
     }
-    return technologyList
-  }, [technologyList])
+    return getTechnologies
+  }, [getTechnologies])
 
   return (
     <>
