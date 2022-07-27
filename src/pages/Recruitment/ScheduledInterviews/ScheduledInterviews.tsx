@@ -22,9 +22,9 @@ const ScheduledInterviews = (): JSX.Element => {
     filterByInterviewStatus,
   )
 
-  const technologyList = useTypedSelector(
-    reduxServices.technology.selectors.technologies,
-  )
+  useEffect(() => {
+    dispatch(reduxServices.technology.getAllTechnology())
+  }, [dispatch])
 
   const selectedView = useTypedSelector(
     reduxServices.scheduledInterviews.selectors.selectedView,
@@ -34,9 +34,9 @@ const ScheduledInterviews = (): JSX.Element => {
     reduxServices.authentication.selectors.selectEmployeeRole,
   )
 
-  useEffect(() => {
-    dispatch(reduxServices.technology.getAllTechnology())
-  }, [dispatch])
+  const technologyList = useTypedSelector(
+    reduxServices.technology.selectors.technologies,
+  )
 
   const handleSelectView = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
