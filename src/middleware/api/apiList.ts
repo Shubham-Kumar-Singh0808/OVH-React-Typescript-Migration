@@ -38,6 +38,7 @@ import {
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
   ScheduledInterviewsApi,
+  AddNewMailTemplateTypeApi,
   MyAttendanceApi,
 } from '../../types/apiTypes'
 
@@ -325,6 +326,13 @@ export const scheduledInterviewsApiConfig: ScheduledInterviewsApi = {
     apiPrefix + '/jobapplicant/searchScheduledCandidates',
   downloadScheduleCandidates:
     apiPrefix + '/jobapplicant/downloadScheduleCandidates',
+}
+
+export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
+  getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+  addNewMailTemplateType: apiPrefix + '/mailTemplates/addMailTemplateType',
+  updateMailTemplateType: apiPrefix + '/mailTemplates/updateMailTemplateType',
+  deleteMailTemplateType: apiPrefix + '/mailTemplates/deleteMailTemplateType',
 }
 
 export const myAttendanceApiConfig: MyAttendanceApi = {

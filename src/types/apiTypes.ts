@@ -277,6 +277,14 @@ export interface ScheduledInterviewsApi extends ApiBase {
   searchScheduledCandidates: string
   downloadScheduleCandidates: string
 }
+
+export interface AddNewMailTemplateTypeApi extends ApiBase {
+  getMailTemplateTypes: string
+  addNewMailTemplateType: string
+  deleteMailTemplateType: string
+  updateMailTemplateType: string
+}
+
 export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
 }
