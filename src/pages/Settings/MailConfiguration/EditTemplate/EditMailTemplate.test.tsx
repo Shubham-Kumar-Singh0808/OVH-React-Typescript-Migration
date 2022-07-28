@@ -1,10 +1,17 @@
 import React, { SetStateAction } from 'react'
 import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
 import EditMailTemplate from './EditMailTemplate'
-import { render, screen, waitFor } from '../../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import { EditEmployeeMailTemplate } from '../../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
-import { mockTemplateTypes } from '../../../../test/data/employeeMailConfigurationData'
+import {
+  mockEmailTemplate,
+  mockTemplateTypes,
+} from '../../../../test/data/employeeMailConfigurationData'
+import stateStore from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
+const editBtnId = 'btn-update'
 describe('Add Template Component Testing', () => {
   describe('without data', () => {
     beforeEach(() => {
@@ -49,7 +56,7 @@ describe('Add Template Component Testing', () => {
     expect(templateDescription).toBeTruthy()
   })
 
-  it('should render Add button as enabled and Clear Button as disabled', () => {
+  it('should render update button is enabled', () => {
     render(
       <EditMailTemplate
         backButtonHandler={jest.fn}
@@ -151,4 +158,112 @@ describe('Add Template Component Testing', () => {
       })
     })
   })
+})
+
+test('should be able to type CK editor and update Mail template', async () => {
+  render(
+    <EditMailTemplate
+      backButtonHandler={jest.fn}
+      employeeTemplate={{
+        id: 0,
+        templateName: '',
+        template: '',
+        templateTypeId: 0,
+        templateType: '',
+        assetTypeId: '',
+        assetType: '',
+        email: '',
+      }}
+      editEmployeeTemplate={{
+        id: 0,
+        templateName: '',
+        template: '',
+        templateTypeId: 0,
+        templateType: '',
+        assetTypeId: '',
+        assetType: '',
+        email: '',
+      }}
+      setEditEmployeeTemplate={jest.fn}
+    />,
+    {
+      preloadedState: {
+        employeeMailConfiguration: {
+          employeeGetEmailTemplate: mockEmailTemplate,
+        },
+      },
+    },
+  )
+  await waitFor(() => {
+    const updateBtn = screen.getByTestId(editBtnId)
+    fireEvent.click(updateBtn)
+    expect(screen.getByTestId('form-select-type')).toHaveValue('')
+  })
+})
+test('should render template types dropdown without crashing..', async () => {
+  render(
+    <EditMailTemplate
+      backButtonHandler={jest.fn}
+      employeeTemplate={{
+        id: 0,
+        templateName: '',
+        template: '',
+        templateTypeId: 0,
+        templateType: '',
+        assetTypeId: '',
+        assetType: '',
+        email: '',
+      }}
+      editEmployeeTemplate={{
+        id: 0,
+        templateName: '',
+        template: '',
+        templateTypeId: 0,
+        templateType: '',
+        assetTypeId: '',
+        assetType: '',
+        email: '',
+      }}
+      setEditEmployeeTemplate={jest.fn}
+    />,
+    {
+      preloadedState: {
+        employeeMailConfiguration: {
+          employeeGetMailTemplateTypes: mockTemplateTypes,
+        },
+      },
+    },
+  )
+  await waitFor(() => {
+    expect(screen.getByTestId('title-input')).toBeInTheDocument()
+  })
+  // test('should fetch Asset types data and put it in the store', async () => {
+  //   render(
+  //     <EditMailTemplate
+  //       backButtonHandler={jest.fn}
+  //       employeeTemplate={{
+  //         id: 0,
+  //         templateName: '',
+  //         template: '',
+  //         templateTypeId: 0,
+  //         templateType: '',
+  //         assetTypeId: '',
+  //         assetType: '',
+  //         email: '',
+  //       }}
+  //       editEmployeeTemplate={{
+  //         id: 0,
+  //         templateName: '',
+  //         template: '',
+  //         templateTypeId: 0,
+  //         templateType: '',
+  //         assetTypeId: '',
+  //         assetType: '',
+  //         email: '',
+  //       }}
+  //       setEditEmployeeTemplate={jest.fn}
+  //     />,
+  //   )
+  //   await stateStore.dispatch(reduxServices.addNewMailTemplate.getAssetTypes())
+  // })
 })
