@@ -12,6 +12,7 @@ const ReportingManager = ({
   reportManagersList,
   onSelectReportManager,
   shouldReset,
+  isRequired,
   reportValue,
 }: ReportManagerProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
@@ -33,6 +34,8 @@ const ReportingManager = ({
     const reportManager = {
       id: managerName?.id,
       fullName: managerName?.fullName,
+      lastName: managerName?.lastName,
+      firstName: managerName?.firstName,
     } as GetReportManager
     onSelectReportManager(reportManager)
   }
@@ -48,9 +51,11 @@ const ReportingManager = ({
           )}
         >
           Reporting Manager:
-          <span className={showIsRequired(autoCompleteTarget as string)}>
-            *
-          </span>
+          {isRequired && (
+            <span className={showIsRequired(autoCompleteTarget as string)}>
+              *
+            </span>
+          )}
         </CFormLabel>
         <CCol sm={3}>
           <Autocomplete

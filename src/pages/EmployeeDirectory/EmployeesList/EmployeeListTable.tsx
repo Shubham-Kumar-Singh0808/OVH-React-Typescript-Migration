@@ -18,21 +18,20 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
-const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
+const EmployeeListTable = ({
+  paginationRange,
+  pageSize,
+  setPageSize,
+  currentPage,
+  setCurrentPage,
+  updateaccess,
+}: EmployeeListTableProps): JSX.Element => {
   const employees = useTypedSelector(
     reduxServices.employeeList.selectors.employees,
   )
   const listSize = useTypedSelector(
     reduxServices.employeeList.selectors.listSize,
   )
-
-  const {
-    paginationRange,
-    pageSize,
-    setPageSize,
-    currentPage,
-    setCurrentPage,
-  } = props
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -60,7 +59,13 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                 <CTableHeaderCell scope="col">Blood Group</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Date of Joining</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                {updateaccess ? (
+                  <CTableHeaderCell scope="col" data-testid="action-header">
+                    Actions
+                  </CTableHeaderCell>
+                ) : (
+                  <div data-testid="no-action-header"></div>
+                )}
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -91,27 +96,31 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
                     <CTableDataCell>{employee.bloodgroup}</CTableDataCell>
                     <CTableDataCell>{employee.dateOfJoining}</CTableDataCell>
                     <CTableDataCell>{employee.country}</CTableDataCell>
-                    <CTableDataCell>
-                      <Link to={`/employeeProfile/${employee.id}`}>
-                        <CButton
-                          color="info"
-                          size="sm"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-eye text-white"></i>
-                        </CButton>
-                      </Link>
-                      &nbsp;
-                      <Link to={`/editEmployee/${employee.id}`}>
-                        <CButton
-                          color="info"
-                          size="sm"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-pencil-square-o text-white"></i>
-                        </CButton>
-                      </Link>
-                    </CTableDataCell>
+                    {updateaccess ? (
+                      <CTableDataCell data-testid="action-cell">
+                        <Link to={`/employeeProfile/${employee.id}`}>
+                          <CButton
+                            color="info"
+                            size="sm"
+                            className="btn-ovh-employee-list"
+                          >
+                            <i className="text-white fa fa-eye"></i>
+                          </CButton>
+                        </Link>
+                        &nbsp;
+                        <Link to={`/editEmployee/${employee.id}`}>
+                          <CButton
+                            color="info"
+                            size="sm"
+                            className="btn-ovh-employee-list"
+                          >
+                            <i className="text-white fa fa-pencil-square-o"></i>
+                          </CButton>
+                        </Link>
+                      </CTableDataCell>
+                    ) : (
+                      <div data-testid="no-action-cell"></div>
+                    )}
                   </CTableRow>
                 )
               })}
@@ -135,7 +144,7 @@ const EmployeeListTable = (props: EmployeeListTableProps): JSX.Element => {
             {listSize > 20 && (
               <CCol
                 xs={5}
-                className="d-grid gap-1 d-md-flex justify-content-md-end"
+                className="gap-1 d-grid d-md-flex justify-content-md-end"
               >
                 <OPagination
                   currentPage={currentPage}

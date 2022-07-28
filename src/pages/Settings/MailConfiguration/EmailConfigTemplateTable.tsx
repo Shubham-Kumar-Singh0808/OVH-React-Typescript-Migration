@@ -22,7 +22,7 @@ import OToast from '../../../components/ReusableComponent/OToast'
 const EmployeeEmailTemplateTable = ({
   employeeTemplate,
   editTemplateButtonHandler,
-}: EmployeeEmailTemplateTableProps) => {
+}: EmployeeEmailTemplateTableProps): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)

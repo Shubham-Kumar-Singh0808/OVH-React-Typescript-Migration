@@ -6,6 +6,7 @@ import { employeeShiftsHandlers } from './employeeShiftsHandlers'
 import { generalInformationHandlers } from './generalInformationHandlers'
 import { hiveActivityReportHandlers } from './hiveActivityReportHandlers'
 import { loginHandlers } from './loginHandlers'
+import { scheduledInterviewsHandlers } from './scheduledInterviewsHandlers'
 import { skillListHandlers } from './skillListHandlers'
 import { userAccessToFeaturesHandlers } from './userAccessToFeaturesHandlers'
 import { userRolesAndPermissionsHandlers } from './userRolesAndPermissionsHandlers'
@@ -22,5 +23,6 @@ export const handlers = [
   ...attendanceReportHandlers,
   ...userAccessToFeaturesHandlers,
   ...hiveActivityReportHandlers,
+  ...scheduledInterviewsHandlers,
   // add your handler here
 ]
