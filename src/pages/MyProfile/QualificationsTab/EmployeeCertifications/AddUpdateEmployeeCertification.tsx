@@ -26,7 +26,8 @@ import {
   reformatDate,
   dateFormatPerLocale,
 } from '../../../../utils/dateFormatUtils'
-import { TextWhite, TextDanger } from '../../../../constant/ClassName'
+import { showIsRequired } from '../../../../utils/helper'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 
 function AddUpdateEmployeeCertification({
   isEditCertificationDetails = false,
@@ -64,10 +65,7 @@ function AddUpdateEmployeeCertification({
   )
 
   const dispatch = useAppDispatch()
-  const deviceLocale: string =
-    navigator.languages && navigator.languages.length
-      ? navigator.languages[0]
-      : navigator.language
+  const deviceLocale: string = navigator.languages[0]
 
   useEffect(() => {
     const localeDateFormat = dateFormatPerLocale.filter(
@@ -108,12 +106,10 @@ function AddUpdateEmployeeCertification({
   let newCompletedDate = new Date()
   let newExpiryDate = new Date()
   if (addCertification.completedDate) {
-    const currentCompletedDate = addCertification.completedDate as string
-    newCompletedDate = reformatDate(currentCompletedDate)
+    newCompletedDate = reformatDate(addCertification.completedDate as string)
   }
   if (addCertification.expiryDate) {
-    const currentExpiryDate = addCertification.expiryDate as string
-    newExpiryDate = reformatDate(currentExpiryDate)
+    newExpiryDate = reformatDate(addCertification.expiryDate as string)
   }
 
   const successToastMessage = (
@@ -371,9 +367,7 @@ function AddUpdateEmployeeCertification({
               }}
             >
               Technology:
-              <span
-                className={addCertification.technology ? TextWhite : TextDanger}
-              >
+              <span className={showIsRequired(addCertification.technology)}>
                 *
               </span>
             </CFormLabel>
@@ -402,9 +396,7 @@ function AddUpdateEmployeeCertification({
             >
               CertificateType:{' '}
               <span
-                className={
-                  addCertification.certificateType ? TextWhite : TextDanger
-                }
+                className={showIsRequired(addCertification.certificateType)}
               >
                 *
               </span>
@@ -439,9 +431,7 @@ function AddUpdateEmployeeCertification({
               }}
             >
               Certification:
-              <span className={addCertification.name ? TextWhite : TextDanger}>
-                *
-              </span>
+              <span className={showIsRequired(addCertification.name)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -462,9 +452,7 @@ function AddUpdateEmployeeCertification({
               }}
             >
               Registration No:
-              <span className={addCertification.code ? TextWhite : TextDanger}>
-                *
-              </span>
+              <span className={showIsRequired(addCertification.code)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
