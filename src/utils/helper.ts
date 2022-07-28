@@ -2,7 +2,7 @@ import moment from 'moment'
 import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 export const listComposer = (list: [], id: string, name: string): GetList[] =>
-  list?.map(
+  list.map(
     (val) =>
       ({
         id: val[id],
