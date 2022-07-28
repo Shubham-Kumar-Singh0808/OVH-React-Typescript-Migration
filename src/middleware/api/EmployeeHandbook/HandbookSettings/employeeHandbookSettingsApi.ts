@@ -74,8 +74,13 @@ const addNewHandbook = async (
     url: employeeHandbookSettingsApiConfig.addNewHandbook,
     method: AllowedHttpMethods.post,
     params: { list: prepareObject.list },
-    paramsSerializer: (params: any) =>
-      qs.stringify(params, { arrayFormat: 'repeat' }),
+    paramsSerializer: (
+      params:
+        | {
+            [key: string]: string | number | boolean | number[] | undefined
+          }
+        | undefined,
+    ) => qs.stringify(params, { arrayFormat: 'repeat' }),
     data: {
       description: prepareObject.description,
       displayOrder: prepareObject.displayOrder,
