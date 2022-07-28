@@ -272,6 +272,11 @@ export interface AddNewTemplateApi extends ApiBase {
   getAssetTypes: string
   addNewMailTemplate: string
 }
+export interface ScheduledInterviewsApi extends ApiBase {
+  searchScheduledCandidatesForEmployee: string
+  searchScheduledCandidates: string
+  downloadScheduleCandidates: string
+}
 
 export interface AddNewMailTemplateTypeApi extends ApiBase {
   getMailTemplateTypes: string
