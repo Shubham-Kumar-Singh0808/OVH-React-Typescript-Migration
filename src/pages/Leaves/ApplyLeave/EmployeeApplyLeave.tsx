@@ -34,6 +34,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
 
   const [fromDate, setFromDate] = useState<Date | string>()
   const [toDate, setToDate] = useState<Date | string>()
+
   const onDateChangeDateOfFromHandler = (date: Date) => {
     const formatDate = moment(date).format(commonFormatDate)
     const name = 'fromDate'

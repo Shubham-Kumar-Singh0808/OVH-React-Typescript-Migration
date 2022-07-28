@@ -1,8 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import EmployeeApplyLeave from '../EmployeeApplyLeave'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import EmployeeApplyLeave from './EmployeeApplyLeave'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import {
   mockLeaveApply,
   mockLeaveType,
@@ -73,11 +73,6 @@ describe('Leave Apply Component Testing', () => {
   })
 })
 
-const deviceLocale: string =
-  navigator.languages && navigator.languages.length
-    ? navigator.languages[0]
-    : navigator.language
-
 describe('LeaveApply component with data', () => {
   beforeEach(() => {
     render(<EmployeeApplyLeave />, {
@@ -87,17 +82,6 @@ describe('LeaveApply component with data', () => {
         },
       },
     })
-  })
-  test('should be able to select date"', () => {
-    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
-    userEvent.type(
-      dateInput[0],
-      new Date('12/20/2021').toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }),
-    )
   })
   it('should fetch leave types dropdown data ', () => {
     render(<EmployeeApplyLeave />)
@@ -146,5 +130,24 @@ describe('LeaveType component with data', () => {
     const LeaveTypeSelectListSelector = screen.getByTestId('form-select')
     userEvent.selectOptions(LeaveTypeSelectListSelector, ['LOP'])
     expect(LeaveTypeSelectListSelector).toHaveValue('LOP')
+  })
+  test('should render data upon apply button click', async () => {
+    const viewButtonElement = screen.getByRole('button', { name: 'Apply' })
+    const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
+    fireEvent.click(fromDatePickerElement[0])
+    await waitFor(() =>
+      fireEvent.change(fromDatePickerElement[0], {
+        target: { value: '29 Oct, 2015' },
+      }),
+    )
+    fireEvent.click(fromDatePickerElement[1])
+    await waitFor(() =>
+      fireEvent.change(fromDatePickerElement[1], {
+        target: { value: '10 Feb, 2022' },
+      }),
+    )
+    userEvent.click(viewButtonElement)
+    expect(fromDatePickerElement[0]).toHaveValue('10/29/2015')
+    expect(fromDatePickerElement[1]).toHaveValue('10 Feb, 2022')
   })
 })
