@@ -87,7 +87,11 @@ const EditMailTemplate = ({
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4} onClick={backButtonHandler}>
-            <CButton color="info" className="btn-ovh me-1">
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="back-btn"
+            >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
           </CCol>
