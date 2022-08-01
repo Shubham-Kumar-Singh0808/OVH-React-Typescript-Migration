@@ -1,7 +1,11 @@
 import moment from 'moment'
 import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
-export const listComposer = (list: [], id: string, name: string): GetList[] => {
+export const listComposer = (
+  list: never[],
+  id: string,
+  name: string,
+): GetList[] => {
   if (list.length === 0) return []
 
   return list.map(
