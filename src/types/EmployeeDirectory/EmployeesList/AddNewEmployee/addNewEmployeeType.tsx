@@ -244,7 +244,7 @@ export interface EmployeeGenderProps extends DynamicFormLabelProps {
 //AddNewEmployee export as main object
 export type AddNewEmployeeState = {
   employeeDepartments?: EmployeeDepartment[]
-  technologies: GetAllTechnology[]
+  technologies?: GetAllTechnology[]
   countries?: GetCountries[]
   hrData?: GetHrData[]
   reportingManagers?: GetAllReportingManagers[]
