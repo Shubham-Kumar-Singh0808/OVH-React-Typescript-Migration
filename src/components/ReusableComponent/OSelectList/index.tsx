@@ -44,7 +44,7 @@ const OSelect = ({
             onChange={onChangeHandler}
           >
             <option value={''}>{label}</option>
-            {list.map((item, index) => {
+            {list?.map((item, index) => {
               const { name: optionName } = item
               return (
                 <option key={index} value={optionName}>
