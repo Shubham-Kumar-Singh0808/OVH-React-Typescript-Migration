@@ -52,7 +52,7 @@ const getAllTechnologySlice = createSlice({
 const isLoading = (state: RootState): LoadingState =>
   state.getAllTechnology.isLoading
 const technologies = (state: RootState): GetAllTechnology[] =>
-  state.getAllTechnology.technologies as GetAllTechnology[]
+  state.getAllTechnology.technologies
 
 export const getAllTechnologyThunk = {
   getAllTechnology,

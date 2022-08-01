@@ -324,11 +324,11 @@ const AddNewEmployee = (): JSX.Element => {
     'departmentId',
     'departmentName',
   )
-  // const composedTechnologyList = listComposer(
-  //   technologyList as [],
-  //   'id',
-  //   'name',
-  // )
+  const composedTechnologyList = listComposer(
+    technologyList as [],
+    'id',
+    'name',
+  )
   const composedUserRoles = listComposer(userRoles as [], 'roleId', 'name')
   const genderList: GetList[] = [
     { id: 1, name: 'Female' },
@@ -481,7 +481,7 @@ const AddNewEmployee = (): JSX.Element => {
               <OSelectList
                 isRequired={true}
                 dynamicFormLabelProps={dynamicFormLabelProps}
-                list={technologyList}
+                list={composedTechnologyList}
                 setValue={onHandleTechnology}
                 value={addEmployee.technology}
                 name="Technology"
