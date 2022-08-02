@@ -6,9 +6,9 @@ export const listComposer = (
   id: string,
   name: string,
 ): GetList[] => {
-  if (list.length === 0) return []
+  if (list.length === 0 || !Array.isArray(list)) return []
 
-  return list?.map(
+  return list.map(
     (val) =>
       ({
         id: val[id],
