@@ -145,6 +145,7 @@ describe('email Template List Table Testing', () => {
       expect(screen.getByRole('textbox')).toHaveValue('')
     })
   })
+  jest.retryTimes(3)
   test('should fetch Email template types data and put it in the store', async () => {
     render(<EmailConfigTemplate />)
     await stateStore.dispatch(
