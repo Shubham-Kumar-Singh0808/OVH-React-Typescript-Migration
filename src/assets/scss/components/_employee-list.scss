@@ -1,0 +1,26 @@
+.employee-thumb {
+  border-radius: 50%;
+  width: 30px;
+  aspect-ratio: auto 30 / 30;
+  height: 30px;
+}
+
+.employee-name {
+  color: $blue-employeeList;
+  text-decoration: none;
+
+  &:hover {
+    color: $primary-75;
+    text-decoration: underline;
+  }
+}
+
+.btn-ovh-employee-list {
+  padding: 4px 8px !important;
+  cursor: pointer;
+  border-radius: 2px;
+  font-size: 12px;
+  vertical-align: middle;
+  -webkit-transition: all 0.15s;
+  transition: all 0.15s;
+}
