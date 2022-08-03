@@ -11,8 +11,27 @@ describe('Employee Handbook Settings Slice Test', () => {
       isLoading: ApiLoadingState.idle,
       employeeHandbooks: [],
       employeeCountries: [],
-      totalHandbookList: [],
       error: null,
+      totalHandbookList: [],
+      updateHandbookPage: {
+        country: undefined,
+        departmentId: undefined,
+        departmentName: undefined,
+        description: '',
+        displayOrder: 0,
+        empCountry: '',
+        handCountry: [],
+        id: 0,
+        pageName: '',
+        sectionId: undefined,
+        sectionName: undefined,
+        title: '',
+        type: '',
+        list: [],
+      },
+      selectedHandbook: [],
+      selectedCountries: [],
+      reRenderHandbookList: true,
     })
   })
 })

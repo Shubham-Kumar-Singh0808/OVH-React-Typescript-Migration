@@ -266,6 +266,8 @@ export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   addNewHandbook: apiPrefix + '/handbookItem/add',
   getEmployeeCountries: apiPrefix + '/jobapplicant/getEmpCountries',
   getTotalHandbookList: apiPrefix + '/handbookItem/getTotalList',
+  getSelectedCountries: apiPrefix + '/handbookItem/getSelectedCountries',
+  updateEmployeeHandbook: apiPrefix + '/handbookItem/updateHandbookItem',
 }
 
 export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {

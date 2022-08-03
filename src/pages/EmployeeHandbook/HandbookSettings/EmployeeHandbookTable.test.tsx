@@ -17,6 +17,7 @@ describe('Employee Handbook Settings', () => {
         currentPage={1}
         pageSize={20}
         paginationRange={[1, 2, 3]}
+        editHandbookButtonHandler={jest.fn()}
       />,
       {
         preloadedState: {
@@ -40,7 +41,7 @@ describe('Employee Handbook Settings', () => {
   })
   test('should render correct number of page records', () => {
     // 21 including the heading
-    expect(screen.queryAllByRole('row')).toHaveLength(44)
+    expect(screen.queryAllByRole('row')).toHaveLength(45)
   })
   test('should render delete button', () => {
     expect(screen.getByTestId('handbook-edit-btn0')).toHaveClass(
@@ -61,14 +62,13 @@ describe('Employee Handbook Settings', () => {
       expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
     })
   })
-  jest.retryTimes(3)
   it('should close the modal on clicking No button from the popup', async () => {
     const deleteButtonElement = screen.getByTestId('handbook-delete-btn4')
     userEvent.click(deleteButtonElement)
     const yesButtonElement = screen.getByRole('button', { name: 'Yes' })
     userEvent.click(yesButtonElement)
     await waitFor(() => {
-      expect(screen.getAllByRole('row')).toHaveLength(44)
+      expect(screen.getAllByRole('row')).toHaveLength(45)
     })
   })
 })
@@ -80,6 +80,7 @@ test('should render no data to display if table is empty', async () => {
       currentPage={1}
       pageSize={20}
       paginationRange={[1, 2, 3]}
+      editHandbookButtonHandler={jest.fn()}
     />,
   )
   await waitFor(() => {

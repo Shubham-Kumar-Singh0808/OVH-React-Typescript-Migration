@@ -11,6 +11,7 @@ import {
   EmployeeHandbookListApiProps,
   EmployeeHandbookSettingSliceState,
   TotalHandbookList,
+  UpdateHandbookPage,
 } from '../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 const getEmployeeHandbooks = createAsyncThunk(
@@ -101,6 +102,48 @@ const addNewHandbook = createAsyncThunk<
   },
 )
 
+const getEmployeeHandbook = createAsyncThunk<
+  EmployeeCountry[] | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeHandbookSettings/getEmployeeHandbook',
+  async (handbookId: number, thunkApi) => {
+    try {
+      return await employeeHandbookSettingsApi.getSelectedCountries(handbookId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateEmployeeHandbook = createAsyncThunk<
+  number | undefined,
+  UpdateHandbookPage,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeHandbookSettings/updateEmployeeHandbook',
+  async (updateHandbook: UpdateHandbookPage, thunkApi) => {
+    try {
+      return await employeeHandbookSettingsApi.updateEmployeeHandbook(
+        updateHandbook,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialEmployeeHandbookSettingState: EmployeeHandbookSettingSliceState = {
   listSize: 0,
   isLoading: ApiLoadingState.idle,
@@ -108,24 +151,61 @@ const initialEmployeeHandbookSettingState: EmployeeHandbookSettingSliceState = {
   employeeCountries: [],
   error: null,
   totalHandbookList: [],
+  updateHandbookPage: {
+    country: undefined,
+    departmentId: undefined,
+    departmentName: undefined,
+    description: '',
+    displayOrder: 0,
+    empCountry: '',
+    handCountry: [],
+    id: 0,
+    pageName: '',
+    sectionId: undefined,
+    sectionName: undefined,
+    title: '',
+    type: '',
+    list: [],
+  },
+  selectedHandbook: [],
+  selectedCountries: [],
+  reRenderHandbookList: true,
 }
 
 const employeeHandbookSettingSlice = createSlice({
   name: 'employeeHandbookSettings',
   initialState: initialEmployeeHandbookSettingState,
-  reducers: {},
+  reducers: {
+    setReRenderHandbooks: (state, action) => {
+      return { ...state, reRenderHandbookList: action.payload }
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getEmployeeCountries.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.employeeCountries = action.payload as EmployeeCountry[]
-      })
       .addCase(getTotalHandbookList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.totalHandbookList = action.payload as TotalHandbookList[]
       })
+      .addCase(getEmployeeHandbooks.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeeHandbooks = action.payload.list as EmployeeHandbook[]
+        state.listSize = action.payload.size
+      })
+      .addCase(getEmployeeHandbook.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.selectedCountries = action.payload as EmployeeCountry[]
+      })
+      .addMatcher(isAnyOf(getEmployeeCountries.fulfilled), (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeeCountries = action.payload as EmployeeCountry[]
+        console.log(action)
+      })
       .addMatcher(
-        isAnyOf(deleteEmployeeHandbook.fulfilled, addNewHandbook.fulfilled),
+        isAnyOf(
+          deleteEmployeeHandbook.fulfilled,
+          addNewHandbook.fulfilled,
+          updateEmployeeHandbook.fulfilled,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },
@@ -133,20 +213,16 @@ const employeeHandbookSettingSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getEmployeeHandbooks.pending,
-          getTotalHandbookList.rejected,
+          getTotalHandbookList.pending,
           deleteEmployeeHandbook.pending,
           getEmployeeCountries.pending,
           addNewHandbook.pending,
+          getEmployeeHandbook.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
-      .addMatcher(isAnyOf(getEmployeeHandbooks.fulfilled), (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.employeeHandbooks = action.payload.list as EmployeeHandbook[]
-        state.listSize = action.payload.size
-      })
       .addMatcher(
         isAnyOf(
           getEmployeeHandbooks.rejected,
@@ -154,6 +230,7 @@ const employeeHandbookSettingSlice = createSlice({
           getEmployeeCountries.rejected,
           deleteEmployeeHandbook.rejected,
           addNewHandbook.rejected,
+          getEmployeeHandbook.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -175,8 +252,17 @@ const listSize = (state: RootState): number =>
 const employeeCountries = (state: RootState): EmployeeCountry[] =>
   state.employeeHandbookSettings.employeeCountries
 
+const selectedCountries = (state: RootState): EmployeeCountry[] =>
+  state.employeeHandbookSettings.selectedCountries
+
 const totalHandbookList = (state: RootState): TotalHandbookList[] =>
   state.employeeHandbookSettings.totalHandbookList
+
+const updateHandbookPage = (state: RootState): UpdateHandbookPage =>
+  state.employeeHandbookSettings.updateHandbookPage
+
+const reRenderHandbookList = (state: RootState): boolean =>
+  state.employeeHandbookSettings.reRenderHandbookList
 
 const employeeHandbookSettingsThunk = {
   getEmployeeHandbooks,
@@ -184,6 +270,8 @@ const employeeHandbookSettingsThunk = {
   deleteEmployeeHandbook,
   getEmployeeCountries,
   addNewHandbook,
+  getEmployeeHandbook,
+  updateEmployeeHandbook,
 }
 
 const employeeHandbookSettingSelectors = {
@@ -192,6 +280,9 @@ const employeeHandbookSettingSelectors = {
   totalHandbookList,
   listSize,
   employeeCountries,
+  updateHandbookPage,
+  selectedCountries,
+  reRenderHandbookList,
 }
 
 export const employeeHandbookSettingService = {

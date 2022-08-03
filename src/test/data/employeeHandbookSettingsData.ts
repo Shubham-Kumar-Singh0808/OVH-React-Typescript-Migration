@@ -1,31 +1,32 @@
-import {
-  EmployeeCountry,
-  MockEmployeeHandbook,
-  TotalHandbookList,
-} from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
+import { MockEmployeeHandbook } from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
+  {
+    id: 0,
+    displayOrder: 60,
+    title: 'testing',
+    description:
+      'ghndyhhhnnnnnn </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
+    pageName: 'testPage',
+    departmentName: '',
+    departmentId: 0,
+    type: 'HandBook',
+    country: '',
+    handCountry: [],
+    empCountry: 'INDIA',
+  },
   {
     id: 1,
     displayOrder: 61,
     title: 'testing',
     description:
       'ghndyhhhnnnnnn<span style="color: rgb(163, 21, 21);">&#34;type&#34;</span><span >: </span><span style="color: rgb(4, 81, 165);">&#34;HandBook&#34;</span>',
-    pageName: 'testedddeedasd',
+    pageName: 'testPage',
     departmentName: '',
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -39,20 +40,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-      {
-        id: 3,
-        name: 'USA',
-      },
-      {
-        id: 5,
-        name: 'PHILIPPINES',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -60,7 +48,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     displayOrder: 53,
     title: 'Employment Types and Compensation Policy',
     description:
-      '<p><b>Employment Categories </b></p>&#10;<p>Based on the conditions of association </b></p>',
+      ' description testing description testing description testing description testing description testing description testing description testing description testing',
     pageName: 'EmployeeCategoriesCodyu',
     departmentName: '',
     departmentId: 0,
@@ -74,6 +62,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 2,
         name: 'INDIA',
+      },
+      {
+        id: 3,
+        name: 'CANADA',
+      },
+      {
+        id: 4,
+        name: 'UK',
       },
       {
         id: 5,
@@ -139,16 +135,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {

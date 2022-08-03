@@ -1,6 +1,7 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type EmployeeHandbookTableProps = {
+  editHandbookButtonHandler: (id: number) => void
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
@@ -9,9 +10,11 @@ export type EmployeeHandbookTableProps = {
 }
 
 export type EmployeeHandbookPageProps = {
+  isEditHandbook?: boolean
   headerTitle: string
   confirmButtonText: string
   backButtonHandler: () => void
+  handbookId?: number
 }
 
 export type EmployeeCountry = {
@@ -26,6 +29,23 @@ export type AddNewHandbookPage = {
   title: string
   list: number[]
   type: string
+}
+
+export type UpdateHandbookPage = {
+  country?: string
+  departmentId?: number
+  departmentName?: string
+  description: string
+  displayOrder: number
+  empCountry?: string
+  handCountry?: EmployeeCountry[]
+  id: number
+  pageName: string
+  sectionId?: number
+  sectionName?: string
+  title: string
+  type?: string
+  list?: number[]
 }
 
 export type EmployeeHandbook = {
@@ -50,12 +70,12 @@ export type TotalHandbookList = {
   displayOrder: number
   empCountry: string
   handCountry: EmployeeCountry[]
-  country: null
-  departmentId: null
-  departmentName: null
+  country: string
+  departmentId: number
+  departmentName: string
   pageName: string
-  sectionId: null
-  sectionName: null
+  sectionId: number
+  sectionName: string
   title: string
   type: string
 }
@@ -90,8 +110,12 @@ export type EmployeeHandbookListResponse = {
 export type EmployeeHandbookSettingSliceState = {
   employeeHandbooks: EmployeeHandbook[]
   employeeCountries: EmployeeCountry[]
+  selectedCountries: EmployeeCountry[]
   totalHandbookList: TotalHandbookList[]
+  updateHandbookPage: UpdateHandbookPage
+  selectedHandbook: EmployeeHandbook[]
   listSize: number
   isLoading: LoadingState
   error: ValidationError
+  reRenderHandbookList: boolean
 }

@@ -172,6 +172,11 @@ const EmployeeHandbookTable = (
                         color="info"
                         className="btn-ovh me-1"
                         data-testid={`handbook-edit-btn${index}`}
+                        onClick={() => {
+                          props.editHandbookButtonHandler(
+                            employeeHandbook.id as number,
+                          )
+                        }}
                       >
                         <i
                           className="fa fa-pencil-square-o"

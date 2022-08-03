@@ -40,7 +40,14 @@ export const getAuthenticatedRequestConfig = ({
   params?: {
     [key: string]: string | number | boolean | undefined | number[]
   }
-  paramsSerializer?: any
+  paramsSerializer?: (
+    params:
+      | {
+          [key: string]: string | number | boolean | number[] | undefined
+        }
+      | undefined,
+  ) => string
+
   data?:
     | { [key: string]: string | number | unknown }
     | unknown

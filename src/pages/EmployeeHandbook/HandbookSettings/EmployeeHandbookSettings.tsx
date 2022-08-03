@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AddNewHandbook from './AddNewPage/AddNewHandbook'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
+import EditHandbook from './EditPage/EditHandbook'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -11,6 +12,7 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const EmployeeHandbookSettings = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
+  const [selectedHandbook, setSelectedHandbook] = useState(0)
 
   const dispatch = useAppDispatch()
 
@@ -19,6 +21,9 @@ const EmployeeHandbookSettings = (): JSX.Element => {
   )
   const isLoading = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.isLoading,
+  )
+  const reRenderHandbookList = useTypedSelector(
+    reduxServices.employeeHandbookSettings.selectors.reRenderHandbookList,
   )
 
   const {
@@ -30,13 +35,23 @@ const EmployeeHandbookSettings = (): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
-    dispatch(
-      reduxServices.employeeHandbookSettings.getEmployeeHandbooks({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
-      }),
-    )
+    if (reRenderHandbookList) {
+      dispatch(
+        reduxServices.employeeHandbookSettings.getEmployeeHandbooks({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+        }),
+      )
+    }
   }, [currentPage, dispatch, pageSize])
+
+  const editHandbookButtonHandler = (handbookId: number) => {
+    setToggle('editHandbookSection')
+    dispatch(
+      reduxServices.employeeHandbookSettings.getEmployeeHandbook(handbookId),
+    )
+    setSelectedHandbook(handbookId)
+  }
 
   return (
     <>
@@ -60,7 +75,11 @@ const EmployeeHandbookSettings = (): JSX.Element => {
                       <i className="fa fa-plus me-1"></i>Add Page
                     </CButton>
                     <Link to={`/EmployeeHandbook`}>
-                      <CButton color="info" className="btn-ovh me-1 text-white">
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 text-white"
+                        data-testid="btn-back"
+                      >
                         <i className="fa fa-arrow-left  me-1"></i>Back
                       </CButton>
                     </Link>
@@ -68,6 +87,7 @@ const EmployeeHandbookSettings = (): JSX.Element => {
                 </CRow>
                 <CRow className="mt-4">
                   <EmployeeHandbookTable
+                    editHandbookButtonHandler={editHandbookButtonHandler}
                     paginationRange={paginationRange}
                     setPageSize={setPageSize}
                     setCurrentPage={setCurrentPage}
@@ -79,7 +99,7 @@ const EmployeeHandbookSettings = (): JSX.Element => {
             ) : (
               <CCol>
                 <CRow>
-                  <CSpinner />
+                  <CSpinner data-testid="handbookSettings-loader" />
                 </CRow>
               </CCol>
             )}
@@ -91,6 +111,15 @@ const EmployeeHandbookSettings = (): JSX.Element => {
           headerTitle="Add New Page"
           confirmButtonText="Save"
           backButtonHandler={() => setToggle('')}
+        />
+      )}
+      {toggle === 'editHandbookSection' && (
+        <EditHandbook
+          headerTitle="Edit Page"
+          confirmButtonText="Update"
+          backButtonHandler={() => setToggle('')}
+          isEditHandbook={true}
+          handbookId={selectedHandbook}
         />
       )}
     </>
