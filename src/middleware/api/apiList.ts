@@ -238,6 +238,7 @@ export const visaListApiConfig: VisaListApi = {
 }
 
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
+  getProjectsClients: apiPrefix + '/project-mgmt/getClients',
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }

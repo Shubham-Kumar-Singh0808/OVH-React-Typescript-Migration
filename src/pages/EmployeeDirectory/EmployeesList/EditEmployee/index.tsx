@@ -50,6 +50,7 @@ const EditEmployee = (): JSX.Element => {
     projectManager: false,
     reportManager: false,
   } as ShouldResetFields
+
   const [resetFields, setResetField] = useState(initResetFields)
   const managerValue = {} as GetAllReportingManagers
   const hrAssociateValue = {} as GetHrData
