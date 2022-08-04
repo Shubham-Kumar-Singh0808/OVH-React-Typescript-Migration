@@ -85,7 +85,7 @@ const HRAssociate = ({
                     ? 'autocomplete-dropdown-item active'
                     : 'autocomplete-dropdown-item '
                 }
-                key={item.fullName}
+                key={item.id}
               >
                 {item.fullName}
               </div>

@@ -2,55 +2,66 @@ import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import Autocomplete from 'react-autocomplete'
 import {
-  GetReportManager,
-  ReportManagerProps,
-} from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { showIsRequired } from '../../../../../../utils/helper'
+  AutoCompleteProps,
+  GetAutoCompleteList,
+  GetOnSelect,
+} from '../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
+import { showIsRequired } from '../../utils/helper'
 
-const ReportingManager = ({
+const OAutoComplete = ({
   dynamicFormLabelProps,
-  reportManagersList,
-  onSelectReportManager,
+  list,
+  onSelect,
   shouldReset,
+  value,
   isRequired,
-  reportValue,
-}: ReportManagerProps): JSX.Element => {
+  label,
+  placeholder,
+  name,
+}: AutoCompleteProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
 
+  const initList = [] as GetAutoCompleteList[]
+  const [selectorLost, setSelectorList] = useState(initList)
+
   useEffect(() => {
-    setAutoCompleteTarget(reportValue)
-  }, [reportValue])
+    setAutoCompleteTarget(value)
+  }, [value])
+
+  useEffect(() => {
+    if (list == null) return
+
+    setSelectorList(list)
+  }, [list])
 
   useEffect(() => {
     if (shouldReset) setAutoCompleteTarget('')
   }, [shouldReset])
 
-  const onHandleSelectReportManager = (fullName: string) => {
-    setAutoCompleteTarget(fullName)
-    const managerName = reportManagersList.find(
-      (value) => value.fullName === fullName,
+  const onHandleSelect = (selectedName: string) => {
+    setAutoCompleteTarget(selectedName)
+    const detail = selectorLost.find(
+      (listValue) => listValue.name === selectedName,
     )
 
-    const reportManager = {
-      id: managerName?.id,
-      fullName: managerName?.fullName,
-      lastName: managerName?.lastName,
-      firstName: managerName?.firstName,
-    } as GetReportManager
-    onSelectReportManager(reportManager)
+    const user = {
+      id: detail?.id,
+      name: detail?.name,
+    } as GetOnSelect
+    onSelect(user)
   }
 
   return (
     <>
       <CRow className="mb-3">
         <CFormLabel
-          data-testid="rmLabel"
+          data-testid={name}
           {...dynamicFormLabelProps(
-            'reportingmanager',
+            `${name}`,
             'col-sm-3 col-form-label text-end',
           )}
         >
-          Reporting Manager:
+          {label}:
           {isRequired && (
             <span className={showIsRequired(autoCompleteTarget as string)}>
               *
@@ -61,12 +72,11 @@ const ReportingManager = ({
           <Autocomplete
             inputProps={{
               className: 'form-control form-control-sm',
-              id: 'reportingmanagers-autocomplete',
-              placeholder: 'Type name here for auto fill',
+              placeholder: `${placeholder}`,
             }}
-            getItemValue={(item) => item.fullName}
-            items={reportManagersList}
-            data-testid="report-input"
+            getItemValue={(item) => item.name}
+            items={selectorLost}
+            data-testid={name}
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
               <div
@@ -89,15 +99,15 @@ const ReportingManager = ({
                 }
                 key={item.id}
               >
-                {item.fullName}
+                {item.name}
               </div>
             )}
             value={autoCompleteTarget}
-            shouldItemRender={(item, value) =>
-              item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
+            shouldItemRender={(item, itemValue) =>
+              item.name.toLowerCase().indexOf(itemValue.toLowerCase()) > -1
             }
             onChange={(e) => setAutoCompleteTarget(e.target.value)}
-            onSelect={(value) => onHandleSelectReportManager(value)}
+            onSelect={(selectedVal) => onHandleSelect(selectedVal)}
           />
         </CCol>
       </CRow>
@@ -105,4 +115,4 @@ const ReportingManager = ({
   )
 }
 
-export default ReportingManager
+export default OAutoComplete
