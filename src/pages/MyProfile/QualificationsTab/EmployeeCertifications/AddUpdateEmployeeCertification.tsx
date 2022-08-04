@@ -106,10 +106,10 @@ function AddUpdateEmployeeCertification({
   let newCompletedDate = new Date()
   let newExpiryDate = new Date()
   if (addCertification.completedDate) {
-    newCompletedDate = reformatDate(addCertification.completedDate as string)
+    newCompletedDate = reformatDate(addCertification.completedDate)
   }
   if (addCertification.expiryDate) {
-    newExpiryDate = reformatDate(addCertification.expiryDate as string)
+    newExpiryDate = reformatDate(addCertification.expiryDate)
   }
 
   const successToastMessage = (
