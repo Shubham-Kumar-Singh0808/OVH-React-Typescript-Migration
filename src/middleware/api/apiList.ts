@@ -37,6 +37,9 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
+  ScheduledInterviewsApi,
+  AddNewMailTemplateTypeApi,
+  MyAttendanceApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -289,6 +292,7 @@ export const addNewEmployeeAPiConfig: AddNewEmployeeAPi = {
   getAllReportingManagersData:
     apiPrefix + '/jobapplicant/getAllReportingManagersData',
   addNewEmployee: apiPrefix + '/jobapplicant/jobAdmin/addNewEmployee',
+  editEmployee: apiPrefix + '/jobapplicant/jobAdmin/editEmployee',
   getAllemploymentType: apiPrefix + '/jobapplicant/getEmploymentType',
   getAllJobType: apiPrefix + '/jobapplicant/getJobType',
   getCheckIfUserExist: apiPrefix + '/Employee/isemployeeUsernameexist',
@@ -310,7 +314,27 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
     deleteMailTemplate: apiPrefix + '/mailTemplates/deleteMailTemplate',
   }
 
-export const addNewTemplateAPiConfig: AddNewTemplateApi = {
+export const addNewTemplateApiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
+}
+
+export const scheduledInterviewsApiConfig: ScheduledInterviewsApi = {
+  searchScheduledCandidatesForEmployee:
+    apiPrefix + '/jobapplicant/searchScheduledCandidatesForEmployee',
+  searchScheduledCandidates:
+    apiPrefix + '/jobapplicant/searchScheduledCandidates',
+  downloadScheduleCandidates:
+    apiPrefix + '/jobapplicant/downloadScheduleCandidates',
+}
+
+export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
+  getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
+  addNewMailTemplateType: apiPrefix + '/mailTemplates/addMailTemplateType',
+  updateMailTemplateType: apiPrefix + '/mailTemplates/updateMailTemplateType',
+  deleteMailTemplateType: apiPrefix + '/mailTemplates/deleteMailTemplateType',
+}
+
+export const myAttendanceApiConfig: MyAttendanceApi = {
+  getMyAttendance: apiPrefix + '/biometric/myAttendence',
 }

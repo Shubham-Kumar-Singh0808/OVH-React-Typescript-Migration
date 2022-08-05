@@ -11,6 +11,7 @@ const HRAssociate = ({
   dynamicFormLabelProps,
   hrDataList,
   onSelectHRAssociate,
+  isRequired,
   shouldReset,
   hrValue,
 }: HrDataProps): JSX.Element => {
@@ -23,6 +24,8 @@ const HRAssociate = ({
     const reportManager = {
       id: managerName?.id,
       fullName: managerName?.fullName,
+      firstName: managerName?.firstName,
+      lastName: managerName?.lastName,
     } as GetHRAssociate
     onSelectHRAssociate(reportManager)
   }
@@ -46,9 +49,11 @@ const HRAssociate = ({
           )}
         >
           HR Associate:
-          <span className={showIsRequired(autoCompleteTarget as string)}>
-            *
-          </span>
+          {isRequired && (
+            <span className={showIsRequired(autoCompleteTarget as string)}>
+              *
+            </span>
+          )}
         </CFormLabel>
         <CCol sm={3}>
           <Autocomplete

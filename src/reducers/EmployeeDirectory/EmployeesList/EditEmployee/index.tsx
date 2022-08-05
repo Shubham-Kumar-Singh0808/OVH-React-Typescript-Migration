@@ -37,6 +37,28 @@ const getSelectedEmployeeInformation = createAsyncThunk<
   },
 )
 
+const updateEmployeeDetails = createAsyncThunk<
+  EditEmployeeTypes,
+  EditEmployeeTypes,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'updateEmployee/updateEmployeeDetails',
+  async (employeeDetails: EditEmployeeTypes, thunkApi) => {
+    try {
+      return await employeeGeneralInformationApi.updateEmployeeDetails(
+        employeeDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const employeeSlice = createSlice({
   name: 'employeeReducer',
   initialState: initialEmployeeState,
@@ -54,11 +76,24 @@ const employeeSlice = createSlice({
         state.editEmployee = action.payload as EditEmployeeTypes
         state.isLoading = ApiLoadingState.succeeded
       })
-      .addMatcher(isAnyOf(getSelectedEmployeeInformation.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addMatcher(isAnyOf(updateEmployeeDetails.fulfilled), (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editEmployee = action.payload as EditEmployeeTypes
       })
       .addMatcher(
-        isAnyOf(getSelectedEmployeeInformation.rejected),
+        isAnyOf(
+          getSelectedEmployeeInformation.pending,
+          updateEmployeeDetails.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getSelectedEmployeeInformation.rejected,
+          updateEmployeeDetails.rejected,
+        ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
@@ -74,6 +109,7 @@ const isLoading = (state: RootState): LoadingState => state.employee.isLoading
 
 export const getEmployeeThunk = {
   getSelectedEmployeeInformation,
+  updateEmployeeDetails,
 }
 
 export const employeeSelectors = {

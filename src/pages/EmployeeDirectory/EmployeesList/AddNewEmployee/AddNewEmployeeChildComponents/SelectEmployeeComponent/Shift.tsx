@@ -9,6 +9,7 @@ const Shift = ({
   list,
   setValue,
   setToggleShift,
+  isRequired,
   value,
   toggleValue,
   isAddDisable,
@@ -32,7 +33,7 @@ const Shift = ({
   }
 
   useEffect(() => {
-    if (value != null) {
+    if (value != null && Object.keys(value).length !== 0) {
       const shift = list.find((schedule) => schedule.name === value)
       const selectedShift = {
         id: shift?.id,
@@ -44,21 +45,24 @@ const Shift = ({
         graceTime: shift?.graceTime,
       } as EmployeeShiftDetails
       setDefaultValue(selectedShift)
+    } else {
+      setDefaultValue(initShift)
     }
   }, [value])
 
+  const selectedValue = value == null ? '' : value
   return (
     <>
       <CRow className="mb-3">
         <CFormLabel
-          data-tesId="shiftLabel"
+          data-tesid="shiftLabel"
           {...dynamicFormLabelProps(
             'shift',
             'col-sm-3 col-form-label text-end',
           )}
         >
           Shift:
-          <span className={showIsRequired(value)}>*</span>
+          {isRequired && <span className={showIsRequired(value)}>*</span>}
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect
@@ -67,7 +71,7 @@ const Shift = ({
             data-testid="formShift"
             aria-label="shift"
             name="shift"
-            value={defaultValue.name}
+            value={selectedValue}
             onChange={onHandleSelectManager}
           >
             <option value={''}>Select Shift</option>

@@ -21,3 +21,6 @@ export type AddTemplateSliceState = {
   isLoading: LoadingState
   error: ValidationError
 }
+export type AddMailTemplateProps = {
+  addButtonHandler?: () => void
+}

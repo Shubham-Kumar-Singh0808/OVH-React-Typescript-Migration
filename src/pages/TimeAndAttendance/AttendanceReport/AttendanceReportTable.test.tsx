@@ -21,6 +21,7 @@ const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
 describe('Attendance Report Table Component Testing', () => {
+  jest.retryTimes(3)
   test('should render AttendanceReport Table component with out crashing', async () => {
     render(
       <AttendanceReportTable

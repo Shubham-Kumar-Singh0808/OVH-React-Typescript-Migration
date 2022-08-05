@@ -9,8 +9,6 @@ import { createMemoryHistory } from 'history'
 import AddNewEmployee from '.'
 import stateStore from '../../../../stateStore'
 import { render, screen, waitFor, fireEvent } from '../../../../test/testUtils'
-import { listComposer } from '../../../../utils/helper'
-import { GetList } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const ReduxProvider = ({
   children,
