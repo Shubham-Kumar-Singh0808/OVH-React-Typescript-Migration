@@ -44,6 +44,9 @@ function AddEditVisaDetails({
 
   const [dateOfIssueFlag, setDateOfIssueFlag] = useState<boolean>(false)
   const [dateOfExpiryFlag, setDateOfExpiryFlag] = useState<boolean>(false)
+  const [showDate, setShowDate] = useState<boolean>(true)
+  const [newDateIssue, setNewDateIssue] = useState<string>('')
+  const [newDateExpiry, setNewDateExpiry] = useState<string>('')
 
   const getEmployeeCountryDetails = useTypedSelector(
     reduxServices.personalInformation.selectors.countryDetails,
@@ -64,8 +67,29 @@ function AddEditVisaDetails({
       ? navigator.languages[0]
       : navigator.language
 
-  const newDateOfIssue = new Date()
-  const newDateOfExpiry = new Date()
+  const currentDateOfIssue = employeeVisaDetails.dateOfIssue as Date
+  const dateIssueParts: string[] | string = employeeVisaDetails.dateOfIssue
+    ? currentDateOfIssue.toString().split('/')
+    : ''
+  const newDateOfIssue = employeeVisaDetails.dateOfIssue
+    ? new Date(
+        Number(dateIssueParts[2]),
+        Number(dateIssueParts[1]) - 1,
+        Number(dateIssueParts[0]),
+      )
+    : new Date()
+
+  const currentDateOfExpiry = employeeVisaDetails.dateOfExpire as Date
+  const dateExpiryPart: string[] | string = employeeVisaDetails.dateOfExpire
+    ? currentDateOfExpiry.toString().split('/')
+    : ''
+  const newDateOfExpiry = employeeVisaDetails.dateOfExpire
+    ? new Date(
+        Number(dateExpiryPart[2]),
+        Number(dateExpiryPart[1]) - 1,
+        Number(dateExpiryPart[0]),
+      )
+    : new Date()
 
   useEffect(() => {
     dispatch(reduxServices.personalInformation.getEmployeeCountryDetails())
@@ -109,6 +133,18 @@ function AddEditVisaDetails({
   useEffect(() => {
     if (isEditVisaDetails) {
       setEmployeeVisaDetails(getEditVisaDetails)
+      const tempDateIssue = getEditVisaDetails.dateOfIssue
+      const tempDateExpiry = getEditVisaDetails.dateOfExpire
+      if (tempDateIssue !== undefined) {
+        setNewDateIssue(tempDateIssue.toString())
+      }
+      if (tempDateExpiry) {
+        setNewDateExpiry(tempDateExpiry.toString())
+      }
+      setShowDate(false)
+      setTimeout(() => {
+        setShowDate(true)
+      }, 100)
     }
   }, [isEditVisaDetails, getEditVisaDetails])
 
@@ -134,10 +170,9 @@ function AddEditVisaDetails({
   }
 
   const onChangeDateOfIssueHandler = (date: Date) => {
-    console.log(date)
     const currentDateExpiry = isEditVisaDetails
       ? employeeVisaDetails.dateOfExpire
-      : new Date()
+      : dateOfExpire
 
     validateDates(date, currentDateExpiry)
 
@@ -156,18 +191,7 @@ function AddEditVisaDetails({
   const onChangeDateOfExpireHandler = (date: Date) => {
     const currentDateIssue = isEditVisaDetails
       ? employeeVisaDetails.dateOfIssue
-      : new Date()
-
-    // const dateParts: string[] | string = employeeVisaDetails.dateOfExpire
-    //   ? currentDateIssue.split('/')
-    //   : ''
-    // const newDateIssue: number | Date = employeeVisaDetails.dateOfExpire
-    //   ? new Date(
-    //       Number(dateParts[2]),
-    //       Number(dateParts[1]) - 1,
-    //       Number(dateParts[0]),
-    //     )
-    //   : new Date(dateOfIssue as string)
+      : dateOfIssue
 
     validateDates(currentDateIssue, date)
 
@@ -202,10 +226,12 @@ function AddEditVisaDetails({
     setError(false)
     setImageUrl('')
   }
+
   const actionMapping = {
     added: 'added',
     updated: 'updated',
   }
+
   const getToastMessage = (action: string) => {
     return (
       <OToast
@@ -218,10 +244,8 @@ function AddEditVisaDetails({
   const handleAddVisaDetails = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
-      // dateOfIssue,
-      // dateOfExpire,
-      // dateOfIssue: moment(dateOfIssue).format(commonFormatDate),
-      // dateOfExpire: moment(dateOfExpire).format(commonFormatDate),
+      dateOfIssue,
+      dateOfExpire,
     }
     const addVisaMemberResultAction = await dispatch(
       reduxServices.personalInformation.addEmployeeVisa(prepareObject),
@@ -233,7 +257,7 @@ function AddEditVisaDetails({
     ) {
       if (selectedFile) {
         const newAddedVisaID = await personalInfoApi.getEmployeeVisaDetails(
-          BigInt(employeeId),
+          Number(employeeId),
         )
         const lastArrayIndex: number = newAddedVisaID.length - 1
 
@@ -242,7 +266,7 @@ function AddEditVisaDetails({
         const visaId = newAddedVisaID[lastArrayIndex].id
         const file = formData as FormData
 
-        await personalInfoApi.uploadVisaImage(visaId, file)
+        await personalInfoApi.uploadVisaImage(BigInt(visaId as number), file)
       }
       dispatch(
         dispatch(
@@ -273,7 +297,7 @@ function AddEditVisaDetails({
         const visaId = employeeVisaDetails.id
         const file = formData as FormData
 
-        await personalInfoApi.uploadVisaImage(visaId, file)
+        await personalInfoApi.uploadVisaImage(visaId as bigint, file)
       }
       dispatch(
         reduxServices.app.actions.addToast(
@@ -284,17 +308,20 @@ function AddEditVisaDetails({
     backButtonHandler()
   }
 
-  const validateDates = (startDate: Date, endDate: Date) => {
-    console.log(startDate)
-    console.log(endDate)
-    const newStartDate = startDate.setHours(0, 0, 0, 0)
-    const newEndtDate = endDate.setHours(0, 0, 0, 0)
-    if (newStartDate > newEndtDate) {
-      setError(true)
-      setIsAddButtonEnabled(false)
-    } else {
-      setError(false)
-      setIsAddButtonEnabled(true)
+  const validateDates = (
+    startDate: Date | undefined,
+    endDate: Date | undefined,
+  ) => {
+    // const newStartDate = startDate?.setHours(0, 0, 0, 0)
+    // const newEndtDate = endDate?.setHours(0, 0, 0, 0)
+    if (startDate && endDate) {
+      if (startDate > endDate) {
+        setError(true)
+        setIsAddButtonEnabled(false)
+      } else {
+        setError(false)
+        setIsAddButtonEnabled(true)
+      }
     }
   }
 
@@ -390,88 +417,96 @@ function AddEditVisaDetails({
               </CFormSelect>
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Date of Issue:
-              <span
-                className={
-                  employeeVisaDetails.dateOfIssue || dateOfIssue
-                    ? TextWhite
-                    : TextDanger
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={3} data-testid="dateOfIssuedInput">
-              <DatePicker
-                className="form-control"
-                name="dateOfIssue"
-                maxDate={new Date()}
-                value={
-                  dateOfIssue?.toLocaleDateString(deviceLocale) ||
-                  employeeVisaDetails.dateOfIssue?.toLocaleDateString(
-                    deviceLocale,
-                  )
-                }
-                selected={
-                  !dateOfIssueFlag && employeeVisaDetails.dateOfIssue
-                    ? newDateOfIssue
-                    : dateOfIssue
-                }
-                onChange={onChangeDateOfIssueHandler}
-                id="dateOfIssue"
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-4 mb-4" data-testid="dateOfExiryInput">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Date of Expire :
-              <span
-                className={
-                  employeeVisaDetails.dateOfExpire || dateOfExpire
-                    ? TextWhite
-                    : TextDanger
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <DatePicker
-                className="form-control"
-                name="dateOfExpire"
-                value={
-                  dateOfExpire?.toLocaleDateString(deviceLocale) ||
-                  employeeVisaDetails.dateOfExpire?.toLocaleDateString(
-                    deviceLocale,
-                  )
-                }
-                selected={
-                  !dateOfExpiryFlag && employeeVisaDetails?.dateOfExpire
-                    ? newDateOfExpiry
-                    : dateOfExpire
-                }
-                onChange={onChangeDateOfExpireHandler}
-                id="dateOfExpire"
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-              />
-              {error && (
-                <p className="text-danger">
-                  Date of Expire should be greater than Date of Issue
-                </p>
-              )}
-            </CCol>
-          </CRow>
+          {showDate ? (
+            <>
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className="col-sm-3 col-form-label text-end">
+                  Date of Issue:
+                  <span
+                    className={
+                      employeeVisaDetails.dateOfIssue || dateOfIssue
+                        ? TextWhite
+                        : TextDanger
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={3} data-testid="dateOfIssuedInput">
+                  <DatePicker
+                    className="form-control"
+                    name="dateOfIssue"
+                    maxDate={new Date()}
+                    value={
+                      dateOfIssue?.toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                      }) || newDateIssue
+                    }
+                    selected={
+                      !dateOfIssueFlag && employeeVisaDetails.dateOfIssue
+                        ? newDateOfIssue
+                        : dateOfIssue
+                    }
+                    onChange={onChangeDateOfIssueHandler}
+                    id="dateOfIssue"
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="dd/mm/yyyy"
+                  />
+                </CCol>
+              </CRow>
+              <CRow className="mt-4 mb-4" data-testid="dateOfExiryInput">
+                <CFormLabel className="col-sm-3 col-form-label text-end">
+                  Date of Expire :
+                  <span
+                    className={
+                      employeeVisaDetails.dateOfExpire || dateOfExpire
+                        ? TextWhite
+                        : TextDanger
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <DatePicker
+                    className="form-control"
+                    name="dateOfExpire"
+                    value={
+                      dateOfExpire?.toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                      }) || newDateExpiry
+                    }
+                    selected={
+                      !dateOfExpiryFlag && employeeVisaDetails.dateOfExpire
+                        ? newDateOfExpiry
+                        : dateOfExpire
+                    }
+                    onChange={onChangeDateOfExpireHandler}
+                    id="dateOfExpire"
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="dd/mm/yyyy"
+                  />
+                  {error && (
+                    <p className="text-danger">
+                      Date of Expire should be greater than Date of Issue
+                    </p>
+                  )}
+                </CCol>
+              </CRow>
+            </>
+          ) : (
+            ''
+          )}
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Upload VISA copy:

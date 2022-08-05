@@ -16,7 +16,6 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
-import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const VisaDetailsTable = ({
   editVisaButtonHandler,
@@ -38,8 +37,8 @@ const VisaDetailsTable = ({
     dispatch(
       reduxServices.personalInformation.getEmployeeVisaDetails(
         isViewingAnotherEmployee
-          ? BigInt(selectedEmployeeId as string)
-          : BigInt(employeeId),
+          ? Number(selectedEmployeeId as string)
+          : Number(employeeId),
       ),
     )
   }, [dispatch, employeeId, isViewingAnotherEmployee, selectedEmployeeId])
@@ -63,7 +62,7 @@ const VisaDetailsTable = ({
     ) {
       dispatch(
         reduxServices.personalInformation.getEmployeeVisaDetails(
-          BigInt(employeeId),
+          Number(employeeId),
         ),
       )
       dispatch(
@@ -82,7 +81,9 @@ const VisaDetailsTable = ({
       return getEmployeeVisaData
         .slice()
         .sort((sortNode1, sortNode2) =>
-          sortNode1.countryName.localeCompare(sortNode2.countryName),
+          (sortNode1.countryName as string).localeCompare(
+            sortNode2.countryName as string,
+          ),
         )
     }
   }, [getEmployeeVisaData])
@@ -122,13 +123,17 @@ const VisaDetailsTable = ({
                 <CTableDataCell scope="row">
                   <CButton
                     color="info btn-ovh me-2"
-                    onClick={() => editVisaButtonHandler(visaItem.id)}
+                    onClick={() =>
+                      editVisaButtonHandler(BigInt(visaItem.id as number))
+                    }
                   >
                     <i className="fa fa-pencil-square-o"></i>
                   </CButton>
                   <CButton
                     color="danger btn-ovh me-2"
-                    onClick={() => handleShowDeleteModal(visaItem.id)}
+                    onClick={() =>
+                      handleShowDeleteModal(BigInt(visaItem.id as number))
+                    }
                   >
                     <i className="fa fa-trash-o" aria-hidden="true"></i>
                   </CButton>

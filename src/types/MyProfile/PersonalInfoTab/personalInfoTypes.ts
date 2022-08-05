@@ -1,4 +1,5 @@
 import { AutoMap } from '@automapper/classes'
+import { EmployeeVisaDetailsDto } from '../../../models/VisaDetailsDto'
 import { ValidationError } from '../../commonTypes'
 
 export type EmployeeFamilyData = {
@@ -12,7 +13,7 @@ export type EmployeeFamilyData = {
 
 export type PersonalInfoTabState = {
   employeeFamilyDetails: EmployeeFamilyData[]
-  employeeVisaDetails: VisaDetails[]
+  employeeVisaDetails: EmployeeVisaDetailsDto[]
   SubCountries: GetCountryDetails
   SubVisa: VisaCountryDetails[]
   editFamilyDetails: EditFamilyDetailsState
@@ -28,8 +29,8 @@ export type VisaDetails = {
   visaType: string
   countryId?: bigint
   countryName: string
-  dateOfIssue: Date
-  dateOfExpire: Date
+  dateOfIssue?: Date
+  dateOfExpire?: Date
 }
 export type EmployeeCountryDetails = {
   id: number
@@ -45,21 +46,22 @@ export type VisaCountryDetails = {
   countryId?: bigint
   countryName: string
 }
+
 export class EmployeeVisaDetails {
   @AutoMap()
-  id: bigint
+  id?: bigint
 
   @AutoMap()
-  empId: bigint
+  empId?: bigint
 
   @AutoMap()
-  empName: string
+  empName?: string
 
   @AutoMap()
   visaTypeId?: bigint
 
   @AutoMap()
-  visaType: string
+  visaType?: string
 
   @AutoMap()
   countryId?: bigint
@@ -68,10 +70,10 @@ export class EmployeeVisaDetails {
   countryName?: string
 
   @AutoMap()
-  dateOfIssue: Date
+  dateOfIssue?: Date
 
   @AutoMap()
-  dateOfExpire: Date
+  dateOfExpire?: Date
 
   @AutoMap()
   createdBy?: string
@@ -86,13 +88,13 @@ export class EmployeeVisaDetails {
   updatedDate?: Date
 
   @AutoMap()
-  visaDetailsPath?: string
+  visaDetailsPath?: string | null
 
   @AutoMap()
-  visaDetailsData?: string
+  visaDetailsData?: string | null
 
   @AutoMap()
-  visaThumbPicture?: string
+  visaThumbPicture?: string | null
 }
 
 export type EmployeeVisaDetailsButton = {

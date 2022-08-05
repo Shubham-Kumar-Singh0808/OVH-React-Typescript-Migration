@@ -7,8 +7,8 @@ import {
   EmployeeVisaDetails,
   GetCountryDetails,
   VisaCountryDetails,
-  VisaDetails,
 } from '../../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
+import { EmployeeVisaDetailsDto } from '../../../../models/VisaDetailsDto'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -84,13 +84,13 @@ const deleteEmployeeFamilyMember = async (
 }
 
 const getEmployeeVisaDetails = async (
-  employeeId: bigint | undefined,
-): Promise<VisaDetails[]> => {
+  employeeId: number | undefined,
+): Promise<EmployeeVisaDetailsDto[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.getVisaDetails,
     method: AllowedHttpMethods.get,
     params: {
-      loggedInEmpId: employeeId,
+      loggedInEmpId: Number(employeeId),
     },
   })
   const response = await useAxios(requestConfig)
@@ -123,7 +123,7 @@ const getEmployeeVisaType = async (
 }
 
 const addEmployeeVisa = async (
-  employeeVisaDetails: EmployeeVisaDetails,
+  employeeVisaDetails: EmployeeVisaDetailsDto,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.addNewVisaMember,
@@ -147,7 +147,7 @@ const getEmployeeVisa = async (id: bigint): Promise<EmployeeVisaDetails> => {
 }
 
 const updateEmployeeVisa = async (
-  employeeVisaDetails: EmployeeVisaDetails,
+  employeeVisaDetails: EmployeeVisaDetailsDto,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: personalInfoApiConfig.updateVisaInformation,
@@ -165,10 +165,10 @@ const deleteEmployeeVisa = async (
     url: personalInfoApiConfig.deleteVisaDetail,
     method: AllowedHttpMethods.get,
     params: {
-      visaID: visaId,
+      visaID: Number(visaId),
     },
     data: {
-      visaID: visaId,
+      visaID: Number(visaId),
     },
   })
   const response = await useAxios(requestConfig)
