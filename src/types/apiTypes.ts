@@ -179,6 +179,7 @@ export interface EmployeeProjectsApi extends ApiBase {
   getEmployeeProjects: string
   getProjectDetails: string
   getProjectsClients: string
+  addProject: string
 }
 
 export interface EmployeeReporteesApi extends ApiBase {

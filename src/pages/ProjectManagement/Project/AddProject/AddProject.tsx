@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -30,9 +30,11 @@ import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { showIsRequired } from '../../../../utils/helper'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddProject = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const history = useHistory()
   const isLoading = ApiLoadingState.succeeded
   const classNameStyle = 'col-sm-3 col-form-label text-end'
 
@@ -43,11 +45,32 @@ const AddProject = (): JSX.Element => {
     }
   }
 
-  const initProject = {} as ProjectDetail
+  const initProject = {
+    intrnalOrNot: false,
+    status: 'NEW',
+  } as ProjectDetail
   const [project, setProject] = useState(initProject)
 
   const [projectName, setProjectName] = useState<string>('')
+  const [projectManager, setProjectManager] = useState<string>('')
+  const [hiveValue, setHive] = useState<string>('')
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
+  const [showEditor, setShowEditor] = useState<boolean>(true)
+  const [isAddBtnEnable, setAddBtn] = useState(false)
+  const [isClearBtnEnable, setClearBtn] = useState(false)
+
+  useEffect(() => {
+    if (
+      project.client !== '' &&
+      project.projectName !== '' &&
+      project.model !== '' &&
+      project.type !== '' &&
+      project.managerId !== -1 &&
+      project.startdate !== ''
+    ) {
+      setAddBtn(true)
+    }
+  }, [project])
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
@@ -105,26 +128,58 @@ const AddProject = (): JSX.Element => {
     { id: 4, name: 'T&M' },
   ]
 
-  const healthList: GetList[] = [
-    { id: 1, name: 'Project not yet started' },
-    { id: 2, name: 'Good' },
-    { id: 3, name: 'Critical' },
-    { id: 4, name: 'Danger' },
+  const healthList = [
+    { label: 'Gray', name: 'Project not yet started' },
+    { label: 'Green', name: 'Good' },
+    { label: 'Orange', name: 'Critical' },
+    { label: 'Red', name: 'Danger' },
   ]
 
   const handleClientSelect = (value: GetOnSelect) => {
-    console.log(value)
+    setClearBtn(true)
+    setProject({
+      ...project,
+      client: value.name,
+    })
   }
 
   const handleProjectName = (value: string) => {
-    console.log(value)
+    setClearBtn(true)
+    setProject({
+      ...project,
+      projectName: value,
+    })
   }
 
   const handlePriceModel = (value: string) => {
-    setProject({ ...project, type: value })
+    setClearBtn(true)
+    setProject({
+      ...project,
+      type: value,
+    })
+  }
+
+  const handleIsInternalStatus = (intrnalOrNot: boolean) => {
+    setClearBtn(true)
+    setProject({
+      ...project,
+      intrnalOrNot,
+    })
+  }
+
+  const handleProjectType = (value: string) => {
+    setClearBtn(true)
+    setProject({ ...project, model: value })
+  }
+
+  const handleProjectManager = (value: GetOnSelect) => {
+    setClearBtn(true)
+    setProject({ ...project, managerId: value.id })
+    setProjectManager(value.name)
   }
 
   const onHandleStartDate = (value: Date) => {
+    setClearBtn(true)
     setProject({
       ...project,
       startdate: moment(value).format(dateFormat),
@@ -132,6 +187,7 @@ const AddProject = (): JSX.Element => {
   }
 
   const onHandleEndDate = (value: Date) => {
+    setClearBtn(true)
     setProject({
       ...project,
       enddate: moment(value).format(dateFormat),
@@ -139,13 +195,76 @@ const AddProject = (): JSX.Element => {
   }
 
   const onHandleHealth = (e: { target: { value: string } }) => {
+    setClearBtn(true)
     setProject({ ...project, health: e.target.value })
   }
 
-  const onHandleDescription = (value: string) => {
-    setProject({ ...project, description: value })
+  const onHandleHiveName = (value: string) => {
+    setClearBtn(true)
+    setProject({ ...project, hiveProjectName: value })
   }
 
+  const onHandleDescription = (description: string) => {
+    setClearBtn(true)
+    setProject((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
+  }
+
+  const handleSubmit = async () => {
+    const payload = {
+      ...project,
+      model: project.model.toUpperCase(),
+      type:
+        project.type === 'T&M'
+          ? 'TM'
+          : project.type.replace(' ', '').toUpperCase(),
+    }
+
+    const newProjectResponse = await dispatch(
+      reduxServices.projectManagement.addProject(payload),
+    )
+    if (
+      reduxServices.projectManagement.addProject.fulfilled.match(
+        newProjectResponse,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          toastElement('New project is successfully added', 'success'),
+        ),
+      )
+
+      history.push('/employeeList')
+    } else {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          toastElement('Project Name Already Exist', 'danger'),
+        ),
+      )
+    }
+  }
+
+  const toastElement = (message: string, type: string) => (
+    <OToast toastColor={type} toastMessage={message} />
+  )
+
+  const handleClear = () => {
+    setProjectManager('')
+    setHive('')
+    setProjectName('')
+    onHandleDescription('')
+    setProject(initProject)
+
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+      setClearBtn(false)
+      setAddBtn(false)
+    }, 0)
+  }
+
+  const selectedHealthValue = project.health == null ? '' : project.health
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -173,7 +292,7 @@ const AddProject = (): JSX.Element => {
                 list={clientOrganizationList}
                 onSelect={handleClientSelect}
                 shouldReset={false}
-                value={''}
+                value={project.client}
                 isRequired={true}
                 label={'Client Organization'}
                 placeholder={'Client'}
@@ -206,18 +325,21 @@ const AddProject = (): JSX.Element => {
                   <CFormCheck
                     inline
                     type="checkbox"
-                    name="employmentcontract"
-                    id="employmentcontractyes"
+                    name="internalProject"
+                    id="internalProject"
                     label="Internal Project"
-                    checked
+                    onChange={(event) =>
+                      handleIsInternalStatus(event.target.checked)
+                    }
+                    checked={project.intrnalOrNot}
                   />
                 </CCol>
               </CRow>
               <OSelectList
                 isRequired={true}
                 list={projectTypeList}
-                setValue={handlePriceModel}
-                value={project.type}
+                setValue={handleProjectType}
+                value={project.model}
                 name="projectType"
                 label="Project Type"
                 placeHolder="---Project Type---"
@@ -225,9 +347,9 @@ const AddProject = (): JSX.Element => {
               />
               <OAutoComplete
                 list={projectManagers}
-                onSelect={handleClientSelect}
+                onSelect={handleProjectManager}
                 shouldReset={false}
-                value={projectName}
+                value={projectManager}
                 isRequired={true}
                 label={'Project Manager'}
                 placeholder={'Project Manager'}
@@ -294,7 +416,7 @@ const AddProject = (): JSX.Element => {
                   data-testId="selectLabel"
                   {...dynamicFormLabelProps('health', classNameStyle)}
                 >
-                  Health:
+                  Health: {project.health}
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormSelect
@@ -303,14 +425,14 @@ const AddProject = (): JSX.Element => {
                     aria-label="health"
                     data-testid="formHealth"
                     name="health"
-                    value={project.health}
+                    value={selectedHealthValue}
                     onChange={onHandleHealth}
                   >
                     <option value={''}>Select</option>
-                    {healthList?.map((item, index) => {
-                      const { name: optionName } = item
+                    {healthList.map((item, index) => {
+                      const { name: optionName, label } = item
                       return (
-                        <option key={index} value={optionName}>
+                        <option key={index} value={label}>
                           {optionName}
                         </option>
                       )
@@ -319,9 +441,9 @@ const AddProject = (): JSX.Element => {
                 </CCol>
               </CRow>
               <OInputField
-                onChangeHandler={setProjectName}
-                onBlurHandler={handleProjectName}
-                value={projectName}
+                onChangeHandler={setHive}
+                onBlurHandler={onHandleHiveName}
+                value={hiveValue}
                 isRequired={false}
                 label="Hive Project Name"
                 name="hiveProjectName"
@@ -335,31 +457,37 @@ const AddProject = (): JSX.Element => {
                 >
                   Description:
                 </CFormLabel>
-                <CCol sm={9}>
-                  <CKEditor<{
-                    onChange: CKEditorEventHandler<'change'>
-                  }>
-                    config={ckeditorConfig}
-                    debug={true}
-                    onChange={({ editor }) => {
-                      onHandleDescription(editor.getData().trim())
-                    }}
-                  />
-                </CCol>
+                {showEditor && (
+                  <CCol sm={9}>
+                    <CKEditor<{
+                      onChange: CKEditorEventHandler<'change'>
+                    }>
+                      config={ckeditorConfig}
+                      debug={true}
+                      onChange={({ editor }) => {
+                        onHandleDescription(editor.getData().trim())
+                      }}
+                    />
+                  </CCol>
+                )}
               </CRow>
               <CRow className="mb-3 align-items-center">
                 <CCol sm={{ span: 6, offset: 3 }}>
                   <CButton
                     className="btn-ovh me-1"
                     color="success"
-                    data-testid="add-new-employee"
+                    data-testid="add-project"
+                    onClick={handleSubmit}
+                    disabled={!isAddBtnEnable}
                   >
                     Add
                   </CButton>
                   <CButton
                     color="warning "
                     className="btn-ovh"
-                    data-testid="clear-new-employee"
+                    data-testid="clear-project"
+                    onClick={handleClear}
+                    disabled={!isClearBtnEnable}
                   >
                     Clear
                   </CButton>

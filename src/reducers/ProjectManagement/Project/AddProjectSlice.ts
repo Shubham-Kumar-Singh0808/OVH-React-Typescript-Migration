@@ -1,15 +1,33 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import AddProject from '../../../middleware/api/ProjectManagement/Projects/AddProject'
 import {
   ProjectClients,
+  ProjectDetail,
   ProjectsManagementSliceState,
 } from '../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
 
 const initialProjectsState = {} as ProjectsManagementSliceState
+
+const addProject = createAsyncThunk<
+  ProjectDetail,
+  ProjectDetail,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('projectManagement/addProject', async (payload: ProjectDetail, thunkApi) => {
+  try {
+    return await AddProject.addProject(payload)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
 
 const getProjectClients = createAsyncThunk(
   'projectManagement/getProjectClients',
@@ -33,16 +51,29 @@ const projectsManagementSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.projectClients = action.payload
       })
-      .addMatcher(isAnyOf(getProjectClients.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addMatcher(isAnyOf(getProjectClients.fulfilled), (state) => {
+      .addCase(addProject.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.projectDetail = action.payload
       })
-      .addMatcher(isAnyOf(getProjectClients.rejected), (state, action) => {
-        state.isLoading = ApiLoadingState.failed
-        state.error = action.payload as ValidationError
-      })
+      .addMatcher(
+        isAnyOf(getProjectClients.pending, addProject.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(getProjectClients.fulfilled, addProject.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(getProjectClients.rejected, addProject.rejected),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.failed
+          state.error = action.payload as ValidationError
+        },
+      )
   },
 })
 
@@ -53,6 +84,7 @@ const isLoading = (state: RootState): LoadingState =>
   state.projectManagement.isLoading
 
 const projectsThunk = {
+  addProject,
   getProjectClients,
 }
 

@@ -44,6 +44,7 @@ export type ProjectDetail = {
 
 export type ProjectsManagementSliceState = {
   projectClients: ProjectClients[]
+  projectDetail: ProjectDetail
   isLoading: LoadingState
   error: ValidationError
 }
