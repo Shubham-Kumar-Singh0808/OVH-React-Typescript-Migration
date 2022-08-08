@@ -288,3 +288,7 @@ export interface AddNewMailTemplateTypeApi extends ApiBase {
 export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
 }
+
+export interface ClientInformationApi extends ApiBase {
+  getClientInformation: string
+}
