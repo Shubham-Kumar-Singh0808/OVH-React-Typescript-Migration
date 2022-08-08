@@ -30,7 +30,11 @@ const ViewClientInformation = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton color="info" className="btn-ovh me-1">
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="back-btn"
+            >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
           </CCol>
@@ -43,7 +47,10 @@ const ViewClientInformation = (): JSX.Element => {
               Org:
             </CFormLabel>
             <CCol sm={2}>
-              <span className="col-sm-15 text-end">
+              <span
+                className="col-sm-15 text-end"
+                data-testid="organization-input"
+              >
                 {getClientInformation.organization}
               </span>
             </CCol>
@@ -53,7 +60,10 @@ const ViewClientInformation = (): JSX.Element => {
               Client:
             </CFormLabel>
             <CCol sm={2}>
-              <span className="col-sm-15 text-end">
+              <span
+                className="col-sm-15 text-end"
+                data-testid="clientName-input"
+              >
                 {getClientInformation.name}
               </span>
             </CCol>
@@ -63,7 +73,10 @@ const ViewClientInformation = (): JSX.Element => {
               Contact Person:
             </CFormLabel>
             <CCol sm={2}>
-              <span className="col-sm-15 text-end">
+              <span
+                className="col-sm-15 text-end"
+                data-testid="personName-input"
+              >
                 {getClientInformation.personName}
               </span>
             </CCol>
@@ -73,7 +86,7 @@ const ViewClientInformation = (): JSX.Element => {
               Email ID:
             </CFormLabel>
             <CCol sm={2}>
-              <span className="col-sm-15 text-end">
+              <span className="col-sm-15 text-end" data-testid="email-input">
                 {getClientInformation.email}
               </span>
             </CCol>
@@ -83,7 +96,7 @@ const ViewClientInformation = (): JSX.Element => {
               Country:
             </CFormLabel>
             <CCol sm={2}>
-              <span className="col-sm-15 text-end">
+              <span className="col-sm-15 text-end" data-testid="country-input">
                 {getClientInformation.country}
               </span>
             </CCol>
@@ -93,7 +106,7 @@ const ViewClientInformation = (): JSX.Element => {
               Mobile:
             </CFormLabel>
             <CCol sm={2}>
-              <span className="col-sm-15 text-end">
+              <span className="col-sm-15 text-end" data-testid="mobile-input">
                 {getClientInformation.phone || 'N/A'}
               </span>
             </CCol>
@@ -103,7 +116,7 @@ const ViewClientInformation = (): JSX.Element => {
               Address:
             </CFormLabel>
             <CCol sm={2}>
-              <span className="col-sm-15 text-end">
+              <span className="col-sm-15 text-end" data-testid="address-input">
                 {getClientInformation.address}
               </span>
             </CCol>
@@ -115,7 +128,10 @@ const ViewClientInformation = (): JSX.Element => {
               Description:
             </CFormLabel>
             <CCol sm={2}>
-              <span className="col-sm-15 text-end">
+              <span
+                className="col-sm-15 text-end"
+                data-testid="description-input"
+              >
                 {getClientInformation.description || 'N/A'}
               </span>
             </CCol>
