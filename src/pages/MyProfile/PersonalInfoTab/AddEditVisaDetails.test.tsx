@@ -5,8 +5,14 @@ import { render, screen } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
-import AddEditVisaDetails from './AddEditFamilyDetails'
+import userEvent from '@testing-library/user-event'
+import AddEditVisaDetails from './AddEditVisaDetails'
 import stateStore from '../../../stateStore'
+
+const deviceLocale: string =
+  navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language
 
 const ReduxProvider = ({
   children,
@@ -23,7 +29,7 @@ jest.mock('react-redux', () => ({
   }),
 }))
 describe('Add New Visa member Testing', () => {
-  it('should display the correct number of options', () => {
+  beforeEach(() => {
     render(
       <ReduxProvider reduxStore={stateStore}>
         <AddEditVisaDetails
@@ -35,14 +41,30 @@ describe('Add New Visa member Testing', () => {
         />
       </ReduxProvider>,
     )
-    expect(screen.getAllByRole('option').length).toBe(11)
   })
-  test('should render date of issued input', () => {
+
+  test('should render datepicker fields and label', () => {
     const dateOfIssued = screen.findByTestId('dateOfIssuedInput')
     expect(dateOfIssued).toBeTruthy()
-  })
-  test('should render date of expiry input', () => {
     const dateOfExpiry = screen.findByTestId('dateOfExiryInput')
     expect(dateOfExpiry).toBeTruthy()
+
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
+    userEvent.type(
+      dateInput[0],
+      new Date('12/20/2021').toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }),
+    )
+    userEvent.type(
+      dateInput[1],
+      new Date('12/21/2022').toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }),
+    )
   })
 })
