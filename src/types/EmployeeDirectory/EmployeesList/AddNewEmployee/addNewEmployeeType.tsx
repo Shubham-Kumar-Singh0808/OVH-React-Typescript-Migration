@@ -199,6 +199,7 @@ export interface SelectProps extends DynamicFormLabelProps {
   value?: string
   name?: string
   label?: string
+  placeHolder?: string
   isRequired: boolean
 }
 export interface StatusProps extends DynamicFormLabelProps {

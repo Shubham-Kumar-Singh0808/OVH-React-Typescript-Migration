@@ -78,6 +78,11 @@ const AddProject = (): JSX.Element => {
       } as GetAutoCompleteList
     })
 
+  const projectTypeList: GetList[] = [
+    { id: 1, name: 'Development' },
+    { id: 2, name: 'Support' },
+  ]
+
   const priceModelList: GetList[] = [
     { id: 1, name: 'Fixed Bid' },
     { id: 2, name: 'Retainer' },
@@ -154,7 +159,7 @@ const AddProject = (): JSX.Element => {
                 onSelect={handleClientSelect}
                 shouldReset={false}
                 value={''}
-                isRequired={false}
+                isRequired={true}
                 label={'Client Organization'}
                 placeholder={'Client'}
                 name={'clientOrganization'}
@@ -164,19 +169,20 @@ const AddProject = (): JSX.Element => {
                 onChangeHandler={setProjectName}
                 onBlurHandler={handleProjectName}
                 value={projectName}
-                isRequired={false}
+                isRequired={true}
                 label={'Project Name'}
                 name={'projectName'}
                 placeholder={'Project Name'}
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
               <OSelectList
-                isRequired={false}
+                isRequired={true}
                 list={priceModelList}
                 setValue={handlePriceModel}
                 value={project.type}
-                name="Pricing Model"
-                label="---Pricing Model---"
+                label="Pricing Model"
+                name="pricingModel"
+                placeHolder="---Pricing Model---"
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
               <CRow className="mb-3 align-items-center">
@@ -193,22 +199,24 @@ const AddProject = (): JSX.Element => {
                 </CCol>
               </CRow>
               <OSelectList
-                isRequired={false}
-                list={priceModelList}
+                isRequired={true}
+                list={projectTypeList}
                 setValue={handlePriceModel}
                 value={project.type}
-                name="Project Type"
-                label="Development"
+                name="projectType"
+                label="Project Type"
+                placeHolder="---Project Type---"
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
-              <OInputField
-                onChangeHandler={setProjectName}
-                onBlurHandler={handleProjectName}
+              <OAutoComplete
+                list={clientOrganizationList}
+                onSelect={handleClientSelect}
+                shouldReset={false}
                 value={projectName}
-                isRequired={false}
+                isRequired={true}
                 label={'Project Manager'}
-                name={'projectManager'}
                 placeholder={'Project Manager'}
+                name={'projectManager'}
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
               <CRow className="mb-3">
