@@ -63,11 +63,26 @@ const AddProject = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.projectManagement.getProjectClients())
+    dispatch(
+      reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
+    )
   }, [dispatch])
 
   const projectClients = useTypedSelector(
     reduxServices.projectManagement.selectors.projectClients,
   )
+
+  const reportingManagersList = useTypedSelector(
+    reduxServices.newEmployee.reportingManagersService.selectors
+      .reportingManagersList,
+  )
+
+  const projectManagers = reportingManagersList?.map((manager) => {
+    return {
+      id: manager.id,
+      name: manager.fullName,
+    } as GetAutoCompleteList
+  })
 
   const clientOrganizationList = projectClients
     ?.filter((filterClient: ProjectClients) => filterClient.name != null)
@@ -209,7 +224,7 @@ const AddProject = (): JSX.Element => {
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
               <OAutoComplete
-                list={clientOrganizationList}
+                list={projectManagers}
                 onSelect={handleClientSelect}
                 shouldReset={false}
                 value={projectName}
@@ -230,7 +245,6 @@ const AddProject = (): JSX.Element => {
                   <DatePicker
                     id="projectstartdate"
                     className="form-control form-control-sm sh-date-picker"
-                    maxDate={new Date()}
                     peekNextMonth
                     showMonthDropdown
                     showYearDropdown
@@ -254,7 +268,6 @@ const AddProject = (): JSX.Element => {
                   <DatePicker
                     id="projectenddate"
                     className="form-control form-control-sm sh-date-picker"
-                    maxDate={new Date()}
                     peekNextMonth
                     showMonthDropdown
                     showYearDropdown
@@ -332,6 +345,24 @@ const AddProject = (): JSX.Element => {
                       onHandleDescription(editor.getData().trim())
                     }}
                   />
+                </CCol>
+              </CRow>
+              <CRow className="mb-3 align-items-center">
+                <CCol sm={{ span: 6, offset: 3 }}>
+                  <CButton
+                    className="btn-ovh me-1"
+                    color="success"
+                    data-testid="add-new-employee"
+                  >
+                    Add
+                  </CButton>
+                  <CButton
+                    color="warning "
+                    className="btn-ovh"
+                    data-testid="clear-new-employee"
+                  >
+                    Clear
+                  </CButton>
                 </CCol>
               </CRow>
             </CCol>
