@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import LeaveReportFilterOption from './LeaveReportFilterOption'
 import { render, screen } from '../../../test/testUtils'
 
-describe('LeaveReportFitler Options Component Testing', () => {
+describe('LeaveReportFilter Options Component Testing', () => {
   describe('Filter Options component without value', () => {
     beforeEach(() => {
       render(<LeaveReportFilterOption />)
