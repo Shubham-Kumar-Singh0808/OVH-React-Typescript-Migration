@@ -13,7 +13,7 @@ const OInputField = ({
   name,
   placeholder,
 }: InputField): JSX.Element => {
-  const handleUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChangeHandler(e.target.value)
   }
 
@@ -40,7 +40,7 @@ const OInputField = ({
             placeholder={placeholder}
             value={value}
             onBlur={handleOnBlurInput}
-            onChange={handleUserEmail}
+            onChange={handleOnChangeInput}
           />
         </CCol>
       </CRow>
