@@ -1,0 +1,171 @@
+import {
+  CRow,
+  CCol,
+  CFormLabel,
+  CFormSelect,
+  CButton,
+  CFormInput,
+  CInputGroup,
+} from '@coreui/react-pro'
+import React, { useState, useEffect } from 'react'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { usePagination } from '../../../middleware/hooks/usePagination'
+import { downloadFile } from '../../../utils/helper'
+import leaveReportsApi from '../../../middleware/api/Leaves/LeaveReports/leaveReportApi'
+
+const LeaveReportsFilterOption = (): JSX.Element => {
+  const [searchInput, setSearchInput] = useState<string>('')
+  const [selectYear, setSelectYear] = useState('2022')
+  const dispatch = useAppDispatch()
+
+  const listSize = useTypedSelector(
+    reduxServices.leaveReport.selectors.listSize,
+  )
+  const getCreditYearData = useTypedSelector(
+    reduxServices.leaveReport.selectors.creditedYears,
+  )
+
+  const getFinancialYear = useTypedSelector(
+    reduxServices.leaveReport.selectors.financialYear,
+  )
+
+  useEffect(() => {
+    dispatch(reduxServices.leaveReport.getFinancialYear())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(reduxServices.leaveReport.creditedYearDetails())
+  }, [dispatch])
+
+  const handleSearch = () => {
+    dispatch(
+      reduxServices.leaveReport.searchLeaveSummaries({
+        financialYear: selectYear,
+        search: searchInput,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      }),
+    )
+  }
+
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.leaveReport.searchLeaveSummaries({
+          financialYear: selectYear,
+          search: searchInput,
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+        }),
+      )
+    }
+  }
+  const handleExportLeaveReportData = async () => {
+    const employeeLeaveReportDataDownload =
+      await leaveReportsApi.exportLeaveReportData({
+        financialYear: selectYear,
+        search: searchInput,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      })
+
+    downloadFile(employeeLeaveReportDataDownload, 'LeaveReportList.csv')
+  }
+
+  useEffect(() => {
+    if (selectYear) {
+      dispatch(
+        reduxServices.leaveReport.getAllEmployeesLeaveSummaries({
+          financialYear: selectYear,
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+        }),
+      )
+    }
+  }, [dispatch, selectYear])
+
+  const formLabelProps = {
+    htmlFor: 'inputNewLeaveReports',
+    className: 'col-form-label category-label',
+  }
+
+  const { currentPage, pageSize } = usePagination(listSize, 20)
+
+  const result = getCreditYearData
+    ?.filter((value) => value.yearOfEra.value <= getFinancialYear)
+    .map((val2) => val2.yearOfEra.value)
+
+  const uniqueValue = Array.from(new Set(result))
+  return (
+    <>
+      <CRow className="mt-4 mb-4">
+        <CFormLabel
+          {...formLabelProps}
+          className="col-sm-1 col-form-label text-end ps-0 pe-0"
+        >
+          Select Year:
+        </CFormLabel>
+        <CFormLabel
+          {...formLabelProps}
+          className="col-sm-4 col-form-label text-end ps-0 pe-0"
+        >
+          Search Employees:
+        </CFormLabel>
+      </CRow>
+      <CRow>
+        <CCol sm={3}>
+          <CFormSelect
+            data-testid="form-select2"
+            aria-label="leaveCycleMonth"
+            name="selectYear"
+            id="selectYear"
+            value={selectYear}
+            onChange={(e) => setSelectYear(e.target.value)}
+          >
+            {uniqueValue.map((value, index) => {
+              return <option key={index}>{value}</option>
+            })}
+          </CFormSelect>
+        </CCol>
+        <CCol sm={4}>
+          <CInputGroup className="global-search me-0" data-testid="searchField">
+            <CFormInput
+              data-testid="searchInput"
+              placeholder="Search Employees"
+              aria-label="Multiple Search"
+              aria-describedby="button-addon2"
+              value={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value)
+              }}
+              onKeyUp={handleSearchByEnter}
+            />
+            <CButton
+              disabled={!searchInput}
+              data-testid="search-btn1"
+              className="cursor-pointer"
+              type="button"
+              color="info"
+              id="button-addon2"
+              onClick={handleSearch}
+            >
+              <i className="fa fa-search"></i>
+            </CButton>
+          </CInputGroup>
+        </CCol>
+        <CCol xs={5} className="d-md-flex justify-content-md-end">
+          <CButton
+            color="info btn-ovh me-0"
+            onClick={handleExportLeaveReportData}
+          >
+            <i className="fa fa-plus me-1"></i>Click to Export
+          </CButton>
+        </CCol>
+      </CRow>
+    </>
+  )
+}
+export default LeaveReportsFilterOption
