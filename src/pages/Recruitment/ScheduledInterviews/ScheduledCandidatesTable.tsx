@@ -114,8 +114,8 @@ const ScheduledCandidatesTable = (props: {
             responsive
             className={
               !scheduledCandidates.list?.length
-                ? 'ps-0 pe-0 mt-4 sh-scheduledInterviewsTable'
-                : 'ps-0 pe-0 mt-4'
+                ? 'mt-4 sh-scheduledInterviewsTable'
+                : 'mt-4'
             }
           >
             <CTableHead>

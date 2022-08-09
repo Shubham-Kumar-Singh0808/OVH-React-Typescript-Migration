@@ -63,7 +63,6 @@ const VisaList = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Visa Details"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         <CRow>

@@ -195,7 +195,6 @@ function AddNewHandbook({
       <OCard
         className="mb-4 myprofile-wrapper"
         title={headerTitle}
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         <CRow className="justify-content-end">

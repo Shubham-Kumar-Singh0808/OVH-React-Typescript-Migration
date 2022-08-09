@@ -85,7 +85,6 @@ const MyAttendance = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper time-in-office-report-card"
         title="Employee Attendance"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         <div className="calendar-box">

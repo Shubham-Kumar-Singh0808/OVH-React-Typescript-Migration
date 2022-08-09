@@ -26,50 +26,42 @@ const ShowHandbook = (): JSX.Element => {
 
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-        CHeaderClassName="d-none"
-      >
-        {isLoading !== ApiLoadingState.loading ? (
-          <>
-            <OCard
-              className="mb-4 myprofile-wrapper"
-              title={`${handbook.title}`}
-              CBodyClassName="ps-0 pe-0"
-              CFooterClassName="d-none"
-            >
-              <CRow className="justify-content-end">
-                <CCol className="text-end" md={4}>
-                  <Link to={'/employeehandbook'}>
-                    <CButton
-                      data-testid="back-button"
-                      color="info"
-                      className="btn-ovh me-1"
-                    >
-                      <i className="fa fa-arrow-left me-1"></i>Back
-                    </CButton>
-                  </Link>
-                </CCol>
-              </CRow>
-              <CRow className="mt-5">
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: handbook.description as string,
-                  }}
-                />
-              </CRow>
-            </OCard>
-          </>
-        ) : (
-          <CCol>
-            <CRow className="category-loading-spinner">
-              <CSpinner />
+      {isLoading !== ApiLoadingState.loading ? (
+        <>
+          <OCard
+            className="mb-4 myprofile-wrapper"
+            title={`${handbook.title}`}
+            CFooterClassName="d-none"
+          >
+            <CRow className="justify-content-end">
+              <CCol className="text-end" md={4}>
+                <Link to={'/employeehandbook'}>
+                  <CButton
+                    data-testid="back-button"
+                    color="info"
+                    className="btn-ovh me-1"
+                  >
+                    <i className="fa fa-arrow-left me-1"></i>Back
+                  </CButton>
+                </Link>
+              </CCol>
             </CRow>
-          </CCol>
-        )}
-      </OCard>
+            <CRow className="mt-5">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: handbook.description as string,
+                }}
+              />
+            </CRow>
+          </OCard>
+        </>
+      ) : (
+        <CCol>
+          <CRow className="category-loading-spinner">
+            <CSpinner />
+          </CRow>
+        </CCol>
+      )}
     </>
   )
 }

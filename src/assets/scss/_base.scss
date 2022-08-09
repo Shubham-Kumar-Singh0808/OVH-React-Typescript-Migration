@@ -1,6 +1,7 @@
 body {
   color: $gray-900;
-  font-family: $font-family-base;
+  // font-family: $font-family-base;
+  font-family: $font-family-poppins;
   font-size: $font-size-sm;
 }
 
@@ -18,7 +19,8 @@ h2 {
 
 h4 {
   margin-top: 0;
-  font-size: $font-size-base + 0.125rem;
+  font-size: $font-size-base;
+  line-height: 24px;
   color: $gray-900;
 }
 h5 {

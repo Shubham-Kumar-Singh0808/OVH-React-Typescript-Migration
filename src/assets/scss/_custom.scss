@@ -88,8 +88,7 @@ dd {
 .myprofile-wrapper {
   .card-header {
     h4 {
-      color: $primary;
-      font-weight: normal;
+      @include card-title($primary-new, $spacer, 24px);
     }
   }
 }

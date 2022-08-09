@@ -1,7 +1,7 @@
 // Cards
 .card {
-  padding-left: $spacer;
-  padding-right: $spacer;
+  @include card-style(10px, 1px solid $handbook-item-border);
+  box-shadow: none;
   // overflow: hidden;
   &.bg-danger,
   &.bg-success {
@@ -11,12 +11,12 @@
       border-top-color: $white;
     }
   }
+  &:not([class*=border]){
+    border: 1px solid $handbook-item-border;
+  }
   .card-header {
+    @include card-header(10px 10px 0px 0px, 1px solid $handbook-item-border, 0.6875rem $spacer-padding);
     background-color: $white;
-    border-bottom: 1px solid $primary-base;
-    border-radius: 0;
-    padding-left: 0;
-    padding-right: 0;
     position: relative;
     color: $gray-900;
     font-weight: 700;
@@ -33,7 +33,6 @@
       }
     }
     .h4 {
-      padding: $spacer - 0.4rem 0 $spacer - 0.6rem;
       margin-bottom: 0;
       white-space: nowrap;
       overflow: hidden;
@@ -45,5 +44,8 @@
     a {
       text-decoration: none;
     }
+  }
+  .card-body {
+    padding:$spacer-padding $spacer-padding 1.875rem;
   }
 }

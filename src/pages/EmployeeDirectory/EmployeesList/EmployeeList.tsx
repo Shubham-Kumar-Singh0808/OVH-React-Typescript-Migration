@@ -44,7 +44,6 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Employee Directory"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         {isLoading !== ApiLoadingState.loading ? (

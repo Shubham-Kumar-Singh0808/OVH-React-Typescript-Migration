@@ -106,7 +106,6 @@ const AddEditLeaveCategories = ({
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Add Leave Category"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         <CRow className="justify-content-end">

@@ -162,7 +162,6 @@ const AttendanceReport = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Attendance Report"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         <CRow>

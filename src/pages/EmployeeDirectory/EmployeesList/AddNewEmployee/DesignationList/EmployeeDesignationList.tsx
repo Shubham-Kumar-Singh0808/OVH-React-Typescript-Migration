@@ -25,7 +25,7 @@ const EmployeeDesignationList = ({
         CFooterClassName="d-none"
       >
         <CRow>
-          <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end pe-0">
+          <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
             <CButton
               color="info btn-ovh me-1"
               onClick={() => setToggleDesignation(true)}
@@ -33,13 +33,13 @@ const EmployeeDesignationList = ({
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
           </CCol>
-          <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
+          <CCol xs={12} className="mt-2 mb-2">
             <AddEmployeeDesignation
               selectedDepartmentId={selectedDepartmentId as number}
               setSelectedDepartmentId={setSelectedDepartmentId}
             />
           </CCol>
-          <CCol xs={12} className="mt-3 mb-3 ps-0 pe-0">
+          <CCol xs={12} className="mt-3 mb-3">
             <EmployeeDesignationListTable
               selectedDepartmentId={selectedDepartmentId as number}
             />

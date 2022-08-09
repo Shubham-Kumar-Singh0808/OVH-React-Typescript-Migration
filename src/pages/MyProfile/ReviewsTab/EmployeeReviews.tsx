@@ -66,7 +66,7 @@ const EmployeeReviews = (): JSX.Element => {
         <h4 className="h4">Review List</h4>
       </CCardHeader>
       <br />
-      <CCardBody className="ps-0 pe-0">
+      <CCardBody>
         {employeeReviews.length ? (
           <>
             <CTable striped className="text-center">

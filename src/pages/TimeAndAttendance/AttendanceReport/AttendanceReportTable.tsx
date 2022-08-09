@@ -101,11 +101,7 @@ const AttendanceReportTable = ({
 
   return (
     <>
-      <CTable
-        striped
-        responsive
-        className="ps-0 pe-0 attendance-report-table mt-1"
-      >
+      <CTable striped responsive className="attendance-report-table mt-1">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell {...tableHeaderCellPropsID}>ID</CTableHeaderCell>

@@ -347,7 +347,6 @@ const EditEmployee = (): JSX.Element => {
     <OCard
       className="mb-4 myprofile-wrapper"
       title="Edit Employee"
-      CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
     >
       {isLoading === ApiLoadingState.succeeded ? (

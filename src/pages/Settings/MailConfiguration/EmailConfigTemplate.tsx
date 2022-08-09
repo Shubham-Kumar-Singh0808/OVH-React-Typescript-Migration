@@ -96,7 +96,6 @@ const EmailConfigTemplate = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Email Templates"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         <CRow>

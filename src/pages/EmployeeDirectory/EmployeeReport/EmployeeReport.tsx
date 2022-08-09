@@ -66,7 +66,6 @@ const EmployeeReport = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Employee Report"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         {isLoading !== ApiLoadingState.loading ? (

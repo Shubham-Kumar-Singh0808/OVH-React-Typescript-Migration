@@ -1,0 +1,18 @@
+@mixin card-style($radius,$border){
+    border-radius: $radius;
+    border: $border;
+}
+
+@mixin card-header($radius,$border, $padding){
+    border-radius: $radius;
+    border-bottom: $border;
+    padding: $padding;
+}
+
+ @mixin card-title($color,$fontSize,$lineHeight){
+    color: $color;
+    font-size: $fontSize;
+    line-height:$lineHeight;
+}
+
+   
