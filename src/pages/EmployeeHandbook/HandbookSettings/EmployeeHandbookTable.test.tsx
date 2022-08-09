@@ -61,6 +61,7 @@ describe('Employee Handbook Settings', () => {
       expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
     })
   })
+  jest.retryTimes(3)
   it('should close the modal on clicking No button from the popup', async () => {
     const deleteButtonElement = screen.getByTestId('handbook-delete-btn4')
     userEvent.click(deleteButtonElement)

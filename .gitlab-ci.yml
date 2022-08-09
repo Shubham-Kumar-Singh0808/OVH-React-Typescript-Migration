@@ -25,9 +25,9 @@ Test:
     - npm run lint
     - echo "Starting Test"
     - npm run test:cov
-    - echo "Starting sonar analysis"
-    - dir
-    - sonar-scanner -D"sonar.projectKey=ovh-typescript-react-migration" -D"sonar.projectName=OVHTypeScriptReactMigration" -D"sonar.sources=src" -D"sonar.qualitygate.wait=true" -D"sonar.typescript.lcov.reportPaths=coverage/lcov.info"
+    # - echo "Starting sonar analysis"
+    # - dir
+    # - sonar-scanner -D"sonar.projectKey=ovh-typescript-react-migration" -D"sonar.projectName=OVHTypeScriptReactMigration" -D"sonar.sources=src" -D"sonar.qualitygate.wait=true" -D"sonar.typescript.lcov.reportPaths=coverage/lcov.info"
   artifacts:
     when: always
     reports:
