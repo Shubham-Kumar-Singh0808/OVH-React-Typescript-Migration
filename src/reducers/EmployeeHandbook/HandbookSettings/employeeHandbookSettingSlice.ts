@@ -188,7 +188,7 @@ const employeeHandbookSettingSlice = createSlice({
       })
       .addCase(getEmployeeHandbooks.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.employeeHandbooks = action.payload.list as EmployeeHandbook[]
+        state.employeeHandbooks = action.payload.list
         state.listSize = action.payload.size
       })
       .addCase(getEmployeeHandbook.fulfilled, (state, action) => {
