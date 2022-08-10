@@ -5,7 +5,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
 import { showIsRequired } from '../../../../utils/helper'
 
-const AddNewMailTemplateType = () => {
+const AddNewMailTemplateType = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [newTemplateType, setNewTemplateType] = useState('')

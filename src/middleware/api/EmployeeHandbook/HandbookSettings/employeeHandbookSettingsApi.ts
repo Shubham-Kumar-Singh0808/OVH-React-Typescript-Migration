@@ -110,7 +110,7 @@ const updateEmployeeHandbook = async (
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeHandbookSettingsApiConfig.updateEmployeeHandbook,
     method: AllowedHttpMethods.put,
-    params: { list: prepareObject.list },
+    params: { list },
     paramsSerializer: (params: ApiParams) =>
       qs.stringify(params, { arrayFormat: 'repeat' }),
     data: {
