@@ -1,10 +1,10 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import OSelectList from './index'
-import { render, screen } from '../../../test/testUtils'
-import { listComposer } from '../../../utils/helper'
-import { mockDesignationList } from '../../../test/data/employeeDesignationListData'
+import OSelectList from './OSelectList'
+import { render, screen } from '../../test/testUtils'
+import { listComposer } from '../../utils/helper'
+import { mockDesignationList } from '../../test/data/employeeDesignationListData'
 
 const mockSetIsAccordionItemShow = jest.fn()
 
