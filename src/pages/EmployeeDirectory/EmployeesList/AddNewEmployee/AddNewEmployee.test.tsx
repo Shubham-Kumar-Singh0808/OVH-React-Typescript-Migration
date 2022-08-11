@@ -123,7 +123,7 @@ describe('Add New Employee Testing', () => {
     userEvent.type(lastName, 'Ko')
     expect(lastName).toHaveValue('Ko')
 
-    const GenderSelectListSelector = screen.getByTestId('formGender')
+    const GenderSelectListSelector = screen.getByTestId('formgender')
     userEvent.selectOptions(GenderSelectListSelector, ['Male'])
     expect(GenderSelectListSelector).toHaveValue('Male')
 
