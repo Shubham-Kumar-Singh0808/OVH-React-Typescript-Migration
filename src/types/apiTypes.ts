@@ -288,3 +288,8 @@ export interface AddNewMailTemplateTypeApi extends ApiBase {
 export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
 }
+
+export interface AddNewClientApi extends ApiBase {
+  getClientCountries: string
+  addNewClient: string
+}

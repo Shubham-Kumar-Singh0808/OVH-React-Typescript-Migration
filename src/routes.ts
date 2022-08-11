@@ -89,6 +89,9 @@ const MyAttedance = React.lazy(
   () => import('./pages/TimeAndAttendance/MyAttendance/MyAttendance'),
 )
 
+const AddClient = React.lazy(
+  () => import('./pages/ProjectManagement/Clients/AddClient/AddNewClient'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -196,6 +199,15 @@ const routes = [
     path: '/employeeattendance',
     name: 'Employee Attendance',
     component: MyAttedance,
+  },
+  {
+    path: '/addClient',
+    name: 'Add Client',
+    component: AddClient,
+  },
+  {
+    path: '/clientsList',
+    name: 'Clients',
   },
 ]
 
