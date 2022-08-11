@@ -128,7 +128,7 @@ describe('Add New Employee Testing', () => {
     expect(GenderSelectListSelector).toHaveValue('Male')
 
     // need to fix
-    const CountrySelectListSelector = screen.getByTestId('formCountry')
+    const CountrySelectListSelector = screen.getByTestId('formcountry')
     fireEvent.change(CountrySelectListSelector, { target: { value: 'test' } })
 
     // Birtday format
