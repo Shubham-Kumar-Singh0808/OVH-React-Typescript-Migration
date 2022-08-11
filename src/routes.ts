@@ -88,7 +88,12 @@ const ScheduledInterview = React.lazy(
 const MyAttedance = React.lazy(
   () => import('./pages/TimeAndAttendance/MyAttendance/MyAttendance'),
 )
-
+const LeaveSummary = React.lazy(
+  () =>
+    import(
+      './pages/Leaves/LeaveSummary/LeaveSummaryLandingScreen/EmployeeLeaveSummary'
+    ),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -196,6 +201,11 @@ const routes = [
     path: '/employeeattendance',
     name: 'Employee Attendance',
     component: MyAttedance,
+  },
+  {
+    path: '/employeeLeaveSummary',
+    name: 'Leave Summary',
+    component: LeaveSummary,
   },
 ]
 

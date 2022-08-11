@@ -40,6 +40,7 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  LeaveSummaryApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -337,4 +338,10 @@ export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
 
 export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
+}
+
+export const leaveSummaryApiConfig: LeaveSummaryApi = {
+  getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
+  getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
+  cancelEmployeeLeave: apiPrefix + '/leave/cancel',
 }

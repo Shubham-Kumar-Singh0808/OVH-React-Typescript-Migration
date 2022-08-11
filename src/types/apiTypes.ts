@@ -288,3 +288,9 @@ export interface AddNewMailTemplateTypeApi extends ApiBase {
 export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
 }
+
+export interface LeaveSummaryApi extends ApiBase {
+  getEmployeeLeaveSummary: string
+  getEmployeeLeaveHistory: string
+  cancelEmployeeLeave: string
+}
