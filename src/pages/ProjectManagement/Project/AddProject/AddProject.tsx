@@ -62,11 +62,17 @@ const AddProject = (): JSX.Element => {
   useEffect(() => {
     if (
       project.client !== '' &&
+      project.client != null &&
       project.projectName !== '' &&
+      project.projectName != null &&
       project.model !== '' &&
+      project.model != null &&
       project.type !== '' &&
+      project.type != null &&
       project.managerId !== -1 &&
-      project.startdate !== ''
+      project.managerId != null &&
+      project.startdate !== '' &&
+      project.startdate != null
     ) {
       setAddBtn(true)
     }
@@ -483,7 +489,7 @@ const AddProject = (): JSX.Element => {
                     Add
                   </CButton>
                   <CButton
-                    color="warning "
+                    color="warning"
                     className="btn-ovh"
                     data-testid="clear-project"
                     onClick={handleClear}
