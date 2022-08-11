@@ -13,10 +13,13 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { downloadFile } from '../../../utils/helper'
 import leaveReportsApi from '../../../middleware/api/Leaves/LeaveReports/leaveReportApi'
+import { LeaveReportOptionsProps } from '../../../types/Leaves/LeaveReports/leaveReportTypes'
 
-const LeaveReportsFilterOption = (): JSX.Element => {
+const LeaveReportsFilterOption = ({
+  selectYear,
+  setSelectYear,
+}: LeaveReportOptionsProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
-  const [selectYear, setSelectYear] = useState('2022')
   const dispatch = useAppDispatch()
 
   const listSize = useTypedSelector(
@@ -75,18 +78,6 @@ const LeaveReportsFilterOption = (): JSX.Element => {
 
     downloadFile(employeeLeaveReportDataDownload, 'LeaveReportList.csv')
   }
-
-  useEffect(() => {
-    if (selectYear) {
-      dispatch(
-        reduxServices.leaveReport.getAllEmployeesLeaveSummaries({
-          financialYear: selectYear,
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-        }),
-      )
-    }
-  }, [dispatch, selectYear])
 
   const formLabelProps = {
     htmlFor: 'inputNewLeaveReports',

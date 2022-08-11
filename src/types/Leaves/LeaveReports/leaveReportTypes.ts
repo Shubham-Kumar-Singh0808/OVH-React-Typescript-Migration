@@ -215,6 +215,7 @@ export type EmployeeLeaveReportTableProps = {
   selectYear?: string
 }
 
-export type LeaveReportProps = {
+export type LeaveReportOptionsProps = {
   selectYear: string
+  setSelectYear: (value: string) => void
 }
