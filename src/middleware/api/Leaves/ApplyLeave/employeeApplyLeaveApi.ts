@@ -1,12 +1,12 @@
-import { AllowedHttpMethods, applyLeaveAPiConfig } from '../apiList'
+import { AllowedHttpMethods, applyLeaveAPiConfig } from '../../apiList'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
-} from '../../../utils/apiUtils'
+} from '../../../../utils/apiUtils'
 import {
   EmployeeLeaveApply,
   EmployeeLeaveType,
-} from '../../../types/Leaves/employeeApplyLeaves'
+} from '../../../../types/Leaves/ApplyLeave/employeeApplyLeaves'
 
 const getEmployeeLeaveType = async (
   employeeId: number | string | undefined,

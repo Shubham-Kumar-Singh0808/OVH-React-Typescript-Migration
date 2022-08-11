@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { AppDispatch, RootState } from '../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import {
   EmployeeLeaveApply,
   EmployeeLeaveApplyState,
   EmployeeLeaveType,
-} from '../../types/Leaves/employeeApplyLeaves'
-import { ValidationError } from '../../types/commonTypes'
-import { ApiLoadingState } from '../../middleware/api/apiList'
-import employeeLeaveApplyApi from '../../middleware/api/Leaves/employeeApplyLeaveApi'
+} from '../../../types/Leaves/ApplyLeave/employeeApplyLeaves'
+import { ValidationError } from '../../../types/commonTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import employeeLeaveApplyApi from '../../../middleware/api/Leaves/ApplyLeave/employeeApplyLeaveApi'
 
 const initialEmployeeApplyLeaveState: EmployeeLeaveApplyState = {
   employeeLeaveType: [],

@@ -1,4 +1,4 @@
-import { LoadingState, ValidationError } from '../commonTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type EmployeeLeaveApply = {
   employeeComments: string

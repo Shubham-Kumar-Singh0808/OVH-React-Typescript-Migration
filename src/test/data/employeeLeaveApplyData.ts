@@ -1,7 +1,7 @@
 import {
   EmployeeLeaveApply,
   EmployeeLeaveType,
-} from '../../types/Leaves/employeeApplyLeaves'
+} from '../../types/Leaves/ApplyLeave/employeeApplyLeaves'
 
 export const mockLeaveType: EmployeeLeaveType[] = [
   {
