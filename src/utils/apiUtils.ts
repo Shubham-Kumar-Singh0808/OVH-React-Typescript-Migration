@@ -1,5 +1,6 @@
 import axios, { Method, ResponseType } from 'axios'
 import { AuthenticatedRequestConfig } from '../types/apiTypes'
+import { ApiParams } from '../types/commonTypes'
 
 export const getUnauthenticatedRequestConfig = ({
   url,
@@ -40,7 +41,7 @@ export const getAuthenticatedRequestConfig = ({
   params?: {
     [key: string]: string | number | boolean | bigint | undefined | number[]
   }
-  paramsSerializer?: any
+  paramsSerializer?: (params: ApiParams) => string
   data?:
     | { [key: string]: string | number | unknown }
     | unknown
