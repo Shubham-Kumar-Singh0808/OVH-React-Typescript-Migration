@@ -3,12 +3,18 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import LeaveReportFilterOption from './LeaveReportFilterOption'
 import { render, screen } from '../../../test/testUtils'
-import { mockCreditYearData } from '../../../test/data/LeaveReportData'
+
+const mockSetSelectYear = jest.fn()
 
 describe('LeaveReportFilter Options Component Testing', () => {
   describe('Filter Options component without value', () => {
     beforeEach(() => {
-      render(<LeaveReportFilterOption />)
+      render(
+        <LeaveReportFilterOption
+          selectYear={''}
+          setSelectYear={mockSetSelectYear}
+        />,
+      )
     })
 
     test('should render labels', () => {
@@ -30,21 +36,5 @@ describe('LeaveReportFilter Options Component Testing', () => {
       userEvent.type(screen.getByPlaceholderText('Search Employees'), 'Java')
       expect(screen.getByTestId('search-btn1')).toBeEnabled()
     })
-  })
-})
-describe('Select Year Field', () => {
-  test('should render Select year field without crashing', () => {
-    render(<LeaveReportFilterOption />, {
-      preloadedState: {
-        leaveReport: {
-          selectFinancialYear: mockCreditYearData,
-        },
-      },
-    })
-
-    const countryDropdown = screen.getByTestId('form-select2')
-    userEvent.selectOptions(countryDropdown, ['2019'])
-    expect(mockCreditYearData).toBeCalledWith('1')
-    expect(countryDropdown).toBeInTheDocument()
   })
 })
