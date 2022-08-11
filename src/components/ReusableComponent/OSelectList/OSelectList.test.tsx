@@ -18,17 +18,14 @@ describe('Add Employee OSelectList Component', () => {
           value="Test Value"
           name="Test Name"
           label="Test Label"
+          placeHolder="Test Label"
           dynamicFormLabelProps={jest.fn()}
         />,
       )
     })
 
-    test('should be able to render Employee OSelectList Component without crashing', () => {
-      screen.debug()
-    })
-
     test('should be able to render Employee OSelectList Component Name', () => {
-      expect(screen.getByText('Test Name:')).toBeInTheDocument()
+      expect(screen.getByText('Test Label')).toBeInTheDocument()
     })
 
     test('should be able to render Employee OSelectList Component label', () => {
@@ -51,13 +48,10 @@ describe('Add Employee OSelectList Component', () => {
           value={''}
           name="Test Name"
           label="Test Label"
+          placeHolder="Test Label"
           dynamicFormLabelProps={jest.fn()}
         />,
       )
-    })
-
-    test('should be able to render Employee OSelectList Component without crashing', () => {
-      screen.debug()
     })
 
     test('should render Employee OSelectList Component List Options with out crashing', () => {
