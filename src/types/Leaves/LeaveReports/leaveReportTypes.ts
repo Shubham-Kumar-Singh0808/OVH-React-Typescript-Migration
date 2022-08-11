@@ -212,5 +212,9 @@ export type EmployeeLeaveReportTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  selectYear?: string
+}
+
+export type LeaveReportProps = {
   selectYear: string
 }

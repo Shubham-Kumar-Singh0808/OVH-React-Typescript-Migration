@@ -37,6 +37,7 @@ const LeaveReportsFilterOption = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.leaveReport.creditedYearDetails())
   }, [dispatch])
+  const { currentPage, pageSize } = usePagination(listSize, 20)
 
   const handleSearch = () => {
     dispatch(
@@ -92,8 +93,6 @@ const LeaveReportsFilterOption = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
 
-  const { currentPage, pageSize } = usePagination(listSize, 20)
-
   const result = getCreditYearData
     ?.filter((value) => value.yearOfEra.value <= getFinancialYear)
     .map((val2) => val2.yearOfEra.value)
@@ -101,68 +100,73 @@ const LeaveReportsFilterOption = (): JSX.Element => {
   const uniqueValue = Array.from(new Set(result))
   return (
     <>
-      <CRow className="mt-4 mb-4">
-        <CFormLabel
-          {...formLabelProps}
-          className="col-sm-1 col-form-label text-end ps-0 pe-0"
-        >
-          Select Year:
-        </CFormLabel>
-        <CFormLabel
-          {...formLabelProps}
-          className="col-sm-4 col-form-label text-end ps-0 pe-0"
-        >
-          Search Employees:
-        </CFormLabel>
-      </CRow>
-      <CRow>
-        <CCol sm={3}>
-          <CFormSelect
-            data-testid="form-select2"
-            aria-label="leaveCycleMonth"
-            name="selectYear"
-            id="selectYear"
-            value={selectYear}
-            onChange={(e) => setSelectYear(e.target.value)}
-          >
-            {uniqueValue.map((value, index) => {
-              return <option key={index}>{value}</option>
-            })}
-          </CFormSelect>
-        </CCol>
-        <CCol sm={4}>
-          <CInputGroup className="global-search me-0" data-testid="searchField">
-            <CFormInput
-              data-testid="searchInput"
-              placeholder="Search Employees"
-              aria-label="Multiple Search"
-              aria-describedby="button-addon2"
-              value={searchInput}
-              onChange={(e) => {
-                setSearchInput(e.target.value)
-              }}
-              onKeyUp={handleSearchByEnter}
-            />
-            <CButton
-              disabled={!searchInput}
-              data-testid="search-btn1"
-              className="cursor-pointer"
-              type="button"
-              color="info"
-              id="button-addon2"
-              onClick={handleSearch}
-            >
-              <i className="fa fa-search"></i>
-            </CButton>
-          </CInputGroup>
-        </CCol>
-        <CCol xs={5} className="d-md-flex justify-content-md-end">
-          <CButton
-            color="info btn-ovh me-0"
-            onClick={handleExportLeaveReportData}
-          >
-            <i className="fa fa-plus me-1"></i>Click to Export
-          </CButton>
+      <CRow className="mt-1">
+        <CCol sm={12}>
+          <CRow>
+            <CCol sm={4}>
+              <CFormLabel
+                {...formLabelProps}
+                className="col-sm-4 col-form-label"
+              >
+                Select Year:
+              </CFormLabel>
+              <CFormSelect
+                data-testid="form-select2"
+                aria-label="leaveCycleMonth"
+                name="selectYear"
+                id="selectYear"
+                value={selectYear}
+                onChange={(e) => setSelectYear(e.target.value)}
+              >
+                {uniqueValue.map((value, index) => {
+                  return <option key={index}>{value}</option>
+                })}
+              </CFormSelect>
+            </CCol>
+            <CCol sm={4}>
+              <CFormLabel
+                {...formLabelProps}
+                className="col-sm-6 col-form-label"
+              >
+                Search Employees:
+              </CFormLabel>
+              <CInputGroup
+                className="global-search me-0"
+                data-testid="searchField"
+              >
+                <CFormInput
+                  data-testid="searchInput"
+                  placeholder="Search Employees"
+                  aria-label="Multiple Search"
+                  aria-describedby="button-addon2"
+                  value={searchInput}
+                  onChange={(e) => {
+                    setSearchInput(e.target.value)
+                  }}
+                  onKeyUp={handleSearchByEnter}
+                />
+                <CButton
+                  disabled={!searchInput}
+                  data-testid="search-btn1"
+                  className="cursor-pointer"
+                  type="button"
+                  color="info"
+                  id="button-addon2"
+                  onClick={handleSearch}
+                >
+                  <i className="fa fa-search"></i>
+                </CButton>
+              </CInputGroup>
+            </CCol>
+            <CCol xs={4}>
+              <CButton
+                color="primary me-1 leavereport-exportbutton"
+                onClick={handleExportLeaveReportData}
+              >
+                <i className="fa fa-plus me-1"></i>Click to Export
+              </CButton>
+            </CCol>
+          </CRow>
         </CCol>
       </CRow>
     </>

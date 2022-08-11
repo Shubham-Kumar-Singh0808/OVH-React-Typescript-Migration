@@ -43,7 +43,6 @@ const LeaveReport = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
-            selectYear={''}
           />
         </>
       ) : (
