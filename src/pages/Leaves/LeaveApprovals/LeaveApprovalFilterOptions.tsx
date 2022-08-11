@@ -123,7 +123,7 @@ const LeaveApprovalFilterOptions = ({
               </CFormLabel>
               <ReactDatePicker
                 id="to-date"
-                data-testid="scheduledInterviewsToDate"
+                data-testid="leaveApprovalFromDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                 peekNextMonth
                 showMonthDropdown
@@ -131,7 +131,7 @@ const LeaveApprovalFilterOptions = ({
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="Select Start Date"
-                name="scheduledInterviewsToDate"
+                name="leaveApprovalFromDate"
                 value={
                   fromDate
                     ? new Date(fromDate).toLocaleDateString(deviceLocale, {
@@ -153,7 +153,7 @@ const LeaveApprovalFilterOptions = ({
               </CFormLabel>
               <ReactDatePicker
                 id="to-date"
-                data-testid="scheduledInterviewsToDate"
+                data-testid="leaveApprovalToDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                 peekNextMonth
                 showMonthDropdown
@@ -161,7 +161,7 @@ const LeaveApprovalFilterOptions = ({
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="Select End Date"
-                name="scheduledInterviewsToDate"
+                name="leaveApprovalToDate"
                 value={
                   toDate
                     ? new Date(toDate).toLocaleDateString(deviceLocale, {
@@ -217,7 +217,7 @@ const LeaveApprovalFilterOptions = ({
             )}
             renderItem={(item, isHighlighted) => (
               <div
-                data-testid="option"
+                data-testid="autoComplete-option"
                 className={
                   isHighlighted
                     ? 'autocomplete-dropdown-item active'
@@ -271,6 +271,7 @@ const LeaveApprovalFilterOptions = ({
           <CButton
             className="cursor-pointer sh-ovh-btn-new"
             color="primary me-1"
+            data-testid="sh-view-button"
             disabled={!isViewBtnEnabled}
             onClick={viewButtonHandler}
           >
@@ -278,6 +279,7 @@ const LeaveApprovalFilterOptions = ({
           </CButton>
           <CButton
             className="cursor-pointer sh-ovh-btn-new"
+            data-testid="sh-clear-button"
             disabled={false}
             color="light me-1"
             onClick={clearButtonHandler}

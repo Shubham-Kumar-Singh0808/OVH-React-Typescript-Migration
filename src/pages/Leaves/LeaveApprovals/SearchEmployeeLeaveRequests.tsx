@@ -12,6 +12,7 @@ import {
   CBadge,
   CFormLabel,
   CFormTextarea,
+  CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import parse from 'html-react-parser'
@@ -393,7 +394,8 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
             </CTableBody>
           ) : (
             <>
-              <OLoadingSpinner type={LoadingType.PAGE} />
+              {/* <OLoadingSpinner type={LoadingType.PAGE} /> */}
+              <CSpinner data-testid="search-leave-loader" />
             </>
           )}
         </CTable>

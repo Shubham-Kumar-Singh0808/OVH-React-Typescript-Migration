@@ -1,5 +1,6 @@
 import {
   CRow,
+  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -76,7 +77,8 @@ const EmployeeLeaves = ({
               })}
             </CTableBody>
           ) : (
-            <OLoadingSpinner type={LoadingType.PAGE} />
+            // <OLoadingSpinner type={LoadingType.PAGE} />
+            <CSpinner />
           )}
         </CTable>
       </CRow>

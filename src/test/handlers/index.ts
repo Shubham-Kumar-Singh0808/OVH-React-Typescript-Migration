@@ -5,6 +5,7 @@ import { employeeListHandlers } from './employeeListHandlers'
 import { employeeShiftsHandlers } from './employeeShiftsHandlers'
 import { generalInformationHandlers } from './generalInformationHandlers'
 import { hiveActivityReportHandlers } from './hiveActivityReportHandlers'
+import { leaveApprovalsHandlers } from './leaveApprovalsHandlers'
 import { loginHandlers } from './loginHandlers'
 import { scheduledInterviewsHandlers } from './scheduledInterviewsHandlers'
 import { skillListHandlers } from './skillListHandlers'
@@ -24,5 +25,6 @@ export const handlers = [
   ...userAccessToFeaturesHandlers,
   ...hiveActivityReportHandlers,
   ...scheduledInterviewsHandlers,
+  ...leaveApprovalsHandlers,
   // add your handler here
 ]

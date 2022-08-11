@@ -12,6 +12,7 @@ import {
   CBadge,
   CFormLabel,
   CFormTextarea,
+  CSpinner,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
@@ -296,6 +297,7 @@ const EmployeeLeaveRequests = (props: {
                         <>
                           <CButton
                             color="success"
+                            data-testid="approve-btn"
                             className="btn-ovh me-2"
                             onClick={() => {
                               handleApproveModal(employeeLeaveItem.id)
@@ -308,6 +310,7 @@ const EmployeeLeaveRequests = (props: {
                           </CButton>
                           <CButton
                             color="danger"
+                            data-testid="reject-btn"
                             className="btn-ovh me-2"
                             onClick={() => {
                               handleRejectModal(employeeLeaveItem.id)
@@ -326,7 +329,8 @@ const EmployeeLeaveRequests = (props: {
             </CTableBody>
           ) : (
             <>
-              <OLoadingSpinner type={LoadingType.PAGE} />
+              {/* <OLoadingSpinner type={LoadingType.PAGE} /> */}
+              <CSpinner />
             </>
           )}
         </CTable>
