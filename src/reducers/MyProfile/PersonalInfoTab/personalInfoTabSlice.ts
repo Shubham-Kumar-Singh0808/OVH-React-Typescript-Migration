@@ -191,26 +191,7 @@ const addEmployeeVisa = createAsyncThunk<
   'addEditFamilyDetails/addEmployeeVisa',
   async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
-      const details = new EmployeeVisaDetails()
-      details.id = BigInt(1)
-      details.empId = BigInt(1)
-      details.empName = ''
-      details.visaTypeId = employeeVisaDetails.visaTypeId
-      details.visaType = ''
-      details.countryId = employeeVisaDetails.countryId
-      details.countryName = ''
-      details.dateOfIssue = employeeVisaDetails.dateOfIssue
-      details.dateOfExpire = employeeVisaDetails.dateOfExpire
-      details.createdBy = ''
-      details.updatedBy = ''
-      details.createdDate = new Date()
-      details.updatedDate = new Date()
-      details.visaDetailsPath = ''
-      details.visaDetailsData = ''
-      details.visaThumbPicture = ''
-
-      const dto = new EmployeeVisaDetailsDto()
-      const newDto = dto.mapToDto(details)
+      const newDto = EmployeeVisaDetailsDto.mapToDto(employeeVisaDetails)
 
       return await personalInfoApi.addEmployeeVisa(newDto)
     } catch (error) {
@@ -232,31 +213,7 @@ const updateEmployeeVisa = createAsyncThunk<
   'personalInfoTab/updateEmployeeVisa',
   async (employeeVisaDetails: EmployeeVisaDetails, thunkApi) => {
     try {
-      const newDateOfIssue = employeeVisaDetails.dateOfIssue?.toString()
-      const newDateOfExpiry = employeeVisaDetails.dateOfExpire?.toString()
-      const newCreatedDate = employeeVisaDetails.createdDate?.toString()
-      const newUpdatedDate = employeeVisaDetails.updatedDate?.toString()
-
-      const details = new EmployeeVisaDetails()
-      details.id = employeeVisaDetails.id
-      details.empId = employeeVisaDetails.empId
-      details.empName = employeeVisaDetails.empName
-      details.visaTypeId = employeeVisaDetails.visaTypeId
-      details.visaType = employeeVisaDetails.visaType
-      details.countryId = employeeVisaDetails.countryId
-      details.countryName = employeeVisaDetails.countryName
-      details.dateOfIssue = new Date(newDateOfIssue as string)
-      details.dateOfExpire = new Date(newDateOfExpiry as string)
-      details.createdBy = employeeVisaDetails.createdBy
-      details.updatedBy = employeeVisaDetails.updatedBy
-      details.createdDate = new Date(newCreatedDate as string)
-      details.updatedDate = new Date(newUpdatedDate as string)
-      details.visaDetailsPath = ''
-      details.visaDetailsData = ''
-      details.visaThumbPicture = ''
-
-      const dto = new EmployeeVisaDetailsDto()
-      const newDto = dto.mapToDto(details)
+      const newDto = EmployeeVisaDetailsDto.mapToDto(employeeVisaDetails)
 
       return await personalInfoApi.updateEmployeeVisa(newDto)
     } catch (error) {

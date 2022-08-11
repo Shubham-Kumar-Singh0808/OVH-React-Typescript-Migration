@@ -61,6 +61,8 @@ function AddEditVisaDetails({
     reduxServices.authentication.selectors.selectEmployeeId,
   )
 
+  console.log(window.location.href)
+
   const dispatch = useAppDispatch()
   const deviceLocale: string =
     navigator.languages && navigator.languages.length
@@ -280,9 +282,31 @@ function AddEditVisaDetails({
   }
 
   const handleUpdateVisaMember = async () => {
-    const prepareObject = {
-      ...employeeVisaDetails,
-    }
+    const newDateOfIssue = employeeVisaDetails.dateOfIssue?.toString()
+    const newDateOfExpiry = employeeVisaDetails.dateOfExpire?.toString()
+    const newCreatedDate = employeeVisaDetails.createdDate?.toString()
+    const newUpdatedDate = employeeVisaDetails.updatedDate?.toString()
+    const prepareObject =
+      // ...employeeVisaDetails,
+      {
+        id: employeeVisaDetails.id,
+        empId: employeeVisaDetails.empId,
+        empName: employeeVisaDetails.empName,
+        visaTypeId: employeeVisaDetails.visaTypeId,
+        visaType: employeeVisaDetails.visaType,
+        countryId: employeeVisaDetails.countryId,
+        countryName: employeeVisaDetails.countryName,
+        dateOfIssue: new Date(newDateOfIssue as string),
+        dateOfExpire: new Date(newDateOfExpiry as string),
+        createdBy: employeeVisaDetails.createdBy,
+        updatedBy: employeeVisaDetails.updatedBy,
+        createdDate: new Date(newCreatedDate as string),
+        updatedDate: new Date(newUpdatedDate as string),
+        visaDetailsPath: '',
+        visaDetailsData: '',
+        visaThumbPicture: '',
+      }
+
     const updateVisaMemberResultAction = await dispatch(
       reduxServices.personalInformation.updateEmployeeVisa(prepareObject),
     )
@@ -312,8 +336,6 @@ function AddEditVisaDetails({
     startDate: Date | undefined,
     endDate: Date | undefined,
   ) => {
-    // const newStartDate = startDate?.setHours(0, 0, 0, 0)
-    // const newEndtDate = endDate?.setHours(0, 0, 0, 0)
     if (startDate && endDate) {
       if (startDate > endDate) {
         setError(true)

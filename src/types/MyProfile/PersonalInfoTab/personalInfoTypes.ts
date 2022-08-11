@@ -48,52 +48,36 @@ export type VisaCountryDetails = {
 }
 
 export class EmployeeVisaDetails {
-  @AutoMap()
   id?: bigint
 
-  @AutoMap()
   empId?: bigint
 
-  @AutoMap()
   empName?: string
 
-  @AutoMap()
   visaTypeId?: bigint
 
-  @AutoMap()
   visaType?: string
 
-  @AutoMap()
   countryId?: bigint
 
-  @AutoMap()
   countryName?: string
 
-  @AutoMap()
   dateOfIssue?: Date
 
-  @AutoMap()
   dateOfExpire?: Date
 
-  @AutoMap()
   createdBy?: string
 
-  @AutoMap()
   updatedBy?: string
 
-  @AutoMap()
   createdDate?: Date
 
-  @AutoMap()
   updatedDate?: Date
 
-  @AutoMap()
   visaDetailsPath?: string | null
 
-  @AutoMap()
   visaDetailsData?: string | null
 
-  @AutoMap()
   visaThumbPicture?: string | null
 }
 
