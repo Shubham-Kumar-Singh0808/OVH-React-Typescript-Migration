@@ -17,44 +17,6 @@ describe('Leave Apply Component Testing', () => {
       screen.debug()
     })
 
-    it('should render intially Apply button as disabled and Clear Button as enabled', () => {
-      render(<EmployeeApplyLeaveFilterOptions />)
-      expect(screen.getByTestId('sh-view-button')).toBeDisabled()
-      // eslint-disable-next-line sonarjs/no-duplicate-string
-      expect(screen.getByTestId('sh-clear-button')).toBeEnabled()
-    })
-    test('should clear dropdown and disable button after submitting ', async () => {
-      render(<EmployeeApplyLeaveFilterOptions />)
-      userEvent.type(screen.getByRole('combobox'), '')
-      await waitFor(() => {
-        userEvent.click(screen.getByRole('button', { name: /clear/i }))
-      })
-    })
-
-    test('renders the <CKEditor> component ', () => {
-      render(<EmployeeApplyLeaveFilterOptions />)
-      const htmlElement = document.querySelector(
-        '[data-testid="ckEditor-component"]',
-      )
-      const nonExistElement = document.querySelector('ckEditor-component')
-
-      expect(htmlElement).toBeInTheDocument()
-      expect(nonExistElement).not.toBeInTheDocument()
-    })
-
-    test('should enabled Apply button when input is not empty', () => {
-      render(<EmployeeApplyLeaveFilterOptions />)
-      expect(screen.getByTestId('sh-clear-button')).not.toBeDisabled()
-      expect(screen.getByTestId('sh-view-button')).toBeDisabled()
-    })
-
-    test('should correctly set default option', () => {
-      render(<EmployeeApplyLeaveFilterOptions />)
-      expect(
-        screen.getByRole('option', { name: 'Select a Leave' }).selected,
-      ).toBe(true)
-    })
-
     it('should display the correct number of options', () => {
       render(<EmployeeApplyLeaveFilterOptions />)
       expect(screen.getAllByRole('option').length).toBe(2)
@@ -122,6 +84,16 @@ describe('Leave Apply Component Testing', () => {
       const LeaveTypeSelectListSelector = screen.getByTestId('form-select')
       userEvent.selectOptions(LeaveTypeSelectListSelector, ['LOP'])
       expect(LeaveTypeSelectListSelector).toHaveValue('LOP')
+    })
+    test('should clear input and disable button after  new apply leave should be added', async () => {
+      const LeaveTypeSelectListSelector = screen.getByTestId('form-select')
+      userEvent.selectOptions(LeaveTypeSelectListSelector, ['LOP'])
+      await waitFor(() => {
+        userEvent.click(screen.getByTestId('sh-clear-button'))
+
+        userEvent.selectOptions(LeaveTypeSelectListSelector, [''])
+        expect(screen.getByTestId('sh-view-button')).toBeDisabled()
+      })
     })
     test('should render data upon apply button click', async () => {
       const viewButtonElement = screen.getByRole('button', { name: 'Apply' })

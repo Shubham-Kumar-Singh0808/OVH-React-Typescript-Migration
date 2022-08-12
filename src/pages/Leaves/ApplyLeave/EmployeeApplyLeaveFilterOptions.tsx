@@ -11,7 +11,7 @@ import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OToast from '../../../components/ReusableComponent/OToast'
 
-const EmployeeApplyLeave = (): JSX.Element => {
+const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const initialEmployeeLeaveApply = {} as EmployeeLeaveApply
   const [applyLeave, setApplyLeave] = useState(initialEmployeeLeaveApply)
@@ -60,7 +60,7 @@ const EmployeeApplyLeave = (): JSX.Element => {
     } else {
       setDateError(false)
     }
-  }, [dispatch])
+  }, [dispatch, fromDate, toDate])
 
   const commonFormatDate = 'l'
   const currentDate = new Date().setHours(0, 0, 0, 0)
@@ -195,7 +195,6 @@ const EmployeeApplyLeave = (): JSX.Element => {
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                // maxDate={new Date()}
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
                 name="fromDate"
@@ -226,7 +225,6 @@ const EmployeeApplyLeave = (): JSX.Element => {
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                // minDate={new Date()}
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
                 name="toDate"
@@ -301,4 +299,4 @@ const EmployeeApplyLeave = (): JSX.Element => {
     </>
   )
 }
-export default EmployeeApplyLeave
+export default EmployeeApplyLeaveFilterOptions
