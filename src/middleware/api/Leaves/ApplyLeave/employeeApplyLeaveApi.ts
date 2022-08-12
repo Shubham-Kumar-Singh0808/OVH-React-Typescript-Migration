@@ -22,7 +22,7 @@ const getEmployeeLeaveType = async (
   return response.data
 }
 
-const employeeLeaveApply = async (
+const employeeApplyLeave = async (
   prepareObject: EmployeeLeaveApply,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -37,7 +37,7 @@ const employeeLeaveApply = async (
 
 const employeeLeaveApplyApi = {
   getEmployeeLeaveType,
-  employeeLeaveApply,
+  employeeApplyLeave,
 }
 
 export default employeeLeaveApplyApi

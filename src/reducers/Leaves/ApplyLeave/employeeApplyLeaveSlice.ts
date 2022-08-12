@@ -36,7 +36,7 @@ const getEmployeeLeaveType = createAsyncThunk<
   },
 )
 
-const employeeLeaveApply = createAsyncThunk<
+const employeeApplyLeave = createAsyncThunk<
   number | undefined,
   EmployeeLeaveApply,
   {
@@ -45,10 +45,10 @@ const employeeLeaveApply = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'addMailTemplate/addNewMailTemplate',
+  'leaves/employeeApplyLeave',
   async (leaveApply: EmployeeLeaveApply, thunkApi) => {
     try {
-      return await employeeLeaveApplyApi.employeeLeaveApply(leaveApply)
+      return await employeeLeaveApplyApi.employeeApplyLeave(leaveApply)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -77,7 +77,7 @@ const employeeLeaveType = (state: RootState): EmployeeLeaveType[] =>
 
 const employeeApplyLeaveThunk = {
   getEmployeeLeaveType,
-  employeeLeaveApply,
+  employeeApplyLeave,
 }
 
 const employeeApplyLeaveSelectors = {

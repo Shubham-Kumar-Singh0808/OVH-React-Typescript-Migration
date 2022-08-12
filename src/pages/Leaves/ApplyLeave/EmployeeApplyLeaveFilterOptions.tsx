@@ -79,14 +79,13 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
       },
     }
     const applyLeaveResultAction = await dispatch(
-      reduxServices.employeeApplyLeave.employeeLeaveApply(prepareObject),
+      reduxServices.employeeApplyLeave.employeeApplyLeave(prepareObject),
     )
     if (
-      reduxServices.employeeApplyLeave.employeeLeaveApply.fulfilled.match(
+      reduxServices.employeeApplyLeave.employeeApplyLeave.fulfilled.match(
         applyLeaveResultAction,
       )
     ) {
-      // backButtonHandler()
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
@@ -96,7 +95,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
         ),
       )
     } else if (
-      reduxServices.employeeApplyLeave.employeeLeaveApply.rejected.match(
+      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
         applyLeaveResultAction,
       ) &&
       applyLeaveResultAction.payload === 302
@@ -111,7 +110,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
         ),
       )
     } else if (
-      reduxServices.employeeApplyLeave.employeeLeaveApply.rejected.match(
+      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
         applyLeaveResultAction,
       ) &&
       applyLeaveResultAction.payload === 500
