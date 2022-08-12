@@ -254,7 +254,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
       </CRow>
 
       <CRow className="mt-3">
-        <CCol sm={8}>
+        <CCol sm={8} data-testid="ckEditor-component">
           <CFormLabel className="col-sm-3 col-form-label">
             Comments:{' '}
           </CFormLabel>

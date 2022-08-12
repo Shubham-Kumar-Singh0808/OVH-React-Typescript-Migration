@@ -85,12 +85,27 @@ describe('Leave Apply Component Testing', () => {
       userEvent.selectOptions(LeaveTypeSelectListSelector, ['LOP'])
       expect(LeaveTypeSelectListSelector).toHaveValue('LOP')
     })
+    test('should clear data upon clear button click', () => {
+      const clearButtonElement = screen.getByRole('button', { name: 'Clear' })
+      userEvent.click(clearButtonElement)
+      const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
+      expect(fromDatePickerElement[0]).toHaveValue('')
+    })
+
+    test('renders the <CKEditor> component ', () => {
+      const htmlElement = document.querySelector(
+        '[data-testid="ckEditor-component"]',
+      )
+      const nonExistElement = document.querySelector('ckEditor-component')
+
+      expect(htmlElement).toBeInTheDocument()
+      expect(nonExistElement).not.toBeInTheDocument()
+    })
     test('should clear input and disable button after  new apply leave should be added', async () => {
       const LeaveTypeSelectListSelector = screen.getByTestId('form-select')
       userEvent.selectOptions(LeaveTypeSelectListSelector, ['LOP'])
       await waitFor(() => {
         userEvent.click(screen.getByTestId('sh-clear-button'))
-
         userEvent.selectOptions(LeaveTypeSelectListSelector, [''])
         expect(screen.getByTestId('sh-view-button')).toBeDisabled()
       })
