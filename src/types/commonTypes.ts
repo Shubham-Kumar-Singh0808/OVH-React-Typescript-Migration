@@ -8,3 +8,9 @@ export type TextEditorProps = {
   value: string
   setFieldValue: (val: string) => void
 }
+
+export type ApiParams =
+  | {
+      [key: string]: string | number | boolean | number[] | undefined
+    }
+  | undefined

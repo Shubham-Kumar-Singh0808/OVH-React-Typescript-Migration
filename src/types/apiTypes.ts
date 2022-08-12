@@ -178,6 +178,8 @@ export interface CertificateTypeApi extends ApiBase {
 export interface EmployeeProjectsApi extends ApiBase {
   getEmployeeProjects: string
   getProjectDetails: string
+  getProjectsClients: string
+  addProject: string
 }
 
 export interface EmployeeReporteesApi extends ApiBase {
@@ -252,6 +254,7 @@ export interface AddNewEmployeeAPi extends ApiBase {
   getAllemploymentType: string
   getAllJobType: string
   getCheckIfUserExist: string
+  editEmployee: string
 }
 
 export interface HiveActivityReportApi extends ApiBase {
@@ -275,4 +278,20 @@ export interface AddNewTemplateApi extends ApiBase {
 export interface ApplyLeaveApi extends ApiBase {
   getLeaveType: string
   applyLeave: string
+}
+export interface ScheduledInterviewsApi extends ApiBase {
+  searchScheduledCandidatesForEmployee: string
+  searchScheduledCandidates: string
+  downloadScheduleCandidates: string
+}
+
+export interface AddNewMailTemplateTypeApi extends ApiBase {
+  getMailTemplateTypes: string
+  addNewMailTemplateType: string
+  deleteMailTemplateType: string
+  updateMailTemplateType: string
+}
+
+export interface MyAttendanceApi extends ApiBase {
+  getMyAttendance: string
 }

@@ -9,8 +9,6 @@ import { createMemoryHistory } from 'history'
 import AddNewEmployee from '.'
 import stateStore from '../../../../stateStore'
 import { render, screen, waitFor, fireEvent } from '../../../../test/testUtils'
-import { listComposer } from '../../../../utils/helper'
-import { GetList } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const ReduxProvider = ({
   children,
@@ -125,12 +123,12 @@ describe('Add New Employee Testing', () => {
     userEvent.type(lastName, 'Ko')
     expect(lastName).toHaveValue('Ko')
 
-    const GenderSelectListSelector = screen.getByTestId('formGender')
+    const GenderSelectListSelector = screen.getByTestId('formgender')
     userEvent.selectOptions(GenderSelectListSelector, ['Male'])
     expect(GenderSelectListSelector).toHaveValue('Male')
 
     // need to fix
-    const CountrySelectListSelector = screen.getByTestId('formCountry')
+    const CountrySelectListSelector = screen.getByTestId('formcountry')
     fireEvent.change(CountrySelectListSelector, { target: { value: 'test' } })
 
     // Birtday format

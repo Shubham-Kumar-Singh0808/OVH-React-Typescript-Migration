@@ -11,6 +11,7 @@ const HRAssociate = ({
   dynamicFormLabelProps,
   hrDataList,
   onSelectHRAssociate,
+  isRequired,
   shouldReset,
   hrValue,
 }: HrDataProps): JSX.Element => {
@@ -23,6 +24,8 @@ const HRAssociate = ({
     const reportManager = {
       id: managerName?.id,
       fullName: managerName?.fullName,
+      firstName: managerName?.firstName,
+      lastName: managerName?.lastName,
     } as GetHRAssociate
     onSelectHRAssociate(reportManager)
   }
@@ -35,6 +38,26 @@ const HRAssociate = ({
     if (shouldReset) setAutoCompleteTarget('')
   }, [shouldReset])
 
+  const itemsLayout = (
+    id: string | number,
+    fullName: string,
+    isHighlighted: boolean,
+  ): JSX.Element => {
+    return (
+      <div
+        data-testid="option"
+        className={
+          isHighlighted
+            ? 'autocomplete-dropdown-item active'
+            : 'autocomplete-dropdown-item '
+        }
+        key={id}
+      >
+        {fullName}
+      </div>
+    )
+  }
+
   return (
     <>
       <CRow className="mb-3">
@@ -46,9 +69,11 @@ const HRAssociate = ({
           )}
         >
           HR Associate:
-          <span className={showIsRequired(autoCompleteTarget as string)}>
-            *
-          </span>
+          {isRequired && (
+            <span className={showIsRequired(autoCompleteTarget as string)}>
+              *
+            </span>
+          )}
         </CFormLabel>
         <CCol sm={3}>
           <Autocomplete
@@ -72,19 +97,9 @@ const HRAssociate = ({
                 {children}
               </div>
             )}
-            renderItem={(item, isHighlighted) => (
-              <div
-                data-testid="option"
-                className={
-                  isHighlighted
-                    ? 'autocomplete-dropdown-item active'
-                    : 'autocomplete-dropdown-item '
-                }
-                key={item.fullName}
-              >
-                {item.fullName}
-              </div>
-            )}
+            renderItem={(item, isHighlighted) =>
+              itemsLayout(item.id, item.fullName, isHighlighted)
+            }
             value={autoCompleteTarget}
             shouldItemRender={(item, value) =>
               item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1

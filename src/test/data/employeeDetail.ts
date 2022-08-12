@@ -1,0 +1,46 @@
+import { EditEmployeeTypes } from '../../types/EmployeeDirectory/EmployeesList/EditEmployee'
+
+export const mockEmployeeTypeDetails: EditEmployeeTypes = {
+  contractEndDate: '16/07/2022',
+  contractExists: true,
+  contractStartDate: '26/06/2022',
+  country: 'INDIA',
+  departmentName: 'Development',
+  designation: 'Assistant Vice President - Delivery',
+  employmentTypeName: 'Permanent',
+  firstName: 'Ajay',
+  jobTypeName: 'Full Time',
+  lastName: 'Ray',
+  role: 'Employee',
+  statusName: 'Active',
+  technology: 'Kentico',
+  workStatus: 'home',
+  hrAssociate: {
+    id: 1140,
+    firstName: 'Roopaly',
+    fullName: 'Roopaly Ganguly',
+    lastName: 'Ganguly',
+  },
+  manager: {
+    firstName: 'Pavani',
+    id: 2003,
+    lastName: 'Paska',
+    fullName: 'Pavani Paska',
+  },
+  projectManager: {
+    firstName: 'Mamatha',
+    id: 1738,
+    lastName: 'Thunam',
+    fullName: 'Mamatha Thunam',
+  },
+  timeSlotDTO: {
+    endTimeHour: '23',
+    endTimeMinutes: '00',
+    graceTime: '00',
+    id: 14,
+    name: 'UK Shift',
+    startTimeHour: '23',
+    startTimeMinutes: '20',
+  },
+  relievingDate: '',
+}

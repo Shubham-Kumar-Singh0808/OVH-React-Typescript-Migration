@@ -1,0 +1,32 @@
+.sh-scheduledInterviewsTable th {
+    border-style: none;
+}
+.sh-Interview-Table-link {
+    color: $blue-employeeList;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+        color: $primary-75;
+    }
+}
+.badge{
+    font-size: 100%;
+    color: black;
+    font-weight: 400;
+    padding: 3px 24px;
+}
+.sh-interview-badge{
+    .badge{
+    font-size: 100%;
+    color: white;
+    font-weight: 400;
+    padding: 3px 24px;
+    }
+}
+.sh-badge-light {
+background-color: $badge-light;
+}
+.table {
+    vertical-align: middle !important;
+    text-align: center;
+}

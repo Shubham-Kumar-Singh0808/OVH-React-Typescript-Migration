@@ -159,9 +159,7 @@ const EmployeeDesignationReportTable = (
                       </Link>
                     </CTableDataCell>
                     <CTableDataCell>{empDesignation.emailId}</CTableDataCell>
-                    <CTableDataCell className="text-center">
-                      {empDesignation.mobile}
-                    </CTableDataCell>
+                    <CTableDataCell>{empDesignation.mobile}</CTableDataCell>
                     <CTableDataCell>
                       {empDesignation.designation}
                     </CTableDataCell>

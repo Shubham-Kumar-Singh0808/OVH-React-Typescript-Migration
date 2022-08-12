@@ -1,6 +1,6 @@
 export type ModalPropsType = {
   visible: boolean
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setVisible: (value: boolean) => void
   alignment?: 'center' | 'top'
   modalTitle?: string
   modalSize?: 'sm' | 'lg' | 'xl' | undefined

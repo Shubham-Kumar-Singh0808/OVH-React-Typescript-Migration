@@ -27,7 +27,7 @@ const CertificateTypeList = React.lazy(
     ),
 )
 const EmployeeList = React.lazy(
-  () => import('./pages/EmployeeDirectory/EmployeesList/EmployeeList'),
+  () => import('./pages/EmployeeDirectory/EmployeesList'),
 )
 const EmployeeReport = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeeReport/EmployeeReport'),
@@ -56,7 +56,6 @@ const EmployeeHandbookSettings = React.lazy(
       './pages/EmployeeHandbook/HandbookSettings/EmployeeHandbookSettings'
     ),
 )
-
 const TimeInOfficeReport = React.lazy(
   () =>
     import('./pages/TimeAndAttendance/TimeInOfficeReport/TimeInOfficeReport'),
@@ -64,22 +63,22 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+
 const MailConfiguration = React.lazy(
   () => import('./pages/Settings/MailConfiguration/EmailConfigTemplate'),
 )
 const AddNewEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/AddNewEmployee'),
 )
-
 const HiveActivityReport = React.lazy(
   () =>
     import('./pages/TimeAndAttendance/HiveActivityReport/HiveActivityReport'),
 )
-
 const AddNewTemplate = React.lazy(
   () =>
     import('./pages/Settings/MailConfiguration/AddTemplate/AddNewMailTemplate'),
 )
+
 const ApplyLeave = React.lazy(
   () => import('./pages/Leaves/ApplyLeave/EmployeeApplyLeave'),
 )
@@ -87,6 +86,18 @@ const ApplyLeave = React.lazy(
 const EditEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
 )
+
+const ScheduledInterview = React.lazy(
+  () => import('./pages/Recruitment/ScheduledInterviews/ScheduledInterviews'),
+)
+const MyAttedance = React.lazy(
+  () => import('./pages/TimeAndAttendance/MyAttendance/MyAttendance'),
+)
+
+const AddProject = React.lazy(
+  () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -194,6 +205,21 @@ const routes = [
     path: '/leaveApplication',
     name: 'Leaves',
     component: ApplyLeave,
+  },
+  {
+    path: '/candidateSearch',
+    name: 'Scheduled Interviews',
+    component: ScheduledInterview,
+  },
+  {
+    path: '/employeeattendance',
+    name: 'Employee Attendance',
+    component: MyAttedance,
+  },
+  {
+    path: '/addproject',
+    name: 'Add Project',
+    component: AddProject,
   },
 ]
 
