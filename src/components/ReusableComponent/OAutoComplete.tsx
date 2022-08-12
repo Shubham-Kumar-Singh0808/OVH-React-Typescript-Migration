@@ -22,7 +22,7 @@ const OAutoComplete = ({
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
 
   const initList = [] as GetAutoCompleteList[]
-  const [selectorLost, setSelectorList] = useState(initList)
+  const [selectorList, setSelectorList] = useState(initList)
 
   useEffect(() => {
     setAutoCompleteTarget(value)
@@ -40,7 +40,7 @@ const OAutoComplete = ({
 
   const onHandleSelect = (selectedName: string) => {
     setAutoCompleteTarget(selectedName)
-    const detail = selectorLost.find(
+    const detail = selectorList.find(
       (listValue) => listValue.name === selectedName,
     )
 
@@ -75,7 +75,7 @@ const OAutoComplete = ({
               placeholder: `${placeholder}`,
             }}
             getItemValue={(item) => item.name}
-            items={selectorLost}
+            items={selectorList}
             data-testid={name}
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
