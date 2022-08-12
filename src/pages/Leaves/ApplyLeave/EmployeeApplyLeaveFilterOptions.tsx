@@ -148,14 +148,19 @@ const EmployeeApplyLeave = (): JSX.Element => {
       setShowEditor(true)
     }, 100)
   }
-  console.log(fromDate)
-  console.log(toDate)
+
   return (
     <>
       <CRow className="mt-1">
         <CCol sm={8}>
           <CFormLabel className="col-sm-3 col-form-label">
             Leave Type:
+            <span
+              className={applyLeave.leaveCategoryName ? TextWhite : TextDanger}
+            >
+              {' '}
+              *
+            </span>
           </CFormLabel>
           <CFormSelect
             data-testid="form-select"
