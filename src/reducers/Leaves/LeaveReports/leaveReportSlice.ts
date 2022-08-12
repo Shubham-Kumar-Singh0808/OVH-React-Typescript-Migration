@@ -88,7 +88,7 @@ const leaveReportSlice = createSlice({
     builder
       .addCase(getAllEmployeesLeaveSummaries.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.leaveSummaries = action.payload as LeaveSummaries
+        state.leaveSummaries = action.payload
         state.listSize = action.payload.size
       })
       .addCase(creditedYearDetails.fulfilled, (state, action) => {
@@ -101,7 +101,7 @@ const leaveReportSlice = createSlice({
       })
       .addCase(searchLeaveSummaries.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.leaveSummaries = action.payload as LeaveSummaries
+        state.leaveSummaries = action.payload
       })
       .addMatcher(isAnyOf(getAllEmployeesLeaveSummaries.pending), (state) => {
         state.isLoading = ApiLoadingState.loading
