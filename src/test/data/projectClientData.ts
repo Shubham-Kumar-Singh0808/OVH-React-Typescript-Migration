@@ -57,7 +57,7 @@ export const mockProjectClient = [
     email: 'btarr@atecorp.com',
     country: 'USA',
     phone: null,
-    description: 'http://atecorp.com/',
+    description: null,
     organization: 'Advanced Test Equipment Rentals',
     totalFixedBids: 2,
     totalRetainers: 0,
