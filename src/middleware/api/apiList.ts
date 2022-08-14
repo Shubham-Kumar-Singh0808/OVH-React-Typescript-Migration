@@ -40,6 +40,7 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  ClientsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -337,4 +338,8 @@ export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
 
 export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
+}
+
+export const clients: ClientsApi = {
+  getClients: apiPrefix + '/project-mgmt/client',
 }

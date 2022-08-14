@@ -1,0 +1,13 @@
+.sh-client-search{
+    min-width: none;
+    flex-wrap: nowrap;
+    
+    .input.form-control{
+        min-width: none;
+    }
+}
+@media (min-width: 1200px){
+.sh-client-search input.form-control {
+    min-width: 180px;
+}
+}
