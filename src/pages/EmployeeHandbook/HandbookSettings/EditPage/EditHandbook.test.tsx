@@ -17,7 +17,6 @@ import {
   cB5,
   updateButton,
   description,
-  cbAll,
 } from '../../../../test/constants'
 import {
   mockCountries,
@@ -26,6 +25,8 @@ import {
 import { mockEmployeeHandbookList } from '../../../../test/data/employeeHandbookSettingsData'
 
 const mockBackButtonHandler = jest.fn()
+const cbAllCountries = 'ch-All-countries'
+
 describe('Edit Page Component Testing', () => {
   describe('Without data', () => {
     beforeEach(() => {
@@ -58,7 +59,7 @@ describe('Edit Page Component Testing', () => {
       expect(displayOrderInput).toBeTruthy()
     })
     test('should render All countries checkbox', () => {
-      const allCountries = screen.findByTestId('ch-All')
+      const allCountries = screen.findByTestId(cbAllCountries)
       expect(allCountries).toBeTruthy()
     })
     test('should render Australia checkbox', () => {
@@ -153,7 +154,7 @@ describe('Edit Page Component Testing', () => {
       fireEvent.click(screen.getByTestId(cB3))
       fireEvent.click(screen.getByTestId(cB4))
       fireEvent.click(screen.getByTestId(cB5))
-      const allCountries = fireEvent.click(screen.getByTestId(cbAll))
+      const allCountries = fireEvent.click(screen.getByTestId(cbAllCountries))
       await waitFor(() => {
         expect(allCountries).toBe(true)
       })
@@ -282,7 +283,7 @@ describe('Edit Page Component Testing', () => {
       )
     })
     test('should Uncheck All countries checkbox', async () => {
-      const handCountries = screen.getByTestId(cbAll)
+      const handCountries = screen.getByTestId(cbAllCountries)
       fireEvent.click(handCountries)
       expect(handCountries).toBeChecked()
       fireEvent.click(handCountries)

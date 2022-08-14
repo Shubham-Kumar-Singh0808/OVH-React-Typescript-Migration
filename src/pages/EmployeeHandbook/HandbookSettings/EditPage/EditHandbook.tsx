@@ -42,7 +42,7 @@ const EditHandbook = ({
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const dispatch = useAppDispatch()
 
-  const employeeCountries = useTypedSelector(
+  const empCountries = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
 
@@ -79,7 +79,7 @@ const EditHandbook = ({
         setShowEditor(true)
       }, 100)
 
-      if (selectedHandbook.handCountry.length === employeeCountries.length) {
+      if (selectedHandbook.handCountry.length === empCountries.length) {
         setAllChecked(true)
       }
       if (selectedHandbook.description.length > 150) {
@@ -91,7 +91,7 @@ const EditHandbook = ({
   }, [totalHandbookList])
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newList = employeeCountries.map((item) => item.id)
+    const newList = empCountries.map((item) => item.id)
     const { checked } = e.target
     setAllChecked(e.target.checked)
     if (checked) {
@@ -124,7 +124,7 @@ const EditHandbook = ({
     } else if (checked && !editPage.list?.includes(value1)) {
       const list = editPage.list || []
       list?.push(value1)
-      if (list.length === employeeCountries.length) setAllChecked(checked)
+      if (list.length === empCountries.length) setAllChecked(checked)
       setEditPage((prevState) => {
         return { ...prevState, ...{ list } }
       })
@@ -205,7 +205,7 @@ const EditHandbook = ({
   }
 
   const handleUpdateHandbook = async () => {
-    const handCountries = employeeCountries.filter((each) =>
+    const handCountries = empCountries.filter((each) =>
       (editPage?.list || []).includes(each.id),
     )
     const updateHandbookResultAction = await dispatch(
@@ -248,7 +248,7 @@ const EditHandbook = ({
     />
   )
 
-  const validateAddButton = isButtonEnabled
+  const validateUpdateButton = isButtonEnabled
     ? isButtonEnabled && isDisplayOrderExist
     : !isButtonEnabled
 
@@ -356,7 +356,7 @@ const EditHandbook = ({
               <CRow>
                 <CCol sm={3}>
                   <CFormCheck
-                    data-testid="ch-All"
+                    data-testid="ch-All-countries"
                     id="all"
                     name="all"
                     label="All"
@@ -366,7 +366,7 @@ const EditHandbook = ({
                 </CCol>
               </CRow>
               <CRow>
-                {employeeCountries.map((country, index) => {
+                {empCountries.map((country, index) => {
                   return (
                     <CCol sm={3} key={index} className="me-4">
                       <CFormCheck
@@ -423,7 +423,7 @@ const EditHandbook = ({
                 className="btn-ovh me-1"
                 data-testid="btn-update"
                 color="success"
-                disabled={validateAddButton}
+                disabled={validateUpdateButton}
                 onClick={handleUpdateHandbook}
               >
                 {confirmButtonText}
