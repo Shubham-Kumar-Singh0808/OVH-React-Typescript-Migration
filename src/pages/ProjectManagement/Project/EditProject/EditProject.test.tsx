@@ -11,7 +11,6 @@ import {
   mockPlatform,
   mockProject,
 } from '../../../../test/data/projectManagerData'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const deviceLocale: string =
   navigator.languages && navigator.languages.length
