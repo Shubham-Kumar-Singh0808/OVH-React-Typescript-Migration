@@ -1,23 +1,29 @@
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React from 'react'
 import { InputField } from '../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { showIsRequired } from '../../utils/helper'
+import { isEmail, showIsRequired } from '../../utils/helper'
 
 const OInputField = ({
   dynamicFormLabelProps,
   onChangeHandler,
   onBlurHandler,
   value,
+  type: inputType,
   isRequired,
   label,
   name,
   placeholder,
 }: InputField): JSX.Element => {
+  const isInvalid = isEmail(value)
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChangeHandler == null) return
+
     onChangeHandler(e.target.value)
   }
 
   const handleOnBlurInput = () => {
+    if (onBlurHandler == null) return
+
     onBlurHandler(value)
   }
 
@@ -25,6 +31,7 @@ const OInputField = ({
     <>
       <CRow className="mb-3">
         <CFormLabel
+          data-testid={name}
           {...dynamicFormLabelProps(name, 'col-sm-3 col-form-label text-end')}
         >
           {label}:
@@ -35,13 +42,16 @@ const OInputField = ({
             id={name}
             data-testid={name}
             size="sm"
-            type="text"
+            type={inputType == null ? 'text' : inputType}
             name={name}
             placeholder={placeholder}
             value={value}
             onBlur={handleOnBlurInput}
             onChange={handleOnChangeInput}
           />
+          {inputType === 'email' && isInvalid ? (
+            <span style={{ color: 'red' }}>Enter a valid Email address</span>
+          ) : null}
         </CCol>
       </CRow>
     </>

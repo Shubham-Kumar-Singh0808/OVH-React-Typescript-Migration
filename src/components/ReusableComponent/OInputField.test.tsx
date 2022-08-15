@@ -62,8 +62,8 @@ describe('OInputField Component', () => {
           onBlurHandler={onBlurFunction}
           value={'test'}
           isRequired={true}
-          label={'test'}
-          name={'test'}
+          label={'testLabel'}
+          name={'testName'}
           placeholder={placeHolder}
           dynamicFormLabelProps={jest.fn()}
         />,
@@ -84,6 +84,37 @@ describe('OInputField Component', () => {
       input.blur()
 
       expect(onBlurFunction).toBeCalledWith('test')
+    })
+
+    test('should be able to see input field label', () => {
+      expect(screen.getByText('testLabel:')).toBeInTheDocument()
+    })
+  })
+
+  describe('Should be able to perform OInputField with email type', () => {
+    const placeHolder = 'another test 2'
+    beforeEach(() => {
+      render(
+        <OInputField
+          onChangeHandler={onChangeFunction}
+          onBlurHandler={onBlurFunction}
+          value={'test'}
+          isRequired={false}
+          label={'emailtype'}
+          type="email"
+          name={'test'}
+          placeholder={placeHolder}
+          dynamicFormLabelProps={jest.fn()}
+        />,
+      )
+    })
+
+    test('should be able to see "Enter a valid Email address"', () => {
+      const input = screen.getByPlaceholderText(placeHolder)
+      userEvent.type(input, 't')
+      expect(
+        screen.getByText('Enter a valid Email address'),
+      ).toBeInTheDocument()
     })
   })
 })
