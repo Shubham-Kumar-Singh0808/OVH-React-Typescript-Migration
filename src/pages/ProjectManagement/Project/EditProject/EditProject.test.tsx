@@ -60,7 +60,9 @@ describe('Edit Project Testing', () => {
     expect(screen.getByPlaceholderText('Project Manager')).toBeInTheDocument()
     expect(screen.getByRole('option', { name: 'Java' }).selected).toBe(true)
     expect(screen.getByRole('option', { name: 'Banking' }).selected).toBe(true)
-    expect(screen.getByRole('option', { name: 'In Progress' }).selected).toBe(true)
+    expect(screen.getByRole('option', { name: 'In Progress' }).selected).toBe(
+      true,
+    )
     const dates = screen.getAllByPlaceholderText('dd/mm/yy')
     expect(dates[0]).toBeInTheDocument()
     expect(dates[1]).toBeInTheDocument()
