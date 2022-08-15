@@ -291,4 +291,7 @@ export interface MyAttendanceApi extends ApiBase {
 
 export interface ClientsApi extends ApiBase {
   getClients: string
+  getProjectsUnderClient: string
+  searchClients: string
+  deleteClient: string
 }

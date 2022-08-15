@@ -4,53 +4,195 @@ import {
   CTableRow,
   CTableHeaderCell,
   CTableBody,
-  CTableDataCell,
+  CCol,
+  CRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import ClientsEntry from './ClientsEntry'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 
-const ClientsTable = () => {
-  const [projectDetailsClicked, setProjectDetailsClicked] = useState<
-    boolean | undefined
-  >(false)
+const ClientsTable = ({
+  paginationRange,
+  pageSize,
+  setPageSize,
+  currentPage,
+  setCurrentPage,
+  selectedClientStatus,
+}: {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  selectedClientStatus: string
+}) => {
+  const dispatch = useAppDispatch()
 
-  const icon = projectDetailsClicked
-    ? 'fa fa-minus-circle cursor-pointer'
-    : 'fa fa-plus-circle cursor-pointer'
+  const [selectedClientId, setSelectedClientId] = useState(0)
+  const [deleteClientModalVisibility, setDeleteClientModalVisibility] =
+    useState(false)
+  const [clientName, setClientName] = useState<string>('')
+  const isLoading = useTypedSelector(reduxServices.clients.selectors.isLoading)
+  const clientsListSize = useTypedSelector(
+    reduxServices.clients.selectors.clientsListSize,
+  )
 
-  const onShowProjectDetailsHandler = () => {
-    setProjectDetailsClicked((projectDetailsClicked) => !projectDetailsClicked)
+  const allClients = useTypedSelector(
+    reduxServices.clients.selectors.allClients,
+  )
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
   }
+
+  const onDeleteBtnClick = (clientId: number, name: string) => {
+    setDeleteClientModalVisibility(true)
+    setClientName(name)
+    setSelectedClientId(clientId)
+  }
+
+  const deleteFailedToastElement = (
+    <OToast
+      toastColor="danger"
+      toastMessage="Client is already added to a project, so can't be deleted."
+    />
+  )
+
+  const deleteSuccessToastElement = (
+    <OToast toastColor="success" toastMessage="Client deleted Successfully!" />
+  )
+
+  const handleConfirmDeleteClient = async () => {
+    setDeleteClientModalVisibility(false)
+    const deleteClientResultAction = await dispatch(
+      reduxServices.clients.deleteClient(selectedClientId),
+    )
+    if (
+      reduxServices.clients.deleteClient.fulfilled.match(
+        deleteClientResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.clients.getClients({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          selectionStatus: selectedClientStatus,
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(deleteSuccessToastElement))
+    } else if (deleteClientResultAction.payload === 500) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastElement))
+    }
+  }
+
+  const tableHeaderCellPropsOrganization = {
+    width: '16%',
+    scope: 'col',
+  }
+
+  const tableHeaderCellPropsAction = {
+    width: '18%',
+    scope: 'col',
+  }
+
   return (
     <>
-      <CTable className="text-left" striped>
+      <CTable className="text-start mt-5" striped>
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col"></CTableHeaderCell>
             <CTableHeaderCell scope="col">Code</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Organization</CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderCellPropsOrganization}>
+              Organization
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Client</CTableHeaderCell>
             <CTableHeaderCell scope="col">Contact Person</CTableHeaderCell>
             <CTableHeaderCell scope="col">Email ID</CTableHeaderCell>
             <CTableHeaderCell scope="col">Country</CTableHeaderCell>
             <CTableHeaderCell scope="col">F.P</CTableHeaderCell>
             <CTableHeaderCell scope="col">R.P</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderCellPropsAction}>
+              Actions
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          <CTableRow>
-            <CTableDataCell scope="row">
-              <i className={icon} onClick={onShowProjectDetailsHandler} />
-            </CTableDataCell>
-            <CTableDataCell scope="row">s</CTableDataCell>
-            <CTableDataCell scope="row">fn</CTableDataCell>
-            <CTableDataCell scope="row">n</CTableDataCell>
-            <CTableDataCell scope="row">df</CTableDataCell>
-            <CTableDataCell scope="row">r</CTableDataCell>
-            <CTableDataCell scope="row">fg</CTableDataCell>
-          </CTableRow>
+          {isLoading !== ApiLoadingState.loading ? (
+            allClients &&
+            allClients?.map((client, index) => (
+              <ClientsEntry
+                id={client.id}
+                client={client}
+                key={index}
+                selectedClientId={selectedClientId}
+                setSelectedClientId={setSelectedClientId}
+                onDeleteBtnClick={onDeleteBtnClick}
+              />
+            ))
+          ) : (
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          )}
         </CTableBody>
       </CTable>
+      {allClients?.length ? (
+        <CRow>
+          <CCol xs={4}>
+            <p>
+              <strong>Total Records: {clientsListSize}</strong>
+            </p>
+          </CCol>
+          <CCol xs={3}>
+            {clientsListSize > 20 && (
+              <OPageSizeSelect
+                handlePageSizeSelectChange={handlePageSizeSelectChange}
+                options={[20, 40, 60, 80]}
+                selectedPageSize={pageSize}
+              />
+            )}
+          </CCol>
+          {clientsListSize > 20 && (
+            <CCol
+              xs={5}
+              className="gap-1 d-grid d-md-flex justify-content-md-end"
+            >
+              <OPagination
+                currentPage={currentPage}
+                pageSetter={setCurrentPage}
+                paginationRange={paginationRange}
+              />
+            </CCol>
+          )}
+        </CRow>
+      ) : (
+        <CCol>
+          <CRow className="mt-3 ms-3">
+            <h5>No Records Found... </h5>
+          </CRow>
+        </CCol>
+      )}
+      <OModal
+        alignment="center"
+        visible={deleteClientModalVisibility}
+        setVisible={setDeleteClientModalVisibility}
+        closeButtonClass="d-none"
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteClient}
+      >
+        <p>{`Do you really want to delete this ${clientName} client ?`}</p>
+      </OModal>
     </>
   )
 }

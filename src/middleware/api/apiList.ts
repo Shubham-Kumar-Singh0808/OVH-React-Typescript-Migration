@@ -340,6 +340,9 @@ export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
 }
 
-export const clients: ClientsApi = {
+export const clientsApiConfig: ClientsApi = {
   getClients: apiPrefix + '/project-mgmt/client',
+  getProjectsUnderClient: apiPrefix + '/project-mgmt/projectsUnderClient',
+  searchClients: apiPrefix + '/project-mgmt/searchClients',
+  deleteClient: apiPrefix + '/project-mgmt/deleteClient',
 }

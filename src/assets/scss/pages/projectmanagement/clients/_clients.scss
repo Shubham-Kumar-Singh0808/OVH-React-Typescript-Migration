@@ -11,3 +11,19 @@
     min-width: 180px;
 }
 }
+.sh-organization-link {
+    a {
+        text-decoration: none;
+        color: $blue-employeeList !important;
+        &:hover {
+            text-decoration: underline;
+            color: $primary-75 !important;
+        }
+      }
+}
+.sh-eye-btn-color{
+    background-color: $blue-btnBg;
+    &:hover {
+        background-color: $blue-btnHover;
+    }
+}

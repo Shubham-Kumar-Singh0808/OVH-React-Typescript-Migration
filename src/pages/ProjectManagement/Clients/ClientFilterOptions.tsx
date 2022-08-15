@@ -6,36 +6,97 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ClientStatus } from '../../../types/ProjectManagement/Clients/clientsTypes'
 
-const ClientFilterOptions = () => {
+const ClientFilterOptions = ({
+  currentPage,
+  pageSize,
+}: {
+  currentPage: number
+  pageSize: number
+}) => {
+  const dispatch = useAppDispatch()
+
+  const [searchInput, setSearchInput] = useState<string>('')
+
+  const selectedClientStatus = useTypedSelector(
+    reduxServices.clients.selectors.selectedClientStatus,
+  )
+
+  const handleChangeSelectedClientStatus = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    dispatch(
+      reduxServices.clients.actions.changeSelectedClientStatus(
+        event.target.value,
+      ),
+    )
+    setSearchInput('')
+  }
+
+  const searchButtonHandlerOnKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.clients.searchClients({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          selectionStatus: selectedClientStatus,
+          searchText: searchInput,
+        }),
+      )
+    }
+  }
+
+  const searchButtonHandler = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    dispatch(
+      reduxServices.clients.searchClients({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+        selectionStatus: selectedClientStatus,
+        searchText: searchInput,
+      }),
+    )
+  }
+
   return (
     <>
       <CRow>
         <CCol sm={7} className="d-md-flex justify-content-md-end mt-2">
           <CFormCheck
             type="radio"
-            name="employmentStatus"
-            // value={EmploymentStatus.active}
-            id="employmentActive"
+            name="clientStatus"
+            value={ClientStatus.all}
+            id="clientsAll"
             label="All"
+            defaultChecked={selectedClientStatus === ClientStatus.all}
+            onChange={handleChangeSelectedClientStatus}
             inline
           />
           <CFormCheck
             type="radio"
-            name="employmentStatus"
-            // value={EmploymentStatus.active}
-            id="employmentActive"
+            name="clientStatus"
+            value={ClientStatus.active}
+            id="clientsActive"
             label="Active"
+            defaultChecked={selectedClientStatus === ClientStatus.active}
+            onChange={handleChangeSelectedClientStatus}
             inline
           />
           <CFormCheck
             type="radio"
-            name="employmentStatus"
-            // value={EmploymentStatus.active}
-            id="employmentActive"
-            label="All"
+            name="clientStatus"
+            value={ClientStatus.inactive}
+            id="clientsInactive"
+            label="Inactive"
+            defaultChecked={selectedClientStatus === ClientStatus.inactive}
+            onChange={handleChangeSelectedClientStatus}
             inline
           />
         </CCol>
@@ -44,11 +105,21 @@ const ClientFilterOptions = () => {
             <CCol sm={12}>
               <CInputGroup className="global-search sh-client-search me-4">
                 <CFormInput
-                  placeholder="Search Employee"
-                  aria-label="Search Employee"
+                  placeholder="Search here"
+                  aria-label="Search here"
                   aria-describedby="button-addon2"
+                  value={searchInput}
+                  onChange={(e) => {
+                    setSearchInput(e.target.value)
+                  }}
+                  onKeyDown={searchButtonHandlerOnKeyDown}
                 />
-                <CButton type="button" color="info" id="button-addon2">
+                <CButton
+                  type="button"
+                  color="info"
+                  id="button-addon2"
+                  onClick={searchButtonHandler}
+                >
                   <i className="fa fa-search"></i>
                 </CButton>
               </CInputGroup>
@@ -58,10 +129,10 @@ const ClientFilterOptions = () => {
         <CCol sm={2}>
           <CRow>
             <CCol sm={12} className="d-md-flex justify-content-md-end pe-0">
-              <Link to="/addNewEmployee">
+              <Link to="/">
                 <CButton color="info" className="text-white btn-ovh" size="sm">
                   <i className="fa fa-plus me-1"></i>
-                  Add Employee
+                  Add Client
                 </CButton>
               </Link>
             </CCol>
