@@ -11,5 +11,42 @@ export const mockLeaveSummary: LeaveSummary = {
   allTakenLeaves: 0,
   calculatedCreditedLeaves: 0,
   carryForwardedLeaves: 0,
-  leaveCategorySummaries: [],
+  leaveCategorySummaries: [
+    {
+      id: 1,
+      leaveCategoryDTO: {
+        id: 1,
+        name: 'Casual',
+        leaveType: 'EARNED',
+      },
+      daysPending: 0.0,
+      daysTaken: 0.0,
+      daysScheduled: 0.0,
+      daysCancelAfterApprovalPending: 0.0,
+    },
+    {
+      id: 2,
+      leaveCategoryDTO: {
+        id: 2,
+        name: 'LOP',
+        leaveType: 'LOP',
+      },
+      daysPending: 0.0,
+      daysTaken: 0.0,
+      daysScheduled: 0.0,
+      daysCancelAfterApprovalPending: 0.0,
+    },
+    {
+      id: 3,
+      leaveCategoryDTO: {
+        id: 3,
+        name: 'PAID',
+        leaveType: 'EARNED',
+      },
+      daysPending: 0.0,
+      daysTaken: 0.0,
+      daysScheduled: 0.0,
+      daysCancelAfterApprovalPending: 0.0,
+    },
+  ],
 }
