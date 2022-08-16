@@ -28,7 +28,7 @@ const EmployeeHandbookTable = (
   const employeeHandbooks = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeHandbooks,
   )
-  const listSize = useTypedSelector(
+  const handbookListSize = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.listSize,
   )
 
@@ -206,11 +206,11 @@ const EmployeeHandbookTable = (
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {listSize} </strong>
+                <strong>Total Records: {handbookListSize} </strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {listSize > 20 && (
+              {handbookListSize > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                   options={[20, 40, 60, 80]}
@@ -218,7 +218,7 @@ const EmployeeHandbookTable = (
                 />
               )}
             </CCol>
-            {listSize > 20 && (
+            {handbookListSize > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"
