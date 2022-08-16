@@ -314,7 +314,7 @@ const AddProject = (): JSX.Element => {
                 list={projectTypeList}
                 setValue={handleProjectType}
                 value={project.model}
-                name="projectType"
+                name="addProjectType"
                 label="Project Type"
                 placeHolder="---Project Type---"
                 dynamicFormLabelProps={dynamicFormLabelProps}

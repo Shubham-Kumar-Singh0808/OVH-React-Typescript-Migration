@@ -59,7 +59,7 @@ const EditProject = (): JSX.Element => {
   const [hiveValue, setHive] = useState<string>('')
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
   const [isUpdateBtnEnable, setUpdateBtn] = useState(false)
-  const [showEditor, setShowEditor] = useState<boolean>(true)
+  // const [showEditor, setShowEditor] = useState<boolean>(true)
 
   const selectedProject = useTypedSelector(
     reduxServices.projectManagement.selectors.project,
@@ -155,10 +155,10 @@ const EditProject = (): JSX.Element => {
       setProjectManager(selectedProject.managerName)
       setHive(selectedProject.hiveProjectName)
 
-      setShowEditor(false)
-      setTimeout(() => {
-        setShowEditor(true)
-      }, 0)
+      // setShowEditor(false)
+      // setTimeout(() => {
+      //   setShowEditor(true)
+      // }, 0)
     }
   }, [selectedProject])
 
@@ -471,7 +471,7 @@ const EditProject = (): JSX.Element => {
                 list={projectTypeList}
                 setValue={handleProjectType}
                 value={typeValue}
-                name="projectType"
+                name="editProjectType"
                 label="Project Type"
                 placeHolder="---Project Type---"
                 dynamicFormLabelProps={dynamicFormLabelProps}
@@ -624,20 +624,20 @@ const EditProject = (): JSX.Element => {
                 >
                   Description:
                 </CFormLabel>
-                {showEditor && (
-                  <CCol sm={9}>
-                    <CKEditor<{
-                      onChange: CKEditorEventHandler<'change'>
-                    }>
-                      initData={project.description}
-                      config={ckeditorConfig}
-                      debug={false}
-                      onChange={({ editor }) => {
-                        onHandleDescription(editor.getData().trim())
-                      }}
-                    />
-                  </CCol>
-                )}
+                {/* {showEditor && ( */}
+                <CCol sm={9}>
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={project.description}
+                    config={ckeditorConfig}
+                    debug={false}
+                    onChange={({ editor }) => {
+                      onHandleDescription(editor.getData().trim())
+                    }}
+                  />
+                </CCol>
+                {/* )} */}
               </CRow>
               <CRow className="mb-3 align-items-center">
                 <CCol sm={{ span: 6, offset: 3 }}>

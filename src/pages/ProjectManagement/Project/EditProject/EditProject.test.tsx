@@ -133,11 +133,11 @@ describe('Edit Project Testing', () => {
     billingContactEmail.focus()
 
     // Pricing Model
-    const OSelectListSelector = screen.getByTestId('formpricingModel')
+    const OSelectListSelector = screen.getByTestId('formeditPricingModel')
     userEvent.selectOptions(OSelectListSelector, ['Support'])
 
     // Project Type
-    const oTypesSelectList = screen.getByTestId('formprojectType')
+    const oTypesSelectList = screen.getByTestId('formeditProjectType')
     userEvent.selectOptions(oTypesSelectList, ['Support'])
 
     // Project Manager
