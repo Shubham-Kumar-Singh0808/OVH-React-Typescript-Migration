@@ -8,9 +8,17 @@ import {
   mockSearchEmployeesLeaves,
 } from '../../../test/data/leaveApprovalsData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <SearchEmployeeLeaveRequests />
+  </div>
+)
 describe('Search Employee Leave Requests Component Testing without data', () => {
   beforeEach(() => {
-    render(<SearchEmployeeLeaveRequests />)
+    render(toRender)
   })
   afterEach(cleanup)
   test('should render the "search employee leaves" table', () => {
@@ -31,7 +39,7 @@ describe('Search Employee Leave Requests Component Testing without data', () => 
 
   describe('Search Employee Leave Requests Component Testing without data', () => {
     beforeEach(() => {
-      render(<SearchEmployeeLeaveRequests />, {
+      render(toRender, {
         preloadedState: {
           leaveApprovals: {
             isLoading: ApiLoadingState.succeeded,
@@ -52,9 +60,6 @@ describe('Search Employee Leave Requests Component Testing without data', () => 
     screen.debug()
     test('should not render the loading spinner when search leaves are not empty', () => {
       expect(screen.findByTestId('search-leave-loader')).toMatchObject({})
-    })
-    test('should', () => {
-      expect(screen.getByText('Sai Banothu')).toBeInTheDocument()
     })
   })
 })

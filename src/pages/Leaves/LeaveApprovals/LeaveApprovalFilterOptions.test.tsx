@@ -7,6 +7,18 @@ import LeaveApprovalFilterOptions from './LeaveApprovalFilterOptions'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeList } from '../../../test/data/employeeListData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <LeaveApprovalFilterOptions
+      previousMonthResult={new Date('25/07/2022')}
+      currentMonthResult={new Date('24/08/2022')}
+    />
+  </div>
+)
+
 const commonFormatDate = 'l'
 const currentYear = new Date().getFullYear()
 const previousMonthResult = new Date(
@@ -22,12 +34,7 @@ const currentMonthResult = new Date(
 
 describe('Leave Approval Filter Options Component Testing', () => {
   beforeEach(() => {
-    render(
-      <LeaveApprovalFilterOptions
-        previousMonthResult={new Date('25/07/2022')}
-        currentMonthResult={new Date('24/08/2022')}
-      />,
-    )
+    render(toRender)
   })
   test('should render labels', () => {
     expect(screen.getByText('From Date:')).toBeInTheDocument()

@@ -10,6 +10,15 @@ import {
 } from '../../../test/data/leaveApprovalsData'
 import { mockEmployeeList } from '../../../test/data/employeeListData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <LeaveApprovals />
+  </div>
+)
+
 const commonFormatDate = 'l'
 const currentYear = new Date().getFullYear()
 const previousMonthResult = new Date(
@@ -23,7 +32,7 @@ const currentMonthResult = new Date(
   Number(24),
 )
 describe('Leave Approvals Component Testing', () => {
-  render(<LeaveApprovals />, {
+  render(toRender, {
     preloadedState: {
       leaveApprovals: {
         getEmployees: mockEmployeeList,

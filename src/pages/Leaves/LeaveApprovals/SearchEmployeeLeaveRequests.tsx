@@ -394,8 +394,10 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
             </CTableBody>
           ) : (
             <>
-              {/* <OLoadingSpinner type={LoadingType.PAGE} /> */}
-              <CSpinner data-testid="search-leave-loader" />
+              <OLoadingSpinner
+                data-testid="search-leave-loader"
+                type={LoadingType.PAGE}
+              />
             </>
           )}
         </CTable>

@@ -9,17 +9,24 @@ import { mockEmployeesLeaves } from '../../../test/data/leaveApprovalsData'
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <EmployeeLeaveRequests
+      setCurrentPage={mockSetCurrentPage}
+      setPageSize={mockSetPageSize}
+      currentPage={1}
+      pageSize={20}
+      paginationRange={[1, 2, 3]}
+    />
+  </div>
+)
+
 describe('Employee Leave Requests Component Testing without data', () => {
   beforeEach(() => {
-    render(
-      <EmployeeLeaveRequests
-        setCurrentPage={mockSetCurrentPage}
-        setPageSize={mockSetPageSize}
-        currentPage={1}
-        pageSize={20}
-        paginationRange={[1, 2, 3]}
-      />,
-    )
+    render(toRender)
   })
   afterEach(cleanup)
   test('should render the "employee leave request" table ', () => {
@@ -40,40 +47,33 @@ describe('Employee Leave Requests Component Testing without data', () => {
 
   describe('Employee Leave Requests Component Testing with data', () => {
     beforeEach(() => {
-      render(
-        <EmployeeLeaveRequests
-          setCurrentPage={mockSetCurrentPage}
-          setPageSize={mockSetPageSize}
-          currentPage={1}
-          pageSize={20}
-          paginationRange={[1, 2, 3]}
-        />,
-        {
-          preloadedState: {
-            leaveApprovals: {
-              employeeLeaves: mockEmployeesLeaves,
-              filterOptions: {
-                isViewBtnClick: false,
-                selectStatus: 'PendingApproval',
-                selectMember: 1092,
-                filterByFromDate: '25/7/2022',
-                filterByToDate: '24/8/2022',
-              },
+      render(toRender, {
+        preloadedState: {
+          leaveApprovals: {
+            employeeLeaves: mockEmployeesLeaves,
+            filterOptions: {
+              isViewBtnClick: false,
+              selectStatus: 'PendingApproval',
+              selectMember: 1092,
+              filterByFromDate: '25/7/2022',
+              filterByToDate: '24/8/2022',
             },
           },
         },
-      )
+      })
     })
     afterEach(cleanup)
     test('should not render the loading spinner when employee leave requests are not empty', () => {
       expect(screen.findByTestId('search-leave-loader')).toMatchObject({})
     })
-    test('should not render the loading s', () => {
+    screen.debug()
+    test('should render approve and reject buttons and upon approve button click it should renter modal', () => {
       const approveBtnElement = screen.getAllByTestId('approve-btn')
       const rejectBtnElement = screen.getAllByTestId('reject-btn')
       expect(approveBtnElement[0]).toBeInTheDocument()
       expect(rejectBtnElement[0]).toBeInTheDocument()
-      // userEvent.click(approveBtnElement[0])
+      userEvent.click(approveBtnElement[0])
+      // expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
     })
   })
 })

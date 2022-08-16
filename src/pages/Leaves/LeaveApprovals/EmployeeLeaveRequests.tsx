@@ -329,8 +329,7 @@ const EmployeeLeaveRequests = (props: {
             </CTableBody>
           ) : (
             <>
-              {/* <OLoadingSpinner type={LoadingType.PAGE} /> */}
-              <CSpinner />
+              <OLoadingSpinner type={LoadingType.PAGE} />
             </>
           )}
         </CTable>
