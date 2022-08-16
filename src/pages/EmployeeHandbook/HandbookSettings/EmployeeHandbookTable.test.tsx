@@ -74,14 +74,12 @@ describe('Employee Handbook Settings', () => {
       expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
     })
   })
-  it('should render Delete modal on clicking delete button from Actions', async () => {
+  it('should render Delete modal on clicking delete button from Actions', () => {
     const deleteButtonElement = screen.getByTestId('handbook-delete-btn1')
     userEvent.click(deleteButtonElement)
-    await waitFor(() => {
-      expect(screen.getByText('Delete Handbook')).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
-    })
+    expect(screen.getByText('Delete Handbook')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
   })
   it('should close the modal on clicking No button from the popup', async () => {
     const deleteButtonElement = screen.getByTestId('handbook-delete-btn4')

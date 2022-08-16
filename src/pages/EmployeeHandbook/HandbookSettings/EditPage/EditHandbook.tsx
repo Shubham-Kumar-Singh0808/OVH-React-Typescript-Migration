@@ -111,7 +111,7 @@ const EditHandbook = ({
   const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target
     const value1 = +value
-    if (editPage.list?.includes(value1) && !checked) {
+    if (editPage.list?.includes(value1)) {
       setAllChecked(checked)
       const list = [...editPage.list]
       const index = list.indexOf(value1)
@@ -121,7 +121,7 @@ const EditHandbook = ({
           return { ...prevState, ...{ list } }
         })
       }
-    } else if (checked && !editPage.list?.includes(value1)) {
+    } else {
       const list = editPage.list || []
       list?.push(value1)
       if (list.length === empCountries.length) setAllChecked(checked)
