@@ -148,11 +148,13 @@ describe('Add New Page Component Testing', () => {
       const checkbox3 = fireEvent.click(screen.getByTestId('ch-countries2'))
       const checkbox4 = fireEvent.click(screen.getByTestId('ch-countries3'))
       const checkbox5 = fireEvent.click(screen.getByTestId('ch-countries4'))
+      const checkbox6 = fireEvent.click(screen.getByTestId('ch-countries5'))
       expect(checkbox1).toBe(true)
       expect(checkbox2).toBe(true)
       expect(checkbox3).toBe(true)
       expect(checkbox4).toBe(true)
       expect(checkbox5).toBe(true)
+      expect(checkbox6).toBe(true)
       await waitFor(() => {
         expect(cbAll).toBeChecked()
       })
