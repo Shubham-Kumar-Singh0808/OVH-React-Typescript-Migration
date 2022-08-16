@@ -31,6 +31,10 @@ import { showIsRequired } from '../../../../utils/helper'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { healthList, priceModelList } from '../../../../constant/constantData'
+import OBackButton from '../../../../components/ReusableComponent/OBackButton'
+import { ClientOrganization } from '../ProjectComponent/ClientOrganization'
+import { ProjectName } from '../ProjectComponent/ProjectName'
 
 const AddProject = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -125,20 +129,6 @@ const AddProject = (): JSX.Element => {
   const projectTypeList: GetList[] = [
     { id: 1, name: 'Development' },
     { id: 2, name: 'Support' },
-  ]
-
-  const priceModelList: GetList[] = [
-    { id: 1, name: 'Fixed Bid' },
-    { id: 2, name: 'Retainer' },
-    { id: 3, name: 'Support' },
-    { id: 4, name: 'T&M' },
-  ]
-
-  const healthList = [
-    { label: 'Gray', name: 'Project not yet started' },
-    { label: 'Green', name: 'Good' },
-    { label: 'Orange', name: 'Critical' },
-    { label: 'Red', name: 'Danger' },
   ]
 
   const handleClientSelect = (value: GetOnSelect) => {
@@ -281,39 +271,17 @@ const AddProject = (): JSX.Element => {
       {isLoading === ApiLoadingState.succeeded ? (
         <>
           <CRow className="justify-content-end">
-            <CCol className="text-end" md={4}>
-              {/* Partial route */}
-              <Link to="/">
-                <CButton
-                  data-testid="back-btn"
-                  color="info"
-                  className="btn-ovh me-1"
-                >
-                  <i className="fa fa-arrow-left me-1"></i>Back
-                </CButton>
-              </Link>
-            </CCol>
+            <OBackButton destination="/" name="back" />
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
-              <OAutoComplete
+              <ClientOrganization
                 list={clientOrganizationList}
-                onSelect={handleClientSelect}
-                shouldReset={false}
+                onSelectHandler={handleClientSelect}
                 value={project.client}
-                isRequired={true}
-                label={'Client Organization'}
-                placeholder={'Client'}
-                name={'clientOrganization'}
-                dynamicFormLabelProps={dynamicFormLabelProps}
               />
-              <OInputField
-                onChangeHandler={setProjectName}
-                onBlurHandler={handleProjectName}
+              <ProjectName
+                onChange={setProjectName}
+                onBlur={handleProjectName}
                 value={projectName}
-                isRequired={true}
-                label={'Project Name'}
-                name={'projectName'}
-                placeholder={'Project Name'}
-                dynamicFormLabelProps={dynamicFormLabelProps}
               />
               <OSelectList
                 isRequired={true}

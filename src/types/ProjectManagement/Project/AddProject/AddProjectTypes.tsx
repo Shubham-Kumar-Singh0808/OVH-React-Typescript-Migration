@@ -1,6 +1,18 @@
 import { LoadingState, ValidationError } from '../../../commonTypes'
 import { DynamicFormLabelProps } from '../../../EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
+export interface ClientOrganizationProps {
+  list: GetAutoCompleteList[]
+  onSelectHandler: (value: GetOnSelect) => void
+  value: string
+}
+
+export interface ProjectNameProps {
+  onChange: (value: string) => void
+  onBlur: (value: string) => void
+  value: string
+}
+
 export type GetAutoCompleteList = {
   id: number
   name: string

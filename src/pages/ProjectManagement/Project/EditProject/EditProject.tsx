@@ -14,7 +14,6 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
 import { GetList } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -30,6 +29,10 @@ import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { isEmail, listComposer, showIsRequired } from '../../../../utils/helper'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import { healthList, priceModelList } from '../../../../constant/constantData'
+import OBackButton from '../../../../components/ReusableComponent/OBackButton'
+import { ClientOrganization } from '../ProjectComponent/ClientOrganization'
+import { ProjectName } from '../ProjectComponent/ProjectName'
 
 interface TypesObject {
   [key: string]: string
@@ -227,20 +230,6 @@ const EditProject = (): JSX.Element => {
     { id: 4, name: 'Closed' },
   ]
 
-  const priceModelList: GetList[] = [
-    { id: 1, name: 'Fixed Bid' },
-    { id: 2, name: 'Retainer' },
-    { id: 3, name: 'Support' },
-    { id: 4, name: 'T&M' },
-  ]
-
-  const healthList = [
-    { label: 'Gray', name: 'Project not yet started' },
-    { label: 'Green', name: 'Good' },
-    { label: 'Orange', name: 'Critical' },
-    { label: 'Red', name: 'Danger' },
-  ]
-
   const handleClientSelect = (value: GetOnSelect) => {
     setProject({
       ...project,
@@ -401,39 +390,17 @@ const EditProject = (): JSX.Element => {
       {Object.keys(project).length > 0 ? (
         <>
           <CRow className="justify-content-end">
-            <CCol className="text-end" md={4}>
-              {/* Partial route */}
-              <Link to="/">
-                <CButton
-                  data-testid="back-btn"
-                  color="info"
-                  className="btn-ovh me-1"
-                >
-                  <i className="fa fa-arrow-left me-1"></i>Back
-                </CButton>
-              </Link>
-            </CCol>
+            <OBackButton destination="/" name="back" />
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
-              <OAutoComplete
+              <ClientOrganization
                 list={clientOrganizationList}
-                onSelect={handleClientSelect}
-                shouldReset={false}
+                onSelectHandler={handleClientSelect}
                 value={project.client}
-                isRequired={true}
-                label={'Client Organization'}
-                placeholder={'Client'}
-                name={'clientOrganization'}
-                dynamicFormLabelProps={dynamicFormLabelProps}
               />
-              <OInputField
-                onChangeHandler={setProjectName}
-                onBlurHandler={handleProjectName}
+              <ProjectName
+                onChange={setProjectName}
+                onBlur={handleProjectName}
                 value={projectName}
-                isRequired={true}
-                label={'Project Name'}
-                name={'projectName'}
-                placeholder={'Project Name'}
-                dynamicFormLabelProps={dynamicFormLabelProps}
               />
               <OInputField
                 onChangeHandler={handleCustomerContactName}
