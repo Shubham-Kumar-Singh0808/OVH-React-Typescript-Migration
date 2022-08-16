@@ -103,6 +103,7 @@ describe('Edit Page Component Testing', () => {
           headerTitle="Edit Page"
           confirmButtonText="Update"
           backButtonHandler={jest.fn()}
+          isEditHandbook={true}
           handbookId={1}
         />,
         {
