@@ -3,9 +3,6 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import { CKEditor } from 'ckeditor4-react'
 import AddNewHandbook from './AddNewHandbook'
 import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
@@ -20,19 +17,12 @@ import {
   cB3,
   cB4,
   cB5,
+  cbAll,
 } from '../../../../test/constants'
 import {
   mockCountries,
   mockHandbookList,
 } from '../../../../test/data/handbookTotalListData'
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('Add New Page Component Testing', () => {
   describe('Without data', () => {
@@ -81,8 +71,8 @@ describe('Add New Page Component Testing', () => {
     beforeEach(() => {
       render(
         <AddNewHandbook
-          headerTitle={''}
-          confirmButtonText={''}
+          headerTitle="Add New Page"
+          confirmButtonText="Save"
           backButtonHandler={jest.fn()}
         />,
         {
@@ -165,8 +155,8 @@ describe('Add New Page Component Testing', () => {
     beforeEach(() => {
       render(
         <AddNewHandbook
-          headerTitle={''}
-          confirmButtonText={''}
+          headerTitle="Add New Page"
+          confirmButtonText="Save"
           backButtonHandler={jest.fn()}
         />,
         {
@@ -214,19 +204,41 @@ describe('Add New Page Component Testing', () => {
         expect(cb5).not.toBeChecked()
       })
     })
+    test('should disable add button if inputs are empty ', async () => {
+      const titleInput = screen.getByTestId(pageTitle)
+      userEvent.type(titleInput, 'titleTesting')
+      expect(titleInput).toHaveValue('titleTesting')
+      const pageNameInput = screen.getByTestId(pageName)
+      userEvent.type(pageNameInput, 'pageNameTesting')
+      expect(pageNameInput).toHaveValue('pageNameTesting')
+      const displayOrderInput = screen.getByTestId(displayOrder)
+      userEvent.type(displayOrderInput, '88')
+      expect(displayOrderInput).toHaveValue('88')
+      const saveBtn = screen.getByTestId('save-btn')
+      await waitFor(() => {
+        expect(saveBtn).toBeDisabled()
+      })
+    })
+    test('should Uncheck All Countries ', async () => {
+      const handbookCountries = screen.getByTestId(cbAll)
+      fireEvent.click(handbookCountries)
+      expect(handbookCountries).toBeChecked()
+      fireEvent.click(handbookCountries)
+      await waitFor(() => {
+        expect(handbookCountries).not.toBeChecked()
+      })
+    })
   })
 
   test('should redirect to /handbook when user clicks on Back Button', async () => {
     const history = createMemoryHistory()
     render(
       <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <AddNewHandbook
-            headerTitle={''}
-            confirmButtonText={''}
-            backButtonHandler={jest.fn()}
-          />
-        </ReduxProvider>
+        <AddNewHandbook
+          headerTitle="Add New Page"
+          confirmButtonText="Save"
+          backButtonHandler={jest.fn()}
+        />
       </Router>,
     )
     userEvent.click(screen.getByRole('button', { name: /Back/i }))
@@ -235,7 +247,6 @@ describe('Add New Page Component Testing', () => {
       expect(history.location.pathname).toBeTruthy()
     })
   })
-
   test('should clear input and disable button after submitting ', async () => {
     render(
       <AddNewHandbook

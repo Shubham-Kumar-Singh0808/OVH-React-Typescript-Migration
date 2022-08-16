@@ -67,7 +67,7 @@ function AddNewHandbook({
   const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target
     const value1 = +value
-    if (addNewPage.list?.includes(value1) && !checked) {
+    if (addNewPage.list?.includes(value1)) {
       setAllChecked(checked)
       const list = [...addNewPage.list]
       const index = list.indexOf(value1)
@@ -77,7 +77,7 @@ function AddNewHandbook({
           return { ...prevState, ...{ list } }
         })
       }
-    } else if (checked && !addNewPage.list?.includes(value1)) {
+    } else {
       const list = addNewPage.list || []
       list?.push(value1)
       if (list.length === employeeCountries.length) setAllChecked(checked)
@@ -193,10 +193,6 @@ function AddNewHandbook({
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
     }
   }
-
-  const validateAddButton = isButtonEnabled
-    ? isButtonEnabled && isDisplayOrderExist
-    : !isButtonEnabled
 
   return (
     <>
@@ -370,7 +366,11 @@ function AddNewHandbook({
                 data-testid="save-btn"
                 className="btn-ovh me-1"
                 color="success"
-                disabled={validateAddButton}
+                disabled={
+                  isButtonEnabled
+                    ? isButtonEnabled && isDisplayOrderExist
+                    : !isButtonEnabled
+                }
                 onClick={handleAddNewHandbookPage}
               >
                 {confirmButtonText}
