@@ -59,7 +59,6 @@ const EditProject = (): JSX.Element => {
   const [hiveValue, setHive] = useState<string>('')
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
   const [isUpdateBtnEnable, setUpdateBtn] = useState(false)
-  // const [showEditor, setShowEditor] = useState<boolean>(true)
 
   const selectedProject = useTypedSelector(
     reduxServices.projectManagement.selectors.project,
@@ -154,11 +153,6 @@ const EditProject = (): JSX.Element => {
       setProjectName(selectedProject.projectName)
       setProjectManager(selectedProject.managerName)
       setHive(selectedProject.hiveProjectName)
-
-      // setShowEditor(false)
-      // setTimeout(() => {
-      //   setShowEditor(true)
-      // }, 0)
     }
   }, [selectedProject])
 
@@ -624,7 +618,6 @@ const EditProject = (): JSX.Element => {
                 >
                   Description:
                 </CFormLabel>
-                {/* {showEditor && ( */}
                 <CCol sm={9}>
                   <CKEditor<{
                     onChange: CKEditorEventHandler<'change'>
@@ -637,7 +630,6 @@ const EditProject = (): JSX.Element => {
                     }}
                   />
                 </CCol>
-                {/* )} */}
               </CRow>
               <CRow className="mb-3 align-items-center">
                 <CCol sm={{ span: 6, offset: 3 }}>
