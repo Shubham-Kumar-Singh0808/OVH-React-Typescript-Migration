@@ -2,12 +2,19 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
+const expectPageSizeToBeRendered = (pageSize: number) => {
+  for (let i = 0; i < pageSize; i++) {
+    expect(
+      screen.getByText(mockEmployeeHandbookList[i].title),
+    ).toBeInTheDocument()
+  }
+}
 describe('Employee Handbook Settings', () => {
   beforeEach(() => {
     render(
@@ -40,7 +47,7 @@ describe('Employee Handbook Settings', () => {
     expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
   })
   test('should render correct number of page records', () => {
-    // 21 including the heading
+    // 45 including the heading
     expect(screen.queryAllByRole('row')).toHaveLength(45)
   })
   test('should render delete button', () => {
@@ -52,6 +59,20 @@ describe('Employee Handbook Settings', () => {
     expect(screen.getByTestId('handbook-delete-btn0')).toHaveClass(
       'btn btn-danger btn-sm',
     )
+  })
+  test('should render Personal info tab component with out crashing', async () => {
+    expectPageSizeToBeRendered(20)
+    await waitFor(() => {
+      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+
+      //   const pageSizeSelect = screen.getByRole('option', {
+      //     name: '40',
+      //   }) as HTMLOptionElement
+      //   expect(pageSizeSelect.selected).toBe(true)
+
+      expect(mockSetPageSize).toHaveBeenCalledTimes(1)
+      expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
+    })
   })
   it('should render Delete modal on clicking delete button from Actions', async () => {
     const deleteButtonElement = screen.getByTestId('handbook-delete-btn1')
