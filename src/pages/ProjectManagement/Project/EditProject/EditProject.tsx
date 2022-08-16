@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -446,7 +446,7 @@ const EditProject = (): JSX.Element => {
                 setValue={handlePriceModel}
                 value={getTypes[project.type]}
                 label="Pricing Model"
-                name="pricingModel"
+                name="editPricingModel"
                 placeHolder="---Pricing Model---"
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
@@ -456,8 +456,8 @@ const EditProject = (): JSX.Element => {
                   <CFormCheck
                     inline
                     type="checkbox"
-                    name="internalProject"
-                    id="internalProject"
+                    name="editInternalProject"
+                    id="editInternalProject"
                     label="Internal Project"
                     onChange={(event) =>
                       handleIsInternalStatus(event.target.checked)
@@ -519,14 +519,17 @@ const EditProject = (): JSX.Element => {
               />
               <CRow className="mb-3">
                 <CFormLabel
-                  {...dynamicFormLabelProps('projectstartdate', classNameStyle)}
+                  {...dynamicFormLabelProps(
+                    'editprojectstartdate',
+                    classNameStyle,
+                  )}
                 >
                   Start Date:
                   <span className={showIsRequired(project.startdate)}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
-                    id="projectstartdate"
+                    id="editprojectstartdate"
                     className="form-control form-control-sm sh-date-picker"
                     peekNextMonth
                     showMonthDropdown
@@ -535,7 +538,7 @@ const EditProject = (): JSX.Element => {
                     data-testid="start-date-picker"
                     placeholderText="dd/mm/yy"
                     dateFormat="dd/mm/yy"
-                    name="projectstartdate"
+                    name="editprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
                   />
@@ -543,13 +546,16 @@ const EditProject = (): JSX.Element => {
               </CRow>
               <CRow className="mb-3">
                 <CFormLabel
-                  {...dynamicFormLabelProps('projectenddate', classNameStyle)}
+                  {...dynamicFormLabelProps(
+                    'editprojectenddate',
+                    classNameStyle,
+                  )}
                 >
                   End Date:
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
-                    id="projectenddate"
+                    id="editprojectenddate"
                     className="form-control form-control-sm sh-date-picker"
                     peekNextMonth
                     showMonthDropdown
@@ -558,7 +564,7 @@ const EditProject = (): JSX.Element => {
                     placeholderText="dd/mm/yy"
                     data-testid="end-date-picker"
                     dateFormat="dd/mm/yy"
-                    name="projectenddate"
+                    name="editprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
                   />
@@ -574,18 +580,18 @@ const EditProject = (): JSX.Element => {
               </CRow>
               <CRow className="mb-3">
                 <CFormLabel
-                  data-testId="selectLabel"
+                  data-testId="editHealthLabel"
                   {...dynamicFormLabelProps('health', classNameStyle)}
                 >
                   Health:
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormSelect
-                    id="health"
+                    id="editHealth"
                     size="sm"
                     aria-label="health"
-                    data-testid="formHealth"
-                    name="health"
+                    data-testid="formEditHealth"
+                    name="editHealth"
                     value={project.health}
                     onChange={onHandleHealth}
                   >
@@ -607,13 +613,13 @@ const EditProject = (): JSX.Element => {
                 value={hiveValue}
                 isRequired={false}
                 label="Hive Project Name"
-                name="hiveProjectName"
+                name="editHiveProjectName"
                 placeholder="Project Name in Hive"
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
               <CRow className="mt-4 mb-4">
                 <CFormLabel
-                  data-testId="selectLabel"
+                  data-testId="descriptionLabel"
                   {...dynamicFormLabelProps('description', classNameStyle)}
                 >
                   Description:
@@ -625,7 +631,7 @@ const EditProject = (): JSX.Element => {
                     }>
                       initData={project.description}
                       config={ckeditorConfig}
-                      debug={true}
+                      debug={false}
                       onChange={({ editor }) => {
                         onHandleDescription(editor.getData().trim())
                       }}

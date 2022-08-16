@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -289,7 +289,7 @@ const AddProject = (): JSX.Element => {
                 setValue={handlePriceModel}
                 value={project.type}
                 label="Pricing Model"
-                name="pricingModel"
+                name="addPricingModel"
                 placeHolder="---Pricing Model---"
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
@@ -332,14 +332,17 @@ const AddProject = (): JSX.Element => {
               />
               <CRow className="mb-3">
                 <CFormLabel
-                  {...dynamicFormLabelProps('projectstartdate', classNameStyle)}
+                  {...dynamicFormLabelProps(
+                    'addprojectstartdate',
+                    classNameStyle,
+                  )}
                 >
                   Start Date:
                   <span className={showIsRequired(project.startdate)}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
-                    id="projectstartdate"
+                    id="addprojectstartdate"
                     className="form-control form-control-sm sh-date-picker"
                     peekNextMonth
                     showMonthDropdown
@@ -348,7 +351,7 @@ const AddProject = (): JSX.Element => {
                     data-testid="start-date-picker"
                     placeholderText="dd/mm/yy"
                     dateFormat="dd/mm/yy"
-                    name="projectstartdate"
+                    name="addprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
                   />
@@ -356,13 +359,16 @@ const AddProject = (): JSX.Element => {
               </CRow>
               <CRow className="mb-3">
                 <CFormLabel
-                  {...dynamicFormLabelProps('projectenddate', classNameStyle)}
+                  {...dynamicFormLabelProps(
+                    'addprojectenddate',
+                    classNameStyle,
+                  )}
                 >
                   End Date:
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
-                    id="projectenddate"
+                    id="addprojectenddate"
                     className="form-control form-control-sm sh-date-picker"
                     peekNextMonth
                     showMonthDropdown
@@ -371,7 +377,7 @@ const AddProject = (): JSX.Element => {
                     placeholderText="dd/mm/yy"
                     data-testid="end-date-picker"
                     dateFormat="dd/mm/yy"
-                    name="projectenddate"
+                    name="addprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
                   />
