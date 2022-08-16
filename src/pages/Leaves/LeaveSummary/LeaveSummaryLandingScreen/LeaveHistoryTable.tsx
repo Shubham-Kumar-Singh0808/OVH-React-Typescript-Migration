@@ -29,7 +29,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
     reduxServices.employeeLeaveSummary.selectors.employeeLeaveHistory,
   )
 
-  const listSize = useTypedSelector(
+  const leaveHistoryListSize = useTypedSelector(
     reduxServices.employeeLeaveSummary.selectors.listSize,
   )
 
@@ -208,11 +208,11 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {listSize}</strong>
+                <strong>Total Records: {leaveHistoryListSize}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {listSize > 20 && (
+              {leaveHistoryListSize > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                   options={[20, 40, 60, 80]}
@@ -220,7 +220,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                 />
               )}
             </CCol>
-            {listSize > 20 && (
+            {leaveHistoryListSize > 20 && (
               <CCol
                 xs={5}
                 className="gap-1 d-grid d-md-flex justify-content-md-end"
@@ -236,7 +236,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
         </>
       ) : (
         <CCol>
-          <CRow className="category-no-data">
+          <CRow>
             <h4 className="text-center">No data to display</h4>
           </CRow>
         </CCol>
