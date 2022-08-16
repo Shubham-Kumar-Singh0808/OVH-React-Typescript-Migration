@@ -24,6 +24,10 @@ export const mockCountries: EmployeeCountry[] = [
     id: 5,
     name: 'PHILIPPINES',
   },
+  {
+    id: 6,
+    name: 'BRAZIL',
+  },
 ]
 
 export const mockHandbookList: TotalHandbookList[] = [

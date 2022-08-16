@@ -17,6 +17,7 @@ import {
   cB5,
   updateButton,
   description,
+  cB6,
 } from '../../../../test/constants'
 import {
   mockCountries,
@@ -82,6 +83,10 @@ describe('Edit Page Component Testing', () => {
       const cbPH = screen.findByTestId(cB5)
       expect(cbPH).toBeTruthy()
     })
+    test('should render Brazil country checkbox', () => {
+      const cbBzl = screen.findByTestId(cB6)
+      expect(cbBzl).toBeTruthy()
+    })
     test('should have update button enabled initially', () => {
       const updateBtn = screen.getByTestId(updateButton)
       expect(updateBtn).toBeTruthy()
@@ -140,12 +145,14 @@ describe('Edit Page Component Testing', () => {
       fireEvent.click(screen.getByTestId(cB3))
       fireEvent.click(screen.getByTestId(cB4))
       fireEvent.click(screen.getByTestId(cB5))
+      fireEvent.click(screen.getByTestId(cB6))
       await waitFor(() => {
         expect(screen.getByText('CANADA')).toBeInTheDocument()
         expect(screen.getByText('INDIA')).toBeInTheDocument()
         expect(screen.getByText('AUSTRALIA')).toBeInTheDocument()
         expect(screen.getByText('PHILIPPINES')).toBeInTheDocument()
         expect(screen.getByText('USA')).toBeInTheDocument()
+        expect(screen.getByText('BRAZIL')).toBeInTheDocument()
       })
     })
     test('Checkbox changes value', async () => {
@@ -154,6 +161,7 @@ describe('Edit Page Component Testing', () => {
       fireEvent.click(screen.getByTestId(cB3))
       fireEvent.click(screen.getByTestId(cB4))
       fireEvent.click(screen.getByTestId(cB5))
+      fireEvent.click(screen.getByTestId(cB6))
       const allCountries = fireEvent.click(screen.getByTestId(cbAllCountries))
       await waitFor(() => {
         expect(allCountries).toBe(true)
@@ -183,6 +191,7 @@ describe('Edit Page Component Testing', () => {
           headerTitle="Edit Page"
           confirmButtonText="Update"
           backButtonHandler={jest.fn()}
+          isEditHandbook={true}
           handbookId={3}
         />,
         {
