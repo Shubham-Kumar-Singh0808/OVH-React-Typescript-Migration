@@ -37,7 +37,7 @@ describe('Edit Page Component Testing', () => {
           confirmButtonText="Update"
           backButtonHandler={jest.fn()}
           handbookId={0}
-          isEditHandbook={true}
+          isEditHandbook={false}
         />,
       )
     })
