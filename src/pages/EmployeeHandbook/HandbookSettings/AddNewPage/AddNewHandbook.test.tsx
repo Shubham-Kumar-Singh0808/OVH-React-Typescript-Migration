@@ -18,6 +18,7 @@ import {
   cB4,
   cB5,
   cbAll,
+  cB6,
 } from '../../../../test/constants'
 import {
   mockCountries,
@@ -113,12 +114,14 @@ describe('Add New Page Component Testing', () => {
       fireEvent.click(screen.getByTestId(cB3))
       fireEvent.click(screen.getByTestId(cB4))
       fireEvent.click(screen.getByTestId(cB5))
+      fireEvent.click(screen.getByTestId(cB6))
       await waitFor(() => {
         expect(screen.getByText('CANADA')).toBeInTheDocument()
         expect(screen.getByText('INDIA')).toBeInTheDocument()
         expect(screen.getByText('AUSTRALIA')).toBeInTheDocument()
         expect(screen.getByText('PHILIPPINES')).toBeInTheDocument()
         expect(screen.getByText('USA')).toBeInTheDocument()
+        expect(screen.getByText('BRAZIL')).toBeInTheDocument()
       })
     })
 
@@ -132,7 +135,7 @@ describe('Add New Page Component Testing', () => {
     })
 
     test('Checkbox changes value', async () => {
-      const cbAll = screen.getByTestId('ch-All')
+      const cbxAll = screen.getByTestId('ch-All')
       const checkbox1 = fireEvent.click(screen.getByTestId('ch-countries0'))
       const checkbox2 = fireEvent.click(screen.getByTestId('ch-countries1'))
       const checkbox3 = fireEvent.click(screen.getByTestId('ch-countries2'))
@@ -146,7 +149,7 @@ describe('Add New Page Component Testing', () => {
       expect(checkbox5).toBe(true)
       expect(checkbox6).toBe(true)
       await waitFor(() => {
-        expect(cbAll).toBeChecked()
+        expect(cbxAll).toBeChecked()
       })
     })
   })
@@ -183,25 +186,29 @@ describe('Add New Page Component Testing', () => {
 
     test('Unselecting checkbox', async () => {
       screen.debug()
-      const cbAll = screen.getByTestId('ch-All')
+      const chbAll = screen.getByTestId('ch-All')
       const cb1 = screen.getByTestId('ch-countries0')
       const cb2 = screen.getByTestId('ch-countries1')
       const cb3 = screen.getByTestId('ch-countries2')
       const cb4 = screen.getByTestId('ch-countries3')
       const cb5 = screen.getByTestId('ch-countries4')
+      const cb6 = screen.getByTestId('ch-countries5')
 
-      fireEvent.change(cbAll, { target: { checked: false } })
+      fireEvent.change(chbAll, { target: { checked: false } })
       fireEvent.change(cb1, { target: { checked: false } })
       fireEvent.change(cb2, { target: { checked: false } })
       fireEvent.change(cb3, { target: { checked: false } })
       fireEvent.change(cb4, { target: { checked: false } })
       fireEvent.change(cb5, { target: { checked: false } })
+      fireEvent.change(cb6, { target: { checked: false } })
+
       await waitFor(() => {
         expect(cb1).not.toBeChecked()
         expect(cb2).not.toBeChecked()
         expect(cb3).not.toBeChecked()
         expect(cb4).not.toBeChecked()
         expect(cb5).not.toBeChecked()
+        expect(cb6).not.toBeChecked()
       })
     })
     test('should disable add button if inputs are empty ', async () => {
