@@ -40,6 +40,7 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  ProjectManagementApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -240,7 +241,6 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getProjectsClients: apiPrefix + '/project-mgmt/getClients',
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
-  addProject: apiPrefix + '/project-mgmt/project',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }
 
@@ -339,4 +339,13 @@ export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
 
 export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
+}
+
+export const projectManagementConfig: ProjectManagementApi = {
+  addProject: apiPrefix + '/project-mgmt/project',
+  updateProject: apiPrefix + '/project-mgmt/project',
+  getProject: apiPrefix + '/project-mgmt/project',
+  getAllPlatforms: apiPrefix + '/project-mgmt/getAllPlatforms',
+  getAllDomains: apiPrefix + '/project-mgmt/getAllDomains',
+  getAllManagers: apiPrefix + '/project-mgmt/getAllManagers',
 }

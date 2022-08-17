@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -14,7 +14,6 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
 import { GetList } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -22,24 +21,27 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   GetAutoCompleteList,
   GetOnSelect,
+  Project,
   ProjectClients,
-  ProjectDetail,
 } from '../../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
 import OInputField from '../../../../components/ReusableComponent/OInputField'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
-import { showIsRequired } from '../../../../utils/helper'
+import { isEmail, listComposer, showIsRequired } from '../../../../utils/helper'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import OToast from '../../../../components/ReusableComponent/OToast'
 import { healthList, priceModelList } from '../../../../constant/constantData'
 import OBackButton from '../../../../components/ReusableComponent/OBackButton'
 import { ClientOrganization } from '../ProjectComponent/ClientOrganization'
 import { ProjectName } from '../ProjectComponent/ProjectName'
 
-const AddProject = (): JSX.Element => {
+interface TypesObject {
+  [key: string]: string
+}
+
+const EditProject = (): JSX.Element => {
+  const { projectId } = useParams<{ projectId: string }>()
   const dispatch = useAppDispatch()
   const history = useHistory()
-  const isLoading = ApiLoadingState.succeeded
   const classNameStyle = 'col-sm-3 col-form-label text-end'
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
@@ -49,19 +51,18 @@ const AddProject = (): JSX.Element => {
     }
   }
 
-  const initProject = {
-    intrnalOrNot: false,
-    status: 'NEW',
-  } as ProjectDetail
+  const initProject = {} as Project
   const [project, setProject] = useState(initProject)
 
   const [projectName, setProjectName] = useState<string>('')
   const [projectManager, setProjectManager] = useState<string>('')
   const [hiveValue, setHive] = useState<string>('')
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
-  const [showEditor, setShowEditor] = useState<boolean>(true)
-  const [isAddBtnEnable, setAddBtn] = useState(false)
-  const [isClearBtnEnable, setClearBtn] = useState(false)
+  const [isUpdateBtnEnable, setUpdateBtn] = useState(false)
+
+  const selectedProject = useTypedSelector(
+    reduxServices.projectManagement.selectors.project,
+  )
 
   useEffect(() => {
     if (
@@ -69,18 +70,91 @@ const AddProject = (): JSX.Element => {
       project.client != null &&
       project.projectName !== '' &&
       project.projectName != null &&
+      project.projectContactPerson != null &&
+      project.projectContactPerson !== '' &&
+      project.projectContactEmail != null &&
+      project.projectContactEmail !== '' &&
+      project.billingContactPerson != null &&
+      project.billingContactPerson !== '' &&
+      project.billingContactPersonEmail != null &&
+      project.billingContactPersonEmail !== '' &&
       project.model !== '' &&
       project.model != null &&
       project.type !== '' &&
       project.type != null &&
       project.managerId !== -1 &&
       project.managerId != null &&
+      project.platform !== '' &&
+      project.platform != null &&
+      project.domain !== '' &&
+      project.domain != null &&
       project.startdate !== '' &&
-      project.startdate != null
+      project.startdate != null &&
+      !isEmail(project.projectContactEmail) &&
+      !isEmail(project.billingContactPersonEmail)
     ) {
-      setAddBtn(true)
+      setUpdateBtn(true)
+    } else {
+      setUpdateBtn(false)
     }
   }, [project])
+
+  useEffect(() => {
+    if (selectedProject != null) {
+      setProject({
+        address: selectedProject.address,
+        allocation: selectedProject.allocation,
+        bcc: selectedProject.bcc,
+        billable: selectedProject.billable,
+        billingContactPerson: selectedProject.billingContactPerson,
+        billingContactPersonEmail: selectedProject.billingContactPersonEmail,
+        cc: selectedProject.cc,
+        checkListExist: selectedProject.checkListExist,
+        client: selectedProject.client,
+        clientId: selectedProject.clientId,
+        clientName: selectedProject.clientName,
+        count: selectedProject.count,
+        country: selectedProject.country,
+        deliveryManager: selectedProject.deliveryManager,
+        description: selectedProject.description,
+        domain: selectedProject.domain,
+        email: selectedProject.email,
+        employeeId: selectedProject.employeeId,
+        enddate: selectedProject.enddate,
+        health: selectedProject.health,
+        hiveProjectFlag: selectedProject.hiveProjectFlag,
+        hiveProjectName: selectedProject.hiveProjectName,
+        id: selectedProject.id,
+        intrnalOrNot: selectedProject.intrnalOrNot,
+        isAllocated: selectedProject.isAllocated,
+        managerId: selectedProject.managerId,
+        managerName: selectedProject.managerName,
+        model: selectedProject.model,
+        newClient: selectedProject.newClient,
+        organization: selectedProject.organization,
+        personName: selectedProject.personName,
+        platform: selectedProject.platform,
+        projectCode: selectedProject.projectCode,
+        projectContactEmail: selectedProject.projectContactEmail,
+        projectContactPerson: selectedProject.projectContactPerson,
+        projectEndDate: selectedProject.projectEndDate,
+        projectName: selectedProject.projectName,
+        projectRequestId: selectedProject.projectRequestId,
+        projectRequestMilestoneDTO: selectedProject.projectRequestMilestoneDTO,
+        projectStartdate: selectedProject.projectStartdate,
+        requestedBy: selectedProject.requestedBy,
+        requiredResources: selectedProject.requiredResources,
+        startdate: selectedProject.startdate,
+        statuEditFlag: selectedProject.statuEditFlag,
+        status: selectedProject.status,
+        technology: selectedProject.technology,
+        type: selectedProject.type,
+      })
+      setProjectName(selectedProject.projectName)
+      setProjectManager(selectedProject.managerName)
+      setHive(selectedProject.hiveProjectName)
+    }
+  }, [selectedProject])
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
@@ -96,24 +170,32 @@ const AddProject = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.projectManagement.getProjectClients())
-    dispatch(
-      reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
-    )
+    dispatch(reduxServices.projectManagement.getAllDomains())
+    dispatch(reduxServices.projectManagement.getAllManagers())
+    dispatch(reduxServices.projectManagement.getAllPlatforms())
+    dispatch(reduxServices.projectManagement.getProject(projectId))
   }, [dispatch])
 
   const projectClients = useTypedSelector(
     reduxServices.projectManagement.selectors.projectClients,
   )
 
-  const reportingManagersList = useTypedSelector(
-    reduxServices.newEmployee.reportingManagersService.selectors
-      .reportingManagersList,
+  const domainList = useTypedSelector(
+    reduxServices.projectManagement.selectors.domains,
   )
 
-  const projectManagers = reportingManagersList?.map((manager) => {
+  const managerList = useTypedSelector(
+    reduxServices.projectManagement.selectors.managers,
+  )
+
+  const platforms = useTypedSelector(
+    reduxServices.projectManagement.selectors.platForms,
+  )
+
+  const projectManagers = managerList?.map((manager) => {
     return {
       id: manager.id,
-      name: manager.fullName,
+      name: `${manager.firstName} ${manager.lastName}`,
     } as GetAutoCompleteList
   })
 
@@ -122,17 +204,27 @@ const AddProject = (): JSX.Element => {
     .map((mapClient) => {
       return {
         id: mapClient.id,
-        name: mapClient.name == null ? '' : mapClient.name,
+        name: mapClient.name,
       } as GetAutoCompleteList
     })
+
+  const projectDomains = listComposer(domainList as [], 'id', 'name')
+
+  const projectPlatforms = listComposer(platforms as [], 'id', 'name')
 
   const projectTypeList: GetList[] = [
     { id: 1, name: 'Development' },
     { id: 2, name: 'Support' },
   ]
 
+  const statusList: GetList[] = [
+    { id: 1, name: 'New' },
+    { id: 2, name: 'In Progress' },
+    { id: 3, name: 'On Hold' },
+    { id: 4, name: 'Closed' },
+  ]
+
   const handleClientSelect = (value: GetOnSelect) => {
-    setClearBtn(true)
     setProject({
       ...project,
       client: value.name,
@@ -140,23 +232,69 @@ const AddProject = (): JSX.Element => {
   }
 
   const handleProjectName = (value: string) => {
-    setClearBtn(true)
     setProject({
       ...project,
       projectName: value,
     })
   }
 
-  const handlePriceModel = (value: string) => {
-    setClearBtn(true)
+  const handleCustomerContactName = (value: string) => {
     setProject({
       ...project,
-      type: value,
+      projectContactPerson: value,
+    })
+  }
+
+  const handleCustomerEmail = (value: string) => {
+    setProject({
+      ...project,
+      projectContactEmail: value,
+    })
+  }
+
+  const handleBillingPerson = (value: string) => {
+    setProject({
+      ...project,
+      billingContactPerson: value,
+    })
+  }
+
+  const handleBillingPersonEmail = (value: string) => {
+    setProject({
+      ...project,
+      billingContactPersonEmail: value,
+    })
+  }
+
+  const handlePlatform = (value: string) => {
+    setProject({
+      ...project,
+      platform: value,
+    })
+  }
+
+  const handleDomain = (value: string) => {
+    setProject({
+      ...project,
+      domain: value,
+    })
+  }
+
+  const handleStatus = (value: string) => {
+    setProject({
+      ...project,
+      status: value,
+    })
+  }
+
+  const handlePriceModel = (value: string) => {
+    setProject({
+      ...project,
+      type: value === 'T&M' ? 'TM' : value.replace(' ', '').toUpperCase(),
     })
   }
 
   const handleIsInternalStatus = (intrnalOrNot: boolean) => {
-    setClearBtn(true)
     setProject({
       ...project,
       intrnalOrNot,
@@ -164,18 +302,15 @@ const AddProject = (): JSX.Element => {
   }
 
   const handleProjectType = (value: string) => {
-    setClearBtn(true)
     setProject({ ...project, model: value })
   }
 
   const handleProjectManager = (value: GetOnSelect) => {
-    setClearBtn(true)
-    setProject({ ...project, managerId: value.id })
+    setProject({ ...project, managerId: value.id, managerName: value.name })
     setProjectManager(value.name)
   }
 
   const onHandleStartDate = (value: Date) => {
-    setClearBtn(true)
     setProject({
       ...project,
       startdate: moment(value).format(dateFormat),
@@ -183,7 +318,6 @@ const AddProject = (): JSX.Element => {
   }
 
   const onHandleEndDate = (value: Date) => {
-    setClearBtn(true)
     setProject({
       ...project,
       enddate: moment(value).format(dateFormat),
@@ -191,84 +325,63 @@ const AddProject = (): JSX.Element => {
   }
 
   const onHandleHealth = (e: { target: { value: string } }) => {
-    setClearBtn(true)
     setProject({ ...project, health: e.target.value })
   }
 
   const onHandleHiveName = (value: string) => {
-    setClearBtn(true)
     setProject({ ...project, hiveProjectName: value })
+    setHive(value)
   }
 
   const onHandleDescription = (description: string) => {
-    setClearBtn(true)
     setProject((prevState) => {
       return { ...prevState, ...{ description } }
     })
   }
 
-  const handleSubmit = async () => {
+  const handleUpdateSubmit = async () => {
     const payload = {
       ...project,
       model: project.model.toUpperCase(),
-      type:
-        project.type === 'T&M'
-          ? 'TM'
-          : project.type.replace(' ', '').toUpperCase(),
+      status:
+        project.status === 'In Progress' || project.status === 'On Hold'
+          ? project.status.replace(' ', '').toUpperCase()
+          : project.status,
     }
 
     const newProjectResponse = await dispatch(
-      reduxServices.projectManagement.addProject(payload),
+      reduxServices.projectManagement.updateProject(payload),
     )
     if (
-      reduxServices.projectManagement.addProject.fulfilled.match(
+      reduxServices.projectManagement.updateProject.fulfilled.match(
         newProjectResponse,
       )
     ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          toastElement('New project is successfully added', 'success'),
-        ),
-      )
-
       history.push('/employeeList')
-    } else {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          toastElement('Project Name Already Exist', 'danger'),
-        ),
-      )
     }
   }
 
-  const toastElement = (message: string, type: string) => (
-    <OToast toastColor={type} toastMessage={message} />
-  )
-
-  const handleClear = () => {
-    setProjectManager('')
-    setHive('')
-    setProjectName('')
-    onHandleDescription('')
-    setProject(initProject)
-
-    setShowEditor(false)
-    setTimeout(() => {
-      setShowEditor(true)
-      setClearBtn(false)
-      setAddBtn(false)
-    }, 0)
+  const getTypes: TypesObject = {
+    FIXEDBID: 'Fixed Bid',
+    RETAINER: 'Retainer',
+    SUPPORT: 'Support',
+    TM: 'T&M',
   }
 
-  const selectedHealthValue = project.health == null ? '' : project.health
+  const typeValue =
+    project.model == null
+      ? ''
+      : project.model.charAt(0).toUpperCase() +
+        project.model.slice(1).toLowerCase()
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
-      title="Add Project"
+      title="Edit Project"
       CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
     >
-      {isLoading === ApiLoadingState.succeeded ? (
+      {Object.keys(project).length > 0 ? (
         <>
           <CRow className="justify-content-end">
             <OBackButton destination="/" name="back" />
@@ -283,13 +396,51 @@ const AddProject = (): JSX.Element => {
                 onBlur={handleProjectName}
                 value={projectName}
               />
+              <OInputField
+                onChangeHandler={handleCustomerContactName}
+                value={project.projectContactPerson}
+                isRequired={true}
+                label={'Customer Contact Name'}
+                name={'customerContactName'}
+                placeholder={'Name'}
+                dynamicFormLabelProps={dynamicFormLabelProps}
+              />
+              <OInputField
+                onChangeHandler={handleCustomerEmail}
+                value={project.projectContactEmail}
+                isRequired={true}
+                type="email"
+                label={'Customer Email'}
+                name={'customerEmail'}
+                placeholder={'Email'}
+                dynamicFormLabelProps={dynamicFormLabelProps}
+              />
+              <OInputField
+                onChangeHandler={handleBillingPerson}
+                value={project.billingContactPerson}
+                isRequired={true}
+                label={'Billing Contact Person'}
+                name={'billingContactPerson'}
+                placeholder={'Name'}
+                dynamicFormLabelProps={dynamicFormLabelProps}
+              />
+              <OInputField
+                onChangeHandler={handleBillingPersonEmail}
+                value={project.billingContactPersonEmail}
+                isRequired={true}
+                type="email"
+                label={'Billing Contact Person Email'}
+                name={'billingContactPersonEmail'}
+                placeholder={'Email Id'}
+                dynamicFormLabelProps={dynamicFormLabelProps}
+              />
               <OSelectList
                 isRequired={true}
                 list={priceModelList}
                 setValue={handlePriceModel}
-                value={project.type}
+                value={getTypes[project.type]}
                 label="Pricing Model"
-                name="addPricingModel"
+                name="editPricingModel"
                 placeHolder="---Pricing Model---"
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
@@ -299,8 +450,9 @@ const AddProject = (): JSX.Element => {
                   <CFormCheck
                     inline
                     type="checkbox"
-                    name="internalProject"
-                    id="internalProject"
+                    name="editInternalProject"
+                    data-testid="editInternalProject"
+                    id="editInternalProject"
                     label="Internal Project"
                     onChange={(event) =>
                       handleIsInternalStatus(event.target.checked)
@@ -313,8 +465,8 @@ const AddProject = (): JSX.Element => {
                 isRequired={true}
                 list={projectTypeList}
                 setValue={handleProjectType}
-                value={project.model}
-                name="addProjectType"
+                value={typeValue}
+                name="editProjectType"
                 label="Project Type"
                 placeHolder="---Project Type---"
                 dynamicFormLabelProps={dynamicFormLabelProps}
@@ -330,10 +482,40 @@ const AddProject = (): JSX.Element => {
                 name={'projectManager'}
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
+              <OSelectList
+                isRequired={true}
+                list={projectPlatforms}
+                setValue={handlePlatform}
+                value={project.platform}
+                name="platform"
+                label="Platform"
+                placeHolder="Select Platform"
+                dynamicFormLabelProps={dynamicFormLabelProps}
+              />
+              <OSelectList
+                isRequired={true}
+                list={projectDomains}
+                setValue={handleDomain}
+                value={project.domain}
+                name="domain"
+                label="Domain"
+                placeHolder="Select Domain"
+                dynamicFormLabelProps={dynamicFormLabelProps}
+              />
+              <OSelectList
+                isRequired={false}
+                list={statusList}
+                setValue={handleStatus}
+                value={project.status}
+                name="status"
+                label="Status"
+                placeHolder="Select Status"
+                dynamicFormLabelProps={dynamicFormLabelProps}
+              />
               <CRow className="mb-3">
                 <CFormLabel
                   {...dynamicFormLabelProps(
-                    'addprojectstartdate',
+                    'editprojectstartdate',
                     classNameStyle,
                   )}
                 >
@@ -342,7 +524,7 @@ const AddProject = (): JSX.Element => {
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
-                    id="addprojectstartdate"
+                    id="editprojectstartdate"
                     className="form-control form-control-sm sh-date-picker"
                     peekNextMonth
                     showMonthDropdown
@@ -351,7 +533,7 @@ const AddProject = (): JSX.Element => {
                     data-testid="start-date-picker"
                     placeholderText="dd/mm/yy"
                     dateFormat="dd/mm/yy"
-                    name="addprojectstartdate"
+                    name="editprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
                   />
@@ -360,7 +542,7 @@ const AddProject = (): JSX.Element => {
               <CRow className="mb-3">
                 <CFormLabel
                   {...dynamicFormLabelProps(
-                    'addprojectenddate',
+                    'editprojectenddate',
                     classNameStyle,
                   )}
                 >
@@ -368,7 +550,7 @@ const AddProject = (): JSX.Element => {
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
-                    id="addprojectenddate"
+                    id="editprojectenddate"
                     className="form-control form-control-sm sh-date-picker"
                     peekNextMonth
                     showMonthDropdown
@@ -377,7 +559,7 @@ const AddProject = (): JSX.Element => {
                     placeholderText="dd/mm/yy"
                     data-testid="end-date-picker"
                     dateFormat="dd/mm/yy"
-                    name="addprojectenddate"
+                    name="editprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
                   />
@@ -393,19 +575,19 @@ const AddProject = (): JSX.Element => {
               </CRow>
               <CRow className="mb-3">
                 <CFormLabel
-                  data-testId="selectLabel"
+                  data-testId="editHealthLabel"
                   {...dynamicFormLabelProps('health', classNameStyle)}
                 >
-                  Health: {project.health}
+                  Health:
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormSelect
-                    id="health"
+                    id="editHealth"
                     size="sm"
                     aria-label="health"
-                    data-testid="formHealth"
-                    name="health"
-                    value={selectedHealthValue}
+                    data-testid="formEditHealth"
+                    name="editHealth"
+                    value={project.health}
                     onChange={onHandleHealth}
                   >
                     <option value={''}>Select</option>
@@ -426,50 +608,40 @@ const AddProject = (): JSX.Element => {
                 value={hiveValue}
                 isRequired={false}
                 label="Hive Project Name"
-                name="hiveProjectName"
+                name="editHiveProjectName"
                 placeholder="Project Name in Hive"
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
               <CRow className="mt-4 mb-4">
                 <CFormLabel
-                  data-testId="selectLabel"
+                  data-testId="descriptionLabel"
                   {...dynamicFormLabelProps('description', classNameStyle)}
                 >
                   Description:
                 </CFormLabel>
-                {showEditor && (
-                  <CCol sm={9}>
-                    <CKEditor<{
-                      onChange: CKEditorEventHandler<'change'>
-                    }>
-                      config={ckeditorConfig}
-                      debug={true}
-                      onChange={({ editor }) => {
-                        onHandleDescription(editor.getData().trim())
-                      }}
-                    />
-                  </CCol>
-                )}
+                <CCol sm={9}>
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={project.description}
+                    config={ckeditorConfig}
+                    debug={false}
+                    onChange={({ editor }) => {
+                      onHandleDescription(editor.getData().trim())
+                    }}
+                  />
+                </CCol>
               </CRow>
               <CRow className="mb-3 align-items-center">
                 <CCol sm={{ span: 6, offset: 3 }}>
                   <CButton
                     className="btn-ovh me-1"
                     color="success"
-                    data-testid="add-project"
-                    onClick={handleSubmit}
-                    disabled={!isAddBtnEnable}
+                    data-testid="update-project"
+                    onClick={handleUpdateSubmit}
+                    disabled={!isUpdateBtnEnable}
                   >
-                    Add
-                  </CButton>
-                  <CButton
-                    color="warning"
-                    className="btn-ovh"
-                    data-testid="clear-project"
-                    onClick={handleClear}
-                    disabled={!isClearBtnEnable}
-                  >
-                    Clear
+                    Update
                   </CButton>
                 </CCol>
               </CRow>
@@ -487,4 +659,4 @@ const AddProject = (): JSX.Element => {
   )
 }
 
-export default AddProject
+export default EditProject

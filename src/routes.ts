@@ -93,6 +93,10 @@ const AddProject = React.lazy(
   () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
 )
 
+const EditProject = React.lazy(
+  () => import('./pages/ProjectManagement/Project/EditProject/EditProject'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -205,6 +209,11 @@ const routes = [
     path: '/addproject',
     name: 'Add Project',
     component: AddProject,
+  },
+  {
+    path: '/editproject/:projectId',
+    name: 'Edit Project',
+    component: EditProject,
   },
 ]
 
