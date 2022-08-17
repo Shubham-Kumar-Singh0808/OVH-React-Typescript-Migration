@@ -17,11 +17,16 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { AddNewTemplate } from '../../../../types/Settings/MailConfiguration/AddTemplate/addMailTemplateTypes'
+import {
+  AddMailTemplateProps,
+  AddNewTemplate,
+} from '../../../../types/Settings/MailConfiguration/AddTemplate/addMailTemplateTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import MailTemplateTypeList from '../AddMailTemplateType/MailTemplateTypeList'
 
-function AddNewMailTemplate(): JSX.Element {
+function AddNewMailTemplate({
+  addButtonHandler,
+}: AddMailTemplateProps): JSX.Element {
   const initialMailTemplateDetails = {} as AddNewTemplate
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [addNewTemplate, setAddNewTemplate] = useState(
@@ -215,7 +220,9 @@ function AddNewMailTemplate(): JSX.Element {
                   <CButton
                     color="info btn-ovh me-1"
                     size="sm"
-                    onClick={() => setToggle('mailTemplateType')}
+                    onClick={
+                      (addButtonHandler = () => setToggle('mailTemplateType'))
+                    }
                   >
                     <i className="fa fa-plus me-1"></i>Add
                   </CButton>

@@ -95,7 +95,6 @@ describe('DesignationList Table Testing', () => {
         expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
       })
     })
-    jest.retryTimes(3)
     it('should close the modal on clicking No button from the popup', async () => {
       const deleteButtonElement = screen.getByTestId('btn-delete6')
       userEvent.click(deleteButtonElement)

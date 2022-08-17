@@ -14,7 +14,6 @@ import {
   getAuthenticatedRequestConfig,
   useAxios,
 } from '../../../../utils/apiUtils'
-import { ApiParams } from '../../../../types/commonTypes'
 
 const getEmployeeHandbooks = async (
   props: EmployeeHandbookListApiProps,
@@ -75,7 +74,7 @@ const addNewHandbook = async (
     url: employeeHandbookSettingsApiConfig.addNewHandbook,
     method: AllowedHttpMethods.post,
     params: { list: prepareObject.list },
-    paramsSerializer: (params: ApiParams) =>
+    paramsSerializer: (params: any) =>
       qs.stringify(params, { arrayFormat: 'repeat' }),
     data: {
       description: prepareObject.description,

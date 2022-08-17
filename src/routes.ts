@@ -81,10 +81,6 @@ const AddNewTemplate = React.lazy(
 const EditEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
 )
-
-const ScheduledInterview = React.lazy(
-  () => import('./pages/Recruitment/ScheduledInterviews/ScheduledInterviews'),
-)
 const MyAttedance = React.lazy(
   () => import('./pages/TimeAndAttendance/MyAttendance/MyAttendance'),
 )
@@ -186,11 +182,6 @@ const routes = [
     path: '/editEmployee/:employeeId',
     name: 'Edit Employee',
     component: EditEmployee,
-  },
-  {
-    path: '/candidateSearch',
-    name: 'Scheduled Interviews',
-    component: ScheduledInterview,
   },
   {
     path: '/employeeattendance',
