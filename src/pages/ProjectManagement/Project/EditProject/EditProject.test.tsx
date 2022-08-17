@@ -178,6 +178,12 @@ describe('Edit Project Testing', () => {
         day: '2-digit',
       }),
     )
+    // Hive
+    const hiveProject = screen.getByPlaceholderText('Project Name in Hive')
+    hiveProject.click()
+    hiveProject.focus()
+    userEvent.type(hiveProject, 'test')
+    hiveProject.blur()
 
     expect(screen.getByTestId(updateBtnId)).not.toBeDisabled()
 
