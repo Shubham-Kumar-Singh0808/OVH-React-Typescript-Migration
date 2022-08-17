@@ -83,7 +83,7 @@ export const mockProject: Project = {
   client: 'Cenveo Corp',
   type: 'FIXEDBID',
   statuEditFlag: 'exist',
-  intrnalOrNot: true,
+  intrnalOrNot: false,
   hiveProjectName: 'Miss Universe',
   projectRequestId: 207,
   model: 'DEVELOPMENT',

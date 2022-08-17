@@ -132,6 +132,13 @@ describe('Edit Project Testing', () => {
     billingContactEmail.click()
     billingContactEmail.focus()
 
+    // Internal Project
+    const internalProject = screen.getByRole('checkbox', {
+      name: 'Internal Project',
+    }) as HTMLInputElement
+    userEvent.click(internalProject)
+    expect(internalProject.checked).toEqual(true)
+
     // Pricing Model
     const OSelectListSelector = screen.getByTestId('formeditPricingModel')
     userEvent.selectOptions(OSelectListSelector, ['Support'])
@@ -159,7 +166,7 @@ describe('Edit Project Testing', () => {
 
     // Project Status
     const statusSelectList = screen.getByTestId('formstatus')
-    userEvent.selectOptions(statusSelectList, ['New'])
+    userEvent.selectOptions(statusSelectList, ['In Progress'])
 
     // Start Date
     const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
@@ -176,5 +183,11 @@ describe('Edit Project Testing', () => {
 
     const addBtn = screen.getByTestId(updateBtnId)
     userEvent.click(addBtn)
+  })
+
+  test('should be able to select T&M without crashing', () => {
+    // Pricing Model
+    const OSelectListSelector = screen.getByTestId('formeditPricingModel')
+    userEvent.selectOptions(OSelectListSelector, ['T&M'])
   })
 })

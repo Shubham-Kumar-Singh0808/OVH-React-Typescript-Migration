@@ -204,7 +204,7 @@ const EditProject = (): JSX.Element => {
     .map((mapClient) => {
       return {
         id: mapClient.id,
-        name: mapClient.name == null ? '' : mapClient.name,
+        name: mapClient.name,
       } as GetAutoCompleteList
     })
 
@@ -451,6 +451,7 @@ const EditProject = (): JSX.Element => {
                     inline
                     type="checkbox"
                     name="editInternalProject"
+                    data-testid="editInternalProject"
                     id="editInternalProject"
                     label="Internal Project"
                     onChange={(event) =>
