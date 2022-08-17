@@ -40,7 +40,7 @@ describe('Mail Template component with data', () => {
       expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
     })
   })
-  jest.retryTimes(3)
+
   it('should close the modal on clicking No button from the popup', async () => {
     const deleteButtonElement = screen.getByTestId('btn-delete0')
     userEvent.click(deleteButtonElement)
@@ -69,7 +69,7 @@ describe('Mail Template component with data', () => {
       await fireEvent.click(saveButtonElement)
 
       expect(screen.getByTestId(`template-input`)).toHaveValue(
-        'test2testing2testing2',
+        'test2testing2testing2testing2',
       )
     })
   })

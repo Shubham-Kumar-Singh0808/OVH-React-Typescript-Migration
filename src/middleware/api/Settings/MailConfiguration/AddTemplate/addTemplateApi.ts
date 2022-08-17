@@ -4,11 +4,11 @@ import {
   AssetTypeResponse,
 } from '../../../../../types/Settings/MailConfiguration/AddTemplate/addMailTemplateTypes'
 import { getAuthenticatedRequestConfig } from '../../../../../utils/apiUtils'
-import { addNewTemplateApiConfig, AllowedHttpMethods } from '../../../apiList'
+import { addNewTemplateAPiConfig, AllowedHttpMethods } from '../../../apiList'
 
 const getAssetTypes = async (): Promise<AssetTypeResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: addNewTemplateApiConfig.getAssetTypes,
+    url: addNewTemplateAPiConfig.getAssetTypes,
     method: AllowedHttpMethods.get,
   })
   const response = await axios(requestConfig)
@@ -19,7 +19,7 @@ const addNewMailTemplate = async (
   prepareObject: AddNewTemplate,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: addNewTemplateApiConfig.addNewMailTemplate,
+    url: addNewTemplateAPiConfig.addNewMailTemplate,
     method: AllowedHttpMethods.post,
     data: prepareObject,
   })

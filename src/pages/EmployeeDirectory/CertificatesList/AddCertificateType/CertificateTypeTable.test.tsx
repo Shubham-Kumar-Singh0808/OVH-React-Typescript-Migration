@@ -66,7 +66,6 @@ describe('CertificateType Table Testing', () => {
     expect(screen.getByText('Next >')).toHaveAttribute('disabled')
     expect(screen.getByText('Last »')).toHaveAttribute('disabled')
   })
-  jest.retryTimes(3)
   it('should render Delete modal on clicking delete button from Actions', async () => {
     const deleteButtonElement = screen.getByTestId('btn-delete1')
     userEvent.click(deleteButtonElement)

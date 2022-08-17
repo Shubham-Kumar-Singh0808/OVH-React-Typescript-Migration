@@ -6,11 +6,18 @@ import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockEmployeeTypeDetails } from '../../../../test/data/employeeDetail'
 import { mockAllTechnology } from '../../../../test/data/certificateTypeData'
+import { listComposer } from '../../../../utils/helper'
 import { mockCountries } from '../../../../test/data/visaListData'
 import { mockEmploymentType } from '../../../../test/data/employmentTypeData'
 import { mockJobTypes } from '../../../../test/data/JobTypesData'
 
 const editBtnId = 'edit-employee'
+
+const composedTechnologyList = listComposer(
+  mockAllTechnology as [],
+  'id',
+  'name',
+)
 
 describe('Edit Employee Testing', () => {
   beforeEach(() => {
@@ -22,7 +29,7 @@ describe('Edit Employee Testing', () => {
         },
         getAllTechnology: {
           isLoading: ApiLoadingState.succeeded,
-          technologies: mockAllTechnology,
+          technologies: composedTechnologyList,
         },
         country: {
           isLoading: ApiLoadingState.succeeded,

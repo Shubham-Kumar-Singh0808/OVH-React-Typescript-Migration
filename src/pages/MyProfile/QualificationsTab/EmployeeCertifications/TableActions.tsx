@@ -14,7 +14,7 @@ const TableActions = ({
   setCertificateId,
   isDeleteModalVisible,
   setIsDeleteModalVisible,
-}: TableActionsType): JSX.Element => {
+}: TableActionsType) => {
   const dispatch = useAppDispatch()
 
   const handleShowDeleteModal = (certificationId: number) => {

@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { EmployeeReport } from '../../../../types/EmployeeDirectory/EmployeeReport/employeeReportTypes'
 import {
   AttendanceRecord,
   EmployeeAttendance,
