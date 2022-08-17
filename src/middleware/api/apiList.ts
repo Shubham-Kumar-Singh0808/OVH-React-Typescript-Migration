@@ -37,7 +37,6 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
-  ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
 } from '../../types/apiTypes'
@@ -314,18 +313,9 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
     deleteMailTemplate: apiPrefix + '/mailTemplates/deleteMailTemplate',
   }
 
-export const addNewTemplateApiConfig: AddNewTemplateApi = {
+export const addNewTemplateAPiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
-}
-
-export const scheduledInterviewsApiConfig: ScheduledInterviewsApi = {
-  searchScheduledCandidatesForEmployee:
-    apiPrefix + '/jobapplicant/searchScheduledCandidatesForEmployee',
-  searchScheduledCandidates:
-    apiPrefix + '/jobapplicant/searchScheduledCandidates',
-  downloadScheduleCandidates:
-    apiPrefix + '/jobapplicant/downloadScheduleCandidates',
 }
 
 export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
