@@ -1,4 +1,4 @@
-import reducer, { projectManagementService } from './Project'
+import reducer, { projectManagementService } from './projectSlice'
 import { mockPlatform } from '../../../test/data/projectManagerData'
 import { ProjectsManagementSliceState } from '../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
