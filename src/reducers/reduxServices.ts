@@ -40,7 +40,7 @@ import { employeeService } from './EmployeeDirectory/EmployeesList/EditEmployee'
 import { scheduledInterviewsService } from './Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
-import { projectManagementService } from './ProjectManagement/Project/AddProjectSlice'
+import { projectManagementService } from './ProjectManagement/Project/projectSlice'
 
 export const reduxServices = {
   app: appService,
