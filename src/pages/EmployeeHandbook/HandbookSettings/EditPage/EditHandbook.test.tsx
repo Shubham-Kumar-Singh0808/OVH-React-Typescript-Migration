@@ -36,7 +36,7 @@ describe('Edit Page Component Testing', () => {
           headerTitle="Edit Page"
           confirmButtonText="Update"
           backButtonHandler={jest.fn()}
-          handbookId={0}
+          handbookId={1}
           isEditHandbook={true}
         />,
       )
@@ -182,15 +182,18 @@ describe('Edit Page Component Testing', () => {
     })
   })
   describe('render edit Page with handbookID=3 details', () => {
+    const history = createMemoryHistory()
     beforeEach(() => {
       render(
-        <EditHandbook
-          headerTitle="Edit Page"
-          confirmButtonText="Update"
-          backButtonHandler={jest.fn()}
-          isEditHandbook={true}
-          handbookId={3}
-        />,
+        <Router history={history}>
+          <EditHandbook
+            headerTitle="Edit Page"
+            confirmButtonText="Update"
+            backButtonHandler={jest.fn()}
+            isEditHandbook={true}
+            handbookId={3}
+          />
+        </Router>,
         {
           preloadedState: {
             employeeHandbookSettings: {
@@ -220,6 +223,13 @@ describe('Edit Page Component Testing', () => {
       const updateBtn = screen.getByTestId('btn-update')
       await waitFor(() => {
         expect(updateBtn).toBeEnabled()
+      })
+    })
+    test('update the handbook details and redirect to handbookSettings page', async () => {
+      const btnUpdate = screen.getByTestId(updateButton)
+      fireEvent.click(btnUpdate)
+      await waitFor(() => {
+        expect(history.location.pathname).toBeTruthy()
       })
     })
   })

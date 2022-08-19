@@ -135,7 +135,7 @@ const EditHandbook = ({
     if (isEditHandbook) {
       dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
     }
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (

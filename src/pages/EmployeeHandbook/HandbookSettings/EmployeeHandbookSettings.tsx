@@ -70,6 +70,7 @@ const EmployeeHandbookSettings = (): JSX.Element => {
                     <CButton
                       color="info"
                       className="btn-ovh me-1 text-white"
+                      data-testid="addPage-btn"
                       onClick={() => setToggle('addNewPageSection')}
                     >
                       <i className="fa fa-plus me-1"></i>Add Page
