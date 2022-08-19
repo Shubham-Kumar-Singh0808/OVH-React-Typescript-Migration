@@ -32,9 +32,9 @@ export const mockCountries: EmployeeCountry[] = [
 
 export const mockHandbookList: TotalHandbookList[] = [
   {
-    id: 114,
-    displayOrder: 1,
-    title: 'test',
+    id: 1,
+    displayOrder: 79,
+    title: '',
     description:
       '<h3 style="color: rgb(0, 0, 0);">The standard Lorem Ipsum passage, used since the 1500s</h3><p veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>',
     pageName: 'testttt',
@@ -44,16 +44,7 @@ export const mockHandbookList: TotalHandbookList[] = [
     sectionId: 21,
     sectionName: 'dsaa',
     country: 'india',
-    handCountry: [
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-      {
-        id: 3,
-        name: 'USA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -82,7 +73,7 @@ export const mockHandbookList: TotalHandbookList[] = [
     empCountry: 'INDIA',
   },
   {
-    id: 121,
+    id: 2,
     displayOrder: 3,
     title: 'test1',
     description:
@@ -96,12 +87,24 @@ export const mockHandbookList: TotalHandbookList[] = [
     country: 'indsdfia',
     handCountry: [
       {
+        id: 1,
+        name: 'AUSTRALIA',
+      },
+      {
         id: 2,
         name: 'INDIA',
       },
       {
         id: 3,
-        name: 'USA',
+        name: 'CANADA',
+      },
+      {
+        id: 4,
+        name: 'UK',
+      },
+      {
+        id: 5,
+        name: 'PHILIPPINES',
       },
     ],
     empCountry: 'INDIA',

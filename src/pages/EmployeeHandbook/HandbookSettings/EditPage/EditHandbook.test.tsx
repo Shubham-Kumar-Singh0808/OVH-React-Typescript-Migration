@@ -37,7 +37,7 @@ describe('Edit Page Component Testing', () => {
           confirmButtonText="Update"
           backButtonHandler={jest.fn()}
           handbookId={0}
-          isEditHandbook={false}
+          isEditHandbook={true}
         />,
       )
     })
@@ -157,15 +157,12 @@ describe('Edit Page Component Testing', () => {
       })
     })
     test('Checkbox changes value', async () => {
-      fireEvent.click(screen.getByTestId(cB1))
-      fireEvent.click(screen.getByTestId(cB2))
-      fireEvent.click(screen.getByTestId(cB3))
-      fireEvent.click(screen.getByTestId(cB4))
-      fireEvent.click(screen.getByTestId(cB5))
-      fireEvent.click(screen.getByTestId(cB6))
-      const allCountries = fireEvent.click(screen.getByTestId(cbAllCountries))
+      const allCountries = screen.getByTestId(cbAllCountries)
+      fireEvent.click(allCountries)
+      expect(allCountries).toBeChecked()
       await waitFor(() => {
-        expect(allCountries).toBe(true)
+        fireEvent.click(allCountries)
+        expect(allCountries).not.toBeChecked()
       })
     })
 
@@ -174,11 +171,10 @@ describe('Edit Page Component Testing', () => {
       userEvent.type(titleInput, '')
       expect(titleInput).toHaveValue('')
       const pageNameInput = screen.getByTestId(pageName)
-      userEvent.type(pageNameInput, 'pageNameTest')
-      expect(pageNameInput).toHaveValue('pageNameTest')
+      expect(pageNameInput).toHaveValue('testttt')
       const displayOrderInput = screen.getByTestId(displayOrder)
-      userEvent.type(displayOrderInput, '25')
-      expect(displayOrderInput).toHaveValue('25')
+      userEvent.type(displayOrderInput, '79')
+      expect(displayOrderInput).toHaveValue('79')
       const updateBtn = screen.getByTestId(updateButton)
       await waitFor(() => {
         expect(updateBtn).toBeDisabled()
