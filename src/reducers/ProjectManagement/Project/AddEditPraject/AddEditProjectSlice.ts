@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { AppDispatch, RootState } from '../../../stateStore'
-import { LoadingState, ValidationError } from '../../../types/commonTypes'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import ProjectApi from '../../../middleware/api/ProjectManagement/Project'
+import { AppDispatch, RootState } from '../../../../stateStore'
+import { LoadingState, ValidationError } from '../../../../types/commonTypes'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import ProjectApi from '../../../../middleware/api/ProjectManagement/Project'
 import {
   Domains,
   Managers,
@@ -12,7 +12,7 @@ import {
   ProjectClients,
   ProjectDetail,
   ProjectsManagementSliceState,
-} from '../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
+} from '../../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
 
 const initialProjectsState = {} as ProjectsManagementSliceState
 

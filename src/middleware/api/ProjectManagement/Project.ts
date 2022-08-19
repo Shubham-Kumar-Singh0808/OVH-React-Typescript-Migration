@@ -15,6 +15,10 @@ import {
   ProjectClients,
   ProjectDetail,
 } from '../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
+import {
+  ProjectDetails,
+  ProjectReportQueryParams,
+} from '../../../types/ProjectManagement/Project/ProjectTypes'
 
 const getProjectClients = async (): Promise<ProjectClients[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -90,6 +94,30 @@ const getAllManagers = async (): Promise<Managers[]> => {
   return response.data
 }
 
+const getActiveProjectReports = async (
+  queryParams: ProjectReportQueryParams,
+): Promise<ProjectDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectManagementConfig.getActiveProjectReports,
+    method: AllowedHttpMethods.get,
+    params: queryParams,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getSearchAllocationReport = async (
+  queryParams: ProjectReportQueryParams,
+): Promise<ProjectDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectManagementConfig.getSearchAllocationReport,
+    method: AllowedHttpMethods.get,
+    params: queryParams,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AddProject = {
   addProject,
   updateProject,
@@ -98,6 +126,8 @@ const AddProject = {
   getAllManagers,
   getProject,
   getProjectClients,
+  getActiveProjectReports,
+  getSearchAllocationReport,
 }
 
 export default AddProject

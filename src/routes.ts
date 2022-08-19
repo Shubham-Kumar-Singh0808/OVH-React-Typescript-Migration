@@ -98,11 +98,19 @@ const LeaveSummary = React.lazy(
     ),
 )
 const AddProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/AddProject/AddProject'
+    ),
 )
-
 const EditProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/EditProject/EditProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/EditProject/EditProject'
+    ),
+)
+const ProjectReport = React.lazy(
+  () => import('./pages/ProjectManagement/Project/ProjectReport'),
 )
 const EditClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/EditClient/EditClient'),
@@ -260,6 +268,11 @@ const routes = [
     path: '/employeeLeaveSummary',
     name: 'Leave Summary',
     component: LeaveSummary,
+  },
+  {
+    path: '/projectreport',
+    name: 'Project Report',
+    component: ProjectReport,
   },
 ]
 

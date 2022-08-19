@@ -352,6 +352,9 @@ export const projectManagementConfig: ProjectManagementApi = {
   getAllPlatforms: apiPrefix + '/project-mgmt/getAllPlatforms',
   getAllDomains: apiPrefix + '/project-mgmt/getAllDomains',
   getAllManagers: apiPrefix + '/project-mgmt/getAllManagers',
+  getActiveProjectReports:
+    apiPrefix + '/project-mgmt/activeProjectsForEmployee',
+  getSearchAllocationReport: apiPrefix + '/project-mgmt/searchAllocationReport',
 }
 
 export const clientsApiConfig: ClientsApi = {
