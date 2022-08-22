@@ -364,7 +364,7 @@ const EditProject = (): JSX.Element => {
         newProjectResponse,
       )
     ) {
-      history.push('/employeeList')
+      history.push('/projectreport')
     }
   }
 
@@ -391,7 +391,7 @@ const EditProject = (): JSX.Element => {
       {Object.keys(project).length > 0 ? (
         <>
           <CRow className="justify-content-end">
-            <OBackButton destination="/" name="back" />
+            <OBackButton destination="/projectreport" name="back" />
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
               <ClientOrganization
                 list={clientOrganizationList}

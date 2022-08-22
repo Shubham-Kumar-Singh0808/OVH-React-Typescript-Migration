@@ -5,9 +5,11 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   ProjectDetails,
+  ProjectReport,
   ProjectReportQueryParams,
   ProjectsReportSliceState,
 } from '../../../types/ProjectManagement/Project/ProjectTypes'
+import { ProjectDetails as ProjectInfo } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 import ProjectApi from '../../../middleware/api/ProjectManagement/Project'
 
 const initialProjectsState = {
@@ -54,65 +56,98 @@ const getFetchSearchAllocationReport = createAsyncThunk<
   },
 )
 
+const getFetchProjectClients = createAsyncThunk<
+  ProjectInfo[],
+  string,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectReports/getFetchProjectClients',
+  async (projectId: string, thunkApi) => {
+    try {
+      return await ProjectApi.getClientProjects(projectId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const projectReportsSlice = createSlice({
   name: 'projectReports',
   initialState: initialProjectsState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getFetchActiveProjectReports.fulfilled, (state, action) => {
-        state.ProjectDetails = action.payload
-        state.listSize = action.payload.Projsize
+      .addCase(getFetchProjectClients.fulfilled, (state, action) => {
+        state.ClientProjects = action.payload
+        state.isClientProjectLoading = ApiLoadingState.succeeded
       })
-      .addCase(getFetchSearchAllocationReport.fulfilled, (state, action) => {
-        state.ProjectDetails = action.payload
-      })
-      .addMatcher(
-        isAnyOf(
-          getFetchActiveProjectReports.pending,
-          getFetchSearchAllocationReport.pending,
-        ),
-        (state) => {
-          state.isLoading = ApiLoadingState.loading
-        },
-      )
       .addMatcher(
         isAnyOf(
           getFetchActiveProjectReports.fulfilled,
           getFetchSearchAllocationReport.fulfilled,
         ),
+        (state, action) => {
+          state.ProjectDetails = action.payload
+          state.Clients = action.payload.Projs
+          state.listSize = action.payload.Projsize
+          state.isProjectLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getFetchActiveProjectReports.pending,
+          getFetchSearchAllocationReport.pending,
+          getFetchProjectClients.pending,
+        ),
         (state) => {
-          state.isLoading = ApiLoadingState.succeeded
+          state.isProjectLoading = ApiLoadingState.loading
+          state.isClientProjectLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
         isAnyOf(
           getFetchActiveProjectReports.rejected,
           getFetchSearchAllocationReport.rejected,
+          getFetchProjectClients.rejected,
         ),
         (state, action) => {
-          state.isLoading = ApiLoadingState.failed
+          state.isProjectLoading = ApiLoadingState.failed
+          state.isClientProjectLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
         },
       )
   },
 })
 
-const projectReports = (state: RootState): ProjectDetails =>
-  state.projectReport.ProjectDetails
+const projectReports = (state: RootState): ProjectReport[] =>
+  state.projectReport.Clients
+
+const projectClients = (state: RootState): ProjectInfo[] =>
+  state.projectReport.ClientProjects
 
 const listSize = (state: RootState): number => state.projectReport.listSize
 
-const isLoading = (state: RootState): LoadingState =>
-  state.projectReport.isLoading
+const isProjectLoading = (state: RootState): LoadingState =>
+  state.projectReport.isProjectLoading
+
+const isClientProjectLoading = (state: RootState): LoadingState =>
+  state.projectReport.isClientProjectLoading
 
 const projectsThunk = {
   getFetchActiveProjectReports,
   getFetchSearchAllocationReport,
+  getFetchProjectClients,
 }
 
 const projectsSelectors = {
-  isLoading,
+  isProjectLoading,
+  isClientProjectLoading,
+  projectClients,
   projectReports,
   listSize,
 }

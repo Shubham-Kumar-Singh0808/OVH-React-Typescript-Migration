@@ -299,6 +299,7 @@ export interface ProjectManagementApi extends ApiBase {
   getAllManagers: string
   getActiveProjectReports: string
   getSearchAllocationReport: string
+  getClientProjects: string
 }
 
 export interface ClientsApi extends ApiBase {

@@ -1,5 +1,4 @@
-// hrm-ws/project-mgmt/activeProjectsForEmployee
-
+import { ProjectDetails as ProjectInfo } from '../../MyProfile/ProjectsTab/employeeProjectTypes'
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 type List = {
@@ -96,7 +95,10 @@ export type ProjectReportsTableProps = {
 
 export type ProjectsReportSliceState = {
   ProjectDetails: ProjectDetails
-  isLoading: LoadingState
+  Clients: ProjectReport[]
+  ClientProjects: ProjectInfo[]
+  isProjectLoading: LoadingState
+  isClientProjectLoading: LoadingState
   listSize: number
   error: ValidationError
 }

@@ -1,7 +1,9 @@
 import {
   CButton,
   CCol,
+  CLink,
   CRow,
+  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -9,11 +11,13 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ProjectReportsTableProps } from '../../../types/ProjectManagement/Project/ProjectTypes'
 
 const ProjectReportsTable = ({
@@ -24,8 +28,24 @@ const ProjectReportsTable = ({
   setCurrentPage,
   updateaccess,
 }: ProjectReportsTableProps): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const [isShow, setIsShow] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<number>()
+
   const projectReports = useTypedSelector(
     reduxServices.projectReport.selectors.projectReports,
+  )
+
+  const listSize = useTypedSelector(
+    reduxServices.projectReport.selectors.listSize,
+  )
+
+  const projectClients = useTypedSelector(
+    reduxServices.projectReport.selectors.projectClients,
+  )
+
+  const isClientProjectLoading = useTypedSelector(
+    reduxServices.projectReport.selectors.isClientProjectLoading,
   )
 
   const handlePageSizeSelectChange = (
@@ -35,9 +55,17 @@ const ProjectReportsTable = ({
     setCurrentPage(1)
   }
 
+  const handleShowProject = (projectId: number) => {
+    setIsShow(!isShow)
+    setSelectedProject(projectId)
+    dispatch(
+      reduxServices.projectReport.getFetchProjectClients(projectId.toString()),
+    )
+  }
+
   return (
     <>
-      {projectReports.Projs.length ? (
+      {projectReports != null && projectReports.length ? (
         <>
           <CTable striped align="middle">
             <CTableHead>
@@ -60,68 +88,193 @@ const ProjectReportsTable = ({
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {projectReports?.Projs.map((value, index) => {
+              {projectReports?.map((value, index) => {
                 return (
-                  <CTableRow key={index}>
-                    <CTableDataCell className="text-center">
-                      <i className="fa fa-minus-circle cursor-pointer" />
-                    </CTableDataCell>
+                  <>
+                    <CTableRow key={index}>
+                      <CTableDataCell className="text-center">
+                        {isShow && selectedProject === value.id ? (
+                          <i
+                            className="fa fa-minus-circle cursor-pointer"
+                            onClick={() => setIsShow(false)}
+                          />
+                        ) : (
+                          <i
+                            className="fa fa-plus-circle cursor-pointer"
+                            onClick={() => handleShowProject(value.id)}
+                          />
+                        )}
+                      </CTableDataCell>
 
-                    <CTableDataCell>{value.projectCode}</CTableDataCell>
-                    <CTableDataCell>{value.projectName}</CTableDataCell>
-                    <CTableDataCell>{value.type}</CTableDataCell>
-                    <CTableDataCell>{value.client}</CTableDataCell>
-                    <CTableDataCell>{value.count}</CTableDataCell>
-                    <CTableDataCell>{value.managerName}</CTableDataCell>
-                    <CTableDataCell>{value.deliveryManager}</CTableDataCell>
-                    <CTableDataCell>{value.startdate}</CTableDataCell>
-                    <CTableDataCell>{value.enddate}</CTableDataCell>
-                    <CTableDataCell>{value.status}</CTableDataCell>
-                    <CTableDataCell>
-                      <CButton
-                        className="cursor-pointer"
-                        color="danger btn-sm me-1"
-                        data-testid="reject-btn"
-                      >
-                        <i
-                          className="fa fa-times text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                    </CTableDataCell>
-                    <CTableDataCell style={{ width: '120px' }}>
-                      <CButton
-                        className="cursor-pointer"
-                        color="info btn-sm me-1"
-                        data-testid="view-btn"
-                      >
-                        <i
-                          className="fa fa-eye text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                      <CButton
-                        className="cursor-pointer"
-                        color="primary btn-sm me-1"
-                        data-testid="edit-btn"
-                      >
-                        <i
-                          className="fa fa-edit text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                      <CButton
-                        className="cursor-pointer"
-                        color="danger btn-sm me-1"
-                        data-testid="delete-btn"
-                      >
-                        <i
-                          className="fa fa-trash-o text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                    </CTableDataCell>
-                  </CTableRow>
+                      <CTableDataCell>{value.projectCode}</CTableDataCell>
+                      <CTableDataCell>{value.projectName}</CTableDataCell>
+                      <CTableDataCell>{value.type}</CTableDataCell>
+                      <CTableDataCell>{value.client}</CTableDataCell>
+                      <CTableDataCell>{value.count}</CTableDataCell>
+                      <CTableDataCell>{value.managerName}</CTableDataCell>
+                      <CTableDataCell>{value.deliveryManager}</CTableDataCell>
+                      <CTableDataCell>{value.startdate}</CTableDataCell>
+                      <CTableDataCell>{value.enddate}</CTableDataCell>
+                      <CTableDataCell>{value.status}</CTableDataCell>
+                      <CTableDataCell>
+                        <CButton
+                          className="cursor-pointer"
+                          color="danger btn-sm me-1"
+                          data-testid="reject-btn"
+                        >
+                          <i
+                            className="fa fa-times text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </CTableDataCell>
+                      <CTableDataCell style={{ width: '120px' }}>
+                        <CButton
+                          className="cursor-pointer"
+                          color="info btn-sm me-1"
+                          data-testid="view-btn"
+                        >
+                          <i
+                            className="fa fa-eye text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                        <Link to={`/editproject/${value.id}`}>
+                          <CButton
+                            className="cursor-pointer"
+                            color="primary btn-sm me-1"
+                            data-testid="edit-btn"
+                          >
+                            <i
+                              className="fa fa-edit text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </Link>
+                        <CButton
+                          className="cursor-pointer"
+                          color="danger btn-sm me-1"
+                          data-testid="delete-btn"
+                        >
+                          <i
+                            className="fa fa-trash-o text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </CTableDataCell>
+                    </CTableRow>
+                    {isShow &&
+                      selectedProject === value.id &&
+                      (isClientProjectLoading === ApiLoadingState.succeeded ? (
+                        <CTableRow>
+                          <CTableDataCell colSpan={8}>
+                            <CTable responsive striped>
+                              <CTableHead color="info">
+                                <CTableRow>
+                                  <CTableHeaderCell scope="col">
+                                    ID
+                                  </CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">
+                                    Name
+                                  </CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">
+                                    Designation
+                                  </CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">
+                                    Department
+                                  </CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">
+                                    Allocation
+                                  </CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">
+                                    Allocated Date
+                                  </CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">
+                                    End Date
+                                  </CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">
+                                    Billable
+                                  </CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">
+                                    Current Status
+                                  </CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">
+                                    Actions
+                                  </CTableHeaderCell>
+                                </CTableRow>
+                              </CTableHead>
+                              <CTableBody>
+                                {projectClients?.map((project, i) => {
+                                  return (
+                                    <CTableRow col-span={7} key={i}>
+                                      <CTableDataCell>
+                                        <CLink className="text-decoration-none">
+                                          {project.employeeId}
+                                        </CLink>
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {project.projectName}
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {project.desigination}
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {project.department}
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {project.allocation}%
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {project.startDate}
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {project.endDate}
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {project.billable ? 'Yes' : 'No'}
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        {project.isAllocated
+                                          ? 'Allocated'
+                                          : 'Not 	Allocated'}
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        <CButton
+                                          className="cursor-pointer"
+                                          color="primary btn-sm me-1"
+                                          data-testid="edit-btn"
+                                        >
+                                          <i
+                                            className="fa fa-edit text-white"
+                                            aria-hidden="true"
+                                          ></i>
+                                        </CButton>
+                                        <CButton
+                                          className="cursor-pointer"
+                                          color="danger btn-sm me-1"
+                                          data-testid="delete-btn"
+                                        >
+                                          <i
+                                            className="fa fa-trash-o text-white"
+                                            aria-hidden="true"
+                                          ></i>
+                                        </CButton>
+                                      </CTableDataCell>
+                                    </CTableRow>
+                                  )
+                                })}
+                              </CTableBody>
+                            </CTable>
+                          </CTableDataCell>
+                        </CTableRow>
+                      ) : (
+                        <CCol data-testid="spinner">
+                          <CRow className="category-loading-spinner">
+                            <CSpinner />
+                          </CRow>
+                        </CCol>
+                      ))}
+                  </>
                 )
               })}
             </CTableBody>
@@ -129,11 +282,11 @@ const ProjectReportsTable = ({
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {projectReports.Projsize}</strong>
+                <strong>Total Records: {listSize}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {projectReports.Projsize > 20 && (
+              {listSize > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                   options={[20, 40, 60, 80]}
@@ -141,7 +294,7 @@ const ProjectReportsTable = ({
                 />
               )}
             </CCol>
-            {projectReports.Projsize > 20 && (
+            {listSize > 20 && (
               <CCol
                 xs={5}
                 className="gap-1 d-grid d-md-flex justify-content-md-end"
@@ -156,9 +309,9 @@ const ProjectReportsTable = ({
           </CRow>
         </>
       ) : (
-        <CCol>
-          <CRow className="category-no-data">
-            <h4 className="text-center">No data to display</h4>
+        <CCol data-testid="spinner">
+          <CRow className="category-loading-spinner">
+            <CSpinner />
           </CRow>
         </CCol>
       )}
