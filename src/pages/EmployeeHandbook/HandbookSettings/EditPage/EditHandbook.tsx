@@ -408,7 +408,7 @@ const EditHandbook = ({
                   }}
                 />
                 {error && (
-                  <p className="text-danger" data-testId="error-msg">
+                  <p className="text-danger" data-testid="error-msg">
                     Please enter at least 150 characters.
                   </p>
                 )}
