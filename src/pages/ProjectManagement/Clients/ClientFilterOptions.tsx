@@ -123,6 +123,7 @@ const ClientFilterOptions = ({
                   color="info"
                   id="button-addon2"
                   onClick={searchButtonHandler}
+                  disabled={!searchInput}
                 >
                   <i className="fa fa-search"></i>
                 </CButton>
