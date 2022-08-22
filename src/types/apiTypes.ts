@@ -178,6 +178,7 @@ export interface CertificateTypeApi extends ApiBase {
 export interface EmployeeProjectsApi extends ApiBase {
   getEmployeeProjects: string
   getProjectDetails: string
+  getProjectsClients: string
 }
 
 export interface EmployeeReporteesApi extends ApiBase {
@@ -287,6 +288,15 @@ export interface AddNewMailTemplateTypeApi extends ApiBase {
 
 export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
+}
+
+export interface ProjectManagementApi extends ApiBase {
+  getProject: string
+  addProject: string
+  updateProject: string
+  getAllPlatforms: string
+  getAllDomains: string
+  getAllManagers: string
 }
 
 export interface ClientsApi extends ApiBase {
