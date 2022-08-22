@@ -29,6 +29,19 @@ const mockBackButtonHandler = jest.fn()
 const cbAllCountries = 'ch-All-countries'
 
 describe('Edit Page Component Testing', () => {
+  describe('edit page with id=0', () => {
+    beforeEach(() => {
+      render(
+        <EditHandbook
+          headerTitle="Edit Page"
+          confirmButtonText="Update"
+          backButtonHandler={jest.fn()}
+          handbookId={0}
+          isEditHandbook={false}
+        />,
+      )
+    })
+  })
   describe('Without data', () => {
     beforeEach(() => {
       render(
