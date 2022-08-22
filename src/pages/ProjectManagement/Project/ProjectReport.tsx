@@ -8,6 +8,13 @@ import {
   CButton,
   CFormCheck,
   CFormInput,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+  CLink,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -347,6 +354,78 @@ const ProjectReport = (): JSX.Element => {
                 </CInputGroup>
               </CCol>
             </CRow>
+          </CRow>
+
+          <CRow className="justify-content-end mt-3">
+            <CTable striped>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell className="text-center"></CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Project Code</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Project Name</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Pricing Model</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Client</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Resources</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">
+                    Project Manager
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">
+                    Delivery Manager
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Start Date</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {projectReports?.Projs.map((value, index) => {
+                  return (
+                    <>
+                      <CTableRow key={index}>
+                        <CTableDataCell className="text-center">
+                          <i className="fa fa-minus-circle cursor-pointer" />
+                        </CTableDataCell>
+
+                        <CTableDataCell scope="row">
+                          {value.projectCode}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.projectName}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.type}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.client}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.count}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.managerName}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.deliveryManager}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.startdate}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.enddate}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.status}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {value.status}
+                        </CTableDataCell>
+                      </CTableRow>
+                    </>
+                  )
+                })}
+              </CTableBody>
+            </CTable>
           </CRow>
         </>
       ) : (
