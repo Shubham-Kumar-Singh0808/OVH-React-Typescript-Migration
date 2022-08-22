@@ -6,7 +6,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
-const Clients = () => {
+const Clients = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const clientsListSize = useTypedSelector(

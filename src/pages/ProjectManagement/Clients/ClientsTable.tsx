@@ -33,9 +33,10 @@ const ClientsTable = ({
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   selectedClientStatus: string
-}) => {
+}): JSX.Element => {
   const dispatch = useAppDispatch()
 
+  const [isIconVisible, setIsIconVisible] = useState(false)
   const [selectedClientId, setSelectedClientId] = useState(0)
   const [deleteClientModalVisibility, setDeleteClientModalVisibility] =
     useState(false)
@@ -102,13 +103,13 @@ const ClientsTable = ({
   }
 
   const tableHeaderCellPropsAction = {
-    width: '18%',
+    width: '16%',
     scope: 'col',
   }
 
   return (
     <>
-      <CTable className="text-start mt-5" striped>
+      <CTable responsive striped className="text-start mt-5">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col"></CTableHeaderCell>
@@ -138,6 +139,8 @@ const ClientsTable = ({
                 selectedClientId={selectedClientId}
                 setSelectedClientId={setSelectedClientId}
                 onDeleteBtnClick={onDeleteBtnClick}
+                isIconVisible={isIconVisible}
+                setIsIconVisible={setIsIconVisible}
               />
             ))
           ) : (
@@ -191,7 +194,10 @@ const ClientsTable = ({
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteClient}
       >
-        <p>{`Do you really want to delete this ${clientName} client ?`}</p>
+        <>
+          Do you really want to delete this <strong>{clientName}</strong> client
+          ?
+        </>
       </OModal>
     </>
   )

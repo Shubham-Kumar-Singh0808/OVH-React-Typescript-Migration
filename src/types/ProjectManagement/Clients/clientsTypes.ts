@@ -9,7 +9,7 @@ export type Client = {
   email: string
   country: string
   phone: null | string
-  description: string
+  description: null | string
   organization: string
   totalFixedBids: number
   totalRetainers: number

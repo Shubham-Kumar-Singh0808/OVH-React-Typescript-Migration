@@ -15,7 +15,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
-const ClientDetailsTable = () => {
+const ClientDetailsTable = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.clients.selectors.isLoadingProjectDetails,
   )
@@ -76,7 +76,11 @@ const ClientDetailsTable = () => {
 
   return (
     <>
-      <CTable className="mt-2 text-start profile-tab-table-size">
+      <CTable
+        responsive
+        striped
+        className="mt-2 text-start profile-tab-table-size"
+      >
         <CTableHead className="profile-tab-header">
           <CTableRow>
             <CTableHeaderCell className="profile-tab-content" scope="col">

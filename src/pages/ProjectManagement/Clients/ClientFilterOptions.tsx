@@ -18,7 +18,7 @@ const ClientFilterOptions = ({
 }: {
   currentPage: number
   pageSize: number
-}) => {
+}): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [searchInput, setSearchInput] = useState<string>('')
@@ -74,6 +74,7 @@ const ClientFilterOptions = ({
             name="clientStatus"
             value={ClientStatus.all}
             id="clientsAll"
+            data-testid="allClientsStatus"
             label="All"
             defaultChecked={selectedClientStatus === ClientStatus.all}
             onChange={handleChangeSelectedClientStatus}
@@ -84,6 +85,7 @@ const ClientFilterOptions = ({
             name="clientStatus"
             value={ClientStatus.active}
             id="clientsActive"
+            data-testid="activeClientsStatus"
             label="Active"
             defaultChecked={selectedClientStatus === ClientStatus.active}
             onChange={handleChangeSelectedClientStatus}
@@ -94,6 +96,7 @@ const ClientFilterOptions = ({
             name="clientStatus"
             value={ClientStatus.inactive}
             id="clientsInactive"
+            data-testid="inactiveClientsStatus"
             label="Inactive"
             defaultChecked={selectedClientStatus === ClientStatus.inactive}
             onChange={handleChangeSelectedClientStatus}
@@ -115,6 +118,7 @@ const ClientFilterOptions = ({
                   onKeyDown={searchButtonHandlerOnKeyDown}
                 />
                 <CButton
+                  data-testid="search-button"
                   type="button"
                   color="info"
                   id="button-addon2"

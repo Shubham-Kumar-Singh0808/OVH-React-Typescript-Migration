@@ -1,5 +1,5 @@
 import { CTableRow, CTableDataCell, CButton, CLink } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React from 'react'
 import ClientDetailsTable from './ClientDetailsTable'
 import { Client } from '../../../types/ProjectManagement/Clients/clientsTypes'
 import { useAppDispatch } from '../../../stateStore'
@@ -8,41 +8,46 @@ import { reduxServices } from '../../../reducers/reduxServices'
 const ClientsEntry = (props: {
   id: number
   client: Client
-  key: number
   selectedClientId: number
   setSelectedClientId: (value: number) => void
   onDeleteBtnClick: (id: number, name: string) => void
-}) => {
+  isIconVisible: boolean
+  setIsIconVisible: (value: boolean) => void
+}): JSX.Element => {
   const dispatch = useAppDispatch()
-
-  const [isIconVisible, setIsIconVisible] = useState(false)
 
   const handleExpandRow = (
     id: number | React.MouseEvent<HTMLButtonElement>,
   ) => {
     props.setSelectedClientId(id as number)
     dispatch(reduxServices.clients.getProjectsUnderClient(id as number))
-    setIsIconVisible(true)
+    props.setIsIconVisible(true)
   }
 
   return (
     <>
-      <CTableRow key={props.id}>
+      <CTableRow>
         <CTableDataCell scope="row">
-          {isIconVisible && props.selectedClientId === props.id ? (
+          {props.isIconVisible && props.selectedClientId === props.id ? (
             <i
+              data-testid="expandIcon"
               className="fa fa-minus-circle cursor-pointer"
-              onClick={() => setIsIconVisible(false)}
+              onClick={() => props.setIsIconVisible(false)}
             />
           ) : (
             <i
+              data-testid="collapseIcon"
               className="fa fa-plus-circle cursor-pointer"
               onClick={() => handleExpandRow(props.id)}
             />
           )}
         </CTableDataCell>
         <CTableDataCell scope="row">{props.client.clientCode}</CTableDataCell>
-        <CTableDataCell scope="row" className="sh-organization-link">
+        <CTableDataCell
+          scope="row"
+          className="sh-organization-link"
+          title={props.client.address}
+        >
           <CLink className="cursor-pointer">{props.client.organization}</CLink>
         </CTableDataCell>
         <CTableDataCell scope="row">{props.client.name}</CTableDataCell>
@@ -70,6 +75,7 @@ const ClientsEntry = (props: {
             <CButton
               color="danger"
               className="btn-ovh me-2"
+              data-testid={`client-delete-btn${props.id}`}
               onClick={() => {
                 props.onDeleteBtnClick(props.id, props.client.name)
               }}
@@ -79,7 +85,7 @@ const ClientsEntry = (props: {
           </>
         </CTableDataCell>
       </CTableRow>
-      {isIconVisible && props.selectedClientId === props.id ? (
+      {props.isIconVisible && props.selectedClientId === props.id ? (
         <CTableDataCell colSpan={10}>
           <ClientDetailsTable />
         </CTableDataCell>
