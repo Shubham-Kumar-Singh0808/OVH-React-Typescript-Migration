@@ -85,8 +85,18 @@ export type ProjectReport = {
   type: string
 }
 
+export type ProjectReportsTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  updateaccess?: boolean
+}
+
 export type ProjectsReportSliceState = {
   ProjectDetails: ProjectDetails
   isLoading: LoadingState
+  listSize: number
   error: ValidationError
 }

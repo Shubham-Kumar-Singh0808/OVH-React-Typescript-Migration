@@ -10,7 +10,9 @@ import {
 } from '../../../types/ProjectManagement/Project/ProjectTypes'
 import ProjectApi from '../../../middleware/api/ProjectManagement/Project'
 
-const initialProjectsState = {} as ProjectsReportSliceState
+const initialProjectsState = {
+  listSize: 0,
+} as ProjectsReportSliceState
 
 const getFetchActiveProjectReports = createAsyncThunk<
   ProjectDetails,
@@ -60,6 +62,7 @@ const projectReportsSlice = createSlice({
     builder
       .addCase(getFetchActiveProjectReports.fulfilled, (state, action) => {
         state.ProjectDetails = action.payload
+        state.listSize = action.payload.Projsize
       })
       .addCase(getFetchSearchAllocationReport.fulfilled, (state, action) => {
         state.ProjectDetails = action.payload
@@ -98,6 +101,8 @@ const projectReportsSlice = createSlice({
 const projectReports = (state: RootState): ProjectDetails =>
   state.projectReport.ProjectDetails
 
+const listSize = (state: RootState): number => state.projectReport.listSize
+
 const isLoading = (state: RootState): LoadingState =>
   state.projectReport.isLoading
 
@@ -109,6 +114,7 @@ const projectsThunk = {
 const projectsSelectors = {
   isLoading,
   projectReports,
+  listSize,
 }
 
 export const projectReportsService = {

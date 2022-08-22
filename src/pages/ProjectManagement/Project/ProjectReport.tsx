@@ -8,34 +8,33 @@ import {
   CButton,
   CFormCheck,
   CFormInput,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-  CLink,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { SelectFilter } from './ProjectComponent/SelectFilter'
+import ProjectReportsTable from './ProjectReportTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { ProjectReportQueryParams } from '../../../types/ProjectManagement/Project/ProjectTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { dateFormat } from '../../../constant/DateFormat'
+import { usePagination } from '../../../middleware/hooks/usePagination'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const ProjectReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const isLoading = true
 
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
 
-  const projectReports = useTypedSelector(
-    reduxServices.projectReport.selectors.projectReports,
+  const listSize = useTypedSelector(
+    reduxServices.projectReport.selectors.listSize,
+  )
+
+  const isLoading = useTypedSelector(
+    reduxServices.projectReport.selectors.isLoading,
   )
 
   const initValue = {
@@ -44,6 +43,9 @@ const ProjectReport = (): JSX.Element => {
     health: 'All',
     projectStatus: 'INPROGRESS',
     type: 'All',
+    projectDatePeriod: '',
+    intrnalOrNot: false,
+    multiSearch: '',
   }
   const [params, setParams] = useState<ProjectReportQueryParams>(initValue)
   const [isViewBtnEnable, setViewBtnEnable] = useState(true)
@@ -51,6 +53,35 @@ const ProjectReport = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.projectReport.getFetchActiveProjectReports(params))
   }, [dispatch])
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(listSize, 20)
+
+  useEffect(() => {
+    const payload =
+      params.projectDatePeriod === 'Custom'
+        ? {
+            ...params,
+            firstIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+            employeeId: Number(employeeId),
+          }
+        : {
+            ...params,
+            firstIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+            startdate: '',
+            enddate: '',
+            employeeId: Number(employeeId),
+          }
+
+    dispatch(reduxServices.projectReport.getFetchActiveProjectReports(payload))
+  }, [currentPage, dispatch, pageSize])
 
   const selectDate = [
     { label: 'Select Date', name: 'Select Date' },
@@ -137,16 +168,10 @@ const ProjectReport = (): JSX.Element => {
     const payload =
       params.projectDatePeriod === 'Custom'
         ? {
-            projectDatePeriod: '',
-            intrnalOrNot: false,
-            multiSearch: '',
             ...params,
             employeeId: Number(employeeId),
           }
         : {
-            projectDatePeriod: '',
-            intrnalOrNot: false,
-            multiSearch: '',
             ...params,
             startdate: '',
             enddate: '',
@@ -163,15 +188,14 @@ const ProjectReport = (): JSX.Element => {
     setParams({ ...initValue, projectDatePeriod: '', multiSearch: '' })
   }
 
-  console.log('projectReports', projectReports)
   return (
     <OCard
-      className="mb-4 myprofile-wrapper"
+      className="mb-4 myprofile-wrapper project-report"
       title="Project Report"
       CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
     >
-      {isLoading ? (
+      {isLoading === ApiLoadingState.succeeded ? (
         <>
           <CRow className="justify-content-end">
             <CRow>
@@ -357,7 +381,14 @@ const ProjectReport = (): JSX.Element => {
           </CRow>
 
           <CRow className="justify-content-end mt-3">
-            <CTable striped>
+            <ProjectReportsTable
+              paginationRange={paginationRange}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+            />
+            {/* <CTable striped align="middle">
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell className="text-center"></CTableHeaderCell>
@@ -375,6 +406,7 @@ const ProjectReport = (): JSX.Element => {
                   <CTableHeaderCell scope="col">Start Date</CTableHeaderCell>
                   <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+                  <CTableHeaderCell scope="col"></CTableHeaderCell>
                   <CTableHeaderCell scope="col">Action</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -387,38 +419,59 @@ const ProjectReport = (): JSX.Element => {
                           <i className="fa fa-minus-circle cursor-pointer" />
                         </CTableDataCell>
 
-                        <CTableDataCell scope="row">
-                          {value.projectCode}
+                        <CTableDataCell>{value.projectCode}</CTableDataCell>
+                        <CTableDataCell>{value.projectName}</CTableDataCell>
+                        <CTableDataCell>{value.type}</CTableDataCell>
+                        <CTableDataCell>{value.client}</CTableDataCell>
+                        <CTableDataCell>{value.count}</CTableDataCell>
+                        <CTableDataCell>{value.managerName}</CTableDataCell>
+                        <CTableDataCell>{value.deliveryManager}</CTableDataCell>
+                        <CTableDataCell>{value.startdate}</CTableDataCell>
+                        <CTableDataCell>{value.enddate}</CTableDataCell>
+                        <CTableDataCell>{value.status}</CTableDataCell>
+                        <CTableDataCell>
+                          <CButton
+                            className="cursor-pointer"
+                            color="danger btn-sm me-1"
+                            data-testid="reject-btn"
+                          >
+                            <i
+                              className="fa fa-times text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
                         </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.projectName}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.type}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.client}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.count}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.managerName}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.deliveryManager}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.startdate}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.enddate}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.status}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {value.status}
+                        <CTableDataCell style={{ width: '120px' }}>
+                          <CButton
+                            className="cursor-pointer"
+                            color="info btn-sm me-1"
+                            data-testid="view-btn"
+                          >
+                            <i
+                              className="fa fa-eye text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                          <CButton
+                            className="cursor-pointer"
+                            color="primary btn-sm me-1"
+                            data-testid="edit-btn"
+                          >
+                            <i
+                              className="fa fa-edit text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                          <CButton
+                            className="cursor-pointer"
+                            color="danger btn-sm me-1"
+                            data-testid="delete-btn"
+                          >
+                            <i
+                              className="fa fa-trash-o text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
                         </CTableDataCell>
                       </CTableRow>
                     </>
@@ -426,6 +479,34 @@ const ProjectReport = (): JSX.Element => {
                 })}
               </CTableBody>
             </CTable>
+            <CRow>
+              <CCol xs={4}>
+                <p>
+                  <strong>Total Records: {projectReports.Projsize}</strong>
+                </p>
+              </CCol>
+              <CCol xs={3}>
+                {projectReports.Projsize > 20 && (
+                  <OPageSizeSelect
+                    handlePageSizeSelectChange={handlePageSizeSelectChange}
+                    options={[20, 40, 60, 80]}
+                    selectedPageSize={projectReports.Projsize}
+                  />
+                )}
+              </CCol>
+              {projectReports.Projsize > 20 && (
+                <CCol
+                  xs={5}
+                  className="gap-1 d-grid d-md-flex justify-content-md-end"
+                >
+                  <OPagination
+                    currentPage={currentPage}
+                    pageSetter={setCurrentPage}
+                    paginationRange={paginationRange}
+                  />
+                </CCol>
+              )}
+            </CRow> */}
           </CRow>
         </>
       ) : (
