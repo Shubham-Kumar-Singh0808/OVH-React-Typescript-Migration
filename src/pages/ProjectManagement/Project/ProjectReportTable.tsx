@@ -13,12 +13,20 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ProjectReportsTableProps } from '../../../types/ProjectManagement/Project/ProjectTypes'
+
+type DeleteProjectType = {
+  id?: number
+  projectName?: string
+  isModelVisible: boolean
+}
 
 const ProjectReportsTable = ({
   paginationRange,
@@ -31,6 +39,9 @@ const ProjectReportsTable = ({
   const dispatch = useAppDispatch()
   const [isShow, setIsShow] = useState(false)
   const [selectedProject, setSelectedProject] = useState<number>()
+  const [toDeleteProject, setToDeleteProject] = useState<DeleteProjectType>({
+    isModelVisible: false,
+  })
 
   const projectReports = useTypedSelector(
     reduxServices.projectReport.selectors.projectReports,
@@ -61,6 +72,48 @@ const ProjectReportsTable = ({
     dispatch(
       reduxServices.projectReport.getFetchProjectClients(projectId.toString()),
     )
+  }
+
+  const handleShowDeleteModal = (visaId: number, name: string) => {
+    setToDeleteProject({ id: visaId, projectName: name, isModelVisible: true })
+  }
+
+  const handleConfirmDeleteProject = async () => {
+    setToDeleteProject({ ...toDeleteProject, isModelVisible: false })
+
+    const projectId = toDeleteProject.id != null ? toDeleteProject.id : 0
+
+    const deleteResponse = await dispatch(
+      reduxServices.projectReport.deleteProjectReport(projectId.toString()),
+    )
+    if (
+      reduxServices.projectReport.deleteProjectReport.fulfilled.match(
+        deleteResponse,
+      )
+    ) {
+      const initValue = {
+        endIndex: 20,
+        firstIndex: 0,
+        health: 'All',
+        projectStatus: 'INPROGRESS',
+        type: 'All',
+        projectDatePeriod: '',
+        intrnalOrNot: false,
+        multiSearch: '',
+      }
+
+      dispatch(
+        reduxServices.projectReport.getFetchActiveProjectReports(initValue),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage={`${toDeleteProject.projectName} successfully deleted`}
+          />,
+        ),
+      )
+    }
   }
 
   return (
@@ -121,6 +174,9 @@ const ProjectReportsTable = ({
                           className="cursor-pointer"
                           color="danger btn-sm me-1"
                           data-testid="reject-btn"
+                          onClick={() =>
+                            handleShowDeleteModal(value.id, value.projectName)
+                          }
                         >
                           <i
                             className="fa fa-times text-white"
@@ -315,6 +371,22 @@ const ProjectReportsTable = ({
           </CRow>
         </CCol>
       )}
+      <OModal
+        alignment="center"
+        visible={toDeleteProject.isModelVisible}
+        setVisible={(value) =>
+          setToDeleteProject({ ...toDeleteProject, isModelVisible: value })
+        }
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteProject}
+      >
+        <p>
+          Do you really want to close this
+          <strong>{` ${toDeleteProject.projectName}`}</strong> project?
+        </p>
+      </OModal>
     </>
   )
 }

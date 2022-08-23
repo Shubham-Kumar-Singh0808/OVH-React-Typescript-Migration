@@ -300,6 +300,7 @@ export interface ProjectManagementApi extends ApiBase {
   getActiveProjectReports: string
   getSearchAllocationReport: string
   getClientProjects: string
+  getCloseProject: string
 }
 
 export interface ClientsApi extends ApiBase {

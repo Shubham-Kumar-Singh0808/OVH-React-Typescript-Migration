@@ -132,8 +132,21 @@ const getClientProjects = async (projectId: string): Promise<ProjectInfo[]> => {
   return response.data
 }
 
+const deleteProjectReport = async (projectId: string): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectManagementConfig.getCloseProject,
+    method: AllowedHttpMethods.get,
+    params: {
+      projectId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AddProject = {
   addProject,
+  deleteProjectReport,
   updateProject,
   getAllPlatforms,
   getAllDomains,

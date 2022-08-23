@@ -76,6 +76,23 @@ const getFetchProjectClients = createAsyncThunk<
   },
 )
 
+const deleteProjectReport = createAsyncThunk<
+  number | undefined,
+  string,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('projectReports/deleteProjectReport', async (projectId: string, thunkApi) => {
+  try {
+    return await ProjectApi.deleteProjectReport(projectId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const projectReportsSlice = createSlice({
   name: 'projectReports',
   initialState: initialProjectsState,
@@ -85,6 +102,9 @@ const projectReportsSlice = createSlice({
       .addCase(getFetchProjectClients.fulfilled, (state, action) => {
         state.ClientProjects = action.payload
         state.isClientProjectLoading = ApiLoadingState.succeeded
+      })
+      .addCase(deleteProjectReport.fulfilled, (state) => {
+        state.isProjectLoading = ApiLoadingState.succeeded
       })
       .addMatcher(
         isAnyOf(
@@ -103,6 +123,7 @@ const projectReportsSlice = createSlice({
           getFetchActiveProjectReports.pending,
           getFetchSearchAllocationReport.pending,
           getFetchProjectClients.pending,
+          deleteProjectReport.pending,
         ),
         (state) => {
           state.isProjectLoading = ApiLoadingState.loading
@@ -114,6 +135,7 @@ const projectReportsSlice = createSlice({
           getFetchActiveProjectReports.rejected,
           getFetchSearchAllocationReport.rejected,
           getFetchProjectClients.rejected,
+          deleteProjectReport.rejected,
         ),
         (state, action) => {
           state.isProjectLoading = ApiLoadingState.failed
@@ -139,6 +161,7 @@ const isClientProjectLoading = (state: RootState): LoadingState =>
   state.projectReport.isClientProjectLoading
 
 const projectsThunk = {
+  deleteProjectReport,
   getFetchActiveProjectReports,
   getFetchSearchAllocationReport,
   getFetchProjectClients,

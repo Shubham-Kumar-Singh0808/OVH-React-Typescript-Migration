@@ -356,6 +356,7 @@ export const projectManagementConfig: ProjectManagementApi = {
     apiPrefix + '/project-mgmt/activeProjectsForEmployee',
   getSearchAllocationReport: apiPrefix + '/project-mgmt/searchAllocationReport',
   getClientProjects: apiPrefix + '/allocation-mgmt/projects',
+  getCloseProject: apiPrefix + '/project-mgmt/closeProject',
 }
 
 export const clientsApiConfig: ClientsApi = {
