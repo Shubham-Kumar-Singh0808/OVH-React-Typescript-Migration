@@ -51,6 +51,7 @@ import scheduledInterviewsReducer from './reducers/Recruitment/ScheduledIntervie
 import addMailTemplateTypeReducer from './reducers/Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import myAttendanceReducer from './reducers/TimeAndAttendance/MyAttendance/myAttendanceSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/projectSlice'
+import clientsReducer from './reducers/ProjectManagement/Clients/clientsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -102,6 +103,7 @@ export const allReducers = {
   addMailTemplateType: addMailTemplateTypeReducer,
   myAttendance: myAttendanceReducer,
   projectManagement: projectManagementReducer,
+  clients: clientsReducer,
   // add your slice reducers here
 }
 

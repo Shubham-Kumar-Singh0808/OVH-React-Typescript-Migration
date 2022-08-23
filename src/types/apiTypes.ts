@@ -298,3 +298,10 @@ export interface ProjectManagementApi extends ApiBase {
   getAllDomains: string
   getAllManagers: string
 }
+
+export interface ClientsApi extends ApiBase {
+  getClients: string
+  getProjectsUnderClient: string
+  searchClients: string
+  deleteClient: string
+}

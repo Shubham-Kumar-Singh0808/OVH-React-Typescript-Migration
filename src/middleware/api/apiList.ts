@@ -40,6 +40,7 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  ClientsApi,
   ProjectManagementApi,
 } from '../../types/apiTypes'
 
@@ -348,4 +349,11 @@ export const projectManagementConfig: ProjectManagementApi = {
   getAllPlatforms: apiPrefix + '/project-mgmt/getAllPlatforms',
   getAllDomains: apiPrefix + '/project-mgmt/getAllDomains',
   getAllManagers: apiPrefix + '/project-mgmt/getAllManagers',
+}
+
+export const clientsApiConfig: ClientsApi = {
+  getClients: apiPrefix + '/project-mgmt/client',
+  getProjectsUnderClient: apiPrefix + '/project-mgmt/projectsUnderClient',
+  searchClients: apiPrefix + '/project-mgmt/searchClients',
+  deleteClient: apiPrefix + '/project-mgmt/deleteClient',
 }
