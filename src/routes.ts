@@ -89,6 +89,14 @@ const MyAttedance = React.lazy(
   () => import('./pages/TimeAndAttendance/MyAttendance/MyAttendance'),
 )
 
+const AddProject = React.lazy(
+  () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
+)
+
+const EditProject = React.lazy(
+  () => import('./pages/ProjectManagement/Project/EditProject/EditProject'),
+)
+
 const AddClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/AddClient/AddNewClient'),
 )
@@ -199,6 +207,16 @@ const routes = [
     path: '/employeeattendance',
     name: 'Employee Attendance',
     component: MyAttedance,
+  },
+  {
+    path: '/addproject',
+    name: 'Add Project',
+    component: AddProject,
+  },
+  {
+    path: '/editproject/:projectId',
+    name: 'Edit Project',
+    component: EditProject,
   },
   {
     path: '/addClient',

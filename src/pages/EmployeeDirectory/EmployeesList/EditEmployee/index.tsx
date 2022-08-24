@@ -50,6 +50,7 @@ const EditEmployee = (): JSX.Element => {
     projectManager: false,
     reportManager: false,
   } as ShouldResetFields
+
   const [resetFields, setResetField] = useState(initResetFields)
   const managerValue = {} as GetAllReportingManagers
   const hrAssociateValue = {} as GetHrData
@@ -388,8 +389,9 @@ const EditEmployee = (): JSX.Element => {
             list={countryList}
             setValue={onHandleCountryType}
             value={editEmployee.country}
-            name="Country"
-            label="Select Country"
+            name="country"
+            label="Country"
+            placeHolder="Select Country"
           />
           <OSelectList
             isRequired={false}
@@ -397,8 +399,9 @@ const EditEmployee = (): JSX.Element => {
             list={composedDepartmentList}
             setValue={onHandleDepartment}
             value={editEmployee.departmentName}
-            name="Department"
-            label="Select Department"
+            name="department"
+            label="Department"
+            placeHolder="Select Department"
           />
           <OSelectList
             isRequired={false}
@@ -406,8 +409,9 @@ const EditEmployee = (): JSX.Element => {
             list={composedTechnologyList}
             setValue={onHandleTechnology}
             value={editEmployee.technology}
-            name="Technology"
-            label="Select"
+            name="technology"
+            label="Technology"
+            placeHolder="Select"
           />
           <Designation
             dynamicFormLabelProps={dynamicFormLabelProps}
@@ -425,8 +429,9 @@ const EditEmployee = (): JSX.Element => {
             list={composedUserRoles}
             setValue={onHandleUserRole}
             value={editEmployee.role}
-            name="Role"
-            label="Select Role"
+            name="role"
+            label="Role"
+            placeHolder="Select Role"
           />
           <ReportingManager
             isRequired={true}
@@ -459,7 +464,8 @@ const EditEmployee = (): JSX.Element => {
             setValue={onHandleEmployeeType}
             value={editEmployee.employmentTypeName}
             name="EmploymentType"
-            label="Select Type"
+            label="Employee Type"
+            placeHolder="Select Type"
           />
           <OSelectList
             isRequired={true}
@@ -468,7 +474,8 @@ const EditEmployee = (): JSX.Element => {
             setValue={onHandleJobType}
             value={editEmployee.jobTypeName}
             name="JobType"
-            label="Select Job Type"
+            label="Job Type"
+            placeHolder="Select Job Type"
           />
           <Shift
             isRequired={true}

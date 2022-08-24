@@ -442,8 +442,9 @@ const AddNewEmployee = (): JSX.Element => {
                 list={composedGenderList}
                 setValue={onHandleGender}
                 value={addEmployee.gender}
-                name="Gender"
-                label="Select Gender"
+                name="gender"
+                label="Gender"
+                placeHolder="Select Gender"
               />
               <OSelectList
                 isRequired={true}
@@ -451,8 +452,9 @@ const AddNewEmployee = (): JSX.Element => {
                 list={countryList}
                 setValue={onHandleCountryType}
                 value={addEmployee.country}
-                name="Country"
-                label="Select Country"
+                name="country"
+                label="Country"
+                placeHolder="Select Country"
               />
               <Birthday
                 dynamicFormLabelProps={dynamicFormLabelProps}
@@ -476,7 +478,8 @@ const AddNewEmployee = (): JSX.Element => {
                 setValue={onHandleDepartment}
                 value={addEmployee.departmentName}
                 name="Department"
-                label="Select Department"
+                label="Department"
+                placeHolder="Select Department"
               />
               <OSelectList
                 isRequired={true}
@@ -484,8 +487,9 @@ const AddNewEmployee = (): JSX.Element => {
                 list={composedTechnologyList}
                 setValue={onHandleTechnology}
                 value={addEmployee.technology}
-                name="Technology"
-                label="Select"
+                name="technology"
+                label="Technology"
+                placeHolder="Select"
               />
               <Designation
                 isRequired={true}
@@ -504,7 +508,8 @@ const AddNewEmployee = (): JSX.Element => {
                 setValue={onHandleUserRole}
                 value={addEmployee.role}
                 name="Role"
-                label="Select Role"
+                label="Role"
+                placeHolder="Select Role"
               />
               <ReportingManager
                 isRequired={true}
@@ -537,7 +542,8 @@ const AddNewEmployee = (): JSX.Element => {
                 setValue={onHandleEmployeeType}
                 value={addEmployee.employmentTypeName}
                 name="EmploymentType"
-                label="Select Employment Type"
+                label="Employment Type"
+                placeHolder="Select Employment Type"
               />
               <OSelectList
                 isRequired={true}
@@ -546,7 +552,8 @@ const AddNewEmployee = (): JSX.Element => {
                 setValue={onHandleJobType}
                 value={addEmployee.jobTypeName}
                 name="JobType"
-                label="Select Job Type"
+                label="Job Type"
+                placeHolder="Select Job Type"
               />
               <Shift
                 isRequired={true}
