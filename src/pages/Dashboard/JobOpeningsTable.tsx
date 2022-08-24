@@ -55,7 +55,7 @@ const JobOpeningsTable = (props: JobOpeningsTableProps): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {jobOpeningDetails.map((jobVacancy, index) => {
+          {jobOpeningDetails?.slice(0, 5).map((jobVacancy, index) => {
             const jobDescriptionLimit =
               jobVacancy.description && jobVacancy.description.length > 30
                 ? `${jobVacancy.description.substring(0, 30)}...`
@@ -70,7 +70,7 @@ const JobOpeningsTable = (props: JobOpeningsTableProps): JSX.Element => {
                 {jobDescriptionLimit ? (
                   <CTableDataCell>
                     <CLink
-                      className="cursor-pointer text-decoration-none text-primary"
+                      className="cursor-pointer text-decoration-none text-primary description-link"
                       data-testid={`job-description${index}`}
                       onClick={() => handleModal(jobVacancy.description)}
                     >
@@ -97,7 +97,11 @@ const JobOpeningsTable = (props: JobOpeningsTableProps): JSX.Element => {
         visible={isJobDescriptionModalVisible}
         setVisible={setIsJobDescriptionModalVisible}
       >
-        {description}
+        <div
+          dangerouslySetInnerHTML={{
+            __html: description,
+          }}
+        />
       </OModal>
     </>
   )

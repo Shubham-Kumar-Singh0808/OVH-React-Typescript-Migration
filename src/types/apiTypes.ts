@@ -291,4 +291,5 @@ export interface MyAttendanceApi extends ApiBase {
 
 export interface DashboardApi extends ApiBase {
   getAllJobVacancies: string
+  getAllAchievements: string
 }

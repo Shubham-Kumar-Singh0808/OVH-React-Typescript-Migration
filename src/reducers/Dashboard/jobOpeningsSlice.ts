@@ -50,9 +50,10 @@ const jobOpeningsSlice = createSlice({
   },
 })
 
-const isLoading = (state: RootState): LoadingState => state.dashboard.isLoading
+const isLoading = (state: RootState): LoadingState =>
+  state.jobOpenings.isLoading
 const jobVacancies = (state: RootState): JobOpeningsDetails[] =>
-  state.dashboard.jobVacancies
+  state.jobOpenings.jobVacancies
 const listSize = (state: RootState): number => state.employeeList.listSize
 
 const jobOpeningsThunk = {

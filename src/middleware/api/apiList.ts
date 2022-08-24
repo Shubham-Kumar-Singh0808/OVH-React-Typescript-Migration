@@ -342,4 +342,5 @@ export const myAttendanceApiConfig: MyAttendanceApi = {
 
 export const dashboardApiConfig: DashboardApi = {
   getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
 }

@@ -60,7 +60,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Job Openings"
                   CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
+                  footerPath="/jobvacancies"
                 >
                   <JobOpeningsTable pageSize={5} />
                 </OCard>
