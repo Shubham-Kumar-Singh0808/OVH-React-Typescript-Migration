@@ -51,8 +51,8 @@ const AddNewClient = (): JSX.Element => {
     }
   }
 
-  const contactNameRegexReplace = /[^a-zA-Z\s]/gi
-  const phoneValueRegexReplace = /[^0-9]/gi
+  const contactNameRegexReplace = /[^a-z]/gi
+  const phoneValueRegexReplace = /^[a-z]+$/gi
 
   const handleMobile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -139,6 +139,8 @@ const AddNewClient = (): JSX.Element => {
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+    setPhoneCode('')
+    setPhoneNumber('')
   }
 
   const successToastMessage = (

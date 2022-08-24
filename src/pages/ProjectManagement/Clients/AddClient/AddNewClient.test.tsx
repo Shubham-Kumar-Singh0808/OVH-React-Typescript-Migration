@@ -154,6 +154,56 @@ describe('Add Template Component Testing', () => {
         expect(screen.getByRole('button', { name: 'Add' })).toBeEnabled()
       })
     })
+    test('should clear all the entered fields upon clicking clear button', async () => {
+      const code = screen.getByTestId(clientCodeElement)
+      userEvent.type(code, '0000')
+      expect(code).toHaveValue('0000')
+
+      const name = screen.getByTestId(clientNameElement)
+      userEvent.type(name, 'Raybiztech1')
+      expect(name).toHaveValue('Raybiztech1')
+
+      const clientOrganisation = screen.getByTestId(clientOrgElement)
+      userEvent.type(clientOrganisation, 'Ray Business Technologies1')
+      expect(clientOrganisation).toHaveValue('Ray Business Technologies1')
+
+      const clientMail = screen.getByTestId(clientEmailElement)
+      userEvent.type(clientMail, 'ajay.gupta@raybiztech.com1')
+      expect(clientMail).toHaveValue('ajay.gupta@raybiztech.com1')
+
+      const contPerson = screen.getByTestId(contactPersonElement)
+      userEvent.type(contPerson, 'AG')
+      expect(contPerson).toHaveValue('AG')
+
+      userEvent.selectOptions(screen.getByTestId(clientCountryElement), 'INDIA')
+
+      const clientAddrs = screen.getByTestId(clientAddressElement)
+      userEvent.type(clientAddrs, 'KavuriHills1')
+      expect(clientAddrs).toHaveValue('KavuriHills1')
+
+      const clientStatus = screen.getByRole('radio', { name: 'Active' })
+      expect(clientStatus).toBeChecked()
+
+      const ctryCode = screen.getByTestId(countryCodeElement)
+      userEvent.type(ctryCode, '90')
+      expect(ctryCode).toHaveValue('90')
+
+      const clientMobl = screen.getByTestId(clientMobileNumberElement)
+      userEvent.type(clientMobl, '8979872335')
+      expect(clientMobl).toHaveValue('8979872335')
+
+      userEvent.click(screen.getByRole('button', { name: 'Clear' }))
+      await waitFor(() => {
+        expect(code).toHaveValue('')
+        expect(name).toHaveValue('')
+        expect(clientOrganisation).toHaveValue('')
+        expect(clientMail).toHaveValue('')
+        expect(contPerson).toHaveValue('')
+        expect(clientAddrs).toHaveValue('')
+        expect(ctryCode).toHaveValue('')
+        expect(clientMobl).toHaveValue('')
+      })
+    })
   })
   describe('Page redirection', () => {
     test('should redirect to /clientsList when user clicks on Back Button', async () => {
