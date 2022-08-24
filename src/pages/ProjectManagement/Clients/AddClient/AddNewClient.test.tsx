@@ -86,21 +86,15 @@ describe('Add Template Component Testing', () => {
   })
 
   describe('Add Client form testing without crashing', () => {
-    const history = createMemoryHistory()
     beforeEach(() => {
-      render(
-        <Router history={history}>
-          <AddNewClient />
-        </Router>,
-        {
-          preloadedState: {
-            addNewClient: {
-              clientCountries: mockClientCountries,
-              addClientDetails: mockAddNewClient,
-            },
+      render(<AddNewClient />, {
+        preloadedState: {
+          addNewClient: {
+            clientCountries: mockClientCountries,
+            addClientDetails: mockAddNewClient,
           },
         },
-      )
+      })
     })
     it('should render Add button as enabled and Clear Button as disabled', () => {
       expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
@@ -158,7 +152,29 @@ describe('Add Template Component Testing', () => {
 
       await waitFor(() => {
         expect(screen.getByRole('button', { name: 'Add' })).toBeEnabled()
-        expect(history.location.pathname).toBe('/')
+      })
+    })
+  })
+  describe('Page redirection', () => {
+    test('should redirect to /clientsList when user clicks on Back Button', async () => {
+      const history = createMemoryHistory()
+      render(
+        <Router history={history}>
+          <AddNewClient />
+        </Router>,
+        {
+          preloadedState: {
+            addNewClient: {
+              clientCountries: mockClientCountries,
+              addClientDetails: mockAddNewClient,
+            },
+          },
+        },
+      )
+      userEvent.click(screen.getByRole('button', { name: /Back/i }))
+      await waitFor(() => {
+        // check if a redirect happens after clicking Back button to Clients Page
+        expect(history.location.pathname).toBe('/clientsList')
       })
     })
   })
