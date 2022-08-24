@@ -299,6 +299,13 @@ export interface ProjectManagementApi extends ApiBase {
   getAllManagers: string
 }
 
+export interface ClientsApi extends ApiBase {
+  getClients: string
+  getProjectsUnderClient: string
+  searchClients: string
+  deleteClient: string
+}
+
 export interface AddNewClientApi extends ApiBase {
   getClientCountries: string
   addNewClient: string

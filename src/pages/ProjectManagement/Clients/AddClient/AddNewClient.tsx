@@ -12,7 +12,7 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import validator from 'validator'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -34,7 +34,7 @@ const AddNewClient = (): JSX.Element => {
   const clientCountries = useTypedSelector(
     reduxServices.addClient.selectors.clientCountries,
   )
-
+  const history = useHistory()
   useEffect(() => {
     dispatch(reduxServices.addClient.getClientCountries())
   }, [dispatch])
@@ -163,6 +163,7 @@ const AddNewClient = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      history.push('/clientsList')
     } else if (
       reduxServices.addClient.addNewClient.rejected.match(
         addClientResultAction,

@@ -3,13 +3,13 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import AddNewClient from './AddClient/AddNewClient'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import AddNewClient from './AddNewClient'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 import {
   mockAddNewClient,
   mockClientCountries,
-} from '../../../test/data/addNewClientData'
-import { emailAddress } from '../../../test/constants'
+} from '../../../../test/data/addNewClientData'
+import { emailAddress } from '../../../../test/constants'
 
 const clientCodeElement = 'clientCode-input'
 const clientNameElement = 'clientName-input'
