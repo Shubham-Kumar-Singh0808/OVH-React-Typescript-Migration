@@ -1,5 +1,5 @@
 import { CRow, CCol, CFormSelect, CFormLabel, CButton } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
@@ -8,6 +8,7 @@ const TicketReportFilterOptions = (): JSX.Element => {
 
   const [selectDepartment, setSelectDepartment] = useState<string | number>()
   const dispatch = useAppDispatch()
+
   const getDepartmentNameList = useTypedSelector(
     reduxServices.ticketReport.selectors.departmentNameList,
   )
@@ -40,10 +41,35 @@ const TicketReportFilterOptions = (): JSX.Element => {
     )
   }
 
+  const sortedDepartmentNames = useMemo(() => {
+    if (getDepartmentNameList) {
+      return getDepartmentNameList
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.name.localeCompare(sortNode2.name),
+        )
+    }
+    return []
+  }, [getDepartmentNameList])
+
+  const handleClearTicketReports = () => {
+    setSelectDate('Today')
+    setSelectDepartment('')
+    dispatch(
+      reduxServices.ticketReport.getTicketsReport({
+        dateSelection: selectDate,
+        departmentId: 0,
+        from: '',
+        ticketStatus: null,
+        to: '',
+      }),
+    )
+  }
+
   return (
     <>
       <CRow className="mt-3">
-        <CCol sm={3} md={3} className="me-2">
+        <CCol sm={2} md={2} className="me-2">
           <CFormLabel>Department Name:</CFormLabel>
           <CFormSelect
             aria-label="Default select example"
@@ -55,14 +81,14 @@ const TicketReportFilterOptions = (): JSX.Element => {
             onChange={(e) => setSelectDepartment(e.target.value)}
           >
             <option value={''}>All</option>
-            {getDepartmentNameList?.map((department, index) => (
+            {sortedDepartmentNames?.map((department, index) => (
               <option key={index} value={department.id}>
                 {department.name}
               </option>
             ))}
           </CFormSelect>
         </CCol>
-        <CCol sm={1} md={3}>
+        <CCol sm={2} md={2}>
           <CFormLabel>Date:</CFormLabel>
           <CFormSelect
             aria-label="Default select example"
@@ -83,7 +109,7 @@ const TicketReportFilterOptions = (): JSX.Element => {
             <option value="Yesterday">Yesterday</option>
           </CFormSelect>
         </CCol>
-        <CCol sm={3} md={3}>
+        <CCol sm={2} md={2} className="mt-4">
           <CButton
             className="cursor-pointer"
             color="success btn-ovh me-1"
@@ -94,13 +120,13 @@ const TicketReportFilterOptions = (): JSX.Element => {
           <CButton
             className="cursor-pointer"
             color="warning btn-ovh me-1"
-            // onClick={handleClearTicketReports}
+            onClick={handleClearTicketReports}
           >
             Clear
           </CButton>
         </CCol>
       </CRow>
-      <CRow className="mt-5 mb-4">
+      <CRow className="mt-2 mb-4">
         <CCol xs={12} className="d-md-flex justify-content-md-end">
           <CButton color="info btn-ovh me-0">
             <i className="fa fa-plus me-1"></i>Click to Export

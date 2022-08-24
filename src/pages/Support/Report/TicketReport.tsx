@@ -1,9 +1,16 @@
 import React from 'react'
+import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import TicketReportFilterOptions from './TicketReportFilterOptions'
 import TicketReportTable from './TicketReportTable'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const TicketReport = (): JSX.Element => {
+  const isLoading = useTypedSelector(
+    reduxServices.ticketReport.selectors.isLoading,
+  )
   return (
     <>
       <OCard
@@ -13,7 +20,18 @@ const TicketReport = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <TicketReportFilterOptions />
-        <TicketReportTable />
+
+        {isLoading !== ApiLoadingState.loading ? (
+          <>
+            <TicketReportTable />
+          </>
+        ) : (
+          <CCol>
+            <CRow className="category-loading-spinner">
+              <CSpinner />
+            </CRow>
+          </CCol>
+        )}
       </OCard>
     </>
   )

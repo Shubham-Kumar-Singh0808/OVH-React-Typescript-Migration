@@ -71,8 +71,11 @@ const ticketReportSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getTicketsReport.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.ticketsReportList = action.payload.list as GetTicketsReportList[]
+      state.ticketsReportList = action.payload.list
       state.getTicketsReport = action.payload
+    })
+    builder.addCase(getTicketsReport.pending, (state) => {
+      state.isLoading = ApiLoadingState.loading
     })
     builder.addCase(getDepartmentCategoryList.fulfilled, (state, action) => {
       state.departmentCategoryList = action.payload as DepartmentCategoryList[]

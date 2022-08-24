@@ -14,7 +14,7 @@ const TicketReportTable = (): JSX.Element => {
   const getTicketReportList = useTypedSelector(
     reduxServices.ticketReport.selectors.ticketsReport,
   )
-  console.log(getTicketReportList)
+
   return (
     <>
       <CTable striped>
@@ -53,6 +53,11 @@ const TicketReportTable = (): JSX.Element => {
           })}
         </CTableBody>
       </CTable>
+      <strong>
+        {getTicketReportList?.length
+          ? `Total Records: ${getTicketReportList?.length}`
+          : `No Records found...`}
+      </strong>
     </>
   )
 }
