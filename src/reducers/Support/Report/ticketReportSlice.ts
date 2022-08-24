@@ -7,6 +7,7 @@ import ticketReportApi from '../../../middleware/api/Support/Report/ticketReport
 import {
   DepartmentCategoryList,
   DepartmentNameList,
+  GetTicketsReportList,
   TicketReportApiProps,
   TicketReportSliceState,
 } from '../../../types/Support/Report/ticketReportTypes'
@@ -56,6 +57,7 @@ const getTicketsReport = createAsyncThunk(
 )
 
 const initialTicketReportState: TicketReportSliceState = {
+  ticketsReportList: [],
   getTicketsReport: { list: [], size: 0 },
   departmentCategoryList: [],
   departmentNameList: [],
@@ -69,6 +71,7 @@ const ticketReportSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getTicketsReport.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
+      state.ticketsReportList = action.payload.list as GetTicketsReportList[]
       state.getTicketsReport = action.payload
     })
     builder.addCase(getDepartmentCategoryList.fulfilled, (state, action) => {
@@ -91,13 +94,18 @@ const isLoading = (state: RootState): LoadingState =>
 
 const departmentNameList = (state: RootState): DepartmentNameList[] =>
   state.ticketReport.departmentNameList
+
 const departmentCategoryList = (state: RootState): DepartmentCategoryList[] =>
   state.ticketReport.departmentCategoryList
+
+const ticketsReport = (state: RootState): GetTicketsReportList[] =>
+  state.ticketReport.ticketsReportList
 
 const ticketReportSelectors = {
   isLoading,
   departmentNameList,
   departmentCategoryList,
+  ticketsReport,
 }
 
 export const ticketReportService = {

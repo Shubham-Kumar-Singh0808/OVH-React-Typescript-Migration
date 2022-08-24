@@ -24,8 +24,6 @@ const TicketReportFilterOptions = (): JSX.Element => {
     )
   }, [dispatch])
 
-  console.log(selectDepartment)
-
   useEffect(() => {
     dispatch(reduxServices.ticketReport.getDepartmentNameList())
   }, [dispatch])
@@ -93,7 +91,11 @@ const TicketReportFilterOptions = (): JSX.Element => {
           >
             View
           </CButton>
-          <CButton className="cursor-pointer" color="warning btn-ovh me-1">
+          <CButton
+            className="cursor-pointer"
+            color="warning btn-ovh me-1"
+            // onClick={handleClearTicketReports}
+          >
             Clear
           </CButton>
         </CCol>

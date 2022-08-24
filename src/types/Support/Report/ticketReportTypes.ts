@@ -32,6 +32,7 @@ export type DepartmentCategoryList = {
 }
 
 export type TicketReportSliceState = {
+  ticketsReportList: GetTicketsReportList[]
   departmentNameList: DepartmentNameList[]
   departmentCategoryList: DepartmentCategoryList[]
   getTicketsReport: GetTicketsReport

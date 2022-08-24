@@ -4,10 +4,17 @@ import {
   CTableRow,
   CTableHeaderCell,
   CTableBody,
+  CTableDataCell,
 } from '@coreui/react-pro'
 import React from 'react'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../stateStore'
 
 const TicketReportTable = (): JSX.Element => {
+  const getTicketReportList = useTypedSelector(
+    reduxServices.ticketReport.selectors.ticketsReport,
+  )
+  console.log(getTicketReportList)
   return (
     <>
       <CTable striped>
@@ -26,7 +33,25 @@ const TicketReportTable = (): JSX.Element => {
             </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
-        <CTableBody></CTableBody>
+        <CTableBody>
+          {getTicketReportList.map((ticketReport, index) => {
+            return (
+              <CTableRow key={index}>
+                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                <CTableDataCell>{ticketReport.trackerName}</CTableDataCell>
+                <CTableDataCell>{ticketReport.categoryName}</CTableDataCell>
+                <CTableDataCell>{ticketReport.subCategoryName}</CTableDataCell>
+                <CTableDataCell>{ticketReport.noOfTickets}</CTableDataCell>
+                <CTableDataCell>
+                  {ticketReport.noOfClosedTickets}
+                </CTableDataCell>
+                <CTableDataCell>
+                  {ticketReport.noOfPendingTickets}
+                </CTableDataCell>
+              </CTableRow>
+            )
+          })}
+        </CTableBody>
       </CTable>
     </>
   )
