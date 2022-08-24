@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
@@ -67,12 +67,6 @@ const ticketReportSlice = createSlice({
   initialState: initialTicketReportState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addMatcher(isAnyOf(getDepartmentNameList.pending), (state) => {
-      state.isLoading = ApiLoadingState.loading
-    })
-    builder.addMatcher(isAnyOf(getTicketsReport.pending), (state) => {
-      state.isLoading = ApiLoadingState.loading
-    })
     builder.addCase(getTicketsReport.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
       state.getTicketsReport = action.payload
@@ -81,7 +75,7 @@ const ticketReportSlice = createSlice({
       state.departmentCategoryList = action.payload as DepartmentCategoryList[]
     })
     builder.addCase(getDepartmentNameList.fulfilled, (state, action) => {
-      state.departmentNameList = action.payload as DepartmentNameList[]
+      state.departmentNameList = action.payload
     })
   },
 })

@@ -40,7 +40,7 @@ export type TicketReportSliceState = {
 
 export type TicketReportApiProps = {
   dateSelection: string
-  departmentId: number
+  departmentId: number | string
   from: string
   ticketStatus: null
   to: string
