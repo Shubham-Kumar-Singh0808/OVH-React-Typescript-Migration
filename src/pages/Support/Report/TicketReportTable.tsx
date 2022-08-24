@@ -100,7 +100,7 @@ const TicketReportTable = (): JSX.Element => {
           <strong>
             {getTicketReportList?.length
               ? `Total Records: ${getTicketReportList.length}`
-              : `No Records Found`}
+              : `No Records Found...`}
           </strong>
         </CCol>
         <CCol xs={3}>
