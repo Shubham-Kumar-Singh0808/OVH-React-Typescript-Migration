@@ -6,6 +6,7 @@ import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   Client,
+  ClientCountry,
   ClientsSliceState,
   ClientStatus,
   GetClientsProps,
@@ -60,12 +61,50 @@ const deleteClient = createAsyncThunk(
   },
 )
 
+const getClientToEdit = createAsyncThunk(
+  'clients/getClientToEdit',
+  async (clientId: number, thunkApi) => {
+    try {
+      return await clientsApi.getClientToEdit(clientId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateClient = createAsyncThunk(
+  'clients/updateClient',
+  async (updatedClientDetails: Client, thunkApi) => {
+    try {
+      return await clientsApi.updateClient(updatedClientDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getClientCountries = createAsyncThunk(
+  'clients/getClientCountries',
+  async (_, thunkApi) => {
+    try {
+      return await clientsApi.getClientCountries()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialClientsSliceState: ClientsSliceState = {
   selectedClientStatus: ClientStatus.active,
   clientsList: { clients: [], totalClients: 0 },
   projectsUnderClient: [],
   isLoading: ApiLoadingState.idle,
   isLoadingProjectDetails: ApiLoadingState.idle,
+  editClient: {} as Client,
+  clientCountries: [],
 }
 
 const clientsSlice = createSlice({
@@ -91,6 +130,14 @@ const clientsSlice = createSlice({
       .addCase(deleteClient.rejected, (state) => {
         state.isLoading = ApiLoadingState.failed
       })
+      .addCase(getClientToEdit.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editClient = action.payload
+      })
+      .addCase(getClientCountries.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.clientCountries = action.payload
+      })
       .addMatcher(
         isAnyOf(getClients.fulfilled, searchClients.fulfilled),
         (state, action) => {
@@ -103,6 +150,8 @@ const clientsSlice = createSlice({
           getClients.pending,
           searchClients.pending,
           deleteClient.pending,
+          getClientToEdit.pending,
+          getClientCountries.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -112,6 +161,7 @@ const clientsSlice = createSlice({
 })
 
 const isLoading = (state: RootState): LoadingState => state.clients.isLoading
+
 const isLoadingProjectDetails = (state: RootState): LoadingState =>
   state.clients.isLoadingProjectDetails
 
@@ -127,11 +177,18 @@ const clientsListSize = (state: RootState): number =>
 const selectedClientStatus = (state: RootState): ClientStatus =>
   state.clients.selectedClientStatus
 
+const getClient = (state: RootState): Client => state.clients.editClient
+const clientCountries = (state: RootState): ClientCountry[] =>
+  state.clients.clientCountries
+
 const clientsThunk = {
   getClients,
   getProjectsUnderClient,
   searchClients,
   deleteClient,
+  getClientToEdit,
+  updateClient,
+  getClientCountries,
 }
 
 const clientsSelectors = {
@@ -141,6 +198,8 @@ const clientsSelectors = {
   selectedClientStatus,
   projectsUnderClient,
   isLoadingProjectDetails,
+  getClient,
+  clientCountries,
 }
 
 export const clientsService = {

@@ -1,5 +1,6 @@
 import { CTableRow, CTableDataCell, CButton, CLink } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import ClientDetailsTable from './ClientDetailsTable'
 import { Client } from '../../../types/ProjectManagement/Clients/clientsTypes'
 import { useAppDispatch } from '../../../stateStore'
@@ -69,9 +70,11 @@ const ClientsEntry = (props: {
             <CButton className="btn-ovh me-2 sh-eye-btn-color">
               <i className="fa fa-eye" aria-hidden="true"></i>
             </CButton>
-            <CButton color="info" className="btn-ovh me-2">
-              <i className="fa fa-edit" aria-hidden="true"></i>
-            </CButton>
+            <Link to={`/editClient/${props.client.id}`}>
+              <CButton color="info" className="btn-ovh me-2">
+                <i className="fa fa-edit" aria-hidden="true"></i>
+              </CButton>
+            </Link>
             <CButton
               color="danger"
               className="btn-ovh me-2"

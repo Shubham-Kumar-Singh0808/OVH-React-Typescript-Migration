@@ -1,6 +1,7 @@
 import reducer, { clientsService } from './clientsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
+  Client,
   ClientsSliceState,
   ClientStatus,
 } from '../../../types/ProjectManagement/Clients/clientsTypes'
@@ -17,6 +18,8 @@ describe('Clients Slice', () => {
       projectsUnderClient: [],
       isLoading: ApiLoadingState.idle,
       isLoadingProjectDetails: ApiLoadingState.idle,
+      editClient: {} as Client,
+      clientCountries: [],
     } as ClientsSliceState
 
     it('Should be able to set isLoading to "loading" if getClients is pending', () => {
@@ -30,6 +33,8 @@ describe('Clients Slice', () => {
         projectsUnderClient: [],
         isLoading: ApiLoadingState.loading,
         isLoadingProjectDetails: ApiLoadingState.idle,
+        editClient: {} as Client,
+        clientCountries: [],
       })
     })
 
@@ -45,6 +50,8 @@ describe('Clients Slice', () => {
         projectsUnderClient: [],
         isLoading: ApiLoadingState.succeeded,
         isLoadingProjectDetails: ApiLoadingState.idle,
+        editClient: {} as Client,
+        clientCountries: [],
       })
     })
     it('Should be able to set isLoading to "success" if getProjectsUnderClient is fulfilled', () => {
@@ -59,6 +66,8 @@ describe('Clients Slice', () => {
         projectsUnderClient: mockProjectsUnderClient,
         isLoading: ApiLoadingState.idle,
         isLoadingProjectDetails: ApiLoadingState.succeeded,
+        editClient: {} as Client,
+        clientCountries: [],
       })
     })
 
@@ -73,6 +82,8 @@ describe('Clients Slice', () => {
         projectsUnderClient: [],
         isLoading: ApiLoadingState.failed,
         isLoadingProjectDetails: ApiLoadingState.idle,
+        editClient: {} as Client,
+        clientCountries: [],
       })
     })
   })

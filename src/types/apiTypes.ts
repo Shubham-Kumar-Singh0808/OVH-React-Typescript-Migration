@@ -304,4 +304,7 @@ export interface ClientsApi extends ApiBase {
   getProjectsUnderClient: string
   searchClients: string
   deleteClient: string
+  editClient: string
+  updateClient: string
+  getClientCountries: string
 }
