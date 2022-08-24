@@ -41,6 +41,8 @@ import {
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
   LeaveReportsApi,
+  ClientsApi,
+  ProjectManagementApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -241,7 +243,6 @@ export const visaListApiConfig: VisaListApi = {
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
   getProjectsClients: apiPrefix + '/project-mgmt/getClients',
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
-  addProject: apiPrefix + '/project-mgmt/project',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }
 
@@ -348,4 +349,20 @@ export const leaveReportsApiConfig: LeaveReportsApi = {
   creditedYears: apiPrefix + '/leaveSetup/creditedYears',
   financialYear: apiPrefix + '/leaveSetup/financialYear',
   downloadLeaveReportList: apiPrefix + '/leaveSetup/exportLeaveReport',
+}
+
+export const projectManagementConfig: ProjectManagementApi = {
+  addProject: apiPrefix + '/project-mgmt/project',
+  updateProject: apiPrefix + '/project-mgmt/project',
+  getProject: apiPrefix + '/project-mgmt/project',
+  getAllPlatforms: apiPrefix + '/project-mgmt/getAllPlatforms',
+  getAllDomains: apiPrefix + '/project-mgmt/getAllDomains',
+  getAllManagers: apiPrefix + '/project-mgmt/getAllManagers',
+}
+
+export const clientsApiConfig: ClientsApi = {
+  getClients: apiPrefix + '/project-mgmt/client',
+  getProjectsUnderClient: apiPrefix + '/project-mgmt/projectsUnderClient',
+  searchClients: apiPrefix + '/project-mgmt/searchClients',
+  deleteClient: apiPrefix + '/project-mgmt/deleteClient',
 }

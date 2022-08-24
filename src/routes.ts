@@ -88,12 +88,19 @@ const EditEmployee = React.lazy(
 const ScheduledInterview = React.lazy(
   () => import('./pages/Recruitment/ScheduledInterviews/ScheduledInterviews'),
 )
-const MyAttedance = React.lazy(
+const MyAttendance = React.lazy(
   () => import('./pages/TimeAndAttendance/MyAttendance/MyAttendance'),
+)
+const Clients = React.lazy(
+  () => import('./pages/ProjectManagement/Clients/Clients'),
 )
 
 const AddProject = React.lazy(
   () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
+)
+
+const EditProject = React.lazy(
+  () => import('./pages/ProjectManagement/Project/EditProject/EditProject'),
 )
 
 /**
@@ -207,12 +214,22 @@ const routes = [
   {
     path: '/employeeattendance',
     name: 'Employee Attendance',
-    component: MyAttedance,
+    component: MyAttendance,
   },
   {
     path: '/addproject',
     name: 'Add Project',
     component: AddProject,
+  },
+  {
+    path: '/editproject/:projectId',
+    name: 'Edit Project',
+    component: EditProject,
+  },
+  {
+    path: '/clientsList',
+    name: 'Clients',
+    component: Clients,
   },
 ]
 

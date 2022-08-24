@@ -179,7 +179,6 @@ export interface EmployeeProjectsApi extends ApiBase {
   getEmployeeProjects: string
   getProjectDetails: string
   getProjectsClients: string
-  addProject: string
 }
 
 export interface EmployeeReporteesApi extends ApiBase {
@@ -297,4 +296,20 @@ export interface LeaveReportsApi extends ApiBase {
   creditedYears: string
   financialYear: string
   downloadLeaveReportList: string
+}
+
+export interface ProjectManagementApi extends ApiBase {
+  getProject: string
+  addProject: string
+  updateProject: string
+  getAllPlatforms: string
+  getAllDomains: string
+  getAllManagers: string
+}
+
+export interface ClientsApi extends ApiBase {
+  getClients: string
+  getProjectsUnderClient: string
+  searchClients: string
+  deleteClient: string
 }
