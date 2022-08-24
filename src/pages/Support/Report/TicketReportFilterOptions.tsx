@@ -13,6 +13,10 @@ const TicketReportFilterOptions = (): JSX.Element => {
     reduxServices.ticketReport.selectors.departmentNameList,
   )
 
+  const getTicketReportList = useTypedSelector(
+    reduxServices.ticketReport.selectors.ticketsReport,
+  )
+
   useEffect(() => {
     dispatch(
       reduxServices.ticketReport.getTicketsReport({
@@ -23,6 +27,8 @@ const TicketReportFilterOptions = (): JSX.Element => {
         to: '',
       }),
     )
+    dispatch(reduxServices.ticketReport.actions.setCurrentPage(1))
+    dispatch(reduxServices.ticketReport.actions.setPageSize(20))
   }, [dispatch])
 
   useEffect(() => {
@@ -126,13 +132,17 @@ const TicketReportFilterOptions = (): JSX.Element => {
           </CButton>
         </CCol>
       </CRow>
-      <CRow className="mt-2 mb-4">
-        <CCol xs={12} className="d-md-flex justify-content-md-end">
-          <CButton color="info btn-ovh me-0">
-            <i className="fa fa-plus me-1"></i>Click to Export
-          </CButton>
-        </CCol>
-      </CRow>
+      {getTicketReportList ? (
+        <CRow className="mt-2 mb-4">
+          <CCol xs={12} className="d-md-flex justify-content-md-end">
+            <CButton color="info btn-ovh me-0">
+              <i className="fa fa-plus me-1"></i>Click to Export
+            </CButton>
+          </CCol>
+        </CRow>
+      ) : (
+        ''
+      )}
     </>
   )
 }

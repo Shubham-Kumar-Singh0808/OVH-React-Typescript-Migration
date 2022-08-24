@@ -5,16 +5,56 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
+  CCol,
+  CRow,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useMemo } from 'react'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { currentPageData } from '../../../utils/paginationUtils'
 
 const TicketReportTable = (): JSX.Element => {
   const getTicketReportList = useTypedSelector(
     reduxServices.ticketReport.selectors.ticketsReport,
   )
 
+  const pageFromState = useTypedSelector(
+    reduxServices.ticketReport.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.ticketReport.selectors.pageSizeFromState,
+  )
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(
+    getTicketReportList.length,
+    pageSizeFromState,
+    pageFromState,
+  )
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const currentPageItems = useMemo(
+    () => currentPageData(getTicketReportList, currentPage, pageSize),
+    [getTicketReportList, currentPage, pageSize],
+  )
   return (
     <>
       <CTable striped>
@@ -34,10 +74,12 @@ const TicketReportTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {getTicketReportList.map((ticketReport, index) => {
+          {currentPageItems.map((ticketReport, index) => {
             return (
               <CTableRow key={index}>
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                <CTableHeaderCell scope="row">
+                  {getItemNumber(index)}
+                </CTableHeaderCell>
                 <CTableDataCell>{ticketReport.trackerName}</CTableDataCell>
                 <CTableDataCell>{ticketReport.categoryName}</CTableDataCell>
                 <CTableDataCell>{ticketReport.subCategoryName}</CTableDataCell>
@@ -53,11 +95,35 @@ const TicketReportTable = (): JSX.Element => {
           })}
         </CTableBody>
       </CTable>
-      <strong>
-        {getTicketReportList?.length
-          ? `Total Records: ${getTicketReportList?.length}`
-          : `No Records found...`}
-      </strong>
+      <CRow>
+        <CCol xs={4}>
+          <strong>
+            {getTicketReportList?.length
+              ? `Total Records: ${getTicketReportList.length}`
+              : `No Records Found`}
+          </strong>
+        </CCol>
+        <CCol xs={3}>
+          {getTicketReportList.length > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {getTicketReportList.length > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
     </>
   )
 }

@@ -57,6 +57,8 @@ const getTicketsReport = createAsyncThunk(
 )
 
 const initialTicketReportState: TicketReportSliceState = {
+  currentPage: 1,
+  pageSize: 20,
   ticketsReportList: [],
   getTicketsReport: { list: [], size: 0 },
   departmentCategoryList: [],
@@ -67,7 +69,14 @@ const initialTicketReportState: TicketReportSliceState = {
 const ticketReportSlice = createSlice({
   name: 'support',
   initialState: initialTicketReportState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getTicketsReport.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
@@ -104,11 +113,18 @@ const departmentCategoryList = (state: RootState): DepartmentCategoryList[] =>
 const ticketsReport = (state: RootState): GetTicketsReportList[] =>
   state.ticketReport.ticketsReportList
 
+const pageFromState = (state: RootState): number =>
+  state.ticketReport.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.ticketReport.pageSize
+
 const ticketReportSelectors = {
   isLoading,
   departmentNameList,
   departmentCategoryList,
   ticketsReport,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const ticketReportService = {
