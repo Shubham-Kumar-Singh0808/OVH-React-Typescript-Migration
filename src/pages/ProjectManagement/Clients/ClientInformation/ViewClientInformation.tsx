@@ -1,18 +1,23 @@
 import { CRow, CCol, CButton, CFormLabel, CForm } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const ViewClientInformation = (): JSX.Element => {
+  const { clientId } = useParams<{ clientId: string }>()
   const getClientInformation = useTypedSelector(
     reduxServices.clientInformation.selectors.viewClientInformation,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(reduxServices.clientInformation.getClientInformation(18))
+    dispatch(
+      reduxServices.clientInformation.getClientInformation(Number(clientId)),
+    )
   }, [dispatch])
   console.log(getClientInformation)
+
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
       htmlFor,
@@ -30,13 +35,15 @@ const ViewClientInformation = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-btn"
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
+            <Link to={`/clientsList`}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-btn"
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
         <CForm className="form-horizontal">
