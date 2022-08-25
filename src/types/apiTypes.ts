@@ -313,3 +313,7 @@ export interface AddNewClientApi extends ApiBase {
   getClientCountries: string
   addNewClient: string
 }
+
+export interface ClientInformationApi extends ApiBase {
+  getClientInformation: string
+}

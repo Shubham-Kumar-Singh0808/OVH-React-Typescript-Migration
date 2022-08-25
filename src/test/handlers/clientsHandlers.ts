@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 import { clientsApiConfig } from '../../middleware/api/apiList'
 import { mockClientsData, mockProjectsUnderClient } from '../data/clientsData'
-import { mockClientCountries, mockEditClient } from '../data/editClientData'
+import { mockEditClient, mockGetClientCountries } from '../data/editClientData'
 
 export const clientsHandlers = [
   // getAllClients api mock
@@ -36,7 +36,7 @@ export const clientsHandlers = [
     return res(
       ctx.json({
         status: 200,
-        data: mockClientCountries,
+        data: mockGetClientCountries,
       }),
     )
   }),
