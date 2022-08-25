@@ -3,9 +3,9 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EditClient from './EditClient'
-import { render, screen } from '../../../../test/testUtils'
+import { cleanup, render, screen } from '../../../../test/testUtils'
 import {
-  mockClientCountries,
+  mockGetClientCountries,
   mockEditClient,
 } from '../../../../test/data/editClientData'
 import { mockClientsData } from '../../../../test/data/clientsData'
@@ -68,11 +68,12 @@ describe('Edit Client Component Testing', () => {
             clientsList: mockClientsData,
             isLoading: true,
             editClient: mockEditClient,
-            clientCountries: mockClientCountries,
+            clientCountries: mockGetClientCountries,
           },
         },
       })
     })
+    afterEach(cleanup)
     test('should be able to select country', () => {
       const countrySelectElement = screen.getByTestId('countryInput')
       expect(countrySelectElement).toBeInTheDocument()

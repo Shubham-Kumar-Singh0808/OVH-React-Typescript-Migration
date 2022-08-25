@@ -67,7 +67,6 @@ describe('Clients Table Component Testing without data', () => {
       })
     })
     afterEach(cleanup)
-    screen.debug()
     test('should render clients Table component with data without crashing', async () => {
       expectPageSizeToBeRendered(20)
       await waitFor(() => {

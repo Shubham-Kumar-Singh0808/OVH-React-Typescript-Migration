@@ -329,11 +329,13 @@ const AddNewClient = (): JSX.Element => {
                 onChange={handleInputChange}
               >
                 <option value={''}>Select Country</option>
-                {clientCountries?.map((country, index) => (
-                  <option key={index} value={country.name}>
-                    {country.name}
-                  </option>
-                ))}
+                {clientCountries &&
+                  clientCountries?.length > 0 &&
+                  clientCountries?.map((country, index) => (
+                    <option key={index} value={country.name}>
+                      {country.name}
+                    </option>
+                  ))}
               </CFormSelect>
             </CCol>
           </CRow>

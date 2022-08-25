@@ -20,7 +20,7 @@ export const mockEditClient: Client = {
   gstCode: '2347987522',
 }
 
-export const mockClientCountries: ClientCountry[] = [
+export const mockGetClientCountries: ClientCountry[] = [
   {
     id: 5,
     name: 'AUSTRALIA',
