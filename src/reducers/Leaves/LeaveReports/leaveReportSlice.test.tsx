@@ -79,5 +79,20 @@ describe('LeaveReport Slice', () => {
         listSize: 0,
       })
     })
+
+    it('Should be able to set isLoading to "success" if getFinancialYear is fulfilled', () => {
+      const action = {
+        type: leaveReportService.getFinancialYear.fulfilled.type,
+      }
+      const state = reducer(initialLeaveReportState, action)
+      expect(state).toEqual({
+        leaveSummaries: { list: [], size: 0, name: '', length: 0 },
+        selectFinancialYear: [],
+        isLoading: ApiLoadingState.succeeded,
+        error: null,
+        financialYear: undefined,
+        listSize: 0,
+      })
+    })
   })
 })
