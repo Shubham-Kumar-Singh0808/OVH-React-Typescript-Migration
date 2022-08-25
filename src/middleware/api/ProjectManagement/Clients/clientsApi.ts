@@ -1,4 +1,6 @@
 import {
+  Client,
+  ClientCountry,
   GetClientsProps,
   GetClientsResponse,
   ProjectsUnderClient,
@@ -72,11 +74,44 @@ const deleteClient = async (id: number): Promise<number | undefined> => {
   return response.data
 }
 
+const getClientToEdit = async (clientId: number): Promise<Client> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: `${clientsApiConfig.editClient}/${clientId}`,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateClient = async (
+  updatedClientDetails: Client,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: clientsApiConfig.updateClient,
+    method: AllowedHttpMethods.put,
+    data: updatedClientDetails,
+  })
+  const responseVisa = await useAxios(requestConfig)
+  return responseVisa.data
+}
+
+const getClientCountries = async (): Promise<ClientCountry[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: clientsApiConfig.getClientCountries,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const clientsApi = {
   getClients,
   getProjectsUnderClient,
   searchClients,
   deleteClient,
+  getClientToEdit,
+  updateClient,
+  getClientCountries,
 }
 
 export default clientsApi

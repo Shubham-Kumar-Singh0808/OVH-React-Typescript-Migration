@@ -358,6 +358,9 @@ export const clientsApiConfig: ClientsApi = {
   getProjectsUnderClient: apiPrefix + '/project-mgmt/projectsUnderClient',
   searchClients: apiPrefix + '/project-mgmt/searchClients',
   deleteClient: apiPrefix + '/project-mgmt/deleteClient',
+  editClient: apiPrefix + '/project-mgmt/client',
+  updateClient: apiPrefix + '/project-mgmt/updateClient',
+  getClientCountries: apiPrefix + '/project-mgmt/country',
 }
 
 export const addNewClientApiConfig: AddNewClientApi = {

@@ -12,32 +12,38 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import validator from 'validator'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { AddClientDetails } from '../../../../types/ProjectManagement/Clients/AddClient/addNewClientTypes'
+import { Client } from '../../../../types/ProjectManagement/Clients/clientsTypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { showIsRequired } from '../../../../utils/helper'
 
-const AddNewClient = (): JSX.Element => {
-  const initialClientDetails = {} as AddClientDetails
-  const [addClient, setAddClient] = useState(initialClientDetails)
-  const [showEditor, setShowEditor] = useState<boolean>(true)
+const EditClient = (): JSX.Element => {
+  const { clientId } = useParams<{ clientId: string }>()
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [phoneCode, setPhoneCode] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [emailError, setEmailError] = useState<boolean>(false)
+  const [isActive, setIsActive] = useState(false)
+  const [showEditor, setShowEditor] = useState<boolean>(true)
   const dispatch = useAppDispatch()
-  const clientCountries = useTypedSelector(
-    reduxServices.addClient.selectors.clientCountries,
-  )
   const history = useHistory()
-  useEffect(() => {
-    dispatch(reduxServices.addClient.getClientCountries())
-  }, [dispatch])
+
+  const initClient = {} as Client
+  const [client, setClient] = useState(initClient)
+
+  const selectedClient = useTypedSelector(
+    reduxServices.clients.selectors.getClient,
+  )
+
+  const clientCountries = useTypedSelector(
+    reduxServices.clients.selectors.clientCountries,
+  )
+
   const formLabelProps = {
     htmlFor: 'inputNewClient',
     className: 'col-form-label category-label',
@@ -54,7 +60,7 @@ const AddNewClient = (): JSX.Element => {
   const contactNameRegexReplace = /[^a-z\s]/gi
   const phoneValueRegexReplace = /\D/g
 
-  const handleMobile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onchangeMobileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'mobileCode') {
       const code = value.replace(phoneValueRegexReplace, '')
@@ -64,8 +70,17 @@ const AddNewClient = (): JSX.Element => {
       setPhoneNumber(mobileNumber)
     }
   }
+  const onChangeDescriptionHandler = (description: string) => {
+    setClient((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
+  }
 
-  const handleInputChange = (
+  useEffect(() => {
+    setIsActive(client.clientStatus)
+  }, [client.clientStatus])
+
+  const onChangeInputHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>
@@ -75,21 +90,27 @@ const AddNewClient = (): JSX.Element => {
     if (name === 'email') {
       const personalEmail = value
       validateEmail(personalEmail)
-      setAddClient((prevState) => {
+      setClient((prevState) => {
         return { ...prevState, ...{ [name]: personalEmail } }
       })
     } else if (name === 'clientCode') {
       const code = value.replace(phoneValueRegexReplace, '')
-      setAddClient((values) => {
+      setClient((values) => {
         return { ...values, ...{ [name]: code } }
       })
     } else if (name === 'personName') {
       const contactPerson = value.replace(contactNameRegexReplace, '')
-      setAddClient((values) => {
+      setClient((values) => {
         return { ...values, ...{ [name]: contactPerson } }
       })
+    } else if (name === 'clientStatus') {
+      setIsActive(value === 'true')
+      const clientStatusValue = value === 'true'
+      setClient((values) => {
+        return { ...values, ...{ [name]: clientStatusValue } }
+      })
     } else {
-      setAddClient((values) => {
+      setClient((values) => {
         return { ...values, ...{ [name]: value } }
       })
     }
@@ -97,90 +118,91 @@ const AddNewClient = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      addClient.clientCode &&
-      addClient.organization &&
-      addClient.name &&
-      addClient.personName &&
-      addClient.email &&
-      addClient.country &&
-      addClient.address &&
+      client.clientCode &&
+      client.organization &&
+      client.name &&
+      client.personName &&
+      client.email &&
+      client.country &&
+      client.address &&
       !emailError
     ) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-    if (addClient.email) {
-      validateEmail(addClient.email)
+    if (client.email) {
+      validateEmail(client.email)
     }
-  }, [addClient, emailError])
+  }, [client, emailError])
 
-  const handleDescription = (description: string) => {
-    setAddClient((prevState) => {
-      return { ...prevState, ...{ description } }
-    })
-  }
+  useEffect(() => {
+    dispatch(reduxServices.clients.getClientToEdit(Number(clientId)))
+    dispatch(reduxServices.clients.getClientCountries())
+  }, [dispatch])
 
-  const handleClearInputs = () => {
-    setAddClient({
-      address: '',
-      clientCode: '',
-      clientStatus: true,
-      country: '',
-      email: '',
-      gstCode: '',
-      name: '',
-      organization: '',
-      personName: '',
-      phone: '',
-      description: '',
-    })
+  useEffect(() => {
+    if (selectedClient != null) {
+      setClient({
+        id: selectedClient.id,
+        clientCode: selectedClient.clientCode,
+        name: selectedClient.name,
+        address: selectedClient.address,
+        personName: selectedClient.personName,
+        email: selectedClient.email,
+        country: selectedClient.country,
+        phone: '',
+        description: selectedClient.description,
+        organization: selectedClient.organization,
+        totalFixedBids: selectedClient.totalFixedBids,
+        totalRetainers: selectedClient.totalRetainers,
+        clientStatus: selectedClient.clientStatus,
+        gstCode: selectedClient.gstCode,
+      })
+    }
+    if (selectedClient?.phone != null) {
+      const splitPhoneNumber = selectedClient.phone.split('-')
+      setPhoneCode(splitPhoneNumber && splitPhoneNumber[0])
+      setPhoneNumber(splitPhoneNumber && splitPhoneNumber[1])
+    }
     setShowEditor(false)
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
-    setPhoneCode('')
-    setPhoneNumber('')
-  }
+  }, [selectedClient])
 
-  const successToastMessage = (
-    <OToast toastMessage="Client Added Successfully." toastColor="success" />
+  const updateClientSuccessToastMessage = (
+    <OToast toastMessage="Client updated Successfully." toastColor="success" />
   )
 
-  const WarningToastMessage = (
-    <OToast toastColor="danger" toastMessage="Client already exists !!" />
-  )
-
-  const handleAddNewClient = async () => {
+  const handleEditClient = async () => {
     const prepareObject = {
-      ...addClient,
+      ...client,
       phone: `${phoneCode}-${phoneNumber}`,
     }
-    const addClientResultAction = await dispatch(
-      reduxServices.addClient.addNewClient(prepareObject),
+    const updateClientResultAction = await dispatch(
+      reduxServices.clients.updateClient(prepareObject),
     )
     if (
-      reduxServices.addClient.addNewClient.fulfilled.match(
-        addClientResultAction,
+      reduxServices.clients.updateClient.fulfilled.match(
+        updateClientResultAction,
       )
     ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
       history.push('/clientsList')
-    } else if (
-      reduxServices.addClient.addNewClient.rejected.match(
-        addClientResultAction,
-      ) &&
-      addClientResultAction.payload === 406
-    ) {
-      dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
+      dispatch(
+        reduxServices.app.actions.addToast(updateClientSuccessToastMessage),
+      )
     }
   }
+
+  const emailAsterisk =
+    client.email && !emailError ? 'text-white' : 'text-danger'
 
   return (
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Add Client"
+        title="Edit Client"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -190,7 +212,7 @@ const AddNewClient = (): JSX.Element => {
               <CButton
                 color="info"
                 className="btn-ovh me-1"
-                data-testid="back-btn"
+                data-testid="backBtn"
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
@@ -203,19 +225,19 @@ const AddNewClient = (): JSX.Element => {
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
             >
-              Code:
-              <span className={showIsRequired(addClient.clientCode)}>*</span>
+              Client Code:
+              <span className={showIsRequired(client.clientCode)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
                 id="clientCode"
-                data-testid="clientCode-input"
+                data-testid="clientCodeInput"
                 name="clientCode"
                 placeholder="Client Code"
                 maxLength={6}
-                value={addClient.clientCode}
-                onChange={handleInputChange}
+                value={client.clientCode}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -224,19 +246,19 @@ const AddNewClient = (): JSX.Element => {
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
             >
-              Org:
-              <span className={showIsRequired(addClient.organization)}>*</span>
+              Organization:
+              <span className={showIsRequired(client.organization)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
                 id="clientOrg"
-                data-testid="org-input"
+                data-testid="organizationInput"
                 name="organization"
                 placeholder="Organization"
                 maxLength={50}
-                value={addClient.organization}
-                onChange={handleInputChange}
+                value={client.organization}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -245,18 +267,19 @@ const AddNewClient = (): JSX.Element => {
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
             >
-              Client: <span className={showIsRequired(addClient.name)}>*</span>
+              Client:
+              <span className={showIsRequired(client.name)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
                 id="clientName"
-                data-testid="clientName-input"
+                data-testid="clientNameInput"
                 name="name"
                 placeholder="Client Name"
                 maxLength={50}
-                value={addClient.name}
-                onChange={handleInputChange}
+                value={client.name}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -266,18 +289,18 @@ const AddNewClient = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Contact Person:
-              <span className={showIsRequired(addClient.personName)}>*</span>
+              <span className={showIsRequired(client.personName)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
                 id="contactPerson"
-                data-testid="contact-input"
+                data-testid="contactInput"
                 name="personName"
                 placeholder="Contact Person"
                 maxLength={50}
-                value={addClient.personName}
-                onChange={handleInputChange}
+                value={client.personName}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -287,26 +310,20 @@ const AddNewClient = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Email:
-              <span
-                className={
-                  addClient.email && !emailError ? 'text-white' : 'text-danger'
-                }
-              >
-                *
-              </span>
+              <span className={emailAsterisk}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="email-address"
+                data-testid="emailAddress"
                 type="email"
                 name="email"
                 placeholder="Contact Person Email"
                 maxLength={50}
-                value={addClient.email}
-                onChange={handleInputChange}
+                value={client.email}
+                onChange={onChangeInputHandler}
               />
               {emailError && (
-                <p data-testid="error-msg" className="text-danger">
+                <p data-testid="error-msg" className="text-danger mt-1">
                   Enter a valid Email address.
                 </p>
               )}
@@ -318,24 +335,22 @@ const AddNewClient = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Country:
-              <span className={showIsRequired(addClient.country)}>*</span>
+              <span className={showIsRequired(client.country)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
                 id="country"
-                data-testid="country-input"
+                data-testid="countryInput"
                 name="country"
-                value={addClient.country}
-                onChange={handleInputChange}
+                value={client.country}
+                onChange={onChangeInputHandler}
               >
                 <option value={''}>Select Country</option>
-                {clientCountries &&
-                  clientCountries?.length > 0 &&
-                  clientCountries?.map((country, index) => (
-                    <option key={index} value={country.name}>
-                      {country.name}
-                    </option>
-                  ))}
+                {clientCountries?.map((country, index) => (
+                  <option key={index} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -356,7 +371,7 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="mobileNumberCode"
                 value={phoneCode}
                 maxLength={3}
-                onChange={handleMobile}
+                onChange={onchangeMobileInput}
               />
             </CCol>
             <CCol sm={2}>
@@ -369,7 +384,7 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="mobileNumberInput"
                 value={phoneNumber}
                 maxLength={10}
-                onChange={handleMobile}
+                onChange={onchangeMobileInput}
               />
             </CCol>
           </CRow>
@@ -384,11 +399,12 @@ const AddNewClient = (): JSX.Element => {
               <CFormInput
                 type="text"
                 id="gstCode"
-                data-testid="gstCode-input"
+                data-testid="gstCodeInput"
                 name="gstCode"
                 placeholder="GST Code"
                 maxLength={32}
-                onChange={handleInputChange}
+                value={client.gstCode as string}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -398,19 +414,19 @@ const AddNewClient = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Address:
-              <span className={showIsRequired(addClient.address)}>*</span>
+              <span className={showIsRequired(client.address)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormTextarea
                 style={{ height: '100px' }}
                 type="text"
                 id="address"
-                data-testid="clientAddress-input"
+                data-testid="clientAddressInput"
                 name="address"
                 placeholder="Address"
                 maxLength={100}
-                value={addClient.address}
-                onChange={handleInputChange}
+                value={client.address}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -419,7 +435,7 @@ const AddNewClient = (): JSX.Element => {
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
             >
-              status:
+              Status:
             </CFormLabel>
             <CCol
               className="mt-1"
@@ -432,11 +448,11 @@ const AddNewClient = (): JSX.Element => {
                 type="radio"
                 name="clientStatus"
                 id="clientActive"
-                data-testid="activeClient-input"
+                data-testid="activeClientInput"
                 label="Active"
                 value="true"
-                checked
-                onChange={handleInputChange}
+                checked={isActive}
+                onChange={onChangeInputHandler}
                 inline
               />
             </CCol>
@@ -451,10 +467,11 @@ const AddNewClient = (): JSX.Element => {
                 type="radio"
                 name="clientStatus"
                 id="clientInactive"
-                data-testid="inActiveClient-input"
+                data-testid="inActiveClientInput"
                 label="Inactive"
                 value="false"
-                onChange={handleInputChange}
+                checked={!isActive}
+                onChange={onChangeInputHandler}
                 inline
               />
             </CCol>
@@ -466,41 +483,31 @@ const AddNewClient = (): JSX.Element => {
             >
               Description:
             </CFormLabel>
-            {showEditor ? (
-              <CCol sm={8}>
+            <CCol sm={8}>
+              {showEditor && (
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
-                  initData={addClient?.description}
+                  initData={client?.description}
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
-                    handleDescription(editor.getData().trim())
+                    onChangeDescriptionHandler(editor.getData().trim())
                   }}
                 />
-              </CCol>
-            ) : (
-              ''
-            )}
+              )}
+            </CCol>
           </CRow>
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
-                data-testid="add-btn"
+                data-testid="updateBtn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                onClick={handleAddNewClient}
                 disabled={!isButtonEnabled}
+                onClick={handleEditClient}
               >
-                Add
-              </CButton>
-              <CButton
-                data-testid="clear-btn"
-                color="warning "
-                className="btn-ovh text-white"
-                onClick={handleClearInputs}
-              >
-                Clear
+                Update
               </CButton>
             </CCol>
           </CRow>
@@ -510,4 +517,4 @@ const AddNewClient = (): JSX.Element => {
   )
 }
 
-export default AddNewClient
+export default EditClient
