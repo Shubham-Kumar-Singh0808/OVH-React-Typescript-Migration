@@ -53,6 +53,7 @@ import myAttendanceReducer from './reducers/TimeAndAttendance/MyAttendance/myAtt
 import leaveReportReducer from './reducers/Leaves/LeaveReports/leaveReportSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/projectSlice'
 import clientsReducer from './reducers/ProjectManagement/Clients/clientsSlice'
+import addClientReducer from './reducers/ProjectManagement/Clients/AddClient/addNewClientSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -106,7 +107,7 @@ export const allReducers = {
   leaveReport: leaveReportReducer,
   projectManagement: projectManagementReducer,
   clients: clientsReducer,
-
+  addNewClient: addClientReducer,
   // add your slice reducers here
 }
 

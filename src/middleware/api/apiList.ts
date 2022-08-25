@@ -43,6 +43,7 @@ import {
   LeaveReportsApi,
   ClientsApi,
   ProjectManagementApi,
+  AddNewClientApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -365,4 +366,9 @@ export const clientsApiConfig: ClientsApi = {
   getProjectsUnderClient: apiPrefix + '/project-mgmt/projectsUnderClient',
   searchClients: apiPrefix + '/project-mgmt/searchClients',
   deleteClient: apiPrefix + '/project-mgmt/deleteClient',
+}
+
+export const addNewClientApiConfig: AddNewClientApi = {
+  getClientCountries: apiPrefix + '/project-mgmt/country',
+  addNewClient: apiPrefix + '/project-mgmt/client',
 }
