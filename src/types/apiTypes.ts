@@ -305,3 +305,8 @@ export interface ClientsApi extends ApiBase {
   searchClients: string
   deleteClient: string
 }
+
+export interface AddNewClientApi extends ApiBase {
+  getClientCountries: string
+  addNewClient: string
+}
