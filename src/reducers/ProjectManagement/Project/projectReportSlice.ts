@@ -76,6 +76,23 @@ const getFetchProjectClients = createAsyncThunk<
   },
 )
 
+const closeProjectReport = createAsyncThunk<
+  number | undefined,
+  string,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('projectReports/closeProjectReport', async (projectId: string, thunkApi) => {
+  try {
+    return await ProjectApi.closeProjectReport(projectId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const deleteProjectReport = createAsyncThunk<
   number | undefined,
   string,
@@ -93,6 +110,46 @@ const deleteProjectReport = createAsyncThunk<
   }
 })
 
+const deallocateProjectReport = createAsyncThunk<
+  number | undefined,
+  ProjectInfo,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectReports/deallocateProjectReport',
+  async (projectDetails: ProjectInfo, thunkApi) => {
+    try {
+      return await ProjectApi.deallocateProjectReport(projectDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateProjectReport = createAsyncThunk<
+  number | undefined,
+  ProjectInfo,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectReports/updateProjectReport',
+  async (projectDetails: ProjectInfo, thunkApi) => {
+    try {
+      return await ProjectApi.updateProjectReport(projectDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const projectReportsSlice = createSlice({
   name: 'projectReports',
   initialState: initialProjectsState,
@@ -103,9 +160,17 @@ const projectReportsSlice = createSlice({
         state.ClientProjects = action.payload
         state.isClientProjectLoading = ApiLoadingState.succeeded
       })
-      .addCase(deleteProjectReport.fulfilled, (state) => {
-        state.isProjectLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(
+          closeProjectReport.fulfilled,
+          deleteProjectReport.fulfilled,
+          deallocateProjectReport.fulfilled,
+          updateProjectReport.fulfilled,
+        ),
+        (state) => {
+          state.isProjectLoading = ApiLoadingState.succeeded
+        },
+      )
       .addMatcher(
         isAnyOf(
           getFetchActiveProjectReports.fulfilled,
@@ -123,7 +188,10 @@ const projectReportsSlice = createSlice({
           getFetchActiveProjectReports.pending,
           getFetchSearchAllocationReport.pending,
           getFetchProjectClients.pending,
+          closeProjectReport.pending,
           deleteProjectReport.pending,
+          deallocateProjectReport.pending,
+          updateProjectReport.pending,
         ),
         (state) => {
           state.isProjectLoading = ApiLoadingState.loading
@@ -135,7 +203,10 @@ const projectReportsSlice = createSlice({
           getFetchActiveProjectReports.rejected,
           getFetchSearchAllocationReport.rejected,
           getFetchProjectClients.rejected,
+          closeProjectReport.rejected,
           deleteProjectReport.rejected,
+          deallocateProjectReport.rejected,
+          updateProjectReport.rejected,
         ),
         (state, action) => {
           state.isProjectLoading = ApiLoadingState.failed
@@ -161,10 +232,13 @@ const isClientProjectLoading = (state: RootState): LoadingState =>
   state.projectReport.isClientProjectLoading
 
 const projectsThunk = {
+  closeProjectReport,
+  deallocateProjectReport,
   deleteProjectReport,
   getFetchActiveProjectReports,
   getFetchSearchAllocationReport,
   getFetchProjectClients,
+  updateProjectReport,
 }
 
 const projectsSelectors = {

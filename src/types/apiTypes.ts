@@ -301,6 +301,9 @@ export interface ProjectManagementApi extends ApiBase {
   getSearchAllocationReport: string
   getClientProjects: string
   getCloseProject: string
+  getDeleteProject: string
+  postDeallocateProject: string
+  postUpdateAllocateProject: string
 }
 
 export interface ClientsApi extends ApiBase {

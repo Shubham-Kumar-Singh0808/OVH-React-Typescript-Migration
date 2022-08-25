@@ -217,3 +217,45 @@ input.capetalized {
     border-color: #d43f3a;
   }
 }
+
+.label {
+  font-weight: 400;
+  border-radius: 0.1em;
+  font-size: 85%;
+}
+
+.label-table {
+  display: inline-block;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  text-align: center !important;
+  width: 100% !important;
+  border-radius: 30px !important;
+}
+
+.label-gray {
+  background-color: #e3e8ee;
+  color: #333;
+}
+
+.label-green {
+  background-color: #8cc152;
+  color: #ffffff;
+}
+
+.label-orange {
+  background-color: #feab34;
+  color: #ffffff;
+}
+
+.label-danger {
+  background-color: #e9573f;
+  color: #ffffff;
+}
+
+.input-xs {
+  padding: 0px;
+  height: 28px !important;
+}

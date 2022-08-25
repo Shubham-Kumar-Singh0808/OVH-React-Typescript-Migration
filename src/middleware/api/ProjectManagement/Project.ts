@@ -132,7 +132,7 @@ const getClientProjects = async (projectId: string): Promise<ProjectInfo[]> => {
   return response.data
 }
 
-const deleteProjectReport = async (projectId: string): Promise<number> => {
+const closeProjectReport = async (projectId: string): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectManagementConfig.getCloseProject,
     method: AllowedHttpMethods.get,
@@ -144,10 +144,49 @@ const deleteProjectReport = async (projectId: string): Promise<number> => {
   return response.data
 }
 
+const deleteProjectReport = async (projectid: string): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectManagementConfig.getDeleteProject,
+    method: AllowedHttpMethods.get,
+    params: {
+      projectid,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deallocateProjectReport = async (
+  projectDetails: ProjectInfo,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectManagementConfig.postDeallocateProject,
+    method: AllowedHttpMethods.post,
+    data: projectDetails,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateProjectReport = async (
+  projectDetails: ProjectInfo,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectManagementConfig.postUpdateAllocateProject,
+    method: AllowedHttpMethods.post,
+    data: projectDetails,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AddProject = {
   addProject,
+  closeProjectReport,
   deleteProjectReport,
+  deallocateProjectReport,
   updateProject,
+  updateProjectReport,
   getAllPlatforms,
   getAllDomains,
   getAllManagers,

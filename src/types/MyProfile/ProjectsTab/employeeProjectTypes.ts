@@ -100,7 +100,7 @@ export type ProjectDetails = {
   department: string
   desigination: string
   userName: string
-  isAllocated: true
+  isAllocated: boolean
   duration: null
   count: null
   rate: null

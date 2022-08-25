@@ -1,6 +1,8 @@
 import {
   CButton,
   CCol,
+  CFormInput,
+  CFormSelect,
   CLink,
   CRow,
   CSpinner,
@@ -20,12 +22,51 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ProjectDetails } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 import { ProjectReportsTableProps } from '../../../types/ProjectManagement/Project/ProjectTypes'
+
+type CloseProjectType = {
+  id?: number
+  projectName?: string
+  isCloseModelVisible: boolean
+}
 
 type DeleteProjectType = {
   id?: number
   projectName?: string
-  isModelVisible: boolean
+  isDeleteModelVisible: boolean
+}
+
+type DeallocationProjectType = {
+  data?: ProjectDetails
+  projectId?: number
+  isDeallocatedModelVisible: boolean
+}
+
+type AllocationProjectType = {
+  data?: ProjectDetails
+  projectId?: number
+  isAllocatedVisible: boolean
+}
+
+type SubProjectType = {
+  allocation?: number
+  billable?: string
+  isAllocated?: boolean
+}
+
+const allocated = 'Allocated'
+const deAllocated = 'De-Allocated'
+
+const initValue = {
+  endIndex: 20,
+  firstIndex: 0,
+  health: 'All',
+  projectStatus: 'INPROGRESS',
+  type: 'All',
+  projectDatePeriod: '',
+  intrnalOrNot: false,
+  multiSearch: '',
 }
 
 const ProjectReportsTable = ({
@@ -39,9 +80,21 @@ const ProjectReportsTable = ({
   const dispatch = useAppDispatch()
   const [isShow, setIsShow] = useState(false)
   const [selectedProject, setSelectedProject] = useState<number>()
-  const [toDeleteProject, setToDeleteProject] = useState<DeleteProjectType>({
-    isModelVisible: false,
+  const [toCloseProject, setToCloseProject] = useState<CloseProjectType>({
+    isCloseModelVisible: false,
   })
+  const [toDeleteProject, setToDeleteProject] = useState<DeleteProjectType>({
+    isDeleteModelVisible: false,
+  })
+  const [toDeallocatedProject, setToDeallocatedProject] =
+    useState<DeallocationProjectType>({
+      isDeallocatedModelVisible: false,
+    })
+  const [toAllocatedProject, setAllocatedProject] =
+    useState<AllocationProjectType>({
+      isAllocatedVisible: false,
+    })
+  const [subProject, setSubProject] = useState<SubProjectType>()
 
   const projectReports = useTypedSelector(
     reduxServices.projectReport.selectors.projectReports,
@@ -74,34 +127,104 @@ const ProjectReportsTable = ({
     )
   }
 
+  const handleShowCloseModal = (visaId: number, name: string) => {
+    setToCloseProject({
+      id: visaId,
+      projectName: name,
+      isCloseModelVisible: true,
+    })
+  }
+
   const handleShowDeleteModal = (visaId: number, name: string) => {
-    setToDeleteProject({ id: visaId, projectName: name, isModelVisible: true })
+    setToDeleteProject({
+      id: visaId,
+      projectName: name,
+      isDeleteModelVisible: true,
+    })
+  }
+
+  const handleShowDeallocationModal = (
+    data: ProjectDetails,
+    projectId: number,
+  ) => {
+    setToDeallocatedProject({
+      data,
+      projectId,
+      isDeallocatedModelVisible: true,
+    })
+  }
+
+  const handleAllocationModal = (data: ProjectDetails, projectId: number) => {
+    setSubProject(undefined)
+    setAllocatedProject({
+      data,
+      projectId,
+      isAllocatedVisible: true,
+    })
+  }
+
+  const handleOnChangeAllocation = (e: { target: { value: string } }) => {
+    setSubProject({
+      ...subProject,
+      allocation: Number(e.target.value),
+    })
+  }
+
+  const handleOnChangeBillable = (e: { target: { value: string } }) => {
+    setSubProject({
+      ...subProject,
+      billable: e.target.value,
+    })
+  }
+
+  const handleOnChangeIsAllocated = (e: { target: { value: string } }) => {
+    setSubProject({
+      ...subProject,
+      isAllocated: e.target.value === allocated,
+    })
+  }
+
+  const handleConfirmCloseProject = async () => {
+    setToCloseProject({ ...toCloseProject, isCloseModelVisible: false })
+
+    const projectId = toCloseProject.id != null ? toCloseProject.id : 0
+
+    const closeResponse = await dispatch(
+      reduxServices.projectReport.closeProjectReport(projectId.toString()),
+    )
+    if (
+      reduxServices.projectReport.closeProjectReport.fulfilled.match(
+        closeResponse,
+      )
+    ) {
+      dispatch(
+        reduxServices.projectReport.getFetchActiveProjectReports(initValue),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage={`${toCloseProject.projectName} successfully closed`}
+          />,
+        ),
+      )
+    }
   }
 
   const handleConfirmDeleteProject = async () => {
-    setToDeleteProject({ ...toDeleteProject, isModelVisible: false })
+    setToDeleteProject({ ...toDeleteProject, isDeleteModelVisible: false })
 
-    const projectId = toDeleteProject.id != null ? toDeleteProject.id : 0
+    const projectId = toDeleteProject.id != null ? toDeleteProject.id : -0
 
     const deleteResponse = await dispatch(
       reduxServices.projectReport.deleteProjectReport(projectId.toString()),
     )
+
     if (
       reduxServices.projectReport.deleteProjectReport.fulfilled.match(
         deleteResponse,
       )
     ) {
-      const initValue = {
-        endIndex: 20,
-        firstIndex: 0,
-        health: 'All',
-        projectStatus: 'INPROGRESS',
-        type: 'All',
-        projectDatePeriod: '',
-        intrnalOrNot: false,
-        multiSearch: '',
-      }
-
       dispatch(
         reduxServices.projectReport.getFetchActiveProjectReports(initValue),
       )
@@ -115,6 +238,76 @@ const ProjectReportsTable = ({
       )
     }
   }
+
+  const handleDeallocatedProject = async () => {
+    setToDeallocatedProject({
+      ...toDeallocatedProject,
+      isDeallocatedModelVisible: false,
+    })
+
+    const payload =
+      toDeallocatedProject.data != null
+        ? {
+            ...toDeallocatedProject.data,
+            isAllocated: false,
+          }
+        : ({} as ProjectDetails)
+
+    const deallocateResponse = await dispatch(
+      reduxServices.projectReport.deallocateProjectReport(payload),
+    )
+
+    if (
+      reduxServices.projectReport.deallocateProjectReport.fulfilled.match(
+        deallocateResponse,
+      )
+    ) {
+      const projectId =
+        toDeallocatedProject.projectId != null
+          ? toDeallocatedProject.projectId
+          : 0
+      dispatch(
+        reduxServices.projectReport.getFetchProjectClients(
+          projectId.toString(),
+        ),
+      )
+    }
+  }
+
+  const handleUpdateProject = async (project: ProjectDetails) => {
+    const payload = {
+      ...project,
+      ...subProject,
+      billable: subProject?.billable === 'Yes',
+    }
+
+    const deallocateResponse = await dispatch(
+      reduxServices.projectReport.updateProjectReport(payload),
+    )
+
+    if (
+      reduxServices.projectReport.updateProjectReport.fulfilled.match(
+        deallocateResponse,
+      ) &&
+      selectedProject != null
+    ) {
+      dispatch(
+        reduxServices.projectReport.getFetchProjectClients(
+          selectedProject.toString(),
+        ),
+      )
+
+      setAllocatedProject({
+        isAllocatedVisible: false,
+      })
+    }
+  }
+
+  const test = (
+    isTrue: boolean,
+    firstValue: string | number,
+    secondValue: string | number,
+  ): string | number => (isTrue ? firstValue : secondValue)
 
   return (
     <>
@@ -168,14 +361,24 @@ const ProjectReportsTable = ({
                       <CTableDataCell>{value.deliveryManager}</CTableDataCell>
                       <CTableDataCell>{value.startdate}</CTableDataCell>
                       <CTableDataCell>{value.enddate}</CTableDataCell>
-                      <CTableDataCell>{value.status}</CTableDataCell>
+                      <CTableDataCell style={{ width: '120px' }}>
+                        <span
+                          className={`label label-table ${
+                            value.health != null
+                              ? 'label-' + value.health.toLowerCase()
+                              : 'label-gray'
+                          }`}
+                        >
+                          {value.status}
+                        </span>
+                      </CTableDataCell>
                       <CTableDataCell>
                         <CButton
                           className="cursor-pointer"
                           color="danger btn-sm me-1"
                           data-testid="reject-btn"
                           onClick={() =>
-                            handleShowDeleteModal(value.id, value.projectName)
+                            handleShowCloseModal(value.id, value.projectName)
                           }
                         >
                           <i
@@ -211,6 +414,10 @@ const ProjectReportsTable = ({
                           className="cursor-pointer"
                           color="danger btn-sm me-1"
                           data-testid="delete-btn"
+                          disabled={value.count > 0}
+                          onClick={() =>
+                            handleShowDeleteModal(value.id, value.projectName)
+                          }
                         >
                           <i
                             className="fa fa-trash-o text-white"
@@ -278,7 +485,23 @@ const ProjectReportsTable = ({
                                         {project.department}
                                       </CTableDataCell>
                                       <CTableDataCell>
-                                        {project.allocation}%
+                                        {toAllocatedProject.isAllocatedVisible &&
+                                        project.employeeId ===
+                                          toAllocatedProject.data
+                                            ?.employeeId ? (
+                                          <CFormInput
+                                            id={project.employeeId.toString()}
+                                            data-testid={project.employeeId}
+                                            size="sm"
+                                            type="number"
+                                            name={project.employeeId.toString()}
+                                            className="input-xs"
+                                            defaultValue={project.allocation}
+                                            onChange={handleOnChangeAllocation}
+                                          />
+                                        ) : (
+                                          <span>{project.allocation}%</span>
+                                        )}
                                       </CTableDataCell>
                                       <CTableDataCell>
                                         {project.startDate}
@@ -286,29 +509,150 @@ const ProjectReportsTable = ({
                                       <CTableDataCell>
                                         {project.endDate}
                                       </CTableDataCell>
-                                      <CTableDataCell>
-                                        {project.billable ? 'Yes' : 'No'}
+                                      <CTableDataCell style={{ width: '84px' }}>
+                                        {toAllocatedProject.isAllocatedVisible &&
+                                        project.employeeId ===
+                                          toAllocatedProject.data
+                                            ?.employeeId ? (
+                                          <span>
+                                            <CFormSelect
+                                              id="billable"
+                                              size="sm"
+                                              aria-label="billable"
+                                              data-testid="formBillable"
+                                              className="input-xs"
+                                              name="billable"
+                                              defaultValue={
+                                                project.billable ? 'Yes' : 'No'
+                                              }
+                                              onChange={handleOnChangeBillable}
+                                            >
+                                              {[
+                                                { label: 'Yes', name: 'Yes' },
+                                                { label: 'No', name: 'No' },
+                                              ].map((item, index) => {
+                                                const {
+                                                  name: optionName,
+                                                  label,
+                                                } = item
+                                                return (
+                                                  <option
+                                                    key={index}
+                                                    value={label}
+                                                  >
+                                                    {optionName}
+                                                  </option>
+                                                )
+                                              })}
+                                            </CFormSelect>
+                                          </span>
+                                        ) : (
+                                          test(project.billable, 'Yes', 'No')
+                                        )}
                                       </CTableDataCell>
-                                      <CTableDataCell>
-                                        {project.isAllocated
-                                          ? 'Allocated'
-                                          : 'Not 	Allocated'}
+                                      <CTableDataCell
+                                        style={{ width: '137px' }}
+                                      >
+                                        {toAllocatedProject.isAllocatedVisible &&
+                                        project.employeeId ===
+                                          toAllocatedProject.data
+                                            ?.employeeId ? (
+                                          <span>
+                                            <CFormSelect
+                                              id="allocated"
+                                              size="sm"
+                                              aria-label="allocated"
+                                              data-testid="formallocated"
+                                              className="input-xs"
+                                              name="allocated"
+                                              defaultValue={test(
+                                                project.isAllocated,
+                                                allocated,
+                                                deAllocated,
+                                              )}
+                                              onChange={
+                                                handleOnChangeIsAllocated
+                                              }
+                                            >
+                                              {[
+                                                {
+                                                  label: allocated,
+                                                  name: allocated,
+                                                },
+                                                {
+                                                  label: deAllocated,
+                                                  name: deAllocated,
+                                                },
+                                              ].map((item, index) => {
+                                                const { name, label } = item
+                                                return (
+                                                  <option
+                                                    key={index}
+                                                    value={label}
+                                                  >
+                                                    {name}
+                                                  </option>
+                                                )
+                                              })}
+                                            </CFormSelect>
+                                          </span>
+                                        ) : (
+                                          test(
+                                            project.isAllocated,
+                                            allocated,
+                                            deAllocated,
+                                          )
+                                        )}
                                       </CTableDataCell>
-                                      <CTableDataCell>
-                                        <CButton
-                                          className="cursor-pointer"
-                                          color="primary btn-sm me-1"
-                                          data-testid="edit-btn"
-                                        >
-                                          <i
-                                            className="fa fa-edit text-white"
-                                            aria-hidden="true"
-                                          ></i>
-                                        </CButton>
+                                      <CTableDataCell
+                                        style={{ width: '100px' }}
+                                      >
+                                        {toAllocatedProject.isAllocatedVisible &&
+                                        project.employeeId ===
+                                          toAllocatedProject.data
+                                            ?.employeeId ? (
+                                          <CButton
+                                            className="cursor-pointer text-white"
+                                            color="success btn-sm me-1"
+                                            data-testid="update-project-btn"
+                                            onClick={() =>
+                                              handleUpdateProject(project)
+                                            }
+                                          >
+                                            <i
+                                              className="fa fa-floppy-o"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </CButton>
+                                        ) : (
+                                          <CButton
+                                            className="cursor-pointer"
+                                            color="primary btn-sm me-1"
+                                            data-testid="edit-btn"
+                                            onClick={() =>
+                                              handleAllocationModal(
+                                                project,
+                                                value.id,
+                                              )
+                                            }
+                                          >
+                                            <i
+                                              className="fa fa-edit text-white"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </CButton>
+                                        )}
                                         <CButton
                                           className="cursor-pointer"
                                           color="danger btn-sm me-1"
-                                          data-testid="delete-btn"
+                                          data-testid="delete-sub-btn"
+                                          disabled={!project.isAllocated}
+                                          onClick={() =>
+                                            handleShowDeallocationModal(
+                                              project,
+                                              value.id,
+                                            )
+                                          }
                                         >
                                           <i
                                             className="fa fa-trash-o text-white"
@@ -373,9 +717,28 @@ const ProjectReportsTable = ({
       )}
       <OModal
         alignment="center"
-        visible={toDeleteProject.isModelVisible}
+        visible={toCloseProject.isCloseModelVisible}
         setVisible={(value) =>
-          setToDeleteProject({ ...toDeleteProject, isModelVisible: value })
+          setToCloseProject({ ...toCloseProject, isCloseModelVisible: value })
+        }
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmCloseProject}
+      >
+        <p>
+          Do you really want to close this
+          <strong>{` ${toCloseProject.projectName}`}</strong> project?
+        </p>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={toDeleteProject.isDeleteModelVisible}
+        setVisible={(value) =>
+          setToDeleteProject({
+            ...toDeleteProject,
+            isDeleteModelVisible: value,
+          })
         }
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
@@ -383,9 +746,25 @@ const ProjectReportsTable = ({
         confirmButtonAction={handleConfirmDeleteProject}
       >
         <p>
-          Do you really want to close this
+          Do you really want to delete this
           <strong>{` ${toDeleteProject.projectName}`}</strong> project?
         </p>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={toDeallocatedProject.isDeallocatedModelVisible}
+        setVisible={(value) =>
+          setToDeallocatedProject({
+            ...toDeallocatedProject,
+            isDeallocatedModelVisible: value,
+          })
+        }
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleDeallocatedProject}
+      >
+        <p>Do you really want to deallocate employee?</p>
       </OModal>
     </>
   )
