@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import TicketReportTable from './TicketReportTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockTicketReportData } from '../../../test/data/ticketReportsData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
@@ -22,6 +23,7 @@ describe('Scheduled Candidates Table Component Testing', () => {
     render(<TicketReportTable />, {
       preloadedState: {
         ticketReport: {
+          isLoading: ApiLoadingState.succeeded,
           ticketsReportList: mockTicketReportData,
         },
       },
@@ -31,8 +33,8 @@ describe('Scheduled Candidates Table Component Testing', () => {
 
     await waitFor(() => {
       userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-      expect(mockSetPageSize).toHaveBeenCalledTimes(1)
-      expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
+      expect(mockSetPageSize).toHaveBeenCalledTimes(0)
+      expect(mockSetCurrentPage).toHaveBeenCalledTimes(0)
     })
   })
 })
