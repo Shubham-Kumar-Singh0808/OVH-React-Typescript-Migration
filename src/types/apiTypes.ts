@@ -179,7 +179,6 @@ export interface EmployeeProjectsApi extends ApiBase {
   getEmployeeProjects: string
   getProjectDetails: string
   getProjectsClients: string
-  addProject: string
 }
 
 export interface EmployeeReporteesApi extends ApiBase {
@@ -289,6 +288,34 @@ export interface AddNewMailTemplateTypeApi extends ApiBase {
 
 export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
+}
+
+export interface ProjectManagementApi extends ApiBase {
+  getProject: string
+  addProject: string
+  updateProject: string
+  getAllPlatforms: string
+  getAllDomains: string
+  getAllManagers: string
+}
+
+export interface ClientsApi extends ApiBase {
+  getClients: string
+  getProjectsUnderClient: string
+  searchClients: string
+  deleteClient: string
+  editClient: string
+  updateClient: string
+  getClientCountries: string
+}
+
+export interface AddNewClientApi extends ApiBase {
+  getClientCountries: string
+  addNewClient: string
+}
+
+export interface ClientInformationApi extends ApiBase {
+  getClientInformation: string
 }
 
 export interface LeaveSummaryApi extends ApiBase {
