@@ -40,6 +40,10 @@ import { employeeService } from './EmployeeDirectory/EmployeesList/EditEmployee'
 import { scheduledInterviewsService } from './Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
+import { projectManagementService } from './ProjectManagement/Project/projectSlice'
+import { clientsService } from './ProjectManagement/Clients/clientsSlice'
+import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
+import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const reduxServices = {
@@ -85,5 +89,9 @@ export const reduxServices = {
   scheduledInterviews: scheduledInterviewsService,
   addNewMailTemplateType: mailTemplateTypeService,
   myAttendance: myAttendanceService,
+  projectManagement: projectManagementService,
+  clients: clientsService,
+  addClient: addNewClientService,
+  clientInformation: clientInformationService,
   leaveApprovals: leaveApprovalsService,
 }

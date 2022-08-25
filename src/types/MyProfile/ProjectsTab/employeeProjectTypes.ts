@@ -3,6 +3,7 @@ import { LoadingState, ValidationError } from '../../commonTypes'
 export type EmployeeProjects = {
   Projsize: number
   Projs?: EmployeeProjectDetails[]
+  clients: EmployeeProjectDetails[]
 }
 
 export type EmployeeProjectDetails = {
