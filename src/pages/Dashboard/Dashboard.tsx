@@ -3,18 +3,12 @@ import React, { useEffect } from 'react'
 import JobOpeningsTable from './JobOpeningsTable'
 import ServiceAwards from './Achievements/ServiceAwards'
 import OCard from '../../components/ReusableComponent/OCard'
-import { useAppDispatch, useTypedSelector } from '../../stateStore'
+import { useAppDispatch } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
 
 const Dashboard = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const listSize = useTypedSelector(
-    reduxServices.jobOpenings.selectors.listSize,
-  )
-  const isLoading = useTypedSelector(
-    reduxServices.jobOpenings.selectors.isLoading,
-  )
   useEffect(() => {
     dispatch(
       reduxServices.jobOpenings.getAllJobVacancies({
@@ -64,7 +58,7 @@ const Dashboard = (): JSX.Element => {
                   CBodyClassName="ps-0 pe-0"
                   footerPath="/jobvacancies"
                 >
-                  <JobOpeningsTable pageSize={5} />
+                  <JobOpeningsTable />
                 </OCard>
               </CCol>
               <CCol sm={3}>

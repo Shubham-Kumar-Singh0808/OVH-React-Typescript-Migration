@@ -8,27 +8,22 @@ const ServiceAwards = (): JSX.Element => {
     reduxServices.serviceAwards.selectors.achievements,
   )
 
-  console.log(serviceAwards)
+  console.log(serviceAwards.employeeServiceAwards)
   return (
     <>
       <CRow>
         <CCol sm={12}>
-          {serviceAwards.length ? (
-            <CRow>
-              {serviceAwards?.map((award, index) => {
+          <CRow>
+            {/* {
+              serviceAwards?.map((award, index) => {
                 return (
                   <CCol sm={3} key={index}>
-                    <CImage
-                      src={award.thumbPicture}
-                      className="employee-thumb"
-                    />
+                    <CImage src={award.thumbPicture} className="employee-thumb" />
+                    <p>{award.employeeName}</p>
                   </CCol>
                 )
-              })}
-            </CRow>
-          ) : (
-            <></>
-          )}
+              })} */}
+          </CRow>
         </CCol>
       </CRow>
     </>

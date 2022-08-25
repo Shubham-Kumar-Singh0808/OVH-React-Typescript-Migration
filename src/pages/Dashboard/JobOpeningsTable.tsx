@@ -5,19 +5,15 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
-  CCol,
-  CRow,
   CLink,
-  CButton,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
-import { JobOpeningsTableProps } from '../../types/Dashboard/JobOpenings/JobOpeningsTypes'
 import OModal from '../../components/ReusableComponent/OModal'
-import { useAppDispatch, useTypedSelector } from '../../stateStore'
+import { useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
 
-const JobOpeningsTable = (props: JobOpeningsTableProps): JSX.Element => {
+const JobOpeningsTable = (): JSX.Element => {
   const [isJobDescriptionModalVisible, setIsJobDescriptionModalVisible] =
     useState(false)
   const [description, setDescription] = useState<string>('')
@@ -26,18 +22,10 @@ const JobOpeningsTable = (props: JobOpeningsTableProps): JSX.Element => {
     reduxServices.jobOpenings.selectors.jobVacancies,
   )
 
-  const jobVacanciesListSize = useTypedSelector(
-    reduxServices.jobOpenings.selectors.listSize,
-  )
-
-  const { pageSize } = props
-
   const handleModal = (jobDescription: string) => {
     setIsJobDescriptionModalVisible(true)
     setDescription(jobDescription)
   }
-
-  const dispatch = useAppDispatch()
 
   return (
     <>

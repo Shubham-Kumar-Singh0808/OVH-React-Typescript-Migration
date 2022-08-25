@@ -1,9 +1,5 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
-export type JobOpeningsTableProps = {
-  pageSize: number
-}
-
 export type JobOpeningsApiProps = {
   startIndex?: number
   endIndex?: number

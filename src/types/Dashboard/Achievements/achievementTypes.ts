@@ -22,8 +22,58 @@ export type ServiceAward = {
   updatedDate: null
 }
 
+export type SpecialAward = {
+  achievementType: string
+  achievementTypeId: number
+  createdBy: null
+  createdDate: null
+  croppedImageData: null
+  dateRequired: boolean
+  description: null
+  employeeId: number
+  employeeName: string
+  endDate: null
+  id: number
+  profilePicture: string
+  showOnDashBoard: boolean
+  startDate: string
+  thumbPicture: string
+  timePeriod: string
+  timePeriodRequired: boolean
+  updatedBy: null
+  updatedDate: null
+}
+
+export type StarOfTheMonth = {
+  achievementType: string
+  achievementTypeId: number
+  createdBy: null
+  createdDate: null
+  croppedImageData: null
+  dateRequired: boolean
+  description: null
+  employeeId: number
+  employeeName: string
+  endDate: string
+  id: number
+  profilePicture: string
+  showOnDashBoard: boolean
+  startDate: string
+  thumbPicture: string
+  timePeriod: string
+  timePeriodRequired: boolean
+  updatedBy: null
+  updatedDate: null
+}
+
+export type EmployeeAchievementsApiResponse = {
+  employeeServiceAwards: ServiceAward[]
+  employeeSpecialAwards: SpecialAward[]
+  employeeStarOfTheMonth: StarOfTheMonth[]
+}
+
 export type AchievementsSliceState = {
-  serviceAwards: ServiceAward[]
+  achievementsData: EmployeeAchievementsApiResponse
   isLoading: LoadingState
   error: ValidationError
 }

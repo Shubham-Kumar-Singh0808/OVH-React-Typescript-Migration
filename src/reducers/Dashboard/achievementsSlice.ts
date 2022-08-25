@@ -6,28 +6,28 @@ import { AppDispatch, RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
   AchievementsSliceState,
+  EmployeeAchievementsApiResponse,
   ServiceAward,
 } from '../../types/Dashboard/Achievements/achievementTypes'
 
-const getAllAchievements = createAsyncThunk<
-  ServiceAward[] | undefined,
-  void,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->('achievements/getAllAchievements', async (_, thunkApi) => {
-  try {
-    return await dashboardApi.getAllAchievements()
-  } catch (error) {
-    const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-  }
-})
+const getAllAchievements = createAsyncThunk(
+  'achievements/getAllAchievements',
+  async (_, thunkApi) => {
+    try {
+      return await dashboardApi.getAllAchievements()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 
 const initialAchievementsState: AchievementsSliceState = {
-  serviceAwards: [],
+  achievementsData: {
+    employeeServiceAwards: [],
+    employeeSpecialAwards: [],
+    employeeStarOfTheMonth: [],
+  },
   isLoading: ApiLoadingState.idle,
   error: null,
 }
@@ -39,7 +39,7 @@ const achievementsSlice = createSlice({
     builder
       .addCase(getAllAchievements.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.serviceAwards = action.payload as ServiceAward[]
+        state.achievementsData = action.payload
       })
       .addMatcher(isAnyOf(getAllAchievements.rejected), (state, action) => {
         state.isLoading = ApiLoadingState.failed
@@ -54,8 +54,8 @@ const achievementsSlice = createSlice({
 const isLoading = (state: RootState): LoadingState =>
   state.achievements.isLoading
 
-const achievements = (state: RootState): ServiceAward[] =>
-  state.achievements.serviceAwards
+const achievements = (state: RootState): EmployeeAchievementsApiResponse =>
+  state.achievements.achievementsData
 
 export const employeeAchievementsThunk = {
   getAllAchievements,
