@@ -43,6 +43,7 @@ import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendan
 import { projectManagementService } from './ProjectManagement/Project/projectSlice'
 import { clientsService } from './ProjectManagement/Clients/clientsSlice'
 import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
+import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -90,4 +91,5 @@ export const reduxServices = {
   projectManagement: projectManagementService,
   clients: clientsService,
   addClient: addNewClientService,
+  clientInformation: clientInformationService,
 }
