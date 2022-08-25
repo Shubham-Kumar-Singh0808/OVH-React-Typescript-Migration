@@ -1,13 +1,15 @@
 import '@testing-library/jest-dom'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import LeaveReportTable from './LeaveReportTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockLeaveReportData } from '../../../test/data/LeaveReportData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
     expect(
-      screen.queryByText(mockLeaveReportData.list[0].carryForwardedLeaves),
+      screen.queryByText(mockLeaveReportData.list[i].employeeDTO.fullName),
     ).toBeInTheDocument()
   }
 }
@@ -24,20 +26,22 @@ describe('Leave Report Component Testing', () => {
         currentPage={1}
         pageSize={20}
         paginationRange={[1, 2, 3]}
-        selectYear={''}
       />,
       {
         preloadedState: {
           leaveReport: {
+            isLoading: ApiLoadingState.succeeded,
             leaveSummaries: mockLeaveReportData,
+            listSize: mockLeaveReportData.size,
           },
         },
       },
     )
     expectPageSizeToBeRendered(20)
     await waitFor(() => {
-      expect(mockSetPageSize).toHaveBeenCalledTimes(0)
-      expect(mockSetCurrentPage).toHaveBeenCalledTimes(0)
+      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+      expect(mockSetPageSize).toHaveBeenCalledTimes(1)
+      expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
     })
   })
 })

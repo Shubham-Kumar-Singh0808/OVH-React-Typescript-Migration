@@ -14,6 +14,7 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { mockLeaveReportData } from '../../../test/data/LeaveReportData'
 import { EmployeeLeaveReportTableProps } from '../../../types/Leaves/LeaveReports/leaveReportTypes'
 
 const LeaveReportTable = ({
@@ -37,7 +38,7 @@ const LeaveReportTable = ({
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
-
+  console.log(mockLeaveReportData.list.length)
   return (
     <>
       <OCard
