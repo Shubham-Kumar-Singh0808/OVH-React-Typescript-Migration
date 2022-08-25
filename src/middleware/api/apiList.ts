@@ -42,6 +42,7 @@ import {
   MyAttendanceApi,
   ClientsApi,
   ProjectManagementApi,
+  AddNewClientApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -359,4 +360,9 @@ export const clientsApiConfig: ClientsApi = {
   editClient: apiPrefix + '/project-mgmt/client',
   updateClient: apiPrefix + '/project-mgmt/updateClient',
   getClientCountries: apiPrefix + '/project-mgmt/country',
+}
+
+export const addNewClientApiConfig: AddNewClientApi = {
+  getClientCountries: apiPrefix + '/project-mgmt/country',
+  addNewClient: apiPrefix + '/project-mgmt/client',
 }

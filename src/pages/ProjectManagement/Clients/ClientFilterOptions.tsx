@@ -134,7 +134,7 @@ const ClientFilterOptions = ({
         <CCol sm={2}>
           <CRow>
             <CCol sm={12} className="d-md-flex justify-content-md-end pe-0">
-              <Link to="/">
+              <Link to="/addClient">
                 <CButton color="info" className="text-white btn-ovh" size="sm">
                   <i className="fa fa-plus me-1"></i>
                   Add Client
