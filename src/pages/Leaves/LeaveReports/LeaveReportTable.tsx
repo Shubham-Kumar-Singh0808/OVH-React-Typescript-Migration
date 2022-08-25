@@ -27,7 +27,7 @@ const LeaveReportTable = ({
     reduxServices.leaveReport.selectors.getLeaveReport,
   )
 
-  const listSize = useTypedSelector(
+  const leaveReportListSize = useTypedSelector(
     reduxServices.leaveReport.selectors.listSize,
   )
 
@@ -96,11 +96,11 @@ const LeaveReportTable = ({
               <CRow>
                 <CCol xs={4}>
                   <p>
-                    <strong>Total Records: {listSize}</strong>
+                    <strong>Total Records: {leaveReportListSize}</strong>
                   </p>
                 </CCol>
                 <CCol xs={3}>
-                  {listSize > 20 && (
+                  {leaveReportListSize > 20 && (
                     <OPageSizeSelect
                       handlePageSizeSelectChange={handlePageSizeSelectChange}
                       options={[20, 40, 60, 80]}
@@ -108,7 +108,7 @@ const LeaveReportTable = ({
                     />
                   )}
                 </CCol>
-                {listSize > 20 && (
+                {leaveReportListSize > 20 && (
                   <CCol
                     xs={5}
                     className="gap-1 d-grid d-md-flex justify-content-md-end"
