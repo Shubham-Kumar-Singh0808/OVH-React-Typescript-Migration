@@ -15,12 +15,9 @@ import React, { useEffect, useState } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import validator from 'validator'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 import { Client } from '../../../../types/ProjectManagement/Clients/clientsTypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { showIsRequired } from '../../../../utils/helper'
@@ -47,8 +44,6 @@ const EditClient = (): JSX.Element => {
     reduxServices.clients.selectors.clientCountries,
   )
 
-  const isLoading = useTypedSelector(reduxServices.clients.selectors.isLoading)
-
   const formLabelProps = {
     htmlFor: 'inputNewClient',
     className: 'col-form-label category-label',
@@ -63,7 +58,7 @@ const EditClient = (): JSX.Element => {
   }
 
   const contactNameRegexReplace = /[^a-z\s]/gi
-  const phoneValueRegexReplace = /[^0-9]/gi
+  const phoneValueRegexReplace = /\D/g
 
   const onchangeMobileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -165,7 +160,7 @@ const EditClient = (): JSX.Element => {
         gstCode: selectedClient.gstCode,
       })
     }
-    if (selectedClient.phone != null) {
+    if (selectedClient?.phone != null) {
       const splitPhoneNumber = selectedClient.phone.split('-')
       setPhoneCode(splitPhoneNumber && splitPhoneNumber[0])
       setPhoneNumber(splitPhoneNumber && splitPhoneNumber[1])
@@ -200,6 +195,9 @@ const EditClient = (): JSX.Element => {
     }
   }
 
+  const emailAsterisk =
+    client.email && !emailError ? 'text-white' : 'text-danger'
+
   return (
     <>
       <OCard
@@ -214,316 +212,306 @@ const EditClient = (): JSX.Element => {
               <CButton
                 color="info"
                 className="btn-ovh me-1"
-                data-testid="back-btn"
+                data-testid="backBtn"
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
             </Link>
           </CCol>
         </CRow>
-        {isLoading !== ApiLoadingState.loading ? (
-          <CForm>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
+        <CForm>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Client Code:
+              <span className={showIsRequired(client.clientCode)}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                type="text"
+                id="clientCode"
+                data-testid="clientCodeInput"
+                name="clientCode"
+                placeholder="Client Code"
+                maxLength={6}
+                value={client.clientCode}
+                onChange={onChangeInputHandler}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Organization:
+              <span className={showIsRequired(client.organization)}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                type="text"
+                id="clientOrg"
+                data-testid="organizationInput"
+                name="organization"
+                placeholder="Organization"
+                maxLength={50}
+                value={client.organization}
+                onChange={onChangeInputHandler}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Client:
+              <span className={showIsRequired(client.name)}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                type="text"
+                id="clientName"
+                data-testid="clientNameInput"
+                name="name"
+                placeholder="Client Name"
+                maxLength={50}
+                value={client.name}
+                onChange={onChangeInputHandler}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Contact Person:
+              <span className={showIsRequired(client.personName)}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                type="text"
+                id="contactPerson"
+                data-testid="contactInput"
+                name="personName"
+                placeholder="Contact Person"
+                maxLength={50}
+                value={client.personName}
+                onChange={onChangeInputHandler}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Email:
+              <span className={emailAsterisk}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                data-testid="emailAddress"
+                type="email"
+                name="email"
+                placeholder="Contact Person Email"
+                maxLength={50}
+                value={client.email}
+                onChange={onChangeInputHandler}
+              />
+              {emailError && (
+                <p data-testid="error-msg" className="text-danger mt-1">
+                  Enter a valid Email address.
+                </p>
+              )}
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Country:
+              <span className={showIsRequired(client.country)}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormSelect
+                id="country"
+                data-testid="countryInput"
+                name="country"
+                value={client.country}
+                onChange={onChangeInputHandler}
               >
-                Client Code:
-                <span className={showIsRequired(client.clientCode)}>*</span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormInput
-                  type="text"
-                  id="clientCode"
-                  data-testid="clientCode-input"
-                  name="clientCode"
-                  placeholder="Client Code"
-                  maxLength={6}
-                  value={client.clientCode}
-                  onChange={onChangeInputHandler}
+                <option value={''}>Select Country</option>
+                {clientCountries?.map((country, index) => (
+                  <option key={index} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </CFormSelect>
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Mobile:
+            </CFormLabel>
+            <CCol sm={1}>
+              <CFormInput
+                type="text"
+                size="sm"
+                id="mobileCode"
+                name="mobileCode"
+                placeholder="code"
+                data-testid="mobileNumberCode"
+                value={phoneCode}
+                maxLength={3}
+                onChange={onchangeMobileInput}
+              />
+            </CCol>
+            <CCol sm={2}>
+              <CFormInput
+                type="text"
+                placeholder="Mobile"
+                size="sm"
+                id="mobile"
+                name="mobile"
+                data-testid="mobileNumberInput"
+                value={phoneNumber}
+                maxLength={10}
+                onChange={onchangeMobileInput}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              GST Code:
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                type="text"
+                id="gstCode"
+                data-testid="gstCodeInput"
+                name="gstCode"
+                placeholder="GST Code"
+                maxLength={32}
+                value={client.gstCode as string}
+                onChange={onChangeInputHandler}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Address:
+              <span className={showIsRequired(client.address)}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormTextarea
+                style={{ height: '100px' }}
+                type="text"
+                id="address"
+                data-testid="clientAddressInput"
+                name="address"
+                placeholder="Address"
+                maxLength={100}
+                value={client.address}
+                onChange={onChangeInputHandler}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Status:
+            </CFormLabel>
+            <CCol
+              className="mt-1"
+              sm={2}
+              md={1}
+              lg={1}
+              data-testid="activeFilterStatus"
+            >
+              <CFormCheck
+                type="radio"
+                name="clientStatus"
+                id="clientActive"
+                data-testid="activeClientInput"
+                label="Active"
+                value="true"
+                checked={isActive}
+                onChange={onChangeInputHandler}
+                inline
+              />
+            </CCol>
+            <CCol
+              className="mt-1"
+              sm={2}
+              md={1}
+              lg={1}
+              data-testid="inactiveFilterStatus"
+            >
+              <CFormCheck
+                type="radio"
+                name="clientStatus"
+                id="clientInactive"
+                data-testid="inActiveClientInput"
+                label="Inactive"
+                value="false"
+                checked={!isActive}
+                onChange={onChangeInputHandler}
+                inline
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Description:
+            </CFormLabel>
+            <CCol sm={8}>
+              {showEditor && (
+                <CKEditor<{
+                  onChange: CKEditorEventHandler<'change'>
+                }>
+                  initData={client?.description}
+                  config={ckeditorConfig}
+                  debug={true}
+                  onChange={({ editor }) => {
+                    onChangeDescriptionHandler(editor.getData().trim())
+                  }}
                 />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
+              )}
+            </CCol>
+          </CRow>
+          <CRow>
+            <CCol md={{ span: 6, offset: 3 }}>
+              <CButton
+                data-testid="updateBtn"
+                className="btn-ovh me-1 text-white"
+                color="success"
+                disabled={!isButtonEnabled}
+                onClick={handleEditClient}
               >
-                Organization:
-                <span className={showIsRequired(client.organization)}>*</span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormInput
-                  type="text"
-                  id="clientOrg"
-                  data-testid="org-input"
-                  name="organization"
-                  placeholder="Organization"
-                  maxLength={50}
-                  value={client.organization}
-                  onChange={onChangeInputHandler}
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
-              >
-                Client:
-                <span className={showIsRequired(client.name)}>*</span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormInput
-                  type="text"
-                  id="clientName"
-                  data-testid="clientName-input"
-                  name="name"
-                  placeholder="Client Name"
-                  maxLength={50}
-                  value={client.name}
-                  onChange={onChangeInputHandler}
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
-              >
-                Contact Person:
-                <span className={showIsRequired(client.personName)}>*</span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormInput
-                  type="text"
-                  id="contactPerson"
-                  data-testid="contact-input"
-                  name="personName"
-                  placeholder="Contact Person"
-                  maxLength={50}
-                  value={client.personName}
-                  onChange={onChangeInputHandler}
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
-              >
-                Email:
-                <span
-                  className={
-                    client.email && !emailError ? 'text-white' : 'text-danger'
-                  }
-                >
-                  *
-                </span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormInput
-                  data-testid="email-address"
-                  type="email"
-                  name="email"
-                  placeholder="Contact Person Email"
-                  maxLength={50}
-                  value={client.email}
-                  onChange={onChangeInputHandler}
-                />
-                {emailError && (
-                  <p data-testid="error-msg" className="text-danger mt-1">
-                    Enter a valid Email address.
-                  </p>
-                )}
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
-              >
-                Country:
-                <span className={showIsRequired(client.country)}>*</span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormSelect
-                  id="country"
-                  data-testid="country-input"
-                  name="country"
-                  value={client.country}
-                  onChange={onChangeInputHandler}
-                >
-                  <option value={''}>Select Country</option>
-                  {clientCountries?.map((country, index) => (
-                    <option key={index} value={country.name}>
-                      {country.name}
-                    </option>
-                  ))}
-                </CFormSelect>
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
-              >
-                Mobile:
-              </CFormLabel>
-              <CCol sm={1}>
-                <CFormInput
-                  type="text"
-                  size="sm"
-                  id="mobileCode"
-                  name="mobileCode"
-                  placeholder="code"
-                  data-testid="mobileNumberCode"
-                  value={phoneCode}
-                  maxLength={3}
-                  onChange={onchangeMobileInput}
-                />
-              </CCol>
-              <CCol sm={2}>
-                <CFormInput
-                  type="text"
-                  placeholder="Mobile"
-                  size="sm"
-                  id="mobile"
-                  name="mobile"
-                  data-testid="mobileNumberInput"
-                  value={phoneNumber}
-                  maxLength={10}
-                  onChange={onchangeMobileInput}
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
-              >
-                GST Code:
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormInput
-                  type="text"
-                  id="gstCode"
-                  data-testid="gstCode-input"
-                  name="gstCode"
-                  placeholder="GST Code"
-                  maxLength={32}
-                  value={client.gstCode as string}
-                  onChange={onChangeInputHandler}
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
-              >
-                Address:
-                <span className={showIsRequired(client.address)}>*</span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <CFormTextarea
-                  style={{ height: '100px' }}
-                  type="text"
-                  id="address"
-                  data-testid="clientAddress-input"
-                  name="address"
-                  placeholder="Address"
-                  maxLength={100}
-                  value={client.address}
-                  onChange={onChangeInputHandler}
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
-              >
-                Status:
-              </CFormLabel>
-              <CCol
-                className="mt-1"
-                sm={2}
-                md={1}
-                lg={1}
-                data-testid="activeFilterStatus"
-              >
-                <CFormCheck
-                  type="radio"
-                  name="clientStatus"
-                  id="clientActive"
-                  data-testid="activeClient-input"
-                  label="Active"
-                  value="true"
-                  checked={isActive}
-                  onChange={onChangeInputHandler}
-                  inline
-                />
-              </CCol>
-              <CCol
-                className="mt-1"
-                sm={2}
-                md={1}
-                lg={1}
-                data-testid="inactiveFilterStatus"
-              >
-                <CFormCheck
-                  type="radio"
-                  name="clientStatus"
-                  id="clientInactive"
-                  data-testid="inActiveClient-input"
-                  label="Inactive"
-                  value="false"
-                  checked={!isActive}
-                  onChange={onChangeInputHandler}
-                  inline
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4">
-              <CFormLabel
-                {...formLabelProps}
-                className="col-sm-3 col-form-label text-end"
-              >
-                Description:
-              </CFormLabel>
-              <CCol sm={8}>
-                {showEditor && (
-                  <CKEditor<{
-                    onChange: CKEditorEventHandler<'change'>
-                  }>
-                    initData={client?.description}
-                    config={ckeditorConfig}
-                    debug={true}
-                    onChange={({ editor }) => {
-                      onChangeDescriptionHandler(editor.getData().trim())
-                    }}
-                  />
-                )}
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol md={{ span: 6, offset: 3 }}>
-                <CButton
-                  data-testid="add-btn"
-                  className="btn-ovh me-1 text-white"
-                  color="success"
-                  disabled={!isButtonEnabled}
-                  onClick={handleEditClient}
-                >
-                  Update
-                </CButton>
-              </CCol>
-            </CRow>
-          </CForm>
-        ) : (
-          <OLoadingSpinner type={LoadingType.PAGE} />
-        )}
+                Update
+              </CButton>
+            </CCol>
+          </CRow>
+        </CForm>
       </OCard>
     </>
   )

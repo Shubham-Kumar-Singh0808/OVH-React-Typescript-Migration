@@ -124,9 +124,6 @@ const clientsSlice = createSlice({
       .addCase(getProjectsUnderClient.pending, (state) => {
         state.isLoadingProjectDetails = ApiLoadingState.loading
       })
-      .addCase(deleteClient.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
       .addCase(deleteClient.rejected, (state) => {
         state.isLoading = ApiLoadingState.failed
       })
@@ -143,6 +140,12 @@ const clientsSlice = createSlice({
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
           state.clientsList = action.payload
+        },
+      )
+      .addMatcher(
+        isAnyOf(updateClient.fulfilled, deleteClient.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
         },
       )
       .addMatcher(
@@ -178,6 +181,7 @@ const selectedClientStatus = (state: RootState): ClientStatus =>
   state.clients.selectedClientStatus
 
 const getClient = (state: RootState): Client => state.clients.editClient
+
 const clientCountries = (state: RootState): ClientCountry[] =>
   state.clients.clientCountries
 
