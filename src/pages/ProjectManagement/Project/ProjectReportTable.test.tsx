@@ -134,4 +134,34 @@ describe('Project Report Table Testing with sub table', () => {
     const modalConfirmBtn = screen.getByTestId('modalConfirmBtn')
     modalConfirmBtn.click()
   })
+
+  test('Should be able open sub table and edit field', () => {
+    const plusBtn = screen.getAllByTestId('plus-btn')
+    plusBtn[0].click()
+
+    const editBtn = screen.getAllByTestId('edit-sub-project-btn')
+    editBtn[0].click()
+
+    const inputField = screen.getByTestId('allocation')
+    inputField.click()
+    inputField.focus()
+    userEvent.type(inputField, '2')
+    inputField.blur()
+
+    // Billable
+    const billableField = screen.getByTestId('formBillable')
+    userEvent.selectOptions(billableField, ['No'])
+
+    expect(billableField).toHaveValue('No')
+
+    // Status
+    const allocatedField = screen.getByTestId('formallocated')
+    userEvent.selectOptions(allocatedField, ['De-Allocated'])
+
+    expect(allocatedField).toHaveValue('De-Allocated')
+
+    // Save update btn
+    const updateBtn = screen.getByTestId('update-project-btn')
+    updateBtn.click()
+  })
 })

@@ -493,7 +493,7 @@ const ProjectReportsTable = ({
                                             ?.employeeId ? (
                                           <CFormInput
                                             id={project.employeeId.toString()}
-                                            data-testid={project.employeeId}
+                                            data-testid="allocation"
                                             size="sm"
                                             type="number"
                                             name={project.employeeId.toString()}
@@ -630,7 +630,7 @@ const ProjectReportsTable = ({
                                           <CButton
                                             className="cursor-pointer"
                                             color="primary btn-sm me-1"
-                                            data-testid="edit-btn"
+                                            data-testid="edit-sub-project-btn"
                                             onClick={() =>
                                               handleAllocationModal(
                                                 project,
