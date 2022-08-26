@@ -12,7 +12,6 @@ import {
   CBadge,
   CFormLabel,
   CFormTextarea,
-  CSpinner,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'

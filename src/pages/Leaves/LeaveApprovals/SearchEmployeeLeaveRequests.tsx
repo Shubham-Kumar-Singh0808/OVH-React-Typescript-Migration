@@ -12,7 +12,6 @@ import {
   CBadge,
   CFormLabel,
   CFormTextarea,
-  CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import parse from 'html-react-parser'
@@ -31,17 +30,20 @@ import OToast from '../../../components/ReusableComponent/OToast'
 const SearchEmployeeLeaveRequests = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const [isCommentsModalVisibility, setIsCommentsModalVisibility] =
+  const [isCommentsModalVisible, setIsCommentsModalVisible] =
     useState<boolean>(false)
-  const [isApproveModalVisibility, setIsApproveModalVisibility] =
+  const [isApproveModalVisible, setIsApproveModalVisible] =
     useState<boolean>(false)
-  const [isRejectModalVisibility, setIsRejectModalVisibility] =
+  const [isRejectModalVisible, setIsRejectModalVisible] =
     useState<boolean>(false)
-  const [isManagerCheckModal, setIsManagerCheckModal] = useState<boolean>(false)
-  const [modalText, setModalText] = useState<string>('')
-  const [isManagerCheckText, setIsManagerCheckText] = useState<string>('')
-  const [selectLeaveId, setSelectLeaveId] = useState<number>(0)
-  const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
+  const [isSearchManagerCheckModal, setIsSearchManagerCheckModal] =
+    useState<boolean>(false)
+  const [searchModalText, setSearchModalText] = useState<string>('')
+  const [isSearchManagerCheckText, setIsSearchManagerCheckText] =
+    useState<string>('')
+  const [selectedLeaveId, setSelectedLeaveId] = useState<number>(0)
+  const [searchApproveLeaveComment, setSearchApproveLeaveComment] =
+    useState<string>('')
 
   const searchLeaves = useTypedSelector(
     reduxServices.leaveApprovals.selectors.searchLeaves,
@@ -80,7 +82,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
     pageSize,
   } = usePagination(searchLeavesListSize, 20)
 
-  const handlePageSizeSelectChange = (
+  const handlePageSizeSelect = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(event.target.value))
@@ -88,8 +90,8 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
   }
 
   const handleModal = (displayText: string) => {
-    setIsCommentsModalVisibility(true)
-    setModalText(displayText)
+    setIsCommentsModalVisible(true)
+    setSearchModalText(displayText)
   }
 
   useEffect(() => {
@@ -123,36 +125,42 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
     filterByToDate,
   ])
 
-  const leaveStatusLabelColor = (leaveStatus: string): JSX.Element => {
-    if (leaveStatus === 'PendingApproval') {
+  const searchLeaveStatusLabelColor = (
+    searchLeaveStatus: string,
+  ): JSX.Element => {
+    if (searchLeaveStatus === 'PendingApproval') {
       return (
         <CBadge className="rounded-pill label-info">
           {'Pending Approval'}
         </CBadge>
       )
-    } else if (leaveStatus === 'Cancelled') {
+    } else if (searchLeaveStatus === 'Cancelled') {
       return (
         <CBadge className="rounded-pill label-gray-cancel">
-          {leaveStatus}
+          {searchLeaveStatus}
         </CBadge>
       )
-    } else if (leaveStatus === 'Approved') {
+    } else if (searchLeaveStatus === 'Approved') {
       return (
-        <CBadge className="rounded-pill label-success">{leaveStatus}</CBadge>
+        <CBadge className="rounded-pill label-success">
+          {searchLeaveStatus}
+        </CBadge>
       )
     } else if (
-      leaveStatus === 'CancelAfterApproval' ||
-      leaveStatus === 'Rejected'
+      searchLeaveStatus === 'CancelAfterApproval' ||
+      searchLeaveStatus === 'Rejected'
     ) {
       return (
-        <CBadge className="rounded-pill label-danger">{leaveStatus}</CBadge>
+        <CBadge className="rounded-pill label-danger">
+          {searchLeaveStatus}
+        </CBadge>
       )
     }
     return <></>
   }
 
-  const handleApproveModal = async (leaveId: number) => {
-    setSelectLeaveId(leaveId)
+  const handleSearchApproveModal = async (leaveId: number) => {
+    setSelectedLeaveId(leaveId)
     const resultAction = await dispatch(
       reduxServices.leaveApprovals.checkProjectManagerExists(leaveId),
     )
@@ -162,17 +170,17 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
       ) &&
       resultAction.payload === false
     ) {
-      setIsApproveModalVisibility(true)
+      setIsApproveModalVisible(true)
     } else {
-      setIsManagerCheckModal(true)
-      setIsManagerCheckText(
+      setIsSearchManagerCheckModal(true)
+      setIsSearchManagerCheckText(
         `Sorry! You can't approve this leave(s), please communicate with respective project manager.`,
       )
     }
   }
 
-  const handleRejectModal = async (leaveId: number) => {
-    setSelectLeaveId(leaveId)
+  const handleSearchRejectModal = async (leaveId: number) => {
+    setSelectedLeaveId(leaveId)
     const resultAction = await dispatch(
       reduxServices.leaveApprovals.checkProjectManagerExists(leaveId),
     )
@@ -182,35 +190,35 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
       ) &&
       resultAction.payload === false
     ) {
-      setIsRejectModalVisibility(true)
+      setIsRejectModalVisible(true)
     } else {
-      setIsManagerCheckModal(true)
-      setIsManagerCheckText(
+      setIsSearchManagerCheckModal(true)
+      setIsSearchManagerCheckText(
         `Sorry! You can't reject this leave(s), please communicate with respective project manager.`,
       )
     }
   }
 
-  const dynamicFormLabelProps = (rows: string, className: string) => {
+  const dynamicFormLabelProperties = (rows: string, className: string) => {
     return {
       rows,
       className,
     }
   }
 
-  const leaveRejectToastElement = (
+  const searchLeaveRejectToastElement = (
     <OToast
       toastColor="danger"
       toastMessage="Leave already cancelled,so cannot Reject/you are not authorized to reject leave."
     />
   )
 
-  const handleApproveLeave = async () => {
-    setIsApproveModalVisibility(false)
+  const handleApproveSearchLeave = async () => {
+    setIsApproveModalVisible(false)
     const leaveApproveResultAction = await dispatch(
       reduxServices.leaveApprovals.leaveApprove({
-        leaveId: selectLeaveId,
-        comments: approveLeaveComment,
+        leaveId: selectedLeaveId,
+        comments: searchApproveLeaveComment,
       }),
     )
     if (
@@ -243,11 +251,11 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
     }
   }
 
-  const handleRejectLeave = async () => {
-    setIsRejectModalVisibility(false)
+  const handleRejectSearchLeave = async () => {
+    setIsRejectModalVisible(false)
     const leaveRejectResultAction = await dispatch(
       reduxServices.leaveApprovals.leaveReject({
-        leaveId: selectLeaveId,
+        leaveId: selectedLeaveId,
       }),
     )
     if (
@@ -283,11 +291,13 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
       ) &&
       leaveRejectResultAction.payload === 500
     ) {
-      dispatch(reduxServices.app.actions.addToast(leaveRejectToastElement))
+      dispatch(
+        reduxServices.app.actions.addToast(searchLeaveRejectToastElement),
+      )
     }
   }
 
-  const tableHeaderCellPropsAction = {
+  const tableHeaderCellProps = {
     width: '12%',
     scope: 'col',
   }
@@ -307,44 +317,41 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
               <CTableHeaderCell>Comments</CTableHeaderCell>
               <CTableHeaderCell>Status</CTableHeaderCell>
               <CTableHeaderCell>Approved By</CTableHeaderCell>
-              <CTableHeaderCell {...tableHeaderCellPropsAction}>
+              <CTableHeaderCell {...tableHeaderCellProps}>
                 Actions
               </CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           {isLoading !== ApiLoadingState.loading ? (
             <CTableBody>
-              {searchLeaves?.map((employeeLeaveItem, index) => {
+              {searchLeaves?.map((currentLeaveItem, index) => {
                 const employeeCommentsLimit =
-                  employeeLeaveItem.employeeComments &&
-                  employeeLeaveItem.employeeComments.length > 30
-                    ? `${employeeLeaveItem.employeeComments.substring(
-                        0,
-                        30,
-                      )}...`
-                    : employeeLeaveItem.employeeComments
+                  currentLeaveItem.employeeComments &&
+                  currentLeaveItem.employeeComments.length > 30
+                    ? `${currentLeaveItem.employeeComments.substring(0, 30)}...`
+                    : currentLeaveItem.employeeComments
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>
-                      {employeeLeaveItem.employeeDTO.fullName}
+                      {currentLeaveItem.employeeDTO.fullName}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {employeeLeaveItem.appliedDate}
+                      {currentLeaveItem.appliedDate}
                     </CTableDataCell>
-                    <CTableDataCell>{employeeLeaveItem.from}</CTableDataCell>
-                    <CTableDataCell>{employeeLeaveItem.to}</CTableDataCell>
+                    <CTableDataCell>{currentLeaveItem.from}</CTableDataCell>
+                    <CTableDataCell>{currentLeaveItem.to}</CTableDataCell>
                     <CTableDataCell>
-                      {employeeLeaveItem.numberOfDays}
+                      {currentLeaveItem.numberOfDays}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {employeeLeaveItem.leaveCategoryDTO.name}
+                      {currentLeaveItem.leaveCategoryDTO.name}
                     </CTableDataCell>
                     <CTableDataCell className="sh-leave-approval-link">
                       {employeeCommentsLimit ? (
                         <CLink
                           className="cursor-pointer"
                           onClick={() =>
-                            handleModal(employeeLeaveItem.employeeComments)
+                            handleModal(currentLeaveItem.employeeComments)
                           }
                         >
                           {parse(employeeCommentsLimit)}
@@ -354,19 +361,19 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
                       )}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {leaveStatusLabelColor(employeeLeaveItem.status)}
+                      {searchLeaveStatusLabelColor(currentLeaveItem.status)}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {employeeLeaveItem.approvedBy}
+                      {currentLeaveItem.approvedBy}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {employeeLeaveItem.status === 'PendingApproval' ? (
+                      {currentLeaveItem.status === 'PendingApproval' ? (
                         <>
                           <CButton
                             color="success"
                             className="btn-ovh me-2"
                             onClick={() => {
-                              handleApproveModal(employeeLeaveItem.id)
+                              handleSearchApproveModal(currentLeaveItem.id)
                             }}
                           >
                             <i
@@ -378,7 +385,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
                             color="danger"
                             className="btn-ovh me-2"
                             onClick={() => {
-                              handleRejectModal(employeeLeaveItem.id)
+                              handleSearchRejectModal(currentLeaveItem.id)
                             }}
                           >
                             <i className="fa fa-times" aria-hidden="true"></i>
@@ -411,7 +418,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
             <CCol xs={3}>
               {searchLeavesListSize > 20 && (
                 <OPageSizeSelect
-                  handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  handlePageSizeSelectChange={handlePageSizeSelect}
                   options={[20, 40, 60, 80, 100]}
                   selectedPageSize={pageSize}
                 />
@@ -441,23 +448,23 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
       <OModal
         modalSize="lg"
         alignment="center"
-        visible={isCommentsModalVisibility}
-        setVisible={setIsCommentsModalVisibility}
+        visible={isCommentsModalVisible}
+        setVisible={setIsCommentsModalVisible}
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
       >
-        <p>{modalText}</p>
+        <p>{searchModalText}</p>
       </OModal>
       <OModal
         alignment="center"
-        visible={isApproveModalVisibility}
-        setVisible={setIsApproveModalVisibility}
+        visible={isApproveModalVisible}
+        setVisible={setIsApproveModalVisible}
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalHeaderClass="d-none"
-        confirmButtonAction={handleApproveLeave}
+        confirmButtonAction={handleApproveSearchLeave}
       >
         <>
           <h4 className="sh-accept-leave-h4">Accept Leave</h4>
@@ -467,8 +474,8 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={6}>
               <CFormTextarea
-                {...dynamicFormLabelProps('2', 'sh-text-area')}
-                onChange={(e) => setApproveLeaveComment(e.target.value)}
+                {...dynamicFormLabelProperties('2', 'sh-text-area')}
+                onChange={(e) => setSearchApproveLeaveComment(e.target.value)}
               ></CFormTextarea>
             </CCol>
           </CRow>
@@ -476,26 +483,26 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
       </OModal>
       <OModal
         alignment="center"
-        visible={isRejectModalVisibility}
-        setVisible={setIsRejectModalVisibility}
+        visible={isRejectModalVisible}
+        setVisible={setIsRejectModalVisible}
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalHeaderClass="d-none"
-        confirmButtonAction={handleRejectLeave}
+        confirmButtonAction={handleRejectSearchLeave}
       >
         <p>{`Would you like to reject the leave ?`}</p>
       </OModal>
       <OModal
         modalSize="lg"
         alignment="center"
-        visible={isManagerCheckModal}
-        setVisible={setIsManagerCheckModal}
+        visible={isSearchManagerCheckModal}
+        setVisible={setIsSearchManagerCheckModal}
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
       >
-        <p>{isManagerCheckText}</p>
+        <p>{isSearchManagerCheckText}</p>
       </OModal>
     </>
   )
