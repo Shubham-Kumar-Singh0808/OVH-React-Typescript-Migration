@@ -44,6 +44,7 @@ import {
   ProjectManagementApi,
   AddNewClientApi,
   ClientInformationApi,
+  LeaveSummaryApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -372,4 +373,10 @@ export const addNewClientApiConfig: AddNewClientApi = {
 
 export const clientInformationApiConfig: ClientInformationApi = {
   getClientInformation: apiPrefix + '/project-mgmt/getClientInfo',
+}
+
+export const leaveSummaryApiConfig: LeaveSummaryApi = {
+  getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
+  getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
+  cancelEmployeeLeave: apiPrefix + '/leave/cancel',
 }
