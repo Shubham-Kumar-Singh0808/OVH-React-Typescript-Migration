@@ -24,7 +24,7 @@ const EarnedLeavesApplied = (): JSX.Element => {
 
   return (
     <>
-      <div className="panel-body">
+      <div className="leave-panel-body">
         <div className="leave-management">
           <div className="leave-widget">
             <div className="status">
