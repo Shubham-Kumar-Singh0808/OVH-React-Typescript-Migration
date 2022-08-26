@@ -1,0 +1,22 @@
+.col-space {
+  padding: 0 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-horizontal .control-label {
+  margin-bottom: 5px;
+  padding-top: 7px;
+}
+
+.panel-body {
+  padding: 20px 20px !important;
+}
+
+@media (min-width: 768px) {
+  .form-horizontal .control-label {
+    text-align: right;
+  }
+}

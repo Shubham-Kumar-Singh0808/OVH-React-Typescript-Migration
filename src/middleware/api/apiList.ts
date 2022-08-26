@@ -40,7 +40,10 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  ClientsApi,
   ProjectManagementApi,
+  AddNewClientApi,
+  ClientInformationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -350,4 +353,23 @@ export const projectManagementConfig: ProjectManagementApi = {
   getAllPlatforms: apiPrefix + '/project-mgmt/getAllPlatforms',
   getAllDomains: apiPrefix + '/project-mgmt/getAllDomains',
   getAllManagers: apiPrefix + '/project-mgmt/getAllManagers',
+}
+
+export const clientsApiConfig: ClientsApi = {
+  getClients: apiPrefix + '/project-mgmt/client',
+  getProjectsUnderClient: apiPrefix + '/project-mgmt/projectsUnderClient',
+  searchClients: apiPrefix + '/project-mgmt/searchClients',
+  deleteClient: apiPrefix + '/project-mgmt/deleteClient',
+  editClient: apiPrefix + '/project-mgmt/client',
+  updateClient: apiPrefix + '/project-mgmt/updateClient',
+  getClientCountries: apiPrefix + '/project-mgmt/country',
+}
+
+export const addNewClientApiConfig: AddNewClientApi = {
+  getClientCountries: apiPrefix + '/project-mgmt/country',
+  addNewClient: apiPrefix + '/project-mgmt/client',
+}
+
+export const clientInformationApiConfig: ClientInformationApi = {
+  getClientInformation: apiPrefix + '/project-mgmt/getClientInfo',
 }

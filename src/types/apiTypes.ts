@@ -300,3 +300,22 @@ export interface ProjectManagementApi extends ApiBase {
   getAllDomains: string
   getAllManagers: string
 }
+
+export interface ClientsApi extends ApiBase {
+  getClients: string
+  getProjectsUnderClient: string
+  searchClients: string
+  deleteClient: string
+  editClient: string
+  updateClient: string
+  getClientCountries: string
+}
+
+export interface AddNewClientApi extends ApiBase {
+  getClientCountries: string
+  addNewClient: string
+}
+
+export interface ClientInformationApi extends ApiBase {
+  getClientInformation: string
+}
