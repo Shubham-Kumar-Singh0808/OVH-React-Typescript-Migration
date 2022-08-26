@@ -343,11 +343,13 @@ const ProjectReportsTable = ({
                           <i
                             className="fa fa-minus-circle cursor-pointer"
                             onClick={() => setIsShow(false)}
+                            data-testid="minus-btn"
                           />
                         ) : (
                           <i
                             className="fa fa-plus-circle cursor-pointer"
                             onClick={() => handleShowProject(value.id)}
+                            data-testid="plus-btn"
                           />
                         )}
                       </CTableDataCell>
@@ -428,7 +430,7 @@ const ProjectReportsTable = ({
                     </CTableRow>
                     {isShow &&
                       selectedProject === value.id &&
-                      (isClientProjectLoading === ApiLoadingState.succeeded ? (
+                      (projectClients.length > 0 ? (
                         <CTableRow>
                           <CTableDataCell colSpan={8}>
                             <CTable responsive striped>

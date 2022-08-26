@@ -5,6 +5,7 @@ import ProjectReportTable from './ProjectReportTable'
 import { fireEvent, waitFor, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockProjectReportData } from '../../../test/data/projectReportData'
+import { mockEmployeeProjectsDetail } from '../../../test/data/employeeProjectsData'
 
 describe('Project Report Table Testing', () => {
   beforeEach(() => {
@@ -27,6 +28,7 @@ describe('Project Report Table Testing', () => {
               Projs: mockProjectReportData.Projs,
             },
             Clients: mockProjectReportData.Projs,
+            ClientProjects: mockEmployeeProjectsDetail,
           },
         },
       },
@@ -58,5 +60,73 @@ describe('Project Report Table Testing', () => {
       userEvent.selectOptions(pageSize, ['20'])
       expect(pageSize).toHaveValue('20')
     })
+  })
+})
+
+describe('Project Report Table Testing with sub table', () => {
+  beforeEach(() => {
+    render(
+      <ProjectReportTable
+        paginationRange={[]}
+        currentPage={1}
+        setCurrentPage={jest.fn()}
+        pageSize={1}
+        setPageSize={jest.fn()}
+      />,
+      {
+        preloadedState: {
+          projectReport: {
+            listSize: 28,
+            isProjectLoading: ApiLoadingState.succeeded,
+            isClientProjectLoading: ApiLoadingState.succeeded,
+            ProjectDetails: {
+              Projsize: mockProjectReportData.Projsize,
+              Projs: mockProjectReportData.Projs,
+            },
+            Clients: mockProjectReportData.Projs,
+            ClientProjects: mockEmployeeProjectsDetail,
+          },
+        },
+      },
+    )
+  })
+
+  test('Should be able open sub table when clicking plus button', () => {
+    render(
+      <ProjectReportTable
+        paginationRange={[]}
+        currentPage={1}
+        setCurrentPage={jest.fn()}
+        pageSize={1}
+        setPageSize={jest.fn()}
+      />,
+      {
+        preloadedState: {
+          projectReport: {
+            listSize: 28,
+            isProjectLoading: ApiLoadingState.succeeded,
+            isClientProjectLoading: ApiLoadingState.succeeded,
+            ProjectDetails: {
+              Projsize: mockProjectReportData.Projsize,
+              Projs: mockProjectReportData.Projs,
+            },
+            Clients: mockProjectReportData.Projs,
+            ClientProjects: mockEmployeeProjectsDetail,
+          },
+        },
+      },
+    )
+
+    const plusBtn = screen.getAllByTestId('plus-btn')
+    plusBtn[0].click()
+
+    expect(screen.getByText('ID')).toBeInTheDocument()
+    expect(screen.getByText('Name')).toBeInTheDocument()
+    expect(screen.getByText('Designation')).toBeInTheDocument()
+    expect(screen.getByText('Department')).toBeInTheDocument()
+    expect(screen.getByText('Allocation')).toBeInTheDocument()
+    expect(screen.getByText('Allocated Date')).toBeInTheDocument()
+    expect(screen.getByText('Billable')).toBeInTheDocument()
+    expect(screen.getByText('Current Status')).toBeInTheDocument()
   })
 })
