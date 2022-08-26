@@ -92,31 +92,6 @@ describe('Project Report Table Testing with sub table', () => {
   })
 
   test('Should be able open sub table when clicking plus button', () => {
-    render(
-      <ProjectReportTable
-        paginationRange={[]}
-        currentPage={1}
-        setCurrentPage={jest.fn()}
-        pageSize={1}
-        setPageSize={jest.fn()}
-      />,
-      {
-        preloadedState: {
-          projectReport: {
-            listSize: 28,
-            isProjectLoading: ApiLoadingState.succeeded,
-            isClientProjectLoading: ApiLoadingState.succeeded,
-            ProjectDetails: {
-              Projsize: mockProjectReportData.Projsize,
-              Projs: mockProjectReportData.Projs,
-            },
-            Clients: mockProjectReportData.Projs,
-            ClientProjects: mockEmployeeProjectsDetail,
-          },
-        },
-      },
-    )
-
     const plusBtn = screen.getAllByTestId('plus-btn')
     plusBtn[0].click()
 
@@ -128,5 +103,35 @@ describe('Project Report Table Testing with sub table', () => {
     expect(screen.getByText('Allocated Date')).toBeInTheDocument()
     expect(screen.getByText('Billable')).toBeInTheDocument()
     expect(screen.getByText('Current Status')).toBeInTheDocument()
+  })
+
+  test('Should be able open sub table when clicking plus button', () => {
+    const plusBtn = screen.getAllByTestId('plus-btn')
+    plusBtn[0].click()
+
+    const minusBtn = screen.getAllByTestId('minus-btn')
+    minusBtn[0].click()
+  })
+
+  test('Should be able open sub table and click close btn', () => {
+    const plusBtn = screen.getAllByTestId('plus-btn')
+    plusBtn[0].click()
+
+    const closeBtn = screen.getAllByTestId('close-btn')
+    closeBtn[0].click()
+
+    const modalConfirmBtn = screen.getByTestId('modalConfirmBtn')
+    modalConfirmBtn.click()
+  })
+
+  test('Should be able open sub table and click delete btn', () => {
+    const plusBtn = screen.getAllByTestId('plus-btn')
+    plusBtn[0].click()
+
+    const closeBtn = screen.getAllByTestId('delete-sub-btn')
+    closeBtn[0].click()
+
+    const modalConfirmBtn = screen.getByTestId('modalConfirmBtn')
+    modalConfirmBtn.click()
   })
 })

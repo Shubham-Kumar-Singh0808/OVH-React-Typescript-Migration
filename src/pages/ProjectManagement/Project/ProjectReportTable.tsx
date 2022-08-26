@@ -378,7 +378,7 @@ const ProjectReportsTable = ({
                         <CButton
                           className="cursor-pointer"
                           color="danger btn-sm me-1"
-                          data-testid="reject-btn"
+                          data-testid="close-btn"
                           onClick={() =>
                             handleShowCloseModal(value.id, value.projectName)
                           }
@@ -430,7 +430,7 @@ const ProjectReportsTable = ({
                     </CTableRow>
                     {isShow &&
                       selectedProject === value.id &&
-                      (projectClients.length > 0 ? (
+                      (projectClients != null ? (
                         <CTableRow>
                           <CTableDataCell colSpan={8}>
                             <CTable responsive striped>
