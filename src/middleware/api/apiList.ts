@@ -345,4 +345,5 @@ export const ticketReportApiConfig: TicketReportApi = {
   departmentCategoryList:
     apiPrefix + '/supportManagement/departmentCategoryList',
   getTicketsReport: apiPrefix + '/supportManagement/getTicketsReport',
+  getTicketsDetails: apiPrefix + '/supportManagement/getTicketsDetails',
 }

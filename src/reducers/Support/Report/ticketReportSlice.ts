@@ -7,7 +7,9 @@ import ticketReportApi from '../../../middleware/api/Support/Report/ticketReport
 import {
   DepartmentCategoryList,
   DepartmentNameList,
+  GetTicketsDetailsList,
   GetTicketsReportList,
+  TicketDetailsProps,
   TicketReportApiProps,
   TicketReportSliceState,
 } from '../../../types/Support/Report/ticketReportTypes'
@@ -56,6 +58,18 @@ const getTicketsReport = createAsyncThunk(
   },
 )
 
+const getTicketDetails = createAsyncThunk(
+  'support/getTicketDetails',
+  async (props: TicketDetailsProps, thunkApi) => {
+    try {
+      return await ticketReportApi.getTicketDetails(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialTicketReportState: TicketReportSliceState = {
   currentPage: 1,
   pageSize: 20,
@@ -64,6 +78,8 @@ const initialTicketReportState: TicketReportSliceState = {
   departmentCategoryList: [],
   departmentNameList: [],
   isLoading: ApiLoadingState.idle,
+  ticketsDetailsList: [],
+  getTicketDetails: { list: [], size: 0 },
 }
 
 const ticketReportSlice = createSlice({
@@ -86,6 +102,14 @@ const ticketReportSlice = createSlice({
     builder.addCase(getTicketsReport.pending, (state) => {
       state.isLoading = ApiLoadingState.loading
     })
+    builder.addCase(getTicketDetails.fulfilled, (state, action) => {
+      state.isLoading = ApiLoadingState.succeeded
+      state.ticketsDetailsList = action.payload.list
+      state.getTicketDetails = action.payload
+    })
+    builder.addCase(getTicketDetails.pending, (state) => {
+      state.isLoading = ApiLoadingState.loading
+    })
     builder.addCase(getDepartmentCategoryList.fulfilled, (state, action) => {
       state.departmentCategoryList = action.payload as DepartmentCategoryList[]
     })
@@ -99,6 +123,7 @@ const ticketReportThunk = {
   getDepartmentNameList,
   getDepartmentCategoryList,
   getTicketsReport,
+  getTicketDetails,
 }
 
 const isLoading = (state: RootState): LoadingState =>
@@ -118,6 +143,9 @@ const pageFromState = (state: RootState): number =>
 const pageSizeFromState = (state: RootState): number =>
   state.ticketReport.pageSize
 
+const ticketsDetails = (state: RootState): GetTicketsDetailsList[] =>
+  state.ticketReport.ticketsDetailsList
+
 const ticketReportSelectors = {
   isLoading,
   departmentNameList,
@@ -125,6 +153,7 @@ const ticketReportSelectors = {
   ticketsReport,
   pageFromState,
   pageSizeFromState,
+  ticketsDetails,
 }
 
 export const ticketReportService = {

@@ -1,11 +1,16 @@
 import { CRow, CCol, CFormSelect, CFormLabel, CButton } from '@coreui/react-pro'
+import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
+import ReactDatePicker from 'react-datepicker'
+import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const TicketReportFilterOptions = (): JSX.Element => {
   const [selectDate, setSelectDate] = useState('Today')
-
+  const [fromDate, setFromDate] = useState<Date | string>()
+  const [toDate, setToDate] = useState<Date | string>()
+  const [showSelectCustom, setShowSelectCustom] = useState<boolean>(false)
   const [selectDepartment, setSelectDepartment] = useState<string | number>()
   const dispatch = useAppDispatch()
 
@@ -17,11 +22,16 @@ const TicketReportFilterOptions = (): JSX.Element => {
     reduxServices.ticketReport.selectors.ticketsReport,
   )
 
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
+
   useEffect(() => {
     dispatch(
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
-        departmentId: 0,
+        departmentId: '',
         from: '',
         ticketStatus: null,
         to: '',
@@ -29,6 +39,24 @@ const TicketReportFilterOptions = (): JSX.Element => {
     )
     dispatch(reduxServices.ticketReport.actions.setCurrentPage(1))
     dispatch(reduxServices.ticketReport.actions.setPageSize(20))
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.ticketReport.getTicketDetails({
+        categoryId: 9,
+        dateSelection: selectDate,
+        departmentId: '',
+        endIndex: 20,
+        filter: 'All',
+        from: '',
+        startIndex: 0,
+        subCategoryId: 56,
+        ticketStatus: '',
+        to: '',
+        trackerId: 1,
+      }),
+    )
   }, [dispatch])
 
   useEffect(() => {
@@ -40,9 +68,9 @@ const TicketReportFilterOptions = (): JSX.Element => {
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
         departmentId: selectDepartment as number,
-        from: '',
+        from: fromDate as string,
         ticketStatus: null,
-        to: '',
+        to: toDate as string,
       }),
     )
   }
@@ -64,7 +92,7 @@ const TicketReportFilterOptions = (): JSX.Element => {
     dispatch(
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
-        departmentId: 0,
+        departmentId: '',
         from: '',
         ticketStatus: null,
         to: '',
@@ -72,6 +100,23 @@ const TicketReportFilterOptions = (): JSX.Element => {
     )
   }
 
+  useEffect(() => {
+    if (selectDate === 'Custom') {
+      setShowSelectCustom(true)
+    } else {
+      setShowSelectCustom(false)
+    }
+  })
+
+  useEffect(() => {
+    if (selectDate !== 'Custom') {
+      setFromDate('')
+      setToDate('')
+    }
+  }, [selectDate])
+
+  const commonFormatDate = 'l'
+  console.log(fromDate)
   return (
     <>
       <CRow className="mt-3">
@@ -115,11 +160,79 @@ const TicketReportFilterOptions = (): JSX.Element => {
             <option value="Yesterday">Yesterday</option>
           </CFormSelect>
         </CCol>
+        {showSelectCustom ? (
+          <>
+            <CCol sm={2} md={2}>
+              <CFormLabel className="col-sm-4 col-form-label">
+                From :
+                <span className={fromDate ? TextWhite : TextDanger}> *</span>
+              </CFormLabel>
+              <ReactDatePicker
+                id="fromDate"
+                data-testid="leaveApprovalFromDate"
+                className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                dateFormat="dd/mm/yy"
+                placeholderText="dd/mm/yy"
+                name="fromDate"
+                value={
+                  fromDate
+                    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: '2-digit',
+                      })
+                    : ''
+                }
+                onChange={(date: Date) =>
+                  setFromDate(moment(date).format(commonFormatDate))
+                }
+              />
+            </CCol>
+            <CCol sm={2} md={2}>
+              <CFormLabel className="col-sm-4 col-form-label">
+                To :
+                <span className={fromDate ? TextWhite : TextDanger}> *</span>
+              </CFormLabel>
+              <ReactDatePicker
+                id="toDate"
+                data-testid="leaveApprovalFromDate"
+                className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                dateFormat="dd/mm/yy"
+                placeholderText="dd/mm/yy"
+                name="toDate"
+                value={
+                  toDate
+                    ? new Date(toDate).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: '2-digit',
+                      })
+                    : ''
+                }
+                onChange={(date: Date) =>
+                  setToDate(moment(date).format(commonFormatDate))
+                }
+              />
+            </CCol>
+          </>
+        ) : (
+          <></>
+        )}
+
         <CCol sm={2} md={2} className="mt-4">
           <CButton
             className="cursor-pointer"
             color="success btn-ovh me-1"
             onClick={handleTicketReports}
+            // disabled={!isViewButtonEnabled}
           >
             View
           </CButton>
