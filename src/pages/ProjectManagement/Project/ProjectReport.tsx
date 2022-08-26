@@ -210,6 +210,7 @@ const ProjectReport = (): JSX.Element => {
             </CCol>
             <CCol sm={2}>
               <SelectFilter
+                data-testid="status-filter"
                 list={selectStatus}
                 label="Status"
                 name="status"
@@ -262,7 +263,6 @@ const ProjectReport = (): JSX.Element => {
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
-                  data-testid="start-date-picker"
                   placeholderText="dd/mm/yy"
                   dateFormat="dd/mm/yy"
                   name="startDate"
@@ -287,7 +287,6 @@ const ProjectReport = (): JSX.Element => {
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
-                  data-testid="start-date-picker"
                   placeholderText="dd/mm/yy"
                   dateFormat="dd/mm/yy"
                   name="endDate"
@@ -310,6 +309,7 @@ const ProjectReport = (): JSX.Element => {
               <CButton
                 className="cursor-pointer"
                 color="warning btn-ovh me-1"
+                data-testid="clearButton"
                 onClick={clearHandler}
               >
                 Clear
@@ -320,7 +320,7 @@ const ProjectReport = (): JSX.Element => {
                 </CButton>
                 &nbsp; &nbsp; &nbsp;
                 <Link to="/addProject">
-                  <CButton color="info btn-ovh me-0">
+                  <CButton color="info btn-ovh me-0" data-testid="addButton">
                     <i className="fa fa-plus me-1"></i>Add Project
                   </CButton>
                 </Link>
