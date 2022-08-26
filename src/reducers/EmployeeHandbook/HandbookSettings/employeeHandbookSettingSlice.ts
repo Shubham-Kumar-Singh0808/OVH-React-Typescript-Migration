@@ -218,6 +218,7 @@ const employeeHandbookSettingSlice = createSlice({
           getEmployeeCountries.pending,
           addNewHandbook.pending,
           getEmployeeHandbook.pending,
+          updateEmployeeHandbook.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -231,6 +232,7 @@ const employeeHandbookSettingSlice = createSlice({
           deleteEmployeeHandbook.rejected,
           addNewHandbook.rejected,
           getEmployeeHandbook.rejected,
+          updateEmployeeHandbook.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed

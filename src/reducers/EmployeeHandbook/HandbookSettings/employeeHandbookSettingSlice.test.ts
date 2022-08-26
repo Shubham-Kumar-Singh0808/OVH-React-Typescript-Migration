@@ -3,6 +3,7 @@ import reducer, {
   employeeHandbookSettingService,
 } from '../../../reducers/EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
+import { mockHandbookList } from '../../../test/data/handbookListData'
 import { mockCountries } from '../../../test/data/handbookTotalListData'
 import {
   EmployeeHandbookSettingSliceState,
@@ -194,6 +195,67 @@ describe('EmployeeHandbookSettings Slice', () => {
         error: null,
         totalHandbookList: [],
         updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+        reRenderHandbookList: true,
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if `updateEmployeeHandbook` is rejected', () => {
+      const rejectedAction = {
+        type: employeeHandbookSettingService.updateEmployeeHandbook.rejected
+          .type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, rejectedAction)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.failed,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: undefined,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+        reRenderHandbookList: true,
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if `updateEmployeeHandbook` is pending', () => {
+      const action = {
+        type: employeeHandbookSettingService.updateEmployeeHandbook.pending
+          .type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.loading,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+        reRenderHandbookList: true,
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if `updateEmployeeHandbook` is fulfilled', () => {
+      const action = {
+        type: employeeHandbookSettingService.updateEmployeeHandbook.fulfilled
+          .type,
+        payload: mockHandbookList,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.succeeded,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: [],
+        updateHandbookPage: {},
         selectedHandbook: [],
         selectedCountries: [],
         reRenderHandbookList: true,
