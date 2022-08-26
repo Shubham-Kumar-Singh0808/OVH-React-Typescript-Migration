@@ -1,0 +1,47 @@
+.leave-panel-body {
+  padding: 10px 20px !important;
+}
+.leave-management {
+  display: inline-block;
+  padding: 9px 0px;
+  border: 1px solid #ccc;
+  text-align: center;
+  width: 100%;
+}
+
+.leave-widget {
+  display: table;
+  width: 100%;
+  height: 80px;
+}
+
+.leave-widget .status {
+  display: table-cell;
+  text-align: center !important;
+  vertical-align: middle;
+}
+
+.label-info {
+  background-color: $info-label;
+  color: white;
+}
+
+.label-gray-cancel {
+  background-color: $bg-gray-dark;
+  color: #404040;
+}
+
+.label-success {
+  background-color: $success-base;
+  color: white;
+}
+
+.label-danger {
+  background-color: $danger-base;
+  color: white;
+}
+
+.label-gray-cancelAfterApproval {
+  background-color: $bg-gray-dark;
+  color: #404040;
+}
