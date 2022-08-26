@@ -68,9 +68,17 @@ const TicketReportFilterOptions = (): JSX.Element => {
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
         departmentId: selectDepartment as number,
-        from: fromDate as string,
+        from: new Date(fromDate as string).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
         ticketStatus: null,
-        to: toDate as string,
+        to: new Date(toDate as string).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
       }),
     )
   }
@@ -182,7 +190,7 @@ const TicketReportFilterOptions = (): JSX.Element => {
                   fromDate
                     ? new Date(fromDate).toLocaleDateString(deviceLocale, {
                         year: 'numeric',
-                        month: 'numeric',
+                        month: '2-digit',
                         day: '2-digit',
                       })
                     : ''
@@ -212,7 +220,7 @@ const TicketReportFilterOptions = (): JSX.Element => {
                   toDate
                     ? new Date(toDate).toLocaleDateString(deviceLocale, {
                         year: 'numeric',
-                        month: 'numeric',
+                        month: '2-digit',
                         day: '2-digit',
                       })
                     : ''

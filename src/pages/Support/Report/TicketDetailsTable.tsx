@@ -27,7 +27,6 @@ const TicketDetailsTable = (): JSX.Element => {
             <CTableHeaderCell scope="col">Description</CTableHeaderCell>
             <CTableHeaderCell scope="col">Priority</CTableHeaderCell>
             <CTableHeaderCell scope="col">Start Date</CTableHeaderCell>
-
             <CTableHeaderCell scope="col">Due Date</CTableHeaderCell>
             <CTableHeaderCell scope="col">Assignee</CTableHeaderCell>
             <CTableHeaderCell scope="col">Spent Time(hh.mm)</CTableHeaderCell>
