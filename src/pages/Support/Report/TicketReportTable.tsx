@@ -10,18 +10,25 @@ import {
   CLink,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
-import TicketDetails from './TicketDetails'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { currentPageData } from '../../../utils/paginationUtils'
 
 const TicketReportTable = ({
   setToggle,
+  selectDate,
+  toDate,
+  fromDate,
+  selectDepartment,
 }: {
   setToggle: (value: string) => void
+  selectDate: string
+  toDate: string
+  fromDate: string
+  selectDepartment: string
 }): JSX.Element => {
   const getTicketReportList = useTypedSelector(
     reduxServices.ticketReport.selectors.ticketsReport,
@@ -33,7 +40,7 @@ const TicketReportTable = ({
   const pageSizeFromState = useTypedSelector(
     reduxServices.ticketReport.selectors.pageSizeFromState,
   )
-
+  const dispatch = useAppDispatch()
   const {
     paginationRange,
     setPageSize,
@@ -61,6 +68,29 @@ const TicketReportTable = ({
     () => currentPageData(getTicketReportList, currentPage, pageSize),
     [getTicketReportList, currentPage, pageSize],
   )
+  const handleShowTicketDetails = (
+    categoryId: number,
+    trackerId: number,
+    subCategoryId: number,
+  ) => {
+    setToggle('ticketDetails')
+    dispatch(
+      reduxServices.ticketReport.getTicketDetails({
+        categoryId,
+        dateSelection: selectDate,
+        departmentId: selectDepartment,
+        endIndex: 20,
+        filter: 'All',
+        from: fromDate as string,
+        startIndex: 0,
+        subCategoryId,
+        ticketStatus: '',
+        to: toDate as string,
+        trackerId,
+      }),
+    )
+  }
+
   return (
     <>
       <>
@@ -96,7 +126,13 @@ const TicketReportTable = ({
                   <CTableDataCell scope="row">
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
-                      onClick={() => setToggle('ticketDetails')}
+                      onClick={() =>
+                        handleShowTicketDetails(
+                          ticketReport.categoryId,
+                          ticketReport.trackerId,
+                          ticketReport.subCategoryId,
+                        )
+                      }
                     >
                       {ticketReport.noOfTickets}
                     </CLink>
@@ -108,7 +144,14 @@ const TicketReportTable = ({
                   <CTableDataCell>
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
-                      onClick={() => setToggle('ticketDetails')}
+                      // eslint-disable-next-line sonarjs/no-identical-functions
+                      onClick={() =>
+                        handleShowTicketDetails(
+                          ticketReport.categoryId,
+                          ticketReport.trackerId,
+                          ticketReport.subCategoryId,
+                        )
+                      }
                     >
                       {ticketReport.noOfPendingTickets}
                     </CLink>

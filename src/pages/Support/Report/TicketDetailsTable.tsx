@@ -5,18 +5,34 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
+  CButton,
+  CCol,
+  CRow,
 } from '@coreui/react-pro'
 import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { TicketDetailsTableProps } from '../../../types/Support/Report/ticketReportTypes'
 
-const TicketDetailsTable = (): JSX.Element => {
+const TicketDetailsTable = ({
+  backButtonHandler,
+}: TicketDetailsTableProps): JSX.Element => {
   const getTicketReportList = useTypedSelector(
     reduxServices.ticketReport.selectors.ticketsDetails,
   )
-  console.log(getTicketReportList)
   return (
     <>
+      <CRow className="justify-content-end">
+        <CCol className="text-end" md={4}>
+          <CButton
+            color="info"
+            className="btn-ovh me-1"
+            onClick={backButtonHandler}
+          >
+            <i className="fa fa-arrow-left  me-1"></i>Back
+          </CButton>
+        </CCol>
+      </CRow>
       <CTable striped>
         <CTableHead>
           <CTableRow>

@@ -2,7 +2,11 @@ import React from 'react'
 import TicketDetailsTable from './TicketDetailsTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 
-const TicketDetails = (): JSX.Element => {
+const TicketDetails = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   return (
     <>
       <OCard
@@ -11,7 +15,7 @@ const TicketDetails = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <TicketDetailsTable />
+        <TicketDetailsTable backButtonHandler={() => setToggle('')} />
       </OCard>
     </>
   )

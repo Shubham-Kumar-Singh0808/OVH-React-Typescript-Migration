@@ -10,6 +10,10 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const TicketReport = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
+  const [selectDate, setSelectDate] = useState('Today')
+  const [fromDate, setFromDate] = useState<string>('')
+  const [toDate, setToDate] = useState<string>('')
+  const [selectDepartment, setSelectDepartment] = useState<string>('')
   const isLoading = useTypedSelector(
     reduxServices.ticketReport.selectors.isLoading,
   )
@@ -22,11 +26,26 @@ const TicketReport = (): JSX.Element => {
           CBodyClassName="ps-0 pe-0"
           CFooterClassName="d-none"
         >
-          <TicketReportFilterOptions />
+          <TicketReportFilterOptions
+            selectDate={selectDate}
+            fromDate={fromDate as string}
+            toDate={toDate as string}
+            selectDepartment={selectDepartment as string}
+            setSelectDate={setSelectDate}
+            setFromDate={setFromDate}
+            setToDate={setToDate}
+            setSelectDepartment={setSelectDepartment}
+          />
 
           {isLoading !== ApiLoadingState.loading ? (
             <>
-              <TicketReportTable setToggle={setToggle} />
+              <TicketReportTable
+                setToggle={setToggle}
+                selectDate={selectDate}
+                toDate={toDate}
+                fromDate={fromDate}
+                selectDepartment={selectDepartment}
+              />
             </>
           ) : (
             <CCol>
@@ -37,7 +56,7 @@ const TicketReport = (): JSX.Element => {
           )}
         </OCard>
       )}
-      {toggle === 'ticketDetails' && <TicketDetails />}
+      {toggle === 'ticketDetails' && <TicketDetails setToggle={setToggle} />}
     </>
   )
 }

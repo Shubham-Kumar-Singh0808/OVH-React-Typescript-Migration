@@ -6,12 +6,26 @@ import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
-const TicketReportFilterOptions = (): JSX.Element => {
-  const [selectDate, setSelectDate] = useState('Today')
-  const [fromDate, setFromDate] = useState<Date | string>()
-  const [toDate, setToDate] = useState<Date | string>()
+const TicketReportFilterOptions = ({
+  selectDate,
+  fromDate,
+  toDate,
+  selectDepartment,
+  setSelectDate,
+  setFromDate,
+  setToDate,
+  setSelectDepartment,
+}: {
+  selectDate: string
+  fromDate: string
+  toDate: string
+  selectDepartment: string
+  setSelectDate: React.Dispatch<React.SetStateAction<string>>
+  setFromDate: React.Dispatch<React.SetStateAction<string>>
+  setToDate: React.Dispatch<React.SetStateAction<string>>
+  setSelectDepartment: React.Dispatch<React.SetStateAction<string>>
+}): JSX.Element => {
   const [showSelectCustom, setShowSelectCustom] = useState<boolean>(false)
-  const [selectDepartment, setSelectDepartment] = useState<string | number>()
   const dispatch = useAppDispatch()
 
   const getDepartmentNameList = useTypedSelector(
@@ -42,24 +56,6 @@ const TicketReportFilterOptions = (): JSX.Element => {
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(
-      reduxServices.ticketReport.getTicketDetails({
-        categoryId: 9,
-        dateSelection: selectDate,
-        departmentId: '',
-        endIndex: 20,
-        filter: 'All',
-        from: '',
-        startIndex: 0,
-        subCategoryId: 56,
-        ticketStatus: '',
-        to: '',
-        trackerId: 1,
-      }),
-    )
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(reduxServices.ticketReport.getDepartmentNameList())
   }, [dispatch])
 
@@ -67,7 +63,7 @@ const TicketReportFilterOptions = (): JSX.Element => {
     dispatch(
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
-        departmentId: selectDepartment as number,
+        departmentId: selectDepartment as string,
         from: new Date(fromDate as string).toLocaleDateString(deviceLocale, {
           year: 'numeric',
           month: '2-digit',

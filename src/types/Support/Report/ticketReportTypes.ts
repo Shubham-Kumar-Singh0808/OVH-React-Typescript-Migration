@@ -26,7 +26,7 @@ export type GetTicketsReportList = {
 export type DepartmentCategoryList = {
   categoryId: number
   categoryName: string
-  departmentId: number
+  departmentId: string
   departmentName: string
   mealType: boolean
 }
@@ -45,7 +45,7 @@ export type TicketReportSliceState = {
 
 export type TicketReportApiProps = {
   dateSelection: string
-  departmentId: number | string
+  departmentId: string
   from: string
   ticketStatus: null
   to: string
@@ -94,7 +94,7 @@ export type GetTicketsDetailsList = {
 export type TicketDetailsProps = {
   categoryId: number
   dateSelection: string
-  departmentId: number | string
+  departmentId: string
   endIndex: number
   filter: string
   from: string
@@ -103,4 +103,8 @@ export type TicketDetailsProps = {
   ticketStatus: string
   to: string
   trackerId: number
+}
+
+export type TicketDetailsTableProps = {
+  backButtonHandler: () => void
 }
