@@ -350,6 +350,7 @@ const ProjectReport = (): JSX.Element => {
                   placeholder="Multiple Search"
                   aria-label="Multiple Search"
                   aria-describedby="search-field"
+                  data-testid="multi-search-input"
                   value={params.multiSearch}
                   onChange={(event) => handleMultipleSearch(event.target.value)}
                 />

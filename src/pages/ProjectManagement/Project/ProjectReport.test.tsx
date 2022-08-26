@@ -135,4 +135,14 @@ describe('Project Report Testing', () => {
     // Should have default value of INPROGRESS
     expect(dateSelector).toHaveValue('INPROGRESS')
   })
+
+  test('should be able to search via multi search', () => {
+    const inputField = screen.getByTestId('multi-search-input')
+    inputField.click()
+    inputField.focus()
+    userEvent.type(inputField, 'RETAINER')
+
+    const searchBtn = screen.getByTestId('multi-search-btn')
+    userEvent.click(searchBtn)
+  })
 })
