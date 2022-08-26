@@ -3528,4 +3528,1264 @@ export const mockCreditYearData: SelectFinancialYear[] = [
     },
     javaDate: 1702233000000,
   },
+  {
+    calendar: {
+      javaDate: 1670437800000,
+      lenient: true,
+      timeInMillis: 1670437800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 11,
+      index: 2,
+    },
+    dayofWeek: 'THURSDAY',
+    partsOfTime: [
+      {
+        unit: 'MONTH',
+        value: 11,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+      {
+        unit: 'DAY',
+        value: 8,
+        index: 5,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 8,
+      index: 5,
+    },
+    javaDate: 1670437800000,
+  },
+  {
+    calendar: {
+      javaDate: 1667845800000,
+      lenient: true,
+      timeInMillis: 1667845800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 10,
+      index: 2,
+    },
+    dayofWeek: 'TUESDAY',
+    partsOfTime: [
+      {
+        unit: 'MONTH',
+        value: 10,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+      {
+        unit: 'DAY',
+        value: 8,
+        index: 5,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 8,
+      index: 5,
+    },
+    javaDate: 1667845800000,
+  },
+  {
+    calendar: {
+      javaDate: 1660588200000,
+      lenient: true,
+      timeInMillis: 1660588200000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 7,
+      index: 2,
+    },
+    dayofWeek: 'TUESDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 16,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 7,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 16,
+      index: 5,
+    },
+    javaDate: 1660588200000,
+  },
+  {
+    calendar: {
+      javaDate: 1660156200000,
+      lenient: true,
+      timeInMillis: 1660156200000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 7,
+      index: 2,
+    },
+    dayofWeek: 'THURSDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 11,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 7,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 11,
+      index: 5,
+    },
+    javaDate: 1660156200000,
+  },
+  {
+    calendar: {
+      javaDate: 1659897000000,
+      lenient: true,
+      timeInMillis: 1659897000000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 7,
+      index: 2,
+    },
+    dayofWeek: 'MONDAY',
+    partsOfTime: [
+      {
+        unit: 'MONTH',
+        value: 7,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+      {
+        unit: 'DAY',
+        value: 8,
+        index: 5,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 8,
+      index: 5,
+    },
+    javaDate: 1659897000000,
+  },
+  {
+    calendar: {
+      javaDate: 1659810600000,
+      lenient: true,
+      timeInMillis: 1659810600000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 7,
+      index: 2,
+    },
+    dayofWeek: 'SUNDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 7,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 7,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 7,
+      index: 5,
+    },
+    javaDate: 1659810600000,
+  },
+  {
+    calendar: {
+      javaDate: 1659637800000,
+      lenient: true,
+      timeInMillis: 1659637800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 7,
+      index: 2,
+    },
+    dayofWeek: 'FRIDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 5,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 7,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 5,
+      index: 5,
+    },
+    javaDate: 1659637800000,
+  },
+  {
+    calendar: {
+      javaDate: 1659551400000,
+      lenient: true,
+      timeInMillis: 1659551400000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 7,
+      index: 2,
+    },
+    dayofWeek: 'THURSDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 4,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 7,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 4,
+      index: 5,
+    },
+    javaDate: 1659551400000,
+  },
+  {
+    calendar: {
+      javaDate: 1659465000000,
+      lenient: true,
+      timeInMillis: 1659465000000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 7,
+      index: 2,
+    },
+    dayofWeek: 'WEDNESDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 3,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 7,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 3,
+      index: 5,
+    },
+    javaDate: 1659465000000,
+  },
+  {
+    calendar: {
+      javaDate: 1659378600000,
+      lenient: true,
+      timeInMillis: 1659378600000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 7,
+      index: 2,
+    },
+    dayofWeek: 'TUESDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 2,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 7,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 2,
+      index: 5,
+    },
+    javaDate: 1659378600000,
+  },
+  {
+    calendar: {
+      javaDate: 1659033000000,
+      lenient: true,
+      timeInMillis: 1659033000000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 6,
+      index: 2,
+    },
+    dayofWeek: 'FRIDAY',
+    partsOfTime: [
+      {
+        unit: 'MONTH',
+        value: 6,
+        index: 2,
+      },
+      {
+        unit: 'DAY',
+        value: 29,
+        index: 5,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 29,
+      index: 5,
+    },
+    javaDate: 1659033000000,
+  },
+  {
+    calendar: {
+      javaDate: 1658773800000,
+      lenient: true,
+      timeInMillis: 1658773800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 6,
+      index: 2,
+    },
+    dayofWeek: 'TUESDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 26,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 6,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 26,
+      index: 5,
+    },
+    javaDate: 1658773800000,
+  },
+  {
+    calendar: {
+      javaDate: 1658082600000,
+      lenient: true,
+      timeInMillis: 1658082600000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 6,
+      index: 2,
+    },
+    dayofWeek: 'MONDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 18,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 6,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 18,
+      index: 5,
+    },
+    javaDate: 1658082600000,
+  },
+  {
+    calendar: {
+      javaDate: 1657737000000,
+      lenient: true,
+      timeInMillis: 1657737000000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 6,
+      index: 2,
+    },
+    dayofWeek: 'THURSDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 14,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 6,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 14,
+      index: 5,
+    },
+    javaDate: 1657737000000,
+  },
+  {
+    calendar: {
+      javaDate: 1657650600000,
+      lenient: true,
+      timeInMillis: 1657650600000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 6,
+      index: 2,
+    },
+    dayofWeek: 'WEDNESDAY',
+    partsOfTime: [
+      {
+        unit: 'MONTH',
+        value: 6,
+        index: 2,
+      },
+      {
+        unit: 'DAY',
+        value: 13,
+        index: 5,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 13,
+      index: 5,
+    },
+    javaDate: 1657650600000,
+  },
+  {
+    calendar: {
+      javaDate: 1657564200000,
+      lenient: true,
+      timeInMillis: 1657564200000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 6,
+      index: 2,
+    },
+    dayofWeek: 'TUESDAY',
+    partsOfTime: [
+      {
+        unit: 'MONTH',
+        value: 6,
+        index: 2,
+      },
+      {
+        unit: 'DAY',
+        value: 12,
+        index: 5,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 12,
+      index: 5,
+    },
+    javaDate: 1657564200000,
+  },
+  {
+    calendar: {
+      javaDate: 1657477800000,
+      lenient: true,
+      timeInMillis: 1657477800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 6,
+      index: 2,
+    },
+    dayofWeek: 'MONDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 11,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 6,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 11,
+      index: 5,
+    },
+    javaDate: 1657477800000,
+  },
+  {
+    calendar: {
+      javaDate: 1657132200000,
+      lenient: true,
+      timeInMillis: 1657132200000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 6,
+      index: 2,
+    },
+    dayofWeek: 'THURSDAY',
+    partsOfTime: [
+      {
+        unit: 'MONTH',
+        value: 6,
+        index: 2,
+      },
+      {
+        unit: 'DAY',
+        value: 7,
+        index: 5,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 7,
+      index: 5,
+    },
+    javaDate: 1657132200000,
+  },
+  {
+    calendar: {
+      javaDate: 1656613800000,
+      lenient: true,
+      timeInMillis: 1656613800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 6,
+      index: 2,
+    },
+    dayofWeek: 'FRIDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 1,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 6,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 1,
+      index: 5,
+    },
+    javaDate: 1656613800000,
+  },
+  {
+    calendar: {
+      javaDate: 1656441000000,
+      lenient: true,
+      timeInMillis: 1656441000000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 5,
+      index: 2,
+    },
+    dayofWeek: 'WEDNESDAY',
+    partsOfTime: [
+      {
+        unit: 'MONTH',
+        value: 5,
+        index: 2,
+      },
+      {
+        unit: 'DAY',
+        value: 29,
+        index: 5,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 29,
+      index: 5,
+    },
+    javaDate: 1656441000000,
+  },
+  {
+    calendar: {
+      javaDate: 1654021800000,
+      lenient: true,
+      timeInMillis: 1654021800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 5,
+      index: 2,
+    },
+    dayofWeek: 'WEDNESDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 1,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 5,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 1,
+      index: 5,
+    },
+    javaDate: 1654021800000,
+  },
+  {
+    calendar: {
+      javaDate: 1653849000000,
+      lenient: true,
+      timeInMillis: 1653849000000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 4,
+      index: 2,
+    },
+    dayofWeek: 'MONDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 30,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 4,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 30,
+      index: 5,
+    },
+    javaDate: 1653849000000,
+  },
+  {
+    calendar: {
+      javaDate: 1653589800000,
+      lenient: true,
+      timeInMillis: 1653589800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 4,
+      index: 2,
+    },
+    dayofWeek: 'FRIDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 27,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 4,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 27,
+      index: 5,
+    },
+    javaDate: 1653589800000,
+  },
+  {
+    calendar: {
+      javaDate: 1653589800000,
+      lenient: true,
+      timeInMillis: 1653589800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 4,
+      index: 2,
+    },
+    dayofWeek: 'FRIDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 27,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 4,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 27,
+      index: 5,
+    },
+    javaDate: 1653589800000,
+  },
+  {
+    calendar: {
+      javaDate: 1648665000000,
+      lenient: true,
+      timeInMillis: 1648665000000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 2,
+      index: 2,
+    },
+    dayofWeek: 'THURSDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 31,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 2,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 31,
+      index: 5,
+    },
+    javaDate: 1648665000000,
+  },
+  {
+    calendar: {
+      javaDate: 1647541800000,
+      lenient: true,
+      timeInMillis: 1647541800000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 2,
+      index: 2,
+    },
+    dayofWeek: 'FRIDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 18,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 2,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 18,
+      index: 5,
+    },
+    javaDate: 1647541800000,
+  },
+  {
+    calendar: {
+      javaDate: 1647282600000,
+      lenient: true,
+      timeInMillis: 1647282600000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 2,
+      index: 2,
+    },
+    dayofWeek: 'TUESDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 15,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 2,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 15,
+      index: 5,
+    },
+    javaDate: 1647282600000,
+  },
+  {
+    calendar: {
+      javaDate: 1646937000000,
+      lenient: true,
+      timeInMillis: 1646937000000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2022,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 2,
+      index: 2,
+    },
+    dayofWeek: 'FRIDAY',
+    partsOfTime: [
+      {
+        unit: 'MONTH',
+        value: 2,
+        index: 2,
+      },
+      {
+        unit: 'DAY',
+        value: 11,
+        index: 5,
+      },
+      {
+        unit: 'YEAR',
+        value: 2022,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 11,
+      index: 5,
+    },
+    javaDate: 1646937000000,
+  },
+  {
+    calendar: {
+      javaDate: 1557858600000,
+      lenient: true,
+      timeInMillis: 1557858600000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2019,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 4,
+      index: 2,
+    },
+    dayofWeek: 'WEDNESDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 15,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 4,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2019,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 15,
+      index: 5,
+    },
+    javaDate: 1557858600000,
+  },
+  {
+    calendar: {
+      javaDate: 1557772200000,
+      lenient: true,
+      timeInMillis: 1557772200000,
+    },
+    timeUnit: 'DAY',
+    yearOfEra: {
+      unit: 'YEAR',
+      value: 2019,
+      index: 1,
+    },
+    monthOfYear: {
+      unit: 'MONTH',
+      value: 4,
+      index: 2,
+    },
+    dayofWeek: 'TUESDAY',
+    partsOfTime: [
+      {
+        unit: 'DAY',
+        value: 14,
+        index: 5,
+      },
+      {
+        unit: 'MONTH',
+        value: 4,
+        index: 2,
+      },
+      {
+        unit: 'YEAR',
+        value: 2019,
+        index: 1,
+      },
+    ],
+    dayOfMonth: {
+      unit: 'DAY',
+      value: 14,
+      index: 5,
+    },
+    javaDate: 1557772200000,
+  },
 ]
