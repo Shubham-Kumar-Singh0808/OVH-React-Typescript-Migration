@@ -28,9 +28,9 @@ const TicketReport = (): JSX.Element => {
         >
           <TicketReportFilterOptions
             selectDate={selectDate}
-            fromDate={fromDate as string}
-            toDate={toDate as string}
-            selectDepartment={selectDepartment as string}
+            fromDate={fromDate}
+            toDate={toDate}
+            selectDepartment={selectDepartment}
             setSelectDate={setSelectDate}
             setFromDate={setFromDate}
             setToDate={setToDate}

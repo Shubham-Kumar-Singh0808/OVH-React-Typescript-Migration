@@ -1,6 +1,7 @@
 // eslint-disable-next-line sonarjs/no-duplicate-string
 /* eslint-disable max-lines */
 import {
+  DepartmentNameList,
   GetTicketsDetailsList,
   GetTicketsReportList,
 } from '../../types/Support/Report/ticketReportTypes'
@@ -1020,5 +1021,24 @@ export const mockTicketDetailsData: GetTicketsDetailsList[] = [
     accessEndDate: '02/08/2022',
     createdDate: '02/08/2022 (02:00)',
     approvedBy: 'N/A',
+  },
+]
+
+export const mockDepartmentNameData: DepartmentNameList[] = [
+  {
+    id: 1,
+    name: 'Networking',
+  },
+  {
+    id: 2,
+    name: 'Administrative',
+  },
+  {
+    id: 3,
+    name: 'HR',
+  },
+  {
+    id: 4,
+    name: 'Accounts',
   },
 ]

@@ -81,11 +81,11 @@ const TicketReportTable = ({
         departmentId: selectDepartment,
         endIndex: 20,
         filter: 'All',
-        from: fromDate as string,
+        from: fromDate,
         startIndex: 0,
         subCategoryId,
         ticketStatus: '',
-        to: toDate as string,
+        to: toDate,
         trackerId,
       }),
     )

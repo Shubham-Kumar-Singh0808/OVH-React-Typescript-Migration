@@ -147,6 +147,7 @@ const TicketReportFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
+            data-testid="form-select3"
             id="selectDate"
             name="selectDate"
             value={selectDate}
@@ -241,6 +242,7 @@ const TicketReportFilterOptions = ({
           </CButton>
           <CButton
             className="cursor-pointer"
+            data-testid="clear-btn"
             color="warning btn-ovh me-1"
             onClick={handleClearTicketReports}
           >
