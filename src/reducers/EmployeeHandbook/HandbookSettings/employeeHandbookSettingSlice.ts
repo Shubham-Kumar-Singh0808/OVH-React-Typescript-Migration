@@ -169,7 +169,6 @@ const initialEmployeeHandbookSettingState: EmployeeHandbookSettingSliceState = {
   },
   selectedHandbook: [],
   selectedCountries: [],
-  reRenderHandbookList: true,
 }
 
 const employeeHandbookSettingSlice = createSlice({
@@ -263,9 +262,6 @@ const totalHandbookList = (state: RootState): TotalHandbookList[] =>
 const updateHandbookPage = (state: RootState): UpdateHandbookPage =>
   state.employeeHandbookSettings.updateHandbookPage
 
-const reRenderHandbookList = (state: RootState): boolean =>
-  state.employeeHandbookSettings.reRenderHandbookList
-
 const employeeHandbookSettingsThunk = {
   getEmployeeHandbooks,
   getTotalHandbookList,
@@ -284,7 +280,6 @@ const employeeHandbookSettingSelectors = {
   employeeCountries,
   updateHandbookPage,
   selectedCountries,
-  reRenderHandbookList,
 }
 
 export const employeeHandbookSettingService = {

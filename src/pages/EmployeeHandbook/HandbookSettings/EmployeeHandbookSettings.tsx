@@ -22,9 +22,6 @@ const EmployeeHandbookSettings = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.isLoading,
   )
-  const reRenderHandbookList = useTypedSelector(
-    reduxServices.employeeHandbookSettings.selectors.reRenderHandbookList,
-  )
 
   const {
     paginationRange,
@@ -35,14 +32,12 @@ const EmployeeHandbookSettings = (): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
-    if (reRenderHandbookList) {
-      dispatch(
-        reduxServices.employeeHandbookSettings.getEmployeeHandbooks({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-        }),
-      )
-    }
+    dispatch(
+      reduxServices.employeeHandbookSettings.getEmployeeHandbooks({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      }),
+    )
   }, [currentPage, dispatch, pageSize])
 
   const editHandbookButtonHandler = (handbookId: number) => {

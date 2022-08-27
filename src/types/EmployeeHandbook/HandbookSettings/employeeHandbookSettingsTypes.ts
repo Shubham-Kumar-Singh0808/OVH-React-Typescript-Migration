@@ -117,5 +117,4 @@ export type EmployeeHandbookSettingSliceState = {
   listSize: number
   isLoading: LoadingState
   error: ValidationError
-  reRenderHandbookList: boolean
 }
