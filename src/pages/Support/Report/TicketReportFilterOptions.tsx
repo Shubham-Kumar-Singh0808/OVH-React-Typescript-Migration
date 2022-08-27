@@ -95,7 +95,7 @@ const TicketReportFilterOptions = ({
     setSelectDepartment('')
     dispatch(
       reduxServices.ticketReport.getTicketsReport({
-        dateSelection: selectDate,
+        dateSelection: 'Today',
         departmentId: '',
         from: '',
         ticketStatus: null,

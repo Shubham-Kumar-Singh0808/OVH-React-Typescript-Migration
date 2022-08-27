@@ -101,9 +101,9 @@ const TicketDetailsTable = ({
                 ? `${ticketDetail.subject.substring(0, 30)}...`
                 : ticketDetail.subject
 
-            const descriptionLimit =
-              ticketDetail.description && ticketDetail.description.length > 30
-                ? `${ticketDetail.description.substring(0, 30)}...`
+            const ticketDescriptionLimit =
+              ticketDetail.description && ticketDetail.description.length > 32
+                ? `${ticketDetail.description.substring(0, 32)}...`
                 : ticketDetail.description
             return (
               <CTableRow key={index}>
@@ -123,9 +123,9 @@ const TicketDetailsTable = ({
                 <CTableDataCell>
                   <CLink
                     className="cursor-pointer text-decoration-none text-primary"
-                    onClick={() => handleModal(ticketDetail?.description)}
+                    onClick={() => handleModal(ticketDetail.description)}
                   >
-                    {parse(descriptionLimit)}
+                    {parse(ticketDescriptionLimit)}
                   </CLink>
                 </CTableDataCell>
                 <CTableDataCell>{ticketDetail.priority}</CTableDataCell>
