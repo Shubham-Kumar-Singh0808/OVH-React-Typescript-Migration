@@ -78,6 +78,118 @@ describe('EmployeeHandbookSettings Slice', () => {
       })
     })
 
+    it('Should be able to set isLoading to "failed" if `getEmployeeHandbooks` is rejected', () => {
+      const rejectedAction = {
+        type: employeeHandbookSettingService.getEmployeeHandbooks.rejected.type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, rejectedAction)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.failed,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: undefined,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if `getEmployeeHandbooks` is pending', () => {
+      const action = {
+        type: employeeHandbookSettingService.getEmployeeHandbooks.pending.type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.loading,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if `getEmployeeHandbooks` is fulfilled', () => {
+      const action = {
+        type: employeeHandbookSettingService.getEmployeeHandbooks.fulfilled
+          .type,
+        payload: mockHandbookList,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: undefined,
+        isLoading: ApiLoadingState.succeeded,
+        employeeHandbooks: undefined,
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if `getEmployeeHandbooksList` is rejected', () => {
+      const rejectedAction = {
+        type: employeeHandbookSettingService.getTotalHandbookList.rejected.type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, rejectedAction)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.failed,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: undefined,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if `getTotalHandbookList` is pending', () => {
+      const action = {
+        type: employeeHandbookSettingService.getTotalHandbookList.pending.type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.loading,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if `getTotalHandbookList` is fulfilled', () => {
+      const action = {
+        type: employeeHandbookSettingService.getTotalHandbookList.fulfilled
+          .type,
+        payload: mockHandbookList,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.succeeded,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: mockHandbookList,
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+      })
+    })
+
     it('Should be able to set isLoading to "failed" if `getEmployeeCountries` is rejected', () => {
       const rejectedAction = {
         type: employeeHandbookSettingService.getEmployeeCountries.rejected.type,
