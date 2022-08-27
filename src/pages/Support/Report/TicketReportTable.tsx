@@ -9,7 +9,7 @@ import {
   CRow,
   CLink,
 } from '@coreui/react-pro'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { usePagination } from '../../../middleware/hooks/usePagination'

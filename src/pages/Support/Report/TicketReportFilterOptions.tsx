@@ -120,7 +120,6 @@ const TicketReportFilterOptions = ({
   }, [selectDate])
 
   const commonFormatDate = 'l'
-  console.log(fromDate)
   return (
     <>
       <CRow className="mt-3">
