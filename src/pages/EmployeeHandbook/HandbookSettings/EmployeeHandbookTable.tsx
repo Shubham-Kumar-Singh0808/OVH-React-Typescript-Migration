@@ -19,8 +19,6 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeHandbookTable = (
   props: EmployeeHandbookTableProps,

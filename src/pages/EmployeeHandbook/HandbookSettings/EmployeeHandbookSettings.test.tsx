@@ -107,5 +107,21 @@ describe('Handbook Settings Component Testing', () => {
       userEvent.click(btnElement)
       expect(history.location.pathname).toBe('/EmployeeHandbook')
     })
+
+    it('should redirect to Add New Page Component', async () => {
+      const addPageButton = screen.getByRole('button', { name: 'Add Page' })
+      userEvent.click(addPageButton)
+      await waitFor(() => {
+        expect(
+          render(
+            <AddNewHandbook
+              headerTitle="Add New Page"
+              confirmButtonText="Save"
+              backButtonHandler={jest.fn()}
+            />,
+          ),
+        )
+      })
+    })
   })
 })
