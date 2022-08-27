@@ -255,7 +255,7 @@ describe('EmployeeHandbookSettings Slice', () => {
         employeeCountries: [],
         error: null,
         totalHandbookList: [],
-        updateHandbookPage: {},
+        updateHandbookPage: {} as UpdateHandbookPage,
         selectedHandbook: [],
         selectedCountries: [],
         reRenderHandbookList: true,

@@ -11,7 +11,13 @@ import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSet
 
 describe('Handbook Settings Component Testing', () => {
   test('should render Handbook Settings Component without crashing', () => {
-    render(<EmployeeHandbookSettings />)
+    render(<EmployeeHandbookSettings />, {
+      preloadedState: {
+        employeeHandbookSettings: {
+          employeeHandbooks: mockEmployeeHandbookList,
+        },
+      },
+    })
     expect(screen.getByText('Handbook Settings')).toBeInTheDocument()
   })
   test('render edit page component', () => {
@@ -34,25 +40,46 @@ describe('Handbook Settings Component Testing', () => {
       />,
     )
   })
-  test('should able to redirect to Employee Handbook page', async () => {
+
+  describe('test with data', () => {
     const history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <EmployeeHandbookSettings />
-      </Router>,
-      {
-        preloadedState: {
-          employeeHandbookSettings: {
-            employeeHandbooks: mockEmployeeHandbookList,
-            listSize: 43,
+    beforeEach(() => {
+      render(
+        <Router history={history}>
+          <EmployeeHandbookSettings />
+        </Router>,
+        {
+          preloadedState: {
+            employeeHandbookSettings: {
+              employeeHandbooks: mockEmployeeHandbookList,
+              listSize: 43,
+            },
           },
         },
-      },
-    )
-    const btnElement = screen.getByRole('button', { name: 'Back' })
-    userEvent.click(btnElement)
-    await waitFor(() => {
-      expect(history.location.pathname).toBe('/EmployeeHandbook')
+      )
+    })
+    test('should able to redirect to Employee Handbook page', async () => {
+      const btnElement = screen.getByRole('button', { name: 'Back' })
+      userEvent.click(btnElement)
+      await waitFor(() => {
+        expect(history.location.pathname).toBe('/EmployeeHandbook')
+      })
+    })
+
+    it('should redirect to Add New Page Component', async () => {
+      const addPageButton = screen.getByRole('button', { name: 'Add Page' })
+      userEvent.click(addPageButton)
+      await waitFor(() => {
+        expect(
+          render(
+            <AddNewHandbook
+              headerTitle="Add New Page"
+              confirmButtonText="Save"
+              backButtonHandler={jest.fn()}
+            />,
+          ),
+        )
+      })
     })
   })
 })

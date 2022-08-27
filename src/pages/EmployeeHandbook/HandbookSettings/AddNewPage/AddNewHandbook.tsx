@@ -313,7 +313,7 @@ function AddNewHandbook({
                 </CCol>
               </CRow>
               <CRow>
-                {employeeCountries.map((country, index) => {
+                {employeeCountries?.map((country, index) => {
                   return (
                     <CCol sm={3} key={index} className="me-4">
                       <CFormCheck
