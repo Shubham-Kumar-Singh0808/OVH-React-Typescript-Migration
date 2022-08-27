@@ -57,38 +57,38 @@ export type GetTicketDetails = {
 }
 
 export type GetTicketsDetailsList = {
-  id: 19093
+  id: number
   departmentId: 1
-  departmentName: 'Networking'
-  categoryId: 9
-  categoryName: 'Access'
-  subCategoryId: 56
-  subCategoryName: 'Create new Git Repository'
-  subject: 'tset'
-  description: 'tsdds'
-  status: 'New'
-  priority: 'Normal'
-  startDate: '26/08/2022'
+  departmentName: string
+  categoryId: number
+  categoryName: string
+  subCategoryId: number
+  subCategoryName: string
+  subject: string
+  description: string
+  status: string
+  priority: string
+  startDate: string
   endDate: null
   assigneeId: null
-  employeeName: 'Admin Rbt'
-  percentageDone: 0
-  actualTime: '0.00'
-  authorName: 'Admin Rbt'
+  employeeName: string
+  percentageDone: number
+  actualTime: string
+  authorName: string
   assigneeName: null
-  approvalStatus: 'N/A'
+  approvalStatus: string
   filePath: null
-  estimatedTime: '1.00'
+  estimatedTime: string
   watcherIds: null
   watcherNames: []
   disableApprove: true
   disableCancel: false
   tracker: 1
-  trackerName: 'Issue'
-  accessStartDate: '26/08/2022'
-  accessEndDate: '27/08/2022'
-  createdDate: '26/08/2022 (11:44)'
-  approvedBy: 'N/A'
+  trackerName: string
+  accessStartDate: string
+  accessEndDate: string
+  createdDate: string
+  approvedBy: string
 }
 
 export type TicketDetailsProps = {

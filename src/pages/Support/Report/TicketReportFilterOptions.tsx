@@ -63,7 +63,7 @@ const TicketReportFilterOptions = ({
     dispatch(
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
-        departmentId: selectDepartment as string,
+        departmentId: selectDepartment,
         from: new Date(fromDate as string).toLocaleDateString(deviceLocale, {
           year: 'numeric',
           month: '2-digit',

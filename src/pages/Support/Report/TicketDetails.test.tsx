@@ -3,15 +3,11 @@ import React from 'react'
 import TicketDetails from './TicketDetails'
 import { render, screen } from '../../../test/testUtils'
 
+const mockSetToggle = jest.fn()
+
 describe('Ticket Report Component Testing', () => {
   test('should render Ticket Report component with out crashing', () => {
-    render(
-      <TicketDetails
-        setToggle={function (): void {
-          throw new Error('Function not implemented.')
-        }}
-      />,
-    )
+    render(<TicketDetails setToggle={mockSetToggle} />)
     expect(screen.getByText('Ticket Details')).toBeInTheDocument()
   })
 })

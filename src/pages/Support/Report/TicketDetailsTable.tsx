@@ -60,9 +60,9 @@ const TicketDetailsTable = ({
     [getTicketDetailsList, currentPage, pageSize],
   )
 
-  const handleModal = (productSpecification: string) => {
+  const handleModal = (ticket: string) => {
     setIsModalVisible(true)
-    setSubject(productSpecification)
+    setSubject(ticket)
   }
   return (
     <>
@@ -95,7 +95,7 @@ const TicketDetailsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentPageItems.map((ticketDetail, index) => {
+          {currentPageItems?.map((ticketDetail, index) => {
             const subjectLimit =
               ticketDetail.subject && ticketDetail.subject.length > 30
                 ? `${ticketDetail.subject.substring(0, 30)}...`
@@ -123,7 +123,7 @@ const TicketDetailsTable = ({
                 <CTableDataCell>
                   <CLink
                     className="cursor-pointer text-decoration-none text-primary"
-                    onClick={() => handleModal(ticketDetail.description)}
+                    onClick={() => handleModal(ticketDetail?.description)}
                   >
                     {parse(descriptionLimit)}
                   </CLink>
