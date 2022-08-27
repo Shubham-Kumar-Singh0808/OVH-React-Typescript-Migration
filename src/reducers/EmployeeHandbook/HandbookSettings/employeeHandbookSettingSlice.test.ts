@@ -261,5 +261,124 @@ describe('EmployeeHandbookSettings Slice', () => {
         reRenderHandbookList: true,
       })
     })
+
+    it('Should be able to set isLoading to "failed" if `addNewHandbook` is rejected', () => {
+      const rejectedAction = {
+        type: employeeHandbookSettingService.addNewHandbook.rejected.type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, rejectedAction)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.failed,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: undefined,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+        reRenderHandbookList: true,
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if `addNewHandbook` is pending', () => {
+      const action = {
+        type: employeeHandbookSettingService.addNewHandbook.pending.type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.loading,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+        reRenderHandbookList: true,
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if `addNewHandbook` is fulfilled', () => {
+      const action = {
+        type: employeeHandbookSettingService.addNewHandbook.fulfilled.type,
+        payload: mockHandbookList,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.succeeded,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: [],
+        updateHandbookPage: {},
+        selectedHandbook: [],
+        selectedCountries: [],
+        reRenderHandbookList: true,
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if `deleteEmployeeHandbook` is rejected', () => {
+      const rejectedAction = {
+        type: employeeHandbookSettingService.deleteEmployeeHandbook.rejected
+          .type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, rejectedAction)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.failed,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: undefined,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+        reRenderHandbookList: true,
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if `deleteEmployeeHandbook` is pending', () => {
+      const action = {
+        type: employeeHandbookSettingService.deleteEmployeeHandbook.pending
+          .type,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.loading,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: [],
+        updateHandbookPage: {} as UpdateHandbookPage,
+        selectedHandbook: [],
+        selectedCountries: [],
+        reRenderHandbookList: true,
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if `deleteEmployeeHandbook` is fulfilled', () => {
+      const action = {
+        type: employeeHandbookSettingService.deleteEmployeeHandbook.fulfilled
+          .type,
+        payload: mockHandbookList,
+      }
+      const state = reducer(initialEmployeeHandbookSettingState, action)
+      expect(state).toEqual({
+        listSize: 0,
+        isLoading: ApiLoadingState.succeeded,
+        employeeHandbooks: [],
+        employeeCountries: [],
+        error: null,
+        totalHandbookList: [],
+        updateHandbookPage: {},
+        selectedHandbook: [],
+        selectedCountries: [],
+        reRenderHandbookList: true,
+      })
+    })
   })
 })
