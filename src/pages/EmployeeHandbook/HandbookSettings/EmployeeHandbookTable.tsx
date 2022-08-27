@@ -2,6 +2,7 @@ import {
   CButton,
   CCol,
   CRow,
+  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -17,6 +18,9 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeHandbookTable = (
   props: EmployeeHandbookTableProps,
@@ -105,9 +109,14 @@ const EmployeeHandbookTable = (
       dispatch(reduxServices.app.actions.addToast(toastElement))
     }
   }
+
+  const isLoading = useTypedSelector(
+    reduxServices.employeeHandbookSettings.selectors.isLoading,
+  )
+
   return (
     <>
-      {employeeHandbooks.length ? (
+      {employeeHandbooks.length && isLoading !== ApiLoadingState.loading ? (
         <>
           <CTable striped responsive align="middle">
             <CTableHead>
@@ -133,7 +142,7 @@ const EmployeeHandbookTable = (
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {employeeHandbooks.map((employeeHandbook, index) => {
+              {employeeHandbooks?.map((employeeHandbook, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell scope="row">
@@ -233,6 +242,9 @@ const EmployeeHandbookTable = (
           </CRow>
         </>
       ) : (
+        <CSpinner data-testid="handbookSettings-loader" />
+      )}
+      {!employeeHandbooks?.length && isLoading !== ApiLoadingState.loading && (
         <CCol>
           <CRow>
             <h4 className="text-center">No data to display</h4>

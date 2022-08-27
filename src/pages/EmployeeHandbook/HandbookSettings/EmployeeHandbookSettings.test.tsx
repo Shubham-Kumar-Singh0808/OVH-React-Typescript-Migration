@@ -9,6 +9,8 @@ import AddNewHandbook from './AddNewPage/AddNewHandbook'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { mockHandbookList } from '../../../test/data/handbookTotalListData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -58,14 +60,14 @@ describe('Handbook Settings Component Testing', () => {
         {
           preloadedState: {
             employeeHandbookSettings: {
-              employeeHandbooks: mockEmployeeHandbookList,
+              employeeHandbooks: mockHandbookList,
               listSize: 43,
             },
           },
         },
       )
     })
-    it('should redirect to Add New Page Component', async () => {
+    it('should redirect to Edit Page Component', async () => {
       const editButton = screen.getByTestId('handbook-edit-btn0')
       userEvent.click(editButton)
       await waitFor(() => {
@@ -75,12 +77,35 @@ describe('Handbook Settings Component Testing', () => {
               headerTitle="Edit Page"
               confirmButtonText="Update"
               backButtonHandler={jest.fn()}
-              isEditHandbook={false}
+              isEditHandbook={true}
               handbookId={0}
             />,
           ),
         )
       })
+    })
+  })
+  describe('test', () => {
+    const history = createMemoryHistory()
+    beforeEach(() => {
+      render(
+        <Router history={history}>
+          <EmployeeHandbookSettings />
+        </Router>,
+        {
+          preloadedState: {
+            employeeHandbookSettings: {
+              employeeHandbooks: mockHandbookList,
+              listSize: 43,
+            },
+          },
+        },
+      )
+    })
+    test('should able to redirect to Employee Handbook page', () => {
+      const btnElement = screen.getByRole('button', { name: 'Back' })
+      userEvent.click(btnElement)
+      expect(history.location.pathname).toBe('/EmployeeHandbook')
     })
   })
 })
