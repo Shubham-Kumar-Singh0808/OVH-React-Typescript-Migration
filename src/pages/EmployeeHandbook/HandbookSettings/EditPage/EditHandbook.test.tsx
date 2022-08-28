@@ -29,6 +29,26 @@ const mockBackButtonHandler = jest.fn()
 const cbAllCountries = 'ch-All-countries'
 
 describe('Edit Page Component Testing', () => {
+  test('render edit page component', () => {
+    render(
+      <EditHandbook
+        headerTitle="Edit Page"
+        confirmButtonText="Update"
+        backButtonHandler={mockBackButtonHandler}
+        handbookId={0}
+        isEditHandbook={false}
+      />,
+      {
+        preloadedState: {
+          employeeHandbookSettings: {
+            employeeCountries: mockCountries,
+            selectedCountries: mockCountries,
+            totalHandbookList: mockHandbookList,
+          },
+        },
+      },
+    )
+  })
   describe('Without data', () => {
     beforeEach(() => {
       render(
@@ -211,6 +231,7 @@ describe('Edit Page Component Testing', () => {
       mockCountries.forEach((allCountries) => {
         expect(screen.getByText(allCountries.name)).toBeInTheDocument()
       })
+      expect(mockCountries).toHaveLength(6)
       expect(selectedCountries).toBeChecked()
     })
     test('should render selected id record details upon clicking edit button ', async () => {
