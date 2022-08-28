@@ -38,6 +38,15 @@ describe('Handbook Settings Component Testing', () => {
         handbookId={0}
         isEditHandbook={false}
       />,
+      {
+        preloadedState: {
+          employeeHandbookSettings: {
+            employeeCountries: mockCountries,
+            selectedCountries: mockCountries,
+            totalHandbookList: mockHandbookList,
+          },
+        },
+      },
     )
   })
   test('render Add Page Component', () => {
@@ -82,7 +91,7 @@ describe('Handbook Settings Component Testing', () => {
               confirmButtonText="Update"
               backButtonHandler={backButtonHandler}
               isEditHandbook={true}
-              handbookId={0}
+              handbookId={1}
             />,
             {
               preloadedState: {
