@@ -9,7 +9,10 @@ import AddNewHandbook from './AddNewPage/AddNewHandbook'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
-import { mockHandbookList } from '../../../test/data/handbookTotalListData'
+import {
+  mockCountries,
+  mockHandbookList,
+} from '../../../test/data/handbookTotalListData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -81,6 +84,15 @@ describe('Handbook Settings Component Testing', () => {
               isEditHandbook={true}
               handbookId={0}
             />,
+            {
+              preloadedState: {
+                employeeHandbookSettings: {
+                  employeeCountries: mockCountries,
+                  selectedCountries: mockCountries,
+                  totalHandbookList: mockHandbookList,
+                },
+              },
+            },
           ),
         )
         await waitFor(() => {
@@ -126,6 +138,14 @@ describe('Handbook Settings Component Testing', () => {
               confirmButtonText="Save"
               backButtonHandler={backButtonHandler}
             />,
+            {
+              preloadedState: {
+                employeeHandbookSettings: {
+                  employeeCountries: mockCountries,
+                  totalHandbookList: mockHandbookList,
+                },
+              },
+            },
           ),
         )
         waitFor(() => {
