@@ -220,11 +220,6 @@ const EditHandbook = ({
       )
     ) {
       backButtonHandler()
-      dispatch(
-        reduxServices.employeeHandbookSettings.actions.setReRenderHandbooks(
-          true,
-        ),
-      )
       dispatch(reduxServices.app.actions.addToast(updateToastMessage))
     } else if (
       reduxServices.employeeHandbookSettings.updateEmployeeHandbook.rejected.match(

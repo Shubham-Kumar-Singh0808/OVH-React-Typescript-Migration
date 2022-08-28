@@ -174,11 +174,7 @@ const initialEmployeeHandbookSettingState: EmployeeHandbookSettingSliceState = {
 const employeeHandbookSettingSlice = createSlice({
   name: 'employeeHandbookSettings',
   initialState: initialEmployeeHandbookSettingState,
-  reducers: {
-    setReRenderHandbooks: (state, action) => {
-      return { ...state, reRenderHandbookList: action.payload }
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getTotalHandbookList.fulfilled, (state, action) => {
