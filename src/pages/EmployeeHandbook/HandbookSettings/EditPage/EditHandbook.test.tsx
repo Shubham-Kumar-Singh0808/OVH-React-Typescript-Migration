@@ -205,6 +205,14 @@ describe('Edit Page Component Testing', () => {
         },
       )
     })
+    test('should render all countries data', () => {
+      const selectedCountries = screen.getByTestId(cbAllCountries)
+      userEvent.click(selectedCountries)
+      mockCountries.forEach((allCountries) => {
+        expect(screen.getByText(allCountries.name)).toBeInTheDocument()
+      })
+      expect(selectedCountries).toBeChecked()
+    })
     test('should render selected id record details upon clicking edit button ', async () => {
       const titleInput = screen.getByTestId(pageTitle)
       expect(titleInput).toHaveValue('Employment Types and Compensation Policy')
