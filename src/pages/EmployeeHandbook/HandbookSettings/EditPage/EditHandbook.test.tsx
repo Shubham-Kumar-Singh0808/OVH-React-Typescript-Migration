@@ -200,7 +200,7 @@ describe('Edit Page Component Testing', () => {
           <EditHandbook
             headerTitle="Edit Page"
             confirmButtonText="Update"
-            backButtonHandler={jest.fn()}
+            backButtonHandler={mockBackButtonHandler}
             isEditHandbook={true}
             handbookId={3}
           />
@@ -242,6 +242,7 @@ describe('Edit Page Component Testing', () => {
       const updateBtn = screen.getByTestId('btn-update')
       await waitFor(() => {
         expect(updateBtn).toBeEnabled()
+        userEvent.click(updateBtn)
       })
     })
     test('update the handbook details and redirect to handbookSettings page', async () => {

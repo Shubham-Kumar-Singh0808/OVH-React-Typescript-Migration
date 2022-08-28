@@ -38,15 +38,6 @@ describe('Handbook Settings Component Testing', () => {
         handbookId={0}
         isEditHandbook={false}
       />,
-      {
-        preloadedState: {
-          employeeHandbookSettings: {
-            employeeCountries: mockCountries,
-            selectedCountries: mockCountries,
-            totalHandbookList: mockHandbookList,
-          },
-        },
-      },
     )
   })
   test('render Add Page Component', () => {
@@ -83,6 +74,7 @@ describe('Handbook Settings Component Testing', () => {
     it('should redirect to Edit Page Component', async () => {
       const editButton = screen.getByTestId('handbook-edit-btn0')
       userEvent.click(editButton)
+      expect(mockEditButtonHandler).toBeCalledTimes(1)
       await waitFor(async () => {
         expect(
           render(
@@ -130,9 +122,9 @@ describe('Handbook Settings Component Testing', () => {
         },
       )
     })
-    test('should able to redirect to Employee Handbook page', () => {
-      const btnElement = screen.getByRole('button', { name: 'Back' })
-      userEvent.click(btnElement)
+    test('should able to click back button', () => {
+      const backBtnElement = screen.getByRole('button', { name: 'Back' })
+      userEvent.click(backBtnElement)
       expect(history.location.pathname).toBe('/EmployeeHandbook')
     })
 
