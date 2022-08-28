@@ -9,11 +9,12 @@ import AddNewHandbook from './AddNewPage/AddNewHandbook'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockHandbookList } from '../../../test/data/handbookTotalListData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
+const mockEditButtonHandler = jest.fn()
+const backButtonHandler = jest.fn()
 describe('Handbook Settings Component Testing', () => {
   test('should render Handbook Settings Component without crashing', () => {
     render(<EmployeeHandbookSettings />, {
@@ -30,7 +31,7 @@ describe('Handbook Settings Component Testing', () => {
       <EditHandbook
         headerTitle="Edit Page"
         confirmButtonText="Update"
-        backButtonHandler={jest.fn()}
+        backButtonHandler={backButtonHandler}
         handbookId={0}
         isEditHandbook={false}
       />,
@@ -41,7 +42,7 @@ describe('Handbook Settings Component Testing', () => {
       <AddNewHandbook
         headerTitle="Add New Page"
         confirmButtonText="Save"
-        backButtonHandler={jest.fn()}
+        backButtonHandler={backButtonHandler}
       />,
     )
   })
@@ -55,7 +56,7 @@ describe('Handbook Settings Component Testing', () => {
           currentPage={1}
           pageSize={20}
           paginationRange={[1, 2, 3]}
-          editHandbookButtonHandler={jest.fn()}
+          editHandbookButtonHandler={mockEditButtonHandler}
         />,
         {
           preloadedState: {
@@ -70,18 +71,24 @@ describe('Handbook Settings Component Testing', () => {
     it('should redirect to Edit Page Component', async () => {
       const editButton = screen.getByTestId('handbook-edit-btn0')
       userEvent.click(editButton)
-      await waitFor(() => {
+      await waitFor(async () => {
         expect(
           render(
             <EditHandbook
               headerTitle="Edit Page"
               confirmButtonText="Update"
-              backButtonHandler={jest.fn()}
+              backButtonHandler={backButtonHandler}
               isEditHandbook={true}
               handbookId={0}
             />,
           ),
         )
+        await waitFor(() => {
+          const editPageBackButton = screen.getByRole('button', {
+            name: 'Back',
+          })
+          userEvent.click(editPageBackButton)
+        })
       })
     })
   })
@@ -117,10 +124,15 @@ describe('Handbook Settings Component Testing', () => {
             <AddNewHandbook
               headerTitle="Add New Page"
               confirmButtonText="Save"
-              backButtonHandler={jest.fn()}
+              backButtonHandler={backButtonHandler}
             />,
           ),
         )
+        waitFor(() => {
+          const addPageBackButton = screen.getByRole('button', { name: 'Back' })
+          userEvent.click(addPageBackButton)
+          expect(history.location.pathname).toBe('/handbooksettings')
+        })
       })
     })
   })
