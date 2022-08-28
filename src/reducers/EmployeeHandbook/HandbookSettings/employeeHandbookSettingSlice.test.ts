@@ -2,6 +2,7 @@ import { ApiLoadingState } from '../../../../src/middleware/api/apiList'
 import reducer, {
   employeeHandbookSettingService,
 } from '../../../reducers/EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
+import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 import { mockHandbookList } from '../../../test/data/handbookListData'
 import { mockCountries } from '../../../test/data/handbookTotalListData'
 import {
@@ -118,7 +119,7 @@ describe('EmployeeHandbookSettings Slice', () => {
       const action = {
         type: employeeHandbookSettingService.getEmployeeHandbooks.fulfilled
           .type,
-        payload: mockHandbookList,
+        payload: mockEmployeeHandbookList,
       }
       const state = reducer(initialEmployeeHandbookSettingState, action)
       expect(state).toEqual({
@@ -288,7 +289,6 @@ describe('EmployeeHandbookSettings Slice', () => {
       const action = {
         type: employeeHandbookSettingService.updateEmployeeHandbook.fulfilled
           .type,
-        payload: mockHandbookList,
       }
       const state = reducer(initialEmployeeHandbookSettingState, action)
       expect(state).toEqual({
@@ -343,7 +343,6 @@ describe('EmployeeHandbookSettings Slice', () => {
     it('Should be able to set isLoading to "success" if `addNewHandbook` is fulfilled', () => {
       const action = {
         type: employeeHandbookSettingService.addNewHandbook.fulfilled.type,
-        payload: mockHandbookList,
       }
       const state = reducer(initialEmployeeHandbookSettingState, action)
       expect(state).toEqual({
@@ -401,7 +400,6 @@ describe('EmployeeHandbookSettings Slice', () => {
       const action = {
         type: employeeHandbookSettingService.deleteEmployeeHandbook.fulfilled
           .type,
-        payload: mockHandbookList,
       }
       const state = reducer(initialEmployeeHandbookSettingState, action)
       expect(state).toEqual({
