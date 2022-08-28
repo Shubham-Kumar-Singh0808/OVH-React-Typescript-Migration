@@ -5,7 +5,13 @@ import { CKEditor } from 'ckeditor4-react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import EditHandbook from './EditHandbook'
-import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import {
   pageTitle,
   pageName,
@@ -274,6 +280,7 @@ describe('Edit Page Component Testing', () => {
         },
       )
     })
+    afterEach(cleanup)
     test('should display error message, when user enters already exist value in the display order input field', async () => {
       const displayOrderInput = screen.getByTestId(displayOrder)
       expect(displayOrderInput).toHaveValue('6')

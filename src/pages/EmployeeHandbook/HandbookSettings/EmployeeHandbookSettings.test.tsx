@@ -105,6 +105,55 @@ describe('Handbook Settings Component Testing', () => {
       })
     })
   })
+  describe('Edit Page Component testing', () => {
+    beforeEach(() => {
+      render(
+        <EmployeeHandbookTable
+          setCurrentPage={mockSetCurrentPage}
+          setPageSize={mockSetPageSize}
+          currentPage={2}
+          pageSize={40}
+          paginationRange={[1, 2, 3]}
+          editHandbookButtonHandler={mockEditButtonHandler}
+        />,
+        {
+          preloadedState: {
+            employeeHandbookSettings: {
+              employeeHandbooks: mockHandbookList,
+              listSize: 43,
+            },
+          },
+        },
+      )
+    })
+    it('should redirect to Edit Handbook Page Component `id=33` ', async () => {
+      const editButtonEl = screen.getByTestId('handbook-edit-btn33')
+      userEvent.click(editButtonEl)
+      expect(mockEditButtonHandler).toBeCalledTimes(1)
+      await waitFor(() => {
+        expect(
+          render(
+            <EditHandbook
+              headerTitle="Edit Page"
+              confirmButtonText="Update"
+              backButtonHandler={backButtonHandler}
+              isEditHandbook={true}
+              handbookId={33}
+            />,
+            {
+              preloadedState: {
+                employeeHandbookSettings: {
+                  employeeCountries: mockCountries,
+                  selectedCountries: mockCountries,
+                  totalHandbookList: mockHandbookList,
+                },
+              },
+            },
+          ),
+        )
+      })
+    })
+  })
   describe('test', () => {
     const history = createMemoryHistory()
     beforeEach(() => {
@@ -150,7 +199,9 @@ describe('Handbook Settings Component Testing', () => {
           ),
         )
         waitFor(() => {
-          const addPageBackButton = screen.getByRole('button', { name: 'Back' })
+          const addPageBackButton = screen.getByRole('button', {
+            name: 'Back',
+          })
           userEvent.click(addPageBackButton)
           expect(history.location.pathname).toBe('/handbooksettings')
         })
