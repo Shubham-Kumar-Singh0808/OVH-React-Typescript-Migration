@@ -58,7 +58,7 @@ export type GetTicketDetails = {
 
 export type GetTicketsDetailsList = {
   id: number
-  departmentId: 1
+  departmentId: number
   departmentName: string
   categoryId: number
   categoryName: string
@@ -83,7 +83,7 @@ export type GetTicketsDetailsList = {
   watcherNames: []
   disableApprove: true
   disableCancel: false
-  tracker: 1
+  tracker: number
   trackerName: string
   accessStartDate: string
   accessEndDate: string

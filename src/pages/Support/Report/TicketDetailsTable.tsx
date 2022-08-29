@@ -70,6 +70,7 @@ const TicketDetailsTable = ({
         <CCol className="text-end" md={4}>
           <CButton
             color="info"
+            data-testid="toggle-back-button"
             className="btn-ovh me-1"
             onClick={backButtonHandler}
           >
@@ -111,23 +112,35 @@ const TicketDetailsTable = ({
                   {ticketDetail.id}
                 </CTableHeaderCell>
                 <CTableDataCell>{ticketDetail.employeeName}</CTableDataCell>
-                <CTableDataCell>
-                  <CLink
-                    className="cursor-pointer text-decoration-none text-primary"
-                    onClick={() => handleModal(ticketDetail.subject)}
-                  >
-                    {parse(subjectLimit)}
-                  </CLink>
-                </CTableDataCell>
+                {subjectLimit ? (
+                  <CTableDataCell>
+                    <CLink
+                      className="cursor-pointer text-decoration-none text-primary"
+                      data-testid={`subject-comments${index}`}
+                      onClick={() => handleModal(ticketDetail.subject)}
+                    >
+                      {parse(subjectLimit)}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>{`N/A`}</CTableDataCell>
+                )}
                 <CTableDataCell>{ticketDetail.trackerName}</CTableDataCell>
-                <CTableDataCell>
-                  <CLink
-                    className="cursor-pointer text-decoration-none text-primary"
-                    onClick={() => handleModal(ticketDetail.description)}
-                  >
-                    {parse(ticketDescriptionLimit)}
-                  </CLink>
-                </CTableDataCell>
+                {ticketDescriptionLimit ? (
+                  <CTableDataCell>
+                    <CLink
+                      className="cursor-pointer text-decoration-none text-primary"
+                      data-testid={`dsc-comments${index}`}
+                      onClick={() => handleModal(ticketDetail.description)}
+                    >
+                      {ticketDetail.description !== null
+                        ? parse(ticketDescriptionLimit)
+                        : 'N/A'}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>{`N/A`}</CTableDataCell>
+                )}
                 <CTableDataCell>{ticketDetail.priority}</CTableDataCell>
                 <CTableDataCell>{ticketDetail.startDate}</CTableDataCell>
                 <CTableDataCell>{ticketDetail.approvedBy}</CTableDataCell>

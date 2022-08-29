@@ -36,3 +36,33 @@ describe('Ticket Details Table Component Testing', () => {
     })
   })
 })
+
+describe('Employee Ticket Details', () => {
+  beforeEach(() => {
+    render(<TicketDetailsTable backButtonHandler={mockBackButton} />, {
+      preloadedState: {
+        ticketReport: {
+          ticketsDetailsList: mockTicketDetailsData,
+        },
+      },
+    })
+  })
+  test('should open modal when clicking on ticket subject link', async () => {
+    const linkElement = screen.getByTestId('subject-comments2')
+    userEvent.click(linkElement)
+    const empComment = screen.getAllByText('Hi')
+    await waitFor(() => {
+      expect(empComment[0]).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+    })
+  })
+  test('should open modal when clicking on ticket description link', async () => {
+    const linkElement = screen.getByTestId('dsc-comments1')
+    userEvent.click(linkElement)
+    const mgrComment = screen.getAllByText('HI')
+    await waitFor(() => {
+      expect(mgrComment[0]).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+    })
+  })
+})

@@ -79,6 +79,8 @@ const TicketReportFilterOptions = ({
     )
   }
 
+  // useEffect(() => {}, [])
+
   const sortedDepartmentNames = useMemo(() => {
     if (getDepartmentNameList) {
       return getDepartmentNameList
@@ -236,7 +238,11 @@ const TicketReportFilterOptions = ({
             className="cursor-pointer"
             color="success btn-ovh me-1"
             onClick={handleTicketReports}
-            // disabled={!isViewButtonEnabled}
+            disabled={
+              showSelectCustom
+                ? !(showSelectCustom && fromDate !== '' && toDate !== '')
+                : false
+            }
           >
             View
           </CButton>
