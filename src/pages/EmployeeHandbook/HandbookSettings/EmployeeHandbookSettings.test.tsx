@@ -12,6 +12,7 @@ import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSet
 import {
   mockCountries,
   mockHandbookList,
+  mockSelectedCountries,
 } from '../../../test/data/handbookTotalListData'
 
 const mockSetCurrentPage = jest.fn()
@@ -107,6 +108,15 @@ describe('Handbook Settings Component Testing', () => {
   })
   describe('Edit Page Component testing', () => {
     beforeEach(() => {
+      render(<EmployeeHandbookSettings />, {
+        preloadedState: {
+          employeeHandbookSettings: {
+            employeeHandbooks: mockEmployeeHandbookList,
+          },
+        },
+      })
+    })
+    it('should redirect to Edit Handbook Page Component `id=33` ', async () => {
       render(
         <EmployeeHandbookTable
           setCurrentPage={mockSetCurrentPage}
@@ -125,8 +135,6 @@ describe('Handbook Settings Component Testing', () => {
           },
         },
       )
-    })
-    it('should redirect to Edit Handbook Page Component `id=33` ', async () => {
       const editButtonEl = screen.getByTestId('handbook-edit-btn33')
       userEvent.click(editButtonEl)
       expect(mockEditButtonHandler).toBeCalledTimes(1)
@@ -144,7 +152,7 @@ describe('Handbook Settings Component Testing', () => {
               preloadedState: {
                 employeeHandbookSettings: {
                   employeeCountries: mockCountries,
-                  selectedCountries: mockCountries,
+                  selectedCountries: mockSelectedCountries,
                   totalHandbookList: mockHandbookList,
                 },
               },
@@ -171,12 +179,6 @@ describe('Handbook Settings Component Testing', () => {
         },
       )
     })
-    test('should able to click back button', () => {
-      const backBtnElement = screen.getByRole('button', { name: 'Back' })
-      userEvent.click(backBtnElement)
-      expect(history.location.pathname).toBe('/EmployeeHandbook')
-    })
-
     it('should redirect to Add New Page Component', async () => {
       const addPageButton = screen.getByRole('button', { name: 'Add Page' })
       userEvent.click(addPageButton)
@@ -203,7 +205,7 @@ describe('Handbook Settings Component Testing', () => {
             name: 'Back',
           })
           userEvent.click(addPageBackButton)
-          expect(history.location.pathname).toBe('/handbooksettings')
+          expect(backButtonHandler).toBeCalledTimes(1)
         })
       })
     })
