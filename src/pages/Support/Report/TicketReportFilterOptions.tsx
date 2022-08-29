@@ -34,10 +34,6 @@ const TicketReportFilterOptions = ({
     reduxServices.ticketReport.selectors.departmentNameList,
   )
 
-  const getTicketReportList = useTypedSelector(
-    reduxServices.ticketReport.selectors.ticketsReport,
-  )
-
   const deviceLocale: string =
     navigator.languages && navigator.languages.length
       ? navigator.languages[0]
@@ -66,13 +62,13 @@ const TicketReportFilterOptions = ({
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
         departmentId: selectDepartment,
-        from: new Date(fromDate as string).toLocaleDateString(deviceLocale, {
+        from: new Date(fromDate).toLocaleDateString(deviceLocale, {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
         }),
         ticketStatus: null,
-        to: new Date(toDate as string).toLocaleDateString(deviceLocale, {
+        to: new Date(toDate).toLocaleDateString(deviceLocale, {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
@@ -127,12 +123,12 @@ const TicketReportFilterOptions = ({
         departmentId: selectDepartment,
         startIndex: 0,
         endIndex: 20,
-        from: new Date(fromDate as string).toLocaleDateString(deviceLocale, {
+        from: new Date(fromDate).toLocaleDateString(deviceLocale, {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
         }),
-        to: new Date(toDate as string).toLocaleDateString(deviceLocale, {
+        to: new Date(toDate).toLocaleDateString(deviceLocale, {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
@@ -143,6 +139,13 @@ const TicketReportFilterOptions = ({
 
     downloadFile(employeeTicketReportDownload, 'MailTemplateList.csv')
   }
+  const toDateValue = toDate
+    ? new Date(toDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
 
   const commonFormatDate = 'l'
   return (
@@ -237,15 +240,7 @@ const TicketReportFilterOptions = ({
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
                 name="toDate"
-                value={
-                  toDate
-                    ? new Date(toDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
+                value={toDateValue}
                 onChange={(date: Date) =>
                   setToDate(moment(date).format(commonFormatDate))
                 }
@@ -279,20 +274,16 @@ const TicketReportFilterOptions = ({
           </CButton>
         </CCol>
       </CRow>
-      {getTicketReportList ? (
-        <CRow className="mt-2 mb-4">
-          <CCol xs={12} className="d-md-flex justify-content-md-end">
-            <CButton
-              color="info btn-ovh me-0"
-              onClick={handleExportTicketReportData}
-            >
-              <i className="fa fa-plus me-1"></i>Click to Export
-            </CButton>
-          </CCol>
-        </CRow>
-      ) : (
-        ''
-      )}
+      <CRow className="mt-2 mb-4">
+        <CCol xs={12} className="d-md-flex justify-content-md-end">
+          <CButton
+            color="info btn-ovh me-0"
+            onClick={handleExportTicketReportData}
+          >
+            <i className="fa fa-plus me-1"></i>Click to Export
+          </CButton>
+        </CCol>
+      </CRow>
     </>
   )
 }
