@@ -78,7 +78,7 @@ const TicketDetailsTable = ({
           </CButton>
         </CCol>
       </CRow>
-      <CTable striped>
+      <CTable striped className="mt-3">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">Ticket No</CTableHeaderCell>

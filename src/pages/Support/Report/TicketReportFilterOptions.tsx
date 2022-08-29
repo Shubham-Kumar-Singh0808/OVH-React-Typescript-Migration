@@ -151,7 +151,7 @@ const TicketReportFilterOptions = ({
   return (
     <>
       <CRow className="mt-3">
-        <CCol sm={2} md={2} className="me-2">
+        <CCol sm={2} md={2}>
           <CFormLabel>Department Name:</CFormLabel>
           <CFormSelect
             aria-label="Default select example"
@@ -192,65 +192,75 @@ const TicketReportFilterOptions = ({
             <option value="Yesterday">Yesterday</option>
           </CFormSelect>
         </CCol>
+
         {showSelectCustom ? (
           <>
-            <CCol sm={2} md={2}>
-              <CFormLabel className="col-sm-4 col-form-label">
-                From :
-                <span className={fromDate ? TextWhite : TextDanger}> *</span>
-              </CFormLabel>
-              <ReactDatePicker
-                id="fromDate"
-                data-testid="leaveApprovalFromDate"
-                className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                dateFormat="dd/mm/yy"
-                placeholderText="dd/mm/yy"
-                name="fromDate"
-                value={
-                  fromDate
-                    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setFromDate(moment(date).format(commonFormatDate))
-                }
-              />
-            </CCol>
-            <CCol sm={2} md={2}>
-              <CFormLabel className="col-sm-4 col-form-label">
-                To :
-                <span className={fromDate ? TextWhite : TextDanger}> *</span>
-              </CFormLabel>
-              <ReactDatePicker
-                id="toDate"
-                data-testid="leaveApprovalFromDate"
-                className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                dateFormat="dd/mm/yy"
-                placeholderText="dd/mm/yy"
-                name="toDate"
-                value={toDateValue}
-                onChange={(date: Date) =>
-                  setToDate(moment(date).format(commonFormatDate))
-                }
-              />
+            <CCol sm={6}>
+              <CRow>
+                <CCol sm={4} md={4}>
+                  <CFormLabel>
+                    From :
+                    <span className={fromDate ? TextWhite : TextDanger}>
+                      {' '}
+                      *
+                    </span>
+                  </CFormLabel>
+                  <ReactDatePicker
+                    id="fromDate"
+                    data-testid="leaveApprovalFromDate"
+                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    dateFormat="dd/mm/yy"
+                    placeholderText="dd/mm/yy"
+                    name="fromDate"
+                    value={
+                      fromDate
+                        ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          })
+                        : ''
+                    }
+                    onChange={(date: Date) =>
+                      setFromDate(moment(date).format(commonFormatDate))
+                    }
+                  />
+                </CCol>
+                <CCol sm={4} md={4}>
+                  <CFormLabel>
+                    To :
+                    <span className={fromDate ? TextWhite : TextDanger}>
+                      {' '}
+                      *
+                    </span>
+                  </CFormLabel>
+                  <ReactDatePicker
+                    id="toDate"
+                    data-testid="leaveApprovalFromDate"
+                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    dateFormat="dd/mm/yy"
+                    placeholderText="dd/mm/yy"
+                    name="toDate"
+                    value={toDateValue}
+                    onChange={(date: Date) =>
+                      setToDate(moment(date).format(commonFormatDate))
+                    }
+                  />
+                </CCol>
+              </CRow>
             </CCol>
           </>
         ) : (
           <></>
         )}
-
         <CCol sm={2} md={2} className="mt-4">
           <CButton
             className="cursor-pointer"
