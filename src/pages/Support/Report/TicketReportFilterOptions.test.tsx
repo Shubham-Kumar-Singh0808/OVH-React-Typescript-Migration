@@ -5,7 +5,6 @@ import TicketReportFilterOptions from './TicketReportFilterOptions'
 import { render, screen } from '../../../test/testUtils'
 import {
   mockDepartmentNameData,
-  mockTicketDetailsData,
   mockTicketReportData,
 } from '../../../test/data/ticketReportsData'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
@@ -68,6 +67,7 @@ describe('Ticket Details component with data', () => {
       },
     )
   })
+
   test('should select dropdown value', () => {
     const LeaveTypeSelectListSelector = screen.getByTestId('form-select1')
     userEvent.selectOptions(LeaveTypeSelectListSelector, ['Networking'])
@@ -105,30 +105,5 @@ describe('Ticket Report component with data', () => {
     const DateElement = screen.getByTestId('form-select3')
     expect(departmentName).toHaveValue('')
     expect(DateElement).toHaveValue('Current Month')
-  })
-})
-
-describe('Ticket Report component with data', () => {
-  beforeEach(() => {
-    render(
-      <TicketReportFilterOptions
-        selectDate={''}
-        fromDate={''}
-        toDate={''}
-        selectDepartment={''}
-        setSelectDate={mockSetSelectDate}
-        setFromDate={mockSetFromDate}
-        setToDate={mockSetToDate}
-        setSelectDepartment={mockSelectDepartment}
-      />,
-      {
-        preloadedState: {
-          ticketReport: {
-            isLoading: ApiLoadingState.succeeded,
-            ticketsDetailsList: mockTicketDetailsData[0].accessStartDate,
-          },
-        },
-      },
-    )
   })
 })
