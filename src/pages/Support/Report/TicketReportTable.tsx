@@ -90,7 +90,7 @@ const TicketReportTable = ({
       }),
     )
   }
-
+  const handleTicket = handleShowTicketDetails
   return (
     <>
       <>
@@ -144,9 +144,8 @@ const TicketReportTable = ({
                   <CTableDataCell>
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
-                      // eslint-disable-next-line sonarjs/no-identical-functions
                       onClick={() =>
-                        handleShowTicketDetails(
+                        handleTicket(
                           ticketReport.categoryId,
                           ticketReport.trackerId,
                           ticketReport.subCategoryId,

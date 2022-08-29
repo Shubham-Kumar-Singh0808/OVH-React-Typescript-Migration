@@ -155,6 +155,16 @@ const TicketReportFilterOptions = ({
       })
     : ''
 
+  const fromDateValue = fromDate
+    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
+  const fromDateLabel = fromDate ? TextWhite : TextDanger
+  const toDateLabel = toDate ? TextWhite : TextDanger
+
   const commonFormatDate = 'l'
   return (
     <>
@@ -207,11 +217,7 @@ const TicketReportFilterOptions = ({
               <CRow>
                 <CCol sm={4} md={4}>
                   <CFormLabel>
-                    From :
-                    <span className={fromDate ? TextWhite : TextDanger}>
-                      {' '}
-                      *
-                    </span>
+                    From :<span className={fromDateLabel}> *</span>
                   </CFormLabel>
                   <ReactDatePicker
                     id="fromDate"
@@ -224,15 +230,7 @@ const TicketReportFilterOptions = ({
                     dateFormat="dd/mm/yy"
                     placeholderText="dd/mm/yy"
                     name="fromDate"
-                    value={
-                      fromDate
-                        ? new Date(fromDate).toLocaleDateString(deviceLocale, {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                          })
-                        : ''
-                    }
+                    value={fromDateValue}
                     onChange={(date: Date) =>
                       setFromDate(moment(date).format(commonFormatDate))
                     }
@@ -240,11 +238,7 @@ const TicketReportFilterOptions = ({
                 </CCol>
                 <CCol sm={4} md={4}>
                   <CFormLabel>
-                    To :
-                    <span className={fromDate ? TextWhite : TextDanger}>
-                      {' '}
-                      *
-                    </span>
+                    To :<span className={toDateLabel}>*</span>
                   </CFormLabel>
                   <ReactDatePicker
                     id="toDate"
