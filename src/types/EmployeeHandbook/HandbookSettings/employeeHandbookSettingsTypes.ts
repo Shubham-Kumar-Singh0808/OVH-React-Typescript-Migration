@@ -20,6 +20,8 @@ export type EmployeeHandbookPageProps = {
 export type EmployeeCountry = {
   id: number
   name: string
+  mobileCode: null
+  countryCode: null
 }
 
 export type AddNewHandbookPage = {

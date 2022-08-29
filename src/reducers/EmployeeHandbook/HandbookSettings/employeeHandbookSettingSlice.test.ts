@@ -347,7 +347,6 @@ describe('EmployeeHandbookSettings Slice', () => {
     it('Should be able to set isLoading to "success" if `addNewHandbook` is fulfilled', () => {
       const action = {
         type: employeeHandbookSettingService.addNewHandbook.fulfilled.type,
-        payload: mockHandbookDetails,
       }
       const state = reducer(initialEmployeeHandbookSettingState, action)
       expect(state).toEqual({

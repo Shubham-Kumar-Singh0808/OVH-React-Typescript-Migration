@@ -58,26 +58,38 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 3,
         name: 'CANADA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 4,
         name: 'UK',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 5,
         name: 'PHILIPPINES',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 6,
         name: 'BRAZIL',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -97,10 +109,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -120,10 +136,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -157,10 +177,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -180,10 +204,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -199,16 +227,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -222,16 +241,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -245,16 +255,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -272,10 +273,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -295,10 +300,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -318,10 +327,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -340,10 +353,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -363,10 +380,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -385,10 +406,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -404,16 +429,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -427,16 +443,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -451,12 +458,10 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     country: '',
     handCountry: [
       {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -473,12 +478,10 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     country: '',
     handCountry: [
       {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -498,14 +501,20 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 3,
         name: 'USA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 5,
         name: 'PHILIPPINES',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -524,14 +533,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 5,
         name: 'PHILIPPINES',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -551,10 +560,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -574,10 +587,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -597,10 +614,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -620,10 +641,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -643,10 +668,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -666,10 +695,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -689,10 +722,14 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
+        mobileCode: null,
+        countryCode: null,
       },
       {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -707,16 +744,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -730,16 +758,7 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     departmentId: 0,
     type: 'HandBook',
     country: '',
-    handCountry: [
-      {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
-      },
-    ],
+    handCountry: [],
     empCountry: 'INDIA',
   },
   {
@@ -755,12 +774,10 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     country: '',
     handCountry: [
       {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -780,10 +797,8 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -803,10 +818,8 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -824,12 +837,10 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     country: '',
     handCountry: [
       {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -849,10 +860,8 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -870,12 +879,10 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
     country: '',
     handCountry: [
       {
-        id: 1,
-        name: 'AUSTRALIA',
-      },
-      {
         id: 2,
         name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -895,10 +902,8 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -917,10 +922,8 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -939,10 +942,8 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -961,10 +962,8 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
@@ -984,10 +983,8 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
       {
         id: 1,
         name: 'AUSTRALIA',
-      },
-      {
-        id: 2,
-        name: 'INDIA',
+        mobileCode: null,
+        countryCode: null,
       },
     ],
     empCountry: 'INDIA',
