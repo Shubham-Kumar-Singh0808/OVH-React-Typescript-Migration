@@ -14,7 +14,7 @@ const mockSetSelectDate = jest.fn()
 const mockSetFromDate = jest.fn()
 const mockSetToDate = jest.fn()
 const mockSelectDepartment = jest.fn()
-
+const selectDate = 'Current Month'
 describe('Ticket Report Component Testing', () => {
   describe('without data', () => {
     beforeEach(() => {
@@ -37,15 +37,12 @@ describe('Ticket Report Component Testing', () => {
 
     test('should select Date dropdown value', () => {
       const LeaveTypeSelectListSelector = screen.getByTestId('form-select3')
-      userEvent.selectOptions(LeaveTypeSelectListSelector, ['Current Month'])
-      expect(LeaveTypeSelectListSelector).toHaveValue('Current Month')
+      userEvent.selectOptions(LeaveTypeSelectListSelector, [selectDate])
+      expect(LeaveTypeSelectListSelector).toHaveValue(selectDate)
     })
     test('should render clear button', () => {
       const clearButton = screen.getByTestId('clear-btn')
       expect(clearButton).toBeEnabled()
-    })
-    test('should correctly set default option', () => {
-      expect(screen.getByRole('option', { name: 'All' }).selected).toBe(true)
     })
   })
 })
