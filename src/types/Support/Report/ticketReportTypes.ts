@@ -49,6 +49,8 @@ export type TicketReportApiProps = {
   from: string
   ticketStatus: null
   to: string
+  startIndex?: number
+  endIndex?: number
 }
 
 export type GetTicketDetails = {

@@ -20,14 +20,25 @@ const mockSetPageSize = jest.fn()
 
 describe('Scheduled Candidates Table Component Testing', () => {
   test('should render scheduled candidates table component without crashing', async () => {
-    render(<TicketReportTable />, {
-      preloadedState: {
-        ticketReport: {
-          isLoading: ApiLoadingState.succeeded,
-          ticketsReportList: mockTicketReportData,
+    render(
+      <TicketReportTable
+        setToggle={function (): void {
+          throw new Error('Function not implemented.')
+        }}
+        selectDate={''}
+        toDate={''}
+        fromDate={''}
+        selectDepartment={''}
+      />,
+      {
+        preloadedState: {
+          ticketReport: {
+            isLoading: ApiLoadingState.succeeded,
+            ticketsReportList: mockTicketReportData,
+          },
         },
       },
-    })
+    )
 
     expectPageSizeToBeRendered(20)
 

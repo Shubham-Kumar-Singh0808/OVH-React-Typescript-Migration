@@ -106,6 +106,11 @@ const TicketDetailsTable = ({
               ticketDetail.description && ticketDetail.description.length > 32
                 ? `${ticketDetail.description.substring(0, 32)}...`
                 : ticketDetail.description
+
+            const ticketDetailDescription =
+              ticketDetail.description !== null
+                ? parse(ticketDescriptionLimit)
+                : 'N/A'
             return (
               <CTableRow key={index}>
                 <CTableHeaderCell scope="row">
@@ -133,9 +138,7 @@ const TicketDetailsTable = ({
                       data-testid={`dsc-comments${index}`}
                       onClick={() => handleModal(ticketDetail.description)}
                     >
-                      {ticketDetail.description !== null
-                        ? parse(ticketDescriptionLimit)
-                        : 'N/A'}
+                      {ticketDetailDescription}
                     </CLink>
                   </CTableDataCell>
                 ) : (

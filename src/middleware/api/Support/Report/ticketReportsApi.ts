@@ -78,11 +78,34 @@ const getTicketDetails = async (
   return response.data
 }
 
+const exportTicketReportData = async (
+  props: TicketReportApiProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketReportApiConfig.exportTicketReports,
+    method: AllowedHttpMethods.get,
+    params: {
+      departmentId: props.departmentId ?? '',
+      startIndex: props.startIndex ?? 0,
+      endIndex: props.endIndex ?? 20,
+      from: props.from ?? '',
+      to: props.to ?? '',
+      ticketStatus: props.ticketStatus ?? '',
+      dateSelection: props.dateSelection ?? '',
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ticketReportApi = {
   getDepartmentNameList,
   getDepartmentCategoryList,
   getTicketsReport,
   getTicketDetails,
+  exportTicketReportData,
 }
 
 export default ticketReportApi

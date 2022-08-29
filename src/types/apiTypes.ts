@@ -294,4 +294,5 @@ export interface TicketReportApi extends ApiBase {
   departmentCategoryList: string
   getTicketsReport: string
   getTicketsDetails: string
+  exportTicketReports: string
 }

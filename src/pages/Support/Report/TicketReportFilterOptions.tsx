@@ -3,8 +3,10 @@ import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
+import ticketReportApi from '../../../middleware/api/Support/Report/ticketReportsApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { downloadFile } from '../../../utils/helper'
 
 const TicketReportFilterOptions = ({
   selectDate,
@@ -79,8 +81,6 @@ const TicketReportFilterOptions = ({
     )
   }
 
-  // useEffect(() => {}, [])
-
   const sortedDepartmentNames = useMemo(() => {
     if (getDepartmentNameList) {
       return getDepartmentNameList
@@ -120,6 +120,29 @@ const TicketReportFilterOptions = ({
       setToDate('')
     }
   }, [selectDate])
+
+  const handleExportTicketReportData = async () => {
+    const employeeTicketReportDownload =
+      await ticketReportApi.exportTicketReportData({
+        departmentId: selectDepartment,
+        startIndex: 0,
+        endIndex: 20,
+        from: new Date(fromDate as string).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
+        to: new Date(toDate as string).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
+        ticketStatus: null,
+        dateSelection: selectDate,
+      })
+
+    downloadFile(employeeTicketReportDownload, 'MailTemplateList.csv')
+  }
 
   const commonFormatDate = 'l'
   return (
@@ -259,7 +282,10 @@ const TicketReportFilterOptions = ({
       {getTicketReportList ? (
         <CRow className="mt-2 mb-4">
           <CCol xs={12} className="d-md-flex justify-content-md-end">
-            <CButton color="info btn-ovh me-0">
+            <CButton
+              color="info btn-ovh me-0"
+              onClick={handleExportTicketReportData}
+            >
               <i className="fa fa-plus me-1"></i>Click to Export
             </CButton>
           </CCol>
