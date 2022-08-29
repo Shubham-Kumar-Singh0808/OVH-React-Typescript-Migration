@@ -290,3 +290,9 @@ export interface AddNewMailTemplateTypeApi extends ApiBase {
 export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
 }
+
+export interface AllocateEmployeeApi extends ApiBase {
+  getAllEmployeeProfiles: string
+  getAllProjectSearch: string
+  allocateNewEmployee: string
+}

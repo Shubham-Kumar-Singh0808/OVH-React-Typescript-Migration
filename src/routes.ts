@@ -93,6 +93,9 @@ const AddProject = React.lazy(
   () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
 )
 
+const EmployeeAllocation = React.lazy(
+  () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -205,6 +208,11 @@ const routes = [
     path: '/addproject',
     name: 'Add Project',
     component: AddProject,
+  },
+  {
+    path: '/allocationEmployee',
+    name: 'Allocate Employee',
+    component: EmployeeAllocation,
   },
 ]
 

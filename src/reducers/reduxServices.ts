@@ -41,6 +41,7 @@ import { scheduledInterviewsService } from './Recruitment/ScheduledInterviews/sc
 import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
 import { projectManagementService } from './ProjectManagement/Project/AddProjectSlice'
+import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 
 export const reduxServices = {
   app: appService,
@@ -86,4 +87,5 @@ export const reduxServices = {
   addNewMailTemplateType: mailTemplateTypeService,
   myAttendance: myAttendanceService,
   projectManagement: projectManagementService,
+  allocateEmployee: allocateEmployeeService,
 }

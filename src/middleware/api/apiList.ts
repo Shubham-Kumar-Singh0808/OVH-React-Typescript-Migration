@@ -40,6 +40,7 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  AllocateEmployeeApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -339,4 +340,11 @@ export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
 
 export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
+}
+
+export const allocateEmployeeApiConfig: AllocateEmployeeApi = {
+  getAllEmployeeProfiles:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData?searchStr',
+  getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
+  allocateNewEmployee: apiPrefix + '/allocation-mgmt/allocation',
 }
