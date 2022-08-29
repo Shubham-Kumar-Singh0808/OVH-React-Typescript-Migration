@@ -1,6 +1,7 @@
 import {
   EmployeeCountry,
   TotalHandbookList,
+  UpdateHandbookPage,
 } from '../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 
 export const mockCountries: EmployeeCountry[] = [
@@ -56,6 +57,24 @@ export const mockSelectedCountries: EmployeeCountry[] = [
     name: 'BRAZIL',
   },
 ]
+
+export const mockHandbookDetails: UpdateHandbookPage = {
+  country: 'INDIA',
+  departmentId: 26,
+  departmentName: 'abc',
+  description:
+    'AzfijWHHedOkgcZXOthCENDKlaZZqnPkrnujJmsyswOElweFsRiLoxGtQHaVrecHusQTiwYcqlrovNXmrUXOOWIaTUzHlMKmYxOJZFpgrVznfljUkBsjQPaskJrJxEdtomRMdUpexrucmHoYNzgWAAu',
+  displayOrder: 3,
+  empCountry: 'INDIA',
+  handCountry: [{ id: 2, name: 'INDIA' }],
+  id: 2,
+  pageName: 'ppkqUHHR',
+  sectionId: 88,
+  sectionName: 'xyz',
+  title: 'ldBmpLUe',
+  type: 'HandBook',
+}
+
 export const mockHandbookList: TotalHandbookList[] = [
   {
     id: 1,
