@@ -6,7 +6,7 @@ import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import ticketReportApi from '../../../middleware/api/Support/Report/ticketReportsApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { downloadFile } from '../../../utils/helper'
+import { deviceLocale, downloadFile } from '../../../utils/helper'
 
 const TicketReportFilterOptions = ({
   selectDate,
@@ -33,11 +33,6 @@ const TicketReportFilterOptions = ({
   const getDepartmentNameList = useTypedSelector(
     reduxServices.ticketReport.selectors.departmentNameList,
   )
-
-  const deviceLocale: string =
-    navigator.languages && navigator.languages.length
-      ? navigator.languages[0]
-      : navigator.language
 
   useEffect(() => {
     dispatch(
