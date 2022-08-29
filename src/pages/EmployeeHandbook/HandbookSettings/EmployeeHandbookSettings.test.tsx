@@ -22,13 +22,20 @@ const mockEditButtonHandler = jest.fn()
 const backButtonHandler = jest.fn()
 describe('Handbook Settings Component Testing', () => {
   test('should render Handbook Settings Component without crashing', () => {
-    render(<EmployeeHandbookSettings />, {
-      preloadedState: {
-        employeeHandbookSettings: {
-          employeeHandbooks: mockEmployeeHandbookList,
+    const history = createMemoryHistory()
+    render(
+      <Router history={history}>
+        <EmployeeHandbookSettings />
+      </Router>,
+      {
+        preloadedState: {
+          employeeHandbookSettings: {
+            employeeHandbooks: mockEmployeeHandbookList,
+            isLoading: ApiLoadingState.succeeded,
+          },
         },
       },
-    })
+    )
     expect(screen.getByText('Handbook Settings')).toBeInTheDocument()
   })
   test('render edit page component', () => {
@@ -37,8 +44,8 @@ describe('Handbook Settings Component Testing', () => {
         headerTitle="Edit Page"
         confirmButtonText="Update"
         backButtonHandler={backButtonHandler}
-        handbookId={0}
-        isEditHandbook={false}
+        handbookId={2}
+        isEditHandbook={true}
       />,
     )
   })
@@ -53,16 +60,22 @@ describe('Handbook Settings Component Testing', () => {
   })
 
   describe('Edit Page Component testing', () => {
+    const history = createMemoryHistory()
     beforeEach(() => {
-      render(<EmployeeHandbookSettings />, {
-        preloadedState: {
-          employeeHandbookSettings: {
-            employeeHandbooks: mockEmployeeHandbookList,
-            isLoading: ApiLoadingState.succeeded,
-            listSize: 43,
+      render(
+        <Router history={history}>
+          <EmployeeHandbookSettings />
+        </Router>,
+        {
+          preloadedState: {
+            employeeHandbookSettings: {
+              employeeHandbooks: mockEmployeeHandbookList,
+              isLoading: ApiLoadingState.succeeded,
+              listSize: 43,
+            },
           },
         },
-      })
+      )
     })
     test('check edit button', () => {
       render(

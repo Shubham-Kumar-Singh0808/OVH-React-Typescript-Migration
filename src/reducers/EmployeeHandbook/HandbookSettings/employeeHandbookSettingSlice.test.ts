@@ -5,6 +5,7 @@ import reducer, {
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 import {
   mockCountries,
+  mockHandbookData,
   mockHandbookDetails,
   mockHandbookList,
 } from '../../../test/data/handbookTotalListData'
@@ -122,13 +123,13 @@ describe('EmployeeHandbookSettings Slice', () => {
       const action = {
         type: employeeHandbookSettingService.getEmployeeHandbooks.fulfilled
           .type,
-        payload: mockEmployeeHandbookList,
+        payload: mockHandbookData,
       }
       const state = reducer(initialEmployeeHandbookSettingState, action)
       expect(state).toEqual({
-        listSize: undefined,
+        listSize: 42,
         isLoading: ApiLoadingState.succeeded,
-        employeeHandbooks: undefined,
+        employeeHandbooks: mockHandbookData.list,
         employeeCountries: [],
         error: null,
         totalHandbookList: [],
@@ -178,7 +179,7 @@ describe('EmployeeHandbookSettings Slice', () => {
       const action = {
         type: employeeHandbookSettingService.getTotalHandbookList.fulfilled
           .type,
-        payload: mockHandbookList,
+        payload: mockHandbookData,
       }
       const state = reducer(initialEmployeeHandbookSettingState, action)
       expect(state).toEqual({
@@ -187,7 +188,7 @@ describe('EmployeeHandbookSettings Slice', () => {
         employeeHandbooks: [],
         employeeCountries: [],
         error: null,
-        totalHandbookList: mockHandbookList,
+        totalHandbookList: mockHandbookData,
         updateHandbookPage: {} as UpdateHandbookPage,
         selectedHandbook: [],
         selectedCountries: [],
