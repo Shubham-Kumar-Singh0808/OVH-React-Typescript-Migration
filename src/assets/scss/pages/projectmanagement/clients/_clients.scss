@@ -1,0 +1,29 @@
+.sh-client-search{
+    min-width: none;
+    flex-wrap: nowrap;
+    
+    .input.form-control{
+        min-width: none;
+    }
+}
+@media (min-width: 1200px){
+.sh-client-search input.form-control {
+    min-width: 180px;
+}
+}
+.sh-organization-link {
+    a {
+        text-decoration: none;
+        color: $blue-employeeList !important;
+        &:hover {
+            text-decoration: underline;
+            color: $primary-75 !important;
+        }
+      }
+}
+.sh-eye-btn-color{
+    background-color: $blue-btnBg;
+    &:hover {
+        background-color: $blue-btnHover;
+    }
+}
