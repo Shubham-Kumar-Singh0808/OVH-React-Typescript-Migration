@@ -178,6 +178,7 @@ export interface CertificateTypeApi extends ApiBase {
 export interface EmployeeProjectsApi extends ApiBase {
   getEmployeeProjects: string
   getProjectDetails: string
+  getProjectsClients: string
 }
 
 export interface EmployeeReporteesApi extends ApiBase {
@@ -295,4 +296,37 @@ export interface TicketReportApi extends ApiBase {
   getTicketsReport: string
   getTicketsDetails: string
   exportTicketReports: string
+}
+export interface ProjectManagementApi extends ApiBase {
+  getProject: string
+  addProject: string
+  updateProject: string
+  getAllPlatforms: string
+  getAllDomains: string
+  getAllManagers: string
+}
+
+export interface ClientsApi extends ApiBase {
+  getClients: string
+  getProjectsUnderClient: string
+  searchClients: string
+  deleteClient: string
+  editClient: string
+  updateClient: string
+  getClientCountries: string
+}
+
+export interface AddNewClientApi extends ApiBase {
+  getClientCountries: string
+  addNewClient: string
+}
+
+export interface ClientInformationApi extends ApiBase {
+  getClientInformation: string
+}
+
+export interface LeaveSummaryApi extends ApiBase {
+  getEmployeeLeaveSummary: string
+  getEmployeeLeaveHistory: string
+  cancelEmployeeLeave: string
 }

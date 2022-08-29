@@ -37,4 +37,8 @@
  &-label-null{
     background-color:  #9b918f
  }
+ &-label-gray{
+    background-color: $badge-light;
+    color:  #333;
+ }
 }

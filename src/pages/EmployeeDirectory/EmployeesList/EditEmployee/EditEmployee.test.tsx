@@ -51,7 +51,7 @@ describe('Edit Employee Testing', () => {
   })
 
   test('should be able to select Technology and update employee', () => {
-    const OSelectListSelector = screen.getByTestId('formTechnology')
+    const OSelectListSelector = screen.getByTestId('formtechnology')
     userEvent.selectOptions(OSelectListSelector, ['Java'])
 
     const updateBtn = screen.getByTestId(editBtnId)
@@ -59,7 +59,7 @@ describe('Edit Employee Testing', () => {
   })
 
   test('should be able to select Country and update employee', () => {
-    const OSelectListSelector = screen.getByTestId('formCountry')
+    const OSelectListSelector = screen.getByTestId('formcountry')
     userEvent.selectOptions(OSelectListSelector, ['INDIA'])
 
     const updateBtn = screen.getByTestId(editBtnId)

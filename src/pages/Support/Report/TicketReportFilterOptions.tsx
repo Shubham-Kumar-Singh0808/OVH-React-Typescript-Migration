@@ -44,9 +44,17 @@ const TicketReportFilterOptions = ({
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
         departmentId: '',
-        from: '',
+        from: new Date(fromDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
         ticketStatus: null,
-        to: '',
+        to: new Date(toDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
       }),
     )
     dispatch(reduxServices.ticketReport.actions.setCurrentPage(1))

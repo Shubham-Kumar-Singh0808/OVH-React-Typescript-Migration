@@ -41,6 +41,11 @@ import {
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
   TicketReportApi,
+  ClientsApi,
+  ProjectManagementApi,
+  AddNewClientApi,
+  ClientInformationApi,
+  LeaveSummaryApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -239,6 +244,7 @@ export const visaListApiConfig: VisaListApi = {
 }
 
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
+  getProjectsClients: apiPrefix + '/project-mgmt/getClients',
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }
@@ -347,4 +353,38 @@ export const ticketReportApiConfig: TicketReportApi = {
   getTicketsReport: apiPrefix + '/supportManagement/getTicketsReport',
   getTicketsDetails: apiPrefix + '/supportManagement/getTicketsDetails',
   exportTicketReports: apiPrefix + '/supportManagement/exportReportList',
+}
+
+export const projectManagementConfig: ProjectManagementApi = {
+  addProject: apiPrefix + '/project-mgmt/project',
+  updateProject: apiPrefix + '/project-mgmt/project',
+  getProject: apiPrefix + '/project-mgmt/project',
+  getAllPlatforms: apiPrefix + '/project-mgmt/getAllPlatforms',
+  getAllDomains: apiPrefix + '/project-mgmt/getAllDomains',
+  getAllManagers: apiPrefix + '/project-mgmt/getAllManagers',
+}
+
+export const clientsApiConfig: ClientsApi = {
+  getClients: apiPrefix + '/project-mgmt/client',
+  getProjectsUnderClient: apiPrefix + '/project-mgmt/projectsUnderClient',
+  searchClients: apiPrefix + '/project-mgmt/searchClients',
+  deleteClient: apiPrefix + '/project-mgmt/deleteClient',
+  editClient: apiPrefix + '/project-mgmt/client',
+  updateClient: apiPrefix + '/project-mgmt/updateClient',
+  getClientCountries: apiPrefix + '/project-mgmt/country',
+}
+
+export const addNewClientApiConfig: AddNewClientApi = {
+  getClientCountries: apiPrefix + '/project-mgmt/country',
+  addNewClient: apiPrefix + '/project-mgmt/client',
+}
+
+export const clientInformationApiConfig: ClientInformationApi = {
+  getClientInformation: apiPrefix + '/project-mgmt/getClientInfo',
+}
+
+export const leaveSummaryApiConfig: LeaveSummaryApi = {
+  getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
+  getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
+  cancelEmployeeLeave: apiPrefix + '/leave/cancel',
 }
