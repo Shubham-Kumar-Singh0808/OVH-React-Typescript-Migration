@@ -28,6 +28,7 @@ import {
 import {
   mockCountries,
   mockHandbookList,
+  mockSelectedCountries,
 } from '../../../../test/data/handbookTotalListData'
 import { mockEmployeeHandbookList } from '../../../../test/data/employeeHandbookSettingsData'
 
@@ -215,7 +216,7 @@ describe('Edit Page Component Testing', () => {
           preloadedState: {
             employeeHandbookSettings: {
               employeeCountries: mockCountries,
-              selectedCountries: mockCountries,
+              selectedCountries: mockSelectedCountries,
               totalHandbookList: mockEmployeeHandbookList,
             },
           },
@@ -224,11 +225,15 @@ describe('Edit Page Component Testing', () => {
     })
     test('should render all countries data', () => {
       const selectedCountries = screen.getByTestId(cbAllCountries)
-      userEvent.click(selectedCountries)
+      // userEvent.click(selectedCountries)
       mockCountries.forEach((allCountries) => {
         expect(screen.getByText(allCountries.name)).toBeInTheDocument()
       })
-      if (mockCountries.length === 6) expect(selectedCountries).toBeChecked()
+      mockSelectedCountries.forEach((handbookCountry) => {
+        expect(screen.getByText(handbookCountry.name)).toBeInTheDocument()
+      })
+      if (mockCountries.length === mockSelectedCountries.length)
+        expect(selectedCountries).toBeChecked()
     })
     test('should render selected id record details upon clicking edit button ', async () => {
       const titleInput = screen.getByTestId(pageTitle)

@@ -30,6 +30,32 @@ export const mockCountries: EmployeeCountry[] = [
   },
 ]
 
+export const mockSelectedCountries: EmployeeCountry[] = [
+  {
+    id: 1,
+    name: 'AUSTRALIA',
+  },
+  {
+    id: 2,
+    name: 'INDIA',
+  },
+  {
+    id: 3,
+    name: 'USA',
+  },
+  {
+    id: 4,
+    name: 'CANADA',
+  },
+  {
+    id: 5,
+    name: 'PHILIPPINES',
+  },
+  {
+    id: 6,
+    name: 'BRAZIL',
+  },
+]
 export const mockHandbookList: TotalHandbookList[] = [
   {
     id: 1,

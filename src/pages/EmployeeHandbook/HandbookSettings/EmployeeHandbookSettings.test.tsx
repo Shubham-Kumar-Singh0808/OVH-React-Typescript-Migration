@@ -112,14 +112,14 @@ describe('Handbook Settings Component Testing', () => {
           setCurrentPage={mockSetCurrentPage}
           setPageSize={mockSetPageSize}
           currentPage={2}
-          pageSize={40}
+          pageSize={20}
           paginationRange={[1, 2, 3]}
           editHandbookButtonHandler={mockEditButtonHandler}
         />,
         {
           preloadedState: {
             employeeHandbookSettings: {
-              employeeHandbooks: mockHandbookList,
+              employeeHandbooks: mockEmployeeHandbookList,
               listSize: 43,
             },
           },

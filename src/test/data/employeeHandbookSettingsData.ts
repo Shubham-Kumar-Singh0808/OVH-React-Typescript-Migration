@@ -75,6 +75,10 @@ export const mockEmployeeHandbookList: MockEmployeeHandbook[] = [
         id: 5,
         name: 'PHILIPPINES',
       },
+      {
+        id: 6,
+        name: 'BRAZIL',
+      },
     ],
     empCountry: 'INDIA',
   },
