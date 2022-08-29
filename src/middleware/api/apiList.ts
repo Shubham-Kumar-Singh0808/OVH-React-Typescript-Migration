@@ -44,6 +44,7 @@ import {
   ProjectManagementApi,
   AddNewClientApi,
   ClientInformationApi,
+  LeaveSummaryApi,
   LeaveApprovalsApi,
 } from '../../types/apiTypes'
 
@@ -371,6 +372,12 @@ export const addNewClientApiConfig: AddNewClientApi = {
 
 export const clientInformationApiConfig: ClientInformationApi = {
   getClientInformation: apiPrefix + '/project-mgmt/getClientInfo',
+}
+
+export const leaveSummaryApiConfig: LeaveSummaryApi = {
+  getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
+  getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
+  cancelEmployeeLeave: apiPrefix + '/leave/cancel',
 }
 
 export const leaveApprovalsApiConfig: LeaveApprovalsApi = {

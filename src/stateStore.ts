@@ -54,6 +54,7 @@ import projectManagementReducer from './reducers/ProjectManagement/Project/proje
 import clientsReducer from './reducers/ProjectManagement/Clients/clientsSlice'
 import addClientReducer from './reducers/ProjectManagement/Clients/AddClient/addNewClientSlice'
 import clientInformationReducer from './reducers/ProjectManagement/Clients/ClientInformation/clientInformationSlice'
+import leaveSummaryReducer from './reducers/Leaves/LeaveSummary/employeeLeaveSummarySlice'
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const allReducers = {
@@ -109,6 +110,7 @@ export const allReducers = {
   clients: clientsReducer,
   addNewClient: addClientReducer,
   clientInformation: clientInformationReducer,
+  employeeLeaveSummary: leaveSummaryReducer,
   leaveApprovals: leaveApprovalsReducer,
   // add your slice reducers here
 }

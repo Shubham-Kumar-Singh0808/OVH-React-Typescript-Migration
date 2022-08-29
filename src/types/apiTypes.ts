@@ -318,6 +318,12 @@ export interface ClientInformationApi extends ApiBase {
   getClientInformation: string
 }
 
+export interface LeaveSummaryApi extends ApiBase {
+  getEmployeeLeaveSummary: string
+  getEmployeeLeaveHistory: string
+  cancelEmployeeLeave: string
+}
+
 export interface LeaveApprovalsApi extends ApiBase {
   getEmployees: string
   getEmployeeLeaves: string

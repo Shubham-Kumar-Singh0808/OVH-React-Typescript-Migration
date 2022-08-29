@@ -44,6 +44,7 @@ import { projectManagementService } from './ProjectManagement/Project/projectSli
 import { clientsService } from './ProjectManagement/Clients/clientsSlice'
 import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
 import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
+import { leaveSummaryService } from './Leaves/LeaveSummary/employeeLeaveSummarySlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const reduxServices = {
@@ -94,4 +95,5 @@ export const reduxServices = {
   addClient: addNewClientService,
   clientInformation: clientInformationService,
   leaveApprovals: leaveApprovalsService,
+  employeeLeaveSummary: leaveSummaryService,
 }

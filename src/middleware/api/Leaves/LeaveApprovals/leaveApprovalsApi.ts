@@ -1,10 +1,10 @@
 import {
-  EmployeeDetails,
   GetEmployeeLeavesProps,
   GetEmployeeLeavesResponse,
   GetSearchEmployeesProps,
   GetSearchLeavesResponse,
 } from '../../../../types/Leaves/LeaveApprovals/leaveApprovalsTypes'
+import { EmployeeDetailsWithAttendanceReport as EmployeeDetails } from '../../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,

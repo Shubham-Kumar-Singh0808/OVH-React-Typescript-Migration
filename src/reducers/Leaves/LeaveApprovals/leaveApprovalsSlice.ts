@@ -7,12 +7,12 @@ import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   AllEmployeesLeavesList,
-  EmployeeDetails,
   EmployeeSummary,
   GetEmployeeLeavesProps,
   GetSearchEmployeesProps,
   LeaveApprovalsSliceState,
 } from '../../../types/Leaves/LeaveApprovals/leaveApprovalsTypes'
+import { EmployeeDetailsWithAttendanceReport as EmployeeDetails } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
 
 const getEmployees = createAsyncThunk(
   'leaveApprovals/getEmployees',
