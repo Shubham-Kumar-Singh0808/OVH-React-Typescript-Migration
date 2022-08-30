@@ -326,4 +326,5 @@ export interface LeaveSummaryApi extends ApiBase {
 
 export interface DashboardApi extends ApiBase {
   getAllJobVacancies: string
+  getUpcomingBirthdayAnniversaries: string
 }

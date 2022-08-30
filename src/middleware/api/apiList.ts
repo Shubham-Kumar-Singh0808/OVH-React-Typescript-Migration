@@ -382,4 +382,6 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
 
 export const dashboardApiConfig: DashboardApi = {
   getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getUpcomingBirthdayAnniversaries:
+    apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
 }

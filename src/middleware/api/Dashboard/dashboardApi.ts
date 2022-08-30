@@ -1,4 +1,8 @@
 import {
+  BirthDayApiProps,
+  UpcomingBirthdayResponse,
+} from '../../../types/Dashboard/Birthdays/birthdayTypes'
+import {
   JobOpeningsApiProps,
   JobVacanciesResponse,
 } from '../../../types/Dashboard/JobOpenings/JobOpeningsTypes'
@@ -26,8 +30,25 @@ const getAllJobVacancies = async (
   return response.data
 }
 
+const getUpcomingBirthdayAnniversaries = async (
+  props: BirthDayApiProps,
+): Promise<UpcomingBirthdayResponse> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: dashboardApiConfig.getUpcomingBirthdayAnniversaries,
+    method: AllowedHttpMethods.get,
+    params: {
+      endIndex: props.endIndex ?? 3,
+      startIndex: props.startIndex ?? 0,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const dashboardApi = {
   getAllJobVacancies,
+  getUpcomingBirthdayAnniversaries,
 }
 
 export default dashboardApi
