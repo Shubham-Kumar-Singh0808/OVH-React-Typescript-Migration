@@ -113,6 +113,22 @@ describe('Project Report Table Testing with sub table', () => {
     minusBtn[0].click()
   })
 
+  test('Should be able click close btn', () => {
+    const closeBtn = screen.getAllByTestId('close-btn')
+    closeBtn[0].click()
+
+    const modalConfirmBtn = screen.getByTestId('modalConfirmBtn')
+    modalConfirmBtn.click()
+  })
+
+  test('Should be able click delete btn', () => {
+    const closeBtn = screen.getAllByTestId('delete-btn')
+    closeBtn[3].click()
+
+    const modalConfirmBtn = screen.getByTestId('modalConfirmBtn')
+    modalConfirmBtn.click()
+  })
+
   test('Should be able open sub table and click close btn', () => {
     const plusBtn = screen.getAllByTestId('plus-btn')
     plusBtn[0].click()

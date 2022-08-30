@@ -19,7 +19,7 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
+// import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ProjectDetails } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
@@ -106,10 +106,6 @@ const ProjectReportsTable = ({
 
   const projectClients = useTypedSelector(
     reduxServices.projectReport.selectors.projectClients,
-  )
-
-  const isClientProjectLoading = useTypedSelector(
-    reduxServices.projectReport.selectors.isClientProjectLoading,
   )
 
   const handlePageSizeSelectChange = (
