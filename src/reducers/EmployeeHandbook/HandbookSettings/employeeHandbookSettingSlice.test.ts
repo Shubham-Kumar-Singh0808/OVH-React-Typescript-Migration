@@ -127,7 +127,7 @@ describe('EmployeeHandbookSettings Slice', () => {
       }
       const state = reducer(initialEmployeeHandbookSettingState, action)
       expect(state).toEqual({
-        listSize: 42,
+        listSize: mockHandbookData.size,
         isLoading: ApiLoadingState.succeeded,
         employeeHandbooks: mockHandbookData.list,
         employeeCountries: [],
