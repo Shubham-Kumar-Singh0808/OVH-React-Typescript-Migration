@@ -7,7 +7,7 @@ import EmployeeHandbookSettings from './EmployeeHandbookSettings'
 import AddNewHandbook from './AddNewPage/AddNewHandbook'
 import EditHandbook from './EditPage/EditHandbook'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
-import { cleanup, render, screen } from '../../../test/testUtils'
+import { cleanup, getByTestId, render, screen } from '../../../test/testUtils'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
@@ -47,8 +47,8 @@ describe('Handbook Settings Component Testing', () => {
       expect(history.location.pathname).toBe('/EmployeeHandbook')
     })
     test('should render addPage Section', () => {
-      const addHandbookButton = screen.getByRole('button', { name: 'Add Page' })
-      userEvent.click(addHandbookButton)
+      const addPageButton = screen.getByRole('button', { name: 'Add Page' })
+      userEvent.click(addPageButton)
       expect(
         render(
           <AddNewHandbook
@@ -60,7 +60,7 @@ describe('Handbook Settings Component Testing', () => {
       )
     })
     test('should render editPage Section', () => {
-      render(
+      const { container } = render(
         <EmployeeHandbookTable
           setCurrentPage={mockSetCurrentPage}
           setPageSize={mockSetPageSize}
@@ -78,9 +78,7 @@ describe('Handbook Settings Component Testing', () => {
           },
         },
       )
-      const editBtn = screen.getByTestId('handbook-edit-btn0')
-      userEvent.click(editBtn)
-      expect(
+      render(
         <EditHandbook
           headerTitle="Edit Page"
           confirmButtonText="Update"
@@ -88,6 +86,19 @@ describe('Handbook Settings Component Testing', () => {
           handbookId={1}
           isEditHandbook={true}
         />,
+      )
+      const editBtn = getByTestId(container, 'handbook-edit-btn0')
+      userEvent.click(editBtn)
+      expect(
+        render(
+          <EditHandbook
+            headerTitle="Edit Page"
+            confirmButtonText="Update"
+            backButtonHandler={jest.fn()}
+            handbookId={1}
+            isEditHandbook={true}
+          />,
+        ),
       )
     })
   })
