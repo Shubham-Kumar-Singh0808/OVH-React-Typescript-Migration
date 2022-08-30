@@ -1,4 +1,5 @@
 import {
+  CCol,
   CRow,
   CTable,
   CTableBody,
@@ -55,8 +56,7 @@ const EmployeeLeaves = ({
               <CTableHeaderCell>Remaining</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
-          {isLoading !== ApiLoadingState.loading &&
-          (leaveSummary?.length || employeeSummary?.length) ? (
+          {leaveSummary?.length || employeeSummary?.length ? (
             <CTableBody>
               {dataToUse?.map((summaryItem, index) => {
                 return (
@@ -76,7 +76,11 @@ const EmployeeLeaves = ({
               })}
             </CTableBody>
           ) : (
-            <OLoadingSpinner type={LoadingType.PAGE} />
+            <CCol>
+              <CRow className="mt-3">
+                <h5>No Records Found... </h5>
+              </CRow>
+            </CCol>
           )}
         </CTable>
       </CRow>

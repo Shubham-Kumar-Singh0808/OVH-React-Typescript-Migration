@@ -30,7 +30,8 @@ const LeaveApprovalFilterOptions = ({
     reduxServices.leaveApprovals.selectors.filterByToDate,
   )
 
-  const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>('All')
+  const [autoCompleteTargetValue, setAutoCompleteTargetValue] =
+    useState<string>('All')
   const [fromDate, setFromDate] = useState<string>(filterByFromDate)
   const [toDate, setToDate] = useState<string>(filterByToDate)
   const [selectEmployeeStatus, setSelectEmployeeStatus] =
@@ -40,7 +41,7 @@ const LeaveApprovalFilterOptions = ({
   const [dateError, setDateError] = useState<boolean>(false)
 
   const onHandleSelectReportManager = (fullName: string) => {
-    setAutoCompleteTarget(fullName)
+    setAutoCompleteTargetValue(fullName)
     const selectedEmployee = getAllEmployees.find(
       (value) => value.fullName === fullName,
     )
@@ -53,7 +54,7 @@ const LeaveApprovalFilterOptions = ({
       toDate &&
       selectEmployeeStatus &&
       selectMember !== null &&
-      autoCompleteTarget
+      autoCompleteTargetValue
     ) {
       setIsViewBtnEnabled(true)
     } else {
@@ -105,7 +106,7 @@ const LeaveApprovalFilterOptions = ({
       ),
     )
     dispatch(reduxServices.leaveApprovals.actions.setSelectMember(null))
-    setAutoCompleteTarget('All')
+    setAutoCompleteTargetValue('All')
     setFromDate(moment(previousMonthResult).format(commonFormatDate))
     setToDate(moment(currentMonthResult).format(commonFormatDate))
     setSelectEmployeeStatus('PendingApproval')
@@ -190,7 +191,7 @@ const LeaveApprovalFilterOptions = ({
         <CCol sm={8}>
           <CFormLabel className="col-sm-3 col-form-label">
             Team Member:
-            <span className={autoCompleteTarget ? TextWhite : TextDanger}>
+            <span className={autoCompleteTargetValue ? TextWhite : TextDanger}>
               *
             </span>
           </CFormLabel>
@@ -207,7 +208,7 @@ const LeaveApprovalFilterOptions = ({
             renderMenu={(children) => (
               <div
                 className={
-                  autoCompleteTarget && autoCompleteTarget.length > 0
+                  autoCompleteTargetValue && autoCompleteTargetValue.length > 0
                     ? 'autocomplete-dropdown-wrap'
                     : 'autocomplete-dropdown-wrap hide'
                 }
@@ -215,24 +216,25 @@ const LeaveApprovalFilterOptions = ({
                 {children}
               </div>
             )}
-            renderItem={(item, isHighlighted) => (
+            renderItem={(currentItem, isHighlightedValue) => (
               <div
-                data-testid="autoComplete-option"
+                data-testid="autoComplete-options"
                 className={
-                  isHighlighted
+                  isHighlightedValue
                     ? 'autocomplete-dropdown-item active'
                     : 'autocomplete-dropdown-item '
                 }
-                key={item.id}
+                key={currentItem.id}
               >
-                {item.fullName}
+                {currentItem.fullName}
               </div>
             )}
-            value={autoCompleteTarget}
-            shouldItemRender={(item, value) =>
-              item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
+            value={autoCompleteTargetValue}
+            shouldItemRender={(currentItem, value) =>
+              currentItem.fullName.toLowerCase().indexOf(value.toLowerCase()) >
+              -1
             }
-            onChange={(e) => setAutoCompleteTarget(e.target.value)}
+            onChange={(e) => setAutoCompleteTargetValue(e.target.value)}
             onSelect={(value) => onHandleSelectReportManager(value)}
           />
         </CCol>

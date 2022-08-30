@@ -82,31 +82,31 @@ const EmployeeLeaveRequests = (props: {
     setModalText(displayText)
   }
 
-  const leaveStatusLabelColor = (leaveStatus: string): JSX.Element => {
-    if (leaveStatus === 'PendingApproval') {
+  const leaveRequestsStatusLabelColor = (statusValue: string): JSX.Element => {
+    if (statusValue === 'PendingApproval') {
       return (
         <CBadge className="rounded-pill label-info">
           {'Pending Approval'}
         </CBadge>
       )
-    } else if (leaveStatus === 'Cancelled') {
+    } else if (statusValue === 'Cancelled') {
       return (
         <CBadge className="rounded-pill label-gray-cancel">
-          {leaveStatus}
+          {statusValue}
         </CBadge>
       )
-    } else if (leaveStatus === 'Approved') {
+    } else if (statusValue === 'Approved') {
       return (
-        <CBadge className="rounded-pill label-success">{leaveStatus}</CBadge>
+        <CBadge className="rounded-pill label-success">{statusValue}</CBadge>
       )
-    } else if (leaveStatus === 'Rejected') {
+    } else if (statusValue === 'Rejected') {
       return (
-        <CBadge className="rounded-pill label-danger">{leaveStatus}</CBadge>
+        <CBadge className="rounded-pill label-danger">{statusValue}</CBadge>
       )
-    } else if (leaveStatus === 'CancelAfterApproval') {
+    } else if (statusValue === 'CancelAfterApproval') {
       return (
         <CBadge className="rounded-pill label-gray-cancelAfterApproval">
-          {leaveStatus}
+          {statusValue}
         </CBadge>
       )
     }
@@ -286,7 +286,7 @@ const EmployeeLeaveRequests = (props: {
                       )}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {leaveStatusLabelColor(employeeLeaveItem.status)}
+                      {leaveRequestsStatusLabelColor(employeeLeaveItem.status)}
                     </CTableDataCell>
                     <CTableDataCell>
                       {employeeLeaveItem.approvedBy}
