@@ -9,11 +9,8 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { EmployeeSummary } from '../../../types/Leaves/LeaveApprovals/leaveApprovalsTypes'
 
 const EmployeeLeaves = ({
@@ -28,10 +25,6 @@ const EmployeeLeaves = ({
 
   const leaveSummary = useTypedSelector(
     reduxServices.leaveApprovals.selectors.leaveSummary,
-  )
-
-  const isLoading = useTypedSelector(
-    reduxServices.leaveApprovals.selectors.isLoading,
   )
 
   useEffect(() => {
