@@ -19,7 +19,6 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OToast from '../../../components/ReusableComponent/OToast'
-// import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ProjectDetails } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
@@ -75,7 +74,6 @@ const ProjectReportsTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
-  updateaccess,
 }: ProjectReportsTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShow, setIsShow] = useState(false)
@@ -520,22 +518,24 @@ const ProjectReportsTable = ({
                                               data-testid="formBillable"
                                               className="input-xs"
                                               name="billable"
-                                              defaultValue={
-                                                project.billable ? 'Yes' : 'No'
-                                              }
+                                              defaultValue={test(
+                                                project.billable,
+                                                'Yes',
+                                                'No',
+                                              )}
                                               onChange={handleOnChangeBillable}
                                             >
                                               {[
                                                 { label: 'Yes', name: 'Yes' },
                                                 { label: 'No', name: 'No' },
-                                              ].map((item, index) => {
+                                              ].map((item, billableIndex) => {
                                                 const {
                                                   name: optionName,
                                                   label,
                                                 } = item
                                                 return (
                                                   <option
-                                                    key={index}
+                                                    key={billableIndex}
                                                     value={label}
                                                   >
                                                     {optionName}
@@ -581,11 +581,11 @@ const ProjectReportsTable = ({
                                                   label: deAllocated,
                                                   name: deAllocated,
                                                 },
-                                              ].map((item, index) => {
+                                              ].map((item, arrayIndex) => {
                                                 const { name, label } = item
                                                 return (
                                                   <option
-                                                    key={index}
+                                                    key={arrayIndex}
                                                     value={label}
                                                   >
                                                     {name}
