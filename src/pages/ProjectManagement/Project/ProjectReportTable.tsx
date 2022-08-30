@@ -68,6 +68,12 @@ const initValue = {
   multiSearch: '',
 }
 
+const getConditionValue = (
+  isTrue: boolean,
+  firstValue: string | number,
+  secondValue: string | number,
+): string | number => (isTrue ? firstValue : secondValue)
+
 const ProjectReportsTable = ({
   paginationRange,
   pageSize,
@@ -297,12 +303,6 @@ const ProjectReportsTable = ({
     }
   }
 
-  const test = (
-    isTrue: boolean,
-    firstValue: string | number,
-    secondValue: string | number,
-  ): string | number => (isTrue ? firstValue : secondValue)
-
   return (
     <>
       {projectReports != null && projectReports.length ? (
@@ -518,7 +518,7 @@ const ProjectReportsTable = ({
                                               data-testid="formBillable"
                                               className="input-xs"
                                               name="billable"
-                                              defaultValue={test(
+                                              defaultValue={getConditionValue(
                                                 project.billable,
                                                 'Yes',
                                                 'No',
@@ -545,7 +545,11 @@ const ProjectReportsTable = ({
                                             </CFormSelect>
                                           </span>
                                         ) : (
-                                          test(project.billable, 'Yes', 'No')
+                                          getConditionValue(
+                                            project.billable,
+                                            'Yes',
+                                            'No',
+                                          )
                                         )}
                                       </CTableDataCell>
                                       <CTableDataCell
@@ -563,7 +567,7 @@ const ProjectReportsTable = ({
                                               data-testid="formallocated"
                                               className="input-xs"
                                               name="allocated"
-                                              defaultValue={test(
+                                              defaultValue={getConditionValue(
                                                 project.isAllocated,
                                                 allocated,
                                                 deAllocated,
@@ -595,7 +599,7 @@ const ProjectReportsTable = ({
                                             </CFormSelect>
                                           </span>
                                         ) : (
-                                          test(
+                                          getConditionValue(
                                             project.isAllocated,
                                             allocated,
                                             deAllocated,
