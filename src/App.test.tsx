@@ -3,7 +3,10 @@ import React from 'react'
 import Dashboard from './pages/Dashboard/Dashboard'
 
 test('App should render without crashing', () => {
-  render(<Dashboard />)
-
+  render(
+    <>
+      <Dashboard />
+    </>,
+  )
   expect(screen.getByText('Dashboard')).toBeInTheDocument()
 })
