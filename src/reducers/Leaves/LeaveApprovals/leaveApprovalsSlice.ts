@@ -99,7 +99,7 @@ const currentMonthResult = new Date(
   Number(24),
 )
 
-const initialScheduledInterviewsSliceState: LeaveApprovalsSliceState = {
+const initialLeaveApprovalsSliceState: LeaveApprovalsSliceState = {
   getEmployees: [],
   employeeLeaves: { allEmpLeavesList: [], employeeSummary: [], size: 0 },
   searchEmployeeLeaves: { leaveSummary: [], searchLeaves: [], size: 0 },
@@ -115,7 +115,7 @@ const initialScheduledInterviewsSliceState: LeaveApprovalsSliceState = {
 
 const leaveApprovalsSlice = createSlice({
   name: 'leaveApprovals',
-  initialState: initialScheduledInterviewsSliceState,
+  initialState: initialLeaveApprovalsSliceState,
   reducers: {
     setIsViewBtnClick: (state, action) => {
       state.filterOptions.isViewBtnClick = action.payload
