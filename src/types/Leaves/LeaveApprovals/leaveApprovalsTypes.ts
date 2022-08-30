@@ -1,5 +1,9 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { EmployeeDetailsWithAttendanceReport as EmployeeDetails } from '../../TimeAndAttendance/AttendanceReport/attendanceReportTypes'
+import {
+  EmployeeBioAttendanceDtoSet,
+  EmployeeDetailsWithAttendanceReport as EmployeeDetails,
+  EmployeeDetailsWithAttendanceReport,
+} from '../../TimeAndAttendance/AttendanceReport/attendanceReportTypes'
 
 export type LeaveApprovalsSliceState = {
   getEmployees: EmployeeDetails[]
@@ -97,107 +101,6 @@ export type Period = {
   }
 }
 
-export type Manager = {
-  id: number
-  firstName: string
-  lastName: string
-  middleName: null | string
-  designation: null | string
-  role: null | string
-  manager: null | string
-  designationKrasDTO: null | string
-  employeeSubmitted: null | string
-  managerSubmitted: null | string
-  acknowledged: null | string
-  fullName: null | string
-  profilePicPath: null | string
-  thumbPicture: null | string
-  profilePicGeneratedPath: null | string
-  gender: null | string
-  dob: null | string
-  departmentName: null | string
-  employmentTypeName: null | string
-  jobTypeName: null | string
-  imageData: null | string
-  curentLocation: null | string
-  baseLocation: null | string
-  officialBirthday: null | string
-  realBirthday: null | string
-  maritalStatus: null | string
-  emergencyContactName: null | string
-  emergencyPhone: null | string
-  emergencyRelationShip: null | string
-  grade: null | string
-  aboutMe: null | string
-  homeNumber: null | string
-  workNumber: null | string
-  presentAddress: null | string
-  presentCity: null | string
-  presentZip: null | string
-  presentLandMark: null | string
-  permanentAddress: null | string
-  permanentCity: null | string
-  permanentZip: null | string
-  permanentLandMark: null | string
-  mobile: null | string
-  homeCode: null | string
-  workCode: null | string
-  skillList: null | string
-  userName: null | string
-  alternativeMobile: null | string
-  dateOfJoining: null | string
-  informationList: null | string
-  anniversary: null | string
-  bankInformationList: null | string
-  bioAttendanceDtoSet: null | string
-  dates: null | string
-  absentCount: number
-  statusName: null | string
-  emergencyContact: null | string
-  relievingDate: null | string
-  observationDTOList: null | string
-  skypeId: null | string
-  percent: null | string
-  passportNumber: null | string
-  passportExpDate: null | string
-  passportIssuedPlace: null | string
-  passportIssuedDate: null | string
-  token: null | string
-  underNoticeDate: null | string
-  candidateId: null | string
-  underNotice: null | string
-  emailId: null | string
-  empManager: null | string
-  bloodgroup: null | string
-  rbtCvPath: null | string
-  rbtCvName: null | string
-  timeSlotDTO: null | string
-  technology: null | string
-  hrAssociate: null | string
-  lateComingCount: null | string
-  passportFrontPagePath: null | string
-  passportBackPagePath: null | string
-  passportFrontPage: null | string
-  passportBackPage: null | string
-  projectManager: null | string
-  casualLeaveCount: number
-  lopLeaveCount: number
-  holidaysCount: number
-  contractExists: null | string
-  contractStartDate: null | string
-  contractEndDate: null | string
-  personalEmail: null | string
-  experience: null | string
-  companyExperience: null | string
-  updatedExperience: null | string
-  country: null | string
-  workStatus: null | string
-  comments: null | string
-  vendorId: null | string
-  vendorName: null | string
-  address: null | string
-}
-
 export type TimeSlotDTO = {
   id: number
   name: string
@@ -222,7 +125,7 @@ export type EmployeeDTO = {
   middleName: null | string
   designation: null | string
   role: null | string
-  manager: Manager
+  manager: EmployeeDetailsWithAttendanceReport
   designationKrasDTO: DesignationKraDTO
   employeeSubmitted: null | string
   managerSubmitted: null | string
@@ -265,7 +168,7 @@ export type EmployeeDTO = {
   informationList: null | string
   anniversary: null | string
   bankInformationList: null | string
-  bioAttendanceDtoSet: null | string
+  bioAttendanceDtoSet: EmployeeBioAttendanceDtoSet[]
   dates: null | string
   absentCount: number
   statusName: string

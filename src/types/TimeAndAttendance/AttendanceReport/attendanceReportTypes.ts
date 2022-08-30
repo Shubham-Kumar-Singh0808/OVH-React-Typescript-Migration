@@ -30,7 +30,7 @@ export type EmployeeDetailsWithAttendanceReport = {
   employeeSubmitted: null | string
   managerSubmitted: null | string
   acknowledged: null | string
-  fullName: string
+  fullName: null | string
   profilePicPath: null | string
   thumbPicture: null | string
   profilePicGeneratedPath: null | string
@@ -64,13 +64,14 @@ export type EmployeeDetailsWithAttendanceReport = {
   homeCode: null | string
   workCode: null | string
   skillList: null | string
-  userName: string
+  userName: null | string
   alternativeMobile: null | string
   dateOfJoining: null | string
   informationList: null | string
   anniversary: null | string
   bankInformationList: null | string
   bioAttendanceDtoSet: EmployeeBioAttendanceDtoSet[]
+  dates?: null | string
   absentCount: number
   statusName: null | string
   emergencyContact: null | string
