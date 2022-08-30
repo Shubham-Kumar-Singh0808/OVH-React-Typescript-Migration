@@ -382,5 +382,4 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
 
 export const dashboardApiConfig: DashboardApi = {
   getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
-  getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
 }

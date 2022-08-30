@@ -1,8 +1,4 @@
 import {
-  EmployeeAchievementsApiResponse,
-  ServiceAward,
-} from '../../../types/Dashboard/Achievements/achievementTypes'
-import {
   JobOpeningsApiProps,
   JobVacanciesResponse,
 } from '../../../types/Dashboard/JobOpenings/JobOpeningsTypes'
@@ -30,18 +26,8 @@ const getAllJobVacancies = async (
   return response.data
 }
 
-const getAllAchievements =
-  async (): Promise<EmployeeAchievementsApiResponse> => {
-    const requestConfig = getAuthenticatedRequestConfig({
-      url: dashboardApiConfig.getAllAchievements,
-      method: AllowedHttpMethods.get,
-    })
-    const response = await useAxios(requestConfig)
-    return response.data
-  }
 const dashboardApi = {
   getAllJobVacancies,
-  getAllAchievements,
 }
 
 export default dashboardApi

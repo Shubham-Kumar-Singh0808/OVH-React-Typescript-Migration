@@ -46,7 +46,6 @@ import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNe
 import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
 import { leaveSummaryService } from './Leaves/LeaveSummary/employeeLeaveSummarySlice'
 import { jobVacanciesService } from './Dashboard/jobOpeningsSlice'
-import { employeeAchievementsService } from './Dashboard/achievementsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -97,5 +96,4 @@ export const reduxServices = {
   clientInformation: clientInformationService,
   employeeLeaveSummary: leaveSummaryService,
   jobOpenings: jobVacanciesService,
-  serviceAwards: employeeAchievementsService,
 }

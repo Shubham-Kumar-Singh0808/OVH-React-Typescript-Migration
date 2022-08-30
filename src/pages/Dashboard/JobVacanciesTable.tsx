@@ -13,7 +13,7 @@ import OModal from '../../components/ReusableComponent/OModal'
 import { useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
 
-const JobOpeningsTable = (): JSX.Element => {
+const JobVacanciesTable = (): JSX.Element => {
   const [isJobDescriptionModalVisible, setIsJobDescriptionModalVisible] =
     useState(false)
   const [description, setDescription] = useState<string>('')
@@ -95,4 +95,4 @@ const JobOpeningsTable = (): JSX.Element => {
   )
 }
 
-export default JobOpeningsTable
+export default JobVacanciesTable

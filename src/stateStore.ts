@@ -56,7 +56,6 @@ import addClientReducer from './reducers/ProjectManagement/Clients/AddClient/add
 import clientInformationReducer from './reducers/ProjectManagement/Clients/ClientInformation/clientInformationSlice'
 import leaveSummaryReducer from './reducers/Leaves/LeaveSummary/employeeLeaveSummarySlice'
 import jobOpeningsReducer from './reducers/Dashboard/jobOpeningsSlice'
-import serviceAwardsReducer from './reducers/Dashboard/achievementsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -108,7 +107,6 @@ export const allReducers = {
   addMailTemplateType: addMailTemplateTypeReducer,
   myAttendance: myAttendanceReducer,
   jobOpenings: jobOpeningsReducer,
-  achievements: serviceAwardsReducer,
   projectManagement: projectManagementReducer,
   clients: clientsReducer,
   addNewClient: addClientReducer,

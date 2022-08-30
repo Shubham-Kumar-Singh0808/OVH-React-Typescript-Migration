@@ -1,7 +1,6 @@
 import { CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import JobOpeningsTable from './JobOpeningsTable'
-import ServiceAwards from './Achievements/ServiceAwards'
+import JobVacanciesTable from './JobVacanciesTable'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -16,7 +15,6 @@ const Dashboard = (): JSX.Element => {
         endIndex: 20,
       }),
     )
-    dispatch(reduxServices.serviceAwards.getAllAchievements())
   }, [dispatch])
 
   return (
@@ -58,7 +56,7 @@ const Dashboard = (): JSX.Element => {
                   CBodyClassName="ps-0 pe-0"
                   footerPath="/jobvacancies"
                 >
-                  <JobOpeningsTable />
+                  <JobVacanciesTable />
                 </OCard>
               </CCol>
               <CCol sm={3}>
@@ -77,9 +75,7 @@ const Dashboard = (): JSX.Element => {
                   title="Service Award"
                   CBodyClassName="ps-0 pe-0"
                   CFooterClassName="d-none"
-                >
-                  <ServiceAwards />
-                </OCard>
+                ></OCard>
               </CCol>
               <CCol sm={3}>
                 <OCard
