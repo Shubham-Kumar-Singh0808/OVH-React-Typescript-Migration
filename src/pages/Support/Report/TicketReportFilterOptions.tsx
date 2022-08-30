@@ -216,7 +216,7 @@ const TicketReportFilterOptions = ({
                   </CFormLabel>
                   <ReactDatePicker
                     id="fromDate"
-                    data-testid="leaveApprovalFromDate"
+                    data-testid="ticketReportFromDate"
                     className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                     peekNextMonth
                     showMonthDropdown

@@ -2,6 +2,7 @@ import reducer, { ticketReportService } from './ticketReportSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { TicketReportSliceState } from '../../../types/Support/Report/ticketReportTypes'
 import {
+  mockDepartmentNameData,
   mockTicketDetailsData,
   mockTicketReportData,
 } from '../../../test/data/ticketReportsData'
@@ -91,6 +92,43 @@ describe('Ticket Report Slice', () => {
         isLoading: ApiLoadingState.succeeded,
         ticketsDetailsList: undefined,
         getTicketDetails: mockTicketDetailsData,
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if getDepartmentNameList is fulfilled', () => {
+      const action = {
+        type: ticketReportService.getDepartmentNameList.fulfilled.type,
+        payload: mockDepartmentNameData,
+      }
+      const state = reducer(initialTicketReportState, action)
+      expect(state).toEqual({
+        currentPage: 1,
+        pageSize: 20,
+        ticketsReportList: [],
+        getTicketsReport: { list: [], size: 0 },
+        departmentCategoryList: [],
+        departmentNameList: mockDepartmentNameData,
+        isLoading: ApiLoadingState.idle,
+        ticketsDetailsList: [],
+        getTicketDetails: { list: [], size: 0 },
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if getDepartmentCategoryList is fulfilled', () => {
+      const action = {
+        type: ticketReportService.getDepartmentCategoryList.fulfilled.type,
+      }
+      const state = reducer(initialTicketReportState, action)
+      expect(state).toEqual({
+        currentPage: 1,
+        pageSize: 20,
+        ticketsReportList: [],
+        getTicketsReport: { list: [], size: 0 },
+        departmentCategoryList: undefined,
+        departmentNameList: [],
+        isLoading: ApiLoadingState.idle,
+        ticketsDetailsList: [],
+        getTicketDetails: { list: [], size: 0 },
       })
     })
   })

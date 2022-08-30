@@ -43,6 +43,10 @@ describe('Ticket Report Component Testing', () => {
       const clearButton = screen.getByTestId('clear-btn')
       expect(clearButton).toBeEnabled()
     })
+    test('should render date picker', () => {
+      const dateInput = screen.findByTestId('ticketReportFromDate')
+      expect(dateInput).toBeTruthy()
+    })
   })
 })
 describe('Ticket Details component with data', () => {
