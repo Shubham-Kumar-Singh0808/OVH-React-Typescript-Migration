@@ -10,6 +10,17 @@ import {
   MyTicketsSliceState,
 } from '../../../types/Support/MyTickets/myTicketsTypes'
 
+// const getTickets = createAsyncThunk(
+//   'support/getTickets',
+//   async (props: GetTicketsProps, thunkApi) => {
+//     try {
+//       return await myTicketsApi.getTickets(props)
+//     } catch (error) {
+//       const err = error as AxiosError
+//       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+//     }
+//   },
+// )
 const getTickets = createAsyncThunk(
   'support/getTickets',
   async (props: GetTicketsProps, thunkApi) => {
@@ -23,8 +34,8 @@ const getTickets = createAsyncThunk(
 )
 
 const initialMyTicketsState: MyTicketsSliceState = {
-  ticketList: { myTickets: [], size: 0 },
-  tickets: [],
+  ticketList: { list: [], size: 0 },
+  allTickets: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -43,10 +54,11 @@ const myTicketsSlice = createSlice({
       })
   },
 })
-
 const isLoading = (state: RootState): LoadingState => state.tickets.isLoading
 
-const allTickets = (state: RootState): MyTicket[] => state.tickets.tickets
+const allTickets = (state: RootState): MyTicket[] =>
+  state.tickets.ticketList.list
+
 const myTicketsThunk = {
   getTickets,
 }

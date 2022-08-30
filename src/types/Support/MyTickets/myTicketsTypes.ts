@@ -36,13 +36,13 @@ export type MyTicket = {
 }
 
 export type GetMyTicketsResponse = {
-  myTickets: MyTicket[]
+  list: MyTicket[]
   size: number
 }
 
 export type MyTicketsSliceState = {
   ticketList: GetMyTicketsResponse
-  tickets: MyTicket[]
+  allTickets: MyTicket[]
   isLoading: ApiLoadingState
 }
 
