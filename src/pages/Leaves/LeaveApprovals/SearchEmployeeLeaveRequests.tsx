@@ -213,6 +213,28 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
     />
   )
 
+  const handleDispatch = () => {
+    return dispatch(
+      reduxServices.leaveApprovals.getSearchEmployees({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+        managerId: Number(employeeId),
+        fromDate: new Date(filterByFromDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: 'numeric',
+          day: '2-digit',
+        }),
+        toDate: new Date(filterByToDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: 'numeric',
+          day: '2-digit',
+        }),
+        member: Number(selectMember),
+        status: selectStatus,
+      }),
+    )
+  }
+
   const handleApproveSearchLeave = async () => {
     setIsApproveModalVisible(false)
     const leaveApproveResultAction = await dispatch(
@@ -226,28 +248,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
         leaveApproveResultAction,
       )
     ) {
-      dispatch(
-        reduxServices.leaveApprovals.getSearchEmployees({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          managerId: Number(employeeId),
-          fromDate: new Date(filterByFromDate).toLocaleDateString(
-            deviceLocale,
-            {
-              year: 'numeric',
-              month: 'numeric',
-              day: '2-digit',
-            },
-          ),
-          toDate: new Date(filterByToDate).toLocaleDateString(deviceLocale, {
-            year: 'numeric',
-            month: 'numeric',
-            day: '2-digit',
-          }),
-          member: Number(selectMember),
-          status: selectStatus,
-        }),
-      )
+      handleDispatch()
     }
   }
 
@@ -263,28 +264,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
         leaveRejectResultAction,
       )
     ) {
-      dispatch(
-        reduxServices.leaveApprovals.getSearchEmployees({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          managerId: Number(employeeId),
-          fromDate: new Date(filterByFromDate).toLocaleDateString(
-            deviceLocale,
-            {
-              year: 'numeric',
-              month: 'numeric',
-              day: '2-digit',
-            },
-          ),
-          toDate: new Date(filterByToDate).toLocaleDateString(deviceLocale, {
-            year: 'numeric',
-            month: 'numeric',
-            day: '2-digit',
-          }),
-          member: Number(selectMember),
-          status: selectStatus,
-        }),
-      )
+      handleDispatch()
     } else if (
       reduxServices.leaveApprovals.leaveApprove.rejected.match(
         leaveRejectResultAction,
