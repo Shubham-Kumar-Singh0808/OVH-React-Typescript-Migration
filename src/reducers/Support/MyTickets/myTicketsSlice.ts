@@ -23,7 +23,7 @@ const getTickets = createAsyncThunk(
 )
 
 const initialMyTicketsState: MyTicketsSliceState = {
-  ticketList: { list: [], size: 0 },
+  ticketList: { size: 0, list: [] },
   allTickets: [],
   isLoading: ApiLoadingState.idle,
   currentPage: 1,

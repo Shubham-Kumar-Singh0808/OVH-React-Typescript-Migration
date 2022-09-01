@@ -5,11 +5,22 @@ import MyTicketsTable from './MyTicketsTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
 
+const expectPageSizeToBeRendered = (pageSize: number) => {
+  for (let i = 0; i < pageSize; i++) {
+    expect(
+      screen.queryByText(mockEmployeeTicketList.list[i].id),
+    ).toBeInTheDocument()
+  }
+}
+
+const mockSetCurrentPage = jest.fn()
+const mockSetPageSize = jest.fn()
+
 describe('MyTickets component with data', () => {
   beforeEach(() => {
     render(<MyTicketsTable />, {
       preloadedState: {
-        myTickets: {
+        tickets: {
           ticketList: mockEmployeeTicketList,
         },
       },
@@ -25,12 +36,32 @@ describe('MyTickets component with data', () => {
     })
   })
   test('should open modal when clicking on description link', async () => {
-    const linkElement = screen.getByTestId('ticket-description1')
+    const linkElement = screen.getByTestId('mgr-comments0')
     userEvent.click(linkElement)
-    const ticketDescription = screen.getAllByText('subject.')
+    const ticketDescription = screen.getAllByText('subject')
     await waitFor(() => {
       expect(ticketDescription[0]).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+    })
+  })
+})
+
+describe('Scheduled Interviews Table Component Testing', () => {
+  test('should render scheduled interviews table component without crashing', async () => {
+    render(<MyTicketsTable />, {
+      preloadedState: {
+        tickets: {
+          ticketList: mockEmployeeTicketList,
+        },
+      },
+    })
+
+    expectPageSizeToBeRendered(20)
+
+    await waitFor(() => {
+      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+      expect(mockSetPageSize).toHaveBeenCalledTimes(0)
+      expect(mockSetCurrentPage).toHaveBeenCalledTimes(0)
     })
   })
 })

@@ -114,7 +114,7 @@ const MyTicketsTable = (): JSX.Element => {
                     <CTableDataCell>
                       <CLink
                         className="cursor-pointer text-decoration-none text-primary"
-                        data-testid={`ticket-description${index}`}
+                        data-testid={`mgr-comments${index}`}
                         onClick={() => handleModal(ticket.description)}
                       >
                         {ticketDescription}

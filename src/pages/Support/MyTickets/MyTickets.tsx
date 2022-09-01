@@ -14,6 +14,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import myTicketsApi from '../../../middleware/api/Support/MyTickets/myTicketsApi'
 import { downloadFile } from '../../../utils/helper'
+import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
 
 const MyTickets = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
@@ -72,7 +73,7 @@ const MyTickets = (): JSX.Element => {
         <CRow className="justify-content-end mt-3">
           <CCol className="text-end" md={4}>
             <CButton
-              data-testid="back-button"
+              data-testid="export-button"
               color="info"
               className="btn-ovh me-1"
               onClick={handleExportTicketListData}

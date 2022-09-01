@@ -346,7 +346,7 @@ export const mockEmployeeTicketList: GetMyTicketsResponse = {
       approvedBy: 'N/A',
     },
     {
-      id: 19070,
+      id: 19080,
       departmentId: 1,
       departmentName: 'Networking',
       categoryId: 5,
@@ -415,7 +415,7 @@ export const mockEmployeeTicketList: GetMyTicketsResponse = {
       approvedBy: 'N/A',
     },
     {
-      id: 19069,
+      id: 19061,
       departmentId: 2,
       departmentName: 'Administrative',
       categoryId: 4,
