@@ -60,14 +60,14 @@ export type GetAllProjectNames = {
 }
 
 export type AllocateEmployeeToProject = {
-  allocation: string
+  allocation: string | number | undefined
   billable: string
   comments: string
   employeeIds: string[]
-  endDate: string
+  endDate: string | undefined
   projectId: number
   projectName: string
-  startDate: string
+  startDate: string | undefined
 }
 
 export type EmployeeAllocateSliceState = {

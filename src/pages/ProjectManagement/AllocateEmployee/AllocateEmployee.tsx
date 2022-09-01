@@ -1,3 +1,4 @@
+// eslint-disable-next-line sonarjs/cognitive-complexity
 import {
   CFormLabel,
   CRow,
@@ -31,7 +32,6 @@ import {
 import OToast from '../../../components/ReusableComponent/OToast'
 import { showIsRequired } from '../../../utils/helper'
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 const AllocateEmployee = (): JSX.Element => {
   const initialEmployeeNames = {} as GetAllEmployeesNames
   const dispatch = useAppDispatch()
@@ -42,32 +42,23 @@ const AllocateEmployee = (): JSX.Element => {
     navigator.languages && navigator.languages.length
       ? navigator.languages[0]
       : navigator.language
-  const [bilLableValue, setBilLableValue] = useState('')
+  const [isBilLable, setIsBilLable] = useState('')
   const addAllocateEmployeeDetails = {} as AllocateEmployeeToProject
   const [addAllocateEmployeeData, setAddAllocateEmployeeData] = useState(
     addAllocateEmployeeDetails,
   )
   console.log(addAllocateEmployeeData)
 
-  const [showText, setShowText] = useState<boolean>(true)
-  const [addEmployeeName, setaddEmployeeName] = useState(initialEmployeeNames)
-
+  const [showComment, setShowComment] = useState<boolean>(true)
+  const [addEmployeeName, setAddEmployeeName] = useState(initialEmployeeNames)
   const [addComment, setAddComment] = useState<string>('')
-  const [error, setError] = useState<boolean>(true)
   const [autoCompleteEtarget, setAutoCompleteEtarget] = useState<string>('')
   const [selectProject, setSelectproject] = useState<GetAllProjectNames>()
-  const [addData, setAddData] = useState<number | string>()
-  const [allocateEmployeeAllocationDate, setAllocateEmployeeAllocationDate] =
-    useState<string>()
-  const [allocateEmployeeEndDate, setAllocateEmployeeEndDate] =
-    useState<string>()
+  const [allocationValue, setAllocationValue] = useState<number | string>()
+  const [allocationDate, setAllocationDate] = useState<string>()
+  const [isEndDate, setIsEndDate] = useState<string>()
   const [dateError, setDateError] = useState<boolean>(false)
   const handleText = (comments: string) => {
-    if (comments.length > 150) {
-      setError(false)
-    } else {
-      setError(true)
-    }
     setAddComment(comments)
   }
   useEffect(() => {
@@ -81,10 +72,6 @@ const AllocateEmployee = (): JSX.Element => {
   const allProjectNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.projectNames,
   )
-
-  // const allocateAllInfo = useTypedSelector(
-  //   reduxServices.allocateEmployee.selectors.allocateInfo,
-  // )
 
   useEffect(() => {
     if (autoCompleteEtarget) {
@@ -108,11 +95,11 @@ const AllocateEmployee = (): JSX.Element => {
   }
 
   const handleBillableChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setBilLableValue(e.target.value)
+    setIsBilLable(e.target.value)
     console.log(e.target.value)
   }
   const handleMultiSelect = (list: GetAllEmployeesNames[], name: string) => {
-    setaddEmployeeName((prevState) => {
+    setAddEmployeeName((prevState) => {
       return { ...prevState, ...{ [name]: list } }
     })
   }
@@ -120,7 +107,7 @@ const AllocateEmployee = (): JSX.Element => {
     selectedList: GetAllEmployeesNames[],
     name: string,
   ) => {
-    setaddEmployeeName((prevState) => {
+    setAddEmployeeName((prevState) => {
       return { ...prevState, ...{ [name]: selectedList } }
     })
   }
@@ -141,25 +128,23 @@ const AllocateEmployee = (): JSX.Element => {
     if (name === 'allocation') {
       let allocationValue = value.replace(/[^0-9]/g, '')
       if (Number(allocationValue) > 100) allocationValue = '100'
-      setAddData(allocationValue)
+      setAllocationValue(allocationValue)
     }
   }
 
   useEffect(() => {
     const tempAllocationDate = new Date(
-      moment(allocateEmployeeAllocationDate?.toString()).format(
-        commonFormatDate,
-      ),
+      moment(allocationDate?.toString()).format(commonFormatDate),
     )
     const tempEndDate = new Date(
-      moment(allocateEmployeeEndDate?.toString()).format(commonFormatDate),
+      moment(isEndDate?.toString()).format(commonFormatDate),
     )
     if (tempEndDate.getTime() < tempAllocationDate.getTime()) {
       setDateError(true)
     } else {
       setDateError(false)
     }
-  }, [allocateEmployeeAllocationDate, allocateEmployeeEndDate])
+  }, [allocationDate, isEndDate])
   const successToastMessage = (
     <OToast
       toastMessage="Employee Allocated successfully"
@@ -169,14 +154,14 @@ const AllocateEmployee = (): JSX.Element => {
 
   const allocateButtonHandler = async () => {
     const finalObject = {
-      allocation: addData,
-      billable: bilLableValue,
+      allocation: allocationValue,
+      billable: isBilLable,
       comments: addComment,
       employeeIds: ['1000'],
-      endDate: allocateEmployeeEndDate,
+      endDate: isEndDate,
       projectId: selectProject?.id as number,
       projectName: selectProject?.projectName as string,
-      startDate: allocateEmployeeAllocationDate,
+      startDate: allocationDate,
     }
     const addNewAllocate = await dispatch(
       reduxServices.allocateEmployee.AddNewAllocate(finalObject),
@@ -191,27 +176,16 @@ const AllocateEmployee = (): JSX.Element => {
     }
   }
   const clearInputs = () => {
-    setAddAllocateEmployeeData({
-      allocation: '',
-      billable: '',
-      comments: '',
-      employeeIds: [''],
-      endDate: '',
-      projectId: 0,
-      projectName: '',
-      startDate: '',
-    })
-    // setaddEmployeeName('')
-    setBilLableValue('')
-    setAddData('')
+    setIsBilLable('')
+    setAllocationValue('')
     setAutoCompleteEtarget('')
-    setAllocateEmployeeEndDate('')
-    setAllocateEmployeeAllocationDate('')
+    setIsEndDate('')
+    setAllocationDate('')
     setAddComment('')
-    setShowText(false)
+    setShowComment(false)
     setTimeout(() => {
-      setShowText(true)
-    }, 100)
+      setShowComment(true)
+    }, 0)
   }
   return (
     <>
@@ -320,7 +294,7 @@ const AllocateEmployee = (): JSX.Element => {
           <CRow className="mt-3 ">
             <CFormLabel {...dynamicFormLabelProps('billable', labelAlignment)}>
               Billable:
-              <span className={bilLableValue ? TextWhite : TextDanger}>*</span>
+              <span className={isBilLable ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -328,7 +302,7 @@ const AllocateEmployee = (): JSX.Element => {
                 size="sm"
                 aria-label="billable"
                 name="billable"
-                value={bilLableValue}
+                value={isBilLable}
                 onChange={handleBillableChange}
               >
                 <option value={''}>Select </option>
@@ -340,7 +314,9 @@ const AllocateEmployee = (): JSX.Element => {
           <CRow className="mt-4 mb-4">
             <CFormLabel {...dynamicFormLabelProps('allocation', formLabel)}>
               Allocation:
-              <span className={addData ? TextWhite : TextDanger}>*</span>
+              <span className={allocationValue ? TextWhite : TextDanger}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -348,7 +324,7 @@ const AllocateEmployee = (): JSX.Element => {
                 id="allocation"
                 name="allocation"
                 max={100}
-                value={addData}
+                value={allocationValue}
                 placeholder="100"
                 onChange={allocateHandleInputChange}
                 maxLength={3}
@@ -359,11 +335,7 @@ const AllocateEmployee = (): JSX.Element => {
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
                 Allocation Date:
-                <span
-                  className={
-                    allocateEmployeeAllocationDate ? TextWhite : TextDanger
-                  }
-                >
+                <span className={allocationDate ? TextWhite : TextDanger}>
                   *
                 </span>
               </CFormLabel>
@@ -380,20 +352,19 @@ const AllocateEmployee = (): JSX.Element => {
                 placeholderText="dd/mm/yy"
                 name="allocateEmployeeAllocationDate"
                 value={
-                  allocateEmployeeAllocationDate
-                    ? new Date(
-                        allocateEmployeeAllocationDate,
-                      ).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
+                  allocationDate
+                    ? new Date(allocationDate).toLocaleDateString(
+                        deviceLocale,
+                        {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        },
+                      )
                     : ''
                 }
                 onChange={(date: Date) =>
-                  setAllocateEmployeeAllocationDate(
-                    moment(date).format(commonFormatDate),
-                  )
+                  setAllocationDate(moment(date).format(commonFormatDate))
                 }
               />
             </CCol>
@@ -402,11 +373,7 @@ const AllocateEmployee = (): JSX.Element => {
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
                 End Date:
-                <span
-                  className={allocateEmployeeEndDate ? TextWhite : TextDanger}
-                >
-                  *
-                </span>
+                <span className={isEndDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
             <CCol sm={3}>
@@ -422,21 +389,16 @@ const AllocateEmployee = (): JSX.Element => {
                 placeholderText="dd/mm/yy"
                 name="allocateEmployeeEndDate"
                 value={
-                  allocateEmployeeEndDate
-                    ? new Date(allocateEmployeeEndDate).toLocaleDateString(
-                        deviceLocale,
-                        {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        },
-                      )
+                  isEndDate
+                    ? new Date(isEndDate).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                      })
                     : ''
                 }
                 onChange={(date: Date) =>
-                  setAllocateEmployeeEndDate(
-                    moment(date).format(commonFormatDate),
-                  )
+                  setIsEndDate(moment(date).format(commonFormatDate))
                 }
               />
             </CCol>
@@ -451,11 +413,8 @@ const AllocateEmployee = (): JSX.Element => {
             </CRow>
           )}
           <CRow className="mt-4 mb-4">
-            <CFormLabel className={TextLabelProps}>
-              Comments:{' '}
-              <span className={addComment ? TextWhite : TextDanger}>*</span>
-            </CFormLabel>
-            {showText ? (
+            <CFormLabel className={TextLabelProps}>Comments: </CFormLabel>
+            {showComment ? (
               <CCol sm={9}>
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
@@ -467,11 +426,6 @@ const AllocateEmployee = (): JSX.Element => {
                     handleText(editor.getData().trim())
                   }}
                 />
-                {error && (
-                  <p className="text-danger" data-testid="error-msg">
-                    Please enter at least 150 characters.
-                  </p>
-                )}
               </CCol>
             ) : (
               ''
