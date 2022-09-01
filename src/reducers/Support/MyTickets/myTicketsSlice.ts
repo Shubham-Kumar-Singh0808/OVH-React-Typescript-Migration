@@ -10,17 +10,6 @@ import {
   MyTicketsSliceState,
 } from '../../../types/Support/MyTickets/myTicketsTypes'
 
-// const getTickets = createAsyncThunk(
-//   'support/getTickets',
-//   async (props: GetTicketsProps, thunkApi) => {
-//     try {
-//       return await myTicketsApi.getTickets(props)
-//     } catch (error) {
-//       const err = error as AxiosError
-//       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-//     }
-//   },
-// )
 const getTickets = createAsyncThunk(
   'support/getTickets',
   async (props: GetTicketsProps, thunkApi) => {
@@ -37,12 +26,21 @@ const initialMyTicketsState: MyTicketsSliceState = {
   ticketList: { list: [], size: 0 },
   allTickets: [],
   isLoading: ApiLoadingState.idle,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const myTicketsSlice = createSlice({
   name: 'support',
   initialState: initialMyTicketsState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getTickets.fulfilled, (state, action) => {
@@ -59,6 +57,9 @@ const isLoading = (state: RootState): LoadingState => state.tickets.isLoading
 const allTickets = (state: RootState): MyTicket[] =>
   state.tickets.ticketList.list
 
+const pageFromState = (state: RootState): number => state.tickets.currentPage
+const pageSizeFromState = (state: RootState): number => state.tickets.pageSize
+
 const myTicketsThunk = {
   getTickets,
 }
@@ -66,6 +67,8 @@ const myTicketsThunk = {
 const myTicketsSelectors = {
   isLoading,
   allTickets,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const myTicketsService = {

@@ -28,8 +28,25 @@ const getTickets = async (
   return response.data
 }
 
+const exportTicketListData = async (
+  props: GetTicketsProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketListInformationApiConfig.exportTicketList,
+    method: AllowedHttpMethods.get,
+    params: {
+      multiSearch: props.multiSearch ?? '',
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const myTicketsApi = {
   getTickets,
+  exportTicketListData,
 }
 
 export default myTicketsApi

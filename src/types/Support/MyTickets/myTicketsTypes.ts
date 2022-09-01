@@ -9,7 +9,7 @@ export type MyTicket = {
   subCategoryId: number
   subCategoryName: string
   subject: string
-  description: null
+  description: string
   status: string
   priority: string
   startDate: string
@@ -44,10 +44,12 @@ export type MyTicketsSliceState = {
   ticketList: GetMyTicketsResponse
   allTickets: MyTicket[]
   isLoading: ApiLoadingState
+  currentPage: number
+  pageSize: number
 }
 
 export type GetTicketsProps = {
-  endIndex: number
+  endIndex?: number
   multiSearch: string
-  startIndex: number
+  startIndex?: number
 }
