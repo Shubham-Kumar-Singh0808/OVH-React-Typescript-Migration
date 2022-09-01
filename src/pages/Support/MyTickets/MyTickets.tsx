@@ -14,7 +14,6 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import myTicketsApi from '../../../middleware/api/Support/MyTickets/myTicketsApi'
 import { downloadFile } from '../../../utils/helper'
-import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
 
 const MyTickets = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')

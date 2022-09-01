@@ -27,14 +27,14 @@ describe('My Tickets Slice', () => {
     })
     it('Should be able to set isLoading to "success" if getTickets is fulfilled', () => {
       const action = {
-        type: myTicketsService.getTickets.pending.type,
-        payload: mockEmployeeTicketList,
+        type: myTicketsService.getTickets.fulfilled.type,
+        // payload: mockEmployeeTicketList,
       }
       const state = myTicketsReducer(initialMyTicketsState, action)
       expect(state).toEqual({
-        ticketList: { list: [], size: 0 },
+        ticketList: undefined,
         allTickets: [],
-        isLoading: ApiLoadingState.loading,
+        isLoading: ApiLoadingState.succeeded,
         currentPage: 1,
         pageSize: 20,
       })

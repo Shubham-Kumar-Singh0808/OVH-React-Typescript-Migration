@@ -135,7 +135,7 @@ const MyTicketsTable = (): JSX.Element => {
                         aria-hidden="true"
                       ></i>
                     </CButton>
-                    <CButton color="info" className="btn-ovh me-2">
+                    <CButton color="btn btn-warning" className="btn-ovh me-2">
                       <i
                         className="fa fa-times text-white"
                         aria-hidden="true"
