@@ -384,4 +384,6 @@ export const dashboardApiConfig: DashboardApi = {
   getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
   getUpcomingBirthdayAnniversaries:
     apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
+  getAllEmployeesBirthdayList:
+    apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
 }

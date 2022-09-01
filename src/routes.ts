@@ -122,6 +122,11 @@ const ViewClient = React.lazy(
 const JobOpenings = React.lazy(
   () => import('./pages/Dashboard/JobOpenings/JobOpenings'),
 )
+
+const BirthdaysListTable = React.lazy(
+  () => import('./pages/Dashboard/Birthdays/ListOfBirthdays'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -269,6 +274,11 @@ const routes = [
     path: '/jobvacancies',
     name: 'Job Openings',
     component: JobOpenings,
+  },
+  {
+    path: '/birthdaylist',
+    name: 'List of Birthdays',
+    component: BirthdaysListTable,
   },
 ]
 

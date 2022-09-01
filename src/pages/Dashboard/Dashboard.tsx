@@ -64,7 +64,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Birthdays"
                   CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
+                  footerPath="/birthdaylist"
                 ></OCard>
               </CCol>
             </CRow>

@@ -2,9 +2,11 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import dashboardApi from '../../middleware/api/Dashboard/dashboardApi'
-import { ValidationError } from '../../types/commonTypes'
+import { RootState } from '../../stateStore'
+import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
   BirthDayApiProps,
+  Birthdays,
   EmployeeBirthdaySliceState,
 } from '../../types/Dashboard/Birthdays/birthdayTypes'
 
@@ -20,7 +22,7 @@ const getUpcomingBirthdayAnniversaries = createAsyncThunk(
   },
 )
 
-const initialupcomingBirthdaysListState: EmployeeBirthdaySliceState = {
+const initialUpcomingBirthdaysListState: EmployeeBirthdaySliceState = {
   listSize: 0,
   isLoading: ApiLoadingState.idle,
   upcomingBirthdays: [],
@@ -29,7 +31,7 @@ const initialupcomingBirthdaysListState: EmployeeBirthdaySliceState = {
 
 const birthdayAnniversarySlice = createSlice({
   name: 'birthdays',
-  initialState: initialupcomingBirthdaysListState,
+  initialState: initialUpcomingBirthdaysListState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -47,28 +49,29 @@ const birthdayAnniversarySlice = createSlice({
   },
 })
 
-//   const employeesCertificates = (state: RootState): EmployeeCertificate[] =>
-//     state.certificateList.employeeCertificationList
+const upcomingEmployeeBirthdays = (state: RootState): Birthdays[] =>
+  state.upcomingEmployeeBirthday.upcomingBirthdays
 
-//   const listSize = (state: RootState): number => state.certificateList.listSize
+const listSize = (state: RootState): number =>
+  state.upcomingEmployeeBirthday.listSize
 
-//   const isLoading = (state: RootState): LoadingState =>
-//     state.certificateList.isLoading
+const isLoading = (state: RootState): LoadingState =>
+  state.upcomingEmployeeBirthday.isLoading
 
-//   const certificateListThunk = {
-//     getEmployeesCertificates,
-//   }
+const upcomingBirthdaysThunk = {
+  getUpcomingBirthdayAnniversaries,
+}
 
-//   const certificateListSelectors = {
-//     employeesCertificates,
-//     listSize,
-//     isLoading,
-//   }
+const upcomingBirthdaysSelectors = {
+  upcomingEmployeeBirthdays,
+  listSize,
+  isLoading,
+}
 
-//   export const certificateListService = {
-//     ...certificateListThunk,
-//     actions: certificateListSlice.actions,
-//     selectors: certificateListSelectors,
-//   }
+export const upcomingBirthdaysService = {
+  ...upcomingBirthdaysThunk,
+  actions: birthdayAnniversarySlice.actions,
+  selectors: upcomingBirthdaysSelectors,
+}
 
 export default birthdayAnniversarySlice.reducer
