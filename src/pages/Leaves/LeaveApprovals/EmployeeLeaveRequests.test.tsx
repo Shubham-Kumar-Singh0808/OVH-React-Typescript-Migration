@@ -3,11 +3,20 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import EmployeeLeaveRequests from './EmployeeLeaveRequests'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockEmployeesLeaves } from '../../../test/data/leaveApprovalsData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
+
+const expectPageSizeToBeRendered = (pageSize: number) => {
+  for (let i = 0; i < pageSize; i++) {
+    expect(
+      screen.queryAllByText(
+        mockEmployeesLeaves.allEmpLeavesList[i].numberOfDays,
+      )[0],
+    ).toBeInTheDocument()
+  }
+}
 
 const toRender = (
   <div>
@@ -63,17 +72,47 @@ describe('Employee Leave Requests Component Testing without data', () => {
       })
     })
     afterEach(cleanup)
-    test('should not render the loading spinner when employee leave requests are not empty', () => {
-      expect(screen.findByTestId('search-leave-loader')).toMatchObject({})
-    })
     screen.debug()
-    test('should render approve and reject buttons and upon approve button click it should renter modal', () => {
+    test('upon approve button click it should render approve modal', async () => {
       const approveBtnElement = screen.getAllByTestId('approve-btn')
-      const rejectBtnElement = screen.getAllByTestId('reject-btn')
       expect(approveBtnElement[0]).toBeInTheDocument()
-      expect(rejectBtnElement[0]).toBeInTheDocument()
       userEvent.click(approveBtnElement[0])
-      // expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
+      await waitFor(() => {
+        const approveModalConfirmBtn = screen.getByRole('button', {
+          name: 'Yes',
+        })
+        userEvent.click(approveModalConfirmBtn)
+        expect(approveModalConfirmBtn).toBeInTheDocument()
+      })
+    })
+
+    test('upon reject button click it should render reject modal', async () => {
+      const rejectBtnElement = screen.getAllByTestId('reject-btn')
+      expect(rejectBtnElement[0]).toBeInTheDocument()
+      userEvent.click(rejectBtnElement[0])
+      await waitFor(() => {
+        const rejectModalConfirmBtn = screen.getByRole('button', {
+          name: 'Yes',
+        })
+        userEvent.click(rejectModalConfirmBtn)
+        expect(rejectModalConfirmBtn).toBeInTheDocument()
+      })
+    })
+
+    test('should able to render comments modal upon employee comments link', () => {
+      const employeeCommentLink = screen.getAllByTestId('employee-comment-Link')
+      expect(employeeCommentLink[0]).toBeInTheDocument()
+      userEvent.click(employeeCommentLink[0])
+      expect(screen.getAllByText('sick')[0]).toBeInTheDocument()
+    })
+
+    test('should render employee leave requests component with data without crashing', async () => {
+      expectPageSizeToBeRendered(20)
+      await waitFor(() => {
+        userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+        expect(mockSetPageSize).toHaveBeenCalledTimes(1)
+        expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })

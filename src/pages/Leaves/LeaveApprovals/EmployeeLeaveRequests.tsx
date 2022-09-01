@@ -275,6 +275,7 @@ const EmployeeLeaveRequests = (props: {
                       {employeeCommentsLimit ? (
                         <CLink
                           className="cursor-pointer"
+                          data-testid="employee-comment-Link"
                           onClick={() =>
                             handleModal(employeeLeaveItem.employeeComments)
                           }

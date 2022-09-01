@@ -10148,7 +10148,7 @@ export const mockEmployeesLeaves: GetEmployeeLeavesResponse = {
           magnitude: 0.0,
         },
       },
-      employeeComments: 'dsfsdf',
+      employeeComments: 'sick',
       managerComments: null,
       employeeDTO: {
         id: 1982,

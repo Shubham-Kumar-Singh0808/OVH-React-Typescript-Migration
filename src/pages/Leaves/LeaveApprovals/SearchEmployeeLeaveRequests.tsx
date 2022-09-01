@@ -94,8 +94,8 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
     setSearchModalText(displayText)
   }
 
-  useEffect(() => {
-    dispatch(
+  const handleDispatch = () => {
+    return dispatch(
       reduxServices.leaveApprovals.getSearchEmployees({
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
@@ -114,6 +114,10 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
         status: selectStatus,
       }),
     )
+  }
+
+  useEffect(() => {
+    handleDispatch()
   }, [
     dispatch,
     currentPage,
@@ -213,28 +217,6 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
     />
   )
 
-  const handleDispatch = () => {
-    return dispatch(
-      reduxServices.leaveApprovals.getSearchEmployees({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
-        managerId: Number(employeeId),
-        fromDate: new Date(filterByFromDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: 'numeric',
-          day: '2-digit',
-        }),
-        toDate: new Date(filterByToDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: 'numeric',
-          day: '2-digit',
-        }),
-        member: Number(selectMember),
-        status: selectStatus,
-      }),
-    )
-  }
-
   const handleApproveSearchLeave = async () => {
     setIsApproveModalVisible(false)
     const leaveApproveResultAction = await dispatch(
@@ -330,6 +312,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
                       {employeeCommentsLimit ? (
                         <CLink
                           className="cursor-pointer"
+                          data-testid="search-leave-btn-link"
                           onClick={() =>
                             handleModal(currentLeaveItem.employeeComments)
                           }
@@ -351,6 +334,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
                         <>
                           <CButton
                             color="success"
+                            data-testid="search-leave-approve-btn"
                             className="btn-ovh me-2"
                             onClick={() => {
                               handleSearchApproveModal(currentLeaveItem.id)
@@ -363,6 +347,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
                           </CButton>
                           <CButton
                             color="danger"
+                            data-testid="reject-leave-approve-btn"
                             className="btn-ovh me-2"
                             onClick={() => {
                               handleSearchRejectModal(currentLeaveItem.id)
