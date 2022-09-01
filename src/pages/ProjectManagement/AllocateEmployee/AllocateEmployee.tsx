@@ -1,4 +1,3 @@
-// eslint-disable-next-line sonarjs/cognitive-complexity
 import {
   CFormLabel,
   CRow,
@@ -25,68 +24,67 @@ import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
-  AllocateEmployeeToProject,
   GetAllEmployeesNames,
   GetAllProjectNames,
 } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { showIsRequired } from '../../../utils/helper'
 
 const AllocateEmployee = (): JSX.Element => {
-  const initialEmployeeNames = {} as GetAllEmployeesNames
   const dispatch = useAppDispatch()
-  const labelAlignment = 'col-sm-3 col-form-label text-end'
   const formLabel = 'col-sm-3 col-form-label text-end'
   const commonFormatDate = 'L'
   const deviceLocale: string =
     navigator.languages && navigator.languages.length
       ? navigator.languages[0]
       : navigator.language
-  const [isBilLable, setIsBilLable] = useState('')
-  const addAllocateEmployeeDetails = {} as AllocateEmployeeToProject
-  const [addAllocateEmployeeData, setAddAllocateEmployeeData] = useState(
-    addAllocateEmployeeDetails,
-  )
-  console.log(addAllocateEmployeeData)
 
+  const initialGetAllProjectNames = {} as GetAllProjectNames
+
+  const [isBilLable, setIsBilLable] = useState('')
   const [showComment, setShowComment] = useState<boolean>(true)
-  const [addEmployeeName, setAddEmployeeName] = useState(initialEmployeeNames)
+  const [addEmployeeName, setAddEmployeeName] = useState<
+    GetAllEmployeesNames[]
+  >([])
   const [addComment, setAddComment] = useState<string>('')
-  const [autoCompleteEtarget, setAutoCompleteEtarget] = useState<string>('')
-  const [selectProject, setSelectproject] = useState<GetAllProjectNames>()
+  const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
+    useState<string>('')
+  const [selectProject, setSelectProject] = useState<GetAllProjectNames>()
   const [allocationValue, setAllocationValue] = useState<number | string>()
   const [allocationDate, setAllocationDate] = useState<string>()
   const [isEndDate, setIsEndDate] = useState<string>()
   const [dateError, setDateError] = useState<boolean>(false)
-  const handleText = (comments: string) => {
-    setAddComment(comments)
-  }
-  useEffect(() => {
-    dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
-  }, [dispatch])
+
   const allEmployeeProfiles = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
-  console.log(allEmployeeProfiles)
 
   const allProjectNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.projectNames,
   )
 
+  const handleText = (comments: string) => {
+    setAddComment(comments)
+  }
+
   useEffect(() => {
-    if (autoCompleteEtarget) {
+    dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (projectsAutoCompleteTarget) {
       dispatch(
         reduxServices.allocateEmployee.getAllProjectSearchData(
-          autoCompleteEtarget,
+          projectsAutoCompleteTarget,
         ),
       )
     }
-  }, [autoCompleteEtarget])
+  }, [projectsAutoCompleteTarget])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
+
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
       htmlFor,
@@ -98,11 +96,11 @@ const AllocateEmployee = (): JSX.Element => {
     setIsBilLable(e.target.value)
     console.log(e.target.value)
   }
-  const handleMultiSelect = (list: GetAllEmployeesNames[], name: string) => {
-    setAddEmployeeName((prevState) => {
-      return { ...prevState, ...{ [name]: list } }
-    })
+
+  const handleMultiSelect = (list: GetAllEmployeesNames[]) => {
+    setAddEmployeeName(list)
   }
+
   const handleOnRemoveSelectedOption = (
     selectedList: GetAllEmployeesNames[],
     name: string,
@@ -111,12 +109,13 @@ const AllocateEmployee = (): JSX.Element => {
       return { ...prevState, ...{ [name]: selectedList } }
     })
   }
-  const onHandleSelectprojectName = (projectName: string) => {
-    setAutoCompleteEtarget(projectName)
+
+  const onHandleSelectProjectName = (projectName: string) => {
+    setProjectsAutoCompleteTarget(projectName)
     const selectedProject = allProjectNames.find(
       (value) => value.projectName === projectName,
     )
-    setSelectproject(selectedProject)
+    setSelectProject(selectedProject)
   }
 
   const allocateHandleInputChange = (
@@ -126,9 +125,9 @@ const AllocateEmployee = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'allocation') {
-      let allocationValue = value.replace(/[^0-9]/g, '')
-      if (Number(allocationValue) > 100) allocationValue = '100'
-      setAllocationValue(allocationValue)
+      let targetValue = value.replace(/\D/g, '')
+      if (Number(targetValue) > 100) targetValue = '100'
+      setAllocationValue(targetValue)
     }
   }
 
@@ -145,6 +144,7 @@ const AllocateEmployee = (): JSX.Element => {
       setDateError(false)
     }
   }, [allocationDate, isEndDate])
+
   const successToastMessage = (
     <OToast
       toastMessage="Employee Allocated successfully"
@@ -157,28 +157,31 @@ const AllocateEmployee = (): JSX.Element => {
       allocation: allocationValue,
       billable: isBilLable,
       comments: addComment,
-      employeeIds: ['1000'],
+      employeeIds: addEmployeeName?.map((currentItem) =>
+        currentItem.id.toString(),
+      ),
       endDate: isEndDate,
       projectId: selectProject?.id as number,
       projectName: selectProject?.projectName as string,
       startDate: allocationDate,
     }
-    const addNewAllocate = await dispatch(
+    const allocateEmployeeResultAction = await dispatch(
       reduxServices.allocateEmployee.AddNewAllocate(finalObject),
     )
     if (
       reduxServices.allocateEmployee.AddNewAllocate.fulfilled.match(
-        addNewAllocate,
+        allocateEmployeeResultAction,
       )
     ) {
-      allocateButtonHandler()
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
   const clearInputs = () => {
     setIsBilLable('')
     setAllocationValue('')
-    setAutoCompleteEtarget('')
+    setProjectsAutoCompleteTarget('')
+    setSelectProject(initialGetAllProjectNames)
+    setAddEmployeeName([])
     setIsEndDate('')
     setAllocationDate('')
     setAddComment('')
@@ -187,6 +190,7 @@ const AllocateEmployee = (): JSX.Element => {
       setShowComment(true)
     }, 0)
   }
+
   return (
     <>
       <OCard
@@ -199,7 +203,7 @@ const AllocateEmployee = (): JSX.Element => {
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Employee:
-              <span className={showIsRequired(addEmployeeName.fullName)}>
+              <span className={addEmployeeName ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -209,9 +213,9 @@ const AllocateEmployee = (): JSX.Element => {
                 options={allEmployeeProfiles?.map((employee) => employee) || []}
                 displayValue="fullName"
                 placeholder="Employee Name"
-                selectedValues={addEmployeeName.fullName}
+                selectedValues={addEmployeeName}
                 onSelect={(list: GetAllEmployeesNames[]) =>
-                  handleMultiSelect(list, 'fullName')
+                  handleMultiSelect(list)
                 }
                 onRemove={(selectedList: GetAllEmployeesNames[]) =>
                   handleOnRemoveSelectedOption(selectedList, 'fullName')
@@ -220,7 +224,7 @@ const AllocateEmployee = (): JSX.Element => {
             </CCol>
           </CRow>
           <CRow className="mt-3">
-            <CFormLabel {...formLabelProps} className={labelAlignment}>
+            <CFormLabel {...formLabelProps} className={formLabel}>
               Project Name:
               <span className={selectProject ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
@@ -232,12 +236,12 @@ const AllocateEmployee = (): JSX.Element => {
                 }}
                 getItemValue={(item) => item.projectName}
                 items={allProjectNames ? allProjectNames : []}
-                data-testid={name}
                 wrapperStyle={{ position: 'relative' }}
                 renderMenu={(children) => (
                   <div
                     className={
-                      autoCompleteEtarget && autoCompleteEtarget.length > 0
+                      projectsAutoCompleteTarget &&
+                      projectsAutoCompleteTarget.length > 0
                         ? 'autocomplete-dropdown-wrap'
                         : 'autocomplete-dropdown-wrap hide'
                     }
@@ -247,7 +251,7 @@ const AllocateEmployee = (): JSX.Element => {
                 )}
                 renderItem={(item, isHighlighted) => (
                   <div
-                    data-testid="option"
+                    data-testid="project-option"
                     className={
                       isHighlighted
                         ? 'autocomplete-dropdown-item active'
@@ -258,41 +262,45 @@ const AllocateEmployee = (): JSX.Element => {
                     {item.projectName}
                   </div>
                 )}
-                value={autoCompleteEtarget}
+                value={projectsAutoCompleteTarget}
                 shouldItemRender={(item, itemValue) =>
                   item?.projectName
                     ?.toLowerCase()
                     .indexOf(itemValue.toLowerCase()) > -1
                 }
-                onChange={(e) => setAutoCompleteEtarget(e.target.value)}
+                onChange={(e) => setProjectsAutoCompleteTarget(e.target.value)}
                 onSelect={(selectedVal) =>
-                  onHandleSelectprojectName(selectedVal)
+                  onHandleSelectProjectName(selectedVal)
                 }
               />
             </CCol>
           </CRow>
+          {selectProject?.startdate && (
+            <>
+              <CRow className="mt-3 ">
+                <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
+                  Project Start Date:
+                </CFormLabel>
+                <CCol sm={6}>
+                  <CFormLabel className="col-sm-15 col-form-label text-end">
+                    {selectProject?.startdate}
+                  </CFormLabel>
+                </CCol>
+              </CRow>
+              <CRow className="mt-3 ">
+                <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
+                  Project End Date:
+                </CFormLabel>
+                <CCol sm={6}>
+                  <CFormLabel className="col-sm-15 col-form-label text-end">
+                    {selectProject?.enddate}
+                  </CFormLabel>
+                </CCol>
+              </CRow>
+            </>
+          )}
           <CRow className="mt-3 ">
-            <CFormLabel {...dynamicFormLabelProps('billable', labelAlignment)}>
-              Project Start Date:
-            </CFormLabel>
-            <CCol sm={6}>
-              <CFormLabel className="col-sm-15 col-form-label text-end">
-                {selectProject?.startdate}
-              </CFormLabel>
-            </CCol>
-          </CRow>
-          <CRow className="mt-3 ">
-            <CFormLabel {...dynamicFormLabelProps('billable', labelAlignment)}>
-              Project End Date:
-            </CFormLabel>
-            <CCol sm={6}>
-              <CFormLabel className="col-sm-15 col-form-label text-end">
-                {selectProject?.enddate}
-              </CFormLabel>
-            </CCol>
-          </CRow>
-          <CRow className="mt-3 ">
-            <CFormLabel {...dynamicFormLabelProps('billable', labelAlignment)}>
+            <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
               Billable:
               <span className={isBilLable ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
@@ -306,8 +314,8 @@ const AllocateEmployee = (): JSX.Element => {
                 onChange={handleBillableChange}
               >
                 <option value={''}>Select </option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
               </CFormSelect>
             </CCol>
           </CRow>
