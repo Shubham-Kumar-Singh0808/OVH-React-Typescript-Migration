@@ -1,6 +1,7 @@
 import { CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import JobVacanciesTable from './JobVacanciesTable'
+import UpcomingBirthdays from './Birthdays/UpcomingBirthdays'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -13,6 +14,12 @@ const Dashboard = (): JSX.Element => {
       reduxServices.jobOpenings.getAllJobVacancies({
         startIndex: 0,
         endIndex: 20,
+      }),
+    )
+    dispatch(
+      reduxServices.upcomingBirthdays.getUpcomingBirthdayAnniversaries({
+        startIndex: 0,
+        endIndex: 3,
       }),
     )
   }, [dispatch])
@@ -65,7 +72,9 @@ const Dashboard = (): JSX.Element => {
                   title="Birthdays"
                   CBodyClassName="ps-0 pe-0"
                   footerPath="/birthdaylist"
-                ></OCard>
+                >
+                  <UpcomingBirthdays />
+                </OCard>
               </CCol>
             </CRow>
             <CRow>

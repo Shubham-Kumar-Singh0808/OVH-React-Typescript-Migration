@@ -1,4 +1,5 @@
 import React from 'react'
+import JobOpeningsTable from './JobOpeningsTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const JobOpenings = (): JSX.Element => {
@@ -9,7 +10,7 @@ const JobOpenings = (): JSX.Element => {
         title="Job Openings"
         CFooterClassName="d-none"
       >
-        <h1>Welcome</h1>
+        <JobOpeningsTable />
       </OCard>
     </>
   )

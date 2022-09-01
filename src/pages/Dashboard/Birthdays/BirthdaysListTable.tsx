@@ -45,7 +45,7 @@ const BirthdaysListTable = (props: BirthdayListTableProps): JSX.Element => {
       <CRow>
         <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end pe-0">
           <Link to={`/dashboard`}>
-            <CButton color="info btn-ovh me-1">
+            <CButton color="info btn-ovh me-1" data-testid="back-btn">
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
           </Link>
@@ -53,7 +53,7 @@ const BirthdaysListTable = (props: BirthdayListTableProps): JSX.Element => {
       </CRow>
       {birthdaysList.length ? (
         <>
-          <CTable className="mt-4" striped align="top">
+          <CTable className="mt-4" striped align="middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">Date</CTableHeaderCell>
