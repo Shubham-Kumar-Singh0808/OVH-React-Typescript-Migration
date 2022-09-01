@@ -101,7 +101,7 @@ const MyTicketsTable = (): JSX.Element => {
                     <CTableDataCell>
                       <CLink
                         className="cursor-pointer text-decoration-none text-primary"
-                        data-testid={`emp-comments${index}`}
+                        data-testid={`emp-subject${index}`}
                         onClick={() => handleModal(ticket.subject)}
                       >
                         {parse(ticketSubjectLimit)}
@@ -110,11 +110,11 @@ const MyTicketsTable = (): JSX.Element => {
                   ) : (
                     <CTableDataCell>{`N/A`}</CTableDataCell>
                   )}
-                  {ticketSubjectLimit ? (
+                  {ticketDiscriptionLimit ? (
                     <CTableDataCell>
                       <CLink
                         className="cursor-pointer text-decoration-none text-primary"
-                        data-testid={`emp-comments${index}`}
+                        data-testid={`ticket-description${index}`}
                         onClick={() => handleModal(ticket.description)}
                       >
                         {ticketDescription}

@@ -88,6 +88,7 @@ const MyTickets = (): JSX.Element => {
                 placeholder="Multiple Search"
                 aria-label="Multiple Search"
                 aria-describedby="button-addon2"
+                data-testid="searchField"
                 value={searchInput}
                 onChange={(e) => {
                   setSearchInput(e.target.value)
@@ -95,7 +96,7 @@ const MyTickets = (): JSX.Element => {
                 onKeyUp={handleSearchByEnter}
               />
               <CButton
-                data-testid="multi-search-btn"
+                data-testid="search-btn1"
                 className="cursor-pointer"
                 type="button"
                 color="info"

@@ -13,13 +13,13 @@ export type MyTicket = {
   status: string
   priority: string
   startDate: string
-  endDate: null
-  assigneeId: null
+  endDate: string
+  assigneeId: number
   employeeName: string
   percentageDone: number
   actualTime: string
   authorName: string
-  assigneeName: null
+  assigneeName: string
   approvalStatus: string
   filePath: string
   estimatedTime: string
@@ -27,7 +27,7 @@ export type MyTicket = {
   watcherNames: []
   disableApprove: true
   disableCancel: false
-  tracker: 1
+  tracker: number
   trackerName: string
   accessStartDate: string
   accessEndDate: string
@@ -36,8 +36,8 @@ export type MyTicket = {
 }
 
 export type GetMyTicketsResponse = {
-  list: MyTicket[]
   size: number
+  list: MyTicket[]
 }
 
 export type MyTicketsSliceState = {
