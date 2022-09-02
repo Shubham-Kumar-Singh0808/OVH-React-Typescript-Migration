@@ -26,9 +26,10 @@ const MyTickets = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Ticket List"
+        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="mt-3">
+        <CCol className="col-xs-12">
           {isLoading !== ApiLoadingState.loading ? (
             <>
               <MyTicketsTable />
@@ -40,7 +41,7 @@ const MyTickets = (): JSX.Element => {
               </CRow>
             </CCol>
           )}
-        </CRow>
+        </CCol>
       </OCard>
     </>
   )

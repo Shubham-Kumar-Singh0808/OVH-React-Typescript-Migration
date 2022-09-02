@@ -169,7 +169,7 @@ const MyTicketsTable = (): JSX.Element => {
                   : 'N/A'
               return (
                 <CTableRow key={index}>
-                  <CTableHeaderCell scope="row">{ticket.id}</CTableHeaderCell>
+                  <CTableDataCell>{ticket.id}</CTableDataCell>
                   {ticketSubjectLimit ? (
                     <CTableDataCell>
                       <CLink
