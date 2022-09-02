@@ -1,5 +1,5 @@
 import {
-  // AllocateEmployeeToProject,
+  AllocateEmployeeToProject,
   GetAllEmployeesNames,
   GetAllProjectNames,
 } from '../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
@@ -112,13 +112,13 @@ export const mockProjectNames: GetAllProjectNames[] = [
     allocation: null,
   },
 ]
-// export const mockAllocateEmployeeToProject: AllocateEmployeeToProject[] = {
-//   allocation: 100,
-//   billable: 'true',
-//   comments: 'test',
-//   employeeIds: ['1000'],
-//   endDate: '07/09/2022',
-//   projectId: 361,
-//   projectName: 'ovh',
-//   startDate: '30/08/2022',
-// }
+export const mockAllocateEmployeeToProject: AllocateEmployeeToProject = {
+  allocation: 100,
+  billable: 'true',
+  comments: 'test',
+  employeeIds: ['1000'],
+  endDate: '07/09/2022',
+  projectId: 361,
+  projectName: 'ovh',
+  startDate: '30/08/2022',
+}

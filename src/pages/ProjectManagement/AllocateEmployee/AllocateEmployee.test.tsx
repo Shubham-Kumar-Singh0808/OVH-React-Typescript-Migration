@@ -3,26 +3,38 @@ import userEvent from '@testing-library/user-event'
 import AllocateEmployee from './AllocateEmployee'
 import { render, screen } from '../../../test/testUtils'
 
-describe('Project Management Allocate Employee Component Testing', () => {
-  // eslint-disable-next-line react/react-in-jsx-scope
-  render(<AllocateEmployee />)
-})
+describe('Allocate Employee without data', () => {
+  beforeEach(() => {
+    // eslint-disable-next-line react/react-in-jsx-scope
+    render(<AllocateEmployee />)
+  })
 
-// DatePickers
-test('should render from date picker', () => {
-  const allocationDatePicker = screen.findByTestId(
-    'allocateEmployeeAllocationDate',
-  )
-  expect(allocationDatePicker).toBeTruthy()
-})
-test('should render to date picker', () => {
-  const EndDatePicker = screen.findByTestId('allocateEmployeeEndDate')
-  expect(EndDatePicker).toBeTruthy()
-})
+  test('should be able to render Experience Component without crashing', () => {
+    screen.debug()
+  })
 
-// Billable
-const BillableSelectListSelector = screen.getByTestId('formBillable')
-userEvent.selectOptions(BillableSelectListSelector, ['Yes'])
-expect(BillableSelectListSelector).toHaveValue('Yes')
+  test('should be able to render Allocate Employee Title', () => {
+    expect(screen.getByText('Employee Allocation')).toBeInTheDocument()
+  })
 
-// Project Names
+  test('should render to date picker', () => {
+    const EndDatePicker = screen.findByTestId('allocateEmployeeEndDate')
+    expect(EndDatePicker).toBeTruthy()
+  })
+  test('should render Allocate button as  disabled initially', () => {
+    expect(screen.getByRole('button', { name: 'Allocate' })).toBeInTheDocument()
+  })
+  test('should render clear button', () => {
+    const clearButton = screen.getByTestId('clear-btn')
+    expect(clearButton).toBeEnabled()
+  })
+  test('should select billable dropdown value', () => {
+    const LeaveTypeSelectListSelector = screen.getByTestId('form-select1')
+    userEvent.selectOptions(LeaveTypeSelectListSelector, ['Yes'])
+    expect(LeaveTypeSelectListSelector).toHaveValue('true')
+  })
+  test('should render Template rich text editor', () => {
+    const templateDescription = screen.findByTestId('ckEditor-component')
+    expect(templateDescription).toBeTruthy()
+  })
+})

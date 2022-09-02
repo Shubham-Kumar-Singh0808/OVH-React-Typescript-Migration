@@ -14,6 +14,7 @@ import moment from 'moment'
 import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
 import Multiselect from 'multiselect-react-dropdown'
+import { useHistory } from 'react-router-dom'
 import OCard from '../../../components/ReusableComponent/OCard'
 import {
   TextLabelProps,
@@ -53,7 +54,7 @@ const AllocateEmployee = (): JSX.Element => {
   const [allocationDate, setAllocationDate] = useState<string>()
   const [isEndDate, setIsEndDate] = useState<string>()
   const [dateError, setDateError] = useState<boolean>(false)
-
+  const [isAllocateButtonEnabled, setIsAllocateButtonEnabled] = useState(false)
   const allEmployeeProfiles = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
@@ -151,7 +152,13 @@ const AllocateEmployee = (): JSX.Element => {
       toastColor="success"
     />
   )
-
+  const failureToastMessage = (
+    <OToast
+      toastMessage="Add an employee within project date limits."
+      toastColor="success"
+    />
+  )
+  const history = useHistory()
   const allocateButtonHandler = async () => {
     const finalObject = {
       allocation: allocationValue,
@@ -174,6 +181,7 @@ const AllocateEmployee = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      history.push('/projectreport')
     }
   }
   const clearInputs = () => {
@@ -190,7 +198,35 @@ const AllocateEmployee = (): JSX.Element => {
       setShowComment(true)
     }, 0)
   }
-
+  useEffect(() => {
+    if (
+      addEmployeeName?.length > 0 &&
+      selectProject?.projectName &&
+      allocationDate &&
+      isEndDate &&
+      isBilLable &&
+      allocationValue
+    ) {
+      setIsAllocateButtonEnabled(true)
+    } else {
+      setIsAllocateButtonEnabled(false)
+    }
+  }, [
+    addEmployeeName,
+    selectProject,
+    isBilLable,
+    allocationValue,
+    allocationDate,
+    isEndDate,
+  ])
+  console.log(
+    addEmployeeName,
+    selectProject,
+    isBilLable,
+    allocationValue,
+    allocationDate,
+    isEndDate,
+  )
   return (
     <>
       <OCard
@@ -226,7 +262,16 @@ const AllocateEmployee = (): JSX.Element => {
           <CRow className="mt-3">
             <CFormLabel {...formLabelProps} className={formLabel}>
               Project Name:
-              <span className={selectProject ? TextWhite : TextDanger}>*</span>
+              {/* <span
+                className={selectProject ? TextWhite : TextDanger}
+              >
+                *
+              </span> */}
+              <span
+                className={projectsAutoCompleteTarget ? TextWhite : TextDanger}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <Autocomplete
@@ -275,7 +320,8 @@ const AllocateEmployee = (): JSX.Element => {
               />
             </CCol>
           </CRow>
-          {selectProject?.startdate && (
+          {/* selectProject?.startdate &&*/}
+          {projectsAutoCompleteTarget && (
             <>
               <CRow className="mt-3 ">
                 <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
@@ -307,6 +353,7 @@ const AllocateEmployee = (): JSX.Element => {
             <CCol sm={3}>
               <CFormSelect
                 id="billable"
+                data-testid="form-select1"
                 size="sm"
                 aria-label="billable"
                 name="billable"
@@ -415,7 +462,7 @@ const AllocateEmployee = (): JSX.Element => {
             <CRow className="mt-2">
               <CCol sm={{ span: 6, offset: 2 }}>
                 <span className="text-danger">
-                  End date should be greater than Allocation date
+                  <b>End date should be greater than Allocation date</b>
                 </span>
               </CCol>
             </CRow>
@@ -446,6 +493,7 @@ const AllocateEmployee = (): JSX.Element => {
                 className="btn-ovh me-1 text-white"
                 color="success"
                 onClick={allocateButtonHandler}
+                disabled={!isAllocateButtonEnabled}
               >
                 Allocate
               </CButton>
@@ -453,6 +501,7 @@ const AllocateEmployee = (): JSX.Element => {
                 data-testid="clear-btn"
                 color="warning"
                 className="btn-ovh text-white"
+                // disabled={!isAllocateButtonEnabled}
                 onClick={clearInputs}
               >
                 Clear
