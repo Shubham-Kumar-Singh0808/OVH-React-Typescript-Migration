@@ -246,6 +246,7 @@ const AllocateEmployee = (): JSX.Element => {
             <CCol sm={3}>
               <Multiselect
                 className="ovh-multiselect"
+                data-testid="employee-option"
                 options={allEmployeeProfiles?.map((employee) => employee) || []}
                 displayValue="fullName"
                 placeholder="Employee Name"
@@ -377,6 +378,7 @@ const AllocateEmployee = (): JSX.Element => {
               <CFormInput
                 type="text"
                 id="allocation"
+                data-testid="allocation-Value"
                 name="allocation"
                 max={100}
                 value={allocationValue}
