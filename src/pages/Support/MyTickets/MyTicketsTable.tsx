@@ -15,14 +15,22 @@ import React, { useMemo, useState } from 'react'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { currentPageData } from '../../../utils/paginationUtils'
 
-const MyTicketsTable = (): JSX.Element => {
+const MyTicketsTable = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
+  const [toCancelTicketId, setToCancelTicketId] = useState(0)
   const [ticketSubject, setTicketSubject] = useState<string>('')
+  const dispatch = useAppDispatch()
   const getAllTickets = useTypedSelector(
     reduxServices.myTickets.selectors.allTickets,
   )
@@ -59,6 +67,49 @@ const MyTicketsTable = (): JSX.Element => {
     () => currentPageData(getAllTickets, currentPage, pageSize),
     [getAllTickets, currentPage, pageSize],
   )
+
+  const handleShowHistoryModal = (id: number) => {
+    setToggle('ticketHistory')
+    dispatch(
+      reduxServices.myTickets.ticketHistoryDetails({
+        filterName: 'support',
+        id,
+      }),
+    )
+  }
+
+  const handleCancelTicketModal = (requestId: number) => {
+    setToCancelTicketId(requestId)
+    setIsCancelModalVisible(true)
+  }
+
+  const handleConfirmCancelTicketDetails = async () => {
+    setIsCancelModalVisible(false)
+    const cancelTicketResultAction = await dispatch(
+      reduxServices.myTickets.cancelTicket(toCancelTicketId),
+    )
+    if (
+      reduxServices.myTickets.cancelTicket.fulfilled.match(
+        cancelTicketResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.myTickets.getTickets({
+          endIndex: 20,
+          multiSearch: '',
+          startIndex: 0,
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Ticket cancelled successfully"
+          />,
+        ),
+      )
+    }
+  }
 
   return (
     <>
@@ -138,12 +189,14 @@ const MyTicketsTable = (): JSX.Element => {
                       <i
                         className="fa fa-times text-white"
                         aria-hidden="true"
+                        onClick={() => handleCancelTicketModal(ticket.id)}
                       ></i>
                     </CButton>
                     <CButton color="info" className="btn-ovh me-2">
                       <i
                         className="fa fa-bar-chart text-white"
                         aria-hidden="true"
+                        onClick={() => handleShowHistoryModal(ticket.id)}
                       ></i>
                     </CButton>
                   </CTableDataCell>
@@ -190,6 +243,17 @@ const MyTicketsTable = (): JSX.Element => {
         setVisible={setIsModalVisible}
       >
         {ticketSubject}
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={isCancelModalVisible}
+        setVisible={setIsCancelModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmCancelTicketDetails}
+      >
+        {`Do you really want to cancel this ticket ?`}
       </OModal>
     </>
   )

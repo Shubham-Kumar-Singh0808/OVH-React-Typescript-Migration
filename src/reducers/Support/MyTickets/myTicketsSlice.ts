@@ -8,6 +8,8 @@ import {
   GetTicketsProps,
   MyTicket,
   MyTicketsSliceState,
+  TicketHistory,
+  TicketHistoryProps,
 } from '../../../types/Support/MyTickets/myTicketsTypes'
 
 const getTickets = createAsyncThunk(
@@ -22,8 +24,33 @@ const getTickets = createAsyncThunk(
   },
 )
 
+const ticketHistoryDetails = createAsyncThunk(
+  'support/ticketHistoryDetails',
+  async (props: TicketHistoryProps, thunkApi) => {
+    try {
+      return await myTicketsApi.ticketHistoryDetails(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const cancelTicket = createAsyncThunk(
+  'clients/cancelTicket',
+  async (requestId: number, thunkApi) => {
+    try {
+      return await myTicketsApi.cancelTicket(requestId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialMyTicketsState: MyTicketsSliceState = {
   ticketList: { size: 0, list: [] },
+  ticketHistory: { size: 0, list: [] },
   allTickets: [],
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
@@ -50,6 +77,13 @@ const myTicketsSlice = createSlice({
       .addCase(getTickets.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
+      .addCase(ticketHistoryDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.ticketHistory = action.payload
+      })
+      .addCase(ticketHistoryDetails.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
   },
 })
 const isLoading = (state: RootState): LoadingState => state.tickets.isLoading
@@ -57,11 +91,16 @@ const isLoading = (state: RootState): LoadingState => state.tickets.isLoading
 const allTickets = (state: RootState): MyTicket[] =>
   state.tickets.ticketList.list
 
+const ticketHistory = (state: RootState): TicketHistory[] =>
+  state.tickets.ticketHistory.list
+
 const pageFromState = (state: RootState): number => state.tickets.currentPage
 const pageSizeFromState = (state: RootState): number => state.tickets.pageSize
 
 const myTicketsThunk = {
   getTickets,
+  ticketHistoryDetails,
+  cancelTicket,
 }
 
 const myTicketsSelectors = {
@@ -69,6 +108,7 @@ const myTicketsSelectors = {
   allTickets,
   pageFromState,
   pageSizeFromState,
+  ticketHistory,
 }
 
 export const myTicketsService = {

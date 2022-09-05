@@ -1,6 +1,8 @@
 import {
+  GetMyTicketHistoryResponse,
   GetMyTicketsResponse,
   GetTicketsProps,
+  TicketHistoryProps,
 } from '../../../../types/Support/MyTickets/myTicketsTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -44,9 +46,40 @@ const exportTicketListData = async (
   return response.data
 }
 
+const ticketHistoryDetails = async (
+  props: TicketHistoryProps,
+): Promise<GetMyTicketHistoryResponse> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketListInformationApiConfig.ticketHistoryDetails,
+    method: AllowedHttpMethods.get,
+    params: {
+      filterName: props.filterName ?? 20,
+      id: props.id,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const cancelTicket = async (requestId: number): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketListInformationApiConfig.cancelTicket,
+    method: AllowedHttpMethods.put,
+    params: {
+      requestId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const myTicketsApi = {
   getTickets,
   exportTicketListData,
+  ticketHistoryDetails,
+  cancelTicket,
 }
 
 export default myTicketsApi

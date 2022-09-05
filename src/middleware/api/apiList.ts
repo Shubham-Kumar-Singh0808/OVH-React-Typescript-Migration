@@ -383,4 +383,6 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
 export const ticketListInformationApiConfig: TicketListInformationApi = {
   getTicketListInformation: apiPrefix + '/supportManagement/searchTicketData',
   exportTicketList: apiPrefix + '/supportManagement/exportRaisedTickets',
+  ticketHistoryDetails: apiPrefix + '/supportManagement/getAudit',
+  cancelTicket: apiPrefix + '/supportManagement/cancelTicketRequest',
 }

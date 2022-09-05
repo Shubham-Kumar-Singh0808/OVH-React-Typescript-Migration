@@ -326,4 +326,6 @@ export interface LeaveSummaryApi extends ApiBase {
 export interface TicketListInformationApi extends ApiBase {
   getTicketListInformation: string
   exportTicketList: string
+  ticketHistoryDetails: string
+  cancelTicket: string
 }

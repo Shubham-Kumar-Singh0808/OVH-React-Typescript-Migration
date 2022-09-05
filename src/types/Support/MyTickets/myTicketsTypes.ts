@@ -42,6 +42,7 @@ export type GetMyTicketsResponse = {
 
 export type MyTicketsSliceState = {
   ticketList: GetMyTicketsResponse
+  ticketHistory: GetMyTicketHistoryResponse
   allTickets: MyTicket[]
   isLoading: ApiLoadingState
   currentPage: number
@@ -52,4 +53,67 @@ export type GetTicketsProps = {
   endIndex?: number
   multiSearch: string
   startIndex?: number
+}
+
+export type TicketHistory = {
+  id: null
+  ticketsSubCategoryName: null
+  subject: null
+  description: null
+  status: null
+  priority: null
+  startDate: null
+  endDate: null
+  assignee: null
+  percentageDone: null
+  actualTime: null
+  documentsPath: null
+  approvalStatus: string
+  oldticketsSubCategoryName: null
+  oldsubject: null
+  olddescription: null
+  oldstatus: null
+  oldpriority: null
+  oldstartDate: null
+  oldendDate: null
+  oldassignee: null
+  oldpercentageDone: null
+  oldactualTime: null
+  olddocumentsPath: null
+  oldapprovalStatus: string
+  modifiedDate: string
+  modifiedBy: string
+  persistType: string
+  columnName: null
+  additionalInfo: null
+  subCategoryName: null
+  estimatedTime: null
+  workFlow: null
+  oldsubCategoryName: null
+  oldestimatedTime: null
+  oldworkFlow: null
+  approvedByManager: null
+  levelOfHierarchy: null
+  oldlevelOfHierarchy: null
+  tracker: null
+  oldtracker: null
+  accessStartDate: null
+  oldAccessStartDate: null
+  accessEndDate: null
+  oldapprovedByManager: null
+  oldAccessEndDate: null
+}
+
+export type GetMyTicketHistoryResponse = {
+  size: number
+  list: TicketHistory[]
+}
+
+export type TicketHistoryProps = {
+  filterName: string
+  id: number
+}
+
+export type TicketHistoryDetailsProps = {
+  backButtonHandler: () => void
 }
