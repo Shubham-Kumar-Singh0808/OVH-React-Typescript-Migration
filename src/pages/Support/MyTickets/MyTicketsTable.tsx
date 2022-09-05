@@ -9,26 +9,20 @@ import {
   CLink,
   CCol,
   CRow,
-  CFormInput,
-  CInputGroup,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useMemo, useState } from 'react'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import myTicketsApi from '../../../middleware/api/Support/MyTickets/myTicketsApi'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { downloadFile } from '../../../utils/helper'
+import { useTypedSelector } from '../../../stateStore'
 import { currentPageData } from '../../../utils/paginationUtils'
 
 const MyTicketsTable = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [searchInput, setSearchInput] = useState<string>('')
   const [ticketSubject, setTicketSubject] = useState<string>('')
-  const dispatch = useAppDispatch()
   const getAllTickets = useTypedSelector(
     reduxServices.myTickets.selectors.allTickets,
   )
@@ -66,76 +60,8 @@ const MyTicketsTable = (): JSX.Element => {
     [getAllTickets, currentPage, pageSize],
   )
 
-  const handleSearch = () => {
-    dispatch(
-      reduxServices.myTickets.getTickets({
-        endIndex: 20,
-        multiSearch: searchInput,
-        startIndex: 0,
-      }),
-    )
-  }
-
-  const handleSearchByEnter = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-  ) => {
-    if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.myTickets.getTickets({
-          endIndex: 20,
-          multiSearch: searchInput,
-          startIndex: 0,
-        }),
-      )
-    }
-  }
-  const handleExportTicketListData = async () => {
-    const myTicketListDownload = await myTicketsApi.exportTicketListData({
-      multiSearch: searchInput,
-    })
-    downloadFile(myTicketListDownload, 'TicketList.csv')
-  }
   return (
     <>
-      <CRow className="justify-content-end">
-        <CCol className="text-end" md={4}>
-          <CButton
-            data-testid="export-button"
-            color="info"
-            className="btn-ovh me-1"
-            onClick={handleExportTicketListData}
-          >
-            <i className="fa fa-plus me-1"></i>Click to Export
-          </CButton>
-        </CCol>
-      </CRow>
-      <CRow className="gap-2 d-md-flex justify-content-md-end mt-3">
-        <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
-          <CInputGroup className="global-search me-0">
-            <CFormInput
-              placeholder="Multiple Search"
-              aria-label="Multiple Search"
-              aria-describedby="button-addon2"
-              data-testid="searchField"
-              value={searchInput}
-              onChange={(e) => {
-                setSearchInput(e.target.value)
-              }}
-              onKeyUp={handleSearchByEnter}
-            />
-            <CButton
-              data-testid="search-btn1"
-              className="cursor-pointer"
-              type="button"
-              color="info"
-              id="button-addon2"
-              onClick={handleSearch}
-            >
-              <i className="fa fa-search"></i>
-            </CButton>
-          </CInputGroup>
-        </CCol>
-      </CRow>
       <CTable striped className="mt-3">
         <CTableHead>
           <CTableRow>
