@@ -45,6 +45,7 @@ import {
   AddNewClientApi,
   ClientInformationApi,
   LeaveSummaryApi,
+  TicketApprovalsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -377,4 +378,14 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
   getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
   getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
   cancelEmployeeLeave: apiPrefix + '/leave/cancel',
+}
+
+export const ticketApprovalsApiConfig: TicketApprovalsApi = {
+  getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
+  getAllTrackerList: apiPrefix + '/supportManagement/getAllTracker',
+  departmentCategoryList:
+    apiPrefix + '/supportManagement/departmentCategoryList',
+  subCategoryList: apiPrefix + '/supportManagement/subCategoryList',
+  getAllTicketsForApproval:
+    apiPrefix + '/supportManagement/getAllTicketsForApproval',
 }
