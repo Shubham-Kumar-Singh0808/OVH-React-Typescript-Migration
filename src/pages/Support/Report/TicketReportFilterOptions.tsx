@@ -28,6 +28,7 @@ const TicketReportFilterOptions = ({
   setSelectDepartment: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const [showSelectCustom, setShowSelectCustom] = useState<boolean>(false)
+  const [dateError, setDateError] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
   const getDepartmentNameList = useTypedSelector(
@@ -104,6 +105,20 @@ const TicketReportFilterOptions = ({
       }),
     )
   }
+
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(fromDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(toDate?.toString()).format(commonFormatDate),
+    )
+    if (fromDate && toDate && newToDate.getTime() < newFromDate.getTime()) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [fromDate, toDate])
 
   useEffect(() => {
     if (selectDate === 'Custom') {
@@ -253,6 +268,15 @@ const TicketReportFilterOptions = ({
                   />
                 </CCol>
               </CRow>
+              {dateError && (
+                <CRow className="mt-2">
+                  <CCol sm={{ span: 6, offset: 4 }}>
+                    <span className="text-danger">
+                      To date should be greater than From date
+                    </span>
+                  </CCol>
+                </CRow>
+              )}
             </CCol>
           </>
         ) : (
