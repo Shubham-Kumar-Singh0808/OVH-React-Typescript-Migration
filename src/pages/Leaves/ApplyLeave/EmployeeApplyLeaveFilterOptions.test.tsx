@@ -1,6 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
+import { createMemoryHistory } from 'history'
 import EmployeeApplyLeaveFilterOptions from './EmployeeApplyLeaveFilterOptions'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import {
@@ -68,6 +69,32 @@ describe('Leave Apply Component Testing', () => {
       const Comments = screen.findByTestId('ckEditor-component')
       expect(Comments).toBeTruthy()
     })
+    test('should render data upon apply button click', async () => {
+      const viewButtonElement = screen.getByRole('button', { name: 'Apply' })
+      const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
+      fireEvent.click(fromDatePickerElement[0])
+      await waitFor(() =>
+        fireEvent.change(fromDatePickerElement[0], {
+          target: { value: '29 Oct, 2015' },
+        }),
+      )
+      fireEvent.click(fromDatePickerElement[1])
+      await waitFor(() =>
+        fireEvent.change(fromDatePickerElement[1], {
+          target: { value: '10 Feb, 2022' },
+        }),
+      )
+      userEvent.click(viewButtonElement)
+      expect(fromDatePickerElement[0]).toHaveValue('10/29/2015')
+      expect(fromDatePickerElement[1]).toHaveValue('2/10/2022')
+    })
+    test('should redirect to / when Apply Leave successful', async () => {
+      const history = createMemoryHistory()
+      userEvent.click(screen.getByRole('button', { name: 'Apply' }))
+      await waitFor(() => {
+        expect(history.location.pathname).toBe('/')
+      })
+    })
   })
 
   describe('LeaveType component with data', () => {
@@ -109,25 +136,6 @@ describe('Leave Apply Component Testing', () => {
         userEvent.selectOptions(LeaveTypeSelectListSelector, [''])
         expect(screen.getByTestId('sh-view-button')).toBeDisabled()
       })
-    })
-    test('should render data upon apply button click', async () => {
-      const viewButtonElement = screen.getByRole('button', { name: 'Apply' })
-      const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
-      fireEvent.click(fromDatePickerElement[0])
-      await waitFor(() =>
-        fireEvent.change(fromDatePickerElement[0], {
-          target: { value: '29 Oct, 2015' },
-        }),
-      )
-      fireEvent.click(fromDatePickerElement[1])
-      await waitFor(() =>
-        fireEvent.change(fromDatePickerElement[1], {
-          target: { value: '10 Feb, 2022' },
-        }),
-      )
-      userEvent.click(viewButtonElement)
-      expect(fromDatePickerElement[0]).toHaveValue('10/29/2015')
-      expect(fromDatePickerElement[1]).toHaveValue('2/10/2022')
     })
   })
 })
