@@ -58,6 +58,7 @@ import leaveSummaryReducer from './reducers/Leaves/LeaveSummary/employeeLeaveSum
 import jobOpeningsReducer from './reducers/Dashboard/jobOpeningsSlice'
 import UpcomingBirthdayReducer from './reducers/Dashboard/birthdayAnniversarySlice'
 import birthdaysListReducer from './reducers/Dashboard/birthdayListSlice'
+import holidaysReducer from './reducers/Dashboard/holidaysSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -116,6 +117,7 @@ export const allReducers = {
   employeeLeaveSummary: leaveSummaryReducer,
   upcomingEmployeeBirthday: UpcomingBirthdayReducer,
   employeesBirthdayList: birthdaysListReducer,
+  holidays: holidaysReducer,
   // add your slice reducers here
 }
 

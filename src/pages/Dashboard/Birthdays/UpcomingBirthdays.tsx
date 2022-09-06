@@ -10,7 +10,7 @@ const UpcomingBirthdays = (): JSX.Element => {
 
   return (
     <>
-      <div className="birthdays-panel-body">
+      <div className="birthdays-panel-body ps-0 pe-0">
         <ul className="birthdays-list-group recent-comments mb0">
           {upcomingEmployeeBirthdays?.map((birthday, index) => {
             return (

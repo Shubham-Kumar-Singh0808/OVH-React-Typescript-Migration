@@ -328,4 +328,7 @@ export interface DashboardApi extends ApiBase {
   getAllJobVacancies: string
   getUpcomingBirthdayAnniversaries: string
   getAllEmployeesBirthdayList: string
+  getUpcomingHolidays: string
+  getAllUpcomingHolidaysList: string
+  addHoliday: string
 }

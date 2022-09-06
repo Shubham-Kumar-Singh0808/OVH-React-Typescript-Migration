@@ -386,4 +386,7 @@ export const dashboardApiConfig: DashboardApi = {
     apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
   getAllEmployeesBirthdayList:
     apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
+  getUpcomingHolidays: apiPrefix + '/Employee/onlyUpcomingHolidays',
+  getAllUpcomingHolidaysList: apiPrefix + '/Employee/upcomingHolidays',
+  addHoliday: apiPrefix + '/Employee/saveHoliday',
 }

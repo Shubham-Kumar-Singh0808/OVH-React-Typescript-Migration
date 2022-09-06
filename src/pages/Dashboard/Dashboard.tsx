@@ -2,6 +2,7 @@ import { CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import JobVacanciesTable from './JobVacanciesTable'
 import UpcomingBirthdays from './Birthdays/UpcomingBirthdays'
+import UpcomingHolidays from './Holidays/UpcomingHolidays'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -22,6 +23,7 @@ const Dashboard = (): JSX.Element => {
         endIndex: 3,
       }),
     )
+    dispatch(reduxServices.holidays.getUpcomingHolidays())
   }, [dispatch])
 
   return (
@@ -35,7 +37,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Earned Leaves"
                   CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
+                  footerPath="/employeeLeaveSummary"
                 ></OCard>
               </CCol>
               <CCol sm={6}>
@@ -91,8 +93,10 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Holidays"
                   CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                ></OCard>
+                  footerPath="/holidaylist"
+                >
+                  <UpcomingHolidays />
+                </OCard>
               </CCol>
             </CRow>
           </CRow>

@@ -127,6 +127,13 @@ const BirthdaysListTable = React.lazy(
   () => import('./pages/Dashboard/Birthdays/ListOfBirthdays'),
 )
 
+const HolidaysList = React.lazy(
+  () => import('./pages/Dashboard/Holidays/HolidaysList/ListOfHolidays'),
+)
+
+const AddHoliday = React.lazy(
+  () => import('./pages/Dashboard/Holidays/HolidaysList/AddHoliday/AddHoliday'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -279,6 +286,16 @@ const routes = [
     path: '/birthdaylist',
     name: 'List of Birthdays',
     component: BirthdaysListTable,
+  },
+  {
+    path: '/holidaylist',
+    name: 'List of Holidays',
+    component: HolidaysList,
+  },
+  {
+    path: '/addHoliday',
+    name: 'Add Holiday',
+    component: AddHoliday,
   },
 ]
 

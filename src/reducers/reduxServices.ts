@@ -48,6 +48,7 @@ import { leaveSummaryService } from './Leaves/LeaveSummary/employeeLeaveSummaryS
 import { jobVacanciesService } from './Dashboard/jobOpeningsSlice'
 import { birthdaysListService } from './Dashboard/birthdayListSlice'
 import { upcomingBirthdaysService } from './Dashboard/birthdayAnniversarySlice'
+import { holidaysService } from './Dashboard/holidaysSlice'
 
 export const reduxServices = {
   app: appService,
@@ -100,4 +101,5 @@ export const reduxServices = {
   jobOpenings: jobVacanciesService,
   birthdaysList: birthdaysListService,
   upcomingBirthdays: upcomingBirthdaysService,
+  holidays: holidaysService,
 }
