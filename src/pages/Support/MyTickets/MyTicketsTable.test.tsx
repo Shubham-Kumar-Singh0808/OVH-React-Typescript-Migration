@@ -5,6 +5,8 @@ import MyTicketsTable from './MyTicketsTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
 
+const mockSetToggle = jest.fn()
+
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
     expect(
@@ -18,7 +20,7 @@ const mockSetPageSize = jest.fn()
 
 describe('MyTickets component with data', () => {
   beforeEach(() => {
-    render(<MyTicketsTable />, {
+    render(<MyTicketsTable setToggle={mockSetToggle} />, {
       preloadedState: {
         tickets: {
           ticketList: mockEmployeeTicketList,
@@ -44,11 +46,24 @@ describe('MyTickets component with data', () => {
       expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
     })
   })
+  test('should render ', () => {
+    const cancelElement = screen.getAllByTestId('cancel-btn')
+    expect(cancelElement[0]).toBeInTheDocument()
+    userEvent.click(cancelElement[0])
+    const confirmDeleteBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(confirmDeleteBtn)
+    expect(confirmDeleteBtn)
+  })
+  test('should click on edit button  ', () => {
+    const editElement = screen.getAllByTestId('edit-btn')
+    userEvent.click(editElement[0])
+    expect(editElement[0]).toBeInTheDocument()
+  })
 })
 
 describe('Scheduled Interviews Table Component Testing', () => {
   test('should render scheduled interviews table component without crashing', async () => {
-    render(<MyTicketsTable />, {
+    render(<MyTicketsTable setToggle={mockSetToggle} />, {
       preloadedState: {
         tickets: {
           ticketList: mockEmployeeTicketList,

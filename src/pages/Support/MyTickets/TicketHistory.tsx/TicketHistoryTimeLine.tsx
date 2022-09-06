@@ -175,7 +175,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                     ) : (
                       <></>
                     )}
-                    {ticketDetails.subject ? (
+                    {ticketDetails.description ? (
                       <>
                         <div className="mb-1">
                           <CFormLabel className="col-form-label p-0">

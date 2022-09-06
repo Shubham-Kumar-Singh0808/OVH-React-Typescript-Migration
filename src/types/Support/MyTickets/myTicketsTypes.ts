@@ -56,17 +56,17 @@ export type GetTicketsProps = {
 }
 
 export type TicketHistory = {
-  id: null
-  ticketsSubCategoryName: null
-  subject: null
-  description: null
-  status: null
-  priority: null
-  startDate: null
-  endDate: null
-  assignee: null
-  percentageDone: null
-  actualTime: null
+  id: null | number
+  ticketsSubCategoryName: null | string
+  subject: null | string
+  description: null | string
+  status: null | string
+  priority: null | string
+  startDate: null | string
+  endDate: null | string
+  assignee: null | string
+  percentageDone: null | string
+  actualTime: null | string
   documentsPath: null
   approvalStatus: string
   oldticketsSubCategoryName: null
@@ -80,7 +80,7 @@ export type TicketHistory = {
   oldpercentageDone: null
   oldactualTime: null
   olddocumentsPath: null
-  oldapprovalStatus: string
+  oldapprovalStatus: string | null
   modifiedDate: string
   modifiedBy: string
   persistType: string
@@ -95,13 +95,13 @@ export type TicketHistory = {
   approvedByManager: null
   levelOfHierarchy: null
   oldlevelOfHierarchy: null
-  tracker: null
-  oldtracker: null
-  accessStartDate: null
-  oldAccessStartDate: null
-  accessEndDate: null
-  oldapprovedByManager: null
-  oldAccessEndDate: null
+  tracker: string
+  oldtracker: string | null
+  accessStartDate: string
+  oldAccessStartDate: string | null
+  accessEndDate: string
+  oldapprovedByManager: string | null
+  oldAccessEndDate: string | null
 }
 
 export type GetMyTicketHistoryResponse = {

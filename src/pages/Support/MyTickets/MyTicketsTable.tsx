@@ -197,6 +197,7 @@ const MyTicketsTable = ({
                       <i
                         className="fa fa-times text-white"
                         aria-hidden="true"
+                        data-testid="cancel-btn"
                         onClick={() => handleCancelTicketModal(ticket.id)}
                       ></i>
                     </CButton>
@@ -204,6 +205,7 @@ const MyTicketsTable = ({
                       <i
                         className="fa fa-bar-chart text-white"
                         aria-hidden="true"
+                        data-testid="edit-btn"
                         onClick={() => handleShowHistoryModal(ticket.id)}
                       ></i>
                     </CButton>

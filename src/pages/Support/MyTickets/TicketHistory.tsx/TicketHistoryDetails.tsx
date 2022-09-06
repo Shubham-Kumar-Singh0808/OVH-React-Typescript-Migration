@@ -23,9 +23,13 @@ const TicketHistoryDetails = ({
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
+            <CButton color="info btn-ovh me-1" data-testid="edit-btn">
+              <i className="fa fa-pencil-square-o"></i>Edit
+            </CButton>
             <CButton
               color="info"
               className="btn-ovh me-1"
+              data-testid="toggle-back-button"
               onClick={backButtonHandler}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
