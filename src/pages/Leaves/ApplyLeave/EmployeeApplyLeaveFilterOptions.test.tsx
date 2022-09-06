@@ -95,6 +95,12 @@ describe('Leave Apply Component Testing', () => {
         expect(history.location.pathname).toBe('/')
       })
     })
+    test('should clear data upon clear button click', () => {
+      const clearButtonElement = screen.getByRole('button', { name: 'Clear' })
+      userEvent.click(clearButtonElement)
+      const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
+      expect(fromDatePickerElement[0]).toHaveValue('')
+    })
   })
 
   describe('LeaveType component with data', () => {
@@ -112,13 +118,6 @@ describe('Leave Apply Component Testing', () => {
       userEvent.selectOptions(LeaveTypeSelectListSelector, ['LOP'])
       expect(LeaveTypeSelectListSelector).toHaveValue('LOP')
     })
-    test('should clear data upon clear button click', () => {
-      const clearButtonElement = screen.getByRole('button', { name: 'Clear' })
-      userEvent.click(clearButtonElement)
-      const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
-      expect(fromDatePickerElement[0]).toHaveValue('')
-    })
-
     test('renders the <CKEditor> component ', () => {
       const htmlElement = document.querySelector(
         '[data-testid="ckEditor-component"]',
