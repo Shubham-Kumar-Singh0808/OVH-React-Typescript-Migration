@@ -4,6 +4,7 @@ import moment from 'moment'
 import ReactDatePicker from 'react-datepicker'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import { useHistory } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmployeeLeaveApply } from '../../../types/Leaves/ApplyLeave/employeeApplyLeaves'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
@@ -15,12 +16,15 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const initialEmployeeLeaveApply = {} as EmployeeLeaveApply
   const [applyLeave, setApplyLeave] = useState(initialEmployeeLeaveApply)
+  const commonFormatDate = 'l'
+  const [fromDate, setFromDate] = useState<string>()
+  const [toDate, setToDate] = useState<string>()
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [dateError, setDateError] = useState<boolean>(false)
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-
+  const history = useHistory()
   const employeeLeaveType = useTypedSelector(
     reduxServices.employeeApplyLeave.selectors.employeeLeaveType,
   )
@@ -30,9 +34,6 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.employeeApplyLeave.getEmployeeLeaveType(employeeId))
   }, [dispatch, employeeId])
-
-  const [fromDate, setFromDate] = useState<Date | string>()
-  const [toDate, setToDate] = useState<Date | string>()
 
   const deviceLocale: string =
     navigator.languages && navigator.languages.length
@@ -54,15 +55,6 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
     })
   }
 
-  useEffect(() => {
-    if ((fromDate as Date) > (toDate as Date)) {
-      setDateError(true)
-    } else {
-      setDateError(false)
-    }
-  }, [dispatch, fromDate, toDate])
-
-  const commonFormatDate = 'l'
   const currentDate = new Date().setHours(0, 0, 0, 0)
 
   const handleApplyLeave = async () => {
@@ -108,6 +100,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
           />,
         ),
       )
+      history.push('/employeeLeaveSummary')
     } else if (
       reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
         applyLeaveResultAction,
@@ -161,6 +154,20 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
       setShowEditor(true)
     }, 100)
   }
+
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(fromDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(toDate?.toString()).format(commonFormatDate),
+    )
+    if (newToDate.getTime() < newFromDate.getTime()) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [fromDate, toDate])
 
   return (
     <>

@@ -129,9 +129,10 @@ export interface UsernameEmailChangeHandlerProp extends DynamicFormLabelProps {
 }
 
 export interface InputField extends DynamicFormLabelProps {
-  onChangeHandler: (username: string) => void
-  onBlurHandler: (username: string) => void
+  onChangeHandler?: (username: string) => void
+  onBlurHandler?: (username: string) => void
   value: string
+  type?: string
   isRequired: boolean
   label: string
   name: string
