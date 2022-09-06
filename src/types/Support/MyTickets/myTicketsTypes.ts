@@ -70,15 +70,15 @@ export type TicketHistory = {
   documentsPath: null
   approvalStatus: string
   oldticketsSubCategoryName: null
-  oldsubject: null
-  olddescription: null
-  oldstatus: null
-  oldpriority: null
-  oldstartDate: null
-  oldendDate: null
-  oldassignee: null
-  oldpercentageDone: null
-  oldactualTime: null
+  oldsubject: null | string
+  olddescription: null | string
+  oldstatus: null | string
+  oldpriority: null | string
+  oldstartDate: null | string
+  oldendDate: null | string
+  oldassignee: null | string
+  oldpercentageDone: null | string
+  oldactualTime: null | string
   olddocumentsPath: null
   oldapprovalStatus: string | null
   modifiedDate: string

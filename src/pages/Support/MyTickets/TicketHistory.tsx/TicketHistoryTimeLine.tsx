@@ -7,100 +7,20 @@ const TicketHistoryTimeLine = (): JSX.Element => {
   const ticketHistory = useTypedSelector(
     reduxServices.myTickets.selectors.ticketHistory,
   )
+  const ticketUtils = (oldValue: string): JSX.Element => {
+    return oldValue ? (
+      <>
+        &nbsp;Changed from {oldValue}
+        <strong> to</strong>
+      </>
+    ) : (
+      <></>
+    )
+  }
   return (
     <>
       <div className="sh-timeline-container">
         {ticketHistory.map((ticketDetails, index) => {
-          const tracker = ticketDetails.oldtracker ? (
-            <>
-              &nbsp;Changed from {ticketDetails.oldtracker}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-          const ticketSubject = ticketDetails.oldsubject ? (
-            <>
-              &nbsp;Changed from {ticketDetails.oldsubject}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-          const ticketStatus = ticketDetails.oldstatus ? (
-            <>
-              &nbsp;Changed from {ticketDetails.oldstatus}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-          const ticketStartDate = ticketDetails.oldstartDate ? (
-            <>
-              &nbsp;Changed from {ticketDetails.oldstartDate}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-          const ticketPriority = ticketDetails.oldpriority ? (
-            <>
-              &nbsp;Changed from {ticketDetails.oldpriority}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-          const ticketPercentage = ticketDetails.oldpercentageDone ? (
-            <>
-              &nbsp;Changed from
-              {ticketDetails.oldpercentageDone}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-          const ticketApproval = ticketDetails.oldapprovalStatus ? (
-            <>
-              &nbsp;Changed from {ticketDetails.oldapprovalStatus}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-
-          const ticketActualTime = ticketDetails.oldactualTime ? (
-            <>
-              &nbsp;Changed from {ticketDetails.oldactualTime}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-          const ticketDiscription = ticketDetails.olddescription ? (
-            <>
-              &nbsp;Changed from {ticketDetails.olddescription}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-          const ticketAccessStartDate = ticketDetails.oldAccessStartDate ? (
-            <>
-              &nbsp;Changed from {ticketDetails.oldAccessStartDate}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
-          const ticketAccessEndDate = ticketDetails.oldAccessEndDate ? (
-            <>
-              &nbsp;Changed from {ticketDetails.oldAccessEndDate}
-              <strong> to</strong>
-            </>
-          ) : (
-            <></>
-          )
           return (
             <div key={index} className="sh-timeline-card">
               <div
@@ -153,7 +73,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Tracker Type
                           </CFormLabel>
-                          {tracker}
+                          {ticketUtils(ticketDetails.oldtracker as string)}
                           &nbsp;
                           {ticketDetails.tracker}
                         </div>
@@ -167,7 +87,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Subject
                           </CFormLabel>
-                          {ticketSubject}
+                          {ticketUtils(ticketDetails.oldsubject as string)}
                           &nbsp;
                           {ticketDetails.subject}
                         </div>
@@ -181,7 +101,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Description
                           </CFormLabel>
-                          {ticketDiscription}
+                          {ticketUtils(ticketDetails.olddescription as string)}
                           &nbsp;
                           {ticketDetails.description}
                         </div>
@@ -195,7 +115,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Status
                           </CFormLabel>
-                          {ticketStatus}
+                          {ticketUtils(ticketDetails.oldstatus as string)}
                           &nbsp;
                           {ticketDetails.status}
                         </div>
@@ -209,7 +129,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Start Date
                           </CFormLabel>
-                          {ticketStartDate}
+                          {ticketUtils(ticketDetails.oldstartDate as string)}
                           &nbsp;
                           {ticketDetails.startDate}
                         </div>
@@ -223,7 +143,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Priority
                           </CFormLabel>
-                          {ticketPriority}
+                          {ticketUtils(ticketDetails.oldpriority as string)}
                           &nbsp;
                           {ticketDetails.priority}
                         </div>
@@ -237,7 +157,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Access Start Date
                           </CFormLabel>
-                          {ticketAccessStartDate}
+                          {ticketUtils(
+                            ticketDetails.oldAccessStartDate as string,
+                          )}
                           &nbsp;
                           {ticketDetails.accessStartDate}
                         </div>
@@ -251,7 +173,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Access End Date
                           </CFormLabel>
-                          {ticketAccessEndDate}
+                          {ticketUtils(
+                            ticketDetails.oldAccessEndDate as string,
+                          )}
                           &nbsp;
                           {ticketDetails.accessEndDate}
                         </div>
@@ -265,7 +189,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Percentage
                           </CFormLabel>
-                          {ticketPercentage}
+                          {ticketUtils(
+                            ticketDetails.oldpercentageDone as string,
+                          )}
                           &nbsp;
                           {ticketDetails.percentageDone}
                         </div>
@@ -279,7 +205,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Permission Status
                           </CFormLabel>
-                          {ticketApproval}
+                          {ticketUtils(
+                            ticketDetails.oldapprovalStatus as string,
+                          )}
                           &nbsp;
                           {ticketDetails.approvalStatus}
                         </div>
@@ -293,7 +221,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Spent Time
                           </CFormLabel>
-                          {ticketActualTime}
+                          {ticketUtils(ticketDetails.oldactualTime as string)}
                           &nbsp;
                           {ticketDetails.actualTime}
                         </div>

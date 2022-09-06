@@ -61,8 +61,8 @@ describe('MyTickets component with data', () => {
   })
 })
 
-describe('Scheduled Interviews Table Component Testing', () => {
-  test('should render scheduled interviews table component without crashing', async () => {
+describe('My Tickets Table Component Testing', () => {
+  test('should render MyTickets table component without crashing', async () => {
     render(<MyTicketsTable setToggle={mockSetToggle} />, {
       preloadedState: {
         tickets: {
