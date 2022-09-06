@@ -179,13 +179,21 @@ const MyTicketsTable = ({
                   <CTableDataCell>{ticket.approvalStatus}</CTableDataCell>
                   <CTableDataCell>{ticket.status}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton color="info" className="btn-ovh me-2">
+                    <CButton
+                      color="info"
+                      className="btn-ovh me-2"
+                      disabled={ticket.approvalStatus === 'Cancelled'}
+                    >
                       <i
                         className="fa fa-pencil-square-o"
                         aria-hidden="true"
                       ></i>
                     </CButton>
-                    <CButton color="btn btn-warning" className="btn-ovh me-2">
+                    <CButton
+                      color="btn btn-warning"
+                      className="btn-ovh me-2"
+                      disabled={ticket.approvalStatus === 'Cancelled'}
+                    >
                       <i
                         className="fa fa-times text-white"
                         aria-hidden="true"
