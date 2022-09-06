@@ -70,12 +70,26 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
       ...applyLeave,
       ...{
         employeeId,
-        leaveAppliedOn: moment(currentDate).format(commonFormatDate),
+        leaveAppliedOn: new Date(currentDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: 'numeric',
+          day: '2-digit',
+        }),
         id: '',
         fromDate: fromDate
-          ? moment(fromDate).format(commonFormatDate)
-          : undefined,
-        toDate: moment(toDate).format(commonFormatDate),
+          ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        toDate: toDate
+          ? new Date(toDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
       },
     }
     const applyLeaveResultAction = await dispatch(
