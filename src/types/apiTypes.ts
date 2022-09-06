@@ -312,9 +312,22 @@ export interface ClientsApi extends ApiBase {
   getProjectsUnderClient: string
   searchClients: string
   deleteClient: string
+  editClient: string
+  updateClient: string
+  getClientCountries: string
 }
 
 export interface AddNewClientApi extends ApiBase {
   getClientCountries: string
   addNewClient: string
+}
+
+export interface ClientInformationApi extends ApiBase {
+  getClientInformation: string
+}
+
+export interface LeaveSummaryApi extends ApiBase {
+  getEmployeeLeaveSummary: string
+  getEmployeeLeaveHistory: string
+  cancelEmployeeLeave: string
 }

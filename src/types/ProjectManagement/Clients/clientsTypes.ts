@@ -91,4 +91,12 @@ export type ClientsSliceState = {
   projectsUnderClient: ProjectsUnderClient[]
   isLoading: ApiLoadingState
   isLoadingProjectDetails: ApiLoadingState
+  editClient: Client
+  clientCountries: ClientCountry[]
+}
+
+export type ClientCountry = {
+  id: number
+  name: string
+  code: null | number
 }

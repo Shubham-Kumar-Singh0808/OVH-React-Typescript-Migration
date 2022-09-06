@@ -1,5 +1,6 @@
 import { CTableRow, CTableDataCell, CButton, CLink } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import ClientDetailsTable from './ClientDetailsTable'
 import { Client } from '../../../types/ProjectManagement/Clients/clientsTypes'
 import { useAppDispatch } from '../../../stateStore'
@@ -48,7 +49,12 @@ const ClientsEntry = (props: {
           className="sh-organization-link"
           title={props.client.address}
         >
-          <CLink className="cursor-pointer">{props.client.organization}</CLink>
+          <Link
+            to={`/clientInfo/${props.client.id}`}
+            className="cursor-pointer"
+          >
+            {props.client.organization}
+          </Link>
         </CTableDataCell>
         <CTableDataCell scope="row">{props.client.name}</CTableDataCell>
         <CTableDataCell scope="row">{props.client.personName}</CTableDataCell>
@@ -66,12 +72,16 @@ const ClientsEntry = (props: {
         </CTableDataCell>
         <CTableDataCell scope="row">
           <>
-            <CButton className="btn-ovh me-2 sh-eye-btn-color">
-              <i className="fa fa-eye" aria-hidden="true"></i>
-            </CButton>
-            <CButton color="info" className="btn-ovh me-2">
-              <i className="fa fa-edit" aria-hidden="true"></i>
-            </CButton>
+            <Link to={`/clientInfo/${props.client.id}`}>
+              <CButton className="btn-ovh me-2 sh-eye-btn-color">
+                <i className="fa fa-eye" aria-hidden="true"></i>
+              </CButton>
+            </Link>
+            <Link to={`/editClient/${props.client.id}`}>
+              <CButton color="info" className="btn-ovh me-2">
+                <i className="fa fa-edit" aria-hidden="true"></i>
+              </CButton>
+            </Link>
             <CButton
               color="danger"
               className="btn-ovh me-2"

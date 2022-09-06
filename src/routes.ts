@@ -94,7 +94,12 @@ const MyAttendance = React.lazy(
 const Clients = React.lazy(
   () => import('./pages/ProjectManagement/Clients/Clients'),
 )
-
+const LeaveSummary = React.lazy(
+  () =>
+    import(
+      './pages/Leaves/LeaveSummary/LeaveSummaryLandingScreen/EmployeeLeaveSummary'
+    ),
+)
 const AddProject = React.lazy(
   () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
 )
@@ -102,9 +107,19 @@ const AddProject = React.lazy(
 const EditProject = React.lazy(
   () => import('./pages/ProjectManagement/Project/EditProject/EditProject'),
 )
+const EditClient = React.lazy(
+  () => import('./pages/ProjectManagement/Clients/EditClient/EditClient'),
+)
 
 const AddClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/AddClient/AddNewClient'),
+)
+
+const ViewClient = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Clients/ClientInformation/ViewClientInformation'
+    ),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -235,19 +250,24 @@ const routes = [
     component: Clients,
   },
   {
-    path: '/addproject',
-    name: 'Add Project',
-    component: AddProject,
-  },
-  {
-    path: '/editproject/:projectId',
-    name: 'Edit Project',
-    component: EditProject,
-  },
-  {
     path: '/addClient',
     name: 'Add Client',
     component: AddClient,
+  },
+  {
+    path: '/clientInfo/:clientId',
+    name: 'View Client',
+    component: ViewClient,
+  },
+  {
+    path: '/editClient/:clientId',
+    name: 'Edit Client',
+    component: EditClient,
+  },
+  {
+    path: '/employeeLeaveSummary',
+    name: 'Leave Summary',
+    component: LeaveSummary,
   },
 ]
 
