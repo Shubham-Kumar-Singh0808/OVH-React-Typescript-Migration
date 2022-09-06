@@ -8,19 +8,18 @@ import {
   mockEmployeeNames,
   mockProjectNames,
 } from '../../../test/data/allocateEmployeeData'
-import { dateFormatPerLocale } from '../../../utils/dateFormatUtils'
+// import { dateFormatPerLocale } from '../../../utils/dateFormatUtils'
 
 const deviceLocale: string =
   navigator.languages && navigator.languages.length
     ? navigator.languages[0]
     : navigator.language
-const localeDateFormat = dateFormatPerLocale.filter(
-  (lang) => lang.label === deviceLocale,
-)
-const dateFormat = localeDateFormat[0].format
+
 const billableValue = 'form-select1'
 const employeeNames = 'Employee Name'
-const allocationValue = 'allocation - Value'
+const allocationValue = 'allocation-value'
+const allocateButton = 'save-btn'
+const clearButton = 'clear-btn'
 
 describe('Allocate Employee without data', () => {
   beforeEach(() => {
@@ -39,8 +38,9 @@ describe('Allocate Employee without data', () => {
     const EndDatePicker = screen.findByTestId('allocateEmployeeEndDate')
     expect(EndDatePicker).toBeTruthy()
   })
-  test('should render Allocate button as  disabled initially', () => {
-    expect(screen.getByRole('button', { name: 'Allocate' })).toBeInTheDocument()
+  test('should render Allocate button as disabled and Clear Button not disabled initially', () => {
+    expect(screen.getByTestId(allocateButton)).toBeDisabled()
+    expect(screen.getByTestId(clearButton)).toBeEnabled()
   })
   test('should render clear button', () => {
     const clearButton = screen.getByTestId('clear-btn')
@@ -108,10 +108,5 @@ describe('should render allocate Employee Component with data', () => {
       expect(projectNameInput).toHaveValue('')
       expect(allocationValueInput).toHaveValue('')
     })
-  })
-  test('should render Allocate button as disabled and Clear Button not disabled initially', () => {
-    render(<AllocateEmployee />)
-    expect(screen.getByRole('button', { name: 'Allocate' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: ' Clear' })).toBeInTheDocument()
   })
 })

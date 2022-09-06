@@ -1,3 +1,4 @@
+import { allocateEmployeeHandlers } from './allocateEmployeeHandlers'
 import { attendanceReportHandlers } from './attendanceReportHandlers'
 import { categoryListHandlers } from './categoryListHandlers'
 import { certificateListHandlers } from './certificateListHandler'
@@ -24,5 +25,6 @@ export const handlers = [
   ...userAccessToFeaturesHandlers,
   ...hiveActivityReportHandlers,
   ...scheduledInterviewsHandlers,
+  ...allocateEmployeeHandlers,
   // add your handler here
 ]

@@ -30,8 +30,11 @@ import {
 } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const AllocateEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const history = useHistory()
+
   const formLabel = 'col-sm-3 col-form-label text-end'
   const commonFormatDate = 'L'
   const deviceLocale: string =
@@ -55,6 +58,7 @@ const AllocateEmployee = (): JSX.Element => {
   const [isEndDate, setIsEndDate] = useState<string>()
   const [dateError, setDateError] = useState<boolean>(false)
   const [isAllocateButtonEnabled, setIsAllocateButtonEnabled] = useState(false)
+
   const allEmployeeProfiles = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
@@ -62,10 +66,6 @@ const AllocateEmployee = (): JSX.Element => {
   const allProjectNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.projectNames,
   )
-
-  const handleText = (comments: string) => {
-    setAddComment(comments)
-  }
 
   useEffect(() => {
     dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
@@ -95,7 +95,11 @@ const AllocateEmployee = (): JSX.Element => {
 
   const handleBillableChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setIsBilLable(e.target.value)
-    console.log(e.target.value)
+    // console.log(e.target.value)
+  }
+
+  const handleText = (comments: string) => {
+    setAddComment(comments)
   }
 
   const handleMultiSelect = (list: GetAllEmployeesNames[]) => {
@@ -104,11 +108,8 @@ const AllocateEmployee = (): JSX.Element => {
 
   const handleOnRemoveSelectedOption = (
     selectedList: GetAllEmployeesNames[],
-    name: string,
   ) => {
-    setAddEmployeeName((prevState) => {
-      return { ...prevState, ...{ [name]: selectedList } }
-    })
+    setAddEmployeeName(selectedList)
   }
 
   const onHandleSelectProjectName = (projectName: string) => {
@@ -117,6 +118,7 @@ const AllocateEmployee = (): JSX.Element => {
       (value) => value.projectName === projectName,
     )
     setSelectProject(selectedProject)
+    console.log(selectedProject)
   }
 
   const allocateHandleInputChange = (
@@ -146,6 +148,29 @@ const AllocateEmployee = (): JSX.Element => {
     }
   }, [allocationDate, isEndDate])
 
+  useEffect(() => {
+    if (
+      addEmployeeName?.length > 0 &&
+      selectProject?.projectName &&
+      allocationDate &&
+      isEndDate &&
+      isBilLable &&
+      allocationValue
+    ) {
+      setIsAllocateButtonEnabled(true)
+    } else {
+      setIsAllocateButtonEnabled(false)
+    }
+  }, [
+    addEmployeeName,
+    selectProject,
+    isBilLable,
+    allocationValue,
+    allocationDate,
+    isEndDate,
+  ])
+  // console.log(addEmployeeName)
+
   const successToastMessage = (
     <OToast
       toastMessage="Employee Allocated successfully"
@@ -155,11 +180,11 @@ const AllocateEmployee = (): JSX.Element => {
   const failureToastMessage = (
     <OToast
       toastMessage="Add an employee within project date limits."
-      toastColor="success"
+      toastColor="danger"
     />
   )
-  const history = useHistory()
-  const allocateButtonHandler = async () => {
+
+  const postAllocateEmployee = async () => {
     const finalObject = {
       allocation: allocationValue,
       billable: isBilLable,
@@ -184,6 +209,33 @@ const AllocateEmployee = (): JSX.Element => {
       history.push('/projectreport')
     }
   }
+  const allocateButtonHandler = () => {
+    const tempAllocationDate = new Date(
+      moment(allocationDate).format(commonFormatDate),
+    )
+    const tempProjectStartDate = new Date(
+      moment(selectProject?.startdate).format(commonFormatDate),
+    )
+    const tempEndDate = new Date(moment(isEndDate).format(commonFormatDate))
+    const tempProjectEndDate = new Date(
+      moment(selectProject?.enddate).format(commonFormatDate),
+    )
+    const newStartdate = new Date(selectProject?.startdate as string)
+    console.log(newStartdate)
+    console.log(selectProject?.startdate)
+    console.log(tempAllocationDate)
+    console.log(tempProjectEndDate)
+    console.log(tempEndDate)
+    if (
+      tempAllocationDate.getTime() >= newStartdate.getTime() &&
+      tempEndDate.getTime() <= tempProjectEndDate.getTime()
+    ) {
+      postAllocateEmployee()
+    } else {
+      dispatch(reduxServices.app.actions.addToast(failureToastMessage))
+    }
+  }
+
   const clearInputs = () => {
     setIsBilLable('')
     setAllocationValue('')
@@ -198,35 +250,6 @@ const AllocateEmployee = (): JSX.Element => {
       setShowComment(true)
     }, 0)
   }
-  useEffect(() => {
-    if (
-      addEmployeeName?.length > 0 &&
-      selectProject?.projectName &&
-      allocationDate &&
-      isEndDate &&
-      isBilLable &&
-      allocationValue
-    ) {
-      setIsAllocateButtonEnabled(true)
-    } else {
-      setIsAllocateButtonEnabled(false)
-    }
-  }, [
-    addEmployeeName,
-    selectProject,
-    isBilLable,
-    allocationValue,
-    allocationDate,
-    isEndDate,
-  ])
-  console.log(
-    addEmployeeName,
-    selectProject,
-    isBilLable,
-    allocationValue,
-    allocationDate,
-    isEndDate,
-  )
   return (
     <>
       <OCard
@@ -239,7 +262,9 @@ const AllocateEmployee = (): JSX.Element => {
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Employee:
-              <span className={addEmployeeName ? TextWhite : TextDanger}>
+              <span
+                className={addEmployeeName?.length ? TextWhite : TextDanger}
+              >
                 *
               </span>
             </CFormLabel>
@@ -255,7 +280,7 @@ const AllocateEmployee = (): JSX.Element => {
                   handleMultiSelect(list)
                 }
                 onRemove={(selectedList: GetAllEmployeesNames[]) =>
-                  handleOnRemoveSelectedOption(selectedList, 'fullName')
+                  handleOnRemoveSelectedOption(selectedList)
                 }
               />
             </CCol>
@@ -321,8 +346,7 @@ const AllocateEmployee = (): JSX.Element => {
               />
             </CCol>
           </CRow>
-          {/* selectProject?.startdate &&*/}
-          {projectsAutoCompleteTarget && (
+          {selectProject?.startdate && (
             <>
               <CRow className="mt-3 ">
                 <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
@@ -378,7 +402,7 @@ const AllocateEmployee = (): JSX.Element => {
               <CFormInput
                 type="text"
                 id="allocation"
-                data-testid="allocation-Value"
+                data-testid="allocation-value"
                 name="allocation"
                 max={100}
                 value={allocationValue}
