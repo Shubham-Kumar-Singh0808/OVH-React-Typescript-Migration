@@ -162,7 +162,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
     const newToDate = new Date(
       moment(toDate?.toString()).format(commonFormatDate),
     )
-    if (newToDate.getTime() < newFromDate.getTime()) {
+    if (fromDate && toDate && newToDate.getTime() < newFromDate.getTime()) {
       setDateError(true)
     } else {
       setDateError(false)
@@ -264,15 +264,16 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
             </CCol>
           </CRow>
         </CCol>
-        {dateError && (
-          <CCol sm={4} className="mt-4 pt-1">
+      </CRow>
+      {dateError && (
+        <CRow className="mt-2">
+          <CCol sm={{ span: 6, offset: 4 }}>
             <span className="text-danger">
               To date should be greater than From date
             </span>
           </CCol>
-        )}
-      </CRow>
-
+        </CRow>
+      )}
       <CRow className="mt-3">
         <CCol sm={8} data-testid="ckEditor-component">
           <CFormLabel className="col-sm-3 col-form-label">
