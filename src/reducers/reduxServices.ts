@@ -95,5 +95,5 @@ export const reduxServices = {
   addClient: addNewClientService,
   clientInformation: clientInformationService,
   employeeLeaveSummary: leaveSummaryService,
-  myTickets: myTicketsService,
+  tickets: myTicketsService,
 }

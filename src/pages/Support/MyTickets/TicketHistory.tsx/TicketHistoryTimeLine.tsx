@@ -5,7 +5,7 @@ import { useTypedSelector } from '../../../../stateStore'
 
 const TicketHistoryTimeLine = (): JSX.Element => {
   const ticketHistory = useTypedSelector(
-    reduxServices.myTickets.selectors.ticketHistory,
+    reduxServices.tickets.selectors.ticketHistory,
   )
   const isTicketPrevValue = (oldValue: string): JSX.Element => {
     return oldValue ? (

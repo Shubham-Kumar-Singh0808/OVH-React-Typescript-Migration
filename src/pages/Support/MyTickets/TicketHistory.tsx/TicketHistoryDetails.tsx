@@ -11,7 +11,7 @@ const TicketHistoryDetails = ({
   backButtonHandler,
 }: TicketHistoryDetailsProps): JSX.Element => {
   const isLoading = useTypedSelector(
-    reduxServices.myTickets.selectors.isLoading,
+    reduxServices.tickets.selectors.isLoading,
   )
   return (
     <>

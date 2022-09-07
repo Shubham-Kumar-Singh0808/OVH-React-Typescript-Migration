@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import TicketHistoryTimeLine from './TicketHistoryTimeLine'
 import { render, screen } from '../../../../test/testUtils'
-import { mockTicketListHistoryDetails } from '../../../../test/data/ticketListHistoryData'
+import { mockTicketListHistoryDetails } from '../../../../test/data/ticketListData'
 
 describe('Ticket History Time line Component Testing', () => {
   describe('should render Ticket History Time line Component without data', () => {
@@ -10,12 +10,17 @@ describe('Ticket History Time line Component Testing', () => {
       render(<TicketHistoryTimeLine />, {
         preloadedState: {
           tickets: {
-            ticketHistory: mockTicketListHistoryDetails,
+            myTickets: mockTicketListHistoryDetails,
           },
         },
       })
     })
-    expect(screen.getByText('12/03/2021')).toBeInTheDocument()
-    expect(screen.getByText('17/05/2022')).toBeInTheDocument()
+    mockTicketListHistoryDetails.list.forEach((childFeature) => {
+      const timeStamp = screen.getAllByTestId('sh-time-stamp')
+      expect(
+        screen.getByText(childFeature.modifiedDate as string),
+      ).toBeInTheDocument()
+      expect(timeStamp).toHaveLength(mockTicketListHistoryDetails.list.length)
+    })
   })
 })

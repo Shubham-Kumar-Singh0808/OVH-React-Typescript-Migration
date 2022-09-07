@@ -21,12 +21,12 @@ const MyTickets = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(
-    reduxServices.myTickets.selectors.isLoading,
+    reduxServices.tickets.selectors.isLoading,
   )
 
   useEffect(() => {
     dispatch(
-      reduxServices.myTickets.getTickets({
+      reduxServices.tickets.getTickets({
         endIndex: 20,
         multiSearch: '',
         startIndex: 0,
@@ -36,7 +36,7 @@ const MyTickets = (): JSX.Element => {
 
   const handleSearch = () => {
     dispatch(
-      reduxServices.myTickets.getTickets({
+      reduxServices.tickets.getTickets({
         endIndex: 20,
         multiSearch: searchInput,
         startIndex: 0,
@@ -49,7 +49,7 @@ const MyTickets = (): JSX.Element => {
   ) => {
     if (event.key === 'Enter') {
       dispatch(
-        reduxServices.myTickets.getTickets({
+        reduxServices.tickets.getTickets({
           endIndex: 20,
           multiSearch: searchInput,
           startIndex: 0,

@@ -32,15 +32,15 @@ const MyTicketsTable = ({
   const [ticketSubject, setTicketSubject] = useState<string>('')
   const dispatch = useAppDispatch()
   const getAllTickets = useTypedSelector(
-    reduxServices.myTickets.selectors.allTickets,
+    reduxServices.tickets.selectors.allTickets,
   )
 
   const pageFromState = useTypedSelector(
-    reduxServices.myTickets.selectors.pageFromState,
+    reduxServices.tickets.selectors.pageFromState,
   )
 
   const pageSizeFromState = useTypedSelector(
-    reduxServices.myTickets.selectors.pageSizeFromState,
+    reduxServices.tickets.selectors.pageSizeFromState,
   )
 
   const handleModal = (subject: string) => {
@@ -71,7 +71,7 @@ const MyTicketsTable = ({
   const handleShowHistoryModal = (id: number) => {
     setToggle('ticketHistory')
     dispatch(
-      reduxServices.myTickets.ticketHistoryDetails({
+      reduxServices.tickets.ticketHistoryDetails({
         filterName: 'support',
         id,
       }),
@@ -86,15 +86,15 @@ const MyTicketsTable = ({
   const handleConfirmCancelTicketDetails = async () => {
     setIsCancelModalVisible(false)
     const cancelTicketResultAction = await dispatch(
-      reduxServices.myTickets.cancelTicket(toCancelTicketId),
+      reduxServices.tickets.cancelTicket(toCancelTicketId),
     )
     if (
-      reduxServices.myTickets.cancelTicket.fulfilled.match(
+      reduxServices.tickets.cancelTicket.fulfilled.match(
         cancelTicketResultAction,
       )
     ) {
       dispatch(
-        reduxServices.myTickets.getTickets({
+        reduxServices.tickets.getTickets({
           endIndex: 20,
           multiSearch: '',
           startIndex: 0,
