@@ -13,6 +13,7 @@ describe('Ticket History Component Testing', () => {
     const backButtonElement = screen.getByTestId('toggle-back-button')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
+    expect(backButtonElement).toHaveValue('')
     expect(mockBackButtonHandler).toHaveBeenCalledTimes(1)
   })
 })

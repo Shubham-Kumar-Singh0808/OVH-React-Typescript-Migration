@@ -3,7 +3,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { MyTicketsSliceState } from '../../../types/Support/MyTickets/myTicketsTypes'
 
 describe('My Tickets Slice', () => {
-  describe('clientsReducer', () => {
+  describe('MyTickets Reducer', () => {
     const initialMyTicketsState = {
       ticketList: { size: 0, list: [] },
       ticketHistory: { size: 0, list: [] },
@@ -19,6 +19,7 @@ describe('My Tickets Slice', () => {
       const state = myTicketsReducer(initialMyTicketsState, action)
       expect(state).toEqual({
         ticketList: { list: [], size: 0 },
+        ticketHistory: { size: 0, list: [] },
         allTickets: [],
         isLoading: ApiLoadingState.loading,
         currentPage: 1,
@@ -33,6 +34,7 @@ describe('My Tickets Slice', () => {
       const state = myTicketsReducer(initialMyTicketsState, action)
       expect(state).toEqual({
         ticketList: undefined,
+        ticketHistory: { size: 0, list: [] },
         allTickets: [],
         isLoading: ApiLoadingState.succeeded,
         currentPage: 1,
