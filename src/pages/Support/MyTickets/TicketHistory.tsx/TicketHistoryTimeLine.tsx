@@ -7,7 +7,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
   const ticketHistory = useTypedSelector(
     reduxServices.myTickets.selectors.ticketHistory,
   )
-  const ticketUtils = (oldValue: string): JSX.Element => {
+  const isTicketPrevValue = (oldValue: string): JSX.Element => {
     return oldValue ? (
       <>
         &nbsp;Changed from {oldValue}
@@ -17,6 +17,36 @@ const TicketHistoryTimeLine = (): JSX.Element => {
       <></>
     )
   }
+  const isPersistValue = (persistType: string) => {
+    if (persistType === 'UPDATED') {
+      return (
+        <CBadge className="rounded-pill" color="info">
+          Updated
+        </CBadge>
+      )
+    } else if (persistType === 'CREATED') {
+      return (
+        <CBadge className="rounded-pill" color="success">
+          Created
+        </CBadge>
+      )
+    } else if (persistType === 'CANCELLED') {
+      return (
+        <CBadge className="rounded-pill" color="warning">
+          Cancelled
+        </CBadge>
+      )
+    } else if (persistType === 'REJECTED') {
+      return (
+        <CBadge className="rounded-pill" color="danger">
+          Rejected
+        </CBadge>
+      )
+    } else {
+      return ''
+    }
+  }
+
   return (
     <>
       <div className="sh-timeline-container">
@@ -38,31 +68,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                     {ticketDetails.modifiedBy} -
                   </h4>
                   <span className="sh-timeline-status">
-                    {ticketDetails.persistType === 'UPDATED' ? (
-                      <>
-                        <CBadge className="rounded-pill" color="info">
-                          Updated
-                        </CBadge>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                    {ticketDetails.persistType === 'CREATED' ? (
-                      <CBadge className="rounded-pill" color="success">
-                        Created
-                      </CBadge>
-                    ) : (
-                      <></>
-                    )}
-                    {ticketDetails.persistType === 'CANCELLED' ? (
-                      <>
-                        <CBadge className="rounded-pill" color="warning">
-                          Cancelled
-                        </CBadge>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                    {isPersistValue(ticketDetails.persistType)}
                   </span>
                 </div>
                 <div className="sh-timeline-body">
@@ -73,7 +79,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Tracker Type
                           </CFormLabel>
-                          {ticketUtils(ticketDetails.oldtracker as string)}
+                          {isTicketPrevValue(
+                            ticketDetails.oldtracker as string,
+                          )}
                           &nbsp;
                           {ticketDetails.tracker}
                         </div>
@@ -87,7 +95,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Subject
                           </CFormLabel>
-                          {ticketUtils(ticketDetails.oldsubject as string)}
+                          {isTicketPrevValue(
+                            ticketDetails.oldsubject as string,
+                          )}
                           &nbsp;
                           {ticketDetails.subject}
                         </div>
@@ -101,7 +111,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Description
                           </CFormLabel>
-                          {ticketUtils(ticketDetails.olddescription as string)}
+                          {isTicketPrevValue(
+                            ticketDetails.olddescription as string,
+                          )}
                           &nbsp;
                           {ticketDetails.description}
                         </div>
@@ -115,7 +127,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Status
                           </CFormLabel>
-                          {ticketUtils(ticketDetails.oldstatus as string)}
+                          {isTicketPrevValue(ticketDetails.oldstatus as string)}
                           &nbsp;
                           {ticketDetails.status}
                         </div>
@@ -129,7 +141,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Start Date
                           </CFormLabel>
-                          {ticketUtils(ticketDetails.oldstartDate as string)}
+                          {isTicketPrevValue(
+                            ticketDetails.oldstartDate as string,
+                          )}
                           &nbsp;
                           {ticketDetails.startDate}
                         </div>
@@ -143,7 +157,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Priority
                           </CFormLabel>
-                          {ticketUtils(ticketDetails.oldpriority as string)}
+                          {isTicketPrevValue(
+                            ticketDetails.oldpriority as string,
+                          )}
                           &nbsp;
                           {ticketDetails.priority}
                         </div>
@@ -157,7 +173,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Access Start Date
                           </CFormLabel>
-                          {ticketUtils(
+                          {isTicketPrevValue(
                             ticketDetails.oldAccessStartDate as string,
                           )}
                           &nbsp;
@@ -173,7 +189,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Access End Date
                           </CFormLabel>
-                          {ticketUtils(
+                          {isTicketPrevValue(
                             ticketDetails.oldAccessEndDate as string,
                           )}
                           &nbsp;
@@ -189,11 +205,11 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Percentage
                           </CFormLabel>
-                          {ticketUtils(
+                          {isTicketPrevValue(
                             ticketDetails.oldpercentageDone as string,
                           )}
                           &nbsp;
-                          {ticketDetails.percentageDone}
+                          {ticketDetails.percentageDone} %
                         </div>
                       </>
                     ) : (
@@ -205,7 +221,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Permission Status
                           </CFormLabel>
-                          {ticketUtils(
+                          {isTicketPrevValue(
                             ticketDetails.oldapprovalStatus as string,
                           )}
                           &nbsp;
@@ -221,9 +237,40 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Spent Time
                           </CFormLabel>
-                          {ticketUtils(ticketDetails.oldactualTime as string)}
-                          &nbsp;
-                          {ticketDetails.actualTime}
+                          {isTicketPrevValue(
+                            ticketDetails.oldactualTime as string,
+                          )}
+                          &nbsp; {ticketDetails.actualTime} Hours
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                    {ticketDetails.assignee ? (
+                      <>
+                        <div className="mb-1">
+                          <CFormLabel className="col-form-label p-0">
+                            Assignee
+                          </CFormLabel>
+                          {isTicketPrevValue(
+                            ticketDetails.oldassignee as string,
+                          )}
+                          &nbsp; {ticketDetails.assignee}
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                    {ticketDetails.approvedByManager ? (
+                      <>
+                        <div className="mb-1">
+                          <CFormLabel className="col-form-label p-0">
+                            Need Approval From
+                          </CFormLabel>
+                          {isTicketPrevValue(
+                            ticketDetails.oldassignee as string,
+                          )}
+                          &nbsp; {ticketDetails.oldapprovedByManager}
                         </div>
                       </>
                     ) : (
