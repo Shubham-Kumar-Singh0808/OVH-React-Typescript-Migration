@@ -95,7 +95,6 @@ const AllocateEmployee = (): JSX.Element => {
 
   const handleBillableChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setIsBilLable(e.target.value)
-    // console.log(e.target.value)
   }
 
   const handleText = (comments: string) => {
@@ -169,7 +168,6 @@ const AllocateEmployee = (): JSX.Element => {
     allocationDate,
     isEndDate,
   ])
-  // console.log(addEmployeeName)
 
   const successToastMessage = (
     <OToast
@@ -213,21 +211,27 @@ const AllocateEmployee = (): JSX.Element => {
     const tempAllocationDate = new Date(
       moment(allocationDate).format(commonFormatDate),
     )
+    const dateParts = selectProject?.startdate
+      ? selectProject.startdate.split('/')
+      : ''
     const tempProjectStartDate = new Date(
-      moment(selectProject?.startdate).format(commonFormatDate),
+      Number(dateParts[2]),
+      Number(dateParts[1]) - 1,
+      Number(dateParts[0]),
     )
     const tempEndDate = new Date(moment(isEndDate).format(commonFormatDate))
     const tempProjectEndDate = new Date(
-      moment(selectProject?.enddate).format(commonFormatDate),
+      Number(dateParts[2]),
+      Number(dateParts[1]) - 1,
+      Number(dateParts[0]),
     )
-    const newStartdate = new Date(selectProject?.startdate as string)
-    console.log(newStartdate)
-    console.log(selectProject?.startdate)
+    console.log(dateParts)
+    console.log(tempProjectStartDate)
     console.log(tempAllocationDate)
     console.log(tempProjectEndDate)
     console.log(tempEndDate)
     if (
-      tempAllocationDate.getTime() >= newStartdate.getTime() &&
+      tempAllocationDate.getTime() >= tempProjectStartDate.getTime() &&
       tempEndDate.getTime() <= tempProjectEndDate.getTime()
     ) {
       postAllocateEmployee()
@@ -288,11 +292,6 @@ const AllocateEmployee = (): JSX.Element => {
           <CRow className="mt-3">
             <CFormLabel {...formLabelProps} className={formLabel}>
               Project Name:
-              {/* <span
-                className={selectProject ? TextWhite : TextDanger}
-              >
-                *
-              </span> */}
               <span
                 className={projectsAutoCompleteTarget ? TextWhite : TextDanger}
               >
@@ -527,7 +526,6 @@ const AllocateEmployee = (): JSX.Element => {
                 data-testid="clear-btn"
                 color="warning"
                 className="btn-ovh text-white"
-                // disabled={!isAllocateButtonEnabled}
                 onClick={clearInputs}
               >
                 Clear

@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
+import { CKEditor } from 'ckeditor4-react'
 import AllocateEmployee from './AllocateEmployee'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import {
   mockAllocateEmployeeToProject,
   mockEmployeeNames,
@@ -88,6 +89,7 @@ describe('should render allocate Employee Component with data', () => {
       }),
     )
   })
+
   test('should render on every input of AllocateEmployee', async () => {
     const employeeNameInput = screen.getByPlaceholderText(employeeNames)
     userEvent.type(employeeNameInput, 'Sunny')
@@ -108,5 +110,49 @@ describe('should render allocate Employee Component with data', () => {
       expect(projectNameInput).toHaveValue('')
       expect(allocationValueInput).toHaveValue('')
     })
+  })
+  test('should enabled on every input of AllocateEmployee', async () => {
+    const employeeNameInput = screen.getByPlaceholderText(employeeNames)
+    userEvent.type(employeeNameInput, 'Sunny')
+    expect(employeeNameInput).toHaveValue('Sunny')
+
+    const projectNameInput = screen.getByPlaceholderText('Project Name')
+    userEvent.type(projectNameInput, 'ovh')
+    expect(projectNameInput).toHaveValue('ovh')
+
+    const allocationValueInput = screen.getByTestId(allocationValue)
+    userEvent.type(allocationValueInput, '100')
+    expect(allocationValueInput).toHaveValue('100')
+
+    userEvent.selectOptions(screen.getByTestId(billableValue), 'Yes')
+    userEvent.click(screen.getByTestId(clearButton))
+    await waitFor(() => {
+      expect(employeeNameInput).toBeEnabled()
+      expect(projectNameInput).toBeEnabled()
+      expect(allocationValueInput).toBeEnabled()
+    })
+  })
+
+  afterEach(cleanup)
+  test('should render labels', () => {
+    expect(screen.getByText('Employee:')).toBeInTheDocument()
+    expect(screen.getByText('Project Name:')).toBeInTheDocument()
+    expect(screen.getByText('Billable:')).toBeInTheDocument()
+    expect(screen.getByText('Allocation:')).toBeInTheDocument()
+    expect(screen.getByText('Allocation Date:')).toBeInTheDocument()
+    expect(screen.getByText('End Date:')).toBeInTheDocument()
+    expect(screen.getByText('Comments:')).toBeInTheDocument()
+  })
+
+  test('should enabled allocate button when input is not empty', () => {
+    expect(screen.getByTestId(clearButton)).not.toBeDisabled()
+    expect(screen.getByTestId(allocateButton)).toBeDisabled()
+  })
+  test('pass comments to test input value', () => {
+    render(
+      <CKEditor
+        initData={process.env.JEST_WORKER_ID !== undefined && <p>Test</p>}
+      />,
+    )
   })
 })
