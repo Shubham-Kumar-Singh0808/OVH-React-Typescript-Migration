@@ -20,13 +20,17 @@ const TicketHistoryTimeLine = (): JSX.Element => {
   const isPersistValue = (persistType: string) => {
     if (persistType === 'UPDATED') {
       return (
-        <CBadge className="rounded-pill" color="info">
+        <CBadge className="rounded-pill" color="info" data-testid="update-btn">
           Updated
         </CBadge>
       )
     } else if (persistType === 'CREATED') {
       return (
-        <CBadge className="rounded-pill" color="success">
+        <CBadge
+          className="rounded-pill"
+          color="success"
+          data-testid="created-btn"
+        >
           Created
         </CBadge>
       )
