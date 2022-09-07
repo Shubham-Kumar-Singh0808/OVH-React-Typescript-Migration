@@ -1,12 +1,12 @@
 import myTicketsReducer, { myTicketsService } from './myTicketsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { MyTicketsSliceState } from '../../../types/Support/MyTickets/myTicketsTypes'
-import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
 
 describe('My Tickets Slice', () => {
   describe('clientsReducer', () => {
     const initialMyTicketsState = {
-      ticketList: { list: [], size: 0 },
+      ticketList: { size: 0, list: [] },
+      ticketHistory: { size: 0, list: [] },
       allTickets: [],
       isLoading: ApiLoadingState.idle,
       currentPage: 1,

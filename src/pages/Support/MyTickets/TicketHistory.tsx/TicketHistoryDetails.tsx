@@ -10,9 +10,7 @@ import { useTypedSelector } from '../../../../stateStore'
 const TicketHistoryDetails = ({
   backButtonHandler,
 }: TicketHistoryDetailsProps): JSX.Element => {
-  const isLoading = useTypedSelector(
-    reduxServices.tickets.selectors.isLoading,
-  )
+  const isLoading = useTypedSelector(reduxServices.tickets.selectors.isLoading)
   return (
     <>
       <OCard
