@@ -20,9 +20,7 @@ const MyTickets = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
-  const isLoading = useTypedSelector(
-    reduxServices.tickets.selectors.isLoading,
-  )
+  const isLoading = useTypedSelector(reduxServices.tickets.selectors.isLoading)
 
   useEffect(() => {
     dispatch(
