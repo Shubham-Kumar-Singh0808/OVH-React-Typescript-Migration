@@ -38,6 +38,7 @@ export type TicketApprovalsSliceState = {
   departmentCategoryList: DepartmentCategoryList[]
   subCategoryList: SubCategoryList[]
   ticketsForApproval: GetAllTicketsForApprovalResponse
+  getAllLookUps: GetAllLookUps[]
 }
 
 export type GetAllTicketsForApprovalProps = {
@@ -95,4 +96,12 @@ export type TicketForApproval = {
 export type GetAllTicketsForApprovalResponse = {
   size: number
   list: TicketForApproval[]
+}
+
+export type GetAllLookUps = {
+  categoryId: number
+  categoryName: string
+  departmentId: number
+  departmentName: string
+  mealType: boolean
 }

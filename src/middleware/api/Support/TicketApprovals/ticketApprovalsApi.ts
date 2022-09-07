@@ -1,6 +1,7 @@
 import {
   DepartmentCategoryList,
   DepartmentList,
+  GetAllLookUps,
   GetAllTicketsForApprovalProps,
   GetAllTicketsForApprovalResponse,
   SubCategoryList,
@@ -25,6 +26,16 @@ const getDepartmentNameList = async (): Promise<DepartmentList[]> => {
 const getTrackerList = async (): Promise<TrackerList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ticketApprovalsApiConfig.getAllTrackerList,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getAllLookUps = async (): Promise<GetAllLookUps[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketApprovalsApiConfig.getAllLookups,
     method: AllowedHttpMethods.get,
   })
 
@@ -90,12 +101,44 @@ const getAllTicketsForApproval = async (
   return response.data
 }
 
+const exportTicketApprovalList = async (
+  props: GetAllTicketsForApprovalProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketApprovalsApiConfig.exportTicketApprovalList,
+    method: AllowedHttpMethods.get,
+    params: {
+      categoryId: props.categoryId ?? '',
+      dateSelection: props.dateSelection,
+      departmentId: props.departmentId ?? '',
+      endIndex: props.endIndex ?? 20,
+      from: props.fromDate,
+      multiSearch: props.multiSearch ?? '',
+      progressStatus: props.progressStatus,
+      searchByAssigneeName: props.searchByAssigneeName,
+      searchByEmpName: props.searchByEmpName,
+      startIndex: props.startIndex ?? 0,
+      subCategoryId: props.subCategoryId ?? '',
+      ticketStatus: props.ticketStatus,
+      to: props.toDate,
+      trackerID: props.trackerID ?? '',
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ticketApprovalsApi = {
   getDepartmentNameList,
   getTrackerList,
+  getAllLookUps,
   getDepartmentCategoryList,
   getSubCategoryList,
   getAllTicketsForApproval,
+  exportTicketApprovalList,
 }
 
 export default ticketApprovalsApi

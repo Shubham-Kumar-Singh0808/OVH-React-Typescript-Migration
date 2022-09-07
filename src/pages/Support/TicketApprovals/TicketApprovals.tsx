@@ -6,6 +6,8 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { GetAllTicketsForApprovalProps } from '../../../types/Support/TicketApprovals/ticketApprovalsTypes'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import { downloadFile } from '../../../utils/helper'
+import ticketApprovalsApi from '../../../middleware/api/Support/TicketApprovals/ticketApprovalsApi'
 
 const TicketApprovals = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -47,6 +49,7 @@ const TicketApprovals = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.ticketApprovals.getDepartmentNameList())
     dispatch(reduxServices.ticketApprovals.getTrackerList())
+    dispatch(reduxServices.ticketApprovals.getAllLookUps())
   }, [dispatch])
 
   useEffect(() => {
@@ -69,6 +72,18 @@ const TicketApprovals = (): JSX.Element => {
     }
   }, [deptId, categoryId])
 
+  const handleExportTicketApprovalList = async (
+    props: GetAllTicketsForApprovalProps,
+  ) => {
+    const ticketApprovalListDownload =
+      await ticketApprovalsApi.exportTicketApprovalList({
+        ...props,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      })
+    downloadFile(ticketApprovalListDownload, 'TicketApprovalList.csv')
+  }
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -84,6 +99,7 @@ const TicketApprovals = (): JSX.Element => {
         subCategoryIdValue={subCategoryIdValue as number}
         setSubCategoryIdValue={setSubCategoryIdValue}
         initialState={initialState}
+        handleExportTicketApprovalList={handleExportTicketApprovalList}
       />
 
       <TicketApprovalsTable

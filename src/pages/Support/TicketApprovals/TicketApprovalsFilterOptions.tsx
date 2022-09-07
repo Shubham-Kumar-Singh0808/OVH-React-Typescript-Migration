@@ -9,7 +9,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
@@ -25,6 +25,7 @@ const TicketApprovalsFilterOptions = ({
   subCategoryIdValue,
   setSubCategoryIdValue,
   initialState,
+  handleExportTicketApprovalList,
 }: {
   setTicketApprovalParams: React.Dispatch<
     React.SetStateAction<GetAllTicketsForApprovalProps>
@@ -36,6 +37,7 @@ const TicketApprovalsFilterOptions = ({
   subCategoryIdValue: number
   setSubCategoryIdValue: (value: number) => void
   initialState: GetAllTicketsForApprovalProps
+  handleExportTicketApprovalList: (value: GetAllTicketsForApprovalProps) => void
 }): JSX.Element => {
   const pendingApproval = 'Pending Approval'
   const [ticketStatusState, setTicketStatusState] = useState<string>('New')
@@ -49,6 +51,7 @@ const TicketApprovalsFilterOptions = ({
   const [assigneeNameCheckbox, setAssigneeNameCheckbox] =
     useState<boolean>(false)
   const [searchValue, setSearchValue] = useState<string>('')
+  const [dateError, setDateError] = useState<boolean>(false)
 
   const departmentList = useTypedSelector(
     reduxServices.ticketApprovals.selectors.departmentNameList,
@@ -64,6 +67,18 @@ const TicketApprovalsFilterOptions = ({
 
   const trackerList = useTypedSelector(
     reduxServices.ticketApprovals.selectors.trackerList,
+  )
+
+  const getAllLookUps = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.allLookUps,
+  )
+
+  const employeeRole = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeRole,
+  )
+
+  const ticketsForApproval = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.ticketsForApproval,
   )
 
   const ticketStatusList = [
@@ -153,6 +168,23 @@ const TicketApprovalsFilterOptions = ({
     setTicketApprovalParams(initialState)
   }
 
+  useEffect(() => {
+    const tempFromDate = new Date(
+      moment(ticketFromDate.toString()).format(commonDateFormat),
+    )
+    const tempToDate = new Date(
+      moment(ticketToDate.toString()).format(commonDateFormat),
+    )
+    if (tempToDate.getTime() < tempFromDate.getTime()) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [ticketFromDate, ticketToDate])
+
+  const categoryListToUse =
+    employeeRole === 'admin' ? departmentCategoryList : getAllLookUps
+
   return (
     <>
       <CRow className="mt-4">
@@ -196,32 +228,35 @@ const TicketApprovalsFilterOptions = ({
             ))}
           </CFormSelect>
         </CCol>
-        <CCol sm={2}>
-          <CFormLabel>Department Name:</CFormLabel>
-          <CFormSelect
-            aria-label="Default select example"
-            size="sm"
-            id="departmentName"
-            data-testid="departmentName"
-            name="departmentName"
-            value={deptId}
-            onChange={(e) => {
-              setDeptId(Number(e.target.value))
-            }}
-          >
-            <option value="">All</option>
-            {departmentList
-              .slice()
-              .sort((department1, department2) =>
-                department1.name.localeCompare(department2.name),
-              )
-              ?.map((dept, index) => (
-                <option key={index} value={dept.id}>
-                  {dept.name}
-                </option>
-              ))}
-          </CFormSelect>
-        </CCol>
+
+        {employeeRole === 'admin' && (
+          <CCol sm={2}>
+            <CFormLabel>Department Name:</CFormLabel>
+            <CFormSelect
+              aria-label="Default select example"
+              size="sm"
+              id="departmentName"
+              data-testid="departmentName"
+              name="departmentName"
+              value={deptId}
+              onChange={(e) => {
+                setDeptId(Number(e.target.value))
+              }}
+            >
+              <option value="">All</option>
+              {departmentList
+                .slice()
+                .sort((department1, department2) =>
+                  department1.name.localeCompare(department2.name),
+                )
+                ?.map((dept, index) => (
+                  <option key={index} value={dept.id}>
+                    {dept.name}
+                  </option>
+                ))}
+            </CFormSelect>
+          </CCol>
+        )}
         <CCol sm={2}>
           <CFormLabel>Category Name:</CFormLabel>
           <CFormSelect
@@ -236,7 +271,7 @@ const TicketApprovalsFilterOptions = ({
             }}
           >
             <option value="">All</option>
-            {departmentCategoryList?.map((category, categoryIndex) => (
+            {categoryListToUse?.map((category, categoryIndex) => (
               <option key={categoryIndex} value={category.categoryId}>
                 {category.categoryName}
               </option>
@@ -380,24 +415,33 @@ const TicketApprovalsFilterOptions = ({
                     setTicketToDate(moment(date).format(commonDateFormat))
                   }
                 />
+                {dateError && (
+                  <CCol sm={12} className="mt-1 pt-1">
+                    <span className="text-danger">
+                      To date should be greater than From date
+                    </span>
+                  </CCol>
+                )}
               </CRow>
             </CCol>
           </CCol>
         )}
       </CRow>
-      <CRow className="time-in-office-report-options mt-4">
-        <CCol md={12}>
-          <CButton
-            color="info"
-            className="text-white btn-ovh pull-right"
-            size="sm"
-            // onClick={handleExportHiveActivityReport}
-          >
-            <i className="fa fa-plus me-1"></i>
-            Click to Export
-          </CButton>
-        </CCol>
-      </CRow>
+      {ticketsForApproval.list?.length > 0 && (
+        <CRow className="time-in-office-report-options mt-4">
+          <CCol md={12}>
+            <CButton
+              color="info"
+              className="text-white btn-ovh pull-right"
+              size="sm"
+              onClick={() => handleExportTicketApprovalList(prepareObject)}
+            >
+              <i className="fa fa-plus me-1"></i>
+              Click to Export
+            </CButton>
+          </CCol>
+        </CRow>
+      )}
       <CRow className="mt-3">
         <CCol sm={{ span: 6, offset: 4 }}>
           <CButton

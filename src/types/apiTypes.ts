@@ -326,7 +326,9 @@ export interface LeaveSummaryApi extends ApiBase {
 export interface TicketApprovalsApi extends ApiBase {
   getDepartmentNameList: string
   getAllTrackerList: string
+  getAllLookups: string
   departmentCategoryList: string
   subCategoryList: string
   getAllTicketsForApproval: string
+  exportTicketApprovalList: string
 }

@@ -383,9 +383,12 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
 export const ticketApprovalsApiConfig: TicketApprovalsApi = {
   getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
   getAllTrackerList: apiPrefix + '/supportManagement/getAllTracker',
+  getAllLookups: apiPrefix + '/supportManagement/getAllLookups',
   departmentCategoryList:
     apiPrefix + '/supportManagement/departmentCategoryList',
   subCategoryList: apiPrefix + '/supportManagement/subCategoryList',
   getAllTicketsForApproval:
     apiPrefix + '/supportManagement/getAllTicketsForApproval',
+  exportTicketApprovalList:
+    apiPrefix + '/supportManagement/exportTicketApprovalList',
 }

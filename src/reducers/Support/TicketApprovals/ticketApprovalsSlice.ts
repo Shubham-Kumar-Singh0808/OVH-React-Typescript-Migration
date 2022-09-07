@@ -7,6 +7,7 @@ import { ValidationError } from '../../../types/commonTypes'
 import {
   DepartmentCategoryList,
   DepartmentList,
+  GetAllLookUps,
   GetAllTicketsForApprovalProps,
   GetAllTicketsForApprovalResponse,
   SubCategoryList,
@@ -31,6 +32,18 @@ const getTrackerList = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await ticketApprovalsApi.getTrackerList()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getAllLookUps = createAsyncThunk(
+  'ticketApprovals/getAllLookUps',
+  async (_, thunkApi) => {
+    try {
+      return await ticketApprovalsApi.getAllLookUps()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -81,6 +94,7 @@ const initialTicketApprovalsSliceState: TicketApprovalsSliceState = {
   departmentCategoryList: [],
   subCategoryList: [],
   ticketsForApproval: { size: 0, list: [] },
+  getAllLookUps: [],
 }
 
 const ticketApprovalsSlice = createSlice({
@@ -98,24 +112,25 @@ const ticketApprovalsSlice = createSlice({
         state.trackerList = action.payload
       })
       .addCase(getDepartmentCategoryList.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.departmentCategoryList = action.payload
       })
       .addCase(getSubCategoryList.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.subCategoryList = action.payload
       })
       .addCase(getAllTicketsForApproval.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.ticketsForApproval = action.payload
       })
+      .addCase(getAllLookUps.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getAllLookUps = action.payload
+      })
       .addMatcher(
         isAnyOf(
           getDepartmentNameList.pending,
           getTrackerList.pending,
-          getDepartmentCategoryList.pending,
-          getSubCategoryList.pending,
           getAllTicketsForApproval.pending,
+          getAllLookUps.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -130,6 +145,7 @@ const ticketApprovalsThunk = {
   getDepartmentCategoryList,
   getSubCategoryList,
   getAllTicketsForApproval,
+  getAllLookUps,
 }
 
 const isLoading = (state: RootState): ApiLoadingState =>
@@ -147,6 +163,9 @@ const subCategoryList = (state: RootState): SubCategoryList[] =>
 const trackerList = (state: RootState): TrackerList[] =>
   state.ticketApprovals.trackerList
 
+const allLookUps = (state: RootState): GetAllLookUps[] =>
+  state.ticketApprovals.getAllLookUps
+
 const ticketsForApproval = (
   state: RootState,
 ): GetAllTicketsForApprovalResponse => state.ticketApprovals.ticketsForApproval
@@ -158,6 +177,7 @@ const ticketApprovalsSelectors = {
   trackerList,
   ticketsForApproval,
   isLoading,
+  allLookUps,
 }
 
 export const ticketApprovalsService = {
