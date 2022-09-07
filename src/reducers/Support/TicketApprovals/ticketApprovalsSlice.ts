@@ -8,8 +8,10 @@ import {
   DepartmentCategoryList,
   DepartmentList,
   GetAllTicketsForApprovalProps,
+  GetAllTicketsForApprovalResponse,
   SubCategoryList,
   TicketApprovalsSliceState,
+  TrackerList,
 } from '../../../types/Support/TicketApprovals/ticketApprovalsTypes'
 
 const getDepartmentNameList = createAsyncThunk(
@@ -130,6 +132,9 @@ const ticketApprovalsThunk = {
   getAllTicketsForApproval,
 }
 
+const isLoading = (state: RootState): ApiLoadingState =>
+  state.ticketApprovals.isLoading
+
 const departmentNameList = (state: RootState): DepartmentList[] =>
   state.ticketApprovals.departmentNameList
 
@@ -139,10 +144,20 @@ const departmentCategoryList = (state: RootState): DepartmentCategoryList[] =>
 const subCategoryList = (state: RootState): SubCategoryList[] =>
   state.ticketApprovals.subCategoryList
 
+const trackerList = (state: RootState): TrackerList[] =>
+  state.ticketApprovals.trackerList
+
+const ticketsForApproval = (
+  state: RootState,
+): GetAllTicketsForApprovalResponse => state.ticketApprovals.ticketsForApproval
+
 const ticketApprovalsSelectors = {
   departmentNameList,
   departmentCategoryList,
   subCategoryList,
+  trackerList,
+  ticketsForApproval,
+  isLoading,
 }
 
 export const ticketApprovalsService = {
