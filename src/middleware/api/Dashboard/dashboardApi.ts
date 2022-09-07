@@ -46,9 +46,19 @@ const getUpcomingBirthdayAnniversaries = async (
   return response.data
 }
 
+const getFinancialYear = async (): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: dashboardApiConfig.getFinancialYear,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const dashboardApi = {
   getAllJobVacancies,
   getUpcomingBirthdayAnniversaries,
+  getFinancialYear,
 }
 
 export default dashboardApi

@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import JobVacanciesTable from './JobVacanciesTable'
 import UpcomingBirthdays from './Birthdays/UpcomingBirthdays'
 import UpcomingHolidays from './Holidays/UpcomingHolidays'
+import EmployeeEarnedLeaves from './EarnedLeaves/EmployeeEarnedLeaves'
+import TimeInOffice from './TimeInOffice/TimeInOffice'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -24,6 +26,8 @@ const Dashboard = (): JSX.Element => {
       }),
     )
     dispatch(reduxServices.holidays.getUpcomingHolidays())
+    dispatch(reduxServices.earnedLeaves.getFinancialYear())
+    dispatch(reduxServices.employeeLeaveSummary.getEmployeeLeaveSummary())
   }, [dispatch])
 
   return (
@@ -33,20 +37,10 @@ const Dashboard = (): JSX.Element => {
           <CRow>
             <CRow>
               <CCol sm={3}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Earned Leaves"
-                  CBodyClassName="ps-0 pe-0"
-                  footerPath="/employeeLeaveSummary"
-                ></OCard>
+                <EmployeeEarnedLeaves />
               </CCol>
               <CCol sm={6}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Time In Office"
-                  CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                ></OCard>
+                <TimeInOffice />
               </CCol>
               <CCol sm={3}>
                 <OCard
