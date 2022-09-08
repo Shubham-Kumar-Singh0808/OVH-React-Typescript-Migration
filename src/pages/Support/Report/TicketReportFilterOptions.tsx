@@ -27,7 +27,6 @@ const TicketReportFilterOptions = ({
   setToDate: React.Dispatch<React.SetStateAction<string>>
   setSelectDepartment: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
-  const [showSelectCustom, setShowSelectCustom] = useState<boolean>(false)
   const [dateError, setDateError] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
@@ -124,14 +123,6 @@ const TicketReportFilterOptions = ({
   }, [fromDate, toDate])
 
   useEffect(() => {
-    if (selectDate === 'Custom') {
-      setShowSelectCustom(true)
-    } else {
-      setShowSelectCustom(false)
-    }
-  })
-
-  useEffect(() => {
     if (selectDate !== 'Custom') {
       setFromDate('')
       setToDate('')
@@ -224,7 +215,7 @@ const TicketReportFilterOptions = ({
           </CFormSelect>
         </CCol>
 
-        {showSelectCustom ? (
+        {selectDate === 'Custom' ? (
           <>
             <CCol sm={6}>
               <CRow>
@@ -291,9 +282,7 @@ const TicketReportFilterOptions = ({
             color="success btn-ovh me-1"
             onClick={handleTicketReports}
             disabled={
-              showSelectCustom
-                ? !(showSelectCustom && fromDate !== '' && toDate !== '')
-                : false
+              selectDate === 'Custom' && !(fromDate !== '' && toDate !== '')
             }
           >
             View
