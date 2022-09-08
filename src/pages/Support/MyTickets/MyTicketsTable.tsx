@@ -68,7 +68,7 @@ const MyTicketsTable = ({
     [getAllTickets, currentPage, pageSize],
   )
 
-  const handleShowHistoryModal = (id: number) => {
+  const handleTicketHistoryClick = (id: number) => {
     setToggle('ticketHistory')
     dispatch(
       reduxServices.tickets.ticketHistoryDetails({
@@ -192,21 +192,24 @@ const MyTicketsTable = ({
                     <CButton
                       color="btn btn-warning"
                       className="btn-ovh me-2"
+                      data-testid="cancel-btn"
+                      onClick={() => handleCancelTicketModal(ticket.id)}
                       disabled={ticket.approvalStatus === 'Cancelled'}
                     >
                       <i
                         className="fa fa-times text-white"
                         aria-hidden="true"
-                        data-testid="cancel-btn"
-                        onClick={() => handleCancelTicketModal(ticket.id)}
                       ></i>
                     </CButton>
-                    <CButton color="info" className="btn-ovh me-2">
+                    <CButton
+                      color="info"
+                      className="btn-ovh me-2"
+                      data-testid="history-btn"
+                      onClick={() => handleTicketHistoryClick(ticket.id)}
+                    >
                       <i
                         className="fa fa-bar-chart text-white"
                         aria-hidden="true"
-                        data-testid="edit-btn"
-                        onClick={() => handleShowHistoryModal(ticket.id)}
                       ></i>
                     </CButton>
                   </CTableDataCell>

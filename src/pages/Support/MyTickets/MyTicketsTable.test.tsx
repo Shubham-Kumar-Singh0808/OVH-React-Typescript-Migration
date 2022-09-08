@@ -55,7 +55,7 @@ describe('MyTickets component with data', () => {
     expect(confirmDeleteBtn)
   })
   test('should click on edit button  ', () => {
-    const editElement = screen.getAllByTestId('edit-btn')
+    const editElement = screen.getAllByTestId('history-btn')
     userEvent.click(editElement[0])
     expect(editElement[0]).toBeInTheDocument()
   })
