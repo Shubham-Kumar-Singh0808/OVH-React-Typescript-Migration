@@ -8,23 +8,59 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const CreateNewTicketFilterOptions = (): JSX.Element => {
+  const [trackerValue, setTrackerValue] = useState<string>()
+  const [deptId, setDeptId] = useState<number>()
+  const [categoryId, setCategoryId] = useState<number>()
+  const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>()
   const [fromDate, setFromDate] = useState<string>()
   const [toDate, setToDate] = useState<string>()
+  const [PriorityValue, setPriorityValue] = useState<string>('Normal')
+  const [subjectValue, setSubjectValue] = useState<string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
+  const dispatch = useAppDispatch()
+  const trackerList = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.trackerList,
+  )
+  const subCategoryList = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.subCategoryList,
+  )
+
+  const departmentList = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.departmentNameList,
+  )
+
+  const departmentCategoryList = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.departmentCategoryList,
+  )
+
+  useEffect(() => {
+    dispatch(reduxServices.ticketApprovals.getDepartmentNameList())
+    dispatch(reduxServices.ticketApprovals.getTrackerList())
+  }, [dispatch])
+  useEffect(() => {
+    if (deptId) {
+      dispatch(reduxServices.ticketApprovals.getDepartmentCategoryList(deptId))
+      setSubCategoryIdValue(0)
+    }
+    if (categoryId) {
+      dispatch(reduxServices.ticketApprovals.getSubCategoryList(categoryId))
+    }
+  }, [deptId, categoryId])
   const commonFormatDate = 'l'
   const deviceLocale: string =
     navigator.languages && navigator.languages.length
       ? navigator.languages[0]
       : navigator.language
 
-  const currentDate = new Date().setHours(0, 0, 0, 0)
   const formLabelProps = {
     htmlFor: 'inputCreateTicket',
     className: 'col-form-label createticket-label',
@@ -32,6 +68,8 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
   const handleDescription = (e: any) => {
     setShowEditor(e.target.value)
   }
+  const whiteText = 'text-white'
+  const dangerText = 'text-danger'
   return (
     <>
       <CForm>
@@ -41,14 +79,25 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Tracker:
-            <span>*</span>
+            <span className={trackerValue ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={3}>
-            <CFormSelect aria-label="tracker" name="tracker" id="tracker">
-              <option value={''}>Select Tracker</option>
-              <option value="Brother">Brother</option>
-              <option value="Daughter">Daughter</option>
-              <option value="Father">Father</option>
+            <CFormSelect
+              aria-label="tracker"
+              id="tracker"
+              data-testid="trackerSelect"
+              name="tracker"
+              value={trackerValue}
+              onChange={(e) => {
+                setTrackerValue(e.target.value)
+              }}
+            >
+              <option value="">Select Tracker</option>
+              {trackerList?.map((trackerItem, trackerItemIndex) => (
+                <option key={trackerItemIndex} value={trackerItem.id}>
+                  {trackerItem.name}
+                </option>
+              ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -58,18 +107,30 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Department:
-            <span>*</span>
+            <span className={deptId ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
               aria-label="department"
-              name="department"
-              id="department"
+              id="departmentName"
+              data-testid="departmentName"
+              name="departmentName"
+              value={deptId}
+              onChange={(e) => {
+                setDeptId(Number(e.target.value))
+              }}
             >
-              <option value={''}>Select Department</option>
-              <option value="Brother">Brother</option>
-              <option value="Daughter">Daughter</option>
-              <option value="Father">Father</option>
+              <option value="">Select Department</option>
+              {departmentList
+                .slice()
+                .sort((department1, department2) =>
+                  department1.name.localeCompare(department2.name),
+                )
+                ?.map((dept, index) => (
+                  <option key={index} value={dept.id}>
+                    {dept.name}
+                  </option>
+                ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -79,14 +140,30 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Category:
-            <span>*</span>
+            <span className={categoryId ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={3}>
-            <CFormSelect aria-label="category" name="category" id="category">
-              <option value={''}>Select Category</option>
-              <option value="Brother">Brother</option>
-              <option value="Daughter">Daughter</option>
-              <option value="Father">Father</option>
+            <CFormSelect
+              aria-label="category"
+              id="categoryName"
+              data-testid="categoryNameSelect"
+              name="categoryName"
+              value={categoryId}
+              onChange={(e) => {
+                setCategoryId(Number(e.target.value))
+              }}
+            >
+              <option value="">Select Category</option>
+              {departmentCategoryList
+                .slice()
+                .sort((category1, category2) =>
+                  category1.categoryName.localeCompare(category2.categoryName),
+                )
+                ?.map((category, categoryIndex) => (
+                  <option key={categoryIndex} value={category.categoryId}>
+                    {category.categoryName}
+                  </option>
+                ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -96,18 +173,37 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Sub-Category:
-            <span>*</span>
+            <span className={subCategoryIdValue ? whiteText : dangerText}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
               aria-label="sub-category"
-              name="sub-category"
-              id="sub-category"
+              id="subCategoryName"
+              data-testid="subCategoryNameSelect"
+              name="subCategoryName"
+              value={subCategoryIdValue}
+              onChange={(e) => {
+                setSubCategoryIdValue(Number(e.target.value))
+              }}
             >
-              <option value={''}>Select sub-Category</option>
-              <option value="Brother">Brother</option>
-              <option value="Daughter">Daughter</option>
-              <option value="Father">Father</option>
+              <option value="">Select Sub-Category</option>
+              {subCategoryList
+                .slice()
+                .sort((subCategory1, subCategory2) =>
+                  subCategory1.subCategoryName.localeCompare(
+                    subCategory2.subCategoryName,
+                  ),
+                )
+                ?.map((subCategory, subCategoryIndex) => (
+                  <option
+                    key={subCategoryIndex}
+                    value={subCategory.subCategoryId}
+                  >
+                    {subCategory.subCategoryName}
+                  </option>
+                ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -176,14 +272,17 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
             Subject:
-            <span>*</span>
+            <span className={subjectValue ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={9}>
             <CFormInput
               type="text"
-              id="Name"
-              name="personName"
-              placeholder="Subject"
+              id="subjectValue"
+              name="subjectValue"
+              value={subjectValue}
+              onChange={(e) => {
+                setSubjectValue(e.target.value)
+              }}
             />
           </CCol>
         </CRow>
@@ -217,11 +316,21 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             <span>*</span>
           </CFormLabel>
           <CCol sm={3}>
-            <CFormSelect aria-label="category" name="category" id="category">
-              <option value={''}>Normal</option>
-              <option value="Brother">Brother</option>
-              <option value="Daughter">Daughter</option>
-              <option value="Father">Father</option>
+            <CFormSelect
+              aria-label="category"
+              id="subCategoryName"
+              data-testid="priority"
+              name="priority"
+              value={PriorityValue}
+              onChange={(e) => {
+                setPriorityValue(e.target.value)
+              }}
+            >
+              <option value="Low">Low</option>
+              <option value="Normal">Normal</option>
+              <option value="High">High</option>
+              <option value="Urgent">Urgent</option>
+              <option value="Immediate">Immediate</option>
             </CFormSelect>
           </CCol>
         </CRow>
