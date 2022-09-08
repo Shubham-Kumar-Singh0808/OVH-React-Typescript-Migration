@@ -45,7 +45,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect aria-label="tracker" name="tracker" id="tracker">
-              <option value={''}>Relationship</option>
+              <option value={''}>Select Tracker</option>
               <option value="Brother">Brother</option>
               <option value="Daughter">Daughter</option>
               <option value="Father">Father</option>
@@ -66,7 +66,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               name="department"
               id="department"
             >
-              <option value={''}>Relationship</option>
+              <option value={''}>Select Department</option>
               <option value="Brother">Brother</option>
               <option value="Daughter">Daughter</option>
               <option value="Father">Father</option>
@@ -83,7 +83,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect aria-label="category" name="category" id="category">
-              <option value={''}>Relationship</option>
+              <option value={''}>Select Category</option>
               <option value="Brother">Brother</option>
               <option value="Daughter">Daughter</option>
               <option value="Father">Father</option>
@@ -104,7 +104,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               name="sub-category"
               id="sub-category"
             >
-              <option value={''}>Relationship</option>
+              <option value={''}>Select sub-Category</option>
               <option value="Brother">Brother</option>
               <option value="Daughter">Daughter</option>
               <option value="Father">Father</option>
@@ -183,7 +183,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               type="text"
               id="Name"
               name="personName"
-              placeholder="Name"
+              placeholder="Subject"
             />
           </CCol>
         </CRow>
@@ -218,7 +218,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect aria-label="category" name="category" id="category">
-              <option value={''}>Relationship</option>
+              <option value={''}>Normal</option>
               <option value="Brother">Brother</option>
               <option value="Daughter">Daughter</option>
               <option value="Father">Father</option>
