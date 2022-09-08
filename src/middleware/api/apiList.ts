@@ -45,6 +45,8 @@ import {
   AddNewClientApi,
   ClientInformationApi,
   LeaveSummaryApi,
+  TicketListInformationApi,
+  TicketApprovalsApi,
   AddTrackerApi,
 } from '../../types/apiTypes'
 
@@ -378,6 +380,26 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
   getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
   getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
   cancelEmployeeLeave: apiPrefix + '/leave/cancel',
+}
+
+export const ticketListInformationApiConfig: TicketListInformationApi = {
+  getTicketListInformation: apiPrefix + '/supportManagement/searchTicketData',
+  exportTicketList: apiPrefix + '/supportManagement/exportRaisedTickets',
+  ticketHistoryDetails: apiPrefix + '/supportManagement/getAudit',
+  cancelTicket: apiPrefix + '/supportManagement/cancelTicketRequest',
+}
+
+export const ticketApprovalsApiConfig: TicketApprovalsApi = {
+  getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
+  getAllTrackerList: apiPrefix + '/supportManagement/getAllTracker',
+  getAllLookups: apiPrefix + '/supportManagement/getAllLookups',
+  departmentCategoryList:
+    apiPrefix + '/supportManagement/departmentCategoryList',
+  subCategoryList: apiPrefix + '/supportManagement/subCategoryList',
+  getAllTicketsForApproval:
+    apiPrefix + '/supportManagement/getAllTicketsForApproval',
+  exportTicketApprovalList:
+    apiPrefix + '/supportManagement/exportTicketApprovalList',
 }
 
 export const addTrackerApiConfig: AddTrackerApi = {

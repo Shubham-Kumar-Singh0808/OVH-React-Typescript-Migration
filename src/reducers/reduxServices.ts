@@ -45,6 +45,8 @@ import { clientsService } from './ProjectManagement/Clients/clientsSlice'
 import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
 import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
 import { leaveSummaryService } from './Leaves/LeaveSummary/employeeLeaveSummarySlice'
+import { myTicketsService } from './Support/MyTickets/myTicketsSlice'
+import { ticketApprovalsService } from './Support/TicketApprovals/ticketApprovalsSlice'
 import { addTrackerListService } from './Support/Raise Ticket/Add Tracker List/addTrackerSlice'
 
 export const reduxServices = {
@@ -95,5 +97,7 @@ export const reduxServices = {
   addClient: addNewClientService,
   clientInformation: clientInformationService,
   employeeLeaveSummary: leaveSummaryService,
+  tickets: myTicketsService,
+  ticketApprovals: ticketApprovalsService,
   addTrackersLists: addTrackerListService,
 }
