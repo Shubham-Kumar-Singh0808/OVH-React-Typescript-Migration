@@ -35,12 +35,12 @@ const ListOfHolidays = (): JSX.Element => {
         <>
           <CRow className="mb-4">
             <SelectCountry
-              selectedCountry={selectedCountry as string}
+              selectedCountry={selectedCountry}
               setSelectedCountry={setSelectedCountry}
             />
             <CCol xs={12} className="mt-4 mb-4 ps-0 pe-0">
               <HolidaysListTable
-                selectedCountry={selectedCountry as string}
+                selectedCountry={selectedCountry}
                 setSelectedCountry={setSelectedCountry}
               />
             </CCol>

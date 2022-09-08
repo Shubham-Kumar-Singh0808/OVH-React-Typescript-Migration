@@ -93,7 +93,7 @@ const AddHoliday = (): JSX.Element => {
     if (
       reduxServices.holidays.addHoliday.fulfilled.match(addHolidayResultAction)
     ) {
-      history.push('holidaylist')
+      history.push('/holidaylist')
       dispatch(reduxServices.app.actions.addToast(getSuccessToastMessage))
     } else if (
       reduxServices.holidays.addHoliday.rejected.match(

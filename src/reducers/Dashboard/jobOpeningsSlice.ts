@@ -54,7 +54,7 @@ const isLoading = (state: RootState): LoadingState =>
   state.jobOpenings.isLoading
 const jobVacancies = (state: RootState): JobOpeningsDetails[] =>
   state.jobOpenings.jobVacancies
-const listSize = (state: RootState): number => state.employeeList.listSize
+const listSize = (state: RootState): number => state.jobOpenings.listSize
 
 const jobOpeningsThunk = {
   getAllJobVacancies,
