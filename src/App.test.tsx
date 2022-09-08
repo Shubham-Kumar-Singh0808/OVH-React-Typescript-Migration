@@ -9,7 +9,7 @@ test('App should render without crashing', () => {
     </>,
   )
   expect(screen.getByText('Earned Leaves')).toBeInTheDocument()
-  expect(screen.getByText('Time In Office')).toBeInTheDocument()
+  expect(screen.getByText('Time in Office')).toBeInTheDocument()
   expect(screen.getByText('Job Openings')).toBeInTheDocument()
   expect(screen.getByText('Trainings')).toBeInTheDocument()
   expect(screen.getByText('Birthdays')).toBeInTheDocument()
