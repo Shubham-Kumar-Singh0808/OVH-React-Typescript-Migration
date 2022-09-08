@@ -6,6 +6,7 @@ import { TicketApprovalsSliceState } from '../../../types/Support/TicketApproval
 import {
   mockAllLookUps,
   mockAllTicketApprovals,
+  mockCategoryList,
   mockDepartmentNamesList,
   mockTrackerList,
 } from '../../../test/data/ticketApprovalsData'
@@ -100,6 +101,23 @@ describe('Ticket Approvals Slice', () => {
         departmentNameList: mockDepartmentNamesList,
         trackerList: [],
         departmentCategoryList: [],
+        subCategoryList: [],
+        ticketsForApproval: { size: 0, list: [] },
+        getAllLookUps: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if getDepartmentCategoryList is fulfilled', () => {
+      const action = {
+        type: ticketApprovalsService.getDepartmentCategoryList.fulfilled.type,
+        payload: mockCategoryList,
+      }
+      const state = ticketApprovalsReducer(initialTicketApprovalsState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.idle,
+        departmentNameList: [],
+        trackerList: [],
+        departmentCategoryList: mockCategoryList,
         subCategoryList: [],
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],

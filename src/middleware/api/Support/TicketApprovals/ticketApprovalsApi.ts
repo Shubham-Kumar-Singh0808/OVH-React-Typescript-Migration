@@ -73,28 +73,32 @@ const getSubCategoryList = async (
   return response.data
 }
 
+const commonParamsUtil = (props: GetAllTicketsForApprovalProps) => {
+  return {
+    categoryId: props.categoryId ?? '',
+    dateSelection: props.dateSelection,
+    departmentId: props.departmentId ?? '',
+    endIndex: props.endIndex ?? 20,
+    from: props.fromDate,
+    multiSearch: props.multiSearch ?? '',
+    progressStatus: props.progressStatus,
+    searchByAssigneeName: props.searchByAssigneeName,
+    searchByEmpName: props.searchByEmpName,
+    startIndex: props.startIndex ?? 0,
+    subCategoryId: props.subCategoryId ?? '',
+    ticketStatus: props.ticketStatus,
+    to: props.toDate,
+    trackerID: props.trackerID ?? '',
+  }
+}
+
 const getAllTicketsForApproval = async (
   props: GetAllTicketsForApprovalProps,
 ): Promise<GetAllTicketsForApprovalResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ticketApprovalsApiConfig.getAllTicketsForApproval,
     method: AllowedHttpMethods.get,
-    params: {
-      categoryId: props.categoryId ?? '',
-      dateSelection: props.dateSelection,
-      departmentId: props.departmentId ?? '',
-      endIndex: props.endIndex ?? 20,
-      from: props.fromDate,
-      multiSearch: props.multiSearch ?? '',
-      progressStatus: props.progressStatus,
-      searchByAssigneeName: props.searchByAssigneeName,
-      searchByEmpName: props.searchByEmpName,
-      startIndex: props.startIndex ?? 0,
-      subCategoryId: props.subCategoryId ?? '',
-      ticketStatus: props.ticketStatus,
-      to: props.toDate,
-      trackerID: props.trackerID ?? '',
-    },
+    params: commonParamsUtil(props),
   })
 
   const response = await useAxios(requestConfig)
@@ -104,26 +108,11 @@ const getAllTicketsForApproval = async (
 const exportTicketApprovalList = async (
   props: GetAllTicketsForApprovalProps,
 ): Promise<Blob | undefined> => {
+  const paramsResult = commonParamsUtil(props)
   const requestConfig = getAuthenticatedRequestConfig({
     url: ticketApprovalsApiConfig.exportTicketApprovalList,
     method: AllowedHttpMethods.get,
-    params: {
-      categoryId: props.categoryId ?? '',
-      dateSelection: props.dateSelection,
-      departmentId: props.departmentId ?? '',
-      endIndex: props.endIndex ?? 20,
-      from: props.fromDate,
-      multiSearch: props.multiSearch ?? '',
-      progressStatus: props.progressStatus,
-      searchByAssigneeName: props.searchByAssigneeName,
-      searchByEmpName: props.searchByEmpName,
-      startIndex: props.startIndex ?? 0,
-      subCategoryId: props.subCategoryId ?? '',
-      ticketStatus: props.ticketStatus,
-      to: props.toDate,
-      trackerID: props.trackerID ?? '',
-      token: localStorage.getItem('token') ?? '',
-    },
+    params: { ...paramsResult, token: localStorage.getItem('token') ?? '' },
     responseType: 'blob',
   })
 
