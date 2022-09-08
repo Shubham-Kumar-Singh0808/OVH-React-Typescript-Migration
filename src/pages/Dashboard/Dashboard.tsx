@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import JobVacanciesTable from './JobVacanciesTable'
 import UpcomingBirthdays from './Birthdays/UpcomingBirthdays'
 import UpcomingHolidays from './Holidays/UpcomingHolidays'
+import UpcomingTrainings from './Trainings/UpcomingTrainings'
+import UpcomingEvents from './Events/UpcomingEvents'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -24,6 +26,8 @@ const Dashboard = (): JSX.Element => {
       }),
     )
     dispatch(reduxServices.holidays.getUpcomingHolidays())
+    dispatch(reduxServices.trainingsAndEvents.getUpcomingTrainings())
+    dispatch(reduxServices.trainingsAndEvents.getUpcomingEvents())
   }, [dispatch])
 
   return (
@@ -53,8 +57,10 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Trainings"
                   CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                ></OCard>
+                  footerPath="/eventList"
+                >
+                  <UpcomingTrainings />
+                </OCard>
               </CCol>
             </CRow>
             <CRow>
@@ -71,11 +77,11 @@ const Dashboard = (): JSX.Element => {
               <CCol sm={3}>
                 <OCard
                   className="mb-4 myprofile-wrapper"
-                  title="Birthdays"
+                  title="Upcoming Events"
                   CBodyClassName="ps-0 pe-0"
-                  footerPath="/birthdaylist"
+                  footerPath="/eventList"
                 >
-                  <UpcomingBirthdays />
+                  <UpcomingEvents />
                 </OCard>
               </CCol>
             </CRow>
@@ -88,6 +94,19 @@ const Dashboard = (): JSX.Element => {
                   CFooterClassName="d-none"
                 ></OCard>
               </CCol>
+              <CCol sm={3}>
+                <OCard
+                  className="mb-4 myprofile-wrapper"
+                  title="Birthdays"
+                  CBodyClassName="ps-0 pe-0"
+                  footerPath="/birthdaylist"
+                >
+                  <UpcomingBirthdays />
+                </OCard>
+              </CCol>
+            </CRow>
+            <CRow>
+              <CCol sm={9}></CCol>
               <CCol sm={3}>
                 <OCard
                   className="mb-4 myprofile-wrapper"

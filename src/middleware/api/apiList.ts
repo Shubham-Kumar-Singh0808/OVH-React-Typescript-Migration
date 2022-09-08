@@ -389,4 +389,6 @@ export const dashboardApiConfig: DashboardApi = {
   getUpcomingHolidays: apiPrefix + '/Employee/onlyUpcomingHolidays',
   getAllUpcomingHolidaysList: apiPrefix + '/Employee/upcomingHolidays',
   addHoliday: apiPrefix + '/Employee/saveHoliday',
+  getUpcomingTrainings: apiPrefix + '/meetingRequest/getTrainingsForDashBoard',
+  getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
 }

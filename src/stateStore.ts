@@ -59,6 +59,7 @@ import jobOpeningsReducer from './reducers/Dashboard/jobOpeningsSlice'
 import UpcomingBirthdayReducer from './reducers/Dashboard/birthdayAnniversarySlice'
 import birthdaysListReducer from './reducers/Dashboard/birthdayListSlice'
 import holidaysReducer from './reducers/Dashboard/holidaysSlice'
+import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -118,6 +119,7 @@ export const allReducers = {
   upcomingEmployeeBirthday: UpcomingBirthdayReducer,
   employeesBirthdayList: birthdaysListReducer,
   holidays: holidaysReducer,
+  trainingsAndEvents: trainingAndEventsReducer,
   // add your slice reducers here
 }
 

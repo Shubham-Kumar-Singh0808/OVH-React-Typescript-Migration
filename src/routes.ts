@@ -297,6 +297,10 @@ const routes = [
     name: 'Add Holiday',
     component: AddHoliday,
   },
+  {
+    path: '/eventList',
+    name: 'Event List',
+  },
 ]
 
 export default routes
