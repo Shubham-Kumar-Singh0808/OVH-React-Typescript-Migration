@@ -18,11 +18,8 @@ describe('Dashboard Sections Testing', () => {
     })
     expect(earnedLeavesTitle).toBeTruthy()
   })
-  test('should render the "Time In Office" header', () => {
-    const timeInOfficeTitle = screen.getByRole('heading', {
-      name: 'Time In Office',
-    })
-    expect(timeInOfficeTitle).toBeTruthy()
+  test('should render the "Time In Office" title', () => {
+    expect(screen.getByText('Time in Office')).toBeInTheDocument()
   })
   test('should render the "Trainings" header', () => {
     const trainingsTitle = screen.getByRole('heading', {

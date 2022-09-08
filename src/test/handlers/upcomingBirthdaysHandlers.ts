@@ -2,7 +2,7 @@ import { rest } from 'msw'
 import { dashboardApiConfig } from '../../middleware/api/apiList'
 import { mockUpcomingBirthdays } from '../../test/data/upcomingBirthdaysData'
 
-export const birthdaysListHandlers = [
+export const upcomingBirthdaysHandlers = [
   // getAllUpcomingBirthdays api mock
   rest.get(
     dashboardApiConfig.getUpcomingBirthdayAnniversaries,

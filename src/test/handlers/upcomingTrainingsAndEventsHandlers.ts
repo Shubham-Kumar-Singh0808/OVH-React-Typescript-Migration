@@ -5,7 +5,7 @@ import {
   mockUpcomingTrainings,
 } from '../data/trainingsAndEventsData'
 
-export const birthdaysListHandlers = [
+export const upcomingTrainingsAndEventsHandlers = [
   // getUpcomingTrainings api mock
   rest.get(dashboardApiConfig.getUpcomingTrainings, (_req, res, ctx) => {
     return res.once(ctx.status(200), ctx.json([]))

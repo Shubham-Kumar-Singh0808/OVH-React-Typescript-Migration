@@ -49,6 +49,8 @@ import { jobVacanciesService } from './Dashboard/jobOpeningsSlice'
 import { birthdaysListService } from './Dashboard/birthdayListSlice'
 import { upcomingBirthdaysService } from './Dashboard/birthdayAnniversarySlice'
 import { holidaysService } from './Dashboard/holidaysSlice'
+import { earnedLeavesService } from './Dashboard/earnedLeavesSlice'
+import { weeklyTimeInOfficeService } from './Dashboard/timeInOfficeSlice'
 import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
 
 export const reduxServices = {
@@ -103,5 +105,7 @@ export const reduxServices = {
   birthdaysList: birthdaysListService,
   upcomingBirthdays: upcomingBirthdaysService,
   holidays: holidaysService,
+  earnedLeaves: earnedLeavesService,
+  weeklyTimeInOffice: weeklyTimeInOfficeService,
   trainingsAndEvents: trainingsAndEventsService,
 }

@@ -62,7 +62,12 @@ const JobVacanciesTable = (): JSX.Element => {
                       data-testid={`job-description${index}`}
                       onClick={() => handleModal(jobVacancy.description)}
                     >
-                      {parse(jobDescriptionLimit)}
+                      {/* {parse(jobDescriptionLimit)} */}
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: jobDescriptionLimit,
+                        }}
+                      />
                     </CLink>
                   </CTableDataCell>
                 ) : (

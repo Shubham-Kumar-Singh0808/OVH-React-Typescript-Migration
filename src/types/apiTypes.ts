@@ -331,6 +331,8 @@ export interface DashboardApi extends ApiBase {
   getUpcomingHolidays: string
   getAllUpcomingHolidaysList: string
   addHoliday: string
+  getFinancialYear: string
+  getEmployeeTimeInOffice: string
   getUpcomingTrainings: string
   getUpcomingEvents: string
 }

@@ -389,6 +389,8 @@ export const dashboardApiConfig: DashboardApi = {
   getUpcomingHolidays: apiPrefix + '/Employee/onlyUpcomingHolidays',
   getAllUpcomingHolidaysList: apiPrefix + '/Employee/upcomingHolidays',
   addHoliday: apiPrefix + '/Employee/saveHoliday',
+  getFinancialYear: apiPrefix + '/leaveSetup/financialYear',
+  getEmployeeTimeInOffice: apiPrefix + '/timeInOffice/weeklyTimeInOfficeReport',
   getUpcomingTrainings: apiPrefix + '/meetingRequest/getTrainingsForDashBoard',
   getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
 }

@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import JobVacanciesTable from './JobVacanciesTable'
 import UpcomingBirthdays from './Birthdays/UpcomingBirthdays'
 import UpcomingHolidays from './Holidays/UpcomingHolidays'
+import EmployeeEarnedLeaves from './EarnedLeaves/EmployeeEarnedLeaves'
+import TimeInOffice from './TimeInOffice/TimeInOffice'
 import UpcomingTrainings from './Trainings/UpcomingTrainings'
 import UpcomingEvents from './Events/UpcomingEvents'
 import OCard from '../../components/ReusableComponent/OCard'
@@ -26,6 +28,9 @@ const Dashboard = (): JSX.Element => {
       }),
     )
     dispatch(reduxServices.holidays.getUpcomingHolidays())
+    dispatch(reduxServices.earnedLeaves.getFinancialYear())
+    dispatch(reduxServices.employeeLeaveSummary.getEmployeeLeaveSummary())
+    dispatch(reduxServices.weeklyTimeInOffice.getEmployeeTimeInOffice())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingTrainings())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingEvents())
   }, [dispatch])
@@ -35,24 +40,36 @@ const Dashboard = (): JSX.Element => {
       <CRow>
         <CCol sm={12}>
           <CRow>
-            <CRow>
-              <CCol sm={3}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Earned Leaves"
-                  CBodyClassName="ps-0 pe-0"
-                  footerPath="/employeeLeaveSummary"
-                ></OCard>
-              </CCol>
-              <CCol sm={6}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Time In Office"
-                  CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                ></OCard>
-              </CCol>
-              <CCol sm={3}>
+            <CCol md={9}>
+              <CRow>
+                <CCol sm={4}>
+                  <EmployeeEarnedLeaves />
+                </CCol>
+                <CCol sm={8}>
+                  <TimeInOffice />
+                </CCol>
+                <CCol sm={12}>
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Job Openings"
+                    CBodyClassName="ps-0 pe-0"
+                    footerPath="/jobvacancies"
+                  >
+                    <JobVacanciesTable />
+                  </OCard>
+                </CCol>
+                <CCol sm={12}>
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Service Award"
+                    CBodyClassName="ps-0 pe-0"
+                    CFooterClassName="d-none"
+                  ></OCard>
+                </CCol>
+              </CRow>
+            </CCol>
+            <CCol md={3}>
+              <CCol sm={12}>
                 <OCard
                   className="mb-4 myprofile-wrapper"
                   title="Trainings"
@@ -62,19 +79,7 @@ const Dashboard = (): JSX.Element => {
                   <UpcomingTrainings />
                 </OCard>
               </CCol>
-            </CRow>
-            <CRow>
-              <CCol sm={9}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Job Openings"
-                  CBodyClassName="ps-0 pe-0"
-                  footerPath="/jobvacancies"
-                >
-                  <JobVacanciesTable />
-                </OCard>
-              </CCol>
-              <CCol sm={3}>
+              <CCol sm={12}>
                 <OCard
                   className="mb-4 myprofile-wrapper"
                   title="Upcoming Events"
@@ -84,17 +89,7 @@ const Dashboard = (): JSX.Element => {
                   <UpcomingEvents />
                 </OCard>
               </CCol>
-            </CRow>
-            <CRow>
-              <CCol sm={9}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Service Award"
-                  CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                ></OCard>
-              </CCol>
-              <CCol sm={3}>
+              <CCol sm={12}>
                 <OCard
                   className="mb-4 myprofile-wrapper"
                   title="Birthdays"
@@ -104,10 +99,7 @@ const Dashboard = (): JSX.Element => {
                   <UpcomingBirthdays />
                 </OCard>
               </CCol>
-            </CRow>
-            <CRow>
-              <CCol sm={9}></CCol>
-              <CCol sm={3}>
+              <CCol sm={12}>
                 <OCard
                   className="mb-4 myprofile-wrapper"
                   title="Holidays"
@@ -117,7 +109,7 @@ const Dashboard = (): JSX.Element => {
                   <UpcomingHolidays />
                 </OCard>
               </CCol>
-            </CRow>
+            </CCol>
           </CRow>
         </CCol>
       </CRow>
