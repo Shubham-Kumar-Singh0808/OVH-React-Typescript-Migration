@@ -118,6 +118,10 @@ const ViewClient = React.lazy(
       './pages/ProjectManagement/Clients/ClientInformation/ViewClientInformation'
     ),
 )
+
+const CreateTicket = React.lazy(
+  () => import('./pages/Support/Raise Ticket/Add Tracker List/AddTrackerList'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -260,6 +264,11 @@ const routes = [
     path: '/employeeLeaveSummary',
     name: 'Leave Summary',
     component: LeaveSummary,
+  },
+  {
+    path: '/createTicket',
+    name: 'Add Tracker List',
+    component: CreateTicket,
   },
 ]
 
