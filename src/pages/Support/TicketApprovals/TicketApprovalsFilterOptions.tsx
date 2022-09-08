@@ -213,9 +213,9 @@ const TicketApprovalsFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="ApprovalStatus"
-            data-testid="ApprovalStatus"
-            name="ApprovalStatus"
+            id="approvalStatus"
+            data-testid="approvalStatus"
+            name="approvalStatus"
             value={approvalStatus}
             onChange={(e) => {
               setApprovalStatus(e.target.value)
@@ -271,11 +271,16 @@ const TicketApprovalsFilterOptions = ({
             }}
           >
             <option value="">All</option>
-            {categoryListToUse?.map((category, categoryIndex) => (
-              <option key={categoryIndex} value={category.categoryId}>
-                {category.categoryName}
-              </option>
-            ))}
+            {categoryListToUse
+              .slice()
+              .sort((category1, category2) =>
+                category1.categoryName.localeCompare(category2.categoryName),
+              )
+              ?.map((category, categoryIndex) => (
+                <option key={categoryIndex} value={category.categoryId}>
+                  {category.categoryName}
+                </option>
+              ))}
           </CFormSelect>
         </CCol>
         <CCol sm={2}>
@@ -292,11 +297,21 @@ const TicketApprovalsFilterOptions = ({
             }}
           >
             <option value="">All</option>
-            {subCategoryList?.map((subCategory, subCategoryIndex) => (
-              <option key={subCategoryIndex} value={subCategory.subCategoryId}>
-                {subCategory.subCategoryName}
-              </option>
-            ))}
+            {subCategoryList
+              .slice()
+              .sort((subCategory1, subCategory2) =>
+                subCategory1.subCategoryName.localeCompare(
+                  subCategory2.subCategoryName,
+                ),
+              )
+              ?.map((subCategory, subCategoryIndex) => (
+                <option
+                  key={subCategoryIndex}
+                  value={subCategory.subCategoryId}
+                >
+                  {subCategory.subCategoryName}
+                </option>
+              ))}
           </CFormSelect>
         </CCol>
         <CCol sm={2}>
