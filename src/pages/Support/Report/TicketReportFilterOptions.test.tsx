@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import TicketReportFilterOptions from './TicketReportFilterOptions'
-import { render, screen } from '../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import {
   mockDepartmentNameData,
   mockTicketReportData,
@@ -13,43 +13,10 @@ const mockSetSelectDate = jest.fn()
 const mockSetFromDate = jest.fn()
 const mockSetToDate = jest.fn()
 const mockSelectDepartment = jest.fn()
-const selectDate = 'Current Month'
-describe('Ticket Report Component Testing', () => {
-  describe('without data', () => {
-    beforeEach(() => {
-      render(
-        <TicketReportFilterOptions
-          selectDate={''}
-          fromDate={''}
-          toDate={''}
-          selectDepartment={''}
-          setSelectDate={mockSetSelectDate}
-          setFromDate={mockSetFromDate}
-          setToDate={mockSetToDate}
-          setSelectDepartment={mockSelectDepartment}
-        />,
-      )
-    })
-    test('should be able to render Ticket Report without crashing', () => {
-      screen.debug()
-    })
 
-    test('should select Date dropdown value', () => {
-      const LeaveTypeSelectListSelector = screen.getByTestId('form-select3')
-      userEvent.selectOptions(LeaveTypeSelectListSelector, [selectDate])
-      expect(LeaveTypeSelectListSelector).toHaveValue(selectDate)
-    })
-    test('should render clear button', () => {
-      const clearButton = screen.getByTestId('clear-btn')
-      expect(clearButton).toBeEnabled()
-    })
-    test('should render date picker', () => {
-      const dateInput = screen.findByTestId('ticketReportFromDate')
-      expect(dateInput).toBeTruthy()
-    })
-  })
-})
-describe('Ticket Details component Department Name dropdown with data', () => {
+const departmentSelection = 'dept-select1'
+
+describe('Ticket Reports Filter Options Component Testing', () => {
   beforeEach(() => {
     render(
       <TicketReportFilterOptions
@@ -62,28 +29,30 @@ describe('Ticket Details component Department Name dropdown with data', () => {
         setToDate={mockSetToDate}
         setSelectDepartment={mockSelectDepartment}
       />,
-      {
-        preloadedState: {
-          ticketReport: {
-            departmentNameList: mockDepartmentNameData,
-          },
-        },
-      },
     )
   })
-
-  test('should select dropdown value', () => {
-    const LeaveTypeSelectListSelector = screen.getByTestId('form-select1')
-    userEvent.selectOptions(LeaveTypeSelectListSelector, ['Networking'])
-    expect(LeaveTypeSelectListSelector).toHaveValue('')
+  test('should render date option select field', () => {
+    const dateOptionSelect = screen.findByTestId('ticket-selectDate')
+    expect(dateOptionSelect).toBeTruthy()
+  })
+  test('should render department select field', () => {
+    const departmentSelect = screen.findByTestId(departmentSelection)
+    expect(departmentSelect).toBeTruthy()
+  })
+  test('should render clear button', () => {
+    const clearButton = screen.getByTestId('clear-btn')
+    expect(clearButton).toBeEnabled()
+  })
+  test('should render date picker', () => {
+    const dateInput = screen.findByTestId('ticketReportFromDate')
+    expect(dateInput).toBeTruthy()
   })
 })
-
-describe('Ticket Report component with data', () => {
+describe('Ticket Approvals Filter Options Component Testing with data', () => {
   beforeEach(() => {
     render(
       <TicketReportFilterOptions
-        selectDate={''}
+        selectDate={'Custom'}
         fromDate={''}
         toDate={''}
         selectDepartment={''}
@@ -97,17 +66,52 @@ describe('Ticket Report component with data', () => {
           ticketReport: {
             isLoading: ApiLoadingState.succeeded,
             ticketsReportList: mockTicketReportData,
+            departmentNameList: mockDepartmentNameData,
           },
         },
       },
     )
   })
+  screen.debug()
+  test('should select dropdown value', () => {
+    const LeaveTypeSelectListSelector = screen.getByTestId(departmentSelection)
+    userEvent.selectOptions(LeaveTypeSelectListSelector, ['Networking'])
+    expect(LeaveTypeSelectListSelector).toHaveValue('')
+  })
+  test('should select Date dropdown value', async () => {
+    const dateOption = screen.getByTestId('ticket-selectDate')
+    userEvent.selectOptions(dateOption, ['Custom'])
+    await waitFor(() => {
+      expect(dateOption).toHaveValue('Custom')
+    })
+  })
+  test('should render data upon view button click', async () => {
+    const viewButtonElement = screen.getByRole('button', { name: 'View' })
+    const fromDatePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
+    fireEvent.click(fromDatePickerElement[0])
+
+    await waitFor(() =>
+      fireEvent.change(fromDatePickerElement[0], {
+        target: { value: '29 Oct, 2015' },
+      }),
+    )
+    fireEvent.click(fromDatePickerElement[1])
+    await waitFor(() =>
+      fireEvent.change(fromDatePickerElement[1], {
+        target: { value: '10 Feb, 2022' },
+      }),
+    )
+    userEvent.click(viewButtonElement)
+    expect(fromDatePickerElement[0]).toHaveValue('')
+    expect(fromDatePickerElement[1]).toHaveValue('')
+    expect(fromDatePickerElement[1]).toBeInTheDocument()
+  })
   test('should clear data upon clear button click', () => {
     const clearButtonElement = screen.getByRole('button', { name: 'Clear' })
     userEvent.click(clearButtonElement)
-    const departmentName = screen.getByTestId('form-select1')
-    const DateElement = screen.getByTestId('form-select3')
+    const departmentName = screen.getByTestId(departmentSelection)
+    const DateElement = screen.getByTestId(departmentSelection)
     expect(departmentName).toHaveValue('')
-    expect(DateElement).toHaveValue('Current Month')
+    expect(DateElement).toHaveValue('')
   })
 })

@@ -2,7 +2,6 @@ import { CRow, CCol, CFormSelect, CFormLabel, CButton } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
-import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import ticketReportApi from '../../../middleware/api/Support/Report/ticketReportsApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -62,6 +61,16 @@ const TicketReportFilterOptions = ({
   useEffect(() => {
     dispatch(reduxServices.ticketReport.getDepartmentNameList())
   }, [dispatch])
+
+  const dateOptionsList = [
+    { label: 'Current Month', name: 'Current Month' },
+    { label: 'Custom', name: 'Custom' },
+    { label: 'Last Month', name: 'Last Month' },
+    { label: 'Last Week Approval', name: 'Last Week' },
+    { label: 'This Week', name: 'This Week' },
+    { label: 'Today', name: 'Today' },
+    { label: 'Yesterday', name: 'Yesterday' },
+  ]
 
   const handleTicketReports = () => {
     dispatch(
@@ -166,9 +175,6 @@ const TicketReportFilterOptions = ({
         day: '2-digit',
       })
     : ''
-  const fromDateLabel = fromDate ? TextWhite : TextDanger
-  const toDateLabel = toDate ? TextWhite : TextDanger
-
   const commonFormatDate = 'l'
   return (
     <>
@@ -179,7 +185,7 @@ const TicketReportFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="selectDepartment"
-            data-testid="form-select1"
+            data-testid="dept-select1"
             name="selectDepartment"
             value={selectDepartment}
             onChange={(e) => setSelectDepartment(e.target.value)}
@@ -197,31 +203,29 @@ const TicketReportFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            data-testid="form-select3"
+            data-testid="ticket-selectDate"
             id="selectDate"
             name="selectDate"
             value={selectDate}
             onChange={(e) => setSelectDate(e.target.value)}
           >
-            <option value="Current Month">Current Month</option>
-            <option value="Custom">Custom</option>
-            <option value="Last Month">Last Month</option>
-            <option value="Last Week">Last Week</option>
-            <option value="This Week">This Week</option>
-            <option value="Today" selected>
-              Today
-            </option>
-            <option value="Yesterday">Yesterday</option>
+            {dateOptionsList.map((currentOption, index) => (
+              <option key={index} value={currentOption.label}>
+                {currentOption.name}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
-
         {selectDate === 'Custom' ? (
           <>
             <CCol sm={6}>
               <CRow>
                 <CCol sm={4} md={4}>
                   <CFormLabel>
-                    From :<span className={fromDateLabel}> *</span>
+                    From :
+                    {(fromDate == null || fromDate === '') && (
+                      <span className="text-danger">*</span>
+                    )}
                   </CFormLabel>
                   <ReactDatePicker
                     id="fromDate"
@@ -242,7 +246,10 @@ const TicketReportFilterOptions = ({
                 </CCol>
                 <CCol sm={4} md={4}>
                   <CFormLabel>
-                    To :<span className={toDateLabel}>*</span>
+                    To :
+                    {(toDate == null || toDate === '') && (
+                      <span className="text-danger">*</span>
+                    )}
                   </CFormLabel>
                   <ReactDatePicker
                     id="toDate"
