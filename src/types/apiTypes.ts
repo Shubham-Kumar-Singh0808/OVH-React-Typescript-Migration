@@ -329,3 +329,12 @@ export interface TicketListInformationApi extends ApiBase {
   ticketHistoryDetails: string
   cancelTicket: string
 }
+export interface TicketApprovalsApi extends ApiBase {
+  getDepartmentNameList: string
+  getAllTrackerList: string
+  getAllLookups: string
+  departmentCategoryList: string
+  subCategoryList: string
+  getAllTicketsForApproval: string
+  exportTicketApprovalList: string
+}
