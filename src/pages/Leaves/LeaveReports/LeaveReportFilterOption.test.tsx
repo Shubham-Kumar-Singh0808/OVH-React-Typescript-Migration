@@ -40,13 +40,12 @@ describe('LeaveReportFilter Options Component Testing', () => {
     test('should render search input mouse enter key', () => {
       const searchField = screen.getByTestId('searchInput')
       userEvent.type(searchField, 'testing')
-      expect(searchField).toHaveValue('testing')
       fireEvent.keyDown(searchField, {
         key: 'Enter',
         code: 'Enter',
         charCode: 13,
       })
-      expect(mockSetSelectYear).toHaveBeenCalledTimes(0)
+      expect(searchField).toHaveValue('testing')
     })
     test('should able to click "click to to export" button', () => {
       const exportBtn = screen.getByRole('button', { name: 'Click to Export' })
