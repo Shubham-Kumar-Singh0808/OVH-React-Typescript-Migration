@@ -102,7 +102,7 @@ const LeaveReportsFilterOption = ({
                 Select Year:
               </CFormLabel>
               <CFormSelect
-                data-testid="form-select2"
+                data-testid="leave-form-select2"
                 aria-label="leaveCycleMonth"
                 name="selectYear"
                 id="selectYear"

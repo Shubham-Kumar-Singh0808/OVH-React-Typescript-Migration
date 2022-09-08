@@ -3,9 +3,14 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import LeaveReportFilterOption from './LeaveReportFilterOption'
 import { fireEvent, render, screen } from '../../../test/testUtils'
+import { mockCreditYearData } from '../../../test/data/LeaveReportData'
 
 const mockSetSelectYear = jest.fn()
 const mockHandleExportTicketApprovalList = jest.fn()
+const result = mockCreditYearData
+  ?.filter((value) => value.yearOfEra.value <= 2022)
+  .map((val2) => val2.yearOfEra.value)
+const uniqueValue = Array.from(new Set(result))
 
 describe('LeaveReportFilter Options Component Testing', () => {
   describe('Filter Options component without value', () => {
@@ -22,7 +27,7 @@ describe('LeaveReportFilter Options Component Testing', () => {
       expect(screen.getByText('Select Year:')).toBeInTheDocument()
     })
     test('should render Select year filter', () => {
-      const selectYearFilter = screen.findByTestId('form-select2')
+      const selectYearFilter = screen.findByTestId('leave-form-select2')
       expect(selectYearFilter).toBeTruthy()
     })
 
@@ -51,6 +56,28 @@ describe('LeaveReportFilter Options Component Testing', () => {
       const exportBtn = screen.getByRole('button', { name: 'Click to Export' })
       userEvent.click(exportBtn)
       expect(mockHandleExportTicketApprovalList).toHaveBeenCalledTimes(0)
+    })
+  })
+})
+
+describe('Ticket Report Filter Option Component Testing', () => {
+  test('should render Leave Summary Component without crashing', () => {
+    render(
+      <LeaveReportFilterOption
+        selectYear={'2022'}
+        setSelectYear={mockSetSelectYear}
+      />,
+      {
+        preloadedState: {
+          leaveReport: {
+            selectFinancialYear: mockCreditYearData,
+          },
+        },
+      },
+    )
+    uniqueValue.forEach((childFeature) => {
+      const timeStamp = screen.getAllByTestId('leave-form-select2')
+      expect(timeStamp).toHaveLength(1)
     })
   })
 })
