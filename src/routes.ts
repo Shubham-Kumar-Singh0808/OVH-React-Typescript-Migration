@@ -111,6 +111,9 @@ const EditClient = React.lazy(
 const AddClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/AddClient/AddNewClient'),
 )
+const CreateNewTicket = React.lazy(
+  () => import('./pages/Support/RaiseTicket/CreateNewTicket'),
+)
 
 const ViewClient = React.lazy(
   () =>
@@ -175,6 +178,11 @@ const routes = [
     path: '/attendancesummary',
     name: 'Attendance Summary',
     component: AttendanceReport,
+  },
+  {
+    path: '/createTicket',
+    name: 'Raise Ticket',
+    component: CreateNewTicket,
   },
   {
     path: '/handbooksettings',
