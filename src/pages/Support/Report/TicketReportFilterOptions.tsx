@@ -34,6 +34,9 @@ const TicketReportFilterOptions = ({
   const getDepartmentNameList = useTypedSelector(
     reduxServices.ticketReport.selectors.departmentNameList,
   )
+  const getTicketReportList = useTypedSelector(
+    reduxServices.ticketReport.selectors.ticketsReport,
+  )
 
   useEffect(() => {
     dispatch(
@@ -305,16 +308,20 @@ const TicketReportFilterOptions = ({
           </CButton>
         </CCol>
       </CRow>
-      <CRow className="mt-2 mb-4">
-        <CCol xs={12} className="d-md-flex justify-content-md-end">
-          <CButton
-            color="info btn-ovh me-0"
-            onClick={handleExportTicketReportData}
-          >
-            <i className="fa fa-plus me-1"></i>Click to Export
-          </CButton>
-        </CCol>
-      </CRow>
+      {getTicketReportList.length > 0 ? (
+        <CRow className="mt-2 mb-4">
+          <CCol xs={12} className="d-md-flex justify-content-md-end">
+            <CButton
+              color="info btn-ovh me-0"
+              onClick={handleExportTicketReportData}
+            >
+              <i className="fa fa-plus me-1"></i>Click to Export
+            </CButton>
+          </CCol>
+        </CRow>
+      ) : (
+        ''
+      )}
     </>
   )
 }
