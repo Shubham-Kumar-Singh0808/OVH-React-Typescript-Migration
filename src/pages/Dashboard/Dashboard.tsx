@@ -28,6 +28,7 @@ const Dashboard = (): JSX.Element => {
     dispatch(reduxServices.holidays.getUpcomingHolidays())
     dispatch(reduxServices.earnedLeaves.getFinancialYear())
     dispatch(reduxServices.employeeLeaveSummary.getEmployeeLeaveSummary())
+    dispatch(reduxServices.weeklyTimeInOffice.getEmployeeTimeInOffice())
   }, [dispatch])
 
   return (

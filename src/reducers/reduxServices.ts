@@ -50,6 +50,7 @@ import { birthdaysListService } from './Dashboard/birthdayListSlice'
 import { upcomingBirthdaysService } from './Dashboard/birthdayAnniversarySlice'
 import { holidaysService } from './Dashboard/holidaysSlice'
 import { earnedLeavesService } from './Dashboard/earnedLeavesSlice'
+import { weeklyTimeInOfficeService } from './Dashboard/timeInOfficeSlice'
 
 export const reduxServices = {
   app: appService,
@@ -104,4 +105,5 @@ export const reduxServices = {
   upcomingBirthdays: upcomingBirthdaysService,
   holidays: holidaysService,
   earnedLeaves: earnedLeavesService,
+  weeklyTimeInOffice: weeklyTimeInOfficeService,
 }

@@ -64,7 +64,7 @@ const weeklyTimeInOfficeSelectors = {
   timeInOffice,
 }
 
-export const earnedLeavesService = {
+export const weeklyTimeInOfficeService = {
   ...weeklyTimeInOfficeThunk,
   actions: weeklyTimeInOfficeSlice.actions,
   selectors: weeklyTimeInOfficeSelectors,
