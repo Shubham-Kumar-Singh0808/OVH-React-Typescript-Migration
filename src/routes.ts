@@ -118,6 +118,10 @@ const ViewClient = React.lazy(
       './pages/ProjectManagement/Clients/ClientInformation/ViewClientInformation'
     ),
 )
+
+const UpdateTicket = React.lazy(
+  () => import('./pages/Support/TicketApprovals/UpdateTicket/UpdateTicket'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -260,6 +264,11 @@ const routes = [
     path: '/employeeLeaveSummary',
     name: 'Leave Summary',
     component: LeaveSummary,
+  },
+  {
+    path: '/updateTicketInApprovals/:ticketNo',
+    name: 'Update Ticket',
+    component: UpdateTicket,
   },
 ]
 
