@@ -47,6 +47,7 @@ import {
   ClientInformationApi,
   LeaveSummaryApi,
   TicketListInformationApi,
+  TicketApprovalsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -395,4 +396,17 @@ export const ticketListInformationApiConfig: TicketListInformationApi = {
   exportTicketList: apiPrefix + '/supportManagement/exportRaisedTickets',
   ticketHistoryDetails: apiPrefix + '/supportManagement/getAudit',
   cancelTicket: apiPrefix + '/supportManagement/cancelTicketRequest',
+}
+
+export const ticketApprovalsApiConfig: TicketApprovalsApi = {
+  getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
+  getAllTrackerList: apiPrefix + '/supportManagement/getAllTracker',
+  getAllLookups: apiPrefix + '/supportManagement/getAllLookups',
+  departmentCategoryList:
+    apiPrefix + '/supportManagement/departmentCategoryList',
+  subCategoryList: apiPrefix + '/supportManagement/subCategoryList',
+  getAllTicketsForApproval:
+    apiPrefix + '/supportManagement/getAllTicketsForApproval',
+  exportTicketApprovalList:
+    apiPrefix + '/supportManagement/exportTicketApprovalList',
 }
