@@ -45,6 +45,7 @@ import {
   AddNewClientApi,
   ClientInformationApi,
   LeaveSummaryApi,
+  AddTrackerApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -377,4 +378,9 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
   getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
   getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
   cancelEmployeeLeave: apiPrefix + '/leave/cancel',
+}
+
+export const addTrackerApiConfig: AddTrackerApi = {
+  addNewTracker: apiPrefix + '/supportManagement/addTracker',
+  deleteTrackerList: apiPrefix + '/supportManagement/deleteTracker?id=31',
 }

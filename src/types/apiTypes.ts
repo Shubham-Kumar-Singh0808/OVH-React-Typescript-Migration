@@ -323,3 +323,7 @@ export interface LeaveSummaryApi extends ApiBase {
   getEmployeeLeaveHistory: string
   cancelEmployeeLeave: string
 }
+export interface AddTrackerApi extends ApiBase {
+  addNewTracker: string
+  deleteTrackerList: string
+}

@@ -14,6 +14,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddTrackerList = (): JSX.Element => {
   const [textName, setTextName] = useState<string>('')
@@ -31,7 +32,7 @@ const AddTrackerList = (): JSX.Element => {
     const { name } = event.target
     if (name === 'name') {
       setTextName(
-        event.target.value.replace(/[^a-zA-Z0-9\s]/gi, '').replace(/^\s*/, ''),
+        event.target.value.replace(/[^a-zA-Z\s]/gi, '').replace(/^\s*/, ''),
       )
     }
   }
@@ -42,6 +43,7 @@ const AddTrackerList = (): JSX.Element => {
   const addButtonHandler = () => {
     'super'
   }
+
   const clearData = () => {
     setTextName('')
     setIsChecked(false)
@@ -53,6 +55,13 @@ const AddTrackerList = (): JSX.Element => {
       setIsAddButtonEnabled(false)
     }
   }, [textName])
+
+  const DeleteToastMessage = (
+    <OToast
+      toastMessage="This tracker is already used in tickets, So you cannot delete"
+      toastColor="danger"
+    />
+  )
   return (
     <>
       <OCard
@@ -64,11 +73,7 @@ const AddTrackerList = (): JSX.Element => {
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
             <Link to={`/createTicket`}>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                //onClick={}
-              >
+              <CButton color="info" className="btn-ovh me-1">
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
             </Link>
@@ -89,6 +94,7 @@ const AddTrackerList = (): JSX.Element => {
                 id="Name"
                 size="sm"
                 name="name"
+                placeholder="Name"
                 maxLength={32}
                 value={textName}
                 onChange={handledInputChange}
@@ -133,9 +139,9 @@ const AddTrackerList = (): JSX.Element => {
               </CButton>
             </CCol>
           </CRow>
-          <CTable striped>
+          <CTable striped responsive>
             <CTableHead>
-              <CTableRow>
+              <CTableRow className="mt-5">
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Approval</CTableHeaderCell>
