@@ -50,6 +50,7 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './pages/projectmanagement/clients/clients';
 @import './components/clientinformation';
 @import './components//leave-summary';
+@import './pages/support/ticketapprovals/ticket-approvals';
 @import './pages/dashboard/birthdays/upcoming-birthdays';
 @import './pages/dashboard/holidays/upcoming-holidays';
 @import './pages/dashboard/holidays/holidays-list';

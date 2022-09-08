@@ -11,6 +11,7 @@ import { employeeLeaveSummaryHandlers } from './leaveSummaryHandlers'
 import { loginHandlers } from './loginHandlers'
 import { scheduledInterviewsHandlers } from './scheduledInterviewsHandlers'
 import { skillListHandlers } from './skillListHandlers'
+import { ticketApprovalsHandlers } from './ticketApprovalsHandlers'
 import { upcomingBirthdaysHandlers } from './upcomingBirthdaysHandlers'
 import { upcomingHolidaysHandlers } from './upcomingHolidaysHandlers'
 import { upcomingTrainingsAndEventsHandlers } from './upcomingTrainingsAndEventsHandlers'
@@ -32,6 +33,7 @@ export const handlers = [
   ...hiveActivityReportHandlers,
   ...scheduledInterviewsHandlers,
   ...clientsHandlers,
+  ...ticketApprovalsHandlers,
   ...upcomingTrainingsAndEventsHandlers,
   ...upcomingHolidaysHandlers,
   ...employeeLeaveSummaryHandlers,

@@ -45,6 +45,8 @@ import { clientsService } from './ProjectManagement/Clients/clientsSlice'
 import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
 import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
 import { leaveSummaryService } from './Leaves/LeaveSummary/employeeLeaveSummarySlice'
+import { myTicketsService } from './Support/MyTickets/myTicketsSlice'
+import { ticketApprovalsService } from './Support/TicketApprovals/ticketApprovalsSlice'
 import { jobVacanciesService } from './Dashboard/jobOpeningsSlice'
 import { birthdaysListService } from './Dashboard/birthdayListSlice'
 import { upcomingBirthdaysService } from './Dashboard/birthdayAnniversarySlice'
@@ -101,6 +103,8 @@ export const reduxServices = {
   addClient: addNewClientService,
   clientInformation: clientInformationService,
   employeeLeaveSummary: leaveSummaryService,
+  tickets: myTicketsService,
+  ticketApprovals: ticketApprovalsService,
   jobOpenings: jobVacanciesService,
   birthdaysList: birthdaysListService,
   upcomingBirthdays: upcomingBirthdaysService,
