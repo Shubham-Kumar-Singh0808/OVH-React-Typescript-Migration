@@ -94,7 +94,7 @@ const TicketReportTable = ({
   return (
     <>
       <>
-        <CTable striped>
+        <CTable striped className="mt-4">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>

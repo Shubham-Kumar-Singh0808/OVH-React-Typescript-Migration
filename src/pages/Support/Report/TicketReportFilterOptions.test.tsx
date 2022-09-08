@@ -49,7 +49,7 @@ describe('Ticket Report Component Testing', () => {
     })
   })
 })
-describe('Ticket Details component with data', () => {
+describe('Ticket Details component Department Name dropdown with data', () => {
   beforeEach(() => {
     render(
       <TicketReportFilterOptions

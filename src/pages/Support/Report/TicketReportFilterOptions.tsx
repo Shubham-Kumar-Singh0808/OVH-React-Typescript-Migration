@@ -308,8 +308,8 @@ const TicketReportFilterOptions = ({
           </CButton>
         </CCol>
       </CRow>
-      {getTicketReportList.length > 0 ? (
-        <CRow className="mt-2 mb-4">
+      {getTicketReportList?.length > 0 && (
+        <CRow className="mt-2">
           <CCol xs={12} className="d-md-flex justify-content-md-end">
             <CButton
               color="info btn-ovh me-0"
@@ -319,8 +319,6 @@ const TicketReportFilterOptions = ({
             </CButton>
           </CCol>
         </CRow>
-      ) : (
-        ''
       )}
     </>
   )
