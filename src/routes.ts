@@ -93,6 +93,10 @@ const MyAttendance = React.lazy(
 const Clients = React.lazy(
   () => import('./pages/ProjectManagement/Clients/Clients'),
 )
+
+const MyTickets = React.lazy(
+  () => import('./pages/Support/MyTickets/MyTickets'),
+)
 const LeaveSummary = React.lazy(
   () =>
     import(
@@ -252,6 +256,11 @@ const routes = [
     path: '/addClient',
     name: 'Add Client',
     component: AddClient,
+  },
+  {
+    path: '/ticketSummary',
+    name: 'Tickets',
+    component: MyTickets,
   },
   {
     path: '/clientInfo/:clientId',
