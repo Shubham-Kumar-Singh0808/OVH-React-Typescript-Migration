@@ -17,14 +17,13 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
+const mockSetToggle = jest.fn()
 
 describe('Scheduled Candidates Table Component Testing', () => {
   test('should render scheduled candidates table component without crashing', async () => {
     render(
       <TicketReportTable
-        setToggle={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        setToggle={mockSetToggle}
         selectDate={''}
         toDate={''}
         fromDate={''}
@@ -47,5 +46,35 @@ describe('Scheduled Candidates Table Component Testing', () => {
       expect(mockSetPageSize).toHaveBeenCalledTimes(0)
       expect(mockSetCurrentPage).toHaveBeenCalledTimes(0)
     })
+  })
+})
+
+describe('Employee Ticket Details', () => {
+  beforeEach(() => {
+    render(
+      <TicketReportTable
+        setToggle={mockSetToggle}
+        selectDate={''}
+        toDate={''}
+        fromDate={''}
+        selectDepartment={''}
+      />,
+      {
+        preloadedState: {
+          ticketReport: {
+            isLoading: ApiLoadingState.succeeded,
+            ticketsReportList: mockTicketReportData,
+          },
+        },
+      },
+    )
+  })
+  test('should clicking on number of tickets', () => {
+    const linkElement = screen.getAllByTestId('num-tickets')
+    expect(linkElement).toBeTruthy()
+  })
+  test('should when clicking on ticket description link', () => {
+    const linkElement = screen.getAllByTestId('pending-tickets')
+    expect(linkElement).toBeTruthy()
   })
 })

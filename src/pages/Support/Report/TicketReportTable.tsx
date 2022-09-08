@@ -126,6 +126,7 @@ const TicketReportTable = ({
                   <CTableDataCell scope="row">
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
+                      data-testid="num-tickets"
                       onClick={() =>
                         handleShowTicketDetails(
                           ticketReport.categoryId,
@@ -144,6 +145,7 @@ const TicketReportTable = ({
                   <CTableDataCell>
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
+                      data-testid="pending-tickets"
                       onClick={() =>
                         handleTicket(
                           ticketReport.categoryId,
