@@ -153,6 +153,7 @@ const LeaveReportsFilterOption = ({
               <CButton
                 color="primary me-1 leavereport-exportbutton"
                 onClick={handleExportLeaveReportData}
+                data-testid="leaveReportExport-btn"
               >
                 <i className="fa fa-plus me-1"></i>Click to Export
               </CButton>

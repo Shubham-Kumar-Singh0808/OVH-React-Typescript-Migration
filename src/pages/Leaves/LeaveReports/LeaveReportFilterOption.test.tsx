@@ -2,9 +2,10 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import LeaveReportFilterOption from './LeaveReportFilterOption'
-import { render, screen } from '../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../test/testUtils'
 
 const mockSetSelectYear = jest.fn()
+const mockHandleExportTicketApprovalList = jest.fn()
 
 describe('LeaveReportFilter Options Component Testing', () => {
   describe('Filter Options component without value', () => {
@@ -35,6 +36,22 @@ describe('LeaveReportFilter Options Component Testing', () => {
       expect(screen.getByTestId('search-btn1')).not.toBeEnabled()
       userEvent.type(screen.getByPlaceholderText('Search Employees'), 'Java')
       expect(screen.getByTestId('search-btn1')).toBeEnabled()
+    })
+    test('should render search input mouse enter key', () => {
+      const searchField = screen.getByTestId('searchInput')
+      userEvent.type(searchField, 'testing')
+      expect(searchField).toHaveValue('testing')
+      fireEvent.keyDown(searchField, {
+        key: 'Enter',
+        code: 'Enter',
+        charCode: 13,
+      })
+      expect(mockSetSelectYear).toHaveBeenCalledTimes(0)
+    })
+    test('should able to click "click to to export" button', () => {
+      const exportBtn = screen.getByRole('button', { name: 'Click to Export' })
+      userEvent.click(exportBtn)
+      expect(mockHandleExportTicketApprovalList).toHaveBeenCalledTimes(0)
     })
   })
 })
