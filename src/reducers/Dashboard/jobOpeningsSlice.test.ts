@@ -1,6 +1,9 @@
 import reducer, { jobVacanciesService } from './jobOpeningsSlice'
 import { ApiLoadingState } from '../../middleware/api/apiList'
-import { mockJobOpenings } from '../../test/data/jobOpeningsData'
+import {
+  mockJobOpenings,
+  mockJobVacancies,
+} from '../../test/data/jobOpeningsData'
 import { JobOpeningsSliceState } from '../../types/Dashboard/JobOpenings/JobOpeningsTypes'
 
 describe('Job Openings Slice', () => {
@@ -28,12 +31,12 @@ describe('Job Openings Slice', () => {
     it('Should be able to set isLoading to "success" if getAllJobVacancies is fulfilled', () => {
       const action = {
         type: jobVacanciesService.getAllJobVacancies.fulfilled.type,
-        payload: mockJobOpenings,
+        payload: mockJobVacancies,
       }
       const state = reducer(initialJobOpeningsState, action)
       expect(state).toEqual({
-        jobVacancies: mockJobOpenings,
-        listSize: 21,
+        jobVacancies: mockJobVacancies.list,
+        listSize: mockJobVacancies.size,
         isLoading: ApiLoadingState.succeeded,
         error: null,
       })
