@@ -8,7 +8,7 @@ describe('Upcoming Events Component Testing', () => {
   render(<UpcomingEvents />, {
     preloadedState: {
       trainingsAndEvents: {
-        upcomingTrainingsAndEvents: mockUpcomingEvents,
+        upcomingEvents: mockUpcomingEvents,
       },
     },
   })

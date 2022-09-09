@@ -34,7 +34,7 @@ const getUpcomingEvents = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('trainingAndEvents/getUpcomingTrainings', async (_, thunkApi) => {
+>('trainingAndEvents/getUpcomingEvents', async (_, thunkApi) => {
   try {
     return await trainingsAndEventsApi.getUpcomingEvents()
   } catch (error) {
@@ -46,7 +46,8 @@ const getUpcomingEvents = createAsyncThunk<
 const initialTrainingAndEventsState: TrainingsAndEventsSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
-  upcomingTrainingsAndEvents: [],
+  upcomingTrainings: [],
+  upcomingEvents: [],
 }
 
 const trainingsAndEventsSlice = createSlice({
@@ -57,16 +58,12 @@ const trainingsAndEventsSlice = createSlice({
     builder
       .addCase(getUpcomingTrainings.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.upcomingTrainingsAndEvents = action.payload as TrainingAndEvent[]
+        state.upcomingTrainings = action.payload as TrainingAndEvent[]
       })
-      .addMatcher(
-        isAnyOf(getUpcomingTrainings.fulfilled, getUpcomingEvents.fulfilled),
-        (state, action) => {
-          state.isLoading = ApiLoadingState.loading
-          state.upcomingTrainingsAndEvents =
-            action.payload as TrainingAndEvent[]
-        },
-      )
+      .addCase(getUpcomingEvents.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.upcomingEvents = action.payload as TrainingAndEvent[]
+      })
       .addMatcher(
         isAnyOf(getUpcomingTrainings.pending, getUpcomingEvents.pending),
         (state) => {
@@ -76,8 +73,11 @@ const trainingsAndEventsSlice = createSlice({
   },
 })
 
-const upcomingTrainingsAndEvents = (state: RootState): TrainingAndEvent[] =>
-  state.trainingsAndEvents.upcomingTrainingsAndEvents
+const upcomingTraining = (state: RootState): TrainingAndEvent[] =>
+  state.trainingsAndEvents.upcomingTrainings
+
+const upcomingEvent = (state: RootState): TrainingAndEvent[] =>
+  state.trainingsAndEvents.upcomingEvents
 
 const isLoading = (state: RootState): LoadingState =>
   state.trainingsAndEvents.isLoading
@@ -89,7 +89,8 @@ const trainingsAndEventsThunk = {
 
 const trainingsAndEventsSelectors = {
   isLoading,
-  upcomingTrainingsAndEvents,
+  upcomingTraining,
+  upcomingEvent,
 }
 
 export const trainingsAndEventsService = {

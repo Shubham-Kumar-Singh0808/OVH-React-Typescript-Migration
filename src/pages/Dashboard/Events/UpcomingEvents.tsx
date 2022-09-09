@@ -4,7 +4,7 @@ import { useTypedSelector } from '../../../stateStore'
 
 const UpcomingEvents = (): JSX.Element => {
   const upcomingEvents = useTypedSelector(
-    reduxServices.trainingsAndEvents.selectors.upcomingTrainingsAndEvents,
+    reduxServices.trainingsAndEvents.selectors.upcomingEvent,
   )
 
   return (

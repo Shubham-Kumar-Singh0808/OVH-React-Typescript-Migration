@@ -57,7 +57,8 @@ export type TrainingAndEvent = {
 }
 
 export type TrainingsAndEventsSliceState = {
-  upcomingTrainingsAndEvents: TrainingAndEvent[]
+  upcomingTrainings: TrainingAndEvent[]
+  upcomingEvents: TrainingAndEvent[]
   isLoading: LoadingState
   error: ValidationError
 }
