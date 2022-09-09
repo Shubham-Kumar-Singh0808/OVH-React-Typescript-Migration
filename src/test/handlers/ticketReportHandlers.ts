@@ -6,7 +6,7 @@ import {
   mockTicketReportData,
 } from '../data/ticketReportsData'
 
-export const clientsHandlers = [
+export const ticketReportHandlers = [
   // getAllClients api mock
   rest.get(ticketReportApiConfig.getDepartmentNameList, (_req, res, ctx) => {
     return res(
