@@ -11,7 +11,7 @@ import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { deviceLocale } from '../../../utils/helper'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
