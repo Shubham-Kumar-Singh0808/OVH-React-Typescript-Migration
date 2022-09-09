@@ -48,6 +48,7 @@ import {
   LeaveSummaryApi,
   TicketListInformationApi,
   TicketApprovalsApi,
+  DashboardApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -409,4 +410,19 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
     apiPrefix + '/supportManagement/getAllTicketsForApproval',
   exportTicketApprovalList:
     apiPrefix + '/supportManagement/exportTicketApprovalList',
+}
+
+export const dashboardApiConfig: DashboardApi = {
+  getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getUpcomingBirthdayAnniversaries:
+    apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
+  getAllEmployeesBirthdayList:
+    apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
+  getUpcomingHolidays: apiPrefix + '/Employee/onlyUpcomingHolidays',
+  getAllUpcomingHolidaysList: apiPrefix + '/Employee/upcomingHolidays',
+  addHoliday: apiPrefix + '/Employee/saveHoliday',
+  getFinancialYear: apiPrefix + '/leaveSetup/financialYear',
+  getEmployeeTimeInOffice: apiPrefix + '/timeInOffice/weeklyTimeInOfficeReport',
+  getUpcomingTrainings: apiPrefix + '/meetingRequest/getTrainingsForDashBoard',
+  getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
 }
