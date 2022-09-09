@@ -113,9 +113,7 @@ const TicketDetailsTable = ({
                 : 'N/A'
             return (
               <CTableRow key={index}>
-                <CTableHeaderCell scope="row">
-                  {ticketDetail.id}
-                </CTableHeaderCell>
+                <CTableDataCell scope="row">{ticketDetail.id}</CTableDataCell>
                 <CTableDataCell>{ticketDetail.employeeName}</CTableDataCell>
                 {subjectLimit ? (
                   <CTableDataCell>
