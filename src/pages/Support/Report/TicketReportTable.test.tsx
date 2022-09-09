@@ -4,7 +4,10 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import TicketReportTable from './TicketReportTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
-import { mockTicketReportData } from '../../../test/data/ticketReportsData'
+import {
+  mockTicketDetailsData,
+  mockTicketReportData,
+} from '../../../test/data/ticketReportsData'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
@@ -34,6 +37,7 @@ describe('Scheduled Candidates Table Component Testing', () => {
           ticketReport: {
             isLoading: ApiLoadingState.succeeded,
             ticketsReportList: mockTicketReportData,
+            ticketsDetailsList: mockTicketDetailsData,
           },
         },
       },
@@ -70,11 +74,15 @@ describe('Employee Ticket Details', () => {
     )
   })
   test('should clicking on number of tickets', () => {
-    const linkElement = screen.getAllByTestId('num-tickets')
-    expect(linkElement).toBeTruthy()
+    const ticketElement = screen.getAllByTestId('num-tickets')
+    userEvent.click(ticketElement[0])
+    expect(ticketElement[0]).toBeInTheDocument()
+    expect(ticketElement).toBeTruthy()
   })
   test('should when clicking on ticket description link', () => {
-    const linkElement = screen.getAllByTestId('pending-tickets')
-    expect(linkElement).toBeTruthy()
+    const descriptionElement = screen.getAllByTestId('pending-tickets')
+    userEvent.click(descriptionElement[0])
+    expect(descriptionElement[0]).toBeInTheDocument()
+    expect(descriptionElement).toBeTruthy()
   })
 })

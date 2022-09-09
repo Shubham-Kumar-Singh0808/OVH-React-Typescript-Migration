@@ -68,7 +68,7 @@ const TicketReportTable = ({
     () => currentPageData(getTicketReportList, currentPage, pageSize),
     [getTicketReportList, currentPage, pageSize],
   )
-  const handleShowTicketDetails = (
+  const handleClickTicketDetails = (
     categoryId: number,
     trackerId: number,
     subCategoryId: number,
@@ -90,7 +90,7 @@ const TicketReportTable = ({
       }),
     )
   }
-  const handleTicket = handleShowTicketDetails
+  const handleTicket = handleClickTicketDetails
   return (
     <>
       <>
@@ -128,7 +128,7 @@ const TicketReportTable = ({
                       className="cursor-pointer text-decoration-none text-primary"
                       data-testid="num-tickets"
                       onClick={() =>
-                        handleShowTicketDetails(
+                        handleClickTicketDetails(
                           ticketReport.categoryId,
                           ticketReport.trackerId,
                           ticketReport.subCategoryId,
