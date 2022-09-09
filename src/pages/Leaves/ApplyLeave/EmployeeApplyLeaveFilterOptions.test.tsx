@@ -2,9 +2,6 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
 import EmployeeApplyLeaveFilterOptions from './EmployeeApplyLeaveFilterOptions'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
@@ -12,15 +9,6 @@ import {
   mockLeaveApply,
   mockLeaveType,
 } from '../../../test/data/employeeLeaveApplyData'
-import stateStore from '../../../stateStore'
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
 
 const leaveFormSelect = 'leaveApply-form-select'
 
@@ -51,15 +39,21 @@ describe('Leave Apply Component Testing', () => {
 })
 
 describe('Ticket Approvals Filter Options Component Testing with data', () => {
+  const history = createMemoryHistory()
   beforeEach(() => {
-    render(<EmployeeApplyLeaveFilterOptions />, {
-      preloadedState: {
-        employeeLeaveApply: {
-          employeeLeaveApply: mockLeaveApply,
-          employeeLeaveType: mockLeaveType,
+    render(
+      <Router history={history}>
+        <EmployeeApplyLeaveFilterOptions />
+      </Router>,
+      {
+        preloadedState: {
+          employeeLeaveApply: {
+            employeeLeaveApply: mockLeaveApply,
+            employeeLeaveType: mockLeaveType,
+          },
         },
       },
-    })
+    )
   })
   screen.debug()
   test('should select Leave Type dropdown value', async () => {
@@ -72,24 +66,21 @@ describe('Ticket Approvals Filter Options Component Testing with data', () => {
 
     await waitFor(() =>
       fireEvent.change(datePickers[0], {
-        target: { value: '29 Oct, 2019' },
+        target: { value: '11 Oct, 2022' },
       }),
     )
     fireEvent.click(datePickers[1])
     await waitFor(() =>
       fireEvent.change(datePickers[1], {
-        target: { value: '10 Jan, 2022' },
+        target: { value: '12 Oct, 2022' },
       }),
     )
-    expect(datePickers[0]).toHaveValue('29/10/2019')
-    expect(datePickers[1]).toHaveValue('1/10/2022')
+    expect(datePickers[0]).toHaveValue('10/11/2022')
+    expect(datePickers[1]).toHaveValue('10/12/2022')
 
     const applyBtnElement = screen.getByRole('button', { name: 'Apply' })
     expect(applyBtnElement).toBeEnabled()
     userEvent.click(applyBtnElement)
-
-    const history = createMemoryHistory()
-    userEvent.click(screen.getByRole('button', { name: 'Apply' }))
     await waitFor(() => {
       expect(history.location.pathname).toBe('/')
     })
@@ -105,6 +96,28 @@ describe('Ticket Approvals Filter Options Component Testing with data', () => {
       expect(datePickers[0]).toHaveValue('')
       expect(datePickers[1]).toHaveValue('')
       expect(screen.getByTestId('sh-view-button')).toBeDisabled()
+    })
+  })
+
+  test('date error', async () => {
+    const datePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
+    fireEvent.click(datePickerElement[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickerElement[0], {
+        target: { value: '11 Oct, 2022' },
+      }),
+    )
+    fireEvent.click(datePickerElement[1])
+    await waitFor(() =>
+      fireEvent.change(datePickerElement[1], {
+        target: { value: '02 Oct, 2022' },
+      }),
+    )
+    expect(datePickerElement[0]).toHaveValue('10/11/2022')
+    expect(datePickerElement[1]).toHaveValue('10/02/2022')
+    await waitFor(() => {
+      expect(screen.getByTestId('errorMessage')).toBeInTheDocument()
     })
   })
 })
