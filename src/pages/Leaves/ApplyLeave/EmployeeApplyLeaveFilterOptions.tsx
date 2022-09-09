@@ -11,6 +11,7 @@ import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { deviceLocale } from '../../../utils/helper'
 
 const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
@@ -33,12 +34,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.employeeApplyLeave.getEmployeeLeaveType(employeeId))
-  }, [dispatch, employeeId])
-
-  const deviceLocale: string =
-    navigator.languages && navigator.languages.length
-      ? navigator.languages[0]
-      : navigator.language
+  }, [dispatch, employeeId]) 
 
   const handleDescription = (employeeComments: string) => {
     setApplyLeave((prevState) => {
@@ -198,7 +194,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
             </span>
           </CFormLabel>
           <CFormSelect
-            data-testid="form-select"
+            data-testid="leaveApply-form-select"
             aria-label="leaveCategoryName"
             name="leaveCategoryName"
             id="leaveCategoryName"
@@ -224,7 +220,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
               </CFormLabel>
               <ReactDatePicker
                 id="fromDate"
-                data-testid="leaveApprovalFromDate"
+                data-testid="leaveApplyFromDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                 peekNextMonth
                 showMonthDropdown
