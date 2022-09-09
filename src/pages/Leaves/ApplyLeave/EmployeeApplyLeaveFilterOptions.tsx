@@ -34,7 +34,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.employeeApplyLeave.getEmployeeLeaveType(employeeId))
-  }, [dispatch, employeeId]) 
+  }, [dispatch, employeeId])
 
   const handleDescription = (employeeComments: string) => {
     setApplyLeave((prevState) => {
