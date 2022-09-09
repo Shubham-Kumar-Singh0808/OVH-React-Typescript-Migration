@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { AppDispatch, RootState } from '../../../stateStore'
+import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import ticketReportApi from '../../../middleware/api/Support/Report/ticketReportsApi'
@@ -19,26 +19,6 @@ const getDepartmentNameList = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await ticketReportApi.getDepartmentNameList()
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-
-const getDepartmentCategoryList = createAsyncThunk<
-  DepartmentCategoryList[] | undefined,
-  string | number,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->(
-  'support/getDepartmentCategoryList',
-  async (deptId: string | number, thunkApi) => {
-    try {
-      return await ticketReportApi.getDepartmentCategoryList(deptId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -110,9 +90,6 @@ const ticketReportSlice = createSlice({
     builder.addCase(getTicketDetails.pending, (state) => {
       state.isLoading = ApiLoadingState.loading
     })
-    builder.addCase(getDepartmentCategoryList.fulfilled, (state, action) => {
-      state.departmentCategoryList = action.payload as DepartmentCategoryList[]
-    })
     builder.addCase(getDepartmentNameList.fulfilled, (state, action) => {
       state.departmentNameList = action.payload
     })
@@ -121,7 +98,6 @@ const ticketReportSlice = createSlice({
 
 const ticketReportThunk = {
   getDepartmentNameList,
-  getDepartmentCategoryList,
   getTicketsReport,
   getTicketDetails,
 }

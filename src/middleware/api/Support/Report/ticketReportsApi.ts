@@ -4,7 +4,6 @@ import {
   getAuthenticatedRequestConfig,
 } from '../../../../utils/apiUtils'
 import {
-  DepartmentCategoryList,
   DepartmentNameList,
   GetTicketDetails,
   GetTicketsReport,
@@ -18,20 +17,6 @@ const getDepartmentNameList = async (): Promise<DepartmentNameList[]> => {
     method: AllowedHttpMethods.get,
   })
 
-  const response = await useAxios(requestConfig)
-  return response.data
-}
-
-const getDepartmentCategoryList = async (
-  deptId: number | string,
-): Promise<DepartmentCategoryList[]> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: ticketReportApiConfig.departmentCategoryList,
-    method: AllowedHttpMethods.get,
-    params: {
-      deptId,
-    },
-  })
   const response = await useAxios(requestConfig)
   return response.data
 }
@@ -102,7 +87,6 @@ const exportTicketReportData = async (
 
 const ticketReportApi = {
   getDepartmentNameList,
-  getDepartmentCategoryList,
   getTicketsReport,
   getTicketDetails,
   exportTicketReportData,
