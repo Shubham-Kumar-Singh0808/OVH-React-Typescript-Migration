@@ -51,3 +51,8 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/clientinformation';
 @import './components//leave-summary';
 @import './pages/support/ticketapprovals/ticket-approvals';
+@import './pages/dashboard/birthdays/upcoming-birthdays';
+@import './pages/dashboard/holidays/upcoming-holidays';
+@import './pages/dashboard/holidays/holidays-list';
+@import './pages/dashboard/earnedleaves/earned-leaves';
+@import './pages/dashboard/timeinoffice/timeinoffice';

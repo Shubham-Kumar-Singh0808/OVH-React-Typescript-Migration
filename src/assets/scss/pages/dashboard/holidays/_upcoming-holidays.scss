@@ -1,0 +1,20 @@
+.holidays-panel-body {
+  padding: 20px 20px !important;
+}
+
+.holidays-list-group {
+  padding-left: 0;
+  /* margin-bottom: 20px; */
+}
+
+.holidays-list-group-item:first-child {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+.holidays-list-group-item {
+  padding: 5px 10px;
+  position: relative;
+  display: block;
+  border: 1px solid #ddd;
+}
