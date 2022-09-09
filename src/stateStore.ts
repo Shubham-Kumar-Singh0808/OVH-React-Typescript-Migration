@@ -57,6 +57,7 @@ import clientInformationReducer from './reducers/ProjectManagement/Clients/Clien
 import leaveSummaryReducer from './reducers/Leaves/LeaveSummary/employeeLeaveSummarySlice'
 import ticketApprovalsReducer from './reducers/Support/TicketApprovals/ticketApprovalsSlice'
 import myTicketsReducer from './reducers/Support/MyTickets/myTicketsSlice'
+import updateTicketReducer from './reducers/Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -114,6 +115,7 @@ export const allReducers = {
   employeeLeaveSummary: leaveSummaryReducer,
   tickets: myTicketsReducer,
   ticketApprovals: ticketApprovalsReducer,
+  updateTicket: updateTicketReducer,
   // add your slice reducers here
 }
 
