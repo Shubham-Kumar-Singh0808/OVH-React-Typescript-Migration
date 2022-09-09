@@ -113,23 +113,5 @@ describe('Ticket Report Slice', () => {
         getTicketDetails: { list: [], size: 0 },
       })
     })
-
-    it('Should be able to set isLoading to "success" if getDepartmentCategoryList is fulfilled', () => {
-      const action = {
-        type: ticketReportService.getDepartmentCategoryList.fulfilled.type,
-      }
-      const state = reducer(initialTicketReportState, action)
-      expect(state).toEqual({
-        currentPage: 1,
-        pageSize: 20,
-        ticketsReportList: [],
-        getTicketsReport: { list: [], size: 0 },
-        departmentCategoryList: undefined,
-        departmentNameList: [],
-        isLoading: ApiLoadingState.idle,
-        ticketsDetailsList: [],
-        getTicketDetails: { list: [], size: 0 },
-      })
-    })
   })
 })

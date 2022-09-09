@@ -114,9 +114,9 @@ const TicketReportTable = ({
             {currentPageItems.map((ticketReport, index) => {
               return (
                 <CTableRow key={index}>
-                  <CTableHeaderCell scope="row">
+                  <CTableDataCell scope="row">
                     {getItemNumber(index)}
-                  </CTableHeaderCell>
+                  </CTableDataCell>
                   <CTableDataCell>{ticketReport.trackerName}</CTableDataCell>
                   <CTableDataCell>{ticketReport.categoryName}</CTableDataCell>
                   <CTableDataCell>
