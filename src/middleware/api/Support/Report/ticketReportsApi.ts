@@ -46,20 +46,17 @@ const getTicketsReport = async (
 const getTicketDetails = async (
   props: TicketDetailsProps,
 ): Promise<GetTicketDetails> => {
+  const paramsLeaveReportResult = commonLeaveReportParamsUtil(props)
   const requestConfig = getAuthenticatedRequestConfig({
     url: ticketReportApiConfig.getTicketsDetails,
     method: AllowedHttpMethods.get,
     params: {
-      categoryId: props.categoryId ?? '',
-      dateSelection: props.dateSelection ?? '',
-      departmentId: props.departmentId ?? '',
+      ...paramsLeaveReportResult,
+      startIndex: props.startIndex ?? 0,
       endIndex: props.endIndex ?? 20,
       filter: props.filter ?? '',
-      from: props.from ?? '',
-      startIndex: props.startIndex ?? 0,
       subCategoryId: props.subCategoryId ?? '',
-      ticketStatus: props.ticketStatus ?? '',
-      to: props.to ?? '',
+      categoryId: props.categoryId ?? '',
       trackerId: props.trackerId ?? '',
     },
   })

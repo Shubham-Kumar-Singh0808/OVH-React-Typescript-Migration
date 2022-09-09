@@ -47,7 +47,7 @@ export type TicketReportApiProps = {
   dateSelection: string
   departmentId: string
   from: string
-  ticketStatus: null
+  ticketStatus: string | null
   to: string
   startIndex?: number
   endIndex?: number
