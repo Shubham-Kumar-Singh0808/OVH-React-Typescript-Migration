@@ -56,6 +56,10 @@ describe('Ticket Approvals Filter Options Component Testing with data', () => {
     )
   })
   screen.debug()
+  it('should render Apply button as enabled and Clear Button as disabled', () => {
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Clear' })).toBeEnabled()
+  })
   test('should select Leave Type dropdown value', async () => {
     const selectLeaveType = screen.getByTestId(leaveFormSelect)
     userEvent.selectOptions(selectLeaveType, ['LOP'])

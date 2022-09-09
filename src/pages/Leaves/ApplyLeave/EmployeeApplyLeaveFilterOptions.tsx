@@ -52,6 +52,9 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
   }
 
   const currentDate = new Date().setHours(0, 0, 0, 0)
+  const successToastMessage = (
+    <OToast toastMessage="Leave applied successfully." toastColor="success" />
+  )
 
   const handleApplyLeave = async () => {
     const prepareObject = {
@@ -88,14 +91,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
         applyLeaveResultAction,
       )
     ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="success"
-            toastMessage="Leave applied successfully"
-          />,
-        ),
-      )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
       history.push('/employeeLeaveSummary')
     } else if (
       reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
