@@ -63,7 +63,7 @@ describe('Ticket Report Filter Option Component Testing', () => {
       {
         preloadedState: {
           leaveReport: {
-            selectFinancialYear: uniqueValue,
+            selectFinancialYear: mockCreditYearData,
             leaveSummaries: mockLeaveReportData,
           },
         },
