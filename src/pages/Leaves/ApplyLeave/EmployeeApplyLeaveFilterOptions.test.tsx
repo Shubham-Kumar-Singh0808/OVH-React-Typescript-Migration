@@ -2,12 +2,25 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
+// eslint-disable-next-line import/named
+import { EnhancedStore } from '@reduxjs/toolkit'
+import { Provider } from 'react-redux'
+import { Router } from 'react-router-dom'
 import EmployeeApplyLeaveFilterOptions from './EmployeeApplyLeaveFilterOptions'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import {
   mockLeaveApply,
   mockLeaveType,
 } from '../../../test/data/employeeLeaveApplyData'
+import stateStore from '../../../stateStore'
+
+const ReduxProvider = ({
+  children,
+  reduxStore,
+}: {
+  children: JSX.Element
+  reduxStore: EnhancedStore
+}) => <Provider store={reduxStore}>{children}</Provider>
 
 describe('Leave Apply Component Testing', () => {
   describe('without data', () => {
@@ -53,6 +66,12 @@ describe('Leave Apply Component Testing', () => {
     test('should render clear button', () => {
       const clearButton = screen.getByTestId('sh-clear-button')
       expect(clearButton).toBeEnabled()
+    })
+
+    test('should click on Apply button ', async () => {
+      const viewButton1 = screen.findByTestId('sh-view-button')
+      await userEvent.click(await viewButton1)
+      expect(viewButton1).toBeTruthy()
     })
 
     test('should render from date picker', () => {
@@ -136,5 +155,20 @@ describe('Leave Apply Component Testing', () => {
         expect(screen.getByTestId('sh-view-button')).toBeDisabled()
       })
     })
+  })
+})
+
+test('should redirect to /employeeSumary when user clicks on Apply Button', async () => {
+  const history = createMemoryHistory()
+  render(
+    <Router history={history}>
+      <ReduxProvider reduxStore={stateStore}>
+        <EmployeeApplyLeaveFilterOptions />
+      </ReduxProvider>
+    </Router>,
+  )
+  userEvent.click(screen.getByRole('button', { name: 'Apply' }))
+  await waitFor(() => {
+    expect(history.location.pathname).toBeTruthy()
   })
 })
