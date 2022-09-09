@@ -45,16 +45,6 @@ describe('LeaveReportFilter Options Component Testing', () => {
       userEvent.type(screen.getByPlaceholderText('Search Employees'), 'Java')
       expect(screen.getByTestId('search-btn1')).toBeEnabled()
     })
-    // test('should render search input mouse enter key', () => {
-    //   const searchField = screen.getByTestId('searchInput')
-    //   userEvent.type(searchField, 'testing')
-    //   fireEvent.keyDown(searchField, {
-    //     key: 'Enter',
-    //     code: 'Enter',
-    //     charCode: 13,
-    //   })
-    //   expect(searchField).toHaveValue('testing')
-    // })
     test('should able to click "click to to export" button', () => {
       const exportBtn = screen.getByRole('button', { name: 'Click to Export' })
       userEvent.click(exportBtn)
@@ -73,7 +63,7 @@ describe('Ticket Report Filter Option Component Testing', () => {
       {
         preloadedState: {
           leaveReport: {
-            selectFinancialYear: mockCreditYearData,
+            selectFinancialYear: uniqueValue,
             leaveSummaries: mockLeaveReportData,
           },
         },
