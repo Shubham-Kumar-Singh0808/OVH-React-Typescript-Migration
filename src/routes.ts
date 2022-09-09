@@ -96,6 +96,10 @@ const MyAttendance = React.lazy(
 const Clients = React.lazy(
   () => import('./pages/ProjectManagement/Clients/Clients'),
 )
+
+const MyTickets = React.lazy(
+  () => import('./pages/Support/MyTickets/MyTickets'),
+)
 const LeaveSummary = React.lazy(
   () =>
     import(
@@ -122,6 +126,9 @@ const ViewClient = React.lazy(
     import(
       './pages/ProjectManagement/Clients/ClientInformation/ViewClientInformation'
     ),
+)
+const TicketApprovals = React.lazy(
+  () => import('./pages/Support/TicketApprovals/TicketApprovals'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -262,6 +269,11 @@ const routes = [
     component: AddClient,
   },
   {
+    path: '/ticketSummary',
+    name: 'Tickets',
+    component: MyTickets,
+  },
+  {
     path: '/clientInfo/:clientId',
     name: 'View Client',
     component: ViewClient,
@@ -275,6 +287,11 @@ const routes = [
     path: '/employeeLeaveSummary',
     name: 'Leave Summary',
     component: LeaveSummary,
+  },
+  {
+    path: '/ticketApprovals',
+    name: 'Ticket Approvals',
+    component: TicketApprovals,
   },
 ]
 
