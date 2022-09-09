@@ -3,7 +3,10 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import LeaveReportFilterOption from './LeaveReportFilterOption'
 import { fireEvent, render, screen } from '../../../test/testUtils'
-import { mockCreditYearData } from '../../../test/data/LeaveReportData'
+import {
+  mockCreditYearData,
+  mockLeaveReportData,
+} from '../../../test/data/LeaveReportData'
 
 const mockSetSelectYear = jest.fn()
 const mockHandleExportTicketApprovalList = jest.fn()
@@ -42,16 +45,16 @@ describe('LeaveReportFilter Options Component Testing', () => {
       userEvent.type(screen.getByPlaceholderText('Search Employees'), 'Java')
       expect(screen.getByTestId('search-btn1')).toBeEnabled()
     })
-    test('should render search input mouse enter key', () => {
-      const searchField = screen.getByTestId('searchInput')
-      userEvent.type(searchField, 'testing')
-      fireEvent.keyDown(searchField, {
-        key: 'Enter',
-        code: 'Enter',
-        charCode: 13,
-      })
-      expect(searchField).toHaveValue('testing')
-    })
+    // test('should render search input mouse enter key', () => {
+    //   const searchField = screen.getByTestId('searchInput')
+    //   userEvent.type(searchField, 'testing')
+    //   fireEvent.keyDown(searchField, {
+    //     key: 'Enter',
+    //     code: 'Enter',
+    //     charCode: 13,
+    //   })
+    //   expect(searchField).toHaveValue('testing')
+    // })
     test('should able to click "click to to export" button', () => {
       const exportBtn = screen.getByRole('button', { name: 'Click to Export' })
       userEvent.click(exportBtn)
@@ -61,23 +64,37 @@ describe('LeaveReportFilter Options Component Testing', () => {
 })
 
 describe('Ticket Report Filter Option Component Testing', () => {
-  test('should render Leave Summary Component without crashing', () => {
+  beforeEach(() => {
     render(
       <LeaveReportFilterOption
-        selectYear={'2022'}
+        selectYear={''}
         setSelectYear={mockSetSelectYear}
       />,
       {
         preloadedState: {
           leaveReport: {
             selectFinancialYear: mockCreditYearData,
+            leaveSummaries: mockLeaveReportData,
           },
         },
       },
     )
+  })
+  test('should render Leave Summary Component without crashing', () => {
     uniqueValue.forEach((childFeature) => {
-      const timeStamp = screen.getAllByTestId('leave-form-select2')
-      expect(timeStamp).toHaveLength(1)
+      const timeStamp = screen.getByTestId('leave-form-select2')
+      expect(timeStamp).toHaveLength(0)
     })
+  })
+
+  test('should render search input mouse enter key', () => {
+    const searchField = screen.getByTestId('searchInput')
+    userEvent.type(searchField, 'testing')
+    fireEvent.keyDown(searchField, {
+      key: 'Enter',
+      code: 'Enter',
+      charCode: 13,
+    })
+    expect(searchField).toHaveValue('testing')
   })
 })
