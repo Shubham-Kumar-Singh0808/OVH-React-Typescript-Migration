@@ -1,13 +1,13 @@
 import { rest } from 'msw'
 import { employeeHandbookSettingsApiConfig } from '../../middleware/api/apiList'
-import { mockEmployeeHandbookList } from '../data/employeeHandbookSettingsData'
 import {
   mockCountries,
+  mockHandbookData,
   mockHandbookDetails,
   mockSelectedCountries,
 } from '../data/handbookTotalListData'
 
-export const employeeListHandlers = [
+export const employeeHandbookSettingsHandlers = [
   // getAllHandbookListApi mock
   rest.get(
     employeeHandbookSettingsApiConfig.getEmployeeHandbooks,
@@ -15,7 +15,7 @@ export const employeeListHandlers = [
       return res(
         ctx.json({
           status: 200,
-          data: { list: mockEmployeeHandbookList },
+          data: { list: mockHandbookData.list },
         }),
       )
     },
@@ -39,7 +39,7 @@ export const employeeListHandlers = [
       return res(
         ctx.json({
           status: 200,
-          data: mockEmployeeHandbookList,
+          data: mockHandbookData,
         }),
       )
     },
@@ -67,7 +67,7 @@ export const employeeListHandlers = [
       )
     },
   ),
-  //addnewHandbookApi mock
+  //addNewHandbookApi mock
   rest.get(
     employeeHandbookSettingsApiConfig.addNewHandbook,
     (_req, res, ctx) => {

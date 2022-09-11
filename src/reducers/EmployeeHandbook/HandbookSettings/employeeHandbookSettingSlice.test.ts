@@ -2,12 +2,10 @@ import { ApiLoadingState } from '../../../../src/middleware/api/apiList'
 import reducer, {
   employeeHandbookSettingService,
 } from '../../../reducers/EmployeeHandbook/HandbookSettings/employeeHandbookSettingSlice'
-import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 import {
   mockCountries,
   mockHandbookData,
   mockHandbookDetails,
-  mockHandbookList,
 } from '../../../test/data/handbookTotalListData'
 import {
   EmployeeHandbookSettingSliceState,
