@@ -126,6 +126,22 @@ const TicketApprovals = React.lazy(
   () => import('./pages/Support/TicketApprovals/TicketApprovals'),
 )
 
+const JobOpenings = React.lazy(
+  () => import('./pages/Dashboard/JobOpenings/JobOpenings'),
+)
+
+const BirthdaysListTable = React.lazy(
+  () => import('./pages/Dashboard/Birthdays/ListOfBirthdays'),
+)
+
+const HolidaysList = React.lazy(
+  () => import('./pages/Dashboard/Holidays/HolidaysList/ListOfHolidays'),
+)
+
+const AddHoliday = React.lazy(
+  () => import('./pages/Dashboard/Holidays/HolidaysList/AddHoliday/AddHoliday'),
+)
+
 const UpdateTicket = React.lazy(
   () => import('./pages/Support/TicketApprovals/UpdateTicket/UpdateTicket'),
 )
@@ -286,6 +302,30 @@ const routes = [
     path: '/updateTicketInApprovals/:ticketId',
     name: 'Update Ticket',
     component: UpdateTicket,
+  },
+  {
+    path: '/jobvacancies',
+    name: 'Job Openings',
+    component: JobOpenings,
+  },
+  {
+    path: '/birthdaylist',
+    name: 'List of Birthdays',
+    component: BirthdaysListTable,
+  },
+  {
+    path: '/holidaylist',
+    name: 'List of Holidays',
+    component: HolidaysList,
+  },
+  {
+    path: '/addHoliday',
+    name: 'Add Holiday',
+    component: AddHoliday,
+  },
+  {
+    path: '/eventList',
+    name: 'Event List',
   },
 ]
 

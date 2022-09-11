@@ -187,16 +187,21 @@ input.capetalized {
   text-transform: capitalize;
 }
 .model-text {
-  color:$blue-employeeEmailTemplateText;
+  color: $blue-employeeEmailTemplateText;
 }
 
 .shift-info {
   display: contents;
 }
 
-.mail-template-table th,.mail-template-table td {
+.mail-template-table th,
+.mail-template-table td {
   text-align: center;
+}
 
+.description-link li,
+.description-link div ul {
+  list-style: none;
 }
 .form-select-not-allowed{
   cursor: not-allowed !important;

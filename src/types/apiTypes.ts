@@ -339,6 +339,19 @@ export interface TicketApprovalsApi extends ApiBase {
   exportTicketApprovalList: string
 }
 
+export interface DashboardApi extends ApiBase {
+  getAllJobVacancies: string
+  getUpcomingBirthdayAnniversaries: string
+  getAllEmployeesBirthdayList: string
+  getUpcomingHolidays: string
+  getAllUpcomingHolidaysList: string
+  addHoliday: string
+  getFinancialYear: string
+  getEmployeeTimeInOffice: string
+  getUpcomingTrainings: string
+  getUpcomingEvents: string
+}
+
 export interface UpdateTicketApi extends ApiBase {
   getTicket: string
   getActiveEmployeeList: string
