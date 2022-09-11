@@ -257,3 +257,10 @@ export const dateFormatPerLocale = [
   { label: 'zh-TW', format: 'yyyy/M/d' },
   { label: 'zu-ZA', format: format1 },
 ]
+
+export const commonDateFormat = 'L'
+
+export const deviceLocale: string =
+  navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language

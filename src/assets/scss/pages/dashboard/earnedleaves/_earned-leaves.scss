@@ -1,0 +1,58 @@
+.leaves-panel {
+  box-shadow: 0 2px 0rgba (0, 0, 0, 0.05);
+  border-radius: 2px;
+  border: 0;
+  opacity: 1;
+  margin-bottom: 35px;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.panel > :first-child {
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+}
+
+.panel-danger.panel-colorful {
+  background-color: #e9573f;
+  color: #fff;
+}
+.panel-danger.panel-colorful .widget-inner h4,
+.panel-danger.panel-colorful .widget-inner h5,
+.panel-danger.panel-colorful .widget-inner h2 {
+  color: #fff;
+}
+
+.pad-all {
+  padding: 15px;
+}
+
+.leaves-media,
+.leaves-media-body {
+  overflow: hidden;
+  zoom: 1;
+}
+
+.leaves-media-left,
+.leaves-media-right,
+.leaves-media-body {
+  /* display: table-cell; */
+  vertical-align: top;
+}
+
+.panel-footer {
+  color: #404040;
+  border-top: 1px solid #ddd;
+  position: relative;
+  padding: 10px 15px;
+}
+
+.fa-angle-double-right::before {
+  content: '\f101';
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
