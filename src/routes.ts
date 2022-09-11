@@ -283,7 +283,7 @@ const routes = [
     component: TicketApprovals,
   },
   {
-    path: '/updateTicketInApprovals/:ticketNo',
+    path: '/updateTicketInApprovals/:ticketId',
     name: 'Update Ticket',
     component: UpdateTicket,
   },

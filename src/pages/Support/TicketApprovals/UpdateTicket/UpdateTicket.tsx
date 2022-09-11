@@ -9,14 +9,25 @@ import {
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 
 const UpdateTicket = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [showEditor, setShowEditor] = useState<boolean>(true)
+
+  const { ticketId } = useParams<{ ticketId: string }>()
+
+  useEffect(() => {
+    dispatch(reduxServices.updateTicket.getTicketToEdit(Number(ticketId)))
+    dispatch(reduxServices.updateTicket.getAudit(Number(ticketId)))
+  }, [dispatch])
 
   return (
     <OCard
