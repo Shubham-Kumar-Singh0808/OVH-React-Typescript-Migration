@@ -91,7 +91,7 @@ const EditHandbook = ({
   }, [totalHandbookList])
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newList = empCountries.map((item) => item.id)
+    const newList = empCountries?.map((item) => item.id)
     const { checked } = e.target
     setAllChecked(e.target.checked)
     if (checked) {
