@@ -55,6 +55,15 @@ import clientsReducer from './reducers/ProjectManagement/Clients/clientsSlice'
 import addClientReducer from './reducers/ProjectManagement/Clients/AddClient/addNewClientSlice'
 import clientInformationReducer from './reducers/ProjectManagement/Clients/ClientInformation/clientInformationSlice'
 import leaveSummaryReducer from './reducers/Leaves/LeaveSummary/employeeLeaveSummarySlice'
+import ticketApprovalsReducer from './reducers/Support/TicketApprovals/ticketApprovalsSlice'
+import myTicketsReducer from './reducers/Support/MyTickets/myTicketsSlice'
+import jobOpeningsReducer from './reducers/Dashboard/jobOpeningsSlice'
+import UpcomingBirthdayReducer from './reducers/Dashboard/birthdayAnniversarySlice'
+import birthdaysListReducer from './reducers/Dashboard/birthdayListSlice'
+import holidaysReducer from './reducers/Dashboard/holidaysSlice'
+import earnedLeavesReducer from './reducers/Dashboard/earnedLeavesSlice'
+import timeInOfficeReducer from './reducers/Dashboard/timeInOfficeSlice'
+import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSlice'
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const allReducers = {
@@ -106,11 +115,20 @@ export const allReducers = {
   scheduledInterviews: scheduledInterviewsReducer,
   addMailTemplateType: addMailTemplateTypeReducer,
   myAttendance: myAttendanceReducer,
+  jobOpenings: jobOpeningsReducer,
   projectManagement: projectManagementReducer,
   clients: clientsReducer,
   addNewClient: addClientReducer,
   clientInformation: clientInformationReducer,
   employeeLeaveSummary: leaveSummaryReducer,
+  tickets: myTicketsReducer,
+  ticketApprovals: ticketApprovalsReducer,
+  upcomingEmployeeBirthday: UpcomingBirthdayReducer,
+  employeesBirthdayList: birthdaysListReducer,
+  holidays: holidaysReducer,
+  earnedLeaves: earnedLeavesReducer,
+  weeklyTimeInOffice: timeInOfficeReducer,
+  trainingsAndEvents: trainingAndEventsReducer,
   leaveApprovals: leaveApprovalsReducer,
   // add your slice reducers here
 }

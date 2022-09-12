@@ -323,6 +323,34 @@ export interface LeaveSummaryApi extends ApiBase {
   getEmployeeLeaveHistory: string
   cancelEmployeeLeave: string
 }
+export interface TicketListInformationApi extends ApiBase {
+  getTicketListInformation: string
+  exportTicketList: string
+  ticketHistoryDetails: string
+  cancelTicket: string
+}
+export interface TicketApprovalsApi extends ApiBase {
+  getDepartmentNameList: string
+  getAllTrackerList: string
+  getAllLookups: string
+  departmentCategoryList: string
+  subCategoryList: string
+  getAllTicketsForApproval: string
+  exportTicketApprovalList: string
+}
+
+export interface DashboardApi extends ApiBase {
+  getAllJobVacancies: string
+  getUpcomingBirthdayAnniversaries: string
+  getAllEmployeesBirthdayList: string
+  getUpcomingHolidays: string
+  getAllUpcomingHolidaysList: string
+  addHoliday: string
+  getFinancialYear: string
+  getEmployeeTimeInOffice: string
+  getUpcomingTrainings: string
+  getUpcomingEvents: string
+}
 
 export interface LeaveApprovalsApi extends ApiBase {
   getEmployees: string
