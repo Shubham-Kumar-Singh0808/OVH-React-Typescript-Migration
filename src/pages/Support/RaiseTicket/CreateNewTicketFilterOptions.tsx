@@ -102,10 +102,11 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
     if (uploadFile) {
       const formData = new FormData()
       formData.append('file', uploadFile, uploadFile.name)
-      const y = createNewTicketResultAction.payload as { ticketId: number }
-      console.log(y)
+      const ticketIdParams = createNewTicketResultAction.payload as {
+        ticketId: number
+      }
       const uploadPrepareObject = {
-        ticketId: y.ticketId,
+        ticketId: ticketIdParams.ticketId,
         file: formData,
       }
       dispatch(
@@ -127,21 +128,6 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           />,
         ),
       )
-      setTrackerValue('')
-      setDeptId(0)
-      setCategoryId(0)
-      setSubCategoryIdValue(0)
-      setStartDate('')
-      setEndDate('')
-      setSubjectValue('')
-      setPriorityValue('Normal')
-      setShowEditor(false)
-      setTimeout(() => {
-        setShowEditor(true)
-      }, 100)
-      setCreateTicket({
-        description: '',
-      })
     }
   }
 

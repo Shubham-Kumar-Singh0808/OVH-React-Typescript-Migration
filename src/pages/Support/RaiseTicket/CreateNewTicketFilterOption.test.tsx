@@ -108,6 +108,7 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     const selectPriority = screen.getByTestId('priority')
     userEvent.selectOptions(selectPriority, ['Normal'])
     expect(selectPriority).toHaveValue('Normal')
+
     const createBtnElement = screen.getByRole('button', { name: 'Create' })
     expect(createBtnElement).toBeEnabled()
     userEvent.click(createBtnElement)
