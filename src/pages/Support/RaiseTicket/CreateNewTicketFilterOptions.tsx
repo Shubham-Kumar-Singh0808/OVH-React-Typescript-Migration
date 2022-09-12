@@ -407,17 +407,16 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
                 setToDate(moment(date).format(commonFormatDate))
               }
             />
+            {dateError && (
+              <CCol>
+                <span className="text-danger" data-testid="errorMessage">
+                  Access end date should be greater than access start date
+                </span>
+              </CCol>
+            )}
           </CCol>
         </CRow>
-        {dateError && (
-          <CRow className="mt-2">
-            <CCol sm={{ span: 2, offset: 2 }}>
-              <span className="text-danger" data-testid="errorMessage">
-                Access end date should be greater than access start date
-              </span>
-            </CCol>
-          </CRow>
-        )}
+
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
             Subject:
