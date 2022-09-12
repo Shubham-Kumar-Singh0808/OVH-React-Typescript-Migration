@@ -422,4 +422,6 @@ export const updateTicketApiConfig: UpdateTicketApi = {
   getTicket: apiPrefix + '/supportManagement/getTicket',
   getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
   getAudit: apiPrefix + '/supportManagement/getAudit',
+  uploadSupportTicketDocuments:
+    apiPrefix + '/fileUpload/uploadSupportTicketsDocuments',
 }

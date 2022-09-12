@@ -22,7 +22,9 @@ const getTicketToEdit = async (ticketId: number): Promise<GetTicketToEdit> => {
   return response.data
 }
 
-const getAudit = async (ticketId: number): Promise<GetAudit[]> => {
+const getAudit = async (
+  ticketId: number,
+): Promise<{ size: number; list: GetAudit[] }> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: updateTicketApiConfig.getAudit,
     method: AllowedHttpMethods.get,
@@ -46,10 +48,30 @@ const getActiveEmployeeList = async (): Promise<GetActiveEmployee[]> => {
   return response.data
 }
 
+const uploadSupportDoc = async (prepareObject: {
+  ticketId: number
+  file: FormData
+}): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: updateTicketApiConfig.uploadSupportTicketDocuments,
+    method: AllowedHttpMethods.post,
+    data: prepareObject.file,
+    params: {
+      personId: prepareObject.ticketId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const updateTicketApi = {
   getTicketToEdit,
   getAudit,
   getActiveEmployeeList,
+  uploadSupportDoc,
 }
 
 export default updateTicketApi

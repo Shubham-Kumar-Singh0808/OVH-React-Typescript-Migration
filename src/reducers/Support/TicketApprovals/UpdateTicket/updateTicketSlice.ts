@@ -5,6 +5,8 @@ import updateTicketApi from '../../../../middleware/api/Support/TicketApprovals/
 import { RootState } from '../../../../stateStore'
 import { ValidationError } from '../../../../types/commonTypes'
 import {
+  GetActiveEmployee,
+  GetAudit,
   GetTicketToEdit,
   UpdateTicketSliceState,
 } from '../../../../types/Support/TicketApprovals/UpdateTicket/updateTicketTypes'
@@ -45,10 +47,22 @@ const getAudit = createAsyncThunk(
   },
 )
 
+const uploadSupportDoc = createAsyncThunk(
+  'updateTicket/uploadSupportDoc',
+  async (prepareObject: { ticketId: number; file: FormData }, thunkApi) => {
+    try {
+      return await updateTicketApi.uploadSupportDoc(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialUpdateTicketSliceState: UpdateTicketSliceState = {
   isLoading: ApiLoadingState.idle,
   activeEmployees: [],
-  auditDetails: [],
+  auditDetails: { size: 0, list: [] },
   ticketDetailsToEdit: {} as GetTicketToEdit,
 }
 
@@ -70,11 +84,15 @@ const updateTicketSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.auditDetails = action.payload
       })
+      .addCase(uploadSupportDoc.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(
           getTicketToEdit.pending,
           getActiveEmployeeList.pending,
           getAudit.pending,
+          uploadSupportDoc.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -83,17 +101,30 @@ const updateTicketSlice = createSlice({
   },
 })
 
+const isLoading = (state: RootState): ApiLoadingState =>
+  state.updateTicket.isLoading
+
+const ticketHistoryDetails = (state: RootState): GetAudit[] =>
+  state.updateTicket.auditDetails.list
+
+const ticketDetailsToEdit = (state: RootState): GetTicketToEdit =>
+  state.updateTicket.ticketDetailsToEdit
+
+const activeEmployees = (state: RootState): GetActiveEmployee[] =>
+  state.updateTicket.activeEmployees
+
 const updateTicketThunk = {
   getTicketToEdit,
   getActiveEmployeeList,
   getAudit,
+  uploadSupportDoc,
 }
-
-const isLoading = (state: RootState): ApiLoadingState =>
-  state.updateTicket.isLoading
 
 const updateTicketSelectors = {
   isLoading,
+  ticketHistoryDetails,
+  ticketDetailsToEdit,
+  activeEmployees,
 }
 
 export const updateTicketService = {

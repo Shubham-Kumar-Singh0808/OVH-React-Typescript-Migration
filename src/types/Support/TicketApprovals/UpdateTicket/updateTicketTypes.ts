@@ -23,8 +23,8 @@ export type GetTicketToEdit = {
   approvalStatus: string
   filePath: string
   estimatedTime: string
-  watcherIds: null
-  watcherNames: string[]
+  watcherIds: string[] | null
+  watcherNames: string[] | null
   disableApprove: boolean
   disableCancel: boolean
   tracker: number
@@ -117,6 +117,6 @@ export type GetAudit = {
 export type UpdateTicketSliceState = {
   isLoading: ApiLoadingState
   activeEmployees: GetActiveEmployee[]
-  auditDetails: GetAudit[]
+  auditDetails: { size: number; list: GetAudit[] }
   ticketDetailsToEdit: GetTicketToEdit
 }
