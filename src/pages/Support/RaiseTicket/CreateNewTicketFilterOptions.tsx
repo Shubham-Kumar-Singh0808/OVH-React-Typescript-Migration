@@ -17,6 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { CreateNewTicket } from '../../../types/Support/RaiseNewTicket/createNewTicketTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const CreateNewTicketFilterOptions = (): JSX.Element => {
   const initialCreateNewTicket = {} as CreateNewTicket
@@ -26,8 +27,8 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
   const [deptId, setDeptId] = useState<number>()
   const [categoryId, setCategoryId] = useState<number>()
   const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>()
-  const [fromDate, setFromDate] = useState<string>()
-  const [toDate, setToDate] = useState<string>()
+  const [startDate, setStartDate] = useState<string>()
+  const [endDate, setEndDate] = useState<string>()
   const [PriorityValue, setPriorityValue] = useState<string>('Normal')
   const [subjectValue, setSubjectValue] = useState<string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
@@ -63,15 +64,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
     }
   }, [deptId, categoryId])
   const commonFormatDate = 'l'
-  const deviceLocale: string =
-    navigator.languages && navigator.languages.length
-      ? navigator.languages[0]
-      : navigator.language
 
-  const formLabelProps = {
-    htmlFor: 'inputCreateTicket',
-    className: 'col-form-label createticket-label',
-  }
   const handleDescription = (description: string) => {
     setCreateTicket((prevState) => {
       return { ...prevState, ...{ description } }
@@ -83,15 +76,15 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
       reduxServices.raiseNewTicket.createNewTicket({
         id: deptId as number,
         description: createTicket?.description,
-        accessEndDate: toDate
-          ? new Date(toDate).toLocaleDateString(deviceLocale, {
+        accessEndDate: endDate
+          ? new Date(endDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
               day: '2-digit',
             })
           : '',
-        accessStartDate: fromDate
-          ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+        accessStartDate: startDate
+          ? new Date(startDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
               day: '2-digit',
@@ -138,8 +131,8 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
       setDeptId(0)
       setCategoryId(0)
       setSubCategoryIdValue(0)
-      setFromDate('')
-      setToDate('')
+      setStartDate('')
+      setEndDate('')
       setSubjectValue('')
       setPriorityValue('Normal')
       setShowEditor(false)
@@ -154,25 +147,25 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
 
   useEffect(() => {
     const newFromDate = new Date(
-      moment(fromDate?.toString()).format(commonFormatDate),
+      moment(startDate?.toString()).format(commonFormatDate),
     )
     const newToDate = new Date(
-      moment(toDate?.toString()).format(commonFormatDate),
+      moment(endDate?.toString()).format(commonFormatDate),
     )
-    if (fromDate && toDate && newToDate.getTime() < newFromDate.getTime()) {
+    if (startDate && endDate && newToDate.getTime() < newFromDate.getTime()) {
       setDateError(true)
     } else {
       setDateError(false)
     }
-  }, [fromDate, toDate])
+  }, [startDate, endDate])
 
   const clearBtnHandler = () => {
     setTrackerValue('')
     setDeptId(0)
     setCategoryId(0)
     setSubCategoryIdValue(0)
-    setFromDate('')
-    setToDate('')
+    setStartDate('')
+    setEndDate('')
     setSubjectValue('')
     setPriorityValue('Normal')
     setShowEditor(false)
@@ -209,10 +202,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
     <>
       <CForm>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-2 col-form-label text-end"
-          >
+          <CFormLabel className="col-sm-2 col-form-label text-end">
             Tracker:
             <span className={trackerValue ? whiteText : dangerText}>*</span>
           </CFormLabel>
@@ -242,10 +232,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-2 col-form-label text-end"
-          >
+          <CFormLabel className="col-sm-2 col-form-label text-end">
             Department:
             <span className={deptId ? whiteText : dangerText}>*</span>
           </CFormLabel>
@@ -275,10 +262,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-2 col-form-label text-end"
-          >
+          <CFormLabel className="col-sm-2 col-form-label text-end">
             Category:
             <span className={categoryId ? whiteText : dangerText}>*</span>
           </CFormLabel>
@@ -308,10 +292,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-2 col-form-label text-end"
-          >
+          <CFormLabel className="col-sm-2 col-form-label text-end">
             Sub-Category:
             <span className={subCategoryIdValue ? whiteText : dangerText}>
               *
@@ -364,8 +345,8 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               placeholderText="dd/mm/yy"
               name="fromDate"
               value={
-                fromDate
-                  ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                startDate
+                  ? new Date(startDate).toLocaleDateString(deviceLocale, {
                       year: 'numeric',
                       month: 'numeric',
                       day: '2-digit',
@@ -373,7 +354,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
                   : ''
               }
               onChange={(date: Date) =>
-                setFromDate(moment(date).format(commonFormatDate))
+                setStartDate(moment(date).format(commonFormatDate))
               }
             />
           </CCol>
@@ -395,8 +376,8 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               placeholderText="dd/mm/yy"
               name="toDate"
               value={
-                toDate
-                  ? new Date(toDate).toLocaleDateString(deviceLocale, {
+                endDate
+                  ? new Date(endDate).toLocaleDateString(deviceLocale, {
                       year: 'numeric',
                       month: 'numeric',
                       day: '2-digit',
@@ -404,7 +385,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
                   : ''
               }
               onChange={(date: Date) =>
-                setToDate(moment(date).format(commonFormatDate))
+                setEndDate(moment(date).format(commonFormatDate))
               }
             />
             {dateError && (
@@ -460,10 +441,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           )}
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-2 col-form-label text-end"
-          >
+          <CFormLabel className="col-sm-2 col-form-label text-end">
             Priority:
           </CFormLabel>
           <CCol sm={3}>
