@@ -13,6 +13,5 @@ test('App should render without crashing', () => {
   expect(screen.getByText('Job Openings')).toBeInTheDocument()
   expect(screen.getByText('Trainings')).toBeInTheDocument()
   expect(screen.getByText('Birthdays')).toBeInTheDocument()
-  expect(screen.getByText('Service Award')).toBeInTheDocument()
   expect(screen.getByText('Holidays')).toBeInTheDocument()
 })

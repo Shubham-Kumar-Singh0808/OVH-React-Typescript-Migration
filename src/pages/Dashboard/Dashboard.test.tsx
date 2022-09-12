@@ -33,12 +33,6 @@ describe('Dashboard Sections Testing', () => {
     })
     expect(birthdaysTitle).toBeTruthy()
   })
-  test('should render the "Service Award" header', () => {
-    const serviceAwardTitle = screen.getByRole('heading', {
-      name: 'Service Award',
-    })
-    expect(serviceAwardTitle).toBeTruthy()
-  })
   test('should render the "Holidays" header', () => {
     const holidaysTitle = screen.getByRole('heading', {
       name: 'Holidays',
