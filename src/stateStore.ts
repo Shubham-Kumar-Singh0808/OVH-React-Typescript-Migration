@@ -65,6 +65,7 @@ import holidaysReducer from './reducers/Dashboard/holidaysSlice'
 import earnedLeavesReducer from './reducers/Dashboard/earnedLeavesSlice'
 import timeInOfficeReducer from './reducers/Dashboard/timeInOfficeSlice'
 import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSlice'
+import provisionPeriodReducer from './reducers/Dashboard/provisionPeriodSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -130,6 +131,7 @@ export const allReducers = {
   earnedLeaves: earnedLeavesReducer,
   weeklyTimeInOffice: timeInOfficeReducer,
   trainingsAndEvents: trainingAndEventsReducer,
+  probationPeriod: provisionPeriodReducer,
   // add your slice reducers here
 }
 

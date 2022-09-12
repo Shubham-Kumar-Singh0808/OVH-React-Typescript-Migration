@@ -143,6 +143,11 @@ const HolidaysList = React.lazy(
 const AddHoliday = React.lazy(
   () => import('./pages/Dashboard/Holidays/HolidaysList/AddHoliday/AddHoliday'),
 )
+
+const ProbationaryList = React.lazy(
+  () => import('./pages/Dashboard/ProbationaryList/ProbationaryList'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -324,6 +329,11 @@ const routes = [
   {
     path: '/eventList',
     name: 'Event List',
+  },
+  {
+    path: '/probationaryList',
+    name: 'Upcoming Probationary End Dates',
+    component: ProbationaryList,
   },
 ]
 
