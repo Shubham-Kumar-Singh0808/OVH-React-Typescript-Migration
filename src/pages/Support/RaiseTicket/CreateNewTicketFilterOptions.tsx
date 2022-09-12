@@ -21,7 +21,6 @@ import OToast from '../../../components/ReusableComponent/OToast'
 const CreateNewTicketFilterOptions = (): JSX.Element => {
   const initialCreateNewTicket = {} as CreateNewTicket
   const [createTicket, setCreateTicket] = useState(initialCreateNewTicket)
-
   const [trackerValue, setTrackerValue] = useState<string>()
   const [deptId, setDeptId] = useState<number>()
   const [categoryId, setCategoryId] = useState<number>()
@@ -31,6 +30,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
   const [PriorityValue, setPriorityValue] = useState<string>('Normal')
   const [subjectValue, setSubjectValue] = useState<string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
+  const [isCreateButtonEnabled, setIsCreateButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
   const trackerList = useTypedSelector(
     reduxServices.ticketApprovals.selectors.trackerList,
@@ -70,9 +70,9 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
     htmlFor: 'inputCreateTicket',
     className: 'col-form-label createticket-label',
   }
-  const handleDescription = (comments: string) => {
+  const handleDescription = (description: string) => {
     setCreateTicket((prevState) => {
-      return { ...prevState, ...{ comments } }
+      return { ...prevState, ...{ description } }
     })
   }
 
@@ -80,7 +80,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
     const createNewTicketResultAction = await dispatch(
       reduxServices.raiseNewTicket.createNewTicket({
         id: deptId as number,
-        description: createTicket.description,
+        description: createTicket?.description,
         accessEndDate: toDate
           ? new Date(toDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
@@ -96,7 +96,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             })
           : '',
         categoryId,
-        startDate: createTicket?.startDate,
+        startDate: '',
         priority: PriorityValue,
         subCategoryId: subCategoryIdValue,
         subject: subjectValue as string,
@@ -129,6 +129,9 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
       setTimeout(() => {
         setShowEditor(true)
       }, 100)
+      setCreateTicket({
+        description: '',
+      })
     }
   }
 
@@ -145,7 +148,24 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+    setCreateTicket({
+      description: '',
+    })
   }
+
+  useEffect(() => {
+    if (
+      trackerValue &&
+      deptId &&
+      categoryId &&
+      subCategoryIdValue &&
+      subjectValue
+    ) {
+      setIsCreateButtonEnabled(true)
+    } else {
+      setIsCreateButtonEnabled(false)
+    }
+  }, [trackerValue, deptId, categoryId, subCategoryIdValue, subjectValue])
   const whiteText = 'text-white'
   const dangerText = 'text-danger'
   return (
@@ -396,7 +416,6 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Priority:
-            <span>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -427,6 +446,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               className="form-control"
               type="file"
               name="file"
+              accept="image/*,"
             />
           </CCol>
         </CRow>
@@ -437,6 +457,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
                 className="btn-ovh me-1"
                 color="success"
                 onClick={handleApplyTicket}
+                disabled={!isCreateButtonEnabled}
               >
                 Create
               </CButton>

@@ -5,13 +5,13 @@ export type CreateNewTicket = {
   accessStartDate?: string
   categoryId?: number
   description: string
-  id: number
+  id?: number
   priority?: string
-  startDate: string
+  startDate?: string
   subCategoryId?: number
-  subject: string
+  subject?: string
   tracker?: number | string
-  watcherIds: []
+  watcherIds?: []
 }
 
 export type createNewTicketSliceState = {
