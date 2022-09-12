@@ -22,6 +22,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
   const initialCreateNewTicket = {} as CreateNewTicket
   const [createTicket, setCreateTicket] = useState(initialCreateNewTicket)
   const [trackerValue, setTrackerValue] = useState<string>()
+  const [dateError, setDateError] = useState<boolean>(false)
   const [deptId, setDeptId] = useState<number>()
   const [categoryId, setCategoryId] = useState<number>()
   const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>()
@@ -31,6 +32,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
   const [subjectValue, setSubjectValue] = useState<string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [isCreateButtonEnabled, setIsCreateButtonEnabled] = useState(false)
+  const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const dispatch = useAppDispatch()
   const trackerList = useTypedSelector(
     reduxServices.ticketApprovals.selectors.trackerList,
@@ -104,6 +106,21 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         watcherIds: [],
       }),
     )
+    if (uploadFile) {
+      const formData = new FormData()
+      formData.append('file', uploadFile, uploadFile.name)
+      const y = createNewTicketResultAction.payload as { ticketId: number }
+      console.log(y)
+      const uploadPrepareObject = {
+        ticketId: y.ticketId,
+        file: formData,
+      }
+      dispatch(
+        reduxServices.raiseNewTicket.uploadSupportTicketsDocuments(
+          uploadPrepareObject,
+        ),
+      )
+    }
     if (
       reduxServices.raiseNewTicket.createNewTicket.fulfilled.match(
         createNewTicketResultAction,
@@ -134,6 +151,20 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
       })
     }
   }
+
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(fromDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(toDate?.toString()).format(commonFormatDate),
+    )
+    if (fromDate && toDate && newToDate.getTime() < newFromDate.getTime()) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [fromDate, toDate])
 
   const clearBtnHandler = () => {
     setTrackerValue('')
@@ -168,6 +199,12 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
   }, [trackerValue, deptId, categoryId, subCategoryIdValue, subjectValue])
   const whiteText = 'text-white'
   const dangerText = 'text-danger'
+
+  const onChangeFileEventHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    if (!file) return
+    setUploadFile(file[0])
+  }
   return (
     <>
       <CForm>
@@ -372,6 +409,15 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
+        {dateError && (
+          <CRow className="mt-2">
+            <CCol sm={{ span: 2, offset: 2 }}>
+              <span className="text-danger" data-testid="errorMessage">
+                Access end date should be greater than access start date
+              </span>
+            </CCol>
+          </CRow>
+        )}
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
             Subject:
@@ -445,12 +491,15 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             Files:
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput
-              id="uploadedFile"
-              className="form-control"
+            <input
               type="file"
-              name="file"
-              accept="image/*,"
+              id="fileUpload"
+              onChange={(element: React.SyntheticEvent) =>
+                onChangeFileEventHandler(
+                  element.currentTarget as HTMLInputElement,
+                )
+              }
+              accept=".png, .jpg, .jpeg"
             />
           </CCol>
         </CRow>

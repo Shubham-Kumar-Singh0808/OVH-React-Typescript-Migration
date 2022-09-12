@@ -108,6 +108,7 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     const createBtnElement = screen.getByRole('button', { name: 'Create' })
     expect(createBtnElement).toBeEnabled()
     userEvent.click(createBtnElement)
+    userEvent.click(screen.getByTestId('create-btn'))
     userEvent.selectOptions(trackerSelect, [''])
     userEvent.selectOptions(departmentSelect, [''])
     userEvent.selectOptions(categoryName, [''])
@@ -116,6 +117,7 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     expect(datePickers[1]).toHaveValue('1/10/2022')
     userEvent.type(subject, '')
     userEvent.selectOptions(selectPriority, ['Normal'])
+
     userEvent.click(screen.getByTestId('clear-btn'))
     userEvent.selectOptions(trackerSelect, [''])
     userEvent.selectOptions(departmentSelect, [''])
@@ -126,5 +128,26 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     userEvent.type(subject, '')
     userEvent.selectOptions(selectPriority, ['Normal'])
     expect(screen.getByTestId('create-btn')).toBeDisabled()
+  })
+  test('date error', async () => {
+    const datePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
+    fireEvent.click(datePickerElement[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickerElement[0], {
+        target: { value: '11 Oct, 2022' },
+      }),
+    )
+    fireEvent.click(datePickerElement[1])
+    await waitFor(() =>
+      fireEvent.change(datePickerElement[1], {
+        target: { value: '02 Oct, 2022' },
+      }),
+    )
+    expect(datePickerElement[0]).toHaveValue('10/11/2022')
+    expect(datePickerElement[1]).toHaveValue('10/02/2022')
+    await waitFor(() => {
+      expect(screen.getByTestId('errorMessage')).toBeInTheDocument()
+    })
   })
 })

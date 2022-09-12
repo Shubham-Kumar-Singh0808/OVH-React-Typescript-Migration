@@ -7,7 +7,7 @@ import { AllowedHttpMethods, createNewTicketApiConfig } from '../../apiList'
 
 const createNewTicket = async (
   raiseNewTicket: CreateNewTicket,
-): Promise<number | undefined> => {
+): Promise<{ ticketId: number }> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: createNewTicketApiConfig.createNewTicket,
     method: AllowedHttpMethods.post,
@@ -17,16 +17,16 @@ const createNewTicket = async (
   return response.data
 }
 
-const uploadSupportTicketsDocuments = async (
-  ticketId: number,
-  file: FormData,
-): Promise<number | undefined> => {
+const uploadSupportTicketsDocuments = async (prepareObject: {
+  ticketId: number
+  file: FormData
+}): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: createNewTicketApiConfig.uploadSupportTicketsDocument,
     method: AllowedHttpMethods.post,
-    data: file,
+    data: prepareObject.file,
     params: {
-      ticketId,
+      ticketId: prepareObject.ticketId,
     },
     additionalHeaders: {
       'Content-Type': 'multipart/form-data',

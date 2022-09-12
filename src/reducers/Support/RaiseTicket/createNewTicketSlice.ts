@@ -10,7 +10,7 @@ import {
 } from '../../../types/Support/RaiseNewTicket/createNewTicketTypes'
 
 const createNewTicket = createAsyncThunk<
-  number | undefined,
+  { ticketId: number },
   CreateNewTicket,
   {
     dispatch: AppDispatch
@@ -22,6 +22,20 @@ const createNewTicket = createAsyncThunk<
   async (raiseNewTicket: CreateNewTicket, thunkApi) => {
     try {
       return await createNewTicketApi.createNewTicket(raiseNewTicket)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const uploadSupportTicketsDocuments = createAsyncThunk(
+  'support/uploadSupportTicketsDocuments',
+  async (prepareObject: { ticketId: number; file: FormData }, thunkApi) => {
+    try {
+      return await createNewTicketApi.uploadSupportTicketsDocuments(
+        prepareObject,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -47,11 +61,18 @@ const createNewTicketSlice = createSlice({
       .addCase(createNewTicket.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
+      .addCase(uploadSupportTicketsDocuments.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
+      .addCase(uploadSupportTicketsDocuments.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
   },
 })
 
 const createNewTicketThunk = {
   createNewTicket,
+  uploadSupportTicketsDocuments,
 }
 
 export const createNewTicketService = {
