@@ -144,4 +144,16 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
       expect(screen.getByTestId('errorMessage')).toBeInTheDocument()
     })
   })
+  test('should upload file image', async () => {
+    const fileToUpload = new File(['(⌐□_□)'], 'testFile.png', {
+      type: 'image/png',
+    })
+    const uploader = screen.getByTestId('file-upload') as HTMLInputElement
+
+    await waitFor(() => {
+      userEvent.upload(uploader, fileToUpload)
+    })
+
+    expect(uploader).toBeTruthy()
+  })
 })
