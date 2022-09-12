@@ -317,7 +317,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           <CCol sm={3}>
             <ReactDatePicker
               id="fromDate"
-              data-testid="leaveApprovalFromDate"
+              data-testid="dateOptionSelect"
               className="form-control form-control-sm sh-date-picker sh-leave-form-control"
               peekNextMonth
               showMonthDropdown
@@ -348,7 +348,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           <CCol sm={3}>
             <ReactDatePicker
               id="toDate"
-              data-testid="leaveApprovalFromDate"
+              data-testid="dateOptionSelect"
               className="form-control form-control-sm sh-date-picker sh-leave-form-control"
               peekNextMonth
               showMonthDropdown
@@ -380,6 +380,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           <CCol sm={9}>
             <CFormInput
               type="text"
+              data-testid="selectSubject"
               id="subjectValue"
               name="subjectValue"
               value={subjectValue}
@@ -390,7 +391,10 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
+          <CFormLabel
+            className="col-sm-2 col-form-label text-end"
+            data-testid="ckEditor-component"
+          >
             Description:
           </CFormLabel>
           {showEditor ? (
@@ -455,6 +459,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             <>
               <CButton
                 className="btn-ovh me-1"
+                data-testid="create-btn"
                 color="success"
                 onClick={handleApplyTicket}
                 disabled={!isCreateButtonEnabled}
@@ -463,6 +468,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               </CButton>
               <CButton
                 color="warning "
+                data-testid="clear-btn"
                 className="btn-ovh"
                 onClick={clearBtnHandler}
               >
