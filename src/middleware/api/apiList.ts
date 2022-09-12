@@ -40,6 +40,7 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  TicketReportApi,
   ClientsApi,
   ProjectManagementApi,
   AddNewClientApi,
@@ -348,6 +349,15 @@ export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
 
 export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
+}
+
+export const ticketReportApiConfig: TicketReportApi = {
+  getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
+  departmentCategoryList:
+    apiPrefix + '/supportManagement/departmentCategoryList',
+  getTicketsReport: apiPrefix + '/supportManagement/getTicketsReport',
+  getTicketsDetails: apiPrefix + '/supportManagement/getTicketsDetails',
+  exportTicketReports: apiPrefix + '/supportManagement/exportReportList',
 }
 
 export const projectManagementConfig: ProjectManagementApi = {

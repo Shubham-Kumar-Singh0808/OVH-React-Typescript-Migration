@@ -292,6 +292,13 @@ export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
 }
 
+export interface TicketReportApi extends ApiBase {
+  getDepartmentNameList: string
+  departmentCategoryList: string
+  getTicketsReport: string
+  getTicketsDetails: string
+  exportTicketReports: string
+}
 export interface ProjectManagementApi extends ApiBase {
   getProject: string
   addProject: string
