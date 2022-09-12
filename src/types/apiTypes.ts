@@ -338,3 +338,8 @@ export interface TicketApprovalsApi extends ApiBase {
   getAllTicketsForApproval: string
   exportTicketApprovalList: string
 }
+
+export interface RaiseNewTicketApi extends ApiBase {
+  createNewTicket: string
+  uploadSupportTicketsDocument: string
+}

@@ -47,6 +47,7 @@ import {
   LeaveSummaryApi,
   TicketListInformationApi,
   TicketApprovalsApi,
+  RaiseNewTicketApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -399,4 +400,10 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
     apiPrefix + '/supportManagement/getAllTicketsForApproval',
   exportTicketApprovalList:
     apiPrefix + '/supportManagement/exportTicketApprovalList',
+}
+
+export const createNewTicketApiConfig: RaiseNewTicketApi = {
+  createNewTicket: apiPrefix + '/supportManagement/createTickets',
+  uploadSupportTicketsDocument:
+    apiPrefix + '/fileUpload/uploadSupportTicketsDocuments',
 }
