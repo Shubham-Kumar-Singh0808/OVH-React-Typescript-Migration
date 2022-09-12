@@ -128,7 +128,7 @@ describe('Edit Page Component Testing', () => {
           preloadedState: {
             employeeHandbookSettings: {
               employeeCountries: mockCountries,
-              selectedCountries: mockCountries,
+              selectedCountries: mockSelectedCountries,
               totalHandbookList: mockHandbookList,
             },
           },

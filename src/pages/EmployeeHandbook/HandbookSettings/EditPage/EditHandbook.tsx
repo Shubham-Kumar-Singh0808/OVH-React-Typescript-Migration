@@ -63,9 +63,9 @@ const EditHandbook = ({
   )
 
   useEffect(() => {
-    const selectedHandbook = totalHandbookList.find(
-      (each) => each.id === handbookId,
-    )
+    const selectedHandbook =
+      totalHandbookList.length > 0 &&
+      totalHandbookList?.find((each) => each.id === handbookId)
 
     if (selectedHandbook) {
       setEditPage((prevState) => {
@@ -91,14 +91,15 @@ const EditHandbook = ({
   }, [totalHandbookList])
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newList = empCountries?.map((item) => item.id)
+    const newList =
+      empCountries.length > 0 && empCountries?.map((item) => item.id)
     const { checked } = e.target
     setAllChecked(e.target.checked)
     if (checked) {
       setEditPage((prevState) => {
         return {
           ...prevState,
-          ...{ list: newList },
+          ...{ newList },
         }
       })
     } else {

@@ -178,7 +178,6 @@ const employeeHandbookSettingSlice = createSlice({
       .addMatcher(isAnyOf(getEmployeeCountries.fulfilled), (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.employeeCountries = action.payload as EmployeeCountry[]
-        console.log(action)
       })
       .addMatcher(
         isAnyOf(
