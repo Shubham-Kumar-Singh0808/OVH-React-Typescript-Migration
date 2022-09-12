@@ -1,16 +1,16 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 export type CreateNewTicket = {
-  accessEndDate: string
-  accessStartDate: string
-  categoryId: number
+  accessEndDate?: string
+  accessStartDate?: string
+  categoryId?: number
   description: string
   id: number
-  priority: string
+  priority?: string
   startDate: string
-  subCategoryId: number
+  subCategoryId?: number
   subject: string
-  tracker: number
+  tracker?: number | string
   watcherIds: []
 }
 

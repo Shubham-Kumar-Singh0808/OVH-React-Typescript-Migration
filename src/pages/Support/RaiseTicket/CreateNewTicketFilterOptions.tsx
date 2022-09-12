@@ -15,8 +15,13 @@ import ReactDatePicker from 'react-datepicker'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { CreateNewTicket } from '../../../types/Support/RaiseNewTicket/createNewTicketTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const CreateNewTicketFilterOptions = (): JSX.Element => {
+  const initialCreateNewTicket = {} as CreateNewTicket
+  const [createTicket, setCreateTicket] = useState(initialCreateNewTicket)
+
   const [trackerValue, setTrackerValue] = useState<string>()
   const [deptId, setDeptId] = useState<number>()
   const [categoryId, setCategoryId] = useState<number>()
@@ -65,8 +70,81 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
     htmlFor: 'inputCreateTicket',
     className: 'col-form-label createticket-label',
   }
-  const handleDescription = (e: any) => {
-    setShowEditor(e.target.value)
+  const handleDescription = (comments: string) => {
+    setCreateTicket((prevState) => {
+      return { ...prevState, ...{ comments } }
+    })
+  }
+
+  const handleApplyTicket = async () => {
+    const createNewTicketResultAction = await dispatch(
+      reduxServices.raiseNewTicket.createNewTicket({
+        id: deptId as number,
+        description: createTicket.description,
+        accessEndDate: toDate
+          ? new Date(toDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        accessStartDate: fromDate
+          ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        categoryId,
+        startDate: createTicket?.startDate,
+        priority: PriorityValue,
+        subCategoryId: subCategoryIdValue,
+        subject: subjectValue as string,
+        tracker: trackerValue,
+        watcherIds: [],
+      }),
+    )
+    if (
+      reduxServices.raiseNewTicket.createNewTicket.fulfilled.match(
+        createNewTicketResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Ticket created successfully"
+          />,
+        ),
+      )
+      setTrackerValue('')
+      setDeptId(0)
+      setCategoryId(0)
+      setSubCategoryIdValue(0)
+      setFromDate('')
+      setToDate('')
+      setSubjectValue('')
+      setPriorityValue('Normal')
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+    }
+  }
+
+  const clearBtnHandler = () => {
+    setTrackerValue('')
+    setDeptId(0)
+    setCategoryId(0)
+    setSubCategoryIdValue(0)
+    setFromDate('')
+    setToDate('')
+    setSubjectValue('')
+    setPriorityValue('Normal')
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
   }
   const whiteText = 'text-white'
   const dangerText = 'text-danger'
@@ -99,6 +177,11 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
                 </option>
               ))}
             </CFormSelect>
+          </CCol>
+          <CCol className="col-sm-3">
+            <CButton color="info btn-ovh me-1">
+              <i className="fa fa-plus me-1"></i>Add
+            </CButton>
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -291,11 +374,11 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             Description:
           </CFormLabel>
           {showEditor ? (
-            <CCol sm={9}>
+            <CCol sm={8}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                // initData={employeeSkill?.comments}
+                initData={createTicket?.description}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -350,10 +433,18 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         <CRow>
           <CCol md={{ span: 6, offset: 2 }}>
             <>
-              <CButton className="btn-ovh me-1" color="success">
+              <CButton
+                className="btn-ovh me-1"
+                color="success"
+                onClick={handleApplyTicket}
+              >
                 Create
               </CButton>
-              <CButton color="warning " className="btn-ovh">
+              <CButton
+                color="warning "
+                className="btn-ovh"
+                onClick={clearBtnHandler}
+              >
                 Clear
               </CButton>
             </>
