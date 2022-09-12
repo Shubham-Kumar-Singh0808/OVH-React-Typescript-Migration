@@ -357,4 +357,5 @@ export interface DashboardApi extends ApiBase {
   getEmployeeTimeInOffice: string
   getUpcomingTrainings: string
   getUpcomingEvents: string
+  getEmployeesUnderProbationPeriod: string
 }

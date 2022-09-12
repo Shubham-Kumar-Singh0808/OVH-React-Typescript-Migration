@@ -55,6 +55,7 @@ import { holidaysService } from './Dashboard/holidaysSlice'
 import { earnedLeavesService } from './Dashboard/earnedLeavesSlice'
 import { weeklyTimeInOfficeService } from './Dashboard/timeInOfficeSlice'
 import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
+import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
 
 export const reduxServices = {
   app: appService,
@@ -114,4 +115,5 @@ export const reduxServices = {
   earnedLeaves: earnedLeavesService,
   weeklyTimeInOffice: weeklyTimeInOfficeService,
   trainingsAndEvents: trainingsAndEventsService,
+  employeeProbationPeriod: provisionPeriodService,
 }
