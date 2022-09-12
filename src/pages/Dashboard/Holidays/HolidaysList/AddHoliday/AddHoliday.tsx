@@ -192,11 +192,12 @@ const AddHoliday = (): JSX.Element => {
                 onChange={handleInputChange}
               >
                 <option value={''}>Select Country</option>
-                {getCountries?.map((country, index) => (
-                  <option key={index} value={country.name}>
-                    {country.name}
-                  </option>
-                ))}
+                {getCountries.length > 0 &&
+                  getCountries?.map((country, index) => (
+                    <option key={index} value={country.name}>
+                      {country.name}
+                    </option>
+                  ))}
               </CFormSelect>
             </CCol>
           </CRow>

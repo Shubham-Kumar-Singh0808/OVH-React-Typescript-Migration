@@ -361,25 +361,26 @@ const EditHandbook = ({
                 </CCol>
               </CRow>
               <CRow>
-                {empCountries.map((country, index) => {
-                  return (
-                    <CCol sm={3} key={index} className="me-4">
-                      <CFormCheck
-                        data-testid={`ch-countries${index}`}
-                        className="mt-1"
-                        id="trigger"
-                        label={country.name}
-                        checked={
-                          editPage.list == null
-                            ? false
-                            : editPage.list?.includes(country.id)
-                        }
-                        value={country.id}
-                        onChange={handleSingleCheck}
-                      />
-                    </CCol>
-                  )
-                })}
+                {empCountries.length > 0 &&
+                  empCountries?.map((country, index) => {
+                    return (
+                      <CCol sm={3} key={index} className="me-4">
+                        <CFormCheck
+                          data-testid={`ch-countries${index}`}
+                          className="mt-1"
+                          id="trigger"
+                          label={country.name}
+                          checked={
+                            editPage.list == null
+                              ? false
+                              : editPage.list?.includes(country.id)
+                          }
+                          value={country.id}
+                          onChange={handleSingleCheck}
+                        />
+                      </CCol>
+                    )
+                  })}
               </CRow>
             </CCol>
           </CRow>
