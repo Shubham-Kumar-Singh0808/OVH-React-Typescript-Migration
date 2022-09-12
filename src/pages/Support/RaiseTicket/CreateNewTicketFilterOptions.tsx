@@ -470,6 +470,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           <CCol sm={3}>
             <input
               type="file"
+              data-testid="file-upload"
               id="fileUpload"
               onChange={(element: React.SyntheticEvent) =>
                 onChangeFileEventHandler(

@@ -47,6 +47,10 @@ describe('Ticket Approvals Filter Options Component Testing', () => {
     const Comments = screen.findByTestId('ckEditor-component')
     expect(Comments).toBeTruthy()
   })
+  test('should render File upload', () => {
+    const Comments = screen.findByTestId('fileUpload')
+    expect(Comments).toBeTruthy()
+  })
 })
 
 describe('Create New Ticket Filter Options Component Testing with data', () => {
@@ -104,20 +108,9 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     const selectPriority = screen.getByTestId('priority')
     userEvent.selectOptions(selectPriority, ['Normal'])
     expect(selectPriority).toHaveValue('Normal')
-
     const createBtnElement = screen.getByRole('button', { name: 'Create' })
     expect(createBtnElement).toBeEnabled()
     userEvent.click(createBtnElement)
-    userEvent.click(screen.getByTestId('create-btn'))
-    userEvent.selectOptions(trackerSelect, [''])
-    userEvent.selectOptions(departmentSelect, [''])
-    userEvent.selectOptions(categoryName, [''])
-    userEvent.selectOptions(subCategoryName, [''])
-    expect(datePickers[0]).toHaveValue('10/29/2019')
-    expect(datePickers[1]).toHaveValue('1/10/2022')
-    userEvent.type(subject, '')
-    userEvent.selectOptions(selectPriority, ['Normal'])
-
     userEvent.click(screen.getByTestId('clear-btn'))
     userEvent.selectOptions(trackerSelect, [''])
     userEvent.selectOptions(departmentSelect, [''])
