@@ -51,7 +51,11 @@ const initialCreateTicketState: createNewTicketSliceState = {
 const createNewTicketSlice = createSlice({
   name: 'support',
   initialState: initialCreateTicketState,
-  reducers: {},
+  reducers: {
+    clearEmployeeEmailTemplate: (state) => {
+      state.createNewTicket = {} as CreateNewTicket
+    },
+  },
 
   extraReducers: (builder) => {
     builder

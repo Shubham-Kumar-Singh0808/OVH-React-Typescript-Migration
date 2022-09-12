@@ -128,6 +128,9 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           />,
         ),
       )
+      dispatch(
+        reduxServices.raiseNewTicket.actions.clearEmployeeEmailTemplate(),
+      )
     }
   }
 
