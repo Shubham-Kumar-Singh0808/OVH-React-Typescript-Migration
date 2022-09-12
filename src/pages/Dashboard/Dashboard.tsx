@@ -7,6 +7,7 @@ import EmployeeEarnedLeaves from './EarnedLeaves/EmployeeEarnedLeaves'
 import TimeInOffice from './TimeInOffice/TimeInOffice'
 import UpcomingTrainings from './Trainings/UpcomingTrainings'
 import UpcomingEvents from './Events/UpcomingEvents'
+import Achievements from './Achievements/Achievements'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -33,6 +34,7 @@ const Dashboard = (): JSX.Element => {
     dispatch(reduxServices.weeklyTimeInOffice.getEmployeeTimeInOffice())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingTrainings())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingEvents())
+    dispatch(reduxServices.employeeAchievements.getAllAchievements())
   }, [dispatch])
 
   return (
@@ -61,10 +63,12 @@ const Dashboard = (): JSX.Element => {
                 <CCol sm={12}>
                   <OCard
                     className="mb-4 myprofile-wrapper"
-                    title="Service Award"
                     CBodyClassName="ps-0 pe-0"
-                    CFooterClassName="d-none"
-                  ></OCard>
+                    CHeaderClassName="d-none"
+                    footerPath="/achievementList"
+                  >
+                    <Achievements />
+                  </OCard>
                 </CCol>
               </CRow>
             </CCol>

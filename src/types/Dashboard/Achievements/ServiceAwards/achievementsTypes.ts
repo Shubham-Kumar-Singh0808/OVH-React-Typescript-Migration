@@ -67,9 +67,9 @@ export type StarOfTheMonth = {
 }
 
 export type EmployeeAchievementsApiResponse = {
-  employeeServiceAwards: ServiceAward[]
-  employeeSpecialAwards: SpecialAward[]
-  employeeStarOfTheMonth: StarOfTheMonth[]
+  serviceAwards?: ServiceAward[]
+  specialAwards?: SpecialAward[]
+  starOfTheMonth?: StarOfTheMonth[]
 }
 
 export type AchievementsSliceState = {

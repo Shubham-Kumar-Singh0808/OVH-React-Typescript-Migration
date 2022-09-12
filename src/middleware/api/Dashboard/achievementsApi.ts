@@ -12,7 +12,11 @@ const getAllAchievements =
       method: AllowedHttpMethods.get,
     })
     const response = await useAxios(requestConfig)
-    return response.data
+    return {
+      serviceAwards: response.data['Service Award'],
+      starOfTheMonth: response.data['Star of the Month'],
+      specialAwards: response.data['Special Award'],
+    }
   }
 
 const achievementsApi = {
