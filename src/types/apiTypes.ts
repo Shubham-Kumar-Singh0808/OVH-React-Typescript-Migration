@@ -290,6 +290,13 @@ export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
 }
 
+export interface TicketReportApi extends ApiBase {
+  getDepartmentNameList: string
+  departmentCategoryList: string
+  getTicketsReport: string
+  getTicketsDetails: string
+  exportTicketReports: string
+}
 export interface ProjectManagementApi extends ApiBase {
   getProject: string
   addProject: string
@@ -342,4 +349,17 @@ export interface TicketApprovalsApi extends ApiBase {
 export interface RaiseNewTicketApi extends ApiBase {
   createNewTicket: string
   uploadSupportTicketsDocument: string
+}
+export interface DashboardApi extends ApiBase {
+  getAllJobVacancies: string
+  getUpcomingBirthdayAnniversaries: string
+  getAllEmployeesBirthdayList: string
+  getUpcomingHolidays: string
+  getAllUpcomingHolidaysList: string
+  addHoliday: string
+  getFinancialYear: string
+  getEmployeeTimeInOffice: string
+  getUpcomingTrainings: string
+  getUpcomingEvents: string
+  getEmployeesUnderProbationPeriod: string
 }

@@ -40,6 +40,7 @@ import { employeeService } from './EmployeeDirectory/EmployeesList/EditEmployee'
 import { scheduledInterviewsService } from './Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
+import { ticketReportService } from './Support/Report/ticketReportSlice'
 import { projectManagementService } from './ProjectManagement/Project/projectSlice'
 import { clientsService } from './ProjectManagement/Clients/clientsSlice'
 import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
@@ -48,6 +49,14 @@ import { leaveSummaryService } from './Leaves/LeaveSummary/employeeLeaveSummaryS
 import { myTicketsService } from './Support/MyTickets/myTicketsSlice'
 import { ticketApprovalsService } from './Support/TicketApprovals/ticketApprovalsSlice'
 import { createNewTicketService } from './Support/RaiseTicket/createNewTicketSlice'
+import { jobVacanciesService } from './Dashboard/jobOpeningsSlice'
+import { birthdaysListService } from './Dashboard/birthdayListSlice'
+import { upcomingBirthdaysService } from './Dashboard/birthdayAnniversarySlice'
+import { holidaysService } from './Dashboard/holidaysSlice'
+import { earnedLeavesService } from './Dashboard/earnedLeavesSlice'
+import { weeklyTimeInOfficeService } from './Dashboard/timeInOfficeSlice'
+import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
+import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
 
 export const reduxServices = {
   app: appService,
@@ -92,6 +101,7 @@ export const reduxServices = {
   scheduledInterviews: scheduledInterviewsService,
   addNewMailTemplateType: mailTemplateTypeService,
   myAttendance: myAttendanceService,
+  ticketReport: ticketReportService,
   projectManagement: projectManagementService,
   clients: clientsService,
   addClient: addNewClientService,
@@ -100,4 +110,12 @@ export const reduxServices = {
   tickets: myTicketsService,
   ticketApprovals: ticketApprovalsService,
   raiseNewTicket: createNewTicketService,
+  jobOpenings: jobVacanciesService,
+  birthdaysList: birthdaysListService,
+  upcomingBirthdays: upcomingBirthdaysService,
+  holidays: holidaysService,
+  earnedLeaves: earnedLeavesService,
+  weeklyTimeInOffice: weeklyTimeInOfficeService,
+  trainingsAndEvents: trainingsAndEventsService,
+  employeeProbationPeriod: provisionPeriodService,
 }
