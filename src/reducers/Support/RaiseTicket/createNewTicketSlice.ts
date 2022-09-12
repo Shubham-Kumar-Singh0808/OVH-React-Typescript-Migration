@@ -52,7 +52,7 @@ const createNewTicketSlice = createSlice({
   name: 'support',
   initialState: initialCreateTicketState,
   reducers: {
-    clearEmployeeEmailTemplate: (state) => {
+    clearNewTicketFields: (state) => {
       state.createNewTicket = {} as CreateNewTicket
     },
   },

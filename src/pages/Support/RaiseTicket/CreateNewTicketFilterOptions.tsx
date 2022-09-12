@@ -128,9 +128,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           />,
         ),
       )
-      dispatch(
-        reduxServices.raiseNewTicket.actions.clearEmployeeEmailTemplate(),
-      )
+      dispatch(reduxServices.raiseNewTicket.actions.clearNewTicketFields())
     }
   }
 
@@ -149,21 +147,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
   }, [startDate, endDate])
 
   const clearBtnHandler = () => {
-    setTrackerValue('')
-    setDeptId(0)
-    setCategoryId(0)
-    setSubCategoryIdValue(0)
-    setStartDate('')
-    setEndDate('')
-    setSubjectValue('')
-    setPriorityValue('Normal')
-    setShowEditor(false)
-    setTimeout(() => {
-      setShowEditor(true)
-    }, 100)
-    setCreateTicket({
-      description: '',
-    })
+    dispatch(reduxServices.raiseNewTicket.actions.clearNewTicketFields())
   }
 
   useEffect(() => {
