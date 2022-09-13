@@ -7,14 +7,17 @@ import EmployeeEarnedLeaves from './EarnedLeaves/EmployeeEarnedLeaves'
 import TimeInOffice from './TimeInOffice/TimeInOffice'
 import UpcomingTrainings from './Trainings/UpcomingTrainings'
 import UpcomingEvents from './Events/UpcomingEvents'
+import UpcomingProbationaryEndDates from './ProbationaryList/UpcomingProbationaryEndDates'
 import Achievements from './Achievements/Achievements'
 import OCard from '../../components/ReusableComponent/OCard'
-import { useAppDispatch } from '../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
 
 const Dashboard = (): JSX.Element => {
   const dispatch = useAppDispatch()
-
+  const employeeID = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
   useEffect(() => {
     dispatch(
       reduxServices.jobOpenings.getAllJobVacancies({
@@ -34,6 +37,13 @@ const Dashboard = (): JSX.Element => {
     dispatch(reduxServices.weeklyTimeInOffice.getEmployeeTimeInOffice())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingTrainings())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingEvents())
+    dispatch(
+      reduxServices.employeeProbationPeriod.getEmployeesUnderProbationPeriod({
+        employeeId: Number(employeeID),
+        startIndex: 0,
+        endIndex: 3,
+      }),
+    )
     dispatch(reduxServices.employeeAchievements.getAllAchievements())
   }, [dispatch])
 
@@ -76,7 +86,7 @@ const Dashboard = (): JSX.Element => {
               <CCol sm={12}>
                 <OCard
                   className="mb-4 myprofile-wrapper"
-                  title="Trainings"
+                  title="Upcoming Trainings"
                   CBodyClassName="ps-0 pe-0"
                   footerPath="/eventList"
                 >
@@ -96,7 +106,7 @@ const Dashboard = (): JSX.Element => {
               <CCol sm={12}>
                 <OCard
                   className="mb-4 myprofile-wrapper"
-                  title="Birthdays"
+                  title="Upcoming Birthdays"
                   CBodyClassName="ps-0 pe-0"
                   footerPath="/birthdaylist"
                 >
@@ -106,11 +116,21 @@ const Dashboard = (): JSX.Element => {
               <CCol sm={12}>
                 <OCard
                   className="mb-4 myprofile-wrapper"
-                  title="Holidays"
+                  title="Upcoming Holidays"
                   CBodyClassName="ps-0 pe-0"
                   footerPath="/holidaylist"
                 >
                   <UpcomingHolidays />
+                </OCard>
+              </CCol>
+              <CCol sm={12}>
+                <OCard
+                  className="mb-4 myprofile-wrapper"
+                  title="Upcoming Probationary End Dates"
+                  CBodyClassName="ps-0 pe-0"
+                  footerPath="/probationaryList"
+                >
+                  <UpcomingProbationaryEndDates />
                 </OCard>
               </CCol>
             </CCol>

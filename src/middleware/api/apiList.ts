@@ -425,5 +425,6 @@ export const dashboardApiConfig: DashboardApi = {
   getEmployeeTimeInOffice: apiPrefix + '/timeInOffice/weeklyTimeInOfficeReport',
   getUpcomingTrainings: apiPrefix + '/meetingRequest/getTrainingsForDashBoard',
   getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
+  getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
   getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
 }
