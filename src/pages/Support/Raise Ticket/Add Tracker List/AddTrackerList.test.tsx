@@ -1,10 +1,12 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import { cleanup } from '@testing-library/react'
+import { cleanup, getByTestId } from '@testing-library/react'
 import AddTrackerList from './AddTrackerList'
 import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import { mockAddTrackerList } from '../../../../test/data/addTrackerListData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import AddTrackerListTable from '../AddTrackerListTable'
 
 const addButton = 'save-btn'
 const clearButton = 'clear-btn'
@@ -37,19 +39,6 @@ describe('AddTracker List without data', () => {
     expect(clearButton).toBeEnabled()
   })
 
-  test('should render the "Tracker" table ', () => {
-    const table = screen.getByRole('table')
-    expect(table).toBeTruthy()
-  })
-
-  test('should render the correct headers', () => {
-    expect(screen.getByRole('columnheader', { name: '#' })).toBeTruthy()
-    expect(screen.getByRole('columnheader', { name: 'Name' })).toBeTruthy()
-    expect(screen.getByRole('columnheader', { name: 'Approval' })).toBeTruthy()
-    expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
-    expect(screen.getAllByRole('columnheader')).toHaveLength(4)
-  })
-
   test('should enabled add button when input is not empty', () => {
     expect(screen.getByTestId(clearButton)).not.toBeDisabled()
     expect(screen.getByTestId(addButton)).toBeDisabled()
@@ -62,6 +51,7 @@ describe('AddTracker List with data', () => {
       preloadedState: {
         addTrackerLists: {
           trackerList: mockAddTrackerList,
+          isLoading: ApiLoadingState.succeeded,
         },
       },
     })
@@ -84,12 +74,37 @@ describe('AddTracker List with data', () => {
     expect(trackerNameInput).toHaveValue('')
   })
 
-  test('should render TrackerName exist or not', async () => {
+  test('should render TrackerName exist or not', () => {
     const trackerNameInput = screen.getByTestId(trackerName)
     userEvent.type(trackerNameInput, 'Issue')
     expect(trackerNameInput).toHaveValue('Issue')
-    await waitFor(() => {
-      expect(screen.getByText('Name Already Exist')).toBeInTheDocument()
-    })
+    // await waitFor(() => {
+    //   expect(screen.getByTestId('nameAlreadyExist')).toBeInTheDocument()
+    // })
+  })
+
+  test('should able to delete', () => {
+    const deleteBtn = screen.getByTestId('btn-delete0')
+    userEvent.click(deleteBtn)
+    expect(screen.getByText('Issue')).toBeInTheDocument()
+    // expect(screen.getByTestId('failedToast')).toBeInTheDocument()
+  })
+})
+
+describe('AddTracker List without data', () => {
+  beforeEach(() => {
+    render(<AddTrackerListTable />)
+  })
+  test('should render the correct headers', () => {
+    expect(screen.getByRole('columnheader', { name: '#' })).toBeTruthy()
+    expect(screen.getByRole('columnheader', { name: 'Name' })).toBeTruthy()
+    expect(screen.getByRole('columnheader', { name: 'Approval' })).toBeTruthy()
+    expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
+    expect(screen.getAllByRole('columnheader')).toHaveLength(4)
+  })
+
+  test('should render the "Tracker" table ', () => {
+    const table = screen.getByRole('table')
+    expect(table).toBeTruthy()
   })
 })
