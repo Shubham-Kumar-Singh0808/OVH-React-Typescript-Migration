@@ -41,6 +41,7 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  TicketReportApi,
   ClientsApi,
   ProjectManagementApi,
   AddNewClientApi,
@@ -48,6 +49,7 @@ import {
   LeaveSummaryApi,
   TicketListInformationApi,
   TicketApprovalsApi,
+  DashboardApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -353,6 +355,15 @@ export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
 }
 
+export const ticketReportApiConfig: TicketReportApi = {
+  getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
+  departmentCategoryList:
+    apiPrefix + '/supportManagement/departmentCategoryList',
+  getTicketsReport: apiPrefix + '/supportManagement/getTicketsReport',
+  getTicketsDetails: apiPrefix + '/supportManagement/getTicketsDetails',
+  exportTicketReports: apiPrefix + '/supportManagement/exportReportList',
+}
+
 export const projectManagementConfig: ProjectManagementApi = {
   addProject: apiPrefix + '/project-mgmt/project',
   updateProject: apiPrefix + '/project-mgmt/project',
@@ -405,4 +416,20 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
     apiPrefix + '/supportManagement/getAllTicketsForApproval',
   exportTicketApprovalList:
     apiPrefix + '/supportManagement/exportTicketApprovalList',
+}
+
+export const dashboardApiConfig: DashboardApi = {
+  getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getUpcomingBirthdayAnniversaries:
+    apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
+  getAllEmployeesBirthdayList:
+    apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
+  getUpcomingHolidays: apiPrefix + '/Employee/onlyUpcomingHolidays',
+  getAllUpcomingHolidaysList: apiPrefix + '/Employee/upcomingHolidays',
+  addHoliday: apiPrefix + '/Employee/saveHoliday',
+  getFinancialYear: apiPrefix + '/leaveSetup/financialYear',
+  getEmployeeTimeInOffice: apiPrefix + '/timeInOffice/weeklyTimeInOfficeReport',
+  getUpcomingTrainings: apiPrefix + '/meetingRequest/getTrainingsForDashBoard',
+  getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
+  getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
 }
