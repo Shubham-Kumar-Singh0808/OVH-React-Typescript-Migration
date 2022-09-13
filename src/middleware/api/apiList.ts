@@ -37,6 +37,7 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
+  ApplyLeaveApi,
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
@@ -329,6 +330,11 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
 export const addNewTemplateApiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
+}
+
+export const applyLeaveAPiConfig: ApplyLeaveApi = {
+  getLeaveType: apiPrefix + '/leaveSetup/leaveCategories',
+  applyLeave: apiPrefix + '/leave/apply',
 }
 
 export const scheduledInterviewsApiConfig: ScheduledInterviewsApi = {

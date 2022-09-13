@@ -275,6 +275,11 @@ export interface AddNewTemplateApi extends ApiBase {
   getAssetTypes: string
   addNewMailTemplate: string
 }
+
+export interface ApplyLeaveApi extends ApiBase {
+  getLeaveType: string
+  applyLeave: string
+}
 export interface ScheduledInterviewsApi extends ApiBase {
   searchScheduledCandidatesForEmployee: string
   searchScheduledCandidates: string

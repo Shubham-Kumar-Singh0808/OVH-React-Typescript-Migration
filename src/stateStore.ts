@@ -47,6 +47,7 @@ import hiveActivityReportReducer from './reducers/TimeAndAttendance/HiveActivity
 import employeeMailConfigurationReducer from './reducers/Settings/MailConfiguration/employeeMailConfigurationSlice'
 import addNewTemplateReducer from './reducers/Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
+import employeeLeaveApplyReducer from './reducers/Leaves/ApplyLeave/employeeApplyLeaveSlice'
 import scheduledInterviewsReducer from './reducers/Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import addMailTemplateTypeReducer from './reducers/Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import myAttendanceReducer from './reducers/TimeAndAttendance/MyAttendance/myAttendanceSlice'
@@ -114,6 +115,7 @@ export const allReducers = {
   employeeMailConfiguration: employeeMailConfigurationReducer,
   addMailTemplate: addNewTemplateReducer,
   employee: employeeReducer,
+  employeeLeaveApply: employeeLeaveApplyReducer,
   scheduledInterviews: scheduledInterviewsReducer,
   addMailTemplateType: addMailTemplateTypeReducer,
   myAttendance: myAttendanceReducer,
