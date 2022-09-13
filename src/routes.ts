@@ -78,6 +78,11 @@ const AddNewTemplate = React.lazy(
   () =>
     import('./pages/Settings/MailConfiguration/AddTemplate/AddNewMailTemplate'),
 )
+
+const ApplyLeave = React.lazy(
+  () => import('./pages/Leaves/ApplyLeave/EmployeeApplyLeave'),
+)
+
 const EditEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
 )
@@ -258,6 +263,16 @@ const routes = [
     path: '/editEmployee/:employeeId',
     name: 'Edit Employee',
     component: EditEmployee,
+  },
+  {
+    path: '/mailTemplates',
+    name: 'Mail Configuration',
+    component: MailConfiguration,
+  },
+  {
+    path: '/leaveApplication',
+    name: 'Leaves',
+    component: ApplyLeave,
   },
   {
     path: '/candidateSearch',
