@@ -13,6 +13,7 @@ const Achievements = (): JSX.Element => {
       <CCardBody className="ps-0 pe-0 mt-4">
         <StarOfTheMonth />
       </CCardBody>
+
       <CCardHeader>
         <h4 className="h4">Special Award</h4>
       </CCardHeader>

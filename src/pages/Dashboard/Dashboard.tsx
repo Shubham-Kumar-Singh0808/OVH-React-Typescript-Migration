@@ -65,7 +65,7 @@ const Dashboard = (): JSX.Element => {
                     className="mb-4 myprofile-wrapper"
                     CBodyClassName="ps-0 pe-0"
                     CHeaderClassName="d-none"
-                    footerPath="/achievementList"
+                    CFooterClassName="d-none"
                   >
                     <Achievements />
                   </OCard>
