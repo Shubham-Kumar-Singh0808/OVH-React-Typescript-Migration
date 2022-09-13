@@ -93,51 +93,6 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
       history.push('/employeeLeaveSummary')
-    } else if (
-      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
-        applyLeaveResultAction,
-      ) &&
-      applyLeaveResultAction.payload === 302
-    ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="danger"
-            toastMessage="            
-            Leave already applied on mentioned date."
-          />,
-        ),
-      )
-    } else if (
-      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
-        applyLeaveResultAction,
-      ) &&
-      applyLeaveResultAction.payload === 500
-    ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="danger"
-            toastMessage="            
-            Leave Application Cannot Process."
-          />,
-        ),
-      )
-    } else if (
-      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
-        applyLeaveResultAction,
-      ) &&
-      applyLeaveResultAction.payload === 406
-    ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="danger"
-            toastMessage="            
-            You are Under Notice,So you can't apply for a leave"
-          />,
-        ),
-      )
     }
   }
 
