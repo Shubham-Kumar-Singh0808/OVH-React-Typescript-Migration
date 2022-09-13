@@ -89,6 +89,7 @@ describe('Add Template Component Testing', () => {
 })
 
 describe('with data', async () => {
+  // eslint-disable-next-line require-await
   test('should be able to type CK editor and update Mail template', async () => {
     render(
       <EditMailTemplate
