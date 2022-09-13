@@ -11,7 +11,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'

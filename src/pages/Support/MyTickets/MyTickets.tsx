@@ -25,7 +25,6 @@ const MyTickets = (): JSX.Element => {
   const listSize = useTypedSelector(
     reduxServices.tickets.selectors.allTicketsListSize,
   )
-
   const {
     paginationRange,
     setPageSize,
