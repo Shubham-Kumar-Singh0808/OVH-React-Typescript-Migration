@@ -102,6 +102,9 @@ const selectLoggedInEmployeeData = (
     ? state.getLoggedInEmployeeData.selectedEmployeeInformation
     : state.getLoggedInEmployeeData.generalInformation
 
+const generalInformation = (state: RootState): EmployeeGeneralInformation =>
+  state.getLoggedInEmployeeData.generalInformation
+
 export const getEmployeeGeneralInformationThunk = {
   getEmployeeGeneralInformation,
   getSelectedEmployeeInformation,
@@ -109,6 +112,7 @@ export const getEmployeeGeneralInformationThunk = {
 
 export const loggedInEmployeeSelectors = {
   selectLoggedInEmployeeData,
+  generalInformation,
 }
 export const generalInformationService = {
   ...getEmployeeGeneralInformationThunk,

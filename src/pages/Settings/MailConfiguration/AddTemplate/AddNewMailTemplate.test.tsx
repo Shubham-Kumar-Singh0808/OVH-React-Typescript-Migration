@@ -132,6 +132,7 @@ describe('Add Template Component Testing', () => {
     expect(htmlElement).toBeInTheDocument()
     expect(nonExistElement).not.toBeInTheDocument()
   })
+  jest.retryTimes(3)
   test('should fetch Asset types data and put it in the store', async () => {
     render(<AddNewMailTemplate />)
     await stateStore.dispatch(reduxServices.addNewMailTemplate.getAssetTypes())

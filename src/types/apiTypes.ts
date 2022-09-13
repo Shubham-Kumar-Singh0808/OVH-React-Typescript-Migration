@@ -178,6 +178,7 @@ export interface CertificateTypeApi extends ApiBase {
 export interface EmployeeProjectsApi extends ApiBase {
   getEmployeeProjects: string
   getProjectDetails: string
+  getProjectsClients: string
 }
 
 export interface EmployeeReporteesApi extends ApiBase {
@@ -288,4 +289,74 @@ export interface AddNewMailTemplateTypeApi extends ApiBase {
 
 export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
+}
+
+export interface TicketReportApi extends ApiBase {
+  getDepartmentNameList: string
+  departmentCategoryList: string
+  getTicketsReport: string
+  getTicketsDetails: string
+  exportTicketReports: string
+}
+export interface ProjectManagementApi extends ApiBase {
+  getProject: string
+  addProject: string
+  updateProject: string
+  getAllPlatforms: string
+  getAllDomains: string
+  getAllManagers: string
+}
+
+export interface ClientsApi extends ApiBase {
+  getClients: string
+  getProjectsUnderClient: string
+  searchClients: string
+  deleteClient: string
+  editClient: string
+  updateClient: string
+  getClientCountries: string
+}
+
+export interface AddNewClientApi extends ApiBase {
+  getClientCountries: string
+  addNewClient: string
+}
+
+export interface ClientInformationApi extends ApiBase {
+  getClientInformation: string
+}
+
+export interface LeaveSummaryApi extends ApiBase {
+  getEmployeeLeaveSummary: string
+  getEmployeeLeaveHistory: string
+  cancelEmployeeLeave: string
+}
+export interface TicketListInformationApi extends ApiBase {
+  getTicketListInformation: string
+  exportTicketList: string
+  ticketHistoryDetails: string
+  cancelTicket: string
+}
+export interface TicketApprovalsApi extends ApiBase {
+  getDepartmentNameList: string
+  getAllTrackerList: string
+  getAllLookups: string
+  departmentCategoryList: string
+  subCategoryList: string
+  getAllTicketsForApproval: string
+  exportTicketApprovalList: string
+}
+
+export interface DashboardApi extends ApiBase {
+  getAllJobVacancies: string
+  getUpcomingBirthdayAnniversaries: string
+  getAllEmployeesBirthdayList: string
+  getUpcomingHolidays: string
+  getAllUpcomingHolidaysList: string
+  addHoliday: string
+  getFinancialYear: string
+  getEmployeeTimeInOffice: string
+  getUpcomingTrainings: string
+  getUpcomingEvents: string
+  getEmployeesUnderProbationPeriod: string
 }
