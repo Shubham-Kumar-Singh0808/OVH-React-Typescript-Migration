@@ -108,6 +108,36 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
           />,
         ),
       )
+    } else if (
+      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
+        applyLeaveResultAction,
+      ) &&
+      applyLeaveResultAction.payload === 500
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Leave Application Cannot Process."
+          />,
+        ),
+      )
+    } else if (
+      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
+        applyLeaveResultAction,
+      ) &&
+      applyLeaveResultAction.payload === 406
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            You are Under Notice,So you can't apply for a leave"
+          />,
+        ),
+      )
     }
   }
 
