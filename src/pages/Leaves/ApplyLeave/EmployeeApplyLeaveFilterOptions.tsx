@@ -93,6 +93,21 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
       history.push('/employeeLeaveSummary')
+    } else if (
+      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
+        applyLeaveResultAction,
+      ) &&
+      applyLeaveResultAction.payload === 302
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Leave already applied on mentioned date."
+          />,
+        ),
+      )
     }
   }
 
