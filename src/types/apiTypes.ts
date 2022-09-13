@@ -229,6 +229,8 @@ export interface EmployeeHandbookSettingsApi extends ApiBase {
   addNewHandbook: string
   getEmployeeHandbooks: string
   deleteEmployeeHandbook: string
+  getSelectedCountries: string
+  updateEmployeeHandbook: string
 }
 
 export interface TimeInOfficeReportApi extends ApiBase {
@@ -358,4 +360,5 @@ export interface DashboardApi extends ApiBase {
   getUpcomingTrainings: string
   getUpcomingEvents: string
   getEmployeesUnderProbationPeriod: string
+  getAllAchievements: string
 }
