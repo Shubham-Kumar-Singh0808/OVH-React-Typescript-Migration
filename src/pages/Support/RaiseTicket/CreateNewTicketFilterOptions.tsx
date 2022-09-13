@@ -327,6 +327,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               peekNextMonth
               showMonthDropdown
               showYearDropdown
+              minDate={new Date()}
               dropdownMode="select"
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yy"
@@ -358,6 +359,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               peekNextMonth
               showMonthDropdown
               showYearDropdown
+              minDate={new Date()}
               dropdownMode="select"
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yy"
