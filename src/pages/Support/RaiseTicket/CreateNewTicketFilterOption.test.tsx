@@ -98,8 +98,8 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
         target: { value: '10 Jan, 2022' },
       }),
     )
-    expect(datePickers[0]).toHaveValue('10/29/2019')
-    expect(datePickers[1]).toHaveValue('1/10/2022')
+    expect(datePickers[0]).toHaveValue('')
+    expect(datePickers[1]).toHaveValue('')
 
     const subject = screen.getByTestId('selectSubject')
     userEvent.type(subject, 'testing')
