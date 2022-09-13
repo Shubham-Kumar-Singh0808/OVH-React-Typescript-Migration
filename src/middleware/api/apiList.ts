@@ -277,6 +277,8 @@ export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   addNewHandbook: apiPrefix + '/handbookItem/add',
   getEmployeeCountries: apiPrefix + '/jobapplicant/getEmpCountries',
   getTotalHandbookList: apiPrefix + '/handbookItem/getTotalList',
+  getSelectedCountries: apiPrefix + '/handbookItem/getSelectedCountries',
+  updateEmployeeHandbook: apiPrefix + '/handbookItem/updateHandbookItem',
 }
 
 export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
@@ -432,4 +434,5 @@ export const dashboardApiConfig: DashboardApi = {
   getUpcomingTrainings: apiPrefix + '/meetingRequest/getTrainingsForDashBoard',
   getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
   getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
+  getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
 }
