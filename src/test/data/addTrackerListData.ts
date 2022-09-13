@@ -1,6 +1,6 @@
 import { Tracker } from '../../types/Support/Raise Ticket/addTrackerListTypes'
 
-export const mockTrackerList: Tracker[] = [
+export const mockAddTrackerList: Tracker[] = [
   {
     id: 1,
     name: 'Issue',
@@ -29,6 +29,11 @@ export const mockTrackerList: Tracker[] = [
   {
     id: 41,
     name: 'abc',
+    permission: false,
+  },
+  {
+    id: 92,
+    name: 'sss',
     permission: false,
   },
 ]

@@ -404,5 +404,5 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
 
 export const addTrackerApiConfig: AddTrackerApi = {
   addNewTracker: apiPrefix + '/supportManagement/addTracker',
-  deleteTrackerList: apiPrefix + '/supportManagement/deleteTracker?id=31',
+  deleteTrackerList: apiPrefix + '/supportManagement/deleteTracker',
 }

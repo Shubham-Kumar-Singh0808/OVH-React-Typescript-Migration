@@ -7,61 +7,140 @@ import {
   CFormLabel,
   CRow,
   CTable,
+  CTableBody,
+  CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { TextDanger } from '../../../../constant/ClassName'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const AddTrackerList = (): JSX.Element => {
-  const [textName, setTextName] = useState<string>('')
+  const [isTrackerName, setIsTrackerName] = useState('')
+  const [isTrackerNameExist, setIsTrackerNameExist] = useState('')
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
   }
+
+  const dispatch = useAppDispatch()
+
+  const trackerList = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.trackerList,
+  )
+
+  const trackerNameExists = (name: string) => {
+    return trackerList?.find((trackerName) => {
+      return trackerName.name.toLowerCase() === name.toLowerCase()
+    })
+  }
+
   const handledInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const { name } = event.target
+    const { name, value } = event.target
     if (name === 'name') {
-      setTextName(
-        event.target.value.replace(/[^a-zA-Z\s]/gi, '').replace(/^\s*/, ''),
-      )
+      const newValue = value.replace(/[^a-zA-Z\s]/gi, '').replace(/^\s*/, '')
+      setIsTrackerName(newValue)
+    }
+    if (trackerNameExists(value)) {
+      setIsTrackerNameExist(value)
+    } else {
+      setIsTrackerNameExist('')
     }
   }
+
   const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = e.target
     setIsChecked(e.target.checked)
   }
-  const addButtonHandler = () => {
-    'super'
-  }
 
-  const clearData = () => {
-    setTextName('')
-    setIsChecked(false)
-  }
-  useEffect(() => {
-    if (textName) {
-      setIsAddButtonEnabled(true)
-    } else {
-      setIsAddButtonEnabled(false)
+  const successToast = (
+    <OToast toastMessage="Tracker Added Successfully" toastColor="success" />
+  )
+
+  const addButtonHandler = async () => {
+    const prepareObj = {
+      name: isTrackerName,
+      permission: isChecked,
     }
-  }, [textName])
+    const isAddTracker = await dispatch(
+      reduxServices.addTrackersLists.addNewTracker(prepareObj),
+    )
+    if (
+      reduxServices.addTrackersLists.addNewTracker.fulfilled.match(isAddTracker)
+    ) {
+      dispatch(reduxServices.ticketApprovals.getTrackerList())
+      setIsTrackerName('')
+      setIsChecked(false)
+      dispatch(reduxServices.app.actions.addToast(successToast))
+    }
+  }
 
-  const DeleteToastMessage = (
+  useEffect(() => {
+    dispatch(reduxServices.ticketApprovals.getTrackerList())
+  }, [dispatch])
+
+  const deleteSuccessToastMessage = (
+    <OToast toastMessage="Tracker Deleted Successfully" toastColor="success" />
+  )
+
+  const deleteFailedToastMessage = (
     <OToast
       toastMessage="This tracker is already used in tickets, So you cannot delete"
       toastColor="danger"
     />
   )
+
+  const deleteTrackerButtonHandler = async (id: number) => {
+    const isDeleteTracker = await dispatch(
+      reduxServices.addTrackersLists.deleteTrackerList(id),
+    )
+    if (
+      reduxServices.addTrackersLists.deleteTrackerList.fulfilled.match(
+        isDeleteTracker,
+      )
+    ) {
+      dispatch(reduxServices.ticketApprovals.getTrackerList())
+      dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
+    } else if (
+      (reduxServices.addTrackersLists.deleteTrackerList.rejected.match(
+        isDeleteTracker,
+      ) &&
+        isDeleteTracker.payload === 405) ||
+      isDeleteTracker.payload === 500
+    ) {
+      await dispatch(
+        reduxServices.app.actions.addToast(deleteFailedToastMessage),
+      )
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
+  const clearData = () => {
+    setIsChecked(false)
+    setIsTrackerName('')
+  }
+
+  useEffect(() => {
+    if (isTrackerName) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [isTrackerName])
+
   return (
     <>
       <OCard
@@ -73,7 +152,11 @@ const AddTrackerList = (): JSX.Element => {
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
             <Link to={`/createTicket`}>
-              <CButton color="info" className="btn-ovh me-1">
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+              >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
             </Link>
@@ -86,19 +169,29 @@ const AddTrackerList = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Name:
-              <span className={textName ? 'text-white' : 'text-danger'}>*</span>
+              <span className={isTrackerName ? 'text-white' : 'text-danger'}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                data-testid="tracker-name"
                 type="text"
                 id="Name"
                 size="sm"
                 name="name"
                 placeholder="Name"
                 maxLength={32}
-                value={textName}
+                value={isTrackerName}
                 onChange={handledInputChange}
               />
+            </CCol>
+            <CCol sm={3}>
+              {isTrackerNameExist && (
+                <p className={TextDanger} data-testid="name-already-exist">
+                  Name Already Exist
+                </p>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -125,7 +218,11 @@ const AddTrackerList = (): JSX.Element => {
                 className="btn-ovh me-1 text-white"
                 color="success"
                 onClick={addButtonHandler}
-                disabled={!isAddButtonEnabled}
+                disabled={
+                  isAddButtonEnabled
+                    ? isAddButtonEnabled && isTrackerNameExist.length > 0
+                    : !isAddButtonEnabled
+                }
               >
                 Add
               </CButton>
@@ -139,16 +236,54 @@ const AddTrackerList = (): JSX.Element => {
               </CButton>
             </CCol>
           </CRow>
-          <CTable striped responsive>
+          <CTable striped responsive className="mt-5">
             <CTableHead>
-              <CTableRow className="mt-5">
+              <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Approval</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
+            <CTableBody>
+              {trackerList.map((tracker, index) => {
+                return (
+                  <CTableRow key={index}>
+                    <CTableDataCell>{index + 1}</CTableDataCell>
+                    <CTableDataCell>{tracker.name}</CTableDataCell>
+                    <CTableDataCell>
+                      <CFormCheck
+                        className="cursor-not-allowed"
+                        name="workflow"
+                        checked={tracker.permission}
+                        disabled={true}
+                      />
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      <CTooltip content="Delete">
+                        <CButton
+                          data-testid={`btn-delete${index}`}
+                          size="sm"
+                          className="btn-ovh me-2 cursor-pointer"
+                          color="danger btn-ovh me-2"
+                          onClick={() => deleteTrackerButtonHandler(tracker.id)}
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    </CTableDataCell>
+                  </CTableRow>
+                )
+              })}
+            </CTableBody>
           </CTable>
+          <CRow>
+            <CCol xs={4}>
+              <p>
+                <strong>Total Records: {trackerList.length}</strong>
+              </p>
+            </CCol>
+          </CRow>
         </CForm>
       </OCard>
     </>

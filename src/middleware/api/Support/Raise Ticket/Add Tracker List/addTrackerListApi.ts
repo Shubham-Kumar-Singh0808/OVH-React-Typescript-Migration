@@ -8,7 +8,10 @@ import { addTrackerApiConfig, AllowedHttpMethods } from '../../../apiList'
 const addNewTracker = async ({
   name,
   permission,
-}: Tracker): Promise<Tracker[]> => {
+}: {
+  name: string
+  permission: boolean
+}): Promise<Tracker[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: addTrackerApiConfig.addNewTracker,
     method: AllowedHttpMethods.post,
@@ -22,14 +25,12 @@ const addNewTracker = async ({
   return response.data
 }
 
-const deleteTrackerList = async (
-  trackerId: number,
-): Promise<number | undefined> => {
+const deleteTrackerList = async (trackerId: number): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: addTrackerApiConfig.deleteTrackerList,
     method: AllowedHttpMethods.delete,
     params: {
-      trackerId,
+      id: trackerId,
     },
   })
 

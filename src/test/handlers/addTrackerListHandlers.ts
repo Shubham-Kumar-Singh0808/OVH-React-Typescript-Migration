@@ -1,17 +1,24 @@
 import { rest } from 'msw'
 import { addTrackerApiConfig } from '../../middleware/api/apiList'
-import { mockTrackerList } from '../data/addTrackerListData'
+import { mockAddTrackerList } from '../data/addTrackerListData'
 
 export const trackerHandlers = [
   rest.get(addTrackerApiConfig.addNewTracker, (_req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,
-        data: {},
+        data: mockAddTrackerList,
       }),
     )
   }),
-  rest.get(addTrackerApiConfig.deleteTrackerList, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockTrackerList))
+
+  // eslint-disable-next-line sonarjs/no-identical-functions
+  rest.get(addTrackerApiConfig.deleteTrackerList, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: mockAddTrackerList,
+      }),
+    )
   }),
 ]

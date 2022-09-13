@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import addTrackerListApi from '../../../../middleware/api/Support/Raise Ticket/Add Tracker List/addTrackerListApi'
@@ -11,12 +11,20 @@ import {
 
 const addNewTracker = createAsyncThunk(
   'addTracker/addNewTracker',
-  async ({ name, permission, id }: Tracker, thunkApi) => {
+  async (
+    {
+      name,
+      permission,
+    }: {
+      name: string
+      permission: boolean
+    },
+    thunkApi,
+  ) => {
     try {
       return await addTrackerListApi.addNewTracker({
         name,
         permission,
-        id,
       })
     } catch (error) {
       const err = error as AxiosError
@@ -53,6 +61,15 @@ const addTrackerSlice = createSlice({
       })
       .addCase(addNewTracker.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
+      })
+      .addMatcher(isAnyOf(addNewTracker.fulfilled), (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
+      .addMatcher(isAnyOf(addNewTracker.pending), (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
+      .addMatcher(isAnyOf(deleteTrackerList.fulfilled), (state) => {
+        state.isLoading = ApiLoadingState.succeeded
       })
   },
 })
