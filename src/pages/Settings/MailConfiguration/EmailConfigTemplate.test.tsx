@@ -57,4 +57,9 @@ describe('Email Configuration Template Component Testing with data', () => {
     userEvent.click(exportBtn)
     expect(exportBtnElement).toHaveBeenCalledTimes(0)
   })
+  test('should redirect to /mailTemplates when user clicks on Back Button', () => {
+    const history = createMemoryHistory()
+    userEvent.click(screen.getByRole('button', { name: /Add Template/i }))
+    expect(history.location.pathname).toBe('/')
+  })
 })
