@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import UpdateTicketEditFields from './UpdateTicketEditFields'
+import UpdateTicketEditFields from './EditTicketFields'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {

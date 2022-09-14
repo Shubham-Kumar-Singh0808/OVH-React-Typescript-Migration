@@ -31,8 +31,8 @@ const UpdateTicketEditFields = ({
   const [editTicketDetails, setEditTicketDetails] = useState(
     initialUpdateTicketState,
   )
-  const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
-  const [dueDate, setDueDate] = useState<string>()
+  const [fileUpload, setFileUpload] = useState<File | undefined>(undefined)
+  const [endDate, setEndDate] = useState<string>()
 
   const ticketDetailsEdit = useTypedSelector(
     reduxServices.updateTicket.selectors.ticketDetailsToEdit,
@@ -60,9 +60,9 @@ const UpdateTicketEditFields = ({
   }
 
   const onChangeFileEventHandler = (element: HTMLInputElement) => {
-    const file = element.files
-    if (!file) return
-    setUploadFile(file[0])
+    const ticketFile = element.files
+    if (!ticketFile) return
+    setFileUpload(ticketFile[0])
   }
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const UpdateTicketEditFields = ({
         approvedBy: ticketDetailsEdit.approvedBy,
       })
     }
-    setDueDate(ticketDetailsEdit.endDate as string)
+    setEndDate(ticketDetailsEdit.endDate as string)
     setShowEditor(false)
     setTimeout(() => {
       setShowEditor(true)
@@ -116,7 +116,7 @@ const UpdateTicketEditFields = ({
   const updateTicketBtnHandler = async () => {
     const updateTicketObj = {
       ...editTicketDetails,
-      endDate: dueDate as string,
+      endDate: endDate as string,
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { assigneeName, ...restTicketUpdateObj } = updateTicketObj
@@ -124,9 +124,9 @@ const UpdateTicketEditFields = ({
       reduxServices.updateTicket.updateTicketDetails(restTicketUpdateObj),
     )
     setReRender(!reRender)
-    if (uploadFile) {
+    if (fileUpload) {
       const formData = new FormData()
-      formData.append('file', uploadFile, uploadFile.name)
+      formData.append('file', fileUpload, fileUpload.name)
       const uploadPrepareObject = {
         ticketId: editTicketDetails.id,
         file: formData,

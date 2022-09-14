@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import { Link, useParams } from 'react-router-dom'
-import UpdateTicketEditFields from './UpdateTicketEditFields'
+import UpdateTicketEditFields from './EditTicketFields'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
