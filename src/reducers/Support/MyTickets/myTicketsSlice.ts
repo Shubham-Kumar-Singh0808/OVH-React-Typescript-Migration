@@ -91,6 +91,9 @@ const isLoading = (state: RootState): LoadingState => state.tickets.isLoading
 const allTickets = (state: RootState): MyTicket[] =>
   state.tickets.ticketList.list
 
+const allTicketsListSize = (state: RootState): number =>
+  state.tickets.ticketList.size
+
 const ticketHistory = (state: RootState): TicketHistory[] =>
   state.tickets.ticketHistory.list
 
@@ -109,6 +112,7 @@ const myTicketsSelectors = {
   pageFromState,
   pageSizeFromState,
   ticketHistory,
+  allTicketsListSize,
 }
 
 export const myTicketsService = {
