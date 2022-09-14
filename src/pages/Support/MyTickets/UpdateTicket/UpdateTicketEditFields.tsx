@@ -25,26 +25,27 @@ const UpdateTicketEditFields = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const initialUpdateState = {} as GetTicketToEdit
+  const initialUpdateTicketState = {} as GetTicketToEdit
 
   const [showEditor, setShowEditor] = useState<boolean>(true)
-  const [updateTicketDetails, setUpdateTicketDetails] =
-    useState(initialUpdateState)
+  const [editTicketDetails, setEditTicketDetails] = useState(
+    initialUpdateTicketState,
+  )
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const [dueDate, setDueDate] = useState<string>()
 
-  const ticketDetailsToEdit = useTypedSelector(
+  const ticketDetailsEdit = useTypedSelector(
     reduxServices.updateTicket.selectors.ticketDetailsToEdit,
   )
 
   useEffect(() => {
     reduxServices.ticketApprovals.getDepartmentCategoryList(
-      ticketDetailsToEdit.departmentId,
+      ticketDetailsEdit.departmentId,
     )
     reduxServices.ticketApprovals.getSubCategoryList(
-      ticketDetailsToEdit.categoryId,
+      ticketDetailsEdit.categoryId,
     )
-  }, [ticketDetailsToEdit])
+  }, [ticketDetailsEdit])
 
   const onChangeHandler = (
     event:
@@ -53,7 +54,7 @@ const UpdateTicketEditFields = ({
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target
-    setUpdateTicketDetails((values) => {
+    setEditTicketDetails((values) => {
       return { ...values, ...{ [name]: value } }
     })
   }
@@ -65,48 +66,48 @@ const UpdateTicketEditFields = ({
   }
 
   useEffect(() => {
-    if (ticketDetailsToEdit != null) {
-      setUpdateTicketDetails({
-        id: ticketDetailsToEdit.id,
-        departmentId: ticketDetailsToEdit.departmentId,
-        departmentName: ticketDetailsToEdit.departmentName,
-        categoryId: ticketDetailsToEdit.categoryId,
-        categoryName: ticketDetailsToEdit.categoryName,
-        subCategoryId: ticketDetailsToEdit.subCategoryId,
-        subCategoryName: ticketDetailsToEdit.subCategoryName,
-        subject: ticketDetailsToEdit.subject,
-        description: ticketDetailsToEdit.description,
-        status: ticketDetailsToEdit.status,
-        priority: ticketDetailsToEdit.priority,
-        startDate: ticketDetailsToEdit.startDate,
-        endDate: ticketDetailsToEdit.endDate,
-        assigneeId: ticketDetailsToEdit.assigneeId,
-        employeeName: ticketDetailsToEdit.employeeName,
-        percentageDone: ticketDetailsToEdit.percentageDone,
-        actualTime: ticketDetailsToEdit.actualTime,
-        authorName: ticketDetailsToEdit.authorName,
-        assigneeName: ticketDetailsToEdit.assigneeName,
-        approvalStatus: ticketDetailsToEdit.approvalStatus,
-        filePath: ticketDetailsToEdit.filePath,
-        estimatedTime: ticketDetailsToEdit.estimatedTime,
-        watcherIds: ticketDetailsToEdit.watcherIds,
-        watcherNames: ticketDetailsToEdit.watcherNames,
-        disableApprove: ticketDetailsToEdit.disableApprove,
-        disableCancel: ticketDetailsToEdit.disableCancel,
-        tracker: ticketDetailsToEdit.tracker,
-        trackerName: ticketDetailsToEdit.trackerName,
-        accessStartDate: ticketDetailsToEdit.accessStartDate,
-        accessEndDate: ticketDetailsToEdit.accessEndDate,
-        createdDate: ticketDetailsToEdit.createdDate,
-        approvedBy: ticketDetailsToEdit.approvedBy,
+    if (ticketDetailsEdit != null) {
+      setEditTicketDetails({
+        id: ticketDetailsEdit.id,
+        departmentId: ticketDetailsEdit.departmentId,
+        departmentName: ticketDetailsEdit.departmentName,
+        categoryId: ticketDetailsEdit.categoryId,
+        categoryName: ticketDetailsEdit.categoryName,
+        subCategoryId: ticketDetailsEdit.subCategoryId,
+        subCategoryName: ticketDetailsEdit.subCategoryName,
+        subject: ticketDetailsEdit.subject,
+        description: ticketDetailsEdit.description,
+        status: ticketDetailsEdit.status,
+        priority: ticketDetailsEdit.priority,
+        startDate: ticketDetailsEdit.startDate,
+        endDate: ticketDetailsEdit.endDate,
+        assigneeId: ticketDetailsEdit.assigneeId,
+        employeeName: ticketDetailsEdit.employeeName,
+        percentageDone: ticketDetailsEdit.percentageDone,
+        actualTime: ticketDetailsEdit.actualTime,
+        authorName: ticketDetailsEdit.authorName,
+        assigneeName: ticketDetailsEdit.assigneeName,
+        approvalStatus: ticketDetailsEdit.approvalStatus,
+        filePath: ticketDetailsEdit.filePath,
+        estimatedTime: ticketDetailsEdit.estimatedTime,
+        watcherIds: ticketDetailsEdit.watcherIds,
+        watcherNames: ticketDetailsEdit.watcherNames,
+        disableApprove: ticketDetailsEdit.disableApprove,
+        disableCancel: ticketDetailsEdit.disableCancel,
+        tracker: ticketDetailsEdit.tracker,
+        trackerName: ticketDetailsEdit.trackerName,
+        accessStartDate: ticketDetailsEdit.accessStartDate,
+        accessEndDate: ticketDetailsEdit.accessEndDate,
+        createdDate: ticketDetailsEdit.createdDate,
+        approvedBy: ticketDetailsEdit.approvedBy,
       })
     }
-    setDueDate(ticketDetailsToEdit.endDate as string)
+    setDueDate(ticketDetailsEdit.endDate as string)
     setShowEditor(false)
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
-  }, [ticketDetailsToEdit])
+  }, [ticketDetailsEdit])
 
   const ticketUpdatedSuccessToast = (
     <OToast toastMessage="Ticket updated successfully." toastColor="success" />
@@ -114,7 +115,7 @@ const UpdateTicketEditFields = ({
 
   const updateTicketBtnHandler = async () => {
     const updateTicketObj = {
-      ...updateTicketDetails,
+      ...editTicketDetails,
       endDate: dueDate as string,
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -127,7 +128,7 @@ const UpdateTicketEditFields = ({
       const formData = new FormData()
       formData.append('file', uploadFile, uploadFile.name)
       const uploadPrepareObject = {
-        ticketId: updateTicketDetails.id,
+        ticketId: editTicketDetails.id,
         file: formData,
       }
       dispatch(reduxServices.updateTicket.uploadSupportDoc(uploadPrepareObject))
@@ -149,12 +150,12 @@ const UpdateTicketEditFields = ({
               id="trackerName"
               data-testid="trackerNameSelect"
               name="trackerName"
-              value={updateTicketDetails.tracker}
+              value={editTicketDetails.tracker}
               disabled={true}
             >
               <option>
-                {updateTicketDetails.trackerName
-                  ? updateTicketDetails.trackerName
+                {editTicketDetails.trackerName
+                  ? editTicketDetails.trackerName
                   : 'Select Tracker'}
               </option>
             </CFormSelect>
@@ -171,12 +172,12 @@ const UpdateTicketEditFields = ({
               id="category"
               data-testid="categorySelect"
               name="categoryName"
-              value={updateTicketDetails.categoryId}
+              value={editTicketDetails.categoryId}
               disabled={true}
             >
               <option>
-                {updateTicketDetails.categoryName
-                  ? updateTicketDetails.categoryName
+                {editTicketDetails.categoryName
+                  ? editTicketDetails.categoryName
                   : 'Select Category'}
               </option>
             </CFormSelect>
@@ -193,12 +194,12 @@ const UpdateTicketEditFields = ({
               id="sub-category"
               data-testid="sub-category"
               name="subCategoryName"
-              value={updateTicketDetails.subCategoryId}
+              value={editTicketDetails.subCategoryId}
               disabled={true}
             >
               <option>
-                {updateTicketDetails.subCategoryName
-                  ? updateTicketDetails.subCategoryName
+                {editTicketDetails.subCategoryName
+                  ? editTicketDetails.subCategoryName
                   : 'Select Sub-Category'}
               </option>
             </CFormSelect>
@@ -214,7 +215,7 @@ const UpdateTicketEditFields = ({
               type="text"
               id="accessStartDate"
               name="accessStartDate"
-              value={updateTicketDetails.accessStartDate}
+              value={editTicketDetails.accessStartDate}
               disabled={true}
             />
           </CCol>
@@ -229,7 +230,7 @@ const UpdateTicketEditFields = ({
               type="text"
               id="accessEndDate"
               name="accessEndDate"
-              value={updateTicketDetails.accessEndDate}
+              value={editTicketDetails.accessEndDate}
               disabled={true}
             />
           </CCol>
@@ -244,7 +245,7 @@ const UpdateTicketEditFields = ({
               data-testid="subject"
               id="subjectValue"
               name="subject"
-              value={updateTicketDetails.subject}
+              value={editTicketDetails.subject}
               onChange={onChangeHandler}
             />
           </CCol>
@@ -258,7 +259,7 @@ const UpdateTicketEditFields = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={updateTicketDetails?.description}
+                initData={editTicketDetails?.description}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -280,7 +281,7 @@ const UpdateTicketEditFields = ({
               id="status"
               data-testid="statusSelect"
               name="status"
-              value={updateTicketDetails.status}
+              value={editTicketDetails.status}
               onChange={onChangeHandler}
             >
               <option value="New">New</option>
@@ -299,7 +300,7 @@ const UpdateTicketEditFields = ({
               id="priority"
               data-testid="prioritySelect"
               name="priority"
-              value={updateTicketDetails.priority}
+              value={editTicketDetails.priority}
               onChange={onChangeHandler}
             >
               <option value="Low">Low</option>
