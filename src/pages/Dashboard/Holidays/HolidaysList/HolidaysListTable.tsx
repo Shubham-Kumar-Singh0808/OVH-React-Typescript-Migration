@@ -58,11 +58,8 @@ const HolidaysListTable = ({
     [holidaysInfo, currentPage, pageSize],
   )
 
-  const handleShowHolidayDeleteModal = (
-    holidayId: number,
-    holidayName: string,
-  ) => {
-    setHolidayId(holidayId)
+  const handleShowHolidayDeleteModal = (id: number, holidayName: string) => {
+    setHolidayId(id)
     setToDeleteHoliday(holidayName)
     setIsDeleteModalVisible(true)
   }
