@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import UpdateTicketEditFields from './UpdateTicketEditFields'
-import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {
   mockActiveEmployees,
