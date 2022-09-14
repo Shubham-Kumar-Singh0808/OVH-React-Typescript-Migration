@@ -69,6 +69,7 @@ const EmailConfigTemplate = (): JSX.Element => {
     assetTypeId: string,
     assetType: string,
     email: string,
+    // eslint-disable-next-line max-params
   ) => {
     setToggle('editTemplate')
     setEditEmployeeTemplate({
@@ -153,7 +154,7 @@ const EmailConfigTemplate = (): JSX.Element => {
                   aria-label="Default select example"
                   size="sm"
                   id="templateTypeId"
-                  data-testid="form-select1"
+                  data-testid="template-select1"
                   name="templateTypeId"
                   value={employeeTemplate.templateTypeId}
                   onChange={onChangeMailTemplateHandler}
@@ -171,6 +172,7 @@ const EmailConfigTemplate = (): JSX.Element => {
                   type="text"
                   id="templateName"
                   name="templateName"
+                  data-testid="search-test"
                   placeholder="Search Text"
                   value={employeeTemplate.templateName}
                   onChange={onChangeMailTemplateHandler}
@@ -187,6 +189,7 @@ const EmailConfigTemplate = (): JSX.Element => {
                 </CButton>
                 <CButton
                   color="warning "
+                  data-testid="clearTemplate-btn"
                   className="btn-ovh"
                   onClick={handleClearDetails}
                 >
@@ -197,6 +200,7 @@ const EmailConfigTemplate = (): JSX.Element => {
                 <CButton
                   color="info btn-ovh me-1"
                   className="text-white"
+                  data-testid="export-btn"
                   onClick={handleExportMailTemplateData}
                 >
                   <i className="fa fa-plus me-1"></i>Click to Export

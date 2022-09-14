@@ -92,12 +92,11 @@ const employeeMailConfigurationSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getEmployeeMailTemplateTypes.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.employeeGetMailTemplateTypes =
-        action.payload as EmployeeMailTemplateType[]
+      state.employeeGetMailTemplateTypes = action.payload
     })
     builder.addCase(getEmployeeMailTemplate.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.employeeGetEmailTemplate = action.payload as EmployeeMailTemplate[]
+      state.employeeGetEmailTemplate = action.payload
     })
     builder.addCase(getEmployeeMailTemplateTypes.pending, (state) => {
       state.isLoading = ApiLoadingState.loading

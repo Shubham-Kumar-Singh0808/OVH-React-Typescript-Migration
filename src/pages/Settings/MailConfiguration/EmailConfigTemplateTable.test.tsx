@@ -120,5 +120,10 @@ describe('email Template List Table Testing', () => {
         expect(screen.getByText('Template model')).toBeInTheDocument()
       })
     })
+    it('should render clicking on edit button Actions', () => {
+      const editButtonElement = screen.getByTestId('edit-btn22')
+      userEvent.click(editButtonElement)
+      expect(editButtonElement).toBeTruthy()
+    })
   })
 })

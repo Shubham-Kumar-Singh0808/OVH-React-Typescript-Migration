@@ -131,6 +131,7 @@ const EmployeeEmailTemplateTable = ({
                   <CTableDataCell scope="row">
                     <CButton
                       color="info btn-ovh me-2"
+                      data-testid="edit-btn22"
                       onClick={() => {
                         editTemplateButtonHandler(
                           emailTemplate.id,
