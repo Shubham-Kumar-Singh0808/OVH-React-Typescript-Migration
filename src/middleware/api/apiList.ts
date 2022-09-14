@@ -37,6 +37,7 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
+  ApplyLeaveApi,
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
@@ -276,6 +277,8 @@ export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   addNewHandbook: apiPrefix + '/handbookItem/add',
   getEmployeeCountries: apiPrefix + '/jobapplicant/getEmpCountries',
   getTotalHandbookList: apiPrefix + '/handbookItem/getTotalList',
+  getSelectedCountries: apiPrefix + '/handbookItem/getSelectedCountries',
+  updateEmployeeHandbook: apiPrefix + '/handbookItem/updateHandbookItem',
 }
 
 export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
@@ -328,6 +331,11 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
 export const addNewTemplateApiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
+}
+
+export const applyLeaveAPiConfig: ApplyLeaveApi = {
+  getLeaveType: apiPrefix + '/leaveSetup/leaveCategories',
+  applyLeave: apiPrefix + '/leave/apply',
 }
 
 export const scheduledInterviewsApiConfig: ScheduledInterviewsApi = {
@@ -427,4 +435,5 @@ export const dashboardApiConfig: DashboardApi = {
   getUpcomingTrainings: apiPrefix + '/meetingRequest/getTrainingsForDashBoard',
   getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
   getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
+  getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
 }

@@ -229,6 +229,8 @@ export interface EmployeeHandbookSettingsApi extends ApiBase {
   addNewHandbook: string
   getEmployeeHandbooks: string
   deleteEmployeeHandbook: string
+  getSelectedCountries: string
+  updateEmployeeHandbook: string
 }
 
 export interface TimeInOfficeReportApi extends ApiBase {
@@ -273,6 +275,11 @@ export interface EmployeeMailConfigurationApi extends ApiBase {
 export interface AddNewTemplateApi extends ApiBase {
   getAssetTypes: string
   addNewMailTemplate: string
+}
+
+export interface ApplyLeaveApi extends ApiBase {
+  getLeaveType: string
+  applyLeave: string
 }
 export interface ScheduledInterviewsApi extends ApiBase {
   searchScheduledCandidatesForEmployee: string
@@ -359,4 +366,5 @@ export interface DashboardApi extends ApiBase {
   getUpcomingTrainings: string
   getUpcomingEvents: string
   getEmployeesUnderProbationPeriod: string
+  getAllAchievements: string
 }

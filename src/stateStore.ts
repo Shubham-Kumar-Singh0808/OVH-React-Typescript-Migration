@@ -47,6 +47,7 @@ import hiveActivityReportReducer from './reducers/TimeAndAttendance/HiveActivity
 import employeeMailConfigurationReducer from './reducers/Settings/MailConfiguration/employeeMailConfigurationSlice'
 import addNewTemplateReducer from './reducers/Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
+import employeeLeaveApplyReducer from './reducers/Leaves/ApplyLeave/employeeApplyLeaveSlice'
 import scheduledInterviewsReducer from './reducers/Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import addMailTemplateTypeReducer from './reducers/Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import myAttendanceReducer from './reducers/TimeAndAttendance/MyAttendance/myAttendanceSlice'
@@ -66,6 +67,7 @@ import earnedLeavesReducer from './reducers/Dashboard/earnedLeavesSlice'
 import timeInOfficeReducer from './reducers/Dashboard/timeInOfficeSlice'
 import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSlice'
 import provisionPeriodReducer from './reducers/Dashboard/provisionPeriodSlice'
+import achievementsReducer from './reducers/Dashboard/achievementsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -113,6 +115,7 @@ export const allReducers = {
   employeeMailConfiguration: employeeMailConfigurationReducer,
   addMailTemplate: addNewTemplateReducer,
   employee: employeeReducer,
+  employeeLeaveApply: employeeLeaveApplyReducer,
   scheduledInterviews: scheduledInterviewsReducer,
   addMailTemplateType: addMailTemplateTypeReducer,
   myAttendance: myAttendanceReducer,
@@ -132,6 +135,7 @@ export const allReducers = {
   weeklyTimeInOffice: timeInOfficeReducer,
   trainingsAndEvents: trainingAndEventsReducer,
   probationPeriod: provisionPeriodReducer,
+  achievements: achievementsReducer,
   // add your slice reducers here
 }
 
