@@ -1,5 +1,5 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import UpdateTicketHistory from './UpdateTicketHistory'
 import UpdateTicketEditFields from './UpdateTicketEditFields'
@@ -11,12 +11,13 @@ const UpdateTicket = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const { ticketId } = useParams<{ ticketId: string }>()
+  const [reRender, setReRender] = useState(false)
 
   useEffect(() => {
     dispatch(reduxServices.updateTicket.getTicketToEdit(Number(ticketId)))
     dispatch(reduxServices.updateTicket.getAudit(Number(ticketId)))
     dispatch(reduxServices.updateTicket.getActiveEmployeeList())
-  }, [dispatch])
+  }, [dispatch, reRender])
 
   return (
     <OCard
@@ -37,7 +38,7 @@ const UpdateTicket = (): JSX.Element => {
           </Link>
         </CCol>
       </CRow>
-      <UpdateTicketEditFields />
+      <UpdateTicketEditFields setReRender={setReRender} reRender={reRender} />
       <UpdateTicketHistory />
     </OCard>
   )

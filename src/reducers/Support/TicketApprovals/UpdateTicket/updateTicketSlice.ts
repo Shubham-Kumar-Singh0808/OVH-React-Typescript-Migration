@@ -59,6 +59,30 @@ const uploadSupportDoc = createAsyncThunk(
   },
 )
 
+const updateTicketDetails = createAsyncThunk(
+  'updateTicket/updateTicketDetails',
+  async (updateObject: GetTicketToEdit, thunkApi) => {
+    try {
+      return await updateTicketApi.updateTicketDetails(updateObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const approveTicket = createAsyncThunk(
+  'updateTicket/approveTicket',
+  async (ticketId: number, thunkApi) => {
+    try {
+      return await updateTicketApi.approveTicket(ticketId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialUpdateTicketSliceState: UpdateTicketSliceState = {
   isLoading: ApiLoadingState.idle,
   activeEmployees: [],
@@ -84,15 +108,24 @@ const updateTicketSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.auditDetails = action.payload
       })
-      .addCase(uploadSupportDoc.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(
+          uploadSupportDoc.fulfilled,
+          updateTicketDetails.fulfilled,
+          approveTicket.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
       .addMatcher(
         isAnyOf(
           getTicketToEdit.pending,
           getActiveEmployeeList.pending,
           getAudit.pending,
           uploadSupportDoc.pending,
+          updateTicketDetails.pending,
+          approveTicket.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -118,6 +151,8 @@ const updateTicketThunk = {
   getActiveEmployeeList,
   getAudit,
   uploadSupportDoc,
+  updateTicketDetails,
+  approveTicket,
 }
 
 const updateTicketSelectors = {

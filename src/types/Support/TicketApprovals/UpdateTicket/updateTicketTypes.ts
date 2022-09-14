@@ -19,7 +19,7 @@ export type GetTicketToEdit = {
   percentageDone: string
   actualTime: string
   authorName: string
-  assigneeName: string | null
+  assigneeName?: string | null
   approvalStatus: string
   filePath: string
   estimatedTime: string

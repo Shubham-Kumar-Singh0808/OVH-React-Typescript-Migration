@@ -57,7 +57,7 @@ const uploadSupportDoc = async (prepareObject: {
     method: AllowedHttpMethods.post,
     data: prepareObject.file,
     params: {
-      personId: prepareObject.ticketId,
+      ticketId: prepareObject.ticketId,
     },
     additionalHeaders: {
       'Content-Type': 'multipart/form-data',
@@ -67,11 +67,39 @@ const uploadSupportDoc = async (prepareObject: {
   return response.data
 }
 
+const updateTicketDetails = async (
+  updateTicketObj: GetTicketToEdit,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: updateTicketApiConfig.updateIndividualTickets,
+    method: AllowedHttpMethods.put,
+    data: updateTicketObj,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const approveTicket = async (ticketId: number): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: updateTicketApiConfig.approveTicketByManager,
+    method: AllowedHttpMethods.put,
+    params: {
+      ticketId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const updateTicketApi = {
   getTicketToEdit,
   getAudit,
   getActiveEmployeeList,
   uploadSupportDoc,
+  updateTicketDetails,
+  approveTicket,
 }
 
 export default updateTicketApi

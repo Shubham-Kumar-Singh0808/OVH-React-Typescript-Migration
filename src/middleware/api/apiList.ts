@@ -424,4 +424,8 @@ export const updateTicketApiConfig: UpdateTicketApi = {
   getAudit: apiPrefix + '/supportManagement/getAudit',
   uploadSupportTicketDocuments:
     apiPrefix + '/fileUpload/uploadSupportTicketsDocuments',
+  updateIndividualTickets:
+    apiPrefix + '/supportManagement/editIndividualTickets',
+  approveTicketByManager:
+    apiPrefix + '/supportManagement/approveByManagerTicket',
 }

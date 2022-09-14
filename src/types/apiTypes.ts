@@ -357,4 +357,6 @@ export interface UpdateTicketApi extends ApiBase {
   getActiveEmployeeList: string
   getAudit: string
   uploadSupportTicketDocuments: string
+  updateIndividualTickets: string
+  approveTicketByManager: string
 }
