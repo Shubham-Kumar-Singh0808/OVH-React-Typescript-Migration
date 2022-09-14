@@ -29,9 +29,9 @@ export type EditEmployeeMailTemplate = {
   template: string
   templateTypeId: number
   templateType: string
-  assetTypeId: string
+  assetTypeId: string | null
   assetType: string
-  email: string
+  email: string | null
 }
 
 export type EmployeeGetEmailTemplateProps = {
@@ -47,16 +47,7 @@ export type EmployeeGetEmailTemplateModelProps = {
 export type EmployeeEmailTemplateTableProps = {
   employeeTemplate: EmployeeMailTemplate
   editEmployeeTemplate: EditEmployeeMailTemplate
-  editTemplateButtonHandler: (
-    id: number,
-    templateName: string,
-    template: string,
-    templateTypeId: number,
-    templateType: string,
-    assetTypeId: string,
-    assetType: string,
-    email: string,
-  ) => void
+  editTemplateButtonHandler: (props: EditEmployeeMailTemplate) => void
 }
 
 export type EditTemplateProps = {

@@ -30,17 +30,9 @@ const EmailConfigTemplate = (): JSX.Element => {
   const [employeeTemplate, setEmployeeTemplate] = useState(
     initialEmployeeEmailTemplate,
   )
-  const [editEmployeeTemplate, setEditEmployeeTemplate] =
-    useState<EditEmployeeMailTemplate>({
-      id: 0,
-      templateName: '',
-      template: '',
-      templateTypeId: 0,
-      templateType: '',
-      assetTypeId: '',
-      assetType: '',
-      email: '',
-    })
+  const [editEmployeeTemplate, setEditEmployeeTemplate] = useState(
+    {} as EditEmployeeMailTemplate,
+  )
   const employeeMailTemplateType = useTypedSelector(
     reduxServices.employeeMailConfiguration.selectors.employeeMailTemplateTypes,
   )
@@ -60,20 +52,19 @@ const EmailConfigTemplate = (): JSX.Element => {
     )
   }
 
-  const editTemplateButtonHandler = (
-    templateId: number,
-    templateName: string,
-    template: string,
-    templateTypeId: number,
-    templateType: string,
-    assetTypeId: string,
-    assetType: string,
-    email: string,
-    // eslint-disable-next-line max-params
-  ) => {
+  const editTemplateButtonHandler = ({
+    id,
+    templateName,
+    template,
+    templateTypeId,
+    templateType,
+    assetTypeId,
+    assetType,
+    email,
+  }: EditEmployeeMailTemplate) => {
     setToggle('editTemplate')
     setEditEmployeeTemplate({
-      id: templateId,
+      id,
       templateName,
       template,
       templateTypeId,
@@ -212,13 +203,12 @@ const EmailConfigTemplate = (): JSX.Element => {
                 </Link>
               </CCol>
             </CRow>
-            <br></br>
-            <br></br>
-            <EmployeeEmailTemplateTable
-              employeeTemplate={employeeTemplate}
-              editTemplateButtonHandler={editTemplateButtonHandler}
-              editEmployeeTemplate={editEmployeeTemplate}
-            />
+            <CRow className="mt-3">
+              <EmployeeEmailTemplateTable
+                employeeTemplate={employeeTemplate}
+                editTemplateButtonHandler={editTemplateButtonHandler}
+              />
+            </CRow>
           </OCard>
         </>
       )}

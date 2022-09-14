@@ -136,7 +136,7 @@ const EditMailTemplate = ({
                     size="sm"
                     id="assetType"
                     name="assetTypeId"
-                    value={editEmployeeTemplate?.assetTypeId}
+                    value={editEmployeeTemplate?.assetTypeId as string}
                     aria-label="Disabled input example"
                     disabled
                   >
@@ -156,7 +156,7 @@ const EditMailTemplate = ({
                     type="email"
                     data-testid="email-address"
                     name="email"
-                    value={editEmployeeTemplate?.email}
+                    value={editEmployeeTemplate?.email as string}
                     maxLength={50}
                     aria-label="Disabled input example"
                     disabled
