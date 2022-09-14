@@ -78,6 +78,11 @@ const AddNewTemplate = React.lazy(
   () =>
     import('./pages/Settings/MailConfiguration/AddTemplate/AddNewMailTemplate'),
 )
+
+const ApplyLeave = React.lazy(
+  () => import('./pages/Leaves/ApplyLeave/EmployeeApplyLeave'),
+)
+
 const EditEmployee = React.lazy(
   () => import('./pages/EmployeeDirectory/EmployeesList/EditEmployee'),
 )
@@ -117,6 +122,9 @@ const EditClient = React.lazy(
 const AddClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/AddClient/AddNewClient'),
 )
+const CreateNewTicket = React.lazy(
+  () => import('./pages/Support/RaiseTicket/CreateNewTicket'),
+)
 
 const ViewClient = React.lazy(
   () =>
@@ -148,6 +156,9 @@ const ProbationaryList = React.lazy(
   () => import('./pages/Dashboard/ProbationaryList/ProbationaryList'),
 )
 
+const UpdateTicket = React.lazy(
+  () => import('./pages/Support/TicketApprovals/UpdateTicket/UpdateTicket'),
+)
 const EditHoliday = React.lazy(
   () =>
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
@@ -217,6 +228,11 @@ const routes = [
     component: AttendanceReport,
   },
   {
+    path: '/createTicket',
+    name: 'Raise Ticket',
+    component: CreateNewTicket,
+  },
+  {
     path: '/handbooksettings',
     name: 'Handbook Settings',
     component: EmployeeHandbookSettings,
@@ -255,6 +271,16 @@ const routes = [
     path: '/editEmployee/:employeeId',
     name: 'Edit Employee',
     component: EditEmployee,
+  },
+  {
+    path: '/mailTemplates',
+    name: 'Mail Configuration',
+    component: MailConfiguration,
+  },
+  {
+    path: '/leaveApplication',
+    name: 'Leaves',
+    component: ApplyLeave,
   },
   {
     path: '/candidateSearch',
@@ -310,6 +336,11 @@ const routes = [
     path: '/ticketApprovals',
     name: 'Ticket Approvals',
     component: TicketApprovals,
+  },
+  {
+    path: '/updateTicketInApprovals/:ticketId',
+    name: 'Update Ticket',
+    component: UpdateTicket,
   },
   {
     path: '/jobvacancies',

@@ -20,13 +20,23 @@ const mockSetPageSize = jest.fn()
 
 describe('MyTickets component with data', () => {
   beforeEach(() => {
-    render(<MyTicketsTable setToggle={mockSetToggle} />, {
-      preloadedState: {
-        tickets: {
-          ticketList: mockEmployeeTicketList,
+    render(
+      <MyTicketsTable
+        setToggle={mockSetToggle}
+        setCurrentPage={mockSetCurrentPage}
+        setPageSize={mockSetPageSize}
+        currentPage={1}
+        pageSize={20}
+        paginationRange={[1, 2, 3]}
+      />,
+      {
+        preloadedState: {
+          tickets: {
+            ticketList: mockEmployeeTicketList,
+          },
         },
       },
-    })
+    )
   })
   test('should open modal when clicking on ticket List subject link', async () => {
     const linkElement = screen.getByTestId('emp-subject2')
@@ -63,20 +73,30 @@ describe('MyTickets component with data', () => {
 
 describe('My Tickets Table Component Testing', () => {
   test('should render MyTickets table component without crashing', async () => {
-    render(<MyTicketsTable setToggle={mockSetToggle} />, {
-      preloadedState: {
-        tickets: {
-          ticketList: mockEmployeeTicketList,
+    render(
+      <MyTicketsTable
+        setToggle={mockSetToggle}
+        setCurrentPage={mockSetCurrentPage}
+        setPageSize={mockSetPageSize}
+        currentPage={1}
+        pageSize={20}
+        paginationRange={[1, 2, 3]}
+      />,
+      {
+        preloadedState: {
+          tickets: {
+            ticketList: mockEmployeeTicketList,
+          },
         },
       },
-    })
+    )
 
     expectPageSizeToBeRendered(20)
 
     await waitFor(() => {
       userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-      expect(mockSetPageSize).toHaveBeenCalledTimes(0)
-      expect(mockSetCurrentPage).toHaveBeenCalledTimes(0)
+      expect(mockSetPageSize).toHaveBeenCalledTimes(1)
+      expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
     })
   })
 })

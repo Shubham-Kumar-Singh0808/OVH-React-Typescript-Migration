@@ -37,6 +37,7 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
+  ApplyLeaveApi,
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
@@ -48,7 +49,9 @@ import {
   LeaveSummaryApi,
   TicketListInformationApi,
   TicketApprovalsApi,
+  RaiseNewTicketApi,
   DashboardApi,
+  UpdateTicketApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -331,6 +334,11 @@ export const addNewTemplateApiConfig: AddNewTemplateApi = {
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
 }
 
+export const applyLeaveAPiConfig: ApplyLeaveApi = {
+  getLeaveType: apiPrefix + '/leaveSetup/leaveCategories',
+  applyLeave: apiPrefix + '/leave/apply',
+}
+
 export const scheduledInterviewsApiConfig: ScheduledInterviewsApi = {
   searchScheduledCandidatesForEmployee:
     apiPrefix + '/jobapplicant/searchScheduledCandidatesForEmployee',
@@ -414,6 +422,12 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
     apiPrefix + '/supportManagement/exportTicketApprovalList',
 }
 
+export const createNewTicketApiConfig: RaiseNewTicketApi = {
+  createNewTicket: apiPrefix + '/supportManagement/createTickets',
+  uploadSupportTicketsDocument:
+    apiPrefix + '/fileUpload/uploadSupportTicketsDocuments',
+}
+
 export const dashboardApiConfig: DashboardApi = {
   getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
   getUpcomingBirthdayAnniversaries:
@@ -432,4 +446,16 @@ export const dashboardApiConfig: DashboardApi = {
   deleteHoliday: apiPrefix + '/Employee/deleteHoliday',
   getHolidayInformation: apiPrefix + '/Employee/holiday',
   updateHoliday: apiPrefix + '/Employee/editHoliday',
+}
+
+export const updateTicketApiConfig: UpdateTicketApi = {
+  getTicket: apiPrefix + '/supportManagement/getTicket',
+  getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
+  getAudit: apiPrefix + '/supportManagement/getAudit',
+  uploadSupportTicketDocuments:
+    apiPrefix + '/fileUpload/uploadSupportTicketsDocuments',
+  updateIndividualTickets:
+    apiPrefix + '/supportManagement/editIndividualTickets',
+  approveTicketByManager:
+    apiPrefix + '/supportManagement/approveByManagerTicket',
 }
