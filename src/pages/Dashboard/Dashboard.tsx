@@ -12,18 +12,13 @@ import Achievements from './Achievements/Achievements'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
-import OLoadingSpinner from '../../components/ReusableComponent/OLoadingSpinner'
-import { ApiLoadingState } from '../../middleware/api/apiList'
-import { LoadingType } from '../../types/Components/loadingScreenTypes'
 
 const Dashboard = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const employeeID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-  const isLoading = useTypedSelector(
-    reduxServices.earnedLeaves.selectors.isLoading,
-  )
+
   useEffect(() => {
     dispatch(
       reduxServices.jobOpenings.getAllJobVacancies({
@@ -55,100 +50,94 @@ const Dashboard = (): JSX.Element => {
 
   return (
     <>
-      {isLoading !== ApiLoadingState.loading ? (
-        <>
+      <CRow>
+        <CCol sm={12}>
           <CRow>
-            <CCol sm={12}>
+            <CCol md={9}>
               <CRow>
-                <CCol md={9}>
-                  <CRow>
-                    <CCol sm={4}>
-                      <EmployeeEarnedLeaves />
-                    </CCol>
-                    <CCol sm={8}>
-                      <TimeInOffice />
-                    </CCol>
-                    <CCol sm={12}>
-                      <OCard
-                        className="mb-4 myprofile-wrapper"
-                        title="Job Openings"
-                        CBodyClassName="ps-0 pe-0"
-                        footerPath="/jobvacancies"
-                      >
-                        <JobVacanciesTable />
-                      </OCard>
-                    </CCol>
-                    <CCol sm={12}>
-                      <OCard
-                        className="mb-4 myprofile-wrapper"
-                        CBodyClassName="ps-0 pe-0"
-                        CHeaderClassName="d-none"
-                        CFooterClassName="d-none"
-                      >
-                        <Achievements />
-                      </OCard>
-                    </CCol>
-                  </CRow>
+                <CCol sm={4}>
+                  <EmployeeEarnedLeaves />
                 </CCol>
-                <CCol md={3}>
-                  <CCol sm={12}>
-                    <OCard
-                      className="mb-4 myprofile-wrapper"
-                      title="Upcoming Trainings"
-                      CBodyClassName="ps-0 pe-0"
-                      footerPath="/eventList"
-                    >
-                      <UpcomingTrainings />
-                    </OCard>
-                  </CCol>
-                  <CCol sm={12}>
-                    <OCard
-                      className="mb-4 myprofile-wrapper"
-                      title="Upcoming Events"
-                      CBodyClassName="ps-0 pe-0"
-                      footerPath="/eventList"
-                    >
-                      <UpcomingEvents />
-                    </OCard>
-                  </CCol>
-                  <CCol sm={12}>
-                    <OCard
-                      className="mb-4 myprofile-wrapper"
-                      title="Upcoming Birthdays"
-                      CBodyClassName="ps-0 pe-0"
-                      footerPath="/birthdaylist"
-                    >
-                      <UpcomingBirthdays />
-                    </OCard>
-                  </CCol>
-                  <CCol sm={12}>
-                    <OCard
-                      className="mb-4 myprofile-wrapper"
-                      title="Upcoming Holidays"
-                      CBodyClassName="ps-0 pe-0"
-                      footerPath="/holidaylist"
-                    >
-                      <UpcomingHolidays />
-                    </OCard>
-                  </CCol>
-                  <CCol sm={12}>
-                    <OCard
-                      className="mb-4 myprofile-wrapper"
-                      title="Upcoming Probationary End Dates"
-                      CBodyClassName="ps-0 pe-0"
-                      footerPath="/probationaryList"
-                    >
-                      <UpcomingProbationaryEndDates />
-                    </OCard>
-                  </CCol>
+                <CCol sm={8}>
+                  <TimeInOffice />
+                </CCol>
+                <CCol sm={12}>
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Job Openings"
+                    CBodyClassName="ps-0 pe-0"
+                    footerPath="/jobvacancies"
+                  >
+                    <JobVacanciesTable />
+                  </OCard>
+                </CCol>
+                <CCol sm={12}>
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    CBodyClassName="ps-0 pe-0"
+                    CHeaderClassName="d-none"
+                    CFooterClassName="d-none"
+                  >
+                    <Achievements />
+                  </OCard>
                 </CCol>
               </CRow>
             </CCol>
+            <CCol md={3}>
+              <CCol sm={12}>
+                <OCard
+                  className="mb-4 myprofile-wrapper"
+                  title="Upcoming Trainings"
+                  CBodyClassName="ps-0 pe-0"
+                  footerPath="/eventList"
+                >
+                  <UpcomingTrainings />
+                </OCard>
+              </CCol>
+              <CCol sm={12}>
+                <OCard
+                  className="mb-4 myprofile-wrapper"
+                  title="Upcoming Events"
+                  CBodyClassName="ps-0 pe-0"
+                  footerPath="/eventList"
+                >
+                  <UpcomingEvents />
+                </OCard>
+              </CCol>
+              <CCol sm={12}>
+                <OCard
+                  className="mb-4 myprofile-wrapper"
+                  title="Upcoming Birthdays"
+                  CBodyClassName="ps-0 pe-0"
+                  footerPath="/birthdaylist"
+                >
+                  <UpcomingBirthdays />
+                </OCard>
+              </CCol>
+              <CCol sm={12}>
+                <OCard
+                  className="mb-4 myprofile-wrapper"
+                  title="Upcoming Holidays"
+                  CBodyClassName="ps-0 pe-0"
+                  footerPath="/holidaylist"
+                >
+                  <UpcomingHolidays />
+                </OCard>
+              </CCol>
+              <CCol sm={12}>
+                <OCard
+                  className="mb-4 myprofile-wrapper"
+                  title="Upcoming Probationary End Dates"
+                  CBodyClassName="ps-0 pe-0"
+                  footerPath="/probationaryList"
+                >
+                  <UpcomingProbationaryEndDates />
+                </OCard>
+              </CCol>
+            </CCol>
           </CRow>
-        </>
-      ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
-      )}
+        </CCol>
+      </CRow>
     </>
   )
 }

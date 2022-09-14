@@ -1,4 +1,5 @@
 import {
+  EditHolidayDetails,
   Holidays,
   SaveHoliday,
 } from '../../types/Dashboard/Holidays/upcomingHolidaysTypes'
@@ -7,6 +8,15 @@ export const mockAddNewHoliday: SaveHoliday = {
   country: 'INDIA',
   date: '09/19/2022',
   name: 'test',
+}
+
+export const mockEditHoliday: EditHolidayDetails = {
+  id: 113,
+  date: '14/10/2022',
+  name: 'Vijaya Dasami',
+  fullDate: null,
+  week: null,
+  country: 'INDIA',
 }
 
 export const mockUpcomingHolidays: Holidays[] = [

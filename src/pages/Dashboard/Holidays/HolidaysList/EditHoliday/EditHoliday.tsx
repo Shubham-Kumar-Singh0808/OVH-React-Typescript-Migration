@@ -179,7 +179,7 @@ const EditHoliday = (): JSX.Element => {
                 aria-label="country"
                 size="sm"
                 id="country"
-                data-testid="country-form-select"
+                data-testid="select-country"
                 name="country"
                 value={editHoliday?.country}
                 onChange={handleInputChange}
@@ -197,7 +197,7 @@ const EditHoliday = (): JSX.Element => {
           <CRow className="mt-4 mb-4">
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
-                data-testid="add-btn"
+                data-testid="update-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
                 onClick={handleUpdateHoliday}
