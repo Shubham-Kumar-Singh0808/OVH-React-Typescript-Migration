@@ -57,6 +57,7 @@ import { weeklyTimeInOfficeService } from './Dashboard/timeInOfficeSlice'
 import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
 import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
 import { employeeAchievementsService } from './Dashboard/achievementsSlice'
+import { addLocationListService } from './Conference Room Booking/New Booking/Add Location List/addLocationListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -118,4 +119,5 @@ export const reduxServices = {
   trainingsAndEvents: trainingsAndEventsService,
   employeeProbationPeriod: provisionPeriodService,
   employeeAchievements: employeeAchievementsService,
+  addLocationList: addLocationListService,
 }

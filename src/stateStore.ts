@@ -67,6 +67,7 @@ import timeInOfficeReducer from './reducers/Dashboard/timeInOfficeSlice'
 import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSlice'
 import provisionPeriodReducer from './reducers/Dashboard/provisionPeriodSlice'
 import achievementsReducer from './reducers/Dashboard/achievementsSlice'
+import addLocationListReducer from './reducers/Conference Room Booking/New Booking/Add Location List/addLocationListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -134,6 +135,7 @@ export const allReducers = {
   trainingsAndEvents: trainingAndEventsReducer,
   probationPeriod: provisionPeriodReducer,
   achievements: achievementsReducer,
+  addLocationList: addLocationListReducer,
   // add your slice reducers here
 }
 

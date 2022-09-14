@@ -49,6 +49,7 @@ import {
   TicketListInformationApi,
   TicketApprovalsApi,
   DashboardApi,
+  AddLocationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -429,4 +430,10 @@ export const dashboardApiConfig: DashboardApi = {
   getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
   getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
   getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
+}
+
+export const addLocationListApiConfig: AddLocationListApi = {
+  getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
+  addLocation: apiPrefix + '/meetingRequest/addLocation',
+  deleteLocation: apiPrefix + '/meetingRequest/deleteLocation',
 }

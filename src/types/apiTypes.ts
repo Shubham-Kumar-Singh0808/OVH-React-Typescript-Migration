@@ -362,3 +362,8 @@ export interface DashboardApi extends ApiBase {
   getEmployeesUnderProbationPeriod: string
   getAllAchievements: string
 }
+export interface AddLocationListApi extends ApiBase {
+  getAllMeetingLocations: string
+  addLocation: string
+  deleteLocation: string
+}
