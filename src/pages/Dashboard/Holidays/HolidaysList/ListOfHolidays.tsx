@@ -14,6 +14,7 @@ const ListOfHolidays = (): JSX.Element => {
   const [selectedCountry, setSelectedCountry] = useState<string>(
     employeeCountry as string,
   )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
