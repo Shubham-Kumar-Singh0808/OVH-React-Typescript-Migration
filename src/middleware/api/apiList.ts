@@ -49,6 +49,7 @@ import {
   LeaveSummaryApi,
   TicketListInformationApi,
   TicketApprovalsApi,
+  RaiseNewTicketApi,
   DashboardApi,
   UpdateTicketApi,
 } from '../../types/apiTypes'
@@ -419,6 +420,12 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
     apiPrefix + '/supportManagement/getAllTicketsForApproval',
   exportTicketApprovalList:
     apiPrefix + '/supportManagement/exportTicketApprovalList',
+}
+
+export const createNewTicketApiConfig: RaiseNewTicketApi = {
+  createNewTicket: apiPrefix + '/supportManagement/createTickets',
+  uploadSupportTicketsDocument:
+    apiPrefix + '/fileUpload/uploadSupportTicketsDocuments',
 }
 
 export const dashboardApiConfig: DashboardApi = {

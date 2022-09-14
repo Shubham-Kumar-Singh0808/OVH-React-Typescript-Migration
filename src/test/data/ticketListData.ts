@@ -690,7 +690,7 @@ export const mockEmployeeTicketList: GetMyTicketsResponse = {
       approvedBy: 'N/A',
     },
     {
-      id: 19071,
+      id: 1979,
       departmentId: 2,
       departmentName: 'Administrative',
       categoryId: 4,

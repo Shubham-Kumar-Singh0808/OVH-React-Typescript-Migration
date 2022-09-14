@@ -59,6 +59,7 @@ import clientInformationReducer from './reducers/ProjectManagement/Clients/Clien
 import leaveSummaryReducer from './reducers/Leaves/LeaveSummary/employeeLeaveSummarySlice'
 import ticketApprovalsReducer from './reducers/Support/TicketApprovals/ticketApprovalsSlice'
 import myTicketsReducer from './reducers/Support/MyTickets/myTicketsSlice'
+import createNewTicketReducer from './reducers/Support/RaiseTicket/createNewTicketSlice'
 import jobOpeningsReducer from './reducers/Dashboard/jobOpeningsSlice'
 import UpcomingBirthdayReducer from './reducers/Dashboard/birthdayAnniversarySlice'
 import birthdaysListReducer from './reducers/Dashboard/birthdayListSlice'
@@ -129,6 +130,7 @@ export const allReducers = {
   employeeLeaveSummary: leaveSummaryReducer,
   tickets: myTicketsReducer,
   ticketApprovals: ticketApprovalsReducer,
+  raiseNewTicket: createNewTicketReducer,
   upcomingEmployeeBirthday: UpcomingBirthdayReducer,
   employeesBirthdayList: birthdaysListReducer,
   holidays: holidaysReducer,

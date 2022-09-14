@@ -353,6 +353,10 @@ export interface TicketApprovalsApi extends ApiBase {
   exportTicketApprovalList: string
 }
 
+export interface RaiseNewTicketApi extends ApiBase {
+  createNewTicket: string
+  uploadSupportTicketsDocument: string
+}
 export interface DashboardApi extends ApiBase {
   getAllJobVacancies: string
   getUpcomingBirthdayAnniversaries: string

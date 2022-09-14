@@ -108,6 +108,21 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
           />,
         ),
       )
+    } else if (
+      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
+        applyLeaveResultAction,
+      ) &&
+      applyLeaveResultAction.payload === 500
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Leave Application Cannot Process."
+          />,
+        ),
+      )
     }
   }
 
