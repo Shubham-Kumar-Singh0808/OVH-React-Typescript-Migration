@@ -1,4 +1,10 @@
-import { CTableRow, CTableDataCell, CButton, CLink } from '@coreui/react-pro'
+import {
+  CTableRow,
+  CTableDataCell,
+  CButton,
+  CLink,
+  CTooltip,
+} from '@coreui/react-pro'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ClientDetailsTable from './ClientDetailsTable'
@@ -82,16 +88,18 @@ const ClientsEntry = (props: {
                 <i className="fa fa-edit" aria-hidden="true"></i>
               </CButton>
             </Link>
-            <CButton
-              color="danger"
-              className="btn-ovh me-2"
-              data-testid={`client-delete-btn${props.id}`}
-              onClick={() => {
-                props.onDeleteBtnClick(props.id, props.client.name)
-              }}
-            >
-              <i className="fa fa-trash-o" aria-hidden="true"></i>
-            </CButton>
+            <CTooltip content="Delete">
+              <CButton
+                color="danger"
+                className="btn-ovh me-2"
+                data-testid={`client-delete-btn${props.id}`}
+                onClick={() => {
+                  props.onDeleteBtnClick(props.id, props.client.name)
+                }}
+              >
+                <i className="fa fa-trash-o" aria-hidden="true"></i>
+              </CButton>
+            </CTooltip>
           </>
         </CTableDataCell>
       </CTableRow>

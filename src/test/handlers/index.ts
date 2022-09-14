@@ -17,6 +17,7 @@ import { ticketApprovalsHandlers } from './ticketApprovalsHandlers'
 import { upcomingBirthdaysHandlers } from './upcomingBirthdaysHandlers'
 import { upcomingHolidaysHandlers } from './upcomingHolidaysHandlers'
 import { upcomingTrainingsAndEventsHandlers } from './upcomingTrainingsAndEventsHandlers'
+import { updateTicketHandlers } from './updateTicketHandlers'
 import { userAccessToFeaturesHandlers } from './userAccessToFeaturesHandlers'
 import { userRolesAndPermissionsHandlers } from './userRolesAndPermissionsHandlers'
 import { timeInOfficeHandlers } from './weeklyTimeInOfficeHandlers'
@@ -44,5 +45,6 @@ export const handlers = [
   ...timeInOfficeHandlers,
   ...employeeHandbookSettingsHandlers,
   ...employeeAchievementsHandlers,
+  ...updateTicketHandlers,
   // add your handler here
 ]

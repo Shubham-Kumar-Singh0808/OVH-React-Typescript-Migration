@@ -371,3 +371,12 @@ export interface DashboardApi extends ApiBase {
   getEmployeesUnderProbationPeriod: string
   getAllAchievements: string
 }
+
+export interface UpdateTicketApi extends ApiBase {
+  getTicket: string
+  getActiveEmployeeList: string
+  getAudit: string
+  uploadSupportTicketDocuments: string
+  updateIndividualTickets: string
+  approveTicketByManager: string
+}

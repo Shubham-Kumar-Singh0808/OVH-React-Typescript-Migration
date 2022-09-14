@@ -51,6 +51,7 @@ import {
   TicketApprovalsApi,
   RaiseNewTicketApi,
   DashboardApi,
+  UpdateTicketApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -442,4 +443,16 @@ export const dashboardApiConfig: DashboardApi = {
   getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
   getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
   getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
+}
+
+export const updateTicketApiConfig: UpdateTicketApi = {
+  getTicket: apiPrefix + '/supportManagement/getTicket',
+  getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
+  getAudit: apiPrefix + '/supportManagement/getAudit',
+  uploadSupportTicketDocuments:
+    apiPrefix + '/fileUpload/uploadSupportTicketsDocuments',
+  updateIndividualTickets:
+    apiPrefix + '/supportManagement/editIndividualTickets',
+  approveTicketByManager:
+    apiPrefix + '/supportManagement/approveByManagerTicket',
 }
