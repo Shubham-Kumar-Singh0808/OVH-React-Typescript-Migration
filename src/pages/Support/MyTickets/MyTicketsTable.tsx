@@ -174,8 +174,12 @@ const MyTicketsTable = ({
                     <CTableDataCell>{`N/A`}</CTableDataCell>
                   )}
                   <CTableDataCell>{ticket.priority}</CTableDataCell>
-                  <CTableDataCell>{ticket.accessStartDate}</CTableDataCell>
-                  <CTableDataCell>{ticket.accessEndDate}</CTableDataCell>
+                  <CTableDataCell>
+                    {ticket.accessStartDate || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {ticket.accessEndDate || 'N/A'}
+                  </CTableDataCell>
                   <CTableDataCell>{ticket.approvalStatus}</CTableDataCell>
                   <CTableDataCell>{ticket.status}</CTableDataCell>
                   <CTableDataCell>

@@ -3,6 +3,8 @@ import { birthdaysListHandlers } from './birthdaysListHandlers'
 import { categoryListHandlers } from './categoryListHandlers'
 import { certificateListHandlers } from './certificateListHandler'
 import { clientsHandlers } from './clientsHandlers'
+import { employeeHandbookSettingsHandlers } from './employeeHandbookSettingsHandlers'
+import { employeeAchievementsHandlers } from './employeeAchievementsHandlers'
 import { employeeListHandlers } from './employeeListHandlers'
 import { employeeShiftsHandlers } from './employeeShiftsHandlers'
 import { generalInformationHandlers } from './generalInformationHandlers'
@@ -41,6 +43,8 @@ export const handlers = [
   ...upcomingBirthdaysHandlers,
   ...birthdaysListHandlers,
   ...timeInOfficeHandlers,
+  ...employeeHandbookSettingsHandlers,
+  ...employeeAchievementsHandlers,
   ...updateTicketHandlers,
   // add your handler here
 ]

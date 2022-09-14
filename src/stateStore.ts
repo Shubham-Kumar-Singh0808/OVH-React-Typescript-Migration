@@ -47,9 +47,11 @@ import hiveActivityReportReducer from './reducers/TimeAndAttendance/HiveActivity
 import employeeMailConfigurationReducer from './reducers/Settings/MailConfiguration/employeeMailConfigurationSlice'
 import addNewTemplateReducer from './reducers/Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
+import employeeLeaveApplyReducer from './reducers/Leaves/ApplyLeave/employeeApplyLeaveSlice'
 import scheduledInterviewsReducer from './reducers/Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import addMailTemplateTypeReducer from './reducers/Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import myAttendanceReducer from './reducers/TimeAndAttendance/MyAttendance/myAttendanceSlice'
+import ticketReportReducer from './reducers/Support/Report/ticketReportSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/projectSlice'
 import clientsReducer from './reducers/ProjectManagement/Clients/clientsSlice'
 import addClientReducer from './reducers/ProjectManagement/Clients/AddClient/addNewClientSlice'
@@ -64,6 +66,8 @@ import holidaysReducer from './reducers/Dashboard/holidaysSlice'
 import earnedLeavesReducer from './reducers/Dashboard/earnedLeavesSlice'
 import timeInOfficeReducer from './reducers/Dashboard/timeInOfficeSlice'
 import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSlice'
+import provisionPeriodReducer from './reducers/Dashboard/provisionPeriodSlice'
+import achievementsReducer from './reducers/Dashboard/achievementsSlice'
 import updateTicketReducer from './reducers/Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 
 export const allReducers = {
@@ -112,9 +116,11 @@ export const allReducers = {
   employeeMailConfiguration: employeeMailConfigurationReducer,
   addMailTemplate: addNewTemplateReducer,
   employee: employeeReducer,
+  employeeLeaveApply: employeeLeaveApplyReducer,
   scheduledInterviews: scheduledInterviewsReducer,
   addMailTemplateType: addMailTemplateTypeReducer,
   myAttendance: myAttendanceReducer,
+  ticketReport: ticketReportReducer,
   jobOpenings: jobOpeningsReducer,
   projectManagement: projectManagementReducer,
   clients: clientsReducer,
@@ -129,6 +135,8 @@ export const allReducers = {
   earnedLeaves: earnedLeavesReducer,
   weeklyTimeInOffice: timeInOfficeReducer,
   trainingsAndEvents: trainingAndEventsReducer,
+  probationPeriod: provisionPeriodReducer,
+  achievements: achievementsReducer,
   updateTicket: updateTicketReducer,
   // add your slice reducers here
 }
