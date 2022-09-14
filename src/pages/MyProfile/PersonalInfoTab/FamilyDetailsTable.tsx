@@ -174,6 +174,7 @@ const FamilyDetailsTable = ({
                   <CButton
                     color="info"
                     className="btn-ovh me-2"
+                    data-testid="edit-family"
                     onClick={() => editButtonHandler?.(family.familyId)}
                   >
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -181,6 +182,7 @@ const FamilyDetailsTable = ({
                   <CButton
                     color="danger"
                     className="btn-ovh me-2"
+                    data-testid="delete-family"
                     onClick={() => handleShowDeleteModal(family.familyId)}
                   >
                     <i className="fa fa-trash-o" aria-hidden="true"></i>

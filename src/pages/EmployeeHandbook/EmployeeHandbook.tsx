@@ -40,7 +40,7 @@ const EmployeeHandbook = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-between">
+        <CRow className="justify-content-between mb-2">
           <CCol md={6}>
             <CInputGroup className="global-search mb-4 handbook-search">
               <CFormInput
@@ -54,12 +54,12 @@ const EmployeeHandbook = (): JSX.Element => {
               </CButton>
             </CInputGroup>
           </CCol>
-          <CCol md={2}>
-            <CButton color="info" className="hb_button" size="sm">
-              <Link to={`/handbooksettings`} className="hb_button">
-                Handbook Settings
-              </Link>
-            </CButton>
+          <CCol className="text-end" md={4}>
+            <Link to={`/handbooksettings`}>
+              <CButton color="info" className="btn-ovh me-0">
+                <i className="fa fa-sign-out fa-fw  me-1"></i>Handbook Settings
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
 
