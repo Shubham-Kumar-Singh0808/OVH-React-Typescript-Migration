@@ -46,7 +46,7 @@ const UpdateTicketEditFields = ({
     )
   }, [ticketDetailsToEdit])
 
-  const onChangeInputHandler = (
+  const onChangeHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>
@@ -112,15 +112,15 @@ const UpdateTicketEditFields = ({
     <OToast toastMessage="Ticket updated successfully." toastColor="success" />
   )
 
-  const updateBtnHandler = async () => {
-    const updateObj = {
+  const updateTicketBtnHandler = async () => {
+    const updateTicketObj = {
       ...updateTicketDetails,
       endDate: dueDate as string,
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { assigneeName, ...restUpdateObj } = updateObj
+    const { assigneeName, ...restTicketUpdateObj } = updateTicketObj
     await dispatch(
-      reduxServices.updateTicket.updateTicketDetails(restUpdateObj),
+      reduxServices.updateTicket.updateTicketDetails(restTicketUpdateObj),
     )
     setReRender(!reRender)
     if (uploadFile) {
@@ -245,7 +245,7 @@ const UpdateTicketEditFields = ({
               id="subjectValue"
               name="subject"
               value={updateTicketDetails.subject}
-              onChange={onChangeInputHandler}
+              onChange={onChangeHandler}
             />
           </CCol>
         </CRow>
@@ -262,7 +262,7 @@ const UpdateTicketEditFields = ({
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  onChangeInputHandler(editor.getData().trim())
+                  onChangeHandler(editor.getData().trim())
                 }}
               />
             </CCol>
@@ -281,7 +281,7 @@ const UpdateTicketEditFields = ({
               data-testid="statusSelect"
               name="status"
               value={updateTicketDetails.status}
-              onChange={onChangeInputHandler}
+              onChange={onChangeHandler}
             >
               <option value="New">New</option>
               <option value="In Progress">In Progress</option>
@@ -300,7 +300,7 @@ const UpdateTicketEditFields = ({
               data-testid="prioritySelect"
               name="priority"
               value={updateTicketDetails.priority}
-              onChange={onChangeInputHandler}
+              onChange={onChangeHandler}
             >
               <option value="Low">Low</option>
               <option value="Normal">Normal</option>
@@ -333,7 +333,7 @@ const UpdateTicketEditFields = ({
             <CButton
               className="cursor-pointer"
               color="success btn-ovh me-1"
-              onClick={updateBtnHandler}
+              onClick={updateTicketBtnHandler}
             >
               Update
             </CButton>
