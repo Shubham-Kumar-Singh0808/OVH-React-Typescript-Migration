@@ -10,7 +10,7 @@ export type AddTrackerSliceState = {
   trackerList: Tracker[]
 }
 // export type AddTrackerListProps = {
-//   addButtonHandler?: () => void
-//   backButtonHandler: () => void
-//   isEmployeeQualificationExist?: boolean
+//   // addButtonHandler?: () => void
+//   setToggle: (value: string) => void
+//   // backButtonHandler?: () => void
 // }

@@ -19,9 +19,10 @@ import { CreateNewTicket } from '../../../types/Support/RaiseNewTicket/createNew
 import OToast from '../../../components/ReusableComponent/OToast'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
 // import { AddTrackerListProps } from '../../../types/Support/Raise Ticket/addTrackerListTypes'
-// {
-//   addButtonHandler,
+// ({
+//   setToggle,
 // }: AddTrackerListProps)
+
 const CreateNewTicketFilterOptions = (): JSX.Element => {
   const initialCreateNewTicket = {} as CreateNewTicket
   const [createTicket, setCreateTicket] = useState(initialCreateNewTicket)
@@ -37,7 +38,6 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [isCreateButtonEnabled, setIsCreateButtonEnabled] = useState(false)
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
-  // const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
   const trackerList = useTypedSelector(
     reduxServices.ticketApprovals.selectors.trackerList,
@@ -220,7 +220,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           <CCol className="col-sm-3">
             <CButton
               color="info btn-ovh me-1"
-              // onClick={(addButtonHandler = () => setToggle('addTrackerList'))}
+              // onClick={() => setToggle('addTrackerList')}
             >
               <i className="fa fa-plus me-1"></i>Add
             </CButton>

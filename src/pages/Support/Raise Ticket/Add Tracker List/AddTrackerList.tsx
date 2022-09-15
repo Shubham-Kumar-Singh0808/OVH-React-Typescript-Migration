@@ -10,13 +10,13 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import AddTrackerListTable from './AddTrackerListTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger } from '../../../../constant/ClassName'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import AddTrackerListTable from '../AddTrackerListTable'
 
 const AddTrackerList = (): JSX.Element => {
   const [isTrackerName, setIsTrackerName] = useState('')

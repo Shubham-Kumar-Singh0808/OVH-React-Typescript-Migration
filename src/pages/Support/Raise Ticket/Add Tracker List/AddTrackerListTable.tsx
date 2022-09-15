@@ -12,9 +12,9 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import OToast from '../../../components/ReusableComponent/OToast'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const AddTrackerListTable = (): JSX.Element => {
   const trackerList = useTypedSelector(

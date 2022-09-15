@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import React from 'react'
+import AddTrackerListTable from './AddTrackerListTable'
 import { render, screen } from '../../../../test/testUtils'
-import AddTrackerListTable from '../AddTrackerListTable'
 
 describe('AddTracker List without data', () => {
   beforeEach(() => {
