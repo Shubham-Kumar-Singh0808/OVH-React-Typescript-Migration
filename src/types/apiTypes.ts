@@ -275,6 +275,11 @@ export interface AddNewTemplateApi extends ApiBase {
   getAssetTypes: string
   addNewMailTemplate: string
 }
+
+export interface ApplyLeaveApi extends ApiBase {
+  getLeaveType: string
+  applyLeave: string
+}
 export interface ScheduledInterviewsApi extends ApiBase {
   searchScheduledCandidatesForEmployee: string
   searchScheduledCandidates: string
@@ -348,6 +353,10 @@ export interface TicketApprovalsApi extends ApiBase {
   exportTicketApprovalList: string
 }
 
+export interface RaiseNewTicketApi extends ApiBase {
+  createNewTicket: string
+  uploadSupportTicketsDocument: string
+}
 export interface DashboardApi extends ApiBase {
   getAllJobVacancies: string
   getUpcomingBirthdayAnniversaries: string
@@ -366,4 +375,13 @@ export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
   addLocation: string
   deleteLocation: string
+}
+
+export interface UpdateTicketApi extends ApiBase {
+  getTicket: string
+  getActiveEmployeeList: string
+  getAudit: string
+  uploadSupportTicketDocuments: string
+  updateIndividualTickets: string
+  approveTicketByManager: string
 }

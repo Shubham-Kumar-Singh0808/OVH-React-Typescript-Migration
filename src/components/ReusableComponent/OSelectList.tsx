@@ -45,14 +45,15 @@ const OSelect = ({
             onChange={onChangeHandler}
           >
             <option value={''}>{placeHolder}</option>
-            {list?.map((item, index) => {
-              const { name: optionName } = item
-              return (
-                <option key={index} value={optionName}>
-                  {optionName}
-                </option>
-              )
-            })}
+            {list.length > 0 &&
+              list?.map((item, index) => {
+                const { name: optionName } = item
+                return (
+                  <option key={index} value={optionName}>
+                    {optionName}
+                  </option>
+                )
+              })}
           </CFormSelect>
         </CCol>
       </CRow>

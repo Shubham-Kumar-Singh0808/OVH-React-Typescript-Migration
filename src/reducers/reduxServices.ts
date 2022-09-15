@@ -37,6 +37,7 @@ import { hiveActivityReportService } from './TimeAndAttendance/HiveActivityRepor
 import { employeeMailConfigurationService } from './Settings/MailConfiguration/employeeMailConfigurationSlice'
 import { addTemplateService } from './Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import { employeeService } from './EmployeeDirectory/EmployeesList/EditEmployee'
+import { employeeLeaveApplyServices } from './Leaves/ApplyLeave/employeeApplyLeaveSlice'
 import { scheduledInterviewsService } from './Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
@@ -48,6 +49,7 @@ import { clientInformationService } from './ProjectManagement/Clients/ClientInfo
 import { leaveSummaryService } from './Leaves/LeaveSummary/employeeLeaveSummarySlice'
 import { myTicketsService } from './Support/MyTickets/myTicketsSlice'
 import { ticketApprovalsService } from './Support/TicketApprovals/ticketApprovalsSlice'
+import { createNewTicketService } from './Support/RaiseTicket/createNewTicketSlice'
 import { jobVacanciesService } from './Dashboard/jobOpeningsSlice'
 import { birthdaysListService } from './Dashboard/birthdayListSlice'
 import { upcomingBirthdaysService } from './Dashboard/birthdayAnniversarySlice'
@@ -57,6 +59,7 @@ import { weeklyTimeInOfficeService } from './Dashboard/timeInOfficeSlice'
 import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
 import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
 import { employeeAchievementsService } from './Dashboard/achievementsSlice'
+import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 import { addLocationListService } from './Conference Room Booking/New Booking/Add Location List/addLocationListSlice'
 
 export const reduxServices = {
@@ -99,6 +102,7 @@ export const reduxServices = {
   employeeMailConfiguration: employeeMailConfigurationService,
   addNewMailTemplate: addTemplateService,
   employee: employeeService,
+  employeeApplyLeave: employeeLeaveApplyServices,
   scheduledInterviews: scheduledInterviewsService,
   addNewMailTemplateType: mailTemplateTypeService,
   myAttendance: myAttendanceService,
@@ -110,6 +114,7 @@ export const reduxServices = {
   employeeLeaveSummary: leaveSummaryService,
   tickets: myTicketsService,
   ticketApprovals: ticketApprovalsService,
+  raiseNewTicket: createNewTicketService,
   jobOpenings: jobVacanciesService,
   birthdaysList: birthdaysListService,
   upcomingBirthdays: upcomingBirthdaysService,
@@ -119,5 +124,6 @@ export const reduxServices = {
   trainingsAndEvents: trainingsAndEventsService,
   employeeProbationPeriod: provisionPeriodService,
   employeeAchievements: employeeAchievementsService,
+  updateTicket: updateTicketService,
   addLocationList: addLocationListService,
 }
