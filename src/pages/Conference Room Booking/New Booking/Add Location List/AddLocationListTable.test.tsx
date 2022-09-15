@@ -3,24 +3,25 @@ import React from 'react'
 import { cleanup } from '@testing-library/react'
 import AddLocationListTable from './AddLocationListTable'
 import { render, screen } from '../../../../test/testUtils'
+import { mockLocationNames } from '../../../../test/data/addLocationListData'
 
 describe('Add Location List Table without data', () => {
   beforeEach(() => {
-    render(<AddLocationListTable />)
+    render(<AddLocationListTable />, {
+      preloadedState: {
+        addLocationList: {
+          meetingLocations: mockLocationNames,
+        },
+      },
+    })
   })
   afterEach(cleanup)
-
-  test('should render the "Tracker" table ', () => {
-    const table = screen.getByRole('table')
-    expect(table).toBeTruthy()
-  })
-
-  test('should render the correct headers', () => {
-    expect(screen.getByRole('columnheader', { name: '#' })).toBeTruthy()
-    expect(
-      screen.getByRole('columnheader', { name: 'Location Name' }),
-    ).toBeTruthy()
-    expect(screen.getByRole('columnheader', { name: 'Action' })).toBeTruthy()
-    expect(screen.getAllByRole('columnheader')).toHaveLength(3)
+  test('should render Add LocationList component with data', () => {
+    expect(screen.getByText('RayBusiness-1')).toBeInTheDocument()
+    expect(screen.getByText('Business room')).toBeInTheDocument()
+    expect(screen.getByText('Skype')).toBeInTheDocument()
+    expect(screen.getByText('Meeting Room 1')).toBeInTheDocument()
+    expect(screen.getByText('hgh')).toBeInTheDocument()
+    expect(screen.getByText('dfd')).toBeInTheDocument()
   })
 })
