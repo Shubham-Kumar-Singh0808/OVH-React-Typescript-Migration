@@ -16,8 +16,8 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
-describe('Scheduled Candidates Table Component Testing', () => {
-  test('should render scheduled candidates table component without crashing', async () => {
+describe('Employee Reviews Table Component Testing', () => {
+  test('should render Reviews Table table component without crashing', async () => {
     render(<EmployeeReviewTable />, {
       preloadedState: {
         employeeReviews: {
