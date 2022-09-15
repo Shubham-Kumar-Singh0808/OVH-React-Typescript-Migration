@@ -120,7 +120,7 @@ const AddLocationList = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="tracker-name"
+                data-testid="locationName"
                 type="text"
                 id="Name"
                 size="sm"

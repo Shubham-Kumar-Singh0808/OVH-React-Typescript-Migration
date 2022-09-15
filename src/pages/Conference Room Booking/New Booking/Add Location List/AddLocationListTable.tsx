@@ -18,6 +18,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddLocationListTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isDeleteLocationId, setIsDeleteLocationId] = useState(0)
 
   const dispatch = useAppDispatch()
 
@@ -26,19 +27,17 @@ const AddLocationListTable = (): JSX.Element => {
   )
 
   const deletedToastElement = (
-    <OToast
-      toastColor="success"
-      toastMessage="CertificateType deleted successfully"
-    />
+    <OToast toastColor="success" toastMessage="Location Deleted Successfully" />
   )
 
   useEffect(() => {
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
   }, [dispatch])
 
-  const deleteLocationButtonHandler = async (locationId: number) => {
+  const deleteLocationButtonHandler = async () => {
+    setIsDeleteModalVisible(false)
     const isDeleteLocation = await dispatch(
-      reduxServices.addLocationList.deleteLocation(locationId),
+      reduxServices.addLocationList.deleteLocation(isDeleteLocationId),
     )
     if (
       reduxServices.addLocationList.deleteLocation.fulfilled.match(
@@ -48,6 +47,11 @@ const AddLocationListTable = (): JSX.Element => {
       dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
     }
+  }
+
+  const confirmDeleteButtonHandler = (id: number) => {
+    setIsDeleteModalVisible(true)
+    setIsDeleteLocationId(id)
   }
 
   return (
@@ -74,7 +78,7 @@ const AddLocationListTable = (): JSX.Element => {
                         size="sm"
                         className="btn-ovh me-2 cursor-pointer"
                         color="danger btn-ovh me-2"
-                        onClick={() => deleteLocationButtonHandler(location.id)}
+                        onClick={() => confirmDeleteButtonHandler(location.id)}
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </CButton>
@@ -99,8 +103,8 @@ const AddLocationListTable = (): JSX.Element => {
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        confirmButtonAction={deleteLocationButtonHandler}
       >
-        {/* {`Do you really want to delete this ${isLocationName} Location ?`} */}
         {`Do you really want to delete this Location ?`}
       </OModal>
     </>

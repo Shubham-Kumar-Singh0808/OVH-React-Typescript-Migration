@@ -1,6 +1,6 @@
 import { getAllMeetingLocations } from '../../types/Conference Room Booking/New Booking/Add Location List/addLocationListTypes'
 
-export const mockTemplateTypes: getAllMeetingLocations[] = [
+export const mockLocationNames: getAllMeetingLocations[] = [
   {
     id: 1,
     locationName: 'RayBusiness-1',
