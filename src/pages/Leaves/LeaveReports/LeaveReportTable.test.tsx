@@ -16,27 +16,34 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <LeaveReportTable
+      setCurrentPage={mockSetCurrentPage}
+      setPageSize={mockSetPageSize}
+      currentPage={1}
+      pageSize={20}
+      paginationRange={[1, 2, 3]}
+    />
+    ,
+  </div>
+)
 
 describe('Leave Report Component Testing', () => {
   test('should render Leave Report Table component with out crashing', async () => {
-    render(
-      <LeaveReportTable
-        setCurrentPage={mockSetCurrentPage}
-        setPageSize={mockSetPageSize}
-        currentPage={1}
-        pageSize={20}
-        paginationRange={[1, 2, 3]}
-      />,
-      {
-        preloadedState: {
-          leaveReport: {
-            isLoading: ApiLoadingState.succeeded,
-            leaveSummaries: mockLeaveReportData,
-            listSize: mockLeaveReportData.size,
-          },
+    render(toRender, {
+      preloadedState: {
+        leaveReport: {
+          isLoading: ApiLoadingState.succeeded,
+          leaveSummaries: mockLeaveReportData,
+          listSize: mockLeaveReportData.size,
         },
       },
-    )
+    })
+
     expectPageSizeToBeRendered(20)
     await waitFor(() => {
       userEvent.selectOptions(screen.getByRole('combobox'), ['40'])

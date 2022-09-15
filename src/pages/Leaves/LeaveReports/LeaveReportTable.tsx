@@ -14,8 +14,10 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import { mockLeaveReportData } from '../../../test/data/LeaveReportData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { EmployeeLeaveReportTableProps } from '../../../types/Leaves/LeaveReports/leaveReportTypes'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const LeaveReportTable = ({
   paginationRange,
@@ -27,9 +29,8 @@ const LeaveReportTable = ({
   const getLeaveReports = useTypedSelector(
     reduxServices.leaveReport.selectors.getLeaveReport,
   )
-
-  const leaveReportListSize = useTypedSelector(
-    reduxServices.leaveReport.selectors.listSize,
+  const isLoading = useTypedSelector(
+    reduxServices.leaveReport.selectors.isLoading,
   )
 
   const handlePageSizeSelectChange = (
@@ -38,7 +39,6 @@ const LeaveReportTable = ({
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
-  console.log(mockLeaveReportData.list.length)
   return (
     <>
       <OCard
@@ -47,90 +47,83 @@ const LeaveReportTable = ({
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <>
-          {getLeaveReports.list.length ? (
-            <>
-              <CTable striped align="middle">
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell>ID</CTableHeaderCell>
-                    <CTableHeaderCell>Name</CTableHeaderCell>
-                    <CTableHeaderCell>Carry Forwarded (Days)</CTableHeaderCell>
-                    <CTableHeaderCell>Credited (Days)</CTableHeaderCell>
-                    <CTableHeaderCell>Casual Applied (Days)</CTableHeaderCell>
-                    <CTableHeaderCell>LOP Applied (Days)</CTableHeaderCell>
-                    <CTableHeaderCell>PAID Applied (Days)</CTableHeaderCell>
-                    <CTableHeaderCell>Leaves Remaining (Days)</CTableHeaderCell>
+        <CTable striped align="middle">
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell>ID</CTableHeaderCell>
+              <CTableHeaderCell>Name</CTableHeaderCell>
+              <CTableHeaderCell>Carry Forwarded (Days)</CTableHeaderCell>
+              <CTableHeaderCell>Credited (Days)</CTableHeaderCell>
+              <CTableHeaderCell>Casual Applied (Days)</CTableHeaderCell>
+              <CTableHeaderCell>LOP Applied (Days)</CTableHeaderCell>
+              <CTableHeaderCell>PAID Applied (Days)</CTableHeaderCell>
+              <CTableHeaderCell>Leaves Remaining (Days)</CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody color="light">
+            {isLoading !== ApiLoadingState.loading ? (
+              getLeaveReports &&
+              getLeaveReports?.list?.map((leave, index) => {
+                return (
+                  <CTableRow key={index}>
+                    <CTableDataCell>{leave.employeeDTO.id}</CTableDataCell>
+                    <CTableDataCell>
+                      {leave.employeeDTO.fullName}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {leave.carryForwardedLeaves}
+                    </CTableDataCell>
+                    <CTableDataCell>{leave.allCreditedLeaves}</CTableDataCell>
+                    <CTableDataCell>{leave.allScheduledLeaves}</CTableDataCell>
+                    <CTableDataCell>{leave.allLOPTakenLeaves}</CTableDataCell>
+                    <CTableDataCell>{leave.allAvailableLeaves}</CTableDataCell>
+                    <CTableDataCell>
+                      {leave.calculatedCreditedLeaves}
+                    </CTableDataCell>
                   </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {getLeaveReports.list.map((leave, index) => {
-                    return (
-                      <CTableRow key={index}>
-                        <CTableDataCell>{leave.employeeDTO.id}</CTableDataCell>
-                        <CTableDataCell>
-                          {leave.employeeDTO.fullName}
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          {leave.carryForwardedLeaves}
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          {leave.allCreditedLeaves}
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          {leave.allScheduledLeaves}
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          {leave.allLOPTakenLeaves}
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          {leave.allAvailableLeaves}
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          {leave.calculatedCreditedLeaves}
-                        </CTableDataCell>
-                      </CTableRow>
-                    )
-                  })}
-                </CTableBody>
-              </CTable>
-              <CRow>
-                <CCol xs={4}>
-                  <p>
-                    <strong>Total Records: {leaveReportListSize}</strong>
-                  </p>
-                </CCol>
-                <CCol xs={3}>
-                  {leaveReportListSize > 20 && (
-                    <OPageSizeSelect
-                      handlePageSizeSelectChange={handlePageSizeSelectChange}
-                      options={[20, 40, 60, 80]}
-                      selectedPageSize={pageSize}
-                    />
-                  )}
-                </CCol>
-                {leaveReportListSize > 20 && (
-                  <CCol
-                    xs={5}
-                    className="gap-1 d-grid d-md-flex justify-content-md-end"
-                  >
-                    <OPagination
-                      currentPage={currentPage}
-                      pageSetter={setCurrentPage}
-                      paginationRange={paginationRange}
-                    />
-                  </CCol>
-                )}
-              </CRow>
-            </>
-          ) : (
-            <CCol>
-              <CRow className="category-no-data">
-                <h4 className="text-center">No data to display</h4>
-              </CRow>
+                )
+              })
+            ) : (
+              <OLoadingSpinner type={LoadingType.PAGE} />
+            )}
+          </CTableBody>
+        </CTable>
+        {getLeaveReports.list?.length ? (
+          <CRow>
+            <CCol xs={4}>
+              <p>
+                <strong>Total Records: {getLeaveReports.size}</strong>
+              </p>
             </CCol>
-          )}
-        </>
+            <CCol xs={3}>
+              {getLeaveReports.size > 20 && (
+                <OPageSizeSelect
+                  handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  options={[20, 40, 60, 80]}
+                  selectedPageSize={pageSize}
+                />
+              )}
+            </CCol>
+            {getLeaveReports.size > 20 && (
+              <CCol
+                xs={5}
+                className="gap-1 d-grid d-md-flex justify-content-md-end"
+              >
+                <OPagination
+                  currentPage={currentPage}
+                  pageSetter={setCurrentPage}
+                  paginationRange={paginationRange}
+                />
+              </CCol>
+            )}
+          </CRow>
+        ) : (
+          <CCol>
+            <CRow className="mt-3 ms-3">
+              <h5>No Records Found... </h5>
+            </CRow>
+          </CCol>
+        )}
       </OCard>
     </>
   )
