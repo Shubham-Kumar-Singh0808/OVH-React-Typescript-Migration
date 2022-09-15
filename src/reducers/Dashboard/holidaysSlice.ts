@@ -82,9 +82,9 @@ const getHolidayInformation = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('holidays/getHolidayInformation', async (handbookId: number, thunkApi) => {
+>('holidays/getHolidayInformation', async (holidayId: number, thunkApi) => {
   try {
-    return await holidaysApi.getHolidayInformation(handbookId)
+    return await holidaysApi.getHolidayInformation(holidayId)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)

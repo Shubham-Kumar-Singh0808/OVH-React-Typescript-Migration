@@ -66,7 +66,7 @@ describe('Employee Holidays Table Component Testing', () => {
     userEvent.click(editButtonEl)
     expect(history.location.pathname).toBe('/editHoliday/148')
   })
-  it('should render Delete modal on clicking delete button from Actions', async () => {
+  it('should render Delete modal popup on clicking delete button from Actions', async () => {
     const deleteButtonEl = screen.getByTestId('holiday-delete-btn1')
     userEvent.click(deleteButtonEl)
     await waitFor(() => {
