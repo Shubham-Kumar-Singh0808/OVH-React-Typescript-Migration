@@ -150,49 +150,55 @@ const FamilyDetailsTable = ({
           </>
         )}
         <CTableBody>
-          {sortedFamilyDetails?.map((family, index) => (
-            <CTableRow key={index}>
-              {isFieldDisabled ? (
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-              ) : (
-                <></>
-              )}
-              <CTableDataCell scope="row">{family.personName}</CTableDataCell>
-              <CTableDataCell scope="row">{family.relationShip}</CTableDataCell>
-              <CTableDataCell scope="row">
-                {family.contactNumber || 'N/A'}
-              </CTableDataCell>
-              {!isFieldDisabled || !isViewingAnotherEmployee ? (
+          {sortedFamilyDetails.length > 0 &&
+            sortedFamilyDetails?.map((family, index) => (
+              <CTableRow key={index}>
+                {isFieldDisabled ? (
+                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                ) : (
+                  <></>
+                )}
+                <CTableDataCell scope="row">{family.personName}</CTableDataCell>
                 <CTableDataCell scope="row">
-                  {localeDateFormat(family.dateOfBirth as string) || 'N/A'}
+                  {family.relationShip}
                 </CTableDataCell>
-              ) : (
-                <></>
-              )}
-              {isFieldDisabled && !isViewingAnotherEmployee ? (
                 <CTableDataCell scope="row">
-                  <CButton
-                    color="info"
-                    className="btn-ovh me-2"
-                    data-testid="edit-family"
-                    onClick={() => editButtonHandler?.(family.familyId)}
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    className="btn-ovh me-2"
-                    data-testid="delete-family"
-                    onClick={() => handleShowDeleteModal(family.familyId)}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
+                  {family.contactNumber || 'N/A'}
                 </CTableDataCell>
-              ) : (
-                <></>
-              )}
-            </CTableRow>
-          ))}
+                {!isFieldDisabled || !isViewingAnotherEmployee ? (
+                  <CTableDataCell scope="row">
+                    {localeDateFormat(family.dateOfBirth as string) || 'N/A'}
+                  </CTableDataCell>
+                ) : (
+                  <></>
+                )}
+                {isFieldDisabled && !isViewingAnotherEmployee ? (
+                  <CTableDataCell scope="row">
+                    <CButton
+                      color="info"
+                      className="btn-ovh me-2"
+                      data-testid="edit-family"
+                      onClick={() => editButtonHandler?.(family.familyId)}
+                    >
+                      <i
+                        className="fa fa-pencil-square-o"
+                        aria-hidden="true"
+                      ></i>
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      className="btn-ovh me-2"
+                      data-testid="delete-family"
+                      onClick={() => handleShowDeleteModal(family.familyId)}
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTableDataCell>
+                ) : (
+                  <></>
+                )}
+              </CTableRow>
+            ))}
         </CTableBody>
       </CTable>
       {isFieldDisabled && (
