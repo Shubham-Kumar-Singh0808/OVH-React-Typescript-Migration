@@ -191,7 +191,7 @@ const TicketApprovalsTable = ({
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     <>
-                      <Link to={`/`}>
+                      <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
                         <CButton color="info" className="btn-ovh me-2">
                           <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>

@@ -9,3 +9,8 @@ export type AddTrackerSliceState = {
   isLoading: ApiLoadingState
   trackerList: Tracker[]
 }
+// export type AddTrackerListProps = {
+//   addButtonHandler?: () => void
+//   backButtonHandler: () => void
+//   isEmployeeQualificationExist?: boolean
+// }

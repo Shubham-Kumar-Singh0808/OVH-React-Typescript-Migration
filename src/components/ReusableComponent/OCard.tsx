@@ -16,6 +16,7 @@ const OCard = (props: {
   CLinkClassName?: string
   CCardTitleClassName?: string
   children?: React.ReactNode
+  footerPath?: string
 }): JSX.Element => {
   return (
     <>
@@ -29,9 +30,9 @@ const OCard = (props: {
             className={`font-weight-bold font-xs float-end ${
               props.CLinkClassName ? props.CLinkClassName : ''
             }`}
-            href="https://coreui.io/"
+            href={props.footerPath}
             rel="noopener norefferer"
-            target="_blank"
+            target="_self"
           >
             View more
             {/* <CIcon icon={cilArrowRight} className="ms-2" width={16} /> */}

@@ -229,6 +229,8 @@ export interface EmployeeHandbookSettingsApi extends ApiBase {
   addNewHandbook: string
   getEmployeeHandbooks: string
   deleteEmployeeHandbook: string
+  getSelectedCountries: string
+  updateEmployeeHandbook: string
 }
 
 export interface TimeInOfficeReportApi extends ApiBase {
@@ -273,6 +275,11 @@ export interface AddNewTemplateApi extends ApiBase {
   getAssetTypes: string
   addNewMailTemplate: string
 }
+
+export interface ApplyLeaveApi extends ApiBase {
+  getLeaveType: string
+  applyLeave: string
+}
 export interface ScheduledInterviewsApi extends ApiBase {
   searchScheduledCandidatesForEmployee: string
   searchScheduledCandidates: string
@@ -290,6 +297,13 @@ export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
 }
 
+export interface TicketReportApi extends ApiBase {
+  getDepartmentNameList: string
+  departmentCategoryList: string
+  getTicketsReport: string
+  getTicketsDetails: string
+  exportTicketReports: string
+}
 export interface ProjectManagementApi extends ApiBase {
   getProject: string
   addProject: string
@@ -341,4 +355,32 @@ export interface TicketApprovalsApi extends ApiBase {
 export interface AddTrackerApi extends ApiBase {
   addNewTracker: string
   deleteTrackerList: string
+}
+
+export interface RaiseNewTicketApi extends ApiBase {
+  createNewTicket: string
+  uploadSupportTicketsDocument: string
+}
+export interface DashboardApi extends ApiBase {
+  getAllJobVacancies: string
+  getUpcomingBirthdayAnniversaries: string
+  getAllEmployeesBirthdayList: string
+  getUpcomingHolidays: string
+  getAllUpcomingHolidaysList: string
+  addHoliday: string
+  getFinancialYear: string
+  getEmployeeTimeInOffice: string
+  getUpcomingTrainings: string
+  getUpcomingEvents: string
+  getEmployeesUnderProbationPeriod: string
+  getAllAchievements: string
+}
+
+export interface UpdateTicketApi extends ApiBase {
+  getTicket: string
+  getActiveEmployeeList: string
+  getAudit: string
+  uploadSupportTicketDocuments: string
+  updateIndividualTickets: string
+  approveTicketByManager: string
 }

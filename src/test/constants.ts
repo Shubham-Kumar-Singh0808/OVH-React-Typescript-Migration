@@ -12,9 +12,11 @@ export const cB2 = 'ch-countries1'
 export const cB3 = 'ch-countries2'
 export const cB4 = 'ch-countries3'
 export const cB5 = 'ch-countries4'
+export const cB6 = 'ch-countries5'
+export const cbAll = 'ch-All'
 export const emailAddress = 'email-address'
 export const templateType = 'form-select-type'
-
+export const updateButton = 'btn-update'
 // HR associate component
 export const selectedHRAssociate = 'Omer Mohsin'
 export const hRAssociatePlaceHolder = 'Type name here for auto fill'
