@@ -10,6 +10,19 @@ import {
 
 const mockSetSelectYear = jest.fn()
 const mockHandleExportTicketApprovalList = jest.fn()
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <LeaveReportFilterOption
+      selectYear={''}
+      setSelectYear={mockSetSelectYear}
+    />
+    ,
+  </div>
+)
 const result = mockCreditYearData
   ?.filter((value) => value.yearOfEra.value <= 2022)
   .map((val2) => val2.yearOfEra.value)
@@ -18,12 +31,7 @@ const uniqueValue = Array.from(new Set(result))
 describe('LeaveReportFilter Options Component Testing', () => {
   describe('Filter Options component without value', () => {
     beforeEach(() => {
-      render(
-        <LeaveReportFilterOption
-          selectYear={''}
-          setSelectYear={mockSetSelectYear}
-        />,
-      )
+      render(toRender)
     })
 
     test('should render labels', () => {
