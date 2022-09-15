@@ -160,6 +160,10 @@ const UpdateTicket = React.lazy(
   () => import('./pages/Support/TicketApprovals/UpdateTicket/UpdateTicket'),
 )
 
+const UpdateTicketUnderTicketList = React.lazy(
+  () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
+)
+
 const CreateTicket = React.lazy(
   () => import('./pages/Support/Raise Ticket/Add Tracker List/AddTrackerList'),
 )
@@ -340,6 +344,12 @@ const routes = [
     path: '/updateTicketInApprovals/:ticketId',
     name: 'Update Ticket',
     component: UpdateTicket,
+  },
+
+  {
+    path: '/updateTicket/:ticketId',
+    name: 'Update Ticket',
+    component: UpdateTicketUnderTicketList,
   },
   {
     path: '/jobvacancies',
