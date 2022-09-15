@@ -3,7 +3,6 @@ import { addLocationListApiConfig } from '../../middleware/api/apiList'
 import { mockLocationNames } from '../data/addLocationListData'
 
 export const addLocationListHandlers = [
-  // addClient api mock
   rest.get(
     addLocationListApiConfig.getAllMeetingLocations,
     (_req, res, ctx) => {

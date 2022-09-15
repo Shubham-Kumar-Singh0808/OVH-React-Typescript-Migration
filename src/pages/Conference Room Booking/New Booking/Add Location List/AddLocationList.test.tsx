@@ -6,9 +6,6 @@ import AddLocationList from './AddLocationList'
 import { render, screen } from '../../../../test/testUtils'
 import { mockLocationNames } from '../../../../test/data/addLocationListData'
 
-const addButton = 'designationButton'
-const locationName = 'Name of the Location:'
-
 describe('Add Location List without data', () => {
   beforeEach(() => {
     render(<AddLocationList />, {
@@ -28,5 +25,17 @@ describe('Add Location List without data', () => {
     const addBtnElement = screen.getByRole('button', { name: 'Add' })
     expect(addBtnElement).toBeEnabled()
     userEvent.click(addBtnElement)
+  })
+})
+describe('Add Location List without data', () => {
+  beforeEach(() => {
+    render(<AddLocationList />)
+  })
+  test('should be able to render  Location List  Title', () => {
+    expect(screen.getByText('Location List')).toBeInTheDocument()
+  })
+
+  test('should render Add button as disabled  initially', () => {
+    expect(screen.getByTestId('designationButton')).toBeDisabled()
   })
 })

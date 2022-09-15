@@ -148,13 +148,6 @@ const ProbationaryList = React.lazy(
   () => import('./pages/Dashboard/ProbationaryList/ProbationaryList'),
 )
 
-const AddLocationList = React.lazy(
-  () =>
-    import(
-      './pages/Conference Room Booking/New Booking/Add Location List/AddLocationList'
-    ),
-)
-
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -341,11 +334,6 @@ const routes = [
     path: '/probationaryList',
     name: 'Upcoming Probationary End Dates',
     component: ProbationaryList,
-  },
-  {
-    path: '/newMeetingRequest',
-    name: 'Conference Room Booking Under New Booking ,Add Location',
-    component: AddLocationList,
   },
 ]
 

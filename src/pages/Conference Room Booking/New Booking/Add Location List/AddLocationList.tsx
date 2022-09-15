@@ -8,7 +8,6 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import AddLocationListTable from './AddLocationListTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -99,15 +98,13 @@ const AddLocationList = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <Link to={`/newMeetingRequest`}>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="back-button"
-              >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </Link>
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="back-button"
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
           </CCol>
         </CRow>
         <CForm>
