@@ -69,7 +69,7 @@ describe('Update Ticket Edit Fields Component Testing with data', () => {
 
   test('Should be able to upload file', () => {
     const file = new File(['hello'], 'hello.png', { type: 'image/png' })
-    const fileInput = screen.getByTestId('fileUpload')
+    const fileInput = screen.getByTestId('fileUpload1')
     userEvent.upload(fileInput, file)
     expect(fileInput.files[0]).toStrictEqual(file)
     expect(fileInput.files.item(0)).toStrictEqual(file)
@@ -80,7 +80,7 @@ describe('Update Ticket Edit Fields Component Testing with data', () => {
     const fileToUpload = new File(['(⌐□_□)'], 'testFile.png', {
       type: 'image/png',
     })
-    const uploader = screen.getByTestId('fileUpload') as HTMLInputElement
+    const uploader = screen.getByTestId('fileUpload1') as HTMLInputElement
 
     await waitFor(() => {
       userEvent.upload(uploader, fileToUpload)

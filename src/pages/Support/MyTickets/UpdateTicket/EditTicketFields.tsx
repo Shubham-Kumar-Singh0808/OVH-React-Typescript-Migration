@@ -59,7 +59,7 @@ const UpdateTicketEditFields = ({
     })
   }
 
-  const onChangeFileEventHandler = (element: HTMLInputElement) => {
+  const onChangeFileHandler = (element: HTMLInputElement) => {
     const ticketFile = element.files
     if (!ticketFile) return
     setFileUpload(ticketFile[0])
@@ -319,11 +319,9 @@ const UpdateTicketEditFields = ({
             <input
               type="file"
               id="fileUpload"
-              data-testid="fileUpload"
+              data-testid="fileUpload1"
               onChange={(element: React.SyntheticEvent) =>
-                onChangeFileEventHandler(
-                  element.currentTarget as HTMLInputElement,
-                )
+                onChangeFileHandler(element.currentTarget as HTMLInputElement)
               }
               accept=".png, .jpg, .jpeg"
             />
