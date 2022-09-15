@@ -164,9 +164,6 @@ const UpdateTicketUnderTicketList = React.lazy(
   () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
 )
 
-const CreateTicket = React.lazy(
-  () => import('./pages/Support/Raise Ticket/Add Tracker List/AddTrackerList'),
-)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -379,11 +376,6 @@ const routes = [
     path: '/probationaryList',
     name: 'Upcoming Probationary End Dates',
     component: ProbationaryList,
-  },
-  {
-    path: '/createTicket',
-    name: 'Add Tracker List',
-    component: CreateTicket,
   },
 ]
 

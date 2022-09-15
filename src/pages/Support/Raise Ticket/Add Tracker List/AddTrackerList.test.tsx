@@ -12,10 +12,11 @@ const clearButton = 'clear-btn'
 const trackerName = 'tracker-name'
 const AddTrackerName = 'Name:'
 const checked = 'ch-All'
+const mockSetTogglePage = jest.fn()
 
 describe('AddTracker List without data', () => {
   beforeEach(() => {
-    render(<AddTrackerList />)
+    render(<AddTrackerList setToggle={mockSetTogglePage} />)
   })
   afterEach(cleanup)
   test('should render addTracker List component with out crashing', () => {
@@ -46,7 +47,7 @@ describe('AddTracker List without data', () => {
 
 describe('AddTracker List with data', () => {
   beforeEach(() => {
-    render(<AddTrackerList />, {
+    render(<AddTrackerList setToggle={mockSetTogglePage} />, {
       preloadedState: {
         addTrackerLists: {
           trackerList: mockAddTrackerList,

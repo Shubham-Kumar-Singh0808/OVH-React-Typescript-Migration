@@ -18,12 +18,12 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { CreateNewTicket } from '../../../types/Support/RaiseNewTicket/createNewTicketTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
-// import { AddTrackerListProps } from '../../../types/Support/Raise Ticket/addTrackerListTypes'
-// ({
-//   setToggle,
-// }: AddTrackerListProps)
 
-const CreateNewTicketFilterOptions = (): JSX.Element => {
+const CreateNewTicketFilterOptions = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const initialCreateNewTicket = {} as CreateNewTicket
   const [createTicket, setCreateTicket] = useState(initialCreateNewTicket)
   const [trackerValue, setTrackerValue] = useState<string>()
@@ -191,7 +191,6 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
   }
   return (
     <>
-      {/* {toggle === '' && ( */}
       <CForm>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
@@ -220,7 +219,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           <CCol className="col-sm-3">
             <CButton
               color="info btn-ovh me-1"
-              // onClick={() => setToggle('addTrackerList')}
+              onClick={() => setToggle('addTrackerList')}
             >
               <i className="fa fa-plus me-1"></i>Add
             </CButton>
@@ -502,10 +501,6 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
       </CForm>
-      {/* // )}
-      // {toggle === 'addtrackerlist' && ( */}
-      {/* //   <QualificationCategoryList backButtonHandler={() => setToggle('')} />
-      // )} */}
     </>
   )
 }

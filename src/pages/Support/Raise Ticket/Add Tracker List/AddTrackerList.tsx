@@ -9,7 +9,6 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import AddTrackerListTable from './AddTrackerListTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -18,7 +17,11 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-const AddTrackerList = (): JSX.Element => {
+const AddTrackerList = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const [isTrackerName, setIsTrackerName] = useState('')
   const [isTrackerNameExist, setIsTrackerNameExist] = useState('')
   const [isChecked, setIsChecked] = useState<boolean>(false)
@@ -116,15 +119,14 @@ const AddTrackerList = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <Link to={`/createTicket`}>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="back-button"
-              >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </Link>
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="back-button"
+              onClick={() => setToggle('')}
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
           </CCol>
         </CRow>
         <CForm>
