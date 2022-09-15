@@ -1,8 +1,6 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type EventListTableProps = {
-  selectMonth: string
-  setSelectMonth: (value: string) => void
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>

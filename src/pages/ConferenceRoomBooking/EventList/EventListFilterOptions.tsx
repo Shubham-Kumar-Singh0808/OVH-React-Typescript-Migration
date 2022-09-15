@@ -1,15 +1,20 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import React from 'react'
 import ReactDatePicker from 'react-datepicker'
+import { EventListOptions } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 
-const EventListFilterOptions = (): JSX.Element => {
-  // const categoryOptions = [
-  //     { label: 'Select Category', value: '' },
-  //     { label: 'Working from Home', value: 'Home' },
-  //     { label: 'Working from Office', value: 'Office' },
-  //     { label: 'External Vendor', value: 'External Vendor' },
-  //     { label: 'Employment Contract', value: 'Employment Contract' },
-  //   ]
+const EventListFilterOptions = ({
+  selectMonth,
+  setSelectMonth,
+}: EventListOptions): JSX.Element => {
+  const selectDateOptions = [
+    { label: 'Today', value: 'Today' },
+    { label: 'Yesterday', value: 'Yesterday' },
+    { label: 'This Week', value: 'This Week' },
+    { label: 'Last Month', value: 'Last Month' },
+    { label: 'Current Month', value: 'Current Month' },
+    { label: 'Custom', value: '' },
+  ]
 
   return (
     <>
@@ -23,11 +28,18 @@ const EventListFilterOptions = (): JSX.Element => {
             id="selectEvent"
             data-testid="form-select"
             name="selectEvent"
+            value={selectMonth}
+            onChange={(e) => {
+              setSelectMonth(e.target.value)
+            }}
           >
-            <option value={''}>Current Month</option>
+            {selectDateOptions.map((opt, index) => (
+              <option key={index} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
-
         <CCol sm={7} className="d-md-flex justify-content-md-end">
           <CCol sm={3} className="ticket-from-date-col">
             <CRow>
