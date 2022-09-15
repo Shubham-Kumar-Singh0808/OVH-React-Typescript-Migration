@@ -115,5 +115,5 @@ export type TicketHistoryProps = {
 }
 
 export type TicketHistoryDetailsProps = {
-  backButtonHandler: () => void
+  backButtonHandler?: () => void
 }

@@ -420,6 +420,7 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
     apiPrefix + '/supportManagement/getAllTicketsForApproval',
   exportTicketApprovalList:
     apiPrefix + '/supportManagement/exportTicketApprovalList',
+  rejectManagerTicket: apiPrefix + '/supportManagement/rejectManagerTicket',
 }
 
 export const createNewTicketApiConfig: RaiseNewTicketApi = {

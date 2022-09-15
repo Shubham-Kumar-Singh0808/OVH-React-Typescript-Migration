@@ -351,6 +351,7 @@ export interface TicketApprovalsApi extends ApiBase {
   subCategoryList: string
   getAllTicketsForApproval: string
   exportTicketApprovalList: string
+  rejectManagerTicket: string
 }
 
 export interface RaiseNewTicketApi extends ApiBase {

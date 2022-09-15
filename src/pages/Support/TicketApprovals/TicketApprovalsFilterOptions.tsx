@@ -113,11 +113,13 @@ const TicketApprovalsFilterOptions = ({
     dateSelection: dateOption,
     departmentId: deptId,
     endIndex: 20,
-    fromDate: new Date(ticketFromDate).toLocaleDateString(deviceLocale, {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }),
+    fromDate: ticketFromDate
+      ? new Date(ticketFromDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        })
+      : '',
     multiSearch: searchValue,
     progressStatus: ticketStatusState,
     searchByEmpName: employeeNameCheckbox,
@@ -125,11 +127,13 @@ const TicketApprovalsFilterOptions = ({
     startIndex: 0,
     subCategoryId: subCategoryIdValue,
     ticketStatus: approvalStatus,
-    toDate: new Date(ticketToDate).toLocaleDateString(deviceLocale, {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }),
+    toDate: ticketToDate
+      ? new Date(ticketToDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        })
+      : '',
     trackerID: trackerValue,
   }
 
