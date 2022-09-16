@@ -27,7 +27,7 @@ const BookingListFilterOptions = (): JSX.Element => {
         </CCol>
 
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Employee Billing Status:</CFormLabel>
+          <CFormLabel className="mt-1">Room:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -43,6 +43,40 @@ const BookingListFilterOptions = (): JSX.Element => {
             <option value="true">Billable</option>
             <option value="false">Non-Billable</option>
             <option value="onBench">Bench</option>
+          </CFormSelect>
+        </CCol>
+        <CCol sm={2} md={1} className="text-end">
+          <CFormLabel className="mt-1">Meeting Status:</CFormLabel>
+        </CCol>
+        <CCol sm={2}>
+          <CFormSelect
+            aria-label="Default select example"
+            size="sm"
+            id="billingStatus"
+            data-testid="form-select2"
+            name="billingStatus"
+          >
+            <option value="All" selected>
+              New
+            </option>
+            <option value="true">In Progress</option>
+            <option value="false">Cancelled</option>
+            <option value="onBench">Completed</option>
+          </CFormSelect>
+        </CCol>
+        <CCol sm={2} md={1} className="text-end">
+          <CFormLabel className="mt-1">Select:</CFormLabel>
+        </CCol>
+        <CCol sm={2}>
+          <CFormSelect
+            aria-label="Default select example"
+            size="sm"
+            id="technology"
+            data-testid="form-select1"
+            name="technology"
+          >
+            <option value="Today">Today</option>
+            <option value="Custom">Custom</option>
           </CFormSelect>
         </CCol>
       </CRow>
