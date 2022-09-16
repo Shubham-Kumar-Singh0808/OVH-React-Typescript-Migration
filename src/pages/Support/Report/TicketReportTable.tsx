@@ -174,6 +174,7 @@ const TicketReportTable = ({
             {getTicketReportList.length > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
+                options={[20, 40, 60, 80]}
                 selectedPageSize={pageSize}
               />
             )}
