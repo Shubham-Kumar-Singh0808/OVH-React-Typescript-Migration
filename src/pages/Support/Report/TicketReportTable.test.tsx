@@ -38,8 +38,8 @@ const toRender = (
   </div>
 )
 
-describe('Scheduled Candidates Table Component Testing', () => {
-  test('should render scheduled candidates table component without crashing', async () => {
+describe('Ticket Report Table Component Testing', () => {
+  test('should render Ticket Report table component without crashing', async () => {
     render(toRender, {
       preloadedState: {
         ticketReport: {
