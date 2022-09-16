@@ -70,7 +70,7 @@ import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSli
 import provisionPeriodReducer from './reducers/Dashboard/provisionPeriodSlice'
 import achievementsReducer from './reducers/Dashboard/achievementsSlice'
 import updateTicketReducer from './reducers/Support/TicketApprovals/UpdateTicket/updateTicketSlice'
-import addTrackerListReducer from './reducers/Support/Raise Ticket/Add Tracker List/addTrackerSlice'
+import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/trackerListSlice'
 
 export const allReducers = {
   app: appReducer,

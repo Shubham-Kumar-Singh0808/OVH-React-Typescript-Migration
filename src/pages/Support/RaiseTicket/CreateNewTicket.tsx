@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import CreateNewTicketFilterOptions from './CreateNewTicketFilterOptions'
+import TrackerList from './TrackerList/TrackerList'
 import OCard from '../../../components/ReusableComponent/OCard'
-import AddTrackerList from '../Raise Ticket/Add Tracker List/AddTrackerList'
 
 const CreateNewTicket = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
@@ -19,7 +19,7 @@ const CreateNewTicket = (): JSX.Element => {
           </OCard>
         </>
       )}
-      {toggle === 'addTrackerList' && <AddTrackerList setToggle={setToggle} />}
+      {toggle === 'addTrackerList' && <TrackerList setToggle={setToggle} />}
     </>
   )
 }

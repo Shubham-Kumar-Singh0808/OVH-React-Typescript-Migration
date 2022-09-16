@@ -1,4 +1,4 @@
-import { Tracker } from '../../types/Support/Raise Ticket/addTrackerListTypes'
+import { Tracker } from '../../types/Support/RaiseNewTicket/TrackerList/trackerListTypes'
 
 export const mockAddTrackerList: Tracker[] = [
   {
