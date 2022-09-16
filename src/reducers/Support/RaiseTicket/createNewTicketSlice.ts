@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import createNewTicketApi from '../../../middleware/api/Support/RaiseTicket/createNewTicketApi'
@@ -59,18 +59,21 @@ const createNewTicketSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(createNewTicket.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addCase(createNewTicket.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
-      .addCase(uploadSupportTicketsDocuments.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
-      .addCase(uploadSupportTicketsDocuments.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
+      .addMatcher(
+        isAnyOf(
+          uploadSupportTicketsDocuments.fulfilled,
+          createNewTicket.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(uploadSupportTicketsDocuments.pending, createNewTicket.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
