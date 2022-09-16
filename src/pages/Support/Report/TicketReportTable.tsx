@@ -74,6 +74,7 @@ const TicketReportTable = ({
     () => currentPageData(getTicketReportList, currentPage, pageSize),
     [getTicketReportList, currentPage, pageSize],
   )
+
   const handleClickTicketDetails = (
     categoryId: number,
     trackerId: number,
@@ -129,41 +130,70 @@ const TicketReportTable = ({
                     <CTableDataCell>
                       {ticketReport.subCategoryName}
                     </CTableDataCell>
-
-                    <CTableDataCell scope="row">
-                      <CLink
-                        className="cursor-pointer text-decoration-none text-primary"
-                        data-testid="num-tickets"
-                        onClick={() =>
-                          handleClickTicketDetails(
-                            ticketReport.categoryId,
-                            ticketReport.trackerId,
-                            ticketReport.subCategoryId,
-                          )
-                        }
-                      >
+                    {ticketReport.noOfTickets > 0 ? (
+                      <CTableDataCell scope="row">
+                        <CLink
+                          className="cursor-pointer text-decoration-none text-primary"
+                          data-testid="num-tickets"
+                          onClick={() =>
+                            handleTicket(
+                              ticketReport.categoryId,
+                              ticketReport.trackerId,
+                              ticketReport.subCategoryId,
+                            )
+                          }
+                        >
+                          {ticketReport.noOfTickets}
+                        </CLink>
+                      </CTableDataCell>
+                    ) : (
+                      <CTableDataCell>
                         {ticketReport.noOfTickets}
-                      </CLink>
-                    </CTableDataCell>
-
-                    <CTableDataCell>
-                      {ticketReport.noOfClosedTickets}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <CLink
-                        className="cursor-pointer text-decoration-none text-primary"
-                        data-testid="pending-tickets"
-                        onClick={() =>
-                          handleTicket(
-                            ticketReport.categoryId,
-                            ticketReport.trackerId,
-                            ticketReport.subCategoryId,
-                          )
-                        }
-                      >
+                      </CTableDataCell>
+                    )}
+                    {ticketReport.noOfClosedTickets > 0 ? (
+                      <CTableDataCell>
+                        <CLink
+                          className="cursor-pointer text-decoration-none text-primary"
+                          data-testid="close-tickets"
+                          onClick={() =>
+                            handleClickTicketDetails(
+                              ticketReport.categoryId,
+                              ticketReport.trackerId,
+                              ticketReport.subCategoryId,
+                            )
+                          }
+                        >
+                          {ticketReport.noOfClosedTickets}
+                        </CLink>
+                      </CTableDataCell>
+                    ) : (
+                      <CTableDataCell>
+                        {ticketReport.noOfClosedTickets}
+                      </CTableDataCell>
+                    )}
+                    {ticketReport.noOfPendingTickets > 0 ? (
+                      <CTableDataCell>
+                        <CLink
+                          className="cursor-pointer text-decoration-none text-primary"
+                          data-testid="pending-tickets"
+                          // eslint-disable-next-line sonarjs/no-identical-functions
+                          onClick={() =>
+                            handleTicket(
+                              ticketReport.categoryId,
+                              ticketReport.trackerId,
+                              ticketReport.subCategoryId,
+                            )
+                          }
+                        >
+                          {ticketReport.noOfPendingTickets}
+                        </CLink>
+                      </CTableDataCell>
+                    ) : (
+                      <CTableDataCell>
                         {ticketReport.noOfPendingTickets}
-                      </CLink>
-                    </CTableDataCell>
+                      </CTableDataCell>
+                    )}
                   </CTableRow>
                 )
               })

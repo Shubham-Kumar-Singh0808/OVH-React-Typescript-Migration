@@ -81,4 +81,9 @@ describe('Employee Ticket Details', () => {
     userEvent.click(descriptionElement[0])
     expect(descriptionElement).toBeTruthy()
   })
+  test('should when clicking on Closed ticket link', () => {
+    const numClosedTicketElement = screen.getAllByTestId('close-tickets')
+    userEvent.click(numClosedTicketElement[0])
+    expect(numClosedTicketElement).toBeTruthy()
+  })
 })
