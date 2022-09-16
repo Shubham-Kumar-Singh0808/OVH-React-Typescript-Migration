@@ -1,7 +1,27 @@
 import { CRow, CCol, CFormLabel, CFormSelect } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const BookingListFilterOptions = (): JSX.Element => {
+  const [location, setLocation] = useState<string>('')
+  const [room, setRoom] = useState<string>('')
+  const dispatch = useAppDispatch()
+
+  const meetingLocation = useTypedSelector(
+    (state) => state.bookingList.meetingLocation,
+  )
+  const roomsOfLocation = useTypedSelector(
+    (state) => state.bookingList.roomsOfLocation,
+  )
+
+  useEffect(() => {
+    dispatch(reduxServices.bookingList.getAllMeetingLocations())
+    if (location) {
+      dispatch(reduxServices.bookingList.getRoomsOfLocation(Number(location)))
+    }
+  }, [dispatch, location])
+
   return (
     <>
       <CRow className="employeeAllocation-form">
@@ -12,20 +32,22 @@ const BookingListFilterOptions = (): JSX.Element => {
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="Select"
+            id="location"
             data-testid="form-select1"
-            name="Select"
+            name="location"
+            value={location}
+            onChange={(e) => {
+              setLocation(e.target.value)
+            }}
           >
-            <option value="Today">Today</option>
-            <option value="Yesterday">Yesterday</option>
-            <option value="This Week">This Week</option>
-            <option value="Last Week">Last Week</option>
-            <option value="Last Month">Last Month</option>
-            <option value="Current Month">Current Month</option>
-            <option value="Custom">Custom</option>
+            <option value={''}>Select</option>
+            {meetingLocation?.map((location, index) => (
+              <option key={index} value={location.id}>
+                {location.locationName}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
-
         <CCol sm={2} md={1} className="text-end">
           <CFormLabel className="mt-1">Room:</CFormLabel>
         </CCol>
@@ -36,13 +58,17 @@ const BookingListFilterOptions = (): JSX.Element => {
             id="billingStatus"
             data-testid="form-select2"
             name="billingStatus"
+            value={room}
+            onChange={(e) => {
+              setRoom(e.target.value)
+            }}
           >
-            <option value="All" selected>
-              All
-            </option>
-            <option value="true">Billable</option>
-            <option value="false">Non-Billable</option>
-            <option value="onBench">Bench</option>
+            <option value={''}>Select Room</option>
+            {roomsOfLocation?.map((room, index) => (
+              <option key={index} value={room.id}>
+                {room.roomName}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={1} className="text-end">

@@ -380,3 +380,9 @@ export interface UpdateTicketApi extends ApiBase {
   updateIndividualTickets: string
   approveTicketByManager: string
 }
+
+export interface BookingListApi extends ApiBase {
+  getRoomsOfLocation: string
+  getAllMeetingLocations: string
+  getBookingsForSelection: string
+}
