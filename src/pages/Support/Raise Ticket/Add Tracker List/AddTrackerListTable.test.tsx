@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import AddTrackerListTable from './AddTrackerListTable'
-import { render, screen } from '../../../../test/testUtils'
+import { cleanup, render, screen } from '../../../../test/testUtils'
+import { mockAddTrackerList } from '../../../../test/data/addTrackerListData'
 
 describe('AddTracker List without data', () => {
   beforeEach(() => {
@@ -18,5 +19,20 @@ describe('AddTracker List without data', () => {
   test('should render the "Tracker" table ', () => {
     const table = screen.getByRole('table')
     expect(table).toBeTruthy()
+  })
+})
+describe('AddTracker List Table without data', () => {
+  beforeEach(() => {
+    render(<AddTrackerListTable />, {
+      preloadedState: {
+        addTrackerLists: {
+          trackerList: mockAddTrackerList,
+        },
+      },
+    })
+  })
+  afterEach(cleanup)
+  test('should render AddTracker List component with data', () => {
+    expect(screen.getAllByText('Issue')).toBeInTheDocument()
   })
 })
