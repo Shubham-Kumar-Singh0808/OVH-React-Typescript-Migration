@@ -47,11 +47,15 @@ function AddNewHandbook({
     reduxServices.employeeHandbookSettings.selectors.totalHandbookList,
   )
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newList = employeeCountries.map((item) => item.id)
     const { checked } = e.target
     setAllChecked(e.target.checked)
     if (checked) {
       setAddNewPage((prevState) => {
-        return { ...prevState, ...{ list: [1, 2, 3, 4, 5] } }
+        return {
+          ...prevState,
+          ...{ list: newList },
+        }
       })
     } else {
       setAddNewPage((prevState) => {
@@ -63,7 +67,7 @@ function AddNewHandbook({
   const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target
     const value1 = +value
-    if (addNewPage.list?.includes(value1) && !checked) {
+    if (addNewPage.list?.includes(value1)) {
       setAllChecked(checked)
       const list = [...addNewPage.list]
       const index = list.indexOf(value1)
@@ -73,10 +77,10 @@ function AddNewHandbook({
           return { ...prevState, ...{ list } }
         })
       }
-    } else if (checked && !addNewPage.list?.includes(value1)) {
+    } else {
       const list = addNewPage.list || []
       list?.push(value1)
-      if (list.length === 5) setAllChecked(checked)
+      if (list.length === employeeCountries.length) setAllChecked(checked)
       setAddNewPage((prevState) => {
         return { ...prevState, ...{ list } }
       })
@@ -309,7 +313,7 @@ function AddNewHandbook({
                 </CCol>
               </CRow>
               <CRow>
-                {employeeCountries.map((country, index) => {
+                {employeeCountries?.map((country, index) => {
                   return (
                     <CCol sm={3} key={index} className="me-4">
                       <CFormCheck
@@ -339,7 +343,7 @@ function AddNewHandbook({
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
-                  initData={addNewPage.description}
+                  initData={addNewPage?.description}
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
@@ -360,7 +364,7 @@ function AddNewHandbook({
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
                 data-testid="save-btn"
-                className="btn-ovh me-1 text-white"
+                className="btn-ovh me-1"
                 color="success"
                 disabled={
                   isButtonEnabled
@@ -374,7 +378,7 @@ function AddNewHandbook({
               <CButton
                 data-testid="clear-btn"
                 color="warning "
-                className="btn-ovh text-white"
+                className="btn-ovh"
                 onClick={handleClearInputs}
               >
                 Clear

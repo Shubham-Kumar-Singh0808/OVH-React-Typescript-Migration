@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -31,6 +31,10 @@ import { showIsRequired } from '../../../../utils/helper'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { healthList, priceModelList } from '../../../../constant/constantData'
+import OBackButton from '../../../../components/ReusableComponent/OBackButton'
+import { ClientOrganization } from '../ProjectComponent/ClientOrganization'
+import { ProjectName } from '../ProjectComponent/ProjectName'
 
 const AddProject = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -125,20 +129,6 @@ const AddProject = (): JSX.Element => {
   const projectTypeList: GetList[] = [
     { id: 1, name: 'Development' },
     { id: 2, name: 'Support' },
-  ]
-
-  const priceModelList: GetList[] = [
-    { id: 1, name: 'Fixed Bid' },
-    { id: 2, name: 'Retainer' },
-    { id: 3, name: 'Support' },
-    { id: 4, name: 'T&M' },
-  ]
-
-  const healthList = [
-    { label: 'Gray', name: 'Project not yet started' },
-    { label: 'Green', name: 'Good' },
-    { label: 'Orange', name: 'Critical' },
-    { label: 'Red', name: 'Danger' },
   ]
 
   const handleClientSelect = (value: GetOnSelect) => {
@@ -280,39 +270,17 @@ const AddProject = (): JSX.Element => {
       {isLoading === ApiLoadingState.succeeded ? (
         <>
           <CRow className="justify-content-end">
-            <CCol className="text-end" md={4}>
-              {/* Partial route */}
-              <Link to="/">
-                <CButton
-                  data-testid="back-btn"
-                  color="info"
-                  className="btn-ovh me-1"
-                >
-                  <i className="fa fa-arrow-left me-1"></i>Back
-                </CButton>
-              </Link>
-            </CCol>
+            <OBackButton destination="/" name="back" />
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
-              <OAutoComplete
+              <ClientOrganization
                 list={clientOrganizationList}
-                onSelect={handleClientSelect}
-                shouldReset={false}
+                onSelectHandler={handleClientSelect}
                 value={project.client}
-                isRequired={true}
-                label={'Client Organization'}
-                placeholder={'Client'}
-                name={'clientOrganization'}
-                dynamicFormLabelProps={dynamicFormLabelProps}
               />
-              <OInputField
-                onChangeHandler={setProjectName}
-                onBlurHandler={handleProjectName}
+              <ProjectName
+                onChange={setProjectName}
+                onBlur={handleProjectName}
                 value={projectName}
-                isRequired={true}
-                label={'Project Name'}
-                name={'projectName'}
-                placeholder={'Project Name'}
-                dynamicFormLabelProps={dynamicFormLabelProps}
               />
               <OSelectList
                 isRequired={true}
@@ -320,7 +288,7 @@ const AddProject = (): JSX.Element => {
                 setValue={handlePriceModel}
                 value={project.type}
                 label="Pricing Model"
-                name="pricingModel"
+                name="addPricingModel"
                 placeHolder="---Pricing Model---"
                 dynamicFormLabelProps={dynamicFormLabelProps}
               />
@@ -345,7 +313,7 @@ const AddProject = (): JSX.Element => {
                 list={projectTypeList}
                 setValue={handleProjectType}
                 value={project.model}
-                name="projectType"
+                name="addProjectType"
                 label="Project Type"
                 placeHolder="---Project Type---"
                 dynamicFormLabelProps={dynamicFormLabelProps}
@@ -363,14 +331,17 @@ const AddProject = (): JSX.Element => {
               />
               <CRow className="mb-3">
                 <CFormLabel
-                  {...dynamicFormLabelProps('projectstartdate', classNameStyle)}
+                  {...dynamicFormLabelProps(
+                    'addprojectstartdate',
+                    classNameStyle,
+                  )}
                 >
                   Start Date:
                   <span className={showIsRequired(project.startdate)}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
-                    id="projectstartdate"
+                    id="addprojectstartdate"
                     className="form-control form-control-sm sh-date-picker"
                     peekNextMonth
                     showMonthDropdown
@@ -379,7 +350,7 @@ const AddProject = (): JSX.Element => {
                     data-testid="start-date-picker"
                     placeholderText="dd/mm/yy"
                     dateFormat="dd/mm/yy"
-                    name="projectstartdate"
+                    name="addprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
                   />
@@ -387,13 +358,16 @@ const AddProject = (): JSX.Element => {
               </CRow>
               <CRow className="mb-3">
                 <CFormLabel
-                  {...dynamicFormLabelProps('projectenddate', classNameStyle)}
+                  {...dynamicFormLabelProps(
+                    'addprojectenddate',
+                    classNameStyle,
+                  )}
                 >
                   End Date:
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
-                    id="projectenddate"
+                    id="addprojectenddate"
                     className="form-control form-control-sm sh-date-picker"
                     peekNextMonth
                     showMonthDropdown
@@ -402,7 +376,7 @@ const AddProject = (): JSX.Element => {
                     placeholderText="dd/mm/yy"
                     data-testid="end-date-picker"
                     dateFormat="dd/mm/yy"
-                    name="projectenddate"
+                    name="addprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
                   />

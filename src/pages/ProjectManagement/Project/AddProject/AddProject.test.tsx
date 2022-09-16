@@ -123,11 +123,11 @@ describe('Add Project Testing', () => {
     projectName.blur()
 
     // Pricing Model
-    const OSelectListSelector = screen.getByTestId('formpricingModel')
+    const OSelectListSelector = screen.getByTestId('formaddPricingModel')
     userEvent.selectOptions(OSelectListSelector, ['Support'])
 
     // Project Type
-    const oTypesSelectList = screen.getByTestId('formprojectType')
+    const oTypesSelectList = screen.getByTestId('formaddProjectType')
     userEvent.selectOptions(oTypesSelectList, ['Support'])
 
     // Project Manager
