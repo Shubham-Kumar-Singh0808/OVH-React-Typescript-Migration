@@ -6,10 +6,19 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EventList = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [selectOption, setSelectOption] = useState<string>('')
+  const [selectDate, setSelectDate] = useState<string>('Current Month')
+  const [eventFromDate, setEventFromDate] = useState<string>('')
+  const [eventToDate, setEventToDate] = useState<string>('')
+  const isLoading = useTypedSelector(
+    reduxServices.eventList.selectors.isLoading,
+  )
+
   const eventListSize = useTypedSelector(
     reduxServices.eventList.selectors.listSize,
   )
@@ -27,13 +36,13 @@ const EventList = (): JSX.Element => {
       reduxServices.eventList.getAllEvents({
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
-        dateSelection: selectOption,
+        dateSelection: selectDate,
         eventTypeId: 0,
-        searchFromDate: '',
-        searchToDate: '',
+        searchFromDate: eventFromDate,
+        searchToDate: eventToDate,
       }),
     )
-  }, [currentPage, dispatch, pageSize, selectOption])
+  }, [currentPage, dispatch, pageSize, selectDate])
 
   return (
     <>
@@ -44,18 +53,28 @@ const EventList = (): JSX.Element => {
       >
         <CRow className="mb-4">
           <EventListFilterOptions
-            selectMonth={selectOption}
-            setSelectMonth={setSelectOption}
+            selectDate={selectDate}
+            setSelectDate={setSelectDate}
+            eventFromDate={eventFromDate}
+            setEventFromDate={setEventFromDate}
+            eventToDate={eventToDate}
+            setEventToDate={setEventToDate}
           />
-          <CCol xs={12} className="mt-4 mb-4 ps-0 pe-0">
-            <EventListTable
-              paginationRange={paginationRange}
-              setPageSize={setPageSize}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              pageSize={pageSize}
-            />
-          </CCol>
+          {isLoading !== ApiLoadingState.loading ? (
+            <>
+              <CCol xs={12} className="mt-4 mb-4 ps-0 pe-0">
+                <EventListTable
+                  paginationRange={paginationRange}
+                  setPageSize={setPageSize}
+                  setCurrentPage={setCurrentPage}
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                />
+              </CCol>
+            </>
+          ) : (
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          )}
         </CRow>
       </OCard>
     </>

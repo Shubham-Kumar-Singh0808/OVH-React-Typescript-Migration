@@ -18,8 +18,12 @@ export type EventListApiProps = {
 }
 
 export type EventListOptions = {
-  selectMonth: string
-  setSelectMonth: (value: string) => void
+  selectDate: string
+  setSelectDate: (value: string) => void
+  eventFromDate: string
+  setEventFromDate: (value: string) => void
+  eventToDate: string
+  setEventToDate: (value: string) => void
 }
 
 export type Author = {
