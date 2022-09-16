@@ -65,7 +65,7 @@ const createNewTicketSlice = createSlice({
           createNewTicket.fulfilled,
         ),
         (state) => {
-          state.isLoading = ApiLoadingState.loading
+          state.isLoading = ApiLoadingState.succeeded
         },
       )
       .addMatcher(
