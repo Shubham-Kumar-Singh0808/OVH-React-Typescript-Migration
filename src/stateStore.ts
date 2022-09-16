@@ -70,7 +70,7 @@ import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSli
 import provisionPeriodReducer from './reducers/Dashboard/provisionPeriodSlice'
 import achievementsReducer from './reducers/Dashboard/achievementsSlice'
 import updateTicketReducer from './reducers/Support/TicketApprovals/UpdateTicket/updateTicketSlice'
-import addLocationListReducer from './reducers/Conference Room Booking/New Booking/Add Location List/addLocationListSlice'
+import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 
 export const allReducers = {
   app: appReducer,

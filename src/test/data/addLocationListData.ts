@@ -1,4 +1,4 @@
-import { getAllMeetingLocations } from '../../types/Conference Room Booking/New Booking/Add Location List/addLocationListTypes'
+import { getAllMeetingLocations } from '../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
 
 export const mockLocationNames: getAllMeetingLocations[] = [
   {

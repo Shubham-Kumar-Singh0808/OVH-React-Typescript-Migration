@@ -60,7 +60,7 @@ import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
 import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
 import { employeeAchievementsService } from './Dashboard/achievementsSlice'
 import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
-import { addLocationListService } from './Conference Room Booking/New Booking/Add Location List/addLocationListSlice'
+import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 
 export const reduxServices = {
   app: appService,

@@ -163,6 +163,12 @@ const UpdateTicket = React.lazy(
 const UpdateTicketUnderTicketList = React.lazy(
   () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
 )
+const LocationList = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
+    ),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -375,6 +381,11 @@ const routes = [
     path: '/probationaryList',
     name: 'Upcoming Probationary End Dates',
     component: ProbationaryList,
+  },
+  {
+    path: '/newMeetingRequest',
+    name: 'Add LocationList',
+    component: LocationList,
   },
 ]
 
