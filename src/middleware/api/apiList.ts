@@ -460,5 +460,8 @@ export const updateTicketApiConfig: UpdateTicketApi = {
 
 export const eventTypeListApiConfig: EventTypeListApi = {
   getAllEventTypes: apiPrefix + '/meetingRequest/getAllEventTypes',
+  addEventType: apiPrefix + '/meetingRequest/addEventType',
+  deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
+  updateEventType: apiPrefix + '/meetingRequest/updateEventType',
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
 }
