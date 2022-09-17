@@ -52,6 +52,7 @@ import {
   RaiseNewTicketApi,
   DashboardApi,
   UpdateTicketApi,
+  RoomListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -455,4 +456,11 @@ export const updateTicketApiConfig: UpdateTicketApi = {
     apiPrefix + '/supportManagement/editIndividualTickets',
   approveTicketByManager:
     apiPrefix + '/supportManagement/approveByManagerTicket',
+}
+
+export const roomListApiConfig: RoomListApi = {
+  getAllMeetingRooms: apiPrefix + '/meetingRequest/getAllMeetingRooms',
+  addRoom: apiPrefix + '/meetingRequest/addRoom',
+  deleteRoom: apiPrefix + '/meetingRequest/deleteRoom',
+  updateRoom: apiPrefix + '/meetingRequest/updateRoom',
 }
