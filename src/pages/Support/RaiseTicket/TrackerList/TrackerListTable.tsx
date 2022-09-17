@@ -81,12 +81,14 @@ const TrackerListTable = (): JSX.Element => {
                 <CTableDataCell>{index + 1}</CTableDataCell>
                 <CTableDataCell>{tracker.name}</CTableDataCell>
                 <CTableDataCell>
-                  <CFormCheck
-                    className="form-check-input form-select-not-allowed"
-                    name="workflow"
-                    checked={tracker.permission}
-                    disabled={true}
-                  />
+                  <span className="hidden-block">
+                    <CFormCheck
+                      className="form-check-input form-select-not-allowed"
+                      name="workflow"
+                      checked={tracker.permission}
+                      disabled={true}
+                    />
+                  </span>
                 </CTableDataCell>
                 <CTableDataCell>
                   <CTooltip content="Delete">

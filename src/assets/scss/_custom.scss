@@ -203,6 +203,9 @@ input.capetalized {
 .description-link div ul {
   list-style: none;
 }
-.form-select-not-allowed{
+.form-select-not-allowed {
   cursor: not-allowed !important;
+}
+.hidden-block {
+  cursor: not-allowed;
 }
