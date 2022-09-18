@@ -76,17 +76,11 @@ const EventTypeListTable = ({
 
   const confirmDeleteEventType = async () => {
     setIsEventTypeDelModal(false)
-    const deleteEventTypeResultAction = await dispatch(
+    await dispatch(
       reduxServices.eventTypeList.deleteEventType(selectEventTypeId),
     )
-    if (
-      reduxServices.eventTypeList.deleteEventType.fulfilled.match(
-        deleteEventTypeResultAction,
-      )
-    ) {
-      await dispatch(reduxServices.eventTypeList.getEventTypes())
-      dispatch(reduxServices.app.actions.addToast(deletedEventTypeToastElement))
-    }
+    await dispatch(reduxServices.eventTypeList.getEventTypes())
+    dispatch(reduxServices.app.actions.addToast(deletedEventTypeToastElement))
   }
 
   const saveBtnHandler = async () => {
@@ -99,23 +93,15 @@ const EventTypeListTable = ({
       dispatch(reduxServices.app.actions.addToast(eventTypeAlreadyExistsToast))
       setIsEditBtnClicked(false)
     } else {
-      const updateEventTypeResultAction = await dispatch(
+      await dispatch(
         reduxServices.eventTypeList.updateEventType({
           id: selectEventTypeId,
           name: editEventTypeName,
         }),
       )
-      if (
-        reduxServices.eventTypeList.updateEventType.fulfilled.match(
-          updateEventTypeResultAction,
-        )
-      ) {
-        await dispatch(reduxServices.eventTypeList.getEventTypes())
-        setIsEditBtnClicked(false)
-        dispatch(
-          reduxServices.app.actions.addToast(updateEventTypeToastElement),
-        )
-      }
+      await dispatch(reduxServices.eventTypeList.getEventTypes())
+      setIsEditBtnClicked(false)
+      dispatch(reduxServices.app.actions.addToast(updateEventTypeToastElement))
     }
   }
 
@@ -140,6 +126,7 @@ const EventTypeListTable = ({
                     <CTableDataCell scope="row">
                       <CCol sm={4}>
                         <CFormInput
+                          data-testid="eventTypeName"
                           type="text"
                           id="eventTypeName"
                           size="sm"
