@@ -113,22 +113,5 @@ describe('Ticket Report Slice', () => {
         getTicketDetails: { list: [], size: 0 },
       })
     })
-    it('Should be able to set isLoading to "loading" if getDepartmentNameList is pending', () => {
-      const action = {
-        type: ticketReportService.getDepartmentNameList.pending.type,
-      }
-      const state = reducer(initialTicketReportState, action)
-      expect(state).toEqual({
-        currentPage: 1,
-        pageSize: 20,
-        ticketsReportList: [],
-        getTicketsReport: { list: [], size: 0 },
-        departmentCategoryList: [],
-        departmentNameList: [],
-        isLoading: ApiLoadingState.loading,
-        ticketsDetailsList: [],
-        getTicketDetails: { list: [], size: 0 },
-      })
-    })
   })
 })
