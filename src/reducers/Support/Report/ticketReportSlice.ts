@@ -89,7 +89,11 @@ const ticketReportSlice = createSlice({
         state.departmentNameList = action.payload
       })
       .addMatcher(
-        isAnyOf(getTicketsReport.pending, getTicketDetails.pending),
+        isAnyOf(
+          getTicketsReport.pending,
+          getTicketDetails.pending,
+          getDepartmentNameList.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
