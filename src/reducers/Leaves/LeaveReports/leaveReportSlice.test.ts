@@ -94,5 +94,47 @@ describe('LeaveReport Slice', () => {
         listSize: 0,
       })
     })
+    it('Should be able to set isLoading to "loading" if creditedYearDetails is pending', () => {
+      const action = {
+        type: leaveReportService.creditedYearDetails.pending.type,
+      }
+      const state = reducer(initialLeaveReportState, action)
+      expect(state).toEqual({
+        leaveSummaries: { list: [], size: 0, name: '', length: 0 },
+        selectFinancialYear: [],
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        financialYear: 0,
+        listSize: 0,
+      })
+    })
+    it('Should be able to set isLoading to "loading" if getFinancialYear is pending', () => {
+      const action = {
+        type: leaveReportService.getFinancialYear.pending.type,
+      }
+      const state = reducer(initialLeaveReportState, action)
+      expect(state).toEqual({
+        leaveSummaries: { list: [], size: 0, name: '', length: 0 },
+        selectFinancialYear: [],
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        financialYear: 0,
+        listSize: 0,
+      })
+    })
+    it('Should be able to set isLoading to "loading" if searchLeaveSummaries is pending', () => {
+      const action = {
+        type: leaveReportService.searchLeaveSummaries.pending.type,
+      }
+      const state = reducer(initialLeaveReportState, action)
+      expect(state).toEqual({
+        leaveSummaries: { list: [], size: 0, name: '', length: 0 },
+        selectFinancialYear: [],
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        financialYear: 0,
+        listSize: 0,
+      })
+    })
   })
 })

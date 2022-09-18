@@ -103,9 +103,17 @@ const leaveReportSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.leaveSummaries = action.payload
       })
-      .addMatcher(isAnyOf(getAllEmployeesLeaveSummaries.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
+      .addMatcher(
+        isAnyOf(
+          getAllEmployeesLeaveSummaries.pending,
+          creditedYearDetails.pending,
+          getFinancialYear.pending,
+          searchLeaveSummaries.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
