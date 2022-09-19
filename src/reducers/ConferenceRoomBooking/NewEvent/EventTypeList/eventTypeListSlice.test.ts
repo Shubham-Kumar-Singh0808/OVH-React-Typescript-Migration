@@ -22,7 +22,7 @@ describe('eventType Slice', () => {
       })
     })
 
-    it('Should be able to set isLoading to "loading" if getEventTypes is fulfilled', () => {
+    it('Should be able to set isLoading to "succeeded" if getEventTypes is fulfilled', () => {
       const action = {
         type: eventTypeListService.getEventTypes.fulfilled.type,
         payload: mockEventTypeList,
@@ -33,7 +33,7 @@ describe('eventType Slice', () => {
         eventTypes: mockEventTypeList,
       })
     })
-    it('Should be able to set isLoading to "loading" if updateEventType is fulfilled', () => {
+    it('Should be able to set isLoading to "succeeded" if updateEventType is fulfilled', () => {
       const action = {
         type: eventTypeListService.updateEventType.fulfilled.type,
       }
@@ -43,7 +43,7 @@ describe('eventType Slice', () => {
         eventTypes: [],
       })
     })
-    it('Should be able to set isLoading to "loading" if addEventType is fulfilled', () => {
+    it('Should be able to set isLoading to "succeeded" if addEventType is fulfilled', () => {
       const action = {
         type: eventTypeListService.addEventType.fulfilled.type,
       }
@@ -53,7 +53,7 @@ describe('eventType Slice', () => {
         eventTypes: [],
       })
     })
-    it('Should be able to set isLoading to "loading" if deleteEventType is fulfilled', () => {
+    it('Should be able to set isLoading to "succeeded" if deleteEventType is fulfilled', () => {
       const action = {
         type: eventTypeListService.deleteEventType.fulfilled.type,
       }
