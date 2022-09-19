@@ -51,9 +51,7 @@ const LocationList = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'name') {
-      const newValue = value
-        .replace(/-_[^a-zA-Z0-9\s]/gi, '')
-        .replace(/^\s*/, '')
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setIsLocationName(newValue)
     }
     if (locationNameExists(value)) {
@@ -124,7 +122,6 @@ const LocationList = (): JSX.Element => {
                 size="sm"
                 name="name"
                 placeholder="Enter Location Name"
-                maxLength={32}
                 value={isLocationName}
                 onChange={handledInputChange}
               />
