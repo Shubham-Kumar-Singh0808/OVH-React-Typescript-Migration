@@ -21,7 +21,7 @@ const ListOfHolidays = (): JSX.Element => {
     dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
     dispatch(
       reduxServices.generalInformation.getEmployeeGeneralInformation(
-        loggedInEmployee.country as string,
+        selectedCountry,
       ),
     )
   }, [dispatch])

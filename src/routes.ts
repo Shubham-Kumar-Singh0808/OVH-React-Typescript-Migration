@@ -163,6 +163,13 @@ const UpdateTicket = React.lazy(
 const UpdateTicketUnderTicketList = React.lazy(
   () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
 )
+
+const EventTypeList = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
+    ),
+)
 const EditHoliday = React.lazy(
   () =>
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
@@ -380,6 +387,11 @@ const routes = [
     path: '/probationaryList',
     name: 'Upcoming Probationary End Dates',
     component: ProbationaryList,
+  },
+  {
+    path: '/newEvent',
+    name: 'Event Type List',
+    component: EventTypeList,
   },
   {
     path: '/editHoliday/:holidayId',

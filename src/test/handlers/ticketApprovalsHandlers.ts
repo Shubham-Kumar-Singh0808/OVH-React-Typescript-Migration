@@ -70,4 +70,13 @@ export const ticketApprovalsHandlers = [
       }),
     )
   }),
+  // getAllLookups api mock
+  rest.put(ticketApprovalsApiConfig.rejectManagerTicket, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: [],
+      }),
+    )
+  }),
 ]
