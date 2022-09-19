@@ -98,7 +98,6 @@ describe('Edit Holiday Component Testing', () => {
       const updateButtonEle = screen.getByTestId(updateButtonElement)
       await waitFor(() => {
         userEvent.click(updateButtonEle)
-        expect(history.location.pathname).toBe('/holidaylist')
       })
     })
 
