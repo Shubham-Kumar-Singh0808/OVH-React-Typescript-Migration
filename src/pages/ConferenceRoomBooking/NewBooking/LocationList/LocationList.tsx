@@ -128,7 +128,7 @@ const LocationList = (): JSX.Element => {
               {isLocationNameExist && (
                 <span
                   className={TextDanger}
-                  data-testid="Location-name-already-exist"
+                  data-testid="LocationNameAlreadyExist"
                 >
                   <b>Location name already exist</b>
                 </span>

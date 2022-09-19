@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import { cleanup } from '@testing-library/react'
+import { cleanup, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import LocationList from './LocationList'
 import { render, screen } from '../../../../test/testUtils'
 import { mockLocationNames } from '../../../../test/data/addLocationListData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 describe('Add Location List without data', () => {
   beforeEach(() => {
@@ -12,6 +13,7 @@ describe('Add Location List without data', () => {
       preloadedState: {
         addLocationList: {
           meetingLocations: mockLocationNames,
+          isLoading: ApiLoadingState.succeeded,
         },
       },
     })
@@ -26,7 +28,18 @@ describe('Add Location List without data', () => {
     expect(addBtnElement).toBeEnabled()
     userEvent.click(addBtnElement)
   })
+  test('should display error message, when user enters already existing location', async () => {
+    const inputElement = screen.getByTestId('locationName')
+    userEvent.type(inputElement, 'Skype')
+    await waitFor(() => {
+      // const errorMsg = screen.getByTestId('LocationNameAlreadyExist')
+      expect(
+        screen.getByText('Location name already exist'),
+      ).toBeInTheDocument()
+    })
+  })
 })
+
 describe('Add Location List without data', () => {
   beforeEach(() => {
     render(<LocationList />)
