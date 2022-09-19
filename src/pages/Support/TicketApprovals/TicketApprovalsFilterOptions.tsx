@@ -1,16 +1,13 @@
-import {
-  CButton,
-  CCol,
-  CFormCheck,
-  CFormInput,
-  CFormLabel,
-  CFormSelect,
-  CInputGroup,
-  CRow,
-} from '@coreui/react-pro'
+import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import TicketApprovalsSearchFilterOptions from './TicketApprovalsSearchFilterOptions'
+import {
+  approvalStatusList,
+  dateOptionsList,
+  ticketStatusList,
+} from '../../../constant/constantData'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { GetAllTicketsForApprovalProps } from '../../../types/Support/TicketApprovals/ticketApprovalsTypes'
@@ -81,33 +78,6 @@ const TicketApprovalsFilterOptions = ({
     reduxServices.ticketApprovals.selectors.ticketsForApproval,
   )
 
-  const ticketStatusList = [
-    { label: 'All', name: 'All' },
-    { label: 'Closed', name: 'Closed' },
-    { label: 'Feedback', name: 'Feedback' },
-    { label: 'Fixed', name: 'Fixed' },
-    { label: 'In Progress', name: 'In Progress' },
-    { label: 'New', name: 'New' },
-  ]
-
-  const approvalStatusList = [
-    { label: 'All', name: 'All' },
-    { label: 'Approved', name: 'Approved' },
-    { label: 'Cancelled', name: 'Cancelled' },
-    { label: 'Pending Approval', name: pendingApproval },
-    { label: 'Rejected', name: 'Rejected' },
-  ]
-
-  const dateOptionsList = [
-    { label: 'Current Month', name: 'Current Month' },
-    { label: 'Custom', name: 'Custom' },
-    { label: 'Last Month', name: 'Last Month' },
-    { label: 'Last Week Approval', name: 'Last Week' },
-    { label: 'This Week', name: 'This Week' },
-    { label: 'Today', name: 'Today' },
-    { label: 'Yesterday', name: 'Yesterday' },
-  ]
-
   const prepareObject = {
     categoryId,
     dateSelection: dateOption,
@@ -173,17 +143,12 @@ const TicketApprovalsFilterOptions = ({
   }
 
   useEffect(() => {
-    const tempFromDate = new Date(
-      moment(ticketFromDate.toString()).format(commonDateFormat),
+    const start = moment(ticketFromDate, commonDateFormat).format(
+      commonDateFormat,
     )
-    const tempToDate = new Date(
-      moment(ticketToDate.toString()).format(commonDateFormat),
-    )
-    if (tempToDate.getTime() < tempFromDate.getTime()) {
-      setDateError(true)
-    } else {
-      setDateError(false)
-    }
+    const end = moment(ticketToDate, commonDateFormat).format(commonDateFormat)
+
+    setDateError(moment(end).isBefore(start))
   }, [ticketFromDate, ticketToDate])
 
   const categoryListToUse =
@@ -484,58 +449,16 @@ const TicketApprovalsFilterOptions = ({
           </CButton>
         </CCol>
       </CRow>
-      <CRow>
-        <CCol sm={12} className="justify-content-md-end">
-          <div className="d-flex flex-column pull-right">
-            <CFormCheck
-              inline
-              className="ticket-search-checkbox"
-              type="checkbox"
-              name="searchByEmployeeName"
-              data-testid="searchByEmployeeName"
-              id="searchByEmployeeName"
-              label="Search by Employee Name"
-              onChange={(e) => setEmployeeNameCheckbox(e.target.checked)}
-              checked={employeeNameCheckbox}
-            />
-            <CFormCheck
-              inline
-              className="ticket-search-checkbox"
-              type="checkbox"
-              name="searchByAssigneeName"
-              data-testid="searchByAssigneeName"
-              id="searchByAssigneeName"
-              label="Search by Assignee Name"
-              onChange={(e) => setAssigneeNameCheckbox(e.target.checked)}
-              checked={assigneeNameCheckbox}
-            />
-            <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
-              <CInputGroup className="global-search me-0 flex-nowrap">
-                <CFormInput
-                  placeholder="Multiple Search"
-                  aria-label="Multiple Search"
-                  aria-describedby="search-field"
-                  data-testid="multi-search-input"
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  onKeyDown={searchButtonOnKeyDown}
-                />
-                <CButton
-                  data-testid="multi-search-btn"
-                  className="cursor-pointer"
-                  type="button"
-                  color="info"
-                  id="search-field"
-                  onClick={searchBtnHandler}
-                  disabled={searchValue == null || searchValue === ''}
-                >
-                  <i className="fa fa-search"></i>
-                </CButton>
-              </CInputGroup>
-            </CCol>
-          </div>
-        </CCol>
-      </CRow>
+      <TicketApprovalsSearchFilterOptions
+        employeeNameCheckbox={employeeNameCheckbox}
+        setEmployeeNameCheckbox={setEmployeeNameCheckbox}
+        assigneeNameCheckbox={assigneeNameCheckbox}
+        setAssigneeNameCheckbox={setAssigneeNameCheckbox}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        searchButtonOnKeyDown={searchButtonOnKeyDown}
+        searchBtnHandler={searchBtnHandler}
+      />
     </>
   )
 }

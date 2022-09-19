@@ -240,6 +240,7 @@ const TicketApprovalsTable = ({
                       <CButton
                         color="danger"
                         className="btn-ovh me-2"
+                        data-testid="ticket-reject-btn"
                         disabled={
                           ticketItem.approvalStatus === 'Approved' ||
                           ticketItem.approvalStatus === 'Rejected' ||
@@ -258,6 +259,7 @@ const TicketApprovalsTable = ({
                       <CButton
                         color="info"
                         className="btn-ovh me-2"
+                        data-testid="ticketTimelineBtn"
                         onClick={() =>
                           handleTicketApprovalsHistory(ticketItem.id)
                         }
