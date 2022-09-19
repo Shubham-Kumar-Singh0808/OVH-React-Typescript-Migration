@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CCol,
@@ -30,10 +30,6 @@ const LocationListTable = (): JSX.Element => {
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Location Deleted Successfully" />
   )
-
-  useEffect(() => {
-    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
-  }, [dispatch])
 
   const confirmDeleteLocation = async () => {
     setIsDeleteModalVisible(false)
