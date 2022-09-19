@@ -12,25 +12,59 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const RoomList = (): JSX.Element => {
   const [filterByLocation, setFilterByLocation] = useState<string>('')
-  const [isRoomName, setIsRoomName] = useState('')
+  const [filterByLocationId] = useState<number>(0)
+  const [selectRoomName, setSelectRoomName] = useState('')
   const [isRoomNameExist, setIsRoomNameExist] = useState('')
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
   }
+
   const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
   }, [dispatch])
+
   const roomNameExists = (name: string) => {
     return roomList?.find((roomName) => {
       return roomName.roomName.toLowerCase() === name.toLowerCase()
     })
+  }
+
+  const successToast = (
+    <OToast toastMessage="Room Added Successfully" toastColor="success" />
+  )
+
+  useEffect(() => {
+    if (selectRoomName) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [selectRoomName])
+
+  const addBtnHandler = async () => {
+    const prepareObj = {
+      roomName: selectRoomName,
+      locationId: filterByLocationId,
+    }
+    const isAddRoom = await dispatch(
+      reduxServices.roomLists.addRoom(prepareObj),
+    )
+    if (reduxServices.roomLists.addRoom.fulfilled.match(isAddRoom)) {
+      dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
+      setSelectRoomName('')
+      dispatch(reduxServices.app.actions.addToast(successToast))
+    }
   }
 
   const handledInputChange = (
@@ -40,8 +74,10 @@ const RoomList = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'name') {
-      const newValue = value.replace(/[^a-zA-Z0-9\s]/gi, '').replace(/^\s*/, '')
-      setIsRoomName(newValue)
+      const newValue = value
+        .replace(/[^_-a-zA-Z0-9\s]/gi, '')
+        .replace(/^\s*/, '')
+      setSelectRoomName(newValue)
     }
     if (roomNameExists(value)) {
       setIsRoomNameExist(value)
@@ -91,6 +127,11 @@ const RoomList = (): JSX.Element => {
                 setFilterByLocation(e.target.value)
               }}
             >
+              {roomList.map((location, index) => (
+                <option key={index} value={location.locationId}>
+                  {location.locationName}
+                </option>
+              ))}
               <option value={''}>Select Location</option>
             </CFormSelect>
           </CCol>
@@ -99,7 +140,9 @@ const RoomList = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Name of the Room:
-            <span className={isRoomName ? 'text-white' : 'text-danger'}>*</span>
+            <span className={selectRoomName ? 'text-white' : 'text-danger'}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -109,7 +152,7 @@ const RoomList = (): JSX.Element => {
               size="sm"
               name="name"
               placeholder="Enter Name"
-              value={isRoomName}
+              value={selectRoomName}
               onChange={handledInputChange}
             />
 
@@ -124,6 +167,12 @@ const RoomList = (): JSX.Element => {
               data-testid="designationButton"
               color="info"
               className="btn-ovh me-1"
+              disabled={
+                isAddButtonEnabled
+                  ? isAddButtonEnabled && isRoomNameExist.length > 0
+                  : !isAddButtonEnabled
+              }
+              onClick={addBtnHandler}
             >
               <i className="fa fa-plus me-1"></i>Add
             </CButton>
