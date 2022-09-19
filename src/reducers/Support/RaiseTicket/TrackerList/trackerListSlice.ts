@@ -55,22 +55,18 @@ const addTrackerSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(addNewTracker.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.trackerList = action.payload
-      })
-      .addCase(addNewTracker.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addMatcher(isAnyOf(addNewTracker.fulfilled), (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
-      .addMatcher(isAnyOf(addNewTracker.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addMatcher(isAnyOf(deleteTrackerList.fulfilled), (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(addNewTracker.pending, deleteTrackerList.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(deleteTrackerList.fulfilled, addNewTracker.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
   },
 })
 

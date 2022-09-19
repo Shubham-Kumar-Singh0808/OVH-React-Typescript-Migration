@@ -55,7 +55,7 @@ const TrackerList = ({
   ) => {
     const { name, value } = event.target
     if (name === 'name') {
-      const newValue = value.replace(/[^a-zA-Z\s]/gi, '').replace(/^\s*/, '')
+      const newValue = value.replace(/[^a-z\s]/gi, '').replace(/^\s*/, '')
       setIsTrackerName(newValue)
     }
     if (trackerNameExists(value)) {
@@ -65,21 +65,16 @@ const TrackerList = ({
     }
   }
 
-  const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked)
-  }
-
   const successToast = (
     <OToast toastMessage="Tracker Added Successfully" toastColor="success" />
   )
 
   const addButtonHandler = async () => {
-    const prepareObj = {
-      name: isTrackerName,
-      permission: isChecked,
-    }
     const isAddTracker = await dispatch(
-      reduxServices.addTrackersLists.addNewTracker(prepareObj),
+      reduxServices.addTrackersLists.addNewTracker({
+        name: isTrackerName,
+        permission: isChecked,
+      }),
     )
     if (
       reduxServices.addTrackersLists.addNewTracker.fulfilled.match(isAddTracker)
@@ -174,7 +169,7 @@ const TrackerList = ({
                 id="workflow"
                 name="workflow"
                 checked={isChecked}
-                onChange={handleChecked}
+                onChange={(e) => setIsChecked(e.target.checked)}
               />
             </CCol>
           </CRow>

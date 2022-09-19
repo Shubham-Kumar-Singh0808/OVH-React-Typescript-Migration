@@ -11,20 +11,17 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React from 'react'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const TrackerListTable = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const trackerList = useTypedSelector(
     reduxServices.ticketApprovals.selectors.trackerList,
   )
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(reduxServices.ticketApprovals.getTrackerList())
-  }, [dispatch])
 
   const deleteSuccessToastMessage = (
     <OToast toastMessage="Tracker Deleted Successfully" toastColor="success" />

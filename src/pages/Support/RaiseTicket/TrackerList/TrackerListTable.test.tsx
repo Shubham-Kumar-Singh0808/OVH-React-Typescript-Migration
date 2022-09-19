@@ -3,6 +3,7 @@ import React from 'react'
 import TrackerListTable from './TrackerListTable'
 import { cleanup, render, screen } from '../../../../test/testUtils'
 import { mockAddTrackerList } from '../../../../test/data/addTrackerListData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 describe('AddTracker List without data', () => {
   beforeEach(() => {
@@ -21,18 +22,28 @@ describe('AddTracker List without data', () => {
     expect(table).toBeTruthy()
   })
 })
+
 describe('AddTracker List Table without data', () => {
   beforeEach(() => {
-    render(<TrackerListTable />, {
-      preloadedState: {
-        addTrackerLists: {
-          trackerList: mockAddTrackerList,
+    render(
+      <div>
+        <div id="backdrop-root"></div>
+        <div id="overlay-root"></div>
+        <div id="root"></div>
+        <TrackerListTable />
+      </div>,
+      {
+        preloadedState: {
+          addTrackerLists: {
+            isLoading: ApiLoadingState.succeeded,
+            trackerList: mockAddTrackerList,
+          },
         },
       },
-    })
+    )
   })
   afterEach(cleanup)
   test('should render AddTracker List component with data', () => {
-    expect(screen.getAllByText('Issue')).toBeInTheDocument()
+    expect(screen.getByText('Issue')).toBeInTheDocument()
   })
 })
