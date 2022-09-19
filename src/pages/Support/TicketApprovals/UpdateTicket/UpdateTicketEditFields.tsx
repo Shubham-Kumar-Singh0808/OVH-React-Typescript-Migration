@@ -571,7 +571,6 @@ const UpdateTicketEditFields = ({
         alignment="center"
         visible={approveModalVisibility}
         setVisible={setApproveModalVisibility}
-        closeButtonClass="d-none"
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
