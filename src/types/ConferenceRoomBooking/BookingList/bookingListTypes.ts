@@ -40,7 +40,7 @@ export type GetBookingsForSelection = {
   toDate: null | string
   startTime: string
   endTime: string
-  projectName: null
+  projectName: null | string
   employeeIds: []
   authorName: {
     id: number
@@ -52,11 +52,11 @@ export type GetBookingsForSelection = {
     fullName: string
   }
   employeeNames: []
-  isAuthorisedUser: false
+  isAuthorisedUser: boolean
   locationId: number
   employeeAvailability: null
   timeFomrat: string
-  disableEdit: false
+  disableEdit: boolean
   meetingEditDTOList: null
   meetingAttendeesDto: null
   availability: null

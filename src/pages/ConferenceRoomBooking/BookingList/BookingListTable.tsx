@@ -114,7 +114,7 @@ const BookingListTable = (): JSX.Element => {
                     {bookingItem.agenda ? (
                       <CLink
                         className="cursor-pointer text-decoration-none"
-                        data-testid="ticket-description-link"
+                        data-testid="ticket-agenda-link"
                         onClick={() => handleAgendaModal(bookingItem.agenda)}
                       >
                         {parse(agendaLimit as string)}
