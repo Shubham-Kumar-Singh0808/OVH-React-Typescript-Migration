@@ -46,6 +46,16 @@ export type Trainer = {
   profilePicPath: string
 }
 
+export type EmployeeDTO = {
+  designation: string
+  emailId: string
+  firstName: string
+  fullName: string
+  id: number
+  lastName: string
+  profilePicPath: string
+}
+
 export type Event = {
   agenda: string
   authorName: Author
@@ -54,11 +64,11 @@ export type Event = {
   conferenceType: string
   description: string
   disableEdit: boolean
-  empDesignations: []
+  empDesignations: string[]
   employeeAvailability: null
-  employeeDto: []
+  employeeDto: EmployeeDTO[]
   employeeIds: []
-  employeeNames: []
+  employeeNames: string[]
   endTime: string
   eventEditAccess: boolean
   eventId: null

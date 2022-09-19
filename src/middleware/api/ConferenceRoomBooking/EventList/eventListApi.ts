@@ -28,8 +28,21 @@ const getAllEvents = async (
   return response.data
 }
 
+const cancelEvent = async (eventId: number): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: eventListApiConfig.cancelEvent,
+    method: AllowedHttpMethods.put,
+    params: {
+      eventId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const eventListApi = {
   getAllEvents,
+  cancelEvent,
 }
 
 export default eventListApi

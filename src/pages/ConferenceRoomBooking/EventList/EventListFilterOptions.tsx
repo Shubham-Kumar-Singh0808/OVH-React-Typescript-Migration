@@ -168,22 +168,14 @@ const EventListFilterOptions = ({
                     type="button"
                     color="info"
                     id="button-search"
-                    disabled={isSearchBtnEnable}
+                    size="sm"
+                    disabled={!isSearchBtnEnable}
                     onClick={handleEventList}
                   >
                     <i className="fa fa-search"></i>
                   </CButton>
                 </CCol>
               </CRow>
-              {/* {dateError && (
-                <CRow className="mt-2">
-                  <CCol sm={{ span: 6, offset: 4 }}>
-                    <span className="text-danger">
-                      To date should be greater than From date
-                    </span>
-                  </CCol>
-                </CRow>
-              )} */}
             </CCol>
           </>
         ) : (

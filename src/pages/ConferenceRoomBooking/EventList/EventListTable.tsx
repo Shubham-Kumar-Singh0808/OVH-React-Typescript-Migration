@@ -16,23 +16,29 @@ import parse from 'html-react-parser'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
   Event,
+  EventListApiProps,
   EventListTableProps,
 } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 
-const EventListTable = (props: EventListTableProps): JSX.Element => {
+const EventListTable = (
+  props: EventListTableProps,
+  { dateSelection, searchFromDate, searchToDate }: EventListApiProps,
+): JSX.Element => {
   const [selectedEventDetails, setSelectedEventDetails] = useState({} as Event)
   const [isEventSubjectModalVisible, setIsEventSubjectModalVisible] =
     useState<boolean>(false)
-
+  const [eventId, setEventId] = useState(0)
+  const [isEventCancelModalVisible, setIsEventCancelModalVisible] =
+    useState(false)
   const eventList = useTypedSelector(reduxServices.eventList.selectors.events)
   const eventListSize = useTypedSelector(
     reduxServices.eventList.selectors.listSize,
   )
-
+  const dispatch = useAppDispatch()
   const {
     paginationRange,
     currentPage,
@@ -51,6 +57,34 @@ const EventListTable = (props: EventListTableProps): JSX.Element => {
   const handleDescriptionModal = (event: Event) => {
     setIsEventSubjectModalVisible(true)
     setSelectedEventDetails(event)
+  }
+
+  const handleShowCancelEventModal = (eventID: number) => {
+    setEventId(eventID)
+    setIsEventCancelModalVisible(true)
+  }
+
+  const handleCancelEvent = async () => {
+    setIsEventCancelModalVisible(false)
+    const cancelEventResultAction = await dispatch(
+      reduxServices.eventList.cancelEvent(eventId),
+    )
+    if (
+      reduxServices.employeeLeaveSummary.cancelEmployeeLeave.fulfilled.match(
+        cancelEventResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.eventList.getAllEvents({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          dateSelection,
+          eventTypeId: 0,
+          searchFromDate,
+          searchToDate,
+        }),
+      )
+    }
   }
 
   return (
@@ -83,7 +117,7 @@ const EventListTable = (props: EventListTableProps): JSX.Element => {
                   {event.agenda ? (
                     <CLink
                       className="cursor-pointer text-decoration-none"
-                      data-testid="ticket-description-link"
+                      data-testid="eventList-description-link"
                       onClick={() => handleDescriptionModal(event)}
                     >
                       {parse(descriptionLimit as string)}
@@ -115,6 +149,7 @@ const EventListTable = (props: EventListTableProps): JSX.Element => {
                     size="sm"
                     className="btn-ovh me-1"
                     data-testid={`holiday-edit-btn${index}`}
+                    disabled={event.disableEdit}
                   >
                     <i className="fa fa-edit" aria-hidden="true"></i>
                   </CButton>
@@ -123,8 +158,7 @@ const EventListTable = (props: EventListTableProps): JSX.Element => {
                     size="sm"
                     className="btn-ovh me-1"
                     data-testid={`cancel-btn${index}`}
-                    disabled
-                    // onClick={() => handleShowCancelModal()}
+                    onClick={() => handleShowCancelEventModal(event.id)}
                   >
                     <i className="fa fa-times" aria-hidden="true"></i>
                   </CButton>
@@ -183,37 +217,70 @@ const EventListTable = (props: EventListTableProps): JSX.Element => {
       >
         <>
           <CCardHeader>{selectedEventDetails.agenda}</CCardHeader>
-          <p>
+          <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold">Organizer :</span>
             {selectedEventDetails.authorName?.fullName}
           </p>
-          <p>
+          <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold">Date :</span>
             <>
               {`${selectedEventDetails.fromDate} to ${selectedEventDetails.toDate} from
               ${selectedEventDetails.startTime} to ${selectedEventDetails.endTime}`}
             </>
           </p>
-          <p>
+          <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold">Location :</span>
             {`${selectedEventDetails.roomName} in ${selectedEventDetails.locationName}`}
           </p>
-          <p>
+          <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold">Description :</span>
             {selectedEventDetails.description !== null
               ? selectedEventDetails.description
               : 'N/A'}
           </p>
-          <p>
+          <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold">Trainer :</span>
             {selectedEventDetails.trainerName?.fullName !== null
               ? `${selectedEventDetails.trainerName?.fullName} - ${selectedEventDetails.trainerName?.designation}`
               : 'N/A'}
           </p>
-          <p>
-            <span className="col-sm-2 text-right fw-bold"></span>
+          <p className="d-flex">
+            <span className="col-sm-2 text-right fw-bold">Attendees:</span>
+            {selectedEventDetails.employeeDto?.length ? (
+              <CTable className="mt-4 mb-4" align="middle">
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell>Name of Employee</CTableHeaderCell>
+                    <CTableHeaderCell>Designation</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                  {selectedEventDetails.employeeDto?.map((emp, index) => {
+                    return (
+                      <CTableRow key={index}>
+                        <CTableDataCell>{emp.fullName}</CTableDataCell>
+                        <CTableDataCell>{emp.designation}</CTableDataCell>
+                      </CTableRow>
+                    )
+                  })}
+                </CTableBody>
+              </CTable>
+            ) : (
+              <>N/A</>
+            )}
           </p>
         </>
+      </OModal>
+      <OModal
+        visible={isEventCancelModalVisible}
+        setVisible={setIsEventCancelModalVisible}
+        modalTitle="Cancel Event"
+        closeButtonClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleCancelEvent}
+      >
+        <>Do you Really want to cancel this Event ?</>
       </OModal>
     </>
   )

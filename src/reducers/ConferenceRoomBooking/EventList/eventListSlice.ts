@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import eventListApi from '../../../middleware/api/ConferenceRoomBooking/EventList/eventListApi'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   Event,
@@ -21,6 +21,23 @@ const getAllEvents = createAsyncThunk(
     }
   },
 )
+
+const cancelEvent = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('eventList/cancelEvent', async (eventId, thunkApi) => {
+  try {
+    return await eventListApi.cancelEvent(eventId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
 
 const initialEventListState: EventListSliceState = {
   isLoading: ApiLoadingState.idle,
@@ -44,9 +61,15 @@ const eventListSlice = createSlice({
         state.events = action.payload.list
         state.listSize = action.payload.size
       })
-      .addMatcher(isAnyOf(getAllEvents.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(cancelEvent.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
       })
+      .addMatcher(
+        isAnyOf(getAllEvents.pending, cancelEvent.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
@@ -58,6 +81,7 @@ const listSize = (state: RootState): number => state.eventList.listSize
 
 export const eventListThunk = {
   getAllEvents,
+  cancelEvent,
 }
 
 export const eventListSelectors = {

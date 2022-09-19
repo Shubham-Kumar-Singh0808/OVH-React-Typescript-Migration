@@ -383,4 +383,5 @@ export interface UpdateTicketApi extends ApiBase {
 
 export interface EventListApi extends ApiBase {
   getAllEvents: string
+  cancelEvent: string
 }
