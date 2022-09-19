@@ -8,6 +8,8 @@ import {
   Event,
   EventListApiProps,
   EventListSliceState,
+  FeedbackForm,
+  FeedbackFormApiProps,
 } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 
 const getAllEvents = createAsyncThunk(
@@ -39,12 +41,26 @@ const cancelEvent = createAsyncThunk<
   }
 })
 
+const getFeedbackFormList = createAsyncThunk(
+  'eventList/getFeedbackFormList',
+  async (props: FeedbackFormApiProps, thunkApi) => {
+    try {
+      return await eventListApi.getFeedbackFormList(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialEventListState: EventListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   events: [],
   selectedMonth: '',
   listSize: 0,
+  feedbackFormDetails: [],
+  feedbackFormListSize: 0,
 }
 const eventListSlice = createSlice({
   name: 'eventList',
@@ -64,8 +80,17 @@ const eventListSlice = createSlice({
       .addCase(cancelEvent.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
+      .addCase(getFeedbackFormList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.feedbackFormDetails = action.payload.list
+        state.feedbackFormListSize = action.payload.size
+      })
       .addMatcher(
-        isAnyOf(getAllEvents.pending, cancelEvent.pending),
+        isAnyOf(
+          getAllEvents.pending,
+          cancelEvent.pending,
+          getFeedbackFormList.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
@@ -78,10 +103,15 @@ const events = (state: RootState): Event[] => state.eventList.events
 const selectedMonth = (state: RootState): string =>
   state.eventList.selectedMonth
 const listSize = (state: RootState): number => state.eventList.listSize
+const feedbackForms = (state: RootState): FeedbackForm[] =>
+  state.eventList.feedbackFormDetails
+const feedbackFormListSize = (state: RootState): number =>
+  state.eventList.feedbackFormListSize
 
 export const eventListThunk = {
   getAllEvents,
   cancelEvent,
+  getFeedbackFormList,
 }
 
 export const eventListSelectors = {
@@ -89,6 +119,8 @@ export const eventListSelectors = {
   events,
   listSize,
   selectedMonth,
+  feedbackForms,
+  feedbackFormListSize,
 }
 
 export const eventListService = {

@@ -17,6 +17,12 @@ export type EventListApiProps = {
   searchToDate?: string
 }
 
+export type FeedbackFormApiProps = {
+  endIndex?: number
+  eventId?: number
+  startIndex?: number
+}
+
 export type EventListOptions = {
   selectDate: string
   setSelectDate: (value: string) => void
@@ -92,15 +98,32 @@ export type Event = {
   trainerName: Trainer
 }
 
+export type FeedbackForm = {
+  id: number
+  createdBy: string
+  createdDate: string
+  employeeId: null
+  eventId: number
+  feedBackFormName: string
+  feedbackFormPath: string
+}
+
 export type GetEventListResponse = {
   list: Event[]
   size: number
 }
 
+export type GetFeedbackFormResponse = {
+  list: FeedbackForm[]
+  size: number
+}
+
 export type EventListSliceState = {
   events: Event[]
+  feedbackFormDetails: FeedbackForm[]
   selectedMonth: string
   listSize: number
+  feedbackFormListSize: number
   isLoading: LoadingState
   error: ValidationError
 }

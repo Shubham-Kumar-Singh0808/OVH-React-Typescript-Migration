@@ -13,6 +13,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
+import { Link } from 'react-router-dom'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -162,13 +163,14 @@ const EventListTable = (
                   >
                     <i className="fa fa-times" aria-hidden="true"></i>
                   </CButton>
-                  <CButton
-                    color="info"
-                    size="sm"
-                    className="btn-ovh-employee-list"
-                  >
-                    <i className="text-white fa fa-eye"></i>
-                  </CButton>
+                  <Link to={`/trainingFeedBackForm/${event.id}`}>
+                    <CButton
+                      className="btn-ovh me-2 sh-eye-btn-color"
+                      size="sm"
+                    >
+                      <i className="fa fa-eye" aria-hidden="true"></i>
+                    </CButton>
+                  </Link>
                 </CTableDataCell>
               </CTableRow>
             )

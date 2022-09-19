@@ -1,6 +1,8 @@
 import {
   EventListApiProps,
+  FeedbackFormApiProps,
   GetEventListResponse,
+  GetFeedbackFormResponse,
 } from '../../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -40,9 +42,27 @@ const cancelEvent = async (eventId: number): Promise<number | undefined> => {
   return response.data
 }
 
+const getFeedbackFormList = async (
+  props: FeedbackFormApiProps,
+): Promise<GetFeedbackFormResponse> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: eventListApiConfig.getFeedbackFormList,
+    method: AllowedHttpMethods.get,
+    params: {
+      endIndex: props.endIndex ?? 20,
+      startIndex: props.startIndex ?? 0,
+      eventId: props.eventId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const eventListApi = {
   getAllEvents,
   cancelEvent,
+  getFeedbackFormList,
 }
 
 export default eventListApi

@@ -461,4 +461,5 @@ export const updateTicketApiConfig: UpdateTicketApi = {
 export const eventListApiConfig: EventListApi = {
   getAllEvents: apiPrefix + '/meetingRequest/getAllEvents',
   cancelEvent: apiPrefix + '/meetingRequest/cancelEvent',
+  getFeedbackFormList: apiPrefix + '/meetingRequest/getFeedbackFormList',
 }

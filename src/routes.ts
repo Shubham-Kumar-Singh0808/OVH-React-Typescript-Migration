@@ -163,6 +163,13 @@ const UpdateTicket = React.lazy(
 const EventsList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
 )
+
+const FeedbackForms = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/EventList/FeedbackForms/FeedbackFormsList'
+    ),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -370,6 +377,11 @@ const routes = [
     path: '/probationaryList',
     name: 'Upcoming Probationary End Dates',
     component: ProbationaryList,
+  },
+  {
+    path: '/trainingFeedBackForm/:eventId',
+    name: 'Feedback Forms',
+    component: FeedbackForms,
   },
 ]
 
