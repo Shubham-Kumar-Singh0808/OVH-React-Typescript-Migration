@@ -8,17 +8,21 @@ import {
   SelectFinancialYear,
 } from '../../../../types/Leaves/LeaveReports/leaveReportTypes'
 
+const commonParamsUtil = (props: LeaveReportsProps) => {
+  return {
+    financialYear: props.financialYear ?? '',
+    startIndex: props.startIndex ?? '',
+    endIndex: props.endIndex ?? '',
+  }
+}
+
 const getAllEmployeesLeaveSummaries = async (
   props: LeaveReportsProps,
 ): Promise<LeaveSummaries> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: leaveReportsApiConfig.getLeaveSummaries,
     method: AllowedHttpMethods.get,
-    params: {
-      financialYear: props.financialYear ?? '',
-      startIndex: props.startIndex ?? '',
-      endIndex: props.endIndex ?? '',
-    },
+    params: commonParamsUtil(props),
   })
   const response = await axios(requestConfig)
   return response.data
@@ -27,15 +31,11 @@ const getAllEmployeesLeaveSummaries = async (
 const searchLeaveSummaries = async (
   props: SearchLeaveReportsProps,
 ): Promise<LeaveSummaries> => {
+  const paramsResult = commonParamsUtil(props)
   const requestConfig = getAuthenticatedRequestConfig({
     url: leaveReportsApiConfig.searchLeaveSummaries,
     method: AllowedHttpMethods.get,
-    params: {
-      financialYear: props.financialYear ?? '',
-      search: props.search ?? '',
-      startIndex: props.startIndex ?? '',
-      endIndex: props.endIndex ?? '',
-    },
+    params: { ...paramsResult, search: props.search ?? '' },
   })
   const response = await axios(requestConfig)
   return response.data
@@ -44,14 +44,13 @@ const searchLeaveSummaries = async (
 const exportLeaveReportData = async (
   props: SearchLeaveReportsProps,
 ): Promise<Blob | undefined> => {
+  const paramsResult = commonParamsUtil(props)
   const requestConfig = getAuthenticatedRequestConfig({
     url: leaveReportsApiConfig.downloadLeaveReportList,
     method: AllowedHttpMethods.get,
     params: {
-      financialYear: props.financialYear ?? '',
+      ...paramsResult,
       search: props.search ?? '',
-      startIndex: props.startIndex ?? '',
-      endIndex: props.endIndex ?? '',
       token: localStorage.getItem('token') ?? '',
     },
     responseType: 'blob',
