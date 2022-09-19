@@ -53,6 +53,7 @@ import {
   DashboardApi,
   UpdateTicketApi,
   BookingListApi,
+  EventTypeListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -421,6 +422,7 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
     apiPrefix + '/supportManagement/getAllTicketsForApproval',
   exportTicketApprovalList:
     apiPrefix + '/supportManagement/exportTicketApprovalList',
+  rejectManagerTicket: apiPrefix + '/supportManagement/rejectManagerTicket',
 }
 
 export const createNewTicketApiConfig: RaiseNewTicketApi = {
@@ -463,4 +465,12 @@ export const bookingListApiConfig: BookingListApi = {
   getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
   getBookingsForSelection:
     apiPrefix + '/meetingRequest/getBookingsForSelection',
+}
+
+export const eventTypeListApiConfig: EventTypeListApi = {
+  getAllEventTypes: apiPrefix + '/meetingRequest/getAllEventTypes',
+  addEventType: apiPrefix + '/meetingRequest/addEventType',
+  deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
+  updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
 }
