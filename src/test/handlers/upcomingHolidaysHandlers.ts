@@ -33,9 +33,17 @@ export const upcomingHolidaysHandlers = [
   }),
 
   //getHolidayData api mock
-  rest.get(dashboardApiConfig.getHolidayInformation, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockEditHoliday))
-  }),
+  rest.get(
+    `${dashboardApiConfig.getHolidayInformation}/${150}`,
+    (_req, res, ctx) => {
+      return res(
+        ctx.json({
+          status: 200,
+          data: mockEditHoliday,
+        }),
+      )
+    },
+  ),
 
   //updateHolidayData api mock
   rest.get(dashboardApiConfig.updateHoliday, (_req, res, ctx) => {
@@ -45,5 +53,14 @@ export const upcomingHolidaysHandlers = [
   //updateHolidayData api mock
   rest.get(dashboardApiConfig.updateHoliday, (_req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockEditHoliday))
+  }),
+  //deleteHoliday
+  rest.get(dashboardApiConfig.deleteHoliday, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: {},
+      }),
+    )
   }),
 ]
