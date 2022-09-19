@@ -87,6 +87,18 @@ const getAllTicketsForApproval = createAsyncThunk(
   },
 )
 
+const rejectTicket = createAsyncThunk(
+  'ticketApprovals/rejectTicket',
+  async (ticketId: number, thunkApi) => {
+    try {
+      return await ticketApprovalsApi.rejectTicket(ticketId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialTicketApprovalsSliceState: TicketApprovalsSliceState = {
   isLoading: ApiLoadingState.idle,
   departmentNameList: [],
@@ -95,12 +107,17 @@ const initialTicketApprovalsSliceState: TicketApprovalsSliceState = {
   subCategoryList: [],
   ticketsForApproval: { size: 0, list: [] },
   getAllLookUps: [],
+  selectedTicketId: 0,
 }
 
 const ticketApprovalsSlice = createSlice({
   name: 'ticketApprovals',
   initialState: initialTicketApprovalsSliceState,
-  reducers: {},
+  reducers: {
+    selectTicketId: (state, action) => {
+      state.selectedTicketId = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getDepartmentNameList.fulfilled, (state, action) => {
@@ -125,12 +142,16 @@ const ticketApprovalsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getAllLookUps = action.payload
       })
+      .addCase(rejectTicket.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(
           getDepartmentNameList.pending,
           getTrackerList.pending,
           getAllTicketsForApproval.pending,
           getAllLookUps.pending,
+          rejectTicket.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -146,6 +167,7 @@ const ticketApprovalsThunk = {
   getSubCategoryList,
   getAllTicketsForApproval,
   getAllLookUps,
+  rejectTicket,
 }
 
 const isLoading = (state: RootState): ApiLoadingState =>
@@ -166,6 +188,9 @@ const trackerList = (state: RootState): TrackerList[] =>
 const allLookUps = (state: RootState): GetAllLookUps[] =>
   state.ticketApprovals.getAllLookUps
 
+const selectTicketId = (state: RootState): number =>
+  state.ticketApprovals.selectedTicketId
+
 const ticketsForApproval = (
   state: RootState,
 ): GetAllTicketsForApprovalResponse => state.ticketApprovals.ticketsForApproval
@@ -178,6 +203,7 @@ const ticketApprovalsSelectors = {
   ticketsForApproval,
   isLoading,
   allLookUps,
+  selectTicketId,
 }
 
 export const ticketApprovalsService = {

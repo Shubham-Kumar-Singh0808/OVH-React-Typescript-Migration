@@ -32,7 +32,6 @@ describe('Add Location List without data', () => {
     const inputElement = screen.getByTestId('locationName')
     userEvent.type(inputElement, 'Skype')
     await waitFor(() => {
-      // const errorMsg = screen.getByTestId('LocationNameAlreadyExist')
       expect(
         screen.getByText('Location name already exist'),
       ).toBeInTheDocument()
