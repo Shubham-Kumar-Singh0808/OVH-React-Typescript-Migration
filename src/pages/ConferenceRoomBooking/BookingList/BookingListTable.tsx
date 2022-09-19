@@ -5,8 +5,13 @@ import {
   CTableHeaderCell,
 } from '@coreui/react-pro'
 import React from 'react'
+import { useTypedSelector } from '../../../stateStore'
 
 const BookingListTable = (): JSX.Element => {
+  const BookingsForSelection = useTypedSelector(
+    (state) => state.bookingList.getBookingsForSelection,
+  )
+  console.log(BookingsForSelection)
   return (
     <>
       <CTable responsive striped className="text-start mt-5">

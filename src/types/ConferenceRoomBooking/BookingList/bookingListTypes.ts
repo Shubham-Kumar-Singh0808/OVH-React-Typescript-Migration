@@ -22,7 +22,7 @@ export type BookingListSliceState = {
 }
 
 export type GetBookingsForSelectionProps = {
-  location: number
+  location: number | number
   meetingStatus: string
   room: string
   status: string

@@ -4,10 +4,10 @@ import BookingListTable from './BookingListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const BookingList = (): JSX.Element => {
-  const [location, setLocation] = useState<string>('')
+  const [location, setLocation] = useState<string>('1')
   const [room, setRoom] = useState<string>('')
-  const [meetingStatus, setMeetingStatus] = useState<string>('')
-  const [selectDate, setSelectDate] = useState<string>('')
+  const [meetingStatus, setMeetingStatus] = useState<string>('New')
+  const [selectDate, setSelectDate] = useState<string>('Today')
   const [date, setDate] = useState<string>('')
   return (
     <>

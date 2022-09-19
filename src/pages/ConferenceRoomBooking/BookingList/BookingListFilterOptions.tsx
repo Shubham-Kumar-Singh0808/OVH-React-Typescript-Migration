@@ -44,6 +44,19 @@ const BookingListFilterOptions = ({
     }
   }, [dispatch, location])
 
+  useEffect(() => {
+    if (location || meetingStatus || room || status) {
+      dispatch(
+        reduxServices.bookingList.getBookingsForSelection({
+          location: Number(location),
+          meetingStatus,
+          room,
+          status: selectDate || date,
+        }),
+      )
+    }
+  }, [dispatch, location, meetingStatus, room, status])
+
   return (
     <>
       <CRow className="mb-5">
@@ -62,7 +75,6 @@ const BookingListFilterOptions = ({
               setLocation(e.target.value)
             }}
           >
-            <option value={''}>Select</option>
             {meetingLocation?.map((location, index) => (
               <option key={index} value={location.id}>
                 {location.locationName}
