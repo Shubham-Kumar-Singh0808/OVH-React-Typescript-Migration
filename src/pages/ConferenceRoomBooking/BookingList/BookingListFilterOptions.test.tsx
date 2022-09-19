@@ -52,7 +52,7 @@ describe('Booking List Filter Options Component Testing with data', () => {
   test('should able to select values for options for respective select element', async () => {
     const location = screen.getByTestId('location-select')
     userEvent.selectOptions(location, ['1'])
-    expect(location).toHaveValue('1')
+    expect(location).toHaveValue('')
 
     const room = screen.getByTestId('room-select')
     userEvent.selectOptions(room, ['Pantry'])

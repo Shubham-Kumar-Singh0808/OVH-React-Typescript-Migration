@@ -45,19 +45,25 @@ const BookingListFilterOptions = ({
   }, [dispatch, location])
 
   useEffect(() => {
-    if (location || meetingStatus || room || status) {
+    if (location || meetingStatus || room || date) {
       dispatch(
         reduxServices.bookingList.getBookingsForSelection({
           location: Number(location),
           meetingStatus,
           room,
-          status: selectDate || date,
+          status: date
+            ? new Date(date).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '' || selectDate,
         }),
       )
       dispatch(reduxServices.bookingList.actions.setCurrentPage(1))
       dispatch(reduxServices.bookingList.actions.setPageSize(20))
     }
-  }, [dispatch, location, meetingStatus, room, status])
+  }, [dispatch, location, meetingStatus, room, date])
 
   return (
     <>
@@ -77,6 +83,7 @@ const BookingListFilterOptions = ({
               setLocation(e.target.value)
             }}
           >
+            <option value={''}>Select Location</option>
             {meetingLocation?.map((location, index) => (
               <option key={index} value={location.id}>
                 {location.locationName}

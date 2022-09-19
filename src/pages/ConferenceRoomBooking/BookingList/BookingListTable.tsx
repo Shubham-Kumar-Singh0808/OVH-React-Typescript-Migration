@@ -117,7 +117,7 @@ const BookingListTable = (): JSX.Element => {
                         data-testid="ticket-agenda-link"
                         onClick={() => handleAgendaModal(bookingItem.agenda)}
                       >
-                        {parse(agendaLimit as string)}
+                        {parse(agendaLimit)}
                       </CLink>
                     ) : (
                       'N/A'
@@ -215,13 +215,13 @@ const BookingListTable = (): JSX.Element => {
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
       >
-        <p>
+        <h4 className="model-text">
           <div
             dangerouslySetInnerHTML={{
               __html: modalAgenda,
             }}
           />
-        </p>
+        </h4>
       </OModal>
     </>
   )
