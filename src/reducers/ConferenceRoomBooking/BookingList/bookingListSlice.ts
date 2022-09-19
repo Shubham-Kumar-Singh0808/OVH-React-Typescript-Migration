@@ -58,12 +58,21 @@ const initialBookingListState: BookingListSliceState = {
   roomsOfLocation: [],
   getBookingsForSelection: [],
   isLoading: ApiLoadingState.idle,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const bookingListSlice = createSlice({
   name: 'conferenceRoomBooking',
   initialState: initialBookingListState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -92,6 +101,14 @@ const bookingListSlice = createSlice({
   },
 })
 
+const isLoading = (state: RootState): ApiLoadingState =>
+  state.bookingList.isLoading
+
+const pageFromState = (state: RootState): number =>
+  state.bookingList.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.bookingList.pageSize
+
 const allMeetingLocations = (state: RootState): MeetingLocations[] =>
   state.bookingList.meetingLocation
 
@@ -102,9 +119,12 @@ const bookingsForSelection = (state: RootState): GetBookingsForSelection[] =>
   state.bookingList.getBookingsForSelection
 
 const bookingListSelectors = {
+  isLoading,
   roomsOfLocationResponse,
   allMeetingLocations,
   bookingsForSelection,
+  pageFromState,
+  pageSizeFromState,
 }
 
 const bookingListThunk = {

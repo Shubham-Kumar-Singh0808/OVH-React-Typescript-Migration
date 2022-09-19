@@ -13,7 +13,7 @@ const BookingList = (): JSX.Element => {
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title={'Ticket Approvals'}
+        title={'Meeting Request Summary'}
         CFooterClassName="d-none"
       >
         <BookingListFilterOptions

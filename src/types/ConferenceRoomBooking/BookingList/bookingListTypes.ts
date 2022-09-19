@@ -19,6 +19,8 @@ export type BookingListSliceState = {
   roomsOfLocation: RoomsOfLocation[]
   getBookingsForSelection: GetBookingsForSelection[]
   isLoading: LoadingState
+  currentPage: number
+  pageSize: number
 }
 
 export type GetBookingsForSelectionProps = {

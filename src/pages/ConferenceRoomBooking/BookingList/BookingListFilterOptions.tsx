@@ -54,6 +54,8 @@ const BookingListFilterOptions = ({
           status: selectDate || date,
         }),
       )
+      dispatch(reduxServices.bookingList.actions.setCurrentPage(1))
+      dispatch(reduxServices.bookingList.actions.setPageSize(20))
     }
   }, [dispatch, location, meetingStatus, room, status])
 
