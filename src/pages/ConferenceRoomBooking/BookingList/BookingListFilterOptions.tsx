@@ -84,9 +84,9 @@ const BookingListFilterOptions = ({
             }}
           >
             <option value={''}>Select Location</option>
-            {meetingLocation?.map((location, index) => (
-              <option key={index} value={location.id}>
-                {location.locationName}
+            {meetingLocation?.map((locationItem, index) => (
+              <option key={index} value={locationItem.id}>
+                {locationItem.locationName}
               </option>
             ))}
           </CFormSelect>
@@ -107,9 +107,9 @@ const BookingListFilterOptions = ({
             }}
           >
             <option value={''}>Select Room</option>
-            {roomsOfLocation?.map((room, index) => (
-              <option key={index} value={room.id}>
-                {room.roomName}
+            {roomsOfLocation?.map((roomItem, index) => (
+              <option key={index} value={roomItem.id}>
+                {roomItem.roomName}
               </option>
             ))}
           </CFormSelect>
