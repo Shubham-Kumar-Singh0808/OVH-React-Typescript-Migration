@@ -140,17 +140,26 @@ const BookingListTable = (): JSX.Element => {
                       '' +
                       bookingItem.authorName.lastName}
                   </CTableDataCell>
-
                   <CTableDataCell scope="row">
-                    <>
-                      <CButton color="info" className="btn-ovh me-2">
-                        <i className="fa fa-edit" aria-hidden="true"></i>
-                      </CButton>
+                    {bookingItem.isAuthorisedUser ? (
+                      <>
+                        <CButton color="info" className="btn-ovh me-2">
+                          <i className="fa fa-edit" aria-hidden="true"></i>
+                        </CButton>
 
-                      <CButton color="danger" className="btn-ovh me-2">
-                        <i className="fa fa-times" aria-hidden="true"></i>
-                      </CButton>
-                    </>
+                        <CButton
+                          color="btn btn-warning"
+                          className="btn-ovh me-2"
+                        >
+                          <i
+                            className="fa fa-times text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </>
+                    ) : (
+                      ''
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )

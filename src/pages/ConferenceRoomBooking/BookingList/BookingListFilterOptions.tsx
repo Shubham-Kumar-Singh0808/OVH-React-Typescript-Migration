@@ -70,7 +70,7 @@ const BookingListFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="location"
-            data-testid="form-select1"
+            data-testid="location-select"
             name="location"
             value={location}
             onChange={(e) => {
@@ -92,7 +92,7 @@ const BookingListFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="billingStatus"
-            data-testid="form-select2"
+            data-testid="room-select"
             name="billingStatus"
             value={room}
             onChange={(e) => {
@@ -115,7 +115,7 @@ const BookingListFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="meetingStatus"
-            data-testid="form-select2"
+            data-testid="meetingStatus-select"
             name="meetingStatus"
             value={meetingStatus}
             onChange={(e) => {
@@ -138,7 +138,7 @@ const BookingListFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="selectDate"
-            data-testid="form-select1"
+            data-testid="date-option"
             name="selectDate"
             value={selectDate}
             onChange={(e) => {
