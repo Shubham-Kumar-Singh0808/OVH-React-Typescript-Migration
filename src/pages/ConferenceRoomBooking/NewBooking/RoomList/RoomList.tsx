@@ -63,6 +63,7 @@ const RoomList = (): JSX.Element => {
     if (reduxServices.roomLists.addRoom.fulfilled.match(isAddRoom)) {
       dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
       setSelectRoomName('')
+      setFilterByLocation('')
       dispatch(reduxServices.app.actions.addToast(successToast))
     }
   }
