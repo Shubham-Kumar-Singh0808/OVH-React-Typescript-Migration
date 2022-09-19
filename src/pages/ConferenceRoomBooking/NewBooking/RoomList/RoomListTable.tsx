@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CCol,
@@ -24,10 +24,6 @@ const RoomListTable = (): JSX.Element => {
 
   const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
-  }, [dispatch])
 
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Room Deleted Successfully" />
