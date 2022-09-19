@@ -6,7 +6,8 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import bookingListApi from '../../../middleware/api/ConferenceRoomBooking/BookingList/bookingListApi'
 import {
   BookingListSliceState,
-  getBookingsForSelectionProps,
+  GetBookingsForSelection,
+  GetBookingsForSelectionProps,
   MeetingLocations,
   RoomsOfLocation,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
@@ -42,7 +43,7 @@ const getRoomsOfLocation = createAsyncThunk<
 
 const getBookingsForSelection = createAsyncThunk(
   'conferenceRoomBooking/getBookingsForSelection',
-  async (props: getBookingsForSelectionProps, thunkApi) => {
+  async (props: GetBookingsForSelectionProps, thunkApi) => {
     try {
       return await bookingListApi.getBookingsForSelection(props)
     } catch (error) {
@@ -55,6 +56,7 @@ const getBookingsForSelection = createAsyncThunk(
 const initialBookingListState: BookingListSliceState = {
   meetingLocation: [],
   roomsOfLocation: [],
+  getBookingsForSelection: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -73,6 +75,10 @@ const bookingListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.roomsOfLocation = action.payload as RoomsOfLocation[]
       })
+      .addCase(getBookingsForSelection.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getBookingsForSelection = action.payload
+      })
       .addMatcher(
         isAnyOf(
           getAllMeetingLocations.pending,
@@ -86,15 +92,19 @@ const bookingListSlice = createSlice({
   },
 })
 
-const AllMeetingLocations = (state: RootState): MeetingLocations[] =>
+const allMeetingLocations = (state: RootState): MeetingLocations[] =>
   state.bookingList.meetingLocation
 
-const RoomsOfLocationResponse = (state: RootState): RoomsOfLocation[] =>
+const roomsOfLocationResponse = (state: RootState): RoomsOfLocation[] =>
   state.bookingList.roomsOfLocation
 
+const bookingsForSelection = (state: RootState): GetBookingsForSelection[] =>
+  state.bookingList.getBookingsForSelection
+
 const bookingListSelectors = {
-  RoomsOfLocationResponse,
-  AllMeetingLocations,
+  roomsOfLocationResponse,
+  allMeetingLocations,
+  bookingsForSelection,
 }
 
 const bookingListThunk = {

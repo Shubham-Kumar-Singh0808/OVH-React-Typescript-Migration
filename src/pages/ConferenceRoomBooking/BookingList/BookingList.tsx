@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BookingListFilterOptions from './BookingListFilterOptions'
 import BookingListTable from './BookingListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const BookingList = (): JSX.Element => {
+  const [location, setLocation] = useState<string>('')
+  const [room, setRoom] = useState<string>('')
+  const [meetingStatus, setMeetingStatus] = useState<string>('')
+  const [selectDate, setSelectDate] = useState<string>('')
+  const [date, setDate] = useState<string>('')
   return (
     <>
       <OCard
@@ -11,7 +16,18 @@ const BookingList = (): JSX.Element => {
         title={'Ticket Approvals'}
         CFooterClassName="d-none"
       >
-        <BookingListFilterOptions />
+        <BookingListFilterOptions
+          location={location}
+          setLocation={setLocation}
+          room={room}
+          setRoom={setRoom}
+          meetingStatus={meetingStatus}
+          setMeetingStatus={setMeetingStatus}
+          selectDate={selectDate}
+          setSelectDate={setSelectDate}
+          date={date}
+          setDate={setDate}
+        />
         <BookingListTable />
       </OCard>
     </>

@@ -1,5 +1,6 @@
 import {
-  getBookingsForSelectionProps,
+  GetBookingsForSelection,
+  GetBookingsForSelectionProps,
   MeetingLocations,
   RoomsOfLocation,
 } from '../../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
@@ -35,8 +36,8 @@ const getRoomsOfLocation = async (
 }
 
 const getBookingsForSelection = async (
-  props: getBookingsForSelectionProps,
-): Promise<RoomsOfLocation> => {
+  props: GetBookingsForSelectionProps,
+): Promise<GetBookingsForSelection[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: bookingListApiConfig.getBookingsForSelection,
     method: AllowedHttpMethods.get,

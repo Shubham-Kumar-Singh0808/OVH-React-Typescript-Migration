@@ -1,4 +1,4 @@
-import { LoadingState, ValidationError } from '../../commonTypes'
+import { LoadingState } from '../../commonTypes'
 
 export type MeetingLocations = {
   id: number
@@ -17,20 +17,65 @@ export type RoomsOfLocation = {
 export type BookingListSliceState = {
   meetingLocation: MeetingLocations[]
   roomsOfLocation: RoomsOfLocation[]
+  getBookingsForSelection: GetBookingsForSelection[]
   isLoading: LoadingState
 }
 
-export type getBookingsForSelectionProps = {
+export type GetBookingsForSelectionProps = {
   location: number
   meetingStatus: string
   room: string
   status: string
 }
 
-export type BookingList = {
-  location: number
+export type GetBookingsForSelection = {
+  id: number
+  agenda: string
+  roomId: number
+  roomName: string
   locationName: string
+  fromDate: string
+  toDate: null | string
+  startTime: string
+  endTime: string
+  projectName: null
+  employeeIds: []
+  authorName: {
+    id: number
+    profilePicPath: string
+    firstName: string
+    lastName: string
+    emailId: string
+    designation: string
+    fullName: string
+  }
+  employeeNames: []
+  isAuthorisedUser: false
+  locationId: number
+  employeeAvailability: null
+  timeFomrat: string
+  disableEdit: false
+  meetingEditDTOList: null
+  meetingAttendeesDto: null
+  availability: null
   meetingStatus: string
-  room: string
-  status: string
+  conferenceType: string
+  eventTypeName: null
+  eventTypeId: null
+  eventLocation: string
+  eventId: number
+  description: string
+  eventEditAccess: true
+  empDesignations: []
+  employeeDto: []
+  trainerName: {
+    id: number
+    profilePicPath: string
+    firstName: string
+    lastName: string
+    emailId: string
+    designation: string
+    fullName: string
+  }
+  availableDates: null
 }
