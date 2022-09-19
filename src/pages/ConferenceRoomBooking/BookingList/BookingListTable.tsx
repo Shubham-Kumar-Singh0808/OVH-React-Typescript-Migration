@@ -201,7 +201,9 @@ const BookingListTable = (): JSX.Element => {
       ) : (
         <CCol>
           <CRow className="mt-3 ms-3">
-            <h5>No Records Found... </h5>
+            <p>
+              <strong>No Records Found... </strong>
+            </p>
           </CRow>
         </CCol>
       )}
