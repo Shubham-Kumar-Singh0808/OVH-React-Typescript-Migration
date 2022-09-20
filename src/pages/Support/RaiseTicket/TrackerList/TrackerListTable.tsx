@@ -37,17 +37,17 @@ const TrackerListTable = (): JSX.Element => {
 
   const deleteTrackerButtonHandler = async (id: number) => {
     const isDeleteTracker = await dispatch(
-      reduxServices.addTrackersLists.deleteTrackerList(id),
+      reduxServices.addTrackerLists.deleteTrackerList(id),
     )
     if (
-      reduxServices.addTrackersLists.deleteTrackerList.fulfilled.match(
+      reduxServices.addTrackerLists.deleteTrackerList.fulfilled.match(
         isDeleteTracker,
       )
     ) {
       dispatch(reduxServices.ticketApprovals.getTrackerList())
       dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
     } else if (
-      (reduxServices.addTrackersLists.deleteTrackerList.rejected.match(
+      (reduxServices.addTrackerLists.deleteTrackerList.rejected.match(
         isDeleteTracker,
       ) &&
         isDeleteTracker.payload === 405) ||
