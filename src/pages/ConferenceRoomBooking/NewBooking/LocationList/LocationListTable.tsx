@@ -18,8 +18,8 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const LocationListTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [isDeleteLocationId, setIsDeleteLocationId] = useState(0)
-  const [isDeleteLocationName, setIsDeleteLocationName] = useState('')
+  const [deleteLocationId, setDeleteLocationId] = useState(0)
+  const [deleteLocationName, setDeleteLocationName] = useState('')
 
   const dispatch = useAppDispatch()
 
@@ -34,7 +34,7 @@ const LocationListTable = (): JSX.Element => {
   const confirmDeleteLocation = async () => {
     setIsDeleteModalVisible(false)
     await dispatch(
-      reduxServices.addLocationList.deleteLocation(isDeleteLocationId),
+      reduxServices.addLocationList.deleteLocation(deleteLocationId),
     )
 
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
@@ -43,8 +43,8 @@ const LocationListTable = (): JSX.Element => {
 
   const deleteButtonHandler = (id: number, locationName: string) => {
     setIsDeleteModalVisible(true)
-    setIsDeleteLocationId(id)
-    setIsDeleteLocationName(locationName)
+    setDeleteLocationId(id)
+    setDeleteLocationName(locationName)
   }
 
   return (
@@ -105,7 +105,7 @@ const LocationListTable = (): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={confirmDeleteLocation}
       >
-        {`Do you really want to delete this ${isDeleteLocationName} Location ?`}
+        {`Do you really want to delete this ${deleteLocationName} Location ?`}
       </OModal>
     </>
   )

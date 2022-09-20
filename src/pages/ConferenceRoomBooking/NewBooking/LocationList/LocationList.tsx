@@ -17,8 +17,8 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const LocationList = (): JSX.Element => {
-  const [isLocationName, setIsLocationName] = useState('')
-  const [isLocationNameExist, setIsLocationNameExist] = useState('')
+  const [locationName, setLocationName] = useState('')
+  const [locationNameExist, setLocationNameExist] = useState('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const formLabelProps = {
@@ -52,12 +52,12 @@ const LocationList = (): JSX.Element => {
     const { name, value } = event.target
     if (name === 'name') {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setIsLocationName(newValue)
+      setLocationName(newValue)
     }
     if (locationNameExists(value)) {
-      setIsLocationNameExist(value)
+      setLocationNameExist(value)
     } else {
-      setIsLocationNameExist('')
+      setLocationNameExist('')
     }
   }
 
@@ -66,22 +66,22 @@ const LocationList = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (isLocationName) {
+    if (locationName) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [isLocationName])
+  }, [locationName])
 
   const addLocationNameButtonHandler = async () => {
     const isAddLocation = await dispatch(
-      reduxServices.addLocationList.addLocation(isLocationName),
+      reduxServices.addLocationList.addLocation(locationName),
     )
     if (
       reduxServices.addLocationList.addLocation.fulfilled.match(isAddLocation)
     ) {
       dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
-      setIsLocationName('')
+      setLocationName('')
       dispatch(reduxServices.app.actions.addToast(successToast))
     }
   }
@@ -122,10 +122,10 @@ const LocationList = (): JSX.Element => {
                 size="sm"
                 name="name"
                 placeholder="Enter Location Name"
-                value={isLocationName}
+                value={locationName}
                 onChange={handledInputChange}
               />
-              {isLocationNameExist && (
+              {locationNameExist && (
                 <span
                   className={TextDanger}
                   data-testid="LocationNameAlreadyExist"
@@ -142,7 +142,7 @@ const LocationList = (): JSX.Element => {
                 onClick={addLocationNameButtonHandler}
                 disabled={
                   isAddButtonEnabled
-                    ? isAddButtonEnabled && isLocationNameExist.length > 0
+                    ? isAddButtonEnabled && locationNameExist.length > 0
                     : !isAddButtonEnabled
                 }
               >
