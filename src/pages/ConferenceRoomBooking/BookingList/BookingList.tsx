@@ -7,8 +7,8 @@ const BookingList = (): JSX.Element => {
   const [location, setLocation] = useState<string>('1')
   const [room, setRoom] = useState<string>('')
   const [meetingStatus, setMeetingStatus] = useState<string>('New')
-  const [selectDate, setSelectDate] = useState<string>('Today')
-  const [date, setDate] = useState<string>('')
+  const [selectDateOptions, setSelectDateOptions] = useState<string>('Today')
+  const [selectDate, setSelectDate] = useState<string>('')
   return (
     <>
       <OCard
@@ -23,10 +23,10 @@ const BookingList = (): JSX.Element => {
           setRoom={setRoom}
           meetingStatus={meetingStatus}
           setMeetingStatus={setMeetingStatus}
+          selectDateOptions={selectDateOptions}
+          setSelectDateOptions={setSelectDateOptions}
           selectDate={selectDate}
           setSelectDate={setSelectDate}
-          date={date}
-          setDate={setDate}
         />
         <BookingListTable />
       </OCard>

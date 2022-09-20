@@ -10,24 +10,24 @@ const BookingListFilterOptions = ({
   location,
   room,
   meetingStatus,
+  selectDateOptions,
   selectDate,
-  date,
   setLocation,
   setRoom,
   setMeetingStatus,
+  setSelectDateOptions,
   setSelectDate,
-  setDate,
 }: {
   location: string
   room: string
   meetingStatus: string
+  selectDateOptions: string
   selectDate: string
-  date: string
   setLocation: React.Dispatch<React.SetStateAction<string>>
   setRoom: React.Dispatch<React.SetStateAction<string>>
   setMeetingStatus: React.Dispatch<React.SetStateAction<string>>
+  setSelectDateOptions: React.Dispatch<React.SetStateAction<string>>
   setSelectDate: React.Dispatch<React.SetStateAction<string>>
-  setDate: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const meetingLocation = useTypedSelector(
@@ -45,25 +45,25 @@ const BookingListFilterOptions = ({
   }, [dispatch, location])
 
   useEffect(() => {
-    if (location || meetingStatus || room || date) {
+    if (location || meetingStatus || room || selectDate) {
       dispatch(
         reduxServices.bookingList.getBookingsForSelection({
           location: Number(location),
           meetingStatus,
           room,
-          status: date
-            ? new Date(date).toLocaleDateString(deviceLocale, {
+          status: selectDate
+            ? new Date(selectDate).toLocaleDateString(deviceLocale, {
                 year: 'numeric',
                 month: 'numeric',
                 day: '2-digit',
               })
-            : '' || selectDate,
+            : '' || selectDateOptions,
         }),
       )
       dispatch(reduxServices.bookingList.actions.setCurrentPage(1))
       dispatch(reduxServices.bookingList.actions.setPageSize(20))
     }
-  }, [dispatch, location, meetingStatus, room, date])
+  }, [dispatch, location, meetingStatus, room, selectDate])
 
   return (
     <>
@@ -144,12 +144,12 @@ const BookingListFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="selectDate"
+            id="selectDateOptions"
             data-testid="date-option"
-            name="selectDate"
-            value={selectDate}
+            name="selectDateOptions"
+            value={selectDateOptions}
             onChange={(e) => {
-              setSelectDate(e.target.value)
+              setSelectDateOptions(e.target.value)
             }}
           >
             <option value="Today">Today</option>
@@ -173,8 +173,8 @@ const BookingListFilterOptions = ({
                 placeholderText="dd/mm/yy"
                 name="date"
                 value={
-                  date
-                    ? new Date(date).toLocaleDateString(deviceLocale, {
+                  selectDate
+                    ? new Date(selectDate).toLocaleDateString(deviceLocale, {
                         year: 'numeric',
                         month: '2-digit',
                         day: '2-digit',
@@ -182,7 +182,7 @@ const BookingListFilterOptions = ({
                     : ''
                 }
                 onChange={(date: Date) =>
-                  setDate(moment(date).format(commonDateFormat))
+                  setSelectDate(moment(date).format(commonDateFormat))
                 }
               />
             </CCol>

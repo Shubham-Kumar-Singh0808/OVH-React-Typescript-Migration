@@ -221,7 +221,7 @@ const BookingListTable = (): JSX.Element => {
       >
         <>
           <CCardHeader className="mb-3">
-            <h4 className="h4">{modalAgenda.agenda}</h4>
+            <h4 className="model-text">{modalAgenda.agenda}</h4>
           </CCardHeader>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">
@@ -247,9 +247,11 @@ const BookingListTable = (): JSX.Element => {
             {modalAgenda.description !== null ? modalAgenda.description : 'N/A'}
           </p>
           <p className="d-flex">
-            <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>
+            <span className="col-sm-2 text-right fw-bold px-3 mt-2">
+              Attendees:
+            </span>
             {modalAgenda.employeeDto?.length ? (
-              <CTable className="mt-4 mb-4" align="middle">
+              <CTable align="middle">
                 <CTableHead>
                   <CTableRow>
                     <CTableHeaderCell>Name of Employee</CTableHeaderCell>
