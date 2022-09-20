@@ -206,6 +206,10 @@ input.capetalized {
 .form-select-not-allowed {
   cursor: not-allowed !important;
 }
+.custom-scroll {
+  height: 350px;
+  overflow: auto;
+}
 .hidden-block {
   cursor: not-allowed;
 }

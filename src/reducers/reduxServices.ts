@@ -61,6 +61,7 @@ import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
 import { employeeAchievementsService } from './Dashboard/achievementsSlice'
 import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 
 export const reduxServices = {
@@ -127,5 +128,6 @@ export const reduxServices = {
   employeeAchievements: employeeAchievementsService,
   updateTicket: updateTicketService,
   eventTypeList: eventTypeListService,
+  addLocationList: addLocationListService,
   addTrackerLists: addTrackerListService,
 }

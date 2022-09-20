@@ -53,6 +53,7 @@ import {
   DashboardApi,
   UpdateTicketApi,
   EventTypeListApi,
+  AddLocationListApi,
   AddTrackerApi,
 } from '../../types/apiTypes'
 
@@ -446,6 +447,12 @@ export const dashboardApiConfig: DashboardApi = {
   getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
   getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
   getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
+}
+
+export const addLocationListApiConfig: AddLocationListApi = {
+  getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
+  addLocation: apiPrefix + '/meetingRequest/addLocation',
+  deleteLocation: apiPrefix + '/meetingRequest/deleteLocation',
 }
 
 export const updateTicketApiConfig: UpdateTicketApi = {
