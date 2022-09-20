@@ -143,7 +143,6 @@ const TrackerList = ({
                 size="sm"
                 name="name"
                 placeholder="Name"
-                maxLength={32}
                 value={isTrackerName}
                 onChange={handledInputChange}
               />

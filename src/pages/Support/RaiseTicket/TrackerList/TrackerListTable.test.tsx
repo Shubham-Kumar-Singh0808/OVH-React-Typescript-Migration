@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import TrackerListTable from './TrackerListTable'
 import { cleanup, render, screen } from '../../../../test/testUtils'
 import { mockAddTrackerList } from '../../../../test/data/addTrackerListData'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 describe('AddTracker List without data', () => {
   beforeEach(() => {
@@ -23,27 +23,32 @@ describe('AddTracker List without data', () => {
   })
 })
 
-describe('AddTracker List Table without data', () => {
+describe('Add Tracker List Table with data', () => {
   beforeEach(() => {
-    render(
-      <div>
-        <div id="backdrop-root"></div>
-        <div id="overlay-root"></div>
-        <div id="root"></div>
-        <TrackerListTable />
-      </div>,
-      {
-        preloadedState: {
-          addTrackerLists: {
-            isLoading: ApiLoadingState.succeeded,
-            trackerList: mockAddTrackerList,
-          },
+    render(<TrackerListTable />, {
+      preloadedState: {
+        addTrackerLists: {
+          trackerList: mockAddTrackerList,
         },
       },
-    )
+    })
   })
   afterEach(cleanup)
-  test('should render AddTracker List component with data', () => {
+  test('should render Add Tracker List component with data', () => {
     expect(screen.getByText('Issue')).toBeInTheDocument()
+    expect(screen.getByText('New Request')).toBeInTheDocument()
+    expect(screen.getByText('Testing')).toBeInTheDocument()
+    expect(screen.getByText('abc')).toBeInTheDocument()
+  })
+
+  test('should be able to click delete button element', () => {
+    const deleteBtnElement = screen.getByTestId('btn-delete3')
+    expect(deleteBtnElement).toBeInTheDocument()
+    userEvent.click(deleteBtnElement)
+  })
+  test('should render with number of records  ', () => {
+    expect(
+      screen.getByText('Total Records: ' + mockAddTrackerList.length),
+    ).toBeInTheDocument()
   })
 })

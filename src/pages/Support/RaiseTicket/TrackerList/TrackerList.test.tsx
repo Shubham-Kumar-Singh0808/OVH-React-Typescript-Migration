@@ -74,6 +74,14 @@ describe('AddTracker List with data', () => {
     expect(trackerNameInput).toHaveValue('')
   })
 
+  // test('should display error message, when user enters already existing Tracker Name', async () => {
+  //   const inputElement = screen.getByTestId('nameAlreadyExist')
+  //   userEvent.type(inputElement, 'Issue')
+  //   await waitFor(() => {
+  //     expect(screen.getByText('Name Already Exist')).toBeInTheDocument()
+  //   })
+  // })
+
   test('should render TrackerName exist or not', () => {
     const trackerNameInput = screen.getByTestId(trackerName)
     userEvent.type(trackerNameInput, 'Issue')
