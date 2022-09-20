@@ -17,7 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const LocationList = (): JSX.Element => {
-  const [locationName, setLocationName] = useState('')
+  const [selectLocationName, setSelectLocationName] = useState('')
   const [locationNameExist, setLocationNameExist] = useState('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
@@ -52,7 +52,7 @@ const LocationList = (): JSX.Element => {
     const { name, value } = event.target
     if (name === 'name') {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setLocationName(newValue)
+      setSelectLocationName(newValue)
     }
     if (locationNameExists(value)) {
       setLocationNameExist(value)
@@ -66,22 +66,22 @@ const LocationList = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (locationName) {
+    if (selectLocationName) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [locationName])
+  }, [selectLocationName])
 
   const addLocationNameButtonHandler = async () => {
     const isAddLocation = await dispatch(
-      reduxServices.addLocationList.addLocation(locationName),
+      reduxServices.addLocationList.addLocation(selectLocationName),
     )
     if (
       reduxServices.addLocationList.addLocation.fulfilled.match(isAddLocation)
     ) {
       dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
-      setLocationName('')
+      setSelectLocationName('')
       dispatch(reduxServices.app.actions.addToast(successToast))
     }
   }
@@ -122,7 +122,7 @@ const LocationList = (): JSX.Element => {
                 size="sm"
                 name="name"
                 placeholder="Enter Location Name"
-                value={locationName}
+                value={selectLocationName}
                 onChange={handledInputChange}
               />
               {locationNameExist && (
