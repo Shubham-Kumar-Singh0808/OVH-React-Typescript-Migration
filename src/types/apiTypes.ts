@@ -375,6 +375,11 @@ export interface DashboardApi extends ApiBase {
   getHolidayInformation: string
   updateHoliday: string
 }
+export interface AddLocationListApi extends ApiBase {
+  getAllMeetingLocations: string
+  addLocation: string
+  deleteLocation: string
+}
 
 export interface UpdateTicketApi extends ApiBase {
   getTicket: string

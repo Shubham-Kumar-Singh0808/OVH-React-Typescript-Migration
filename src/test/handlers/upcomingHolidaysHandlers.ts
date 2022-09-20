@@ -8,12 +8,12 @@ import {
 
 export const upcomingHolidaysHandlers = [
   // addHoliday api mock
-  rest.get(dashboardApiConfig.addHoliday, (_req, res, ctx) => {
+  rest.post(dashboardApiConfig.addHoliday, (_req, res, ctx) => {
     return res.once(ctx.status(200), ctx.json([]))
   }),
 
   // addHoliday api mock
-  rest.get(dashboardApiConfig.addHoliday, (_req, res, ctx) => {
+  rest.post(dashboardApiConfig.addHoliday, (_req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockAddNewHoliday))
   }),
 
@@ -46,16 +46,16 @@ export const upcomingHolidaysHandlers = [
   ),
 
   //updateHolidayData api mock
-  rest.get(dashboardApiConfig.updateHoliday, (_req, res, ctx) => {
+  rest.put(dashboardApiConfig.updateHoliday, (_req, res, ctx) => {
     return res.once(ctx.status(200), ctx.json([]))
   }),
 
   //updateHolidayData api mock
-  rest.get(dashboardApiConfig.updateHoliday, (_req, res, ctx) => {
+  rest.put(dashboardApiConfig.updateHoliday, (_req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockEditHoliday))
   }),
   //deleteHoliday
-  rest.get(dashboardApiConfig.deleteHoliday, (_req, res, ctx) => {
+  rest.delete(dashboardApiConfig.deleteHoliday, (_req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,
