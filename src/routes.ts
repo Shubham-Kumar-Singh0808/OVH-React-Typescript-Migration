@@ -176,6 +176,11 @@ const LocationList = React.lazy(
       './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
     ),
 )
+const EditHoliday = React.lazy(
+  () =>
+    import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -398,6 +403,11 @@ const routes = [
     path: '/newMeetingRequest',
     name: 'Add LocationList',
     component: LocationList,
+  },
+  {
+    path: '/editHoliday/:holidayId',
+    name: 'Edit Holiday',
+    component: EditHoliday,
   },
 ]
 
