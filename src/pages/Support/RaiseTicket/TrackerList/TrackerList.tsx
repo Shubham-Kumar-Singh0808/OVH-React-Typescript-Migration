@@ -22,7 +22,7 @@ const TrackerList = ({
 }: {
   setToggle: (value: string) => void
 }): JSX.Element => {
-  const [trackerName, setTrackerName] = useState('')
+  const [selectTrackerName, setSelectTrackerName] = useState('')
   const [trackerNameExist, setTrackerNameExist] = useState('')
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
@@ -56,7 +56,7 @@ const TrackerList = ({
     const { name, value } = event.target
     if (name === 'name') {
       const newValue = value.replace(/[^a-z\s]/gi, '').replace(/^\s*/, '')
-      setTrackerName(newValue)
+      setSelectTrackerName(newValue)
     }
     if (trackerNameExists(value)) {
       setTrackerNameExist(value)
@@ -72,7 +72,7 @@ const TrackerList = ({
   const addButtonHandler = async () => {
     const isAddTracker = await dispatch(
       reduxServices.addTrackersLists.addNewTracker({
-        name: trackerName,
+        name: selectTrackerName,
         permission: isChecked,
       }),
     )
@@ -80,7 +80,7 @@ const TrackerList = ({
       reduxServices.addTrackersLists.addNewTracker.fulfilled.match(isAddTracker)
     ) {
       dispatch(reduxServices.ticketApprovals.getTrackerList())
-      setTrackerName('')
+      setSelectTrackerName('')
       setIsChecked(false)
       dispatch(reduxServices.app.actions.addToast(successToast))
     }
@@ -88,17 +88,17 @@ const TrackerList = ({
 
   const clearData = () => {
     setIsChecked(false)
-    setTrackerName('')
+    setSelectTrackerName('')
     setTrackerNameExist('')
   }
 
   useEffect(() => {
-    if (trackerName) {
+    if (selectTrackerName) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [trackerName])
+  }, [selectTrackerName])
 
   const isLoading = useTypedSelector(
     reduxServices.scheduledInterviews.selectors.isLoading,
@@ -131,7 +131,9 @@ const TrackerList = ({
               className="col-sm-3 col-form-label text-end"
             >
               Name:
-              <span className={trackerName ? 'text-white' : 'text-danger'}>
+              <span
+                className={selectTrackerName ? 'text-white' : 'text-danger'}
+              >
                 *
               </span>
             </CFormLabel>
@@ -143,7 +145,7 @@ const TrackerList = ({
                 size="sm"
                 name="name"
                 placeholder="Name"
-                value={trackerName}
+                value={selectTrackerName}
                 onChange={handledInputChange}
               />
             </CCol>
