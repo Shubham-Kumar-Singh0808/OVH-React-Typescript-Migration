@@ -170,6 +170,11 @@ const EventTypeList = React.lazy(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
 )
+const EmployeeAllocation = React.lazy(
+  () =>
+    import('./pages/ProjectManagement/EmployeeAllocation/EmployeeAllocation'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -223,6 +228,12 @@ const routes = [
     name: 'Employee Handbook',
     component: EmployeeHandbook,
   },
+  {
+    path: '/Employeereport',
+    name: 'Employee Allocation Report',
+    component: EmployeeAllocation,
+  },
+
   {
     path: '/showemployeehandbook/:clickedpageName',
     name: 'Handbook',

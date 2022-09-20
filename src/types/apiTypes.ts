@@ -388,3 +388,9 @@ export interface EventTypeListApi extends ApiBase {
   updateEventType: string
   getLoggedEmployeeName: string
 }
+export interface EmployeeAllocationApi extends ApiBase {
+  getEmployeeAllocationReport: string
+  projectUnderEmployees: string
+  updateEmployeeAllocateProject: string
+  downloadEmployeeAllocationList: string
+}
