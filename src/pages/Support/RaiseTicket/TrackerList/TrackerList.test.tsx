@@ -56,6 +56,7 @@ describe('AddTracker List with data', () => {
       },
     })
   })
+
   afterEach(cleanup)
   test('should render  Tracker List  screen and back button without crashing', () => {
     const backBtnElement = screen.getByRole('button', { name: 'Back' })
@@ -73,14 +74,6 @@ describe('AddTracker List with data', () => {
     userEvent.click(screen.getByTestId(clearButton))
     expect(trackerNameInput).toHaveValue('')
   })
-
-  // test('should display error message, when user enters already existing Tracker Name', async () => {
-  //   const inputElement = screen.getByTestId('nameAlreadyExist')
-  //   userEvent.type(inputElement, 'Issue')
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Name Already Exist')).toBeInTheDocument()
-  //   })
-  // })
 
   test('should render TrackerName exist or not', () => {
     const trackerNameInput = screen.getByTestId(trackerName)
