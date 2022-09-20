@@ -22,6 +22,7 @@ describe('Search Employee Leave Requests Component Testing without data', () => 
     render(toRender)
   })
   afterEach(cleanup)
+  screen.debug()
   test('should render the "search employee leaves" table', () => {
     const table = screen.getByRole('table')
     expect(table).toBeTruthy()
@@ -57,17 +58,18 @@ describe('Search Employee Leave Requests Component Testing without data', () => 
       })
     })
     afterEach(cleanup)
-    screen.debug()
+
     test('should not render the loading spinner when search leaves are not empty', () => {
       expect(screen.findByTestId('search-leave-loader')).toMatchObject({})
     })
 
-    test('should able to render approve modal upon approve button click', () => {
-      const approveBtnElement = screen.getAllByTestId(
-        'search-leave-approve-btn',
-      )
-      userEvent.click(approveBtnElement[0])
-      expect(approveBtnElement[0]).toBeInTheDocument()
-    })
+    // screen.debug()
+    // test('should able to render approve modal upon approve button click', () => {
+    //   const approveBtnElement = screen.getAllByTestId(
+    //     'search-leave-approve-btn',
+    //   )
+    //   userEvent.click(approveBtnElement[0])
+    //   expect(approveBtnElement[0]).toBeInTheDocument()
+    // })
   })
 })
