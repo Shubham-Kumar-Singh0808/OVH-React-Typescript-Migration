@@ -13,7 +13,6 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import {
   EditEmployeeMailTemplate,
   EditTemplateProps,
@@ -21,6 +20,7 @@ import {
 import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { showIsRequired } from '../../../../utils/helper'
 
 const EditMailTemplate = ({
   backButtonHandler,
@@ -192,11 +192,7 @@ const EditMailTemplate = ({
               className="col-sm-2 col-form-label text-end"
             >
               Template:{' '}
-              <span
-                className={
-                  editEmployeeTemplate.template ? TextWhite : TextDanger
-                }
-              >
+              <span className={showIsRequired(editEmployeeTemplate.template)}>
                 *
               </span>
             </CFormLabel>

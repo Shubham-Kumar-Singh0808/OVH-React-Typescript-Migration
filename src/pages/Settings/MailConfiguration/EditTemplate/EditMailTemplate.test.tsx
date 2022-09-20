@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import EditMailTemplate from './EditMailTemplate'
 import { mockEmailTemplate } from '../../../../test/data/employeeMailConfigurationData'
 import { render, screen } from '../../../../test/testUtils'
+import { emailAddress, templateType } from '../../../../test/constants'
 
 const backButtonHandlerElement = jest.fn()
 const editTemplateElement = jest.fn()
@@ -80,5 +81,11 @@ describe('Email Configuration in edit Template Component Testing with data', () 
     userEvent.click(editElement[0])
     expect(editElement[0]).toBeInTheDocument()
     expect(screen.getByTestId('btn-update')).toBeEnabled()
+  })
+  test('render email input', () => {
+    userEvent.selectOptions(screen.getByTestId(templateType), 'food')
+    const inputEl = screen.getByTestId(emailAddress)
+    expect(inputEl).toBeInTheDocument()
+    expect(inputEl).toHaveAttribute('type', 'email')
   })
 })
