@@ -11,13 +11,12 @@ const ListOfHolidays = (): JSX.Element => {
     reduxServices.generalInformation.selectors.generalInformation,
   )
   const employeeCountry = loggedInEmployee?.country
-  const [selectedCountry, setSelectedCountry] = useState<string>(
-    employeeCountry as string,
-  )
+  const [selectedCountry, setSelectedCountry] = useState<string>('')
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
+    setSelectedCountry(employeeCountry as string)
     dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
     dispatch(
       reduxServices.generalInformation.getEmployeeGeneralInformation(
