@@ -203,10 +203,14 @@ input.capetalized {
 .description-link div ul {
   list-style: none;
 }
-.form-select-not-allowed{
+.form-select-not-allowed {
   cursor: not-allowed !important;
 }
 .label-default {
   background-color: $badge-light;
   color: #333;
+}
+.custom-scroll {
+  height: 350px;
+  overflow: auto;
 }
