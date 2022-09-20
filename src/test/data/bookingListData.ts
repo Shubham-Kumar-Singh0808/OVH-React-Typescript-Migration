@@ -210,7 +210,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: 'Training',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 2027,
+        profilePicPath: '',
+        firstName: 'Sandeep',
+        lastName: 'Guzzarlamudi',
+        emailId: 'test@raybztech.com',
+        designation: 'Associate Software Engineer',
+        fullName: 'Sandeep Guzzarlamudi',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '../proilepics/1977.jpeg',
@@ -261,7 +271,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1991,
+        profilePicPath: '',
+        firstName: 'Itadmin',
+        lastName: 'A',
+        emailId: 'test@rybiztech.com',
+        designation: 'IT Suport Lead',
+        fullName: 'Itadmin A',
+      },
+    ],
     trainerName: {
       id: 22,
       profilePicPath: '',
@@ -312,7 +332,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1991,
+        profilePicPath: '../profilepics/Default_Female.jpg',
+        firstName: 'Itadmin',
+        lastName: 'A',
+        emailId: 'test@raybiztech1.com',
+        designation: 'IT Support Lead',
+        fullName: 'Itadmin A',
+      },
+    ],
     trainerName: {
       id: 22,
       profilePicPath: '',
@@ -363,7 +393,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: 'Health',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1991,
+        profilePicPath: '../profilepics/Default_Female.jpg',
+        firstName: 'Itadmin',
+        lastName: 'A',
+        emailId: 'test@raybiztech2.com',
+        designation: 'IT Support Lead',
+        fullName: 'Itadmin A',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -414,13 +454,23 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: 'testing',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1054,
+        profilePicPath: '',
+        firstName: 'DileepVarma',
+        lastName: 'S V V',
+        emailId: 'test@raybiztech4.com',
+        designation: 'crzb',
+        fullName: 'Dileep Vama S V V',
+      },
+    ],
     trainerName: {
       id: 1983,
       profilePicPath: '../profilepics/1983.jpeg',
       firstName: 'Sai',
       lastName: 'Banothu',
-      emailId: 'test@raybiztech.com',
+      emailId: 'test@raybiztech5.com',
       designation: 'Associate Software Engineer',
       fullName: 'Sai Banothu',
     },
@@ -465,7 +515,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1054,
+        profilePicPath: '../profilepics/Default_Mae.jpg',
+        firstName: 'Diep Varma',
+        lastName: 'S V V',
+        emailId: 'test@raybtech.com',
+        designation: 'crzb',
+        fullName: 'Dileep Vara S V V',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -516,7 +576,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1054,
+        profilePicPath: '../profilepics/Default_Male.jpg',
+        firstName: 'Dileep Varma',
+        lastName: 'S V V',
+        emailId: 'test@rbiztech.com',
+        designation: 'crzb',
+        fullName: 'Dileep Varma S V V',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -567,7 +637,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1054,
+        profilePicPath: '../profilepics/Default_Male.jpg',
+        firstName: 'Dileep Varma',
+        lastName: 'S V V',
+        emailId: 'tes@raybiztech.com',
+        designation: 'crzb',
+        fullName: 'Dileep Varma S V V',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -618,7 +698,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'te@raybiztech.com',
+        designation: 'fwlz',
+        fullName: 'Pradeep',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -669,7 +759,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: 'Heath Camp',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@rayztech.com',
+        designation: 'fwlz',
+        fullName: 'Pradeep',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '../profilepis/1977.jpeg',
@@ -720,7 +820,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: 'Health Cap',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '../rofilepics/1057.jpeg',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raztech.com',
+        designation: 'fwlz',
+        fullName: 'PradeepNamburu',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '../profilepics/197.jpeg',
@@ -771,7 +881,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybich.com',
+        designation: 'fwlz',
+        fullName: '',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -822,7 +942,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybih.com',
+        designation: 'fwlz',
+        fullName: 'Vinesh',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -873,7 +1003,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybiztech7.com',
+        designation: 'fwlz',
+        fullName: '',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -924,7 +1064,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybiztech8.com',
+        designation: 'fwlz',
+        fullName: 'Basheer',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -975,7 +1125,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybiztech9.com',
+        designation: 'fwlz',
+        fullName: '',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -1026,7 +1186,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybiztech44.com',
+        designation: 'fwlz',
+        fullName: '',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -1077,7 +1247,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybiztech55.com',
+        designation: 'fwlz',
+        fullName: 'PNamburu',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -1128,7 +1308,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybiztech66.com',
+        designation: 'fwlz',
+        fullName: 'PradeeNamburu',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -1179,7 +1369,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: '',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybiztech77.com',
+        designation: 'fwlz',
+        fullName: 'Pradep Namburu',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '',
@@ -1230,7 +1430,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: 'Healh Camp',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '../profilepics/1057.jpeg',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybiztech.com',
+        designation: 'fwlz',
+        fullName: 'Pradeep Namburu',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '../profilecs/1977.jpeg',
@@ -1281,7 +1491,17 @@ export const mockBookingsForSelection: GetBookingsForSelection[] = [
     description: 'Health Camp',
     eventEditAccess: true,
     empDesignations: [],
-    employeeDto: [],
+    employeeDto: [
+      {
+        id: 1057,
+        profilePicPath: '../profilepics/1057.jpeg',
+        firstName: 'Pradeep',
+        lastName: 'Namburu',
+        emailId: 'test@raybiztech.com',
+        designation: 'fwlz',
+        fullName: 'Pradeep Namburu',
+      },
+    ],
     trainerName: {
       id: 1977,
       profilePicPath: '../profilepics/1977.jpeg',

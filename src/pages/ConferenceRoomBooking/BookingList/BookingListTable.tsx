@@ -10,6 +10,7 @@ import {
   CRow,
   CLink,
   CBadge,
+  CCardHeader,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
@@ -22,11 +23,12 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { GetBookingsForSelection } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 
 const BookingListTable = (): JSX.Element => {
   const [isAgendaModalVisible, setIsAgendaModalVisible] =
     useState<boolean>(false)
-  const [modalAgenda, setModalAgenda] = useState<string>('')
+  const [modalAgenda, setModalAgenda] = useState({} as GetBookingsForSelection)
   const BookingsForSelection = useTypedSelector(
     reduxServices.bookingList.selectors.bookingsForSelection,
   )
@@ -60,9 +62,9 @@ const BookingListTable = (): JSX.Element => {
     setCurrentPage(1)
   }
 
-  const handleAgendaModal = (value: string) => {
+  const handleAgendaModal = (booking: GetBookingsForSelection) => {
     setIsAgendaModalVisible(true)
-    setModalAgenda(value)
+    setModalAgenda(booking)
   }
 
   const roomBookingStatusLabelColor = (bookingStatus: string): JSX.Element => {
@@ -115,7 +117,7 @@ const BookingListTable = (): JSX.Element => {
                       <CLink
                         className="cursor-pointer text-decoration-none"
                         data-testid="ticket-agenda-link"
-                        onClick={() => handleAgendaModal(bookingItem.agenda)}
+                        onClick={() => handleAgendaModal(bookingItem)}
                       >
                         {parse(agendaLimit)}
                       </CLink>
@@ -217,13 +219,59 @@ const BookingListTable = (): JSX.Element => {
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
       >
-        <h4 className="model-text">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: modalAgenda,
-            }}
-          />
-        </h4>
+        <>
+          <CCardHeader className="mb-3">
+            <h4 className="h4">{modalAgenda.agenda}</h4>
+          </CCardHeader>
+          <p className="d-flex">
+            <span className="col-sm-2 text-right fw-bold px-3">
+              Organizer :
+            </span>
+            {modalAgenda.authorName?.fullName}
+          </p>
+          <p className="d-flex">
+            <span className="col-sm-2 text-right fw-bold px-3">Date :</span>
+            <>
+              {`${modalAgenda.fromDate} to ${modalAgenda.toDate} from
+              ${modalAgenda.startTime} to ${modalAgenda.endTime}`}
+            </>
+          </p>
+          <p className="d-flex">
+            <span className="col-sm-2 text-right fw-bold px-3">Location :</span>
+            {`${modalAgenda.roomName} in ${modalAgenda.locationName}`}
+          </p>
+          <p className="d-flex">
+            <span className="col-sm-2 text-right fw-bold px-3">
+              Description :
+            </span>
+            {modalAgenda.description !== null ? modalAgenda.description : 'N/A'}
+          </p>
+          <p className="d-flex">
+            <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>
+            {modalAgenda.employeeDto?.length ? (
+              <CTable className="mt-4 mb-4" align="middle">
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell>Name of Employee</CTableHeaderCell>
+                    <CTableHeaderCell>Designation</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                  {modalAgenda?.employeeDto?.map((emp, index) => {
+                    return (
+                      <CTableRow key={index}>
+                        <CTableDataCell>{emp.fullName}</CTableDataCell>
+                        <CTableDataCell>{emp.designation}</CTableDataCell>
+                      </CTableRow>
+                    )
+                  })}
+                </CTableBody>
+              </CTable>
+            ) : (
+              <>N/A</>
+            )}
+          </p>
+        </>
       </OModal>
     </>
   )

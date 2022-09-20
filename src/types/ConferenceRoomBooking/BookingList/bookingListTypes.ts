@@ -69,7 +69,17 @@ export type GetBookingsForSelection = {
   description: string
   eventEditAccess: true
   empDesignations: []
-  employeeDto: []
+  employeeDto: [
+    {
+      id: number
+      profilePicPath: string
+      firstName: string
+      lastName: string
+      emailId: string
+      designation: string
+      fullName: string
+    },
+  ]
   trainerName: {
     id: number
     profilePicPath: string
@@ -80,4 +90,15 @@ export type GetBookingsForSelection = {
     fullName: string
   }
   availableDates: null
+}
+
+export type handleModelProps = {
+  agenda: string
+  fullName: string
+  startTime: string
+  endTime: string
+  fromDate: string
+  roomName: string
+  locationName: string
+  description: string
 }
