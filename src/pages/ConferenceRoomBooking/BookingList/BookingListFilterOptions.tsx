@@ -156,7 +156,7 @@ const BookingListFilterOptions = ({
             <option value="Custom">Custom</option>
           </CFormSelect>
         </CCol>
-        {selectDate === 'Custom' && (
+        {selectDateOptions === 'Custom' && (
           <>
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-1">Date:</CFormLabel>

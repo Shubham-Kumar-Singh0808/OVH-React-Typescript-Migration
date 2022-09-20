@@ -28,10 +28,10 @@ const toRender = (
       setRoom={setRoom}
       meetingStatus={''}
       setMeetingStatus={setMeetingStatus}
-      selectDate={'Custom'}
-      setSelectDate={setSelectDate}
-      date={''}
-      setDate={setDate}
+      selectDateOptions={'Custom'}
+      setSelectDateOptions={setSelectDate}
+      selectDate={''}
+      setSelectDate={setDate}
     />
   </div>
 )
