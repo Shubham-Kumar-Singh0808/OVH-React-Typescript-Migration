@@ -26,12 +26,17 @@ const RoomList = (): JSX.Element => {
     className: 'col-form-label',
   }
 
+  const dispatch = useAppDispatch()
+
   const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
 
-  const dispatch = useAppDispatch()
+  const locationList = useTypedSelector(
+    reduxServices.addLocationList.selectors.locationNames,
+  )
 
   useEffect(() => {
     dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
+    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
   }, [dispatch])
 
   const roomNameExists = (name: string) => {
@@ -126,8 +131,8 @@ const RoomList = (): JSX.Element => {
                 setFilterByLocation(e.target.value)
               }}
             >
-              {roomList.map((location, index) => (
-                <option key={index} value={location.locationId}>
+              {locationList.map((location, index) => (
+                <option key={index} value={location.id}>
                   {location.locationName}
                 </option>
               ))}

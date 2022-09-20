@@ -176,7 +176,8 @@ const LocationList = React.lazy(
       './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
     ),
 )
-const AddRoomList = React.lazy(
+
+const RoomList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
 /**
@@ -403,9 +404,9 @@ const routes = [
     component: LocationList,
   },
   {
-    path: '/newMeetingRequest',
+    path: '/roomList',
     name: 'RoomList',
-    component: AddRoomList,
+    component: RoomList,
   },
 ]
 

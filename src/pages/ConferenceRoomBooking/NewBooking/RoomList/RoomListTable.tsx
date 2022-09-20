@@ -94,25 +94,25 @@ const RoomListTable = (): JSX.Element => {
             })}
           </CTableBody>
         </CTable>
-        <CRow>
-          <CCol xs={4}>
-            <p>
-              <strong>Total Records: {roomList.length}</strong>
-            </p>
-          </CCol>
-        </CRow>
-        <OModal
-          alignment="center"
-          visible={isDeleteModalVisible}
-          setVisible={setIsDeleteModalVisible}
-          modalHeaderClass="d-none"
-          confirmButtonText="Yes"
-          cancelButtonText="No"
-          confirmButtonAction={confirmDeleteRoom}
-        >
-          {`Do you really want to delete this ${deleteRoomName} Location ?`}
-        </OModal>
       </CCol>
+      <CRow>
+        <CCol xs={4}>
+          <p>
+            <strong>Total Records: {roomList.length}</strong>
+          </p>
+        </CCol>
+      </CRow>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={confirmDeleteRoom}
+      >
+        {`Do you really want to delete this ${deleteRoomName} Location ?`}
+      </OModal>
     </>
   )
 }
