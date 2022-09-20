@@ -1,12 +1,9 @@
 import { CRow, CCol, CButton, CForm, CFormLabel } from '@coreui/react-pro'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { eventListThunk } from '../../../../reducers/ConferenceRoomBooking/EventList/eventListSlice'
-import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
-import { showIsRequired } from '../../../../utils/helper'
 
 const UploadFeedbackForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -47,12 +44,13 @@ const UploadFeedbackForm = (): JSX.Element => {
     setUploadFeedbackForm(file[0])
   }
 
-  const toastElement = (
-    <OToast
-      toastMessage="Feedback Form Successfully Uploaded."
-      toastColor="success"
-    />
-  )
+  useEffect(() => {
+    if (uploadFeedbackForm) {
+      setIsUploadBtnEnabled(true)
+    } else {
+      setIsUploadBtnEnabled(false)
+    }
+  })
 
   const handleUploadFeedbackForm = async () => {
     if (uploadFeedbackForm) {
@@ -64,7 +62,6 @@ const UploadFeedbackForm = (): JSX.Element => {
       }
       await dispatch(eventListThunk.uploadFeedbackForm(uploadPrepareObject))
     }
-    dispatch(reduxServices.app.actions.addToast(toastElement))
     window.location.reload()
   }
   return (
@@ -102,6 +99,11 @@ const UploadFeedbackForm = (): JSX.Element => {
                 )
               }
             />
+            {uploadErrorText && (
+              <div id="error">
+                <strong className="mt-3 text-danger">{uploadErrorText}</strong>
+              </div>
+            )}
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -110,6 +112,7 @@ const UploadFeedbackForm = (): JSX.Element => {
               data-testid="upload-btn"
               className="btn-ovh me-1 text-white"
               color="success"
+              disabled={!isUploadBtnEnabled}
               onClick={handleUploadFeedbackForm}
             >
               Upload

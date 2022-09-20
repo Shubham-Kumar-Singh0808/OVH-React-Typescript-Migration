@@ -48,6 +48,9 @@ const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
 
   const handleDownloadFeedbackForm = async (feedbackFormName: string) => {
     const employeeFeedbackForm = await eventListApi.downloadFeedbackForm({
@@ -77,7 +80,7 @@ const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
               {feedbackFormsList?.map((feedbackForm, index) => {
                 return (
                   <CTableRow key={index} className="text-start">
-                    <CTableDataCell>{index + 1}</CTableDataCell>
+                    <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                     <CTableDataCell>
                       <CLink
                         className="cursor-pointer sh-hive-activity-link"
@@ -129,7 +132,7 @@ const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <p className="text-center">No Records Found...</p>
+        <strong>No Records Found...</strong>
       )}
     </>
   )
