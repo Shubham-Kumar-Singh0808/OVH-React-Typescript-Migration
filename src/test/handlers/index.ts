@@ -3,6 +3,8 @@ import { birthdaysListHandlers } from './birthdaysListHandlers'
 import { categoryListHandlers } from './categoryListHandlers'
 import { certificateListHandlers } from './certificateListHandler'
 import { clientsHandlers } from './clientsHandlers'
+import { employeeHandbookSettingsHandlers } from './employeeHandbookSettingsHandlers'
+import { employeeAchievementsHandlers } from './employeeAchievementsHandlers'
 import { employeeListHandlers } from './employeeListHandlers'
 import { employeeShiftsHandlers } from './employeeShiftsHandlers'
 import { generalInformationHandlers } from './generalInformationHandlers'
@@ -16,9 +18,11 @@ import { ticketApprovalsHandlers } from './ticketApprovalsHandlers'
 import { upcomingBirthdaysHandlers } from './upcomingBirthdaysHandlers'
 import { upcomingHolidaysHandlers } from './upcomingHolidaysHandlers'
 import { upcomingTrainingsAndEventsHandlers } from './upcomingTrainingsAndEventsHandlers'
+import { updateTicketHandlers } from './updateTicketHandlers'
 import { userAccessToFeaturesHandlers } from './userAccessToFeaturesHandlers'
 import { userRolesAndPermissionsHandlers } from './userRolesAndPermissionsHandlers'
 import { timeInOfficeHandlers } from './weeklyTimeInOfficeHandlers'
+import { eventTypeListHandlers } from './eventTypeListHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -41,6 +45,10 @@ export const handlers = [
   ...upcomingBirthdaysHandlers,
   ...birthdaysListHandlers,
   ...timeInOfficeHandlers,
+  ...employeeHandbookSettingsHandlers,
+  ...employeeAchievementsHandlers,
+  ...updateTicketHandlers,
+  ...eventTypeListHandlers,
   ...leaveApprovalsHandlers,
   // add your handler here
 ]

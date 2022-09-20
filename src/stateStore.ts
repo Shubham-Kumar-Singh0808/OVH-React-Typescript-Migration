@@ -47,9 +47,11 @@ import hiveActivityReportReducer from './reducers/TimeAndAttendance/HiveActivity
 import employeeMailConfigurationReducer from './reducers/Settings/MailConfiguration/employeeMailConfigurationSlice'
 import addNewTemplateReducer from './reducers/Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import employeeReducer from './reducers/EmployeeDirectory/EmployeesList/EditEmployee'
+import employeeLeaveApplyReducer from './reducers/Leaves/ApplyLeave/employeeApplyLeaveSlice'
 import scheduledInterviewsReducer from './reducers/Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import addMailTemplateTypeReducer from './reducers/Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import myAttendanceReducer from './reducers/TimeAndAttendance/MyAttendance/myAttendanceSlice'
+import ticketReportReducer from './reducers/Support/Report/ticketReportSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/projectSlice'
 import clientsReducer from './reducers/ProjectManagement/Clients/clientsSlice'
 import addClientReducer from './reducers/ProjectManagement/Clients/AddClient/addNewClientSlice'
@@ -57,6 +59,7 @@ import clientInformationReducer from './reducers/ProjectManagement/Clients/Clien
 import leaveSummaryReducer from './reducers/Leaves/LeaveSummary/employeeLeaveSummarySlice'
 import ticketApprovalsReducer from './reducers/Support/TicketApprovals/ticketApprovalsSlice'
 import myTicketsReducer from './reducers/Support/MyTickets/myTicketsSlice'
+import createNewTicketReducer from './reducers/Support/RaiseTicket/createNewTicketSlice'
 import jobOpeningsReducer from './reducers/Dashboard/jobOpeningsSlice'
 import UpcomingBirthdayReducer from './reducers/Dashboard/birthdayAnniversarySlice'
 import birthdaysListReducer from './reducers/Dashboard/birthdayListSlice'
@@ -64,6 +67,10 @@ import holidaysReducer from './reducers/Dashboard/holidaysSlice'
 import earnedLeavesReducer from './reducers/Dashboard/earnedLeavesSlice'
 import timeInOfficeReducer from './reducers/Dashboard/timeInOfficeSlice'
 import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSlice'
+import provisionPeriodReducer from './reducers/Dashboard/provisionPeriodSlice'
+import achievementsReducer from './reducers/Dashboard/achievementsSlice'
+import updateTicketReducer from './reducers/Support/TicketApprovals/UpdateTicket/updateTicketSlice'
+import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const allReducers = {
@@ -112,9 +119,11 @@ export const allReducers = {
   employeeMailConfiguration: employeeMailConfigurationReducer,
   addMailTemplate: addNewTemplateReducer,
   employee: employeeReducer,
+  employeeLeaveApply: employeeLeaveApplyReducer,
   scheduledInterviews: scheduledInterviewsReducer,
   addMailTemplateType: addMailTemplateTypeReducer,
   myAttendance: myAttendanceReducer,
+  ticketReport: ticketReportReducer,
   jobOpenings: jobOpeningsReducer,
   projectManagement: projectManagementReducer,
   clients: clientsReducer,
@@ -123,6 +132,7 @@ export const allReducers = {
   employeeLeaveSummary: leaveSummaryReducer,
   tickets: myTicketsReducer,
   ticketApprovals: ticketApprovalsReducer,
+  raiseNewTicket: createNewTicketReducer,
   upcomingEmployeeBirthday: UpcomingBirthdayReducer,
   employeesBirthdayList: birthdaysListReducer,
   holidays: holidaysReducer,
@@ -130,6 +140,10 @@ export const allReducers = {
   weeklyTimeInOffice: timeInOfficeReducer,
   trainingsAndEvents: trainingAndEventsReducer,
   leaveApprovals: leaveApprovalsReducer,
+  probationPeriod: provisionPeriodReducer,
+  achievements: achievementsReducer,
+  updateTicket: updateTicketReducer,
+  eventTypeList: eventTypeListReducer,
   // add your slice reducers here
 }
 
