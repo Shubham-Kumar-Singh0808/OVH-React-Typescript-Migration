@@ -1,13 +1,9 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import userEvent from '@testing-library/user-event'
 import SearchEmployeeLeaveRequests from './SearchEmployeeLeaveRequests'
-import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
+import { cleanup, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import {
-  mockEmployeesLeaves,
-  mockSearchEmployeesLeaves,
-} from '../../../test/data/leaveApprovalsData'
+import { mockSearchEmployeesLeaves } from '../../../test/data/leaveApprovalsData'
 
 const toRender = (
   <div>
@@ -62,14 +58,5 @@ describe('Search Employee Leave Requests Component Testing without data', () => 
     test('should not render the loading spinner when search leaves are not empty', () => {
       expect(screen.findByTestId('search-leave-loader')).toMatchObject({})
     })
-
-    // screen.debug()
-    // test('should able to render approve modal upon approve button click', () => {
-    //   const approveBtnElement = screen.getAllByTestId(
-    //     'search-leave-approve-btn',
-    //   )
-    //   userEvent.click(approveBtnElement[0])
-    //   expect(approveBtnElement[0]).toBeInTheDocument()
-    // })
   })
 })
