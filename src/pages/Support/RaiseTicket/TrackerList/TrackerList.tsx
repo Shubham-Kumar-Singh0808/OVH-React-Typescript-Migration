@@ -22,8 +22,8 @@ const TrackerList = ({
 }: {
   setToggle: (value: string) => void
 }): JSX.Element => {
-  const [isTrackerName, setIsTrackerName] = useState('')
-  const [isTrackerNameExist, setIsTrackerNameExist] = useState('')
+  const [trackerName, setTrackerName] = useState('')
+  const [trackerNameExist, setTrackerNameExist] = useState('')
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
@@ -56,12 +56,12 @@ const TrackerList = ({
     const { name, value } = event.target
     if (name === 'name') {
       const newValue = value.replace(/[^a-z\s]/gi, '').replace(/^\s*/, '')
-      setIsTrackerName(newValue)
+      setTrackerName(newValue)
     }
     if (trackerNameExists(value)) {
-      setIsTrackerNameExist(value)
+      setTrackerNameExist(value)
     } else {
-      setIsTrackerNameExist('')
+      setTrackerNameExist('')
     }
   }
 
@@ -72,7 +72,7 @@ const TrackerList = ({
   const addButtonHandler = async () => {
     const isAddTracker = await dispatch(
       reduxServices.addTrackersLists.addNewTracker({
-        name: isTrackerName,
+        name: trackerName,
         permission: isChecked,
       }),
     )
@@ -80,7 +80,7 @@ const TrackerList = ({
       reduxServices.addTrackersLists.addNewTracker.fulfilled.match(isAddTracker)
     ) {
       dispatch(reduxServices.ticketApprovals.getTrackerList())
-      setIsTrackerName('')
+      setTrackerName('')
       setIsChecked(false)
       dispatch(reduxServices.app.actions.addToast(successToast))
     }
@@ -88,17 +88,17 @@ const TrackerList = ({
 
   const clearData = () => {
     setIsChecked(false)
-    setIsTrackerName('')
-    setIsTrackerNameExist('')
+    setTrackerName('')
+    setTrackerNameExist('')
   }
 
   useEffect(() => {
-    if (isTrackerName) {
+    if (trackerName) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [isTrackerName])
+  }, [trackerName])
 
   const isLoading = useTypedSelector(
     reduxServices.scheduledInterviews.selectors.isLoading,
@@ -131,7 +131,7 @@ const TrackerList = ({
               className="col-sm-3 col-form-label text-end"
             >
               Name:
-              <span className={isTrackerName ? 'text-white' : 'text-danger'}>
+              <span className={trackerName ? 'text-white' : 'text-danger'}>
                 *
               </span>
             </CFormLabel>
@@ -143,12 +143,12 @@ const TrackerList = ({
                 size="sm"
                 name="name"
                 placeholder="Name"
-                value={isTrackerName}
+                value={trackerName}
                 onChange={handledInputChange}
               />
             </CCol>
             <CCol sm={3}>
-              {isTrackerNameExist && (
+              {trackerNameExist && (
                 <p className={TextDanger} data-testid="nameAlreadyExist">
                   Name Already Exist
                 </p>
@@ -181,7 +181,7 @@ const TrackerList = ({
                 onClick={addButtonHandler}
                 disabled={
                   isAddButtonEnabled
-                    ? isAddButtonEnabled && isTrackerNameExist.length > 0
+                    ? isAddButtonEnabled && trackerNameExist.length > 0
                     : !isAddButtonEnabled
                 }
               >

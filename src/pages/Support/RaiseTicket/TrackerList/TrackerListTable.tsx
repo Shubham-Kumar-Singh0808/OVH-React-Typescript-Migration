@@ -53,9 +53,7 @@ const TrackerListTable = (): JSX.Element => {
         isDeleteTracker.payload === 405) ||
       isDeleteTracker.payload === 500
     ) {
-      await dispatch(
-        reduxServices.app.actions.addToast(deleteFailedToastMessage),
-      )
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }

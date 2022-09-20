@@ -29,6 +29,17 @@ describe('Tracker List Slice', () => {
       })
     })
 
+    it('Should be able to set isLoading to "loading" if deleteTrackerList is pending', () => {
+      const action = {
+        type: addTrackerListService.deleteTrackerList.pending.type,
+      }
+      const state = trackerListReducer(initialState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        trackerList: [],
+      })
+    })
+
     it('Should be able to set isLoading to "succeeded" if deleteTrackerList is fulfilled', () => {
       const action = {
         type: addTrackerListService.deleteTrackerList.fulfilled.type,
