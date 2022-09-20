@@ -447,6 +447,9 @@ export const dashboardApiConfig: DashboardApi = {
   getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
   getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
   getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
+  deleteHoliday: apiPrefix + '/Employee/deleteHoliday',
+  getHolidayInformation: apiPrefix + '/Employee/holiday',
+  updateHoliday: apiPrefix + '/Employee/editHoliday',
 }
 
 export const addLocationListApiConfig: AddLocationListApi = {
