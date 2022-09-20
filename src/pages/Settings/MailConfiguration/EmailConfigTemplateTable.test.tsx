@@ -55,6 +55,7 @@ describe('Email Configuration Template Component Testing with data', () => {
     const editElement = screen.getAllByTestId('edit-btn22')
     userEvent.click(editElement[0])
     expect(editElement[0]).toBeInTheDocument()
+    expect(emailTemplateTableElement).toHaveBeenCalledTimes(1)
   })
   test('should render with table data ', () => {
     expect(screen.getByText('old')).toBeInTheDocument()
