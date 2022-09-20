@@ -385,4 +385,6 @@ export interface EventListApi extends ApiBase {
   getAllEvents: string
   cancelEvent: string
   getFeedbackFormList: string
+  downloadFeedbackForm: string
+  uploadFeedbackForm: string
 }

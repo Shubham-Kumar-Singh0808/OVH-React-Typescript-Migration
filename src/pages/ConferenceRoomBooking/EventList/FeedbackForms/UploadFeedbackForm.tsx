@@ -1,12 +1,71 @@
 import { CRow, CCol, CButton, CForm, CFormLabel } from '@coreui/react-pro'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
+import { eventListThunk } from '../../../../reducers/ConferenceRoomBooking/EventList/eventListSlice'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
 import { showIsRequired } from '../../../../utils/helper'
 
 const UploadFeedbackForm = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const { eventId } = useParams<{ eventId: string }>()
+  const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
+    File | undefined
+  >(undefined)
+  const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
+  const [uploadErrorText, setUploadErrorText] = useState<string>('')
+
   const formLabelProps = {
     htmlFor: 'inputUploadForm',
     className: 'col-form-label feedbackForm-label',
+  }
+
+  const onChangeFileUploadHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    let extension = ''
+    if (!file) return
+    if (file && file[0] !== undefined) {
+      extension = file[0].name.split('.').pop() as string
+    }
+    if (file[0] !== undefined && file[0].size > 2048000) {
+      setUploadErrorText(
+        'File size exceeded. Please upload a file less than 2MB.',
+      )
+      return
+    }
+    if (!acceptedFileTypes.includes(extension)) {
+      setUploadErrorText(
+        'Wrong file format chosen. Please choose either doc, docx, or pdf.',
+      )
+      return
+    }
+    setIsUploadBtnEnabled(true)
+    setUploadErrorText('')
+    setUploadFeedbackForm(file[0])
+  }
+
+  const toastElement = (
+    <OToast
+      toastMessage="Feedback Form Successfully Uploaded."
+      toastColor="success"
+    />
+  )
+
+  const handleUploadFeedbackForm = async () => {
+    if (uploadFeedbackForm) {
+      const formData = new FormData()
+      formData.append('file', uploadFeedbackForm, uploadFeedbackForm.name)
+      const uploadPrepareObject = {
+        eventId: Number(eventId),
+        file: formData,
+      }
+      await dispatch(eventListThunk.uploadFeedbackForm(uploadPrepareObject))
+    }
+    dispatch(reduxServices.app.actions.addToast(toastElement))
+    window.location.reload()
   }
   return (
     <>
@@ -26,8 +85,9 @@ const UploadFeedbackForm = (): JSX.Element => {
             className="col-sm-3 col-form-label text-end"
           >
             Upload Feedback form:
-            <span className="text-danger">*</span>
-            {/* <span className={showIsRequired(addHoliday?.name)}>*</span> */}
+            <span className={uploadFeedbackForm ? TextWhite : TextDanger}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <input
@@ -35,7 +95,12 @@ const UploadFeedbackForm = (): JSX.Element => {
               data-testid="feedback-form"
               type="file"
               name="name"
-              maxLength={50}
+              accept=".doc, .docx, .pdf"
+              onChange={(element: SyntheticEvent) =>
+                onChangeFileUploadHandler(
+                  element.currentTarget as HTMLInputElement,
+                )
+              }
             />
           </CCol>
         </CRow>
@@ -45,6 +110,7 @@ const UploadFeedbackForm = (): JSX.Element => {
               data-testid="upload-btn"
               className="btn-ovh me-1 text-white"
               color="success"
+              onClick={handleUploadFeedbackForm}
             >
               Upload
             </CButton>

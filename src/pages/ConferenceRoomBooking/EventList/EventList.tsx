@@ -1,6 +1,5 @@
 import { CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import EventListFilterOptions from './EventListFilterOptions'
 import EventListTable from './EventListTable'
 import OCard from '../../../components/ReusableComponent/OCard'

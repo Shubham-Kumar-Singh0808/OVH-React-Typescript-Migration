@@ -1,8 +1,10 @@
 import {
+  DownloadFeedbackFormInterface,
   EventListApiProps,
   FeedbackFormApiProps,
   GetEventListResponse,
   GetFeedbackFormResponse,
+  UploadFeedbackFormInterface,
 } from '../../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -59,10 +61,47 @@ const getFeedbackFormList = async (
   return response.data
 }
 
+const downloadFeedbackForm = async (
+  prepareObject: DownloadFeedbackFormInterface,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: eventListApiConfig.downloadFeedbackForm,
+    method: AllowedHttpMethods.get,
+    params: {
+      fileName: prepareObject.fileName,
+      token: prepareObject.token,
+      tenantKey: prepareObject.tenantKey,
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const uploadFeedbackForm = async (
+  prepareObject: UploadFeedbackFormInterface,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: eventListApiConfig.uploadFeedbackForm,
+    method: AllowedHttpMethods.post,
+    data: prepareObject.file,
+    params: {
+      eventId: prepareObject.eventId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const eventListApi = {
   getAllEvents,
   cancelEvent,
   getFeedbackFormList,
+  downloadFeedbackForm,
+  uploadFeedbackForm,
 }
 
 export default eventListApi

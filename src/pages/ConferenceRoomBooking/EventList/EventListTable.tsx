@@ -121,7 +121,7 @@ const EventListTable = (
                       data-testid="eventList-description-link"
                       onClick={() => handleDescriptionModal(event)}
                     >
-                      {parse(descriptionLimit as string)}
+                      {parse(descriptionLimit)}
                     </CLink>
                   ) : (
                     'N/A'

@@ -118,6 +118,17 @@ export type GetFeedbackFormResponse = {
   size: number
 }
 
+export type DownloadFeedbackFormInterface = {
+  fileName?: string
+  tenantKey?: string
+  token?: string
+}
+
+export type UploadFeedbackFormInterface = {
+  eventId: number
+  file: FormData
+}
+
 export type EventListSliceState = {
   events: Event[]
   feedbackFormDetails: FeedbackForm[]

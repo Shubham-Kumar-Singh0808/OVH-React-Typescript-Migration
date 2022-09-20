@@ -10,6 +10,7 @@ import {
   EventListSliceState,
   FeedbackForm,
   FeedbackFormApiProps,
+  UploadFeedbackFormInterface,
 } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 
 const getAllEvents = createAsyncThunk(
@@ -53,6 +54,26 @@ const getFeedbackFormList = createAsyncThunk(
   },
 )
 
+const uploadFeedbackForm = createAsyncThunk<
+  number | undefined,
+  UploadFeedbackFormInterface,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'eventList/uploadFeedbackForm',
+  async (prepareObject: UploadFeedbackFormInterface, thunkApi) => {
+    try {
+      return await eventListApi.uploadFeedbackForm(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialEventListState: EventListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -77,19 +98,23 @@ const eventListSlice = createSlice({
         state.events = action.payload.list
         state.listSize = action.payload.size
       })
-      .addCase(cancelEvent.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
       .addCase(getFeedbackFormList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.feedbackFormDetails = action.payload.list
         state.feedbackFormListSize = action.payload.size
       })
       .addMatcher(
+        isAnyOf(cancelEvent.fulfilled, uploadFeedbackForm.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
         isAnyOf(
           getAllEvents.pending,
           cancelEvent.pending,
           getFeedbackFormList.pending,
+          uploadFeedbackForm.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -112,6 +137,7 @@ export const eventListThunk = {
   getAllEvents,
   cancelEvent,
   getFeedbackFormList,
+  uploadFeedbackForm,
 }
 
 export const eventListSelectors = {

@@ -1,5 +1,6 @@
 import {
   CCol,
+  CLink,
   CRow,
   CTable,
   CTableBody,
@@ -11,9 +12,11 @@ import {
 import React from 'react'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
+import eventListApi from '../../../../middleware/api/ConferenceRoomBooking/EventList/eventListApi'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 import { EventListTableProps } from '../../../../types/ConferenceRoomBooking/EventList/eventListTypes'
+import { downloadFile } from '../../../../utils/helper'
 
 const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
   const feedbackFormsList = useTypedSelector(
@@ -22,6 +25,13 @@ const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
 
   const feedbackFormListSize = useTypedSelector(
     reduxServices.eventList.selectors.feedbackFormListSize,
+  )
+
+  const tenantKey = useTypedSelector(
+    reduxServices.authentication.selectors.selectTenantKey,
+  )
+  const authenticatedToken = useTypedSelector(
+    reduxServices.authentication.selectors.selectToken,
   )
 
   const {
@@ -37,6 +47,15 @@ const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+  }
+
+  const handleDownloadFeedbackForm = async (feedbackFormName: string) => {
+    const employeeFeedbackForm = await eventListApi.downloadFeedbackForm({
+      fileName: feedbackFormName,
+      token: tenantKey,
+      tenantKey: authenticatedToken,
+    })
+    downloadFile(employeeFeedbackForm, feedbackFormName)
   }
 
   return (
@@ -60,7 +79,16 @@ const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
                   <CTableRow key={index} className="text-start">
                     <CTableDataCell>{index + 1}</CTableDataCell>
                     <CTableDataCell>
-                      {feedbackForm.feedBackFormName}
+                      <CLink
+                        className="cursor-pointer sh-hive-activity-link"
+                        onClick={() =>
+                          handleDownloadFeedbackForm(
+                            feedbackForm.feedBackFormName,
+                          )
+                        }
+                      >
+                        {feedbackForm.feedBackFormName}
+                      </CLink>
                     </CTableDataCell>
                     <CTableDataCell>{feedbackForm.createdBy}</CTableDataCell>
                     <CTableDataCell>{feedbackForm.createdDate}</CTableDataCell>

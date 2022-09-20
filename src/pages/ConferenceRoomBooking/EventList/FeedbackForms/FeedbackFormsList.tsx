@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { CRow } from '@coreui/react-pro'
+import { useParams } from 'react-router-dom'
 import UploadFeedbackForm from './UploadFeedbackForm'
 import FeedbackFormTable from './FeedbackFormTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -8,6 +9,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const FeedbackFormsList = (): JSX.Element => {
+  const { eventId } = useParams<{ eventId: string }>()
   const dispatch = useAppDispatch()
   const feedbackFormListSize = useTypedSelector(
     reduxServices.eventList.selectors.feedbackFormListSize,
@@ -26,7 +28,7 @@ const FeedbackFormsList = (): JSX.Element => {
       reduxServices.eventList.getFeedbackFormList({
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
-        eventId: 0,
+        eventId: Number(eventId),
       }),
     )
   }, [currentPage, dispatch, pageSize])
