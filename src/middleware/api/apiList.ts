@@ -52,6 +52,8 @@ import {
   RaiseNewTicketApi,
   DashboardApi,
   UpdateTicketApi,
+  EventTypeListApi,
+  AddLocationListApi,
   RoomListApi,
 } from '../../types/apiTypes'
 
@@ -421,6 +423,7 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
     apiPrefix + '/supportManagement/getAllTicketsForApproval',
   exportTicketApprovalList:
     apiPrefix + '/supportManagement/exportTicketApprovalList',
+  rejectManagerTicket: apiPrefix + '/supportManagement/rejectManagerTicket',
 }
 
 export const createNewTicketApiConfig: RaiseNewTicketApi = {
@@ -446,6 +449,12 @@ export const dashboardApiConfig: DashboardApi = {
   getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
 }
 
+export const addLocationListApiConfig: AddLocationListApi = {
+  getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
+  addLocation: apiPrefix + '/meetingRequest/addLocation',
+  deleteLocation: apiPrefix + '/meetingRequest/deleteLocation',
+}
+
 export const updateTicketApiConfig: UpdateTicketApi = {
   getTicket: apiPrefix + '/supportManagement/getTicket',
   getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
@@ -456,6 +465,14 @@ export const updateTicketApiConfig: UpdateTicketApi = {
     apiPrefix + '/supportManagement/editIndividualTickets',
   approveTicketByManager:
     apiPrefix + '/supportManagement/approveByManagerTicket',
+}
+
+export const eventTypeListApiConfig: EventTypeListApi = {
+  getAllEventTypes: apiPrefix + '/meetingRequest/getAllEventTypes',
+  addEventType: apiPrefix + '/meetingRequest/addEventType',
+  deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
+  updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
 }
 
 export const roomListApiConfig: RoomListApi = {
