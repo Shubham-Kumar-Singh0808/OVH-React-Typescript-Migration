@@ -19,8 +19,8 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const RoomListTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [isDeleteRoomName, setIsDeleteRoomName] = useState('')
-  const [isDeleteLocationId, setIsDeleteLocationId] = useState(0)
+  const [deleteRoomName, setDeleteRoomName] = useState('')
+  const [deleteLocationId, setDeleteLocationId] = useState(0)
 
   const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
   const dispatch = useAppDispatch()
@@ -32,7 +32,7 @@ const RoomListTable = (): JSX.Element => {
   const confirmDeleteRoom = async () => {
     setIsDeleteModalVisible(false)
     const isDeleteRoom = await dispatch(
-      reduxServices.roomLists.deleteRoom(isDeleteLocationId),
+      reduxServices.roomLists.deleteRoom(deleteLocationId),
     )
     if (reduxServices.roomLists.deleteRoom.fulfilled.match(isDeleteRoom)) {
       dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
@@ -42,8 +42,8 @@ const RoomListTable = (): JSX.Element => {
 
   const deleteBtnHandler = (id: number, roomName: string) => {
     setIsDeleteModalVisible(true)
-    setIsDeleteLocationId(id)
-    setIsDeleteRoomName(roomName)
+    setDeleteLocationId(id)
+    setDeleteRoomName(roomName)
   }
 
   return (
@@ -110,7 +110,7 @@ const RoomListTable = (): JSX.Element => {
           cancelButtonText="No"
           confirmButtonAction={confirmDeleteRoom}
         >
-          {`Do you really want to delete this ${isDeleteRoomName} Location ?`}
+          {`Do you really want to delete this ${deleteRoomName} Location ?`}
         </OModal>
       </CCol>
     </>

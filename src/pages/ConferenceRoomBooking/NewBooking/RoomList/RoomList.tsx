@@ -18,7 +18,7 @@ const RoomList = (): JSX.Element => {
   const [filterByLocation, setFilterByLocation] = useState<string>('')
   const [filterByLocationId] = useState<number>(0)
   const [selectRoomName, setSelectRoomName] = useState('')
-  const [isRoomNameExist, setIsRoomNameExist] = useState('')
+  const [roomNameExist, setRoomNameExist] = useState('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const formLabelProps = {
@@ -75,15 +75,13 @@ const RoomList = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'name') {
-      const newValue = value
-        .replace(/[^_-a-zA-Z0-9\s]/gi, '')
-        .replace(/^\s*/, '')
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setSelectRoomName(newValue)
     }
     if (roomNameExists(value)) {
-      setIsRoomNameExist(value)
+      setRoomNameExist(value)
     } else {
-      setIsRoomNameExist('')
+      setRoomNameExist('')
     }
   }
 
@@ -157,7 +155,7 @@ const RoomList = (): JSX.Element => {
               onChange={handledInputChange}
             />
 
-            {isRoomNameExist && (
+            {roomNameExist && (
               <p className={TextDanger} data-testid="nameAlreadyExist">
                 Name Already Exist
               </p>
@@ -170,7 +168,7 @@ const RoomList = (): JSX.Element => {
               className="btn-ovh me-1"
               disabled={
                 isAddButtonEnabled
-                  ? isAddButtonEnabled && isRoomNameExist.length > 0
+                  ? isAddButtonEnabled && roomNameExist.length > 0
                   : !isAddButtonEnabled
               }
               onClick={addBtnHandler}
