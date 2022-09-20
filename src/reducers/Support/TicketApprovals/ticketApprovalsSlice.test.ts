@@ -21,6 +21,7 @@ describe('Ticket Approvals Slice', () => {
       subCategoryList: [],
       ticketsForApproval: { size: 0, list: [] },
       getAllLookUps: [],
+      selectedTicketId: 0,
     } as TicketApprovalsSliceState
 
     it('Should be able to set isLoading to "loading" if getAllLookUps is pending', () => {
@@ -36,6 +37,7 @@ describe('Ticket Approvals Slice', () => {
         subCategoryList: [],
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],
+        selectedTicketId: 0,
       })
     })
 
@@ -53,6 +55,7 @@ describe('Ticket Approvals Slice', () => {
         subCategoryList: [],
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: mockAllLookUps,
+        selectedTicketId: 0,
       })
     })
 
@@ -70,6 +73,7 @@ describe('Ticket Approvals Slice', () => {
         subCategoryList: [],
         ticketsForApproval: mockAllTicketApprovals,
         getAllLookUps: [],
+        selectedTicketId: 0,
       })
     })
 
@@ -87,6 +91,7 @@ describe('Ticket Approvals Slice', () => {
         subCategoryList: [],
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],
+        selectedTicketId: 0,
       })
     })
 
@@ -104,6 +109,7 @@ describe('Ticket Approvals Slice', () => {
         subCategoryList: [],
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],
+        selectedTicketId: 0,
       })
     })
 
@@ -121,6 +127,24 @@ describe('Ticket Approvals Slice', () => {
         subCategoryList: [],
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],
+        selectedTicketId: 0,
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if rejectTicket is fulfilled', () => {
+      const action = {
+        type: ticketApprovalsService.rejectTicket.fulfilled.type,
+      }
+      const state = ticketApprovalsReducer(initialTicketApprovalsState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        departmentNameList: [],
+        trackerList: [],
+        departmentCategoryList: [],
+        subCategoryList: [],
+        ticketsForApproval: { size: 0, list: [] },
+        getAllLookUps: [],
+        selectedTicketId: 0,
       })
     })
   })

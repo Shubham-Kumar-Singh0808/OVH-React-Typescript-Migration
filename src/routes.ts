@@ -160,6 +160,23 @@ const UpdateTicket = React.lazy(
   () => import('./pages/Support/TicketApprovals/UpdateTicket/UpdateTicket'),
 )
 
+const UpdateTicketUnderTicketList = React.lazy(
+  () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
+)
+
+const EventTypeList = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
+    ),
+)
+const LocationList = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
+    ),
+)
+
 const EventsList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
 )
@@ -348,6 +365,12 @@ const routes = [
     name: 'Update Ticket',
     component: UpdateTicket,
   },
+
+  {
+    path: '/updateTicket/:ticketId',
+    name: 'Update Ticket',
+    component: UpdateTicketUnderTicketList,
+  },
   {
     path: '/jobvacancies',
     name: 'Job Openings',
@@ -377,6 +400,16 @@ const routes = [
     path: '/probationaryList',
     name: 'Upcoming Probationary End Dates',
     component: ProbationaryList,
+  },
+  {
+    path: '/newEvent',
+    name: 'Event Type List',
+    component: EventTypeList,
+  },
+  {
+    path: '/newMeetingRequest',
+    name: 'Add LocationList',
+    component: LocationList,
   },
   {
     path: '/trainingFeedBackForm/:eventId',
