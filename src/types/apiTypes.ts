@@ -351,6 +351,7 @@ export interface TicketApprovalsApi extends ApiBase {
   subCategoryList: string
   getAllTicketsForApproval: string
   exportTicketApprovalList: string
+  rejectManagerTicket: string
 }
 export interface AddTrackerApi extends ApiBase {
   addNewTracker: string
@@ -383,4 +384,11 @@ export interface UpdateTicketApi extends ApiBase {
   uploadSupportTicketDocuments: string
   updateIndividualTickets: string
   approveTicketByManager: string
+}
+export interface EventTypeListApi extends ApiBase {
+  getAllEventTypes: string
+  addEventType: string
+  deleteEventType: string
+  updateEventType: string
+  getLoggedEmployeeName: string
 }
