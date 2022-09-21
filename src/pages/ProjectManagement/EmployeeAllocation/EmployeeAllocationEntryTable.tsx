@@ -11,13 +11,14 @@ import {
   CFormSelect,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { Link } from 'react-router-dom'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { UpdateEmployeeAllocationProject } from '../../../types/ProjectManagement/EmployeeAllocation/employeeAllocationTypes'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const EmployeeAllocationEntryTable = (props: {
   id: number
@@ -53,6 +54,7 @@ const EmployeeAllocationEntryTable = (props: {
     }
     return <></>
   }
+  const commonFormatDate = 'l'
 
   const editProjectAllocationButtonHandler = (
     address: null,
@@ -196,10 +198,22 @@ const EmployeeAllocationEntryTable = (props: {
         reduxServices.employeeAllocationReport.projectUnderEmployeesReport({
           dateSelection: Select,
           employeeid: id as number,
-          enddate: toDate as string,
+          enddate: toDate
+            ? new Date(toDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
           isAllocated: allocationStatus,
           isBillale: billingStatus,
-          startdate: fromDate as string,
+          startdate: fromDate
+            ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
         }),
       )
       setIsProjectAllocationEdit(false)
@@ -277,13 +291,12 @@ const EmployeeAllocationEntryTable = (props: {
                             className="form-control form-control-sm sh-date-picker"
                             placeholderText="dd/mm/yy"
                             name="startdate"
-                            minDate={new Date()}
                             id="startdate"
                             peekNextMonth
                             showMonthDropdown
                             showYearDropdown
                             dropdownMode="select"
-                            value={editEmployeeAllocation.startdate as string}
+                            value={editEmployeeAllocation?.startdate}
                             onChange={(date: Date) =>
                               onStartDateChangeHandler(date)
                             }
@@ -303,13 +316,12 @@ const EmployeeAllocationEntryTable = (props: {
                             className="form-control form-control-sm sh-date-picker"
                             placeholderText="dd/mm/yy"
                             name="enddate"
-                            minDate={new Date()}
                             id="enddate"
                             peekNextMonth
                             showMonthDropdown
                             showYearDropdown
                             dropdownMode="select"
-                            value={editEmployeeAllocation.enddate as string}
+                            value={editEmployeeAllocation?.enddate}
                             onChange={(date: Date) =>
                               onEndDateChangeHandler(date)
                             }

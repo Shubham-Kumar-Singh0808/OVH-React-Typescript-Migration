@@ -157,7 +157,12 @@ const EmployeeAllocationReportTable = (props: {
                     <CTableDataCell scope="row">
                       {allocationReport.departmentName}
                     </CTableDataCell>
-                    <CTableDataCell scope="row">
+                    <CTableDataCell
+                      scope="row"
+                      className={
+                        allocationReport.percent > 100 ? 'text-danger' : ''
+                      }
+                    >
                       {allocationReport.percent}
                     </CTableDataCell>
                   </CTableRow>

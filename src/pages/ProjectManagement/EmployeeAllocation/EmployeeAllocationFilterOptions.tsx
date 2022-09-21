@@ -24,7 +24,8 @@ import { EmployeeDepartment } from '../../../types/EmployeeDirectory/EmployeesLi
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const EmployeeAllocationFilterOptions = (): JSX.Element => {
-  const [Select, setSelect] = useState<string>('Current Month')
+  const currentMonth = 'Current Month'
+  const [Select, setSelect] = useState<string>(currentMonth)
   const [billingStatus, setBillingStatus] = useState<string>('All')
   const [allocationStatus, setAllocationStatus] = useState<string>('')
   const [selectTechnology, setSelectTechnology] = useState<string>('')
@@ -144,6 +145,20 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
     setSelectDepartment([])
     setFromDate('')
     setToDate('')
+    dispatch(
+      reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
+        Billingtype: 'All',
+        EmployeeStatus: '',
+        dateSelection: currentMonth,
+        departmentNames: [],
+        employeeName: '',
+        endIndex: pageSize * currentPage,
+        enddate: '',
+        firstIndex: pageSize * (currentPage - 1),
+        startdate: '',
+        technology: '',
+      }),
+    )
   }
 
   const handleSearch = () => {
