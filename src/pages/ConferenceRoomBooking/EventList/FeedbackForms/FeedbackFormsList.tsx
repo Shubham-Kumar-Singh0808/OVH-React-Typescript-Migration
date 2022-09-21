@@ -7,6 +7,9 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const FeedbackFormsList = (): JSX.Element => {
   const { eventId } = useParams<{ eventId: string }>()
@@ -14,7 +17,9 @@ const FeedbackFormsList = (): JSX.Element => {
   const feedbackFormListSize = useTypedSelector(
     reduxServices.eventList.selectors.feedbackFormListSize,
   )
-
+  const isLoading = useTypedSelector(
+    reduxServices.eventList.selectors.isLoading,
+  )
   const {
     paginationRange,
     currentPage,
@@ -41,15 +46,21 @@ const FeedbackFormsList = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <UploadFeedbackForm />
-        <CRow className="mt-4">
-          <FeedbackFormTable
-            paginationRange={paginationRange}
-            setPageSize={setPageSize}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
-        </CRow>
+        {isLoading !== ApiLoadingState.loading ? (
+          <>
+            <CRow className="mt-4">
+              <FeedbackFormTable
+                paginationRange={paginationRange}
+                setPageSize={setPageSize}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={pageSize}
+              />
+            </CRow>
+          </>
+        ) : (
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        )}
       </OCard>
     </>
   )
