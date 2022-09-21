@@ -16,13 +16,17 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { getAllMeetingRooms } from '../../../../types/ConferenceRoomBooking/NewBooking/RoomList/roomListTypes'
 
 const RoomListTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteRoomName, setDeleteRoomName] = useState('')
   const [deleteLocationId, setDeleteLocationId] = useState(0)
+  const initialRoomListDetails = {} as getAllMeetingRooms
+  const [updateRooms, setUpdateRooms] = useState(initialRoomListDetails)
 
   const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
+
   const dispatch = useAppDispatch()
 
   const deletedToastElement = (
@@ -44,6 +48,30 @@ const RoomListTable = (): JSX.Element => {
     setIsDeleteModalVisible(true)
     setDeleteLocationId(id)
     setDeleteRoomName(roomName)
+  }
+
+  const updatedToast = (
+    <OToast toastColor="success" toastMessage="Room Updated Successfully" />
+  )
+
+  const handleUpdateRoom = async () => {
+    const updatingRoom = await dispatch(
+      reduxServices.roomLists.updateRoom(updateRooms),
+    )
+    if (reduxServices.roomLists.updateRoom.fulfilled.match(updatingRoom)) {
+      dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
+      dispatch(reduxServices.app.actions.addToast(updatedToast))
+    }
+  }
+  const onChangeHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = e.target
+    setUpdateRooms((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
   }
 
   return (
@@ -72,6 +100,8 @@ const RoomListTable = (): JSX.Element => {
                       id="formSwitchCheckDefault"
                       type="radio"
                       size="xl"
+                      onClick={handleUpdateRoom}
+                      onChange={onChangeHandler}
                     />
                   </CTableDataCell>
                   <CTableDataCell>

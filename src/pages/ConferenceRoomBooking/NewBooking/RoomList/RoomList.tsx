@@ -66,10 +66,10 @@ const RoomList = (): JSX.Element => {
       reduxServices.roomLists.addRoom(prepareObj),
     )
     if (reduxServices.roomLists.addRoom.fulfilled.match(isAddRoom)) {
-      dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
       setSelectRoomName('')
       setFilterByLocation('')
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
     }
   }
 
@@ -79,7 +79,7 @@ const RoomList = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    if (name === 'name') {
+    if (name === 'roomName') {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setSelectRoomName(newValue)
     }
@@ -150,11 +150,11 @@ const RoomList = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
-              data-testid="tracker-name"
+              data-testid="roomName"
               type="text"
-              id="Name"
+              id="roomName"
               size="sm"
-              name="name"
+              name="roomName"
               placeholder="Enter Name"
               value={selectRoomName}
               onChange={handledInputChange}
