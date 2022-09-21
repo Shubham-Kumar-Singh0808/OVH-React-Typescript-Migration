@@ -22,16 +22,20 @@ const getEmployeeMailTemplateTypes = async (): Promise<
   return response.data
 }
 
+const commonParamsUtil = (props: EmployeeGetEmailTemplateProps) => {
+  return {
+    searchText: props.templateName ?? '',
+    type: props.templateTypeId ?? '',
+  }
+}
+
 const getEmployeeMailTemplate = async (
   props: EmployeeGetEmailTemplateProps,
 ): Promise<EmployeeMailTemplate[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeMailConfigurationApiConfig.getMailTemplates,
     method: AllowedHttpMethods.get,
-    params: {
-      searchText: props.templateName ?? '',
-      type: props.templateTypeId ?? '',
-    },
+    params: commonParamsUtil(props),
   })
   const response = await axios(requestConfig)
   return response.data
@@ -40,12 +44,12 @@ const getEmployeeMailTemplate = async (
 const exportEmployeeMailTemplateData = async (
   props: EmployeeGetEmailTemplateProps,
 ): Promise<Blob | undefined> => {
+  const paramsResult = commonParamsUtil(props)
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeMailConfigurationApiConfig.exportMailTemplatesList,
     method: AllowedHttpMethods.get,
     params: {
-      searchText: props.templateName ?? '',
-      type: props.templateTypeId ?? '',
+      ...paramsResult,
       token: localStorage.getItem('token') ?? '',
       tenantKey: localStorage.getItem('token') ?? '',
     },
