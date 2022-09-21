@@ -11,19 +11,23 @@ import {
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import React, { useMemo, useState, useEffect } from 'react'
+import Multiselect from 'multiselect-react-dropdown'
 import EmployeeAllocationReportTable from './EmployeeAllocationReportTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { downloadFile, showIsRequired } from '../../../utils/helper'
 import employeeAllocationReportApi from '../../../middleware/api/ProjectManagement/EmployeeAllocation/employeeAllocationApi'
+import { EmployeeDepartment } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 const EmployeeAllocationFilterOptions = (): JSX.Element => {
   const [Select, setSelect] = useState<string>('Current Month')
   const [billingStatus, setBillingStatus] = useState<string>('All')
   const [allocationStatus, setAllocationStatus] = useState<string>('')
   const [selectTechnology, setSelectTechnology] = useState<string>('')
-  const [selectDepartment, setSelectDepartment] = useState<string>('')
+  const [selectDepartment, setSelectDepartment] = useState<
+    EmployeeDepartment[]
+  >([])
   const [showSelectCustom, setShowSelectCustom] = useState<boolean>(false)
   const [fromDate, setFromDate] = useState<Date | string>()
   const [toDate, setToDate] = useState<Date | string>()
@@ -31,7 +35,6 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-  console.log(Select)
   const dispatch = useAppDispatch()
 
   const getTechnologies = useTypedSelector(
@@ -78,7 +81,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
         Billingtype: billingStatus,
         EmployeeStatus: '',
         dateSelection: Select,
-        departmentNames: '',
+        departmentNames: [],
         employeeName: '',
         endIndex: 20,
         enddate: '',
@@ -95,7 +98,9 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
         Billingtype: billingStatus,
         EmployeeStatus: allocationStatus,
         dateSelection: Select,
-        departmentNames: selectDepartment,
+        departmentNames: selectDepartment?.map((currentItem) =>
+          currentItem.departmentName.toString(),
+        ),
         employeeName: '',
         endIndex: 20,
         startdate: moment(fromDate).format(commonFormatDate),
@@ -121,7 +126,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
     setBillingStatus('All')
     setSelectTechnology('')
     setAllocationStatus('')
-    setSelectDepartment('')
+    setSelectDepartment([])
     setFromDate('')
     setToDate('')
   }
@@ -132,7 +137,9 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
         Billingtype: billingStatus,
         EmployeeStatus: allocationStatus,
         dateSelection: Select,
-        departmentNames: selectDepartment,
+        departmentNames: selectDepartment?.map((currentItem) =>
+          currentItem.departmentName.toString(),
+        ),
         employeeName: searchInput,
         endIndex: 20,
         startdate: moment(fromDate).format(commonFormatDate),
@@ -152,7 +159,9 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
           Billingtype: billingStatus,
           EmployeeStatus: allocationStatus,
           dateSelection: Select,
-          departmentNames: selectDepartment,
+          departmentNames: selectDepartment?.map((currentItem) =>
+            currentItem.departmentName.toString(),
+          ),
           employeeName: searchInput,
           endIndex: 20,
           startdate: moment(fromDate).format(commonFormatDate),
@@ -184,6 +193,14 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
       employeeEmployeeAllocationReportDownload,
       'EmployeeAllocationList.csv',
     )
+  }
+
+  const handleMultiSelect = (list: EmployeeDepartment[]) => {
+    setSelectDepartment(list)
+  }
+
+  const handleOnRemoveSelectedOption = (selectedList: EmployeeDepartment[]) => {
+    setSelectDepartment(selectedList)
   }
 
   return (
@@ -255,22 +272,18 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
           <CFormLabel className="mt-1">Department:</CFormLabel>
         </CCol>
         <CCol sm={2}>
-          <CFormSelect
-            aria-label="Default select example"
-            size="sm"
-            id="selectDepartment"
-            data-testid="form-select2"
-            name="selectDepartment"
-            value={selectDepartment}
-            onChange={(e) => setSelectDepartment(e.target.value)}
-          >
-            <option value={''}>Select</option>
-            {departmentsList?.map((department, index) => (
-              <option key={index} value={department.departmentName}>
-                {department.departmentName}
-              </option>
-            ))}
-          </CFormSelect>
+          <Multiselect
+            className="ovh-multiselect"
+            data-testid="employee-option"
+            options={departmentsList?.map((department) => department) || []}
+            displayValue="departmentName"
+            placeholder="Select"
+            selectedValues={selectDepartment}
+            onSelect={(list: EmployeeDepartment[]) => handleMultiSelect(list)}
+            onRemove={(selectedList: EmployeeDepartment[]) =>
+              handleOnRemoveSelectedOption(selectedList)
+            }
+          />
         </CCol>
         <CCol sm={2} md={1} className="text-end">
           <CFormLabel className="mt-1">Technology:</CFormLabel>

@@ -116,7 +116,7 @@ export type EmployeeAllocationReportProps = {
   Billingtype: string
   EmployeeStatus: string
   dateSelection: string
-  departmentNames: string
+  departmentNames: string[]
   employeeName: string
   endIndex: number
   enddate: string

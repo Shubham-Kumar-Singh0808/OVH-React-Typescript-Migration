@@ -20,7 +20,7 @@ const getEmployeeAllocationReport = async (
       Billingtype: props.Billingtype ?? '',
       EmployeeStatus: props.EmployeeStatus ?? '',
       dateSelection: props.dateSelection ?? '',
-      departmentNames: props.departmentNames ?? '',
+      departmentNames: String(props.departmentNames ?? ''),
       employeeName: props.employeeName ?? '',
       endIndex: props.endIndex ?? 20,
       enddate: props.enddate ?? '',
