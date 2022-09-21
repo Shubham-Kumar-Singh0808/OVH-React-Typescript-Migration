@@ -170,6 +170,17 @@ const EventTypeList = React.lazy(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
 )
+const LocationList = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
+    ),
+)
+const EditHoliday = React.lazy(
+  () =>
+    import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
+)
+
 const NewEvent = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewEvent/NewEvent'),
 )
@@ -395,6 +406,16 @@ const routes = [
     path: '/addEventType',
     name: 'Event Type List',
     component: EventTypeList,
+  },
+  {
+    path: '/newMeetingRequest',
+    name: 'Add LocationList',
+    component: LocationList,
+  },
+  {
+    path: '/editHoliday/:holidayId',
+    name: 'Edit Holiday',
+    component: EditHoliday,
   },
 ]
 
