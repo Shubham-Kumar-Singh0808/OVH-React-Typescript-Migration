@@ -11,6 +11,14 @@ import { mockEventList } from '../../../test/data/eventListData'
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
+const expectPageSizeToBeRendered = (pageSize: number) => {
+  for (let i = 0; i < pageSize; i++) {
+    expect(
+      screen.getByText(mockEventList.list[i].authorName.fullName),
+    ).toBeInTheDocument()
+  }
+}
+
 const history = createMemoryHistory()
 const toRender = (
   <div>
@@ -34,8 +42,20 @@ describe('EventList', () => {
       render(toRender, {
         preloadedState: {
           eventList: {
-            events: mockEventList,
+            events: mockEventList.list,
             isLoading: ApiLoadingState.succeeded,
+            listSize: 41,
+          },
+          authentication: {
+            authenticatedUser: {
+              employeeName: 'admin',
+              employeeId: '1983',
+              userName: 'admin',
+              role: 'admin',
+              tenantKey: 'abc',
+              token: 'test',
+              designation: 'developer',
+            },
           },
         },
       })
@@ -68,7 +88,7 @@ describe('EventList', () => {
       expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
     })
     test('should render correct number of page records', () => {
-      expect(screen.queryAllByRole('row')).toHaveLength(21)
+      expect(screen.queryAllByRole('row')).toHaveLength(42)
     })
 
     test('should render edit button in the Actions', () => {
@@ -87,35 +107,39 @@ describe('EventList', () => {
       )
     })
 
-    // test('should redirect to Edit Holiday page upon clicking Edit button from HolidaysList Page', () => {
-    //   const editButtonEl = screen.getByTestId('holiday-edit-btn1')
-    //   userEvent.click(editButtonEl)
-    //   expect(history.location.pathname).toBe('/editHoliday/148')
-    // })
-    // it('should render Delete modal popup on clicking delete button from Actions', async () => {
-    //   const deleteButtonEl = screen.getByTestId('holiday-delete-btn1')
-    //   userEvent.click(deleteButtonEl)
-    //   await waitFor(() => {
-    //     expect(screen.getByText('Delete Holiday')).toBeInTheDocument()
-    //     expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
-    //     expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
-    //   })
-    // })
-    // it('should close modal popup after clicking Yes option from the modal', () => {
-    //   const deleteButtonElement = screen.getByTestId('holiday-delete-btn1')
-    //   userEvent.click(deleteButtonElement)
-    //   const yesButtonEle = screen.getByRole('button', { name: 'Yes' })
-    //   userEvent.click(yesButtonEle)
-    // })
-    // test('should render correct number of 40 page records', () => {
-    //   userEvent.selectOptions(screen.getByRole('combobox'), ['20'])
-    //   const pageSizeSelect = screen.getByRole('option', {
-    //     name: '40',
-    //   }) as HTMLOptionElement
-    //   expect(pageSizeSelect.selected).toBe(true)
+    test('should redirect to FeedbackForms page upon clicking View button from EventsList Page', () => {
+      const viewButtonEl = screen.getByTestId('viewEvent-btn1')
+      userEvent.click(viewButtonEl)
+      expect(history.location.pathname).toBe('/trainingFeedBackForm/14854')
+    })
 
-    //   // 42 including the heading
-    //   expect(screen.getAllByRole('row')).toHaveLength(21)
-    // })
+    it('should render Cancel Event modal popup on clicking cancel button from Actions', async () => {
+      const cancelButtonEl = screen.getByTestId('cancelEvent-btn0')
+      userEvent.click(cancelButtonEl)
+      await waitFor(() => {
+        expect(screen.getByText('Cancel Event')).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
+      })
+    })
+
+    it('should close modal popup after clicking Yes option from the modal', async () => {
+      const cancelButtonElement = screen.getByTestId('cancelEvent-btn1')
+      userEvent.click(cancelButtonElement)
+      const yesButtonEle = screen.getByRole('button', { name: 'Yes' })
+      userEvent.click(yesButtonEle)
+      await waitFor(() => {
+        expect(yesButtonEle).not.toBeInTheDocument()
+      })
+    })
+
+    test('should render correct number of 40 page records', async () => {
+      expectPageSizeToBeRendered(20)
+      await waitFor(() => {
+        userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+        expect(mockSetPageSize).toHaveBeenCalledTimes(1)
+        expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
+      })
+    })
   })
 })

@@ -104,7 +104,7 @@ const eventListSlice = createSlice({
         state.feedbackFormListSize = action.payload.size
       })
       .addMatcher(
-        isAnyOf(cancelEvent.fulfilled, uploadFeedbackForm.pending),
+        isAnyOf(cancelEvent.fulfilled, uploadFeedbackForm.fulfilled),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },

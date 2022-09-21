@@ -12,6 +12,7 @@ import {
 import React from 'react'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import eventListApi from '../../../../middleware/api/ConferenceRoomBooking/EventList/eventListApi'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
@@ -19,6 +20,10 @@ import { EventListTableProps } from '../../../../types/ConferenceRoomBooking/Eve
 import { downloadFile } from '../../../../utils/helper'
 
 const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
+  const isLoading = useTypedSelector(
+    reduxServices.eventList.selectors.isLoading,
+  )
+
   const feedbackFormsList = useTypedSelector(
     reduxServices.eventList.selectors.feedbackForms,
   )
@@ -63,7 +68,7 @@ const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
 
   return (
     <>
-      {feedbackFormsList.length ? (
+      {isLoading !== ApiLoadingState.loading && feedbackFormsList.length ? (
         <>
           <CTable className="mt-4" striped align="middle">
             <CTableHead>
@@ -90,6 +95,7 @@ const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
                           )
                         }
                       >
+                        <i className="fa fa-paperclip me-1"></i>
                         {feedbackForm.feedBackFormName}
                       </CLink>
                     </CTableDataCell>

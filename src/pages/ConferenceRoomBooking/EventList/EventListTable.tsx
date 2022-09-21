@@ -39,6 +39,11 @@ const EventListTable = (
   const eventListSize = useTypedSelector(
     reduxServices.eventList.selectors.listSize,
   )
+  const role = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.role,
+  )
+  console.log(role)
+
   const dispatch = useAppDispatch()
   const {
     paginationRange,
@@ -112,7 +117,7 @@ const EventListTable = (
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {eventList.map((event, index) => {
+              {eventList?.map((event, index) => {
                 const descriptionLimit =
                   event.agenda && event.agenda.length > 30
                     ? `${event.agenda.substring(0, 30)}...`
@@ -160,36 +165,36 @@ const EventListTable = (
                       {event.authorName.fullName}
                     </CTableDataCell>
                     <CTableDataCell scope="row">
-                      <CButton
-                        color="info"
-                        size="sm"
-                        className="btn-ovh me-1"
-                        data-testid={`editEvent-btn${index}`}
-                        disabled={event.disableEdit}
-                      >
-                        <i className="fa fa-edit" aria-hidden="true"></i>
-                      </CButton>
-                      <CButton
-                        color="warning"
-                        size="sm"
-                        className="btn-ovh me-1"
-                        data-testid={`cancelEvent-btn${index}`}
-                        disabled={
-                          event.disableEdit || event.meetingStatus !== 'New'
-                        }
-                        onClick={() => handleShowCancelEventModal(event.id)}
-                      >
-                        <i className="fa fa-times" aria-hidden="true"></i>
-                      </CButton>
-                      <Link to={`/trainingFeedBackForm/${event.id}`}>
-                        <CButton
-                          className="btn-ovh me-2 sh-eye-btn-color"
-                          size="sm"
-                          data-testid={`viewEvent-btn${index}`}
-                        >
-                          <i className="fa fa-eye" aria-hidden="true"></i>
-                        </CButton>
-                      </Link>
+                      {role !== 'Employee' && (
+                        <>
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
+                            data-testid={`editEvent-btn${index}`}
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                          <CButton
+                            color="warning"
+                            className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
+                            data-testid={`cancelEvent-btn${index}`}
+                            disabled={
+                              event.disableEdit || event.meetingStatus !== 'New'
+                            }
+                            onClick={() => handleShowCancelEventModal(event.id)}
+                          >
+                            <i className="fa fa-times" aria-hidden="true"></i>
+                          </CButton>
+                          <Link to={`/trainingFeedBackForm/${event.id}`}>
+                            <CButton
+                              className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
+                              data-testid={`viewEvent-btn${index}`}
+                            >
+                              <i className="fa fa-eye" aria-hidden="true"></i>
+                            </CButton>
+                          </Link>
+                        </>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )
@@ -237,7 +242,9 @@ const EventListTable = (
             modalHeaderClass="d-none"
           >
             <>
-              <CCardHeader>{selectedEventDetails.agenda}</CCardHeader>
+              <CCardHeader className="mb-3">
+                <h4 className="model-text">{selectedEventDetails.agenda}</h4>
+              </CCardHeader>
               <p className="d-flex">
                 <span className="col-sm-2 text-right fw-bold">Organizer :</span>
                 {selectedEventDetails.authorName?.fullName}
@@ -270,7 +277,7 @@ const EventListTable = (
               <p className="d-flex">
                 <span className="col-sm-2 text-right fw-bold">Attendees:</span>
                 {selectedEventDetails.employeeDto?.length ? (
-                  <CTable className="mt-4 mb-4" align="middle">
+                  <CTable align="middle">
                     <CTableHead>
                       <CTableRow>
                         <CTableHeaderCell>Name of Employee</CTableHeaderCell>
