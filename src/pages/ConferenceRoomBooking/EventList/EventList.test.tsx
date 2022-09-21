@@ -14,7 +14,19 @@ const toRender = (
 )
 describe('List Of Birthdays Component Testing', () => {
   render(toRender, {
-    preloadedState: {},
+    preloadedState: {
+      authentication: {
+        authenticatedUser: {
+          employeeName: 'admin',
+          employeeId: '1983',
+          userName: 'admin',
+          role: 'admin',
+          tenantKey: 'abc',
+          token: 'test',
+          designation: 'developer',
+        },
+      },
+    },
   })
   screen.debug()
   test('should render EventList Page without crashing', () => {
