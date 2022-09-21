@@ -39,7 +39,7 @@ const RoomListTable = (): JSX.Element => {
       reduxServices.roomLists.deleteRoom(deleteLocationId),
     )
     if (reduxServices.roomLists.deleteRoom.fulfilled.match(isDeleteRoom)) {
-      dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
+      dispatch(reduxServices.roomLists.getMeetingRooms())
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
     }
   }
@@ -55,25 +55,15 @@ const RoomListTable = (): JSX.Element => {
   )
 
   const handleUpdateRoom = async () => {
+    setUpdateRooms(updateRooms)
     const updatingRoom = await dispatch(
       reduxServices.roomLists.updateRoom(updateRooms),
     )
     if (reduxServices.roomLists.updateRoom.fulfilled.match(updatingRoom)) {
-      dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
+      dispatch(reduxServices.roomLists.getMeetingRooms())
       dispatch(reduxServices.app.actions.addToast(updatedToast))
     }
   }
-  const onChangeHandler = (
-    e:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { name, value } = e.target
-    setUpdateRooms((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
-  }
-
   return (
     <>
       <CCol className="custom-scroll">
@@ -96,12 +86,12 @@ const RoomListTable = (): JSX.Element => {
                   <CTableDataCell>{room.roomName}</CTableDataCell>
                   <CTableDataCell>
                     <CFormSwitch
+                      className="slider round"
                       data-testid={`btn-update${index}`}
                       id="formSwitchCheckDefault"
                       type="radio"
                       size="xl"
                       onClick={handleUpdateRoom}
-                      onChange={onChangeHandler}
                     />
                   </CTableDataCell>
                   <CTableDataCell>

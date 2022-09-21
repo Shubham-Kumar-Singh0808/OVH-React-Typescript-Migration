@@ -5,7 +5,7 @@ import {
 } from '../../../../../utils/apiUtils'
 import { AllowedHttpMethods, roomListApiConfig } from '../../../apiList'
 
-const getAllMeetingRoomsData = async (): Promise<getAllMeetingRooms[]> => {
+const getMeetingRooms = async (): Promise<getAllMeetingRooms[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: roomListApiConfig.getAllMeetingRooms,
     method: AllowedHttpMethods.get,
@@ -58,7 +58,7 @@ const updateRoom = async (
 }
 
 const roomListApi = {
-  getAllMeetingRoomsData,
+  getMeetingRooms,
   addRoom,
   deleteRoom,
   updateRoom,

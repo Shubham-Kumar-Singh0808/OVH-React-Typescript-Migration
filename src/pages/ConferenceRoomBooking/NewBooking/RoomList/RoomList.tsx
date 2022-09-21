@@ -16,7 +16,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const RoomList = (): JSX.Element => {
   const [filterByLocation, setFilterByLocation] = useState<string>('')
-  const [filterByLocationId] = useState<number>(0)
+  const [filterByLocationId, setFilterByLocationId] = useState<number>(0)
   const [selectRoomName, setSelectRoomName] = useState('')
   const [roomNameExist, setRoomNameExist] = useState('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
@@ -35,7 +35,7 @@ const RoomList = (): JSX.Element => {
   )
 
   useEffect(() => {
-    dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
+    dispatch(reduxServices.roomLists.getMeetingRooms())
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
   }, [dispatch])
 
@@ -69,7 +69,7 @@ const RoomList = (): JSX.Element => {
       setSelectRoomName('')
       setFilterByLocation('')
       dispatch(reduxServices.app.actions.addToast(successToast))
-      dispatch(reduxServices.roomLists.getAllMeetingRoomsData())
+      dispatch(reduxServices.roomLists.getMeetingRooms())
     }
   }
 

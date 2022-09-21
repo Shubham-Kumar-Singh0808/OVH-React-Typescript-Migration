@@ -9,11 +9,11 @@ import {
   getAllMeetingRooms,
 } from '../../../../types/ConferenceRoomBooking/NewBooking/RoomList/roomListTypes'
 
-const getAllMeetingRoomsData = createAsyncThunk(
-  'roomList/getAllMeetingRoomsData',
+const getMeetingRooms = createAsyncThunk(
+  'roomList/getMeetingRooms',
   async (_, thunkApi) => {
     try {
-      return await roomListApi.getAllMeetingRoomsData()
+      return await roomListApi.getMeetingRooms()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -102,13 +102,13 @@ const roomListSlice = createSlice({
   extraReducers(builder) {
     builder
 
-      .addCase(getAllMeetingRoomsData.fulfilled, (state, action) => {
+      .addCase(getMeetingRooms.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.meetingRooms = action.payload as getAllMeetingRooms[]
       })
       .addMatcher(
         isAnyOf(
-          getAllMeetingRoomsData.fulfilled,
+          getMeetingRooms.fulfilled,
           addRoom.fulfilled,
           deleteRoom.fulfilled,
           updateRoom.fulfilled,
@@ -119,7 +119,7 @@ const roomListSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          getAllMeetingRoomsData.pending,
+          getMeetingRooms.pending,
           addRoom.pending,
           updateRoom.pending,
           deleteRoom.pending,
@@ -130,7 +130,7 @@ const roomListSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          getAllMeetingRoomsData.rejected,
+          getMeetingRooms.rejected,
           addRoom.rejected,
           updateRoom.rejected,
           deleteRoom.rejected,
@@ -157,7 +157,7 @@ const updateRoomNames = (state: RootState): getAllMeetingRooms[] =>
 const isLoading = (state: RootState): LoadingState => state.roomList.isLoading
 
 const roomListThunk = {
-  getAllMeetingRoomsData,
+  getMeetingRooms,
   addRoom,
   deleteRoom,
   updateRoom,
