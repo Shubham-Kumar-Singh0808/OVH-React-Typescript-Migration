@@ -8,10 +8,16 @@ import {
   CCol,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import EmployeeAllocationEntryTable from './EmployeeAllocationEntryTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import OPagination from '../../../components/ReusableComponent/OPagination'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const EmployeeAllocationReportTable = (props: {
   Select: string
@@ -19,6 +25,11 @@ const EmployeeAllocationReportTable = (props: {
   allocationStatus: string
   billingStatus: string
   fromDate: string
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [selectedKRA, setSelectedKRA] = useState(0)
@@ -27,8 +38,28 @@ const EmployeeAllocationReportTable = (props: {
   const employeeAllocationReport = useTypedSelector(
     reduxServices.employeeAllocationReport.selectors.employeeAllocationReport,
   )
-  const { Select, toDate, allocationStatus, billingStatus, fromDate } = props
+  const {
+    Select,
+    toDate,
+    allocationStatus,
+    billingStatus,
+    fromDate,
+    paginationRange,
+    currentPage,
+    setCurrentPage,
+    pageSize,
+    setPageSize,
+  } = props
+  const isLoading = useTypedSelector(
+    reduxServices.employeeAllocationReport.selectors.isLoading,
+  )
 
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
   const handleExpandRow = (
     id: number | React.MouseEvent<HTMLButtonElement>,
   ) => {
@@ -37,14 +68,43 @@ const EmployeeAllocationReportTable = (props: {
       reduxServices.employeeAllocationReport.projectUnderEmployeesReport({
         dateSelection: Select,
         employeeid: id as number,
-        enddate: toDate as string,
+        enddate: toDate
+          ? new Date(toDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
         isAllocated: allocationStatus,
         isBillale: billingStatus,
-        startdate: fromDate as string,
+        startdate: fromDate
+          ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
       }),
     )
     setIsIconVisible(true)
   }
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
+        Billingtype: billingStatus,
+        EmployeeStatus: '',
+        dateSelection: Select,
+        departmentNames: [],
+        employeeName: '',
+        endIndex: pageSize * currentPage,
+        enddate: '',
+        firstIndex: pageSize * (currentPage - 1),
+        startdate: '',
+        technology: '',
+      }),
+    )
+  }, [dispatch])
 
   return (
     <>
@@ -61,72 +121,104 @@ const EmployeeAllocationReportTable = (props: {
             </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
-        <CTableBody>
-          {employeeAllocationReport?.map((allocationReport, index) => {
-            return (
-              <>
-                <CTableRow key={index}>
-                  <CTableDataCell className="text-center">
-                    {isIconVisible && selectedKRA === allocationReport.id ? (
-                      <i
-                        className="fa fa-minus-circle cursor-pointer"
-                        onClick={() => setIsIconVisible(false)}
+        <CTableBody color="light">
+          {isLoading !== ApiLoadingState.loading ? (
+            employeeAllocationReport &&
+            employeeAllocationReport?.map((allocationReport, index) => {
+              return (
+                <>
+                  <CTableRow key={index}>
+                    <CTableDataCell className="text-center">
+                      {isIconVisible && selectedKRA === allocationReport.id ? (
+                        <i
+                          className="fa fa-minus-circle cursor-pointer"
+                          onClick={() => setIsIconVisible(false)}
+                        />
+                      ) : (
+                        <i
+                          className="fa fa-plus-circle cursor-pointer"
+                          onClick={() =>
+                            handleExpandRow(allocationReport.id as number)
+                          }
+                        />
+                      )}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {allocationReport.id}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {allocationReport.firstName +
+                        ' ' +
+                        allocationReport.lastName}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {allocationReport.designation}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {allocationReport.departmentName}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {allocationReport.percent}
+                    </CTableDataCell>
+                  </CTableRow>
+                  {isIconVisible && selectedKRA === allocationReport.id ? (
+                    <>
+                      <EmployeeAllocationEntryTable
+                        id={allocationReport.id}
+                        Select={Select}
+                        toDate={toDate as string}
+                        allocationStatus={allocationStatus}
+                        billingStatus={billingStatus}
+                        fromDate={fromDate as string}
                       />
-                    ) : (
-                      <i
-                        className="fa fa-plus-circle cursor-pointer"
-                        onClick={() =>
-                          handleExpandRow(allocationReport.id as number)
-                        }
-                      />
-                    )}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {allocationReport.id}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {allocationReport.firstName +
-                      ' ' +
-                      allocationReport.lastName}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {allocationReport.designation}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {allocationReport.departmentName}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {allocationReport.percent}
-                  </CTableDataCell>
-                </CTableRow>
-                {isIconVisible && selectedKRA === allocationReport.id ? (
-                  <>
-                    <EmployeeAllocationEntryTable
-                      id={allocationReport.id}
-                      Select={Select}
-                      toDate={toDate as string}
-                      allocationStatus={allocationStatus}
-                      billingStatus={billingStatus}
-                      fromDate={fromDate as string}
-                    />
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            )
-          })}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              )
+            })
+          ) : (
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          )}
         </CTableBody>
       </CTable>
-      <CCol>
-        <CRow className="mt-5">
-          <strong>
-            {employeeAllocationReport?.length
-              ? `Total Records: ${employeeAllocationReport?.length}`
-              : `No Records found`}
-          </strong>
+      {employeeAllocationReport?.length ? (
+        <CRow>
+          <CCol xs={4}>
+            <p>
+              <strong>Total Records: {employeeAllocationReport?.length}</strong>
+            </p>
+          </CCol>
+          <CCol xs={3}>
+            {employeeAllocationReport?.length > 20 && (
+              <OPageSizeSelect
+                handlePageSizeSelectChange={handlePageSizeSelectChange}
+                options={[20, 40, 60, 80]}
+                selectedPageSize={pageSize}
+              />
+            )}
+          </CCol>
+          {employeeAllocationReport?.length > 20 && (
+            <CCol
+              xs={5}
+              className="gap-1 d-grid d-md-flex justify-content-md-end"
+            >
+              <OPagination
+                currentPage={currentPage}
+                pageSetter={setCurrentPage}
+                paginationRange={paginationRange}
+              />
+            </CCol>
+          )}
         </CRow>
-      </CCol>
+      ) : (
+        <CCol>
+          <CRow className="mt-3 ms-3">
+            <h5>No Records Found... </h5>
+          </CRow>
+        </CCol>
+      )}
     </>
   )
 }

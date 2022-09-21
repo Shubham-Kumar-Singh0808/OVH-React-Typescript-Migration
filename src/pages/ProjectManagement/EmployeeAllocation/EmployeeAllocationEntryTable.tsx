@@ -43,13 +43,13 @@ const EmployeeAllocationEntryTable = (props: {
   const { Select, toDate, allocationStatus, billingStatus, fromDate, id } =
     props
 
-  const projectAllocationReport = (status: string): JSX.Element => {
+  const allocationStatusLabelColor = (status: string): JSX.Element => {
     if (status === 'New') {
-      return (
-        <CBadge className="rounded-pill" color="success">
-          {status}
-        </CBadge>
-      )
+      return <CBadge className="rounded-pill label-default">{status}</CBadge>
+    } else if (status === 'In Progress') {
+      return <CBadge className="rounded-pill label-success">{status}</CBadge>
+    } else if (status === 'Closed') {
+      return <CBadge className="rounded-pill label-success">{status}</CBadge>
     }
     return <></>
   }
@@ -267,7 +267,7 @@ const EmployeeAllocationEntryTable = (props: {
                       {projectReport.managerName}
                     </CTableDataCell>
                     <CTableDataCell scope="row">
-                      {projectAllocationReport(projectReport.status)}
+                      {allocationStatusLabelColor(projectReport.status)}
                     </CTableDataCell>
                     {isProjectAllocationEdit &&
                     projectReport.id === templateId ? (

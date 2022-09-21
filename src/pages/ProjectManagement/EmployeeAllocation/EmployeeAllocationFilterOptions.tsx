@@ -6,7 +6,6 @@ import {
   CFormSelect,
   CInputGroup,
   CRow,
-  CSpinner,
 } from '@coreui/react-pro'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
@@ -15,10 +14,14 @@ import Multiselect from 'multiselect-react-dropdown'
 import EmployeeAllocationReportTable from './EmployeeAllocationReportTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { downloadFile, showIsRequired } from '../../../utils/helper'
+import {
+  deviceLocale,
+  downloadFile,
+  showIsRequired,
+} from '../../../utils/helper'
 import employeeAllocationReportApi from '../../../middleware/api/ProjectManagement/EmployeeAllocation/employeeAllocationApi'
 import { EmployeeDepartment } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const EmployeeAllocationFilterOptions = (): JSX.Element => {
   const [Select, setSelect] = useState<string>('Current Month')
@@ -28,7 +31,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
   const [selectDepartment, setSelectDepartment] = useState<
     EmployeeDepartment[]
   >([])
-  const [showSelectCustom, setShowSelectCustom] = useState<boolean>(false)
+  const [dateError, setDateError] = useState<boolean>(false)
   const [fromDate, setFromDate] = useState<Date | string>()
   const [toDate, setToDate] = useState<Date | string>()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -36,7 +39,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
     reduxServices.authentication.selectors.selectEmployeeId,
   )
   const dispatch = useAppDispatch()
-
+  const commonFormatDate = 'l'
   const getTechnologies = useTypedSelector(
     (state) => state.employeeCertificates.getAllTechnologies,
   )
@@ -46,10 +49,18 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
       .employeeDepartments,
   )
 
-  const isLoading = useTypedSelector(
-    reduxServices.employeeAllocationReport.selectors.isLoading,
+  const employeeAllocationReport = useTypedSelector(
+    reduxServices.employeeAllocationReport.selectors.employeeAllocationReport,
   )
-  const commonFormatDate = 'DD/MM/YYYY'
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(employeeAllocationReport.length, 20)
+
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getTechnologies())
   }, [dispatch])
@@ -59,14 +70,6 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
       reduxServices.newEmployee.employeeDepartmentsService.getEmployeeDepartments(),
     )
   }, [dispatch])
-
-  useEffect(() => {
-    if (Select === 'Custom') {
-      setShowSelectCustom(true)
-    } else {
-      setShowSelectCustom(false)
-    }
-  })
 
   useEffect(() => {
     if (Select !== 'Custom') {
@@ -83,9 +86,9 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
         dateSelection: Select,
         departmentNames: [],
         employeeName: '',
-        endIndex: 20,
+        endIndex: pageSize * currentPage,
         enddate: '',
-        firstIndex: 0,
+        firstIndex: pageSize * (currentPage - 1),
         startdate: '',
         technology: '',
       }),
@@ -102,10 +105,22 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
           currentItem.departmentName.toString(),
         ),
         employeeName: '',
-        endIndex: 20,
-        startdate: moment(fromDate).format(commonFormatDate),
-        enddate: moment(toDate).format(commonFormatDate),
-        firstIndex: 0,
+        endIndex: pageSize * currentPage,
+        startdate: fromDate
+          ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        enddate: toDate
+          ? new Date(toDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        firstIndex: pageSize * (currentPage - 1),
         technology: selectTechnology,
       }),
     )
@@ -141,10 +156,22 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
           currentItem.departmentName.toString(),
         ),
         employeeName: searchInput,
-        endIndex: 20,
-        startdate: moment(fromDate).format(commonFormatDate),
-        enddate: moment(toDate).format(commonFormatDate),
-        firstIndex: 0,
+        endIndex: pageSize * currentPage,
+        startdate: fromDate
+          ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        enddate: toDate
+          ? new Date(toDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        firstIndex: pageSize * (currentPage - 1),
         technology: selectTechnology,
       }),
     )
@@ -163,10 +190,22 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
             currentItem.departmentName.toString(),
           ),
           employeeName: searchInput,
-          endIndex: 20,
-          startdate: moment(fromDate).format(commonFormatDate),
-          enddate: moment(toDate).format(commonFormatDate),
-          firstIndex: 0,
+          endIndex: pageSize * currentPage,
+          startdate: fromDate
+            ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
+          enddate: toDate
+            ? new Date(toDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
+          firstIndex: pageSize * (currentPage - 1),
           technology: selectTechnology,
         }),
       )
@@ -177,8 +216,8 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
     const employeeEmployeeAllocationReportDownload =
       await employeeAllocationReportApi.ExportEmployeeAllocationReportList({
         id: employeeId,
-        startIndex: 0,
-        endIndex: 20,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
         empName: '',
         technology: '',
         isbillable: billingStatus,
@@ -202,6 +241,20 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
   const handleOnRemoveSelectedOption = (selectedList: EmployeeDepartment[]) => {
     setSelectDepartment(selectedList)
   }
+
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(fromDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(toDate?.toString()).format(commonFormatDate),
+    )
+    if (fromDate && toDate && newToDate.getTime() < newFromDate.getTime()) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [fromDate, toDate])
 
   return (
     <>
@@ -308,7 +361,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
             ))}
           </CFormSelect>
         </CCol>
-        {showSelectCustom ? (
+        {Select === 'Custom' ? (
           <>
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-1">
@@ -328,7 +381,15 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                value={fromDate as string}
+                value={
+                  fromDate
+                    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: '2-digit',
+                      })
+                    : ''
+                }
                 onChange={(date: Date) => setFromDate(date)}
                 selected={fromDate as Date}
               />
@@ -344,17 +405,33 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
                 data-testid="date-picker"
                 placeholderText="dd/mm/yy"
                 name="toDate"
-                minDate={new Date()}
                 id="toDate"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                value={toDate as string}
+                value={
+                  toDate
+                    ? new Date(toDate).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: '2-digit',
+                      })
+                    : ''
+                }
                 onChange={(date: Date) => setToDate(date)}
                 selected={toDate as Date}
               />
             </CCol>
+            {dateError && (
+              <CRow className="mt-2">
+                <CCol sm={{ span: 6, offset: 4 }}>
+                  <span className="text-danger" data-testid="errorMessage">
+                    To date should be greater than From date
+                  </span>
+                </CCol>
+              </CRow>
+            )}
           </>
         ) : (
           <></>
@@ -374,6 +451,9 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
             className="cursor-pointer"
             color="success btn-ovh me-1"
             onClick={handleViewButtonHandler}
+            disabled={
+              Select === 'Custom' && !(fromDate !== '' && toDate !== '')
+            }
           >
             View
           </CButton>
@@ -414,23 +494,20 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
         </CCol>
       </CRow>
       <CCol xs={12} className="mt-3 ms-3">
-        {isLoading !== ApiLoadingState.loading ? (
-          <CCol xs={12}>
-            <EmployeeAllocationReportTable
-              Select={Select}
-              toDate={toDate as string}
-              allocationStatus={allocationStatus}
-              billingStatus={billingStatus}
-              fromDate={fromDate as string}
-            />
-          </CCol>
-        ) : (
-          <CCol>
-            <CRow className="category-loading-spinner">
-              <CSpinner />
-            </CRow>
-          </CCol>
-        )}
+        <CCol xs={12}>
+          <EmployeeAllocationReportTable
+            Select={Select}
+            toDate={toDate as string}
+            allocationStatus={allocationStatus}
+            billingStatus={billingStatus}
+            fromDate={fromDate as string}
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        </CCol>
       </CCol>
     </>
   )
