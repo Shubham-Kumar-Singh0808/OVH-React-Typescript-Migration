@@ -10,24 +10,27 @@ import {
   UpdateEmployeeAllocationProject,
 } from '../../../../types/ProjectManagement/EmployeeAllocation/employeeAllocationTypes'
 
+const commonParamsUtil = (props: EmployeeAllocationReportProps) => {
+  return {
+    Billingtype: props.Billingtype ?? '',
+    EmployeeStatus: props.EmployeeStatus ?? '',
+    dateSelection: props.dateSelection ?? '',
+    departmentNames: String(props.departmentNames ?? ''),
+    employeeName: props.employeeName ?? '',
+    endIndex: props.endIndex ?? 20,
+    enddate: props.enddate ?? '',
+    firstIndex: props.firstIndex ?? 0,
+    startdate: props.startdate ?? '',
+    technology: props.technology ?? '',
+  }
+}
 const getEmployeeAllocationReport = async (
   props: EmployeeAllocationReportProps,
 ): Promise<EmployeeAllocationReportType> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeAllocationApiConfig.getEmployeeAllocationReport,
     method: AllowedHttpMethods.get,
-    params: {
-      Billingtype: props.Billingtype ?? '',
-      EmployeeStatus: props.EmployeeStatus ?? '',
-      dateSelection: props.dateSelection ?? '',
-      departmentNames: String(props.departmentNames ?? ''),
-      employeeName: props.employeeName ?? '',
-      endIndex: props.endIndex ?? 20,
-      enddate: props.enddate ?? '',
-      firstIndex: props.firstIndex ?? 0,
-      startdate: props.startdate ?? '',
-      technology: props.technology ?? '',
-    },
+    params: commonParamsUtil(props),
   })
   const response = await axios(requestConfig)
   return response.data
