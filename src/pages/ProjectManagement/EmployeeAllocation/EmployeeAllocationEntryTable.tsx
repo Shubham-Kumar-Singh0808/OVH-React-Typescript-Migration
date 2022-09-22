@@ -103,7 +103,7 @@ const EmployeeAllocationEntryTable = (props: {
       dispatch(
         reduxServices.employeeAllocationReport.projectUnderEmployeesReport({
           dateSelection: Select,
-          employeeid: id as number,
+          employeeid: id,
           enddate: toDate
             ? new Date(toDate).toLocaleDateString(deviceLocale, {
                 year: 'numeric',
@@ -176,6 +176,10 @@ const EmployeeAllocationEntryTable = (props: {
             </CTableHead>
             <CTableBody>
               {projectUnderReport?.map((projectReport, KRAindex) => {
+                const billable = projectReport.billable ? 'yes' : 'No'
+                const allocated = projectReport.isAllocated
+                  ? 'Allocated'
+                  : 'De-Allocated'
                 return (
                   <CTableRow key={KRAindex} col-span={7}>
                     <CTableDataCell scope="row">
@@ -279,9 +283,7 @@ const EmployeeAllocationEntryTable = (props: {
                         </div>
                       </CTableDataCell>
                     ) : (
-                      <CTableDataCell scope="row">
-                        {projectReport.billable ? 'yes' : 'No'}
-                      </CTableDataCell>
+                      <CTableDataCell scope="row">{billable}</CTableDataCell>
                     )}
                     {isProjectAllocationEdit &&
                     projectReport.id === templateId ? (
@@ -304,11 +306,7 @@ const EmployeeAllocationEntryTable = (props: {
                         </div>
                       </CTableDataCell>
                     ) : (
-                      <CTableDataCell scope="row">
-                        {projectReport.isAllocated
-                          ? 'Allocated'
-                          : 'De-Allocated'}
-                      </CTableDataCell>
+                      <CTableDataCell scope="row">{allocated}</CTableDataCell>
                     )}
                     <CTableDataCell scope="row">
                       {isProjectAllocationEdit &&
@@ -326,6 +324,7 @@ const EmployeeAllocationEntryTable = (props: {
                           </CButton>
                           <CButton
                             color="warning"
+                            data-testid="cancel-btn"
                             className="btn-ovh me-1"
                             onClick={cancelProjectAllocationButtonHandler}
                           >
@@ -336,6 +335,7 @@ const EmployeeAllocationEntryTable = (props: {
                         <>
                           <CButton
                             color="info btn-ovh me-2"
+                            data-testid="edit-btn"
                             onClick={() => {
                               editProjectAllocationButtonHandler(projectReport)
                             }}

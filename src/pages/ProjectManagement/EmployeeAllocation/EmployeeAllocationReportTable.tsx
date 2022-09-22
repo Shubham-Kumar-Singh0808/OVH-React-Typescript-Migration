@@ -145,9 +145,7 @@ const EmployeeAllocationReportTable = (props: {
                         <i
                           className="fa fa-plus-circle cursor-pointer"
                           data-testid="expandable-test"
-                          onClick={() =>
-                            handleExpandRow(allocationReport.id as number)
-                          }
+                          onClick={() => handleExpandRow(allocationReport.id)}
                         />
                       )}
                     </CTableDataCell>
@@ -179,10 +177,10 @@ const EmployeeAllocationReportTable = (props: {
                       <EmployeeAllocationEntryTable
                         id={allocationReport.id}
                         Select={Select}
-                        toDate={toDate as string}
+                        toDate={toDate}
                         allocationStatus={allocationStatus}
                         billingStatus={billingStatus}
-                        fromDate={fromDate as string}
+                        fromDate={fromDate}
                       />
                     </>
                   ) : (

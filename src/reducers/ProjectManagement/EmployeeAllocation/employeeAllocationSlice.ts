@@ -85,7 +85,7 @@ const employeeAllocationSlice = createSlice({
     })
     builder.addCase(projectUnderEmployeesReport.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.projectUnderEmployees = action.payload as ProjectUnderEmployees[]
+      state.projectUnderEmployees = action.payload
     })
     builder.addCase(getEmployeeAllocationReport.pending, (state) => {
       state.isLoading = ApiLoadingState.loading
