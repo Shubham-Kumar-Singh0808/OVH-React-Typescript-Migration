@@ -21,11 +21,15 @@ import {
 } from '../../../utils/helper'
 import employeeAllocationReportApi from '../../../middleware/api/ProjectManagement/EmployeeAllocation/employeeAllocationApi'
 import { EmployeeDepartment } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { usePagination } from '../../../middleware/hooks/usePagination'
 
-const EmployeeAllocationFilterOptions = (): JSX.Element => {
+const EmployeeAllocationFilterOptions = ({
+  Select,
+  setSelect,
+}: {
+  Select: string
+  setSelect: React.Dispatch<React.SetStateAction<string>>
+}): JSX.Element => {
   const currentMonth = 'Current Month'
-  const [Select, setSelect] = useState<string>(currentMonth)
   const [billingStatus, setBillingStatus] = useState<string>('All')
   const [allocationStatus, setAllocationStatus] = useState<string>('')
   const [selectTechnology, setSelectTechnology] = useState<string>('')
@@ -49,18 +53,6 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
     reduxServices.newEmployee.employeeDepartmentsService.selectors
       .employeeDepartments,
   )
-
-  const employeeAllocationReport = useTypedSelector(
-    reduxServices.employeeAllocationReport.selectors.employeeAllocationReport,
-  )
-
-  const {
-    paginationRange,
-    setPageSize,
-    setCurrentPage,
-    currentPage,
-    pageSize,
-  } = usePagination(employeeAllocationReport.length, 20)
 
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getTechnologies())
@@ -87,9 +79,9 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
         dateSelection: Select,
         departmentNames: [],
         employeeName: '',
-        endIndex: pageSize * currentPage,
+        endIndex: 20,
         enddate: '',
-        firstIndex: pageSize * (currentPage - 1),
+        firstIndex: 0,
         startdate: '',
         technology: '',
       }),
@@ -106,7 +98,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
           currentItem.departmentName.toString(),
         ),
         employeeName: '',
-        endIndex: pageSize * currentPage,
+        endIndex: 20,
         startdate: fromDate
           ? new Date(fromDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
@@ -121,7 +113,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
               day: '2-digit',
             })
           : '',
-        firstIndex: pageSize * (currentPage - 1),
+        firstIndex: 0,
         technology: selectTechnology,
       }),
     )
@@ -152,9 +144,9 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
         dateSelection: currentMonth,
         departmentNames: [],
         employeeName: '',
-        endIndex: pageSize * currentPage,
+        endIndex: 20,
         enddate: '',
-        firstIndex: pageSize * (currentPage - 1),
+        firstIndex: 0,
         startdate: '',
         technology: '',
       }),
@@ -171,7 +163,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
           currentItem.departmentName.toString(),
         ),
         employeeName: searchInput,
-        endIndex: pageSize * currentPage,
+        endIndex: 20,
         startdate: fromDate
           ? new Date(fromDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
@@ -186,7 +178,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
               day: '2-digit',
             })
           : '',
-        firstIndex: pageSize * (currentPage - 1),
+        firstIndex: 0,
         technology: selectTechnology,
       }),
     )
@@ -205,7 +197,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
             currentItem.departmentName.toString(),
           ),
           employeeName: searchInput,
-          endIndex: pageSize * currentPage,
+          endIndex: 20,
           startdate: fromDate
             ? new Date(fromDate).toLocaleDateString(deviceLocale, {
                 year: 'numeric',
@@ -220,7 +212,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
                 day: '2-digit',
               })
             : '',
-          firstIndex: pageSize * (currentPage - 1),
+          firstIndex: 0,
           technology: selectTechnology,
         }),
       )
@@ -231,8 +223,8 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
     const employeeEmployeeAllocationReportDownload =
       await employeeAllocationReportApi.ExportEmployeeAllocationReportList({
         id: employeeId,
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
+        startIndex: 0,
+        endIndex: 20,
         empName: '',
         technology: '',
         isbillable: billingStatus,
@@ -327,7 +319,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
             aria-label="Default select example"
             size="sm"
             id="allocationStatus"
-            data-testid="form-select2"
+            data-testid="form-select3"
             name="allocationStatus"
             value={allocationStatus}
             onChange={(e) => setAllocationStatus(e.target.value)}
@@ -361,7 +353,7 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
             aria-label="Default select example"
             size="sm"
             id="technology"
-            data-testid="form-select1"
+            data-testid="technology-select1"
             name="technology"
             value={selectTechnology}
             onChange={(e) => {
@@ -516,11 +508,6 @@ const EmployeeAllocationFilterOptions = (): JSX.Element => {
             allocationStatus={allocationStatus}
             billingStatus={billingStatus}
             fromDate={fromDate as string}
-            paginationRange={paginationRange}
-            setPageSize={setPageSize}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            pageSize={pageSize}
           />
         </CCol>
       </CCol>

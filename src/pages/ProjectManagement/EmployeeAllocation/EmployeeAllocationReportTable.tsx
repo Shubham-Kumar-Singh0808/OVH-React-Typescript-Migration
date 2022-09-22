@@ -18,6 +18,7 @@ import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const EmployeeAllocationReportTable = (props: {
   Select: string
@@ -25,11 +26,6 @@ const EmployeeAllocationReportTable = (props: {
   allocationStatus: string
   billingStatus: string
   fromDate: string
-  paginationRange: number[]
-  currentPage: number
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  pageSize: number
-  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [selectedKRA, setSelectedKRA] = useState(0)
@@ -38,18 +34,15 @@ const EmployeeAllocationReportTable = (props: {
   const employeeAllocationReport = useTypedSelector(
     reduxServices.employeeAllocationReport.selectors.employeeAllocationReport,
   )
+  const { Select, toDate, allocationStatus, billingStatus, fromDate } = props
+
   const {
-    Select,
-    toDate,
-    allocationStatus,
-    billingStatus,
-    fromDate,
     paginationRange,
-    currentPage,
-    setCurrentPage,
-    pageSize,
     setPageSize,
-  } = props
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(employeeAllocationReport?.Empsize, 20)
   const isLoading = useTypedSelector(
     reduxServices.employeeAllocationReport.selectors.isLoading,
   )
@@ -124,7 +117,7 @@ const EmployeeAllocationReportTable = (props: {
         <CTableBody color="light">
           {isLoading !== ApiLoadingState.loading ? (
             employeeAllocationReport &&
-            employeeAllocationReport?.map((allocationReport, index) => {
+            employeeAllocationReport.emps?.map((allocationReport, index) => {
               return (
                 <>
                   <CTableRow key={index}>
@@ -188,15 +181,17 @@ const EmployeeAllocationReportTable = (props: {
           )}
         </CTableBody>
       </CTable>
-      {employeeAllocationReport?.length ? (
+      {employeeAllocationReport?.Empsize ? (
         <CRow>
           <CCol xs={4}>
             <p>
-              <strong>Total Records: {employeeAllocationReport?.length}</strong>
+              <strong>
+                Total Records: {employeeAllocationReport?.Empsize}
+              </strong>
             </p>
           </CCol>
           <CCol xs={3}>
-            {employeeAllocationReport?.length > 20 && (
+            {employeeAllocationReport?.Empsize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
                 options={[20, 40, 60, 80]}
@@ -204,7 +199,7 @@ const EmployeeAllocationReportTable = (props: {
               />
             )}
           </CCol>
-          {employeeAllocationReport?.length > 20 && (
+          {employeeAllocationReport?.Empsize > 20 && (
             <CCol
               xs={5}
               className="gap-1 d-grid d-md-flex justify-content-md-end"

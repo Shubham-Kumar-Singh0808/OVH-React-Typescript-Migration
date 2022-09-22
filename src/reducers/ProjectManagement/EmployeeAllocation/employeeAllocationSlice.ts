@@ -7,6 +7,7 @@ import employeeAllocationReportApi from '../../../middleware/api/ProjectManageme
 import {
   EmployeeAllocationReportProps,
   EmployeeAllocationReportState,
+  EmployeeAllocationReportType,
   GetEmployeeAllocationReport,
   ProjectUnderEmployees,
   ProjectUnderEmployeesProps,
@@ -70,7 +71,7 @@ const initialEmployeeAllocationReportState: EmployeeAllocationReportState = {
   emps: [],
   projectUnderEmployees: [],
   isLoading: ApiLoadingState.idle,
-
+  employeeAllocationReportType: {} as EmployeeAllocationReportType,
   error: null,
 }
 const employeeAllocationSlice = createSlice({
@@ -95,7 +96,8 @@ const employeeAllocationSlice = createSlice({
 
 const employeeAllocationReport = (
   state: RootState,
-): GetEmployeeAllocationReport[] => state.employeeAllocationReport.emps
+): EmployeeAllocationReportType =>
+  state.employeeAllocationReport.employeeAllocationReportType
 
 const employeeUnderProject = (state: RootState): ProjectUnderEmployees[] =>
   state.employeeAllocationReport.projectUnderEmployees

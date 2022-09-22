@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import {
   CTable,
   CTableHead,
@@ -54,7 +55,6 @@ const EmployeeAllocationEntryTable = (props: {
     }
     return <></>
   }
-  const commonFormatDate = 'l'
 
   const editProjectAllocationButtonHandler = (
     address: null,
@@ -157,6 +157,34 @@ const EmployeeAllocationEntryTable = (props: {
       type,
     })
   }
+  const commonFormatDate = 'l'
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(editEmployeeAllocation?.startdate?.toString()).format(
+        commonFormatDate,
+      ),
+    )
+    const newToDate = new Date(
+      moment(editEmployeeAllocation?.enddate?.toString()).format(
+        commonFormatDate,
+      ),
+    )
+    if (
+      editEmployeeAllocation?.startdate &&
+      editEmployeeAllocation?.enddate &&
+      newToDate.getTime() < newFromDate.getTime()
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Leave already applied on mentioned date."
+          />,
+        ),
+      )
+    }
+  }, [editEmployeeAllocation?.startdate, editEmployeeAllocation?.enddate])
 
   const handleEditProjectAllocationHandler = (
     event:
@@ -231,6 +259,7 @@ const EmployeeAllocationEntryTable = (props: {
   const cancelProjectAllocationButtonHandler = () => {
     setIsProjectAllocationEdit(false)
   }
+  console.log(editEmployeeAllocation?.startdate)
 
   return (
     <>

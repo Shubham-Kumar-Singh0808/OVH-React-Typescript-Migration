@@ -7,6 +7,7 @@ export type EmployeeAllocationReportType = {
 export type EmployeeAllocationReportState = {
   Empsize: number
   emps: GetEmployeeAllocationReport[]
+  employeeAllocationReportType: EmployeeAllocationReportType
   projectUnderEmployees: ProjectUnderEmployees[]
   isLoading: LoadingState
   error: ValidationError
