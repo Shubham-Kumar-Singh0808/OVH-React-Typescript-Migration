@@ -58,4 +58,10 @@ describe('Room List Table with data', () => {
       screen.getByText('Total Records: ' + mockRoomNames.length),
     ).toBeInTheDocument()
   })
+
+  test('should be able to click update button element', () => {
+    const updateBtnElement = screen.getAllByTestId('btn-update')
+    userEvent.click(updateBtnElement[0])
+    expect(updateBtnElement).toBeTruthy()
+  })
 })

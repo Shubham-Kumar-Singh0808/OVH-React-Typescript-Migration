@@ -19,19 +19,39 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { getAllMeetingRooms } from '../../../../types/ConferenceRoomBooking/NewBooking/RoomList/roomListTypes'
 
 const RoomListTable = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [deleteRoomName, setDeleteRoomName] = useState('')
+  const [selectedRoomName, setSelectedRoomName] = useState('')
   const [deleteLocationId, setDeleteLocationId] = useState(0)
+
   const initialRoomListDetails = {} as getAllMeetingRooms
-  const [updateRooms, setUpdateRooms] = useState(initialRoomListDetails)
+  const [updateRoomDetails, setUpdateRoomDetails] = useState(
+    initialRoomListDetails,
+  )
 
   const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
-
-  const dispatch = useAppDispatch()
 
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Room Deleted Successfully" />
   )
+
+  const updatedToast = (
+    <OToast toastColor="success" toastMessage="Room Updated Successfully" />
+  )
+
+  const switchOnChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    room: getAllMeetingRooms,
+    index: number,
+  ) => {
+    const { checked } = e.target
+    const mappedRoomCopy = { ...room }
+    let toEdit = null
+    toEdit = { ...mappedRoomCopy, ...{ roomStatus: checked } }
+    setUpdateRoomDetails(toEdit)
+    console.log(updateRoomDetails)
+  }
 
   const confirmDeleteRoom = async () => {
     setIsDeleteModalVisible(false)
@@ -47,23 +67,26 @@ const RoomListTable = (): JSX.Element => {
   const deleteBtnHandler = (id: number, roomName: string) => {
     setIsDeleteModalVisible(true)
     setDeleteLocationId(id)
-    setDeleteRoomName(roomName)
+    setSelectedRoomName(roomName)
   }
 
-  const updatedToast = (
-    <OToast toastColor="success" toastMessage="Room Updated Successfully" />
-  )
-
-  const handleUpdateRoom = async () => {
-    setUpdateRooms(updateRooms)
+  const handleUpdateRoom = async (room: getAllMeetingRooms) => {
+    // console.log(room)
+    const prepareObject = {
+      ...room,
+      ...{ roomStatus: updateRoomDetails.roomStatus },
+    }
+    // console.log(prepareObject)
     const updatingRoom = await dispatch(
-      reduxServices.roomLists.updateRoom(updateRooms),
+      reduxServices.roomLists.updateRoom(updateRoomDetails),
     )
     if (reduxServices.roomLists.updateRoom.fulfilled.match(updatingRoom)) {
       dispatch(reduxServices.roomLists.getMeetingRooms())
       dispatch(reduxServices.app.actions.addToast(updatedToast))
     }
   }
+  // console.log(roomStatus)
+
   return (
     <>
       <CCol className="custom-scroll">
@@ -86,12 +109,19 @@ const RoomListTable = (): JSX.Element => {
                   <CTableDataCell>{room.roomName}</CTableDataCell>
                   <CTableDataCell>
                     <CFormSwitch
-                      className="slider round"
+                      className="sh-form-switch"
                       data-testid={`btn-update${index}`}
                       id="formSwitchCheckDefault"
-                      type="radio"
-                      size="xl"
-                      onClick={handleUpdateRoom}
+                      type="checkbox"
+                      name="roomStatus"
+                      size="lg"
+                      valid={true}
+                      checked={
+                        updateRoomDetails.id && updateRoomDetails.id === room.id
+                          ? updateRoomDetails.roomStatus
+                          : room.roomStatus
+                      }
+                      onChange={(e) => switchOnChangeHandler(e, room, index)}
                     />
                   </CTableDataCell>
                   <CTableDataCell>
@@ -131,7 +161,7 @@ const RoomListTable = (): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={confirmDeleteRoom}
       >
-        {`Do you really want to delete this ${deleteRoomName} Location ?`}
+        {`Do you really want to delete this ${selectedRoomName} Location ?`}
       </OModal>
     </>
   )

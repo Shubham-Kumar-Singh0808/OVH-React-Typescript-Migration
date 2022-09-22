@@ -15,9 +15,9 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 
 const RoomList = (): JSX.Element => {
-  const [filterByLocation, setFilterByLocation] = useState<string>('')
-  const [filterByLocationId, setFilterByLocationId] = useState<number>(0)
+  const [selectLocationId, setSelectLocationId] = useState<string>('')
   const [selectRoomName, setSelectRoomName] = useState('')
+
   const [roomNameExist, setRoomNameExist] = useState('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
@@ -60,16 +60,16 @@ const RoomList = (): JSX.Element => {
   const addBtnHandler = async () => {
     const prepareObj = {
       roomName: selectRoomName,
-      locationId: filterByLocationId,
+      locationId: Number(selectLocationId),
     }
     const isAddRoom = await dispatch(
       reduxServices.roomLists.addRoom(prepareObj),
     )
     if (reduxServices.roomLists.addRoom.fulfilled.match(isAddRoom)) {
       setSelectRoomName('')
-      setFilterByLocation('')
-      dispatch(reduxServices.app.actions.addToast(successToast))
+      setSelectLocationId('')
       dispatch(reduxServices.roomLists.getMeetingRooms())
+      dispatch(reduxServices.app.actions.addToast(successToast))
     }
   }
 
@@ -114,7 +114,7 @@ const RoomList = (): JSX.Element => {
           <CCol sm={2} md={1} className="text-end">
             <CFormLabel className="mt-1">
               Location:{' '}
-              <span className={filterByLocation ? TextWhite : TextDanger}>
+              <span className={selectLocationId ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -126,9 +126,9 @@ const RoomList = (): JSX.Element => {
               id="location"
               data-testid="form-select1"
               name="location"
-              value={filterByLocation}
+              value={selectLocationId}
               onChange={(e) => {
-                setFilterByLocation(e.target.value)
+                setSelectLocationId(e.target.value)
               }}
             >
               {locationList.map((location, index) => (
