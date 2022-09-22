@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import EmployeeAllocationFilterOptions from './EmployeeAllocationFilterOptions'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeAllocationReport } from '../../../test/data/employeeAllocationReportData'
+import { mockAllTechnology } from '../../../test/data/certificateTypeData'
 
 const mockSetSelect = jest.fn()
 const mockSetTicketApprovalParams = jest.fn()
@@ -52,6 +53,7 @@ describe('Employee allocation Filter Options Component Testing with data', () =>
       preloadedState: {
         employeeAllocationReport: {
           employeeAllocationReportType: mockEmployeeAllocationReport,
+          getAllTechnologies: mockAllTechnology,
         },
       },
     })
@@ -69,6 +71,10 @@ describe('Employee allocation Filter Options Component Testing with data', () =>
     const categoryName = screen.getByTestId('form-select3')
     userEvent.selectOptions(categoryName, ['Allocated'])
     expect(categoryName).toHaveValue('true')
+
+    const technology = screen.getByTestId('technology-select1')
+    userEvent.selectOptions(technology, [''])
+    expect(technology).toHaveValue('')
 
     const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
     fireEvent.click(datePickers[0])
@@ -95,5 +101,11 @@ describe('Employee allocation Filter Options Component Testing with data', () =>
     userEvent.selectOptions(categoryName, ['true'])
     expect(datePickers[0]).toHaveValue('')
     expect(datePickers[1]).toHaveValue('')
+  })
+  test('should render ticket approval search filter options component with out crashing', () => {
+    const searchInput = screen.getByTestId('search-input')
+    userEvent.type(searchInput, 'vinesh')
+    expect(searchInput).toHaveValue('vinesh')
+    expect(searchInput).toBeInTheDocument()
   })
 })

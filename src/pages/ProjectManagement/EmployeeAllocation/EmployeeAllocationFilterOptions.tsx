@@ -265,6 +265,22 @@ const EmployeeAllocationFilterOptions = ({
     }
   }, [fromDate, toDate])
 
+  const toDateValue = toDate
+    ? new Date(toDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+
+  const fromDateValue = fromDate
+    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+
   return (
     <>
       <CRow className="employeeAllocation-form">
@@ -336,7 +352,7 @@ const EmployeeAllocationFilterOptions = ({
         <CCol sm={2}>
           <Multiselect
             className="ovh-multiselect"
-            data-testid="employee-option"
+            data-testid="department-option"
             options={departmentsList?.map((department) => department) || []}
             displayValue="departmentName"
             placeholder="Select"
@@ -390,15 +406,7 @@ const EmployeeAllocationFilterOptions = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                value={
-                  fromDate
-                    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
+                value={fromDateValue}
                 onChange={(date: Date) => setFromDate(date)}
                 selected={fromDate as Date}
               />
@@ -419,15 +427,7 @@ const EmployeeAllocationFilterOptions = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                value={
-                  toDate
-                    ? new Date(toDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
+                value={toDateValue}
                 onChange={(date: Date) => setToDate(date)}
                 selected={toDate as Date}
               />
@@ -479,6 +479,7 @@ const EmployeeAllocationFilterOptions = ({
             <CFormInput
               placeholder="Multiple Search"
               aria-label="Multiple Search"
+              data-testid="search-input"
               aria-describedby="button-addon2"
               value={searchInput}
               onChange={(e) => {
