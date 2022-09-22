@@ -8,7 +8,7 @@ import {
   CCol,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import EmployeeAllocationEntryTable from './EmployeeAllocationEntryTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'

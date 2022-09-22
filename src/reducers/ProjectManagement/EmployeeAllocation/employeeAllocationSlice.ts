@@ -8,7 +8,6 @@ import {
   EmployeeAllocationReportProps,
   EmployeeAllocationReportState,
   EmployeeAllocationReportType,
-  GetEmployeeAllocationReport,
   ProjectUnderEmployees,
   ProjectUnderEmployeesProps,
   UpdateEmployeeAllocationProject,
