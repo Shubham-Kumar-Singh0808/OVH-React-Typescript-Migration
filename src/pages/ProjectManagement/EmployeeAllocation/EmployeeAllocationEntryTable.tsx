@@ -12,7 +12,7 @@ import {
   CFormSelect,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { Link } from 'react-router-dom'
 import OToast from '../../../components/ReusableComponent/OToast'
@@ -63,34 +63,6 @@ const EmployeeAllocationEntryTable = (props: {
     setTemplateId(projectReport.id)
     setEditEmployeeAllocation(projectReport)
   }
-  const commonFormatDate = 'l'
-  useEffect(() => {
-    const newFromDate = new Date(
-      moment(editEmployeeAllocation?.startdate?.toString()).format(
-        commonFormatDate,
-      ),
-    )
-    const newToDate = new Date(
-      moment(editEmployeeAllocation?.enddate?.toString()).format(
-        commonFormatDate,
-      ),
-    )
-    if (
-      editEmployeeAllocation?.startdate &&
-      editEmployeeAllocation?.enddate &&
-      newToDate.getTime() < newFromDate.getTime()
-    ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="danger"
-            toastMessage="            
-            Leave already applied on mentioned date."
-          />,
-        ),
-      )
-    }
-  }, [editEmployeeAllocation?.startdate, editEmployeeAllocation?.enddate])
 
   const handleEditProjectAllocationHandler = (
     event:
@@ -165,7 +137,6 @@ const EmployeeAllocationEntryTable = (props: {
   const cancelProjectAllocationButtonHandler = () => {
     setIsProjectAllocationEdit(false)
   }
-  console.log(editEmployeeAllocation?.startdate)
 
   return (
     <>

@@ -76,10 +76,5 @@ describe('Employee allocation report Table Component Testing without data', () =
         expect(screen.getAllByRole('row')).toHaveLength(2)
       })
     })
-    test('should render click on plus icon', () => {
-      const iconVisible = screen.getAllByTestId('expandable-test')
-      userEvent.click(iconVisible[0])
-      expect(iconVisible[0]).toBeInTheDocument()
-    })
   })
 })
