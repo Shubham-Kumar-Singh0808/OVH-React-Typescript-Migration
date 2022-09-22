@@ -48,6 +48,10 @@ const EmployeeAllocationReportTable = (props: {
     setSelectedKRA,
   } = props
 
+  const isLoading = useTypedSelector(
+    reduxServices.employeeAllocationReport.selectors.isLoading,
+  )
+
   const {
     paginationRange,
     setPageSize,
@@ -55,9 +59,6 @@ const EmployeeAllocationReportTable = (props: {
     currentPage,
     pageSize,
   } = usePagination(employeeAllocationReport?.Empsize, 20)
-  const isLoading = useTypedSelector(
-    reduxServices.employeeAllocationReport.selectors.isLoading,
-  )
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,

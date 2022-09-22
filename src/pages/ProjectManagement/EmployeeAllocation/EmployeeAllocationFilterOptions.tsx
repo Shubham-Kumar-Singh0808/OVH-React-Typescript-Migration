@@ -431,21 +431,17 @@ const EmployeeAllocationFilterOptions = ({
                 onChange={(date: Date) => setToDate(date)}
                 selected={toDate as Date}
               />
+              {dateError && (
+                <span className="text-danger" data-testid="errorMessage">
+                  To date should be greater than From date
+                </span>
+              )}
             </CCol>
-            {dateError && (
-              <CRow className="mt-2">
-                <CCol sm={{ span: 6, offset: 4 }}>
-                  <span className="text-danger" data-testid="errorMessage">
-                    To date should be greater than From date
-                  </span>
-                </CCol>
-              </CRow>
-            )}
           </>
         ) : (
           <></>
         )}
-        <CCol className="d-md-flex justify-content-md-end">
+        <CCol className="employee-allocation-export-btn">
           <CButton
             color="info btn-ovh me-0"
             onClick={handleExportEmployeeAllocation}
