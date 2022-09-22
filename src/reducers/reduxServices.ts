@@ -62,6 +62,7 @@ import { employeeAchievementsService } from './Dashboard/achievementsSlice'
 import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
 import { employeeAllocationSliceService } from './ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
+import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 
 export const reduxServices = {
   app: appService,

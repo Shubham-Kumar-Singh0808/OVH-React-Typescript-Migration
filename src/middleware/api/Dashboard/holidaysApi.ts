@@ -1,4 +1,5 @@
 import {
+  EditHolidayDetails,
   Holidays,
   SaveHoliday,
 } from '../../../types/Dashboard/Holidays/upcomingHolidaysTypes'
@@ -44,10 +45,54 @@ const addHoliday = async (
   return response.data
 }
 
+const deleteHoliday = async (
+  holidayId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: dashboardApiConfig.deleteHoliday,
+    method: AllowedHttpMethods.delete,
+    params: {
+      holidayId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getHolidayInformation = async (
+  holidayId: number,
+): Promise<EditHolidayDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: dashboardApiConfig.getHolidayInformation,
+    method: AllowedHttpMethods.get,
+    params: {
+      holidayId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateHoliday = async (
+  holidayDetails: EditHolidayDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: dashboardApiConfig.updateHoliday,
+    method: AllowedHttpMethods.put,
+    data: holidayDetails,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const holidaysApi = {
   getUpcomingHolidays,
   getAllUpcomingHolidaysList,
   addHoliday,
+  deleteHoliday,
+  getHolidayInformation,
+  updateHoliday,
 }
 
 export default holidaysApi

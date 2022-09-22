@@ -14,9 +14,8 @@ export type HolidaysListProps = {
   setSelectedCountry: (value: string) => void
 }
 
-export interface ToggleHolidaysListProp {
-  toggleValue: boolean
-  setToggleHolidaysList: (value: boolean) => void
+export type backButtonProp = {
+  editHolidayButtonHandler: (id: number) => void
 }
 
 export type SaveHoliday = {
@@ -25,10 +24,24 @@ export type SaveHoliday = {
   name: string
 }
 
+export type EditHolidayDetails = {
+  country: string
+  date: string
+  fullDate: null
+  id: number
+  name: string
+  week: null
+}
+
+export type holidaysPageProps = {
+  selectedHoliday?: number
+}
+
 export type HolidaysSliceState = {
   isLoading: LoadingState
   upcomingHolidays: Holidays[]
   addNewHoliday: SaveHoliday
+  editHoliday: EditHolidayDetails
   refreshList: boolean
   currentPage: number
   pageSize: number
