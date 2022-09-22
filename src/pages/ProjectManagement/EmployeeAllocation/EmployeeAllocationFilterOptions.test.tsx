@@ -28,11 +28,11 @@ describe('Employee Allocation Filter Options Component Testing', () => {
     const selectDate = screen.findByTestId('form-select1')
     expect(selectDate).toBeTruthy()
   })
-  test('should render approval status filter', () => {
+  test('should render Employee Billing Status filter', () => {
     const billingStatus = screen.findByTestId('form-select2')
     expect(billingStatus).toBeTruthy()
   })
-  test('should render category name select filter', () => {
+  test('should render Allocation Status filter', () => {
     const allocationStatus = screen.findByTestId('form-select3')
     expect(allocationStatus).toBeTruthy()
   })
@@ -44,13 +44,9 @@ describe('Employee Allocation Filter Options Component Testing', () => {
     const trackerSelect = screen.findByTestId('technology-select1')
     expect(trackerSelect).toBeTruthy()
   })
-  test('should render search input', () => {
-    const searchField = screen.findByTestId('employee-option')
-    expect(searchField).toBeTruthy()
-  })
 })
 
-describe('Ticket Approvals Filter Options Component Testing with data', () => {
+describe('Employee allocation Filter Options Component Testing with data', () => {
   beforeEach(() => {
     render(toRender, {
       preloadedState: {
@@ -90,9 +86,14 @@ describe('Ticket Approvals Filter Options Component Testing with data', () => {
     )
     expect(datePickers[0]).toHaveValue('10/29/2019')
     expect(datePickers[1]).toHaveValue('1/10/2022')
-
     const viewBtnElement = screen.getByRole('button', { name: 'View' })
     userEvent.click(viewBtnElement)
     expect(mockSetTicketApprovalParams).toHaveBeenCalledTimes(0)
+    userEvent.click(screen.getByTestId('clear-btn'))
+    userEvent.selectOptions(approvalStatus, ['All'])
+    userEvent.selectOptions(ticketStatus, ['Custom'])
+    userEvent.selectOptions(categoryName, ['true'])
+    expect(datePickers[0]).toHaveValue('')
+    expect(datePickers[1]).toHaveValue('')
   })
 })

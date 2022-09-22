@@ -82,7 +82,7 @@ const employeeAllocationSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getEmployeeAllocationReport.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.emps = action.payload.emps as GetEmployeeAllocationReport[]
+      state.employeeAllocationReportType = action.payload
     })
     builder.addCase(projectUnderEmployeesReport.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded

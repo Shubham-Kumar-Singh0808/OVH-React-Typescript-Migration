@@ -6,6 +6,8 @@ import EmployeeAllocationReportTable from './EmployeeAllocationReportTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeAllocationReport } from '../../../test/data/employeeAllocationReportData'
 
+const mockSetIconVisible = jest.fn()
+const mockSelectedKRA = jest.fn()
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
@@ -17,16 +19,20 @@ const toRender = (
       allocationStatus={''}
       billingStatus={''}
       fromDate={''}
+      isIconVisible={true}
+      selectedKRA={1050}
+      setIsIconVisible={mockSetIconVisible}
+      setSelectedKRA={mockSelectedKRA}
     />
   </div>
 )
 
-describe('Ticket Approvals Table Component Testing without data', () => {
+describe('Employee allocation report Table Component Testing without data', () => {
   beforeEach(() => {
     render(toRender)
   })
 
-  describe('Ticket Approvals Table Component Testing', () => {
+  describe('Employee Allocation Report Table Component Testing', () => {
     beforeEach(() => {
       render(toRender, {
         preloadedState: {
@@ -60,7 +66,7 @@ describe('Ticket Approvals Table Component Testing without data', () => {
         expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
       })
     })
-    test('should render Assets table component with data without crashing', async () => {
+    test('should render Employee allocation table component with data without crashing', async () => {
       await waitFor(() => {
         userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
         const pageSizeSelect = screen.getByRole('option', {
@@ -69,6 +75,11 @@ describe('Ticket Approvals Table Component Testing without data', () => {
         expect(pageSizeSelect.selected).toBe(true)
         expect(screen.getAllByRole('row')).toHaveLength(2)
       })
+    })
+    test('should render click on plus icon', () => {
+      const iconVisible = screen.getAllByTestId('expandable-test')
+      userEvent.click(iconVisible[0])
+      expect(iconVisible[0]).toBeInTheDocument()
     })
   })
 })

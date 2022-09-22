@@ -1,9 +1,7 @@
 import '@testing-library/jest-dom'
-
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import EmployeeAllocationEntryTable from './EmployeeAllocationEntryTable'
-import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
+import { cleanup, render, screen } from '../../../test/testUtils'
 import { mockProjectUnderEmployeesList } from '../../../test/data/employeeAllocationReportData'
 
 const toRender = (
@@ -22,7 +20,7 @@ const toRender = (
   </div>
 )
 
-describe('Ticket Approvals Table Component Testing', () => {
+describe('Employee Allocation Entry Table Component Testing', () => {
   beforeEach(() => {
     render(toRender, {
       preloadedState: {
@@ -34,7 +32,7 @@ describe('Ticket Approvals Table Component Testing', () => {
   })
 
   afterEach(cleanup)
-  test('should render number of records', () => {
+  test('should render table with data', () => {
     expect(screen.getByText('ovh')).toBeInTheDocument()
     expect(screen.getByText('Mamatha Thunam')).toBeInTheDocument()
     expect(screen.getByText('New')).toBeInTheDocument()

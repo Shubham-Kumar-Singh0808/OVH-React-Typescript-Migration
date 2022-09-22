@@ -36,6 +36,8 @@ const EmployeeAllocationFilterOptions = ({
   const [selectDepartment, setSelectDepartment] = useState<
     EmployeeDepartment[]
   >([])
+  const [isIconVisible, setIsIconVisible] = useState(false)
+  const [selectedKRA, setSelectedKRA] = useState(0)
   const [dateError, setDateError] = useState<boolean>(false)
   const [fromDate, setFromDate] = useState<Date | string>()
   const [toDate, setToDate] = useState<Date | string>()
@@ -467,6 +469,7 @@ const EmployeeAllocationFilterOptions = ({
           <CButton
             className="cursor-pointer"
             disabled={false}
+            data-testid="clear-btn"
             color="warning btn-ovh me-1"
             onClick={clearButtonHandler}
           >
@@ -508,6 +511,10 @@ const EmployeeAllocationFilterOptions = ({
             allocationStatus={allocationStatus}
             billingStatus={billingStatus}
             fromDate={fromDate as string}
+            isIconVisible={isIconVisible}
+            selectedKRA={selectedKRA}
+            setIsIconVisible={setIsIconVisible}
+            setSelectedKRA={setSelectedKRA}
           />
         </CCol>
       </CCol>

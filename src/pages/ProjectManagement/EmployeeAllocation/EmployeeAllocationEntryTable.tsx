@@ -298,7 +298,7 @@ const EmployeeAllocationEntryTable = (props: {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {projectUnderReport.map((projectReport, KRAindex) => {
+              {projectUnderReport?.map((projectReport, KRAindex) => {
                 return (
                   <CTableRow key={KRAindex} col-span={7}>
                     <CTableDataCell scope="row">

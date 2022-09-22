@@ -26,15 +26,27 @@ const EmployeeAllocationReportTable = (props: {
   allocationStatus: string
   billingStatus: string
   fromDate: string
+  isIconVisible: boolean
+  selectedKRA: number
+  setIsIconVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setSelectedKRA: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
-  const [isIconVisible, setIsIconVisible] = useState(false)
-  const [selectedKRA, setSelectedKRA] = useState(0)
   const dispatch = useAppDispatch()
 
   const employeeAllocationReport = useTypedSelector(
     reduxServices.employeeAllocationReport.selectors.employeeAllocationReport,
   )
-  const { Select, toDate, allocationStatus, billingStatus, fromDate } = props
+  const {
+    Select,
+    toDate,
+    allocationStatus,
+    billingStatus,
+    fromDate,
+    isIconVisible,
+    selectedKRA,
+    setIsIconVisible,
+    setSelectedKRA,
+  } = props
 
   const {
     paginationRange,
@@ -126,10 +138,12 @@ const EmployeeAllocationReportTable = (props: {
                         <i
                           className="fa fa-minus-circle cursor-pointer"
                           onClick={() => setIsIconVisible(false)}
+                          data-testid="expandable-test"
                         />
                       ) : (
                         <i
                           className="fa fa-plus-circle cursor-pointer"
+                          data-testid="expandable-test"
                           onClick={() =>
                             handleExpandRow(allocationReport.id as number)
                           }
