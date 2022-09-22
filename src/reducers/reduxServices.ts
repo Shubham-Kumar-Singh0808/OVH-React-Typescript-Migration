@@ -128,5 +128,6 @@ export const reduxServices = {
   employeeAchievements: employeeAchievementsService,
   updateTicket: updateTicketService,
   eventTypeList: eventTypeListService,
+  addLocationList: addLocationListService,
   employeeAllocationReport: employeeAllocationSliceService,
 }
