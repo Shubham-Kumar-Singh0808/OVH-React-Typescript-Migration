@@ -12,7 +12,7 @@ export const mockTicketReportData: GetTicketsReportList[] = [
     categoryName: 'Acssories',
     subCategoryName: 'Android Cable',
     noOfTickets: '3',
-    noOfClosedTickets: '0',
+    noOfClosedTickets: '1',
     noOfPendingTickets: '3',
     categoryId: 11,
     subCategoryId: 68,

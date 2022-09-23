@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import TicketReport from './TicketReport'
+import LeaveReport from './LeaveReport'
 import { render, screen } from '../../../test/testUtils'
 
 const toRender = (
@@ -8,15 +8,15 @@ const toRender = (
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <TicketReport />
+    <LeaveReport />
   </div>
 )
 
-describe('Ticket Report Component Testing', () => {
+describe('Leave Report Component Testing', () => {
   render(toRender, {
     preloadedState: {},
   })
-  test('should render Ticket Report component with out crashing', () => {
-    expect(screen.getByText('Ticket Reports')).toBeInTheDocument()
+  test('should render Leave Report component with out crashing', () => {
+    expect(screen.getByText('Leave Reports')).toBeInTheDocument()
   })
 })

@@ -41,6 +41,7 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  LeaveReportsApi,
   TicketReportApi,
   ClientsApi,
   ProjectManagementApi,
@@ -362,6 +363,13 @@ export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
 }
 
+export const leaveReportsApiConfig: LeaveReportsApi = {
+  getLeaveSummaries: apiPrefix + '/leaveSetup/bioAdmin/leaveSummaries',
+  searchLeaveSummaries: apiPrefix + '/leaveSetup/searchLeaveSummaries',
+  creditedYears: apiPrefix + '/leaveSetup/creditedYears',
+  financialYear: apiPrefix + '/leaveSetup/financialYear',
+  downloadLeaveReportList: apiPrefix + '/leaveSetup/exportLeaveReport',
+}
 export const ticketReportApiConfig: TicketReportApi = {
   getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
   departmentCategoryList:
