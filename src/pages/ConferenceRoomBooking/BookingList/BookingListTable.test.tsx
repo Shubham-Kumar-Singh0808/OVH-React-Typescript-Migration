@@ -6,14 +6,6 @@ import BookingListTable from './BookingListTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockBookingsForSelection } from '../../../test/data/bookingListData'
 
-// const expectPageSizeToBeRendered = (pageSize: number) => {
-//   for (let i = 0; i < pageSize; i++) {
-//     expect(
-//       screen.queryAllByText(mockBookingsForSelection[i].agenda[0]),
-//     ).toBeInTheDocument()
-//   }
-// }
-
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
