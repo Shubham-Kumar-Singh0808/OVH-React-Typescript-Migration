@@ -79,39 +79,40 @@ const TrackerListTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {trackerList.map((tracker, index) => {
-            return (
-              <CTableRow key={index}>
-                <CTableDataCell>{index + 1}</CTableDataCell>
-                <CTableDataCell>{tracker.name}</CTableDataCell>
-                <CTableDataCell>
-                  <span className="hidden-block">
-                    <CFormCheck
-                      className="form-check-input form-select-not-allowed"
-                      name="workflow"
-                      checked={tracker.permission}
-                      disabled={true}
-                    />
-                  </span>
-                </CTableDataCell>
-                <CTableDataCell>
-                  <CTooltip content="Delete">
-                    <CButton
-                      data-testid={`btn-delete${index}`}
-                      size="sm"
-                      className="btn-ovh me-2 cursor-pointer"
-                      color="danger btn-ovh me-2"
-                      onClick={() =>
-                        deleteTrackerButtonHandler(tracker.id, tracker.name)
-                      }
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
-                  </CTooltip>
-                </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+          {trackerList &&
+            trackerList?.map((tracker, index) => {
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell>{tracker.name}</CTableDataCell>
+                  <CTableDataCell>
+                    <span className="hidden-block">
+                      <CFormCheck
+                        className="form-check-input form-select-not-allowed"
+                        name="workflow"
+                        checked={tracker.permission}
+                        disabled={true}
+                      />
+                    </span>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CTooltip content="Delete">
+                      <CButton
+                        data-testid={`btn-delete${index}`}
+                        size="sm"
+                        className="btn-ovh me-2 cursor-pointer"
+                        color="danger btn-ovh me-2"
+                        onClick={() =>
+                          deleteTrackerButtonHandler(tracker.id, tracker.name)
+                        }
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
       <CRow>
