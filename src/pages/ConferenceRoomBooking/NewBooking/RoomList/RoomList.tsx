@@ -62,15 +62,12 @@ const RoomList = (): JSX.Element => {
       roomName: selectRoomName,
       locationId: Number(selectLocationId),
     }
-    const isAddRoom = await dispatch(
-      reduxServices.roomLists.addRoom(prepareObj),
-    )
-    if (reduxServices.roomLists.addRoom.fulfilled.match(isAddRoom)) {
-      setSelectRoomName('')
-      setSelectLocationId('')
-      dispatch(reduxServices.roomLists.getMeetingRooms())
-      dispatch(reduxServices.app.actions.addToast(successToast))
-    }
+    await dispatch(reduxServices.roomLists.addRoom(prepareObj))
+
+    setSelectRoomName('')
+    setSelectLocationId('')
+    dispatch(reduxServices.roomLists.getMeetingRooms())
+    dispatch(reduxServices.app.actions.addToast(successToast))
   }
 
   const handledInputChange = (

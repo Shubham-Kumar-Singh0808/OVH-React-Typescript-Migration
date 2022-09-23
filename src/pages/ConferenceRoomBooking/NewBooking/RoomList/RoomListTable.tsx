@@ -40,34 +40,31 @@ const RoomListTable = (): JSX.Element => {
     <OToast toastColor="success" toastMessage="Room Updated Successfully" />
   )
 
-  const switchOnChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    room: getAllMeetingRooms,
-    index: number,
-  ) => {
-    const { checked } = e.target
-    const mappedRoomCopy = { ...room }
-    let toEdit = null
-    toEdit = { ...mappedRoomCopy, ...{ roomStatus: checked } }
-    setUpdateRoomDetails(toEdit)
-    console.log(updateRoomDetails)
-  }
-
-  const confirmDeleteRoom = async () => {
-    setIsDeleteModalVisible(false)
-    const isDeleteRoom = await dispatch(
-      reduxServices.roomLists.deleteRoom(deleteLocationId),
-    )
-    if (reduxServices.roomLists.deleteRoom.fulfilled.match(isDeleteRoom)) {
-      dispatch(reduxServices.roomLists.getMeetingRooms())
-      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
-    }
-  }
+  // const switchOnChangeHandler = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   room: getAllMeetingRooms,
+  //   index: number,
+  // ) => {
+  //   const { checked } = e.target
+  //   const mappedRoomCopy = { ...room }
+  //   let toEdit = null
+  //   toEdit = { ...mappedRoomCopy, ...{ roomStatus: checked } }
+  //   setUpdateRoomDetails(toEdit)
+  //   console.log(updateRoomDetails)
+  // }
 
   const deleteBtnHandler = (id: number, roomName: string) => {
     setIsDeleteModalVisible(true)
     setDeleteLocationId(id)
     setSelectedRoomName(roomName)
+  }
+
+  const confirmDeleteRoom = async () => {
+    setIsDeleteModalVisible(false)
+    await dispatch(reduxServices.roomLists.deleteRoom(deleteLocationId))
+
+    dispatch(reduxServices.roomLists.getMeetingRooms())
+    dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
 
   const handleUpdateRoom = async (room: getAllMeetingRooms) => {
@@ -121,7 +118,7 @@ const RoomListTable = (): JSX.Element => {
                           ? updateRoomDetails.roomStatus
                           : room.roomStatus
                       }
-                      onChange={(e) => switchOnChangeHandler(e, room, index)}
+                      // onChange={(e) => switchOnChangeHandler(e, room, index)}
                     />
                   </CTableDataCell>
                   <CTableDataCell>
@@ -131,9 +128,7 @@ const RoomListTable = (): JSX.Element => {
                         size="sm"
                         className="btn-ovh me-2 cursor-pointer"
                         color="danger btn-ovh me-2"
-                        onClick={() =>
-                          deleteBtnHandler(room.locationId, room.roomName)
-                        }
+                        onClick={() => deleteBtnHandler(room.id, room.roomName)}
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </CButton>

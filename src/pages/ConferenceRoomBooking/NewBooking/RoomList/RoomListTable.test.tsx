@@ -59,9 +59,9 @@ describe('Room List Table with data', () => {
     ).toBeInTheDocument()
   })
 
-  test('should be able to click update button element', () => {
-    const updateBtnElement = screen.getAllByTestId('btn-update')
-    userEvent.click(updateBtnElement[0])
-    expect(updateBtnElement).toBeTruthy()
-  })
+  // test('should be able to click update button element', () => {
+  //   const updateBtnElement = screen.getAllByTestId('btn-update')
+  //   userEvent.click(updateBtnElement[0])
+  //   expect(updateBtnElement).toBeTruthy()
+  // })
 })
