@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
+import { CRow } from '@coreui/react-pro'
 import TicketReportFilterOptions from './TicketReportFilterOptions'
 import TicketReportTable from './TicketReportTable'
 import TicketDetails from './TicketDetails'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { useTypedSelector } from '../../../stateStore'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const TicketReport = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
@@ -14,9 +11,6 @@ const TicketReport = (): JSX.Element => {
   const [fromDate, setFromDate] = useState<string>('')
   const [toDate, setToDate] = useState<string>('')
   const [selectDepartment, setSelectDepartment] = useState<string>('')
-  const isLoading = useTypedSelector(
-    reduxServices.ticketReport.selectors.isLoading,
-  )
   return (
     <>
       {toggle === '' && (
@@ -36,24 +30,15 @@ const TicketReport = (): JSX.Element => {
             setToDate={setToDate}
             setSelectDepartment={setSelectDepartment}
           />
-
-          {isLoading !== ApiLoadingState.loading ? (
-            <>
-              <TicketReportTable
-                setToggle={setToggle}
-                selectDate={selectDate}
-                toDate={toDate}
-                fromDate={fromDate}
-                selectDepartment={selectDepartment}
-              />
-            </>
-          ) : (
-            <CCol>
-              <CRow className="category-loading-spinner">
-                <CSpinner />
-              </CRow>
-            </CCol>
-          )}
+          <CRow className="mt-3">
+            <TicketReportTable
+              setToggle={setToggle}
+              selectDate={selectDate}
+              toDate={toDate}
+              fromDate={fromDate}
+              selectDepartment={selectDepartment}
+            />
+          </CRow>
         </OCard>
       )}
       {toggle === 'ticketDetails' && <TicketDetails setToggle={setToggle} />}
