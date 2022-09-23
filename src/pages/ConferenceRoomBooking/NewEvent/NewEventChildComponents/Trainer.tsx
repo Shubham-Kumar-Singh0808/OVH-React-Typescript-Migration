@@ -5,7 +5,7 @@ const Trainer = (): JSX.Element => {
   return (
     <CRow className="mt-1 mb-3">
       <CFormLabel className="col-sm-2 col-form-label text-end">
-        Reserved by:
+        Trainer:
         <span>*</span>
       </CFormLabel>
       <CCol sm={4}>

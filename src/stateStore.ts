@@ -72,6 +72,7 @@ import achievementsReducer from './reducers/Dashboard/achievementsSlice'
 import updateTicketReducer from './reducers/Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import newEventReducer from './reducers/ConferenceRoomBooking/NewEvent/newEventSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -144,6 +145,7 @@ export const allReducers = {
   addLocationList: addLocationListReducer,
   updateTicket: updateTicketReducer,
   eventTypeList: eventTypeListReducer,
+  newEvent: newEventReducer,
   // add your slice reducers here
 }
 

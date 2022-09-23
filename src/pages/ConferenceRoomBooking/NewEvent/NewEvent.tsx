@@ -8,7 +8,7 @@ import {
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Attendees,
   EventEndDate,
@@ -22,15 +22,79 @@ import {
 } from './NewEventChildComponents'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
+import {
+  AddEvent,
+  Author,
+  Availability,
+  TrainerDetails,
+} from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const NewEvent = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
+  const trainerDetails = {} as TrainerDetails
+  const authorDetails = {} as Author
+  const employeesAvailability = {} as Availability[]
+
+  const initEvent = {
+    agenda: '',
+    authorName: authorDetails,
+    availability: employeesAvailability,
+    conferenceType: '',
+    description: '',
+    endTime: '',
+    eventLocation: '',
+    eventTypeId: 0,
+    fromDate: '',
+    locationId: 1,
+    projectName: '',
+    roomId: 0,
+    startTime: '',
+    toDate: '',
+    trainerName: trainerDetails,
+  } as AddEvent
+
+  const [addEvent, setAddEvent] = useState(initEvent)
+
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
+    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+    dispatch(reduxServices.newEvent.getLoggedEmployee())
   }, [dispatch])
+
+  useEffect(() => {
+    if (addEvent.locationId)
+      dispatch(reduxServices.newEvent.getRoomsByLocation(addEvent.locationId))
+  }, [addEvent.locationId])
+
+  const eventLocations = useTypedSelector(
+    reduxServices.addLocationList.selectors.locationNames,
+  )
+
+  const locationRooms = useTypedSelector(
+    reduxServices.newEvent.selectors.roomsByLocation,
+  )
+
+  const loggedEmployee = useTypedSelector(
+    reduxServices.newEvent.selectors.loggedEmployee,
+  )
+
+  const allEmployeesProfiles = useTypedSelector(
+    reduxServices.newEvent.selectors.allEmployeesProfiles,
+  )
+
+  // onchange handlers
+  const onHandleLocation = (value: string) => {
+    setAddEvent({ ...addEvent, locationId: Number(value) })
+  }
+  const onHandleRoom = (value: string) => {
+    setAddEvent({ ...addEvent, roomId: Number(value) })
+  }
+  const onSelectAuthor = (value: Author) => {
+    setAddEvent({ ...addEvent, authorName: value })
+  }
 
   return (
     <OCard
@@ -40,8 +104,19 @@ const NewEvent = (): JSX.Element => {
       CFooterClassName="d-none"
     >
       <CForm>
-        <LocationAndRoom />
-        <ReservedBy />
+        <LocationAndRoom
+          eventLocations={eventLocations}
+          onHandleLocation={onHandleLocation}
+          onHandleRoom={onHandleRoom}
+          locationRooms={locationRooms}
+          locationValue={addEvent.locationId}
+          roomValue={addEvent.roomId}
+        />
+        <ReservedBy
+          loggedEmployeeName={loggedEmployee.fullName}
+          allEmployeesProfiles={allEmployeesProfiles}
+          onSelectAuthor={onSelectAuthor}
+        />
         <Trainer />
         <EventType />
         <EventFromDate />

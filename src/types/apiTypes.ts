@@ -394,5 +394,9 @@ export interface EventTypeListApi extends ApiBase {
   addEventType: string
   deleteEventType: string
   updateEventType: string
+}
+export interface NewEventApi extends ApiBase {
   getLoggedEmployeeName: string
+  getRoomsOfLocation: string
+  getAllProfileEmployeesData: string
 }
