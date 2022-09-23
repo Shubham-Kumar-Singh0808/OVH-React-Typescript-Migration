@@ -329,6 +329,7 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
     getMailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
     getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
     exportMailTemplatesList: apiPrefix + '/mailTemplates/exportMailTemplates',
+    updateMailTemplate: apiPrefix + '/mailTemplates/updateMailTemplate',
     deleteMailTemplate: apiPrefix + '/mailTemplates/deleteMailTemplate',
   }
 

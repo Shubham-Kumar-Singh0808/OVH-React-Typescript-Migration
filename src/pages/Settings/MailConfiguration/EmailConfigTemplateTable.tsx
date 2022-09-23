@@ -15,13 +15,27 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import {
   EmployeeGetEmailTemplateModelProps,
-  EmployeeEmailTemplateTableProps,
+  EmployeeMailTemplate,
+  EditEmployeeMailTemplate,
 } from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const EmployeeEmailTemplateTable = ({
   employeeTemplate,
-}: EmployeeEmailTemplateTableProps): JSX.Element => {
+  editTemplateButtonHandler,
+}: {
+  employeeTemplate: EmployeeMailTemplate
+  editTemplateButtonHandler: ({
+    id,
+    templateName,
+    template,
+    templateTypeId,
+    templateType,
+    assetTypeId,
+    assetType,
+    email,
+  }: EditEmployeeMailTemplate) => void
+}): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -79,7 +93,6 @@ const EmployeeEmailTemplateTable = ({
       )
     }
   }
-
   return (
     <CTable striped>
       <CTableHead>
@@ -129,7 +142,22 @@ const EmployeeEmailTemplateTable = ({
                     </CLink>
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    <CButton color="info btn-ovh me-2">
+                    <CButton
+                      color="info btn-ovh me-2"
+                      data-testid="edit-btn22"
+                      onClick={() => {
+                        editTemplateButtonHandler({
+                          id: emailTemplate.id,
+                          templateName: emailTemplate.templateName,
+                          template: emailTemplate.template,
+                          templateTypeId: emailTemplate.templateTypeId,
+                          templateType: emailTemplate.templateType,
+                          assetTypeId: emailTemplate.assetTypeId,
+                          assetType: emailTemplate.assetType,
+                          email: emailTemplate.email,
+                        })
+                      }}
+                    >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
                     <CButton
