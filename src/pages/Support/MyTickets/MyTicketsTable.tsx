@@ -72,6 +72,7 @@ const MyTicketsTable = ({
         id,
       }),
     )
+    dispatch(reduxServices.ticketApprovals.actions.selectTicketId(id))
   }
 
   const handleCancelTicketModal = (requestId: number) => {

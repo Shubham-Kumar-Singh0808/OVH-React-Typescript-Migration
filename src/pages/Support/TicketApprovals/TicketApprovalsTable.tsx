@@ -17,9 +17,10 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const TicketApprovalsTable = ({
@@ -28,19 +29,31 @@ const TicketApprovalsTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  renderTicketApprovals,
+  setRenderTicketApprovals,
+  setToggle,
 }: {
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  renderTicketApprovals: boolean
+  setRenderTicketApprovals: (value: boolean) => void
+  setToggle: (value: string) => void
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [isDescriptionModalVisible, setIsDescriptionModalVisible] =
     useState<boolean>(false)
   const [isSubjectModalVisible, setIsSubjectModalVisible] =
     useState<boolean>(false)
   const [modalDescription, setModalDescription] = useState<string>('')
   const [modalSubject, setModalSubject] = useState<string>('')
+  const [isRejectModalVisible, setIsRejectModalVisible] =
+    useState<boolean>(false)
+  const [subCategoryName, setSubCategoryName] = useState<string>('')
+  const [selectedTicketId, setSelectedTicketId] = useState<number>(0)
 
   const ticketsForApproval = useTypedSelector(
     reduxServices.ticketApprovals.selectors.ticketsForApproval,
@@ -78,6 +91,10 @@ const TicketApprovalsTable = ({
     scope: 'col',
   }
 
+  const ticketRejectedSuccessToast = (
+    <OToast toastMessage="Ticket reject successfully" toastColor="success" />
+  )
+
   const handleSubjectModal = (value: string) => {
     setIsSubjectModalVisible(true)
     setModalSubject(value)
@@ -86,6 +103,30 @@ const TicketApprovalsTable = ({
   const handleDescriptionModal = (value: string) => {
     setIsDescriptionModalVisible(true)
     setModalDescription(value)
+  }
+
+  const handleRejectModal = (value: string, id: number) => {
+    setIsRejectModalVisible(true)
+    setSubCategoryName(value)
+    setSelectedTicketId(id)
+  }
+
+  const handleConfirmRejectTicket = async (ticketId: number) => {
+    setIsRejectModalVisible(false)
+    await dispatch(reduxServices.ticketApprovals.rejectTicket(ticketId))
+    setRenderTicketApprovals(!renderTicketApprovals)
+    dispatch(reduxServices.app.actions.addToast(ticketRejectedSuccessToast))
+  }
+
+  const handleTicketApprovalsHistory = (id: number) => {
+    setToggle('ticketApprovalHistory')
+    dispatch(
+      reduxServices.tickets.ticketHistoryDetails({
+        filterName: 'support',
+        id,
+      }),
+    )
+    dispatch(reduxServices.ticketApprovals.actions.selectTicketId(id))
   }
 
   return (
@@ -196,14 +237,35 @@ const TicketApprovalsTable = ({
                           <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>
                       </Link>
-                      <CButton color="danger" className="btn-ovh me-2">
+                      <CButton
+                        color="danger"
+                        className="btn-ovh me-2"
+                        data-testid="ticket-reject-btn"
+                        disabled={
+                          ticketItem.approvalStatus === 'Approved' ||
+                          ticketItem.approvalStatus === 'Rejected' ||
+                          ticketItem.approvalStatus === 'Cancelled' ||
+                          !ticketItem.disableApprove
+                        }
+                        onClick={() =>
+                          handleRejectModal(
+                            ticketItem.subCategoryName,
+                            ticketItem.id,
+                          )
+                        }
+                      >
                         <i className="fa fa-times" aria-hidden="true"></i>
                       </CButton>
-                      <Link to={`/`}>
-                        <CButton color="info" className="btn-ovh me-2">
-                          <i className="fa fa-bar-chart" aria-hidden="true"></i>
-                        </CButton>
-                      </Link>
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-2"
+                        data-testid="ticketTimelineBtn"
+                        onClick={() =>
+                          handleTicketApprovalsHistory(ticketItem.id)
+                        }
+                      >
+                        <i className="fa fa-bar-chart" aria-hidden="true"></i>
+                      </CButton>
                     </>
                   </CTableDataCell>
                 </CTableRow>
@@ -279,6 +341,20 @@ const TicketApprovalsTable = ({
         modalHeaderClass="d-none"
       >
         <p>{modalSubject}</p>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={isRejectModalVisible}
+        setVisible={setIsRejectModalVisible}
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        modalHeaderClass="d-none"
+        confirmButtonAction={() => handleConfirmRejectTicket(selectedTicketId)}
+      >
+        <>
+          Do you really want to reject this <strong>{subCategoryName}</strong>{' '}
+          ticket ?
+        </>
       </OModal>
     </>
   )

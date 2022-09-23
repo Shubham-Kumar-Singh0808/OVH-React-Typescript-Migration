@@ -71,6 +71,8 @@ import provisionPeriodReducer from './reducers/Dashboard/provisionPeriodSlice'
 import achievementsReducer from './reducers/Dashboard/achievementsSlice'
 import updateTicketReducer from './reducers/Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 import leaveReportReducer from './reducers/Leaves/LeaveReports/leaveReportSlice'
+import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
+import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -140,8 +142,10 @@ export const allReducers = {
   trainingsAndEvents: trainingAndEventsReducer,
   probationPeriod: provisionPeriodReducer,
   achievements: achievementsReducer,
+  addLocationList: addLocationListReducer,
   updateTicket: updateTicketReducer,
   leaveReport: leaveReportReducer,
+  eventTypeList: eventTypeListReducer,
   // add your slice reducers here
 }
 

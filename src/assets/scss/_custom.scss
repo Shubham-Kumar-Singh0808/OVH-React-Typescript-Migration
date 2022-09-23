@@ -203,7 +203,7 @@ input.capetalized {
 .description-link div ul {
   list-style: none;
 }
-.form-select-not-allowed{
+.form-select-not-allowed {
   cursor: not-allowed !important;
 }
 .leavereport-exportbutton {
@@ -212,3 +212,7 @@ input.capetalized {
   font-size: 13px;
 }
 
+.custom-scroll {
+  height: 350px;
+  overflow: auto;
+}
