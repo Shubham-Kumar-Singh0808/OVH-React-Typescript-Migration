@@ -1,9 +1,12 @@
 import { CBadge, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 
 const TicketHistoryTimeLine = (): JSX.Element => {
+  const location = useLocation()
+
   const ticketHistory = useTypedSelector(
     reduxServices.tickets.selectors.ticketHistory,
   )
@@ -77,7 +80,8 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                 </div>
                 <div className="sh-timeline-body">
                   <div className="sh-timeline-item mb-1">
-                    {ticketDetails.tracker ? (
+                    {ticketDetails.tracker &&
+                    location.pathname !== '/ticketApprovals' ? (
                       <>
                         <div className="mb-1">
                           <CFormLabel className="col-form-label p-0">

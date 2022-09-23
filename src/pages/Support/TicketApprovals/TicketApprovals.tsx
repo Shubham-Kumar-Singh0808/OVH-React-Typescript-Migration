@@ -8,6 +8,7 @@ import { GetAllTicketsForApprovalProps } from '../../../types/Support/TicketAppr
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { downloadFile } from '../../../utils/helper'
 import ticketApprovalsApi from '../../../middleware/api/Support/TicketApprovals/ticketApprovalsApi'
+import TicketHistoryDetails from '../MyTickets/TicketHistory.tsx/TicketHistoryDetails'
 
 const TicketApprovals = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -17,7 +18,7 @@ const TicketApprovals = (): JSX.Element => {
     dateSelection: 'Today',
     departmentId: undefined,
     endIndex: 20,
-    fromDate: '',
+    fromDate: undefined,
     multiSearch: '',
     progressStatus: 'New',
     searchByAssigneeName: false,
@@ -25,14 +26,17 @@ const TicketApprovals = (): JSX.Element => {
     startIndex: 0,
     subCategoryId: undefined,
     ticketStatus: 'Pending Approval',
-    toDate: '',
+    toDate: undefined,
     trackerID: undefined,
   }
 
+  const [toggle, setToggle] = useState<string>('')
   const [ticketApprovalParams, setTicketApprovalParams] = useState(initialState)
   const [deptId, setDeptId] = useState<number>()
   const [categoryId, setCategoryId] = useState<number>()
   const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>()
+  const [renderTicketApprovals, setRenderTicketApprovals] =
+    useState<boolean>(false)
 
   const ticketsForApproval = useTypedSelector(
     reduxServices.ticketApprovals.selectors.ticketsForApproval,
@@ -60,7 +64,13 @@ const TicketApprovals = (): JSX.Element => {
         endIndex: pageSize * currentPage,
       }),
     )
-  }, [dispatch, ticketApprovalParams, currentPage, pageSize])
+  }, [
+    dispatch,
+    ticketApprovalParams,
+    currentPage,
+    pageSize,
+    renderTicketApprovals,
+  ])
 
   useEffect(() => {
     if (deptId) {
@@ -85,31 +95,43 @@ const TicketApprovals = (): JSX.Element => {
   }
 
   return (
-    <OCard
-      className="mb-4 myprofile-wrapper"
-      title={'Ticket Approvals'}
-      CFooterClassName="d-none"
-    >
-      <TicketApprovalsFilterOptions
-        setTicketApprovalParams={setTicketApprovalParams}
-        deptId={deptId as number}
-        setDeptId={setDeptId}
-        categoryId={categoryId as number}
-        setCategoryId={setCategoryId}
-        subCategoryIdValue={subCategoryIdValue as number}
-        setSubCategoryIdValue={setSubCategoryIdValue}
-        initialState={initialState}
-        handleExportTicketApprovalList={handleExportTicketApprovalList}
-      />
+    <>
+      {toggle === '' && (
+        <>
+          <OCard
+            className="mb-4 myprofile-wrapper"
+            title={'Ticket Approvals'}
+            CFooterClassName="d-none"
+          >
+            <TicketApprovalsFilterOptions
+              setTicketApprovalParams={setTicketApprovalParams}
+              deptId={deptId as number}
+              setDeptId={setDeptId}
+              categoryId={categoryId as number}
+              setCategoryId={setCategoryId}
+              subCategoryIdValue={subCategoryIdValue as number}
+              setSubCategoryIdValue={setSubCategoryIdValue}
+              initialState={initialState}
+              handleExportTicketApprovalList={handleExportTicketApprovalList}
+            />
 
-      <TicketApprovalsTable
-        paginationRange={paginationRange}
-        setPageSize={setPageSize}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        pageSize={pageSize}
-      />
-    </OCard>
+            <TicketApprovalsTable
+              paginationRange={paginationRange}
+              setPageSize={setPageSize}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              renderTicketApprovals={renderTicketApprovals}
+              setRenderTicketApprovals={setRenderTicketApprovals}
+              setToggle={setToggle}
+            />
+          </OCard>
+        </>
+      )}
+      {toggle === 'ticketApprovalHistory' && (
+        <TicketHistoryDetails backButtonHandler={() => setToggle('')} />
+      )}
+    </>
   )
 }
 

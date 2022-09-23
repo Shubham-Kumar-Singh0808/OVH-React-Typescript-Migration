@@ -122,6 +122,9 @@ const EditClient = React.lazy(
 const AddClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/AddClient/AddNewClient'),
 )
+const CreateNewTicket = React.lazy(
+  () => import('./pages/Support/RaiseTicket/CreateNewTicket'),
+)
 
 const ViewClient = React.lazy(
   () =>
@@ -151,6 +154,31 @@ const AddHoliday = React.lazy(
 
 const ProbationaryList = React.lazy(
   () => import('./pages/Dashboard/ProbationaryList/ProbationaryList'),
+)
+
+const UpdateTicket = React.lazy(
+  () => import('./pages/Support/TicketApprovals/UpdateTicket/UpdateTicket'),
+)
+
+const UpdateTicketUnderTicketList = React.lazy(
+  () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
+)
+
+const EventTypeList = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
+    ),
+)
+const LocationList = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
+    ),
+)
+const EditHoliday = React.lazy(
+  () =>
+    import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
 /**
@@ -215,6 +243,11 @@ const routes = [
     path: '/attendancesummary',
     name: 'Attendance Summary',
     component: AttendanceReport,
+  },
+  {
+    path: '/createTicket',
+    name: 'Raise Ticket',
+    component: CreateNewTicket,
   },
   {
     path: '/handbooksettings',
@@ -322,6 +355,17 @@ const routes = [
     component: TicketApprovals,
   },
   {
+    path: '/updateTicketInApprovals/:ticketId',
+    name: 'Update Ticket',
+    component: UpdateTicket,
+  },
+
+  {
+    path: '/updateTicket/:ticketId',
+    name: 'Update Ticket',
+    component: UpdateTicketUnderTicketList,
+  },
+  {
     path: '/jobvacancies',
     name: 'Job Openings',
     component: JobOpenings,
@@ -349,6 +393,21 @@ const routes = [
     path: '/probationaryList',
     name: 'Upcoming Probationary End Dates',
     component: ProbationaryList,
+  },
+  {
+    path: '/newEvent',
+    name: 'Event Type List',
+    component: EventTypeList,
+  },
+  {
+    path: '/newMeetingRequest',
+    name: 'Add LocationList',
+    component: LocationList,
+  },
+  {
+    path: '/editHoliday/:holidayId',
+    name: 'Edit Holiday',
+    component: EditHoliday,
   },
 ]
 

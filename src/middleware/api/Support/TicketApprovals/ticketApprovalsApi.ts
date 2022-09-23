@@ -79,7 +79,7 @@ const commonParamsUtil = (props: GetAllTicketsForApprovalProps) => {
     dateSelection: props.dateSelection,
     departmentId: props.departmentId ?? '',
     endIndex: props.endIndex ?? 20,
-    from: props.fromDate,
+    from: props.fromDate ?? '',
     multiSearch: props.multiSearch ?? '',
     progressStatus: props.progressStatus,
     searchByAssigneeName: props.searchByAssigneeName,
@@ -87,7 +87,7 @@ const commonParamsUtil = (props: GetAllTicketsForApprovalProps) => {
     startIndex: props.startIndex ?? 0,
     subCategoryId: props.subCategoryId ?? '',
     ticketStatus: props.ticketStatus,
-    to: props.toDate,
+    to: props.toDate ?? '',
     trackerID: props.trackerID ?? '',
   }
 }
@@ -120,6 +120,19 @@ const exportTicketApprovalList = async (
   return response.data
 }
 
+const rejectTicket = async (ticketId: number): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketApprovalsApiConfig.rejectManagerTicket,
+    method: AllowedHttpMethods.put,
+    params: {
+      tktId: ticketId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ticketApprovalsApi = {
   getDepartmentNameList,
   getTrackerList,
@@ -128,6 +141,7 @@ const ticketApprovalsApi = {
   getSubCategoryList,
   getAllTicketsForApproval,
   exportTicketApprovalList,
+  rejectTicket,
 }
 
 export default ticketApprovalsApi

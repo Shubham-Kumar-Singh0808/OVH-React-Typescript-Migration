@@ -17,9 +17,11 @@ import { ticketApprovalsHandlers } from './ticketApprovalsHandlers'
 import { upcomingBirthdaysHandlers } from './upcomingBirthdaysHandlers'
 import { upcomingHolidaysHandlers } from './upcomingHolidaysHandlers'
 import { upcomingTrainingsAndEventsHandlers } from './upcomingTrainingsAndEventsHandlers'
+import { updateTicketHandlers } from './updateTicketHandlers'
 import { userAccessToFeaturesHandlers } from './userAccessToFeaturesHandlers'
 import { userRolesAndPermissionsHandlers } from './userRolesAndPermissionsHandlers'
 import { timeInOfficeHandlers } from './weeklyTimeInOfficeHandlers'
+import { eventTypeListHandlers } from './eventTypeListHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -44,5 +46,7 @@ export const handlers = [
   ...timeInOfficeHandlers,
   ...employeeHandbookSettingsHandlers,
   ...employeeAchievementsHandlers,
+  ...updateTicketHandlers,
+  ...eventTypeListHandlers,
   // add your handler here
 ]

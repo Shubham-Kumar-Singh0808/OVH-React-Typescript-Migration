@@ -15,22 +15,33 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import myTicketsApi from '../../../middleware/api/Support/MyTickets/myTicketsApi'
 import { downloadFile } from '../../../utils/helper'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const MyTickets = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(reduxServices.tickets.selectors.isLoading)
+  const listSize = useTypedSelector(
+    reduxServices.tickets.selectors.allTicketsListSize,
+  )
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(listSize, 20)
 
   useEffect(() => {
     dispatch(
       reduxServices.tickets.getTickets({
-        endIndex: 20,
+        endIndex: pageSize * currentPage,
         multiSearch: '',
-        startIndex: 0,
+        startIndex: pageSize * (currentPage - 1),
       }),
     )
-  }, [dispatch])
+  }, [dispatch, pageSize, currentPage])
 
   const handleSearch = () => {
     dispatch(
@@ -115,7 +126,14 @@ const MyTickets = (): JSX.Element => {
             <CCol className="col-xs-12">
               {isLoading !== ApiLoadingState.loading ? (
                 <>
-                  <MyTicketsTable setToggle={setToggle} />
+                  <MyTicketsTable
+                    setToggle={setToggle}
+                    paginationRange={paginationRange}
+                    setPageSize={setPageSize}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                  />
                 </>
               ) : (
                 <CCol>

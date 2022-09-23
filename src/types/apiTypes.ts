@@ -352,8 +352,13 @@ export interface TicketApprovalsApi extends ApiBase {
   subCategoryList: string
   getAllTicketsForApproval: string
   exportTicketApprovalList: string
+  rejectManagerTicket: string
 }
 
+export interface RaiseNewTicketApi extends ApiBase {
+  createNewTicket: string
+  uploadSupportTicketsDocument: string
+}
 export interface DashboardApi extends ApiBase {
   getAllJobVacancies: string
   getUpcomingBirthdayAnniversaries: string
@@ -367,4 +372,28 @@ export interface DashboardApi extends ApiBase {
   getUpcomingEvents: string
   getEmployeesUnderProbationPeriod: string
   getAllAchievements: string
+  deleteHoliday: string
+  getHolidayInformation: string
+  updateHoliday: string
+}
+export interface AddLocationListApi extends ApiBase {
+  getAllMeetingLocations: string
+  addLocation: string
+  deleteLocation: string
+}
+
+export interface UpdateTicketApi extends ApiBase {
+  getTicket: string
+  getActiveEmployeeList: string
+  getAudit: string
+  uploadSupportTicketDocuments: string
+  updateIndividualTickets: string
+  approveTicketByManager: string
+}
+export interface EventTypeListApi extends ApiBase {
+  getAllEventTypes: string
+  addEventType: string
+  deleteEventType: string
+  updateEventType: string
+  getLoggedEmployeeName: string
 }

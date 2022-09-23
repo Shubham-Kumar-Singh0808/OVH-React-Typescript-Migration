@@ -49,6 +49,7 @@ import { clientInformationService } from './ProjectManagement/Clients/ClientInfo
 import { leaveSummaryService } from './Leaves/LeaveSummary/employeeLeaveSummarySlice'
 import { myTicketsService } from './Support/MyTickets/myTicketsSlice'
 import { ticketApprovalsService } from './Support/TicketApprovals/ticketApprovalsSlice'
+import { createNewTicketService } from './Support/RaiseTicket/createNewTicketSlice'
 import { jobVacanciesService } from './Dashboard/jobOpeningsSlice'
 import { birthdaysListService } from './Dashboard/birthdayListSlice'
 import { upcomingBirthdaysService } from './Dashboard/birthdayAnniversarySlice'
@@ -58,6 +59,9 @@ import { weeklyTimeInOfficeService } from './Dashboard/timeInOfficeSlice'
 import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
 import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
 import { employeeAchievementsService } from './Dashboard/achievementsSlice'
+import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
+import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -111,6 +115,7 @@ export const reduxServices = {
   employeeLeaveSummary: leaveSummaryService,
   tickets: myTicketsService,
   ticketApprovals: ticketApprovalsService,
+  raiseNewTicket: createNewTicketService,
   jobOpenings: jobVacanciesService,
   birthdaysList: birthdaysListService,
   upcomingBirthdays: upcomingBirthdaysService,
@@ -120,4 +125,7 @@ export const reduxServices = {
   trainingsAndEvents: trainingsAndEventsService,
   employeeProbationPeriod: provisionPeriodService,
   employeeAchievements: employeeAchievementsService,
+  updateTicket: updateTicketService,
+  eventTypeList: eventTypeListService,
+  addLocationList: addLocationListService,
 }
