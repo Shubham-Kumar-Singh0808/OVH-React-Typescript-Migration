@@ -63,6 +63,9 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+const LeaveReports = React.lazy(
+  () => import('./pages/Leaves/LeaveReports/LeaveReport'),
+)
 
 const MailConfiguration = React.lazy(
   () => import('./pages/Settings/MailConfiguration/EmailConfigTemplate'),
@@ -179,6 +182,11 @@ const LocationList = React.lazy(
       './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
     ),
 )
+const EditHoliday = React.lazy(
+  () =>
+    import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -231,6 +239,11 @@ const routes = [
     path: '/employeehandbook',
     name: 'Employee Handbook',
     component: EmployeeHandbook,
+  },
+  {
+    path: '/leaveReports',
+    name: 'Leave Reports',
+    component: LeaveReports,
   },
   {
     path: '/showemployeehandbook/:clickedpageName',
@@ -406,6 +419,11 @@ const routes = [
     path: '/newMeetingRequest',
     name: 'Add LocationList',
     component: LocationList,
+  },
+  {
+    path: '/editHoliday/:holidayId',
+    name: 'Edit Holiday',
+    component: EditHoliday,
   },
 ]
 

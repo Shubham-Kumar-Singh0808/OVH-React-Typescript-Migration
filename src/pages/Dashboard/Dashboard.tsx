@@ -18,6 +18,7 @@ const Dashboard = (): JSX.Element => {
   const employeeID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+
   useEffect(() => {
     dispatch(
       reduxServices.jobOpenings.getAllJobVacancies({

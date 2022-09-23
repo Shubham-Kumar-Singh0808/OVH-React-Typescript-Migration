@@ -308,7 +308,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
             className="cursor-pointer sh-ovh-btn-new"
             color="primary me-1"
             data-testid="sh-view-button"
-            disabled={!isButtonEnabled}
+            disabled={!isButtonEnabled || dateError}
             onClick={handleApplyLeave}
           >
             Apply

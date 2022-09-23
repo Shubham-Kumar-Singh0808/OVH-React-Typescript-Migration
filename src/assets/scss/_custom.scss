@@ -210,6 +210,12 @@ input.capetalized {
   background-color: $badge-light;
   color: #333;
 }
+.leavereport-exportbutton {
+  float:right;
+  margin-top: 36px;
+  font-size: 13px;
+}
+
 .custom-scroll {
   height: 350px;
   overflow: auto;

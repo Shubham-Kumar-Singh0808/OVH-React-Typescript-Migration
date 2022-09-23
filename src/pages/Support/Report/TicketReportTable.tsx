@@ -10,11 +10,14 @@ import {
   CLink,
 } from '@coreui/react-pro'
 import React, { useMemo } from 'react'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { currentPageData } from '../../../utils/paginationUtils'
 
 const TicketReportTable = ({
@@ -32,6 +35,9 @@ const TicketReportTable = ({
 }): JSX.Element => {
   const getTicketReportList = useTypedSelector(
     reduxServices.ticketReport.selectors.ticketsReport,
+  )
+  const isLoading = useTypedSelector(
+    reduxServices.ticketReport.selectors.isLoading,
   )
 
   const pageFromState = useTypedSelector(
@@ -68,6 +74,7 @@ const TicketReportTable = ({
     () => currentPageData(getTicketReportList, currentPage, pageSize),
     [getTicketReportList, currentPage, pageSize],
   )
+
   const handleClickTicketDetails = (
     categoryId: number,
     trackerId: number,
@@ -111,55 +118,88 @@ const TicketReportTable = ({
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {currentPageItems.map((ticketReport, index) => {
-              return (
-                <CTableRow key={index}>
-                  <CTableDataCell scope="row">
-                    {getItemNumber(index)}
-                  </CTableDataCell>
-                  <CTableDataCell>{ticketReport.trackerName}</CTableDataCell>
-                  <CTableDataCell>{ticketReport.categoryName}</CTableDataCell>
-                  <CTableDataCell>
-                    {ticketReport.subCategoryName}
-                  </CTableDataCell>
-
-                  <CTableDataCell scope="row">
-                    <CLink
-                      className="cursor-pointer text-decoration-none text-primary"
-                      data-testid="num-tickets"
-                      onClick={() =>
-                        handleClickTicketDetails(
-                          ticketReport.categoryId,
-                          ticketReport.trackerId,
-                          ticketReport.subCategoryId,
-                        )
-                      }
-                    >
-                      {ticketReport.noOfTickets}
-                    </CLink>
-                  </CTableDataCell>
-
-                  <CTableDataCell>
-                    {ticketReport.noOfClosedTickets}
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    <CLink
-                      className="cursor-pointer text-decoration-none text-primary"
-                      data-testid="pending-tickets"
-                      onClick={() =>
-                        handleTicket(
-                          ticketReport.categoryId,
-                          ticketReport.trackerId,
-                          ticketReport.subCategoryId,
-                        )
-                      }
-                    >
-                      {ticketReport.noOfPendingTickets}
-                    </CLink>
-                  </CTableDataCell>
-                </CTableRow>
-              )
-            })}
+            {isLoading !== ApiLoadingState.loading ? (
+              currentPageItems.map((ticketReport, index) => {
+                return (
+                  <CTableRow key={index}>
+                    <CTableDataCell scope="row">
+                      {getItemNumber(index)}
+                    </CTableDataCell>
+                    <CTableDataCell>{ticketReport.trackerName}</CTableDataCell>
+                    <CTableDataCell>{ticketReport.categoryName}</CTableDataCell>
+                    <CTableDataCell>
+                      {ticketReport.subCategoryName}
+                    </CTableDataCell>
+                    {ticketReport.noOfTickets > 0 ? (
+                      <CTableDataCell scope="row">
+                        <CLink
+                          className="cursor-pointer text-decoration-none text-primary"
+                          data-testid="num-tickets"
+                          onClick={() =>
+                            handleTicket(
+                              ticketReport.categoryId,
+                              ticketReport.trackerId,
+                              ticketReport.subCategoryId,
+                            )
+                          }
+                        >
+                          {ticketReport.noOfTickets}
+                        </CLink>
+                      </CTableDataCell>
+                    ) : (
+                      <CTableDataCell>
+                        {ticketReport.noOfTickets}
+                      </CTableDataCell>
+                    )}
+                    {ticketReport.noOfClosedTickets > 0 ? (
+                      <CTableDataCell>
+                        <CLink
+                          className="cursor-pointer text-decoration-none text-primary"
+                          data-testid="close-tickets"
+                          onClick={() =>
+                            handleClickTicketDetails(
+                              ticketReport.categoryId,
+                              ticketReport.trackerId,
+                              ticketReport.subCategoryId,
+                            )
+                          }
+                        >
+                          {ticketReport.noOfClosedTickets}
+                        </CLink>
+                      </CTableDataCell>
+                    ) : (
+                      <CTableDataCell>
+                        {ticketReport.noOfClosedTickets}
+                      </CTableDataCell>
+                    )}
+                    {ticketReport.noOfPendingTickets > 0 ? (
+                      <CTableDataCell>
+                        <CLink
+                          className="cursor-pointer text-decoration-none text-primary"
+                          data-testid="pending-tickets"
+                          // eslint-disable-next-line sonarjs/no-identical-functions
+                          onClick={() =>
+                            handleTicket(
+                              ticketReport.categoryId,
+                              ticketReport.trackerId,
+                              ticketReport.subCategoryId,
+                            )
+                          }
+                        >
+                          {ticketReport.noOfPendingTickets}
+                        </CLink>
+                      </CTableDataCell>
+                    ) : (
+                      <CTableDataCell>
+                        {ticketReport.noOfPendingTickets}
+                      </CTableDataCell>
+                    )}
+                  </CTableRow>
+                )
+              })
+            ) : (
+              <OLoadingSpinner type={LoadingType.PAGE} />
+            )}
           </CTableBody>
         </CTable>
         <CRow>
@@ -174,6 +214,7 @@ const TicketReportTable = ({
             {getTicketReportList.length > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
+                options={[20, 40, 60, 80]}
                 selectedPageSize={pageSize}
               />
             )}
