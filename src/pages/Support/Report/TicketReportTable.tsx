@@ -75,13 +75,12 @@ const TicketReportTable = ({
     [getTicketReportList, currentPage, pageSize],
   )
 
-  const handleClickTicketDetails = (
+  const handleDispatch = (
     categoryId: number,
     trackerId: number,
     subCategoryId: number,
   ) => {
-    setToggle('ticketDetails')
-    dispatch(
+    return dispatch(
       reduxServices.ticketReport.getTicketDetails({
         categoryId,
         dateSelection: selectDate,
@@ -97,6 +96,24 @@ const TicketReportTable = ({
       }),
     )
   }
+  const handleClickTicketDetails = (
+    categoryId: number,
+    trackerId: number,
+    subCategoryId: number,
+  ) => {
+    setToggle('ticketDetails')
+    handleDispatch(categoryId, trackerId, subCategoryId)
+  }
+
+  const handlePendingTicket = (
+    categoryId: number,
+    trackerId: number,
+    subCategoryId: number,
+  ) => {
+    setToggle('ticketDetails')
+    handleDispatch(categoryId, trackerId, subCategoryId)
+  }
+
   const handleTicket = handleClickTicketDetails
   return (
     <>
@@ -177,9 +194,8 @@ const TicketReportTable = ({
                         <CLink
                           className="cursor-pointer text-decoration-none text-primary"
                           data-testid="pending-tickets"
-                          // eslint-disable-next-line sonarjs/no-identical-functions
                           onClick={() =>
-                            handleTicket(
+                            handlePendingTicket(
                               ticketReport.categoryId,
                               ticketReport.trackerId,
                               ticketReport.subCategoryId,
