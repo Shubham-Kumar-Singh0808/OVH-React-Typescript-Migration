@@ -132,7 +132,21 @@ const CreateNewTicketFilterOptions = ({
           />,
         ),
       )
-      dispatch(reduxServices.raiseNewTicket.actions.clearNewTicketFields())
+      setTrackerValue('')
+      setDeptId(0)
+      setCategoryId(0)
+      setSubCategoryIdValue(0)
+      setStartDate('')
+      setEndDate('')
+      setSubjectValue('')
+      setPriorityValue('Normal')
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+      setCreateTicket({
+        description: '',
+      })
     }
   }
 
