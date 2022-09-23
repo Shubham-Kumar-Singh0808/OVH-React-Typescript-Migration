@@ -268,6 +268,7 @@ export interface EmployeeMailConfigurationApi extends ApiBase {
   getMailTemplates: string
   getMailTemplateTypes: string
   exportMailTemplatesList: string
+  updateMailTemplate: string
   deleteMailTemplate: string
 }
 
