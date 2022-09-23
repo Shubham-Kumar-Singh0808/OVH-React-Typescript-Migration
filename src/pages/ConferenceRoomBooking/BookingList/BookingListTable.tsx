@@ -10,7 +10,6 @@ import {
   CRow,
   CLink,
   CBadge,
-  CCardHeader,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
@@ -220,9 +219,7 @@ const BookingListTable = (): JSX.Element => {
         modalHeaderClass="d-none"
       >
         <>
-          <CCardHeader className="mb-3">
-            <h4 className="model-text">{modalAgenda.agenda}</h4>
-          </CCardHeader>
+          <h4 className="model-header-text mb-3">{modalAgenda.agenda}</h4>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">
               Organizer :
@@ -251,7 +248,7 @@ const BookingListTable = (): JSX.Element => {
               Attendees:
             </span>
             {modalAgenda.employeeDto?.length ? (
-              <CTable align="middle">
+              <CTable align="middle" className="bookingList-model-table">
                 <CTableHead>
                   <CTableRow>
                     <CTableHeaderCell>Name of Employee</CTableHeaderCell>

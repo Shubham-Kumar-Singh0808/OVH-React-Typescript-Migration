@@ -214,3 +214,12 @@ input.capetalized {
   height: 350px;
   overflow: auto;
 }
+
+.model-header-text{
+  padding: 1rem 0;
+  border-bottom: 1px solid $blue-light;
+  color: $blue-light;
+}
+.bookingList-model-table th,.bookingList-model-table td{
+border-bottom: none;
+}
