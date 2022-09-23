@@ -37,8 +37,24 @@ import {
   HiveActivityReportApi,
   EmployeeMailConfigurationApi,
   AddNewTemplateApi,
+  ApplyLeaveApi,
+  ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  LeaveReportsApi,
+  TicketReportApi,
+  ClientsApi,
+  ProjectManagementApi,
+  AddNewClientApi,
+  ClientInformationApi,
+  LeaveSummaryApi,
+  TicketListInformationApi,
+  TicketApprovalsApi,
+  RaiseNewTicketApi,
+  DashboardApi,
+  UpdateTicketApi,
+  EventTypeListApi,
+  AddLocationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -237,6 +253,7 @@ export const visaListApiConfig: VisaListApi = {
 }
 
 export const employeeProjectsApiConfig: EmployeeProjectsApi = {
+  getProjectsClients: apiPrefix + '/project-mgmt/getClients',
   getEmployeeProjects: apiPrefix + '/project-mgmt/getEmployeeProjectslist',
   getProjectDetails: apiPrefix + '/allocation-mgmt/directoryProjects',
 }
@@ -265,6 +282,8 @@ export const employeeHandbookSettingsApiConfig: EmployeeHandbookSettingsApi = {
   addNewHandbook: apiPrefix + '/handbookItem/add',
   getEmployeeCountries: apiPrefix + '/jobapplicant/getEmpCountries',
   getTotalHandbookList: apiPrefix + '/handbookItem/getTotalList',
+  getSelectedCountries: apiPrefix + '/handbookItem/getSelectedCountries',
+  updateEmployeeHandbook: apiPrefix + '/handbookItem/updateHandbookItem',
 }
 
 export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
@@ -310,12 +329,27 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
     getMailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
     getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
     exportMailTemplatesList: apiPrefix + '/mailTemplates/exportMailTemplates',
+    updateMailTemplate: apiPrefix + '/mailTemplates/updateMailTemplate',
     deleteMailTemplate: apiPrefix + '/mailTemplates/deleteMailTemplate',
   }
 
-export const addNewTemplateAPiConfig: AddNewTemplateApi = {
+export const addNewTemplateApiConfig: AddNewTemplateApi = {
   getAssetTypes: apiPrefix + '/assetManagement/getAllLookUps',
   addNewMailTemplate: apiPrefix + '/mailTemplates/addMailTemplate',
+}
+
+export const applyLeaveAPiConfig: ApplyLeaveApi = {
+  getLeaveType: apiPrefix + '/leaveSetup/leaveCategories',
+  applyLeave: apiPrefix + '/leave/apply',
+}
+
+export const scheduledInterviewsApiConfig: ScheduledInterviewsApi = {
+  searchScheduledCandidatesForEmployee:
+    apiPrefix + '/jobapplicant/searchScheduledCandidatesForEmployee',
+  searchScheduledCandidates:
+    apiPrefix + '/jobapplicant/searchScheduledCandidates',
+  downloadScheduleCandidates:
+    apiPrefix + '/jobapplicant/downloadScheduleCandidates',
 }
 
 export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
@@ -327,4 +361,127 @@ export const addNewMailTemplateTypeAPiConfig: AddNewMailTemplateTypeApi = {
 
 export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
+}
+
+export const leaveReportsApiConfig: LeaveReportsApi = {
+  getLeaveSummaries: apiPrefix + '/leaveSetup/bioAdmin/leaveSummaries',
+  searchLeaveSummaries: apiPrefix + '/leaveSetup/searchLeaveSummaries',
+  creditedYears: apiPrefix + '/leaveSetup/creditedYears',
+  financialYear: apiPrefix + '/leaveSetup/financialYear',
+  downloadLeaveReportList: apiPrefix + '/leaveSetup/exportLeaveReport',
+}
+export const ticketReportApiConfig: TicketReportApi = {
+  getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
+  departmentCategoryList:
+    apiPrefix + '/supportManagement/departmentCategoryList',
+  getTicketsReport: apiPrefix + '/supportManagement/getTicketsReport',
+  getTicketsDetails: apiPrefix + '/supportManagement/getTicketsDetails',
+  exportTicketReports: apiPrefix + '/supportManagement/exportReportList',
+}
+
+export const projectManagementConfig: ProjectManagementApi = {
+  addProject: apiPrefix + '/project-mgmt/project',
+  updateProject: apiPrefix + '/project-mgmt/project',
+  getProject: apiPrefix + '/project-mgmt/project',
+  getAllPlatforms: apiPrefix + '/project-mgmt/getAllPlatforms',
+  getAllDomains: apiPrefix + '/project-mgmt/getAllDomains',
+  getAllManagers: apiPrefix + '/project-mgmt/getAllManagers',
+}
+
+export const clientsApiConfig: ClientsApi = {
+  getClients: apiPrefix + '/project-mgmt/client',
+  getProjectsUnderClient: apiPrefix + '/project-mgmt/projectsUnderClient',
+  searchClients: apiPrefix + '/project-mgmt/searchClients',
+  deleteClient: apiPrefix + '/project-mgmt/deleteClient',
+  editClient: apiPrefix + '/project-mgmt/client',
+  updateClient: apiPrefix + '/project-mgmt/updateClient',
+  getClientCountries: apiPrefix + '/project-mgmt/country',
+}
+
+export const addNewClientApiConfig: AddNewClientApi = {
+  getClientCountries: apiPrefix + '/project-mgmt/country',
+  addNewClient: apiPrefix + '/project-mgmt/client',
+}
+
+export const clientInformationApiConfig: ClientInformationApi = {
+  getClientInformation: apiPrefix + '/project-mgmt/getClientInfo',
+}
+
+export const leaveSummaryApiConfig: LeaveSummaryApi = {
+  getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
+  getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
+  cancelEmployeeLeave: apiPrefix + '/leave/cancel',
+}
+
+export const ticketListInformationApiConfig: TicketListInformationApi = {
+  getTicketListInformation: apiPrefix + '/supportManagement/searchTicketData',
+  exportTicketList: apiPrefix + '/supportManagement/exportRaisedTickets',
+  ticketHistoryDetails: apiPrefix + '/supportManagement/getAudit',
+  cancelTicket: apiPrefix + '/supportManagement/cancelTicketRequest',
+}
+
+export const ticketApprovalsApiConfig: TicketApprovalsApi = {
+  getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
+  getAllTrackerList: apiPrefix + '/supportManagement/getAllTracker',
+  getAllLookups: apiPrefix + '/supportManagement/getAllLookups',
+  departmentCategoryList:
+    apiPrefix + '/supportManagement/departmentCategoryList',
+  subCategoryList: apiPrefix + '/supportManagement/subCategoryList',
+  getAllTicketsForApproval:
+    apiPrefix + '/supportManagement/getAllTicketsForApproval',
+  exportTicketApprovalList:
+    apiPrefix + '/supportManagement/exportTicketApprovalList',
+  rejectManagerTicket: apiPrefix + '/supportManagement/rejectManagerTicket',
+}
+
+export const createNewTicketApiConfig: RaiseNewTicketApi = {
+  createNewTicket: apiPrefix + '/supportManagement/createTickets',
+  uploadSupportTicketsDocument:
+    apiPrefix + '/fileUpload/uploadSupportTicketsDocuments',
+}
+
+export const dashboardApiConfig: DashboardApi = {
+  getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getUpcomingBirthdayAnniversaries:
+    apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
+  getAllEmployeesBirthdayList:
+    apiPrefix + '/Employee/upcomingBirthdayAnniversaries',
+  getUpcomingHolidays: apiPrefix + '/Employee/onlyUpcomingHolidays',
+  getAllUpcomingHolidaysList: apiPrefix + '/Employee/upcomingHolidays',
+  addHoliday: apiPrefix + '/Employee/saveHoliday',
+  getFinancialYear: apiPrefix + '/leaveSetup/financialYear',
+  getEmployeeTimeInOffice: apiPrefix + '/timeInOffice/weeklyTimeInOfficeReport',
+  getUpcomingTrainings: apiPrefix + '/meetingRequest/getTrainingsForDashBoard',
+  getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
+  getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
+  getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
+  deleteHoliday: apiPrefix + '/Employee/deleteHoliday',
+  getHolidayInformation: apiPrefix + '/Employee/holiday',
+  updateHoliday: apiPrefix + '/Employee/editHoliday',
+}
+
+export const addLocationListApiConfig: AddLocationListApi = {
+  getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
+  addLocation: apiPrefix + '/meetingRequest/addLocation',
+  deleteLocation: apiPrefix + '/meetingRequest/deleteLocation',
+}
+
+export const updateTicketApiConfig: UpdateTicketApi = {
+  getTicket: apiPrefix + '/supportManagement/getTicket',
+  getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
+  getAudit: apiPrefix + '/supportManagement/getAudit',
+  uploadSupportTicketDocuments:
+    apiPrefix + '/fileUpload/uploadSupportTicketsDocuments',
+  updateIndividualTickets:
+    apiPrefix + '/supportManagement/editIndividualTickets',
+  approveTicketByManager:
+    apiPrefix + '/supportManagement/approveByManagerTicket',
+}
+
+export const eventTypeListApiConfig: EventTypeListApi = {
+  getAllEventTypes: apiPrefix + '/meetingRequest/getAllEventTypes',
+  addEventType: apiPrefix + '/meetingRequest/addEventType',
+  deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
+  updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
 }

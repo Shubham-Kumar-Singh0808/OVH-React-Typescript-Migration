@@ -128,6 +128,17 @@ export interface UsernameEmailChangeHandlerProp extends DynamicFormLabelProps {
   isUserAllowed: boolean
 }
 
+export interface InputField extends DynamicFormLabelProps {
+  onChangeHandler?: (username: string) => void
+  onBlurHandler?: (username: string) => void
+  value: string
+  type?: string
+  isRequired: boolean
+  label: string
+  name: string
+  placeholder: string
+}
+
 export interface FullNameChangeHandlerProp extends DynamicFormLabelProps {
   firstNameChangeHandler: (firstName: string) => void
   lastNameChangeHandler: (lastName: string) => void
@@ -189,6 +200,7 @@ export interface SelectProps extends DynamicFormLabelProps {
   value?: string
   name?: string
   label?: string
+  placeHolder?: string
   isRequired: boolean
 }
 export interface StatusProps extends DynamicFormLabelProps {

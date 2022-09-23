@@ -6,18 +6,11 @@ import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockEmployeeTypeDetails } from '../../../../test/data/employeeDetail'
 import { mockAllTechnology } from '../../../../test/data/certificateTypeData'
-import { listComposer } from '../../../../utils/helper'
 import { mockCountries } from '../../../../test/data/visaListData'
 import { mockEmploymentType } from '../../../../test/data/employmentTypeData'
 import { mockJobTypes } from '../../../../test/data/JobTypesData'
 
 const editBtnId = 'edit-employee'
-
-const composedTechnologyList = listComposer(
-  mockAllTechnology as [],
-  'id',
-  'name',
-)
 
 describe('Edit Employee Testing', () => {
   beforeEach(() => {
@@ -29,7 +22,7 @@ describe('Edit Employee Testing', () => {
         },
         getAllTechnology: {
           isLoading: ApiLoadingState.succeeded,
-          technologies: composedTechnologyList,
+          technologies: mockAllTechnology,
         },
         country: {
           isLoading: ApiLoadingState.succeeded,
@@ -58,7 +51,7 @@ describe('Edit Employee Testing', () => {
   })
 
   test('should be able to select Technology and update employee', () => {
-    const OSelectListSelector = screen.getByTestId('formTechnology')
+    const OSelectListSelector = screen.getByTestId('formtechnology')
     userEvent.selectOptions(OSelectListSelector, ['Java'])
 
     const updateBtn = screen.getByTestId(editBtnId)
@@ -66,7 +59,7 @@ describe('Edit Employee Testing', () => {
   })
 
   test('should be able to select Country and update employee', () => {
-    const OSelectListSelector = screen.getByTestId('formCountry')
+    const OSelectListSelector = screen.getByTestId('formcountry')
     userEvent.selectOptions(OSelectListSelector, ['INDIA'])
 
     const updateBtn = screen.getByTestId(editBtnId)

@@ -5,7 +5,7 @@ import {
   EmployeeAsset,
   EmployeeAssetsState,
 } from '../../../types/MyProfile/MyAssetsTab/employeeAssetsTypes'
-import { ValidationError } from '../../../types/commonTypes'
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import employeeAssetsApi from '../../../middleware/api/MyProfile/MyAssetsTab/employeeAssetsApi'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
@@ -54,12 +54,16 @@ const employeeAssetsSlice = createSlice({
 const employeeAssets = (state: RootState): EmployeeAsset[] =>
   state.employeeAssets.employeeAssets
 
+const isLoading = (state: RootState): LoadingState =>
+  state.employeeAssets.isLoading
+
 const employeeAssetsThunk = {
   getEmployeeMyAssets: getEmployeeAssets,
 }
 
 const employeeAssetsSelectors = {
-  employeeMyAssets: employeeAssets,
+  employeeAssets,
+  isLoading,
 }
 
 export const employeeAssetsService = {

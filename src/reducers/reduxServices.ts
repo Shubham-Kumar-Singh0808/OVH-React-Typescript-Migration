@@ -37,8 +37,32 @@ import { hiveActivityReportService } from './TimeAndAttendance/HiveActivityRepor
 import { employeeMailConfigurationService } from './Settings/MailConfiguration/employeeMailConfigurationSlice'
 import { addTemplateService } from './Settings/MailConfiguration/AddTemplate/addMailTemplateSlice'
 import { employeeService } from './EmployeeDirectory/EmployeesList/EditEmployee'
+import { employeeLeaveApplyServices } from './Leaves/ApplyLeave/employeeApplyLeaveSlice'
+import { scheduledInterviewsService } from './Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
+import { leaveReportService } from './Leaves/LeaveReports/leaveReportSlice'
+import { ticketReportService } from './Support/Report/ticketReportSlice'
+import { projectManagementService } from './ProjectManagement/Project/projectSlice'
+import { clientsService } from './ProjectManagement/Clients/clientsSlice'
+import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
+import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
+import { leaveSummaryService } from './Leaves/LeaveSummary/employeeLeaveSummarySlice'
+import { myTicketsService } from './Support/MyTickets/myTicketsSlice'
+import { ticketApprovalsService } from './Support/TicketApprovals/ticketApprovalsSlice'
+import { createNewTicketService } from './Support/RaiseTicket/createNewTicketSlice'
+import { jobVacanciesService } from './Dashboard/jobOpeningsSlice'
+import { birthdaysListService } from './Dashboard/birthdayListSlice'
+import { upcomingBirthdaysService } from './Dashboard/birthdayAnniversarySlice'
+import { holidaysService } from './Dashboard/holidaysSlice'
+import { earnedLeavesService } from './Dashboard/earnedLeavesSlice'
+import { weeklyTimeInOfficeService } from './Dashboard/timeInOfficeSlice'
+import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
+import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
+import { employeeAchievementsService } from './Dashboard/achievementsSlice'
+import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
+import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -80,6 +104,30 @@ export const reduxServices = {
   employeeMailConfiguration: employeeMailConfigurationService,
   addNewMailTemplate: addTemplateService,
   employee: employeeService,
+  employeeApplyLeave: employeeLeaveApplyServices,
+  scheduledInterviews: scheduledInterviewsService,
   addNewMailTemplateType: mailTemplateTypeService,
   myAttendance: myAttendanceService,
+  leaveReport: leaveReportService,
+  ticketReport: ticketReportService,
+  projectManagement: projectManagementService,
+  clients: clientsService,
+  addClient: addNewClientService,
+  clientInformation: clientInformationService,
+  employeeLeaveSummary: leaveSummaryService,
+  tickets: myTicketsService,
+  ticketApprovals: ticketApprovalsService,
+  raiseNewTicket: createNewTicketService,
+  jobOpenings: jobVacanciesService,
+  birthdaysList: birthdaysListService,
+  upcomingBirthdays: upcomingBirthdaysService,
+  holidays: holidaysService,
+  earnedLeaves: earnedLeavesService,
+  weeklyTimeInOffice: weeklyTimeInOfficeService,
+  trainingsAndEvents: trainingsAndEventsService,
+  employeeProbationPeriod: provisionPeriodService,
+  employeeAchievements: employeeAchievementsService,
+  updateTicket: updateTicketService,
+  eventTypeList: eventTypeListService,
+  addLocationList: addLocationListService,
 }

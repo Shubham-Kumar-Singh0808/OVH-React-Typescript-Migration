@@ -1,58 +1,43 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable require-await */
-/* eslint-disable import/named */
-// Todd: remove eslint and fix error
-// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
-import { render, screen, waitFor } from '@testing-library/react'
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
+import userEvent from '@testing-library/user-event'
 import FamilyDetailsTable from './FamilyDetailsTable'
-import stateStore from '../../../stateStore'
+import { render, screen } from '../../../test/testUtils'
+import { mockFamilyTableDetails } from '../../../test/data/familyTableData'
 
-const history = createMemoryHistory()
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => (
-  <Router history={history}>
-    <Provider store={reduxStore}>{children}</Provider>
-  </Router>
-)
-
-const mockUseDispatchValue = 1984
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn().mockImplementation(() => {
-    return mockUseDispatchValue
-  }),
-}))
-
-describe('FamilyDetails Table Testing', () => {
-  test('should render', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <FamilyDetailsTable editButtonHandler={jest.fn()} />
-      </ReduxProvider>,
-    )
-    expect(screen.getByText('Relationship')).toBeInTheDocument()
-    expect(screen.getAllByRole('columnheader')).toHaveLength(4)
+describe('Family Table component with data', () => {
+  beforeEach(() => {
+    render(<FamilyDetailsTable isFieldDisabled={true} />, {
+      preloadedState: {
+        personalInfoDetails: {
+          employeeFamilyDetails: mockFamilyTableDetails,
+        },
+      },
+    })
   })
-  // test('should render no data to display if FamilyDetailsTable is empty', async () => {
-  //   render(
-  //     <ReduxProvider reduxStore={stateStore}>
-  //       <FamilyDetailsTable editButtonHandler={jest.fn()} />
-  //     </ReduxProvider>,
-  //   )
-  //   await waitFor(() => {
-  //     expect(screen.getByText('No Records found')).toBeInTheDocument()
-  //   })
-  // })
+  test('should click on delete button ', () => {
+    const deleteElement = screen.getAllByTestId('delete-family')
+    expect(deleteElement[0]).toBeInTheDocument()
+    userEvent.click(deleteElement[0])
+    const confirmDeleteBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(confirmDeleteBtn)
+    expect(confirmDeleteBtn)
+  })
+  test('should click on edit button  ', () => {
+    const editElement = screen.getAllByTestId('edit-family')
+    userEvent.click(editElement[0])
+    expect(editElement[0]).toBeInTheDocument()
+  })
+
+  test('should render with data ', () => {
+    expect(screen.getByText('vinesh')).toBeInTheDocument()
+    expect(screen.getByText('Brother')).toBeInTheDocument()
+    expect(screen.getByText('970150987')).toBeInTheDocument()
+    expect(screen.getByText('03/23/2022')).toBeInTheDocument()
+  })
+  test('should render with number of records  ', () => {
+    expect(
+      screen.getByText('Total Records: ' + mockFamilyTableDetails.length),
+    ).toBeInTheDocument()
+  })
 })

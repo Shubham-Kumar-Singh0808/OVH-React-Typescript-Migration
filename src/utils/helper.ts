@@ -1,14 +1,21 @@
 import moment from 'moment'
 import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
-export const listComposer = (list: [], id: string, name: string): GetList[] =>
-  list.map(
+export const listComposer = (
+  list: never[],
+  id: string,
+  name: string,
+): GetList[] => {
+  if (list == null || list.length === 0 || !Array.isArray(list)) return []
+
+  return list.map(
     (val) =>
       ({
         id: val[id],
         name: val[name],
       } as GetList),
   )
+}
 
 export const showIsRequired = (value: string): string =>
   value == null || value === '' ? 'text-danger' : 'text-white'
@@ -33,3 +40,13 @@ export const downloadFile = (
 }
 export const currentMonthDate = moment().subtract(1, 'months').format('M/YYYY')
 export const previousMonthDate = moment().subtract(2, 'months').format('M/YYYY')
+
+const matcher =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+
+export const isEmail = (value: string): boolean => !matcher.test(value)
+
+export const deviceLocale: string =
+  navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language

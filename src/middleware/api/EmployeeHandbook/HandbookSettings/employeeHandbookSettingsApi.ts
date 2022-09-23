@@ -9,11 +9,13 @@ import {
   EmployeeHandbookListApiProps,
   EmployeeHandbookListResponse,
   TotalHandbookList,
+  UpdateHandbookPage,
 } from '../../../../types/EmployeeHandbook/HandbookSettings/employeeHandbookSettingsTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
 } from '../../../../utils/apiUtils'
+import { ApiParams } from '../../../../types/commonTypes'
 
 const getEmployeeHandbooks = async (
   props: EmployeeHandbookListApiProps,
@@ -74,7 +76,7 @@ const addNewHandbook = async (
     url: employeeHandbookSettingsApiConfig.addNewHandbook,
     method: AllowedHttpMethods.post,
     params: { list: prepareObject.list },
-    paramsSerializer: (params: any) =>
+    paramsSerializer: (params: ApiParams) =>
       qs.stringify(params, { arrayFormat: 'repeat' }),
     data: {
       description: prepareObject.description,
@@ -89,12 +91,46 @@ const addNewHandbook = async (
   return response.data
 }
 
+const getSelectedCountries = async (id: number): Promise<EmployeeCountry[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeHandbookSettingsApiConfig.getSelectedCountries,
+    method: AllowedHttpMethods.get,
+    params: {
+      id,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateEmployeeHandbook = async (
+  prepareObject: UpdateHandbookPage,
+): Promise<number | undefined> => {
+  const { list, ...rest } = prepareObject
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeHandbookSettingsApiConfig.updateEmployeeHandbook,
+    method: AllowedHttpMethods.put,
+    params: { list },
+    paramsSerializer: (params: ApiParams) =>
+      qs.stringify(params, { arrayFormat: 'repeat' }),
+    data: {
+      ...rest,
+      ...{ type: 'HandBook' },
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const employeeHandbookSettingsApi = {
   getEmployeeHandbooks,
   getTotalHandbookList,
   deleteEmployeeHandbook,
   getEmployeeCountries,
   addNewHandbook,
+  getSelectedCountries,
+  updateEmployeeHandbook,
 }
 
 export default employeeHandbookSettingsApi

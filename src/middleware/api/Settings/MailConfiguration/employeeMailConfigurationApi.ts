@@ -7,6 +7,7 @@ import {
   EmployeeMailTemplate,
   EmployeeGetEmailTemplateProps,
   EmployeeMailTemplateType,
+  EditEmployeeMailTemplate,
 } from '../../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
 
@@ -21,16 +22,20 @@ const getEmployeeMailTemplateTypes = async (): Promise<
   return response.data
 }
 
+const commonParamsUtil = (props: EmployeeGetEmailTemplateProps) => {
+  return {
+    searchText: props.templateName ?? '',
+    type: props.templateTypeId ?? '',
+  }
+}
+
 const getEmployeeMailTemplate = async (
   props: EmployeeGetEmailTemplateProps,
 ): Promise<EmployeeMailTemplate[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeMailConfigurationApiConfig.getMailTemplates,
     method: AllowedHttpMethods.get,
-    params: {
-      searchText: props.templateName ?? '',
-      type: props.templateTypeId ?? '',
-    },
+    params: commonParamsUtil(props),
   })
   const response = await axios(requestConfig)
   return response.data
@@ -39,12 +44,12 @@ const getEmployeeMailTemplate = async (
 const exportEmployeeMailTemplateData = async (
   props: EmployeeGetEmailTemplateProps,
 ): Promise<Blob | undefined> => {
+  const paramsResult = commonParamsUtil(props)
   const requestConfig = getAuthenticatedRequestConfig({
     url: employeeMailConfigurationApiConfig.exportMailTemplatesList,
     method: AllowedHttpMethods.get,
     params: {
-      searchText: props.templateName ?? '',
-      type: props.templateTypeId ?? '',
+      ...paramsResult,
       token: localStorage.getItem('token') ?? '',
       tenantKey: localStorage.getItem('token') ?? '',
     },
@@ -66,10 +71,24 @@ const deleteMailTemplate = async (id: number): Promise<number | undefined> => {
   return response.data
 }
 
+const updateMailTemplate = async (
+  prepareObject: EditEmployeeMailTemplate,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeMailConfigurationApiConfig.updateMailTemplate,
+    method: AllowedHttpMethods.put,
+    data: prepareObject,
+  })
+
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const employeeMailConfigurationApi = {
   getEmployeeMailTemplateTypes,
   getEmployeeMailTemplate,
   exportEmployeeMailTemplateData,
+  updateMailTemplate,
   deleteMailTemplate,
 }
 

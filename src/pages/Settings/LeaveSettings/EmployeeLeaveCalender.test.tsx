@@ -42,7 +42,7 @@ describe('Leave Calender Testing', () => {
         <EmployeeLeaveCalender />
       </ReduxProvider>,
     )
-    expect(screen.getAllByRole('option').length).toBe(44)
+    expect(screen.getAllByRole('option').length).toBe(42)
   })
 
   test('should render add new Leave calender form without crashing', () => {
