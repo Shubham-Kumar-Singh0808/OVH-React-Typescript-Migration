@@ -1,6 +1,6 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
-export type LoggedEmployeeName = {
+export type NewBookingLoggedEmployeeName = {
   id: 1985
   profilePicPath: '../profilepics/Default_Male.jpg'
   firstName: 'Vinesh'
@@ -10,7 +10,7 @@ export type LoggedEmployeeName = {
   fullName: 'Vinesh Merugu'
 }
 
-export type AddLocationSliceState = {
-  loggedEmployeeName: LoggedEmployeeName[]
+export type newBookingSliceState = {
+  loggedEmployeeName: NewBookingLoggedEmployeeName[]
   isLoading: ApiLoadingState
 }
