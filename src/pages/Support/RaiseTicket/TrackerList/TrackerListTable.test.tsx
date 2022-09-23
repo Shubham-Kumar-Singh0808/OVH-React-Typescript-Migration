@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import TrackerListTable from './TrackerListTable'
 import { cleanup, render, screen } from '../../../../test/testUtils'
 import { mockTrackerList } from '../../../../test/data/ticketApprovalsData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 describe('Add Tracker List without data', () => {
   beforeEach(() => {
@@ -30,6 +31,7 @@ describe('Add Tracker List Table without data', () => {
       preloadedState: {
         ticketApprovals: {
           trackerList: mockTrackerList,
+          isLoading: ApiLoadingState.succeeded,
         },
       },
     })
