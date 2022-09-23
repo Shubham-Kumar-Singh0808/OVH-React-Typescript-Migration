@@ -180,7 +180,7 @@ const TicketReportFilterOptions = ({
     <>
       <CRow className="mt-3">
         <CCol sm={2} md={2}>
-          <CFormLabel>Department Name:</CFormLabel>
+          <CFormLabel>Department Name :</CFormLabel>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
@@ -199,7 +199,7 @@ const TicketReportFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={2}>
-          <CFormLabel>Date:</CFormLabel>
+          <CFormLabel>Date :</CFormLabel>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
