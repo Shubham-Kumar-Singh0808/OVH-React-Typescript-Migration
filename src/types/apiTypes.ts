@@ -396,3 +396,8 @@ export interface EventTypeListApi extends ApiBase {
   updateEventType: string
   getLoggedEmployeeName: string
 }
+
+export interface NewBookingApi extends ApiBase {
+  getLoggedEmployeeName: string
+}
+

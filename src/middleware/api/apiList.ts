@@ -54,6 +54,7 @@ import {
   UpdateTicketApi,
   EventTypeListApi,
   AddLocationListApi,
+  NewBookingApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -474,5 +475,9 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   addEventType: apiPrefix + '/meetingRequest/addEventType',
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+}
+
+export const newBookingApiConfig: NewBookingApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
 }
