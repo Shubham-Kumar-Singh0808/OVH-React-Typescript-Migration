@@ -1,15 +1,16 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import { cleanup } from '@testing-library/react'
+import { cleanup, waitFor } from '@testing-library/react'
 import TrackerList from './TrackerList'
 import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { mockAddTrackerList } from '../../../../test/data/addTrackerListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockTrackerList } from '../../../../test/data/ticketApprovalsData'
 
 const addButton = 'save-btn'
 const clearButton = 'clear-btn'
-const trackerName = 'tracker-name'
+const trackerName = 'trackerName'
 const AddTrackerName = 'Name:'
 const checked = 'ch-All'
 const mockSetTogglePage = jest.fn()
@@ -33,7 +34,6 @@ describe('AddTracker List without data', () => {
     expect(screen.getByTestId(addButton)).toBeDisabled()
     expect(screen.getByTestId(clearButton)).toBeEnabled()
   })
-
   test('should render clear button', () => {
     const clearButton = screen.getByTestId('clear-btn')
     expect(clearButton).toBeEnabled()
@@ -45,7 +45,7 @@ describe('AddTracker List without data', () => {
   })
 })
 
-describe('AddTracker List with data', () => {
+describe('Tracker List with data', () => {
   beforeEach(() => {
     render(<TrackerList setToggle={mockSetTogglePage} />, {
       preloadedState: {
@@ -67,6 +67,8 @@ describe('AddTracker List with data', () => {
   test('should able to clear input field', () => {
     const trackerNameInput = screen.getByTestId(trackerName)
     userEvent.type(trackerNameInput, 'Test')
+    const addButton = screen.getByTestId('save-btn')
+    expect(addButton).toBeEnabled()
     const cbAll = screen.getByTestId(checked)
     fireEvent.change(cbAll, { target: { checked: true } })
     userEvent.click(screen.getByRole('button', { name: 'Add' }))
@@ -74,10 +76,24 @@ describe('AddTracker List with data', () => {
     userEvent.click(screen.getByTestId(clearButton))
     expect(trackerNameInput).toHaveValue('')
   })
+})
 
-  test('should render TrackerName exist or not', () => {
-    const trackerNameInput = screen.getByTestId(trackerName)
-    userEvent.type(trackerNameInput, 'Issue')
-    expect(trackerNameInput).toHaveValue('Issue')
+describe('TrackerList with data', () => {
+  beforeEach(() => {
+    render(<TrackerList setToggle={mockSetTogglePage} />, {
+      preloadedState: {
+        ticketApprovals: {
+          trackerList: mockTrackerList,
+        },
+      },
+    })
+  })
+  afterEach(cleanup)
+  test('should display error message, when user enters already existing tracker', async () => {
+    const inputElement = screen.getByTestId('trackerName')
+    userEvent.type(inputElement, 'Issue')
+    await waitFor(() => {
+      expect(screen.getByText('Name Already Exist')).toBeInTheDocument()
+    })
   })
 })

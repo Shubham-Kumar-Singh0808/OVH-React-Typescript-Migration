@@ -11,12 +11,16 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import OModal from '../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const TrackerListTable = (): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [deleteRoomName, setDeleteRoomName] = useState('')
+  const [deleteRoomId, setDeleteRoomId] = useState(0)
   const dispatch = useAppDispatch()
 
   const trackerList = useTypedSelector(
@@ -34,10 +38,15 @@ const TrackerListTable = (): JSX.Element => {
       data-testid="failedToast"
     />
   )
-
-  const deleteTrackerButtonHandler = async (id: number) => {
+  const deleteTrackerButtonHandler = (id: number, roomName: string) => {
+    setIsDeleteModalVisible(true)
+    setDeleteRoomId(id)
+    setDeleteRoomName(roomName)
+  }
+  const confirmDeleteRoom = async () => {
+    setIsDeleteModalVisible(false)
     const isDeleteTracker = await dispatch(
-      reduxServices.addTrackerLists.deleteTrackerList(id),
+      reduxServices.addTrackerLists.deleteTrackerList(deleteRoomId),
     )
     if (
       reduxServices.addTrackerLists.deleteTrackerList.fulfilled.match(
@@ -92,7 +101,9 @@ const TrackerListTable = (): JSX.Element => {
                       size="sm"
                       className="btn-ovh me-2 cursor-pointer"
                       color="danger btn-ovh me-2"
-                      onClick={() => deleteTrackerButtonHandler(tracker.id)}
+                      onClick={() =>
+                        deleteTrackerButtonHandler(tracker.id, tracker.name)
+                      }
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
@@ -110,6 +121,17 @@ const TrackerListTable = (): JSX.Element => {
           </p>
         </CCol>
       </CRow>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={confirmDeleteRoom}
+      >
+        {`Do you really want to delete this ${deleteRoomName} Location ?`}
+      </OModal>
     </>
   )
 }

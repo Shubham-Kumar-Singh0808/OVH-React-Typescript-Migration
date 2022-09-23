@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import TrackerListTable from './TrackerListTable'
-import { render, screen } from '../../../../test/testUtils'
-import { mockAddTrackerList } from '../../../../test/data/addTrackerListData'
+import { cleanup, render, screen } from '../../../../test/testUtils'
+import { mockTrackerList } from '../../../../test/data/ticketApprovalsData'
 
-describe('AddTracker List without data', () => {
+describe('Add Tracker List without data', () => {
   beforeEach(() => {
     render(<TrackerListTable />)
   })
@@ -23,19 +24,35 @@ describe('AddTracker List without data', () => {
   })
 })
 
-describe('MyTickets component with data', () => {
+describe('Add Tracker List Table without data', () => {
   beforeEach(() => {
     render(<TrackerListTable />, {
       preloadedState: {
-        addTrackerLists: {
-          trackerList: mockAddTrackerList,
+        ticketApprovals: {
+          trackerList: mockTrackerList,
         },
       },
     })
   })
-  test('should render with data', () => {
+  afterEach(cleanup)
+  test('should render with data ', () => {
     expect(screen.getByText('Issue')).toBeInTheDocument()
     expect(screen.getByText('New Request')).toBeInTheDocument()
-    expect(screen.getByText('Teset')).toBeInTheDocument()
+    expect(screen.getByText('Testing')).toBeInTheDocument()
+    expect(screen.getByText('test22')).toBeInTheDocument()
+    expect(screen.getByText('testing12')).toBeInTheDocument()
+  })
+  test('should be able to click delete button element', () => {
+    const deleteBtnElement = screen.getByTestId('btn-delete2')
+    expect(deleteBtnElement).toBeInTheDocument()
+    userEvent.click(deleteBtnElement)
+    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(modalConfirmBtn)
+    expect(modalConfirmBtn).toBeInTheDocument()
+  })
+  test('should render number of records', () => {
+    expect(
+      screen.getByText('Total Records: ' + mockTrackerList.length),
+    ).toBeInTheDocument()
   })
 })

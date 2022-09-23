@@ -32,8 +32,8 @@ export const mockAddTrackerList: Tracker[] = [
     permission: false,
   },
   {
-    id: 92,
-    name: 'sss',
-    permission: false,
+    id: 115,
+    name: 'tracker',
+    permission: true,
   },
 ]

@@ -139,7 +139,7 @@ const TrackerList = ({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="tracker-name"
+                data-testid="trackerName"
                 type="text"
                 id="Name"
                 size="sm"
