@@ -48,14 +48,10 @@ const TrackerListTable = (): JSX.Element => {
     const isDeleteTracker = await dispatch(
       reduxServices.addTrackerLists.deleteTrackerList(deleteRoomId),
     )
+
+    dispatch(reduxServices.ticketApprovals.getTrackerList())
+    dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
     if (
-      reduxServices.addTrackerLists.deleteTrackerList.fulfilled.match(
-        isDeleteTracker,
-      )
-    ) {
-      dispatch(reduxServices.ticketApprovals.getTrackerList())
-      dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
-    } else if (
       (reduxServices.addTrackerLists.deleteTrackerList.rejected.match(
         isDeleteTracker,
       ) &&
@@ -69,7 +65,7 @@ const TrackerListTable = (): JSX.Element => {
 
   return (
     <>
-      <CTable striped responsive className="mt-5">
+      <CTable striped responsive className="mt-5 text-center">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>

@@ -164,7 +164,7 @@ const TrackerList = ({
             >
               Work Flow:
             </CFormLabel>
-            <CCol sm={3}>
+            <CCol sm={3} className="pt-2">
               <CFormCheck
                 data-testid="ch-All"
                 id="workflow"
