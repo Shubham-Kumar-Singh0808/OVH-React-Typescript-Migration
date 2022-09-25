@@ -16,10 +16,10 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import eventListApi from '../../../../middleware/api/ConferenceRoomBooking/EventList/eventListApi'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
-import { EventListTableProps } from '../../../../types/ConferenceRoomBooking/EventList/eventListTypes'
+import { FeedbackFormTableProps } from '../../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 import { downloadFile } from '../../../../utils/helper'
 
-const FeedbackFormTable = (props: EventListTableProps): JSX.Element => {
+const FeedbackFormTable = (props: FeedbackFormTableProps): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.eventList.selectors.isLoading,
   )

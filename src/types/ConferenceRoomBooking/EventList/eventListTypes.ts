@@ -108,6 +108,14 @@ export type FeedbackForm = {
   feedbackFormPath: string
 }
 
+export type FeedbackFormTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
 export type GetEventListResponse = {
   list: Event[]
   size: number

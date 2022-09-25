@@ -12,7 +12,7 @@ const toRender = (
     <EventList />
   </div>
 )
-describe('List Of Birthdays Component Testing', () => {
+describe('EventList Component Testing', () => {
   render(toRender, {
     preloadedState: {
       authentication: {

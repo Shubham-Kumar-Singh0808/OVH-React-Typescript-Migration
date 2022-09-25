@@ -14,7 +14,7 @@ const mockSetPageSize = jest.fn()
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
     expect(
-      screen.getByText(mockFeedbackFormList.list[i].createdBy),
+      screen.getByText(mockFeedbackFormList.list[i].feedBackFormName),
     ).toBeInTheDocument()
   }
 }
@@ -27,30 +27,30 @@ const toRender = (
     <div id="root"></div>
     <Router history={history}>
       <FeedbackFormTable
-        setCurrentPage={mockSetCurrentPage}
-        setPageSize={mockSetPageSize}
-        currentPage={1}
-        pageSize={20}
         paginationRange={[1, 2, 3]}
+        currentPage={1}
+        setCurrentPage={mockSetCurrentPage}
+        pageSize={1}
+        setPageSize={mockSetPageSize}
       />
     </Router>
   </div>
 )
-describe('EventList', () => {
-  describe('EventsListTable Component Testing', () => {
+describe('Feedback Forms Page', () => {
+  describe('Feedback Forms Component Testing', () => {
     beforeEach(() => {
       render(toRender, {
         preloadedState: {
           eventList: {
-            feedbackFormDetails: mockFeedbackFormList.list,
             isLoading: ApiLoadingState.succeeded,
-            listSize: mockFeedbackFormList.size,
+            feedbackFormDetails: mockFeedbackFormList.list,
+            feedbackFormListSize: mockFeedbackFormList.size,
           },
         },
       })
     })
     afterEach(cleanup)
-    test('should render the "Events List" table ', () => {
+    test('should render the "feedback form List" table ', () => {
       const table = screen.getByRole('table')
       expect(table).toBeTruthy()
     })
@@ -68,6 +68,14 @@ describe('EventList', () => {
     })
     test('should render correct number of page records', () => {
       expect(screen.queryAllByRole('row')).toHaveLength(42)
+    })
+    test('should render pagesize when records has length more than 20 records', async () => {
+      expectPageSizeToBeRendered(20)
+      await waitFor(() => {
+        userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+        expect(mockSetPageSize).toHaveBeenCalledTimes(1)
+        expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })
