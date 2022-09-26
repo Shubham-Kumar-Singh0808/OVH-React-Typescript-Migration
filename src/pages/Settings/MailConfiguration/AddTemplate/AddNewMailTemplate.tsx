@@ -41,7 +41,7 @@ function AddNewMailTemplate(): JSX.Element {
       reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
     )
     dispatch(reduxServices.addNewMailTemplate.getAssetTypes())
-  }, [dispatch])
+  }, [dispatch, toggle])
 
   const getAssetTypes = useTypedSelector(
     reduxServices.addNewMailTemplate.selectors.assetTypes,
@@ -139,8 +139,9 @@ function AddNewMailTemplate(): JSX.Element {
         addNewTemplateResultAction,
       )
     ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      window.location.reload()
     }
+    dispatch(reduxServices.app.actions.addToast(successToastMessage))
   }
 
   const handleClearInputs = () => {
@@ -297,6 +298,7 @@ function AddNewMailTemplate(): JSX.Element {
                     data-testid="title-input"
                     type="text"
                     name="templateName"
+                    placeholder="Title"
                     value={addNewTemplate?.templateName}
                     maxLength={50}
                     onChange={handleInputChange}
