@@ -40,14 +40,7 @@ const getEmployeeAssets = createAsyncThunk<
 const employeeAssetsSlice = createSlice({
   name: 'employeeMyAssets',
   initialState: initialEmployeeAssetsState,
-  reducers: {
-    setCurrentPage: (state, action) => {
-      state.currentPage = action.payload
-    },
-    setPageSize: (state, action) => {
-      state.pageSize = action.payload
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder.addCase(getEmployeeAssets.fulfilled, (state, action) => {
@@ -62,10 +55,6 @@ const employeeAssetsSlice = createSlice({
 
 const employeeAssets = (state: RootState): EmployeeAsset[] =>
   state.employeeAssets.employeeAssets
-const pageFromState = (state: RootState): number =>
-  state.employeeAssets.currentPage
-const pageSizeFromState = (state: RootState): number =>
-  state.employeeAssets.pageSize
 
 const isLoading = (state: RootState): LoadingState =>
   state.employeeAssets.isLoading
@@ -77,8 +66,6 @@ const employeeAssetsThunk = {
 const employeeAssetsSelectors = {
   employeeAssets,
   isLoading,
-  pageFromState,
-  pageSizeFromState,
 }
 
 export const employeeAssetsService = {
