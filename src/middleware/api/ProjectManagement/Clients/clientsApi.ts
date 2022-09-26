@@ -104,6 +104,18 @@ const getClientCountries = async (): Promise<ClientCountry[]> => {
   return response.data
 }
 
+const isOrganizationExists = async (organization: string): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: clientsApiConfig.clientOrg,
+    method: AllowedHttpMethods.get,
+    params: {
+      organization,
+    },
+  })
+  const responseVisa = await useAxios(requestConfig)
+  return responseVisa.data
+}
+
 const clientsApi = {
   getClients,
   getProjectsUnderClient,
@@ -112,6 +124,7 @@ const clientsApi = {
   getClientToEdit,
   updateClient,
   getClientCountries,
+  isOrganizationExists,
 }
 
 export default clientsApi

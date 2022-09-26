@@ -87,7 +87,7 @@ const TicketApprovalsTable = ({
     scope: 'col',
   }
   const tableHeaderCellPropsAction = {
-    width: '10%',
+    width: '24%',
     scope: 'col',
   }
 
@@ -233,13 +233,16 @@ const TicketApprovalsTable = ({
                   <CTableDataCell scope="row">
                     <>
                       <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
-                        <CButton color="info" className="btn-ovh me-2">
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                        >
                           <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>
                       </Link>
                       <CButton
-                        color="danger"
-                        className="btn-ovh me-2"
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
                         data-testid="ticket-reject-btn"
                         disabled={
                           ticketItem.approvalStatus === 'Approved' ||
@@ -257,8 +260,8 @@ const TicketApprovalsTable = ({
                         <i className="fa fa-times" aria-hidden="true"></i>
                       </CButton>
                       <CButton
-                        color="info"
-                        className="btn-ovh me-2"
+                        color="info btn-ovh me-1"
+                        className="btn-ovh-employee-list"
                         data-testid="ticketTimelineBtn"
                         onClick={() =>
                           handleTicketApprovalsHistory(ticketItem.id)
