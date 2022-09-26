@@ -67,6 +67,21 @@ const EventListFilterOptions = ({
     setSearchBtnEnable(moment(end).isBefore(start))
   }, [eventFromDate, eventToDate])
 
+  const toDate = eventToDate
+    ? new Date(eventToDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
+
+  const fromDate = eventFromDate
+    ? new Date(eventFromDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
   return (
     <>
       <CRow className="mt-3">
@@ -75,7 +90,7 @@ const EventListFilterOptions = ({
           <CFormSelect
             size="sm"
             id="selectEvent"
-            data-testid="form-select-date"
+            data-testid="event-select-date"
             name="selectEvent"
             value={selectDate}
             onChange={(e) => {
@@ -111,18 +126,7 @@ const EventListFilterOptions = ({
                     dateFormat="dd/mm/yy"
                     placeholderText="dd/mm/yy"
                     name="fromDate"
-                    value={
-                      eventFromDate
-                        ? new Date(eventFromDate).toLocaleDateString(
-                            deviceLocale,
-                            {
-                              year: 'numeric',
-                              month: '2-digit',
-                              day: '2-digit',
-                            },
-                          )
-                        : ''
-                    }
+                    value={fromDate}
                     onChange={(date: Date) =>
                       setEventFromDate(moment(date).format(commonDateFormat))
                     }
@@ -146,18 +150,7 @@ const EventListFilterOptions = ({
                     dateFormat="dd/mm/yy"
                     placeholderText="dd/mm/yy"
                     name="toDate"
-                    value={
-                      eventToDate
-                        ? new Date(eventToDate).toLocaleDateString(
-                            deviceLocale,
-                            {
-                              year: 'numeric',
-                              month: '2-digit',
-                              day: '2-digit',
-                            },
-                          )
-                        : ''
-                    }
+                    value={toDate}
                     onChange={(date: Date) =>
                       setEventToDate(moment(date).format(commonDateFormat))
                     }

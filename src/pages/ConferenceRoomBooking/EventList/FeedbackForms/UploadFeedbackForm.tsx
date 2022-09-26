@@ -91,7 +91,7 @@ const UploadFeedbackForm = (): JSX.Element => {
               className="mt-1"
               data-testid="feedback-form"
               type="file"
-              name="name"
+              name="upload-form"
               accept=".doc, .docx, .pdf"
               onChange={(element: SyntheticEvent) =>
                 onChangeFileUploadHandler(

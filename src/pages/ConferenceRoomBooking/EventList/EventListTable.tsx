@@ -42,7 +42,6 @@ const EventListTable = (
   const role = useTypedSelector(
     (state) => state.authentication.authenticatedUser.role,
   )
-  console.log(role)
 
   const dispatch = useAppDispatch()
   const {
@@ -96,6 +95,39 @@ const EventListTable = (
       )
     }
   }
+
+  const attendees = selectedEventDetails.employeeDto?.length ? (
+    <CTable align="middle">
+      <CTableHead>
+        <CTableRow>
+          <CTableHeaderCell>Name of Employee</CTableHeaderCell>
+          <CTableHeaderCell>Designation</CTableHeaderCell>
+        </CTableRow>
+      </CTableHead>
+      <CTableBody>
+        {selectedEventDetails.employeeDto?.map((emp, index) => {
+          return (
+            <CTableRow key={index}>
+              <CTableDataCell>{emp.fullName}</CTableDataCell>
+              <CTableDataCell>{emp.designation}</CTableDataCell>
+            </CTableRow>
+          )
+        })}
+      </CTableBody>
+    </CTable>
+  ) : (
+    <>N/A</>
+  )
+
+  const trainer =
+    selectedEventDetails.trainerName?.fullName !== null
+      ? `${selectedEventDetails.trainerName?.fullName} - ${selectedEventDetails.trainerName?.designation}`
+      : 'N/A'
+
+  const eventDescription =
+    selectedEventDetails.description !== null
+      ? selectedEventDetails.description
+      : 'N/A'
 
   return (
     <>
@@ -264,40 +296,15 @@ const EventListTable = (
                 <span className="col-sm-2 text-right fw-bold">
                   Description :
                 </span>
-                {selectedEventDetails.description !== null
-                  ? selectedEventDetails.description
-                  : 'N/A'}
+                {eventDescription}
               </p>
               <p className="d-flex">
                 <span className="col-sm-2 text-right fw-bold">Trainer :</span>
-                {selectedEventDetails.trainerName?.fullName !== null
-                  ? `${selectedEventDetails.trainerName?.fullName} - ${selectedEventDetails.trainerName?.designation}`
-                  : 'N/A'}
+                {trainer}
               </p>
               <p className="d-flex">
                 <span className="col-sm-2 text-right fw-bold">Attendees:</span>
-                {selectedEventDetails.employeeDto?.length ? (
-                  <CTable align="middle">
-                    <CTableHead>
-                      <CTableRow>
-                        <CTableHeaderCell>Name of Employee</CTableHeaderCell>
-                        <CTableHeaderCell>Designation</CTableHeaderCell>
-                      </CTableRow>
-                    </CTableHead>
-                    <CTableBody>
-                      {selectedEventDetails.employeeDto?.map((emp, index) => {
-                        return (
-                          <CTableRow key={index}>
-                            <CTableDataCell>{emp.fullName}</CTableDataCell>
-                            <CTableDataCell>{emp.designation}</CTableDataCell>
-                          </CTableRow>
-                        )
-                      })}
-                    </CTableBody>
-                  </CTable>
-                ) : (
-                  <>N/A</>
-                )}
+                {attendees}
               </p>
             </>
           </OModal>
