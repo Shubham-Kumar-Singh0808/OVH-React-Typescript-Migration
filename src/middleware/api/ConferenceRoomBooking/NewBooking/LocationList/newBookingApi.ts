@@ -5,17 +5,16 @@ import {
 } from '../../../../../utils/apiUtils'
 import { AllowedHttpMethods, newBookingApiConfig } from '../../../apiList'
 
-const getLoggedEmployeeName = async (): Promise<
-  NewBookingLoggedEmployeeName[]
-> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: newBookingApiConfig.getLoggedEmployeeName,
-    method: AllowedHttpMethods.get,
-  })
+const getLoggedEmployeeName =
+  async (): Promise<NewBookingLoggedEmployeeName> => {
+    const requestConfig = getAuthenticatedRequestConfig({
+      url: newBookingApiConfig.getLoggedEmployeeName,
+      method: AllowedHttpMethods.get,
+    })
 
-  const response = await useAxios(requestConfig)
-  return response.data
-}
+    const response = await useAxios(requestConfig)
+    return response.data
+  }
 const getAllEmployees = async (
   searchString: string,
 ): Promise<NewBookingLoggedEmployeeName[]> => {

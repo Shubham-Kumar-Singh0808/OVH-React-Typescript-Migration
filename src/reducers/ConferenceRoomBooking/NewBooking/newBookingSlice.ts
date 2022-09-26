@@ -34,7 +34,8 @@ const getAllEmployees = createAsyncThunk(
 )
 
 const initialNewBookingListState: newBookingSliceState = {
-  loggedEmployeeName: [],
+  loggedEmployeeName: {} as NewBookingLoggedEmployeeName,
+  allEmployeesProfiles: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -52,18 +53,26 @@ const newBookingSlice = createSlice({
         state.isLoading = ApiLoadingState.loading
         state.loggedEmployeeName = action.payload
       })
+      .addCase(getAllEmployees.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.allEmployeesProfiles = action.payload
+      })
   },
 })
 
-const LoggedEmployeeName = (state: RootState): NewBookingLoggedEmployeeName[] =>
+const LoggedEmployeeName = (state: RootState): NewBookingLoggedEmployeeName =>
   state.newBooking.loggedEmployeeName
+
+const allEmployeesProfiles = (
+  state: RootState,
+): NewBookingLoggedEmployeeName[] => state.newBooking.allEmployeesProfiles
 
 const newBookingThunk = {
   getLoggedEmployeeName,
   getAllEmployees,
 }
 
-const newBookingSelectors = { LoggedEmployeeName }
+const newBookingSelectors = { LoggedEmployeeName, allEmployeesProfiles }
 
 export const newBookingService = {
   ...newBookingThunk,
