@@ -49,8 +49,8 @@ const TrackerListTable = (): JSX.Element => {
       reduxServices.addTrackerLists.deleteTrackerList(deleteRoomId),
     )
 
-    dispatch(reduxServices.ticketApprovals.getTrackerList())
     dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
+    dispatch(reduxServices.ticketApprovals.getTrackerList())
     if (
       (reduxServices.addTrackerLists.deleteTrackerList.rejected.match(
         isDeleteTracker,
