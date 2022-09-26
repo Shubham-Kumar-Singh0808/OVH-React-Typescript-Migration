@@ -158,4 +158,9 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
 
     expect(uploader).toBeTruthy()
   })
+  test('should be able to click Add button element', () => {
+    const toggleBtn = screen.getByRole('button', { name: 'Add' })
+    userEvent.click(toggleBtn)
+    expect(toggleBtn).toBeInTheDocument()
+  })
 })
