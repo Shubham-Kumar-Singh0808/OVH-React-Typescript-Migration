@@ -5,16 +5,25 @@ import MyTickets from './MyTickets'
 import { render, screen } from '../../../test/testUtils'
 import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <MyTickets />,
+  </div>
+)
+
 describe('Ticket List Component Testing', () => {
   test('should render My Tickets component with out crashing', () => {
-    render(<MyTickets />)
+    render(toRender)
     expect(screen.getByText('Ticket List')).toBeInTheDocument()
   })
 })
 
 describe('MyTickets component with data', () => {
   beforeEach(() => {
-    render(<MyTickets />, {
+    render(toRender, {
       preloadedState: {
         tickets: {
           ticketList: mockEmployeeTicketList,

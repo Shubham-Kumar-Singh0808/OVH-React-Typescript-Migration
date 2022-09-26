@@ -117,6 +117,8 @@ describe('Ticket Approvals Filter Options Component Testing with data', () => {
     expect(datePickerElement[1]).toHaveValue('10/02/2022')
     await waitFor(() => {
       expect(screen.getByTestId('errorMessage')).toBeInTheDocument()
+      const applyBtnElement = screen.getByRole('button', { name: 'Apply' })
+      expect(applyBtnElement).toBeDisabled()
     })
   })
 })

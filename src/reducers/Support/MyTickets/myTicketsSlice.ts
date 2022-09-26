@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import myTicketsApi from '../../../middleware/api/Support/MyTickets/myTicketsApi'
@@ -74,16 +74,16 @@ const myTicketsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.ticketList = action.payload
       })
-      .addCase(getTickets.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
       .addCase(ticketHistoryDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.ticketHistory = action.payload
       })
-      .addCase(ticketHistoryDetails.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
+      .addMatcher(
+        isAnyOf(ticketHistoryDetails.pending, getTickets.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 const isLoading = (state: RootState): LoadingState => state.tickets.isLoading

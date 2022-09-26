@@ -22,26 +22,33 @@ const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 const mockSetToggle = jest.fn()
 
-describe('Scheduled Candidates Table Component Testing', () => {
-  test('should render scheduled candidates table component without crashing', async () => {
-    render(
-      <TicketReportTable
-        setToggle={mockSetToggle}
-        selectDate={''}
-        toDate={''}
-        fromDate={''}
-        selectDepartment={''}
-      />,
-      {
-        preloadedState: {
-          ticketReport: {
-            isLoading: ApiLoadingState.succeeded,
-            ticketsReportList: mockTicketReportData,
-            ticketsDetailsList: mockTicketDetailsData,
-          },
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <TicketReportTable
+      setToggle={mockSetToggle}
+      selectDate={''}
+      toDate={''}
+      fromDate={''}
+      selectDepartment={''}
+    />
+    ,
+  </div>
+)
+
+describe('Ticket Report Table Component Testing', () => {
+  test('should render Ticket Report table component without crashing', async () => {
+    render(toRender, {
+      preloadedState: {
+        ticketReport: {
+          isLoading: ApiLoadingState.succeeded,
+          ticketsReportList: mockTicketReportData,
+          ticketsDetailsList: mockTicketDetailsData,
         },
       },
-    )
+    })
 
     expectPageSizeToBeRendered(20)
 
@@ -55,34 +62,28 @@ describe('Scheduled Candidates Table Component Testing', () => {
 
 describe('Employee Ticket Details', () => {
   beforeEach(() => {
-    render(
-      <TicketReportTable
-        setToggle={mockSetToggle}
-        selectDate={''}
-        toDate={''}
-        fromDate={''}
-        selectDepartment={''}
-      />,
-      {
-        preloadedState: {
-          ticketReport: {
-            isLoading: ApiLoadingState.succeeded,
-            ticketsReportList: mockTicketReportData,
-          },
+    render(toRender, {
+      preloadedState: {
+        ticketReport: {
+          isLoading: ApiLoadingState.succeeded,
+          ticketsReportList: mockTicketReportData,
         },
       },
-    )
+    })
   })
   test('should clicking on number of tickets', () => {
     const ticketElement = screen.getAllByTestId('num-tickets')
     userEvent.click(ticketElement[0])
-    expect(ticketElement[0]).toBeInTheDocument()
     expect(ticketElement).toBeTruthy()
   })
   test('should when clicking on ticket description link', () => {
     const descriptionElement = screen.getAllByTestId('pending-tickets')
     userEvent.click(descriptionElement[0])
-    expect(descriptionElement[0]).toBeInTheDocument()
     expect(descriptionElement).toBeTruthy()
+  })
+  test('should when clicking on Closed ticket link', () => {
+    const numClosedTicketElement = screen.getAllByTestId('close-tickets')
+    userEvent.click(numClosedTicketElement[0])
+    expect(numClosedTicketElement).toBeTruthy()
   })
 })
