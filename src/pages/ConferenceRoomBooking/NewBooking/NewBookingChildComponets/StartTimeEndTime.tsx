@@ -1,25 +1,48 @@
 import React from 'react'
 import { CRow, CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
+import { showIsRequired } from '../../../../utils/helper'
 
-const StartTimeEndTime = (): JSX.Element => {
+const StartTimeEndTime = ({
+  startTimeValue,
+  endTimeValue,
+  onChangeStartEndTime,
+}: {
+  startTimeValue: string
+  endTimeValue: string
+  onChangeStartEndTime: (e: any) => void
+}): JSX.Element => {
   return (
     <>
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           Start Time:
-          <span>*</span>
+          <span className={showIsRequired(startTimeValue)}>*</span>
         </CFormLabel>
         <CCol sm={4}>
           <CCol sm={12}>
             <CRow>
               <CCol sm={4}>
                 <CFormSelect
-                  aria-label="location"
-                  id="location"
-                  data-testid="locationSelect"
-                  name="location"
+                  aria-label="startTimeValue"
+                  id="startTimeValue"
+                  data-testid="startTimeValue"
+                  name="startTimeValue"
+                  value={startTimeValue}
+                  onChange={onChangeStartEndTime}
                 >
                   <option value="">00</option>
+                  <option value="">01</option>
+                  <option value="">02</option>
+                  <option value="">03</option>
+                  <option value="">04</option>
+                  <option value="">05</option>
+                  <option value="">06</option>
+                  <option value="">07</option>
+                  <option value="">08</option>
+                  <option value="">09</option>
+                  <option value="">10</option>
+                  <option value="">11</option>
+                  <option value="">12</option>
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
@@ -30,6 +53,9 @@ const StartTimeEndTime = (): JSX.Element => {
                   name="location"
                 >
                   <option value="">00</option>
+                  <option value="">15</option>
+                  <option value="">30</option>
+                  <option value="">45</option>
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
@@ -39,7 +65,8 @@ const StartTimeEndTime = (): JSX.Element => {
                   data-testid="locationSelect"
                   name="location"
                 >
-                  <option value="">00</option>
+                  <option value="">AM</option>
+                  <option value="">PM</option>
                 </CFormSelect>
               </CCol>
             </CRow>
@@ -49,19 +76,33 @@ const StartTimeEndTime = (): JSX.Element => {
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           End Time:
-          <span>*</span>
+          <span className={showIsRequired(endTimeValue)}>*</span>
         </CFormLabel>
         <CCol sm={4}>
           <CCol sm={12}>
             <CRow>
               <CCol sm={4}>
                 <CFormSelect
-                  aria-label="location"
-                  id="location"
-                  data-testid="locationSelect"
-                  name="location"
+                  aria-label="endTimeValue"
+                  id="endTimeValue"
+                  data-testid="endTimeValue"
+                  name="endTimeValue"
+                  value={endTimeValue}
+                  onChange={onChangeStartEndTime}
                 >
                   <option value="">00</option>
+                  <option value="">01</option>
+                  <option value="">02</option>
+                  <option value="">03</option>
+                  <option value="">04</option>
+                  <option value="">05</option>
+                  <option value="">06</option>
+                  <option value="">07</option>
+                  <option value="">08</option>
+                  <option value="">09</option>
+                  <option value="">10</option>
+                  <option value="">11</option>
+                  <option value="">12</option>
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
@@ -72,6 +113,9 @@ const StartTimeEndTime = (): JSX.Element => {
                   name="location"
                 >
                   <option value="">00</option>
+                  <option value="">15</option>
+                  <option value="">30</option>
+                  <option value="">45</option>
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
@@ -81,7 +125,8 @@ const StartTimeEndTime = (): JSX.Element => {
                   data-testid="locationSelect"
                   name="location"
                 >
-                  <option value="">00</option>
+                  <option value="">AM</option>
+                  <option value="">PM</option>
                 </CFormSelect>
               </CCol>
             </CRow>

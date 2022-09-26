@@ -147,7 +147,11 @@ const NewBookingFilterOptions = (): JSX.Element => {
         fromDateValue={newRoomBooking.fromDate}
         fromDateChangeHandler={fromDateChangeHandler}
       />
-      <StartTimeEndTime />
+      <StartTimeEndTime
+        startTimeValue={newRoomBooking.startTime}
+        onChangeStartEndTime={onChangeHandler}
+        endTimeValue={newRoomBooking?.endTime}
+      />
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           Subject:
