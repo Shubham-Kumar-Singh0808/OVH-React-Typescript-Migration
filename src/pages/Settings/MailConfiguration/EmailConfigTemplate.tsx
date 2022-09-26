@@ -176,7 +176,7 @@ const EmailConfigTemplate = (): JSX.Element => {
                   onClick={handleEmailTemplate}
                   disabled={!isAddButtonEnabled}
                 >
-                  <i className="fa fa-search"></i>Search
+                  <i className="fa fa-search"></i> Search
                 </CButton>
                 <CButton
                   color="warning "
