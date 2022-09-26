@@ -269,6 +269,21 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                     ) : (
                       <></>
                     )}
+                    {ticketDetails.description ? (
+                      <>
+                        <div className="mb-1">
+                          <CFormLabel className="col-form-label p-0">
+                            Description
+                          </CFormLabel>
+                          {isTicketPrevValue(
+                            ticketDetails.olddescription as string,
+                          )}
+                          &nbsp; {ticketDetails.description}
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                     {ticketDetails.approvedByManager ? (
                       <>
                         <div className="mb-1">

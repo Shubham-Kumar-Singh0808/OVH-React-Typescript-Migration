@@ -14,9 +14,9 @@ export type GetTicketsReportList = {
   trackerName: string
   categoryName: string
   subCategoryName: string
-  noOfTickets: string
-  noOfClosedTickets: string
-  noOfPendingTickets: string
+  noOfTickets: string | number
+  noOfClosedTickets: string | number
+  noOfPendingTickets: string | number
   categoryId: number
   subCategoryId: number
   trackerId: number

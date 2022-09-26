@@ -206,7 +206,26 @@ input.capetalized {
 .form-select-not-allowed {
   cursor: not-allowed !important;
 }
+.label-default {
+  background-color: $badge-light;
+  color: #333;
+}
+.leavereport-exportbutton {
+  float:right;
+  margin-top: 36px;
+  font-size: 13px;
+}
+
 .custom-scroll {
   height: 350px;
   overflow: auto;
+}
+
+.model-header-text{
+  padding: 1rem 0;
+  border-bottom: 1px solid $blue-light;
+  color: $blue-light;
+}
+.bookingList-model-table th,.bookingList-model-table td{
+border-bottom: none;
 }

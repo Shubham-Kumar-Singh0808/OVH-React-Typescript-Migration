@@ -12,12 +12,15 @@ import {
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useMemo, useState } from 'react'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { TicketDetailsTableProps } from '../../../types/Support/Report/ticketReportTypes'
 import { currentPageData } from '../../../utils/paginationUtils'
 
@@ -28,6 +31,9 @@ const TicketDetailsTable = ({
   const [subject, setSubject] = useState<string>('')
   const getTicketDetailsList = useTypedSelector(
     reduxServices.ticketReport.selectors.ticketsDetails,
+  )
+  const isLoading = useTypedSelector(
+    reduxServices.ticketReport.selectors.isLoading,
   )
 
   const pageFromState = useTypedSelector(
@@ -96,62 +102,66 @@ const TicketDetailsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentPageItems?.map((ticketDetail, index) => {
-            const subjectLimit =
-              ticketDetail.subject && ticketDetail.subject.length > 30
-                ? `${ticketDetail.subject.substring(0, 30)}...`
-                : ticketDetail.subject
+          {isLoading !== ApiLoadingState.loading ? (
+            currentPageItems?.map((ticketDetail, index) => {
+              const subjectLimit =
+                ticketDetail.subject && ticketDetail.subject.length > 30
+                  ? `${ticketDetail.subject.substring(0, 30)}...`
+                  : ticketDetail.subject
 
-            const ticketDescriptionLimit =
-              ticketDetail.description && ticketDetail.description.length > 32
-                ? `${ticketDetail.description.substring(0, 32)}...`
-                : ticketDetail.description
+              const ticketDescriptionLimit =
+                ticketDetail.description && ticketDetail.description.length > 32
+                  ? `${ticketDetail.description.substring(0, 32)}...`
+                  : ticketDetail.description
 
-            const ticketDetailDescription =
-              ticketDetail.description !== null
-                ? parse(ticketDescriptionLimit)
-                : 'N/A'
-            return (
-              <CTableRow key={index}>
-                <CTableDataCell scope="row">{ticketDetail.id}</CTableDataCell>
-                <CTableDataCell>{ticketDetail.employeeName}</CTableDataCell>
-                {subjectLimit ? (
-                  <CTableDataCell>
-                    <CLink
-                      className="cursor-pointer text-decoration-none text-primary"
-                      data-testid={`subject-comments${index}`}
-                      onClick={() => handleModal(ticketDetail.subject)}
-                    >
-                      {parse(subjectLimit)}
-                    </CLink>
-                  </CTableDataCell>
-                ) : (
-                  <CTableDataCell>{`N/A`}</CTableDataCell>
-                )}
-                <CTableDataCell>{ticketDetail.trackerName}</CTableDataCell>
-                {ticketDescriptionLimit ? (
-                  <CTableDataCell>
-                    <CLink
-                      className="cursor-pointer text-decoration-none text-primary"
-                      data-testid={`dsc-comments${index}`}
-                      onClick={() => handleModal(ticketDetail.description)}
-                    >
-                      {ticketDetailDescription}
-                    </CLink>
-                  </CTableDataCell>
-                ) : (
-                  <CTableDataCell>{`N/A`}</CTableDataCell>
-                )}
-                <CTableDataCell>{ticketDetail.priority}</CTableDataCell>
-                <CTableDataCell>{ticketDetail.startDate}</CTableDataCell>
-                <CTableDataCell>{ticketDetail.approvedBy}</CTableDataCell>
-                <CTableDataCell>{ticketDetail.approvalStatus}</CTableDataCell>
-                <CTableDataCell>{ticketDetail.actualTime}</CTableDataCell>
-                <CTableDataCell>{ticketDetail.approvalStatus}</CTableDataCell>
-                <CTableDataCell>{ticketDetail.status}</CTableDataCell>
-              </CTableRow>
-            )
-          })}
+              const ticketDetailDescription =
+                ticketDetail.description !== null
+                  ? parse(ticketDescriptionLimit)
+                  : 'N/A'
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell scope="row">{ticketDetail.id}</CTableDataCell>
+                  <CTableDataCell>{ticketDetail.employeeName}</CTableDataCell>
+                  {subjectLimit ? (
+                    <CTableDataCell>
+                      <CLink
+                        className="cursor-pointer text-decoration-none text-primary"
+                        data-testid={`subject-comments${index}`}
+                        onClick={() => handleModal(ticketDetail.subject)}
+                      >
+                        {parse(subjectLimit)}
+                      </CLink>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{`N/A`}</CTableDataCell>
+                  )}
+                  <CTableDataCell>{ticketDetail.trackerName}</CTableDataCell>
+                  {ticketDescriptionLimit ? (
+                    <CTableDataCell>
+                      <CLink
+                        className="cursor-pointer text-decoration-none text-primary"
+                        data-testid={`dsc-comments${index}`}
+                        onClick={() => handleModal(ticketDetail.description)}
+                      >
+                        {ticketDetailDescription}
+                      </CLink>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{`N/A`}</CTableDataCell>
+                  )}
+                  <CTableDataCell>{ticketDetail.priority}</CTableDataCell>
+                  <CTableDataCell>{ticketDetail.startDate}</CTableDataCell>
+                  <CTableDataCell>{ticketDetail.approvedBy}</CTableDataCell>
+                  <CTableDataCell>{ticketDetail.approvalStatus}</CTableDataCell>
+                  <CTableDataCell>{ticketDetail.actualTime}</CTableDataCell>
+                  <CTableDataCell>{ticketDetail.approvalStatus}</CTableDataCell>
+                  <CTableDataCell>{ticketDetail.status}</CTableDataCell>
+                </CTableRow>
+              )
+            })
+          ) : (
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          )}
         </CTableBody>
       </CTable>
       <CRow>

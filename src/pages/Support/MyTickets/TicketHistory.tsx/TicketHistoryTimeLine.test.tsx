@@ -29,7 +29,6 @@ describe('Ticket History Time line Component Testing', () => {
       const timeStamp = screen.getAllByTestId('sh-time-stamp')
       expect(timeStamp).toBeTruthy()
       expect(screen.getByText('pen')).toBeInTheDocument()
-      expect(screen.getByText('balu')).toBeInTheDocument()
       expect(screen.getByText('12/03/2021')).toBeInTheDocument()
       expect(screen.getByText('05-Sep-2022 04:35:28 PM')).toBeInTheDocument()
       expect(screen.getByText('12/08/2022')).toBeInTheDocument()

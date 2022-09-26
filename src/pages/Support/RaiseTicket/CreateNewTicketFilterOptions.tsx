@@ -128,7 +128,21 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           />,
         ),
       )
-      dispatch(reduxServices.raiseNewTicket.actions.clearNewTicketFields())
+      setTrackerValue('')
+      setDeptId(0)
+      setCategoryId(0)
+      setSubCategoryIdValue(0)
+      setStartDate('')
+      setEndDate('')
+      setSubjectValue('')
+      setPriorityValue('Normal')
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+      setCreateTicket({
+        description: '',
+      })
     }
   }
 
@@ -190,7 +204,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
       <CForm>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Tracker:
+            Tracker :
             <span className={trackerValue ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={3}>
@@ -220,7 +234,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Department:
+            Department :
             <span className={deptId ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={3}>
@@ -250,7 +264,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Category:
+            Category :
             <span className={categoryId ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={3}>
@@ -280,7 +294,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Sub-Category:
+            Sub-Category :
             <span className={subCategoryIdValue ? whiteText : dangerText}>
               *
             </span>
@@ -317,7 +331,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Start Date:
+            Start Date :
           </CFormLabel>
           <CCol sm={3}>
             <ReactDatePicker
@@ -349,7 +363,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            End Date::
+            End Date :
           </CFormLabel>
           <CCol sm={3}>
             <ReactDatePicker
@@ -389,7 +403,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
 
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Subject:
+            Subject :
             <span className={subjectValue ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={9}>
@@ -410,7 +424,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
             data-testid="ckEditor-component"
           >
-            Description:
+            Description :
           </CFormLabel>
           {showEditor ? (
             <CCol sm={8}>
@@ -431,7 +445,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Priority:
+            Priority :
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -454,7 +468,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Files:
+            Files :
           </CFormLabel>
           <CCol sm={3}>
             <input
@@ -478,7 +492,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
                 data-testid="create-btn"
                 color="success"
                 onClick={handleApplyTicket}
-                disabled={!isCreateButtonEnabled}
+                disabled={!isCreateButtonEnabled || dateError}
               >
                 Create
               </CButton>

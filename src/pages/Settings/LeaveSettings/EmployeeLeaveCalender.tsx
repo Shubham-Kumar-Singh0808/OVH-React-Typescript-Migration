@@ -210,7 +210,6 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             value={employeeLeaveCalender?.probationPeriod}
             onChange={onChangeLeaveCalenderHandler}
           >
-            <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -266,7 +265,6 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             value={employeeLeaveCalender?.payrollCutoffDate}
             onChange={onChangeLeaveCalenderHandler}
           >
-            <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
