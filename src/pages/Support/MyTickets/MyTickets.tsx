@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CRow,
-  CCol,
-  CSpinner,
-  CButton,
-  CFormInput,
-  CInputGroup,
-} from '@coreui/react-pro'
+import { CRow, CCol, CButton, CFormInput, CInputGroup } from '@coreui/react-pro'
 import MyTicketsTable from './MyTicketsTable'
 import TicketHistoryDetails from './TicketHistory.tsx/TicketHistoryDetails'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import myTicketsApi from '../../../middleware/api/Support/MyTickets/myTicketsApi'
 import { downloadFile } from '../../../utils/helper'
 import { usePagination } from '../../../middleware/hooks/usePagination'
@@ -21,7 +13,6 @@ const MyTickets = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
-  const isLoading = useTypedSelector(reduxServices.tickets.selectors.isLoading)
   const listSize = useTypedSelector(
     reduxServices.tickets.selectors.allTicketsListSize,
   )
@@ -124,24 +115,14 @@ const MyTickets = (): JSX.Element => {
               </CCol>
             </CRow>
             <CCol className="col-xs-12">
-              {isLoading !== ApiLoadingState.loading ? (
-                <>
-                  <MyTicketsTable
-                    setToggle={setToggle}
-                    paginationRange={paginationRange}
-                    setPageSize={setPageSize}
-                    setCurrentPage={setCurrentPage}
-                    currentPage={currentPage}
-                    pageSize={pageSize}
-                  />
-                </>
-              ) : (
-                <CCol>
-                  <CRow className="category-loading-spinner">
-                    <CSpinner />
-                  </CRow>
-                </CCol>
-              )}
+              <MyTicketsTable
+                setToggle={setToggle}
+                paginationRange={paginationRange}
+                setPageSize={setPageSize}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={pageSize}
+              />
             </CCol>
           </OCard>
         </>

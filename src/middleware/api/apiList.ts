@@ -41,6 +41,7 @@ import {
   ScheduledInterviewsApi,
   AddNewMailTemplateTypeApi,
   MyAttendanceApi,
+  LeaveReportsApi,
   TicketReportApi,
   ClientsApi,
   ProjectManagementApi,
@@ -52,6 +53,9 @@ import {
   RaiseNewTicketApi,
   DashboardApi,
   UpdateTicketApi,
+  BookingListApi,
+  EventTypeListApi,
+  AddLocationListApi,
   AllocateEmployeeApi,
 } from '../../types/apiTypes'
 
@@ -327,6 +331,7 @@ export const employeeMailConfigurationApiConfig: EmployeeMailConfigurationApi =
     getMailTemplates: apiPrefix + '/mailTemplates/getMailTemplates',
     getMailTemplateTypes: apiPrefix + '/mailTemplates/getMailTemplateTypes',
     exportMailTemplatesList: apiPrefix + '/mailTemplates/exportMailTemplates',
+    updateMailTemplate: apiPrefix + '/mailTemplates/updateMailTemplate',
     deleteMailTemplate: apiPrefix + '/mailTemplates/deleteMailTemplate',
   }
 
@@ -360,6 +365,13 @@ export const myAttendanceApiConfig: MyAttendanceApi = {
   getMyAttendance: apiPrefix + '/biometric/myAttendence',
 }
 
+export const leaveReportsApiConfig: LeaveReportsApi = {
+  getLeaveSummaries: apiPrefix + '/leaveSetup/bioAdmin/leaveSummaries',
+  searchLeaveSummaries: apiPrefix + '/leaveSetup/searchLeaveSummaries',
+  creditedYears: apiPrefix + '/leaveSetup/creditedYears',
+  financialYear: apiPrefix + '/leaveSetup/financialYear',
+  downloadLeaveReportList: apiPrefix + '/leaveSetup/exportLeaveReport',
+}
 export const allocateEmployeeApiConfig: AllocateEmployeeApi = {
   getAllEmployeeProfiles:
     apiPrefix + '/jobapplicant/getAllProfileEmployeesData?searchStr',
@@ -428,6 +440,7 @@ export const ticketApprovalsApiConfig: TicketApprovalsApi = {
     apiPrefix + '/supportManagement/getAllTicketsForApproval',
   exportTicketApprovalList:
     apiPrefix + '/supportManagement/exportTicketApprovalList',
+  rejectManagerTicket: apiPrefix + '/supportManagement/rejectManagerTicket',
 }
 
 export const createNewTicketApiConfig: RaiseNewTicketApi = {
@@ -451,6 +464,15 @@ export const dashboardApiConfig: DashboardApi = {
   getUpcomingEvents: apiPrefix + '/meetingRequest/getEventsForDashBoard',
   getEmployeesUnderProbationPeriod: apiPrefix + '/Employee/provisionPeriod',
   getAllAchievements: apiPrefix + '/achievement/getAllAchievementList',
+  deleteHoliday: apiPrefix + '/Employee/deleteHoliday',
+  getHolidayInformation: apiPrefix + '/Employee/holiday',
+  updateHoliday: apiPrefix + '/Employee/editHoliday',
+}
+
+export const addLocationListApiConfig: AddLocationListApi = {
+  getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
+  addLocation: apiPrefix + '/meetingRequest/addLocation',
+  deleteLocation: apiPrefix + '/meetingRequest/deleteLocation',
 }
 
 export const updateTicketApiConfig: UpdateTicketApi = {
@@ -463,4 +485,19 @@ export const updateTicketApiConfig: UpdateTicketApi = {
     apiPrefix + '/supportManagement/editIndividualTickets',
   approveTicketByManager:
     apiPrefix + '/supportManagement/approveByManagerTicket',
+}
+
+export const bookingListApiConfig: BookingListApi = {
+  getRoomsOfLocation: apiPrefix + '/meetingRequest/getRoomsOfLocation',
+  getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
+  getBookingsForSelection:
+    apiPrefix + '/meetingRequest/getBookingsForSelection',
+}
+
+export const eventTypeListApiConfig: EventTypeListApi = {
+  getAllEventTypes: apiPrefix + '/meetingRequest/getAllEventTypes',
+  addEventType: apiPrefix + '/meetingRequest/addEventType',
+  deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
+  updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
 }

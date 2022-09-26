@@ -39,6 +39,7 @@ export type TicketApprovalsSliceState = {
   subCategoryList: SubCategoryList[]
   ticketsForApproval: GetAllTicketsForApprovalResponse
   getAllLookUps: GetAllLookUps[]
+  selectedTicketId: number
 }
 
 export type GetAllTicketsForApprovalProps = {

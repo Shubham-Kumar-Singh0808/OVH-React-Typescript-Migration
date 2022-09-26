@@ -268,6 +268,7 @@ export interface EmployeeMailConfigurationApi extends ApiBase {
   getMailTemplates: string
   getMailTemplateTypes: string
   exportMailTemplatesList: string
+  updateMailTemplate: string
   deleteMailTemplate: string
 }
 
@@ -295,6 +296,14 @@ export interface AddNewMailTemplateTypeApi extends ApiBase {
 
 export interface MyAttendanceApi extends ApiBase {
   getMyAttendance: string
+}
+
+export interface LeaveReportsApi extends ApiBase {
+  getLeaveSummaries: string
+  searchLeaveSummaries: string
+  creditedYears: string
+  financialYear: string
+  downloadLeaveReportList: string
 }
 
 export interface AllocateEmployeeApi extends ApiBase {
@@ -357,6 +366,7 @@ export interface TicketApprovalsApi extends ApiBase {
   subCategoryList: string
   getAllTicketsForApproval: string
   exportTicketApprovalList: string
+  rejectManagerTicket: string
 }
 
 export interface RaiseNewTicketApi extends ApiBase {
@@ -376,6 +386,14 @@ export interface DashboardApi extends ApiBase {
   getUpcomingEvents: string
   getEmployeesUnderProbationPeriod: string
   getAllAchievements: string
+  deleteHoliday: string
+  getHolidayInformation: string
+  updateHoliday: string
+}
+export interface AddLocationListApi extends ApiBase {
+  getAllMeetingLocations: string
+  addLocation: string
+  deleteLocation: string
 }
 
 export interface UpdateTicketApi extends ApiBase {
@@ -385,4 +403,17 @@ export interface UpdateTicketApi extends ApiBase {
   uploadSupportTicketDocuments: string
   updateIndividualTickets: string
   approveTicketByManager: string
+}
+
+export interface BookingListApi extends ApiBase {
+  getRoomsOfLocation: string
+  getAllMeetingLocations: string
+  getBookingsForSelection: string
+}
+export interface EventTypeListApi extends ApiBase {
+  getAllEventTypes: string
+  addEventType: string
+  deleteEventType: string
+  updateEventType: string
+  getLoggedEmployeeName: string
 }
