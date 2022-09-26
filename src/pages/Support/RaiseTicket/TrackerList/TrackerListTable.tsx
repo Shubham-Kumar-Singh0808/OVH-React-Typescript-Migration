@@ -45,24 +45,27 @@ const TrackerListTable = (): JSX.Element => {
   }
   const confirmDeleteRoom = async () => {
     setIsDeleteModalVisible(false)
-    const isDeleteTracker = await dispatch(
+    const deleteTrackerResult = await dispatch(
       reduxServices.addTrackerLists.deleteTrackerList(deleteRoomId),
     )
-
-    dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
-    dispatch(reduxServices.ticketApprovals.getTrackerList())
     if (
+      reduxServices.addTrackerLists.deleteTrackerList.fulfilled.match(
+        deleteTrackerResult,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
+      dispatch(reduxServices.ticketApprovals.getTrackerList())
+    } else if (
       (reduxServices.addTrackerLists.deleteTrackerList.rejected.match(
-        isDeleteTracker,
+        deleteTrackerResult,
       ) &&
-        isDeleteTracker.payload === 405) ||
-      isDeleteTracker.payload === 500
+        deleteTrackerResult.payload === 405) ||
+      deleteTrackerResult.payload === 500
     ) {
       dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
-
   return (
     <>
       <CTable striped responsive className="mt-5 text-center">

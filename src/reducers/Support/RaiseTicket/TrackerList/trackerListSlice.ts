@@ -4,10 +4,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import trackerListApi from '../../../../middleware/api/Support/RaiseTicket/TrackerList/trackerListApi'
 import { RootState } from '../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
-import {
-  AddTrackerSliceState,
-  Tracker,
-} from '../../../../types/Support/RaiseNewTicket/TrackerList/trackerListTypes'
+import { AddTrackerSliceState } from '../../../../types/Support/RaiseNewTicket/TrackerList/trackerListTypes'
 
 const addNewTracker = createAsyncThunk(
   'addTracker/addNewTracker',
@@ -70,12 +67,6 @@ const addTrackerSlice = createSlice({
   },
 })
 
-const addTracker = (state: RootState): Tracker[] =>
-  state.addTrackerLists.trackerList
-
-const deleteTracker = (state: RootState): Tracker[] =>
-  state.addTrackerLists.trackerList
-
 const isLoading = (state: RootState): LoadingState =>
   state.employeeLeaveSummary.isLoading
 
@@ -86,8 +77,6 @@ const addTrackerListThunk = {
 
 const addTrackerListSelectors = {
   isLoading,
-  addTracker,
-  deleteTracker,
 }
 
 export const addTrackerListService = {

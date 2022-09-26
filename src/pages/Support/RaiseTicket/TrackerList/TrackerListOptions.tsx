@@ -54,7 +54,7 @@ const TrackerListOptions = ({
   ) => {
     const { name, value } = event.target
     if (name === 'name') {
-      const newValue = value.replace(/[^a-z\s]$/gi, '')
+      const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
       setSelectTrackerName(newValue)
     }
     if (trackerNameExists(value)) {
@@ -92,7 +92,7 @@ const TrackerListOptions = ({
   }
 
   useEffect(() => {
-    if (selectTrackerName.replace(/^\s*/, '')) {
+    if (selectTrackerName) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
