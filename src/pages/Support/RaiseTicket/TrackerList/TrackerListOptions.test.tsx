@@ -55,9 +55,10 @@ describe('Tracker List with data', () => {
 
   afterEach(cleanup)
   test('should render  Tracker List  screen and back button without crashing', () => {
-    const backBtnElement = screen.getByRole('button', { name: 'Back' })
-    expect(backBtnElement).toBeInTheDocument()
-    userEvent.click(backBtnElement)
+    const backButtonElement = screen.getByTestId('back-button')
+    expect(backButtonElement).toBeInTheDocument()
+    userEvent.click(backButtonElement)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
   })
 
   test('should able to clear input field', () => {
@@ -67,6 +68,7 @@ describe('Tracker List with data', () => {
     expect(addButton).toBeEnabled()
     const cbAll = screen.getByTestId(checked)
     fireEvent.change(cbAll, { target: { checked: true } })
+    fireEvent.change(cbAll, { target: { checked: false } })
     userEvent.click(screen.getByRole('button', { name: 'Add' }))
     expect(trackerNameInput).toHaveValue('Test')
     userEvent.click(screen.getByTestId(clearButton))
