@@ -67,3 +67,8 @@ export type InitialNewEventSliceState = {
   roomsByLocation: RoomsByLocation[]
   allEmployeesProfiles: LoggedEmployee[]
 }
+
+export type EventTypeList = {
+  id: number
+  name: string
+}

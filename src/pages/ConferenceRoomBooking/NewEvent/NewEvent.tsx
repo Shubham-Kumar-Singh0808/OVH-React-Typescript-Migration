@@ -9,6 +9,7 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
+import moment from 'moment'
 import {
   Attendees,
   EventEndDate,
@@ -30,6 +31,7 @@ import {
   Availability,
   TrainerDetails,
 } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
+import { commonDateFormat } from '../../../utils/dateFormatUtils'
 
 const NewEvent = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -62,6 +64,7 @@ const NewEvent = (): JSX.Element => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
     dispatch(reduxServices.newEvent.getLoggedEmployee())
+    dispatch(reduxServices.eventTypeList.getEventTypes())
   }, [dispatch])
 
   useEffect(() => {
@@ -85,6 +88,10 @@ const NewEvent = (): JSX.Element => {
     reduxServices.newEvent.selectors.allEmployeesProfiles,
   )
 
+  const eventTypeList = useTypedSelector(
+    reduxServices.eventTypeList.selectors.eventTypeList,
+  )
+
   // onchange handlers
   const onHandleLocation = (value: string) => {
     setAddEvent({ ...addEvent, locationId: Number(value) })
@@ -94,6 +101,18 @@ const NewEvent = (): JSX.Element => {
   }
   const onSelectAuthor = (value: Author) => {
     setAddEvent({ ...addEvent, authorName: value })
+  }
+  const onSelectTrainer = (value: Author) => {
+    setAddEvent({ ...addEvent, trainerName: value })
+  }
+  const onHandleEventType = (value: string) => {
+    setAddEvent({ ...addEvent, eventTypeId: Number(value) })
+  }
+  const fromDateChangeHandler = (value: Date) => {
+    setAddEvent({
+      ...addEvent,
+      fromDate: moment(value).format(commonDateFormat),
+    })
   }
 
   return (
@@ -117,9 +136,19 @@ const NewEvent = (): JSX.Element => {
           allEmployeesProfiles={allEmployeesProfiles}
           onSelectAuthor={onSelectAuthor}
         />
-        <Trainer />
-        <EventType />
-        <EventFromDate />
+        <Trainer
+          allEmployeesProfiles={allEmployeesProfiles}
+          onSelectTrainer={onSelectTrainer}
+        />
+        <EventType
+          eventTypeList={eventTypeList}
+          eventTypeValue={addEvent.eventTypeId}
+          onHandleEventType={onHandleEventType}
+        />
+        <EventFromDate
+          fromDateValue={addEvent.fromDate}
+          fromDateChangeHandler={fromDateChangeHandler}
+        />
         <EventEndDate />
         <StartTimeEndTime />
         <CRow className="mt-1 mb-3">
