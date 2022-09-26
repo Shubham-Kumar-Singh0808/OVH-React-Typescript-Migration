@@ -30,7 +30,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
     initialMailTemplateType,
   )
   const [templateId, setTemplateId] = useState(0)
-
+  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
   const mailTemplateTypes = useTypedSelector(
     reduxServices.addNewMailTemplateType.selectors.mailTemplateType,
   )
@@ -155,6 +155,14 @@ const MailTemplateTypeTable = (): JSX.Element => {
     setIsMailTemplateEdit(false)
   }
 
+  useEffect(() => {
+    if (editTemplateTypeDetails?.name?.replace(/^\s*/, '')) {
+      setIsSaveButtonEnabled(true)
+    } else {
+      setIsSaveButtonEnabled(false)
+    }
+  }, [editTemplateTypeDetails.name])
+
   return (
     <>
       <CTable striped className="mail-template-table">
@@ -196,6 +204,7 @@ const MailTemplateTypeTable = (): JSX.Element => {
                       data-testid={`sh-save-btn${index}`}
                       className="btn-ovh me-1"
                       onClick={saveMailTemplateButtonHandler}
+                      disabled={!isSaveButtonEnabled}
                     >
                       <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     </CButton>
