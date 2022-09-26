@@ -497,4 +497,6 @@ export const eventTypeListApiConfig: EventTypeListApi = {
 
 export const newBookingApiConfig: NewBookingApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
 }

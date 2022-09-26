@@ -21,6 +21,18 @@ const getLoggedEmployeeName = createAsyncThunk(
   },
 )
 
+const getAllEmployees = createAsyncThunk(
+  'newBooking/getAllEmployees',
+  async (searchString: string, thunkApi) => {
+    try {
+      return await newBookingApi.getAllEmployees(searchString)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialNewBookingListState: newBookingSliceState = {
   loggedEmployeeName: [],
   isLoading: ApiLoadingState.idle,
@@ -48,6 +60,7 @@ const LoggedEmployeeName = (state: RootState): NewBookingLoggedEmployeeName[] =>
 
 const newBookingThunk = {
   getLoggedEmployeeName,
+  getAllEmployees,
 }
 
 const newBookingSelectors = { LoggedEmployeeName }

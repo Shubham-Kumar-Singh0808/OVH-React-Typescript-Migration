@@ -16,9 +16,23 @@ const getLoggedEmployeeName = async (): Promise<
   const response = await useAxios(requestConfig)
   return response.data
 }
+const getAllEmployees = async (
+  searchString: string,
+): Promise<NewBookingLoggedEmployeeName[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: newBookingApiConfig.getAllProfileEmployeesData,
+    method: AllowedHttpMethods.get,
+    params: {
+      searchStr: searchString,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 
 const newBookingApi = {
   getLoggedEmployeeName,
+  getAllEmployees,
 }
 
 export default newBookingApi
