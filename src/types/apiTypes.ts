@@ -398,6 +398,12 @@ export interface UpdateTicketApi extends ApiBase {
   updateIndividualTickets: string
   approveTicketByManager: string
 }
+
+export interface BookingListApi extends ApiBase {
+  getRoomsOfLocation: string
+  getAllMeetingLocations: string
+  getBookingsForSelection: string
+}
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string
   addEventType: string

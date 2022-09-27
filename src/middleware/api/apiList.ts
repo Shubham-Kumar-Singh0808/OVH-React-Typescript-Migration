@@ -53,6 +53,7 @@ import {
   RaiseNewTicketApi,
   DashboardApi,
   UpdateTicketApi,
+  BookingListApi,
   EventTypeListApi,
   AddLocationListApi,
 } from '../../types/apiTypes'
@@ -476,6 +477,13 @@ export const updateTicketApiConfig: UpdateTicketApi = {
     apiPrefix + '/supportManagement/editIndividualTickets',
   approveTicketByManager:
     apiPrefix + '/supportManagement/approveByManagerTicket',
+}
+
+export const bookingListApiConfig: BookingListApi = {
+  getRoomsOfLocation: apiPrefix + '/meetingRequest/getRoomsOfLocation',
+  getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
+  getBookingsForSelection:
+    apiPrefix + '/meetingRequest/getBookingsForSelection',
 }
 
 export const eventTypeListApiConfig: EventTypeListApi = {

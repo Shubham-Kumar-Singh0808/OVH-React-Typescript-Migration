@@ -128,7 +128,21 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           />,
         ),
       )
-      dispatch(reduxServices.raiseNewTicket.actions.clearNewTicketFields())
+      setTrackerValue('')
+      setDeptId(0)
+      setCategoryId(0)
+      setSubCategoryIdValue(0)
+      setStartDate('')
+      setEndDate('')
+      setSubjectValue('')
+      setPriorityValue('Normal')
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+      setCreateTicket({
+        description: '',
+      })
     }
   }
 
@@ -390,7 +404,13 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
             Subject :
-            <span className={subjectValue ? whiteText : dangerText}>*</span>
+            <span
+              className={
+                subjectValue?.replace(/^\s*/, '') ? whiteText : dangerText
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={9}>
             <CFormInput

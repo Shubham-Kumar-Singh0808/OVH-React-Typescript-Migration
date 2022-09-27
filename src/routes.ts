@@ -167,6 +167,9 @@ const UpdateTicketUnderTicketList = React.lazy(
   () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
 )
 
+const BookingList = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/BookingList/BookingList'),
+)
 const EventTypeList = React.lazy(
   () =>
     import(
@@ -401,6 +404,11 @@ const routes = [
     path: '/probationaryList',
     name: 'Upcoming Probationary End Dates',
     component: ProbationaryList,
+  },
+  {
+    path: '/meetingList',
+    name: 'Booking List',
+    component: BookingList,
   },
   {
     path: '/newEvent',
