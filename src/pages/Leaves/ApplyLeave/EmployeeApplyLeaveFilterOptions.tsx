@@ -205,7 +205,6 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 checked={leaveTypeItem.name === applyLeave.leaveCategoryName}
                 onChange={onChangeLeaveTypeHandler}
               />
-              // </CCol>
             )
           })}
         </CCol>
