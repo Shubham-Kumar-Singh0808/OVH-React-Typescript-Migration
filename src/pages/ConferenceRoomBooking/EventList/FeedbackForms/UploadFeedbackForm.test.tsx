@@ -8,6 +8,8 @@ import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockFeedbackFormList } from '../../../../test/data/feedbackFormListData'
 
+const fileUploadInput = 'feedback-form'
+
 const history = createMemoryHistory()
 const toRender = (
   <div>
@@ -51,7 +53,7 @@ describe('EventList Component Testing', () => {
   })
   test('Clicking on the upload button calls the `handleFileUpload` function', () => {
     const fakeFile = new File(['hello'], 'hello.doc', { type: 'pdf/doc' })
-    fireEvent.change(screen.getByTestId('feedback-form'), {
+    fireEvent.change(screen.getByTestId(fileUploadInput), {
       target: { files: [fakeFile] },
     })
   })
@@ -59,7 +61,7 @@ describe('EventList Component Testing', () => {
     const file = new File(['feedbackForm'], 'feedbackForm.docx', {
       type: 'doc/docx/pdf',
     })
-    const fileInput = screen.getByTestId('feedback-form')
+    const fileInput = screen.getByTestId(fileUploadInput)
     userEvent.upload(fileInput, file)
 
     expect(fileInput.files[0]).toStrictEqual(file)
@@ -71,5 +73,18 @@ describe('EventList Component Testing', () => {
     const backButtonEl = screen.getByTestId('back-btn')
     userEvent.click(backButtonEl)
     expect(history.location.pathname).toBe('/eventList')
+  })
+  test('Should display error message when wrong format of file is uploaded', () => {
+    const file = new File(['feedbackFormTest'], 'feedbackFormTest.jpg', {
+      type: 'doc/docx/pdf',
+    })
+    const fileInput = screen.getByTestId(fileUploadInput)
+    userEvent.upload(fileInput, file)
+
+    expect(
+      screen.getByText(
+        'Wrong file format chosen. Please choose either doc, docx, or pdf.',
+      ),
+    ).toBeInTheDocument()
   })
 })
