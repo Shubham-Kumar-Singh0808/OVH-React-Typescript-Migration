@@ -6,6 +6,25 @@ import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
 
 const mockSetToggle = jest.fn()
+const mockSetCurrentPage = jest.fn()
+const mockSetPageSize = jest.fn()
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <MyTicketsTable
+      setToggle={mockSetToggle}
+      setCurrentPage={mockSetCurrentPage}
+      setPageSize={mockSetPageSize}
+      currentPage={1}
+      pageSize={20}
+      paginationRange={[1, 2, 3]}
+    />
+    ,
+  </div>
+)
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
@@ -15,28 +34,15 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
   }
 }
 
-const mockSetCurrentPage = jest.fn()
-const mockSetPageSize = jest.fn()
-
 describe('MyTickets component with data', () => {
   beforeEach(() => {
-    render(
-      <MyTicketsTable
-        setToggle={mockSetToggle}
-        setCurrentPage={mockSetCurrentPage}
-        setPageSize={mockSetPageSize}
-        currentPage={1}
-        pageSize={20}
-        paginationRange={[1, 2, 3]}
-      />,
-      {
-        preloadedState: {
-          tickets: {
-            ticketList: mockEmployeeTicketList,
-          },
+    render(toRender, {
+      preloadedState: {
+        tickets: {
+          ticketList: mockEmployeeTicketList,
         },
       },
-    )
+    })
   })
   test('should open modal when clicking on ticket List subject link', async () => {
     const linkElement = screen.getByTestId('emp-subject2')
@@ -65,31 +71,20 @@ describe('MyTickets component with data', () => {
     expect(confirmDeleteBtn)
   })
   test('should click on edit button  ', () => {
-    const editElement = screen.getAllByTestId('history-btn')
+    const editElement = screen.getAllByTestId('edit-btn')
     userEvent.click(editElement[0])
-    expect(editElement[0]).toBeInTheDocument()
   })
 })
 
 describe('My Tickets Table Component Testing', () => {
   test('should render MyTickets table component without crashing', async () => {
-    render(
-      <MyTicketsTable
-        setToggle={mockSetToggle}
-        setCurrentPage={mockSetCurrentPage}
-        setPageSize={mockSetPageSize}
-        currentPage={1}
-        pageSize={20}
-        paginationRange={[1, 2, 3]}
-      />,
-      {
-        preloadedState: {
-          tickets: {
-            ticketList: mockEmployeeTicketList,
-          },
+    render(toRender, {
+      preloadedState: {
+        tickets: {
+          ticketList: mockEmployeeTicketList,
         },
       },
-    )
+    })
 
     expectPageSizeToBeRendered(20)
 

@@ -16,10 +16,6 @@ describe('Leave Apply Component Testing', () => {
   beforeEach(() => {
     render(<EmployeeApplyLeaveFilterOptions />)
   })
-  it('should display the correct number of options', () => {
-    render(<EmployeeApplyLeaveFilterOptions />)
-    expect(screen.getAllByRole('option').length).toBe(2)
-  })
   test('should render leave Type filter', () => {
     const leaveType = screen.findByTestId(leaveFormSelect)
     expect(leaveType).toBeTruthy()
@@ -61,9 +57,9 @@ describe('Ticket Approvals Filter Options Component Testing with data', () => {
     expect(screen.getByRole('button', { name: 'Clear' })).toBeEnabled()
   })
   test('should select Leave Type dropdown value', async () => {
-    const selectLeaveType = screen.getByTestId(leaveFormSelect)
-    userEvent.selectOptions(selectLeaveType, ['LOP'])
-    expect(selectLeaveType).toHaveValue('LOP')
+    const selectLeaveType = screen.getAllByTestId(leaveFormSelect)
+    fireEvent.click(selectLeaveType[0], 'LOP')
+    expect(selectLeaveType).toBeTruthy()
 
     const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
     fireEvent.click(datePickers[0])
@@ -91,11 +87,10 @@ describe('Ticket Approvals Filter Options Component Testing with data', () => {
   })
 
   test('should clear input and disable button after  new apply leave should be added', async () => {
-    const LeaveTypeSelectListSelector = screen.getByTestId(leaveFormSelect)
-    userEvent.selectOptions(LeaveTypeSelectListSelector, ['LOP'])
+    const LeaveTypeSelectListSelector = screen.getAllByTestId(leaveFormSelect)
+    fireEvent.click(LeaveTypeSelectListSelector[0], 'LOP')
     await waitFor(() => {
       userEvent.click(screen.getByTestId('sh-clear-button'))
-      userEvent.selectOptions(LeaveTypeSelectListSelector, [''])
       const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
       expect(datePickers[0]).toHaveValue('')
       expect(datePickers[1]).toHaveValue('')
@@ -122,6 +117,8 @@ describe('Ticket Approvals Filter Options Component Testing with data', () => {
     expect(datePickerElement[1]).toHaveValue('10/02/2022')
     await waitFor(() => {
       expect(screen.getByTestId('errorMessage')).toBeInTheDocument()
+      const applyBtnElement = screen.getByRole('button', { name: 'Apply' })
+      expect(applyBtnElement).toBeDisabled()
     })
   })
 })
