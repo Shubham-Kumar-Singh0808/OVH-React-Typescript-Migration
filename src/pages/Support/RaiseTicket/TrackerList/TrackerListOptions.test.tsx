@@ -98,4 +98,11 @@ describe('TrackerList with data', () => {
       expect(screen.getByText('Name Already Exist')).toBeInTheDocument()
     })
   })
+  test('should render clear inputs', async () => {
+    userEvent.click(screen.getByRole('button', { name: 'Add' }))
+    const clearInputName = screen.getByPlaceholderText('Name')
+    expect(clearInputName).toHaveValue('')
+    const clearCB = await screen.findByTestId('ch-All')
+    fireEvent.change(clearCB, { target: { checked: false } })
+  })
 })
