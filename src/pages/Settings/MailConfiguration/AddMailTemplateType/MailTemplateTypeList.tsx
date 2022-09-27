@@ -28,7 +28,6 @@ const MailTemplateTypeList = ({
         <OCard
           className="mb-4 myprofile-wrapper"
           title="Add Template Type"
-          CBodyClassName="ps-0 pe-0"
           CFooterClassName="d-none"
         >
           <CRow>

@@ -105,6 +105,9 @@ const Clients = React.lazy(
 const MyTickets = React.lazy(
   () => import('./pages/Support/MyTickets/MyTickets'),
 )
+const LeaveApprovals = React.lazy(
+  () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
+)
 const LeaveSummary = React.lazy(
   () =>
     import(
@@ -414,6 +417,11 @@ const routes = [
     path: '/newEvent',
     name: 'Event Type List',
     component: EventTypeList,
+  },
+  {
+    path: '/leaveApprovals',
+    name: 'Leave Approvals',
+    component: LeaveApprovals,
   },
   {
     path: '/newMeetingRequest',

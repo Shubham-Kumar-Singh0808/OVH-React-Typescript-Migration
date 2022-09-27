@@ -98,6 +98,7 @@ $primary-base: #124b7c !default;
 $primary-75: #1b5d95;
 $primary-50: #458fd2 !default;
 $primary-navHover: #2d76b5;
+$primary-new: #043D86;
 // $primary-25:    #ccc7f6 !default;
 
 // $secondary-dark:  #212233 !default;
@@ -109,7 +110,6 @@ $primary-navHover: #2d76b5;
 $success-base: #8cc152 !default;
 // $success-50:    #96dbad !default;
 // $success-25:    #cbedd6 !default;
-
 // $info-dark:  #2982cc !default;
 $info-base: #3f8bd1 !default;
 $info-label: #3bb5e8 !default;
@@ -331,6 +331,7 @@ $green-success: #5cb85c;
 
 // scss-docs-start spacer-variables-maps
 $spacer: 1rem !default;
+$spacer-padding : 1.25rem;
 // $spacers: (
 //   0: 0,
 //   1: $spacer / 4,
@@ -498,6 +499,8 @@ $border-radius-pill: 50rem !default;
 // $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 // stylelint-enable value-keyword-case
 $font-family-base: 'Roboto', sans-serif !default;
+$font-family-poppins:'Poppins', sans-serif;
+
 // $font-family-code:            var(--#{$variable-prefix}font-monospace) !default;
 
 // $font-size-root effects the value of `rem`, which is used for as well font sizes, paddings and margins

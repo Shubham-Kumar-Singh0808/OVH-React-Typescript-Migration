@@ -37,7 +37,6 @@ const EmployeeHandbook = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Employee Handbook"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         <CRow className="justify-content-between mb-2">

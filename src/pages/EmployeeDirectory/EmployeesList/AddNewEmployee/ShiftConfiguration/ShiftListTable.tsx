@@ -196,11 +196,7 @@ const ShiftListTable = ({
 
   return (
     <>
-      <CTable
-        striped
-        responsive
-        className="ps-0 pe-0 shift-configuration-table"
-      >
+      <CTable striped responsive className="shift-configuration-table">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell {...tableHeaderCellPropsSNo}>#</CTableHeaderCell>

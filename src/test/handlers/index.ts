@@ -10,6 +10,7 @@ import { employeeShiftsHandlers } from './employeeShiftsHandlers'
 import { generalInformationHandlers } from './generalInformationHandlers'
 import { hiveActivityReportHandlers } from './hiveActivityReportHandlers'
 import { employeeLeaveSummaryHandlers } from './leaveSummaryHandlers'
+import { leaveApprovalsHandlers } from './leaveApprovalsHandlers'
 import { loginHandlers } from './loginHandlers'
 import { scheduledInterviewsHandlers } from './scheduledInterviewsHandlers'
 import { skillListHandlers } from './skillListHandlers'
@@ -48,5 +49,6 @@ export const handlers = [
   ...employeeAchievementsHandlers,
   ...updateTicketHandlers,
   ...eventTypeListHandlers,
+  ...leaveApprovalsHandlers,
   // add your handler here
 ]

@@ -31,7 +31,6 @@ const ShowHandbook = (): JSX.Element => {
           <OCard
             className="mb-4 myprofile-wrapper"
             title={`${handbook.title}`}
-            CBodyClassName="ps-0 pe-0"
             CFooterClassName="d-none"
           >
             <CRow className="justify-content-end">

@@ -55,6 +55,7 @@ import {
   UpdateTicketApi,
   BookingListApi,
   EventTypeListApi,
+  LeaveApprovalsApi,
   AddLocationListApi,
 } from '../../types/apiTypes'
 
@@ -492,4 +493,13 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+}
+
+export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
+  getEmployees: apiPrefix + '/managerAppraisalController/getEmployees',
+  getEmployeeLeaves: apiPrefix + '/leave/bioAdminManager/employeeLeaves',
+  getSearchEmployees: apiPrefix + '/leave/bioAdminManager/searchEmployees',
+  checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
+  leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
+  leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
 }

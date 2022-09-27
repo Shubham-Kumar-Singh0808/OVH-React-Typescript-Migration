@@ -74,6 +74,7 @@ import bookingListReducer from './reducers/ConferenceRoomBooking/BookingList/boo
 import leaveReportReducer from './reducers/Leaves/LeaveReports/leaveReportSlice'
 import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -141,6 +142,7 @@ export const allReducers = {
   earnedLeaves: earnedLeavesReducer,
   weeklyTimeInOffice: timeInOfficeReducer,
   trainingsAndEvents: trainingAndEventsReducer,
+  leaveApprovals: leaveApprovalsReducer,
   probationPeriod: provisionPeriodReducer,
   achievements: achievementsReducer,
   addLocationList: addLocationListReducer,

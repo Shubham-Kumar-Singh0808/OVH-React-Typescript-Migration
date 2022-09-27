@@ -411,3 +411,12 @@ export interface EventTypeListApi extends ApiBase {
   updateEventType: string
   getLoggedEmployeeName: string
 }
+
+export interface LeaveApprovalsApi extends ApiBase {
+  getEmployees: string
+  getEmployeeLeaves: string
+  getSearchEmployees: string
+  checkProjectManagerExits: string
+  leaveApprove: string
+  leaveReject: string
+}

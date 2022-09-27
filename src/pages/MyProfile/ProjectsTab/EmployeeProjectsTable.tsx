@@ -36,7 +36,7 @@ const EmployeeProjectsTable = (): JSX.Element => {
 
   return (
     <>
-      <CCardBody className="ps-0 pe-0">
+      <CCardBody>
         <CTable className="text-left" striped>
           <CTableHead>
             <CTableRow>

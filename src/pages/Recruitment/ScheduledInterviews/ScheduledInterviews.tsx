@@ -55,7 +55,6 @@ const ScheduledInterviews = (): JSX.Element => {
             ? 'Scheduled Interviews'
             : 'Scheduled Candidates'
         }
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         <CRow>

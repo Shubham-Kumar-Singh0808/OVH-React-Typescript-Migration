@@ -1,0 +1,54 @@
+input.form-control.sh-leave-form-control,select.form-select.sh-leave-form-control {
+height: 48px;
+left: 314px;
+border-radius: 5px;
+&::placeholder {
+    font-size: 12px;
+}
+}
+
+.sh-ovh-btn-new{
+height: 36px;
+width: 80px;
+border-radius: 5px;
+}
+
+.sh-accept-leave-h4{
+  margin-top: -26px;
+}
+
+.sh-leave-approval-link {
+  a {
+    text-decoration: none;
+    color: $blue-employeeList !important;
+    &:hover {
+        text-decoration: underline;
+        color: $primary-75 !important;
+    }
+  }
+}
+
+.label-info {
+    background-color: $info-label;
+    color: white;
+  }
+  
+  .label-gray-cancel {
+    background-color: $bg-gray-dark;
+    color: #404040;
+  }
+  
+  .label-success {
+    background-color: $success-base;
+    color: white;
+  }
+  
+  .label-danger {
+    background-color: $danger-base;
+    color: white;
+  }
+  
+  .label-gray-cancelAfterApproval {
+    background-color: $bg-gray-dark;
+    color: #404040;
+  }

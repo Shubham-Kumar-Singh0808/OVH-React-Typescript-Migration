@@ -22,7 +22,6 @@ const MyProfile = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Profile Details"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         {isViewingAnotherEmployee ? (

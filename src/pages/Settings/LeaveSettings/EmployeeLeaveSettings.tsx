@@ -13,7 +13,6 @@ const EmployeeLeaveSettings = (): JSX.Element => {
           <OCard
             className="mb-4 myprofile-wrapper"
             title="Leave Settings"
-            CBodyClassName="ps-0 pe-0"
             CFooterClassName="d-none"
           >
             <EmployeeLeaveCalender />

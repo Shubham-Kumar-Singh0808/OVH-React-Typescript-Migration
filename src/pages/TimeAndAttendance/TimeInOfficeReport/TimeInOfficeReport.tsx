@@ -104,7 +104,6 @@ const TimeInOfficeReport = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper time-in-office-report-card"
         title="Time in Office Report"
-        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
         <ReportOptions
