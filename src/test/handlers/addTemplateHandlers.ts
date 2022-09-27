@@ -2,9 +2,9 @@ import { rest } from 'msw'
 import { addNewTemplateApiConfig } from '../../middleware/api/apiList'
 import { mockTemplateTypes } from '../data/addMailTemplateData'
 
-export const categoryListHandlers = [
+export const addNewTemplateHandlers = [
   // addTemplate api mock
-  rest.get(addNewTemplateApiConfig.addNewMailTemplate, (req, res, ctx) => {
+  rest.post(addNewTemplateApiConfig.addNewMailTemplate, (req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,

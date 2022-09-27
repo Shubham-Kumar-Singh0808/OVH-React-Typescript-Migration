@@ -22,6 +22,7 @@ import { userAccessToFeaturesHandlers } from './userAccessToFeaturesHandlers'
 import { userRolesAndPermissionsHandlers } from './userRolesAndPermissionsHandlers'
 import { timeInOfficeHandlers } from './weeklyTimeInOfficeHandlers'
 import { eventTypeListHandlers } from './eventTypeListHandlers'
+import { addNewTemplateHandlers } from './addTemplateHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -48,5 +49,6 @@ export const handlers = [
   ...employeeAchievementsHandlers,
   ...updateTicketHandlers,
   ...eventTypeListHandlers,
+  ...addNewTemplateHandlers,
   // add your handler here
 ]
