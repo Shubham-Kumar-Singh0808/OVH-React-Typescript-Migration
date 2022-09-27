@@ -47,8 +47,13 @@ const AddNewAllocate = createAsyncThunk(
   },
 )
 
-const initialAllocateEmployeeState = {} as EmployeeAllocateSliceState
-
+const initialAllocateEmployeeState: EmployeeAllocateSliceState = {
+  getAllEmployees: [],
+  getAllProjects: [],
+  allocateEmployee: {} as AllocateEmployeeToProject,
+  isLoading: ApiLoadingState.idle,
+  error: null,
+}
 const allocateEmployeeSlice = createSlice({
   name: 'allocateEmployee',
   initialState: initialAllocateEmployeeState,
