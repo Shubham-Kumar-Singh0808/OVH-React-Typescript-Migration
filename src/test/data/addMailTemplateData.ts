@@ -1,3 +1,4 @@
+import { AssetTypeResponse } from '../../types/Settings/MailConfiguration/AddTemplate/addMailTemplateTypes'
 import { EmployeeMailTemplateType } from '../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 
 export const mockTemplateTypes: EmployeeMailTemplateType[] = [
@@ -74,3 +75,20 @@ export const mockTemplateTypes: EmployeeMailTemplateType[] = [
     name: 'Asset',
   },
 ]
+
+export const mockAssetTypes: AssetTypeResponse = {
+  assetTypeList: [
+    {
+      id: 1,
+      assetType: 'Hardware',
+    },
+    {
+      id: 2,
+      assetType: 'Software',
+    },
+    {
+      id: 3,
+      assetType: 'Utilities',
+    },
+  ],
+}

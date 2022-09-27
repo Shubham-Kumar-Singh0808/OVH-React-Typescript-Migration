@@ -20,6 +20,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { AddNewTemplate } from '../../../../types/Settings/MailConfiguration/AddTemplate/addMailTemplateTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import MailTemplateTypeList from '../AddMailTemplateType/MailTemplateTypeList'
+import { showIsRequired } from '../../../../utils/helper'
 
 function AddNewMailTemplate(): JSX.Element {
   const initialMailTemplateDetails = {} as AddNewTemplate
@@ -56,13 +57,20 @@ function AddNewMailTemplate(): JSX.Element {
   }
 
   useEffect(() => {
+    if (addNewTemplate.email === '') {
+      setEmailError(false)
+    }
+  }, [addNewTemplate])
+
+  useEffect(() => {
     if (showAssetType) {
       if (
         addNewTemplate.assetTypeId &&
         addNewTemplate.template &&
         addNewTemplate.templateName &&
         addNewTemplate.email &&
-        addNewTemplate.templateTypeId
+        addNewTemplate.templateTypeId &&
+        !emailError
       ) {
         setIsButtonEnabled(true)
       } else {
@@ -72,7 +80,7 @@ function AddNewMailTemplate(): JSX.Element {
     if (!showAssetType) {
       if (
         addNewTemplate.template &&
-        addNewTemplate.templateName &&
+        addNewTemplate.templateName?.replace(/^\s*/, '') &&
         addNewTemplate.templateTypeId
       ) {
         setIsButtonEnabled(true)
@@ -115,7 +123,7 @@ function AddNewMailTemplate(): JSX.Element {
     }
   }
   useEffect(() => {
-    if (Number(addNewTemplate.templateTypeId) === 11) {
+    if (Number(addNewTemplate.templateTypeId) === 61) {
       setShowAssetType(true)
     } else {
       setShowAssetType(false)
@@ -157,8 +165,6 @@ function AddNewMailTemplate(): JSX.Element {
     }
     dispatch(reduxServices.app.actions.addToast(successToastMessage))
   }
-
-  const isAsteriskShow = addNewTemplate.assetTypeId ? TextWhite : TextDanger
 
   return (
     <>
@@ -229,7 +235,14 @@ function AddNewMailTemplate(): JSX.Element {
                       {...formLabelProps}
                       className="col-sm-2 col-form-label text-end"
                     >
-                      Asset Type: <span className={isAsteriskShow}>*</span>
+                      Asset Type:{' '}
+                      <span
+                        className={showIsRequired(
+                          addNewTemplate.assetTypeId as string,
+                        )}
+                      >
+                        *
+                      </span>
                     </CFormLabel>
                     <CCol sm={4}>
                       <CFormSelect
@@ -256,19 +269,26 @@ function AddNewMailTemplate(): JSX.Element {
                       className="col-sm-2 col-form-label text-end"
                     >
                       Email:
-                      <span className={isAsteriskShow}>*</span>
+                      <span
+                        className={showIsRequired(
+                          addNewTemplate.email as string,
+                        )}
+                      >
+                        *
+                      </span>
                     </CFormLabel>
                     <CCol sm={4}>
                       <CFormInput
                         type="email"
                         data-testid="email-address"
                         name="email"
+                        placeholder="Email Address"
                         value={addNewTemplate?.email}
                         maxLength={50}
                         onChange={handleInputChange}
                       />
                       {emailError && (
-                        <p data-testid="error-msg" className={TextDanger}>
+                        <p data-testid="error-msg" className="mt-1 text-danger">
                           Enter a valid Email address.For multiple mail ids
                           use,without space!!
                         </p>
