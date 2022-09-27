@@ -12,12 +12,11 @@ export const trackerHandlers = [
     )
   }),
 
-  // eslint-disable-next-line sonarjs/no-identical-functions
-  rest.get(addTrackerApiConfig.deleteTrackerList, (_req, res, ctx) => {
+  rest.delete(addTrackerApiConfig.deleteTrackerList, (_req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,
-        data: mockAddTrackerList,
+        data: {},
       }),
     )
   }),
