@@ -73,7 +73,6 @@ const TrackerListOptions = ({
         permission: isChecked,
       }),
     )
-
     dispatch(reduxServices.ticketApprovals.getTrackerList())
     dispatch(reduxServices.app.actions.addToast(successToast))
     setSelectTrackerName('')
@@ -114,7 +113,7 @@ const TrackerListOptions = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Name:
+            Name :
             <span className={selectTrackerName ? 'text-white' : 'text-danger'}>
               *
             </span>
