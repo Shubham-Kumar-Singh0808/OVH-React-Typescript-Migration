@@ -289,8 +289,9 @@ const TicketReportFilterOptions = ({
             color="success btn-ovh me-1"
             onClick={handleTicketReports}
             disabled={
-              selectDate === 'Custom' &&
-              !((fromDate !== '' && toDate !== '') || dateError)
+              (selectDate === 'Custom' &&
+                !(fromDate !== '' && toDate !== '')) ||
+              dateError
             }
           >
             View
