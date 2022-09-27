@@ -51,7 +51,7 @@ const TrackerListOptions = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    if (name === 'name') {
+    if (name === 'tracker') {
       const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
       setSelectTrackerName(newValue)
     }
@@ -79,9 +79,9 @@ const TrackerListOptions = ({
       )
     ) {
       dispatch(reduxServices.ticketApprovals.getTrackerList())
+      dispatch(reduxServices.app.actions.addToast(successToast))
       setSelectTrackerName('')
       setIsChecked(false)
-      dispatch(reduxServices.app.actions.addToast(successToast))
     }
   }
 
@@ -130,7 +130,7 @@ const TrackerListOptions = ({
               type="text"
               id="Name"
               size="sm"
-              name="name"
+              name="tracker"
               placeholder="Name"
               value={selectTrackerName}
               onChange={handledInputChange}
