@@ -6,6 +6,7 @@ import ReactDatePicker from 'react-datepicker'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { commonDateFormat } from '../../../utils/dateFormatUtils'
 import { deviceLocale } from '../../../utils/leaveApprovalsUtils'
 
 const LeaveApprovalFilterOptions = ({
@@ -63,17 +64,12 @@ const LeaveApprovalFilterOptions = ({
   }, [fromDate, toDate, selectEmployeeStatus, selectMember])
 
   useEffect(() => {
-    const tempFromDate = new Date(
-      moment(fromDate.toString()).format(commonFormatDate),
+    const tempFromDate = moment(fromDate, commonDateFormat).format(
+      commonDateFormat,
     )
-    const tempToDate = new Date(
-      moment(toDate.toString()).format(commonFormatDate),
-    )
-    if (tempToDate.getTime() < tempFromDate.getTime()) {
-      setDateError(true)
-    } else {
-      setDateError(false)
-    }
+    const tempToDate = moment(toDate, commonDateFormat).format(commonDateFormat)
+
+    setDateError(moment(tempToDate).isBefore(tempFromDate))
   }, [fromDate, toDate])
 
   const viewButtonHandler = (e: React.SyntheticEvent) => {
@@ -115,9 +111,9 @@ const LeaveApprovalFilterOptions = ({
   return (
     <>
       <CRow className="mt-1">
-        <CCol sm={8}>
+        <CCol sm={12}>
           <CRow>
-            <CCol sm={6}>
+            <CCol sm={4}>
               <CFormLabel className="col-sm-4 col-form-label">
                 From Date:
                 <span className={fromDate ? TextWhite : TextDanger}>*</span>
@@ -147,7 +143,7 @@ const LeaveApprovalFilterOptions = ({
                 }
               />
             </CCol>
-            <CCol sm={6}>
+            <CCol sm={4}>
               <CFormLabel className="col-sm-3 col-form-label">
                 To Date:
                 <span className={toDate ? TextWhite : TextDanger}>*</span>
@@ -177,10 +173,65 @@ const LeaveApprovalFilterOptions = ({
                 }
               />
             </CCol>
+            <CCol sm={4}>
+              <CFormLabel className="col-sm-4 col-form-label">
+                Team Member:
+                <span
+                  className={autoCompleteTargetValue ? TextWhite : TextDanger}
+                >
+                  *
+                </span>
+              </CFormLabel>
+              <Autocomplete
+                inputProps={{
+                  className:
+                    'form-control form-control-sm sh-leave-form-control',
+                  id: 'employees-autocomplete',
+                  placeholder: 'Select Team Member',
+                }}
+                getItemValue={(item) => item.fullName}
+                items={getAllEmployees}
+                data-testid="employee-input"
+                wrapperStyle={{ position: 'relative' }}
+                renderMenu={(children) => (
+                  <div
+                    className={
+                      autoCompleteTargetValue &&
+                      autoCompleteTargetValue.length > 0
+                        ? 'autocomplete-dropdown-wrap'
+                        : 'autocomplete-dropdown-wrap hide'
+                    }
+                  >
+                    {children}
+                  </div>
+                )}
+                renderItem={(currentItem, isHighlightedValue) => (
+                  <div
+                    data-testid="autoComplete-options"
+                    className={
+                      isHighlightedValue
+                        ? 'autocomplete-dropdown-item active'
+                        : 'autocomplete-dropdown-item '
+                    }
+                    key={currentItem.id}
+                  >
+                    {currentItem.fullName}
+                  </div>
+                )}
+                value={autoCompleteTargetValue}
+                shouldItemRender={(currentItem, value) =>
+                  currentItem.fullName
+                    .toLowerCase()
+                    .indexOf(value.toLowerCase()) > -1
+                }
+                onChange={(e) => setAutoCompleteTargetValue(e.target.value)}
+                onSelect={(value) => onHandleSelectReportManager(value)}
+              />
+            </CCol>
           </CRow>
         </CCol>
         {dateError && (
-          <CCol sm={4} className="mt-4 pt-1">
+          <CCol sm={4} className="mt-1 pt-1">
             <span className="text-danger">
               To date should be greater than From date
             </span>
@@ -188,59 +239,7 @@ const LeaveApprovalFilterOptions = ({
         )}
       </CRow>
       <CRow className="mt-3">
-        <CCol sm={8}>
-          <CFormLabel className="col-sm-3 col-form-label">
-            Team Member:
-            <span className={autoCompleteTargetValue ? TextWhite : TextDanger}>
-              *
-            </span>
-          </CFormLabel>
-          <Autocomplete
-            inputProps={{
-              className: 'form-control form-control-sm sh-leave-form-control',
-              id: 'employees-autocomplete',
-              placeholder: 'Select Team Member',
-            }}
-            getItemValue={(item) => item.fullName}
-            items={getAllEmployees}
-            data-testid="employee-input"
-            wrapperStyle={{ position: 'relative' }}
-            renderMenu={(children) => (
-              <div
-                className={
-                  autoCompleteTargetValue && autoCompleteTargetValue.length > 0
-                    ? 'autocomplete-dropdown-wrap'
-                    : 'autocomplete-dropdown-wrap hide'
-                }
-              >
-                {children}
-              </div>
-            )}
-            renderItem={(currentItem, isHighlightedValue) => (
-              <div
-                data-testid="autoComplete-options"
-                className={
-                  isHighlightedValue
-                    ? 'autocomplete-dropdown-item active'
-                    : 'autocomplete-dropdown-item '
-                }
-                key={currentItem.id}
-              >
-                {currentItem.fullName}
-              </div>
-            )}
-            value={autoCompleteTargetValue}
-            shouldItemRender={(currentItem, value) =>
-              currentItem.fullName.toLowerCase().indexOf(value.toLowerCase()) >
-              -1
-            }
-            onChange={(e) => setAutoCompleteTargetValue(e.target.value)}
-            onSelect={(value) => onHandleSelectReportManager(value)}
-          />
-        </CCol>
-      </CRow>
-      <CRow className="mt-3">
-        <CCol sm={8}>
+        <CCol sm={4}>
           <CFormLabel className="col-sm-3 col-form-label">
             Status:{' '}
             <span className={selectEmployeeStatus ? TextWhite : TextDanger}>

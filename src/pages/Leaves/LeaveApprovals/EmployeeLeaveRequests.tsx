@@ -296,9 +296,9 @@ const EmployeeLeaveRequests = (props: {
                       {employeeLeaveItem.status === 'PendingApproval' ? (
                         <>
                           <CButton
-                            color="success"
+                            color="success btn-ovh me-1"
                             data-testid="approve-btn"
-                            className="btn-ovh me-2"
+                            className="btn-ovh-employee-list"
                             onClick={() => {
                               handleApproveModal(employeeLeaveItem.id)
                             }}
@@ -309,9 +309,9 @@ const EmployeeLeaveRequests = (props: {
                             ></i>
                           </CButton>
                           <CButton
-                            color="danger"
+                            color="danger btn-ovh me-1"
                             data-testid="reject-btn"
-                            className="btn-ovh me-2"
+                            className="btn-ovh-employee-list"
                             onClick={() => {
                               handleRejectModal(employeeLeaveItem.id)
                             }}

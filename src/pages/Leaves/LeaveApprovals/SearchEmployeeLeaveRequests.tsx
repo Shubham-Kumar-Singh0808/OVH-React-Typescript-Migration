@@ -333,9 +333,9 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
                       {currentLeaveItem.status === 'PendingApproval' ? (
                         <>
                           <CButton
-                            color="success"
+                            color="success btn-ovh me-1"
                             data-testid="search-leave-approve-btn"
-                            className="btn-ovh me-2"
+                            className="btn-ovh-employee-list"
                             onClick={() => {
                               handleSearchApproveModal(currentLeaveItem.id)
                             }}
@@ -346,9 +346,9 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
                             ></i>
                           </CButton>
                           <CButton
-                            color="danger"
+                            color="danger btn-ovh me-1"
                             data-testid="reject-leave-approve-btn"
-                            className="btn-ovh me-2"
+                            className="btn-ovh-employee-list"
                             onClick={() => {
                               handleSearchRejectModal(currentLeaveItem.id)
                             }}
