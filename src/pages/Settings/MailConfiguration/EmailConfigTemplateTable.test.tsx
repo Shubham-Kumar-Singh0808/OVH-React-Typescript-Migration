@@ -1,124 +1,73 @@
-/* eslint-disable import/named */
-import '@testing-library/jest-dom'
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EmailConfigTemplateTable from './EmailConfigTemplateTable'
-import { render, screen, waitFor } from '../../../test/testUtils'
-import stateStore from '../../../stateStore'
+import { render, screen } from '../../../test/testUtils'
 import { mockEmailTemplate } from '../../../test/data/employeeMailConfigurationData'
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
-describe('email Template List Table Testing', () => {
-  test('should render No data to display if Mail template is empty', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <EmailConfigTemplateTable
-          employeeTemplate={{
-            id: 0,
-            templateName: '',
-            template: '',
-            templateTypeId: '',
-          }}
-        />
-      </ReduxProvider>,
-    )
-    await waitFor(() => {
-      expect(screen.getByText('No Records found...')).toBeInTheDocument()
-    })
-  })
-  test('should render correct number of page records', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <EmailConfigTemplateTable
-          employeeTemplate={{
-            id: 0,
-            templateName: '',
-            template: '',
-            templateTypeId: '',
-          }}
-        />
-      </ReduxProvider>,
-    )
+const emailTemplateTableElement = jest.fn()
 
-    await waitFor(() => {
-      expect(screen.getAllByRole('row')).toHaveLength(1)
-    })
-  })
-
-  test('should render Email Template details table component without crashing', () => {
+describe('Email Configuration Template Component Testing with data', () => {
+  beforeEach(() => {
     render(
       <EmailConfigTemplateTable
         employeeTemplate={{
+          id: 5,
+          templateName: 'testing',
+          template: 'good testing',
+          templateTypeId: 5,
+          templateType: 'selinum',
+          assetTypeId: '4',
+          assetType: 'test',
+          email: 'vinesh',
+        }}
+        editEmployeeTemplate={{
           id: 0,
           templateName: '',
           template: '',
-          templateTypeId: '',
+          templateTypeId: 0,
+          templateType: '',
+          assetTypeId: '',
+          assetType: '',
+          email: '',
         }}
+        editTemplateButtonHandler={emailTemplateTableElement}
       />,
-    )
-    expect(screen.getByText('Title')).toBeInTheDocument()
-  })
-  describe('Email Template component with data', () => {
-    beforeEach(() => {
-      render(
-        <EmailConfigTemplateTable
-          employeeTemplate={{
-            id: 70,
-            templateName: 'old',
-            template: 'tyhu',
-            templateTypeId: '5',
-          }}
-        />,
-        {
-          preloadedState: {
-            employeeMailConfiguration: {
-              employeeGetEmailTemplate: mockEmailTemplate,
-            },
+
+      {
+        preloadedState: {
+          employeeMailConfiguration: {
+            employeeGetEmailTemplate: mockEmailTemplate,
           },
         },
-      )
-    })
-
-    test('should render delete button', () => {
-      expect(screen.getByTestId('btn-delete0')).toHaveClass(
-        'btn btn-danger btn-ovh me-2',
-      )
-    })
-
-    it('should render Delete modal on clicking delete button from Actions', async () => {
-      const deleteButtonElement = screen.getByTestId('btn-delete1')
-      userEvent.click(deleteButtonElement)
-      await waitFor(() => {
-        expect(screen.getByText('Delete Template')).toBeInTheDocument()
-        expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
-        expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
-      })
-    })
-
-    it('should close the modal on clicking No button from the popup', async () => {
-      const deleteButtonElement = screen.getByTestId('btn-delete0')
-      userEvent.click(deleteButtonElement)
-      const yesButtonElement = screen.getByRole('button', { name: 'Yes' })
-      userEvent.click(yesButtonElement)
-      await waitFor(() => {
-        expect(screen.getAllByRole('row')).toHaveLength(3)
-      })
-    })
-
-    it('should render template modal on clicking link from Actions', async () => {
-      const deleteButtonElement = screen.getByTestId('mail-lin0')
-      userEvent.click(deleteButtonElement)
-      await waitFor(() => {
-        expect(screen.getByText('Template model')).toBeInTheDocument()
-      })
-    })
+      },
+    )
+  })
+  screen.debug()
+  test('should Click on delete button ', () => {
+    const deleteElement = screen.getAllByTestId('btn-delete1')
+    expect(deleteElement[0]).toBeInTheDocument()
+    userEvent.click(deleteElement[0])
+    const confirmDeleteBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(confirmDeleteBtn)
+    expect(confirmDeleteBtn)
+  })
+  test('should click on edit button  ', () => {
+    const editElement = screen.getAllByTestId('edit-btn22')
+    userEvent.click(editElement[0])
+    expect(editElement[0]).toBeInTheDocument()
+    expect(emailTemplateTableElement).toHaveBeenCalledTimes(1)
+  })
+  test('should render with table data ', () => {
+    expect(screen.getByText('old')).toBeInTheDocument()
+    expect(screen.getByText('tyhu')).toBeInTheDocument()
+    expect(screen.getByText('1')).toBeInTheDocument()
+    expect(screen.getByText('Conference Room Booking')).toBeInTheDocument()
+    expect(screen.getByText('dmcod')).toBeInTheDocument()
+    expect(screen.getByText('Support Management')).toBeInTheDocument()
+  })
+  test('should render with table record ', () => {
+    expect(
+      screen.getByText('Total Records: ' + mockEmailTemplate.length),
+    ).toBeInTheDocument()
   })
 })

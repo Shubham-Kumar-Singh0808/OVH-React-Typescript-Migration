@@ -6,6 +6,7 @@ import {
   EmployeeGetEmailTemplateProps,
   EmployeeMailTemplateType,
   EmployeeMailConfigurationState,
+  EditEmployeeMailTemplate,
 } from '../../../types/Settings/MailConfiguration/employeMailConfigurationTypes'
 import { ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
@@ -28,6 +29,26 @@ const getEmployeeMailTemplate = createAsyncThunk(
   async (props: EmployeeGetEmailTemplateProps, thunkApi) => {
     try {
       return await employeeMailConfigurationApi.getEmployeeMailTemplate(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateMailTemplate = createAsyncThunk<
+  number | undefined,
+  EditEmployeeMailTemplate,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'mailConfiguration/updateMailTemplate',
+  async (editTemplate: EditEmployeeMailTemplate, thunkApi) => {
+    try {
+      return await employeeMailConfigurationApi.updateMailTemplate(editTemplate)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -71,12 +92,11 @@ const employeeMailConfigurationSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getEmployeeMailTemplateTypes.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.employeeGetMailTemplateTypes =
-        action.payload as EmployeeMailTemplateType[]
+      state.employeeGetMailTemplateTypes = action.payload
     })
     builder.addCase(getEmployeeMailTemplate.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.employeeGetEmailTemplate = action.payload as EmployeeMailTemplate[]
+      state.employeeGetEmailTemplate = action.payload
     })
     builder.addCase(getEmployeeMailTemplateTypes.pending, (state) => {
       state.isLoading = ApiLoadingState.loading
@@ -96,6 +116,7 @@ const employeeMailConfigurationThunk = {
   getEmployeeMailTemplateTypes,
   getEmployeeMailTemplate,
   deleteMailTemplate,
+  updateMailTemplate,
 }
 
 const employeeMailConfigurationSelectors = {

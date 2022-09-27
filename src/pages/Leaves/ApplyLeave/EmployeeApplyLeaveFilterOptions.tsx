@@ -123,6 +123,21 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
           />,
         ),
       )
+    } else if (
+      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
+        applyLeaveResultAction,
+      ) &&
+      applyLeaveResultAction.payload === 406
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            You are Under Notice,So you can't apply for a leave."
+          />,
+        ),
+      )
     }
   }
 
@@ -293,7 +308,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
             className="cursor-pointer sh-ovh-btn-new"
             color="primary me-1"
             data-testid="sh-view-button"
-            disabled={!isButtonEnabled}
+            disabled={!isButtonEnabled || dateError}
             onClick={handleApplyLeave}
           >
             Apply

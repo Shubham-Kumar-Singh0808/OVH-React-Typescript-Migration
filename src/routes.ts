@@ -63,6 +63,9 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+const LeaveReports = React.lazy(
+  () => import('./pages/Leaves/LeaveReports/LeaveReport'),
+)
 
 const MailConfiguration = React.lazy(
   () => import('./pages/Settings/MailConfiguration/EmailConfigTemplate'),
@@ -164,6 +167,9 @@ const UpdateTicketUnderTicketList = React.lazy(
   () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
 )
 
+const BookingList = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/BookingList/BookingList'),
+)
 const EventTypeList = React.lazy(
   () =>
     import(
@@ -175,6 +181,10 @@ const LocationList = React.lazy(
     import(
       './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
     ),
+)
+const EditHoliday = React.lazy(
+  () =>
+    import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
 const RoomList = React.lazy(
@@ -232,6 +242,11 @@ const routes = [
     path: '/employeehandbook',
     name: 'Employee Handbook',
     component: EmployeeHandbook,
+  },
+  {
+    path: '/leaveReports',
+    name: 'Leave Reports',
+    component: LeaveReports,
   },
   {
     path: '/showemployeehandbook/:clickedpageName',
@@ -394,6 +409,11 @@ const routes = [
     component: ProbationaryList,
   },
   {
+    path: '/meetingList',
+    name: 'Booking List',
+    component: BookingList,
+  },
+  {
     path: '/newEvent',
     name: 'Event Type List',
     component: EventTypeList,
@@ -402,6 +422,11 @@ const routes = [
     path: '/newMeetingRequest',
     name: 'Add LocationList',
     component: LocationList,
+  },
+  {
+    path: '/editHoliday/:holidayId',
+    name: 'Edit Holiday',
+    component: EditHoliday,
   },
   {
     path: '/roomList',
