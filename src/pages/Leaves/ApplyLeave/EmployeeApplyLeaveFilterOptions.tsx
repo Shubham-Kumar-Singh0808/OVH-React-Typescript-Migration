@@ -182,7 +182,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
     <>
       <CRow className="mt-1">
         <CCol sm={8}>
-          <CFormLabel className="col-sm-3 col-form-label">
+          <CFormLabel className="w-100 col-form-label">
             Leave Type:
             <span
               className={applyLeave.leaveCategoryName ? TextWhite : TextDanger}
