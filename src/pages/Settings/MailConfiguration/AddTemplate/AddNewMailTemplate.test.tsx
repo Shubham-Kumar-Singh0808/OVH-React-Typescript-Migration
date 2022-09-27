@@ -72,7 +72,7 @@ describe('Add Template Component Testing', () => {
         },
       },
     })
-    userEvent.selectOptions(screen.getByTestId(templateType), '11')
+    userEvent.selectOptions(screen.getByTestId(templateType), '61')
     const inputEl = screen.getByTestId(emailAddress)
     expect(inputEl).toBeInTheDocument()
     expect(inputEl).toHaveAttribute('type', 'email')
@@ -85,7 +85,7 @@ describe('Add Template Component Testing', () => {
         },
       },
     })
-    userEvent.selectOptions(screen.getByTestId(templateType), '11')
+    userEvent.selectOptions(screen.getByTestId(templateType), '61')
     const inputEl = screen.getByTestId(emailAddress)
     userEvent.type(inputEl, 'test@mail.com')
     await waitFor(() => {
@@ -102,7 +102,7 @@ describe('Add Template Component Testing', () => {
         },
       },
     })
-    userEvent.selectOptions(screen.getByTestId('form-select-type'), '11')
+    userEvent.selectOptions(screen.getByTestId('form-select-type'), '61')
 
     const inputEl = screen.getByTestId('email-address')
     userEvent.type(inputEl, 'test')

@@ -35,7 +35,7 @@ export const mockTemplateTypes: EmployeeMailTemplateType[] = [
     name: 'IT Declaration',
   },
   {
-    id: 11,
+    id: 61,
     name: 'Asset Management',
   },
   {
