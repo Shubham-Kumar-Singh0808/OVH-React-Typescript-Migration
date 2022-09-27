@@ -50,7 +50,11 @@ const LocationListTable = (): JSX.Element => {
   return (
     <>
       <CCol className="custom-scroll">
-        <CTable striped responsive className="mt-5">
+        <CTable
+          striped
+          responsive
+          className="mt-2 text-start text-left align-middle"
+        >
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -70,8 +74,8 @@ const LocationListTable = (): JSX.Element => {
                         <CButton
                           data-testid={`btn-delete${index}`}
                           size="sm"
-                          className="btn-ovh me-2 cursor-pointer"
-                          color="danger btn-ovh me-2"
+                          color="danger btn-ovh me-1"
+                          className="btn-ovh-employee-list"
                           onClick={() =>
                             deleteButtonHandler(
                               location.id,
