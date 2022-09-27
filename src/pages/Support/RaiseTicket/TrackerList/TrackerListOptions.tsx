@@ -9,7 +9,6 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import TrackerListTable from './TrackerListTable'
-import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -62,10 +61,6 @@ const TrackerListOptions = ({
     }
   }
 
-  const successToast = (
-    <OToast toastMessage="Tracker Added Successfully" toastColor="success" />
-  )
-
   const addButtonHandler = async () => {
     await dispatch(
       reduxServices.addTrackerLists.addNewTracker({
@@ -74,7 +69,6 @@ const TrackerListOptions = ({
       }),
     )
     dispatch(reduxServices.ticketApprovals.getTrackerList())
-    dispatch(reduxServices.app.actions.addToast(successToast))
     setSelectTrackerName('')
     setIsChecked(false)
   }
