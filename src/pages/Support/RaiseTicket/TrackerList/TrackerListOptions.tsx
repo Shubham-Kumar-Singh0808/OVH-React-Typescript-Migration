@@ -6,13 +6,11 @@ import {
   CFormInput,
   CFormLabel,
   CRow,
-  CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import TrackerListTable from './TrackerListTable'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger } from '../../../../constant/ClassName'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
@@ -100,10 +98,6 @@ const TrackerListOptions = ({
       setIsAddButtonEnabled(false)
     }
   }, [selectTrackerName])
-
-  const isLoading = useTypedSelector(
-    reduxServices.scheduledInterviews.selectors.isLoading,
-  )
 
   return (
     <>
@@ -193,14 +187,7 @@ const TrackerListOptions = ({
           </CCol>
         </CRow>
       </CForm>
-
-      {isLoading !== ApiLoadingState.loading ? (
-        <TrackerListTable />
-      ) : (
-        <>
-          <CSpinner />
-        </>
-      )}
+      <TrackerListTable />
     </>
   )
 }
