@@ -335,6 +335,7 @@ export interface ClientsApi extends ApiBase {
 export interface AddNewClientApi extends ApiBase {
   getClientCountries: string
   addNewClient: string
+  checkClientOrgExist: string
 }
 
 export interface ClientInformationApi extends ApiBase {
