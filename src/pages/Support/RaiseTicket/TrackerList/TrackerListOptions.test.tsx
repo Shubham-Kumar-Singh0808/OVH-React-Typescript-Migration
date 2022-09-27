@@ -11,7 +11,7 @@ import { mockTrackerList } from '../../../../test/data/ticketApprovalsData'
 const addButton = 'save-btn'
 const clearButton = 'clear-btn'
 const trackerName = 'trackerName'
-const AddTrackerName = 'Name:'
+const AddTrackerName = 'Name :'
 const checked = 'ch-All'
 const mockSetTogglePage = jest.fn()
 
