@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EditClient from './EditClient'
-import { cleanup, render, screen, waitFor } from '../../../../test/testUtils'
+import { cleanup, render, screen } from '../../../../test/testUtils'
 import {
   mockGetClientCountries,
   mockEditClient,
@@ -123,17 +123,6 @@ describe('Edit Client Component Testing', () => {
       const updateBtnElement = screen.getByTestId('updateBtn')
       userEvent.click(updateBtnElement)
       expect(updateBtnElement).not.toBeDisabled()
-    })
-
-    test('should able to validate organization field', () => {
-      // Organization
-      const organizationInput = screen.getByTestId('organizationInput')
-      userEvent.type(organizationInput, 'Ray Business Technologies')
-      const updateBtnElement = screen.getByTestId('updateBtn')
-      userEvent.click(updateBtnElement)
-      waitFor(() => {
-        expect(updateBtnElement).toBeDisabled()
-      })
     })
   })
 })
