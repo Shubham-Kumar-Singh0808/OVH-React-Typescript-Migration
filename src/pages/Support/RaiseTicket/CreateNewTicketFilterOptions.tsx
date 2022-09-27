@@ -486,7 +486,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
                   element.currentTarget as HTMLInputElement,
                 )
               }
-              accept=".png, .jpg, .jpeg"
+              accept=".png, .jpg, .jpeg,"
             />
           </CCol>
         </CRow>
