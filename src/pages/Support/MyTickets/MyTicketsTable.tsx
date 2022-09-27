@@ -183,6 +183,7 @@ const MyTicketsTable = ({
                         color="info"
                         className="btn-ovh me-2"
                         disabled={ticket.approvalStatus === 'Cancelled'}
+                        data-testid="edit-btn"
                       >
                         <i
                           className="fa fa-pencil-square-o"
