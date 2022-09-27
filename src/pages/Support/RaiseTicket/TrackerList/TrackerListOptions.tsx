@@ -67,22 +67,17 @@ const TrackerListOptions = ({
   )
 
   const addButtonHandler = async () => {
-    const addTrackerResult = await dispatch(
+    await dispatch(
       reduxServices.addTrackerLists.addNewTracker({
         name: selectTrackerName,
         permission: isChecked,
       }),
     )
-    if (
-      reduxServices.addTrackerLists.addNewTracker.fulfilled.match(
-        addTrackerResult,
-      )
-    ) {
-      dispatch(reduxServices.ticketApprovals.getTrackerList())
-      dispatch(reduxServices.app.actions.addToast(successToast))
-      setSelectTrackerName('')
-      setIsChecked(false)
-    }
+
+    dispatch(reduxServices.ticketApprovals.getTrackerList())
+    dispatch(reduxServices.app.actions.addToast(successToast))
+    setSelectTrackerName('')
+    setIsChecked(false)
   }
 
   const clearData = () => {
