@@ -98,12 +98,12 @@ const ClientsTable = ({
   }
 
   const tableHeaderCellPropsOrganization = {
-    width: '22%',
+    width: '24%',
     scope: 'col',
   }
 
   const tableHeaderCellPropsAction = {
-    width: '16%',
+    width: '18%',
     scope: 'col',
   }
 
@@ -202,7 +202,6 @@ const ClientsTable = ({
         alignment="center"
         visible={deleteClientModalVisibility}
         setVisible={setDeleteClientModalVisibility}
-        closeButtonClass="d-none"
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"

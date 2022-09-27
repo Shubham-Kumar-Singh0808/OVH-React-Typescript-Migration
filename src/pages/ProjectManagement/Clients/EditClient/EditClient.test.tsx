@@ -3,12 +3,13 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EditClient from './EditClient'
-import { cleanup, render, screen } from '../../../../test/testUtils'
+import { cleanup, render, screen, waitFor } from '../../../../test/testUtils'
 import {
   mockGetClientCountries,
   mockEditClient,
 } from '../../../../test/data/editClientData'
 import { mockClientsData } from '../../../../test/data/clientsData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const toRender = (
   <div>
@@ -66,7 +67,7 @@ describe('Edit Client Component Testing', () => {
         preloadedState: {
           clients: {
             clientsList: mockClientsData,
-            isLoading: true,
+            isLoading: ApiLoadingState.succeeded,
             editClient: mockEditClient,
             clientCountries: mockGetClientCountries,
           },
@@ -122,6 +123,17 @@ describe('Edit Client Component Testing', () => {
       const updateBtnElement = screen.getByTestId('updateBtn')
       userEvent.click(updateBtnElement)
       expect(updateBtnElement).not.toBeDisabled()
+    })
+
+    test('should able to validate organization field', () => {
+      // Organization
+      const organizationInput = screen.getByTestId('organizationInput')
+      userEvent.type(organizationInput, 'Ray Business Technologies')
+      const updateBtnElement = screen.getByTestId('updateBtn')
+      userEvent.click(updateBtnElement)
+      waitFor(() => {
+        expect(updateBtnElement).toBeDisabled()
+      })
     })
   })
 })
