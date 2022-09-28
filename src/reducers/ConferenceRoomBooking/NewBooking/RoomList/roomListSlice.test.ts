@@ -10,7 +10,7 @@ describe('Location List Slice', () => {
 
     it('Should be able to set isLoading to "loading" if getAllMeetingRoomsData  is pending', () => {
       const action = {
-        type: roomListService.getAllMeetingRoomsData.pending.type,
+        type: roomListService.getMeetingRooms.pending.type,
       }
       const state = roomListReducer(initialState, action)
       expect(state).toEqual({
@@ -54,7 +54,7 @@ describe('Location List Slice', () => {
 
     it('Should be able to set isLoading to "succeeded" if getAllMeetingRoomsData is fulfilled', () => {
       const action = {
-        type: roomListService.getAllMeetingRoomsData.fulfilled.type,
+        type: roomListService.getMeetingRooms.fulfilled.type,
       }
       const state = roomListReducer(initialState, action)
       expect(state).toEqual({
