@@ -330,6 +330,7 @@ export interface ClientsApi extends ApiBase {
   editClient: string
   updateClient: string
   getClientCountries: string
+  clientOrg: string
 }
 
 export interface AddNewClientApi extends ApiBase {

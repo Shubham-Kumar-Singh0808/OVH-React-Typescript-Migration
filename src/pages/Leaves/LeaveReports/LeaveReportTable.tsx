@@ -73,7 +73,9 @@ const LeaveReportTable = ({
                     <CTableDataCell>
                       {leave.carryForwardedLeaves}
                     </CTableDataCell>
-                    <CTableDataCell>{leave.allCreditedLeaves}</CTableDataCell>
+                    <CTableDataCell>
+                      {leave.allCreditedLeaves}.00
+                    </CTableDataCell>
                     <CTableDataCell>{leave.allScheduledLeaves}</CTableDataCell>
                     <CTableDataCell>{leave.allLOPTakenLeaves}</CTableDataCell>
                     <CTableDataCell>{leave.allAvailableLeaves}</CTableDataCell>
@@ -99,7 +101,7 @@ const LeaveReportTable = ({
               {getLeaveReports.size > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
-                  options={[20, 40, 60, 80]}
+                  options={[20, 40, 60, 80, 100]}
                   selectedPageSize={pageSize}
                 />
               )}
