@@ -71,8 +71,8 @@ const BookingListFilterOptions = ({
       <CRow className="mb-5">
         <CCol sm={2} md={1} className="text-end">
           <CFormLabel className="mt-1">
-            Location :{' '}
-            <span className={location ? TextWhite : TextDanger}> *</span>
+            Location :
+            <span className={location ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
         </CCol>
         <CCol sm={2}>
@@ -96,7 +96,7 @@ const BookingListFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Room:</CFormLabel>
+          <CFormLabel className="mt-1">Room :</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
