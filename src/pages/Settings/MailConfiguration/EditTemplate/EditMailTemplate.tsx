@@ -20,7 +20,6 @@ import {
 import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { showIsRequired } from '../../../../utils/helper'
 
 const EditMailTemplate = ({
   backButtonHandler,
@@ -192,7 +191,13 @@ const EditMailTemplate = ({
               className="col-sm-2 col-form-label text-end"
             >
               Template:{' '}
-              <span className={showIsRequired(editEmployeeTemplate.template)}>
+              <span
+                className={
+                  editEmployeeTemplate.template?.replace(/^\s*/, '')
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
                 *
               </span>
             </CFormLabel>
