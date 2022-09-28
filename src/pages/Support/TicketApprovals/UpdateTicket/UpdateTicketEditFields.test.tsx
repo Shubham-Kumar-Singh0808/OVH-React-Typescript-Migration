@@ -102,7 +102,7 @@ describe('Update Ticket Edit Fields Component Testing with data', () => {
     const dropdownOptions = screen.getAllByTestId('autoComplete-options')
     fireEvent.click(dropdownOptions[0])
 
-    expect(autocomplete).toHaveValue('Veera')
+    expect(autocomplete).toHaveValue('Veera Kunagu')
   })
   test('Should be able to upload file', () => {
     const file = new File(['hello'], 'hello.png', { type: 'image/png' })
