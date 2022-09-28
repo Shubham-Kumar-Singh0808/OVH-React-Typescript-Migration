@@ -70,4 +70,10 @@ describe('Dashboard Sections Testing', () => {
     })
     expect(holidaysTitle).toBeTruthy()
   })
+  test('should render the "Upcoming Probationary End Dates" header', () => {
+    const upcomingProbationaryEndDatesTitle = screen.getByRole('heading', {
+      name: 'Upcoming Probationary End Dates',
+    })
+    expect(upcomingProbationaryEndDatesTitle).toBeTruthy()
+  })
 })
