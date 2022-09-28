@@ -50,5 +50,6 @@ export const handlers = [
   ...updateTicketHandlers,
   ...eventTypeListHandlers,
   ...eventListHandlers,
+  ...employeeHandbookSettingsHandlers,
   // add your handler here
 ]
