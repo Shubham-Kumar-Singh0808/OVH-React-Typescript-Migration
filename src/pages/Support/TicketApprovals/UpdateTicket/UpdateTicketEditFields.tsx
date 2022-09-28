@@ -9,7 +9,6 @@ import {
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
@@ -19,7 +18,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { GetTicketToEdit } from '../../../../types/Support/TicketApprovals/UpdateTicket/updateTicketTypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { commonDateFormat } from '../../../../utils/dateFormatUtils'
+import { deviceLocale } from '../../../../utils/helper'
 
 const UpdateTicketEditFields = ({
   reRender,
@@ -77,6 +76,12 @@ const UpdateTicketEditFields = ({
     })
   }
 
+  const onChangeDescriptionHandler = (description: string) => {
+    setUpdateTicketDetails((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
+  }
+
   const onChangeSpentTime = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSpentTime((prevState) => {
       return { ...prevState, ...{ [event.target.name]: event.target.value } }
@@ -89,9 +94,11 @@ const UpdateTicketEditFields = ({
     setUploadFile(file[0])
   }
   const onHandleSelectActiveEmployee = (firstName: string) => {
-    setActiveEmployeesAutoComplete(firstName)
     const selectedActiveEmployee = activeEmployees.find(
       (value) => value.empFirstName === firstName,
+    )
+    setActiveEmployeesAutoComplete(
+      `${selectedActiveEmployee?.empFirstName} ${selectedActiveEmployee?.empLastName}`,
     )
     setSelectEmployee(selectedActiveEmployee?.employeeId as number)
   }
@@ -114,7 +121,7 @@ const UpdateTicketEditFields = ({
         endDate: ticketDetailsToEdit.endDate,
         assigneeId: ticketDetailsToEdit.assigneeId,
         employeeName: ticketDetailsToEdit.employeeName,
-        percentageDone: ticketDetailsToEdit.percentageDone,
+        percentageDone: '',
         actualTime: ticketDetailsToEdit.actualTime,
         authorName: ticketDetailsToEdit.authorName,
         assigneeName: ticketDetailsToEdit.assigneeName,
@@ -132,6 +139,10 @@ const UpdateTicketEditFields = ({
         createdDate: ticketDetailsToEdit.createdDate,
         approvedBy: ticketDetailsToEdit.approvedBy,
       })
+    }
+    if (ticketDetailsToEdit.assigneeName) {
+      setActiveEmployeesAutoComplete(ticketDetailsToEdit.assigneeName)
+      setSelectEmployee(ticketDetailsToEdit.assigneeId)
     }
     setStartDate(ticketDetailsToEdit.startDate)
     setDueDate(ticketDetailsToEdit.endDate as string)
@@ -151,12 +162,17 @@ const UpdateTicketEditFields = ({
   const updateBtnHandler = async () => {
     const updateObj = {
       ...updateTicketDetails,
+      startDate: startDate as string,
       endDate: dueDate as string,
+      percentageDone:
+        updateTicketDetails.percentageDone === ''
+          ? ticketDetailsToEdit.percentageDone
+          : updateTicketDetails.percentageDone,
       assigneeId: selectEmployee as number,
       actualTime:
-        spentTime.hours !== ''
-          ? `${spentTime.hours}.${spentTime.minutes}`
-          : '0',
+        spentTime.hours === '' && spentTime.minutes === ''
+          ? ticketDetailsToEdit.actualTime
+          : `${spentTime.hours}.${spentTime.minutes}`,
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { assigneeName, ...restUpdateObj } = updateObj
@@ -174,6 +190,10 @@ const UpdateTicketEditFields = ({
       dispatch(reduxServices.updateTicket.uploadSupportDoc(uploadPrepareObject))
     }
     dispatch(reduxServices.app.actions.addToast(ticketUpdatedSuccessToast))
+    setUpdateTicketDetails((prevState) => {
+      return { ...prevState, ...{ percentageDone: '' } }
+    })
+    setSpentTime({ hours: '', minutes: '' })
   }
 
   const handleConfirmApproveTicket = async () => {
@@ -290,6 +310,7 @@ const UpdateTicketEditFields = ({
           </CFormLabel>
           <CCol sm={9}>
             <CFormInput
+              autoComplete="off"
               type="text"
               id="subjectValue"
               name="subject"
@@ -307,11 +328,10 @@ const UpdateTicketEditFields = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={updateTicketDetails?.description}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  onChangeInputHandler(editor.getData().trim())
+                  onChangeDescriptionHandler(editor.getData().trim())
                 }}
               />
             </CCol>
@@ -377,7 +397,15 @@ const UpdateTicketEditFields = ({
               name="startDate"
               value={startDate}
               onChange={(date: Date) =>
-                setStartDate(moment(date).format(commonDateFormat))
+                setStartDate(
+                  date
+                    ? new Date(date).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                      })
+                    : '',
+                )
               }
             />
           </CCol>
@@ -398,7 +426,15 @@ const UpdateTicketEditFields = ({
               name="fromDate"
               value={dueDate}
               onChange={(date: Date) =>
-                setDueDate(moment(date).format(commonDateFormat))
+                setDueDate(
+                  date
+                    ? new Date(date).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                      })
+                    : '',
+                )
               }
             />
           </CCol>
@@ -465,6 +501,7 @@ const UpdateTicketEditFields = ({
               value={updateTicketDetails.percentageDone}
               onChange={onChangeInputHandler}
             >
+              <option value=""></option>
               <option value="0">0%</option>
               <option value="10">10%</option>
               <option value="20">20%</option>
@@ -499,6 +536,7 @@ const UpdateTicketEditFields = ({
           </CFormLabel>
           <CCol sm={1}>
             <CFormInput
+              autoComplete="off"
               id="startTimeHour"
               size="sm"
               type="text"
@@ -512,6 +550,7 @@ const UpdateTicketEditFields = ({
           </CCol>
           <CCol sm={1}>
             <CFormInput
+              autoComplete="off"
               id="startTimeMinutes"
               size="sm"
               type="text"
@@ -538,7 +577,6 @@ const UpdateTicketEditFields = ({
                   element.currentTarget as HTMLInputElement,
                 )
               }
-              accept=".png, .jpg, .jpeg"
             />
           </CCol>
         </CRow>
