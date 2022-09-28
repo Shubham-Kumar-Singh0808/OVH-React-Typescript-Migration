@@ -15,7 +15,19 @@ const toRender = (
 describe('Dashboard Sections Testing', () => {
   beforeEach(() => {
     render(toRender, {
-      preloadedState: {},
+      preloadedState: {
+        authentication: {
+          authenticatedUser: {
+            employeeName: 'admin',
+            employeeId: '1980',
+            userName: 'admin',
+            role: 'admin',
+            tenantKey: 'RAYBIZTECH',
+            token: 'test',
+            designation: 'Software Developer',
+          },
+        },
+      },
     })
   })
   screen.debug()
