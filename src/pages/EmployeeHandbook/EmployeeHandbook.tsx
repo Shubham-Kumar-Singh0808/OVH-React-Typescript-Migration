@@ -22,7 +22,9 @@ const EmployeeHandbook = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.EmployeeHandbook.selectors.isLoading,
   )
-
+  const empRole = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.role,
+  )
   const [inputText, setInputText] = useState('')
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const lowerCase = e.currentTarget.value
@@ -32,6 +34,7 @@ const EmployeeHandbook = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.EmployeeHandbook.getHandbooks())
   }, [dispatch])
+
   return (
     <>
       <OCard
@@ -54,13 +57,18 @@ const EmployeeHandbook = (): JSX.Element => {
               </CButton>
             </CInputGroup>
           </CCol>
-          <CCol className="text-end" md={4}>
-            <Link to={`/handbooksettings`}>
-              <CButton color="info" className="btn-ovh me-0">
-                <i className="fa fa-sign-out fa-fw  me-1"></i>Handbook Settings
-              </CButton>
-            </Link>
-          </CCol>
+          {(empRole === 'admin' ||
+            empRole === 'HR Manager' ||
+            empRole === 'HR') && (
+            <CCol className="text-end" md={4}>
+              <Link to={`/handbooksettings`}>
+                <CButton color="info" className="btn-ovh me-0">
+                  <i className="fa fa-sign-out fa-fw  me-1"></i>Handbook
+                  Settings
+                </CButton>
+              </Link>
+            </CCol>
+          )}
         </CRow>
 
         {isLoading !== ApiLoadingState.loading ? (

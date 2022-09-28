@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom'
-// import { render, screen } from '@testing-library/react'
 import React from 'react'
 import EmployeeHandbook from './EmployeeHandbook'
 import { render, screen } from '../../test/testUtils'
