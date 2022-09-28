@@ -181,6 +181,7 @@ const TicketApprovalsFilterOptions = ({
           <CFormLabel>Approval Status:</CFormLabel>
           <CFormSelect
             aria-label="Default select example"
+            className="approval-status-select"
             size="sm"
             id="approvalStatus"
             data-testid="approvalStatus"
