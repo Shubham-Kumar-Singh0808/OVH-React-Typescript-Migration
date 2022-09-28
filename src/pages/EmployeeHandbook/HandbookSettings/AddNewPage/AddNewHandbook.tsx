@@ -299,9 +299,9 @@ function AddNewHandbook({
                 *
               </span>
             </CFormLabel>
-            <CCol sm={3}>
+            <CCol sm={4}>
               <CRow>
-                <CCol sm={3}>
+                <CCol sm={4}>
                   <CFormCheck
                     data-testid="ch-All"
                     id="all"
