@@ -1,5 +1,6 @@
 import React from 'react'
 import Dashboard from './Dashboard'
+import UpcomingProbationaryEndDates from './ProbationaryList/UpcomingProbationaryEndDates'
 import { render, screen } from '../../test/testUtils'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import { mockLeaveSummary } from '../../test/data/leaveSummaryData'
@@ -21,7 +22,7 @@ describe('Dashboard Sections Testing', () => {
             employeeName: 'admin',
             employeeId: '1980',
             userName: 'admin',
-            role: 'admin',
+            role: 'admin' || 'HR Manager' || 'HR',
             tenantKey: 'RAYBIZTECH',
             token: 'test',
             designation: 'Software Developer',
@@ -70,10 +71,7 @@ describe('Dashboard Sections Testing', () => {
     })
     expect(holidaysTitle).toBeTruthy()
   })
-  test('should render the "Upcoming Probationary End Dates" header', () => {
-    const upcomingProbationaryEndDatesTitle = screen.getByRole('heading', {
-      name: 'Upcoming Probationary End Dates',
-    })
-    expect(upcomingProbationaryEndDatesTitle).toBeTruthy()
+  test('should render the "Upcoming Probationary End Dates" component when loggedIn user is Admin or HR Manager or HR', () => {
+    expect(render(<UpcomingProbationaryEndDates />))
   })
 })

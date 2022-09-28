@@ -20,7 +20,7 @@ describe('Employee Handbook Component Testing', () => {
               employeeName: 'admin',
               employeeId: '1983',
               userName: 'admin',
-              role: 'admin',
+              role: 'admin' || 'HR Manager' || 'HR',
               tenantKey: 'abc',
               token: 'test',
               designation: 'developer',
@@ -33,7 +33,7 @@ describe('Employee Handbook Component Testing', () => {
   test('should render `Employee Handbook` component without crashing', () => {
     expect(screen.getByText('Employee Handbook')).toBeInTheDocument()
   })
-  test('should redirect to /Handbook Settings when user clicks on Back Button from HolidaysList Page', async () => {
+  test('should redirect to /Handbook Settings when user clicks on handbooksettings from HolidaysList Page', async () => {
     userEvent.click(screen.getByRole('button', { name: 'Handbook Settings' }))
     await waitFor(() => {
       // check if a redirect happens after clicking HandbookSettings
