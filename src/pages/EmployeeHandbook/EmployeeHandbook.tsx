@@ -62,7 +62,11 @@ const EmployeeHandbook = (): JSX.Element => {
             empRole === 'HR') && (
             <CCol className="text-end" md={4}>
               <Link to={`/handbooksettings`}>
-                <CButton color="info" className="btn-ovh me-0">
+                <CButton
+                  color="info"
+                  className="btn-ovh me-0"
+                  data-testid="handbook-settings-btn"
+                >
                   <i className="fa fa-sign-out fa-fw  me-1"></i>Handbook
                   Settings
                 </CButton>
