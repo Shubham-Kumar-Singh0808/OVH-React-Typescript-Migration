@@ -64,6 +64,7 @@ import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/upda
 import { bookingListService } from './ConferenceRoomBooking/BookingList/bookingListSlice'
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
+import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -132,4 +133,5 @@ export const reduxServices = {
   bookingList: bookingListService,
   eventTypeList: eventTypeListService,
   addLocationList: addLocationListService,
+  eventList: eventListService,
 }
