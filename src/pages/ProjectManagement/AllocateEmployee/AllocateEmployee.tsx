@@ -41,7 +41,7 @@ const AllocateEmployee = (): JSX.Element => {
   const initialGetAllProjectNames = {} as GetAllProjectNames
 
   const [isBilLable, setIsBilLable] = useState('')
-  const [showComment, setShowComment] = useState<boolean>(true)
+  const [isShowComment, setIsShowComment] = useState<boolean>(true)
   const [addEmployeeName, setAddEmployeeName] = useState<
     GetAllEmployeesNames[]
   >([])
@@ -51,8 +51,8 @@ const AllocateEmployee = (): JSX.Element => {
   const [selectProject, setSelectProject] = useState<GetAllProjectNames>()
   const [allocationValue, setAllocationValue] = useState<number | string>()
   const [allocationDate, setAllocationDate] = useState<string>()
-  const [isEndDate, setIsEndDate] = useState<string>()
-  const [dateError, setDateError] = useState<boolean>(false)
+  const [allocationEndDate, setAllocationEndDate] = useState<string>()
+  const [isDateError, setIsDateError] = useState<boolean>(false)
   const [isAllocateButtonEnabled, setIsAllocateButtonEnabled] = useState(false)
 
   const allEmployeeProfiles = useTypedSelector(
@@ -113,7 +113,6 @@ const AllocateEmployee = (): JSX.Element => {
       (value) => value.projectName === projectName,
     )
     setSelectProject(selectedProject)
-    console.log(selectedProject)
   }
 
   const allocateHandleInputChange = (
@@ -134,21 +133,21 @@ const AllocateEmployee = (): JSX.Element => {
       moment(allocationDate?.toString()).format(commonFormatDate),
     )
     const tempEndDate = new Date(
-      moment(isEndDate?.toString()).format(commonFormatDate),
+      moment(allocationEndDate?.toString()).format(commonFormatDate),
     )
     if (tempEndDate.getTime() < tempAllocationDate.getTime()) {
-      setDateError(true)
+      setIsDateError(true)
     } else {
-      setDateError(false)
+      setIsDateError(false)
     }
-  }, [allocationDate, isEndDate])
+  }, [allocationDate, allocationEndDate])
 
   useEffect(() => {
     if (
       addEmployeeName?.length > 0 &&
       selectProject?.projectName &&
       allocationDate &&
-      isEndDate &&
+      allocationEndDate &&
       isBilLable &&
       allocationValue
     ) {
@@ -162,7 +161,7 @@ const AllocateEmployee = (): JSX.Element => {
     isBilLable,
     allocationValue,
     allocationDate,
-    isEndDate,
+    allocationEndDate,
   ])
 
   const successToastMessage = (
@@ -186,7 +185,7 @@ const AllocateEmployee = (): JSX.Element => {
       employeeIds: addEmployeeName?.map((currentItem) =>
         currentItem.id.toString(),
       ),
-      endDate: isEndDate,
+      endDate: allocationEndDate,
       projectId: selectProject?.id as number,
       projectName: selectProject?.projectName as string,
       startDate: allocationDate,
@@ -215,7 +214,9 @@ const AllocateEmployee = (): JSX.Element => {
       Number(dateParts[1]) - 1,
       Number(dateParts[0]),
     )
-    const tempEndDate = new Date(moment(isEndDate).format(commonFormatDate))
+    const tempEndDate = new Date(
+      moment(allocationEndDate).format(commonFormatDate),
+    )
     const tempProjectEndDate = new Date(
       Number(dateParts[2]),
       Number(dateParts[1]) - 1,
@@ -237,12 +238,12 @@ const AllocateEmployee = (): JSX.Element => {
     setProjectsAutoCompleteTarget('')
     setSelectProject(initialGetAllProjectNames)
     setAddEmployeeName([])
-    setIsEndDate('')
+    setAllocationEndDate('')
     setAllocationDate('')
     setAddComment('')
-    setShowComment(false)
+    setIsShowComment(false)
     setTimeout(() => {
-      setShowComment(true)
+      setIsShowComment(true)
     }, 0)
   }
   return (
@@ -444,7 +445,9 @@ const AllocateEmployee = (): JSX.Element => {
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
                 End Date:
-                <span className={isEndDate ? TextWhite : TextDanger}>*</span>
+                <span className={allocationEndDate ? TextWhite : TextDanger}>
+                  *
+                </span>
               </CFormLabel>
             </CCol>
             <CCol sm={3}>
@@ -460,21 +463,24 @@ const AllocateEmployee = (): JSX.Element => {
                 placeholderText="dd/mm/yy"
                 name="allocateEmployeeEndDate"
                 value={
-                  isEndDate
-                    ? new Date(isEndDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
+                  allocationEndDate
+                    ? new Date(allocationEndDate).toLocaleDateString(
+                        deviceLocale,
+                        {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        },
+                      )
                     : ''
                 }
                 onChange={(date: Date) =>
-                  setIsEndDate(moment(date).format(commonFormatDate))
+                  setAllocationEndDate(moment(date).format(commonFormatDate))
                 }
               />
             </CCol>
           </CRow>
-          {dateError && (
+          {isDateError && (
             <CRow className="mt-2">
               <CCol sm={{ span: 6, offset: 2 }}>
                 <span className="text-danger">
@@ -485,7 +491,7 @@ const AllocateEmployee = (): JSX.Element => {
           )}
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>Comments: </CFormLabel>
-            {showComment ? (
+            {isShowComment ? (
               <CCol sm={9}>
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
