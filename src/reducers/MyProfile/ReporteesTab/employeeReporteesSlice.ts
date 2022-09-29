@@ -17,6 +17,8 @@ const initialEmployeeReporteesState: ReporteesState = {
   employeeReporteesKPIs: [],
   isLoading: ApiLoadingState.idle,
   error: 0,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const getEmployeeReportees = createAsyncThunk<
@@ -120,6 +122,11 @@ const employeeReporteesKRAs = (state: RootState): EmployeeReporteesKRA[] =>
 const employeeReporteesKPIs = (state: RootState): EmployeeReporteesKPI[] =>
   state.employeeReportees.employeeReporteesKPIs
 
+const pageFromState = (state: RootState): number =>
+  state.employeeAssets.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.employeeAssets.pageSize
+
 const employeeReporteesThunk = {
   getEmployeeReportees,
   getEmployeeReporteesKRAs,
@@ -130,6 +137,8 @@ const employeeReporteesSelectors = {
   employeeReportees,
   employeeReporteesKRAs,
   employeeReporteesKPIs,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const employeeReporteesService = {
