@@ -23,7 +23,8 @@ const JobVacanciesTable = (): JSX.Element => {
   )
 
   const handleModal = (jobDescription: string) => {
-    setIsJobDescriptionModalVisible(true)
+    const description = jobDescription?.length > 20
+    setIsJobDescriptionModalVisible(description)
     setDescription(jobDescription)
   }
 
@@ -46,7 +47,7 @@ const JobVacanciesTable = (): JSX.Element => {
           {jobOpeningDetails?.slice(0, 5).map((jobVacancy, index) => {
             const jobDescriptionLimit =
               jobVacancy.description && jobVacancy.description.length > 30
-                ? `${jobVacancy.description.substring(0, 30)}...`
+                ? `${jobVacancy.description.substring(0, 30)}`
                 : jobVacancy.description
             return (
               <CTableRow key={index}>

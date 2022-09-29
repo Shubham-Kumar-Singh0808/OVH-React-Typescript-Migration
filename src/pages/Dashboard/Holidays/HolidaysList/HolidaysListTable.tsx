@@ -21,8 +21,6 @@ import { usePagination } from '../../../../middleware/hooks/usePagination'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import OModal from '../../../../components/ReusableComponent/OModal'
 
@@ -182,7 +180,7 @@ const HolidaysListTable = ({
           </OModal>
         </>
       ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
+        <></>
       )}
     </>
   )
