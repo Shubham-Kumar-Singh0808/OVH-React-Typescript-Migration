@@ -29,6 +29,7 @@ const EditMailTemplate = ({
   setEditEmployeeTemplate,
 }: EditTemplateProps): JSX.Element => {
   const [showAssetType, setShowAssetType] = useState<boolean>(false)
+  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
   useEffect(() => {
     if (Number(editEmployeeTemplate.templateTypeId) === 11) {
@@ -43,6 +44,14 @@ const EditMailTemplate = ({
       return { ...prevState, ...{ template } }
     })
   }
+
+  useEffect(() => {
+    if (editEmployeeTemplate.template?.replace(/^\s*/, '')) {
+      setIsUpdateButtonEnabled(true)
+    } else {
+      setIsUpdateButtonEnabled(false)
+    }
+  }, [editEmployeeTemplate.template])
 
   const handleUpdateMailTemplate = async () => {
     const updateMailTemplateResultAction = await dispatch(
@@ -192,7 +201,11 @@ const EditMailTemplate = ({
               className="col-sm-2 col-form-label text-end"
             >
               Template :{' '}
-              <span className={showIsRequired(editEmployeeTemplate.template)}>
+              <span
+                className={showIsRequired(
+                  editEmployeeTemplate.template?.replace(/^\s*/, ''),
+                )}
+              >
                 *
               </span>
             </CFormLabel>
@@ -220,6 +233,7 @@ const EditMailTemplate = ({
                 color="success"
                 onClick={handleUpdateMailTemplate}
                 data-testid="btn-update"
+                disabled={!isUpdateButtonEnabled}
               >
                 Update
               </CButton>
