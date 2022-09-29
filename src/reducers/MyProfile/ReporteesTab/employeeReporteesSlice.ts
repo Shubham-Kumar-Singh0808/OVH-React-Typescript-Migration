@@ -124,8 +124,6 @@ const employeeReporteesKPIs = (state: RootState): EmployeeReporteesKPI[] =>
 
 const pageFromState = (state: RootState): number =>
   state.employeeReportees.currentPage
-const pageSizeFromState = (state: RootState): number =>
-  state.employeeReportees.pageSize
 
 const employeeReporteesThunk = {
   getEmployeeReportees,
@@ -138,7 +136,6 @@ const employeeReporteesSelectors = {
   employeeReporteesKRAs,
   employeeReporteesKPIs,
   pageFromState,
-  pageSizeFromState,
 }
 
 export const employeeReporteesService = {
