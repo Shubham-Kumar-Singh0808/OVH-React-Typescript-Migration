@@ -416,3 +416,11 @@ export interface EventTypeListApi extends ApiBase {
   updateEventType: string
   getLoggedEmployeeName: string
 }
+
+export interface EventListApi extends ApiBase {
+  getAllEvents: string
+  cancelEvent: string
+  getFeedbackFormList: string
+  downloadFeedbackForm: string
+  uploadFeedbackForm: string
+}
