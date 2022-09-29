@@ -260,8 +260,11 @@ function AddNewMailTemplate(): JSX.Element {
                     </CFormLabel>
                     <CCol sm={4}>
                       <CFormInput
+                        className="ps-2"
                         type="email"
                         data-testid="email-address"
+                        placeholder="Email Address"
+                        autoComplete="off"
                         name="email"
                         value={addNewTemplate?.email}
                         maxLength={50}
@@ -295,9 +298,11 @@ function AddNewMailTemplate(): JSX.Element {
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormInput
+                    className="ps-2"
                     data-testid="title-input"
                     type="text"
                     name="templateName"
+                    autoComplete="off"
                     placeholder="Title"
                     value={addNewTemplate?.templateName}
                     maxLength={50}
