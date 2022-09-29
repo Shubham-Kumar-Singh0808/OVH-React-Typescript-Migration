@@ -12,7 +12,7 @@ export const trackerHandlers = [
     )
   }),
 
-  rest.delete(addTrackerApiConfig.deleteTrackerList, (_req, res, ctx) => {
+  rest.delete(addTrackerApiConfig.deleteTracker, (_req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,

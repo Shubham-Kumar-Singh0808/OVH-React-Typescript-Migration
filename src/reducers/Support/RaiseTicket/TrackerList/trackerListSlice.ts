@@ -33,7 +33,7 @@ const deleteTrackerList = createAsyncThunk(
   'addTracker/deleteTrackerList',
   async (id: number, thunkApi) => {
     try {
-      return await trackerListApi.deleteTrackerList(id)
+      return await trackerListApi.deleteTracker(id)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

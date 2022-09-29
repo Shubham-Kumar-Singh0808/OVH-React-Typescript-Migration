@@ -364,7 +364,7 @@ export interface TicketApprovalsApi extends ApiBase {
 }
 export interface AddTrackerApi extends ApiBase {
   addNewTracker: string
-  deleteTrackerList: string
+  deleteTracker: string
 }
 
 export interface RaiseNewTicketApi extends ApiBase {

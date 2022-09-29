@@ -497,5 +497,5 @@ export const eventTypeListApiConfig: EventTypeListApi = {
 
 export const addTrackerApiConfig: AddTrackerApi = {
   addNewTracker: apiPrefix + '/supportManagement/addTracker',
-  deleteTrackerList: apiPrefix + '/supportManagement/deleteTracker',
+  deleteTracker: apiPrefix + '/supportManagement/deleteTracker',
 }

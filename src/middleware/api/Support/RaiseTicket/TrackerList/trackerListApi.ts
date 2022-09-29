@@ -25,9 +25,9 @@ const addNewTracker = async ({
   return response.data
 }
 
-const deleteTrackerList = async (trackerId: number): Promise<number> => {
+const deleteTracker = async (trackerId: number): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: addTrackerApiConfig.deleteTrackerList,
+    url: addTrackerApiConfig.deleteTracker,
     method: AllowedHttpMethods.delete,
     params: {
       id: trackerId,
@@ -40,7 +40,7 @@ const deleteTrackerList = async (trackerId: number): Promise<number> => {
 
 const trackerListApi = {
   addNewTracker,
-  deleteTrackerList,
+  deleteTracker,
 }
 
 export default trackerListApi

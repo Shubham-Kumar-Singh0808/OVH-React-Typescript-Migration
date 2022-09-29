@@ -19,8 +19,8 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const TrackerListTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [deleteRoomName, setDeleteRoomName] = useState('')
-  const [deleteRoomId, setDeleteRoomId] = useState(0)
+  const [deleteTrackerName, setDeleteTrackerName] = useState('')
+  const [deleteTrackerId, setDeleteTrackerId] = useState(0)
   const dispatch = useAppDispatch()
 
   const trackerList = useTypedSelector(
@@ -40,13 +40,13 @@ const TrackerListTable = (): JSX.Element => {
   )
   const deleteTrackerButtonHandler = (id: number, roomName: string) => {
     setIsDeleteModalVisible(true)
-    setDeleteRoomId(id)
-    setDeleteRoomName(roomName)
+    setDeleteTrackerId(id)
+    setDeleteTrackerName(roomName)
   }
-  const confirmDeleteRoom = async () => {
+  const confirmDeleteTracker = async () => {
     setIsDeleteModalVisible(false)
     const deleteTrackerResult = await dispatch(
-      reduxServices.addTrackerLists.deleteTrackerList(deleteRoomId),
+      reduxServices.addTrackerLists.deleteTrackerList(deleteTrackerId),
     )
     if (
       reduxServices.addTrackerLists.deleteTrackerList.fulfilled.match(
@@ -127,9 +127,9 @@ const TrackerListTable = (): JSX.Element => {
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
-        confirmButtonAction={confirmDeleteRoom}
+        confirmButtonAction={confirmDeleteTracker}
       >
-        {`Do you really want to delete this ${deleteRoomName} Location ?`}
+        {`Do you really want to delete this ${deleteTrackerName} Location ?`}
       </OModal>
     </>
   )
