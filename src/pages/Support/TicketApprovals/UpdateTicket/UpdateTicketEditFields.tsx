@@ -9,6 +9,7 @@ import {
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
@@ -18,6 +19,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { GetTicketToEdit } from '../../../../types/Support/TicketApprovals/UpdateTicket/updateTicketTypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import { commonDateFormat } from '../../../../utils/dateFormatUtils'
 import { deviceLocale } from '../../../../utils/helper'
 
 const UpdateTicketEditFields = ({
@@ -42,10 +44,11 @@ const UpdateTicketEditFields = ({
     minutes: string
   }>({ hours: '', minutes: '' })
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
-  const [startDate, setStartDate] = useState<string>()
-  const [dueDate, setDueDate] = useState<string>()
+  const [startDate, setStartDate] = useState<string>('')
+  const [dueDate, setDueDate] = useState<string>('')
   const [approveModalVisibility, setApproveModalVisibility] =
     useState<boolean>(false)
+  const [dueDateError, setDueDateError] = useState<boolean>(false)
 
   const ticketDetailsToEdit = useTypedSelector(
     reduxServices.updateTicket.selectors.ticketDetailsToEdit,
@@ -204,6 +207,18 @@ const UpdateTicketEditFields = ({
     setReRender(!reRender)
     dispatch(reduxServices.app.actions.addToast(ticketApprovedSuccessToast))
   }
+
+  useEffect(() => {
+    const start = startDate
+      ? moment(startDate, commonDateFormat).format(commonDateFormat)
+      : moment(updateTicketDetails.startDate, commonDateFormat).format(
+          commonDateFormat,
+        )
+
+    const end = moment(dueDate, commonDateFormat).format(commonDateFormat)
+
+    setDueDateError(moment(end).isBefore(start))
+  }, [startDate, dueDate])
 
   return (
     <>
@@ -437,6 +452,13 @@ const UpdateTicketEditFields = ({
                 )
               }
             />
+            {dueDateError && (
+              <CCol sm={12}>
+                <span className="text-danger fw-bold">
+                  Due date should be greater than Start date
+                </span>
+              </CCol>
+            )}
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -592,10 +614,11 @@ const UpdateTicketEditFields = ({
             <CButton
               className="cursor-pointer"
               disabled={
-                updateTicketDetails.approvalStatus === 'Approved' ||
-                updateTicketDetails.approvalStatus === 'Rejected' ||
-                updateTicketDetails.approvalStatus === 'Cancelled' ||
-                !updateTicketDetails.disableApprove
+                (updateTicketDetails.approvalStatus === 'Approved' ||
+                  updateTicketDetails.approvalStatus === 'Rejected' ||
+                  updateTicketDetails.approvalStatus === 'Cancelled' ||
+                  !updateTicketDetails.disableApprove) &&
+                !dueDateError
               }
               color="success btn-ovh me-1"
               onClick={() => setApproveModalVisibility(true)}

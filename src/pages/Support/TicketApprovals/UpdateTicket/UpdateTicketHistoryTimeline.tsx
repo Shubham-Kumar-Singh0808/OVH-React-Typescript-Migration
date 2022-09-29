@@ -11,8 +11,8 @@ const UpdateTicketHistoryTimeline = (): JSX.Element => {
   const isTicketPrevProp = (oldProp: string): JSX.Element => {
     return oldProp ? (
       <>
-        &nbsp;Changed from {oldProp}
-        <strong> to</strong>
+        &nbsp;Changed from&nbsp;{parse(oldProp)}&nbsp;
+        <strong>to</strong>
       </>
     ) : (
       <></>

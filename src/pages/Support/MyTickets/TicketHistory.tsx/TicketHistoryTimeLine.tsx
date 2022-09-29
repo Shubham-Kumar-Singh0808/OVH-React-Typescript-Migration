@@ -14,8 +14,8 @@ const TicketHistoryTimeLine = (): JSX.Element => {
   const isTicketPrevValue = (oldValue: string): JSX.Element => {
     return oldValue ? (
       <>
-        &nbsp;Changed from {oldValue}
-        <strong> to</strong>
+        &nbsp;Changed from&nbsp;{parse(oldValue)}&nbsp;
+        <strong>to</strong>
       </>
     ) : (
       <></>
