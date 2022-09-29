@@ -12,6 +12,7 @@ import TrackerListTable from './TrackerListTable'
 import { TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const TrackerListOptions = ({
   setToggle,
@@ -60,6 +61,9 @@ const TrackerListOptions = ({
       setTrackerNameExist('')
     }
   }
+  const successToast = (
+    <OToast toastMessage="Tracker Added Successfully" toastColor="success" />
+  )
 
   const addButtonHandler = async () => {
     await dispatch(
@@ -69,6 +73,7 @@ const TrackerListOptions = ({
       }),
     )
     dispatch(reduxServices.ticketApprovals.getTrackerList())
+    dispatch(reduxServices.app.actions.addToast(successToast))
     setSelectTrackerName('')
     setIsChecked(false)
   }

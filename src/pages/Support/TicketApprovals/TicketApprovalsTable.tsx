@@ -87,7 +87,11 @@ const TicketApprovalsTable = ({
     scope: 'col',
   }
   const tableHeaderCellPropsAction = {
-    width: '24%',
+    width: '20%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropsDescription = {
+    width: '11%',
     scope: 'col',
   }
 
@@ -131,7 +135,7 @@ const TicketApprovalsTable = ({
 
   return (
     <>
-      <CTable responsive striped className="text-start mt-5">
+      <CTable responsive striped className="text-center mt-5">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell {...tableHeaderCellPropsTicketNo}>
@@ -144,7 +148,9 @@ const TicketApprovalsTable = ({
               Subject
             </CTableHeaderCell>
             <CTableHeaderCell scope="col">Tracker</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderCellPropsDescription}>
+              Description
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Priority</CTableHeaderCell>
             <CTableHeaderCell {...tableHeaderCellPropsStartDate}>
               Start Date
@@ -219,7 +225,7 @@ const TicketApprovalsTable = ({
                     {ticketItem.endDate ? ticketItem.endDate : 'N/A'}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    {ticketItem.approvedBy}
+                    {ticketItem.assigneeName ? ticketItem.assigneeName : 'N/A'}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     {ticketItem.estimatedTime}
