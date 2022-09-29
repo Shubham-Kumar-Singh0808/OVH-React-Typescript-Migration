@@ -56,6 +56,7 @@ import {
   BookingListApi,
   EventTypeListApi,
   AddLocationListApi,
+  AddTrackerApi,
   AllocateEmployeeApi,
 } from '../../types/apiTypes'
 
@@ -405,6 +406,7 @@ export const clientsApiConfig: ClientsApi = {
   editClient: apiPrefix + '/project-mgmt/client',
   updateClient: apiPrefix + '/project-mgmt/updateClient',
   getClientCountries: apiPrefix + '/project-mgmt/country',
+  clientOrg: apiPrefix + '/project-mgmt/clientOrg',
 }
 
 export const addNewClientApiConfig: AddNewClientApi = {
@@ -500,4 +502,9 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+}
+
+export const addTrackerApiConfig: AddTrackerApi = {
+  addNewTracker: apiPrefix + '/supportManagement/addTracker',
+  deleteTracker: apiPrefix + '/supportManagement/deleteTracker',
 }

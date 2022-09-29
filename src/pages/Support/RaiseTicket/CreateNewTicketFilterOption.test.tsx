@@ -11,9 +11,11 @@ import {
   mockTrackerList,
 } from '../../../test/data/ticketApprovalsData'
 
+const mockSetTogglePage = jest.fn()
+
 describe('Ticket Approvals Filter Options Component Testing', () => {
   beforeEach(() => {
-    render(<CreateNewTicketFilterOptions />)
+    render(<CreateNewTicketFilterOptions setToggle={mockSetTogglePage} />)
   })
   test('should render tracker select field', () => {
     const trackerSelect = screen.findByTestId('trackerSelect')
@@ -55,7 +57,7 @@ describe('Ticket Approvals Filter Options Component Testing', () => {
 
 describe('Create New Ticket Filter Options Component Testing with data', () => {
   beforeEach(() => {
-    render(<CreateNewTicketFilterOptions />, {
+    render(<CreateNewTicketFilterOptions setToggle={mockSetTogglePage} />, {
       preloadedState: {
         ticketApprovals: {
           trackerList: mockTrackerList,
@@ -155,5 +157,10 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     })
 
     expect(uploader).toBeTruthy()
+  })
+  test('should be able to click Add button element', () => {
+    const toggleBtn = screen.getByRole('button', { name: 'Add' })
+    userEvent.click(toggleBtn)
+    expect(toggleBtn).toBeInTheDocument()
   })
 })

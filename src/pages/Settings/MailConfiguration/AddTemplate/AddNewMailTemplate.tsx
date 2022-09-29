@@ -41,7 +41,7 @@ function AddNewMailTemplate(): JSX.Element {
       reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
     )
     dispatch(reduxServices.addNewMailTemplate.getAssetTypes())
-  }, [dispatch])
+  }, [dispatch, toggle])
 
   const getAssetTypes = useTypedSelector(
     reduxServices.addNewMailTemplate.selectors.assetTypes,
@@ -129,20 +129,6 @@ function AddNewMailTemplate(): JSX.Element {
     />
   )
 
-  const handleAddNewHandbookPage = async () => {
-    const addNewTemplateResultAction = await dispatch(
-      reduxServices.addNewMailTemplate.addNewMailTemplate(addNewTemplate),
-    )
-
-    if (
-      reduxServices.addNewMailTemplate.addNewMailTemplate.fulfilled.match(
-        addNewTemplateResultAction,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
-    }
-  }
-
   const handleClearInputs = () => {
     setAddNewTemplate({
       templateTypeId: 0,
@@ -155,6 +141,21 @@ function AddNewMailTemplate(): JSX.Element {
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+  }
+
+  const handleAddNewHandbookPage = async () => {
+    const addNewTemplateResultAction = await dispatch(
+      reduxServices.addNewMailTemplate.addNewMailTemplate(addNewTemplate),
+    )
+
+    if (
+      reduxServices.addNewMailTemplate.addNewMailTemplate.fulfilled.match(
+        addNewTemplateResultAction,
+      )
+    ) {
+      handleClearInputs()
+    }
+    dispatch(reduxServices.app.actions.addToast(successToastMessage))
   }
 
   const isAsteriskShow = addNewTemplate.assetTypeId ? TextWhite : TextDanger
@@ -286,7 +287,9 @@ function AddNewMailTemplate(): JSX.Element {
                   Title:
                   <span
                     className={
-                      addNewTemplate.templateName ? TextWhite : TextDanger
+                      addNewTemplate.templateName?.replace(/^\s*/, '')
+                        ? TextWhite
+                        : TextDanger
                     }
                   >
                     *
@@ -297,6 +300,7 @@ function AddNewMailTemplate(): JSX.Element {
                     data-testid="title-input"
                     type="text"
                     name="templateName"
+                    placeholder="Title"
                     value={addNewTemplate?.templateName}
                     maxLength={50}
                     onChange={handleInputChange}

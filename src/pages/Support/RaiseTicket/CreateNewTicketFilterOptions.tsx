@@ -19,7 +19,11 @@ import { CreateNewTicket } from '../../../types/Support/RaiseNewTicket/createNew
 import OToast from '../../../components/ReusableComponent/OToast'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
 
-const CreateNewTicketFilterOptions = (): JSX.Element => {
+const CreateNewTicketFilterOptions = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const initialCreateNewTicket = {} as CreateNewTicket
   const [createTicket, setCreateTicket] = useState(initialCreateNewTicket)
   const [trackerValue, setTrackerValue] = useState<string>()
@@ -227,7 +231,10 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
             </CFormSelect>
           </CCol>
           <CCol className="col-sm-3">
-            <CButton color="info btn-ovh me-1">
+            <CButton
+              color="info btn-ovh me-1"
+              onClick={() => setToggle('addTrackerList')}
+            >
               <i className="fa fa-plus me-1"></i>Add
             </CButton>
           </CCol>
@@ -404,7 +411,13 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
             Subject :
-            <span className={subjectValue ? whiteText : dangerText}>*</span>
+            <span
+              className={
+                subjectValue?.replace(/^\s*/, '') ? whiteText : dangerText
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={9}>
             <CFormInput
@@ -480,7 +493,6 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
                   element.currentTarget as HTMLInputElement,
                 )
               }
-              accept=".png, .jpg, .jpeg"
             />
           </CCol>
         </CRow>
