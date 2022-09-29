@@ -37,7 +37,7 @@ const TicketHistoryDetails = ({
               }
             >
               <CButton color="info btn-ovh me-1" data-testid="edit-btn">
-                <i className="fa fa-pencil-square-o"></i>Edit
+                <i className="fa fa-pencil-square-o"></i>&nbsp;Edit
               </CButton>
             </Link>
             <CButton

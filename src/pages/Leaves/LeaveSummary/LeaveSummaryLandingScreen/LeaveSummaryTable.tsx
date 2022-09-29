@@ -32,7 +32,7 @@ const LeaveSummaryTable = (): JSX.Element => {
         </CTableHead>
         <CTableBody>
           <CTableRow>
-            <CTableHeaderCell scope="row">Total Earned Leaves</CTableHeaderCell>
+            <CTableDataCell scope="row">Total Earned Leaves</CTableDataCell>
             <CTableDataCell>
               {employeeLeaveSummary?.allCreditedLeaves}
             </CTableDataCell>
@@ -53,7 +53,7 @@ const LeaveSummaryTable = (): JSX.Element => {
             </CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableHeaderCell scope="row">LOP</CTableHeaderCell>
+            <CTableDataCell scope="row">LOP</CTableDataCell>
             <CTableDataCell>0</CTableDataCell>
             <CTableDataCell>
               {employeeLeaveSummary.allLOPTakenLeaves}
