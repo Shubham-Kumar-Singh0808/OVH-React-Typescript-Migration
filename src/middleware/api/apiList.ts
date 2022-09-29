@@ -56,6 +56,7 @@ import {
   BookingListApi,
   EventTypeListApi,
   AddLocationListApi,
+  EventListApi,
   AddTrackerApi,
 } from '../../types/apiTypes'
 
@@ -494,6 +495,15 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+}
+
+export const eventListApiConfig: EventListApi = {
+  getAllEvents: apiPrefix + '/meetingRequest/getAllEvents',
+  cancelEvent: apiPrefix + '/meetingRequest/cancelEvent',
+  getFeedbackFormList: apiPrefix + '/meetingRequest/getFeedbackFormList',
+  downloadFeedbackForm: apiPrefix + '/meetingRequest/downloadFeedbackForm',
+  uploadFeedbackForm:
+    apiPrefix + '/fileUpload/uploadMeetingRequestFeedbackForm',
 }
 
 export const addTrackerApiConfig: AddTrackerApi = {

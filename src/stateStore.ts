@@ -74,6 +74,7 @@ import bookingListReducer from './reducers/ConferenceRoomBooking/BookingList/boo
 import leaveReportReducer from './reducers/Leaves/LeaveReports/leaveReportSlice'
 import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import eventListReducer from './reducers/ConferenceRoomBooking/EventList/eventListSlice'
 import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/trackerListSlice'
 
 export const allReducers = {
@@ -150,6 +151,7 @@ export const allReducers = {
   bookingList: bookingListReducer,
   leaveReport: leaveReportReducer,
   eventTypeList: eventTypeListReducer,
+  eventList: eventListReducer,
   // add your slice reducers here
 }
 
