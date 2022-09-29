@@ -121,6 +121,7 @@ const LocationList = (): JSX.Element => {
                 id="Name"
                 size="sm"
                 name="name"
+                autoComplete="off"
                 placeholder="Enter Location Name"
                 value={selectLocationName}
                 onChange={handledInputChange}
