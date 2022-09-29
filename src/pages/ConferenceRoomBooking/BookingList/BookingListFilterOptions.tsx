@@ -167,6 +167,7 @@ const BookingListFilterOptions = ({
             </CCol>
             <CCol sm={2}>
               <ReactDatePicker
+                autoComplete="off"
                 id="date"
                 data-testid="date"
                 className="form-control form-control-sm sh-date-picker"
@@ -174,7 +175,7 @@ const BookingListFilterOptions = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 name="date"
                 value={
                   selectDate

@@ -103,7 +103,7 @@ const EditMailTemplate = ({
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Type:
+              Type :
             </CFormLabel>
             <CCol sm={4}>
               <CFormSelect
@@ -128,7 +128,7 @@ const EditMailTemplate = ({
                   {...formLabelProps}
                   className="col-sm-2 col-form-label text-end"
                 >
-                  Asset Type:
+                  Asset Type :
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormSelect
@@ -149,7 +149,7 @@ const EditMailTemplate = ({
                   {...formLabelProps}
                   className="col-sm-2 col-form-label text-end"
                 >
-                  Email:
+                  Email :
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormInput
@@ -172,7 +172,7 @@ const EditMailTemplate = ({
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Title:
+              Title :
             </CFormLabel>
             <CCol sm={4}>
               <CFormInput
@@ -191,8 +191,12 @@ const EditMailTemplate = ({
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Template:{' '}
-              <span className={showIsRequired(editEmployeeTemplate.template)}>
+              Template :{' '}
+              <span
+                className={showIsRequired(
+                  editEmployeeTemplate.template?.replace(/^\s*/, ''),
+                )}
+              >
                 *
               </span>
             </CFormLabel>
