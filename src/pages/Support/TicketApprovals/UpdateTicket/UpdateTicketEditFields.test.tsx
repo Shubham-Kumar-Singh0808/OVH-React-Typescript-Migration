@@ -2,7 +2,13 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import UpdateTicketEditFields from './UpdateTicketEditFields'
-import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {
   mockActiveEmployees,
@@ -87,10 +93,19 @@ describe('Update Ticket Edit Fields Component Testing with data', () => {
     )
     expect(datePickerElements[0]).toHaveValue('10/29/2019')
     expect(datePickerElements[1]).toHaveValue('01/10/2022')
+    act(() => {
+      const file = new File(['hello'], 'hello.png', { type: 'image/png' })
+      const fileInput = screen.getByTestId('fileUpload')
+      userEvent.upload(fileInput, file)
 
-    const updateBtnElement = screen.getByRole('button', { name: 'Update' })
-    userEvent.click(updateBtnElement)
+      const updateBtnElement = screen.getByRole('button', { name: 'Update' })
+
+      userEvent.click(updateBtnElement)
+    })
     expect(priorityElement).toHaveValue('Normal')
+    await waitFor(() => {
+      expect(mockSetReRender).toHaveBeenCalledTimes(1)
+    })
   })
 
   test('Should be able to function autocomplete', () => {
@@ -125,4 +140,12 @@ describe('Update Ticket Edit Fields Component Testing with data', () => {
       expect(modalConfirmBtn).toBeInTheDocument()
     })
   })
+
+  // test('Should be able to render ckEditor', async () => {
+  //   const ckEditorElement = screen.getByTestId('ckEditor')
+  //   expect(ckEditorElement).toBeInTheDocument()
+  //   await waitFor(() => {
+  //     expect(ckEditorElement).toBeInTheDocument()
+  //   })
+  // })
 })
