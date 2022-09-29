@@ -65,12 +65,6 @@ const UpdateTicketEditFields = ({
     setFileUpload(ticketFile[0])
   }
 
-  const onChangeDescriptionHandler = (description: string) => {
-    setEditTicketDetails((prevState) => {
-      return { ...prevState, ...{ description } }
-    })
-  }
-
   useEffect(() => {
     if (ticketDetailsEdit != null) {
       setEditTicketDetails({
@@ -140,6 +134,12 @@ const UpdateTicketEditFields = ({
       dispatch(reduxServices.updateTicket.uploadSupportDoc(uploadPrepareObject))
     }
     dispatch(reduxServices.app.actions.addToast(ticketUpdatedSuccessToast))
+  }
+
+  const onChangeDescriptionHandler = (description: string) => {
+    setEditTicketDetails((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
   }
 
   return (
