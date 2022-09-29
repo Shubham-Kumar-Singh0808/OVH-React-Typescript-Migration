@@ -33,7 +33,7 @@ describe('Family Table component with data', () => {
     expect(screen.getByText('vinesh')).toBeInTheDocument()
     expect(screen.getByText('Brother')).toBeInTheDocument()
     expect(screen.getByText('970150987')).toBeInTheDocument()
-    expect(screen.getByText('03/23/2022')).toBeInTheDocument()
+    expect(screen.getByText('23/03/2022')).toBeInTheDocument()
   })
   test('should render with number of records  ', () => {
     expect(
