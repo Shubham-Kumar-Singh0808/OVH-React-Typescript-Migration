@@ -7,6 +7,7 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { TextDanger, TextWhite } from '../../../constant/ClassName'
 
 const ScheduledInterviewsFilterOptions = (props: {
   selectInterviewStatus: string
@@ -146,7 +147,14 @@ const ScheduledInterviewsFilterOptions = (props: {
     <>
       <CRow className="mt-4">
         <CCol sm={2} md={2} className="text-end">
-          <CFormLabel className="mt-1">From:</CFormLabel>
+          <CFormLabel className="mt-1">
+            From:
+            <span
+              className={scheduledInterviewFromDate ? TextWhite : TextDanger}
+            >
+              *
+            </span>
+          </CFormLabel>
         </CCol>
         <CCol sm={3}>
           <ReactDatePicker
@@ -181,7 +189,12 @@ const ScheduledInterviewsFilterOptions = (props: {
       </CRow>
       <CRow className="mt-3">
         <CCol sm={2} md={2} className="text-end">
-          <CFormLabel className="mt-1">To:</CFormLabel>
+          <CFormLabel className="mt-1">
+            To:
+            <span className={scheduledInterviewToDate ? TextWhite : TextDanger}>
+              *
+            </span>
+          </CFormLabel>
         </CCol>
         <CCol sm={3}>
           <ReactDatePicker
