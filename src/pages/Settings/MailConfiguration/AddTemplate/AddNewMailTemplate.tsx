@@ -290,7 +290,9 @@ function AddNewMailTemplate(): JSX.Element {
                   Title:
                   <span
                     className={
-                      addNewTemplate.templateName ? TextWhite : TextDanger
+                      addNewTemplate.templateName?.replace(/^\s*/, '')
+                        ? TextWhite
+                        : TextDanger
                     }
                   >
                     *
