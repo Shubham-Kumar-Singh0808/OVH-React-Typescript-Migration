@@ -57,6 +57,7 @@ import {
   EventTypeListApi,
   AddLocationListApi,
   EventListApi,
+  AddTrackerApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -503,4 +504,9 @@ export const eventListApiConfig: EventListApi = {
   downloadFeedbackForm: apiPrefix + '/meetingRequest/downloadFeedbackForm',
   uploadFeedbackForm:
     apiPrefix + '/fileUpload/uploadMeetingRequestFeedbackForm',
+}
+
+export const addTrackerApiConfig: AddTrackerApi = {
+  addNewTracker: apiPrefix + '/supportManagement/addTracker',
+  deleteTracker: apiPrefix + '/supportManagement/deleteTracker',
 }

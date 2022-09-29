@@ -9,7 +9,6 @@ import {
   CCol,
   CButton,
   CLink,
-  CCardHeader,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
@@ -97,7 +96,7 @@ const EventListTable = (
   }
 
   const attendees = selectedEventDetails.employeeDto?.length ? (
-    <CTable align="middle">
+    <CTable align="middle" className="bookingList-model-table">
       <CTableHead>
         <CTableRow>
           <CTableHeaderCell>Name of Employee</CTableHeaderCell>
@@ -274,36 +273,44 @@ const EventListTable = (
             modalHeaderClass="d-none"
           >
             <>
-              <CCardHeader className="mb-3">
-                <h4 className="model-text">{selectedEventDetails.agenda}</h4>
-              </CCardHeader>
+              <h4 className="model-header-text mb-3">
+                {selectedEventDetails.agenda}
+              </h4>
               <p className="d-flex">
-                <span className="col-sm-2 text-right fw-bold">Organizer :</span>
+                <span className="col-sm-2 text-right fw-bold px-3">
+                  Organizer :
+                </span>
                 {selectedEventDetails.authorName?.fullName}
               </p>
               <p className="d-flex">
-                <span className="col-sm-2 text-right fw-bold">Date :</span>
+                <span className="col-sm-2 text-right fw-bold px-3">Date :</span>
                 <>
                   {`${selectedEventDetails.fromDate} to ${selectedEventDetails.toDate} from
               ${selectedEventDetails.startTime} to ${selectedEventDetails.endTime}`}
                 </>
               </p>
               <p className="d-flex">
-                <span className="col-sm-2 text-right fw-bold">Location :</span>
+                <span className="col-sm-2 text-right fw-bold px-3">
+                  Location :
+                </span>
                 {`${selectedEventDetails.roomName} in ${selectedEventDetails.locationName}`}
               </p>
               <p className="d-flex">
-                <span className="col-sm-2 text-right fw-bold">
+                <span className="col-sm-2 text-right fw-bold px-3">
                   Description :
                 </span>
                 {eventDescription}
               </p>
               <p className="d-flex">
-                <span className="col-sm-2 text-right fw-bold">Trainer :</span>
+                <span className="col-sm-2 text-right fw-bold px-3">
+                  Trainer :
+                </span>
                 {trainer}
               </p>
               <p className="d-flex">
-                <span className="col-sm-2 text-right fw-bold">Attendees:</span>
+                <span className="col-sm-2 text-right fw-bold px-3 mt-2">
+                  Attendees:
+                </span>
                 {attendees}
               </p>
             </>

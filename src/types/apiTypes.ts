@@ -363,6 +363,10 @@ export interface TicketApprovalsApi extends ApiBase {
   exportTicketApprovalList: string
   rejectManagerTicket: string
 }
+export interface AddTrackerApi extends ApiBase {
+  addNewTracker: string
+  deleteTracker: string
+}
 
 export interface RaiseNewTicketApi extends ApiBase {
   createNewTicket: string
