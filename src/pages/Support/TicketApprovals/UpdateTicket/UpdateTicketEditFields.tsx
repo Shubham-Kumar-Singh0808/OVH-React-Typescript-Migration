@@ -165,8 +165,8 @@ const UpdateTicketEditFields = ({
   const updateBtnHandler = async () => {
     const updateObj = {
       ...updateTicketDetails,
-      startDate: startDate as string,
-      endDate: dueDate as string,
+      startDate,
+      endDate: dueDate,
       percentageDone:
         updateTicketDetails.percentageDone === ''
           ? ticketDetailsToEdit.percentageDone
