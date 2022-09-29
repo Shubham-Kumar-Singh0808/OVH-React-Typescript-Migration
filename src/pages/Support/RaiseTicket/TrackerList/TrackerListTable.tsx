@@ -67,13 +67,17 @@ const TrackerListTable = (): JSX.Element => {
   }
   return (
     <>
-      <CTable striped responsive className="mt-5 text-center">
+      <CTable striped responsive className="mt-5 align-middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
             <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Approval</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="text-middle">
+              Approval
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="text-center">
+              Actions
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -83,23 +87,23 @@ const TrackerListTable = (): JSX.Element => {
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
                   <CTableDataCell>{tracker.name}</CTableDataCell>
-                  <CTableDataCell>
-                    <span className="hidden-block">
+                  <CTableDataCell className="text-middle ms-2">
+                    <span className="hidden-block ms-3">
                       <CFormCheck
-                        className="form-check-input form-select-not-allowed"
+                        className="form-check-input form-select-not-allowed "
                         name="workflow"
                         checked={tracker.permission}
                         disabled={true}
                       />
                     </span>
                   </CTableDataCell>
-                  <CTableDataCell>
+                  <CTableDataCell className="text-center">
                     <CTooltip content="Delete">
                       <CButton
                         data-testid={`btn-delete${index}`}
                         size="sm"
-                        className="btn-ovh me-2 cursor-pointer"
-                        color="danger btn-ovh me-2"
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
                         onClick={() =>
                           deleteTrackerButtonHandler(tracker.id, tracker.name)
                         }
