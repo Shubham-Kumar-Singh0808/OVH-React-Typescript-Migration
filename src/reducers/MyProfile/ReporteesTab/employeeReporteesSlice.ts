@@ -123,9 +123,9 @@ const employeeReporteesKPIs = (state: RootState): EmployeeReporteesKPI[] =>
   state.employeeReportees.employeeReporteesKPIs
 
 const pageFromState = (state: RootState): number =>
-  state.employeeAssets.currentPage
+  state.employeeReportees.currentPage
 const pageSizeFromState = (state: RootState): number =>
-  state.employeeAssets.pageSize
+  state.employeeReportees.pageSize
 
 const employeeReporteesThunk = {
   getEmployeeReportees,
