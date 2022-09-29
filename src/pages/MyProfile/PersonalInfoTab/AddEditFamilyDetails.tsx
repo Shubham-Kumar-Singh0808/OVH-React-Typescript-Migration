@@ -57,7 +57,7 @@ function AddEditFamilyDetails({
         return { ...prevState, ...{ [name]: contactValue } }
       })
     } else if (name === 'personName') {
-      const personValue = value.replace(/[^a-zA-Z\s]$/gi, '')
+      const personValue = value.replace(/[^a-z\s]$/gi, '')
       setEmployeeFamily((prevState) => {
         return { ...prevState, ...{ [name]: personValue } }
       })
@@ -211,6 +211,7 @@ function AddEditFamilyDetails({
                 id="Name"
                 name="personName"
                 placeholder="Name"
+                data-testid="person-name"
                 value={employeeFamily?.personName}
                 onChange={onChangePersonNameHandler}
               />
@@ -232,6 +233,7 @@ function AddEditFamilyDetails({
                 aria-label="Relationship"
                 name="relationShip"
                 id="Relationship"
+                data-testid="relationship-test"
                 value={employeeFamily?.relationShip}
                 onChange={onChangePersonNameHandler}
               >
@@ -255,6 +257,7 @@ function AddEditFamilyDetails({
               <CFormInput
                 type="text"
                 id="ContactNumber"
+                data-testid="contact-number"
                 name="contactNumber"
                 placeholder="Contact Number"
                 value={employeeFamily?.contactNumber}

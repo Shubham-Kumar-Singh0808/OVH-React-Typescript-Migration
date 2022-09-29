@@ -271,11 +271,7 @@ const uploadEmployeePassport = createAsyncThunk<
 const personalInfoTabSlice = createSlice({
   name: 'personalInfoTab',
   initialState: initialPersonalInfoTabState,
-  reducers: {
-    clearVisaType: (state) => {
-      state.SubVisa = []
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder

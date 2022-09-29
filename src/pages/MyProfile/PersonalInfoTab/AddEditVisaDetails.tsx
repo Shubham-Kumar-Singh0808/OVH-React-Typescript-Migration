@@ -163,12 +163,6 @@ function AddEditVisaDetails({
     })
   }
 
-  useEffect(() => {
-    if (employeeVisaDetails?.countryId === '') {
-      dispatch(reduxServices.personalInformation.actions.clearVisaType())
-    }
-  }, [dispatch, employeeVisaDetails?.countryId])
-
   const onChangeDateOfIssueHandler = (date: Date) => {
     const currentDateExpiry = isEditVisaDetails
       ? (employeeVisaDetails.dateOfExpire as string)
