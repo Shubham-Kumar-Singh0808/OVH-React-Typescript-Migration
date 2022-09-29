@@ -56,6 +56,7 @@ import {
   BookingListApi,
   EventTypeListApi,
   AddLocationListApi,
+  AddTrackerApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -493,4 +494,9 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+}
+
+export const addTrackerApiConfig: AddTrackerApi = {
+  addNewTracker: apiPrefix + '/supportManagement/addTracker',
+  deleteTracker: apiPrefix + '/supportManagement/deleteTracker',
 }
