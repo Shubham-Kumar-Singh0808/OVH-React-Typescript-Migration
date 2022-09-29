@@ -135,17 +135,35 @@ describe('Update Ticket Edit Fields Component Testing with data', () => {
     expect(approveBtnElement).toBeEnabled()
     expect(approveBtnElement).toBeInTheDocument()
     userEvent.click(approveBtnElement)
+    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
     await waitFor(() => {
-      const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
       expect(modalConfirmBtn).toBeInTheDocument()
+    })
+    userEvent.click(modalConfirmBtn)
+    await waitFor(() => {
+      expect(mockSetReRender).toHaveBeenCalledTimes(1)
     })
   })
 
-  // test('Should be able to render ckEditor', async () => {
-  //   const ckEditorElement = screen.getByTestId('ckEditor')
-  //   expect(ckEditorElement).toBeInTheDocument()
-  //   await waitFor(() => {
-  //     expect(ckEditorElement).toBeInTheDocument()
-  //   })
-  // })
+  test('Should be able to render ckEditor', async () => {
+    const updateBtnElement = screen.getByRole('button', { name: 'Update' })
+    const datePickerElements = screen.getAllByPlaceholderText('dd/mm/yy')
+    fireEvent.click(datePickerElements[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickerElements[0], {
+        target: { value: '' },
+      }),
+    )
+    fireEvent.click(datePickerElements[1])
+    await waitFor(() =>
+      fireEvent.change(datePickerElements[1], {
+        target: { value: '' },
+      }),
+    )
+    expect(datePickerElements[0]).toHaveValue('13/09/2022')
+    expect(datePickerElements[1]).toHaveValue('')
+    userEvent.click(updateBtnElement)
+    expect(updateBtnElement).toBeInTheDocument()
+  })
 })
