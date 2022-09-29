@@ -299,8 +299,8 @@ function AddNewHandbook({
                 *
               </span>
             </CFormLabel>
-            <CCol sm={3}>
-              <CRow>
+            <CCol sm={4}>
+              <CRow className="mt-2">
                 <CCol sm={3}>
                   <CFormCheck
                     data-testid="ch-All"

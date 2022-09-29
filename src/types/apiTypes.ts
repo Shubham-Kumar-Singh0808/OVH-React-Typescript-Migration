@@ -330,6 +330,7 @@ export interface ClientsApi extends ApiBase {
   editClient: string
   updateClient: string
   getClientCountries: string
+  clientOrg: string
 }
 
 export interface AddNewClientApi extends ApiBase {
@@ -361,6 +362,10 @@ export interface TicketApprovalsApi extends ApiBase {
   getAllTicketsForApproval: string
   exportTicketApprovalList: string
   rejectManagerTicket: string
+}
+export interface AddTrackerApi extends ApiBase {
+  addNewTracker: string
+  deleteTracker: string
 }
 
 export interface RaiseNewTicketApi extends ApiBase {

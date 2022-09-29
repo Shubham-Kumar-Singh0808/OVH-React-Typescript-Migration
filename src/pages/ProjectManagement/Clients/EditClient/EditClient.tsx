@@ -256,7 +256,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="organizationInput"
                 name="organization"
                 placeholder="Organization"
-                maxLength={50}
                 value={client.organization}
                 onChange={onChangeInputHandler}
               />
