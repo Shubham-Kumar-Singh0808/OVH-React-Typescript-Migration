@@ -227,6 +227,7 @@ function AddNewHandbook({
             <CCol sm={3}>
               <CFormInput
                 data-testid="title-input"
+                autoComplete="off"
                 type="text"
                 name="title"
                 value={addNewPage.title}
@@ -247,6 +248,7 @@ function AddNewHandbook({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                autoComplete="off"
                 data-testid="pageName-input"
                 type="text"
                 name="pageName"
@@ -271,6 +273,7 @@ function AddNewHandbook({
             <CCol sm={3}>
               <CFormInput
                 data-testid="displayOrder-input"
+                autoComplete="off"
                 type="text"
                 maxLength={2}
                 min={1}
@@ -299,8 +302,8 @@ function AddNewHandbook({
                 *
               </span>
             </CFormLabel>
-            <CCol sm={3}>
-              <CRow>
+            <CCol sm={4}>
+              <CRow className="mt-2">
                 <CCol sm={3}>
                   <CFormCheck
                     data-testid="ch-All"

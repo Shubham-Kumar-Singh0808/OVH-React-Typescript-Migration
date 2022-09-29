@@ -136,6 +136,8 @@ const AddHoliday = (): JSX.Element => {
                 data-testid="holiday-name"
                 type="text"
                 name="name"
+                placeholder="Holiday Name"
+                autoComplete="off"
                 value={addHoliday.name}
                 maxLength={50}
                 onChange={handleInputChange}
