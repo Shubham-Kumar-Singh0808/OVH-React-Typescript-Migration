@@ -13,6 +13,8 @@ const initialEmployeeAssetsState: EmployeeAssetsState = {
   employeeAssets: [],
   isLoading: ApiLoadingState.idle,
   error: 0,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const getEmployeeAssets = createAsyncThunk<
@@ -57,13 +59,20 @@ const employeeAssets = (state: RootState): EmployeeAsset[] =>
 const isLoading = (state: RootState): LoadingState =>
   state.employeeAssets.isLoading
 
+const pageFromState = (state: RootState): number =>
+  state.employeeAssets.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.employeeAssets.pageSize
+
 const employeeAssetsThunk = {
-  getEmployeeMyAssets: getEmployeeAssets,
+  getEmployeeAssets,
 }
 
 const employeeAssetsSelectors = {
   employeeAssets,
   isLoading,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const employeeAssetsService = {
