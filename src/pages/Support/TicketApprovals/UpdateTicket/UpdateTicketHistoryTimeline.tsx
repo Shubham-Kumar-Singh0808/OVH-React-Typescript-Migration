@@ -1,5 +1,6 @@
 import { CBadge, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
+import parse from 'html-react-parser'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 
@@ -10,8 +11,8 @@ const UpdateTicketHistoryTimeline = (): JSX.Element => {
   const isTicketPrevProp = (oldProp: string): JSX.Element => {
     return oldProp ? (
       <>
-        &nbsp;Changed from {oldProp}
-        <strong> to</strong>
+        &nbsp;Changed from&nbsp;{parse(oldProp)}&nbsp;
+        <strong>to</strong>
       </>
     ) : (
       <></>
@@ -112,7 +113,7 @@ const UpdateTicketHistoryTimeline = (): JSX.Element => {
                       )}
                       {currTicketDetail.description ? (
                         <>
-                          <div className="mb-1">
+                          <div className="mb-1 d-flex">
                             <CFormLabel className="col-form-label p-0">
                               Description
                             </CFormLabel>
@@ -120,7 +121,7 @@ const UpdateTicketHistoryTimeline = (): JSX.Element => {
                               currTicketDetail.olddescription as string,
                             )}
                             &nbsp;
-                            {currTicketDetail.description}
+                            {parse(currTicketDetail.description)}
                           </div>
                         </>
                       ) : (
@@ -278,6 +279,21 @@ const UpdateTicketHistoryTimeline = (): JSX.Element => {
                               currTicketDetail.oldassignee as string,
                             )}
                             &nbsp; {currTicketDetail.oldapprovedByManager}
+                          </div>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {currTicketDetail.endDate ? (
+                        <>
+                          <div className="mb-1">
+                            <CFormLabel className="col-form-label p-0">
+                              End Date
+                            </CFormLabel>
+                            {isTicketPrevProp(
+                              currTicketDetail.oldendDate as string,
+                            )}
+                            &nbsp; {currTicketDetail.endDate}
                           </div>
                         </>
                       ) : (
