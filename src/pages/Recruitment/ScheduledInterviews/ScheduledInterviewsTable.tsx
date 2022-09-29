@@ -172,7 +172,7 @@ const ScheduledInterviewsTable = (props: {
           ) : (
             <CCol>
               <CRow className="mt-3 ms-3">
-                <h5>No Records Found... </h5>
+                <strong>No Records Found... </strong>
               </CRow>
             </CCol>
           )}

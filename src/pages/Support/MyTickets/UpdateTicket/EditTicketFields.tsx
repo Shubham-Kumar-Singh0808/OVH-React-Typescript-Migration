@@ -65,6 +65,12 @@ const UpdateTicketEditFields = ({
     setFileUpload(ticketFile[0])
   }
 
+  const onChangeDescriptionHandler = (description: string) => {
+    setEditTicketDetails((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
+  }
+
   useEffect(() => {
     if (ticketDetailsEdit != null) {
       setEditTicketDetails({
@@ -259,11 +265,10 @@ const UpdateTicketEditFields = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={editTicketDetails?.description}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  onChangeHandler(editor.getData().trim())
+                  onChangeDescriptionHandler(editor.getData().trim())
                 }}
               />
             </CCol>
@@ -323,7 +328,6 @@ const UpdateTicketEditFields = ({
               onChange={(element: React.SyntheticEvent) =>
                 onChangeFileHandler(element.currentTarget as HTMLInputElement)
               }
-              accept=".png, .jpg, .jpeg"
             />
           </CCol>
         </CRow>

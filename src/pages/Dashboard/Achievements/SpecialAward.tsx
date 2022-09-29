@@ -16,7 +16,8 @@ const SpecialAward = (): JSX.Element => {
         rel="noopener norefferer"
         target="_self"
       >
-        View more
+        More
+        {''} <i className="fa fa-angle-double-right fa-lg"></i>
       </CLink>
     </CCardFooter>
   )

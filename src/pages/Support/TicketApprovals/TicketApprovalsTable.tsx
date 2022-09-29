@@ -87,7 +87,11 @@ const TicketApprovalsTable = ({
     scope: 'col',
   }
   const tableHeaderCellPropsAction = {
-    width: '10%',
+    width: '20%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropsDescription = {
+    width: '11%',
     scope: 'col',
   }
 
@@ -131,7 +135,7 @@ const TicketApprovalsTable = ({
 
   return (
     <>
-      <CTable responsive striped className="text-start mt-5">
+      <CTable responsive striped className="text-center mt-5">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell {...tableHeaderCellPropsTicketNo}>
@@ -144,7 +148,9 @@ const TicketApprovalsTable = ({
               Subject
             </CTableHeaderCell>
             <CTableHeaderCell scope="col">Tracker</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderCellPropsDescription}>
+              Description
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Priority</CTableHeaderCell>
             <CTableHeaderCell {...tableHeaderCellPropsStartDate}>
               Start Date
@@ -219,7 +225,7 @@ const TicketApprovalsTable = ({
                     {ticketItem.endDate ? ticketItem.endDate : 'N/A'}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    {ticketItem.approvedBy}
+                    {ticketItem.assigneeName ? ticketItem.assigneeName : 'N/A'}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     {ticketItem.estimatedTime}
@@ -233,13 +239,16 @@ const TicketApprovalsTable = ({
                   <CTableDataCell scope="row">
                     <>
                       <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
-                        <CButton color="info" className="btn-ovh me-2">
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                        >
                           <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>
                       </Link>
                       <CButton
-                        color="danger"
-                        className="btn-ovh me-2"
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
                         data-testid="ticket-reject-btn"
                         disabled={
                           ticketItem.approvalStatus === 'Approved' ||
@@ -257,8 +266,8 @@ const TicketApprovalsTable = ({
                         <i className="fa fa-times" aria-hidden="true"></i>
                       </CButton>
                       <CButton
-                        color="info"
-                        className="btn-ovh me-2"
+                        color="info btn-ovh me-1"
+                        className="btn-ovh-employee-list"
                         data-testid="ticketTimelineBtn"
                         onClick={() =>
                           handleTicketApprovalsHistory(ticketItem.id)

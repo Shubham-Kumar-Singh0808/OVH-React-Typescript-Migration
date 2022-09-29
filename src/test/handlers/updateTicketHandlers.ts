@@ -24,4 +24,12 @@ export const updateTicketHandlers = [
       }),
     )
   }),
+  // updateIndividualTickets api mock
+  rest.put(updateTicketApiConfig.updateIndividualTickets, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+      }),
+    )
+  }),
 ]

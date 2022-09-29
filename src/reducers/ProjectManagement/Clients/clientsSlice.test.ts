@@ -10,7 +10,7 @@ import {
   mockProjectsUnderClient,
 } from '../../../test/data/clientsData'
 import {
-  mockClientCountries,
+  mockGetClientCountries,
   mockEditClient,
 } from '../../../test/data/editClientData'
 
@@ -95,7 +95,7 @@ describe('Clients Slice', () => {
     it('Should be able to set isLoading to "success" if getClientCountries is fulfilled', () => {
       const action = {
         type: clientsService.getClientCountries.fulfilled.type,
-        payload: mockClientCountries,
+        payload: mockGetClientCountries,
       }
       const state = clientsReducer(initialClientsState, action)
       expect(state).toEqual({
@@ -105,7 +105,7 @@ describe('Clients Slice', () => {
         isLoading: ApiLoadingState.succeeded,
         isLoadingProjectDetails: ApiLoadingState.idle,
         editClient: {} as Client,
-        clientCountries: mockClientCountries,
+        clientCountries: mockGetClientCountries,
       })
     })
 

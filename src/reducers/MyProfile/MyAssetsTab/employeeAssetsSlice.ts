@@ -58,7 +58,7 @@ const isLoading = (state: RootState): LoadingState =>
   state.employeeAssets.isLoading
 
 const employeeAssetsThunk = {
-  getEmployeeMyAssets: getEmployeeAssets,
+  getEmployeeAssets,
 }
 
 const employeeAssetsSelectors = {
