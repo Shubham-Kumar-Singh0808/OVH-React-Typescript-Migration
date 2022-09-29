@@ -122,9 +122,6 @@ const employeeReporteesKRAs = (state: RootState): EmployeeReporteesKRA[] =>
 const employeeReporteesKPIs = (state: RootState): EmployeeReporteesKPI[] =>
   state.employeeReportees.employeeReporteesKPIs
 
-const pageFromState = (state: RootState): number =>
-  state.employeeReportees.currentPage
-
 const employeeReporteesThunk = {
   getEmployeeReportees,
   getEmployeeReporteesKRAs,
@@ -135,7 +132,6 @@ const employeeReporteesSelectors = {
   employeeReportees,
   employeeReporteesKRAs,
   employeeReporteesKPIs,
-  pageFromState,
 }
 
 export const employeeReporteesService = {
