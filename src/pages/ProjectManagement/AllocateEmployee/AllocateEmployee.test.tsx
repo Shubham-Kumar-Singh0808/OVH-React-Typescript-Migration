@@ -9,12 +9,8 @@ import {
   mockEmployeeNames,
   mockProjectNames,
 } from '../../../test/data/allocateEmployeeData'
-// import { dateFormatPerLocale } from '../../../utils/dateFormatUtils'
-
-const deviceLocale: string =
-  navigator.languages && navigator.languages.length
-    ? navigator.languages[0]
-    : navigator.language
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const billableValue = 'form-select1'
 const employeeNames = 'Employee Name'
@@ -66,6 +62,7 @@ describe('should render allocate Employee Component with data', () => {
           getAllEmployees: mockEmployeeNames,
           getAllProjects: mockProjectNames,
           allocateEmployee: mockAllocateEmployeeToProject,
+          isLoading: ApiLoadingState.succeeded,
         },
       },
     })

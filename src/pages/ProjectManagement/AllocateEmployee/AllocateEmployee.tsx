@@ -29,6 +29,7 @@ import {
   GetAllProjectNames,
 } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const AllocateEmployee = (): JSX.Element => {
@@ -37,11 +38,6 @@ const AllocateEmployee = (): JSX.Element => {
 
   const formLabel = 'col-sm-3 col-form-label text-end'
   const commonFormatDate = 'L'
-  const deviceLocale: string =
-    navigator.languages && navigator.languages.length
-      ? navigator.languages[0]
-      : navigator.language
-
   const initialGetAllProjectNames = {} as GetAllProjectNames
 
   const [isBilLable, setIsBilLable] = useState('')
@@ -225,11 +221,6 @@ const AllocateEmployee = (): JSX.Element => {
       Number(dateParts[1]) - 1,
       Number(dateParts[0]),
     )
-    console.log(dateParts)
-    console.log(tempProjectStartDate)
-    console.log(tempAllocationDate)
-    console.log(tempProjectEndDate)
-    console.log(tempEndDate)
     if (
       tempAllocationDate.getTime() >= tempProjectStartDate.getTime() &&
       tempEndDate.getTime() <= tempProjectEndDate.getTime()

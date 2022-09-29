@@ -4,7 +4,6 @@ import {
   EmployeeAllocateSliceState,
 } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import {
-  mockAllocateEmployeeToProject,
   mockEmployeeNames,
   mockProjectNames,
 } from '../../../test/data/allocateEmployeeData'
@@ -20,7 +19,7 @@ describe('Achievements Slice', () => {
       error: null,
     } as EmployeeAllocateSliceState
 
-    it('Should be able to set isLoading to "loading" if getAllEmployees is pending', () => {
+    it('Should be able to set isLoading to "loading" if getAllEmployeesProfileData is pending', () => {
       const action = {
         type: allocateEmployeeService.getAllEmployeesProfileData.pending.type,
       }
@@ -34,7 +33,7 @@ describe('Achievements Slice', () => {
       })
     })
 
-    it('Should be able to set isLoading to "loading" if getAllProjects is pending', () => {
+    it('Should be able to set isLoading to "loading" if getAllProjectSearchData is pending', () => {
       const action = {
         type: allocateEmployeeService.getAllProjectSearchData.pending.type,
       }
@@ -48,21 +47,7 @@ describe('Achievements Slice', () => {
       })
     })
 
-    it('Should be able to set isLoading to "loading" if allocateEmployee is pending', () => {
-      const action = {
-        type: allocateEmployeeService.AddNewAllocate.pending.type,
-      }
-      const state = reducer(initialAllocateEmployeeState, action)
-      expect(state).toEqual({
-        getAllEmployees: [],
-        getAllProjects: [],
-        allocateEmployee: {} as AllocateEmployeeToProject,
-        isLoading: ApiLoadingState.idle,
-        error: null,
-      })
-    })
-
-    it('Should be able to set isLoading to "success" if getAllEmployees is fulfilled', () => {
+    it('Should be able to set isLoading to "success" if getAllEmployeesProfileData is fulfilled', () => {
       const action = {
         type: allocateEmployeeService.getAllEmployeesProfileData.fulfilled.type,
         payload: mockEmployeeNames,
@@ -77,7 +62,7 @@ describe('Achievements Slice', () => {
       })
     })
 
-    it('Should be able to set isLoading to "success" if getAllProjects is fulfilled', () => {
+    it('Should be able to set isLoading to "success" if getAllProjectSearchData is fulfilled', () => {
       const action = {
         type: allocateEmployeeService.getAllProjectSearchData.fulfilled.type,
         payload: mockProjectNames,
@@ -88,21 +73,6 @@ describe('Achievements Slice', () => {
         getAllProjects: mockProjectNames,
         allocateEmployee: {} as AllocateEmployeeToProject,
         isLoading: ApiLoadingState.succeeded,
-        error: null,
-      })
-    })
-
-    it('Should be able to set isLoading to "success" if allocateEmployee is fulfilled', () => {
-      const action = {
-        type: allocateEmployeeService.AddNewAllocate.fulfilled.type,
-        payload: mockAllocateEmployeeToProject,
-      }
-      const state = reducer(initialAllocateEmployeeState, action)
-      expect(state).toEqual({
-        getAllEmployees: [],
-        getAllProjects: [],
-        allocateEmployee: {} as AllocateEmployeeToProject,
-        isLoading: ApiLoadingState.idle,
         error: null,
       })
     })

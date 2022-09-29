@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { LoadingState, ValidationError } from '../../../types/commonTypes'
+import { ValidationError } from '../../../types/commonTypes'
 import allocateEmployeeApi from '../../../middleware/api/ProjectManagement/AllocateEmployee/allocateEmployeeApi'
 import {
   AllocateEmployeeToProject,
@@ -93,12 +93,6 @@ const employeeNames = (state: RootState): GetAllEmployeesNames[] =>
 const projectNames = (state: RootState): GetAllProjectNames[] =>
   state.allocateEmployee.getAllProjects
 
-const allocateInfo = (state: RootState): AllocateEmployeeToProject =>
-  state.allocateEmployee.allocateEmployee
-
-const isLoading = (state: RootState): LoadingState =>
-  state.projectManagement.isLoading
-
 const allocateEmployeeThunk = {
   getAllEmployeesProfileData,
   getAllProjectSearchData,
@@ -106,10 +100,8 @@ const allocateEmployeeThunk = {
 }
 
 const allocateEmployeeSelectors = {
-  isLoading,
   employeeNames,
   projectNames,
-  allocateInfo,
 }
 
 export const allocateEmployeeService = {
