@@ -97,6 +97,18 @@ const getClientCountries = createAsyncThunk(
   },
 )
 
+const isOrganizationExists = createAsyncThunk(
+  'clients/isOrganizationExists',
+  async (inputText: string, thunkApi) => {
+    try {
+      return await clientsApi.isOrganizationExists(inputText)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialClientsSliceState: ClientsSliceState = {
   selectedClientStatus: ClientStatus.active,
   clientsList: { clients: [], totalClients: 0 },
@@ -143,7 +155,11 @@ const clientsSlice = createSlice({
         },
       )
       .addMatcher(
-        isAnyOf(updateClient.fulfilled, deleteClient.fulfilled),
+        isAnyOf(
+          updateClient.fulfilled,
+          deleteClient.fulfilled,
+          isOrganizationExists.fulfilled,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },
@@ -155,6 +171,7 @@ const clientsSlice = createSlice({
           deleteClient.pending,
           getClientToEdit.pending,
           getClientCountries.pending,
+          isOrganizationExists.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -193,6 +210,7 @@ const clientsThunk = {
   getClientToEdit,
   updateClient,
   getClientCountries,
+  isOrganizationExists,
 }
 
 const clientsSelectors = {

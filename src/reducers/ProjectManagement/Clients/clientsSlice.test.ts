@@ -140,5 +140,20 @@ describe('Clients Slice', () => {
         clientCountries: [],
       })
     })
+    it('Should be able to set isLoading to "success" if isOrganizationExists is fulfilled', () => {
+      const action = {
+        type: clientsService.isOrganizationExists.fulfilled.type,
+      }
+      const state = clientsReducer(initialClientsState, action)
+      expect(state).toEqual({
+        selectedClientStatus: ClientStatus.active,
+        clientsList: { clients: [], totalClients: 0 },
+        projectsUnderClient: [],
+        isLoading: ApiLoadingState.succeeded,
+        isLoadingProjectDetails: ApiLoadingState.idle,
+        editClient: {} as Client,
+        clientCountries: [],
+      })
+    })
   })
 })
