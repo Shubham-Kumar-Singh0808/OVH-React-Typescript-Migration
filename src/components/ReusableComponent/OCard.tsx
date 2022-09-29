@@ -34,8 +34,8 @@ const OCard = (props: {
             rel="noopener norefferer"
             target="_self"
           >
-            View more
-            {/* <CIcon icon={cilArrowRight} className="ms-2" width={16} /> */}
+            More
+            {''} <i className="fa fa-angle-double-right fa-lg"></i>
           </CLink>
         </CCardFooter>
       </CCard>

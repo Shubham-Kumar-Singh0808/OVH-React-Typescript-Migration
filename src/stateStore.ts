@@ -75,6 +75,8 @@ import leaveReportReducer from './reducers/Leaves/LeaveReports/leaveReportSlice'
 import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
 import employeeAllocationReportReducer from './reducers/ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
+import eventListReducer from './reducers/ConferenceRoomBooking/EventList/eventListSlice'
+import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/trackerListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -135,6 +137,7 @@ export const allReducers = {
   employeeLeaveSummary: leaveSummaryReducer,
   tickets: myTicketsReducer,
   ticketApprovals: ticketApprovalsReducer,
+  addTrackerLists: addTrackerListReducer,
   raiseNewTicket: createNewTicketReducer,
   upcomingEmployeeBirthday: UpcomingBirthdayReducer,
   employeesBirthdayList: birthdaysListReducer,
@@ -150,6 +153,7 @@ export const allReducers = {
   leaveReport: leaveReportReducer,
   eventTypeList: eventTypeListReducer,
   employeeAllocationReport: employeeAllocationReportReducer,
+  eventList: eventListReducer,
   // add your slice reducers here
 }
 

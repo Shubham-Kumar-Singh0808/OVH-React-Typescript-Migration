@@ -18,6 +18,9 @@ const Dashboard = (): JSX.Element => {
   const employeeID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+  const role = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.role,
+  )
 
   useEffect(() => {
     dispatch(
@@ -125,14 +128,18 @@ const Dashboard = (): JSX.Element => {
                 </OCard>
               </CCol>
               <CCol sm={12}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Upcoming Probationary End Dates"
-                  CBodyClassName="ps-0 pe-0"
-                  footerPath="/probationaryList"
-                >
-                  <UpcomingProbationaryEndDates />
-                </OCard>
+                {(role === 'admin' ||
+                  role === 'HR Manager' ||
+                  role === 'HR') && (
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Upcoming Probationary End Dates"
+                    CBodyClassName="ps-0 pe-0"
+                    footerPath="/probationaryList"
+                  >
+                    <UpcomingProbationaryEndDates />
+                  </OCard>
+                )}
               </CCol>
             </CCol>
           </CRow>

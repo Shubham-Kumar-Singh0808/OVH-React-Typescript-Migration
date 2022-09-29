@@ -11,7 +11,7 @@ const HandbookList = ({
     <div>
       <CListGroup flush>
         {handbooks
-          .filter((handbook) => {
+          ?.filter((handbook) => {
             if (inputText === '') {
               return handbook
             } else {

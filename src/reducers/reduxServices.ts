@@ -65,6 +65,8 @@ import { bookingListService } from './ConferenceRoomBooking/BookingList/bookingL
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
 import { employeeAllocationSliceService } from './ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
+import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
+import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -134,4 +136,6 @@ export const reduxServices = {
   eventTypeList: eventTypeListService,
   addLocationList: addLocationListService,
   employeeAllocationReport: employeeAllocationSliceService,
+  addTrackerLists: addTrackerListService,
+  eventList: eventListService,
 }

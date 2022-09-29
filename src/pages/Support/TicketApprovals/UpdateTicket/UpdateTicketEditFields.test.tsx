@@ -2,7 +2,13 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import UpdateTicketEditFields from './UpdateTicketEditFields'
-import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {
   mockActiveEmployees,
@@ -87,10 +93,19 @@ describe('Update Ticket Edit Fields Component Testing with data', () => {
     )
     expect(datePickerElements[0]).toHaveValue('10/29/2019')
     expect(datePickerElements[1]).toHaveValue('01/10/2022')
+    act(() => {
+      const file = new File(['hello'], 'hello.png', { type: 'image/png' })
+      const fileInput = screen.getByTestId('fileUpload')
+      userEvent.upload(fileInput, file)
 
-    const updateBtnElement = screen.getByRole('button', { name: 'Update' })
-    userEvent.click(updateBtnElement)
+      const updateBtnElement = screen.getByRole('button', { name: 'Update' })
+
+      userEvent.click(updateBtnElement)
+    })
     expect(priorityElement).toHaveValue('Normal')
+    await waitFor(() => {
+      expect(mockSetReRender).toHaveBeenCalledTimes(1)
+    })
   })
 
   test('Should be able to function autocomplete', () => {
@@ -102,7 +117,7 @@ describe('Update Ticket Edit Fields Component Testing with data', () => {
     const dropdownOptions = screen.getAllByTestId('autoComplete-options')
     fireEvent.click(dropdownOptions[0])
 
-    expect(autocomplete).toHaveValue('Veera')
+    expect(autocomplete).toHaveValue('Veera Kunagu')
   })
   test('Should be able to upload file', () => {
     const file = new File(['hello'], 'hello.png', { type: 'image/png' })
@@ -120,9 +135,35 @@ describe('Update Ticket Edit Fields Component Testing with data', () => {
     expect(approveBtnElement).toBeEnabled()
     expect(approveBtnElement).toBeInTheDocument()
     userEvent.click(approveBtnElement)
+    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
     await waitFor(() => {
-      const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
       expect(modalConfirmBtn).toBeInTheDocument()
     })
+    userEvent.click(modalConfirmBtn)
+    await waitFor(() => {
+      expect(mockSetReRender).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  test('Should be able to render ckEditor', async () => {
+    const updateBtnElement = screen.getByRole('button', { name: 'Update' })
+    const datePickerElements = screen.getAllByPlaceholderText('dd/mm/yy')
+    fireEvent.click(datePickerElements[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickerElements[0], {
+        target: { value: '' },
+      }),
+    )
+    fireEvent.click(datePickerElements[1])
+    await waitFor(() =>
+      fireEvent.change(datePickerElements[1], {
+        target: { value: '' },
+      }),
+    )
+    expect(datePickerElements[0]).toHaveValue('13/09/2022')
+    expect(datePickerElements[1]).toHaveValue('')
+    userEvent.click(updateBtnElement)
+    expect(updateBtnElement).toBeInTheDocument()
   })
 })

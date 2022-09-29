@@ -57,6 +57,8 @@ import {
   EventTypeListApi,
   EmployeeAllocationApi,
   AddLocationListApi,
+  EventListApi,
+  AddTrackerApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -398,6 +400,7 @@ export const clientsApiConfig: ClientsApi = {
   editClient: apiPrefix + '/project-mgmt/client',
   updateClient: apiPrefix + '/project-mgmt/updateClient',
   getClientCountries: apiPrefix + '/project-mgmt/country',
+  clientOrg: apiPrefix + '/project-mgmt/clientOrg',
 }
 
 export const addNewClientApiConfig: AddNewClientApi = {
@@ -501,4 +504,18 @@ export const employeeAllocationApiConfig: EmployeeAllocationApi = {
   updateEmployeeAllocateProject:
     apiPrefix + '/project-mgmt/updateEmployeeAllocateProject',
   downloadEmployeeAllocationList: apiPrefix + '/project-mgmt/exportFile',
+}
+
+export const eventListApiConfig: EventListApi = {
+  getAllEvents: apiPrefix + '/meetingRequest/getAllEvents',
+  cancelEvent: apiPrefix + '/meetingRequest/cancelEvent',
+  getFeedbackFormList: apiPrefix + '/meetingRequest/getFeedbackFormList',
+  downloadFeedbackForm: apiPrefix + '/meetingRequest/downloadFeedbackForm',
+  uploadFeedbackForm:
+    apiPrefix + '/fileUpload/uploadMeetingRequestFeedbackForm',
+}
+
+export const addTrackerApiConfig: AddTrackerApi = {
+  addNewTracker: apiPrefix + '/supportManagement/addTracker',
+  deleteTracker: apiPrefix + '/supportManagement/deleteTracker',
 }

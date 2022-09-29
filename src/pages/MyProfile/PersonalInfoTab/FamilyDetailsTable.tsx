@@ -14,7 +14,6 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
-import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const FamilyDetailsTable = ({
   editButtonHandler,
@@ -167,7 +166,7 @@ const FamilyDetailsTable = ({
                 </CTableDataCell>
                 {!isFieldDisabled || !isViewingAnotherEmployee ? (
                   <CTableDataCell scope="row">
-                    {localeDateFormat(family.dateOfBirth as string) || 'N/A'}
+                    {family.dateOfBirth || 'N/A'}
                   </CTableDataCell>
                 ) : (
                   <></>

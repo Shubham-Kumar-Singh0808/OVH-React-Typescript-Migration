@@ -148,7 +148,7 @@ const ClientDetailsTable = (): JSX.Element => {
         </CTableBody>
       </CTable>
       {!projectsUnderClient?.length && isLoading !== ApiLoadingState.loading && (
-        <CCol className="text-start ms-3">
+        <CCol className="text-start ms-4">
           <CRow>
             <h5>No Records Found... </h5>
           </CRow>

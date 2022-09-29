@@ -88,8 +88,8 @@ const MyTickets = (): JSX.Element => {
               </CCol>
             </CRow>
             <CRow className="gap-2 d-md-flex justify-content-md-end mt-3">
-              <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
-                <CInputGroup className="global-search me-0">
+              <CCol xs={12} sm={3}>
+                <CInputGroup className="global-search me-0 sh-client-search">
                   <CFormInput
                     placeholder="Multiple Search"
                     aria-label="Multiple Search"

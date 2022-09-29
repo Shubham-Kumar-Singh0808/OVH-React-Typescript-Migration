@@ -23,6 +23,9 @@ import { userRolesAndPermissionsHandlers } from './userRolesAndPermissionsHandle
 import { timeInOfficeHandlers } from './weeklyTimeInOfficeHandlers'
 import { eventTypeListHandlers } from './eventTypeListHandlers'
 import { employeeAllocationHandlers } from './EmployeeAllocationHandlers'
+import { trackerHandlers } from './addTrackerListHandlers'
+import { eventListHandlers } from './eventListHandlers'
+import { employeeHandbookHandlers } from './employeeHandbookHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -50,5 +53,9 @@ export const handlers = [
   ...updateTicketHandlers,
   ...eventTypeListHandlers,
   ...employeeAllocationHandlers,
+  ...trackerHandlers,
+  ...eventListHandlers,
+  ...employeeHandbookSettingsHandlers,
+  ...employeeHandbookHandlers,
   // add your handler here
 ]
