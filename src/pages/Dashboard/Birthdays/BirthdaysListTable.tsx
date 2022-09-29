@@ -53,11 +53,13 @@ const BirthdaysListTable = (props: BirthdayListTableProps): JSX.Element => {
       </CRow>
       {birthdaysList.length ? (
         <>
-          <CTable className="mt-4 ps-0" striped align="middle">
+          <CTable className="mt-4 ps-0" striped responsive align="middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">Date</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+                <CTableHeaderCell className="text-center" scope="col">
+                  Name
+                </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -65,7 +67,9 @@ const BirthdaysListTable = (props: BirthdayListTableProps): JSX.Element => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{employeeBirthday.date}</CTableDataCell>
-                    <CTableDataCell>{employeeBirthday.name}</CTableDataCell>
+                    <CTableDataCell className="text-center">
+                      {employeeBirthday.name}
+                    </CTableDataCell>
                   </CTableRow>
                 )
               })}
