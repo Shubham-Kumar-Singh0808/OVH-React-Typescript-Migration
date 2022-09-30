@@ -89,7 +89,7 @@ const LeaveReportTable = ({
                       {leave.allCreditedLeaves}.00
                     </CTableDataCell>
                     {getLeaveReports?.list[0]?.leaveCategorySummaries?.map(
-                      (leaveCategory, index) => (
+                      (leaveCategory) => (
                         <CTableDataCell key={index}>
                           {leaveCategory.daysPending +
                             leaveCategory.daysTaken +
