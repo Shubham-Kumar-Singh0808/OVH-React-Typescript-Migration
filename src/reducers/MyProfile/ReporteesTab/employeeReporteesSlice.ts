@@ -84,7 +84,14 @@ const getEmployeeReporteesKPIs = createAsyncThunk<
 const employeeReporteesSlice = createSlice({
   name: 'employeeReportees',
   initialState: initialEmployeeReporteesState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getEmployeeReportees.fulfilled, (state, action) => {
@@ -122,6 +129,11 @@ const employeeReporteesKRAs = (state: RootState): EmployeeReporteesKRA[] =>
 const employeeReporteesKPIs = (state: RootState): EmployeeReporteesKPI[] =>
   state.employeeReportees.employeeReporteesKPIs
 
+const pageFromState = (state: RootState): number =>
+  state.employeeReportees.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.employeeReportees.pageSize
+
 const employeeReporteesThunk = {
   getEmployeeReportees,
   getEmployeeReporteesKRAs,
@@ -132,6 +144,8 @@ const employeeReporteesSelectors = {
   employeeReportees,
   employeeReporteesKRAs,
   employeeReporteesKPIs,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const employeeReporteesService = {
