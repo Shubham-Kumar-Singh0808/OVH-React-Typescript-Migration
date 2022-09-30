@@ -3,7 +3,13 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EmployeeReportessTable from './EmployeeReportessTable'
-import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
+import {
+  cleanup,
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+} from '../../../test/testUtils'
 import { mockReporteesDetails } from '../../../test/data/employeeReporteesData'
 
 describe('Employee Reportees Table Component Testing', () => {
@@ -47,5 +53,10 @@ describe('Employee Reportees Table Component Testing', () => {
       expect(pageSizeSelect.selected).toBe(true)
       expect(screen.getAllByRole('row')).toHaveLength(25)
     })
+  })
+  test('should open modal when clicking on ticket description link', () => {
+    const linkElement = screen.getAllByTestId('report-test')
+    fireEvent.click(linkElement[0], '')
+    expect(linkElement).toBeTruthy()
   })
 })

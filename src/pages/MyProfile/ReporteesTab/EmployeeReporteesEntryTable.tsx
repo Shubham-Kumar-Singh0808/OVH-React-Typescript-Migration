@@ -61,6 +61,7 @@ const EmployeeReporteesEntryTable = (): JSX.Element => {
                         <i
                           className="fa fa-minus-circle cursor-pointer"
                           onClick={() => setIsIconVisible(false)}
+                          data-testid="minus-test"
                         />
                       ) : (
                         <i

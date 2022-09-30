@@ -25,6 +25,7 @@ describe('Employee Reportees Table Component Testing', () => {
   test('should render with data ', () => {
     expect(screen.getByText('Accounts')).toBeInTheDocument()
     expect(screen.getByText('30')).toBeInTheDocument()
+    expect(screen.getByText('N/A')).toBeInTheDocument()
     expect(
       screen.getByText('Finance and Account Executive'),
     ).toBeInTheDocument()

@@ -120,6 +120,7 @@ const EmployeeReportessTable = (): JSX.Element => {
                 <CTableDataCell scope="row">
                   <CLink
                     className="cursor-pointer text-decoration-none text-primary"
+                    data-testid="report-test"
                     onClick={() => handleModal(reportee.reporteeId)}
                   >
                     Click for KRAs

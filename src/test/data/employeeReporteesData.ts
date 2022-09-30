@@ -202,7 +202,7 @@ export const mockReporteesKRAs: EmployeeReporteesKRA[] = [
   {
     id: 149,
     name: 'Finance Management',
-    description: '',
+    description: 'reporting',
     kpiLookps: null,
     count: 3,
     checkType: null,
