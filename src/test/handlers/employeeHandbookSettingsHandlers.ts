@@ -45,7 +45,7 @@ export const employeeHandbookSettingsHandlers = [
     },
   ),
   //deleteHandbook APi mock
-  rest.get(
+  rest.delete(
     employeeHandbookSettingsApiConfig.deleteEmployeeHandbook,
     (_req, res, ctx) => {
       return res(
@@ -68,7 +68,7 @@ export const employeeHandbookSettingsHandlers = [
     },
   ),
   //addNewHandbookApi mock
-  rest.get(
+  rest.post(
     employeeHandbookSettingsApiConfig.addNewHandbook,
     (_req, res, ctx) => {
       return res(
@@ -80,7 +80,7 @@ export const employeeHandbookSettingsHandlers = [
     },
   ),
   //updateHandbookApi mock
-  rest.get(
+  rest.put(
     employeeHandbookSettingsApiConfig.updateEmployeeHandbook,
     (_req, res, ctx) => {
       return res(

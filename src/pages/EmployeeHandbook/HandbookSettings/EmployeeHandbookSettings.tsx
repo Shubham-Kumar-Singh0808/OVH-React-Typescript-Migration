@@ -34,7 +34,7 @@ const EmployeeHandbookSettings = (): JSX.Element => {
         endIndex: pageSize * currentPage,
       }),
     )
-  }, [currentPage, dispatch, pageSize])
+  }, [currentPage, dispatch, pageSize, toggle])
 
   const editHandbookButtonHandler = (handbookId: number) => {
     setToggle('editHandbookSection')

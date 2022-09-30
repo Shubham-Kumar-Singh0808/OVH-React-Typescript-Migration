@@ -211,6 +211,7 @@ const AddNewClient = (): JSX.Element => {
                 type="text"
                 id="clientCode"
                 data-testid="clientCode-input"
+                autoComplete="off"
                 name="clientCode"
                 placeholder="Client Code"
                 maxLength={6}
@@ -232,6 +233,7 @@ const AddNewClient = (): JSX.Element => {
                 type="text"
                 id="clientOrg"
                 data-testid="org-input"
+                autoComplete="new-password"
                 name="organization"
                 placeholder="Organization"
                 maxLength={50}
@@ -251,6 +253,7 @@ const AddNewClient = (): JSX.Element => {
               <CFormInput
                 type="text"
                 id="clientName"
+                autoComplete="off"
                 data-testid="clientName-input"
                 name="name"
                 placeholder="Client Name"
@@ -272,6 +275,7 @@ const AddNewClient = (): JSX.Element => {
               <CFormInput
                 type="text"
                 id="contactPerson"
+                autoComplete="off"
                 data-testid="contact-input"
                 name="personName"
                 placeholder="Contact Person"
@@ -300,13 +304,14 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="email-address"
                 type="email"
                 name="email"
+                autoComplete="off"
                 placeholder="Contact Person Email"
                 maxLength={50}
                 value={addClient.email}
                 onChange={handleInputChange}
               />
               {emailError && (
-                <p data-testid="error-msg" className="text-danger">
+                <p data-testid="error-msg" className="text-danger mt-1">
                   Enter a valid Email address.
                 </p>
               )}
@@ -351,6 +356,7 @@ const AddNewClient = (): JSX.Element => {
                 type="text"
                 size="sm"
                 id="mobileCode"
+                autoComplete="new-password"
                 name="mobileCode"
                 placeholder="code"
                 data-testid="mobileNumberCode"
@@ -365,6 +371,7 @@ const AddNewClient = (): JSX.Element => {
                 placeholder="Mobile"
                 size="sm"
                 id="mobile"
+                autoComplete="new-password"
                 name="mobile"
                 data-testid="mobileNumberInput"
                 value={phoneNumber}
@@ -384,6 +391,7 @@ const AddNewClient = (): JSX.Element => {
               <CFormInput
                 type="text"
                 id="gstCode"
+                autoComplete="new-password"
                 data-testid="gstCode-input"
                 name="gstCode"
                 placeholder="GST Code"
@@ -405,6 +413,7 @@ const AddNewClient = (): JSX.Element => {
                 style={{ height: '100px' }}
                 type="text"
                 id="address"
+                autoComplete="new-password"
                 data-testid="clientAddress-input"
                 name="address"
                 placeholder="Address"

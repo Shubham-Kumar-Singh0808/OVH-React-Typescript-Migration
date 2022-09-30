@@ -176,6 +176,7 @@ const EmployeeEmailTemplateTable = ({
               modalSize="lg"
               alignment="center"
               modalTitle="Template model"
+              modalBodyClass="model-body-text-alinement"
               modalFooterClass="d-none"
               modalHeaderClass="d-none"
               visible={isModalVisible}
