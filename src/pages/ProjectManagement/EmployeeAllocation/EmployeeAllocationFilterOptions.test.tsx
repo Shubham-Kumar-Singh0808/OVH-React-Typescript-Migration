@@ -108,4 +108,15 @@ describe('Employee allocation Filter Options Component Testing with data', () =>
     expect(searchInput).toHaveValue('vinesh')
     expect(searchInput).toBeInTheDocument()
   })
+  test('should render search input', () => {
+    const searchField = screen.getByTestId('search-input')
+    userEvent.type(searchField, 'testing')
+    expect(searchField).toHaveValue('testing')
+    fireEvent.keyDown(searchField, {
+      key: 'Enter',
+      code: 'Enter',
+      charCode: 13,
+    })
+    expect(mockSetTicketApprovalParams).toHaveBeenCalledTimes(0)
+  })
 })
