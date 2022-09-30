@@ -3,14 +3,19 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import AllocateEmployee from './AllocateEmployee'
-import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../test/testUtils'
 import {
   mockAllocateEmployeeToProject,
   mockEmployeeNames,
   mockProjectNames,
 } from '../../../test/data/allocateEmployeeData'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const billableValue = 'form-select1'
 const employeeNames = 'Employee Name'
@@ -39,10 +44,6 @@ describe('Allocate Employee without data', () => {
     expect(screen.getByTestId(allocateButton)).toBeDisabled()
     expect(screen.getByTestId(clearButton)).toBeEnabled()
   })
-  test('should render clear button', () => {
-    const clearButton = screen.getByTestId('clear-btn')
-    expect(clearButton).toBeEnabled()
-  })
   test('should select billable dropdown value', () => {
     const BillableSelector = screen.getByTestId('form-select1')
     userEvent.selectOptions(BillableSelector, ['Yes'])
@@ -51,6 +52,15 @@ describe('Allocate Employee without data', () => {
   test('should render Template rich text editor', () => {
     const templateComment = screen.findByTestId('ckEditor-component')
     expect(templateComment).toBeTruthy()
+  })
+  test('should render labels', () => {
+    expect(screen.getByText('Employee:')).toBeInTheDocument()
+    expect(screen.getByText('Project Name:')).toBeInTheDocument()
+    expect(screen.getByText('Billable:')).toBeInTheDocument()
+    expect(screen.getByText('Allocation:')).toBeInTheDocument()
+    expect(screen.getByText('Allocation Date:')).toBeInTheDocument()
+    expect(screen.getByText('End Date:')).toBeInTheDocument()
+    expect(screen.getByText('Comments:')).toBeInTheDocument()
   })
 })
 
@@ -67,24 +77,26 @@ describe('should render allocate Employee Component with data', () => {
       },
     })
   })
-  test('should render dates on selection', () => {
-    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
-    userEvent.type(
-      dateInput[0],
-      new Date('10/02/20').toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
+  test('should render on Dates AllocateEmployee', async () => {
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
+    fireEvent.click(datePickers[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickers[0], {
+        target: { value: '30 Aug, 2022' },
       }),
     )
-    userEvent.type(
-      dateInput[1],
-      new Date('12/02/20').toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
+    fireEvent.click(datePickers[1])
+    await waitFor(() =>
+      fireEvent.change(datePickers[1], {
+        target: { value: '07 Sep, 2022' },
       }),
     )
+    expect(datePickers[0]).toHaveValue('08/30/2022')
+    expect(datePickers[1]).toHaveValue('09/07/2022')
+    userEvent.click(screen.getByTestId(clearButton))
+    expect(datePickers[0]).toHaveValue('')
+    expect(datePickers[1]).toHaveValue('')
   })
 
   test('should render on every input of AllocateEmployee', async () => {
@@ -108,48 +120,41 @@ describe('should render allocate Employee Component with data', () => {
       expect(allocationValueInput).toHaveValue('')
     })
   })
-  test('should enabled on every input of AllocateEmployee', async () => {
+  test('should enabled on every input of AllocateEmployee', () => {
     const employeeNameInput = screen.getByPlaceholderText(employeeNames)
     userEvent.type(employeeNameInput, 'Sunny')
-    expect(employeeNameInput).toHaveValue('Sunny')
 
     const projectNameInput = screen.getByPlaceholderText('Project Name')
     userEvent.type(projectNameInput, 'ovh')
-    expect(projectNameInput).toHaveValue('ovh')
 
     const allocationValueInput = screen.getByTestId(allocationValue)
     userEvent.type(allocationValueInput, '100')
-    expect(allocationValueInput).toHaveValue('100')
 
     userEvent.selectOptions(screen.getByTestId(billableValue), 'Yes')
+    userEvent.click(screen.getByTestId(allocateButton))
+    expect(screen.getByTestId(allocateButton)).not.toBeEnabled()
+    expect(employeeNameInput).toHaveValue('')
+    expect(projectNameInput).toHaveValue('ovh')
+    expect(allocationValueInput).toHaveValue('100')
+
     userEvent.click(screen.getByTestId(clearButton))
-    await waitFor(() => {
-      expect(employeeNameInput).toBeEnabled()
-      expect(projectNameInput).toBeEnabled()
-      expect(allocationValueInput).toBeEnabled()
-    })
+    expect(screen.getByTestId(clearButton)).toBeEnabled()
+    expect(employeeNameInput).toHaveValue('')
+    expect(projectNameInput).toHaveValue('')
+    expect(allocationValueInput).toHaveValue('')
   })
+  test('should be able to click Add button element', () => {
+    const addBtn = screen.getByRole('button', { name: 'Allocate' })
+    userEvent.click(addBtn)
+    expect(addBtn).toBeInTheDocument()
+  })
+})
 
-  afterEach(cleanup)
-  test('should render labels', () => {
-    expect(screen.getByText('Employee:')).toBeInTheDocument()
-    expect(screen.getByText('Project Name:')).toBeInTheDocument()
-    expect(screen.getByText('Billable:')).toBeInTheDocument()
-    expect(screen.getByText('Allocation:')).toBeInTheDocument()
-    expect(screen.getByText('Allocation Date:')).toBeInTheDocument()
-    expect(screen.getByText('End Date:')).toBeInTheDocument()
-    expect(screen.getByText('Comments:')).toBeInTheDocument()
-  })
-
-  test('should enabled allocate button when input is not empty', () => {
-    expect(screen.getByTestId(clearButton)).not.toBeDisabled()
-    expect(screen.getByTestId(allocateButton)).toBeDisabled()
-  })
-  test('pass comments to test input value', () => {
-    render(
-      <CKEditor
-        initData={process.env.JEST_WORKER_ID !== undefined && <p>Test</p>}
-      />,
-    )
-  })
+afterEach(cleanup)
+test('pass comments to test input value', () => {
+  render(
+    <CKEditor
+      initData={process.env.JEST_WORKER_ID !== undefined && <p>Test</p>}
+    />,
+  )
 })

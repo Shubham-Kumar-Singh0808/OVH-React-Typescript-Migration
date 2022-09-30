@@ -177,7 +177,7 @@ const AllocateEmployee = (): JSX.Element => {
     />
   )
 
-  const postAllocateEmployee = async () => {
+  const postAllocateEmployee = () => {
     const finalObject = {
       allocation: allocationValue,
       billable: isBilLable,
@@ -190,17 +190,10 @@ const AllocateEmployee = (): JSX.Element => {
       projectName: selectProject?.projectName as string,
       startDate: allocationDate,
     }
-    const allocateEmployeeResultAction = await dispatch(
-      reduxServices.allocateEmployee.AddNewAllocate(finalObject),
-    )
-    if (
-      reduxServices.allocateEmployee.AddNewAllocate.fulfilled.match(
-        allocateEmployeeResultAction,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
-      history.push('/projectreport')
-    }
+    dispatch(reduxServices.allocateEmployee.AddNewAllocate(finalObject))
+
+    dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    history.push('/projectreport')
   }
   const allocateButtonHandler = () => {
     const tempAllocationDate = new Date(
@@ -497,6 +490,7 @@ const AllocateEmployee = (): JSX.Element => {
                   onChange: CKEditorEventHandler<'change'>
                 }>
                   initData={addComment}
+                  data-testid="allocateEmployeeComment"
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
