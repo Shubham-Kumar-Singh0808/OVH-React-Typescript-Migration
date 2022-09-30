@@ -2,7 +2,7 @@ import { CRow, CCol, CButton, CCardHeader, CCardBody } from '@coreui/react-pro'
 import React from 'react'
 import EmployeeReportessTable from './EmployeeReportessTable'
 
-const EmployeeReportees = (): JSX.Element => {
+const EmployeeReporteesList = (): JSX.Element => {
   return (
     <>
       <CRow className="justify-content-end">
@@ -22,4 +22,4 @@ const EmployeeReportees = (): JSX.Element => {
   )
 }
 
-export default EmployeeReportees
+export default EmployeeReporteesList
