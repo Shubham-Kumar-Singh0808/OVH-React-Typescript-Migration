@@ -66,7 +66,7 @@ const EmployeeReporteesEntryTable = (): JSX.Element => {
                         <i
                           className="fa fa-plus-circle cursor-pointer"
                           data-testid="plus-icon"
-                          onClick={() => handleExpandRow(KRAs.id as number)}
+                          onClick={() => handleExpandRow(KRAs.id)}
                         />
                       )}
                     </CTableDataCell>
