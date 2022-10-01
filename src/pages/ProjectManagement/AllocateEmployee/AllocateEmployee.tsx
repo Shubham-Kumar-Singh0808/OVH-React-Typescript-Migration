@@ -31,10 +31,20 @@ import {
 import OToast from '../../../components/ReusableComponent/OToast'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 const AllocateEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const history = useHistory()
+  const formLabelProps = {
+    htmlFor: 'inputNewHandbook',
+    className: 'col-form-label category-label',
+  }
+
+  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
+    return {
+      htmlFor,
+      className,
+    }
+  }
 
   const formLabel = 'col-sm-3 col-form-label text-end'
   const commonFormatDate = 'L'
@@ -76,22 +86,6 @@ const AllocateEmployee = (): JSX.Element => {
       )
     }
   }, [projectsAutoCompleteTarget])
-
-  const formLabelProps = {
-    htmlFor: 'inputNewHandbook',
-    className: 'col-form-label category-label',
-  }
-
-  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
-    return {
-      htmlFor,
-      className,
-    }
-  }
-
-  const handleBillableChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setIsBilLable(e.target.value)
-  }
 
   const handleText = (comments: string) => {
     setAddComment(comments)
@@ -367,7 +361,9 @@ const AllocateEmployee = (): JSX.Element => {
                 aria-label="billable"
                 name="billable"
                 value={isBilLable}
-                onChange={handleBillableChange}
+                onChange={(e) => {
+                  setIsBilLable(e.target.value)
+                }}
               >
                 <option value={''}>Select </option>
                 <option value="true">Yes</option>
