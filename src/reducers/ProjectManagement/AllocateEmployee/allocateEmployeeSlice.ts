@@ -77,13 +77,6 @@ const allocateEmployeeSlice = createSlice({
           state.isLoading = ApiLoadingState.loading
         },
       )
-      .addMatcher(
-        isAnyOf(getAllEmployeesProfileData.rejected),
-        (state, action) => {
-          state.isLoading = ApiLoadingState.failed
-          state.error = action.payload as ValidationError
-        },
-      )
   },
 })
 
