@@ -126,7 +126,7 @@ const ViewClientInformation = (): JSX.Element => {
               Address:
             </CFormLabel>
             <CCol>
-              <span className="col-sm-15 text-end" data-testid="address-input">
+              <span data-testid="address-input">
                 {getClientInformation.address}
               </span>
             </CCol>
@@ -137,7 +137,7 @@ const ViewClientInformation = (): JSX.Element => {
             >
               Description:
             </CFormLabel>
-            <CCol>
+            <CCol sm={8}>
               <span data-testid="description-input">
                 <div
                   dangerouslySetInnerHTML={{
