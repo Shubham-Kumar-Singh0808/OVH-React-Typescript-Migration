@@ -1,4 +1,4 @@
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
+import { CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import CertificateDetailsExpandableTable from './CertificateDetailsExpandableTable'
 import CertificatesFilterOptions from './CertificatesFilterOptions'
