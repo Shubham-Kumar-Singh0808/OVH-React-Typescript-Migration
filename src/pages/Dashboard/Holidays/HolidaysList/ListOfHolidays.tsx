@@ -38,6 +38,8 @@ const ListOfHolidays = (): JSX.Element => {
               selectedCountry={selectedCountry}
               setSelectedCountry={setSelectedCountry}
             />
+          </CRow>
+          <CRow>
             <CCol xs={12} className="mt-4 mb-4 ps-0 pe-0">
               <HolidaysListTable
                 selectedCountry={selectedCountry}
