@@ -1,4 +1,4 @@
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
+import { CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import LeaveSummaryTable from './LeaveSummaryTable'
 import EarnedLeavesApplied from './EarnedLeavesApplied'
@@ -7,7 +7,6 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const EmployeeLeaveSummary = (): JSX.Element => {
   const dispatch = useAppDispatch()

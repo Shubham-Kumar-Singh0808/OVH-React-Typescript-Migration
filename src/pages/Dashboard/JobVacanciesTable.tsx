@@ -23,8 +23,8 @@ const JobVacanciesTable = (): JSX.Element => {
   )
 
   const handleModal = (jobDescription: string) => {
-    const description = jobDescription?.length > 20
-    setIsJobDescriptionModalVisible(description)
+    const jobDescriptionLength = jobDescription?.length > 20
+    setIsJobDescriptionModalVisible(jobDescriptionLength)
     setDescription(jobDescription)
   }
 
