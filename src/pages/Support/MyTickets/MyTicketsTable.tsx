@@ -264,6 +264,7 @@ const MyTicketsTable = ({
         alignment="center"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
+        modalBodyClass="model-body-text-alinement"
         visible={isModalVisible}
         setVisible={setIsModalVisible}
       >

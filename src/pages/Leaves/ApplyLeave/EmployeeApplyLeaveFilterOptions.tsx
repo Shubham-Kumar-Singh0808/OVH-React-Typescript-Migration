@@ -129,14 +129,14 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
       reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
         applyLeaveResultAction,
       ) &&
-      applyLeaveResultAction.payload === 406
+      applyLeaveResultAction.payload === 402
     ) {
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="danger"
             toastMessage="            
-            You are Under Notice,So you can't apply for a leave."
+            You don't have enough leave balance to apply."
           />,
         ),
       )

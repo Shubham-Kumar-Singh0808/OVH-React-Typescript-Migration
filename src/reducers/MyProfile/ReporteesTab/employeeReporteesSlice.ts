@@ -17,6 +17,8 @@ const initialEmployeeReporteesState: ReporteesState = {
   employeeReporteesKPIs: [],
   isLoading: ApiLoadingState.idle,
   error: 0,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const getEmployeeReportees = createAsyncThunk<

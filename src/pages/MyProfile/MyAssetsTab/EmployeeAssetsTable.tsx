@@ -39,7 +39,7 @@ const EmployeeAssetsTable = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(reduxServices.employeeAssets.getEmployeeMyAssets(employeeId))
+    dispatch(reduxServices.employeeAssets.getEmployeeAssets(employeeId))
   }, [dispatch, employeeId])
 
   const handleModal = (productSpecification: string) => {
