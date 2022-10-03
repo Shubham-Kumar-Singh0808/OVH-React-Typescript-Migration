@@ -384,6 +384,7 @@ const AllocateEmployee = (): JSX.Element => {
                 id="allocation"
                 data-testid="allocation-value"
                 name="allocation"
+                autoComplete="off"
                 max={100}
                 value={allocationValue}
                 placeholder="100"
@@ -406,6 +407,7 @@ const AllocateEmployee = (): JSX.Element => {
                 id="allocation-date"
                 data-testid="allocateEmployeeAllocationDate"
                 className="form-control form-control-sm sh-date-picker"
+                autoComplete="off"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -444,6 +446,7 @@ const AllocateEmployee = (): JSX.Element => {
                 id="end-date:"
                 data-testid="allocateEmployeeEndDate"
                 className="form-control form-control-sm sh-date-picker"
+                autoComplete="off"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
