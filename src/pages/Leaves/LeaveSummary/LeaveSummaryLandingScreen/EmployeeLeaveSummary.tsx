@@ -7,6 +7,9 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const EmployeeLeaveSummary = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -14,7 +17,9 @@ const EmployeeLeaveSummary = (): JSX.Element => {
   const listSize = useTypedSelector(
     reduxServices.employeeLeaveSummary.selectors.listSize,
   )
-
+  const isLoading = useTypedSelector(
+    reduxServices.employeeLeaveSummary.selectors.isLoading,
+  )
   const {
     paginationRange,
     setPageSize,
@@ -35,42 +40,48 @@ const EmployeeLeaveSummary = (): JSX.Element => {
 
   return (
     <>
-      <CRow>
-        <CCol md={9}>
+      {isLoading !== ApiLoadingState.loading ? (
+        <>
+          <CRow>
+            <CCol md={9}>
+              <OCard
+                className="mb-4 myprofile-wrapper"
+                title="Leave Summary"
+                CBodyClassName="ps-0 pe-0"
+                CFooterClassName="d-none"
+              >
+                <LeaveSummaryTable />
+              </OCard>
+            </CCol>
+            <CCol md={3}>
+              <OCard
+                className="mb-4 myprofile-wrapper"
+                title="Earned Leaves Applied"
+                CBodyClassName="ps-0 pe-0"
+                CFooterClassName="d-none"
+              >
+                <EarnedLeavesApplied />
+              </OCard>
+            </CCol>
+          </CRow>
           <OCard
             className="mb-4 myprofile-wrapper"
-            title="Leave Summary"
+            title="Leave History"
             CBodyClassName="ps-0 pe-0"
             CFooterClassName="d-none"
           >
-            <LeaveSummaryTable />
+            <LeaveHistoryTable
+              paginationRange={paginationRange}
+              setPageSize={setPageSize}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              pageSize={pageSize}
+            />
           </OCard>
-        </CCol>
-        <CCol md={3}>
-          <OCard
-            className="mb-4 myprofile-wrapper"
-            title="Earned Leaves Applied"
-            CBodyClassName="ps-0 pe-0"
-            CFooterClassName="d-none"
-          >
-            <EarnedLeavesApplied />
-          </OCard>
-        </CCol>
-      </CRow>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title="Leave History"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <LeaveHistoryTable
-          paginationRange={paginationRange}
-          setPageSize={setPageSize}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          pageSize={pageSize}
-        />
-      </OCard>
+        </>
+      ) : (
+        <OLoadingSpinner type={LoadingType.PAGE} />
+      )}
     </>
   )
 }

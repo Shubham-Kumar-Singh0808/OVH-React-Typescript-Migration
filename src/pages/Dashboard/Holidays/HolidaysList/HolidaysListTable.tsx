@@ -10,8 +10,6 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { Link } from 'react-router-dom'
 import { HolidaysListProps } from '../../../../types/Dashboard/Holidays/upcomingHolidaysTypes'
 import { currentPageData } from '../../../../utils/paginationUtils'
@@ -35,6 +33,11 @@ const HolidaysListTable = ({
   const holidaysInfo = useTypedSelector(
     reduxServices.holidays.selectors.upcomingHolidays,
   )
+
+  const userRole = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.role,
+  )
+
   const isLoading = useTypedSelector(reduxServices.holidays.selectors.isLoading)
   const {
     paginationRange,
@@ -86,35 +89,42 @@ const HolidaysListTable = ({
 
   const getAllHolidays = selectedCountry ? (
     <CTableBody>
-      {currentPageItems?.map((holiday, index) => (
-        <CTableRow key={index} className="text-start">
-          <CTableDataCell>{holiday.date}</CTableDataCell>
-          <CTableDataCell>{holiday.week}</CTableDataCell>
-          <CTableDataCell>{holiday.name}</CTableDataCell>
-          <CTableDataCell>{holiday.country}</CTableDataCell>
-          <CTableDataCell>
-            <Link to={`/editHoliday/${holiday.id}`}>
-              <CButton
-                color="info"
-                className="btn-ovh me-2"
-                data-testid={`holiday-edit-btn${index}`}
-              >
-                <i className="fa fa-edit" aria-hidden="true"></i>
-              </CButton>
-            </Link>
-            <CButton
-              color="danger"
-              size="sm"
-              data-testid={`holiday-delete-btn${index}`}
-              onClick={() =>
-                handleShowHolidayDeleteModal(holiday.id, holiday.name)
-              }
-            >
-              <CIcon className="text-white" icon={cilTrash} />
-            </CButton>
-          </CTableDataCell>
-        </CTableRow>
-      ))}
+      {currentPageItems
+        ?.filter((currHoliday) => new Date(currHoliday.date) > new Date())
+        .map((holiday, index) => (
+          <CTableRow key={index} className="text-start">
+            <CTableDataCell>{holiday.date}</CTableDataCell>
+            <CTableDataCell>{holiday.week}</CTableDataCell>
+            <CTableDataCell>{holiday.name}</CTableDataCell>
+            <CTableDataCell>{holiday.country}</CTableDataCell>
+            <CTableDataCell>
+              {(userRole === 'admin' || userRole === 'HR Manager') && (
+                <>
+                  <Link to={`/editHoliday/${holiday.id}`}>
+                    <CButton
+                      color="info"
+                      className="btn-ovh btn-ovh-employee-list me-1"
+                      data-testid={`holiday-edit-btn${index}`}
+                    >
+                      <i className="fa fa-edit" aria-hidden="true"></i>
+                    </CButton>
+                  </Link>
+                  <CButton
+                    className="btn-ovh btn-ovh-employee-list"
+                    color="danger"
+                    size="sm"
+                    data-testid={`holiday-delete-btn${index}`}
+                    onClick={() =>
+                      handleShowHolidayDeleteModal(holiday.id, holiday.name)
+                    }
+                  >
+                    <i className="fa fa-trash-o" aria-hidden="true"></i>
+                  </CButton>
+                </>
+              )}
+            </CTableDataCell>
+          </CTableRow>
+        ))}
     </CTableBody>
   ) : (
     <></>
@@ -130,7 +140,9 @@ const HolidaysListTable = ({
                 <CTableHeaderCell scope="col">Week</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Occasion</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                {(userRole === 'admin' || userRole === 'HR Manager') && (
+                  <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                )}
               </CTableRow>
             </CTableHead>
             {getAllHolidays}

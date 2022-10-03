@@ -136,6 +136,7 @@ const AddNewClient = (): JSX.Element => {
       description: '',
     })
     setShowEditor(false)
+    setEmailError(false)
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
@@ -173,6 +174,7 @@ const AddNewClient = (): JSX.Element => {
       addClientResultAction.payload === 406
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
+      setIsButtonEnabled(false)
     }
   }
 
@@ -198,7 +200,7 @@ const AddNewClient = (): JSX.Element => {
           </CCol>
         </CRow>
         <CForm>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-0 mb-4">
             <CFormLabel
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
@@ -310,11 +312,6 @@ const AddNewClient = (): JSX.Element => {
                 value={addClient.email}
                 onChange={handleInputChange}
               />
-              {emailError && (
-                <p data-testid="error-msg" className="text-danger mt-1">
-                  Enter a valid Email address.
-                </p>
-              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -428,7 +425,7 @@ const AddNewClient = (): JSX.Element => {
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
             >
-              status:
+              Status:
             </CFormLabel>
             <CCol
               className="mt-1"

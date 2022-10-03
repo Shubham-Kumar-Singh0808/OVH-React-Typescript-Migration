@@ -46,8 +46,8 @@ const JobVacanciesTable = (): JSX.Element => {
         <CTableBody>
           {jobOpeningDetails?.slice(0, 5).map((jobVacancy, index) => {
             const jobDescriptionLimit =
-              jobVacancy.description && jobVacancy.description.length > 30
-                ? `${jobVacancy.description.substring(0, 30)}`
+              jobVacancy.description && jobVacancy.description.length > 25
+                ? `${jobVacancy.description.substring(0, 25)}`
                 : jobVacancy.description
             return (
               <CTableRow key={index}>
