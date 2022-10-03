@@ -72,7 +72,7 @@ function AddNewMailTemplate(): JSX.Element {
     if (!showAssetType) {
       if (
         addNewTemplate.template &&
-        addNewTemplate.templateName &&
+        addNewTemplate.templateName?.replace(/^\s*/, '') &&
         addNewTemplate.templateTypeId
       ) {
         setIsButtonEnabled(true)
