@@ -92,7 +92,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Upcoming Trainings"
                   CBodyClassName="ps-0 pe-0"
-                  footerPath="/eventList"
+                  CFooterClassName="d-none"
                 >
                   <UpcomingTrainings />
                 </OCard>
@@ -102,7 +102,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Upcoming Events"
                   CBodyClassName="ps-0 pe-0"
-                  footerPath="/eventList"
+                  CFooterClassName="d-none"
                 >
                   <UpcomingEvents />
                 </OCard>
@@ -112,7 +112,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Upcoming Birthdays"
                   CBodyClassName="ps-0 pe-0"
-                  footerPath="/birthdaylist"
+                  CFooterClassName="d-none"
                 >
                   <UpcomingBirthdays />
                 </OCard>
@@ -122,7 +122,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Upcoming Holidays"
                   CBodyClassName="ps-0 pe-0"
-                  footerPath="/holidaylist"
+                  CFooterClassName="d-none"
                 >
                   <UpcomingHolidays />
                 </OCard>
@@ -135,7 +135,7 @@ const Dashboard = (): JSX.Element => {
                     className="mb-4 myprofile-wrapper"
                     title="Upcoming Probationary End Dates"
                     CBodyClassName="ps-0 pe-0"
-                    footerPath="/probationaryList"
+                    CFooterClassName="d-none"
                   >
                     <UpcomingProbationaryEndDates />
                   </OCard>
