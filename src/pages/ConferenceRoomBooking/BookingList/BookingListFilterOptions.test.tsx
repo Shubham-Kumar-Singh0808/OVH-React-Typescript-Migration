@@ -66,7 +66,7 @@ describe('Booking List Filter Options Component Testing with data', () => {
     userEvent.selectOptions(dateOption, ['Custom'])
     expect(dateOption).toHaveValue('Custom')
 
-    const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
     fireEvent.click(datePickers[0])
 
     await waitFor(() =>

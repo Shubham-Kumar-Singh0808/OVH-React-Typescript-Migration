@@ -9,6 +9,7 @@ import {
   mockEditClient,
 } from '../../../../test/data/editClientData'
 import { mockClientsData } from '../../../../test/data/clientsData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const toRender = (
   <div>
@@ -66,7 +67,7 @@ describe('Edit Client Component Testing', () => {
         preloadedState: {
           clients: {
             clientsList: mockClientsData,
-            isLoading: true,
+            isLoading: ApiLoadingState.succeeded,
             editClient: mockEditClient,
             clientCountries: mockGetClientCountries,
           },

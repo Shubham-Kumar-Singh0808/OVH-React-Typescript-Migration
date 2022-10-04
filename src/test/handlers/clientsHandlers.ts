@@ -40,4 +40,13 @@ export const clientsHandlers = [
       }),
     )
   }),
+  // is client organization api mock
+  rest.get(clientsApiConfig.clientOrg, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: false,
+      }),
+    )
+  }),
 ]

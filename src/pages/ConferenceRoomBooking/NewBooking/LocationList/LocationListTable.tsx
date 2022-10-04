@@ -30,15 +30,34 @@ const LocationListTable = (): JSX.Element => {
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Location Deleted Successfully" />
   )
+  const deleteFailedToastMessage = (
+    <OToast
+      toastColor="danger"
+      toastMessage="Rooms are assigned to this location, so you cannot delete this location"
+    />
+  )
 
   const confirmDeleteLocation = async () => {
     setIsDeleteModalVisible(false)
-    await dispatch(
+    const deleteLocationResult = await dispatch(
       reduxServices.addLocationList.deleteLocation(deleteLocationId),
     )
-
-    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
-    dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+    if (
+      reduxServices.addLocationList.deleteLocation.fulfilled.match(
+        deleteLocationResult,
+      )
+    ) {
+      dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+    } else if (
+      (reduxServices.addLocationList.deleteLocation.rejected.match(
+        deleteLocationResult,
+      ) &&
+        deleteLocationResult.payload === 500) ||
+      deleteLocationResult.payload === 405
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
+    }
   }
 
   const deleteButtonHandler = (id: number, locationName: string) => {
@@ -50,7 +69,11 @@ const LocationListTable = (): JSX.Element => {
   return (
     <>
       <CCol className="custom-scroll">
-        <CTable striped responsive className="mt-5">
+        <CTable
+          striped
+          responsive
+          className="text-start text-left align-middle"
+        >
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -70,8 +93,8 @@ const LocationListTable = (): JSX.Element => {
                         <CButton
                           data-testid={`btn-delete${index}`}
                           size="sm"
-                          className="btn-ovh me-2 cursor-pointer"
-                          color="danger btn-ovh me-2"
+                          color="danger btn-ovh me-1"
+                          className="btn-ovh-employee-list"
                           onClick={() =>
                             deleteButtonHandler(
                               location.id,

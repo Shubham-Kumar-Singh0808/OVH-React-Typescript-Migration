@@ -114,7 +114,10 @@ const ViewClientInformation = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={2}>
               <span className="col-sm-15 text-end" data-testid="mobile-input">
-                {getClientInformation.phone || 'N/A'}
+                {getClientInformation.phone !== null &&
+                getClientInformation.phone !== '-'
+                  ? getClientInformation.phone
+                  : 'N/A'}
               </span>
             </CCol>
           </CRow>
@@ -122,8 +125,8 @@ const ViewClientInformation = (): JSX.Element => {
             <CFormLabel {...dynamicFormLabelProps('address', commonFormLabel)}>
               Address:
             </CFormLabel>
-            <CCol sm={2}>
-              <span className="col-sm-15 text-end" data-testid="address-input">
+            <CCol>
+              <span data-testid="address-input">
                 {getClientInformation.address}
               </span>
             </CCol>
@@ -134,12 +137,13 @@ const ViewClientInformation = (): JSX.Element => {
             >
               Description:
             </CFormLabel>
-            <CCol sm={2}>
-              <span
-                className="col-sm-15 text-end"
-                data-testid="description-input"
-              >
-                {getClientInformation.description || 'N/A'}
+            <CCol sm={8}>
+              <span data-testid="description-input">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: getClientInformation?.description || 'N/A',
+                  }}
+                />
               </span>
             </CCol>
           </CRow>

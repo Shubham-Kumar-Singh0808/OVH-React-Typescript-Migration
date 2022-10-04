@@ -22,6 +22,10 @@ import { userAccessToFeaturesHandlers } from './userAccessToFeaturesHandlers'
 import { userRolesAndPermissionsHandlers } from './userRolesAndPermissionsHandlers'
 import { timeInOfficeHandlers } from './weeklyTimeInOfficeHandlers'
 import { eventTypeListHandlers } from './eventTypeListHandlers'
+import { trackerHandlers } from './addTrackerListHandlers'
+import { eventListHandlers } from './eventListHandlers'
+import { employeeHandbookHandlers } from './employeeHandbookHandlers'
+import { employeeLeaveHistoryHandlers } from './employeeLeaveHistoryHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -48,5 +52,11 @@ export const handlers = [
   ...employeeAchievementsHandlers,
   ...updateTicketHandlers,
   ...eventTypeListHandlers,
+  ...trackerHandlers,
+  ...eventListHandlers,
+  ...employeeHandbookSettingsHandlers,
+  ...employeeHandbookHandlers,
+  ...employeeLeaveSummaryHandlers,
+  ...employeeLeaveHistoryHandlers,
   // add your handler here
 ]

@@ -111,7 +111,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
 
   return (
     <>
-      {employeeLeaveHistoryDetails.length ? (
+      {employeeLeaveHistoryDetails?.length ? (
         <>
           <CTable striped align="middle">
             <CTableHead>
@@ -190,7 +190,8 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                       {leaveHistory.status === 'PendingApproval' ? (
                         <CButton
                           color="warning"
-                          className="btn-ovh me-1"
+                          size="sm"
+                          className="btn-ovh btn-ovh-employee-list"
                           data-testid={`cancel-btn${index}`}
                           onClick={() => handleShowCancelModal(leaveHistory.id)}
                         >
@@ -260,7 +261,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={handleCancelLeave}
       >
-        <>Would you like to cancel the leave ?</>
+        <>Would you like to Cancel the leave ?</>
       </OModal>
     </>
   )
