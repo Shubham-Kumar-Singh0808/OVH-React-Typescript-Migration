@@ -71,12 +71,12 @@ describe('HolidaysList', () => {
       expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
     })
     test('should render correct number of page records', () => {
-      expect(screen.queryAllByRole('row')).toHaveLength(21)
+      expect(screen.queryAllByRole('row')).toHaveLength(4)
     })
 
     test('should render edit button in the Actions', () => {
       expect(screen.getByTestId('holiday-edit-btn0')).toHaveClass(
-        'btn btn-info btn-ovh me-2',
+        'btn btn-info btn-ovh btn-ovh-employee-list me-1',
       )
     })
     test('should render delete button in the Actions', () => {
@@ -88,7 +88,7 @@ describe('HolidaysList', () => {
     test('should redirect to Edit Holiday page upon clicking Edit button from HolidaysList Page', () => {
       const editButtonEl = screen.getByTestId('holiday-edit-btn1')
       userEvent.click(editButtonEl)
-      expect(history.location.pathname).toBe('/editHoliday/148')
+      expect(history.location.pathname).toBe('/editHoliday/144')
     })
     it('should render Delete modal popup on clicking delete button from Actions', async () => {
       const deleteButtonEl = screen.getByTestId('holiday-delete-btn1')
