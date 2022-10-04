@@ -31,7 +31,7 @@ const EmployeeEarnedLeaves = (): JSX.Element => {
         <div className="panel-footer">
           <p className="text-right mb0">
             <a className="text-white" href="/employeeLeaveSummary">
-              More
+              More {''}
               <i className="fa fa-angle-double-right fa-lg"></i>
             </a>
           </p>

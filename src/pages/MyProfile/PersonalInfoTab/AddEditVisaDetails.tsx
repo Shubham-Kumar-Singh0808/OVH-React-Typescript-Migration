@@ -112,6 +112,12 @@ function AddEditVisaDetails({
   }, [dispatch, employeeVisaDetails?.countryId])
 
   useEffect(() => {
+    if (employeeVisaDetails?.countryId === '') {
+      dispatch(reduxServices.personalInformation.actions.clearVisaType())
+    }
+  }, [dispatch, employeeVisaDetails?.countryId])
+
+  useEffect(() => {
     if (selectedFile) {
       setImageUrl(URL.createObjectURL(selectedFile))
     }
