@@ -93,6 +93,7 @@ const CertificatesFilterOptions = ({
         </CCol>
         <CCol sm={2}>
           <CFormSelect
+            className="pe-2"
             aria-label="Default select example"
             size="sm"
             id="technology"
