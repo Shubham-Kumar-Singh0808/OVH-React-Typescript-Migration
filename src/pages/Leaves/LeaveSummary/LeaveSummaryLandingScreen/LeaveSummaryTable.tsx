@@ -16,9 +16,9 @@ const LeaveSummaryTable = (): JSX.Element => {
   )
   return (
     <>
-      <CTable striped responsive className="align-middle">
+      <CTable striped>
         <CTableHead>
-          <CTableRow className="text-center">
+          <CTableRow>
             <CTableHeaderCell scope="col">Type</CTableHeaderCell>
             <CTableHeaderCell scope="col">Credited</CTableHeaderCell>
             <CTableHeaderCell scope="col">approved</CTableHeaderCell>
@@ -31,7 +31,7 @@ const LeaveSummaryTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          <CTableRow className="text-center">
+          <CTableRow>
             <CTableDataCell scope="row">Total Earned Leaves</CTableDataCell>
             <CTableDataCell>
               {employeeLeaveSummary?.allCreditedLeaves}
@@ -52,7 +52,7 @@ const LeaveSummaryTable = (): JSX.Element => {
               {employeeLeaveSummary?.allAvailableLeaves}
             </CTableDataCell>
           </CTableRow>
-          <CTableRow className="text-center">
+          <CTableRow>
             <CTableDataCell scope="row">LOP</CTableDataCell>
             <CTableDataCell>0</CTableDataCell>
             <CTableDataCell>
