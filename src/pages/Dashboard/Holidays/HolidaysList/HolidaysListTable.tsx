@@ -86,46 +86,45 @@ const HolidaysListTable = ({
       )
     }
   }
-  const filteredHolidays = currentPageItems?.filter(
-    (currHoliday) => new Date(currHoliday.date) > new Date(),
-  )
 
   const getAllHolidays = selectedCountry ? (
     <CTableBody>
-      {filteredHolidays?.map((holiday, index) => (
-        <CTableRow key={index} className="text-start">
-          <CTableDataCell>{holiday.date}</CTableDataCell>
-          <CTableDataCell>{holiday.week}</CTableDataCell>
-          <CTableDataCell>{holiday.name}</CTableDataCell>
-          <CTableDataCell>{holiday.country}</CTableDataCell>
-          <CTableDataCell>
-            {(userRole === 'admin' || userRole === 'HR Manager') && (
-              <>
-                <Link to={`/editHoliday/${holiday.id}`}>
+      {currentPageItems
+        ?.filter((currHoliday) => new Date(currHoliday.date) > new Date())
+        .map((holiday, index) => (
+          <CTableRow key={index} className="text-start">
+            <CTableDataCell>{holiday.date}</CTableDataCell>
+            <CTableDataCell>{holiday.week}</CTableDataCell>
+            <CTableDataCell>{holiday.name}</CTableDataCell>
+            <CTableDataCell>{holiday.country}</CTableDataCell>
+            <CTableDataCell>
+              {(userRole === 'admin' || userRole === 'HR Manager') && (
+                <>
+                  <Link to={`/editHoliday/${holiday.id}`}>
+                    <CButton
+                      color="info"
+                      className="btn-ovh btn-ovh-employee-list me-1"
+                      data-testid={`holiday-edit-btn${index}`}
+                    >
+                      <i className="fa fa-edit" aria-hidden="true"></i>
+                    </CButton>
+                  </Link>
                   <CButton
-                    color="info"
-                    className="btn-ovh btn-ovh-employee-list me-1"
-                    data-testid={`holiday-edit-btn${index}`}
+                    className="btn-ovh btn-ovh-employee-list"
+                    color="danger"
+                    size="sm"
+                    data-testid={`holiday-delete-btn${index}`}
+                    onClick={() =>
+                      handleShowHolidayDeleteModal(holiday.id, holiday.name)
+                    }
                   >
-                    <i className="fa fa-edit" aria-hidden="true"></i>
+                    <i className="fa fa-trash-o" aria-hidden="true"></i>
                   </CButton>
-                </Link>
-                <CButton
-                  className="btn-ovh btn-ovh-employee-list"
-                  color="danger"
-                  size="sm"
-                  data-testid={`holiday-delete-btn${index}`}
-                  onClick={() =>
-                    handleShowHolidayDeleteModal(holiday.id, holiday.name)
-                  }
-                >
-                  <i className="fa fa-trash-o" aria-hidden="true"></i>
-                </CButton>
-              </>
-            )}
-          </CTableDataCell>
-        </CTableRow>
-      ))}
+                </>
+              )}
+            </CTableDataCell>
+          </CTableRow>
+        ))}
     </CTableBody>
   ) : (
     <></>
@@ -152,20 +151,18 @@ const HolidaysListTable = ({
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>
-                  Total Number of Holidays:{filteredHolidays.length}
-                </strong>
+                <strong>Total Number of Holidays:{holidaysInfo.length}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {filteredHolidays.length > 20 && (
+              {holidaysInfo.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                   selectedPageSize={pageSize}
                 />
               )}
             </CCol>
-            {filteredHolidays.length > 20 && (
+            {holidaysInfo.length > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"
