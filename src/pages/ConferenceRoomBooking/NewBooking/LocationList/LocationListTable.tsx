@@ -30,16 +30,36 @@ const LocationListTable = (): JSX.Element => {
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Location Deleted Successfully" />
   )
+  const deleteFailedToastMessage = (
+    <OToast
+      toastColor="danger"
+      toastMessage="Rooms are assigned to this location, so you cannot delete this location"
+    />
+  )
 
   const confirmDeleteLocation = async () => {
     setIsDeleteModalVisible(false)
-    await dispatch(
+    const deleteLocationResult = await dispatch(
       reduxServices.addLocationList.deleteLocation(deleteLocationId),
     )
-
-    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
-    dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+    if (
+      reduxServices.addLocationList.deleteLocation.fulfilled.match(
+        deleteLocationResult,
+      )
+    ) {
+      dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+    } else if (
+      (reduxServices.addLocationList.deleteLocation.rejected.match(
+        deleteLocationResult,
+      ) &&
+        deleteLocationResult.payload === 500) ||
+      deleteLocationResult.payload === 405
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
+    }
   }
+
   const deleteButtonHandler = (id: number, locationName: string) => {
     setIsDeleteModalVisible(true)
     setDeleteLocationId(id)
