@@ -148,7 +148,10 @@ const AddNewClient = (): JSX.Element => {
   )
 
   const WarningToastMessage = (
-    <OToast toastColor="danger" toastMessage="Client already exists !!" />
+    <OToast
+      toastColor="danger"
+      toastMessage="Already a Client is existed with the given Code."
+    />
   )
 
   const handleAddNewClient = async () => {
@@ -173,6 +176,7 @@ const AddNewClient = (): JSX.Element => {
       addClientResultAction.payload === 406
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
