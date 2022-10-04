@@ -160,6 +160,10 @@ const ShiftConfiguration = ({
     }
   }
 
+  // useEffect(() => {
+  //   dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
+  // }, [dispatch])
+
   useEffect(() => {
     if (
       employeeShiftDetails.name &&

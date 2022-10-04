@@ -56,13 +56,13 @@ const LeaveSummaryTable = (): JSX.Element => {
             <CTableDataCell scope="row">LOP</CTableDataCell>
             <CTableDataCell>0</CTableDataCell>
             <CTableDataCell>
-              {employeeLeaveSummary?.allLOPTakenLeaves}
+              {employeeLeaveSummary.allLOPTakenLeaves}
             </CTableDataCell>
             <CTableDataCell>
-              {employeeLeaveSummary?.allScheduledLeaves}
+              {employeeLeaveSummary.allScheduledLeaves}
             </CTableDataCell>
             <CTableDataCell>
-              {employeeLeaveSummary?.allLOPPendingLeaves}
+              {employeeLeaveSummary.allLOPPendingLeaves}
             </CTableDataCell>
             <CTableDataCell>0</CTableDataCell>
             <CTableDataCell>0</CTableDataCell>

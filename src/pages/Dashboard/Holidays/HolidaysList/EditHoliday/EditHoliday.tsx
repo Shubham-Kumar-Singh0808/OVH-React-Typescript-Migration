@@ -135,8 +135,6 @@ const EditHoliday = (): JSX.Element => {
             <CCol sm={3}>
               <CFormInput
                 data-testid="holiday-name"
-                autoComplete="off"
-                placeholder="Holiday Name"
                 type="text"
                 name="name"
                 value={editHoliday.name}

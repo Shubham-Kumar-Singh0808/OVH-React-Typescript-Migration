@@ -8,12 +8,12 @@ import {
   CTableDataCell,
   CCol,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React from 'react'
 import OCard from '../../../components/ReusableComponent/OCard'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { EmployeeLeaveReportTableProps } from '../../../types/Leaves/LeaveReports/leaveReportTypes'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
@@ -39,16 +39,6 @@ const LeaveReportTable = ({
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
-
-  const dispatch = useAppDispatch()
-
-  const getEmployeeLeaveCategories = useTypedSelector(
-    reduxServices.employeeLeaveSettings.selectors.employeeLeaveCategories,
-  )
-
-  useEffect(() => {
-    dispatch(reduxServices.employeeLeaveSettings.getEmployeeLeaveCategories())
-  }, [dispatch])
   return (
     <>
       <OCard
@@ -64,11 +54,9 @@ const LeaveReportTable = ({
               <CTableHeaderCell>Name</CTableHeaderCell>
               <CTableHeaderCell>Carry Forwarded (Days)</CTableHeaderCell>
               <CTableHeaderCell>Credited (Days)</CTableHeaderCell>
-              {getEmployeeLeaveCategories?.map((leave, index) => (
-                <CTableHeaderCell key={index}>
-                  {leave.name} Applied (Days)
-                </CTableHeaderCell>
-              ))}
+              <CTableHeaderCell>Casual Applied (Days)</CTableHeaderCell>
+              <CTableHeaderCell>LOP Applied (Days)</CTableHeaderCell>
+              <CTableHeaderCell>PAID Applied (Days)</CTableHeaderCell>
               <CTableHeaderCell>Leaves Remaining (Days)</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
@@ -88,15 +76,9 @@ const LeaveReportTable = ({
                     <CTableDataCell>
                       {leave.allCreditedLeaves}.00
                     </CTableDataCell>
-                    {getLeaveReports?.list[0]?.leaveCategorySummaries?.map(
-                      (leaveCategory) => (
-                        <CTableDataCell key={index}>
-                          {leaveCategory.daysPending +
-                            leaveCategory.daysTaken +
-                            leaveCategory.daysScheduled}{' '}
-                        </CTableDataCell>
-                      ),
-                    )}
+                    <CTableDataCell>{leave.allScheduledLeaves}</CTableDataCell>
+                    <CTableDataCell>{leave.allLOPTakenLeaves}</CTableDataCell>
+                    <CTableDataCell>{leave.allAvailableLeaves}</CTableDataCell>
                     <CTableDataCell>
                       {leave.calculatedCreditedLeaves}
                     </CTableDataCell>

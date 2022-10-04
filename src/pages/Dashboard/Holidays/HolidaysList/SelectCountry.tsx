@@ -1,4 +1,4 @@
-import { CButton, CCol, CFormLabel, CFormSelect } from '@coreui/react-pro'
+import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -31,43 +31,45 @@ const SelectCountry = ({
 
   return (
     <>
-      <CFormLabel className="col-sm-3 col-form-label text-end"></CFormLabel>
-      <CCol sm={3}>
-        <CFormSelect
-          aria-label="country"
-          size="sm"
-          id="country"
-          data-testid="country-form-select"
-          name="country"
-          value={selectedCountry}
-          onChange={(e) => setSelectedCountry(e.target.value)}
-        >
-          <option value={''}>Select Country</option>
-          {countries?.map((country, index) => (
-            <option
-              key={index}
-              value={country.name}
-              data-testid="selectCountry-option"
-            >
-              {country.name}
-            </option>
-          ))}
-        </CFormSelect>
-      </CCol>
-      <CCol className="d-md-flex justify-content-md-end me-1">
-        <Link to={`/dashboard`}>
-          <CButton color="info" className="btn-ovh me-1 text-white">
-            <i className="fa fa-arrow-left me-1"></i>Back
-          </CButton>
-        </Link>
-        {(role === 'admin' || role === 'HR Manager') && (
-          <Link to={`/addHoliday`}>
-            <CButton color="info" className="btn-ovh text-white">
-              <i className="fa fa-plus me-1"></i>Add
+      <CRow>
+        <CFormLabel className="col-sm-3 col-form-label text-end"></CFormLabel>
+        <CCol sm={3}>
+          <CFormSelect
+            aria-label="country"
+            size="sm"
+            id="country"
+            data-testid="country-form-select"
+            name="country"
+            value={selectedCountry}
+            onChange={(e) => setSelectedCountry(e.target.value)}
+          >
+            <option value={''}>Select Country</option>
+            {countries?.map((country, index) => (
+              <option
+                key={index}
+                value={country.name}
+                data-testid="selectCountry-option"
+              >
+                {country.name}
+              </option>
+            ))}
+          </CFormSelect>
+        </CCol>
+        <CCol className="d-md-flex justify-content-md-end pe-0">
+          <Link to={`/dashboard`}>
+            <CButton color="info" className="btn-ovh me-1 text-white">
+              <i className="fa fa-arrow-left me-1"></i>Back
             </CButton>
           </Link>
-        )}
-      </CCol>
+          {(role === 'admin' || role === 'HR Manager') && (
+            <Link to={`/addHoliday`}>
+              <CButton color="info" className="btn-ovh text-white">
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </Link>
+          )}
+        </CCol>
+      </CRow>
     </>
   )
 }

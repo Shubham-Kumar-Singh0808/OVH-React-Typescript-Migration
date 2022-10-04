@@ -111,7 +111,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
 
   return (
     <>
-      {employeeLeaveHistoryDetails?.length ? (
+      {employeeLeaveHistoryDetails.length ? (
         <>
           <CTable striped align="middle">
             <CTableHead>

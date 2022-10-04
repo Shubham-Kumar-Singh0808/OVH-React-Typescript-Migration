@@ -99,6 +99,7 @@ describe('Add Holiday Component Testing', () => {
       fireEvent.change(holidayDatePickerEl[0], {
         target: { value: '09 May, 2022' },
       })
+      expect(holidayDatePickerEl[0]).toHaveValue('05/09/2022')
       userEvent.click(screen.getByRole('button', { name: 'Clear' }))
       await waitFor(() => {
         expect(holidayNameEl).toHaveValue('')

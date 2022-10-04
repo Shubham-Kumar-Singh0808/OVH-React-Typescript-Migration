@@ -1,4 +1,4 @@
-import { CCol, CRow } from '@coreui/react-pro'
+import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import CertificateDetailsExpandableTable from './CertificateDetailsExpandableTable'
 import CertificatesFilterOptions from './CertificatesFilterOptions'
@@ -7,8 +7,6 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const CertificatesList = (): JSX.Element => {
   const [filterByTechnology, setFilterByTechnology] = useState<string>('')
@@ -99,9 +97,11 @@ const CertificatesList = (): JSX.Element => {
               />
             </CCol>
           ) : (
-            <>
-              <OLoadingSpinner type={LoadingType.PAGE} />
-            </>
+            <CCol>
+              <CRow className="category-loading-spinner">
+                <CSpinner />
+              </CRow>
+            </CCol>
           )}
         </CRow>
       </OCard>

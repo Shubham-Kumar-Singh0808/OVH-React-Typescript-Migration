@@ -64,7 +64,7 @@ const EventListFilterOptions = ({
     )
     const end = moment(eventToDate, commonDateFormat).format(commonDateFormat)
 
-    setSearchBtnEnable(moment(start).isBefore(end))
+    setSearchBtnEnable(moment(end).isBefore(start))
   }, [eventFromDate, eventToDate])
 
   const toDate = eventToDate
@@ -118,7 +118,6 @@ const EventListFilterOptions = ({
                   <ReactDatePicker
                     id="fromDate"
                     data-testid="eventList-FromDate"
-                    autoComplete="off"
                     className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                     peekNextMonth
                     showMonthDropdown
@@ -143,7 +142,6 @@ const EventListFilterOptions = ({
                   <ReactDatePicker
                     id="toDate"
                     data-testid="eventList-FromDate"
-                    autoComplete="off"
                     className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                     peekNextMonth
                     showMonthDropdown
@@ -158,9 +156,8 @@ const EventListFilterOptions = ({
                     }
                   />
                 </CCol>
-                <CCol md={1} sm={1} className="event-list-search">
+                <CCol md={1} sm={1}>
                   <CButton
-                    className="event-list-search-btn"
                     type="button"
                     color="info"
                     id="button-search"

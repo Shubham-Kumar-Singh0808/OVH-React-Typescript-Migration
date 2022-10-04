@@ -56,14 +56,15 @@ const CertificateDetailsExpandableTable = (
       {employeesCertificates.length ? (
         <>
           <CAccordion
-            {...(isAccordionItemShow && { activeItemKey: accordionItemShow })}
+            alwaysOpen
+            activeItemKey={accordionItemShow}
             flush
             className="expandable-table mb-4 mt-4"
           >
             {employeesCertificates.map((currEmployeeCertificates, index) => {
               return (
                 <React.Fragment key={index}>
-                  <CAccordionItem {...(isAccordionItemShow && { itemKey: 1 })}>
+                  <CAccordionItem itemKey={1}>
                     <CAccordionHeader>
                       <span
                         className="title-sm expandable-table-title"

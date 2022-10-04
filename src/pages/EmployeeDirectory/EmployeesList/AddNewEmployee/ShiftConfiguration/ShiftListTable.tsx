@@ -229,7 +229,7 @@ const ShiftListTable = ({
                 </CTableDataCell>
                 {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                   <CTableDataCell scope="row">
-                    <div className="d-flex align-items-center sh-edit-shift">
+                    <div className="d-flex align-items-center">
                       <div className="edit-time-control sh-left">
                         <CFormInput
                           id="startTimeHour"
@@ -265,7 +265,7 @@ const ShiftListTable = ({
                 )}
                 {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                   <CTableDataCell scope="row">
-                    <div className="d-flex align-items-center sh-edit-shift">
+                    <div className="d-flex align-items-center">
                       <div className="edit-time-control sh-left">
                         <CFormInput
                           id="endTimeHour"
@@ -300,7 +300,7 @@ const ShiftListTable = ({
 
                 {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                   <CTableDataCell scope="row">
-                    <div className="edit-time-control sh-div-grace-time">
+                    <div className="edit-time-control">
                       <CFormInput
                         id="graceTime"
                         data-testid={`sh-graceTime-input${index}`}

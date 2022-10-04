@@ -136,7 +136,6 @@ function AddNewHandbook({
       type: '',
     })
     setShowEditor(false)
-    setError(false)
     setTimeout(() => {
       setShowEditor(true)
     }, 100)

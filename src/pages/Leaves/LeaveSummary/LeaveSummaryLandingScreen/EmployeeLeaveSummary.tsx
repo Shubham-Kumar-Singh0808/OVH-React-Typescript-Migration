@@ -14,6 +14,7 @@ const EmployeeLeaveSummary = (): JSX.Element => {
   const listSize = useTypedSelector(
     reduxServices.employeeLeaveSummary.selectors.listSize,
   )
+
   const {
     paginationRange,
     setPageSize,
