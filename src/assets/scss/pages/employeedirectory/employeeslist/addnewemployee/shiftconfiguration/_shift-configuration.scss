@@ -16,9 +16,11 @@
       }
     }
   }
-.shift-configuration-table td, th {
-  vertical-align: middle !important;
-  text-align: center;
+.shift-configuration-table {
+  td, th {
+    vertical-align: middle !important;
+    text-align: center;
+  }
 }
 .sh-div-grace-time{
   margin-left: calc(50% - 20px);
