@@ -27,7 +27,7 @@ const EmployeeHandbook = (): JSX.Element => {
   )
   const [inputText, setInputText] = useState('')
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const lowerCase = e.currentTarget.value
+    const lowerCase = e.currentTarget.value.toLowerCase()
     setInputText(lowerCase)
   }
 
