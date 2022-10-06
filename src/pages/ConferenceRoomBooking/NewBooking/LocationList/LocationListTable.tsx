@@ -40,6 +40,7 @@ const LocationListTable = (): JSX.Element => {
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
     dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
+
   const deleteButtonHandler = (id: number, locationName: string) => {
     setIsDeleteModalVisible(true)
     setDeleteLocationId(id)
@@ -52,7 +53,7 @@ const LocationListTable = (): JSX.Element => {
         <CTable
           striped
           responsive
-          className="mt-2 text-start text-left align-middle"
+          className="text-start text-left align-middle"
         >
           <CTableHead>
             <CTableRow>

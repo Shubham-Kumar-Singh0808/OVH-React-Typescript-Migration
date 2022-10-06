@@ -22,7 +22,7 @@ const ShowHandbook = (): JSX.Element => {
     return () => {
       handbook = {} as Handbook
     }
-  }, [clickedpageName])
+  }, [dispatch, clickedpageName])
 
   return (
     <>

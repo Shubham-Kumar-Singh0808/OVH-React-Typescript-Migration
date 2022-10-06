@@ -54,7 +54,7 @@ const SelectCountry = ({
           ))}
         </CFormSelect>
       </CCol>
-      <CCol className="d-md-flex justify-content-md-end me-1">
+      <CCol className="d-md-flex justify-content-md-end me-0 ps-0 pe-0">
         <Link to={`/dashboard`}>
           <CButton color="info" className="btn-ovh me-1 text-white">
             <i className="fa fa-arrow-left me-1"></i>Back
