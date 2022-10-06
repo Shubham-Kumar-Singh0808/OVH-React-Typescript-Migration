@@ -33,17 +33,12 @@ const LocationListTable = (): JSX.Element => {
 
   const confirmDeleteLocation = async () => {
     setIsDeleteModalVisible(false)
-    const deleteLocationResult = await dispatch(
+    await dispatch(
       reduxServices.addLocationList.deleteLocation(deleteLocationId),
     )
-    if (
-      reduxServices.addLocationList.deleteLocation.fulfilled.match(
-        deleteLocationResult,
-      )
-    ) {
-      dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
-      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
-    }
+
+    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+    dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
 
   const deleteButtonHandler = (id: number, locationName: string) => {
