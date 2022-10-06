@@ -71,7 +71,7 @@ describe('HolidaysList', () => {
       expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
     })
     test('should render correct number of page records', () => {
-      expect(screen.queryAllByRole('row')).toHaveLength(5)
+      expect(screen.queryAllByRole('row')).toHaveLength(4)
     })
 
     test('should render edit button in the Actions', () => {
@@ -88,7 +88,7 @@ describe('HolidaysList', () => {
     test('should redirect to Edit Holiday page upon clicking Edit button from HolidaysList Page', () => {
       const editButtonEl = screen.getByTestId('holiday-edit-btn1')
       userEvent.click(editButtonEl)
-      expect(history.location.pathname).toBe('/editHoliday/144')
+      expect(history.location.pathname).toBe('/editHoliday/145')
     })
     it('should render Delete modal popup on clicking delete button from Actions', async () => {
       const deleteButtonEl = screen.getByTestId('holiday-delete-btn1')
@@ -106,14 +106,7 @@ describe('HolidaysList', () => {
       userEvent.click(yesButtonEle)
     })
     test('should render correct number of  page records', () => {
-      // userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-      // const pageSizeSelect = screen.getByRole('option', {
-      //   name: '40',
-      // }) as HTMLOptionElement
-      // expect(pageSizeSelect.selected).toBe(true)
-
-      // // 42 including the heading
-      expect(screen.getAllByRole('row')).toHaveLength(5)
+      expect(screen.getAllByRole('row')).toHaveLength(4)
     })
   })
 
