@@ -72,7 +72,7 @@ const LocationListTable = (): JSX.Element => {
         <CTable
           striped
           responsive
-          className="text-start text-left align-middle"
+          className="text-start text-left align-middle alignment"
         >
           <CTableHead>
             <CTableRow>
