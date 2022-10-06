@@ -30,12 +30,6 @@ const LocationListTable = (): JSX.Element => {
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Location Deleted Successfully" />
   )
-  const deleteFailedToastMessage = (
-    <OToast
-      toastColor="danger"
-      toastMessage="Rooms are assigned to this location, so you cannot delete this location"
-    />
-  )
 
   const confirmDeleteLocation = async () => {
     setIsDeleteModalVisible(false)
@@ -49,14 +43,6 @@ const LocationListTable = (): JSX.Element => {
     ) {
       dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
-    } else if (
-      (reduxServices.addLocationList.deleteLocation.rejected.match(
-        deleteLocationResult,
-      ) &&
-        deleteLocationResult.payload === 500) ||
-      deleteLocationResult.payload === 405
-    ) {
-      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
     }
   }
 
