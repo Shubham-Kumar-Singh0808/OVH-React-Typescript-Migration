@@ -9,6 +9,8 @@ const deviceLocale: string =
     ? navigator.languages[0]
     : navigator.language
 
+const dateOfBirth = 'dd/mm/yyyy'
+
 describe('Add Employment Contract Component', () => {
   describe('Should render date if isContractExist is "true"', () => {
     beforeEach(() => {
@@ -17,17 +19,17 @@ describe('Add Employment Contract Component', () => {
           onStartDateChangeHandler={jest.fn()}
           onEndDateChangeHandler={jest.fn()}
           onContractExistHandler={jest.fn()}
-          startDateValue={new Date()}
-          endDateValue={new Date()}
           isContractExist={true}
           dynamicFormLabelProps={jest.fn()}
           isRequired={false}
+          startDateValue={''}
+          endDateValue={''}
         />,
       )
     })
 
     test('should be able to see place holder "Select start date" and "Select end date"', () => {
-      const input = screen.getAllByPlaceholderText('dd/mm/yyyy')
+      const input = screen.getAllByPlaceholderText(dateOfBirth)
       expect(input[0]).toBeInTheDocument()
       expect(input[1]).toBeInTheDocument()
     })
@@ -47,7 +49,7 @@ describe('Add Employment Contract Component', () => {
     })
 
     test('should be able to select start date"', () => {
-      const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
+      const dateInput = screen.getAllByPlaceholderText(dateOfBirth)
       userEvent.type(
         dateInput[0],
         new Date('12/20/2021').toLocaleDateString(deviceLocale, {
@@ -59,7 +61,7 @@ describe('Add Employment Contract Component', () => {
     })
 
     test('should be able to select end date', () => {
-      const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
+      const dateInput = screen.getAllByPlaceholderText(dateOfBirth)
       userEvent.type(
         dateInput[0],
         new Date('12/22/2021').toLocaleDateString(deviceLocale, {
@@ -95,11 +97,11 @@ describe('Add Employment Contract Component', () => {
           onStartDateChangeHandler={jest.fn()}
           onEndDateChangeHandler={jest.fn()}
           onContractExistHandler={jest.fn()}
-          startDateValue={new Date()}
-          endDateValue={new Date()}
           isContractExist={false}
           dynamicFormLabelProps={jest.fn()}
           isRequired={false}
+          startDateValue={''}
+          endDateValue={''}
         />,
       )
     })
