@@ -27,7 +27,7 @@ describe('Add Employment Contract Component', () => {
     })
 
     test('should be able to see place holder "Select start date" and "Select end date"', () => {
-      const input = screen.getAllByPlaceholderText('dd/mm/yy')
+      const input = screen.getAllByPlaceholderText('dd/mm/yyyy')
       expect(input[0]).toBeInTheDocument()
       expect(input[1]).toBeInTheDocument()
     })
@@ -47,7 +47,7 @@ describe('Add Employment Contract Component', () => {
     })
 
     test('should be able to select start date"', () => {
-      const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
+      const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
       userEvent.type(
         dateInput[0],
         new Date('12/20/2021').toLocaleDateString(deviceLocale, {
@@ -59,7 +59,7 @@ describe('Add Employment Contract Component', () => {
     })
 
     test('should be able to select end date', () => {
-      const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
+      const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
       userEvent.type(
         dateInput[0],
         new Date('12/22/2021').toLocaleDateString(deviceLocale, {

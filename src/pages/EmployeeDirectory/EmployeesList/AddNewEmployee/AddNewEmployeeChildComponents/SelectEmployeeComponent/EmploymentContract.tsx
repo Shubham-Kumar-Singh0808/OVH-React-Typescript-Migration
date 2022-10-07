@@ -93,7 +93,7 @@ const EmploymentContract = ({
                 showYearDropdown
                 dropdownMode="select"
                 data-testid="start-date-picker"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 dateFormat="dd/mm/yy"
                 name="contractstartdate"
                 value={startDateValue}
@@ -118,7 +118,7 @@ const EmploymentContract = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 data-testid="end-date-picker"
                 dateFormat="dd/mm/yy"
                 name="contractenddate"
