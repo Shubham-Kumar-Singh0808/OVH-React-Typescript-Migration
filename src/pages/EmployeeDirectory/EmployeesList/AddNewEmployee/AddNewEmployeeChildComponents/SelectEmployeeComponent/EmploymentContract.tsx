@@ -88,7 +88,6 @@ const EmploymentContract = ({
               <DatePicker
                 id="contractstartdate"
                 className="form-control form-control-sm sh-date-picker"
-                maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -115,7 +114,6 @@ const EmploymentContract = ({
               <DatePicker
                 id="contractenddate"
                 className="form-control form-control-sm sh-date-picker"
-                maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
