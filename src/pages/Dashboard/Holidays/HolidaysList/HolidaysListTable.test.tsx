@@ -106,6 +106,13 @@ describe('HolidaysList', () => {
       userEvent.click(yesButtonEle)
     })
     test('should render correct number of  page records', () => {
+      // userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+      // const pageSizeSelect = screen.getByRole('option', {
+      //   name: '40',
+      // }) as HTMLOptionElement
+      // expect(pageSizeSelect.selected).toBe(true)
+
+      // // 42 including the heading
       expect(screen.getAllByRole('row')).toHaveLength(4)
     })
   })
