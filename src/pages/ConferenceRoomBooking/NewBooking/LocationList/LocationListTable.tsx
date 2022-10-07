@@ -123,9 +123,10 @@ const LocationListTable = (): JSX.Element => {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Location"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteLocation}
       >
         {`Do you really want to delete this ${deleteLocationName} Location ?`}

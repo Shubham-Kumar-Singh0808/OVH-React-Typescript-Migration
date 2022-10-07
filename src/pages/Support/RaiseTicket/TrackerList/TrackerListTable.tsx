@@ -67,7 +67,7 @@ const TrackerListTable = (): JSX.Element => {
   }
   return (
     <>
-      <CTable striped responsive className="mt-5 align-middle">
+      <CTable striped responsive className="mt-5 align-middle alignment">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -128,9 +128,10 @@ const TrackerListTable = (): JSX.Element => {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Tracker"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteTracker}
       >
         {`Do you really want to delete this ${deleteTrackerName} Location ?`}
