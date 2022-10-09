@@ -405,6 +405,7 @@ export const clientsApiConfig: ClientsApi = {
 export const addNewClientApiConfig: AddNewClientApi = {
   getClientCountries: apiPrefix + '/project-mgmt/country',
   addNewClient: apiPrefix + '/project-mgmt/client',
+  checkClientOrgExist: apiPrefix + '/project-mgmt/clientOrg',
 }
 
 export const clientInformationApiConfig: ClientInformationApi = {
