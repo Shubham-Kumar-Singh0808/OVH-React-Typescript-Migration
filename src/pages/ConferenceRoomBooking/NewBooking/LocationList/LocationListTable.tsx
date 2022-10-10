@@ -110,7 +110,10 @@ const LocationListTable = (): JSX.Element => {
         closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteLocation}
       >
-        {`Do you really want to delete this ${deleteLocationName} Location ?`}
+        <>
+          Do you really want to delete this{' '}
+          <strong>{deleteLocationName}</strong> Location ?
+        </>
       </OModal>
     </>
   )
