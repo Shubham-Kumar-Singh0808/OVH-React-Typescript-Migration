@@ -17,7 +17,11 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-const TrackerListTable = (): JSX.Element => {
+const TrackerListTable = ({
+  userDeleteAccess,
+}: {
+  userDeleteAccess: boolean
+}): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteTrackerName, setDeleteTrackerName] = useState('')
   const [deleteTrackerId, setDeleteTrackerId] = useState(0)
@@ -65,6 +69,7 @@ const TrackerListTable = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
     }
   }
+
   return (
     <>
       {' '}
@@ -90,9 +95,9 @@ const TrackerListTable = (): JSX.Element => {
                     <CTableDataCell>{index + 1}</CTableDataCell>
                     <CTableDataCell>{tracker.name}</CTableDataCell>
                     <CTableDataCell className="text-middle ms-2">
-                      <span className="hidden-block ms-3">
+                      <span className="hidden-block ms-3 sh-tracker-checkbox">
                         <CFormCheck
-                          className="form-check-input form-select-not-allowed "
+                          className="form-check-input form-select-not-allowed"
                           name="workflow"
                           checked={tracker.permission}
                           disabled={true}
@@ -100,19 +105,24 @@ const TrackerListTable = (): JSX.Element => {
                       </span>
                     </CTableDataCell>
                     <CTableDataCell className="text-center">
-                      <CTooltip content="Delete">
-                        <CButton
-                          data-testid={`btn-delete${index}`}
-                          size="sm"
-                          color="danger btn-ovh me-1"
-                          className="btn-ovh-employee-list"
-                          onClick={() =>
-                            deleteTrackerButtonHandler(tracker.id, tracker.name)
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
+                      {userDeleteAccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            data-testid={`btn-delete${index}`}
+                            size="sm"
+                            color="danger btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              deleteTrackerButtonHandler(
+                                tracker.id,
+                                tracker.name,
+                              )
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )
