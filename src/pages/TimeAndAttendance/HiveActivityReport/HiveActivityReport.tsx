@@ -89,9 +89,9 @@ const HiveActivityReport = (): JSX.Element => {
   }
 
   const setMonthToDisplay = useCallback(
-    (dateToUse) => {
+    (dateValue) => {
       const monthToDisplay =
-        dateToUse === currentMonthDate
+        dateValue === currentMonthDate
           ? moment().format('MMMM-YYYY')
           : moment().subtract(1, 'months').format('MMMM-YYYY')
 
