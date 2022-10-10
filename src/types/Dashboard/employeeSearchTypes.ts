@@ -1,16 +1,20 @@
 import { LoadingState } from '../../types/commonTypes'
 
 export type employeeProfileData = {
-  designation: 'Senior Project Manager'
-  emailId: 'test@raybiztech.com'
-  firstName: 'Venkata Ananda '
-  fullName: 'Venkata Ananda  Chanapathi'
-  id: 1541
-  lastName: 'Chanapathi'
-  profilePicPath: '../profilepics/1541.jpeg'
+  designation: string
+  emailId: string
+  firstName: string
+  fullName: string
+  id: number
+  lastName: string
+  profilePicPath: string
 }
 
-export type BirthdayListTableSliceState = {
+export type employeeProfileProps = {
+  searchStr?: string
+}
+
+export type employeeProfileSearchState = {
   isLoading: LoadingState
   employeeProfile: employeeProfileData[]
 }

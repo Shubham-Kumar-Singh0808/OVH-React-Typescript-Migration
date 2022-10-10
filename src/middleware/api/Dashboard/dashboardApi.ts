@@ -3,6 +3,10 @@ import {
   UpcomingBirthdayResponse,
 } from '../../../types/Dashboard/Birthdays/birthdayTypes'
 import {
+  employeeProfileData,
+  employeeProfileProps,
+} from '../../../types/Dashboard/employeeSearchTypes'
+import {
   JobOpeningsApiProps,
   JobVacanciesResponse,
 } from '../../../types/Dashboard/JobOpenings/JobOpeningsTypes'
@@ -55,10 +59,26 @@ const getFinancialYear = async (): Promise<number | undefined> => {
   return response.data
 }
 
+const searchEmployee = async (
+  props: employeeProfileProps,
+): Promise<employeeProfileData[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: dashboardApiConfig.searchEmployee,
+    method: AllowedHttpMethods.get,
+    params: {
+      searchStr: props.searchStr,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const dashboardApi = {
   getAllJobVacancies,
   getUpcomingBirthdayAnniversaries,
   getFinancialYear,
+  searchEmployee,
 }
 
 export default dashboardApi
