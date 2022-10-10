@@ -43,6 +43,7 @@ export type HiveActivityReportSliceState = {
   managerHiveActivityReport: GetManagerHiveActivityReportResponse
   employeeHiveActivityReport: EmployeeHiveReport
   isLoading: ApiLoadingState
+  monthDisplay: string
 }
 
 export type ManagerHiveActivityReportProps = {

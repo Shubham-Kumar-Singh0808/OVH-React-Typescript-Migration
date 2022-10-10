@@ -63,6 +63,7 @@ const initialHiveActivityReportSliceState: HiveActivityReportSliceState = {
     projectIdentifier: '',
   },
   isLoading: ApiLoadingState.idle,
+  monthDisplay: moment(new Date()).format('MMMM-YYYY'),
 }
 
 const hiveActivityReportSlice = createSlice({
@@ -74,6 +75,9 @@ const hiveActivityReportSlice = createSlice({
     },
     setSelectedView: (state, action) => {
       state.selectedView = action.payload
+    },
+    setMonthDisplay: (state, action) => {
+      state.monthDisplay = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -119,6 +123,8 @@ const selectedView = (state: RootState): SelectedView =>
   state.hiveActivityReport.selectedView
 const managerReportSize = (state: RootState): number =>
   state.hiveActivityReport.managerHiveActivityReport.size
+const monthDisplay = (state: RootState): string =>
+  state.hiveActivityReport.monthDisplay
 
 const hiveActivityReportThunk = {
   getEmployeeHiveActivityReport,
@@ -133,6 +139,7 @@ const hiveActivityReportSelectors = {
   selectedDate,
   selectedView,
   managerReportSize,
+  monthDisplay,
 }
 
 export const hiveActivityReportService = {
