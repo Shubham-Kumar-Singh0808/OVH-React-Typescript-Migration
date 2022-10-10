@@ -237,7 +237,7 @@ const TicketApprovalsTable = ({
                     {ticketItem.status}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    <>
+                    <div className="buttons-clients">
                       <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
                         <CButton
                           color="info btn-ovh me-1"
@@ -275,7 +275,7 @@ const TicketApprovalsTable = ({
                       >
                         <i className="fa fa-bar-chart" aria-hidden="true"></i>
                       </CButton>
-                    </>
+                    </div>
                   </CTableDataCell>
                 </CTableRow>
               )
