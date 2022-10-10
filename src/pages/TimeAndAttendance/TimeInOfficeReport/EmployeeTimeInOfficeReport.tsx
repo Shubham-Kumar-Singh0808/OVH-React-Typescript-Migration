@@ -34,16 +34,17 @@ const EmployeeTimeInOfficeReport = (): JSX.Element => {
         </CTableHead>
         <CTableBody>
           <CTableRow>
-            {timeInOfficeEmployeeReport.inOfficeDTOs.map((value, index) => {
-              return (
-                <CTableDataCell
-                  key={index}
-                  className={`color-for-time-${value.colorForTime}`}
-                >
-                  {value.spentHours}
-                </CTableDataCell>
-              )
-            })}
+            {timeInOfficeEmployeeReport.inOfficeDTOs &&
+              timeInOfficeEmployeeReport.inOfficeDTOs.map((value, index) => {
+                return (
+                  <CTableDataCell
+                    key={index}
+                    className={`color-for-time-${value.colorForTime}`}
+                  >
+                    {value.spentHours}
+                  </CTableDataCell>
+                )
+              })}
             <CTableDataCell className="color-for-time-total">
               {timeInOfficeEmployeeReport.totalTimeInOfficeHours}
             </CTableDataCell>
