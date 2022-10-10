@@ -30,34 +30,15 @@ const LocationListTable = (): JSX.Element => {
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Location Deleted Successfully" />
   )
-  const deleteFailedToastMessage = (
-    <OToast
-      toastColor="danger"
-      toastMessage="Rooms are assigned to this location, so you cannot delete this location"
-    />
-  )
 
   const confirmDeleteLocation = async () => {
     setIsDeleteModalVisible(false)
-    const deleteLocationResult = await dispatch(
+    await dispatch(
       reduxServices.addLocationList.deleteLocation(deleteLocationId),
     )
-    if (
-      reduxServices.addLocationList.deleteLocation.fulfilled.match(
-        deleteLocationResult,
-      )
-    ) {
-      dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
-      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
-    } else if (
-      (reduxServices.addLocationList.deleteLocation.rejected.match(
-        deleteLocationResult,
-      ) &&
-        deleteLocationResult.payload === 500) ||
-      deleteLocationResult.payload === 405
-    ) {
-      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
-    }
+
+    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+    dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
 
   const deleteButtonHandler = (id: number, locationName: string) => {
@@ -72,7 +53,7 @@ const LocationListTable = (): JSX.Element => {
         <CTable
           striped
           responsive
-          className="text-start text-left align-middle"
+          className="text-start text-left align-middle alignment"
         >
           <CTableHead>
             <CTableRow>
@@ -123,9 +104,10 @@ const LocationListTable = (): JSX.Element => {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Location"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteLocation}
       >
         {`Do you really want to delete this ${deleteLocationName} Location ?`}
