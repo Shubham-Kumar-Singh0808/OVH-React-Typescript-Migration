@@ -241,7 +241,6 @@ const AddNewClient = (): JSX.Element => {
                 autoComplete="new-password"
                 name="organization"
                 placeholder="Organization"
-                maxLength={50}
                 value={addClient.organization}
                 onChange={handleInputChange}
               />
@@ -262,7 +261,6 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="clientName-input"
                 name="name"
                 placeholder="Client Name"
-                maxLength={50}
                 value={addClient.name}
                 onChange={handleInputChange}
               />
@@ -284,7 +282,6 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="contact-input"
                 name="personName"
                 placeholder="Contact Person"
-                maxLength={50}
                 value={addClient.personName}
                 onChange={handleInputChange}
               />
@@ -311,7 +308,6 @@ const AddNewClient = (): JSX.Element => {
                 name="email"
                 autoComplete="off"
                 placeholder="Contact Person Email"
-                maxLength={50}
                 value={addClient.email}
                 onChange={handleInputChange}
               />
@@ -395,7 +391,7 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="gstCode-input"
                 name="gstCode"
                 placeholder="GST Code"
-                maxLength={32}
+                value={addClient.gstCode}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -417,7 +413,6 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="clientAddress-input"
                 name="address"
                 placeholder="Address"
-                maxLength={100}
                 value={addClient.address}
                 onChange={handleInputChange}
               />
