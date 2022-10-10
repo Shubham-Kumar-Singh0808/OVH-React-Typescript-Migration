@@ -76,9 +76,6 @@ const addNewClientSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.clientCountries = action.payload as ClientCountry[]
       })
-      // .addCase(addNewClient.fulfilled, (state) => {
-      //   state.isLoading = ApiLoadingState.succeeded
-      // })
       .addMatcher(
         isAnyOf(addNewClient.fulfilled, checkClientOrgExist.fulfilled),
         (state) => {

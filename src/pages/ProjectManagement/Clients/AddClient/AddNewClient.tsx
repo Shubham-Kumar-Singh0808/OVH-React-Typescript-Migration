@@ -162,20 +162,24 @@ const AddNewClient = (): JSX.Element => {
     />
   )
   const isOrgAlreadyExists = async (value: string) => {
-    const isOrgAlreadyExistsResultAction = await dispatch(
-      reduxServices.addClient.checkClientOrgExist(value),
-    )
-    if (
-      reduxServices.addClient.checkClientOrgExist.fulfilled.match(
-        isOrgAlreadyExistsResultAction,
-      ) &&
-      isOrgAlreadyExistsResultAction.payload === true
-    ) {
-      setAddClient((prevState) => {
-        return { ...prevState, ...{ organization: '' } }
-      })
-      dispatch(reduxServices.app.actions.addToast(clientOrgAlreadyExistsToast))
-      dispatch(reduxServices.app.actions.addToast(undefined))
+    if (value !== '' || undefined) {
+      const isOrgAlreadyExistsResultAction = await dispatch(
+        reduxServices.addClient.checkClientOrgExist(value),
+      )
+      if (
+        reduxServices.addClient.checkClientOrgExist.fulfilled.match(
+          isOrgAlreadyExistsResultAction,
+        ) &&
+        isOrgAlreadyExistsResultAction.payload === true
+      ) {
+        setAddClient((prevState) => {
+          return { ...prevState, ...{ organization: '' } }
+        })
+        dispatch(
+          reduxServices.app.actions.addToast(clientOrgAlreadyExistsToast),
+        )
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      }
     }
   }
 
