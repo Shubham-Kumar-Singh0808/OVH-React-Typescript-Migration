@@ -10,6 +10,7 @@ import {
   mockClientCountries,
 } from '../../../../test/data/addNewClientData'
 import { emailAddress } from '../../../../test/constants'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const clientCodeElement = 'clientCode-input'
 const clientNameElement = 'clientName-input'
@@ -86,15 +87,21 @@ describe('Add Template Component Testing', () => {
   })
 
   describe('Add Client form testing without crashing', () => {
+    const history = createMemoryHistory()
     beforeEach(() => {
-      render(<AddNewClient />, {
-        preloadedState: {
-          addNewClient: {
-            clientCountries: mockClientCountries,
-            addClientDetails: mockAddNewClient,
+      render(
+        <Router history={history}>
+          <AddNewClient />
+        </Router>,
+        {
+          preloadedState: {
+            addNewClient: {
+              clientCountries: mockClientCountries,
+              addClientDetails: mockAddNewClient,
+            },
           },
         },
-      })
+      )
     })
     it('should render Add button as enabled and Clear Button as disabled', () => {
       expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
@@ -110,16 +117,16 @@ describe('Add Template Component Testing', () => {
     })
     test('should enable add button , when all mandatory fields are entered', async () => {
       const clientCode = screen.getByTestId(clientCodeElement)
-      userEvent.type(clientCode, '000')
-      expect(clientCode).toHaveValue('000')
+      userEvent.type(clientCode, '0001')
+      expect(clientCode).toHaveValue('0001')
 
       const clientName = screen.getByTestId(clientNameElement)
-      userEvent.type(clientName, 'Raybiztech')
-      expect(clientName).toHaveValue('Raybiztech')
+      userEvent.type(clientName, 'Raybiztech1')
+      expect(clientName).toHaveValue('Raybiztech1')
 
       const clientOrg = screen.getByTestId(clientOrgElement)
-      userEvent.type(clientOrg, 'Ray Business Technologies')
-      expect(clientOrg).toHaveValue('Ray Business Technologies')
+      userEvent.type(clientOrg, 'Ray Business Technologies2')
+      expect(clientOrg).toHaveValue('Ray Business Technologies2')
 
       const clientEmail = screen.getByTestId(clientEmailElement)
       userEvent.type(clientEmail, 'ajay.gupta@raybiztech.com')
@@ -149,9 +156,11 @@ describe('Add Template Component Testing', () => {
       const gstCode = screen.getByTestId(gstCodeElement)
       userEvent.type(gstCode, '23441234324')
       expect(gstCode).toHaveValue('23441234324')
-
+      const addButtonEl = screen.getByRole('button', { name: 'Add' })
       await waitFor(() => {
-        expect(screen.getByRole('button', { name: 'Add' })).toBeEnabled()
+        expect(addButtonEl).toBeEnabled()
+        userEvent.click(addButtonEl)
+        expect(history.location.pathname).toBe('/clientsList')
       })
     })
     test('should clear all the entered fields upon clicking clear button', async () => {

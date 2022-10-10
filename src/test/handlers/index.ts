@@ -26,6 +26,7 @@ import { trackerHandlers } from './addTrackerListHandlers'
 import { eventListHandlers } from './eventListHandlers'
 import { employeeHandbookHandlers } from './employeeHandbookHandlers'
 import { employeeLeaveHistoryHandlers } from './employeeLeaveHistoryHandlers'
+import { addNewClientHandlers } from './addNewClientHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -58,5 +59,6 @@ export const handlers = [
   ...employeeHandbookHandlers,
   ...employeeLeaveSummaryHandlers,
   ...employeeLeaveHistoryHandlers,
+  ...addNewClientHandlers,
   // add your handler here
 ]
