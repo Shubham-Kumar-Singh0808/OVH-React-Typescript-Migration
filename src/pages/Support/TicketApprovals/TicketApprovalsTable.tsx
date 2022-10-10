@@ -330,6 +330,7 @@ const TicketApprovalsTable = ({
         cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
+        modalBodyClass="pt-0 pb-5"
       >
         <p>
           <div
@@ -348,6 +349,7 @@ const TicketApprovalsTable = ({
         cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
+        modalBodyClass="pt-0 pb-5"
       >
         <p>{modalSubject}</p>
       </OModal>
@@ -358,6 +360,7 @@ const TicketApprovalsTable = ({
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalHeaderClass="d-none"
+        modalBodyClass="pt-0 pb-5"
         confirmButtonAction={() => handleConfirmRejectTicket(selectedTicketId)}
       >
         <>

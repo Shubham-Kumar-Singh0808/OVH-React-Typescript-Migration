@@ -206,6 +206,7 @@ const ClientsTable = ({
         closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        modalBodyClass="mt-0"
         confirmButtonAction={handleConfirmDeleteClient}
       >
         <>
