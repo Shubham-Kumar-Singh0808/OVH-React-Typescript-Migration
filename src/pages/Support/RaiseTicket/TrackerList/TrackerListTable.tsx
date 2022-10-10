@@ -146,6 +146,7 @@ const TrackerListTable = ({
         cancelButtonText="No"
         closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteTracker}
+        modalBodyClass="mt-0"
       >
         <>
           Do you really want to delete this <strong>{deleteTrackerName}</strong>{' '}

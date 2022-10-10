@@ -109,6 +109,7 @@ const LocationListTable = (): JSX.Element => {
         cancelButtonText="No"
         closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteLocation}
+        modalBodyClass="mt-0"
       >
         <>
           Do you really want to delete this{' '}
