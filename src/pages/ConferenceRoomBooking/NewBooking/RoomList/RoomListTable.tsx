@@ -40,18 +40,18 @@ const RoomListTable = (): JSX.Element => {
     <OToast toastColor="success" toastMessage="Room Updated Successfully" />
   )
 
-  // const switchOnChangeHandler = (
-  //   e: React.ChangeEvent<HTMLInputElement>,
-  //   room: getAllMeetingRooms,
-  //   index: number,
-  // ) => {
-  //   const { checked } = e.target
-  //   const mappedRoomCopy = { ...room }
-  //   let toEdit = null
-  //   toEdit = { ...mappedRoomCopy, ...{ roomStatus: checked } }
-  //   setUpdateRoomDetails(toEdit)
-  //   console.log(updateRoomDetails)
-  // }
+  const switchOnChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    room: getAllMeetingRooms,
+    index: number,
+  ) => {
+    const { checked } = e.target
+    const mappedRoomCopy = { ...room }
+    let toEdit = null
+    toEdit = { ...mappedRoomCopy, ...{ roomStatus: checked } }
+    setUpdateRoomDetails(toEdit)
+    console.log(updateRoomDetails)
+  }
 
   const deleteBtnHandler = (id: number, roomName: string) => {
     setIsDeleteModalVisible(true)
@@ -68,12 +68,10 @@ const RoomListTable = (): JSX.Element => {
   }
 
   const handleUpdateRoom = async (room: getAllMeetingRooms) => {
-    // console.log(room)
     const prepareObject = {
       ...room,
       ...{ roomStatus: updateRoomDetails.roomStatus },
     }
-    // console.log(prepareObject)
     const updatingRoom = await dispatch(
       reduxServices.roomLists.updateRoom(updateRoomDetails),
     )
@@ -82,12 +80,15 @@ const RoomListTable = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(updatedToast))
     }
   }
-  // console.log(roomStatus)
 
   return (
     <>
       <CCol className="custom-scroll">
-        <CTable striped responsive className="mt-5">
+        <CTable
+          striped
+          responsive
+          className="text-start text-left align-middle alignment mt-4"
+        >
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -118,7 +119,6 @@ const RoomListTable = (): JSX.Element => {
                           ? updateRoomDetails.roomStatus
                           : room.roomStatus
                       }
-                      // onChange={(e) => switchOnChangeHandler(e, room, index)}
                     />
                   </CTableDataCell>
                   <CTableDataCell>
@@ -126,8 +126,8 @@ const RoomListTable = (): JSX.Element => {
                       <CButton
                         data-testid={`btn-delete${index}`}
                         size="sm"
-                        className="btn-ovh me-2 cursor-pointer"
-                        color="danger btn-ovh me-2"
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
                         onClick={() => deleteBtnHandler(room.id, room.roomName)}
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
@@ -151,12 +151,17 @@ const RoomListTable = (): JSX.Element => {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Room"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteRoom}
+        modalBodyClass="mt-0"
       >
-        {`Do you really want to delete this ${selectedRoomName} Location ?`}
+        <>
+          Do you really want to delete this <strong>{selectedRoomName}</strong>{' '}
+          Location ?
+        </>
       </OModal>
     </>
   )
