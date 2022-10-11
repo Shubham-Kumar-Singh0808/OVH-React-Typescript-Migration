@@ -89,7 +89,7 @@ const BookingListFilterOptions = ({
           >
             <option value={''}>Select Location</option>
             {meetingLocation?.map((locationItem, index) => (
-              <option key={index} value={locationItem.id}>
+              <option key={index} value={locationItem.locationName}>
                 {locationItem.locationName}
               </option>
             ))}
