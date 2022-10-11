@@ -237,7 +237,7 @@ const TicketApprovalsTable = ({
                     {ticketItem.status}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    <>
+                    <div className="buttons-clients">
                       <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
                         <CButton
                           color="info btn-ovh me-1"
@@ -275,7 +275,7 @@ const TicketApprovalsTable = ({
                       >
                         <i className="fa fa-bar-chart" aria-hidden="true"></i>
                       </CButton>
-                    </>
+                    </div>
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -330,6 +330,7 @@ const TicketApprovalsTable = ({
         cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
+        modalBodyClass="pt-0 pb-5"
       >
         <p>
           <div
@@ -348,6 +349,7 @@ const TicketApprovalsTable = ({
         cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
+        modalBodyClass="pt-0 pb-5"
       >
         <p>{modalSubject}</p>
       </OModal>
@@ -358,6 +360,7 @@ const TicketApprovalsTable = ({
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalHeaderClass="d-none"
+        modalBodyClass="pt-0 pb-5"
         confirmButtonAction={() => handleConfirmRejectTicket(selectedTicketId)}
       >
         <>

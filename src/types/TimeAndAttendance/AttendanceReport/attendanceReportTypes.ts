@@ -128,6 +128,7 @@ export type EmployeeAttendanceReportSliceState = {
   days: number[]
   employeeAttendanceReport: EmployeeDetailsWithAttendanceReport[]
   isLoading: ApiLoadingState
+  monthDisplay: string
 }
 
 export type EmployeeAttendanceReportApiProps = {
