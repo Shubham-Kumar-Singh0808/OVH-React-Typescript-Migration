@@ -136,6 +136,7 @@ const AddNewClient = (): JSX.Element => {
       description: '',
     })
     setShowEditor(false)
+    setEmailError(false)
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
@@ -148,7 +149,10 @@ const AddNewClient = (): JSX.Element => {
   )
 
   const WarningToastMessage = (
-    <OToast toastColor="danger" toastMessage="Client already exists !!" />
+    <OToast
+      toastColor="danger"
+      toastMessage="Already a Client is existed with the given Code."
+    />
   )
 
   const handleAddNewClient = async () => {
@@ -173,6 +177,7 @@ const AddNewClient = (): JSX.Element => {
       addClientResultAction.payload === 406
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -198,7 +203,7 @@ const AddNewClient = (): JSX.Element => {
           </CCol>
         </CRow>
         <CForm>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-0 mb-4">
             <CFormLabel
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
@@ -236,7 +241,6 @@ const AddNewClient = (): JSX.Element => {
                 autoComplete="new-password"
                 name="organization"
                 placeholder="Organization"
-                maxLength={50}
                 value={addClient.organization}
                 onChange={handleInputChange}
               />
@@ -257,7 +261,6 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="clientName-input"
                 name="name"
                 placeholder="Client Name"
-                maxLength={50}
                 value={addClient.name}
                 onChange={handleInputChange}
               />
@@ -279,7 +282,6 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="contact-input"
                 name="personName"
                 placeholder="Contact Person"
-                maxLength={50}
                 value={addClient.personName}
                 onChange={handleInputChange}
               />
@@ -306,15 +308,9 @@ const AddNewClient = (): JSX.Element => {
                 name="email"
                 autoComplete="off"
                 placeholder="Contact Person Email"
-                maxLength={50}
                 value={addClient.email}
                 onChange={handleInputChange}
               />
-              {emailError && (
-                <p data-testid="error-msg" className="text-danger mt-1">
-                  Enter a valid Email address.
-                </p>
-              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -395,7 +391,7 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="gstCode-input"
                 name="gstCode"
                 placeholder="GST Code"
-                maxLength={32}
+                value={addClient.gstCode}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -417,7 +413,6 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="clientAddress-input"
                 name="address"
                 placeholder="Address"
-                maxLength={100}
                 value={addClient.address}
                 onChange={handleInputChange}
               />
@@ -428,7 +423,7 @@ const AddNewClient = (): JSX.Element => {
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
             >
-              status:
+              Status:
             </CFormLabel>
             <CCol
               className="mt-1"

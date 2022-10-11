@@ -10,8 +10,6 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { Link } from 'react-router-dom'
 import { HolidaysListProps } from '../../../../types/Dashboard/Holidays/upcomingHolidaysTypes'
 import { currentPageData } from '../../../../utils/paginationUtils'
@@ -21,8 +19,6 @@ import { usePagination } from '../../../../middleware/hooks/usePagination'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import OModal from '../../../../components/ReusableComponent/OModal'
 
@@ -37,6 +33,11 @@ const HolidaysListTable = ({
   const holidaysInfo = useTypedSelector(
     reduxServices.holidays.selectors.upcomingHolidays,
   )
+
+  const userRole = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.role,
+  )
+
   const isLoading = useTypedSelector(reduxServices.holidays.selectors.isLoading)
   const {
     paginationRange,
@@ -85,35 +86,43 @@ const HolidaysListTable = ({
       )
     }
   }
+  const filteredHolidays = currentPageItems?.filter(
+    (currHoliday) => new Date(currHoliday.date) > new Date(),
+  )
 
   const getAllHolidays = selectedCountry ? (
     <CTableBody>
-      {currentPageItems?.map((holiday, index) => (
+      {filteredHolidays?.map((holiday, index) => (
         <CTableRow key={index} className="text-start">
           <CTableDataCell>{holiday.date}</CTableDataCell>
           <CTableDataCell>{holiday.week}</CTableDataCell>
           <CTableDataCell>{holiday.name}</CTableDataCell>
           <CTableDataCell>{holiday.country}</CTableDataCell>
           <CTableDataCell>
-            <Link to={`/editHoliday/${holiday.id}`}>
-              <CButton
-                color="info"
-                className="btn-ovh me-2"
-                data-testid={`holiday-edit-btn${index}`}
-              >
-                <i className="fa fa-edit" aria-hidden="true"></i>
-              </CButton>
-            </Link>
-            <CButton
-              color="danger"
-              size="sm"
-              data-testid={`holiday-delete-btn${index}`}
-              onClick={() =>
-                handleShowHolidayDeleteModal(holiday.id, holiday.name)
-              }
-            >
-              <CIcon className="text-white" icon={cilTrash} />
-            </CButton>
+            {(userRole === 'admin' || userRole === 'HR Manager') && (
+              <>
+                <Link to={`/editHoliday/${holiday.id}`}>
+                  <CButton
+                    color="info"
+                    className="btn-ovh btn-ovh-employee-list me-1"
+                    data-testid={`holiday-edit-btn${index}`}
+                  >
+                    <i className="fa fa-edit" aria-hidden="true"></i>
+                  </CButton>
+                </Link>
+                <CButton
+                  className="btn-ovh btn-ovh-employee-list"
+                  color="danger"
+                  size="sm"
+                  data-testid={`holiday-delete-btn${index}`}
+                  onClick={() =>
+                    handleShowHolidayDeleteModal(holiday.id, holiday.name)
+                  }
+                >
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </CButton>
+              </>
+            )}
           </CTableDataCell>
         </CTableRow>
       ))}
@@ -132,7 +141,9 @@ const HolidaysListTable = ({
                 <CTableHeaderCell scope="col">Week</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Occasion</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                {(userRole === 'admin' || userRole === 'HR Manager') && (
+                  <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                )}
               </CTableRow>
             </CTableHead>
             {getAllHolidays}
@@ -141,18 +152,20 @@ const HolidaysListTable = ({
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Number of Holidays:{holidaysInfo.length}</strong>
+                <strong>
+                  Total Number of Holidays:{filteredHolidays.length}
+                </strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {holidaysInfo.length > 20 && (
+              {filteredHolidays.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                   selectedPageSize={pageSize}
                 />
               )}
             </CCol>
-            {holidaysInfo.length > 20 && (
+            {filteredHolidays.length > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"
@@ -182,7 +195,7 @@ const HolidaysListTable = ({
           </OModal>
         </>
       ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
+        <></>
       )}
     </>
   )

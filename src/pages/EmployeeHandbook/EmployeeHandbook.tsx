@@ -27,7 +27,7 @@ const EmployeeHandbook = (): JSX.Element => {
   )
   const [inputText, setInputText] = useState('')
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const lowerCase = e.currentTarget.value
+    const lowerCase = e.currentTarget.value.toLowerCase()
     setInputText(lowerCase)
   }
 
@@ -44,7 +44,7 @@ const EmployeeHandbook = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <CRow className="justify-content-between mb-2">
-          <CCol md={6}>
+          <CCol md={4}>
             <CInputGroup className="global-search mb-4 handbook-search">
               <CFormInput
                 placeholder="Search Handbook"

@@ -40,6 +40,7 @@ const LocationListTable = (): JSX.Element => {
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
     dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
+
   const deleteButtonHandler = (id: number, locationName: string) => {
     setIsDeleteModalVisible(true)
     setDeleteLocationId(id)
@@ -52,7 +53,7 @@ const LocationListTable = (): JSX.Element => {
         <CTable
           striped
           responsive
-          className="mt-2 text-start text-left align-middle"
+          className="text-start text-left align-middle alignment"
         >
           <CTableHead>
             <CTableRow>
@@ -103,9 +104,10 @@ const LocationListTable = (): JSX.Element => {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Location"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteLocation}
       >
         {`Do you really want to delete this ${deleteLocationName} Location ?`}

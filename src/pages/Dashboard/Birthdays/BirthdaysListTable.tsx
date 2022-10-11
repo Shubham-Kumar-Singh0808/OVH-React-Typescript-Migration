@@ -39,7 +39,10 @@ const BirthdaysListTable = (props: BirthdayListTableProps): JSX.Element => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
-
+  const tableHeaderCellPropActions = {
+    width: '40%',
+    scope: 'col',
+  }
   return (
     <>
       <CRow>
@@ -53,11 +56,18 @@ const BirthdaysListTable = (props: BirthdayListTableProps): JSX.Element => {
       </CRow>
       {birthdaysList.length ? (
         <>
-          <CTable className="mt-4 ps-0" striped responsive align="middle">
+          <CTable
+            className="mt-4 ps-0 alignment"
+            striped
+            responsive
+            align="middle"
+          >
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Date</CTableHeaderCell>
-                <CTableHeaderCell className="text-center" scope="col">
+                <CTableHeaderCell {...tableHeaderCellPropActions} scope="col">
+                  Date
+                </CTableHeaderCell>
+                <CTableHeaderCell {...tableHeaderCellPropActions} scope="col">
                   Name
                 </CTableHeaderCell>
               </CTableRow>
@@ -67,9 +77,7 @@ const BirthdaysListTable = (props: BirthdayListTableProps): JSX.Element => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{employeeBirthday.date}</CTableDataCell>
-                    <CTableDataCell className="text-center">
-                      {employeeBirthday.name}
-                    </CTableDataCell>
+                    <CTableDataCell>{employeeBirthday.name}</CTableDataCell>
                   </CTableRow>
                 )
               })}
