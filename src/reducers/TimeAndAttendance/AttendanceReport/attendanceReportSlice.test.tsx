@@ -8,6 +8,7 @@ import {
   mockDays,
 } from '../../../test/data/attendanceReportData'
 import { EmployeeAttendanceReportSliceState } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
+import stateStore from '../../../stateStore'
 
 const mockAttendanceReportResponseData = {
   list: mockAttendanceReport,
@@ -58,6 +59,15 @@ describe('Attendance Report Slice', () => {
         isLoading: ApiLoadingState.succeeded,
         monthDisplay: moment(new Date()).format('MMMM-YYYY'),
       })
+    })
+    test('able to update month to display', () => {
+      stateStore.dispatch(
+        attendanceReportService.actions.setMonthDisplay(
+          moment('21/11/2022').format('MMMM-YYYY'),
+        ),
+      )
+      const state = stateStore.getState().employeeAttendanceReport
+      expect(state.monthDisplay).toBe(moment('21/11/2022').format('MMMM-YYYY'))
     })
   })
 })
