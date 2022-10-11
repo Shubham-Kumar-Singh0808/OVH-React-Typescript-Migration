@@ -174,14 +174,7 @@ const EmployeeAllocationReportTable = (props: {
                   </CTableRow>
                   {isIconVisible && selectedKRA === allocationReport.id ? (
                     <>
-                      <EmployeeAllocationEntryTable
-                        id={allocationReport.id}
-                        Select={Select}
-                        toDate={toDate}
-                        allocationStatus={allocationStatus}
-                        billingStatus={billingStatus}
-                        fromDate={fromDate}
-                      />
+                      <EmployeeAllocationEntryTable />
                     </>
                   ) : (
                     <></>

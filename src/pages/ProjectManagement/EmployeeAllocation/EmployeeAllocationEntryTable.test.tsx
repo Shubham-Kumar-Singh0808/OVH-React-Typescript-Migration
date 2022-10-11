@@ -10,14 +10,7 @@ const toRender = (
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <EmployeeAllocationEntryTable
-      id={0}
-      Select={''}
-      toDate={''}
-      allocationStatus={''}
-      billingStatus={''}
-      fromDate={''}
-    />
+    <EmployeeAllocationEntryTable />
   </div>
 )
 
