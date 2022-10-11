@@ -76,7 +76,7 @@ const EmployeeAllocationEntryTable = (props: {
   }
   const onEndDateChangeHandler = (date: Date) => {
     const formatDate = moment(date).format('DD/MM/YYYY')
-    const name = 'enddate'
+    const name = 'endDate'
     setEditEmployeeAllocation((prevState) => {
       return { ...prevState, ...{ [name]: formatDate } }
     })
@@ -225,8 +225,8 @@ const EmployeeAllocationEntryTable = (props: {
                           <DatePicker
                             className="form-control form-control-sm sh-date-picker"
                             placeholderText="dd/mm/yy"
-                            name="enddate"
-                            id="enddate"
+                            name="endDate"
+                            id="endDate"
                             peekNextMonth
                             showMonthDropdown
                             showYearDropdown
