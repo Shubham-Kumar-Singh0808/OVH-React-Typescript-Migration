@@ -114,7 +114,7 @@ const EmployeeHandbookTable = (
 
   return (
     <>
-      {employeeHandbooks.length && isLoading !== ApiLoadingState.loading ? (
+      {employeeHandbooks?.length && isLoading !== ApiLoadingState.loading ? (
         <>
           <CTable striped responsive align="middle">
             <CTableHead>
