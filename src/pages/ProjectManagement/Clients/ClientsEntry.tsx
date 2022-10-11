@@ -77,7 +77,7 @@ const ClientsEntry = (props: {
           </CLink>
         </CTableDataCell>
         <CTableDataCell scope="row">
-          <>
+          <div className="buttons-clients">
             <Link to={`/clientInfo/${props.client.id}`}>
               <CButton className="btn-ovh-employee-list me-1 sh-eye-btn-color">
                 <i className="fa fa-eye" aria-hidden="true"></i>
@@ -103,7 +103,7 @@ const ClientsEntry = (props: {
                 <i className="fa fa-trash-o" aria-hidden="true"></i>
               </CButton>
             </CTooltip>
-          </>
+          </div>
         </CTableDataCell>
       </CTableRow>
       {props.isIconVisible && props.selectedClientId === props.id ? (

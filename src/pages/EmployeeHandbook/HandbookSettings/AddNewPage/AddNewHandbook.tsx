@@ -137,6 +137,8 @@ function AddNewHandbook({
     })
     setShowEditor(false)
     setError(false)
+    setAllChecked(false)
+    setIsDisplayOrderExist(false)
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
@@ -177,7 +179,6 @@ function AddNewHandbook({
     const addNewHandbookResultAction = await dispatch(
       reduxServices.employeeHandbookSettings.addNewHandbook(addNewPage),
     )
-
     if (
       reduxServices.employeeHandbookSettings.addNewHandbook.fulfilled.match(
         addNewHandbookResultAction,
@@ -186,10 +187,11 @@ function AddNewHandbook({
       backButtonHandler()
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
     } else if (
-      reduxServices.employeeHandbookSettings.addNewHandbook.rejected.match(
+      (reduxServices.employeeHandbookSettings.addNewHandbook.rejected.match(
         addNewHandbookResultAction,
       ) &&
-      addNewHandbookResultAction.payload === 404
+        addNewHandbookResultAction.payload === 404) ||
+      addNewHandbookResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
     }
