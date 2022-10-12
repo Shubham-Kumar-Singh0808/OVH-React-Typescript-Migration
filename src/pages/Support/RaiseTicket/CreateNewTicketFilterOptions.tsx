@@ -21,8 +21,10 @@ import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const CreateNewTicketFilterOptions = ({
   setToggle,
+  userViewAccess,
 }: {
   setToggle: (value: string) => void
+  userViewAccess: boolean
 }): JSX.Element => {
   const initialCreateNewTicket = {} as CreateNewTicket
   const [createTicket, setCreateTicket] = useState(initialCreateNewTicket)
@@ -203,6 +205,7 @@ const CreateNewTicketFilterOptions = ({
     if (!file) return
     setUploadFile(file[0])
   }
+
   return (
     <>
       <CForm>
@@ -230,14 +233,16 @@ const CreateNewTicketFilterOptions = ({
               ))}
             </CFormSelect>
           </CCol>
-          <CCol className="col-sm-3">
-            <CButton
-              color="info btn-ovh me-1"
-              onClick={() => setToggle('addTrackerList')}
-            >
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
-          </CCol>
+          {userViewAccess && (
+            <CCol className="col-sm-3">
+              <CButton
+                color="info btn-ovh me-1"
+                onClick={() => setToggle('addTrackerList')}
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </CCol>
+          )}
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
