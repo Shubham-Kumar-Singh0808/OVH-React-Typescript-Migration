@@ -268,7 +268,13 @@ const MyTicketsTable = ({
         visible={isModalVisible}
         setVisible={setIsModalVisible}
       >
-        {ticketSubject}
+        <p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: ticketSubject,
+            }}
+          />
+        </p>
       </OModal>
       <OModal
         alignment="center"
