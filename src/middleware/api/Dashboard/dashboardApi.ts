@@ -2,10 +2,7 @@ import {
   BirthDayApiProps,
   UpcomingBirthdayResponse,
 } from '../../../types/Dashboard/Birthdays/birthdayTypes'
-import {
-  employeeProfileData,
-  employeeProfileProps,
-} from '../../../types/Dashboard/employeeSearchTypes'
+import { employeeProfileData } from '../../../types/Dashboard/employeeSearchTypes'
 import {
   JobOpeningsApiProps,
   JobVacanciesResponse,
@@ -60,13 +57,13 @@ const getFinancialYear = async (): Promise<number | undefined> => {
 }
 
 const searchEmployee = async (
-  props: employeeProfileProps,
+  searchValue: string,
 ): Promise<employeeProfileData[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: dashboardApiConfig.searchEmployee,
     method: AllowedHttpMethods.get,
     params: {
-      searchStr: props.searchStr,
+      searchStr: searchValue,
     },
   })
 

@@ -6,15 +6,14 @@ import { RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
   employeeProfileData,
-  employeeProfileProps,
   employeeProfileSearchState,
 } from '../../types/Dashboard/employeeSearchTypes'
 
 const searchEmployee = createAsyncThunk(
   'searchEmployee/searchEmployee',
-  async (props: employeeProfileProps, thunkApi) => {
+  async (searchString: string, thunkApi) => {
     try {
-      return await dashboardApi.searchEmployee(props)
+      return await dashboardApi.searchEmployee(searchString)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
