@@ -193,25 +193,33 @@ const AllocateEmployee = (): JSX.Element => {
     const tempAllocationDate = new Date(
       moment(allocationDate).format(commonFormatDate),
     )
-    const dateParts = selectProject?.startdate
+    const startDateParts = selectProject?.startdate
       ? selectProject.startdate.split('/')
       : ''
     const tempProjectStartDate = new Date(
-      Number(dateParts[2]),
-      Number(dateParts[1]) - 1,
-      Number(dateParts[0]),
+      Number(startDateParts[2]),
+      Number(startDateParts[1]) - 1,
+      Number(startDateParts[0]),
     )
+
     const tempEndDate = new Date(
       moment(allocationEndDate).format(commonFormatDate),
     )
+    const endDateParts = selectProject?.enddate
+      ? selectProject.enddate.split('/')
+      : ''
     const tempProjectEndDate = new Date(
-      Number(dateParts[2]),
-      Number(dateParts[1]) - 1,
-      Number(dateParts[0]),
+      Number(endDateParts[2]),
+      Number(endDateParts[1]) - 1,
+      Number(endDateParts[0]),
     )
+
     if (
-      tempAllocationDate.getTime() >= tempProjectStartDate.getTime() &&
-      tempEndDate.getTime() <= tempProjectEndDate.getTime()
+      tempAllocationDate <= tempEndDate &&
+      tempAllocationDate >= tempProjectStartDate &&
+      tempAllocationDate <= tempProjectEndDate &&
+      tempEndDate <= tempProjectEndDate &&
+      tempEndDate >= tempProjectStartDate
     ) {
       postAllocateEmployee()
     } else {
@@ -412,7 +420,7 @@ const AllocateEmployee = (): JSX.Element => {
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 name="allocateEmployeeAllocationDate"
                 value={
                   allocationDate
@@ -452,7 +460,7 @@ const AllocateEmployee = (): JSX.Element => {
                 showYearDropdown
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 name="allocateEmployeeEndDate"
                 value={
                   allocationEndDate

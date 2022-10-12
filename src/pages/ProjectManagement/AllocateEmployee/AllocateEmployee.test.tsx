@@ -78,7 +78,7 @@ describe('should render allocate Employee Component with data', () => {
     })
   })
   test('should render on Dates AllocateEmployee', async () => {
-    const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
     fireEvent.click(datePickers[0])
 
     await waitFor(() =>
