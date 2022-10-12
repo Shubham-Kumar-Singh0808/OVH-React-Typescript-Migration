@@ -136,6 +136,8 @@ function AddNewHandbook({
       type: '',
     })
     setShowEditor(false)
+    setIsDisplayOrderExist(false)
+    setAllChecked(false)
     setError(false)
     setTimeout(() => {
       setShowEditor(true)
@@ -189,7 +191,7 @@ function AddNewHandbook({
       reduxServices.employeeHandbookSettings.addNewHandbook.rejected.match(
         addNewHandbookResultAction,
       ) &&
-      addNewHandbookResultAction.payload === 404
+      addNewHandbookResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
     }
