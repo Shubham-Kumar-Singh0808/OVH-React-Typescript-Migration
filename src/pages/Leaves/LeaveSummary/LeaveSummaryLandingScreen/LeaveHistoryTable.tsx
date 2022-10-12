@@ -108,6 +108,12 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
     return <></>
   }
 
+  function strip(html: string) {
+    const tmp = document.implementation.createHTMLDocument('New').body
+    tmp.innerHTML = html
+    return tmp.textContent || tmp.innerText || ''
+  }
+
   return (
     <>
       {employeeLeaveHistoryDetails?.length ? (
@@ -151,15 +157,18 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                       {leaveHistory.leaveCategoryDTO.name}
                     </CTableDataCell>
                     {employeeCommentsLimit ? (
-                      <CTableDataCell>
+                      <CTableDataCell
+                        scope="row"
+                        className="sh-organization-link"
+                      >
                         <CLink
-                          className="cursor-pointer text-decoration-none text-primary"
+                          className="cursor-pointer text-primary"
                           data-testid={`emp-comments${index}`}
                           onClick={() =>
                             handleModal(leaveHistory.employeeComments)
                           }
                         >
-                          {parse(employeeCommentsLimit)}
+                          {strip(employeeCommentsLimit)}
                         </CLink>
                       </CTableDataCell>
                     ) : (
@@ -167,9 +176,12 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     )}
 
                     {mgrCommentsLimit ? (
-                      <CTableDataCell>
+                      <CTableDataCell
+                        scope="row"
+                        className="sh-organization-link"
+                      >
                         <CLink
-                          className="cursor-pointer text-decoration-none text-primary"
+                          className="cursor-pointer text-primary"
                           data-testid={`mgr-comments${index}`}
                           onClick={() =>
                             handleModal(leaveHistory.managerComments)
@@ -181,7 +193,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     ) : (
                       <CTableDataCell>{`N/A`}</CTableDataCell>
                     )}
-                    <CTableDataCell>
+                    <CTableDataCell scope="row">
                       {leaveStatusLabelColor(leaveHistory.status)}
                     </CTableDataCell>
                     <CTableDataCell>{leaveHistory.approvedBy}</CTableDataCell>
