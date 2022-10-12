@@ -136,6 +136,7 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     userEvent.selectOptions(selectPriority, ['Normal'])
     expect(screen.getByTestId('create-btn')).toBeDisabled()
   })
+
   test('should upload file image', async () => {
     const fileToUpload = new File(['(⌐□_□)'], 'testFile.png', {
       type: 'image/png',
