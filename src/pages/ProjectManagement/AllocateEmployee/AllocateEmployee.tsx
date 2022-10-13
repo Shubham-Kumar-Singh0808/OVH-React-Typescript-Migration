@@ -250,7 +250,7 @@ const AllocateEmployee = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <CForm>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-3 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Employee:
               <span
@@ -414,7 +414,7 @@ const AllocateEmployee = (): JSX.Element => {
               <ReactDatePicker
                 id="allocation-date"
                 data-testid="allocateEmployeeAllocationDate"
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 autoComplete="off"
                 peekNextMonth
                 showMonthDropdown
@@ -453,7 +453,7 @@ const AllocateEmployee = (): JSX.Element => {
               <ReactDatePicker
                 id="end-date:"
                 data-testid="allocateEmployeeEndDate"
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 autoComplete="off"
                 peekNextMonth
                 showMonthDropdown
