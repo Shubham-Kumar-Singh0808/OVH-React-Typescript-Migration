@@ -283,7 +283,6 @@ const EditHandbook = ({
                 type="text"
                 name="title"
                 value={editPage.title}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -304,7 +303,6 @@ const EditHandbook = ({
                 type="text"
                 name="pageName"
                 value={editPage.pageName}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>

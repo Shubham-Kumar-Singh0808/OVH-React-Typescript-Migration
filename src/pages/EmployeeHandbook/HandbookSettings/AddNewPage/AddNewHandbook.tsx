@@ -234,7 +234,6 @@ function AddNewHandbook({
                 type="text"
                 name="title"
                 value={addNewPage.title}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -256,7 +255,6 @@ function AddNewHandbook({
                 type="text"
                 name="pageName"
                 value={addNewPage.pageName}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
