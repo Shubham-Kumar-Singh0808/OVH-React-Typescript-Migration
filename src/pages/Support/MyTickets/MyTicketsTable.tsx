@@ -30,6 +30,7 @@ const MyTicketsTable = ({
   setCurrentPage,
   pageSize,
   setPageSize,
+  userEditAccess,
 }: {
   setToggle: (value: string) => void
   paginationRange: number[]
@@ -37,6 +38,7 @@ const MyTicketsTable = ({
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  userEditAccess: boolean
 }): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
@@ -178,31 +180,35 @@ const MyTicketsTable = ({
                   <CTableDataCell>{ticket.approvalStatus}</CTableDataCell>
                   <CTableDataCell>{ticket.status}</CTableDataCell>
                   <CTableDataCell>
-                    <Link to={`/updateTicket/${ticket.id}`}>
-                      <CButton
-                        color="info"
-                        className="btn-ovh me-2"
-                        disabled={ticket.approvalStatus === 'Cancelled'}
-                        data-testid="edit-btn"
-                      >
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                    </Link>
-                    <CButton
-                      color="btn btn-warning"
-                      className="btn-ovh me-2"
-                      data-testid="cancel-btn"
-                      onClick={() => handleCancelTicketModal(ticket.id)}
-                      disabled={ticket.approvalStatus === 'Cancelled'}
-                    >
-                      <i
-                        className="fa fa-times text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    {userEditAccess && (
+                      <>
+                        <Link to={`/updateTicket/${ticket.id}`}>
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-2"
+                            disabled={ticket.approvalStatus === 'Cancelled'}
+                            data-testid="edit-btn"
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </Link>
+                        <CButton
+                          color="btn btn-warning"
+                          className="btn-ovh me-2"
+                          data-testid="cancel-btn"
+                          onClick={() => handleCancelTicketModal(ticket.id)}
+                          disabled={ticket.approvalStatus === 'Cancelled'}
+                        >
+                          <i
+                            className="fa fa-times text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </>
+                    )}
                     <CButton
                       color="info"
                       className="btn-ovh me-2"
