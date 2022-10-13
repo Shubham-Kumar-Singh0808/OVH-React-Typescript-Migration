@@ -21,6 +21,7 @@ const toRender = (
       currentPage={1}
       pageSize={20}
       paginationRange={[1, 2, 3]}
+      userEditAccess={true}
     />
     ,
   </div>
