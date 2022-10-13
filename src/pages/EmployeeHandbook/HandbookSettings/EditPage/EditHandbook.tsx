@@ -82,7 +82,7 @@ const EditHandbook = ({
       if (selectedHandbook.handCountry.length === empCountries.length) {
         setAllChecked(true)
       }
-      if (selectedHandbook.description.length > 150) {
+      if (selectedHandbook.description.length > 156) {
         setError(false)
       } else {
         setError(true)
@@ -143,7 +143,7 @@ const EditHandbook = ({
       editPage.displayOrder &&
       editPage.pageName &&
       editPage.list &&
-      editPage.description?.length > 150
+      editPage.description?.length > 156
     ) {
       setIsButtonEnabled(true)
     } else {
