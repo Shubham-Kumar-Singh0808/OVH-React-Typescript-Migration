@@ -490,6 +490,7 @@ const CreateNewTicketFilterOptions = ({
           </CFormLabel>
           <CCol sm={3}>
             <input
+              className="sh-updateTicket-file"
               type="file"
               data-testid="file-upload"
               id="fileUpload"
