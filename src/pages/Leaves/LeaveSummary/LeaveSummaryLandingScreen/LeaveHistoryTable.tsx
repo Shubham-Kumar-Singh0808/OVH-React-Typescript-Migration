@@ -108,17 +108,11 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
     return <></>
   }
 
-  function strip(html: string) {
-    const tmp = document.implementation.createHTMLDocument('New').body
-    tmp.innerHTML = html
-    return tmp.textContent || tmp.innerText || ''
-  }
-
   return (
     <>
       {employeeLeaveHistoryDetails?.length ? (
         <>
-          <CTable striped align="middle" className="text-center">
+          <CTable striped className="text-center">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
@@ -168,7 +162,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                             handleModal(leaveHistory.employeeComments)
                           }
                         >
-                          {strip(employeeCommentsLimit)}
+                          {parse(employeeCommentsLimit)}
                         </CLink>
                       </CTableDataCell>
                     ) : (
