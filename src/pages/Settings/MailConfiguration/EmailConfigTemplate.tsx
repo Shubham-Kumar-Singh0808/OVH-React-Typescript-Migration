@@ -126,6 +126,14 @@ const EmailConfigTemplate = (): JSX.Element => {
 
     downloadFile(employeeMailTemplateDownload, 'MailTemplateList.csv')
   }
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Mail Configuration',
+  )
+
   return (
     <>
       {toggle === '' && (
@@ -158,6 +166,7 @@ const EmailConfigTemplate = (): JSX.Element => {
                   ))}
                 </CFormSelect>
               </CCol>
+
               <CCol sm={4}>
                 <CFormInput
                   type="text"
@@ -196,17 +205,21 @@ const EmailConfigTemplate = (): JSX.Element => {
                 >
                   <i className="fa fa-plus me-1"></i>Click to Export
                 </CButton>
-                <Link to={`/addTemplate`}>
-                  <CButton color="info btn-ovh me-1" className="text-white">
-                    <i className="fa fa-plus me-1"></i>Add Template
-                  </CButton>
-                </Link>
+                {userAccess?.createaccess && (
+                  <Link to={`/addTemplate`}>
+                    <CButton color="info btn-ovh me-1" className="text-white">
+                      <i className="fa fa-plus me-1"></i>Add Template
+                    </CButton>
+                  </Link>
+                )}
               </CCol>
             </CRow>
             <CRow className="mt-3">
               <EmployeeEmailTemplateTable
                 employeeTemplate={employeeTemplate}
                 editTemplateButtonHandler={editTemplateButtonHandler}
+                userDeleteAccess={userAccess?.deleteaccess as boolean}
+                userEditAccess={userAccess?.updateaccess as boolean}
               />
             </CRow>
           </OCard>
