@@ -64,6 +64,13 @@ const MyTickets = (): JSX.Element => {
     })
     downloadFile(myTicketListDownload, 'TicketList.csv')
   }
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Tickets',
+  )
 
   return (
     <>
@@ -122,6 +129,7 @@ const MyTickets = (): JSX.Element => {
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
                 pageSize={pageSize}
+                userEditAccess={userAccess?.updateaccess as boolean}
               />
             </CCol>
           </OCard>
