@@ -66,7 +66,7 @@ function AddEditEmployeeSkill({
         ),
       )
     }
-  }, [dispatch, employeeSkill?.categoryType])
+  }, [dispatch, employeeSkill?.categoryType, toggle])
 
   useEffect(() => {
     if (editFetchSkillsDetails?.comments) {

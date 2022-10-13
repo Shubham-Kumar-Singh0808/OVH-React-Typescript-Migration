@@ -322,6 +322,7 @@ const UpdateTicketEditFields = ({
           </CFormLabel>
           <CCol sm={3}>
             <input
+              className="sh-updateTicket-file"
               type="file"
               id="fileUpload"
               data-testid="fileUpload1"

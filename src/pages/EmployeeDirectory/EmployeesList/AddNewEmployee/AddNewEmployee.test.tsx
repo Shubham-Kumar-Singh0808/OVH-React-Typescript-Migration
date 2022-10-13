@@ -132,7 +132,7 @@ describe('Add New Employee Testing', () => {
     fireEvent.change(CountrySelectListSelector, { target: { value: 'test' } })
 
     // Birtday format
-    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {

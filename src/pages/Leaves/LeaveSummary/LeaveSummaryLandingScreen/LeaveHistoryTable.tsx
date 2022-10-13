@@ -261,6 +261,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
         visible={isCancelModalVisible}
         setVisible={setIsCancelModalVisible}
         modalTitle="Cancel Leave"
+        modalBodyClass="mt-0"
         closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"

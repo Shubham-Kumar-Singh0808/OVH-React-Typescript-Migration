@@ -8,7 +8,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 describe('Add Tracker List without data', () => {
   beforeEach(() => {
-    render(<TrackerListTable />)
+    render(<TrackerListTable userDeleteAccess={true} />)
   })
 
   test('should render the correct headers', () => {
@@ -27,7 +27,7 @@ describe('Add Tracker List without data', () => {
 
 describe('Add Tracker List Table without data', () => {
   beforeEach(() => {
-    render(<TrackerListTable />, {
+    render(<TrackerListTable userDeleteAccess={true} />, {
       preloadedState: {
         ticketApprovals: {
           trackerList: mockTrackerList,
@@ -45,7 +45,7 @@ describe('Add Tracker List Table without data', () => {
     expect(screen.getByText('testing12')).toBeInTheDocument()
   })
   test('should be able to click delete button element', () => {
-    const deleteBtnElement = screen.getByTestId('btn-delete2')
+    const deleteBtnElement = screen.getByTestId('btn-delete1')
     expect(deleteBtnElement).toBeInTheDocument()
     userEvent.click(deleteBtnElement)
     const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })

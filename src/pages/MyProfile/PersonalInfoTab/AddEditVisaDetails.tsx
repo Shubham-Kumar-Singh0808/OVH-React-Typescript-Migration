@@ -265,7 +265,7 @@ function AddEditVisaDetails({
     return (
       <OToast
         toastColor="success"
-        toastMessage={`Your Visa Member have been ${action} successfully.`}
+        toastMessage={`Visa details ${action} successfully`}
       />
     )
   }
