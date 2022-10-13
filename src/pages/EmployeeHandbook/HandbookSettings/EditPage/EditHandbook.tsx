@@ -91,15 +91,14 @@ const EditHandbook = ({
   }, [totalHandbookList])
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newList =
-      empCountries.length > 0 && empCountries?.map((item) => item.id)
+    const newList = empCountries?.map((item) => item.id)
     const { checked } = e.target
     setAllChecked(e.target.checked)
     if (checked) {
       setEditPage((prevState) => {
         return {
           ...prevState,
-          ...{ newList },
+          ...{ list: newList },
         }
       })
     } else {
@@ -342,6 +341,7 @@ const EditHandbook = ({
             <CFormLabel
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
+              id="check-country"
             >
               Country:
               <span className={editPage.list ? TextWhite : TextDanger}>*</span>
@@ -367,7 +367,7 @@ const EditHandbook = ({
                         <CFormCheck
                           data-testid={`ch-countries${index}`}
                           className="mt-1"
-                          id="trigger"
+                          id={country.name}
                           label={country.name}
                           checked={
                             editPage.list == null
