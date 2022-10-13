@@ -1,10 +1,12 @@
 import {
   CButton,
+  CCol,
   CContainer,
   CHeader,
   CHeaderBrand,
   CHeaderNav,
   CHeaderToggler,
+  CImage,
   CInputGroup,
 } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
@@ -56,7 +58,7 @@ const AppHeader = (): JSX.Element => {
               inputProps={{
                 className: 'form-control form-control-sm',
                 id: 'trainer-autocomplete',
-                placeholder: 'Trainer',
+                placeholder: 'Search Employee',
               }}
               getItemValue={(item) => item.fullName}
               items={employees?.slice(0, 10)}
@@ -67,25 +69,34 @@ const AppHeader = (): JSX.Element => {
                   className={
                     searchAutoCompleteTarget &&
                     searchAutoCompleteTarget.length > 0
-                      ? 'autocomplete-dropdown-wrap'
-                      : 'autocomplete-dropdown-wrap hide'
+                      ? 'autocomplete-dropdown-wrap search-employee-list'
+                      : 'autocomplete-dropdown-wrap hide search-employee-list'
                   }
                 >
                   {children}
                 </div>
               )}
               renderItem={(item, isHighlighted) => (
-                <div
-                  data-testid="employee-option"
-                  className={
-                    isHighlighted
-                      ? 'autocomplete-dropdown-item active'
-                      : 'autocomplete-dropdown-item '
-                  }
-                  key={item.id}
-                >
-                  {item.fullName}
-                </div>
+                <>
+                  <CCol className="d-flex justify-content-left p-2 employee-wrapper">
+                    <CImage
+                      className="birthday-avatar"
+                      src={item.profilePicPath}
+                    />
+                    <div
+                      data-testid="employee-option"
+                      className={
+                        isHighlighted
+                          ? 'autocomplete-dropdown-item active p-2'
+                          : 'autocomplete-dropdown-item p-2'
+                      }
+                      key={item.id}
+                    >
+                      <p className="m-0 employee-fullname">{item.fullName}</p>
+                      <span className="employee-desg">{item.designation}</span>
+                    </div>
+                  </CCol>
+                </>
               )}
               value={searchAutoCompleteTarget}
               shouldItemRender={(item, value) =>

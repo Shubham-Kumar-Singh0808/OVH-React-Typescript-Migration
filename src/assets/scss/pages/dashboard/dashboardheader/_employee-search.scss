@@ -1,0 +1,24 @@
+.search-employee-list{
+    padding: 4px;
+    cursor: pointer;
+    .birthday-avatar{
+        margin-top: 7px;
+    }
+    .employee-desg {
+        color: $search-textDesignation;
+    }    
+    .employee-text {
+        color: $search-textKeyWord;
+    }    
+    .employee-fullname{
+        font-weight: 500;
+    } 
+    .employee-wrapper:hover {
+        background: $search-listHover;
+        .employee-fullname{
+            color: $white;
+        }
+    } 
+}
+
+
