@@ -239,7 +239,6 @@ const AddNewEmployee = (): JSX.Element => {
       addEmployee.manager.fullName != null &&
       addEmployee.projectManager.fullName != null &&
       addEmployee.role !== '' &&
-      addEmployee.technology !== '' &&
       addEmployee.timeSlotDTO.name != null &&
       addEmployee.userName !== '' &&
       addEmployee.workStatus !== ''

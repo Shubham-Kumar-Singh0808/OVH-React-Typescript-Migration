@@ -189,7 +189,7 @@ const EditEmployee = (): JSX.Element => {
       editEmployee.designation !== '' &&
       editEmployee.role !== '' &&
       editEmployee.manager != null &&
-      editEmployee.hrAssociate != null &&
+      editEmployee.hrAssociate?.fullName != null &&
       editEmployee.employmentTypeName !== '' &&
       editEmployee.jobTypeName !== '' &&
       editEmployee.timeSlotDTO != null
@@ -386,16 +386,6 @@ const EditEmployee = (): JSX.Element => {
           <OSelectList
             isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
-            list={countryList}
-            setValue={onHandleCountryType}
-            value={editEmployee.country}
-            name="country"
-            label="Country"
-            placeHolder="Select Country"
-          />
-          <OSelectList
-            isRequired={false}
-            dynamicFormLabelProps={dynamicFormLabelProps}
             list={composedDepartmentList}
             setValue={onHandleDepartment}
             value={editEmployee.departmentName}
@@ -476,6 +466,16 @@ const EditEmployee = (): JSX.Element => {
             name="JobType"
             label="Job Type"
             placeHolder="Select Job Type"
+          />
+          <OSelectList
+            isRequired={false}
+            dynamicFormLabelProps={dynamicFormLabelProps}
+            list={countryList}
+            setValue={onHandleCountryType}
+            value={editEmployee.country}
+            name="country"
+            label="Country"
+            placeHolder="Select Country"
           />
           <Shift
             isRequired={true}
