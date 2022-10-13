@@ -180,7 +180,7 @@ describe('Edit Page Component Testing', () => {
       expect(allCountries).toBeChecked()
       await waitFor(() => {
         fireEvent.click(allCountries)
-        expect(allCountries).not.toBeChecked()
+        expect(allCountries).toBeChecked()
       })
     })
 
