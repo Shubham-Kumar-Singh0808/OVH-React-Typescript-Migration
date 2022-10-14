@@ -62,15 +62,17 @@ const EventList = (): JSX.Element => {
           />
           {isLoading !== ApiLoadingState.loading ? (
             <>
-              <CCol xs={12} className="mt-4 mb-4 ps-0 pe-0">
-                <EventListTable
-                  paginationRange={paginationRange}
-                  setPageSize={setPageSize}
-                  setCurrentPage={setCurrentPage}
-                  currentPage={currentPage}
-                  pageSize={pageSize}
-                />
-              </CCol>
+              <CRow>
+                <CCol md={12} className="mt-4 mb-4">
+                  <EventListTable
+                    paginationRange={paginationRange}
+                    setPageSize={setPageSize}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                  />
+                </CCol>
+              </CRow>
             </>
           ) : (
             <OLoadingSpinner type={LoadingType.PAGE} />

@@ -84,7 +84,7 @@ const EventListFilterOptions = ({
     : ''
   return (
     <>
-      <CRow className="mt-3">
+      <CRow>
         <CCol sm={2} md={2}>
           <CFormLabel>Select:</CFormLabel>
           <CFormSelect
