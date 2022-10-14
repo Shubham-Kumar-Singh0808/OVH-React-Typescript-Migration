@@ -99,8 +99,8 @@ const EventListTable = (
     <CTable align="middle" className="bookingList-model-table">
       <CTableHead>
         <CTableRow>
-          <CTableHeaderCell>Name of Employee</CTableHeaderCell>
-          <CTableHeaderCell>Designation</CTableHeaderCell>
+          <CTableHeaderCell className="pt-0">Name of Employee</CTableHeaderCell>
+          <CTableHeaderCell className="pt-0">Designation</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
       <CTableBody>
@@ -181,9 +181,7 @@ const EventListTable = (
                 <CTableDataCell scope="row">{event.fromDate}</CTableDataCell>
                 <CTableDataCell scope="row">{event.toDate}</CTableDataCell>
                 <CTableDataCell scope="row">
-                  {event.startTime}
-                  <span>to</span>
-                  {event.endTime}
+                  {`${event.startTime} to ${event.endTime}`}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
                   {event.authorName.fullName}
@@ -297,9 +295,7 @@ const EventListTable = (
             {trainer}
           </p>
           <p className="d-flex">
-            <span className="col-sm-2 text-right fw-bold px-3 mt-2">
-              Attendees:
-            </span>
+            <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>
             {attendees}
           </p>
         </>

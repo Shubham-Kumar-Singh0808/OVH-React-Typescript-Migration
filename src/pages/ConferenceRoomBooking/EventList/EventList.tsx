@@ -51,7 +51,7 @@ const EventList = (): JSX.Element => {
         title="Event List"
         CFooterClassName="d-none"
       >
-        <CRow className="mb-4">
+        <CRow>
           <EventListFilterOptions
             selectDate={selectDate}
             setSelectDate={setSelectDate}

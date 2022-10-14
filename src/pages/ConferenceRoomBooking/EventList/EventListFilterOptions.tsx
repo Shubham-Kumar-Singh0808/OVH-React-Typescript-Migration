@@ -84,100 +84,98 @@ const EventListFilterOptions = ({
     : ''
   return (
     <>
-      <CRow>
-        <CCol sm={2} md={2}>
-          <CFormLabel>Select:</CFormLabel>
-          <CFormSelect
-            size="sm"
-            id="selectEvent"
-            data-testid="event-select-date"
-            name="selectEvent"
-            value={selectDate}
-            onChange={(e) => {
-              setSelectDate(e.target.value)
-            }}
-          >
-            {selectDateOptions.map((opt, index) => (
-              <option key={index} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </CFormSelect>
-        </CCol>
-        {selectDate === 'Custom' ? (
-          <>
-            <CCol sm={6}>
-              <CRow>
-                <CCol sm={4} md={4}>
-                  <CFormLabel>
-                    From :
-                    {(eventFromDate == null || eventFromDate === '') && (
-                      <span className="text-danger">*</span>
-                    )}
-                  </CFormLabel>
-                  <ReactDatePicker
-                    id="fromDate"
-                    data-testid="eventList-FromDate"
-                    autoComplete="off"
-                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                    peekNextMonth
-                    showMonthDropdown
-                    showYearDropdown
-                    dropdownMode="select"
-                    dateFormat="dd/mm/yy"
-                    placeholderText="dd/mm/yy"
-                    name="fromDate"
-                    value={fromDate}
-                    onChange={(date: Date) =>
-                      setEventFromDate(moment(date).format(commonDateFormat))
-                    }
-                  />
-                </CCol>
-                <CCol sm={4} md={4}>
-                  <CFormLabel>
-                    To :
-                    {(eventToDate == null || eventToDate === '') && (
-                      <span className="text-danger">*</span>
-                    )}
-                  </CFormLabel>
-                  <ReactDatePicker
-                    id="toDate"
-                    data-testid="eventList-FromDate"
-                    autoComplete="off"
-                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                    peekNextMonth
-                    showMonthDropdown
-                    showYearDropdown
-                    dropdownMode="select"
-                    dateFormat="dd/mm/yy"
-                    placeholderText="dd/mm/yy"
-                    name="toDate"
-                    value={toDate}
-                    onChange={(date: Date) =>
-                      setEventToDate(moment(date).format(commonDateFormat))
-                    }
-                  />
-                </CCol>
-                <CCol md={1} sm={1} className="event-list-search">
-                  <CButton
-                    className="event-list-search-btn"
-                    type="button"
-                    color="info"
-                    id="button-search"
-                    size="sm"
-                    disabled={!isSearchBtnEnable}
-                    onClick={handleEventList}
-                  >
-                    <i className="fa fa-search"></i>
-                  </CButton>
-                </CCol>
-              </CRow>
-            </CCol>
-          </>
-        ) : (
-          <></>
-        )}
-      </CRow>
+      <CCol sm={2} md={2}>
+        <CFormLabel className="mb0">Select:</CFormLabel>
+        <CFormSelect
+          size="sm"
+          id="selectEvent"
+          data-testid="event-select-date"
+          name="selectEvent"
+          value={selectDate}
+          onChange={(e) => {
+            setSelectDate(e.target.value)
+          }}
+        >
+          {selectDateOptions.map((opt, index) => (
+            <option key={index} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </CFormSelect>
+      </CCol>
+      {selectDate === 'Custom' ? (
+        <>
+          <CCol sm={6}>
+            <CRow>
+              <CCol sm={4} md={4}>
+                <CFormLabel>
+                  From :
+                  {(eventFromDate == null || eventFromDate === '') && (
+                    <span className="text-danger">*</span>
+                  )}
+                </CFormLabel>
+                <ReactDatePicker
+                  id="fromDate"
+                  data-testid="eventList-FromDate"
+                  autoComplete="off"
+                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  dateFormat="dd/mm/yy"
+                  placeholderText="dd/mm/yy"
+                  name="fromDate"
+                  value={fromDate}
+                  onChange={(date: Date) =>
+                    setEventFromDate(moment(date).format(commonDateFormat))
+                  }
+                />
+              </CCol>
+              <CCol sm={4} md={4}>
+                <CFormLabel>
+                  To :
+                  {(eventToDate == null || eventToDate === '') && (
+                    <span className="text-danger">*</span>
+                  )}
+                </CFormLabel>
+                <ReactDatePicker
+                  id="toDate"
+                  data-testid="eventList-FromDate"
+                  autoComplete="off"
+                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  dateFormat="dd/mm/yy"
+                  placeholderText="dd/mm/yy"
+                  name="toDate"
+                  value={toDate}
+                  onChange={(date: Date) =>
+                    setEventToDate(moment(date).format(commonDateFormat))
+                  }
+                />
+              </CCol>
+              <CCol md={1} sm={1} className="event-list-search">
+                <CButton
+                  className="event-list-search-btn"
+                  type="button"
+                  color="info"
+                  id="button-search"
+                  size="sm"
+                  disabled={!isSearchBtnEnable}
+                  onClick={handleEventList}
+                >
+                  <i className="fa fa-search"></i>
+                </CButton>
+              </CCol>
+            </CRow>
+          </CCol>
+        </>
+      ) : (
+        <></>
+      )}
     </>
   )
 }
