@@ -18,7 +18,7 @@ describe('List Options Component Testing', () => {
   test('should render Personal info tab component with out crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <ListOptions />
+        <ListOptions userCreateAccess={true} />
       </ReduxProvider>,
     )
 

@@ -7,7 +7,11 @@ import employeeListApi from '../../../middleware/api/EmployeeDirectory/Employees
 import { reduxServices } from '../../../reducers/reduxServices'
 import { downloadFile } from '../../../utils/helper'
 
-const ListOptions = (): JSX.Element => {
+const ListOptions = ({
+  userCreateAccess,
+}: {
+  userCreateAccess: boolean
+}): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const selectedEmploymentStatus = useTypedSelector(
@@ -104,12 +108,14 @@ const ListOptions = (): JSX.Element => {
           Click to Export Employee List
         </CButton>
         &nbsp; &nbsp; &nbsp;
-        <Link to="/addNewEmployee">
-          <CButton color="info" className="text-white btn-ovh" size="sm">
-            <i className="fa fa-plus me-1"></i>
-            Add Employee
-          </CButton>
-        </Link>
+        {userCreateAccess && (
+          <Link to="/addNewEmployee">
+            <CButton color="info" className="text-white btn-ovh" size="sm">
+              <i className="fa fa-plus me-1"></i>
+              Add Employee
+            </CButton>
+          </Link>
+        )}
       </div>
     </div>
   )
