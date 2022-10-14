@@ -184,7 +184,7 @@ const EmployeeEmailTemplateTable = ({
               modalSize="lg"
               alignment="center"
               modalTitle="Template model"
-              modalBodyClass="model-body-text-alinement"
+              modalBodyClass="model-body-text-alinement template-body"
               modalFooterClass="d-none"
               modalHeaderClass="d-none"
               visible={isModalVisible}
@@ -195,6 +195,7 @@ const EmployeeEmailTemplateTable = ({
                   {emailTemplateModel.emailTemplateName}
                 </h4>
                 <div
+                  className="template-content"
                   dangerouslySetInnerHTML={{
                     __html: emailTemplateModel.emailTemplate,
                   }}
