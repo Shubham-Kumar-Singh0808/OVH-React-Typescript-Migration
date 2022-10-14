@@ -135,7 +135,7 @@ const TicketApprovalsTable = ({
 
   return (
     <>
-      <CTable responsive striped className="text-center mt-5">
+      <CTable responsive striped className="text-center mt-5 align-middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell {...tableHeaderCellPropsTicketNo}>
