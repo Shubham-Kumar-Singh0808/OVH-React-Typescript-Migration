@@ -2,7 +2,7 @@
     padding: 4px;
     cursor: pointer;
     .birthday-avatar{
-        margin-top: 7px;
+        margin-top: 6px;
     }
     .employee-desg {
         color: $search-textDesignation;
@@ -19,6 +19,9 @@
             color: $white;
         }
     } 
+    .autocomplete-dropdown-item.active{
+        background-color: $search-listHover;
+    }
 }
 
 

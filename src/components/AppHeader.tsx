@@ -13,6 +13,7 @@ import CIcon from '@coreui/icons-react'
 import React, { useEffect, useState } from 'react'
 import { cilMenu } from '@coreui/icons'
 import Autocomplete from 'react-autocomplete'
+import { useHistory } from 'react-router-dom'
 import AppHeaderDropdown from './AppHeaderDropdown'
 import { logo } from '../assets/brand/logo'
 import { reduxServices } from '../reducers/reduxServices'
@@ -20,7 +21,7 @@ import { useAppDispatch, useTypedSelector } from '../stateStore'
 
 const AppHeader = (): JSX.Element => {
   const dispatch = useAppDispatch()
-
+  const history = useHistory()
   const [searchAutoCompleteTarget, setSearchAutoCompleteTarget] =
     useState<string>()
 
@@ -37,7 +38,24 @@ const AppHeader = (): JSX.Element => {
   }, [searchAutoCompleteTarget])
 
   const onHandleSelectEmployee = (fullName: string) => {
+    console.log(fullName)
     setSearchAutoCompleteTarget(fullName)
+  }
+
+  const handleSearchEmployee = async () => {
+    const searchEmployeeResultAction = await dispatch(
+      reduxServices.searchEmployee.searchEmployee(
+        searchAutoCompleteTarget as string,
+      ),
+    )
+
+    if (
+      reduxServices.searchEmployee.searchEmployee.fulfilled.match(
+        searchEmployeeResultAction,
+      )
+    ) {
+      history.push('/employeeList')
+    }
   }
 
   return (
@@ -57,12 +75,12 @@ const AppHeader = (): JSX.Element => {
             <Autocomplete
               inputProps={{
                 className: 'form-control form-control-sm',
-                id: 'trainer-autocomplete',
+                id: 'employee-autocomplete',
                 placeholder: 'Search Employee',
               }}
               getItemValue={(item) => item.fullName}
               items={employees?.slice(0, 10)}
-              data-testid="author-input"
+              data-testid="employee-input"
               wrapperStyle={{ position: 'relative' }}
               renderMenu={(children) => (
                 <div
@@ -77,26 +95,26 @@ const AppHeader = (): JSX.Element => {
                 </div>
               )}
               renderItem={(item, isHighlighted) => (
-                <>
-                  <CCol className="d-flex justify-content-left p-2 employee-wrapper">
+                <div
+                  data-testid="trainer-option"
+                  className={
+                    isHighlighted
+                      ? 'autocomplete-dropdown-item active'
+                      : 'autocomplete-dropdown-item'
+                  }
+                  key={item.id}
+                >
+                  <CCol className="d-flex justify-content-left employee-wrapper">
                     <CImage
                       className="birthday-avatar"
                       src={item.profilePicPath}
                     />
-                    <div
-                      data-testid="employee-option"
-                      className={
-                        isHighlighted
-                          ? 'autocomplete-dropdown-item active p-2'
-                          : 'autocomplete-dropdown-item p-2'
-                      }
-                      key={item.id}
-                    >
+                    <div className="p-1">
                       <p className="m-0 employee-fullname">{item.fullName}</p>
                       <span className="employee-desg">{item.designation}</span>
                     </div>
                   </CCol>
-                </>
+                </div>
               )}
               value={searchAutoCompleteTarget}
               shouldItemRender={(item, value) =>
@@ -105,7 +123,12 @@ const AppHeader = (): JSX.Element => {
               onChange={(e) => setSearchAutoCompleteTarget(e.target.value)}
               onSelect={(value) => onHandleSelectEmployee(value)}
             />
-            <CButton type="button" color="info" id="button-addon2">
+            <CButton
+              type="button"
+              color="info"
+              id="button-addon2"
+              onClick={handleSearchEmployee}
+            >
               <i className="fa fa-search"></i>
             </CButton>
           </CInputGroup>
