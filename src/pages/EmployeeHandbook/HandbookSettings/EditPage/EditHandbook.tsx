@@ -82,7 +82,7 @@ const EditHandbook = ({
       if (selectedHandbook.handCountry.length === empCountries.length) {
         setAllChecked(true)
       }
-      if (selectedHandbook.description.length > 150) {
+      if (selectedHandbook.description.length > 156) {
         setError(false)
       } else {
         setError(true)
@@ -91,15 +91,14 @@ const EditHandbook = ({
   }, [totalHandbookList])
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newList =
-      empCountries.length > 0 && empCountries?.map((item) => item.id)
+    const newList = empCountries?.map((item) => item.id)
     const { checked } = e.target
     setAllChecked(e.target.checked)
     if (checked) {
       setEditPage((prevState) => {
         return {
           ...prevState,
-          ...{ newList },
+          ...{ list: newList },
         }
       })
     } else {
@@ -144,7 +143,7 @@ const EditHandbook = ({
       editPage.displayOrder &&
       editPage.pageName &&
       editPage.list &&
-      editPage.description?.length > 150
+      editPage.description?.length > 156
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -283,7 +282,6 @@ const EditHandbook = ({
                 type="text"
                 name="title"
                 value={editPage.title}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -304,7 +302,6 @@ const EditHandbook = ({
                 type="text"
                 name="pageName"
                 value={editPage.pageName}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -344,6 +341,7 @@ const EditHandbook = ({
             <CFormLabel
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
+              id="check-country"
             >
               Country:
               <span className={editPage.list ? TextWhite : TextDanger}>*</span>
@@ -369,7 +367,7 @@ const EditHandbook = ({
                         <CFormCheck
                           data-testid={`ch-countries${index}`}
                           className="mt-1"
-                          id="trigger"
+                          id={country.name}
                           label={country.name}
                           checked={
                             editPage.list == null
