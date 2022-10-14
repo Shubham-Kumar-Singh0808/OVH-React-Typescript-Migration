@@ -16,6 +16,7 @@ const AppHeaderDropdown = (): JSX.Element => {
   const handleLogout = () => {
     localStorage.clear()
     dispatch(reduxServices.authentication.actions.clearAuthentication())
+    dispatch(reduxServices.app.actions.setReRenderMenu(true))
     history.push('/')
   }
 

@@ -108,7 +108,7 @@ const EventTypeListTable = ({
   return (
     <>
       <CCol className="custom-scroll">
-        <CTable striped responsive className="mt-3">
+        <CTable striped responsive className="mt-1">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -125,8 +125,9 @@ const EventTypeListTable = ({
                     {isEditBtnClicked &&
                     currEventType.id === selectEventTypeId ? (
                       <CTableDataCell scope="row">
-                        <CCol sm={4}>
+                        <CCol sm={5}>
                           <CFormInput
+                            className="eventType-editInput"
                             data-testid="eventTypeName"
                             type="text"
                             id="eventTypeName"
@@ -177,7 +178,7 @@ const EventTypeListTable = ({
                             data-testid={`edit-btn${index}`}
                             size="sm"
                             className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                            color="info btn-ovh me-2"
+                            color="info btn-ovh me-1"
                             onClick={() =>
                               editBtnHandler(
                                 currEventType.id,
@@ -223,10 +224,12 @@ const EventTypeListTable = ({
         alignment="center"
         visible={isEventTypeDelModal}
         setVisible={setIsEventTypeDelModal}
-        modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteEventType}
+        modalBodyClass="mt-0"
+        modalTitle="Delete EventType"
       >
         <>
           Do you really want to delete this{' '}
