@@ -79,7 +79,7 @@ const ClientsEntry = (props: {
         <CTableDataCell scope="row">
           <div className="buttons-clients">
             <Link to={`/clientInfo/${props.client.id}`}>
-              <CButton className="btn-ovh-employee-list me-1 sh-eye-btn-color">
+              <CButton className="btn-ovh btn-ovh-employee-list me-1 sh-eye-btn-color">
                 <i className="fa fa-eye" aria-hidden="true"></i>
               </CButton>
             </Link>
