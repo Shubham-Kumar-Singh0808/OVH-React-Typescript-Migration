@@ -29,16 +29,24 @@ const AppHeaderDropdown = (): JSX.Element => {
   }
 
   return (
-    <CDropdown variant="nav-item">
-      <CDropdownToggle {...dropdownToggleProps}>
-        <i className="fa fa-power-off fa-lg"></i>
-      </CDropdownToggle>
-      <CDropdownMenu {...dropdownMenuProps}>
-        <CDropdownItem className="cursor-pointer" onClick={handleLogout}>
-          Logout
-        </CDropdownItem>
-      </CDropdownMenu>
-    </CDropdown>
+    <>
+      <CDropdown variant="nav-item">
+        <CDropdownToggle {...dropdownToggleProps}>
+          <i className="fa fa-bell-o fa-lg"></i>
+        </CDropdownToggle>
+      </CDropdown>
+      &nbsp; &nbsp; &nbsp;
+      <CDropdown variant="nav-item">
+        <CDropdownToggle {...dropdownToggleProps}>
+          <i className="fa fa-power-off fa-lg"></i>
+        </CDropdownToggle>
+        <CDropdownMenu {...dropdownMenuProps}>
+          <CDropdownItem className="cursor-pointer" onClick={handleLogout}>
+            Logout
+          </CDropdownItem>
+        </CDropdownMenu>
+      </CDropdown>
+    </>
   )
 }
 

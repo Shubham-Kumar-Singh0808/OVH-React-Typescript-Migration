@@ -25,6 +25,7 @@ const EmployeeListTable = ({
   currentPage,
   setCurrentPage,
   updateaccess,
+  userEditAccess,
 }: EmployeeListTableProps): JSX.Element => {
   const employees = useTypedSelector(
     reduxServices.employeeList.selectors.employees,
@@ -98,25 +99,29 @@ const EmployeeListTable = ({
                     <CTableDataCell>{employee.country}</CTableDataCell>
                     {updateaccess ? (
                       <CTableDataCell data-testid="action-cell">
-                        <Link to={`/employeeProfile/${employee.id}`}>
-                          <CButton
-                            color="info"
-                            size="sm"
-                            className="btn-ovh-employee-list"
-                          >
-                            <i className="text-white fa fa-eye"></i>
-                          </CButton>
-                        </Link>
-                        &nbsp;
-                        <Link to={`/editEmployee/${employee.id}`}>
-                          <CButton
-                            color="info"
-                            size="sm"
-                            className="btn-ovh-employee-list"
-                          >
-                            <i className="text-white fa fa-pencil-square-o"></i>
-                          </CButton>
-                        </Link>
+                        {userEditAccess && (
+                          <>
+                            <Link to={`/employeeProfile/${employee.id}`}>
+                              <CButton
+                                color="info"
+                                size="sm"
+                                className="btn-ovh-employee-list"
+                              >
+                                <i className="text-white fa fa-eye"></i>
+                              </CButton>
+                            </Link>
+                            &nbsp;
+                            <Link to={`/editEmployee/${employee.id}`}>
+                              <CButton
+                                color="info"
+                                size="sm"
+                                className="btn-ovh-employee-list"
+                              >
+                                <i className="text-white fa fa-pencil-square-o"></i>
+                              </CButton>
+                            </Link>
+                          </>
+                        )}
                       </CTableDataCell>
                     ) : (
                       <div data-testid="no-action-cell"></div>
