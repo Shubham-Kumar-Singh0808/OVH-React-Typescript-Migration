@@ -263,7 +263,10 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           {isTicketPrevValue(
                             ticketDetails.olddescription as string,
                           )}
-                          &nbsp; {parse(ticketDetails.description)}
+                          &nbsp;
+                          <span className="descriptionField">
+                            {parse(ticketDetails.description)}
+                          </span>
                         </div>
                       </>
                     ) : (
