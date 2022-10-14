@@ -117,11 +117,15 @@ const UpdateTicketHistoryTimeline = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Description
                             </CFormLabel>
-                            {isTicketPrevProp(
-                              currTicketDetail.olddescription as string,
-                            )}
+                            <span className="descriptionField">
+                              {isTicketPrevProp(
+                                currTicketDetail.olddescription as string,
+                              )}
+                            </span>
                             &nbsp;
-                            {parse(currTicketDetail.description)}
+                            <span className="descriptionField">
+                              {parse(currTicketDetail.description)}
+                            </span>
                           </div>
                         </>
                       ) : (
