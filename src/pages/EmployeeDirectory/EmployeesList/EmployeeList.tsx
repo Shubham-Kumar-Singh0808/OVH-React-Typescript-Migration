@@ -27,6 +27,9 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Employee',
   )
+  const userAccessTo = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Employee Directory-Options',
+  )
 
   const {
     paginationRange,
@@ -58,6 +61,7 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
           <>
             <ListOptions
               userCreateAccess={userAccess?.createaccess as boolean}
+              userViewAccess={userAccessTo?.viewaccess as boolean}
             />
             <EmployeeListTable
               paginationRange={paginationRange}
