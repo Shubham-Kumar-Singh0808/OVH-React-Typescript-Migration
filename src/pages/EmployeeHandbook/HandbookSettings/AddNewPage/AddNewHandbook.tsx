@@ -234,7 +234,6 @@ function AddNewHandbook({
                 type="text"
                 name="title"
                 value={addNewPage.title}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -256,7 +255,6 @@ function AddNewHandbook({
                 type="text"
                 name="pageName"
                 value={addNewPage.pageName}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -325,7 +323,7 @@ function AddNewHandbook({
                       <CFormCheck
                         data-testid={`ch-countries${index}`}
                         className="mt-1"
-                        id="trigger"
+                        id={country.name}
                         label={country.name}
                         checked={!!addNewPage.list?.includes(country.id)}
                         value={country.id}
