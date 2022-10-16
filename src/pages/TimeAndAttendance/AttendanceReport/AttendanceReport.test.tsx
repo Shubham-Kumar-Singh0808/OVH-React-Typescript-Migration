@@ -10,14 +10,22 @@ import {
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import { mockEmployeeShifts } from '../../../test/data/employeeShiftsData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <AttendanceReport />
+  </div>
+)
 describe('Attendance Report Component Testing', () => {
   test('should render attendance report component with out crashing', () => {
-    render(<AttendanceReport />)
+    render(toRender)
     expect(screen.getByText('Attendance Report')).toBeInTheDocument()
   })
 
   test('should render click to export biometric attendance after selection of with Biometric option', () => {
-    render(<AttendanceReport />, {
+    render(toRender, {
       preloadedState: {
         employeeAttendanceReport: {
           size: 214,
@@ -45,7 +53,7 @@ describe('Attendance Report Component Testing', () => {
   })
 
   test('upon shift selection the shift time should display on screen', () => {
-    render(<AttendanceReport />, {
+    render(toRender, {
       preloadedState: {
         employeeAttendanceReport: {
           size: 214,
