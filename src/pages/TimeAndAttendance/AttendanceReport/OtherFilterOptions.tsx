@@ -78,6 +78,7 @@ const OtherFilterOptions = ({
             </CCol>
             <CCol sm={2} className="text-end">
               <CFormCheck
+                data-testid="activeEmploymentStatus"
                 className="mt-1"
                 type="radio"
                 name="employmentStatus"

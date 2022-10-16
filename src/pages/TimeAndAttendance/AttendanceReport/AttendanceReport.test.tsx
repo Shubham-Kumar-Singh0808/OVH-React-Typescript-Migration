@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AttendanceReport from './AttendanceReport'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import {
   mockAttendanceReport,
   mockDays,
@@ -78,5 +78,43 @@ describe('Attendance Report Component Testing', () => {
         ).toBeInTheDocument()
       })
     })
+  })
+
+  test('should render attendance report upon view button click', async () => {
+    render(toRender, {
+      preloadedState: {
+        employeeAttendanceReport: {
+          size: 214,
+          days: mockDays,
+          employeeAttendanceReport: mockAttendanceReport,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+        shiftConfiguration: {
+          employeeShifts: mockEmployeeShifts,
+        },
+        authentication: {
+          authenticatedUser: {
+            employeeName: 'venkata',
+            employeeId: 1978,
+            userName: 'venkata kolla',
+            role: 'admin',
+          },
+        },
+      },
+    })
+    const monthOption = screen.getByLabelText(
+      'Previous Month',
+    ) as HTMLInputElement
+    fireEvent.click(monthOption)
+    await waitFor(() => {
+      expect(monthOption).toBeChecked()
+    })
+    const exportButton = screen.getByRole('button', {
+      name: 'Click to Export Attendance',
+    })
+    userEvent.click(exportButton)
+    expect(exportButton)
   })
 })
