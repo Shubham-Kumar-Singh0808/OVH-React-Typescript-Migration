@@ -189,7 +189,7 @@ const EditEmployee = (): JSX.Element => {
       editEmployee.designation !== '' &&
       editEmployee.role !== '' &&
       editEmployee.manager != null &&
-      editEmployee.hrAssociate != null &&
+      editEmployee.hrAssociate?.fullName != null &&
       editEmployee.employmentTypeName !== '' &&
       editEmployee.jobTypeName !== '' &&
       editEmployee.timeSlotDTO != null
