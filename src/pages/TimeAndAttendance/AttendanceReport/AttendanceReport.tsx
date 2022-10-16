@@ -1,5 +1,6 @@
 import { CButton, CCol, CFormCheck, CRow } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import moment from 'moment'
 import AttendanceReportTable from './AttendanceReportTable'
 import BiometricAndShiftFilterOptions from './BiometricAndShiftFilterOptions'
 import OtherFilterOptions from './OtherFilterOptions'
@@ -57,10 +58,26 @@ const AttendanceReport = (): JSX.Element => {
     pageSize,
   } = usePagination(listSize, 20)
 
+  const setMonthToDisplay = useCallback(
+    (dateValue) => {
+      const monthToDisplay =
+        dateValue === currentMonth
+          ? moment().format('MMMM-YYYY')
+          : moment().subtract(1, 'months').format('MMMM-YYYY')
+      dispatch(
+        reduxServices.employeeAttendanceReport.actions.setMonthDisplay(
+          monthToDisplay,
+        ),
+      )
+    },
+    [selectMonth],
+  )
+
   const handleChangeSelectMonth = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setSelectMonth(Number(event.target.value))
+    setMonthToDisplay(+event.target.value)
     setIsOther('')
     setFilterByEmployeeStatus('')
     setSearchEmployee('')
@@ -244,7 +261,6 @@ const AttendanceReport = (): JSX.Element => {
           setSelectShiftId={setSelectShiftId}
           selectMonth={selectMonth}
           isOther={isOther}
-          filterByDate={filterByDate as Date}
         />
         <AttendanceReportTable
           paginationRange={paginationRange}

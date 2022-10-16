@@ -1,7 +1,10 @@
 import { CButton, CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
+import moment from 'moment'
 import React, { useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../stateStore'
 import {
   EmployeeStatus,
   OtherFilterOptionsProps,
@@ -11,6 +14,8 @@ const OtherFilterOptions = ({
   setFilterByEmployeeStatus,
   setFilterByDate,
 }: OtherFilterOptionsProps): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [selectEmployeeStatus, setSelectEmployeeStatus] = useState<string>('')
   const [selectSearchDate, setSelectSearchDate] = useState<Date | null>()
 
@@ -33,6 +38,11 @@ const OtherFilterOptions = ({
     setFilterByEmployeeStatus(selectEmployeeStatus)
     if (selectSearchDate) {
       setFilterByDate(selectSearchDate)
+      dispatch(
+        reduxServices.employeeAttendanceReport.actions.setMonthDisplay(
+          moment(selectSearchDate).format('MMMM-YYYY'),
+        ),
+      )
     }
   }
 
@@ -47,6 +57,7 @@ const OtherFilterOptions = ({
         </CCol>
         <CCol sm={1} className="text-end pe-2 ms-3 sh-date-picker-column">
           <DatePicker
+            autoComplete="off"
             id="employeeRealBirthday"
             className="form-control form-control-sm sh-date-picker"
             maxDate={new Date()}
