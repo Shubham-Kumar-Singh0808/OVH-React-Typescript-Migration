@@ -5,6 +5,7 @@ import newBookingApi from '../../../middleware/api/ConferenceRoomBooking/NewBook
 import { RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
 import {
+  GetAllAttendies,
   GetAllProjectNames,
   NewBookingLoggedEmployeeName,
   newBookingSliceState,
@@ -46,10 +47,23 @@ const getAllProjectSearchData = createAsyncThunk(
   },
 )
 
+const getAllAttendiesData = createAsyncThunk(
+  'newBooking/getAllProjectSearchData',
+  async (projectName: string, thunkApi) => {
+    try {
+      return await newBookingApi.getAllAttendiesData(projectName)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialNewBookingListState: newBookingSliceState = {
   loggedEmployeeName: {} as NewBookingLoggedEmployeeName,
   allEmployeesProfiles: [],
   getAllProjects: [],
+  getAllAttendies: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -91,16 +105,21 @@ const allEmployeesProfiles = (
 const projectNames = (state: RootState): GetAllProjectNames[] =>
   state.newBooking.getAllProjects
 
+const attendieNames = (state: RootState): GetAllAttendies[] =>
+  state.newBooking.getAllAttendies
+
 const newBookingThunk = {
   getLoggedEmployeeName,
   getAllEmployees,
   getAllProjectSearchData,
+  getAllAttendiesData,
 }
 
 const newBookingSelectors = {
   LoggedEmployeeName,
   allEmployeesProfiles,
   projectNames,
+  attendieNames,
 }
 
 export const newBookingService = {
