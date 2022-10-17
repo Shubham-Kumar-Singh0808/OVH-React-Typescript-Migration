@@ -11,9 +11,9 @@ import {
 
 const searchEmployee = createAsyncThunk(
   'searchEmployee/searchEmployee',
-  async (searchString: string, thunkApi) => {
+  async (searchEmployeeString: string, thunkApi) => {
     try {
-      return await dashboardApi.searchEmployee(searchString)
+      return await dashboardApi.searchEmployee(searchEmployeeString)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
