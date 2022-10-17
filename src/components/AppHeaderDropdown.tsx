@@ -1,5 +1,6 @@
 import {
   CDropdown,
+  CDropdownDivider,
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
@@ -35,6 +36,12 @@ const AppHeaderDropdown = (): JSX.Element => {
         <CDropdownToggle {...dropdownToggleProps}>
           <i className="fa fa-bell-o fa-lg"></i>
         </CDropdownToggle>
+        <CDropdownMenu>
+          <CDropdownDivider />
+          <CDropdownItem component="button">
+            Show All Notifications
+          </CDropdownItem>
+        </CDropdownMenu>
       </CDropdown>
       &nbsp; &nbsp; &nbsp;
       <CDropdown variant="nav-item">
