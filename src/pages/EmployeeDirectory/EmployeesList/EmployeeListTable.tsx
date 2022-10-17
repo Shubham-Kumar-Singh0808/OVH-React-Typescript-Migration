@@ -100,7 +100,7 @@ const EmployeeListTable = ({
                     {updateaccess ? (
                       <CTableDataCell data-testid="action-cell">
                         {userEditAccess && (
-                          <>
+                          <div className="sh-btn-group">
                             <Link to={`/employeeProfile/${employee.id}`}>
                               <CButton
                                 color="info"
@@ -120,7 +120,7 @@ const EmployeeListTable = ({
                                 <i className="text-white fa fa-pencil-square-o"></i>
                               </CButton>
                             </Link>
-                          </>
+                          </div>
                         )}
                       </CTableDataCell>
                     ) : (
@@ -163,7 +163,7 @@ const EmployeeListTable = ({
       ) : (
         <CCol>
           <CRow className="category-no-data">
-            <h4 className="text-center">No data to display</h4>
+            <h4 className="text-center">No Records Found...</h4>
           </CRow>
         </CCol>
       )}
