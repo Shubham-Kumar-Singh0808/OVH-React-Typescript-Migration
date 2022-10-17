@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { CRow, CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
 import { showIsRequired } from '../../../../utils/helper'
 
@@ -9,7 +9,7 @@ const StartTimeEndTime = ({
 }: {
   startTimeValue: string
   endTimeValue: string
-  onChangeStartEndTime: (e: any) => void
+  onChangeStartEndTime: (value: ChangeEvent<HTMLSelectElement>) => void
 }): JSX.Element => {
   return (
     <>
@@ -90,19 +90,19 @@ const StartTimeEndTime = ({
                   value={endTimeValue}
                   onChange={onChangeStartEndTime}
                 >
-                  <option value="">00</option>
-                  <option value="">01</option>
-                  <option value="">02</option>
-                  <option value="">03</option>
-                  <option value="">04</option>
-                  <option value="">05</option>
-                  <option value="">06</option>
-                  <option value="">07</option>
-                  <option value="">08</option>
-                  <option value="">09</option>
-                  <option value="">10</option>
-                  <option value="">11</option>
-                  <option value="">12</option>
+                  <option value="00">00</option>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
@@ -112,10 +112,10 @@ const StartTimeEndTime = ({
                   data-testid="locationSelect"
                   name="location"
                 >
-                  <option value="">00</option>
-                  <option value="">15</option>
-                  <option value="">30</option>
-                  <option value="">45</option>
+                  <option value="00">00</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="45">45</option>
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
@@ -125,8 +125,8 @@ const StartTimeEndTime = ({
                   data-testid="locationSelect"
                   name="location"
                 >
-                  <option value="">AM</option>
-                  <option value="">PM</option>
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
                 </CFormSelect>
               </CCol>
             </CRow>

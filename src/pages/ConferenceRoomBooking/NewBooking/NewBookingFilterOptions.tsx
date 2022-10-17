@@ -91,7 +91,6 @@ const NewBookingFilterOptions = (): JSX.Element => {
       return { ...prevState, ...{ [name]: value } }
     })
   }
-
   return (
     <>
       <CRow className="mt-1 mb-3">
