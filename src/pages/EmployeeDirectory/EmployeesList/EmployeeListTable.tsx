@@ -17,6 +17,9 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const EmployeeListTable = ({
   paginationRange,
@@ -32,6 +35,10 @@ const EmployeeListTable = ({
   )
   const listSize = useTypedSelector(
     reduxServices.employeeList.selectors.listSize,
+  )
+
+  const isLoading = useTypedSelector(
+    reduxServices.employeeList.selectors.isLoading,
   )
 
   const handlePageSizeSelectChange = (
@@ -70,65 +77,70 @@ const EmployeeListTable = ({
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {employees.map((employee, index) => {
-                return (
-                  <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">
-                      <CImage
-                        src={employee.thumbPicture}
-                        className="employee-thumb"
-                      />
-                    </CTableHeaderCell>
-                    <CTableDataCell>{employee.id}</CTableDataCell>
-                    <CTableDataCell>
-                      <Link
-                        to={`/employeeProfile/${employee.id}`}
-                        className="employee-name"
-                      >
-                        {employee.fullName}
-                      </Link>
-                    </CTableDataCell>
-                    <CTableDataCell>{employee.emailId}</CTableDataCell>
-                    <CTableDataCell className="text-center">
-                      {employee.mobile}
-                    </CTableDataCell>
-                    <CTableDataCell>{employee.designation}</CTableDataCell>
-                    <CTableDataCell>{employee.departmentName}</CTableDataCell>
-                    <CTableDataCell>{employee.bloodgroup}</CTableDataCell>
-                    <CTableDataCell>{employee.dateOfJoining}</CTableDataCell>
-                    <CTableDataCell>{employee.country}</CTableDataCell>
-                    {updateaccess ? (
-                      <CTableDataCell data-testid="action-cell">
-                        {userEditAccess && (
-                          <>
-                            <Link to={`/employeeProfile/${employee.id}`}>
-                              <CButton
-                                color="info"
-                                size="sm"
-                                className="btn-ovh-employee-list"
-                              >
-                                <i className="text-white fa fa-eye"></i>
-                              </CButton>
-                            </Link>
-                            &nbsp;
-                            <Link to={`/editEmployee/${employee.id}`}>
-                              <CButton
-                                color="info"
-                                size="sm"
-                                className="btn-ovh-employee-list"
-                              >
-                                <i className="text-white fa fa-pencil-square-o"></i>
-                              </CButton>
-                            </Link>
-                          </>
-                        )}
+              {isLoading !== ApiLoadingState.loading ? (
+                employees &&
+                employees.map((employee, index) => {
+                  return (
+                    <CTableRow key={index}>
+                      <CTableHeaderCell scope="row">
+                        <CImage
+                          src={employee.thumbPicture}
+                          className="employee-thumb"
+                        />
+                      </CTableHeaderCell>
+                      <CTableDataCell>{employee.id}</CTableDataCell>
+                      <CTableDataCell>
+                        <Link
+                          to={`/employeeProfile/${employee.id}`}
+                          className="employee-name"
+                        >
+                          {employee.fullName}
+                        </Link>
                       </CTableDataCell>
-                    ) : (
-                      <div data-testid="no-action-cell"></div>
-                    )}
-                  </CTableRow>
-                )
-              })}
+                      <CTableDataCell>{employee.emailId}</CTableDataCell>
+                      <CTableDataCell className="text-center">
+                        {employee.mobile}
+                      </CTableDataCell>
+                      <CTableDataCell>{employee.designation}</CTableDataCell>
+                      <CTableDataCell>{employee.departmentName}</CTableDataCell>
+                      <CTableDataCell>{employee.bloodgroup}</CTableDataCell>
+                      <CTableDataCell>{employee.dateOfJoining}</CTableDataCell>
+                      <CTableDataCell>{employee.country}</CTableDataCell>
+                      {updateaccess ? (
+                        <CTableDataCell data-testid="action-cell">
+                          {userEditAccess && (
+                            <>
+                              <Link to={`/employeeProfile/${employee.id}`}>
+                                <CButton
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh-employee-list"
+                                >
+                                  <i className="text-white fa fa-eye"></i>
+                                </CButton>
+                              </Link>
+                              &nbsp;
+                              <Link to={`/editEmployee/${employee.id}`}>
+                                <CButton
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh-employee-list"
+                                >
+                                  <i className="text-white fa fa-pencil-square-o"></i>
+                                </CButton>
+                              </Link>
+                            </>
+                          )}
+                        </CTableDataCell>
+                      ) : (
+                        <div data-testid="no-action-cell"></div>
+                      )}
+                    </CTableRow>
+                  )
+                })
+              ) : (
+                <OLoadingSpinner type={LoadingType.PAGE} />
+              )}
             </CTableBody>
           </CTable>
           <CRow>
