@@ -214,7 +214,7 @@ const EmailConfigTemplate = (): JSX.Element => {
                 )}
               </CCol>
             </CRow>
-            <CRow className="mt-3">
+            <CRow className="mt-3 ps-2">
               <EmployeeEmailTemplateTable
                 employeeTemplate={employeeTemplate}
                 editTemplateButtonHandler={editTemplateButtonHandler}

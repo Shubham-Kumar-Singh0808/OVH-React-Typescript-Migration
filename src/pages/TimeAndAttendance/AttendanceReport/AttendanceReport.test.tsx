@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AttendanceReport from './AttendanceReport'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import {
   mockAttendanceReport,
   mockDays,
@@ -10,14 +10,22 @@ import {
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import { mockEmployeeShifts } from '../../../test/data/employeeShiftsData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <AttendanceReport />
+  </div>
+)
 describe('Attendance Report Component Testing', () => {
   test('should render attendance report component with out crashing', () => {
-    render(<AttendanceReport />)
+    render(toRender)
     expect(screen.getByText('Attendance Report')).toBeInTheDocument()
   })
 
   test('should render click to export biometric attendance after selection of with Biometric option', () => {
-    render(<AttendanceReport />, {
+    render(toRender, {
       preloadedState: {
         employeeAttendanceReport: {
           size: 214,
@@ -45,7 +53,7 @@ describe('Attendance Report Component Testing', () => {
   })
 
   test('upon shift selection the shift time should display on screen', () => {
-    render(<AttendanceReport />, {
+    render(toRender, {
       preloadedState: {
         employeeAttendanceReport: {
           size: 214,
@@ -70,5 +78,43 @@ describe('Attendance Report Component Testing', () => {
         ).toBeInTheDocument()
       })
     })
+  })
+
+  test('should render attendance report upon view button click', async () => {
+    render(toRender, {
+      preloadedState: {
+        employeeAttendanceReport: {
+          size: 214,
+          days: mockDays,
+          employeeAttendanceReport: mockAttendanceReport,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+        shiftConfiguration: {
+          employeeShifts: mockEmployeeShifts,
+        },
+        authentication: {
+          authenticatedUser: {
+            employeeName: 'venkata',
+            employeeId: 1978,
+            userName: 'venkata kolla',
+            role: 'admin',
+          },
+        },
+      },
+    })
+    const monthOption = screen.getByLabelText(
+      'Previous Month',
+    ) as HTMLInputElement
+    fireEvent.click(monthOption)
+    await waitFor(() => {
+      expect(monthOption).toBeChecked()
+    })
+    const exportButton = screen.getByRole('button', {
+      name: 'Click to Export Attendance',
+    })
+    userEvent.click(exportButton)
+    expect(exportButton)
   })
 })
