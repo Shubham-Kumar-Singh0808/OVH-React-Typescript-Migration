@@ -17,6 +17,7 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { downloadFile } from '../../../utils/helper'
+import { TextDanger, TextWhite } from '../../../constant/ClassName'
 
 const ScheduledCandidatesFilterOptions = (props: {
   filterByTechnology: string
@@ -191,7 +192,14 @@ const ScheduledCandidatesFilterOptions = (props: {
     <>
       <CRow className="mt-4">
         <CCol sm={2} md={2} className="text-end">
-          <CFormLabel className="mt-1">From:</CFormLabel>
+          <CFormLabel className="mt-1">
+            From:
+            <span
+              className={scheduledCandidatesFromDate ? TextWhite : TextDanger}
+            >
+              *
+            </span>
+          </CFormLabel>
         </CCol>
         <CCol sm={3}>
           <ReactDatePicker
@@ -226,7 +234,14 @@ const ScheduledCandidatesFilterOptions = (props: {
       </CRow>
       <CRow className="mt-3">
         <CCol sm={2} md={2} className="text-end">
-          <CFormLabel className="mt-1">To:</CFormLabel>
+          <CFormLabel className="mt-1">
+            To:
+            <span
+              className={scheduledCandidatesToDate ? TextWhite : TextDanger}
+            >
+              *
+            </span>
+          </CFormLabel>
         </CCol>
         <CCol sm={3}>
           <ReactDatePicker

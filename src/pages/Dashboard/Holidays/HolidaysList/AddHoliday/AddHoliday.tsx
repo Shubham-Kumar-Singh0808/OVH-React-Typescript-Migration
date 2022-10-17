@@ -84,7 +84,15 @@ const AddHoliday = (): JSX.Element => {
   const handleAddHoliday = async () => {
     const prepareObject = {
       ...addHoliday,
-      ...{ date: holidayDate as string },
+      ...{
+        date: holidayDate
+          ? new Date(holidayDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })
+          : '',
+      },
     }
     const addHolidayResultAction = await dispatch(
       reduxServices.holidays.addHoliday(prepareObject),
@@ -102,6 +110,7 @@ const AddHoliday = (): JSX.Element => {
       addHolidayResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(getWarningToastMessage))
+      handleClear()
     }
   }
 
@@ -133,9 +142,12 @@ const AddHoliday = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                className="ps-2"
                 data-testid="holiday-name"
                 type="text"
                 name="name"
+                placeholder="Holiday Name"
+                autoComplete="off"
                 value={addHoliday.name}
                 maxLength={50}
                 onChange={handleInputChange}
@@ -151,6 +163,7 @@ const AddHoliday = (): JSX.Element => {
               <ReactDatePicker
                 id="holiday-date"
                 data-testid="holidayDateInput"
+                autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
                 peekNextMonth
                 showMonthDropdown
@@ -158,6 +171,7 @@ const AddHoliday = (): JSX.Element => {
                 dropdownMode="select"
                 placeholderText="Holiday Date"
                 name="holidayDate"
+                minDate={new Date()}
                 value={
                   holidayDate
                     ? new Date(holidayDate).toLocaleDateString(deviceLocale, {
@@ -167,9 +181,9 @@ const AddHoliday = (): JSX.Element => {
                       })
                     : ''
                 }
-                onChange={(date: Date) =>
+                onChange={(date: Date) => {
                   setHolidayDate(moment(date).format(commonFormatDate))
-                }
+                }}
               />
             </CCol>
           </CRow>

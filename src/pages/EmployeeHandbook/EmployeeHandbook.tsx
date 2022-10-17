@@ -22,16 +22,19 @@ const EmployeeHandbook = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.EmployeeHandbook.selectors.isLoading,
   )
-
+  const empRole = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.role,
+  )
   const [inputText, setInputText] = useState('')
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const lowerCase = e.currentTarget.value
+    const lowerCase = e.currentTarget.value.toLowerCase()
     setInputText(lowerCase)
   }
 
   useEffect(() => {
     dispatch(reduxServices.EmployeeHandbook.getHandbooks())
   }, [dispatch])
+
   return (
     <>
       <OCard
@@ -41,7 +44,7 @@ const EmployeeHandbook = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <CRow className="justify-content-between mb-2">
-          <CCol md={6}>
+          <CCol md={4}>
             <CInputGroup className="global-search mb-4 handbook-search">
               <CFormInput
                 placeholder="Search Handbook"
@@ -54,13 +57,22 @@ const EmployeeHandbook = (): JSX.Element => {
               </CButton>
             </CInputGroup>
           </CCol>
-          <CCol className="text-end" md={4}>
-            <Link to={`/handbooksettings`}>
-              <CButton color="info" className="btn-ovh me-0">
-                <i className="fa fa-sign-out fa-fw  me-1"></i>Handbook Settings
-              </CButton>
-            </Link>
-          </CCol>
+          {(empRole === 'admin' ||
+            empRole === 'HR Manager' ||
+            empRole === 'HR') && (
+            <CCol className="text-end" md={4}>
+              <Link to={`/handbooksettings`}>
+                <CButton
+                  color="info"
+                  className="btn-ovh me-0"
+                  data-testid="handbook-settings-btn"
+                >
+                  <i className="fa fa-sign-out fa-fw  me-1"></i>Handbook
+                  Settings
+                </CButton>
+              </Link>
+            </CCol>
+          )}
         </CRow>
 
         {isLoading !== ApiLoadingState.loading ? (

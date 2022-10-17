@@ -18,6 +18,9 @@ const Dashboard = (): JSX.Element => {
   const employeeID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+  const role = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.role,
+  )
 
   useEffect(() => {
     dispatch(
@@ -89,7 +92,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Upcoming Trainings"
                   CBodyClassName="ps-0 pe-0"
-                  footerPath="/eventList"
+                  CFooterClassName="d-none"
                 >
                   <UpcomingTrainings />
                 </OCard>
@@ -99,7 +102,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Upcoming Events"
                   CBodyClassName="ps-0 pe-0"
-                  footerPath="/eventList"
+                  CFooterClassName="d-none"
                 >
                   <UpcomingEvents />
                 </OCard>
@@ -109,7 +112,7 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Upcoming Birthdays"
                   CBodyClassName="ps-0 pe-0"
-                  footerPath="/birthdaylist"
+                  CFooterClassName="d-none"
                 >
                   <UpcomingBirthdays />
                 </OCard>
@@ -119,20 +122,24 @@ const Dashboard = (): JSX.Element => {
                   className="mb-4 myprofile-wrapper"
                   title="Upcoming Holidays"
                   CBodyClassName="ps-0 pe-0"
-                  footerPath="/holidaylist"
+                  CFooterClassName="d-none"
                 >
                   <UpcomingHolidays />
                 </OCard>
               </CCol>
               <CCol sm={12}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Upcoming Probationary End Dates"
-                  CBodyClassName="ps-0 pe-0"
-                  footerPath="/probationaryList"
-                >
-                  <UpcomingProbationaryEndDates />
-                </OCard>
+                {(role === 'admin' ||
+                  role === 'HR Manager' ||
+                  role === 'HR') && (
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Upcoming Probationary End Dates"
+                    CBodyClassName="ps-0 pe-0"
+                    CFooterClassName="d-none"
+                  >
+                    <UpcomingProbationaryEndDates />
+                  </OCard>
+                )}
               </CCol>
             </CCol>
           </CRow>

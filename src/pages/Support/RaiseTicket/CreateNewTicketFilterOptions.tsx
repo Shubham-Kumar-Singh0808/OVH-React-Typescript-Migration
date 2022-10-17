@@ -19,7 +19,13 @@ import { CreateNewTicket } from '../../../types/Support/RaiseNewTicket/createNew
 import OToast from '../../../components/ReusableComponent/OToast'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
 
-const CreateNewTicketFilterOptions = (): JSX.Element => {
+const CreateNewTicketFilterOptions = ({
+  setToggle,
+  userViewAccess,
+}: {
+  setToggle: (value: string) => void
+  userViewAccess: boolean
+}): JSX.Element => {
   const initialCreateNewTicket = {} as CreateNewTicket
   const [createTicket, setCreateTicket] = useState(initialCreateNewTicket)
   const [trackerValue, setTrackerValue] = useState<string>()
@@ -199,6 +205,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
     if (!file) return
     setUploadFile(file[0])
   }
+
   return (
     <>
       <CForm>
@@ -226,11 +233,16 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
               ))}
             </CFormSelect>
           </CCol>
-          <CCol className="col-sm-3">
-            <CButton color="info btn-ovh me-1">
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
-          </CCol>
+          {userViewAccess && (
+            <CCol className="col-sm-3">
+              <CButton
+                color="info btn-ovh me-1"
+                onClick={() => setToggle('addTrackerList')}
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </CCol>
+          )}
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
@@ -404,7 +416,13 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
             Subject :
-            <span className={subjectValue ? whiteText : dangerText}>*</span>
+            <span
+              className={
+                subjectValue?.replace(/^\s*/, '') ? whiteText : dangerText
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={9}>
             <CFormInput
@@ -472,6 +490,7 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <input
+              className="sh-updateTicket-file"
               type="file"
               data-testid="file-upload"
               id="fileUpload"
@@ -480,7 +499,6 @@ const CreateNewTicketFilterOptions = (): JSX.Element => {
                   element.currentTarget as HTMLInputElement,
                 )
               }
-              accept=".png, .jpg, .jpeg"
             />
           </CCol>
         </CRow>

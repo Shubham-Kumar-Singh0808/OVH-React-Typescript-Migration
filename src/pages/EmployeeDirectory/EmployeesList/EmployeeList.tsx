@@ -20,6 +20,16 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   const selectedEmploymentStatus = useTypedSelector(
     reduxServices.employeeList.selectors.selectedEmploymentStatus,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Employee',
+  )
+  const userAccessTo = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Employee Directory-Options',
+  )
 
   const {
     paginationRange,
@@ -49,7 +59,10 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
       >
         {isLoading !== ApiLoadingState.loading ? (
           <>
-            <ListOptions />
+            <ListOptions
+              userCreateAccess={userAccess?.createaccess as boolean}
+              userViewAccess={userAccessTo?.viewaccess as boolean}
+            />
             <EmployeeListTable
               paginationRange={paginationRange}
               setPageSize={setPageSize}
@@ -57,6 +70,7 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
               currentPage={currentPage}
               pageSize={pageSize}
               updateaccess={updateaccess}
+              userEditAccess={userAccess?.updateaccess as boolean}
             />
           </>
         ) : (

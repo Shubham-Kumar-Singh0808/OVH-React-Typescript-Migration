@@ -41,7 +41,7 @@ function AddNewMailTemplate(): JSX.Element {
       reduxServices.employeeMailConfiguration.getEmployeeMailTemplateTypes(),
     )
     dispatch(reduxServices.addNewMailTemplate.getAssetTypes())
-  }, [dispatch])
+  }, [dispatch, toggle])
 
   const getAssetTypes = useTypedSelector(
     reduxServices.addNewMailTemplate.selectors.assetTypes,
@@ -72,7 +72,7 @@ function AddNewMailTemplate(): JSX.Element {
     if (!showAssetType) {
       if (
         addNewTemplate.template &&
-        addNewTemplate.templateName &&
+        addNewTemplate.templateName?.replace(/^\s*/, '') &&
         addNewTemplate.templateTypeId
       ) {
         setIsButtonEnabled(true)
@@ -129,20 +129,6 @@ function AddNewMailTemplate(): JSX.Element {
     />
   )
 
-  const handleAddNewHandbookPage = async () => {
-    const addNewTemplateResultAction = await dispatch(
-      reduxServices.addNewMailTemplate.addNewMailTemplate(addNewTemplate),
-    )
-
-    if (
-      reduxServices.addNewMailTemplate.addNewMailTemplate.fulfilled.match(
-        addNewTemplateResultAction,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
-    }
-  }
-
   const handleClearInputs = () => {
     setAddNewTemplate({
       templateTypeId: 0,
@@ -155,6 +141,21 @@ function AddNewMailTemplate(): JSX.Element {
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+  }
+
+  const handleAddNewHandbookPage = async () => {
+    const addNewTemplateResultAction = await dispatch(
+      reduxServices.addNewMailTemplate.addNewMailTemplate(addNewTemplate),
+    )
+
+    if (
+      reduxServices.addNewMailTemplate.addNewMailTemplate.fulfilled.match(
+        addNewTemplateResultAction,
+      )
+    ) {
+      handleClearInputs()
+    }
+    dispatch(reduxServices.app.actions.addToast(successToastMessage))
   }
 
   const isAsteriskShow = addNewTemplate.assetTypeId ? TextWhite : TextDanger
@@ -259,8 +260,11 @@ function AddNewMailTemplate(): JSX.Element {
                     </CFormLabel>
                     <CCol sm={4}>
                       <CFormInput
+                        className="ps-2"
                         type="email"
                         data-testid="email-address"
+                        placeholder="Email Address"
+                        autoComplete="off"
                         name="email"
                         value={addNewTemplate?.email}
                         maxLength={50}
@@ -286,7 +290,9 @@ function AddNewMailTemplate(): JSX.Element {
                   Title:
                   <span
                     className={
-                      addNewTemplate.templateName ? TextWhite : TextDanger
+                      addNewTemplate.templateName?.replace(/^\s*/, '')
+                        ? TextWhite
+                        : TextDanger
                     }
                   >
                     *
@@ -294,9 +300,12 @@ function AddNewMailTemplate(): JSX.Element {
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormInput
+                    className="ps-2"
                     data-testid="title-input"
                     type="text"
                     name="templateName"
+                    autoComplete="off"
+                    placeholder="Title"
                     value={addNewTemplate?.templateName}
                     maxLength={50}
                     onChange={handleInputChange}

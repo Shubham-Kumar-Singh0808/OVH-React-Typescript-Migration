@@ -338,6 +338,7 @@ const TicketApprovalsFilterOptions = ({
                   )}
                 </CFormLabel>
                 <ReactDatePicker
+                  autoComplete="off"
                   id="from-date"
                   data-testid="ticketsApprovalsFromDate"
                   className="form-control form-control-sm sh-date-picker"
@@ -375,6 +376,7 @@ const TicketApprovalsFilterOptions = ({
                   )}
                 </CFormLabel>
                 <ReactDatePicker
+                  autoComplete="off"
                   id="from-date"
                   data-testid="ticketsApprovalsToDate"
                   className="form-control form-control-sm sh-date-picker"
@@ -402,7 +404,7 @@ const TicketApprovalsFilterOptions = ({
                 />
                 {dateError && (
                   <CCol sm={12} className="mt-1 pt-1">
-                    <span className="text-danger">
+                    <span className="text-danger fw-bold">
                       To date should be greater than From date
                     </span>
                   </CCol>
@@ -434,7 +436,7 @@ const TicketApprovalsFilterOptions = ({
             color="success btn-ovh me-1"
             disabled={
               dateOption === 'Custom' &&
-              !(ticketFromDate !== '' && ticketToDate !== '')
+              !(ticketFromDate !== '' && ticketToDate !== '' && !dateError)
             }
             onClick={viewButtonHandler}
           >

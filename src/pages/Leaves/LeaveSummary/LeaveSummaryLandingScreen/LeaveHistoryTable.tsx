@@ -9,7 +9,6 @@ import {
   CRow,
   CLink,
   CButton,
-  CBadge,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
@@ -81,29 +80,29 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
   const leaveStatusLabelColor = (leaveStatus: string): JSX.Element => {
     if (leaveStatus === 'PendingApproval') {
       return (
-        <CBadge className="rounded-pill label-info">
+        <span className="profile-tab-label label-info">
           {'Pending Approval'}
-        </CBadge>
+        </span>
       )
     } else if (leaveStatus === 'Cancelled') {
       return (
-        <CBadge className="rounded-pill label-gray-cancel">
+        <span className="profile-tab-label label-gray-cancel">
           {leaveStatus}
-        </CBadge>
+        </span>
       )
     } else if (leaveStatus === 'Approved') {
       return (
-        <CBadge className="rounded-pill label-success">{leaveStatus}</CBadge>
+        <span className="profile-tab-label label-success">{leaveStatus}</span>
       )
     } else if (leaveStatus === 'Rejected') {
       return (
-        <CBadge className="rounded-pill label-danger">{leaveStatus}</CBadge>
+        <span className="profile-tab-label label-danger">{leaveStatus}</span>
       )
     } else if (leaveStatus === 'CancelAfterApproval') {
       return (
-        <CBadge className="rounded-pill label-gray-cancelAfterApproval">
+        <span className="profile-tab-label label-gray-cancelAfterApproval">
           {leaveStatus}
-        </CBadge>
+        </span>
       )
     }
     return <></>
@@ -111,9 +110,9 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
 
   return (
     <>
-      {employeeLeaveHistoryDetails.length ? (
+      {employeeLeaveHistoryDetails?.length ? (
         <>
-          <CTable striped align="middle">
+          <CTable striped className="text-center">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
@@ -152,9 +151,12 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                       {leaveHistory.leaveCategoryDTO.name}
                     </CTableDataCell>
                     {employeeCommentsLimit ? (
-                      <CTableDataCell>
+                      <CTableDataCell
+                        scope="row"
+                        className="sh-organization-link"
+                      >
                         <CLink
-                          className="cursor-pointer text-decoration-none text-primary"
+                          className="cursor-pointer text-primary"
                           data-testid={`emp-comments${index}`}
                           onClick={() =>
                             handleModal(leaveHistory.employeeComments)
@@ -168,9 +170,12 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     )}
 
                     {mgrCommentsLimit ? (
-                      <CTableDataCell>
+                      <CTableDataCell
+                        scope="row"
+                        className="sh-organization-link"
+                      >
                         <CLink
-                          className="cursor-pointer text-decoration-none text-primary"
+                          className="cursor-pointer text-primary"
                           data-testid={`mgr-comments${index}`}
                           onClick={() =>
                             handleModal(leaveHistory.managerComments)
@@ -182,7 +187,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     ) : (
                       <CTableDataCell>{`N/A`}</CTableDataCell>
                     )}
-                    <CTableDataCell>
+                    <CTableDataCell scope="row">
                       {leaveStatusLabelColor(leaveHistory.status)}
                     </CTableDataCell>
                     <CTableDataCell>{leaveHistory.approvedBy}</CTableDataCell>
@@ -190,7 +195,8 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                       {leaveHistory.status === 'PendingApproval' ? (
                         <CButton
                           color="warning"
-                          className="btn-ovh me-1"
+                          size="sm"
+                          className="btn-ovh btn-ovh-employee-list"
                           data-testid={`cancel-btn${index}`}
                           onClick={() => handleShowCancelModal(leaveHistory.id)}
                         >
@@ -249,18 +255,25 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
         visible={isModalVisible}
         setVisible={setIsModalVisible}
       >
-        {comments}
+        <p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: comments,
+            }}
+          />
+        </p>
       </OModal>
       <OModal
         visible={isCancelModalVisible}
         setVisible={setIsCancelModalVisible}
         modalTitle="Cancel Leave"
+        modalBodyClass="mt-0"
         closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={handleCancelLeave}
       >
-        <>Would you like to cancel the leave ?</>
+        <>Would you like to Cancel the leave ?</>
       </OModal>
     </>
   )

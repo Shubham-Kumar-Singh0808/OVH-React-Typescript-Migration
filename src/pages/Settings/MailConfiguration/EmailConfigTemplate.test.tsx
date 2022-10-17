@@ -8,6 +8,8 @@ import {
   mockEmailTemplate,
   mockTemplateTypes,
 } from '../../../test/data/employeeMailConfigurationData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const exportBtnElement = jest.fn()
 
@@ -23,6 +25,10 @@ describe('Email Configuration Template Component Testing with data', () => {
           employeeMailConfiguration: {
             employeeGetEmailTemplate: mockEmailTemplate,
             employeeGetMailTemplateTypes: mockTemplateTypes,
+          },
+          userAccessToFeatures: {
+            isLoading: ApiLoadingState.succeeded,
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       },

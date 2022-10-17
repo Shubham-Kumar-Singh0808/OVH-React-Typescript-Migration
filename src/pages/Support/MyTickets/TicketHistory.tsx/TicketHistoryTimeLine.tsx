@@ -1,6 +1,7 @@
 import { CBadge, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
+import parse from 'html-react-parser'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 
@@ -13,8 +14,8 @@ const TicketHistoryTimeLine = (): JSX.Element => {
   const isTicketPrevValue = (oldValue: string): JSX.Element => {
     return oldValue ? (
       <>
-        &nbsp;Changed from {oldValue}
-        <strong> to</strong>
+        &nbsp;Changed from&nbsp;{parse(oldValue)}&nbsp;
+        <strong>to</strong>
       </>
     ) : (
       <></>
@@ -108,22 +109,6 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           )}
                           &nbsp;
                           {ticketDetails.subject}
-                        </div>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                    {ticketDetails.description ? (
-                      <>
-                        <div className="mb-1">
-                          <CFormLabel className="col-form-label p-0">
-                            Description
-                          </CFormLabel>
-                          {isTicketPrevValue(
-                            ticketDetails.olddescription as string,
-                          )}
-                          &nbsp;
-                          {ticketDetails.description}
                         </div>
                       </>
                     ) : (
@@ -278,7 +263,10 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           {isTicketPrevValue(
                             ticketDetails.olddescription as string,
                           )}
-                          &nbsp; {ticketDetails.description}
+                          &nbsp;
+                          <span className="descriptionField">
+                            {parse(ticketDetails.description)}
+                          </span>
                         </div>
                       </>
                     ) : (
@@ -294,6 +282,21 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                             ticketDetails.oldassignee as string,
                           )}
                           &nbsp; {ticketDetails.oldapprovedByManager}
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                    {ticketDetails.endDate ? (
+                      <>
+                        <div className="mb-1">
+                          <CFormLabel className="col-form-label p-0">
+                            End Date
+                          </CFormLabel>
+                          {isTicketPrevValue(
+                            ticketDetails.oldendDate as string,
+                          )}
+                          &nbsp; {ticketDetails.endDate}
                         </div>
                       </>
                     ) : (

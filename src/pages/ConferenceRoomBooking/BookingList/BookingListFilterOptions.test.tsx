@@ -51,7 +51,7 @@ describe('Booking List Filter Options Component Testing with data', () => {
   screen.debug()
   test('should able to select values for options for respective select element', async () => {
     const location = screen.getByTestId('location-select')
-    userEvent.selectOptions(location, ['1'])
+    userEvent.selectOptions(location, ['RayBizech-1'])
     expect(location).toHaveValue('')
 
     const room = screen.getByTestId('room-select')
@@ -66,7 +66,7 @@ describe('Booking List Filter Options Component Testing with data', () => {
     userEvent.selectOptions(dateOption, ['Custom'])
     expect(dateOption).toHaveValue('Custom')
 
-    const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
     fireEvent.click(datePickers[0])
 
     await waitFor(() =>

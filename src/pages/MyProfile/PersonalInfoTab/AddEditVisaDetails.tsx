@@ -6,12 +6,11 @@ import {
   CCardHeader,
   CCol,
   CForm,
-  CFormInput,
   CFormLabel,
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -109,6 +108,12 @@ function AddEditVisaDetails({
           employeeVisaDetails?.countryId,
         ),
       )
+    }
+  }, [dispatch, employeeVisaDetails?.countryId])
+
+  useEffect(() => {
+    if (employeeVisaDetails?.countryId === '') {
+      dispatch(reduxServices.personalInformation.actions.clearVisaType())
     }
   }, [dispatch, employeeVisaDetails?.countryId])
 
@@ -260,7 +265,7 @@ function AddEditVisaDetails({
     return (
       <OToast
         toastColor="success"
-        toastMessage={`Your Visa Member have been ${action} successfully.`}
+        toastMessage={`Visa details ${action} successfully`}
       />
     )
   }
@@ -518,17 +523,17 @@ function AddEditVisaDetails({
               Upload VISA copy:
             </CFormLabel>
             <CCol sm={3}>
-              <CFormInput
-                id="uploadedFile"
-                className="form-control"
+              <input
                 type="file"
+                data-testid="file-upload"
+                id="fileUpload"
                 name="file"
-                accept="image/*,"
-                onChange={(element: SyntheticEvent) =>
+                onChange={(element: React.SyntheticEvent) =>
                   onChangeFileEventHandler(
                     element.currentTarget as HTMLInputElement,
                   )
                 }
+                accept="image/*,"
               />
             </CCol>
             {selectedFile || getEditVisaDetails?.visaDetailsData ? (

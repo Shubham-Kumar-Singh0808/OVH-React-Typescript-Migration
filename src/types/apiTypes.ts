@@ -363,6 +363,10 @@ export interface TicketApprovalsApi extends ApiBase {
   exportTicketApprovalList: string
   rejectManagerTicket: string
 }
+export interface AddTrackerApi extends ApiBase {
+  addNewTracker: string
+  deleteTracker: string
+}
 
 export interface RaiseNewTicketApi extends ApiBase {
   createNewTicket: string
@@ -411,4 +415,12 @@ export interface EventTypeListApi extends ApiBase {
   deleteEventType: string
   updateEventType: string
   getLoggedEmployeeName: string
+}
+
+export interface EventListApi extends ApiBase {
+  getAllEvents: string
+  cancelEvent: string
+  getFeedbackFormList: string
+  downloadFeedbackForm: string
+  uploadFeedbackForm: string
 }

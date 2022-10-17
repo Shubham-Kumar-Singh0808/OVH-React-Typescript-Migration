@@ -102,6 +102,7 @@ const TicketApprovals = (): JSX.Element => {
             className="mb-4 myprofile-wrapper"
             title={'Ticket Approvals'}
             CFooterClassName="d-none"
+            CBodyClassName="ps-0 pe-0"
           >
             <TicketApprovalsFilterOptions
               setTicketApprovalParams={setTicketApprovalParams}
