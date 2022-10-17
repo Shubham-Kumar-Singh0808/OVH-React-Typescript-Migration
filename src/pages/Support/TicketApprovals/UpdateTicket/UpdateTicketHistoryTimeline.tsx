@@ -11,7 +11,8 @@ const UpdateTicketHistoryTimeline = (): JSX.Element => {
   const isTicketPrevProp = (oldProp: string): JSX.Element => {
     return oldProp ? (
       <>
-        &nbsp;Changed from&nbsp;{parse(oldProp)}&nbsp;
+        <span>&nbsp;Changed from&nbsp;{parse(oldProp)}</span>
+        &nbsp;
         <strong>to</strong>
       </>
     ) : (
@@ -113,7 +114,7 @@ const UpdateTicketHistoryTimeline = (): JSX.Element => {
                       )}
                       {currTicketDetail.description ? (
                         <>
-                          <div className="mb-1 d-flex">
+                          <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
                               Description
                             </CFormLabel>
