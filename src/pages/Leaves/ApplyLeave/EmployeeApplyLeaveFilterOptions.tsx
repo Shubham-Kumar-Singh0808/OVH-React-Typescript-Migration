@@ -227,6 +227,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
+                autoComplete="off"
                 name="fromDate"
                 value={
                   fromDate
@@ -254,6 +255,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
