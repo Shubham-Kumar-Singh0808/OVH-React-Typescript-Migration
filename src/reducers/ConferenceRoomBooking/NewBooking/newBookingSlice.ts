@@ -5,6 +5,7 @@ import newBookingApi from '../../../middleware/api/ConferenceRoomBooking/NewBook
 import { RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
 import {
+  GetAllProjectNames,
   NewBookingLoggedEmployeeName,
   newBookingSliceState,
 } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
@@ -33,9 +34,22 @@ const getAllEmployees = createAsyncThunk(
   },
 )
 
+const getAllProjectSearchData = createAsyncThunk(
+  'newBooking/getAllProjectSearchData',
+  async (searchString: string, thunkApi) => {
+    try {
+      return await newBookingApi.getAllProjectSearchData(searchString)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialNewBookingListState: newBookingSliceState = {
   loggedEmployeeName: {} as NewBookingLoggedEmployeeName,
   allEmployeesProfiles: [],
+  getAllProjects: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -57,6 +71,13 @@ const newBookingSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.allEmployeesProfiles = action.payload
       })
+      .addCase(getAllProjectSearchData.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getAllProjects = action.payload
+      })
+      .addCase(getAllProjectSearchData.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
   },
 })
 
@@ -67,12 +88,20 @@ const allEmployeesProfiles = (
   state: RootState,
 ): NewBookingLoggedEmployeeName[] => state.newBooking.allEmployeesProfiles
 
+const projectNames = (state: RootState): GetAllProjectNames[] =>
+  state.newBooking.getAllProjects
+
 const newBookingThunk = {
   getLoggedEmployeeName,
   getAllEmployees,
+  getAllProjectSearchData,
 }
 
-const newBookingSelectors = { LoggedEmployeeName, allEmployeesProfiles }
+const newBookingSelectors = {
+  LoggedEmployeeName,
+  allEmployeesProfiles,
+  projectNames,
+}
 
 export const newBookingService = {
   ...newBookingThunk,

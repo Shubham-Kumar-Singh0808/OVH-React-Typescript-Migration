@@ -415,4 +415,5 @@ export interface EventTypeListApi extends ApiBase {
 export interface NewBookingApi extends ApiBase {
   getLoggedEmployeeName: string
   getAllProfileEmployeesData: string
+  getAllProjectSearch: string
 }

@@ -1,4 +1,7 @@
-import { NewBookingLoggedEmployeeName } from '../../../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
+import {
+  NewBookingLoggedEmployeeName,
+  GetAllProjectNames,
+} from '../../../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -29,9 +32,23 @@ const getAllEmployees = async (
   return response.data
 }
 
+const getAllProjectSearchData = async (
+  searchString: string,
+): Promise<GetAllProjectNames[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: newBookingApiConfig.getAllProjectSearch,
+    method: AllowedHttpMethods.get,
+    params: { searchStr: searchString },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const newBookingApi = {
   getLoggedEmployeeName,
   getAllEmployees,
+  getAllProjectSearchData,
 }
 
 export default newBookingApi
