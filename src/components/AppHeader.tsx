@@ -59,6 +59,7 @@ const AppHeader = (): JSX.Element => {
     ) {
       history.push('/employeeList')
     }
+    history.push('/employeeList')
   }
 
   const handleSearchEmployeeOnEnter = (
@@ -108,7 +109,7 @@ const AppHeader = (): JSX.Element => {
               )}
               renderItem={(item, isHighlighted) => (
                 <div
-                  data-testid="trainer-option"
+                  data-testid="employee-option"
                   className={
                     isHighlighted
                       ? 'autocomplete-dropdown-item active'
@@ -139,6 +140,7 @@ const AppHeader = (): JSX.Element => {
               type="button"
               color="info"
               id="button-addon2"
+              data-testid="search-employee-btn"
               onClick={handleSearchEmployee}
             >
               <i className="fa fa-search"></i>
