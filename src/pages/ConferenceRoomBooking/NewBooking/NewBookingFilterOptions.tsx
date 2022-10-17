@@ -22,13 +22,13 @@ import {
 } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { commonDateFormat } from '../../../utils/dateFormatUtils'
 import { showIsRequired } from '../../../utils/helper'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const NewBookingFilterOptions = (): JSX.Element => {
   const [location, setLocation] = useState<string>('1')
   const [selectProject, setSelectProject] = useState<GetAllProjectNames>()
   const authorDetails = {} as Author
   const employeesAvailability = {} as Availability[]
-  console.log(selectProject)
   const initEvent = {
     agenda: '',
     authorName: authorDetails,
@@ -53,14 +53,10 @@ const NewBookingFilterOptions = (): JSX.Element => {
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.bookingList.getAllMeetingLocations())
-    if (newRoomBooking?.locationId) {
-      dispatch(
-        reduxServices.bookingList.getRoomsOfLocation(
-          Number(newRoomBooking?.locationId),
-        ),
-      )
+    if (location) {
+      dispatch(reduxServices.bookingList.getRoomsOfLocation(Number(location)))
     }
-  }, [dispatch, newRoomBooking?.locationId])
+  }, [dispatch, location])
 
   const loggedEmployee = useTypedSelector(
     reduxServices.newBooking.selectors.LoggedEmployeeName,
@@ -91,6 +87,35 @@ const NewBookingFilterOptions = (): JSX.Element => {
     setNewRoomBooking((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
+  }
+  const handleConfirmBooking = async () => {
+    const prepareObject = {
+      agenda: newRoomBooking?.agenda,
+      authorName: authorDetails,
+      availability: employeesAvailability,
+      conferenceType: 'Meeting',
+      employeeIds: [],
+      endTime: 
+
+    }
+    const confirmNewBookingResultAction = await dispatch(
+      reduxServices.newBooking.confirmNewMeetingAppointment(prepareObject),
+    )
+    if (
+      reduxServices.newBooking.confirmNewMeetingAppointment.fulfilled.match(
+        confirmNewBookingResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            You are Under Notice,So you can't apply for a leave."
+          />,
+        ),
+      )
+    }
   }
   return (
     <>
@@ -147,11 +172,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
         fromDateValue={newRoomBooking.fromDate}
         fromDateChangeHandler={fromDateChangeHandler}
       />
-      <StartTimeEndTime
-        startTimeValue={newRoomBooking.startTime}
-        onChangeStartEndTime={onChangeHandler}
-        endTimeValue={newRoomBooking?.endTime}
-      />
+      <StartTimeEndTime />
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           Subject:
@@ -169,7 +190,11 @@ const NewBookingFilterOptions = (): JSX.Element => {
         </CCol>
       </CRow>
       <SelectProject setSelectProject={setSelectProject} />
-      <Attendees />
+      <Attendees
+        loggedEmployeeName={loggedEmployee.fullName}
+        allEmployeesProfiles={allEmployeesProfiles}
+        onSelectAuthor={onSelectAuthor}
+      />
       <CRow className="mt-5 mb-4">
         <CCol md={{ span: 6, offset: 2 }}>
           <>
@@ -177,6 +202,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
               className="btn-ovh me-1"
               data-testid="confirmBtn"
               color="success"
+              onClick={handleConfirmBooking}
             >
               Confirm
             </CButton>

@@ -417,4 +417,5 @@ export interface NewBookingApi extends ApiBase {
   getAllProfileEmployeesData: string
   getAllProjectSearch: string
   getAllAttendies: string
+  confirmNewMeetingAppointment: string
 }

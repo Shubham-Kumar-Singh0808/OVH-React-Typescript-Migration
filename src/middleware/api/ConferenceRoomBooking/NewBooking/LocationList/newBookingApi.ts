@@ -2,6 +2,7 @@ import {
   NewBookingLoggedEmployeeName,
   GetAllProjectNames,
   GetAllAttendies,
+  ConfirmNewMeetingAppointment,
 } from '../../../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -59,11 +60,24 @@ const getAllAttendiesData = async (
   return response.data
 }
 
+const confirmNewMeetingAppointment = async (
+  newMeetingAppoinment: ConfirmNewMeetingAppointment,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: newBookingApiConfig.confirmNewMeetingAppointment,
+    method: AllowedHttpMethods.post,
+    data: newMeetingAppoinment,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const newBookingApi = {
   getLoggedEmployeeName,
   getAllEmployees,
   getAllProjectSearchData,
   getAllAttendiesData,
+  confirmNewMeetingAppointment,
 }
 
 export default newBookingApi

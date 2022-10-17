@@ -5,6 +5,7 @@ import newBookingApi from '../../../middleware/api/ConferenceRoomBooking/NewBook
 import { RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
 import {
+  ConfirmNewMeetingAppointment,
   GetAllAttendies,
   GetAllProjectNames,
   NewBookingLoggedEmployeeName,
@@ -52,6 +53,20 @@ const getAllAttendiesData = createAsyncThunk(
   async (projectName: string, thunkApi) => {
     try {
       return await newBookingApi.getAllAttendiesData(projectName)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const confirmNewMeetingAppointment = createAsyncThunk(
+  'confirmNewMeetingAppointment/getAllProjectSearchData',
+  async (newMeetingAppoinment: ConfirmNewMeetingAppointment, thunkApi) => {
+    try {
+      return await newBookingApi.confirmNewMeetingAppointment(
+        newMeetingAppoinment,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -113,6 +128,7 @@ const newBookingThunk = {
   getAllEmployees,
   getAllProjectSearchData,
   getAllAttendiesData,
+  confirmNewMeetingAppointment,
 }
 
 const newBookingSelectors = {

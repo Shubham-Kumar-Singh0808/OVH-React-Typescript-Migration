@@ -200,3 +200,17 @@ export type GetAllAttendies = {
   countryCodeAlternative: null
   address: null
 }
+
+export type ConfirmNewMeetingAppointment = {
+  agenda: string
+  authorName: Author
+  availability: Availability[]
+  conferenceType: string
+  employeeIds: []
+  endTime: string
+  fromDate: string
+  locationId: 5
+  projectName: string
+  roomId: number
+  startTime: string
+}
