@@ -18,16 +18,17 @@ import { Author } from '../../../types/Dashboard/TrainingsAndEvents/trainingsAnd
 import {
   AddRoom,
   Availability,
+  GetAllProjectNames,
 } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { commonDateFormat } from '../../../utils/dateFormatUtils'
 import { showIsRequired } from '../../../utils/helper'
 
 const NewBookingFilterOptions = (): JSX.Element => {
   const [location, setLocation] = useState<string>('1')
-
+  const [selectProject, setSelectProject] = useState<GetAllProjectNames>()
   const authorDetails = {} as Author
   const employeesAvailability = {} as Availability[]
-
+  console.log(selectProject)
   const initEvent = {
     agenda: '',
     authorName: authorDetails,
@@ -167,7 +168,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
           ></CFormTextarea>
         </CCol>
       </CRow>
-      <SelectProject />
+      <SelectProject setSelectProject={setSelectProject} />
       <Attendees />
       <CRow className="mt-5 mb-4">
         <CCol md={{ span: 6, offset: 2 }}>
