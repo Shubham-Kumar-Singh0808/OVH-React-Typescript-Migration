@@ -38,7 +38,6 @@ const AppHeader = (): JSX.Element => {
   }, [searchAutoCompleteTarget])
 
   const onHandleSelectEmployee = (fullName: string) => {
-    console.log(fullName)
     setSearchAutoCompleteTarget(fullName)
   }
 
@@ -48,7 +47,11 @@ const AppHeader = (): JSX.Element => {
         searchAutoCompleteTarget as string,
       ),
     )
-
+    dispatch(
+      reduxServices.searchEmployee.actions.setSearchValue(
+        searchAutoCompleteTarget,
+      ),
+    )
     if (
       reduxServices.searchEmployee.searchEmployee.fulfilled.match(
         searchEmployeeResultAction,

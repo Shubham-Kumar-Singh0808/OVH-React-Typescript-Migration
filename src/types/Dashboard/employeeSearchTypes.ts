@@ -16,5 +16,6 @@ export type employeeProfileProps = {
 
 export type employeeProfileSearchState = {
   isLoading: LoadingState
+  searchString: string
   employeeProfile: employeeProfileData[]
 }

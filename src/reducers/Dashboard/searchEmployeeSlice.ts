@@ -24,12 +24,17 @@ const searchEmployee = createAsyncThunk(
 const initialEmployeeSearchSliceState: employeeProfileSearchState = {
   isLoading: ApiLoadingState.idle,
   employeeProfile: [],
+  searchString: '',
 }
 
 const searchEmployeeSlice = createSlice({
   name: 'searchEmployee',
   initialState: initialEmployeeSearchSliceState,
-  reducers: {},
+  reducers: {
+    setSearchValue: (state, action) => {
+      state.searchString = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(searchEmployee.pending, (state) => {
@@ -48,6 +53,9 @@ const isLoading = (state: RootState): LoadingState =>
 const allEmployees = (state: RootState): employeeProfileData[] =>
   state.dashboardEmployeeSearch.employeeProfile
 
+const searchString = (state: RootState): string =>
+  state.dashboardEmployeeSearch.searchString
+
 const employeeSearchThunk = {
   searchEmployee,
 }
@@ -55,6 +63,7 @@ const employeeSearchThunk = {
 const employeeSearchSelectors = {
   isLoading,
   allEmployees,
+  searchString,
 }
 
 export const employeeSearchService = {
