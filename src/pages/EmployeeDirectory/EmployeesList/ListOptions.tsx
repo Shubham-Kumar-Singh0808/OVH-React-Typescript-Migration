@@ -7,7 +7,13 @@ import employeeListApi from '../../../middleware/api/EmployeeDirectory/Employees
 import { reduxServices } from '../../../reducers/reduxServices'
 import { downloadFile } from '../../../utils/helper'
 
-const ListOptions = (): JSX.Element => {
+const ListOptions = ({
+  userCreateAccess,
+  userViewAccess,
+}: {
+  userCreateAccess: boolean
+  userViewAccess: boolean
+}): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const selectedEmploymentStatus = useTypedSelector(
@@ -35,81 +41,92 @@ const ListOptions = (): JSX.Element => {
   return (
     <div className="mb-3 pull-right">
       <div className="d-inline">
-        <CFormCheck
-          type="radio"
-          name="employmentStatus"
-          value={EmploymentStatus.active}
-          id="employmentActive"
-          label="Active"
-          defaultChecked={selectedEmploymentStatus === EmploymentStatus.active}
-          onChange={handleChangeSelectedEmploymentStatus}
-          inline
-        />
-        <CFormCheck
-          type="radio"
-          name="employmentStatus"
-          value={EmploymentStatus.contract}
-          id="employmentContract"
-          label="Employment Contract"
-          defaultChecked={
-            selectedEmploymentStatus === EmploymentStatus.contract
-          }
-          onChange={handleChangeSelectedEmploymentStatus}
-          inline
-        />
-        <CFormCheck
-          type="radio"
-          name="employmentStatus"
-          value={EmploymentStatus.inactive}
-          id="employmentInactive"
-          label="Inactive"
-          defaultChecked={
-            selectedEmploymentStatus === EmploymentStatus.inactive
-          }
-          onChange={handleChangeSelectedEmploymentStatus}
-          inline
-        />
-        <CFormCheck
-          type="radio"
-          name="employmentStatus"
-          value={EmploymentStatus.resigned}
-          id="employmentUnderNotice"
-          label="Resigned"
-          defaultChecked={
-            selectedEmploymentStatus === EmploymentStatus.resigned
-          }
-          onChange={handleChangeSelectedEmploymentStatus}
-          inline
-        />
-        <CFormCheck
-          type="radio"
-          name="employmentStatus"
-          value={EmploymentStatus.pip}
-          id="employmentUnderNotice"
-          label="PIP"
-          defaultChecked={selectedEmploymentStatus === EmploymentStatus.pip}
-          onChange={handleChangeSelectedEmploymentStatus}
-          inline
-        />
+        {userViewAccess && (
+          <>
+            <CFormCheck
+              type="radio"
+              name="employmentStatus"
+              value={EmploymentStatus.active}
+              id="employmentActive"
+              label="Active"
+              defaultChecked={
+                selectedEmploymentStatus === EmploymentStatus.active
+              }
+              onChange={handleChangeSelectedEmploymentStatus}
+              inline
+            />
+            <CFormCheck
+              type="radio"
+              name="employmentStatus"
+              value={EmploymentStatus.contract}
+              id="employmentContract"
+              label="Employment Contract"
+              defaultChecked={
+                selectedEmploymentStatus === EmploymentStatus.contract
+              }
+              onChange={handleChangeSelectedEmploymentStatus}
+              inline
+            />
+            <CFormCheck
+              type="radio"
+              name="employmentStatus"
+              value={EmploymentStatus.inactive}
+              id="employmentInactive"
+              label="Inactive"
+              defaultChecked={
+                selectedEmploymentStatus === EmploymentStatus.inactive
+              }
+              onChange={handleChangeSelectedEmploymentStatus}
+              inline
+            />
+            <CFormCheck
+              type="radio"
+              name="employmentStatus"
+              value={EmploymentStatus.resigned}
+              id="employmentUnderNotice"
+              label="Resigned"
+              defaultChecked={
+                selectedEmploymentStatus === EmploymentStatus.resigned
+              }
+              onChange={handleChangeSelectedEmploymentStatus}
+              inline
+            />
+            <CFormCheck
+              type="radio"
+              name="employmentStatus"
+              value={EmploymentStatus.pip}
+              id="employmentUnderNotice"
+              label="PIP"
+              defaultChecked={selectedEmploymentStatus === EmploymentStatus.pip}
+              onChange={handleChangeSelectedEmploymentStatus}
+              inline
+            />
+          </>
+        )}
       </div>
+
       <div className="d-inline ml15 pull-right">
-        <CButton
-          color="info"
-          className="text-white btn-ovh"
-          size="sm"
-          onClick={handleExportEmployeeData}
-          data-testid="employee-export-btn"
-        >
-          <i className="fa fa-plus me-1"></i>
-          Click to Export Employee List
-        </CButton>
-        &nbsp; &nbsp; &nbsp;
-        <Link to="/addNewEmployee">
-          <CButton color="info" className="text-white btn-ovh" size="sm">
+        {userViewAccess && (
+          <CButton
+            color="info"
+            className="text-white btn-ovh"
+            size="sm"
+            onClick={handleExportEmployeeData}
+            data-testid="employee-export-btn"
+          >
             <i className="fa fa-plus me-1"></i>
-            Add Employee
+            Click to Export Employee List
           </CButton>
-        </Link>
+        )}
+        &nbsp; &nbsp; &nbsp;
+        {userCreateAccess && (
+          <Link to="/addNewEmployee">
+            <CButton color="info" className="text-white btn-ovh" size="sm">
+              <i className="fa fa-plus me-1"></i>
+              Add Employee
+            </CButton>
+          </Link>
+        )}
       </div>
     </div>
   )

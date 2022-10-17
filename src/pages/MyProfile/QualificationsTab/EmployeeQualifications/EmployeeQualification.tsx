@@ -75,9 +75,11 @@ const EmployeeQualifications = (): JSX.Element => {
             className="ps-0 text-dark othersField"
             data-testid="others"
           >
-            {(employeeQualification?.others &&
-              parse(employeeQualification?.others)) ||
-              'N/A'}
+            <span className="descriptionField">
+              {(employeeQualification?.others &&
+                parse(employeeQualification?.others)) ||
+                'N/A'}
+            </span>
           </CCol>
         </CRow>
       </CForm>

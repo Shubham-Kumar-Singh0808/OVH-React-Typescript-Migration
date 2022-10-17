@@ -64,3 +64,5 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './pages/support/trackerlist/trackerlist';
 @import './pages/dashboard/dashboardheader/employee-search';
 @import './pages/conferenceroombooking/newevent/eventtypelist/event-type-list';
+@import './pages/employeedirectory/employeeslist/employees-list';
+@import './components/otoast';
