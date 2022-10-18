@@ -7,13 +7,16 @@ import { mockFamilyTableDetails } from '../../../test/data/familyTableData'
 
 describe('Family Table component with data', () => {
   beforeEach(() => {
-    render(<FamilyDetailsTable isFieldDisabled={true} />, {
-      preloadedState: {
-        personalInfoDetails: {
-          employeeFamilyDetails: mockFamilyTableDetails,
+    render(
+      <FamilyDetailsTable isFieldDisabled={true} userEditAccess={true} />,
+      {
+        preloadedState: {
+          personalInfoDetails: {
+            employeeFamilyDetails: mockFamilyTableDetails,
+          },
         },
       },
-    })
+    )
   })
   test('should click on delete button ', () => {
     const deleteElement = screen.getAllByTestId('delete-family')
