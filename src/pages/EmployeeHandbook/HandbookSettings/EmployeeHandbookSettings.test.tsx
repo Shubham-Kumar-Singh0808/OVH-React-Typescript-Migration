@@ -1,7 +1,5 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 import EmployeeHandbookSettings from './EmployeeHandbookSettings'
 import AddNewHandbook from './AddNewPage/AddNewHandbook'
@@ -13,23 +11,26 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <EmployeeHandbookSettings />
+  </div>
+)
 describe('Handbook Settings Component Testing', () => {
   describe('should render Handbook Settings Component without crashing', () => {
-    const history = createMemoryHistory()
     beforeEach(() => {
-      render(
-        <Router history={history}>
-          <EmployeeHandbookSettings />
-        </Router>,
-        {
-          preloadedState: {
-            employeeHandbookSettings: {
-              employeeHandbooks: mockEmployeeHandbookList,
-              isLoading: ApiLoadingState.succeeded,
-            },
+      render(toRender, {
+        preloadedState: {
+          employeeHandbookSettings: {
+            employeeHandbooks: mockEmployeeHandbookList,
+            isLoading: ApiLoadingState.succeeded,
           },
         },
-      )
+      })
     })
     afterEach(cleanup)
     test('should render HandbookSettings Title', () => {
@@ -40,11 +41,6 @@ describe('Handbook Settings Component Testing', () => {
       expect(addPageButton).toBeInTheDocument()
       const backButton = screen.getByRole('button', { name: 'Back' })
       expect(backButton).toBeInTheDocument()
-    })
-    test(' should redirect to EmployeeHandbook page onClicking back button', () => {
-      const backButtonEl = screen.getByRole('button', { name: 'Back' })
-      userEvent.click(backButtonEl)
-      expect(history.location.pathname).toBe('/EmployeeHandbook')
     })
     test('should render addPage Section', () => {
       const addPageButton = screen.getByRole('button', { name: 'Add Page' })
