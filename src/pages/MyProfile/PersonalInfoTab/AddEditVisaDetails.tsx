@@ -471,7 +471,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText="dd/mm/yyyy"
                 dateFormat={dateFormat}
               />
             </CCol>
@@ -508,7 +508,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText="dd/mm/yyyy"
                 dateFormat={dateFormat}
               />
               {error && (

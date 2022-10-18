@@ -33,7 +33,6 @@ export const PassportDetails = (props: {
     setIsPassportPlaceOfIssueButtonEnabled,
   ] = useState<boolean>(false)
   const [dateFormat, setDateFormat] = useState<string>('')
-  const [isDateSelected, setIsDateSelected] = useState<boolean>(false)
   const [passportIssuedDate, setPassportIssuedDate] = useState<Date | string>()
   const [passportExpDate, setPassportExpDate] = useState<Date | string>()
   const [passportIssuedDateFlag, setPassportIssuedDateFlag] =
@@ -136,29 +135,30 @@ export const PassportDetails = (props: {
     }
   }, [frontUpload, backUpload])
 
-  useEffect(() => {
-    if (
-      employeePassportDetails?.passportIssuedDate &&
-      employeePassportDetails?.passportExpDate
-    )
-      setIsDateSelected(true)
-  }, [
-    employeePassportDetails?.passportIssuedDate,
-    employeePassportDetails?.passportExpDate,
-  ])
+  // useEffect(() => {
+  //   if (
+  //     employeePassportDetails?.passportIssuedDate &&
+  //     employeePassportDetails?.passportExpDate
+  //   )
+  //     setIsDateSelected(true)
+  // }, [
+  //   employeePassportDetails?.passportIssuedDate,
+  //   employeePassportDetails?.passportExpDate,
+  // ])
 
   useEffect(() => {
     if (employeePassportDetails?.passportNumber) {
       setIsPassportButtonEnabled(true)
     } else {
       setIsPassportButtonEnabled(false)
-      setIsDateSelected(false)
-      setIsPassportPlaceOfIssueButtonEnabled(false)
     }
   }, [employeePassportDetails?.passportNumber])
 
   useEffect(() => {
-    if (employeePassportDetails?.passportIssuedPlace) {
+    if (
+      employeePassportDetails?.passportIssuedPlace &&
+      employeePassportDetails?.passportNumber
+    ) {
       setIsPassportPlaceOfIssueButtonEnabled(true)
     } else {
       setIsPassportPlaceOfIssueButtonEnabled(false)
@@ -239,7 +239,7 @@ export const PassportDetails = (props: {
               placeholderText={dateFormat}
               dateFormat={dateFormat}
               name="passportIssuedDate"
-              disabled={!isPassportPlaceOfIssueButtonEnabled}
+              disabled={!isPassportButtonEnabled}
               value={dateFormmatted(
                 employeePassportDetails.passportIssuedDate as string,
               )}
@@ -279,7 +279,7 @@ export const PassportDetails = (props: {
                   ? newPassportExpDate
                   : (passportExpDate as Date)
               }
-              disabled={!isPassportPlaceOfIssueButtonEnabled}
+              disabled={!isPassportButtonEnabled}
               value={dateFormmatted(
                 employeePassportDetails.passportExpDate as string,
               )}
@@ -301,7 +301,7 @@ export const PassportDetails = (props: {
               className="form-control form-control-sm"
               data-testid="frontUploadInput"
               id="exampleFormControlFile1"
-              disabled={!isDateSelected}
+              disabled={!isPassportPlaceOfIssueButtonEnabled}
               onChange={(file1: SyntheticEvent) =>
                 onChangeFileEventHandler(
                   file1.currentTarget as HTMLInputElement,
@@ -330,7 +330,7 @@ export const PassportDetails = (props: {
               data-testid="backUploadInput"
               className="form-control form-control-sm"
               id="exampleFormControlFile2"
-              disabled={!isDateSelected}
+              disabled={!isPassportPlaceOfIssueButtonEnabled}
               onChange={(file2: SyntheticEvent) =>
                 onChangeFileEventHandler(
                   file2.currentTarget as HTMLInputElement,
