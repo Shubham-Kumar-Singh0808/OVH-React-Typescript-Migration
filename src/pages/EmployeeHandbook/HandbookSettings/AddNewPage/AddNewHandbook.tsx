@@ -223,7 +223,15 @@ function AddNewHandbook({
               className="col-sm-3 col-form-label text-end"
             >
               Title:
-              <span className={addNewPage.title ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addNewPage.title
+                    ?.replace(/^\s*/, '')
+                    .replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -244,7 +252,15 @@ function AddNewHandbook({
               className="col-sm-3 col-form-label text-end"
             >
               Page Name:
-              <span className={addNewPage.pageName ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addNewPage.pageName
+                    ?.replace(/^\s*/, '')
+                    .replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -299,7 +315,11 @@ function AddNewHandbook({
               className="col-sm-3 col-form-label text-end"
             >
               Country:
-              <span className={addNewPage.list ? TextWhite : TextDanger}>
+              <span
+                className={
+                  allChecked && addNewPage.list ? TextWhite : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -338,7 +358,15 @@ function AddNewHandbook({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Description:{' '}
-              <span className={addNewPage.description ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addNewPage.description
+                    ?.replace(/^\s*/, '')
+                    .replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>

@@ -274,7 +274,15 @@ const EditHandbook = ({
               className="col-sm-3 col-form-label text-end"
             >
               Title:
-              <span className={editPage.title ? TextWhite : TextDanger}>*</span>
+              <span
+                className={
+                  editPage.title?.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -292,7 +300,15 @@ const EditHandbook = ({
               className="col-sm-3 col-form-label text-end"
             >
               Page Name:
-              <span className={editPage.pageName ? TextWhite : TextDanger}>
+              <span
+                className={
+                  editPage.pageName
+                    ?.replace(/^\s*/, '')
+                    .replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -325,7 +341,7 @@ const EditHandbook = ({
                 max={99}
                 id="displayOrder"
                 name="displayOrder"
-                value={editPage.displayOrder}
+                value={editPage.displayOrder || ''}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -344,7 +360,11 @@ const EditHandbook = ({
               id="check-country"
             >
               Country:
-              <span className={editPage.list ? TextWhite : TextDanger}>*</span>
+              <span
+                className={allChecked && editPage.list ? TextWhite : TextDanger}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={4}>
               <CRow className="mt-2">
