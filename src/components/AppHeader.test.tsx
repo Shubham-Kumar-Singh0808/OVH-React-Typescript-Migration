@@ -4,48 +4,122 @@ import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import AppHeader from './AppHeader'
-import { fireEvent, render, screen, waitFor } from '../test/testUtils'
+import { cleanup, fireEvent, render, screen, waitFor } from '../test/testUtils'
 import { mockSearchEmployee } from '../test/data/employeeProfileDate'
-import { ApiLoadingState } from '../middleware/api/apiList'
+import EmployeeList from '../pages/EmployeeDirectory/EmployeesList/EmployeeList'
 
-const searchButtonElement = 'employee-input'
+const searchButton = 'search-employee-btn'
+const searchEmployeeString = 'Raju Sriramoju'
+const searchPlaceholderText = 'Search Employee'
 describe('Dashboard AppHeader Component Testing', () => {
-  const history = createMemoryHistory()
-  beforeEach(() => {
-    render(
-      <Router history={history}>
-        <AppHeader />
-      </Router>,
-      {
-        preloadedState: {
-          dashboardEmployeeSearch: {
-            employeeProfile: mockSearchEmployee,
-            searchString: '',
-            isLoading: ApiLoadingState.succeeded,
+  describe('Dashboard AppHeader Component Testing', () => {
+    const history = createMemoryHistory()
+    beforeEach(() => {
+      render(
+        <Router history={history}>
+          <AppHeader />
+        </Router>,
+        {
+          preloadedState: {
+            dashboardEmployeeSearch: {
+              employeeProfile: mockSearchEmployee,
+              searchString: '',
+            },
           },
         },
-      },
-    )
-  })
-  screen.debug()
-  test('should render search button without crashing', () => {
-    expect(screen.getByPlaceholderText('Search Employee')).toBeInTheDocument()
-  })
-  test('should redirect to employeeList page when user clicks on search button without search string', async () => {
-    const searchInputEl = screen.getByTestId('search-employee-btn')
-    // userEvent.type(searchInput, '')
-    fireEvent.click(searchInputEl)
-    await waitFor(() => {
-      // check if a redirect happens after clicking search button to employeeList page
-      expect(history.location.pathname).toBe('/')
+      )
+    })
+    afterEach(cleanup)
+    test('should render search button without crashing', () => {
+      expect(
+        screen.getByPlaceholderText(searchPlaceholderText),
+      ).toBeInTheDocument()
+    })
+    test('should render Notification icon without crashing', () => {
+      const notificationIcon = screen.getByTestId('notification-button')
+      userEvent.click(notificationIcon)
+      expect(screen.getByText('Show All Notifications')).toBeInTheDocument()
+    })
+    test('should render logout button without crashing', () => {
+      const logoutButtonIcon = screen.getByTestId('logout-button')
+      userEvent.click(logoutButtonIcon)
+      expect(screen.getByText('Logout')).toBeInTheDocument()
+    })
+    test('should redirect to employeeList page when user clicks on search button without search string', () => {
+      const searchButtonEl = screen.getByTestId(searchButton)
+      userEvent.click(searchButtonEl)
+    })
+    test('should be able to render search component placeholder', () => {
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+    })
+    test('Should be able to function autocomplete', () => {
+      const autocomplete = screen.getByPlaceholderText(searchPlaceholderText)
+      autocomplete.click()
+      autocomplete.focus()
+      fireEvent.change(autocomplete, { target: { value: 'Haji Pasha' } })
+
+      const dropdownOptions = screen.getByRole('combobox')
+      fireEvent.click(dropdownOptions)
+
+      expect(autocomplete).toHaveValue('Haji Pasha')
+    })
+    test('should redirect to employeeList page upon clicking the search button without searchString', async () => {
+      const autocomplete = screen.getByPlaceholderText(searchPlaceholderText)
+      autocomplete.click()
+      autocomplete.focus()
+      fireEvent.change(autocomplete, {
+        target: { value: '' },
+      })
+      const dropdownOptions = screen.getByRole('combobox')
+      fireEvent.click(dropdownOptions)
+      expect(autocomplete).toHaveValue('')
+      const searchButton = screen.getByTestId('search-employee-btn')
+      userEvent.click(searchButton)
+      await waitFor(() => {
+        expect(render(toRender))
+      })
     })
   })
-  //   test('upon providing search text and then clicking enter key it should call a function ', async () => {
-  //     const searchInput = screen.getByTestId('searchField')
-  //     userEvent.type(searchInput, 'Java')
-  //     fireEvent.keyDown(searchInput, { key: 'Enter', keyCode: 13 })
-  //     await waitFor(() => {
-  //       expect(mockSetMultiSearchValue).toBeCalledTimes(1)
-  //     })
-  //   })
+  const toRender = (
+    <div>
+      <div id="backdrop-root"></div>
+      <div id="overlay-root"></div>
+      <div id="root"></div>
+      <EmployeeList />
+    </div>
+  )
+  describe('should redirect to employeeList page with search string Data', () => {
+    const history = createMemoryHistory()
+    beforeEach(() => {
+      render(
+        <Router history={history}>
+          <AppHeader />
+        </Router>,
+        {
+          preloadedState: {
+            dashboardEmployeeSearch: {
+              employeeProfile: mockSearchEmployee,
+              searchString: 'Raju Sriramoju',
+            },
+          },
+        },
+      )
+    })
+    test('should redirect to employeeList page upon clicking the search button with searchString', async () => {
+      const autocomplete = screen.getByPlaceholderText(searchPlaceholderText)
+      autocomplete.click()
+      autocomplete.focus()
+      fireEvent.change(autocomplete, {
+        target: { value: searchEmployeeString },
+      })
+      const dropdownOptions = screen.getByRole('combobox')
+      fireEvent.click(dropdownOptions)
+      expect(autocomplete).toHaveValue(searchEmployeeString)
+      const searchButtonElement = screen.getByTestId(searchButton)
+      userEvent.click(searchButtonElement)
+      await waitFor(() => {
+        expect(render(toRender))
+      })
+    })
+  })
 })

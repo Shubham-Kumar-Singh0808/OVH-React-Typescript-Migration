@@ -79,9 +79,9 @@ const AppHeader = (): JSX.Element => {
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
-        <CHeaderBrand className="mx-auto d-md-none">
+        {/* <CHeaderBrand className="mx-auto d-none">
           <CIcon icon={logo} height={48} />
-        </CHeaderBrand>
+        </CHeaderBrand> */}
         <CHeaderNav>
           <CInputGroup className="global-search me-4">
             <Autocomplete
@@ -91,9 +91,8 @@ const AppHeader = (): JSX.Element => {
                 placeholder: 'Search Employee',
                 onKeyDown: handleSearchEmployeeOnEnter,
               }}
-              getItemValue={(item) => item.fullName}
-              items={employees?.slice(0, 10)}
-              data-testid="employee-input"
+              getItemValue={(item) => item?.fullName}
+              items={employees}
               wrapperStyle={{ position: 'relative' }}
               renderMenu={(children) => (
                 <div
@@ -109,7 +108,7 @@ const AppHeader = (): JSX.Element => {
               )}
               renderItem={(item, isHighlighted) => (
                 <div
-                  data-testid="employee-option"
+                  data-testid="employee-options"
                   className={
                     isHighlighted
                       ? 'autocomplete-dropdown-item active'
