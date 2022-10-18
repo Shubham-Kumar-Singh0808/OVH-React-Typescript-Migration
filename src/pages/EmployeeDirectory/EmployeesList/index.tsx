@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import EmployeeList from './EmployeeList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeListDirectory = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -42,11 +43,9 @@ const EmployeeListDirectory = (): JSX.Element => {
           deleteaccess={userAccess?.deleteaccess}
         />
       ) : (
-        <CCol>
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <>
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        </>
       )}
     </>
   )

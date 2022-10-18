@@ -1,18 +1,22 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import userEvent from '@testing-library/user-event'
-import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
 import EmployeeHandbook from './EmployeeHandbook'
-import { render, screen, waitFor } from '../../test/testUtils'
+import { render, screen } from '../../test/testUtils'
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <EmployeeHandbook />
+  </div>
+)
 
 describe('Employee Handbook Component Testing', () => {
-  const history = createMemoryHistory()
   beforeEach(() => {
     render(
-      <Router history={history}>
-        <EmployeeHandbook />,
-      </Router>,
+      toRender,
+
       {
         preloadedState: {
           authentication: {
@@ -32,12 +36,5 @@ describe('Employee Handbook Component Testing', () => {
   })
   test('should render `Employee Handbook` component without crashing', () => {
     expect(screen.getByText('Employee Handbook')).toBeInTheDocument()
-  })
-  test('should redirect to /Handbook Settings when user clicks on handbooksettings from HolidaysList Page', async () => {
-    userEvent.click(screen.getByRole('button', { name: 'Handbook Settings' }))
-    await waitFor(() => {
-      // check if a redirect happens after clicking HandbookSettings
-      expect(history.location.pathname).toBe('/handbooksettings')
-    })
   })
 })
