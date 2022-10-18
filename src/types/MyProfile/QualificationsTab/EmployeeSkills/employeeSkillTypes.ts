@@ -13,6 +13,7 @@ export interface EmployeeSkillInfo {
   tableClassName: string
   isFieldDisabled: boolean
   editSkillButtonHandler?: (skillId: number) => void
+  userEditAccess?: boolean
 }
 
 export type EmployeeSkillState = {

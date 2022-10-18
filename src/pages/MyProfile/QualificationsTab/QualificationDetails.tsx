@@ -9,7 +9,7 @@ import EmployeeSkillsTable from './EmployeeSkills/EmployeeSkillsTable'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import { employeeSkillThunk } from '../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 
 const QualificationDetails = (): JSX.Element => {
@@ -29,6 +29,14 @@ const QualificationDetails = (): JSX.Element => {
     setToggle('editSkill')
     dispatch(employeeSkillThunk.getEmployeeSkillInformation(skillId))
   }
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills',
+  )
 
   return (
     <>
@@ -77,6 +85,7 @@ const QualificationDetails = (): JSX.Element => {
               striped={true}
               bordered={false}
               tableClassName={''}
+              userEditAccess={userAccess?.updateaccess as boolean}
             />
           </CCardBody>
         </>

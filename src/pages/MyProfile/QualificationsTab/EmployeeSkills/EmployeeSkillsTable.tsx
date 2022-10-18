@@ -21,6 +21,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   bordered = false,
   isFieldDisabled = false,
   tableClassName = '',
+  userEditAccess,
 }: EmployeeSkillInfo): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const dispatch = useAppDispatch()
@@ -145,7 +146,9 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
                   {skillItem.expYear && `${skillItem.expYear}`} Year(`s)&nbsp;
                   {skillItem.expMonth && `${skillItem.expMonth}`} month(`s)
                 </CTableDataCell>
-                {isFieldDisabled && !isViewingAnotherEmployee ? (
+                {userEditAccess &&
+                isFieldDisabled &&
+                !isViewingAnotherEmployee ? (
                   <CTableDataCell scope="row">
                     <CButton
                       color="info"
@@ -168,7 +171,9 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
                     </CButton>
                   </CTableDataCell>
                 ) : (
-                  <></>
+                  <>
+                    <CTableDataCell scope="row"></CTableDataCell>
+                  </>
                 )}
               </CTableRow>
             )
