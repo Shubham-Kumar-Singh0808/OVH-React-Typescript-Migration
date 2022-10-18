@@ -33,6 +33,7 @@ const toRender = (
       setToggle={mockSetToggle}
       renderTicketApprovals={true}
       setRenderTicketApprovals={mockSetRenderTicketApprovals}
+      userAccess={true}
     />
   </div>
 )

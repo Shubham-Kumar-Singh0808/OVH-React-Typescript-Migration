@@ -94,6 +94,14 @@ const TicketApprovals = (): JSX.Element => {
     downloadFile(ticketApprovalListDownload, 'TicketApprovalList.csv')
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Ticket Approvals',
+  )
+
   return (
     <>
       {toggle === '' && (
@@ -125,6 +133,7 @@ const TicketApprovals = (): JSX.Element => {
               renderTicketApprovals={renderTicketApprovals}
               setRenderTicketApprovals={setRenderTicketApprovals}
               setToggle={setToggle}
+              userAccess={userAccess?.updateaccess as boolean}
             />
           </OCard>
         </>

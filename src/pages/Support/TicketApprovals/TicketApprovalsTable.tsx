@@ -32,6 +32,7 @@ const TicketApprovalsTable = ({
   renderTicketApprovals,
   setRenderTicketApprovals,
   setToggle,
+  userAccess,
 }: {
   paginationRange: number[]
   currentPage: number
@@ -41,6 +42,7 @@ const TicketApprovalsTable = ({
   renderTicketApprovals: boolean
   setRenderTicketApprovals: (value: boolean) => void
   setToggle: (value: string) => void
+  userAccess: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -238,14 +240,16 @@ const TicketApprovalsTable = ({
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     <div className="buttons-clients">
-                      <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
-                        <CButton
-                          color="info btn-ovh me-1"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-                      </Link>
+                      {userAccess && (
+                        <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
+                          <CButton
+                            color="info btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </Link>
+                      )}
                       <CButton
                         color="danger btn-ovh me-1"
                         className="btn-ovh-employee-list"
