@@ -124,6 +124,13 @@ const PersonalInfoTab = ({
   >(undefined)
   const [checkBox, setCheckBox] = useState(false)
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-PersonalInfo-Family Details',
+  )
+
   useEffect(() => {
     if (checkBox) {
       setEmployeePermanentAddressDetails({
@@ -337,6 +344,7 @@ const PersonalInfoTab = ({
                 striped={true}
                 bordered={false}
                 tableClassName=""
+                userEditAccess={userAccess?.updateaccess as boolean}
               />
             </CCardBody>
 
