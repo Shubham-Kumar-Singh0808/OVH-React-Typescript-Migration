@@ -3,7 +3,6 @@ import {
   CCol,
   CContainer,
   CHeader,
-  CHeaderBrand,
   CHeaderNav,
   CHeaderToggler,
   CImage,
@@ -15,7 +14,6 @@ import { cilMenu } from '@coreui/icons'
 import Autocomplete from 'react-autocomplete'
 import { useHistory } from 'react-router-dom'
 import AppHeaderDropdown from './AppHeaderDropdown'
-import { logo } from '../assets/brand/logo'
 import { reduxServices } from '../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../stateStore'
 
