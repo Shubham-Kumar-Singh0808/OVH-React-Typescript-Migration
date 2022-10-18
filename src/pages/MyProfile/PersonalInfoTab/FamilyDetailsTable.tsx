@@ -21,7 +21,6 @@ const FamilyDetailsTable = ({
   striped = true,
   bordered = true,
   tableClassName = '',
-  userEditAccess,
 }: EmployeeFamilyDetailsTableProps): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -172,9 +171,7 @@ const FamilyDetailsTable = ({
                 ) : (
                   <></>
                 )}
-                {userEditAccess &&
-                isFieldDisabled &&
-                !isViewingAnotherEmployee ? (
+                {isFieldDisabled && !isViewingAnotherEmployee ? (
                   <CTableDataCell scope="row">
                     <CButton
                       color="info"
