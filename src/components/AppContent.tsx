@@ -1,13 +1,15 @@
 import React, { Suspense } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { CContainer, CSpinner } from '@coreui/react-pro'
+import { CContainer } from '@coreui/react-pro'
 // routes config
+import OLoadingSpinner from './ReusableComponent/OLoadingSpinner'
 import routes from '../routes'
+import { LoadingType } from '../types/Components/loadingScreenTypes'
 
 const AppContent = () => {
   return (
     <CContainer fluid>
-      <Suspense fallback={<CSpinner color="primary" />}>
+      <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>
         <Switch>
           {routes.map((route, idx) => {
             return (

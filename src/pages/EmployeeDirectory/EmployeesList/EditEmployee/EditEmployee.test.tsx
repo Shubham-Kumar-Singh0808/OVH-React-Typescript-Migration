@@ -12,9 +12,18 @@ import { mockJobTypes } from '../../../../test/data/JobTypesData'
 
 const editBtnId = 'edit-employee'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <EditNewEmployee />
+  </div>
+)
+
 describe('Edit Employee Testing', () => {
   beforeEach(() => {
-    render(<EditNewEmployee />, {
+    render(toRender, {
       preloadedState: {
         employee: {
           isLoading: ApiLoadingState.succeeded,
@@ -98,15 +107,5 @@ describe('Edit Employee Testing', () => {
 
   test('should render "Edit Employee" title', () => {
     expect(screen.getByText('Edit Employee')).toBeInTheDocument()
-  })
-})
-
-describe('Edit Employee Testing without state', () => {
-  beforeEach(() => {
-    render(<EditNewEmployee />)
-  })
-
-  test('should render loading', () => {
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
   })
 })
