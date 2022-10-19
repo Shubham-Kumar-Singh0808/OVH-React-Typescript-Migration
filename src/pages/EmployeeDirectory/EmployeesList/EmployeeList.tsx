@@ -31,7 +31,9 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   const userAccessTo = userAccessToFeatures?.find(
     (feature) => feature.name === 'Employee Directory-Options',
   )
-
+  const searchString = useTypedSelector(
+    reduxServices.searchEmployee.selectors.searchString,
+  )
   const {
     paginationRange,
     setPageSize,
@@ -46,9 +48,10 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
         selectionStatus: selectedEmploymentStatus,
+        searchStr: searchString,
       }),
     )
-  }, [currentPage, dispatch, pageSize, selectedEmploymentStatus])
+  }, [currentPage, dispatch, pageSize, selectedEmploymentStatus, searchString])
 
   return (
     <>

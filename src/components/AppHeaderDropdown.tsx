@@ -32,7 +32,7 @@ const AppHeaderDropdown = (): JSX.Element => {
 
   return (
     <>
-      <CDropdown variant="nav-item">
+      <CDropdown variant="nav-item" data-testid="notification-button">
         <CDropdownToggle {...dropdownToggleProps}>
           <i className="fa fa-bell-o fa-lg"></i>
         </CDropdownToggle>
@@ -44,7 +44,7 @@ const AppHeaderDropdown = (): JSX.Element => {
         </CDropdownMenu>
       </CDropdown>
       &nbsp; &nbsp; &nbsp;
-      <CDropdown variant="nav-item">
+      <CDropdown variant="nav-item" data-testid="logout-button">
         <CDropdownToggle {...dropdownToggleProps}>
           <i className="fa fa-power-off fa-lg"></i>
         </CDropdownToggle>
