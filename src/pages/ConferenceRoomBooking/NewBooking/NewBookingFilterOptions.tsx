@@ -96,6 +96,23 @@ const NewBookingFilterOptions = (): JSX.Element => {
   const onHandleEndTime = (value: string) => {
     setNewRoomBooking({ ...newRoomBooking, endTime: value })
   }
+
+  const handleConfirmBooking = async () => {
+    const newEmployeeResponse = await dispatch(
+      reduxServices.newBooking.confirmNewMeetingAppointment(newRoomBooking),
+    )
+    if (
+      reduxServices.newBooking.confirmNewMeetingAppointment.fulfilled.match(
+        newEmployeeResponse,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          toastElement('New employee is successfully added'),
+        ),
+      )
+    }
+  }
   return (
     <>
       <LocationAndRoom
@@ -147,7 +164,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
               className="btn-ovh me-1"
               data-testid="confirmBtn"
               color="success"
-              // onClick={handleConfirmBooking}
+              onClick={handleConfirmBooking}
             >
               Confirm
             </CButton>
