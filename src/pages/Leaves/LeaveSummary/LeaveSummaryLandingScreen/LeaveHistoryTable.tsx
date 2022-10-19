@@ -156,7 +156,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                         className="sh-organization-link"
                       >
                         <CLink
-                          className="cursor-pointer text-primary"
+                          className="cursor-pointer text-primary centerAlignment-text"
                           data-testid={`emp-comments${index}`}
                           onClick={() =>
                             handleModal(leaveHistory.employeeComments)

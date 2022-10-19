@@ -325,6 +325,13 @@ const PersonalInfoTab = ({
     (feature) => feature.name === 'My Profile-PersonalInfo-Family Details',
   )
 
+  const familyAddButton =
+    !isViewingAnotherEmployee && userAccess?.createaccess ? (
+      <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
+    ) : (
+      <></>
+    )
+
   return (
     <>
       <>
@@ -334,11 +341,7 @@ const PersonalInfoTab = ({
               <h4 className="h4">Family Details</h4>
             </CCardHeader>
             <CCardBody className="ps-0 pe-0">
-              {!isViewingAnotherEmployee && userAccess?.createaccess ? (
-                <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
-              ) : (
-                <></>
-              )}
+              {familyAddButton}
               <FamilyDetailsTable
                 editButtonHandler={editButtonHandler}
                 isFieldDisabled={true}
