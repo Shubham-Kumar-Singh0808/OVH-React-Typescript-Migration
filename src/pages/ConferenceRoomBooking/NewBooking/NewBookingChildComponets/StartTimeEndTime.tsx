@@ -2,11 +2,20 @@ import React, { useState } from 'react'
 import { CRow, CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
 import { showIsRequired } from '../../../../utils/helper'
 
-const StartTimeEndTime = (): JSX.Element => {
-  const [startTimeHours, setStartTimeHours] = useState<string>('')
+const StartTimeEndTime = ({
+  onHandleStartTime,
+  onHandleEndTime,
+  startTimeValue,
+  endTimeValue,
+}: {
+  onHandleStartTime: (value: string) => void
+  onHandleEndTime: (value: string) => void
+  startTimeValue: string
+  endTimeValue: string
+}): JSX.Element => {
   const [startTimeMinutes, setStartTimeMinutes] = useState<string>('')
   const [startTimeMedetarian, setStartTimeMedetarian] = useState<string>('')
-  const [endTimeHours, setEndTimeHours] = useState<string>('')
+
   const [endTimeMinutes, setEndTimeHoursMinutes] = useState<string>('')
   const [endTime, setEndTime] = useState<string>('')
   return (
@@ -14,7 +23,7 @@ const StartTimeEndTime = (): JSX.Element => {
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           Start Time:
-          <span className={showIsRequired(startTimeHours)}>*</span>
+          <span className={showIsRequired(startTimeValue)}>*</span>
         </CFormLabel>
         <CCol sm={4}>
           <CCol sm={12}>
@@ -25,8 +34,10 @@ const StartTimeEndTime = (): JSX.Element => {
                   id="startTimeValue"
                   data-testid="startTimeValue"
                   name="startTimeValue"
-                  value={startTimeHours}
-                  onChange={(e) => setStartTimeHours(e.target.value)}
+                  value={startTimeValue}
+                  onChange={(e) => {
+                    onHandleStartTime(e.target.value)
+                  }}
                 >
                   <option value="">00</option>
                   <option value="01">01</option>
@@ -78,7 +89,7 @@ const StartTimeEndTime = (): JSX.Element => {
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           End Time:
-          <span className={showIsRequired(endTimeHours)}>*</span>
+          <span className={showIsRequired(endTimeValue)}>*</span>
         </CFormLabel>
         <CCol sm={4}>
           <CCol sm={12}>
@@ -89,8 +100,10 @@ const StartTimeEndTime = (): JSX.Element => {
                   id="endTimeValue"
                   data-testid="endTimeValue"
                   name="endTimeValue"
-                  value={endTimeHours}
-                  onChange={(e) => setEndTimeHours(e.target.value)}
+                  value={endTimeValue}
+                  onChange={(e) => {
+                    onHandleEndTime(e.target.value)
+                  }}
                 >
                   <option value="00">00</option>
                   <option value="01">01</option>

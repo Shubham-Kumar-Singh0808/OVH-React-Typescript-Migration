@@ -90,6 +90,12 @@ const NewBookingFilterOptions = (): JSX.Element => {
   const onHandleRoom = (value: string) => {
     setNewRoomBooking({ ...newRoomBooking, roomId: Number(value) })
   }
+  const onHandleStartTime = (value: string) => {
+    setNewRoomBooking({ ...newRoomBooking, startTime: value })
+  }
+  const onHandleEndTime = (value: string) => {
+    setNewRoomBooking({ ...newRoomBooking, endTime: value })
+  }
   return (
     <>
       <LocationAndRoom
@@ -106,7 +112,12 @@ const NewBookingFilterOptions = (): JSX.Element => {
         fromDate={fromDate}
         setFromDate={setFromDate}
       />
-      <StartTimeEndTime />
+      <StartTimeEndTime
+        onHandleStartTime={onHandleStartTime}
+        onHandleEndTime={onHandleEndTime}
+        startTimeValue={newRoomBooking.startTime}
+        endTimeValue={newRoomBooking.endTime}
+      />
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           Subject:
