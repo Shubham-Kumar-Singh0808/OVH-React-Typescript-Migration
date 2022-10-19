@@ -236,6 +236,7 @@ const employeeCertificationsSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
+          getEmployeeCertificates.pending,
           getTechnologies.pending,
           getCertificateByTechnologyName.pending,
           getEmployeeCertificate.pending,
