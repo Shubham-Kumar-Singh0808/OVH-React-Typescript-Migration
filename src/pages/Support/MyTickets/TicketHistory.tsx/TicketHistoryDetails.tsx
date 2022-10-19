@@ -1,23 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CRow, CCol, CButton, CSpinner } from '@coreui/react-pro'
 import { Link, useLocation } from 'react-router-dom'
 import TicketHistoryTimeLine from './TicketHistoryTimeLine'
-import { TicketHistoryDetailsProps } from '../../../../types/Support/MyTickets/myTicketsTypes'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-const TicketHistoryDetails = ({
-  backButtonHandler,
-}: TicketHistoryDetailsProps): JSX.Element => {
+const TicketHistoryDetails = (): JSX.Element => {
   const location = useLocation()
+  const dispatch = useAppDispatch()
 
   const isLoading = useTypedSelector(reduxServices.tickets.selectors.isLoading)
 
   const ticketId = useTypedSelector(
     reduxServices.ticketApprovals.selectors.selectTicketId,
   )
+
+  const backButtonHandler = () => {
+    if (location.pathname === '/ticketSummary') {
+      dispatch(reduxServices.tickets.actions.toggle(''))
+    } else {
+      dispatch(reduxServices.ticketApprovals.actions.setToggle(''))
+    }
+  }
+
+  useEffect(() => {
+    console.log(location.pathname)
+    dispatch(
+      reduxServices.ticketApprovals.actions.setRoutePath(location.pathname),
+    )
+  }, [location.pathname])
 
   return (
     <>

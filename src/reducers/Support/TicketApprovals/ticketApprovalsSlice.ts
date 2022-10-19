@@ -108,6 +108,8 @@ const initialTicketApprovalsSliceState: TicketApprovalsSliceState = {
   ticketsForApproval: { size: 0, list: [] },
   getAllLookUps: [],
   selectedTicketId: 0,
+  toggleValue: '',
+  routePath: '',
 }
 
 const ticketApprovalsSlice = createSlice({
@@ -116,6 +118,12 @@ const ticketApprovalsSlice = createSlice({
   reducers: {
     selectTicketId: (state, action) => {
       state.selectedTicketId = action.payload
+    },
+    setToggle: (state, action) => {
+      state.toggleValue = action.payload
+    },
+    setRoutePath: (state, action) => {
+      state.routePath = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -191,6 +199,11 @@ const allLookUps = (state: RootState): GetAllLookUps[] =>
 const selectTicketId = (state: RootState): number =>
   state.ticketApprovals.selectedTicketId
 
+const toggleValue = (state: RootState): string =>
+  state.ticketApprovals.toggleValue
+
+const routePath = (state: RootState): string => state.ticketApprovals.routePath
+
 const ticketsForApproval = (
   state: RootState,
 ): GetAllTicketsForApprovalResponse => state.ticketApprovals.ticketsForApproval
@@ -204,6 +217,8 @@ const ticketApprovalsSelectors = {
   isLoading,
   allLookUps,
   selectTicketId,
+  toggleValue,
+  routePath,
 }
 
 export const ticketApprovalsService = {

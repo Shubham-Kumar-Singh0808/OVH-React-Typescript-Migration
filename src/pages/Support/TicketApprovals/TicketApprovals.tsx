@@ -30,7 +30,6 @@ const TicketApprovals = (): JSX.Element => {
     trackerID: undefined,
   }
 
-  const [toggle, setToggle] = useState<string>('')
   const [ticketApprovalParams, setTicketApprovalParams] = useState(initialState)
   const [deptId, setDeptId] = useState<number>()
   const [categoryId, setCategoryId] = useState<number>()
@@ -40,6 +39,10 @@ const TicketApprovals = (): JSX.Element => {
 
   const ticketsForApproval = useTypedSelector(
     reduxServices.ticketApprovals.selectors.ticketsForApproval,
+  )
+
+  const toggleValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.toggleValue,
   )
 
   const {
@@ -104,7 +107,7 @@ const TicketApprovals = (): JSX.Element => {
 
   return (
     <>
-      {toggle === '' && (
+      {toggleValue === '' && (
         <>
           <OCard
             className="mb-4 myprofile-wrapper"
@@ -132,15 +135,12 @@ const TicketApprovals = (): JSX.Element => {
               pageSize={pageSize}
               renderTicketApprovals={renderTicketApprovals}
               setRenderTicketApprovals={setRenderTicketApprovals}
-              setToggle={setToggle}
               userAccess={userAccess?.updateaccess as boolean}
             />
           </OCard>
         </>
       )}
-      {toggle === 'ticketApprovalHistory' && (
-        <TicketHistoryDetails backButtonHandler={() => setToggle('')} />
-      )}
+      {toggleValue === 'ticketApprovalHistory' && <TicketHistoryDetails />}
     </>
   )
 }

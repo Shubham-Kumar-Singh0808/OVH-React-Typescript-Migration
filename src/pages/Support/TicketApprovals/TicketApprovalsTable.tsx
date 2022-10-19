@@ -31,7 +31,6 @@ const TicketApprovalsTable = ({
   setCurrentPage,
   renderTicketApprovals,
   setRenderTicketApprovals,
-  setToggle,
   userAccess,
 }: {
   paginationRange: number[]
@@ -41,7 +40,6 @@ const TicketApprovalsTable = ({
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   renderTicketApprovals: boolean
   setRenderTicketApprovals: (value: boolean) => void
-  setToggle: (value: string) => void
   userAccess: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -125,7 +123,9 @@ const TicketApprovalsTable = ({
   }
 
   const handleTicketApprovalsHistory = (id: number) => {
-    setToggle('ticketApprovalHistory')
+    dispatch(
+      reduxServices.ticketApprovals.actions.setToggle('ticketApprovalHistory'),
+    )
     dispatch(
       reduxServices.tickets.ticketHistoryDetails({
         filterName: 'support',

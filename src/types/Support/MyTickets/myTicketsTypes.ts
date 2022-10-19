@@ -47,6 +47,7 @@ export type MyTicketsSliceState = {
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number
+  toggle: string
 }
 
 export type GetTicketsProps = {
@@ -112,8 +113,4 @@ export type GetMyTicketHistoryResponse = {
 export type TicketHistoryProps = {
   filterName: string
   id: number
-}
-
-export type TicketHistoryDetailsProps = {
-  backButtonHandler?: () => void
 }
