@@ -43,7 +43,7 @@ const EmployeeListTable = ({
 
   return (
     <>
-      {employees.length ? (
+      {employees?.length ? (
         <>
           <CTable striped align="middle">
             <CTableHead>
