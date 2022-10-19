@@ -35,6 +35,7 @@ const MyTickets = (): JSX.Element => {
         startIndex: pageSize * (currentPage - 1),
       }),
     )
+    dispatch(reduxServices.ticketApprovals.actions.setRoutePath(''))
   }, [dispatch, pageSize, currentPage])
 
   const handleSearch = () => {

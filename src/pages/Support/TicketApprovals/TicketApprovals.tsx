@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import TicketApprovalsFilterOptions from './TicketApprovalsFilterOptions'
 import TicketApprovalsTable from './TicketApprovalsTable'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -12,6 +13,7 @@ import TicketHistoryDetails from '../MyTickets/TicketHistory.tsx/TicketHistoryDe
 
 const TicketApprovals = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const location = useLocation()
 
   const initialState: GetAllTicketsForApprovalProps = {
     categoryId: undefined,
@@ -57,6 +59,9 @@ const TicketApprovals = (): JSX.Element => {
     dispatch(reduxServices.ticketApprovals.getDepartmentNameList())
     dispatch(reduxServices.ticketApprovals.getTrackerList())
     dispatch(reduxServices.ticketApprovals.getAllLookUps())
+    dispatch(
+      reduxServices.ticketApprovals.actions.setRoutePath(location.pathname),
+    )
   }, [dispatch])
 
   useEffect(() => {
