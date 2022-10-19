@@ -89,17 +89,33 @@ const NewBookingFilterOptions = (): JSX.Element => {
     })
   }
   const handleConfirmBooking = async () => {
-    const prepareObject = {
-      agenda: newRoomBooking?.agenda,
-      authorName: authorDetails,
-      availability: employeesAvailability,
-      conferenceType: 'Meeting',
-      employeeIds: [],
-      endTime: 
-
-    }
+    // const prepareObject = {
+    //   agenda: newRoomBooking?.agenda,
+    //   authorName: authorDetails,
+    //   availability: employeesAvailability,
+    //   conferenceType: 'Meeting',
+    //   employeeIds: [],
+    //   endTime: '',
+    //   fromDate: '',
+    //   locationId: location,
+    //   projectName: selectProject,
+    //   roomId: newRoomBooking?.roomId,
+    //   startTime: '',
+    // }
     const confirmNewBookingResultAction = await dispatch(
-      reduxServices.newBooking.confirmNewMeetingAppointment(prepareObject),
+      reduxServices.newBooking.confirmNewMeetingAppointment({
+        agenda: newRoomBooking?.agenda,
+        authorName: authorDetails,
+        availability: employeesAvailability as Availability[],
+        conferenceType: 'Meeting',
+        employeeIds: [],
+        endTime: '',
+        fromDate: '',
+        locationId: location,
+        projectName: selectProject as GetAllProjectNames,
+        roomId: newRoomBooking?.roomId as string,
+        startTime: '',
+      }),
     )
     if (
       reduxServices.newBooking.confirmNewMeetingAppointment.fulfilled.match(
@@ -109,9 +125,9 @@ const NewBookingFilterOptions = (): JSX.Element => {
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
-            toastColor="danger"
+            toastColor="success"
             toastMessage="            
-            You are Under Notice,So you can't apply for a leave."
+            New room is booking"
           />,
         ),
       )

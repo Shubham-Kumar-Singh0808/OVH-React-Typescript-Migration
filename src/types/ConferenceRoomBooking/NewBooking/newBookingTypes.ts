@@ -206,11 +206,11 @@ export type ConfirmNewMeetingAppointment = {
   authorName: Author
   availability: Availability[]
   conferenceType: string
-  employeeIds: []
+  employeeIds?: []
   endTime: string
   fromDate: string
-  locationId: 5
-  projectName: string
-  roomId: number
+  locationId: string
+  projectName: string | GetAllProjectNames
+  roomId: number | string
   startTime: string
 }
