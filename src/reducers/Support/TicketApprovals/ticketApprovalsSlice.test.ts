@@ -22,6 +22,8 @@ describe('Ticket Approvals Slice', () => {
       ticketsForApproval: { size: 0, list: [] },
       getAllLookUps: [],
       selectedTicketId: 0,
+      toggleValue: '',
+      routePath: '',
     } as TicketApprovalsSliceState
 
     it('Should be able to set isLoading to "loading" if getAllLookUps is pending', () => {
@@ -38,6 +40,8 @@ describe('Ticket Approvals Slice', () => {
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],
         selectedTicketId: 0,
+        toggleValue: '',
+        routePath: '',
       })
     })
 
@@ -56,6 +60,8 @@ describe('Ticket Approvals Slice', () => {
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: mockAllLookUps,
         selectedTicketId: 0,
+        toggleValue: '',
+        routePath: '',
       })
     })
 
@@ -74,6 +80,8 @@ describe('Ticket Approvals Slice', () => {
         ticketsForApproval: mockAllTicketApprovals,
         getAllLookUps: [],
         selectedTicketId: 0,
+        toggleValue: '',
+        routePath: '',
       })
     })
 
@@ -92,6 +100,8 @@ describe('Ticket Approvals Slice', () => {
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],
         selectedTicketId: 0,
+        toggleValue: '',
+        routePath: '',
       })
     })
 
@@ -110,6 +120,8 @@ describe('Ticket Approvals Slice', () => {
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],
         selectedTicketId: 0,
+        toggleValue: '',
+        routePath: '',
       })
     })
 
@@ -128,6 +140,8 @@ describe('Ticket Approvals Slice', () => {
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],
         selectedTicketId: 0,
+        toggleValue: '',
+        routePath: '',
       })
     })
 
@@ -145,6 +159,8 @@ describe('Ticket Approvals Slice', () => {
         ticketsForApproval: { size: 0, list: [] },
         getAllLookUps: [],
         selectedTicketId: 0,
+        toggleValue: '',
+        routePath: '',
       })
     })
   })

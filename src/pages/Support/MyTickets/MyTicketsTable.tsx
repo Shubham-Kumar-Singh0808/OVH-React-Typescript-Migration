@@ -24,7 +24,6 @@ import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const MyTicketsTable = ({
-  setToggle,
   paginationRange,
   currentPage,
   setCurrentPage,
@@ -32,7 +31,6 @@ const MyTicketsTable = ({
   setPageSize,
   userEditAccess,
 }: {
-  setToggle: (value: string) => void
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
@@ -68,7 +66,7 @@ const MyTicketsTable = ({
   }
 
   const handleTicketHistoryClick = (id: number) => {
-    setToggle('ticketHistory')
+    dispatch(reduxServices.tickets.actions.toggle('ticketHistory'))
     dispatch(
       reduxServices.tickets.ticketHistoryDetails({
         filterName: 'support',
