@@ -20,6 +20,7 @@ import {
   GetAllProjectNames,
 } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { showIsRequired } from '../../../utils/helper'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const NewBookingFilterOptions = (): JSX.Element => {
   const [selectProject, setSelectProject] = useState<GetAllProjectNames>()
@@ -108,7 +109,11 @@ const NewBookingFilterOptions = (): JSX.Element => {
     ) {
       dispatch(
         reduxServices.app.actions.addToast(
-          toastElement('New employee is successfully added'),
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Leave already applied on mentioned date."
+          />,
         ),
       )
     }

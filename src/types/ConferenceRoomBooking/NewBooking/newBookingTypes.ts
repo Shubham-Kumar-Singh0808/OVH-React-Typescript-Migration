@@ -209,7 +209,7 @@ export type ConfirmNewMeetingAppointment = {
   employeeIds?: []
   endTime: string
   fromDate: string
-  locationId: string
+  locationId: number
   projectName: string | GetAllProjectNames
   roomId: number | string
   startTime: string
