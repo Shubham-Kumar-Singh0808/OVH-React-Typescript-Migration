@@ -11,11 +11,14 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const MyTickets = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
-  const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
+
   const listSize = useTypedSelector(
     reduxServices.tickets.selectors.allTicketsListSize,
   )
+
+  const toggle = useTypedSelector(reduxServices.tickets.selectors.toggle)
+
   const {
     paginationRange,
     setPageSize,
@@ -32,6 +35,7 @@ const MyTickets = (): JSX.Element => {
         startIndex: pageSize * (currentPage - 1),
       }),
     )
+    dispatch(reduxServices.ticketApprovals.actions.setRoutePath(''))
   }, [dispatch, pageSize, currentPage])
 
   const handleSearch = () => {
@@ -123,7 +127,6 @@ const MyTickets = (): JSX.Element => {
             </CRow>
             <CCol className="col-xs-12">
               <MyTicketsTable
-                setToggle={setToggle}
                 paginationRange={paginationRange}
                 setPageSize={setPageSize}
                 setCurrentPage={setCurrentPage}
@@ -135,9 +138,7 @@ const MyTickets = (): JSX.Element => {
           </OCard>
         </>
       )}
-      {toggle === 'ticketHistory' && (
-        <TicketHistoryDetails backButtonHandler={() => setToggle('')} />
-      )}
+      {toggle === 'ticketHistory' && <TicketHistoryDetails />}
     </>
   )
 }

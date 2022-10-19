@@ -16,7 +16,6 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
-const mockSetToggle = jest.fn()
 const mockSetRenderTicketApprovals = jest.fn()
 
 const toRender = (
@@ -30,9 +29,9 @@ const toRender = (
       currentPage={1}
       pageSize={20}
       paginationRange={[1, 2, 3]}
-      setToggle={mockSetToggle}
       renderTicketApprovals={true}
       setRenderTicketApprovals={mockSetRenderTicketApprovals}
+      userAccess={true}
     />
   </div>
 )
@@ -105,9 +104,8 @@ describe('Ticket Approvals Table Component Testing without data', () => {
 
     test('should render reject modal', () => {
       const ticketTimelineBtn = screen.getAllByTestId('ticketTimelineBtn')
-      expect(ticketTimelineBtn[0]).toBeInTheDocument()
       userEvent.click(ticketTimelineBtn[0])
-      expect(mockSetToggle).toHaveBeenCalledTimes(1)
+      expect(ticketTimelineBtn[0]).toBeInTheDocument()
     })
   })
 })
