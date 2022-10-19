@@ -1,6 +1,7 @@
 import myTicketsReducer, { myTicketsService } from './myTicketsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { MyTicketsSliceState } from '../../../types/Support/MyTickets/myTicketsTypes'
+import stateStore from '../../../stateStore'
 
 describe('My Tickets Slice', () => {
   describe('MyTickets Reducer', () => {
@@ -43,6 +44,11 @@ describe('My Tickets Slice', () => {
         pageSize: 20,
         toggle: '',
       })
+    })
+    test('able to update toggle value', () => {
+      stateStore.dispatch(myTicketsService.actions.toggle('test'))
+      const state = stateStore.getState().tickets
+      expect(state.toggle).toBe('test')
     })
   })
 })
