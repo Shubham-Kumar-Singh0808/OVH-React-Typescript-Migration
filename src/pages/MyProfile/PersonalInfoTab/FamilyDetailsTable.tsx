@@ -194,7 +194,9 @@ const FamilyDetailsTable = ({
                     </CButton>
                   </CTableDataCell>
                 ) : (
-                  <></>
+                  <>
+                    <CTableDataCell scope="row"></CTableDataCell>
+                  </>
                 )}
               </CTableRow>
             ))}

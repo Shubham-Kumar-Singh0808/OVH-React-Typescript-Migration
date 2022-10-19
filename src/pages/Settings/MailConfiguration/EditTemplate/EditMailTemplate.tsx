@@ -199,7 +199,7 @@ const EditMailTemplate = ({
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Template :{' '}
+              Template :
               <span
                 className={
                   editEmployeeTemplate.template?.replace(/^\s*/, '')
