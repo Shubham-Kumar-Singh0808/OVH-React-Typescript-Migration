@@ -3,15 +3,14 @@ import {
   CRow,
   CFormLabel,
   CCol,
-  CFormSelect,
   CFormTextarea,
   CButton,
 } from '@coreui/react-pro'
-import moment from 'moment'
 import NewRoomReservedBy from './NewBookingChildComponets/NewRoomReservedBy'
 import StartTimeEndTime from './NewBookingChildComponets/StartTimeEndTime'
 import SelectProject from './NewBookingChildComponets/SelectProject'
 import Attendees from './NewBookingChildComponets/Attendees'
+import LocationAndRoom from './NewBookingChildComponets/LocationAndRoom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { Author } from '../../../types/Dashboard/TrainingsAndEvents/trainingsAndEventsTypes'
@@ -20,13 +19,13 @@ import {
   Availability,
   GetAllProjectNames,
 } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
-import { commonDateFormat } from '../../../utils/dateFormatUtils'
 import { showIsRequired } from '../../../utils/helper'
-import OToast from '../../../components/ReusableComponent/OToast'
 
 const NewBookingFilterOptions = (): JSX.Element => {
-  const [location, setLocation] = useState<string>('1')
   const [selectProject, setSelectProject] = useState<GetAllProjectNames>()
+  const [fromDate, setFromDate] = useState<string>(
+    new Date() as unknown as string,
+  )
   const authorDetails = {} as Author
   const employeesAvailability = {} as Availability[]
   const initEvent = {
@@ -37,24 +36,22 @@ const NewBookingFilterOptions = (): JSX.Element => {
     employeeIds: [],
     endTime: '',
     fromDate: '',
-    locationId: 0,
+    locationId: 1,
     projectName: '',
-    roomId: '',
+    roomId: 0,
     startTime: '',
   } as AddRoom
-
+  console.log(selectProject)
   const [newRoomBooking, setNewRoomBooking] = useState(initEvent)
-  const meetingLocation = useTypedSelector(
-    (state) => state.bookingList.meetingLocation,
-  )
-  const roomsOfLocation = useTypedSelector(
-    (state) => state.bookingList.roomsOfLocation,
-  )
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.bookingList.getAllMeetingLocations())
-    if (location) {
-      dispatch(reduxServices.bookingList.getRoomsOfLocation(Number(location)))
+    if (newRoomBooking.locationId) {
+      dispatch(
+        reduxServices.bookingList.getRoomsOfLocation(
+          Number(newRoomBooking.locationId),
+        ),
+      )
     }
   }, [dispatch, location])
 
@@ -70,12 +67,9 @@ const NewBookingFilterOptions = (): JSX.Element => {
     setNewRoomBooking({ ...newRoomBooking, authorName: value })
   }
 
-  const fromDateChangeHandler = (value: Date) => {
-    setNewRoomBooking({
-      ...newRoomBooking,
-      fromDate: moment(value).format(commonDateFormat),
-    })
-  }
+  useEffect(() => {
+    dispatch(reduxServices.newBooking.getLoggedEmployeeName())
+  }, [dispatch])
 
   const onChangeHandler = (
     e:
@@ -88,105 +82,29 @@ const NewBookingFilterOptions = (): JSX.Element => {
       return { ...prevState, ...{ [name]: value } }
     })
   }
-  const handleConfirmBooking = async () => {
-    // const prepareObject = {
-    //   agenda: newRoomBooking?.agenda,
-    //   authorName: authorDetails,
-    //   availability: employeesAvailability,
-    //   conferenceType: 'Meeting',
-    //   employeeIds: [],
-    //   endTime: '',
-    //   fromDate: '',
-    //   locationId: location,
-    //   projectName: selectProject,
-    //   roomId: newRoomBooking?.roomId,
-    //   startTime: '',
-    // }
-    const confirmNewBookingResultAction = await dispatch(
-      reduxServices.newBooking.confirmNewMeetingAppointment({
-        agenda: newRoomBooking?.agenda,
-        authorName: authorDetails,
-        availability: employeesAvailability as Availability[],
-        conferenceType: 'Meeting',
-        employeeIds: [],
-        endTime: '',
-        fromDate: '',
-        locationId: location,
-        projectName: selectProject as GetAllProjectNames,
-        roomId: newRoomBooking?.roomId as string,
-        startTime: '',
-      }),
-    )
-    if (
-      reduxServices.newBooking.confirmNewMeetingAppointment.fulfilled.match(
-        confirmNewBookingResultAction,
-      )
-    ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="success"
-            toastMessage="            
-            New room is booking"
-          />,
-        ),
-      )
-    }
+
+  const onHandleLocation = (value: string) => {
+    setNewRoomBooking({ ...newRoomBooking, locationId: Number(value) })
+  }
+
+  const onHandleRoom = (value: string) => {
+    setNewRoomBooking({ ...newRoomBooking, roomId: Number(value) })
   }
   return (
     <>
-      <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-2 col-form-label text-end">
-          Location:
-          <span className={showIsRequired(location)}>*</span>
-        </CFormLabel>
-        <CCol sm={4}>
-          <CFormSelect
-            aria-label="location"
-            id="location"
-            data-testid="locationSelect"
-            name="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          >
-            <option value={''}>Select Location</option>
-            {meetingLocation?.map((locationItem, index) => (
-              <option key={index} value={locationItem.id}>
-                {locationItem.locationName}
-              </option>
-            ))}
-          </CFormSelect>
-        </CCol>
-      </CRow>
-      <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-2 col-form-label text-end">
-          Room:
-          <span className={showIsRequired(newRoomBooking?.roomId)}>*</span>
-        </CFormLabel>
-        <CCol sm={4}>
-          <CFormSelect
-            aria-label="room"
-            id="room"
-            data-testid="locationSelect"
-            name="room"
-            value={newRoomBooking?.roomId}
-            onChange={onChangeHandler}
-          >
-            <option value={''}>Select Room</option>
-            {roomsOfLocation?.map((roomItem, index) => (
-              <option key={index} value={roomItem.id}>
-                {roomItem.roomName}
-              </option>
-            ))}
-          </CFormSelect>
-        </CCol>
-      </CRow>
+      <LocationAndRoom
+        onHandleLocation={onHandleLocation}
+        onHandleRoom={onHandleRoom}
+        // locationRooms={locationRooms}
+        locationValue={newRoomBooking.locationId}
+        roomValue={newRoomBooking.roomId}
+      />
       <NewRoomReservedBy
         loggedEmployeeName={loggedEmployee.fullName}
         allEmployeesProfiles={allEmployeesProfiles}
         onSelectAuthor={onSelectAuthor}
-        fromDateValue={newRoomBooking.fromDate}
-        fromDateChangeHandler={fromDateChangeHandler}
+        fromDate={fromDate}
+        setFromDate={setFromDate}
       />
       <StartTimeEndTime />
       <CRow className="mt-1 mb-3">
@@ -218,7 +136,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
               className="btn-ovh me-1"
               data-testid="confirmBtn"
               color="success"
-              onClick={handleConfirmBooking}
+              // onClick={handleConfirmBooking}
             >
               Confirm
             </CButton>

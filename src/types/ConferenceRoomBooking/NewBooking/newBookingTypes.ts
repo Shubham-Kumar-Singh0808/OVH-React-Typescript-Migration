@@ -42,7 +42,7 @@ export type AddRoom = {
   fromDate: string
   locationId: number
   projectName: string
-  roomId: string
+  roomId: number
   startTime: string
 }
 

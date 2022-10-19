@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CRow, CFormLabel, CCol } from '@coreui/react-pro'
 import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
+import moment from 'moment'
 import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
@@ -10,22 +11,31 @@ import {
   NewBookingLoggedEmployeeName,
 } from '../../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { showIsRequired } from '../../../../utils/helper'
+import {
+  commonDateFormat,
+  deviceLocale,
+} from '../../../../utils/dateFormatUtils'
 
 const NewRoomReservedBy = ({
+  loggedEmployeeName,
   allEmployeesProfiles,
   onSelectAuthor,
-  fromDateValue,
-  fromDateChangeHandler,
+  fromDate,
+  setFromDate,
 }: {
   loggedEmployeeName: string
   allEmployeesProfiles: NewBookingLoggedEmployeeName[]
   onSelectAuthor: (value: Author) => void
-  fromDateValue: string
-  fromDateChangeHandler: (e: Date) => void
+  fromDate: string
+  setFromDate: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
+
+  useEffect(() => {
+    setAutoCompleteTarget(loggedEmployeeName)
+  }, [loggedEmployeeName])
 
   useEffect(() => {
     if (autoCompleteTarget) {
@@ -95,7 +105,7 @@ const NewRoomReservedBy = ({
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           From Date:
-          <span className={showIsRequired(fromDateValue)}>*</span>
+          <span className={showIsRequired(fromDate)}>*</span>
         </CFormLabel>
         <CCol sm={4}>
           <ReactDatePicker
@@ -110,8 +120,18 @@ const NewRoomReservedBy = ({
             dateFormat="dd/mm/yy"
             placeholderText="DD/MM/YY"
             name="fromDate"
-            value={fromDateValue}
-            onChange={(date: Date) => fromDateChangeHandler(date)}
+            value={
+              fromDate
+                ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                  })
+                : ''
+            }
+            onChange={(date: Date) =>
+              setFromDate(moment(date).format(commonDateFormat))
+            }
           />
         </CCol>
       </CRow>
