@@ -26,7 +26,6 @@ const TicketHistoryDetails = (): JSX.Element => {
   }
 
   useEffect(() => {
-    console.log(location.pathname)
     dispatch(
       reduxServices.ticketApprovals.actions.setRoutePath(location.pathname),
     )
