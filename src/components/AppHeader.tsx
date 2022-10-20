@@ -120,7 +120,7 @@ const AppHeader = (): JSX.Element => {
                       src={item.profilePicPath}
                     />
                     <div className="p-1">
-                      <p className="m-0 employee-fullname">{item.fullName}</p>
+                      <p className="m-0 employee-fullname">{item?.fullName}</p>
                       <span className="employee-desg">{item.designation}</span>
                     </div>
                   </CCol>

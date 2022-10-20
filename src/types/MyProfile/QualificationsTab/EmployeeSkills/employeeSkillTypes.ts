@@ -1,3 +1,5 @@
+import { UserAccessToFeatures } from '../../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
+
 export type EmployeeSkills = {
   categoryType: string
   skillType: string
@@ -13,6 +15,7 @@ export interface EmployeeSkillInfo {
   tableClassName: string
   isFieldDisabled: boolean
   editSkillButtonHandler?: (skillId: number) => void
+  userAccess?: UserAccessToFeatures
 }
 
 export type EmployeeSkillState = {
