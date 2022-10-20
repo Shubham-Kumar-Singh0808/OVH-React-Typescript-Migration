@@ -54,11 +54,13 @@ const EmployeeHandbook = (): JSX.Element => {
                 aria-label="Search Handbook"
                 onChange={inputHandler}
                 className="input-handbook"
+                data-testid="handbook-textInput"
               />
               <CButton
                 type="button"
                 color="info"
                 id="button-addon2"
+                data-testid="search-handbook"
                 onClick={searchHandbook}
               >
                 <i className="fa fa-search"></i>
