@@ -221,9 +221,9 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 id="fromDate"
                 data-testid="leaveApplyFromDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
@@ -251,8 +251,8 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 id="toDate"
                 data-testid="leaveApprovalFromDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                peekNextMonth
                 showMonthDropdown
+                autoComplete="off"
                 showYearDropdown
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
