@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import TicketApprovalsFilterOptions from './TicketApprovalsFilterOptions'
 import TicketApprovalsTable from './TicketApprovalsTable'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -12,6 +13,7 @@ import TicketHistoryDetails from '../MyTickets/TicketHistory.tsx/TicketHistoryDe
 
 const TicketApprovals = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const location = useLocation()
 
   const initialState: GetAllTicketsForApprovalProps = {
     categoryId: undefined,
@@ -30,7 +32,6 @@ const TicketApprovals = (): JSX.Element => {
     trackerID: undefined,
   }
 
-  const [toggle, setToggle] = useState<string>('')
   const [ticketApprovalParams, setTicketApprovalParams] = useState(initialState)
   const [deptId, setDeptId] = useState<number>()
   const [categoryId, setCategoryId] = useState<number>()
@@ -40,6 +41,10 @@ const TicketApprovals = (): JSX.Element => {
 
   const ticketsForApproval = useTypedSelector(
     reduxServices.ticketApprovals.selectors.ticketsForApproval,
+  )
+
+  const toggleValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.toggleValue,
   )
 
   const {
@@ -54,6 +59,9 @@ const TicketApprovals = (): JSX.Element => {
     dispatch(reduxServices.ticketApprovals.getDepartmentNameList())
     dispatch(reduxServices.ticketApprovals.getTrackerList())
     dispatch(reduxServices.ticketApprovals.getAllLookUps())
+    dispatch(
+      reduxServices.ticketApprovals.actions.setRoutePath(location.pathname),
+    )
   }, [dispatch])
 
   useEffect(() => {
@@ -94,9 +102,17 @@ const TicketApprovals = (): JSX.Element => {
     downloadFile(ticketApprovalListDownload, 'TicketApprovalList.csv')
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Ticket Approvals',
+  )
+
   return (
     <>
-      {toggle === '' && (
+      {toggleValue === '' && (
         <>
           <OCard
             className="mb-4 myprofile-wrapper"
@@ -124,14 +140,12 @@ const TicketApprovals = (): JSX.Element => {
               pageSize={pageSize}
               renderTicketApprovals={renderTicketApprovals}
               setRenderTicketApprovals={setRenderTicketApprovals}
-              setToggle={setToggle}
+              userAccess={userAccess?.updateaccess as boolean}
             />
           </OCard>
         </>
       )}
-      {toggle === 'ticketApprovalHistory' && (
-        <TicketHistoryDetails backButtonHandler={() => setToggle('')} />
-      )}
+      {toggleValue === 'ticketApprovalHistory' && <TicketHistoryDetails />}
     </>
   )
 }

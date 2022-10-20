@@ -1,4 +1,3 @@
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import EmployeeListTable from './EmployeeListTable'
 import ListOptions from './ListOptions'
@@ -8,6 +7,8 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -30,7 +31,9 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   const userAccessTo = userAccessToFeatures?.find(
     (feature) => feature.name === 'Employee Directory-Options',
   )
-
+  const searchString = useTypedSelector(
+    reduxServices.searchEmployee.selectors.searchString,
+  )
   const {
     paginationRange,
     setPageSize,
@@ -45,9 +48,10 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
         selectionStatus: selectedEmploymentStatus,
+        searchStr: searchString,
       }),
     )
-  }, [currentPage, dispatch, pageSize, selectedEmploymentStatus])
+  }, [currentPage, dispatch, pageSize, selectedEmploymentStatus, searchString])
 
   return (
     <>
@@ -74,11 +78,9 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
             />
           </>
         ) : (
-          <CCol>
-            <CRow className="category-loading-spinner">
-              <CSpinner />
-            </CRow>
-          </CCol>
+          <>
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          </>
         )}
       </OCard>
     </>
