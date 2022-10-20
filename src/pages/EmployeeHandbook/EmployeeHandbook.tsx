@@ -21,9 +21,17 @@ const EmployeeHandbook = (): JSX.Element => {
     (state) => state.authentication.authenticatedUser.role,
   )
   const [inputText, setInputText] = useState('')
+  const [filterByInputText, setFilterByInputText] = useState('')
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const lowerCase = e.currentTarget.value.toLowerCase()
-    setInputText(lowerCase)
+    setFilterByInputText(lowerCase)
+    if (!lowerCase) {
+      setInputText('')
+    }
+  }
+
+  const searchHandbook = () => {
+    setInputText(filterByInputText)
   }
 
   useEffect(() => {
@@ -47,7 +55,12 @@ const EmployeeHandbook = (): JSX.Element => {
                 onChange={inputHandler}
                 className="input-handbook"
               />
-              <CButton type="button" color="info" id="button-addon2">
+              <CButton
+                type="button"
+                color="info"
+                id="button-addon2"
+                onClick={searchHandbook}
+              >
                 <i className="fa fa-search"></i>
               </CButton>
             </CInputGroup>
