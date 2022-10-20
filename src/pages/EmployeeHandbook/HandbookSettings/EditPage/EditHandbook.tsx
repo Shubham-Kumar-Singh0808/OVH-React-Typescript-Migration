@@ -360,11 +360,7 @@ const EditHandbook = ({
               id="check-country"
             >
               Country:
-              <span
-                className={allChecked && editPage.list ? TextWhite : TextDanger}
-              >
-                *
-              </span>
+              <span className={editPage.list ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={4}>
               <CRow className="mt-2">
