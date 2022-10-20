@@ -1,11 +1,13 @@
 import { useParams, Link } from 'react-router-dom'
 import React, { useEffect } from 'react'
-import { CCol, CRow, CSpinner, CButton } from '@coreui/react-pro'
+import { CCol, CRow, CButton } from '@coreui/react-pro'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import { Handbook } from '../../types/EmployeeHandbook/employeeHandbookTypes'
+import OLoadingSpinner from '../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../types/Components/loadingScreenTypes'
 
 const ShowHandbook = (): JSX.Element => {
   const { clickedpageName } = useParams<{ clickedpageName: string }>()
@@ -57,11 +59,9 @@ const ShowHandbook = (): JSX.Element => {
           </OCard>
         </>
       ) : (
-        <CCol>
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <>
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        </>
       )}
     </>
   )

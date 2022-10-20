@@ -93,7 +93,7 @@ function AddNewHandbook({
       addNewPage.displayOrder &&
       addNewPage.pageName &&
       addNewPage.list &&
-      addNewPage.description?.length > 150
+      addNewPage.description?.length > 156
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -136,6 +136,8 @@ function AddNewHandbook({
       type: '',
     })
     setShowEditor(false)
+    setIsDisplayOrderExist(false)
+    setAllChecked(false)
     setError(false)
     setTimeout(() => {
       setShowEditor(true)
@@ -151,7 +153,7 @@ function AddNewHandbook({
     dispatch(reduxServices.employeeHandbookSettings.getTotalHandbookList())
   }, [dispatch])
   const handleDescription = (description: string) => {
-    if (description.length > 150) {
+    if (description.length > 156) {
       setError(false)
     } else {
       setError(true)
@@ -189,7 +191,7 @@ function AddNewHandbook({
       reduxServices.employeeHandbookSettings.addNewHandbook.rejected.match(
         addNewHandbookResultAction,
       ) &&
-      addNewHandbookResultAction.payload === 404
+      addNewHandbookResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
     }
@@ -232,7 +234,6 @@ function AddNewHandbook({
                 type="text"
                 name="title"
                 value={addNewPage.title}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -254,7 +255,6 @@ function AddNewHandbook({
                 type="text"
                 name="pageName"
                 value={addNewPage.pageName}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -323,7 +323,7 @@ function AddNewHandbook({
                       <CFormCheck
                         data-testid={`ch-countries${index}`}
                         className="mt-1"
-                        id="trigger"
+                        id={country.name}
                         label={country.name}
                         checked={!!addNewPage.list?.includes(country.id)}
                         value={country.id}

@@ -189,7 +189,11 @@ const getEmployeeCertificateById = createAsyncThunk<
 const employeeCertificationsSlice = createSlice({
   name: 'employeeCertifications',
   initialState: initialCertificationState,
-  reducers: {},
+  reducers: {
+    clearCertificateType: (state, action) => {
+      state.typeOfCertificate = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getTechnologies.fulfilled, (state, action) => {
@@ -232,6 +236,7 @@ const employeeCertificationsSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
+          getEmployeeCertificates.pending,
           getTechnologies.pending,
           getCertificateByTechnologyName.pending,
           getEmployeeCertificate.pending,

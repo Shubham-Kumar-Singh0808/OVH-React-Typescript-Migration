@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CButton,
-  CCol,
-  CFormInput,
-  CInputGroup,
-  CRow,
-  CSpinner,
-} from '@coreui/react-pro'
+import { CButton, CCol, CFormInput, CInputGroup, CRow } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import HandbookList from './HandbookList'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
 import { ApiLoadingState } from '../../middleware/api/apiList'
+import OLoadingSpinner from '../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../types/Components/loadingScreenTypes'
 
 const EmployeeHandbook = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -78,11 +73,9 @@ const EmployeeHandbook = (): JSX.Element => {
         {isLoading !== ApiLoadingState.loading ? (
           <HandbookList handbooks={handbooks} inputText={inputText} />
         ) : (
-          <CCol>
-            <CRow className="category-loading-spinner">
-              <CSpinner />
-            </CRow>
-          </CCol>
+          <>
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          </>
         )}
       </OCard>
     </>

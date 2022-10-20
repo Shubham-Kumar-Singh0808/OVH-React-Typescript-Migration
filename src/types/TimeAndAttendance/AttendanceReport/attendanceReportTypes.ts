@@ -128,6 +128,7 @@ export type EmployeeAttendanceReportSliceState = {
   days: number[]
   employeeAttendanceReport: EmployeeDetailsWithAttendanceReport[]
   isLoading: ApiLoadingState
+  monthDisplay: string
 }
 
 export type EmployeeAttendanceReportApiProps = {
@@ -152,7 +153,6 @@ export type BiometricAndShiftFilterOptionsProps = {
   setSelectShiftId: (value: string) => void
   selectMonth: number
   isOther: string
-  filterByDate: Date
 }
 
 export type AttendanceReportTableProps = {

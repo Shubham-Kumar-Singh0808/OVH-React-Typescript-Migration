@@ -103,7 +103,7 @@ const ClientsTable = ({
   }
 
   const tableHeaderCellPropsAction = {
-    width: '18%',
+    width: '10%',
     scope: 'col',
   }
 
@@ -200,11 +200,13 @@ const ClientsTable = ({
       )}
       <OModal
         alignment="center"
+        modalTitle="Delete Client"
         visible={deleteClientModalVisibility}
         setVisible={setDeleteClientModalVisibility}
-        modalHeaderClass="d-none"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        modalBodyClass="mt-0"
         confirmButtonAction={handleConfirmDeleteClient}
       >
         <>

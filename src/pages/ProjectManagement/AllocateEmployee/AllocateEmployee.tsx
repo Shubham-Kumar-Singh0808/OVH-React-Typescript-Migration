@@ -339,7 +339,10 @@ const AllocateEmployee = (): JSX.Element => {
                   Project Start Date:
                 </CFormLabel>
                 <CCol sm={6}>
-                  <CFormLabel className="col-sm-15 col-form-label text-end">
+                  <CFormLabel
+                    className="col-sm-15 col-form-label text-end"
+                    data-testid="projectStartDate"
+                  >
                     {selectProject?.startdate}
                   </CFormLabel>
                 </CCol>
@@ -349,7 +352,10 @@ const AllocateEmployee = (): JSX.Element => {
                   Project End Date:
                 </CFormLabel>
                 <CCol sm={6}>
-                  <CFormLabel className="col-sm-15 col-form-label text-end">
+                  <CFormLabel
+                    className="col-sm-15 col-form-label text-end"
+                    data-testid="projectEndDate"
+                  >
                     {selectProject?.enddate}
                   </CFormLabel>
                 </CCol>

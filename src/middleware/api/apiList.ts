@@ -470,6 +470,7 @@ export const dashboardApiConfig: DashboardApi = {
   deleteHoliday: apiPrefix + '/Employee/deleteHoliday',
   getHolidayInformation: apiPrefix + '/Employee/holiday',
   updateHoliday: apiPrefix + '/Employee/editHoliday',
+  searchEmployee: apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
 }
 
 export const addLocationListApiConfig: AddLocationListApi = {

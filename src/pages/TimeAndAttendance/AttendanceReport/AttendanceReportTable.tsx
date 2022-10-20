@@ -1,7 +1,6 @@
 import {
   CCol,
   CRow,
-  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -19,6 +18,8 @@ import {
   AttendanceReportTableProps,
   AttendanceStatusCheckProps,
 } from '../../../types/TimeAndAttendance/AttendanceReport/attendanceReportTypes'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const AttendanceReportTable = ({
   paginationRange,
@@ -202,11 +203,7 @@ const AttendanceReportTable = ({
             })}
           </CTableBody>
         ) : (
-          <CCol>
-            <CRow className="category-loading-spinner ms-1">
-              <CSpinner />
-            </CRow>
-          </CCol>
+          <OLoadingSpinner type={LoadingType.PAGE} />
         )}
       </CTable>
       {isLoading !== ApiLoadingState.loading && (
@@ -224,7 +221,7 @@ const AttendanceReportTable = ({
             {listSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
-                options={[20, 40, 60, 80]}
+                options={[20, 40, 60, 80, 100]}
                 selectedPageSize={pageSize}
               />
             )}

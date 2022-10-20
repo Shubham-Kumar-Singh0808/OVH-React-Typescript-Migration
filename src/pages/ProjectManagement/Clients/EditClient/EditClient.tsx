@@ -276,7 +276,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="clientNameInput"
                 name="name"
                 placeholder="Client Name"
-                maxLength={50}
                 value={client.name}
                 onChange={onChangeInputHandler}
               />
@@ -297,7 +296,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="contactInput"
                 name="personName"
                 placeholder="Contact Person"
-                maxLength={50}
                 value={client.personName}
                 onChange={onChangeInputHandler}
               />
@@ -317,7 +315,6 @@ const EditClient = (): JSX.Element => {
                 type="email"
                 name="email"
                 placeholder="Contact Person Email"
-                maxLength={50}
                 value={client.email}
                 onChange={onChangeInputHandler}
               />
@@ -401,7 +398,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="gstCodeInput"
                 name="gstCode"
                 placeholder="GST Code"
-                maxLength={32}
                 value={client.gstCode as string}
                 onChange={onChangeInputHandler}
               />
@@ -423,7 +419,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="clientAddressInput"
                 name="address"
                 placeholder="Address"
-                maxLength={100}
                 value={client.address}
                 onChange={onChangeInputHandler}
               />

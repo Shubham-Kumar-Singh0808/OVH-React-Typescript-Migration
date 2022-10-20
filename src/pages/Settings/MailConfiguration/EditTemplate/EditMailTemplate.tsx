@@ -20,7 +20,7 @@ import {
 import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { showIsRequired } from '../../../../utils/helper'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 
 const EditMailTemplate = ({
   backButtonHandler,
@@ -29,6 +29,7 @@ const EditMailTemplate = ({
   setEditEmployeeTemplate,
 }: EditTemplateProps): JSX.Element => {
   const [showAssetType, setShowAssetType] = useState<boolean>(false)
+  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
   useEffect(() => {
     if (Number(editEmployeeTemplate.templateTypeId) === 11) {
@@ -36,7 +37,14 @@ const EditMailTemplate = ({
     } else {
       setShowAssetType(false)
     }
-  })
+    if (!showAssetType) {
+      if (editEmployeeTemplate.template?.replace(/^\s*/, '')) {
+        setIsUpdateButtonEnabled(true)
+      } else {
+        setIsUpdateButtonEnabled(false)
+      }
+    }
+  }, [editEmployeeTemplate.template])
 
   const handleDescription = (template: string) => {
     setEditEmployeeTemplate((prevState: EditEmployeeMailTemplate) => {
@@ -191,11 +199,13 @@ const EditMailTemplate = ({
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Template :{' '}
+              Template :
               <span
-                className={showIsRequired(
-                  editEmployeeTemplate.template?.replace(/^\s*/, ''),
-                )}
+                className={
+                  editEmployeeTemplate.template?.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
               >
                 *
               </span>
@@ -224,6 +234,7 @@ const EditMailTemplate = ({
                 color="success"
                 onClick={handleUpdateMailTemplate}
                 data-testid="btn-update"
+                disabled={!isUpdateButtonEnabled}
               >
                 Update
               </CButton>

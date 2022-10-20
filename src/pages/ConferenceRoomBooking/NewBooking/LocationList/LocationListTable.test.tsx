@@ -8,7 +8,7 @@ import { mockLocationNames } from '../../../../test/data/addLocationListData'
 
 describe('Add Location List Table without data', () => {
   beforeEach(() => {
-    render(<LocationListTable />, {
+    render(<LocationListTable userDeleteAccess={true} />, {
       preloadedState: {
         addLocationList: {
           meetingLocations: mockLocationNames,

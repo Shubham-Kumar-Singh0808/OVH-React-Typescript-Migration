@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
+import moment from 'moment'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import attendanceReportApi from '../../../middleware/api/TimeAndAttendance/AttendanceReport/attendanceReportApi'
 import { RootState } from '../../../stateStore'
@@ -29,12 +30,17 @@ const initialEmployeeAttendanceReportState: EmployeeAttendanceReportSliceState =
     days: [],
     employeeAttendanceReport: [],
     isLoading: ApiLoadingState.idle,
+    monthDisplay: moment(new Date()).format('MMMM-YYYY'),
   }
 
 const attendanceReportSlice = createSlice({
   name: 'attendanceReport',
   initialState: initialEmployeeAttendanceReportState,
-  reducers: {},
+  reducers: {
+    setMonthDisplay: (state, action) => {
+      state.monthDisplay = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getEmployeeAttendanceReport.fulfilled, (state, action) => {
@@ -62,6 +68,9 @@ const isLoading = (state: RootState): LoadingState =>
 
 const days = (state: RootState): number[] => state.employeeAttendanceReport.days
 
+const monthDisplay = (state: RootState): string =>
+  state.employeeAttendanceReport.monthDisplay
+
 const attendanceReportThunk = {
   getEmployeeAttendanceReport,
 }
@@ -71,6 +80,7 @@ const attendanceReportSelectors = {
   listSize,
   isLoading,
   days,
+  monthDisplay,
 }
 
 export const attendanceReportService = {

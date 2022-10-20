@@ -31,7 +31,7 @@ const TicketApprovalsTable = ({
   setCurrentPage,
   renderTicketApprovals,
   setRenderTicketApprovals,
-  setToggle,
+  userAccess,
 }: {
   paginationRange: number[]
   currentPage: number
@@ -40,7 +40,7 @@ const TicketApprovalsTable = ({
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   renderTicketApprovals: boolean
   setRenderTicketApprovals: (value: boolean) => void
-  setToggle: (value: string) => void
+  userAccess: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -123,7 +123,9 @@ const TicketApprovalsTable = ({
   }
 
   const handleTicketApprovalsHistory = (id: number) => {
-    setToggle('ticketApprovalHistory')
+    dispatch(
+      reduxServices.ticketApprovals.actions.setToggle('ticketApprovalHistory'),
+    )
     dispatch(
       reduxServices.tickets.ticketHistoryDetails({
         filterName: 'support',
@@ -135,7 +137,7 @@ const TicketApprovalsTable = ({
 
   return (
     <>
-      <CTable responsive striped className="text-center mt-5">
+      <CTable responsive striped className="text-center mt-5 align-middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell {...tableHeaderCellPropsTicketNo}>
@@ -237,15 +239,17 @@ const TicketApprovalsTable = ({
                     {ticketItem.status}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    <>
-                      <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
-                        <CButton
-                          color="info btn-ovh me-1"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-                      </Link>
+                    <div className="buttons-clients">
+                      {userAccess && (
+                        <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
+                          <CButton
+                            color="info btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </Link>
+                      )}
                       <CButton
                         color="danger btn-ovh me-1"
                         className="btn-ovh-employee-list"
@@ -275,7 +279,7 @@ const TicketApprovalsTable = ({
                       >
                         <i className="fa fa-bar-chart" aria-hidden="true"></i>
                       </CButton>
-                    </>
+                    </div>
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -330,6 +334,7 @@ const TicketApprovalsTable = ({
         cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
+        modalBodyClass="pt-0 pb-5"
       >
         <p>
           <div
@@ -348,6 +353,7 @@ const TicketApprovalsTable = ({
         cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
+        modalBodyClass="pt-0 pb-5"
       >
         <p>{modalSubject}</p>
       </OModal>
@@ -358,6 +364,7 @@ const TicketApprovalsTable = ({
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalHeaderClass="d-none"
+        modalBodyClass="pt-0 pb-5"
         confirmButtonAction={() => handleConfirmRejectTicket(selectedTicketId)}
       >
         <>
