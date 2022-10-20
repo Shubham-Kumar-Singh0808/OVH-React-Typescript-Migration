@@ -7,10 +7,12 @@ import AppHeader from './AppHeader'
 import { cleanup, fireEvent, render, screen, waitFor } from '../test/testUtils'
 import { mockSearchEmployee } from '../test/data/employeeProfileDate'
 import EmployeeList from '../pages/EmployeeDirectory/EmployeesList/EmployeeList'
+import { mockUserAccessToFeaturesData } from '../test/data/userAccessToFeaturesData'
 
 const searchButton = 'search-employee-btn'
 const searchEmployeeString = 'Raju Sriramoju'
 const searchPlaceholderText = 'Search Employee'
+
 describe('Dashboard AppHeader Component Testing', () => {
   describe('Dashboard AppHeader Component Testing', () => {
     const history = createMemoryHistory()
@@ -24,6 +26,9 @@ describe('Dashboard AppHeader Component Testing', () => {
             dashboardEmployeeSearch: {
               employeeProfile: mockSearchEmployee,
               searchString: '',
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
             },
           },
         },
@@ -100,6 +105,9 @@ describe('Dashboard AppHeader Component Testing', () => {
             dashboardEmployeeSearch: {
               employeeProfile: mockSearchEmployee,
               searchString: 'Raju Sriramoju',
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
             },
           },
         },
