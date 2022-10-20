@@ -315,7 +315,9 @@ function AddNewHandbook({
               className="col-sm-3 col-form-label text-end"
             >
               Country:
-              <span className={addNewPage.list ? TextWhite : TextDanger}>
+              <span
+                className={addNewPage.list?.length > 0 ? TextWhite : TextDanger}
+              >
                 *
               </span>
             </CFormLabel>
