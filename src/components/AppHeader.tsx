@@ -98,7 +98,7 @@ const AppHeader = (): JSX.Element => {
                     searchAutoCompleteTarget &&
                     searchAutoCompleteTarget.length > 0
                       ? 'autocomplete-dropdown-wrap search-employee-list'
-                      : 'autocomplete-dropdown-wrap hide search-employee-list'
+                      : 'autocomplete-dropdown-wrap hide-wrapper search-employee-list'
                   }
                 >
                   {children}
