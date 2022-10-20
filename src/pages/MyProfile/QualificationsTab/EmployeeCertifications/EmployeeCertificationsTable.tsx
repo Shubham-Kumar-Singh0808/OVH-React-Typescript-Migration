@@ -52,7 +52,7 @@ const EmployeeCertificationsTable = ({
   const sortedCertificateDetails = useMemo(() => {
     if (employeeCertificates) {
       return employeeCertificates
-        .slice()
+        ?.slice()
         .sort((sortNode1, sortNode2) =>
           sortNode1.name.localeCompare(sortNode2.name),
         )
