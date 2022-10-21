@@ -6,6 +6,7 @@ import { createMemoryHistory } from 'history'
 import EmployeeHandbook from './EmployeeHandbook'
 import { render, screen } from '../../test/testUtils'
 import { mockHandbookList } from '../../test/data/handbookListData'
+import { mockUserAccessToFeaturesData } from '../../test/data/userAccessToFeaturesData'
 
 const history = createMemoryHistory()
 const toRender = (
@@ -36,6 +37,9 @@ describe('Employee Handbook Component Testing', () => {
         },
         EmployeeHandbook: {
           handbooksList: mockHandbookList,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
