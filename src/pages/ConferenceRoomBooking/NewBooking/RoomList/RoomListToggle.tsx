@@ -23,7 +23,7 @@ const RoomListToggle = ({
   const handleUpdateRoom = async (updatedRoomObj: getAllMeetingRooms) => {
     await dispatch(reduxServices.roomLists.updateRoom(updatedRoomObj))
     dispatch(reduxServices.roomLists.getMeetingRooms())
-    await dispatch(reduxServices.app.actions.addToast(updatedToast))
+    dispatch(reduxServices.app.actions.addToast(updatedToast))
     dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
