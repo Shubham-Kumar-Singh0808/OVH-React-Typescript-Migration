@@ -17,8 +17,11 @@ const EmployeeHandbook = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.EmployeeHandbook.selectors.isLoading,
   )
-  const empRole = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToHandbookSettings = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Handbook',
   )
   const [inputText, setInputText] = useState('')
   const [filterByInputText, setFilterByInputText] = useState('')
@@ -67,9 +70,7 @@ const EmployeeHandbook = (): JSX.Element => {
               </CButton>
             </CInputGroup>
           </CCol>
-          {(empRole === 'admin' ||
-            empRole === 'HR Manager' ||
-            empRole === 'HR') && (
+          {userAccessToHandbookSettings?.deleteaccess && (
             <CCol className="text-end" md={4}>
               <Link to={`/handbooksettings`}>
                 <CButton
