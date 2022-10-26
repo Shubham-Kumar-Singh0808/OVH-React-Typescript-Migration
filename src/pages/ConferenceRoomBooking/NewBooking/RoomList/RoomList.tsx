@@ -49,6 +49,14 @@ const RoomList = (): JSX.Element => {
     <OToast toastMessage="Room Added Successfully" toastColor="success" />
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Meeting-Location',
+  )
+
   useEffect(() => {
     if (selectRoomName) {
       setIsAddButtonEnabled(true)
@@ -163,23 +171,25 @@ const RoomList = (): JSX.Element => {
               </p>
             )}
           </CCol>
-          <CCol sm={2}>
-            <CButton
-              data-testid="designationButton"
-              color="info"
-              className="btn-ovh me-1"
-              disabled={
-                isAddButtonEnabled
-                  ? isAddButtonEnabled && roomNameExist.length > 0
-                  : !isAddButtonEnabled
-              }
-              onClick={addBtnHandler}
-            >
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
-          </CCol>
+          {userAccess?.createaccess && (
+            <CCol sm={2}>
+              <CButton
+                data-testid="designationButton"
+                color="info"
+                className="btn-ovh me-1"
+                disabled={
+                  isAddButtonEnabled
+                    ? isAddButtonEnabled && roomNameExist.length > 0
+                    : !isAddButtonEnabled
+                }
+                onClick={addBtnHandler}
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </CCol>
+          )}
         </CRow>
-        <RoomListTable />
+        <RoomListTable userDeleteAccess={userAccess?.deleteaccess as boolean} />
       </OCard>
     </>
   )
