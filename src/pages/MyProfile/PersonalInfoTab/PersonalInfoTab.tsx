@@ -317,21 +317,6 @@ const PersonalInfoTab = ({
     })
   }
 
-  const userAccessToFeatures = useTypedSelector(
-    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
-  )
-
-  const userAccess = userAccessToFeatures?.find(
-    (feature) => feature.name === 'My Profile-PersonalInfo-Family Details',
-  )
-
-  const familyAddButton =
-    !isViewingAnotherEmployee && userAccess?.createaccess ? (
-      <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
-    ) : (
-      <></>
-    )
-
   return (
     <>
       <>
@@ -341,15 +326,17 @@ const PersonalInfoTab = ({
               <h4 className="h4">Family Details</h4>
             </CCardHeader>
             <CCardBody className="ps-0 pe-0">
-              {familyAddButton}
+              {!isViewingAnotherEmployee ? (
+                <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
+              ) : (
+                <></>
+              )}
               <FamilyDetailsTable
                 editButtonHandler={editButtonHandler}
                 isFieldDisabled={true}
                 striped={true}
                 bordered={false}
                 tableClassName=""
-                userDeleteAccess={userAccess?.deleteaccess as boolean}
-                userEditAccess={userAccess?.updateaccess as boolean}
               />
             </CCardBody>
 
