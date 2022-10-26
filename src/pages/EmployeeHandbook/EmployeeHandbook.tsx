@@ -31,6 +31,7 @@ const EmployeeHandbook = (): JSX.Element => {
     if (!lowerCase) {
       setInputText('')
     }
+    searchHandbook()
   }
 
   const searchHandbook = () => {
