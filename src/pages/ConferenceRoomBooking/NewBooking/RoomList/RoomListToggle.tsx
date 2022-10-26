@@ -29,8 +29,7 @@ const RoomListToggle = ({
 
   const switchOnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target
-    let checkedCopy = isChecked
-    checkedCopy = checked
+    const checkedCopy = checked
     setIsChecked(checkedCopy)
     const prepareObject = { ...room, roomStatus: checkedCopy }
     handleUpdateRoom(prepareObject)

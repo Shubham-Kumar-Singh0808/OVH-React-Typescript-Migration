@@ -104,7 +104,7 @@ const roomListSlice = createSlice({
 
       .addCase(getMeetingRooms.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.meetingRooms = action.payload as getAllMeetingRooms[]
+        state.meetingRooms = action.payload
       })
       .addMatcher(
         isAnyOf(
