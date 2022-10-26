@@ -7,6 +7,7 @@ import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { mockAddTrackerList } from '../../../../test/data/addTrackerListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockTrackerList } from '../../../../test/data/ticketApprovalsData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const addButton = 'save-btn'
 const clearButton = 'clear-btn'
@@ -17,7 +18,18 @@ const mockSetTogglePage = jest.fn()
 
 describe('AddTracker List without data', () => {
   beforeEach(() => {
-    render(<TrackerListOptions setToggle={mockSetTogglePage} />)
+    render(<TrackerListOptions setToggle={mockSetTogglePage} />, {
+      preloadedState: {
+        addTrackerLists: {
+          trackerList: mockAddTrackerList,
+          isLoading: ApiLoadingState.succeeded,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
+    })
   })
   afterEach(cleanup)
   test('should render addTracker List component with out crashing', () => {
@@ -48,6 +60,9 @@ describe('Tracker List with data', () => {
         addTrackerLists: {
           trackerList: mockAddTrackerList,
           isLoading: ApiLoadingState.succeeded,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
@@ -86,6 +101,10 @@ describe('TrackerList with data', () => {
       preloadedState: {
         ticketApprovals: {
           trackerList: mockTrackerList,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

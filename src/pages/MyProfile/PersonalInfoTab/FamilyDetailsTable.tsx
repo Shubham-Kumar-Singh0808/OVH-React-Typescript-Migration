@@ -66,7 +66,7 @@ const FamilyDetailsTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Family Detail deleted successfully"
+            toastMessage="Family Details deleted successfully"
           />,
         ),
       )
@@ -194,7 +194,9 @@ const FamilyDetailsTable = ({
                     </CButton>
                   </CTableDataCell>
                 ) : (
-                  <></>
+                  <>
+                    <CTableDataCell scope="row"></CTableDataCell>
+                  </>
                 )}
               </CTableRow>
             ))}

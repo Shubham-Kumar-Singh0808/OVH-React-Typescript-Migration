@@ -256,14 +256,17 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                     )}
                     {ticketDetails.description ? (
                       <>
-                        <div className="mb-1 d-flex">
+                        <div className="mb-1">
                           <CFormLabel className="col-form-label p-0">
                             Description
                           </CFormLabel>
                           {isTicketPrevValue(
                             ticketDetails.olddescription as string,
                           )}
-                          &nbsp; {parse(ticketDetails.description)}
+                          &nbsp;
+                          <span className="descriptionField">
+                            {parse(ticketDetails.description)}
+                          </span>
                         </div>
                       </>
                     ) : (

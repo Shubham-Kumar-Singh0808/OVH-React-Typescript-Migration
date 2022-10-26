@@ -251,8 +251,12 @@ const BookingListTable = (): JSX.Element => {
               <CTable align="middle" className="bookingList-model-table">
                 <CTableHead>
                   <CTableRow>
-                    <CTableHeaderCell>Name of Employee</CTableHeaderCell>
-                    <CTableHeaderCell>Designation</CTableHeaderCell>
+                    <CTableHeaderCell className="pt-0">
+                      Name of Employee
+                    </CTableHeaderCell>
+                    <CTableHeaderCell className="pt-0">
+                      Designation
+                    </CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>

@@ -99,14 +99,14 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
       reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
         applyLeaveResultAction,
       ) &&
-      applyLeaveResultAction.payload === 204
+      applyLeaveResultAction.payload === 406
     ) {
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="danger"
             toastMessage="            
-            Leave cannot be applied on non working days."
+            You are Under Notice,So you can't apply for a leave"
           />,
         ),
       )
