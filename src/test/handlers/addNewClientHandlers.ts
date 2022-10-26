@@ -24,7 +24,6 @@ export const addNewClientHandlers = [
     return res(
       ctx.json({
         status: 200,
-        data: { true: false },
       }),
     )
   }),

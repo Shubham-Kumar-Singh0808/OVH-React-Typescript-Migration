@@ -58,7 +58,6 @@ describe('addNewClient Slice', () => {
     it('Should be able to set isLoading to "success" if addNewClient is fulfilled', () => {
       const action = {
         type: addNewClientService.addNewClient.fulfilled.type,
-        payload: mockAddNewClient,
       }
       const state = reducer(initialAddClientState, action)
       expect(state).toEqual({
@@ -107,7 +106,6 @@ describe('addNewClient Slice', () => {
     it('Should be able to set isLoading to "success" if checkClientOrgExist is fulfilled', () => {
       const action = {
         type: addNewClientService.checkClientOrgExist.fulfilled.type,
-        payload: true,
       }
       const state = reducer(initialAddClientState, action)
       expect(state).toEqual({
