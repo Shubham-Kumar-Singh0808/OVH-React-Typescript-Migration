@@ -112,7 +112,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
     <>
       {employeeLeaveHistoryDetails?.length ? (
         <>
-          <CTable striped className="text-center">
+          <CTable striped className="text-center" align="middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
@@ -160,7 +160,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                         className="sh-organization-link"
                       >
                         <CLink
-                          className="cursor-pointer text-primary"
+                          className="cursor-pointer text-primary centerAlignment-text"
                           data-testid={`emp-comments${index}`}
                           onClick={() =>
                             handleModal(leaveHistory.employeeComments)
