@@ -150,7 +150,7 @@ const HolidaysListTable = ({
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Number of Holidays:{holidaysInfo.length}</strong>
+                <strong>Total Number of Holidays: {holidaysInfo.length}</strong>
               </p>
             </CCol>
             <CCol xs={3}>

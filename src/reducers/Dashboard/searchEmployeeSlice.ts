@@ -34,6 +34,9 @@ const searchEmployeeSlice = createSlice({
     setSearchValue: (state, action) => {
       state.searchString = action.payload
     },
+    setClearEmployeeProfiles: (state) => {
+      state.employeeProfile = []
+    },
   },
   extraReducers: (builder) => {
     builder
