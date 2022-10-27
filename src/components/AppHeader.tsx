@@ -20,6 +20,7 @@ import { useAppDispatch, useTypedSelector } from '../stateStore'
 const AppHeader = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const history = useHistory()
+  const employeeListPath = '/employeeList'
   const [searchAutoCompleteTarget, setSearchAutoCompleteTarget] =
     useState<string>()
 
@@ -32,6 +33,13 @@ const AppHeader = (): JSX.Element => {
   const userAccessToSearch = userAccessToFeatures?.find(
     (feature) => feature.name === 'Employee Directory',
   )
+  useEffect(() => {
+    if (window.location.pathname !== employeeListPath) {
+      setSearchAutoCompleteTarget('')
+      dispatch(reduxServices.searchEmployee.actions.setClearEmployeeProfiles())
+    }
+  }, [window.location.pathname])
+
   useEffect(() => {
     if (searchAutoCompleteTarget) {
       dispatch(
@@ -60,9 +68,9 @@ const AppHeader = (): JSX.Element => {
         searchEmployeeResultAction,
       )
     ) {
-      history.push('/employeeList')
+      history.push(employeeListPath)
     }
-    history.push('/employeeList')
+    history.push(employeeListPath)
   }
 
   const handleSearchEmployeeOnEnter = (
