@@ -129,11 +129,15 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
             </CTableHead>
             <CTableBody>
               {employeeLeaveHistoryDetails.map((leaveHistory, index) => {
+                const removeTag = '/(<([^>]+)>)/gi'
+                const removeSpaces = leaveHistory.employeeComments.replace(
+                  removeTag,
+                  '',
+                )
                 const employeeCommentsLimit =
-                  leaveHistory.employeeComments &&
-                  leaveHistory.employeeComments.length > 30
-                    ? `${leaveHistory.employeeComments.substring(0, 30)}...`
-                    : leaveHistory.employeeComments
+                  removeSpaces && removeSpaces.length > 30
+                    ? `${removeSpaces.substring(0, 30)}...`
+                    : removeSpaces
 
                 const mgrCommentsLimit =
                   leaveHistory.managerComments &&
