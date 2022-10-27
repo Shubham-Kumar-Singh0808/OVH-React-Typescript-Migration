@@ -35,6 +35,10 @@ const TrackerListOptions = ({
     reduxServices.ticketApprovals.selectors.trackerList,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
   useEffect(() => {
     dispatch(reduxServices.ticketApprovals.getTrackerList())
   }, [dispatch])
@@ -91,6 +95,10 @@ const TrackerListOptions = ({
       setIsAddButtonEnabled(false)
     }
   }, [selectTrackerName])
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Tracker',
+  )
 
   return (
     <>
@@ -154,33 +162,37 @@ const TrackerListOptions = ({
             />
           </CCol>
         </CRow>
-        <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
-              data-testid="save-btn"
-              className="btn-ovh me-1 text-white"
-              color="success"
-              onClick={addButtonHandler}
-              disabled={
-                isAddButtonEnabled
-                  ? isAddButtonEnabled && trackerNameExist.length > 0
-                  : !isAddButtonEnabled
-              }
-            >
-              Add
-            </CButton>
-            <CButton
-              data-testid="clear-btn"
-              color="warning"
-              className="btn-ovh text-white"
-              onClick={clearData}
-            >
-              Clear
-            </CButton>
-          </CCol>
-        </CRow>
+        {userAccess?.createaccess && (
+          <CRow>
+            <CCol md={{ span: 6, offset: 3 }}>
+              <CButton
+                data-testid="save-btn"
+                className="btn-ovh me-1 text-white"
+                color="success"
+                onClick={addButtonHandler}
+                disabled={
+                  isAddButtonEnabled
+                    ? isAddButtonEnabled && trackerNameExist.length > 0
+                    : !isAddButtonEnabled
+                }
+              >
+                Add
+              </CButton>
+              <CButton
+                data-testid="clear-btn"
+                color="warning"
+                className="btn-ovh text-white"
+                onClick={clearData}
+              >
+                Clear
+              </CButton>
+            </CCol>
+          </CRow>
+        )}
       </CForm>
-      <TrackerListTable />
+      <TrackerListTable
+        userDeleteAccess={userAccess?.deleteaccess as boolean}
+      />
     </>
   )
 }

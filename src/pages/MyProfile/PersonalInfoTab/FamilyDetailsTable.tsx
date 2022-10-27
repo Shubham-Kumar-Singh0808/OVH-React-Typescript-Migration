@@ -21,6 +21,8 @@ const FamilyDetailsTable = ({
   striped = true,
   bordered = true,
   tableClassName = '',
+  userEditAccess = true,
+  userDeleteAccess = true,
 }: EmployeeFamilyDetailsTableProps): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -66,7 +68,7 @@ const FamilyDetailsTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Family Detail deleted successfully"
+            toastMessage="Family Details deleted successfully"
           />,
         ),
       )
@@ -173,28 +175,34 @@ const FamilyDetailsTable = ({
                 )}
                 {isFieldDisabled && !isViewingAnotherEmployee ? (
                   <CTableDataCell scope="row">
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-2"
-                      data-testid="edit-family"
-                      onClick={() => editButtonHandler?.(family.familyId)}
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh me-2"
-                      data-testid="delete-family"
-                      onClick={() => handleShowDeleteModal(family.familyId)}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
+                    {userEditAccess && (
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-2"
+                        data-testid="edit-family"
+                        onClick={() => editButtonHandler?.(family.familyId)}
+                      >
+                        <i
+                          className="fa fa-pencil-square-o"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    )}
+                    {userDeleteAccess && (
+                      <CButton
+                        color="danger"
+                        className="btn-ovh me-2"
+                        data-testid="delete-family"
+                        onClick={() => handleShowDeleteModal(family.familyId)}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 ) : (
-                  <></>
+                  <>
+                    <CTableDataCell scope="row"></CTableDataCell>
+                  </>
                 )}
               </CTableRow>
             ))}

@@ -2,7 +2,6 @@ import {
   CButton,
   CCol,
   CRow,
-  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -19,6 +18,8 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeHandbookTable = (
   props: EmployeeHandbookTableProps,
@@ -114,7 +115,7 @@ const EmployeeHandbookTable = (
 
   return (
     <>
-      {employeeHandbooks.length && isLoading !== ApiLoadingState.loading ? (
+      {employeeHandbooks?.length && isLoading !== ApiLoadingState.loading ? (
         <>
           <CTable striped responsive align="middle">
             <CTableHead>
@@ -177,7 +178,7 @@ const EmployeeHandbookTable = (
                       <CButton
                         size="sm"
                         color="info"
-                        className="btn-ovh me-1"
+                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
                         data-testid={`handbook-edit-btn${index}`}
                         onClick={() => {
                           props.editHandbookButtonHandler(
@@ -194,7 +195,7 @@ const EmployeeHandbookTable = (
                         size="sm"
                         data-testid={`handbook-delete-btn${index}`}
                         color="danger"
-                        className="btn-ovh me-1"
+                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
                         onClick={() =>
                           handleShowDeleteModal(
                             employeeHandbook.id as number,
@@ -240,7 +241,7 @@ const EmployeeHandbookTable = (
           </CRow>
         </>
       ) : (
-        <CSpinner data-testid="handbookSettings-loader" />
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
       {!employeeHandbooks?.length && isLoading !== ApiLoadingState.loading && (
         <CCol>
@@ -254,6 +255,7 @@ const EmployeeHandbookTable = (
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Handbook"
         closeButtonClass="d-none"
+        modalBodyClass="mt-0"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteHandbook}

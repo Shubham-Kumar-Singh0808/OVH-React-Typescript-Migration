@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event'
 import FamilyDetailsTable from './FamilyDetailsTable'
 import { render, screen } from '../../../test/testUtils'
 import { mockFamilyTableDetails } from '../../../test/data/familyTableData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 describe('Family Table component with data', () => {
   beforeEach(() => {
@@ -11,6 +13,10 @@ describe('Family Table component with data', () => {
       preloadedState: {
         personalInfoDetails: {
           employeeFamilyDetails: mockFamilyTableDetails,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

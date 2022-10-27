@@ -265,7 +265,7 @@ function AddEditVisaDetails({
     return (
       <OToast
         toastColor="success"
-        toastMessage={`Your Visa Member have been ${action} successfully.`}
+        toastMessage={`Visa details ${action} successfully`}
       />
     )
   }
@@ -471,7 +471,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText="dd/mm/yyyy"
                 dateFormat={dateFormat}
               />
             </CCol>
@@ -508,7 +508,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText="dd/mm/yyyy"
                 dateFormat={dateFormat}
               />
               {error && (

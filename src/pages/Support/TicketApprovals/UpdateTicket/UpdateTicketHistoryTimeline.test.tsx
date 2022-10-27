@@ -33,8 +33,8 @@ describe('Update Ticket History Time line Component Testing', () => {
       expect(screen.getByText('12/03/2021')).toBeInTheDocument()
       expect(screen.getByText('05-Sep-2022 04:35:28 PM')).toBeInTheDocument()
       expect(screen.getByText('12/08/2022')).toBeInTheDocument()
-      expect(screen.getByText('Cancelled')).toBeInTheDocument()
-      expect(screen.getByText('Rejected')).toBeInTheDocument()
+      expect(screen.getAllByText('Cancelled')[0]).toBeInTheDocument()
+      expect(screen.getAllByText('Rejected')[0]).toBeInTheDocument()
     })
     test('should render created button with data ', () => {
       const createdElement = screen.getAllByTestId('created-btn')

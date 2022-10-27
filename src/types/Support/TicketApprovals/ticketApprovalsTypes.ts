@@ -40,6 +40,8 @@ export type TicketApprovalsSliceState = {
   ticketsForApproval: GetAllTicketsForApprovalResponse
   getAllLookUps: GetAllLookUps[]
   selectedTicketId: number
+  toggleValue: string
+  routePath: string
 }
 
 export type GetAllTicketsForApprovalProps = {

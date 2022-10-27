@@ -7,14 +7,14 @@ export const addLocationListHandlers = [
     return res(
       ctx.json({
         status: 200,
-        data: {},
+        data: { mockRoomNames },
       }),
     )
   }),
-  rest.get(roomListApiConfig.addRoom, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockRoomNames))
+  rest.post(roomListApiConfig.addRoom, (_req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ status: 200, data: {} }))
   }),
-  rest.get(roomListApiConfig.deleteRoom, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockRoomNames))
+  rest.delete(roomListApiConfig.deleteRoom, (_req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ status: 200 }))
   }),
 ]

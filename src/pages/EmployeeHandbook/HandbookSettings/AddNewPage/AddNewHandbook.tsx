@@ -93,7 +93,7 @@ function AddNewHandbook({
       addNewPage.displayOrder &&
       addNewPage.pageName &&
       addNewPage.list &&
-      addNewPage.description?.length > 150
+      addNewPage.description?.length > 156
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -136,9 +136,9 @@ function AddNewHandbook({
       type: '',
     })
     setShowEditor(false)
-    setError(false)
-    setAllChecked(false)
     setIsDisplayOrderExist(false)
+    setAllChecked(false)
+    setError(false)
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
@@ -153,7 +153,7 @@ function AddNewHandbook({
     dispatch(reduxServices.employeeHandbookSettings.getTotalHandbookList())
   }, [dispatch])
   const handleDescription = (description: string) => {
-    if (description.length > 150) {
+    if (description.length > 156) {
       setError(false)
     } else {
       setError(true)
@@ -179,6 +179,7 @@ function AddNewHandbook({
     const addNewHandbookResultAction = await dispatch(
       reduxServices.employeeHandbookSettings.addNewHandbook(addNewPage),
     )
+
     if (
       reduxServices.employeeHandbookSettings.addNewHandbook.fulfilled.match(
         addNewHandbookResultAction,
@@ -187,10 +188,9 @@ function AddNewHandbook({
       backButtonHandler()
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
     } else if (
-      (reduxServices.employeeHandbookSettings.addNewHandbook.rejected.match(
+      reduxServices.employeeHandbookSettings.addNewHandbook.rejected.match(
         addNewHandbookResultAction,
       ) &&
-        addNewHandbookResultAction.payload === 404) ||
       addNewHandbookResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
@@ -223,7 +223,15 @@ function AddNewHandbook({
               className="col-sm-3 col-form-label text-end"
             >
               Title:
-              <span className={addNewPage.title ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addNewPage.title
+                    ?.replace(/^\s*/, '')
+                    .replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -234,7 +242,6 @@ function AddNewHandbook({
                 type="text"
                 name="title"
                 value={addNewPage.title}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -245,7 +252,15 @@ function AddNewHandbook({
               className="col-sm-3 col-form-label text-end"
             >
               Page Name:
-              <span className={addNewPage.pageName ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addNewPage.pageName
+                    ?.replace(/^\s*/, '')
+                    .replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -256,7 +271,6 @@ function AddNewHandbook({
                 type="text"
                 name="pageName"
                 value={addNewPage.pageName}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -301,7 +315,9 @@ function AddNewHandbook({
               className="col-sm-3 col-form-label text-end"
             >
               Country:
-              <span className={addNewPage.list ? TextWhite : TextDanger}>
+              <span
+                className={addNewPage.list?.length > 0 ? TextWhite : TextDanger}
+              >
                 *
               </span>
             </CFormLabel>
@@ -325,7 +341,7 @@ function AddNewHandbook({
                       <CFormCheck
                         data-testid={`ch-countries${index}`}
                         className="mt-1"
-                        id="trigger"
+                        id={country.name}
                         label={country.name}
                         checked={!!addNewPage.list?.includes(country.id)}
                         value={country.id}
@@ -340,7 +356,15 @@ function AddNewHandbook({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Description:{' '}
-              <span className={addNewPage.description ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addNewPage.description
+                    ?.replace(/^\s*/, '')
+                    .replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
