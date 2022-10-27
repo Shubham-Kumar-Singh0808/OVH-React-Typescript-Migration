@@ -12,6 +12,15 @@ export const addNewClientHandlers = [
       }),
     )
   }),
+  // addClient api mock for status:406
+  rest.post(addNewClientApiConfig.addNewClient, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 406,
+        data: {},
+      }),
+    )
+  }),
   rest.get(addNewClientApiConfig.getClientCountries, (_req, res, ctx) => {
     return res(
       ctx.json({
@@ -24,6 +33,7 @@ export const addNewClientHandlers = [
     return res(
       ctx.json({
         status: 200,
+        data: true,
       }),
     )
   }),
