@@ -225,7 +225,6 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 showYearDropdown
                 autoComplete="off"
                 dropdownMode="select"
-                autoComplete="off"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
                 name="fromDate"
@@ -259,7 +258,6 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
                 name="toDate"
-                autoComplete="off"
                 value={
                   toDate
                     ? new Date(toDate).toLocaleDateString(deviceLocale, {
