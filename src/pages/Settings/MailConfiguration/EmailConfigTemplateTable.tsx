@@ -115,10 +115,16 @@ const EmployeeEmailTemplateTable = ({
         <>
           <CTableBody>
             {employeeMailTemplates?.map((emailTemplate, index) => {
+              const removeTag = '/(<([^>]+)>)/gi'
+              const removeSpaces = emailTemplate.template
+                .replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
+                .replace(removeTag, '')
               const descriptionLimit =
-                emailTemplate.template && emailTemplate.template.length > 15
-                  ? `${emailTemplate.template.substring(0, 15)}...`
-                  : emailTemplate.template
+                removeSpaces && removeSpaces.length > 15
+                  ? `${removeSpaces.substring(0, 15)}...`
+                  : removeSpaces
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">{index + 1}</CTableDataCell>
