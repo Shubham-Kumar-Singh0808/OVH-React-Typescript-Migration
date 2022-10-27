@@ -52,4 +52,10 @@ describe('RoomList without data', () => {
     userEvent.type(roomNameInput, 'Aurobindo')
     expect(roomNameInput).toHaveValue('Aurobindo')
   })
+
+  test('should render  Room List screen and add button', () => {
+    const addBtnElement = screen.getByRole('button', { name: 'Add' })
+    expect(addBtnElement).toBeInTheDocument()
+    userEvent.click(addBtnElement)
+  })
 })
