@@ -12,12 +12,24 @@ export const addRoomListHandlers = [
     )
   }),
   rest.post(roomListApiConfig.addRoom, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ status: 200, data: {} }))
+    return res(
+      ctx.json({
+        status: 200,
+        data: {},
+      }),
+    )
   }),
   rest.delete(roomListApiConfig.deleteRoom, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ status: 200 }))
+    return res(
+      ctx.json({
+        status: 200,
+      }),
+    )
   }),
   rest.put(roomListApiConfig.updateRoom, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ status: 200 }))
+    const locResponse = ctx.json({
+      status: 200,
+    })
+    return res(locResponse)
   }),
 ]
