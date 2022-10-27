@@ -49,4 +49,13 @@ export const clientsHandlers = [
       }),
     )
   }),
+  // update Client
+  rest.get(clientsApiConfig.updateClient, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 500,
+        data: {},
+      }),
+    )
+  }),
 ]
