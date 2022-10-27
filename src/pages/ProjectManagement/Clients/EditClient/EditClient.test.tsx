@@ -93,7 +93,7 @@ describe('Edit Client Component Testing', () => {
 
       // Client Name
       const clientNameInput = screen.getByTestId('clientNameInput')
-      userEvent.type(clientNameInput, 'testing')
+      userEvent.type(clientNameInput, 'Testing')
 
       // Client Contact Person
       const contactPersonInput = screen.getByTestId('contactInput')
