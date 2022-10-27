@@ -4,12 +4,24 @@ import userEvent from '@testing-library/user-event'
 import RoomList from './RoomList'
 import { render, screen } from '../../../../test/testUtils'
 import { mockRoomNames } from '../../../../test/data/addRoomListData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const roomName = 'Name of the Room:'
 
 describe('RoomList without data', () => {
   beforeEach(() => {
-    render(<RoomList />)
+    render(<RoomList />, {
+      preloadedState: {
+        roomList: {
+          meetingRooms: mockRoomNames,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
+    })
   })
   test('should be able to render  Room List  Title', () => {
     expect(screen.getByText('Room List')).toBeInTheDocument()
@@ -28,18 +40,7 @@ describe('RoomList without data', () => {
     expect(backBtnElement).toBeInTheDocument()
     userEvent.click(backBtnElement)
   })
-})
 
-describe('should render RoomList Component with data', () => {
-  beforeEach(() => {
-    render(<RoomList />, {
-      preloadedState: {
-        roomList: {
-          meetingRooms: mockRoomNames,
-        },
-      },
-    })
-  })
   test('should select Location Name', () => {
     const LocationSelector = screen.getByTestId('form-select1')
     userEvent.selectOptions(LocationSelector, ['Select Location'])
@@ -50,5 +51,11 @@ describe('should render RoomList Component with data', () => {
     const roomNameInput = screen.getByPlaceholderText('Enter Name')
     userEvent.type(roomNameInput, 'Aurobindo')
     expect(roomNameInput).toHaveValue('Aurobindo')
+  })
+
+  test('should render  Room List screen and add button', () => {
+    const addBtnElement = screen.getByRole('button', { name: 'Add' })
+    expect(addBtnElement).toBeInTheDocument()
+    userEvent.click(addBtnElement)
   })
 })

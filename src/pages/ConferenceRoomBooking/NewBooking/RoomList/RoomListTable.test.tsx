@@ -8,7 +8,7 @@ import { mockRoomNames } from '../../../../test/data/addRoomListData'
 
 describe('Room List without data', () => {
   beforeEach(() => {
-    render(<RoomListTable />)
+    render(<RoomListTable userDeleteAccess={true} />)
   })
 
   test('should render the correct headers', () => {
@@ -28,7 +28,7 @@ describe('Room List without data', () => {
 
 describe('Room List Table with data', () => {
   beforeEach(() => {
-    render(<RoomListTable />, {
+    render(<RoomListTable userDeleteAccess={true} />, {
       preloadedState: {
         roomList: {
           meetingRooms: mockRoomNames,
@@ -58,10 +58,4 @@ describe('Room List Table with data', () => {
       screen.getByText('Total Records: ' + mockRoomNames.length),
     ).toBeInTheDocument()
   })
-
-  // test('should be able to click update button element', () => {
-  //   const updateBtnElement = screen.getAllByTestId('btn-update')
-  //   userEvent.click(updateBtnElement[0])
-  //   expect(updateBtnElement).toBeTruthy()
-  // })
 })
