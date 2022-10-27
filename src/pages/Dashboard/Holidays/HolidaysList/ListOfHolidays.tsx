@@ -10,7 +10,7 @@ const ListOfHolidays = (): JSX.Element => {
   const loggedInEmployee = useTypedSelector(
     reduxServices.generalInformation.selectors.generalInformation,
   )
-  const employeeCountry = loggedInEmployee?.country
+  const employeeCountry = loggedInEmployee.country
   const [selectedCountry, setSelectedCountry] = useState<string>('')
 
   const dispatch = useAppDispatch()
@@ -23,7 +23,7 @@ const ListOfHolidays = (): JSX.Element => {
         selectedCountry,
       ),
     )
-  }, [dispatch])
+  }, [dispatch, employeeCountry])
 
   return (
     <>

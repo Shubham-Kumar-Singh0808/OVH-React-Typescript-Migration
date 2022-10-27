@@ -110,14 +110,15 @@ const AppHeader = (): JSX.Element => {
                     {children}
                   </div>
                 )}
-                renderItem={(item, isHighlighted) => (
+                renderItem={(item) => (
                   <div
                     data-testid="employee-options"
-                    className={
-                      isHighlighted
-                        ? 'autocomplete-dropdown-item active'
-                        : 'autocomplete-dropdown-item'
-                    }
+                    className="autocomplete-dropdown-item"
+                    // className={
+                    //   isHighlighted
+                    //     ? 'autocomplete-dropdown-item active'
+                    //     : 'autocomplete-dropdown-item'
+                    // }
                     key={item.id}
                   >
                     <CCol className="d-flex justify-content-left employee-wrapper">
