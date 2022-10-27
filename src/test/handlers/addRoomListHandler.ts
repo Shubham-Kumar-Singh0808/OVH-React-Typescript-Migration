@@ -2,7 +2,7 @@ import { rest } from 'msw'
 import { roomListApiConfig } from '../../middleware/api/apiList'
 import { mockRoomNames } from '../data/addRoomListData'
 
-export const addLocationListHandlers = [
+export const addRoomListHandlers = [
   rest.get(roomListApiConfig.getAllMeetingRooms, (_req, res, ctx) => {
     return res(
       ctx.json({
@@ -15,6 +15,9 @@ export const addLocationListHandlers = [
     return res(ctx.status(200), ctx.json({ status: 200, data: {} }))
   }),
   rest.delete(roomListApiConfig.deleteRoom, (_req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ status: 200 }))
+  }),
+  rest.put(roomListApiConfig.updateRoom, (_req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ status: 200 }))
   }),
 ]
