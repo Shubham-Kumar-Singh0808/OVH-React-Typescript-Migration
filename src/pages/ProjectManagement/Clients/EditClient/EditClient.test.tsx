@@ -89,11 +89,11 @@ describe('Edit Client Component Testing', () => {
 
       // Organization
       const organizationInput = screen.getByTestId('organizationInput')
-      userEvent.type(organizationInput, 'test')
+      userEvent.type(organizationInput, 'Rooftop Digital')
 
       // Client Name
       const clientNameInput = screen.getByTestId('clientNameInput')
-      userEvent.type(clientNameInput, 'Testing')
+      userEvent.type(clientNameInput, 'AM Solutions')
 
       // Client Contact Person
       const contactPersonInput = screen.getByTestId('contactInput')
