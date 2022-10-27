@@ -161,7 +161,7 @@ describe('HolidaysList', () => {
       if (mockUpcomingUSAHolidays.length === 0)
         await waitFor(() => {
           expect(
-            screen.queryByText('Total Number of Holidays:0'),
+            screen.queryByText('Total Number of Holidays: 0'),
           ).toBeInTheDocument()
         })
     })
