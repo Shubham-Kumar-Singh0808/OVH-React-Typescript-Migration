@@ -61,6 +61,7 @@ const HolidaysListTable = ({
 
   const handleShowHolidayDeleteModal = (id: number, holidayName: string) => {
     setHolidayId(id)
+
     setToDeleteHoliday(holidayName)
     setIsDeleteModalVisible(true)
   }
@@ -86,13 +87,10 @@ const HolidaysListTable = ({
       )
     }
   }
-  const filteredHolidays = currentPageItems?.filter(
-    (currHoliday) => new Date(currHoliday.date) > new Date(),
-  )
 
   const getAllHolidays = selectedCountry ? (
     <CTableBody>
-      {filteredHolidays?.map((holiday, index) => (
+      {currentPageItems?.map((holiday, index) => (
         <CTableRow key={index} className="text-start">
           <CTableDataCell>{holiday.date}</CTableDataCell>
           <CTableDataCell>{holiday.week}</CTableDataCell>
@@ -152,20 +150,18 @@ const HolidaysListTable = ({
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>
-                  Total Number of Holidays:{filteredHolidays.length}
-                </strong>
+                <strong>Total Number of Holidays:{holidaysInfo.length}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {filteredHolidays.length > 20 && (
+              {holidaysInfo.length > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                   selectedPageSize={pageSize}
                 />
               )}
             </CCol>
-            {filteredHolidays.length > 20 && (
+            {holidaysInfo.length > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"
