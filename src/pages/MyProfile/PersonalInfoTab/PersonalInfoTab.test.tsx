@@ -1,70 +1,35 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable import/named */
-// Todo: Vinesh // remove eslint and fix all the errors
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
 import PersonalInfoTab from './PersonalInfoTab'
-import { getEmployeeGeneralInformationThunk } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
+import { cleanup, render, screen } from '../../../test/testUtils'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import stateStore from '../../../stateStore'
+import { getEmployeeGeneralInformationThunk } from '../../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 
-const history = createMemoryHistory()
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => (
-  <Router history={history}>
-    <Provider store={reduxStore}>{children}</Provider>
-  </Router>
-)
-
-const mockUseDispatchValue = 1984
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn().mockImplementation(() => {
-    return mockUseDispatchValue
-  }),
-}))
-describe('Personal Info Tab Testing', () => {
-  it('should be fetched from the server and put in the store', async () => {
+describe('Add Location List without data', () => {
+  beforeEach(() => {
+    render(<PersonalInfoTab handleActiveTab={jest.fn()} />, {
+      preloadedState: {
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
+    })
+  })
+  afterEach(cleanup)
+  test('should render Personal info tab component with out crashing', async () => {
     await stateStore.dispatch(
       getEmployeeGeneralInformationThunk.getEmployeeGeneralInformation('1985'),
     )
+    expect(screen.getByText('Work:')).toBeInTheDocument()
+    expect(screen.getByText('Home:')).toBeInTheDocument()
   })
-  // test('should render Personal info tab component with out crashing', async () => {
-  //   render(
-  //     <ReduxProvider reduxStore={stateStore}>
-  //       <PersonalInfoTab />
-  //     </ReduxProvider>,
-  //   )
-  //   await stateStore.dispatch(
-  //     getEmployeeGeneralInformationThunk.getEmployeeGeneralInformation('1985'),
-  //   )
-  //   expect(screen.getByText('Work:')).toBeInTheDocument()
-  //   expect(screen.getByText('Home:')).toBeInTheDocument()
-  // })
-  // test('should render PersonalInfoTab button as disabled initially', () => {
-  //   render(
-  //     <ReduxProvider reduxStore={stateStore}>
-  //       <PersonalInfoTab />
-  //     </ReduxProvider>,
-  //   )
-  //   expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument()
-  // })
-  // it('should display the correct number of options', () => {
-  //   render(
-  //     <ReduxProvider reduxStore={stateStore}>
-  //       <PersonalInfoTab />
-  //     </ReduxProvider>,
-  //   )
-  //   expect(screen.getAllByRole('option').length).toBe(11)
-  // })
+  test('should render PersonalInfoTab button as disabled initially', () => {
+    expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument()
+  })
+  it('should display the correct number of options', () => {
+    expect(screen.getAllByRole('option').length).toBe(11)
+  })
 })
