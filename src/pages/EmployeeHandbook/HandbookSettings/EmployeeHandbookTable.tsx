@@ -118,6 +118,10 @@ const EmployeeHandbookTable = (
     reduxServices.employeeHandbookSettings.selectors.isLoading,
   )
 
+  const actionHeaderViewAccess =
+    userAccessToHandbookActions?.updateaccess ||
+    userAccessToHandbookActions?.deleteaccess
+
   return (
     <>
       {employeeHandbooks?.length && isLoading !== ApiLoadingState.loading ? (
@@ -140,8 +144,7 @@ const EmployeeHandbookTable = (
                 <CTableHeaderCell {...tableHeaderCellPropCountry}>
                   Country
                 </CTableHeaderCell>
-                {userAccessToHandbookActions?.updateaccess ||
-                userAccessToHandbookActions?.deleteaccess ? (
+                {actionHeaderViewAccess ? (
                   <CTableHeaderCell {...tableHeaderCellPropActions}>
                     Actions
                   </CTableHeaderCell>
