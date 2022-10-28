@@ -5,10 +5,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { HolidaysListProps } from '../../../../types/Dashboard/Holidays/upcomingHolidaysTypes'
 
-const SelectCountry = ({
-  selectedCountry,
-  setSelectedCountry,
-}: HolidaysListProps): JSX.Element => {
+const SelectCountry = ({ selectedCountry }: HolidaysListProps): JSX.Element => {
   const countries = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
@@ -43,7 +40,13 @@ const SelectCountry = ({
           data-testid="country-form-select"
           name="country"
           value={selectedCountry}
-          onChange={(e) => setSelectedCountry(e.target.value)}
+          onChange={(e) =>
+            dispatch(
+              reduxServices.holidays.actions.setSelectedEmployeeCountry(
+                e.target.value,
+              ),
+            )
+          }
         >
           <option value={''}>Select Country</option>
           {countries?.map((country, index) => (
