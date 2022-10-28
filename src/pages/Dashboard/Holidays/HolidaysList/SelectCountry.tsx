@@ -13,8 +13,11 @@ const SelectCountry = ({
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
 
-  const role = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddHoliday = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Holiday Actions',
   )
 
   const dispatch = useAppDispatch()
@@ -60,7 +63,7 @@ const SelectCountry = ({
             <i className="fa fa-arrow-left me-1"></i>Back
           </CButton>
         </Link>
-        {(role === 'admin' || role === 'HR Manager') && (
+        {userAccessToAddHoliday?.createaccess && (
           <Link to={`/addHoliday`}>
             <CButton color="info" className="btn-ovh text-white">
               <i className="fa fa-plus me-1"></i>Add
