@@ -223,8 +223,8 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                 showMonthDropdown
                 showYearDropdown
-                dropdownMode="select"
                 autoComplete="off"
+                dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
                 name="fromDate"
@@ -252,12 +252,12 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 data-testid="leaveApprovalFromDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                 showMonthDropdown
+                autoComplete="off"
                 showYearDropdown
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
                 name="toDate"
-                autoComplete="off"
                 value={
                   toDate
                     ? new Date(toDate).toLocaleDateString(deviceLocale, {

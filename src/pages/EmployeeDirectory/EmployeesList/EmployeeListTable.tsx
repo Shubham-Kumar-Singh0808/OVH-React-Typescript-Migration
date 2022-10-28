@@ -134,9 +134,7 @@ const EmployeeListTable = ({
         <CRow>
           <CCol md={3} className="no-records">
             <strong>
-              {employees?.length
-                ? `Total Records: ${employees.length}`
-                : `Employee Not Found.`}
+              {listSize ? `Total Records: ${listSize}` : `Employee Not Found.`}
             </strong>
           </CCol>
           <CCol xs={3}>
@@ -162,13 +160,6 @@ const EmployeeListTable = ({
           )}
         </CRow>
       </>
-      {/* ) : (
-        <CCol>
-          <CRow className="category-no-data">
-            <h4 className="text-center">No Records Found...</h4>
-          </CRow>
-        </CCol>
-      )} */}
     </>
   )
 }
