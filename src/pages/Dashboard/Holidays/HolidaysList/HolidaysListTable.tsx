@@ -131,6 +131,8 @@ const HolidaysListTable = ({
   ) : (
     <></>
   )
+  const actionHeaderViewAccess =
+    userAccessToHolidays?.updateaccess || userAccessToHolidays?.deleteaccess
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (
@@ -142,8 +144,7 @@ const HolidaysListTable = ({
                 <CTableHeaderCell scope="col">Week</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Occasion</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                {userAccessToHolidays?.updateaccess ||
-                userAccessToHolidays?.deleteaccess ? (
+                {actionHeaderViewAccess ? (
                   <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
                 ) : (
                   <></>
