@@ -23,7 +23,7 @@ export const clientsHandlers = [
     )
   }),
   // edit client api mock
-  rest.get(`${clientsApiConfig.editClient}/${18}`, (_req, res, ctx) => {
+  rest.get(`${clientsApiConfig.editClient}:clientId`, (_req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,
@@ -43,27 +43,46 @@ export const clientsHandlers = [
   // is client organization api mock
   rest.get(clientsApiConfig.clientOrg, (_req, res, ctx) => {
     return res(
+      ctx.status(200),
       ctx.json({
         status: 200,
-        data: false,
+        data: true,
       }),
     )
   }),
-  // update Client success
-  rest.put(clientsApiConfig.updateClient, (_req, res, ctx) => {
+  // update Client
+  rest.put(clientsApiConfig.updateClient, (req, res, ctx) => {
+    // const name = req.url.searchParams.get('name')
+    // if (
+    //   name !== mockClientsData.clients.find((crrClient) => crrClient.name)?.name
+    // ) {
     return res(
+      ctx.status(200),
       ctx.json({
         status: 200,
         data: {},
       }),
     )
+    // }
+    //   else {
+    //     return res(ctx.status(500))
+    //   }
   }),
   // update Client rejected
   rest.put(clientsApiConfig.updateClient, (_req, res, ctx) => {
     return res(
+      ctx.status(500),
       ctx.json({
-        status: 500,
-        data: {},
+        payload: 500,
+      }),
+    )
+  }),
+  // isOrganizationExists
+  rest.get(clientsApiConfig.clientOrg, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: false,
       }),
     )
   }),
