@@ -211,7 +211,7 @@ describe('Edit Client Component Testing', () => {
       })
     })
     afterEach(cleanup)
-    test('update button should disable upon providing existing client name ', () => {
+    test('update button should disable upon providing existing client name ', async () => {
       // Client Code
       const clientCodeInput = screen.getByTestId(clientCodeId)
       userEvent.type(clientCodeInput, '888')
@@ -223,7 +223,7 @@ describe('Edit Client Component Testing', () => {
 
       // Client Name
       const clientNameInput = screen.getByTestId(clientNameId)
-      userEvent.type(clientNameInput, 'newTestClient')
+      userEvent.type(clientNameInput, 'Overseas Connect INC')
 
       // Client Contact Person
       const contactPersonInput = screen.getByTestId(contactPersonId)
@@ -252,7 +252,9 @@ describe('Edit Client Component Testing', () => {
       // Update Button
       const updateBtnElement = screen.getByTestId(updateBtnElementId)
       userEvent.click(updateBtnElement)
-      expect(updateBtnElement).toBeDisabled()
+      await waitFor(() => {
+        expect(updateBtnElement).toBeDisabled()
+      })
     })
   })
 })
