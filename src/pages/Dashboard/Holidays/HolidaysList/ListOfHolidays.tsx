@@ -23,7 +23,7 @@ const ListOfHolidays = (): JSX.Element => {
         selectedCountry,
       ),
     )
-  }, [dispatch])
+  }, [dispatch, employeeCountry])
 
   return (
     <>
