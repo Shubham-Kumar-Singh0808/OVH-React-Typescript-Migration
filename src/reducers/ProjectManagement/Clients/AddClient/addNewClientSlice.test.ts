@@ -4,10 +4,7 @@ import {
   AddClientDetails,
   AddNewClientSliceState,
 } from '../../../../types/ProjectManagement/Clients/AddClient/addNewClientTypes'
-import {
-  mockAddNewClient,
-  mockClientCountries,
-} from '../../../../test/data/addNewClientData'
+import { mockClientCountries } from '../../../../test/data/addNewClientData'
 
 describe('addNewClient Slice', () => {
   describe('Reducer', () => {
@@ -52,7 +49,6 @@ describe('addNewClient Slice', () => {
       expect(state).toEqual({
         clientCountries: [],
         isLoading: ApiLoadingState.failed,
-        error: null,
         addClientDetails: {} as AddClientDetails,
       })
     })
