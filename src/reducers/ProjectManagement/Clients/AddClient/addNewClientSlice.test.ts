@@ -52,6 +52,7 @@ describe('addNewClient Slice', () => {
       expect(state).toEqual({
         clientCountries: [],
         isLoading: ApiLoadingState.failed,
+        error: null,
         addClientDetails: {} as AddClientDetails,
       })
     })

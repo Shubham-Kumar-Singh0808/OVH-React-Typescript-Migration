@@ -29,11 +29,21 @@ export const addNewClientHandlers = [
       }),
     )
   }),
+  //checkClientOrganizationExist api mock
   rest.get(addNewClientApiConfig.checkClientOrgExist, (_req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,
         data: true,
+      }),
+    )
+  }),
+  //checkClientOrganizationExist api mock
+  rest.get(addNewClientApiConfig.checkClientOrgExist, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: false,
       }),
     )
   }),
