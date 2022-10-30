@@ -14,6 +14,6 @@ describe('My Profile Tabs Component Testing', () => {
       },
     })
 
-    expect(screen.getByText('General')).toBeInTheDocument()
+    expect(screen.getByText('General Information')).toBeInTheDocument()
   })
 })
