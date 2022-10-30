@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// Todo: remove eslint and fix all the errors
 import {
   CNav,
   CNavItem,
@@ -21,7 +19,6 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import EmployeeProjects from '../ProjectsTab/EmployeeProjects'
 import EmployeeAssets from '../MyAssetsTab/EmployeeAssets'
-import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 import { mapTabsToFeatures } from '../../../utils/helper'
 import { MappedTabs } from '../../../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
 
@@ -105,8 +102,8 @@ const MyProfileTabs = (): JSX.Element => {
       <CNav className="inline-tabs-nav" variant="tabs" role="tablist">
         {tabResult
           ?.filter((value) => Object.keys(value).length !== 0)
-          .map((item, _i) => (
-            <CNavItem key={item.id}>
+          .map((item, index) => (
+            <CNavItem key={index}>
               {/* {employeeRole !== 'admin' &&
               employeeRole !== 'HR' &&
               item.id === 9 ? (
@@ -114,6 +111,7 @@ const MyProfileTabs = (): JSX.Element => {
               ) : ( */}
               <>
                 <CNavLink
+                  data-testid="profileNavLink"
                   active={activeTabsKey === item.id}
                   onClick={() => handleActiveTab(item.id)}
                 >
