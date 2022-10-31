@@ -108,7 +108,9 @@ const AppraisalConfigurationsTable = (): JSX.Element => {
                   <CTableDataCell>
                     {appraisalCycle.servicePeriod}
                   </CTableDataCell>
-                  <CTableDataCell>{appraisalCycle.active}</CTableDataCell>
+                  <CTableDataCell>
+                    {appraisalCycle.active ? 'Yes' : 'No'}
+                  </CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
                     {appraisalCycle.description ? (
                       <CLink
