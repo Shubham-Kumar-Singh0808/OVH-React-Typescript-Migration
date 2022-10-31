@@ -50,10 +50,6 @@ describe('Dashboard AppHeader Component Testing', () => {
       userEvent.click(logoutButtonIcon)
       expect(screen.getByText('Logout')).toBeInTheDocument()
     })
-    test('should redirect to employeeList page when user clicks on search button without search string', () => {
-      const searchButtonEl = screen.getByTestId(searchButton)
-      userEvent.click(searchButtonEl)
-    })
     test('should be able to render search component placeholder', () => {
       expect(screen.getByRole('combobox')).toBeInTheDocument()
     })
