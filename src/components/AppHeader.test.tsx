@@ -126,7 +126,19 @@ describe('Dashboard AppHeader Component Testing', () => {
       const searchButtonElement = screen.getByTestId(searchButton)
       userEvent.click(searchButtonElement)
       await waitFor(() => {
-        expect(render(toRender))
+        expect(
+          render(toRender, {
+            preloadedState: {
+              dashboardEmployeeSearch: {
+                employeeProfile: mockSearchEmployee,
+                searchString: searchEmployeeString,
+              },
+              userAccessToFeatures: {
+                userAccessToFeatures: mockUserAccessToFeaturesData,
+              },
+            },
+          }),
+        )
       })
     })
   })
