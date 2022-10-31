@@ -6,6 +6,7 @@ import { Router } from 'react-router-dom'
 import SelectCountry from './SelectCountry'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { mockCountries } from '../../../../test/data/handbookTotalListData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 describe('Select Country Component Testing', () => {
   const history = createMemoryHistory()
@@ -29,6 +30,9 @@ describe('Select Country Component Testing', () => {
               token: 'test',
               designation: 'developer',
             },
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       },

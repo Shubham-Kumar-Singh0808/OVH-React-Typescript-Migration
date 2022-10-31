@@ -3,6 +3,7 @@ import React from 'react'
 import ListOfHolidays from './ListOfHolidays'
 import { render, screen } from '../../../../test/testUtils'
 import { mockLoggedInEmployeeData } from '../../../../test/data/myProfileData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const toRender = (
   <div>
@@ -28,6 +29,9 @@ describe('List Of Holidays Component Testing', () => {
           tenantKey: 'abc',
           token: 'test',
           designation: 'developer',
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     },

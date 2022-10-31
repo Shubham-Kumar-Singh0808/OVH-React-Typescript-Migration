@@ -20,6 +20,7 @@ import { useAppDispatch, useTypedSelector } from '../stateStore'
 const AppHeader = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const history = useHistory()
+  const employeeListPath = '/employeeList'
   const [searchAutoCompleteTarget, setSearchAutoCompleteTarget] =
     useState<string>()
 
@@ -32,6 +33,13 @@ const AppHeader = (): JSX.Element => {
   const userAccessToSearch = userAccessToFeatures?.find(
     (feature) => feature.name === 'Employee Directory',
   )
+  useEffect(() => {
+    if (window.location.pathname !== employeeListPath) {
+      setSearchAutoCompleteTarget('')
+      dispatch(reduxServices.searchEmployee.actions.setClearEmployeeProfiles())
+    }
+  }, [window.location.pathname])
+
   useEffect(() => {
     if (searchAutoCompleteTarget) {
       dispatch(
@@ -60,17 +68,9 @@ const AppHeader = (): JSX.Element => {
         searchEmployeeResultAction,
       )
     ) {
-      history.push('/employeeList')
+      history.push(employeeListPath)
     }
-    history.push('/employeeList')
-  }
-
-  const handleSearchEmployeeOnEnter = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-  ) => {
-    if (event.key === 'Enter') {
-      handleSearchEmployee()
-    }
+    history.push(employeeListPath)
   }
 
   return (
@@ -93,7 +93,7 @@ const AppHeader = (): JSX.Element => {
                   className: 'form-control form-control-sm',
                   id: 'employee-autocomplete',
                   placeholder: 'Search Employee',
-                  onKeyDown: handleSearchEmployeeOnEnter,
+                  // onKeyDown: handleSearchEmployeeOnEnter,
                 }}
                 getItemValue={(item) => item?.fullName}
                 items={employees?.slice(0, 10)}
@@ -110,14 +110,10 @@ const AppHeader = (): JSX.Element => {
                     {children}
                   </div>
                 )}
-                renderItem={(item, isHighlighted) => (
+                renderItem={(item) => (
                   <div
                     data-testid="employee-options"
-                    className={
-                      isHighlighted
-                        ? 'autocomplete-dropdown-item active'
-                        : 'autocomplete-dropdown-item'
-                    }
+                    className="autocomplete-dropdown-item"
                     key={item.id}
                   >
                     <CCol className="d-flex justify-content-left employee-wrapper">

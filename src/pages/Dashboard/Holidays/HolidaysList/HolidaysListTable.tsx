@@ -34,8 +34,11 @@ const HolidaysListTable = ({
     reduxServices.holidays.selectors.upcomingHolidays,
   )
 
-  const userRole = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToHolidays = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Holiday Actions',
   )
 
   const isLoading = useTypedSelector(reduxServices.holidays.selectors.isLoading)
@@ -97,29 +100,29 @@ const HolidaysListTable = ({
           <CTableDataCell>{holiday.name}</CTableDataCell>
           <CTableDataCell>{holiday.country}</CTableDataCell>
           <CTableDataCell>
-            {(userRole === 'admin' || userRole === 'HR Manager') && (
-              <>
-                <Link to={`/editHoliday/${holiday.id}`}>
-                  <CButton
-                    color="info"
-                    className="btn-ovh btn-ovh-employee-list me-1"
-                    data-testid={`holiday-edit-btn${index}`}
-                  >
-                    <i className="fa fa-edit" aria-hidden="true"></i>
-                  </CButton>
-                </Link>
+            {userAccessToHolidays?.updateaccess && (
+              <Link to={`/editHoliday/${holiday.id}`}>
                 <CButton
-                  className="btn-ovh btn-ovh-employee-list"
-                  color="danger"
-                  size="sm"
-                  data-testid={`holiday-delete-btn${index}`}
-                  onClick={() =>
-                    handleShowHolidayDeleteModal(holiday.id, holiday.name)
-                  }
+                  color="info"
+                  className="btn-ovh btn-ovh-employee-list me-1"
+                  data-testid={`holiday-edit-btn${index}`}
                 >
-                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                  <i className="fa fa-edit" aria-hidden="true"></i>
                 </CButton>
-              </>
+              </Link>
+            )}
+            {userAccessToHolidays?.deleteaccess && (
+              <CButton
+                className="btn-ovh btn-ovh-employee-list"
+                color="danger"
+                size="sm"
+                data-testid={`holiday-delete-btn${index}`}
+                onClick={() =>
+                  handleShowHolidayDeleteModal(holiday.id, holiday.name)
+                }
+              >
+                <i className="fa fa-trash-o" aria-hidden="true"></i>
+              </CButton>
             )}
           </CTableDataCell>
         </CTableRow>
@@ -128,6 +131,8 @@ const HolidaysListTable = ({
   ) : (
     <></>
   )
+  const actionHeaderViewAccess =
+    userAccessToHolidays?.updateaccess || userAccessToHolidays?.deleteaccess
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (
@@ -139,8 +144,10 @@ const HolidaysListTable = ({
                 <CTableHeaderCell scope="col">Week</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Occasion</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                {(userRole === 'admin' || userRole === 'HR Manager') && (
+                {actionHeaderViewAccess ? (
                   <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                ) : (
+                  <></>
                 )}
               </CTableRow>
             </CTableHead>
@@ -151,6 +158,7 @@ const HolidaysListTable = ({
             <CCol xs={4}>
               <p>
                 <strong>Total Number of Holidays:{holidaysInfo.length}</strong>
+                <strong>Total Number of Holidays: {holidaysInfo.length}</strong>
               </p>
             </CCol>
             <CCol xs={3}>

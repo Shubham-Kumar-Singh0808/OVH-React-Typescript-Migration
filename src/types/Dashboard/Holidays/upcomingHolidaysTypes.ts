@@ -11,7 +11,7 @@ export type Holidays = {
 
 export type HolidaysListProps = {
   selectedCountry: string
-  setSelectedCountry: (value: string) => void
+  // setSelectedCountry: (value: string) => void
 }
 
 export type backButtonProp = {
@@ -38,6 +38,7 @@ export type holidaysPageProps = {
 }
 
 export type HolidaysSliceState = {
+  selectedEmployeeCountry: string
   isLoading: LoadingState
   upcomingHolidays: Holidays[]
   addNewHoliday: SaveHoliday
