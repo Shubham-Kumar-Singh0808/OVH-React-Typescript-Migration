@@ -67,6 +67,7 @@ import { addLocationListService } from './ConferenceRoomBooking/NewBooking/Locat
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
+import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -138,4 +139,5 @@ export const reduxServices = {
   addTrackerLists: addTrackerListService,
   eventList: eventListService,
   searchEmployee: employeeSearchService,
+  appraisalConfigurations: appraisalCycleService,
 }

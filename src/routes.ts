@@ -198,6 +198,9 @@ const EditHoliday = React.lazy(
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
+const AppraisalConfigurations = React.lazy(
+  () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -441,6 +444,11 @@ const routes = [
     path: '/editHoliday/:holidayId',
     name: 'Edit Holiday',
     component: EditHoliday,
+  },
+  {
+    path: '/appraisalCycle',
+    name: 'Appraisal Configurations',
+    component: AppraisalConfigurations,
   },
 ]
 

@@ -58,6 +58,7 @@ import {
   AddLocationListApi,
   EventListApi,
   AddTrackerApi,
+  AppraisalConfigurationsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -510,4 +511,8 @@ export const eventListApiConfig: EventListApi = {
 export const addTrackerApiConfig: AddTrackerApi = {
   addNewTracker: apiPrefix + '/supportManagement/addTracker',
   deleteTracker: apiPrefix + '/supportManagement/deleteTracker',
+}
+
+export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
+  getAppraisalCycle: apiPrefix + '/appraisal/cycle',
 }

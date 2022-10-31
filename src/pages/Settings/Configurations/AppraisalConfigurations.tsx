@@ -1,8 +1,9 @@
 import React from 'react'
-import { CButton, CCol } from '@coreui/react-pro'
+import { CButton, CCol, CRow } from '@coreui/react-pro'
+import AppraisalConfigurationsTable from './AppraisalConfigurationsTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 
-const AppraisalConfigurations = () => {
+const AppraisalConfigurations = (): JSX.Element => {
   return (
     <>
       <OCard
@@ -12,15 +13,17 @@ const AppraisalConfigurations = () => {
         CFooterClassName="d-none"
       >
         {' '}
-        <CCol sm={3}>
-          <CButton
-            data-testid="designationButton"
-            color="info"
-            className="btn-ovh me-1"
-          >
-            <i className="fa fa-plus me-1"></i>Add Configuration
-          </CButton>
-        </CCol>
+        <CRow className="mt-1">
+          <CCol md={12} className="pe-0">
+            <div className="form-group pull-right ms-4">
+              <CButton color="info" className="text-white btn-ovh" size="sm">
+                <i className="fa fa-plus me-1"></i>
+                Add Configuration
+              </CButton>
+            </div>
+          </CCol>
+        </CRow>
+        <AppraisalConfigurationsTable />
       </OCard>
     </>
   )
