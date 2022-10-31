@@ -1,5 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-// todo: remove eslint and fix all errors
 import {
   CButton,
   CCol,
@@ -32,12 +30,9 @@ import {
   dateFormatPerLocale,
 } from '../../../utils/dateFormatUtils'
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const deviceLocale: string =
-    navigator.languages && navigator.languages.length
-      ? navigator.languages[0]
-      : navigator.language
 
   const [dateFormat, setDateFormat] = useState<string>('')
 
@@ -55,6 +50,13 @@ const BasicInfoTab = (): JSX.Element => {
     reduxServices.authentication.selectors.selectToken,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-BasicInfo',
+  )
   const selectedUserBasicInformation = {
     id: employeeBasicInformation.id,
     baseLocation: employeeBasicInformation.baseLocation,
@@ -114,9 +116,11 @@ const BasicInfoTab = (): JSX.Element => {
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
   const [selectedProfilePicture, setSelectedProfilePicture] =
     useState<UploadImageInterface>()
-  const [officialBday, setOfficialBday] = useState<Date>()
-  const [realBday, setRealBday] = useState<Date>()
-  const [selectedAnniversary, setSelectedAnniversary] = useState<Date>()
+  const [officialBday, setOfficialBday] = useState<Date | string>()
+  const [realBday, setRealBday] = useState<Date | string>()
+  const [selectedAnniversary, setSelectedAnniversary] = useState<
+    Date | string
+  >()
   const [officialBdyFlag, setOfficialBdayFlag] = useState(false)
   const [realBdayFlag, setRealBdayFlag] = useState(false)
   const [anniversaryFlag, setAnniversaryFlag] = useState(false)
@@ -130,35 +134,21 @@ const BasicInfoTab = (): JSX.Element => {
   }, [])
 
   const commonFormatDate = 'DD/MM/YYYY'
-  const dateFormmatted = (date: string) => {
-    if (date) {
-      const tempDateFormat = reformatDate(date as string)
-      return tempDateFormat.toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    } else {
-      return ''
-    }
-  }
 
   let newOfficialBday = new Date()
   if (employeeBasicInformationEditData.officialBirthday) {
     const currentOfficialBday =
-      employeeBasicInformationEditData.officialBirthday as string
+      employeeBasicInformationEditData.officialBirthday
     newOfficialBday = reformatDate(currentOfficialBday)
   }
   let newRealBirthday = new Date()
   if (employeeBasicInformationEditData.realBirthday) {
-    const currentRealBirthday =
-      employeeBasicInformationEditData.realBirthday as string
+    const currentRealBirthday = employeeBasicInformationEditData.realBirthday
     newRealBirthday = reformatDate(currentRealBirthday)
   }
   let newAnniversary = new Date()
   if (employeeBasicInformationEditData.anniversary) {
-    const currentAnniversary =
-      employeeBasicInformationEditData.anniversary as string
+    const currentAnniversary = employeeBasicInformationEditData.anniversary
     newAnniversary = reformatDate(currentAnniversary)
   }
 
@@ -656,13 +646,14 @@ const BasicInfoTab = (): JSX.Element => {
               placeholderText={dateFormat}
               dateFormat={dateFormat}
               name="officialBirthday"
-              value={dateFormmatted(
-                employeeBasicInformationEditData.officialBirthday as string,
-              )}
+              value={
+                (officialBday as string) ||
+                (employeeBasicInformationEditData.officialBirthday as string)
+              }
               selected={
                 !officialBdyFlag && dateIsValid(newOfficialBday)
                   ? newOfficialBday
-                  : officialBday
+                  : (officialBday as Date)
               }
               onChange={(date: Date) => {
                 onDateChangeHandler(date, { name: 'officialBirthday' })
@@ -710,13 +701,14 @@ const BasicInfoTab = (): JSX.Element => {
                 placeholderText={dateFormat}
                 dateFormat={dateFormat}
                 name="realBirthday"
-                value={dateFormmatted(
-                  employeeBasicInformationEditData.realBirthday as string,
-                )}
+                value={
+                  (realBday as string) ||
+                  (employeeBasicInformationEditData.realBirthday as string)
+                }
                 selected={
                   !realBdayFlag && dateIsValid(newRealBirthday)
                     ? newRealBirthday
-                    : realBday
+                    : (realBday as Date)
                 }
                 onChange={(date: Date) => {
                   onDateChangeHandler(date, { name: 'realBirthday' })
@@ -784,13 +776,14 @@ const BasicInfoTab = (): JSX.Element => {
                 placeholderText={dateFormat}
                 dateFormat={dateFormat}
                 name="anniversary"
-                value={dateFormmatted(
-                  employeeBasicInformationEditData.anniversary as string,
-                )}
+                value={
+                  (selectedAnniversary as string) ||
+                  (employeeBasicInformationEditData.anniversary as string)
+                }
                 selected={
                   !anniversaryFlag && dateIsValid(newAnniversary)
                     ? newAnniversary
-                    : selectedAnniversary
+                    : (selectedAnniversary as Date)
                 }
                 onChange={(date: Date) => {
                   onDateChangeHandler(date, { name: 'anniversary' })
@@ -975,18 +968,20 @@ const BasicInfoTab = (): JSX.Element => {
             )}
           </CCol>
         </CRow>
-        <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
-              className="mt-4 btn-ovh btn btn-success"
-              size="sm"
-              disabled={!saveButtonEnabled}
-              type="submit"
-            >
-              Save
-            </CButton>
-          </CCol>
-        </CRow>
+        {userAccess?.updateaccess && (
+          <CRow>
+            <CCol md={{ span: 6, offset: 3 }}>
+              <CButton
+                className="mt-3 btn-ovh btn btn-success"
+                size="sm"
+                disabled={!saveButtonEnabled}
+                type="submit"
+              >
+                Save
+              </CButton>
+            </CCol>
+          </CRow>
+        )}
       </CForm>
     </>
   )

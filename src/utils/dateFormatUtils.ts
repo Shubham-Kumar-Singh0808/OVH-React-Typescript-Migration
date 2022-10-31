@@ -96,7 +96,7 @@ export const dateFormatPerLocale = [
   { label: 'en-CA', format: format2 },
   { label: 'en-GB', format: format2 },
   { label: 'en-IE', format: format2 },
-  { label: 'en-IN', format: format3 },
+  { label: 'en-IN', format: format2 },
   { label: 'en-JM', format: format2 },
   { label: 'en-MY', format: 'd/M/yyyy' },
   { label: 'en-NZ', format: 'd/MM/yyyy' },
