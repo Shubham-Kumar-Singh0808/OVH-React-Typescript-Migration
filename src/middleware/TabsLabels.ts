@@ -1,41 +1,51 @@
-/* eslint-disable prettier/prettier */
+import { MyProfileTabList } from '../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
+
 //Add the Tabs Labels to show in My profile tabs sections
-const TabsLabels = [
+const TabsLabels: MyProfileTabList[] = [
   {
     id: 1,
-    name: 'General',
+    tabName: 'General',
+    label: 'My Profile-General',
   },
   {
     id: 2,
-    name: 'Basic Info',
+    tabName: 'Basic Info',
+    label: 'My Profile-BasicInfo',
   },
   {
     id: 3,
-    name: 'Personal Info',
+    tabName: 'Personal Info',
+    label: 'My Profile-PersonalInfo',
   },
   {
     id: 4,
-    name: 'Qualification',
+    tabName: 'Qualification',
+    label: 'My Profile-Skills',
   },
   {
     id: 5,
-    name: 'Reviews',
+    tabName: 'Reviews',
+    label: 'My Profile-Observations',
   },
   {
     id: 6,
-    name: 'Projects',
+    tabName: 'Projects',
+    label: 'My Profile-Projects',
   },
   {
     id: 7,
-    name: 'Reportees',
+    tabName: 'Reportees',
+    label: 'My Profile-Reporties',
   },
   {
     id: 8,
-    name: 'Assets',
+    tabName: 'Assets',
+    label: 'My Profile-Infra',
   },
   {
     id: 9,
-    name: 'Profile History',
+    tabName: 'Profile History',
+    label: 'My Profile-EmployeeHistory',
   },
 ]
 export default TabsLabels
