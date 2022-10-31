@@ -1,7 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
 import EmployeeCertificationsTable from './EmployeeCertificationsTable'
-import { render, screen } from '../../../../test/testUtils'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 import { EmployeeCertification } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import { mockEmployeeCertifications } from '../../../../test/data/employeeCertificationData'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
@@ -66,6 +67,33 @@ describe('Employee Certification Table Component Testing', () => {
     })
     test('should render correct number of page records', () => {
       expect(screen.queryAllByRole('row')).toHaveLength(10)
+    })
+  })
+
+  describe('Certification Table with data', () => {
+    test('should display table data', async () => {
+      render(
+        <EmployeeCertificationsTable
+          editCertificateButtonHandler={mockEditHandler}
+          userAccess={userAccessToCertifications}
+        />,
+        {
+          preloadedState: {
+            employeeCertificates: {
+              certificationDetails:
+                mockEmployeeCertifications as EmployeeCertification[],
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
+            },
+          },
+        },
+      )
+      expect(screen.getByText('Description')).toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(screen.getByText('qweert')).toBeInTheDocument()
+      })
     })
   })
 })
