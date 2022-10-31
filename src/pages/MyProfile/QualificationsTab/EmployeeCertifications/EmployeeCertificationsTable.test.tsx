@@ -1,7 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import EmployeeCertificationsTable from './EmployeeCertificationsTable'
-import { render, screen, waitFor } from '../../../../test/testUtils'
+import { render, screen } from '../../../../test/testUtils'
 import { EmployeeCertification } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 import { mockEmployeeCertifications } from '../../../../test/data/employeeCertificationData'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
@@ -68,5 +68,4 @@ describe('Employee Certification Table Component Testing', () => {
       expect(screen.queryAllByRole('row')).toHaveLength(10)
     })
   })
- 
 })
