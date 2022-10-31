@@ -110,8 +110,10 @@ const MyAttendance = (): JSX.Element => {
                 </h2>
               </div>
               <div className="fc-toolbar-chunk">
-                {moment(currentDate).format('MMMM') !==
-                  moment(new Date()).subtract(1, 'months').format('MMMM') && (
+                {moment(currentDate).format('MMMM YYYY') !==
+                  moment(new Date())
+                    .subtract(1, 'months')
+                    .format('MMMM YYYY') && (
                   <button
                     className="fc-prev-button fc-button fc-button-primary"
                     title="Previous month"

@@ -9,8 +9,9 @@ import EmployeeSkillsTable from './EmployeeSkills/EmployeeSkillsTable'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import { employeeSkillThunk } from '../../../reducers/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillSlice'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
+import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 const QualificationDetails = (): JSX.Element => {
   const [isViewingAnotherEmployee] = useSelectedEmployee()
@@ -30,6 +31,16 @@ const QualificationDetails = (): JSX.Element => {
     dispatch(employeeSkillThunk.getEmployeeSkillInformation(skillId))
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessToSkill = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills',
+  )
+  const userAccessToCertifications = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills-Certifications',
+  )
   return (
     <>
       {toggle === '' && (
@@ -51,7 +62,8 @@ const QualificationDetails = (): JSX.Element => {
             <h4 className="h4">Certifications</h4>
           </CCardHeader>
           <CCardBody className="ps-0 pe-0">
-            {!isViewingAnotherEmployee ? (
+            {!isViewingAnotherEmployee &&
+            userAccessToCertifications?.createaccess ? (
               <OAddButton
                 addButtonHandler={() => setToggle('addCertificationSection')}
               />
@@ -60,13 +72,15 @@ const QualificationDetails = (): JSX.Element => {
             )}
             <EmployeeCertificationsTable
               editCertificateButtonHandler={editCertificateButtonHandler}
+              userAccess={userAccessToCertifications as UserAccessToFeatures}
             />
           </CCardBody>
           <CCardHeader>
             <h4 className="h4">Skills</h4>
           </CCardHeader>
           <CCardBody className="ps-0 pe-0">
-            {!isViewingAnotherEmployee ? (
+            {!isViewingAnotherEmployee &&
+            (userAccessToSkill?.createaccess as boolean) ? (
               <OAddButton addButtonHandler={() => setToggle('addSkills')} />
             ) : (
               <></>
@@ -77,6 +91,7 @@ const QualificationDetails = (): JSX.Element => {
               striped={true}
               bordered={false}
               tableClassName={''}
+              userAccess={userAccessToSkill as UserAccessToFeatures}
             />
           </CCardBody>
         </>

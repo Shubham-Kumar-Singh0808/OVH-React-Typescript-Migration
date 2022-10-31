@@ -1,6 +1,8 @@
 .search-employee-list{
-    padding: 4px;
     width: calc(100% + 12px);
+    .hide-wrapper {
+        display: none;
+    }
     cursor: pointer;
     .birthday-avatar{
         margin-top: 6px;
@@ -20,9 +22,14 @@
             color: $white;
         }
     } 
-    .autocomplete-dropdown-item.active{
+    .autocomplete-dropdown-item.active {
         background-color: $search-listHover;
     }
 }
+
+.no-records {
+    margin-left: 32px;
+    margin-top: 25px;
+  }
 
 
