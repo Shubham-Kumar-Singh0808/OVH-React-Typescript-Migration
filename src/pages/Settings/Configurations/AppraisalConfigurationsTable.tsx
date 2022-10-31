@@ -126,11 +126,14 @@ const AppraisalConfigurationsTable = (): JSX.Element => {
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     <CButton
-                      size="sm"
                       color="info"
-                      className="btn-ovh me-1 btn-sm"
+                      className="btn-ovh me-2"
+                      data-testid="edit-family"
                     >
-                      <i className="fa fa-edit" aria-hidden="true"></i>
+                      <i
+                        className="fa fa-pencil-square-o"
+                        aria-hidden="true"
+                      ></i>
                     </CButton>
                   </CTableDataCell>
                   <CTableDataCell scope="row">
