@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCol,
+  CLink,
   CRow,
   CTable,
   CTableBody,
@@ -10,13 +11,19 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
+import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import { getAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import OModal from '../../../components/ReusableComponent/OModal'
 
 const AppraisalConfigurationsTable = (): JSX.Element => {
+  const [isAgendaModalVisible, setIsAgendaModalVisible] =
+    useState<boolean>(false)
+  const [modalAgenda, setModalAgenda] = useState({} as getAppraisalCycle)
   const dispatch = useAppDispatch()
 
   const appraisalCycleNames = useTypedSelector(
@@ -51,6 +58,10 @@ const AppraisalConfigurationsTable = (): JSX.Element => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
+  const handleAgendaModal = (appraisalCycle: getAppraisalCycle) => {
+    setIsAgendaModalVisible(true)
+    setModalAgenda(appraisalCycle)
+  }
   return (
     <>
       <CTable
@@ -76,21 +87,42 @@ const AppraisalConfigurationsTable = (): JSX.Element => {
         </CTableHead>
         <CTableBody>
           {appraisalCycleNames.length > 0 &&
-            appraisalCycleNames?.map((appraisalCycle, index) => (
-              <CTableRow key={index}>
-                <CTableDataCell>{index + 1}</CTableDataCell>
-                <CTableDataCell>{appraisalCycle.name}</CTableDataCell>
-                <CTableDataCell>{appraisalCycle.appraisalType}</CTableDataCell>
-                <CTableDataCell>{appraisalCycle.toDate}</CTableDataCell>
-                <CTableDataCell>{appraisalCycle.fromDate}</CTableDataCell>
-                <CTableDataCell>
-                  {appraisalCycle.appraisalDuration}
-                </CTableDataCell>
-                <CTableDataCell>{appraisalCycle.servicePeriod}</CTableDataCell>
-                <CTableDataCell>{appraisalCycle.active}</CTableDataCell>
-                <CTableDataCell>{appraisalCycle.description}</CTableDataCell>
-                <CTableDataCell scope="row">
-                  <>
+            appraisalCycleNames?.map((appraisalCycle, index) => {
+              const agendaLimit =
+                appraisalCycle.description &&
+                appraisalCycle.description.length > 30
+                  ? `${appraisalCycle.description.substring(0, 30)}...`
+                  : appraisalCycle.description
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell>{appraisalCycle.name}</CTableDataCell>
+                  <CTableDataCell>
+                    {appraisalCycle.appraisalType}
+                  </CTableDataCell>
+                  <CTableDataCell>{appraisalCycle.toDate}</CTableDataCell>
+                  <CTableDataCell>{appraisalCycle.fromDate}</CTableDataCell>
+                  <CTableDataCell>
+                    {appraisalCycle.appraisalDuration}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {appraisalCycle.servicePeriod}
+                  </CTableDataCell>
+                  <CTableDataCell>{appraisalCycle.active}</CTableDataCell>
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    {appraisalCycle.description ? (
+                      <CLink
+                        className="cursor-pointer text-decoration-none"
+                        data-testid="ticket-agenda-link"
+                        onClick={() => handleAgendaModal(appraisalCycle)}
+                      >
+                        {parse(agendaLimit)}
+                      </CLink>
+                    ) : (
+                      'N/A'
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell scope="row">
                     <CButton
                       size="sm"
                       color="info"
@@ -98,10 +130,8 @@ const AppraisalConfigurationsTable = (): JSX.Element => {
                     >
                       <i className="fa fa-edit" aria-hidden="true"></i>
                     </CButton>
-                  </>
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  <>
+                  </CTableDataCell>
+                  <CTableDataCell scope="row">
                     <CButton
                       size="sm"
                       color="info"
@@ -109,12 +139,13 @@ const AppraisalConfigurationsTable = (): JSX.Element => {
                     >
                       <i className="fa fa-plus" aria-hidden="true"></i>
                     </CButton>
-                  </>
-                </CTableDataCell>
-              </CTableRow>
-            ))}
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
+
       {appraisalCycleNames.length ? (
         <CRow>
           <CCol xs={4}>
@@ -153,6 +184,20 @@ const AppraisalConfigurationsTable = (): JSX.Element => {
           </CRow>
         </CCol>
       )}
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        visible={isAgendaModalVisible}
+        setVisible={setIsAgendaModalVisible}
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+      >
+        <>
+          <p>{modalAgenda.description}</p>
+        </>
+      </OModal>
     </>
   )
 }
