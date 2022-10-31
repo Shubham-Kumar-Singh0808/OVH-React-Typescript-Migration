@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import RoomList from './RoomList'
-import { render, screen } from '../../../../test/testUtils'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 import { mockRoomNames } from '../../../../test/data/addRoomListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
@@ -15,6 +15,9 @@ describe('RoomList without data', () => {
       preloadedState: {
         roomList: {
           meetingRooms: mockRoomNames,
+        },
+        addLocationList: {
+          meetingLocations: mockRoomNames,
         },
         userAccessToFeatures: {
           isLoading: ApiLoadingState.succeeded,
@@ -43,8 +46,8 @@ describe('RoomList without data', () => {
 
   test('should select Location Name', () => {
     const LocationSelector = screen.getByTestId('form-select1')
-    userEvent.selectOptions(LocationSelector, ['Select Location'])
-    expect(LocationSelector).toHaveValue('')
+    userEvent.selectOptions(LocationSelector, ['Raybiztech - 2'])
+    expect(LocationSelector).toHaveValue('5')
   })
 
   test('should render on every input of RoomList', () => {
@@ -53,9 +56,12 @@ describe('RoomList without data', () => {
     expect(roomNameInput).toHaveValue('Aurobindo')
   })
 
-  test('should render  Room List screen and add button', () => {
+  test('should render  Room List screen and add button', async () => {
     const addBtnElement = screen.getByRole('button', { name: 'Add' })
     expect(addBtnElement).toBeInTheDocument()
     userEvent.click(addBtnElement)
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('Enter Name')).toHaveValue('')
+    })
   })
 })

@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import RoomListToggle from './RoomListToggle'
-import { render, screen } from '../../../../test/testUtils'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
@@ -25,9 +25,12 @@ describe('Room List without data', () => {
     })
   })
 
-  test('should be able to click update button element', () => {
+  test('should be able to click update button element', async () => {
     const updateBtnElement = screen.getAllByTestId('btn-update1')
     userEvent.click(updateBtnElement[0])
     expect(updateBtnElement).toBeTruthy()
+    await waitFor(() => {
+      expect(updateBtnElement[0]).not.toBeChecked()
+    })
   })
 })
