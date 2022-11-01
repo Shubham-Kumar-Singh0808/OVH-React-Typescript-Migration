@@ -23,7 +23,7 @@ const AppraisalConfigurations = (): JSX.Element => {
                   color="info"
                   className="text-white btn-ovh"
                   size="sm"
-                  onClick={() => setToggle('appraisalCycle')}
+                  onClick={() => setToggle('addConfiguration')}
                 >
                   <i className="fa fa-plus me-1"></i>
                   Add Configuration
@@ -34,9 +34,11 @@ const AppraisalConfigurations = (): JSX.Element => {
           <AppraisalConfigurationsTable />
         </OCard>
       )}
-      {/* {toggle === 'addConfiguration' && (
+      {toggle === 'addConfiguration' && (
         <AddConfiguration
-          setToggle={setToggle}
+          setToggle={() => {
+            setToggle('')
+          }}
           reviewPeriodTo={undefined}
           reviewPeriodFrom={undefined}
           setReviewPeriodTo={(): void => {
@@ -46,7 +48,7 @@ const AppraisalConfigurations = (): JSX.Element => {
             throw new Error('Function not implemented.')
           }}
         />
-      )} */}
+      )}
     </>
   )
 }

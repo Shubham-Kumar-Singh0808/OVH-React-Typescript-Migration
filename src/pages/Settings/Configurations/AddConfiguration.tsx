@@ -29,7 +29,7 @@ const AddConfiguration = ({
   setReviewPeriodTo,
   setReviewPeriodFrom,
 }: {
-  setToggle: (value: string) => void
+  setToggle: () => void
   reviewPeriodTo: Date | undefined
   reviewPeriodFrom: Date | undefined
   setReviewPeriodTo: React.Dispatch<React.SetStateAction<Date | undefined>>
@@ -119,6 +119,7 @@ const AddConfiguration = ({
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
+              onClick={setToggle}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -226,6 +227,7 @@ const AddConfiguration = ({
                 className="form-control form-control-sm sh-date-picker"
                 maxDate={new Date()}
                 showMonthYearPicker
+                dropdownMode="select"
                 placeholderText="mm/yyyy"
                 dateFormat="MM/yyyy"
                 name="selectMonth"
@@ -320,7 +322,7 @@ const AddConfiguration = ({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                className="not-allowed"
+                className="form-input  form-input-not-allowed"
                 data-testid="reviewDuration"
                 id="reviewDuration"
                 size="sm"
