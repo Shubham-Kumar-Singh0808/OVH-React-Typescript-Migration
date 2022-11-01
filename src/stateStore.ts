@@ -76,6 +76,7 @@ import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/
 import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
 import eventListReducer from './reducers/ConferenceRoomBooking/EventList/eventListSlice'
 import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/trackerListSlice'
+import addRoomList from './reducers/ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 import employeeProfileSearchReducer from './reducers/Dashboard/searchEmployeeSlice'
 import appraisalConfigurationsReducer from './reducers/Settings/Configurations/appraisalConfigurationsSlice'
 
@@ -154,6 +155,7 @@ export const allReducers = {
   leaveReport: leaveReportReducer,
   eventTypeList: eventTypeListReducer,
   eventList: eventListReducer,
+  roomList: addRoomList,
   dashboardEmployeeSearch: employeeProfileSearchReducer,
   appraisalConfigurations: appraisalConfigurationsReducer,
   // add your slice reducers here

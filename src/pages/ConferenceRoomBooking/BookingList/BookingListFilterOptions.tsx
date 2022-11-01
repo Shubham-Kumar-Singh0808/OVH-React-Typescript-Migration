@@ -88,11 +88,13 @@ const BookingListFilterOptions = ({
             }}
           >
             <option value={''}>Select Location</option>
-            {meetingLocation?.map((locationItem, index) => (
-              <option key={index} value={locationItem.locationName}>
-                {locationItem.locationName}
-              </option>
-            ))}
+            {meetingLocation &&
+              meetingLocation?.length > 0 &&
+              meetingLocation?.map((locationItem, index) => (
+                <option key={index} value={locationItem.locationName}>
+                  {locationItem.locationName}
+                </option>
+              ))}
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={1} className="text-end">

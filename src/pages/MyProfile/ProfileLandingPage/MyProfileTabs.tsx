@@ -54,6 +54,15 @@ const MyProfileTabs = (): JSX.Element => {
     setTabResult(mappedTabs as MappedTabs[])
   }, [userAccessToFeatures])
 
+  useEffect(() => {
+    if (tabResult) {
+      const newTabResult = tabResult?.filter(
+        (value) => Object.keys(value).length !== 0,
+      )
+      setActiveTabsKey(newTabResult[0].id)
+    }
+  }, [tabResult])
+
   const handleActiveTab = (tabKey: number) => {
     setActiveTabsKey(tabKey)
   }

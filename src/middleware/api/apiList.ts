@@ -59,6 +59,7 @@ import {
   EventListApi,
   AddTrackerApi,
   AppraisalConfigurationsApi,
+  RoomListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -515,4 +516,11 @@ export const addTrackerApiConfig: AddTrackerApi = {
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
   getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+}
+
+export const roomListApiConfig: RoomListApi = {
+  getAllMeetingRooms: apiPrefix + '/meetingRequest/getAllMeetingRooms',
+  addRoom: apiPrefix + '/meetingRequest/addRoom',
+  deleteRoom: apiPrefix + '/meetingRequest/deleteRoom',
+  updateRoom: apiPrefix + '/meetingRequest/updateRoom',
 }

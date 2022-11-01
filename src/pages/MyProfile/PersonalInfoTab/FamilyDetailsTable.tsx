@@ -110,6 +110,7 @@ const FamilyDetailsTable = ({
         striped={striped}
         bordered={bordered}
         className={tableClassName}
+        align="middle"
       >
         {!isFieldDisabled ? (
           <>
