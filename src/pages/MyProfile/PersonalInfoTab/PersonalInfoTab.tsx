@@ -132,6 +132,13 @@ const PersonalInfoTab = ({
         permanentZip: employeePresenetAddressDetails.presentZip,
         permanentLandMark: employeePresenetAddressDetails.presentLandMark,
       })
+    } else {
+      setEmployeePermanentAddressDetails({
+        permanentAddress: '',
+        permanentCity: '',
+        permanentZip: '',
+        permanentLandMark: '',
+      })
     }
   }, [
     checkBox,

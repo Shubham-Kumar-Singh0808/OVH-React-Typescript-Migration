@@ -522,9 +522,10 @@ function AddEditVisaDetails({
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Upload VISA copy:
             </CFormLabel>
-            <CCol sm={3}>
+            <CCol>
               <input
                 type="file"
+                className="mt-1"
                 data-testid="file-upload"
                 id="fileUpload"
                 name="file"
