@@ -50,6 +50,10 @@ describe('Dashboard AppHeader Component Testing', () => {
       userEvent.click(logoutButtonIcon)
       expect(screen.getByText('Logout')).toBeInTheDocument()
     })
+    test('should redirect to employeeList page when user clicks on search button without search string', () => {
+      const searchButtonEl = screen.getByTestId(searchButton)
+      userEvent.click(searchButtonEl)
+    })
     test('should be able to render search component placeholder', () => {
       expect(screen.getByRole('combobox')).toBeInTheDocument()
     })
@@ -122,7 +126,19 @@ describe('Dashboard AppHeader Component Testing', () => {
       const searchButtonElement = screen.getByTestId(searchButton)
       userEvent.click(searchButtonElement)
       await waitFor(() => {
-        expect(render(toRender))
+        expect(
+          render(toRender, {
+            preloadedState: {
+              dashboardEmployeeSearch: {
+                employeeProfile: mockSearchEmployee,
+                searchString: searchEmployeeString,
+              },
+              userAccessToFeatures: {
+                userAccessToFeatures: mockUserAccessToFeaturesData,
+              },
+            },
+          }),
+        )
       })
     })
   })
