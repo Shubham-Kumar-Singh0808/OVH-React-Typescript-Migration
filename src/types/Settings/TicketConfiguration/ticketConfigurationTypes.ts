@@ -1,5 +1,13 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
+export type SubCategoryListTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
 export type TicketConfigurationDepartments = {
   id: number
   name: string
@@ -22,7 +30,7 @@ export type TicketConfigurationSubCategories = {
   categoryName: string
   departmentName: string
   departmentId: number
-  levelOfHierarchy: unknown
+  levelOfHierarchy: string
 }
 
 export type TicketConfigurationState = {
@@ -30,6 +38,7 @@ export type TicketConfigurationState = {
   categories: TicketConfigurationCategories[]
   subCategories: TicketConfigurationSubCategories[]
   subCategoryList: TicketConfigurationSubCategoryList
+  listSize: number
   isLoading: LoadingState
   error: ValidationError
 }

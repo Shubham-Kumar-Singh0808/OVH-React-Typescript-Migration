@@ -179,6 +179,9 @@ const subCategoryList = (
 ): TicketConfigurationSubCategoryList =>
   state.ticketConfiguration.subCategoryList
 
+const listSize = (state: RootState): number =>
+  state.ticketConfiguration.listSize
+
 const ticketConfigurationThunk = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
@@ -193,6 +196,7 @@ const qualificationCategorySelectors = {
   categories,
   subCategories,
   subCategoryList,
+  listSize,
 }
 
 export const ticketConfigurationService = {
