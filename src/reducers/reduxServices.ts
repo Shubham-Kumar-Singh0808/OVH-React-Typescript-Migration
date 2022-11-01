@@ -66,6 +66,7 @@ import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventType
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
+import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
 
 export const reduxServices = {
@@ -137,5 +138,6 @@ export const reduxServices = {
   addLocationList: addLocationListService,
   addTrackerLists: addTrackerListService,
   eventList: eventListService,
+  roomLists: roomListService,
   searchEmployee: employeeSearchService,
 }
