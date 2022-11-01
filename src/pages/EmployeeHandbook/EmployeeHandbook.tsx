@@ -21,7 +21,7 @@ const EmployeeHandbook = (): JSX.Element => {
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToHandbookSettings = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Handbook',
+    (feature) => feature.name === 'Handbook Settings',
   )
   const [inputText, setInputText] = useState('')
   const [filterByInputText, setFilterByInputText] = useState('')
@@ -71,7 +71,7 @@ const EmployeeHandbook = (): JSX.Element => {
               </CButton>
             </CInputGroup>
           </CCol>
-          {userAccessToHandbookSettings?.deleteaccess && (
+          {userAccessToHandbookSettings?.viewaccess && (
             <CCol className="text-end" md={4}>
               <Link to={`/handbooksettings`}>
                 <CButton

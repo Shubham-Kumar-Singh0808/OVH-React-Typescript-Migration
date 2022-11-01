@@ -2,8 +2,9 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
-import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
+import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -39,6 +40,9 @@ describe('Employee Handbook Settings', () => {
         employeeHandbookSettings: {
           employeeHandbooks: mockEmployeeHandbookList,
           listSize: 43,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
