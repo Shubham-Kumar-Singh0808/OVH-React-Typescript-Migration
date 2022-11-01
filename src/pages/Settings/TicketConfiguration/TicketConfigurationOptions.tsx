@@ -1,9 +1,7 @@
 import { CRow, CFormLabel, CCol, CFormSelect, CButton } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import {
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
@@ -15,7 +13,7 @@ const TicketConfigurationOptions = (): JSX.Element => {
   const [selectedDepartment, setSelectedDepartment] = useState<number>()
   const [selectedCategory, setSelectedCategory] = useState<number>()
   const [selectedSubCategory, setSelectedSubCategory] = useState<number>()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const dispatch = useAppDispatch()
   const departments: TicketConfigurationDepartments[] = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.departments,
@@ -108,7 +106,6 @@ const TicketConfigurationOptions = (): JSX.Element => {
 
   return (
     <>
-      {isLoading && <OLoadingSpinner type={LoadingType.COMPONENT} />}
       <CRow className="mt-3">
         <CCol sm={3}>
           <CFormLabel className="col-sm-12 col-form-label text-start">
@@ -125,7 +122,7 @@ const TicketConfigurationOptions = (): JSX.Element => {
               >
                 <option value="0">Select Department</option>
                 {departments &&
-                  departments.map((department) => (
+                  departments?.map((department) => (
                     <option key={department.id} value={department.id}>
                       {department.name}
                     </option>
@@ -149,11 +146,9 @@ const TicketConfigurationOptions = (): JSX.Element => {
                 onChange={onCategoryChange}
                 value={categoryDefault}
               >
-                <option value="0" hidden>
-                  Select Category
-                </option>
+                <option value="0">Select Category</option>
                 {categories &&
-                  categories.map((category) => (
+                  categories?.map((category) => (
                     <option
                       key={category.categoryId}
                       value={category.categoryId}
@@ -180,11 +175,9 @@ const TicketConfigurationOptions = (): JSX.Element => {
                 onChange={onSubCategoryChange}
                 value={subCategoryDefault}
               >
-                <option value="0" hidden>
-                  Select Sub-Category
-                </option>
+                <option value="0">Select Sub-Category</option>
                 {subCategories &&
-                  subCategories.map((subCategory) => (
+                  subCategories?.map((subCategory) => (
                     <option
                       key={subCategory.subCategoryId}
                       value={subCategory.subCategoryId}

@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   CCol,
+  CFormCheck,
   CRow,
   CTable,
   CTableBody,
@@ -39,6 +40,8 @@ const SubCategoryListTable = (
     setCurrentPage(1)
   }
 
+  const workFlowChecked = <CFormCheck checked disabled />
+  const workFlowUnChecked = <CFormCheck disabled />
   return (
     <>
       <CTable className="mt-4 ps-0 alignment" striped responsive align="middle">
@@ -62,8 +65,12 @@ const SubCategoryListTable = (
                 <CTableDataCell>{ticket.departmentName}</CTableDataCell>
                 <CTableDataCell>{ticket.categoryName}</CTableDataCell>
                 <CTableDataCell>{ticket.subCategoryName}</CTableDataCell>
-                <CTableDataCell>{ticket.estimatedTime}</CTableDataCell>
-                <CTableDataCell>{ticket.workFlow}</CTableDataCell>
+                <CTableDataCell>{ticket.estimatedTime || 0}</CTableDataCell>
+                <CTableDataCell>
+                  {ticket.workFlow === true
+                    ? workFlowChecked
+                    : workFlowUnChecked}
+                </CTableDataCell>
                 <CTableDataCell>{ticket?.levelOfHierarchy}</CTableDataCell>
                 <CTableDataCell>Buttons</CTableDataCell>
               </CTableRow>
