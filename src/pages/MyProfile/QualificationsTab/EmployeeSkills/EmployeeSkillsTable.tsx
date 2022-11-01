@@ -91,6 +91,20 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
             <CTableRow>
               <CTableDataCell {...tableDataCellProps}>Skill Set</CTableDataCell>
             </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell {...tableHeaderCellProps}>
+                Category
+              </CTableHeaderCell>
+              <CTableHeaderCell {...tableHeaderCellProps}>
+                Skill
+              </CTableHeaderCell>
+              <CTableHeaderCell {...tableHeaderCellProps}>
+                Competency
+              </CTableHeaderCell>
+              <CTableHeaderCell {...tableHeaderCellProps}>
+                Experience
+              </CTableHeaderCell>
+            </CTableRow>
             {!isFieldDisabled ||
               (isViewingAnotherEmployee && (
                 <CTableRow>
