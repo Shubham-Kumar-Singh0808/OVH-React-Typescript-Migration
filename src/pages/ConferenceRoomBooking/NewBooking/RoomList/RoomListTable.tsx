@@ -66,35 +66,37 @@ const RoomListTable = ({
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {roomList.map((room, index) => {
-              return (
-                <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
-                  <CTableDataCell>{room.locationName}</CTableDataCell>
-                  <CTableDataCell>{room.roomName}</CTableDataCell>
-                  <CTableDataCell>
-                    <RoomListToggle index={index} room={room} />
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    {userDeleteAccess && (
-                      <CTooltip content="Delete">
-                        <CButton
-                          data-testid={`btn-delete${index}`}
-                          size="sm"
-                          color="danger btn-ovh me-1"
-                          className="btn-ovh-employee-list"
-                          onClick={() =>
-                            deleteBtnHandler(room.id, room.roomName)
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
-                    )}
-                  </CTableDataCell>
-                </CTableRow>
-              )
-            })}
+            {roomList &&
+              roomList?.length > 0 &&
+              roomList?.map((room, index) => {
+                return (
+                  <CTableRow key={index}>
+                    <CTableDataCell>{index + 1}</CTableDataCell>
+                    <CTableDataCell>{room.locationName}</CTableDataCell>
+                    <CTableDataCell>{room.roomName}</CTableDataCell>
+                    <CTableDataCell>
+                      <RoomListToggle index={index} room={room} />
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {userDeleteAccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            data-testid={`btn-delete${index}`}
+                            size="sm"
+                            color="danger btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              deleteBtnHandler(room.id, room.roomName)
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
+                    </CTableDataCell>
+                  </CTableRow>
+                )
+              })}
           </CTableBody>
         </CTable>
       </CCol>
