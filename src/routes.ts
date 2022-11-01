@@ -201,6 +201,11 @@ const EditHoliday = React.lazy(
 const RoomList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
+
+const TicketConfiguration = React.lazy(
+  () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -449,6 +454,11 @@ const routes = [
     path: '/roomList',
     name: 'RoomList',
     component: RoomList,
+  },
+  {
+    path: '/subCategoryList',
+    name: 'Ticket Configuration',
+    component: TicketConfiguration,
   },
 ]
 

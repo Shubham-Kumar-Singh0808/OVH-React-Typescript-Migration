@@ -59,6 +59,7 @@ import {
   EventListApi,
   AddTrackerApi,
   RoomListApi,
+  TicketConfigurationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -518,4 +519,11 @@ export const roomListApiConfig: RoomListApi = {
   addRoom: apiPrefix + '/meetingRequest/addRoom',
   deleteRoom: apiPrefix + '/meetingRequest/deleteRoom',
   updateRoom: apiPrefix + '/meetingRequest/updateRoom',
+}
+
+export const ticketConfigurationApiConfig: TicketConfigurationApi = {
+  getDepartments: apiPrefix + '/supportManagement/getDepartmentNameList',
+  getCategories: apiPrefix + '/supportManagement/departmentCategoryList',
+  getSubCategories: apiPrefix + '/supportManagement/subCategoryList',
+  getSubCategoryList: apiPrefix + '/supportManagement/getSearchSubCategoryList',
 }
