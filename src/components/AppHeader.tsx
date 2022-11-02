@@ -52,6 +52,14 @@ const AppHeader = (): JSX.Element => {
     setSearchAutoCompleteTarget(fullName)
   }
 
+  const handleSearchEmployeeOnEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      handleSearchEmployee()
+    }
+  }
+
   const handleSearchEmployee = async () => {
     const searchEmployeeResultAction = await dispatch(
       reduxServices.searchEmployee.searchEmployee(
@@ -93,7 +101,7 @@ const AppHeader = (): JSX.Element => {
                   className: 'form-control form-control-sm',
                   id: 'employee-autocomplete',
                   placeholder: 'Search Employee',
-                  // onKeyDown: handleSearchEmployeeOnEnter,
+                  onKeyDown: handleSearchEmployeeOnEnter,
                 }}
                 getItemValue={(item) => item?.fullName}
                 items={employees?.slice(0, 10)}
