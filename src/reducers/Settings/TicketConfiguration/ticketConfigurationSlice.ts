@@ -101,8 +101,8 @@ const ticketConfigurationSlice = createSlice({
     builder
       .addCase(getTicketConfigurationDepartments.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.categories = [] as TicketConfigurationCategories[]
-        state.subCategories = [] as TicketConfigurationSubCategories[]
+        // state.categories = [] as TicketConfigurationCategories[]
+        // state.subCategories = [] as TicketConfigurationSubCategories[]
         state.departments = action.payload as TicketConfigurationDepartments[]
       })
       .addCase(
@@ -115,7 +115,7 @@ const ticketConfigurationSlice = createSlice({
       )
       .addCase(getTicketConfigurationCategories.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.subCategories = [] as TicketConfigurationSubCategories[]
+        // state.subCategories = [] as TicketConfigurationSubCategories[]
         state.categories = action.payload as TicketConfigurationCategories[]
       })
       .addCase(
@@ -130,8 +130,8 @@ const ticketConfigurationSlice = createSlice({
         isAnyOf(getTicketConfigurationCategories.pending),
         (state) => {
           state.isLoading = ApiLoadingState.loading
-          state.subCategories = [] as TicketConfigurationSubCategories[]
-          state.categories = [] as TicketConfigurationCategories[]
+          //   state.subCategories = [] as TicketConfigurationSubCategories[]
+          //   state.categories = [] as TicketConfigurationCategories[]
         },
       )
       .addMatcher(

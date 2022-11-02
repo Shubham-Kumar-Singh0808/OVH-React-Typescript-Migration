@@ -89,7 +89,6 @@ const TicketConfigurationOptions = (): JSX.Element => {
         ),
       )
     }
-
     setSelectedCategory(undefined)
     setSelectedSubCategory(undefined)
   }, [selectedDepartment])
