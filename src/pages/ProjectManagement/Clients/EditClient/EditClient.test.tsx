@@ -2,6 +2,7 @@ import '@testing-library/jest-dom'
 
 import React from 'react'
 import userEvent from '@testing-library/user-event'
+import { rest } from 'msw'
 import EditClient from './EditClient'
 import { cleanup, render, screen, waitFor } from '../../../../test/testUtils'
 import {
@@ -9,7 +10,12 @@ import {
   mockEditClient,
 } from '../../../../test/data/editClientData'
 import { mockClientsData } from '../../../../test/data/clientsData'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import {
+  ApiLoadingState,
+  clientsApiConfig,
+} from '../../../../middleware/api/apiList'
+import { server } from '../../../../test/server'
+import { Client } from '../../../../types/ProjectManagement/Clients/clientsTypes'
 
 const toRender = (
   <div>
@@ -212,6 +218,27 @@ describe('Edit Client Component Testing', () => {
     })
     afterEach(cleanup)
     test('update button should disable upon providing existing client name ', async () => {
+      server.use(
+        rest.put<Client, { message: string }>(
+          clientsApiConfig.updateClient,
+          (req, res, ctx) => {
+            const { name } = req.body
+            const filteredClient = mockClientsData.clients.find(
+              (currClient) => currClient.name === name,
+            )
+            if (filteredClient) {
+              return res(
+                ctx.status(500),
+                ctx.json({
+                  message: 'Client Name Already Exists',
+                }),
+              )
+            } else {
+              return res(ctx.status(200), ctx.json({}))
+            }
+          },
+        ),
+      )
       // Client Code
       const clientCodeInput = screen.getByTestId(clientCodeId)
       userEvent.type(clientCodeInput, '888')

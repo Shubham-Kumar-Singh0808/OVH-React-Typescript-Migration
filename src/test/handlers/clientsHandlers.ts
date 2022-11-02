@@ -41,49 +41,59 @@ export const clientsHandlers = [
     )
   }),
   // is client organization api mock
-  rest.get(clientsApiConfig.clientOrg, (_req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        status: 200,
-        data: true,
-      }),
-    )
-  }),
+  // rest.get(clientsApiConfig.clientOrg, (_req, res, ctx) => {
+  //   return res(
+  //     ctx.status(200),
+  //     ctx.json({
+  //       status: 200,
+  //       data: true,
+  //     }),
+  //   )
+  // }),
   // update Client
   rest.put(clientsApiConfig.updateClient, (req, res, ctx) => {
-    // const name = req.url.searchParams.get('name')
-    // if (
-    //   name !== mockClientsData.clients.find((crrClient) => crrClient.name)?.name
-    // ) {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        status: 200,
-        data: {},
-      }),
+    const parsedJson = JSON.parse(req.body as string)
+    const filteredClient = mockClientsData.clients.find(
+      (crrClient) => crrClient.name === parsedJson.name,
     )
-    // }
-    //   else {
-    //     return res(ctx.status(500))
-    //   }
+    if (filteredClient) {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          status: 200,
+          data: {},
+        }),
+      )
+    } else {
+      return res(ctx.status(500))
+    }
   }),
   // update Client rejected
   rest.put(clientsApiConfig.updateClient, (_req, res, ctx) => {
-    return res(
-      ctx.status(500),
-      ctx.json({
-        payload: 500,
-      }),
-    )
+    return res(ctx.status(200), ctx.json({}))
   }),
   // isOrganizationExists
-  rest.get(clientsApiConfig.clientOrg, (_req, res, ctx) => {
-    return res(
-      ctx.json({
-        status: 200,
-        data: false,
-      }),
+  rest.get(clientsApiConfig.clientOrg, (req, res, ctx) => {
+    const organization = req.url.searchParams.get('organization')
+    const filteredOrganization = mockClientsData.clients.find(
+      (currClient) => currClient.organization === organization,
     )
+    if (filteredOrganization) {
+      return res(
+        ctx.delay(100),
+        ctx.json({
+          status: 200,
+          data: true,
+        }),
+      )
+    } else {
+      return res(
+        ctx.delay(100),
+        ctx.json({
+          status: 200,
+          data: false,
+        }),
+      )
+    }
   }),
 ]
