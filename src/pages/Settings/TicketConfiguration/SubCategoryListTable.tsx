@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  CButton,
   CCol,
   CFormCheck,
   CRow,
@@ -9,6 +10,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -71,18 +73,51 @@ const SubCategoryListTable = (
                     ? workFlowChecked
                     : workFlowUnChecked}
                 </CTableDataCell>
-                <CTableDataCell>{ticket?.levelOfHierarchy}</CTableDataCell>
-                <CTableDataCell>Buttons</CTableDataCell>
+                <CTableDataCell>
+                  {ticket?.levelOfHierarchy || 'N/A'}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  <div className="buttons-subCategoryList">
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="info btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                      >
+                        <i className="fa fa-edit" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                    <CTooltip content="Ticket Timeline">
+                      <CButton
+                        color="info btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                        data-testid="subCategoryTimelineBtn"
+                      >
+                        <i className="fa fa-bar-chart" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                    <CTooltip content="Delete">
+                      <CButton
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                        // data-testid={`client-delete-btn${props.id}`}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  </div>
+                </CTableDataCell>
               </CTableRow>
             )
           })}
         </CTableBody>
       </CTable>
-      <CRow>
-        <CCol xs={4}>
-          <p>
-            <strong>Total Records: {subCategoryListSize}</strong>
-          </p>
+      <CRow className="mt-3">
+        <CCol md={3} className="pull-left">
+          <strong>
+            {subCategoryList?.length
+              ? `Total Records: ${subCategoryList.length}`
+              : `No Records Found...`}
+          </strong>
         </CCol>
         <CCol xs={3}>
           {subCategoryListSize > 20 && (
