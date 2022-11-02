@@ -24,10 +24,13 @@ import { showIsRequired } from '../../../../utils/helper'
 
 const AddNewClient = (): JSX.Element => {
   const initialClientDetails = {} as AddClientDetails
-  const [addClient, setAddClient] = useState(initialClientDetails)
+  const [addClient, setAddClient] = useState({
+    ...initialClientDetails,
+    clientStatus: true,
+  })
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
-  const [isActive, setIsActive] = useState(false)
+  const [isActive, setIsActive] = useState(true)
   const [phoneCode, setPhoneCode] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [emailError, setEmailError] = useState<boolean>(false)
