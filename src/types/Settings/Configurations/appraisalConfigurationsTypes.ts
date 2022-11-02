@@ -3,7 +3,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 export type getAppraisalCycle = {
   id: number
   name: string
-  description: string
+  description: string | null
   toDate: string
   fromDate: string
   active: boolean
@@ -15,6 +15,7 @@ export type getAppraisalCycle = {
   appraisalEndDate: string
   servicePeriod: number
 }
+
 export type AppraisalCycleSliceState = {
   appraisalCycle: getAppraisalCycle[]
   isLoading: ApiLoadingState

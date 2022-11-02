@@ -428,6 +428,10 @@ export interface EventListApi extends ApiBase {
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
 }
+export interface getEmpDepartmentsApi extends ApiBase {
+  getEmpDepartments: string
+  designationdeptId: string
+}
 export interface RoomListApi extends ApiBase {
   getAllMeetingRooms: string
   addRoom: string

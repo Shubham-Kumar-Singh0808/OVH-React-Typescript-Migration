@@ -202,6 +202,9 @@ const AppraisalConfigurations = React.lazy(
   () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
 )
 
+const AssignTemplate = React.lazy(
+  () => import('./pages/Settings/Configurations/AssignTemplate'),
+)
 const RoomList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
@@ -458,6 +461,11 @@ const routes = [
     path: '/roomList',
     name: 'RoomList',
     component: RoomList,
+  },
+  {
+    path: '/assignTemplate?cycle=32',
+    name: 'Assign Template',
+    component: AssignTemplate,
   },
 ]
 

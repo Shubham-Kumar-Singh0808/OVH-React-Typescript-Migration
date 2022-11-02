@@ -118,7 +118,7 @@ const AppraisalConfigurationsTable = (): JSX.Element => {
                         data-testid="ticket-agenda-link"
                         onClick={() => handleAgendaModal(appraisalCycle)}
                       >
-                        {parse(agendaLimit)}
+                        {parse(agendaLimit as string)}
                       </CLink>
                     ) : (
                       'N/A'
