@@ -23,7 +23,7 @@ const getAllEmpDepartmentNames = createAsyncThunk(
 )
 
 const getDesignationDeptId = createAsyncThunk(
-  'assignTemplate/deleteRoom',
+  'assignTemplate/designationId',
   async (deptId: number, thunkApi) => {
     try {
       return await assignTemplateApi.designationId(deptId)
@@ -34,9 +34,46 @@ const getDesignationDeptId = createAsyncThunk(
   },
 )
 
+const getnewCycleId = createAsyncThunk(
+  'assignTemplate/cycleId',
+  async (newCycleID: number, thunkApi) => {
+    try {
+      return await assignTemplateApi.cycleId(newCycleID)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getDesignationWiseKRAs = createAsyncThunk(
+  'assignTemplate/designationWiseKRAs',
+  async (
+    {
+      departmentId,
+      designationId,
+    }: {
+      departmentId: number
+      designationId: number
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await assignTemplateApi.designationWiseKRAs({
+        departmentId,
+        designationId,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialAssignTemplateSliceState: AssignTemplateSliceState = {
   empDepartments: [],
   designationdeptIds: [],
+  designationWiseKRA: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -72,6 +109,8 @@ const isLoading = (state: RootState): LoadingState =>
 const appraisalCycleThunk = {
   getAllEmpDepartmentNames,
   getDesignationDeptId,
+  getnewCycleId,
+  getDesignationWiseKRAs,
 }
 
 const assignTemplateSelectors = {

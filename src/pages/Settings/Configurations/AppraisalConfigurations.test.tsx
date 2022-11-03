@@ -6,6 +6,7 @@ import AppraisalConfigurations from './AppraisalConfigurations'
 import { render } from '../../../test/testUtils'
 import { mockAppraisalCycle } from '../../../test/data/appraisalConfigurationsData'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 describe('AppraisalConfigurations without data', () => {
   beforeEach(() => {
@@ -14,6 +15,10 @@ describe('AppraisalConfigurations without data', () => {
         appraisalCycleSlice: {
           appraisalCycle: mockAppraisalCycle,
           isLoading: ApiLoadingState.idle,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

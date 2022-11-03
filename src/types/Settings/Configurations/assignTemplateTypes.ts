@@ -15,8 +15,23 @@ export type getdesignationdeptId = {
   departmentId: number
 }
 
+export type getDesignationWiseKRA = {
+  id: number
+  name: string
+  description: string
+  kpiLookps: null
+  count: number
+  checkType: null
+  designationName: string
+  designationId: number
+  departmentName: string
+  departmentId: number
+  designationKraPercentage: number
+}
+
 export type AssignTemplateSliceState = {
   empDepartments: getEmpDepartments[]
   designationdeptIds: getdesignationdeptId[]
+  designationWiseKRA: getDesignationWiseKRA[]
   isLoading: ApiLoadingState
 }
