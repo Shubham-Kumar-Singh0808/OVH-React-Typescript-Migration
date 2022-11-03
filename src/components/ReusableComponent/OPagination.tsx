@@ -1,5 +1,7 @@
 import { CPagination, CPaginationItem } from '@coreui/react-pro'
 import React, { useMemo } from 'react'
+import { reduxServices } from '../../reducers/reduxServices'
+import { useAppDispatch } from '../../stateStore'
 
 const OPagination = ({
   currentPage,
@@ -10,24 +12,34 @@ const OPagination = ({
   pageSetter: React.Dispatch<React.SetStateAction<number>>
   paginationRange: number[]
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const persistCurrentPage = (pageNumber: number) => {
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(pageNumber))
+  }
+
   const handleNextPage = () => {
     pageSetter(currentPage + 1)
+    persistCurrentPage(currentPage + 1)
   }
 
   const handlePreviousPage = () => {
     pageSetter(currentPage - 1)
+    persistCurrentPage(currentPage - 1)
   }
 
   const handleFirstPage = () => {
     pageSetter(1)
+    persistCurrentPage(1)
   }
 
   const handleLastPage = () => {
     pageSetter(paginationRange[paginationRange.length - 1])
+    persistCurrentPage(paginationRange[paginationRange.length - 1])
   }
 
   const handleSelectPage = (pageNumber: number) => {
     pageSetter(pageNumber)
+    persistCurrentPage(pageNumber)
   }
 
   const paginationItems = useMemo(() => {

@@ -12,6 +12,7 @@ type AppState = {
     | undefined
   reRenderMenu: boolean
   isSessionExpired: boolean
+  persistCurrentPage: number
 }
 
 const initialState: AppState = {
@@ -22,6 +23,7 @@ const initialState: AppState = {
   toast: undefined,
   reRenderMenu: true,
   isSessionExpired: false,
+  persistCurrentPage: 0,
 }
 
 const appSlice = createSlice({
@@ -40,13 +42,19 @@ const appSlice = createSlice({
     setIsSessionExpired: (state, action) => {
       return { ...state, isSessionExpired: action.payload }
     },
+    setPersistCurrentPage: (state, action) => {
+      return { ...state, persistCurrentPage: action.payload }
+    },
   },
 })
 
 const selectIsSessionExpired = (state: RootState): boolean =>
   state.app.isSessionExpired
 
-const appSelectors = { selectIsSessionExpired }
+const selectCurrentPage = (state: RootState): number =>
+  state.app.persistCurrentPage
+
+const appSelectors = { selectIsSessionExpired, selectCurrentPage }
 
 export const appService = { actions: appSlice.actions, selectors: appSelectors }
 
