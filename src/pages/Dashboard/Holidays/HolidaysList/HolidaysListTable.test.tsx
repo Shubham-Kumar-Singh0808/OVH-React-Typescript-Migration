@@ -12,6 +12,7 @@ import {
 import { mockCountries } from '../../../../test/data/handbookTotalListData'
 import { mockLoggedInEmployeeData } from '../../../../test/data/myProfileData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const deleteButton = 'holiday-delete-btn1'
 const history = createMemoryHistory()
@@ -28,6 +29,7 @@ const toRender = (
     </Router>
   </div>
 )
+
 describe('HolidaysList', () => {
   describe('Employee Holidays Table Component Testing', () => {
     beforeEach(() => {
@@ -53,6 +55,9 @@ describe('HolidaysList', () => {
               token: 'test',
               designation: 'developer',
             },
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })
@@ -150,6 +155,9 @@ describe('HolidaysList', () => {
                 token: 'test',
                 designation: 'developer',
               },
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
             },
           },
         },

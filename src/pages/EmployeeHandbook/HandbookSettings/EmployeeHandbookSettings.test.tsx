@@ -8,6 +8,7 @@ import EmployeeHandbookTable from './EmployeeHandbookTable'
 import { cleanup, getByTestId, render, screen } from '../../../test/testUtils'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -28,6 +29,9 @@ describe('Handbook Settings Component Testing', () => {
           employeeHandbookSettings: {
             employeeHandbooks: mockEmployeeHandbookList,
             isLoading: ApiLoadingState.succeeded,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })
@@ -70,6 +74,9 @@ describe('Handbook Settings Component Testing', () => {
             employeeHandbookSettings: {
               employeeHandbooks: mockEmployeeHandbookList,
               listSize: 43,
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
             },
           },
         },

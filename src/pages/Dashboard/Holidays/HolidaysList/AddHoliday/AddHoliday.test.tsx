@@ -75,9 +75,9 @@ describe('Add Holiday Component Testing', () => {
       const holidayDatePickerElement =
         screen.getAllByPlaceholderText(holidayDateInput)
       fireEvent.change(holidayDatePickerElement[0], {
-        target: { value: '30 Oct, 2022' },
+        target: { value: '30 Oct, 2095' },
       })
-      expect(holidayDatePickerElement[0]).toHaveValue('10/30/2022')
+      expect(holidayDatePickerElement[0]).toHaveValue('10/30/2095')
       const addButtonEl = screen.getByTestId(addButtonElement)
       await waitFor(() => {
         expect(addButtonEl).toBeEnabled()
@@ -119,9 +119,9 @@ describe('Add Holiday Component Testing', () => {
       const holidayDatePickerEl =
         screen.getAllByPlaceholderText(holidayDateInput)
       fireEvent.change(holidayDatePickerEl[0], {
-        target: { value: '30 Nov, 2022' },
+        target: { value: '30 Nov, 2090' },
       })
-      expect(holidayDatePickerEl[0]).toHaveValue('11/30/2022')
+      expect(holidayDatePickerEl[0]).toHaveValue('11/30/2090')
       const addButtonEle = screen.getByTestId(addButtonElement)
       expect(addButtonEle).toBeEnabled()
       await waitFor(() => {

@@ -68,6 +68,9 @@ const EditHoliday = (): JSX.Element => {
     setEditHoliday((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
+    if (name === 'country') {
+      dispatch(reduxServices.holidays.actions.setSelectedEmployeeCountry(value))
+    }
   }
 
   const getUpdateToastMessage = (
