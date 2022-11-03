@@ -115,7 +115,7 @@ const RoomList = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow>
+        <CRow className="mb-3 mt-3">
           <CCol sm={2} md={1} className="text-end">
             <CFormLabel className="mt-1">
               Location:{' '}
@@ -155,20 +155,21 @@ const RoomList = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              className="mb-2"
               data-testid="roomName"
               type="text"
               id="roomName"
               size="sm"
               name="roomName"
+              autoComplete="off"
               placeholder="Enter Name"
               value={selectRoomName}
               onChange={handledInputChange}
             />
-
             {roomNameExist && (
-              <p className={TextDanger} data-testid="nameAlreadyExist">
-                Room name already exist
-              </p>
+              <span className={TextDanger} data-testid="nameAlreadyExist">
+                <b>Room name already exist</b>
+              </span>
             )}
           </CCol>
           {userAccess?.createaccess && (
