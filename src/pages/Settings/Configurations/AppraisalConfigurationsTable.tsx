@@ -10,7 +10,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -20,7 +22,11 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { getAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 
-const AppraisalConfigurationsTable = (): JSX.Element => {
+const AppraisalConfigurationsTable = ({
+  userEditAccess,
+}: {
+  userEditAccess: boolean
+}): JSX.Element => {
   const [isAgendaModalVisible, setIsAgendaModalVisible] =
     useState<boolean>(false)
   const [modalAgenda, setModalAgenda] = useState({} as getAppraisalCycle)
@@ -124,26 +130,33 @@ const AppraisalConfigurationsTable = (): JSX.Element => {
                       'N/A'
                     )}
                   </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-2"
-                      data-testid="edit-family"
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                  <CTableDataCell>
+                    {userEditAccess && (
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh me-1 btn-sm"
+                          data-testid="edit-template"
+                        >
+                          <i className="fa fa-edit" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    )}
                   </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    <CButton
-                      size="sm"
-                      color="info"
-                      className="btn-ovh me-1 btn-sm"
-                    >
-                      <i className="fa fa-plus" aria-hidden="true"></i>
-                    </CButton>
+                  <CTableDataCell>
+                    {userEditAccess && (
+                      <CTooltip content="Assign Template">
+                        <Link to={'/assignTemplate?cycle=32'}>
+                          <CButton
+                            size="sm"
+                            color="info"
+                            className="btn-ovh me-1 btn-sm"
+                          >
+                            <i className="fa fa-plus" aria-hidden="true"></i>
+                          </CButton>
+                        </Link>
+                      </CTooltip>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )
