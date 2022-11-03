@@ -210,7 +210,7 @@ describe('Edit Client Component Testing', () => {
           clients: {
             clientsList: mockClientsData,
             // isLoading: ApiLoadingState.succeeded,
-            // editClient: mockEditClient,
+            editClient: mockEditClient,
             clientCountries: mockGetClientCountries,
           },
         },
@@ -223,6 +223,7 @@ describe('Edit Client Component Testing', () => {
           clientsApiConfig.updateClient,
           (req, res, ctx) => {
             const { name } = req.body
+            console.log('@@@@@@@@', req.body)
             const filteredClient = mockClientsData.clients.find(
               (currClient) => currClient.name === name,
             )
@@ -242,7 +243,7 @@ describe('Edit Client Component Testing', () => {
       // Client Code
       const clientCodeInput = screen.getByTestId(clientCodeId)
       userEvent.type(clientCodeInput, '888')
-      expect(clientCodeInput).toHaveValue(`888`)
+      expect(clientCodeInput).toHaveValue(`000888`)
 
       // Organization
       const organizationInput = screen.getByTestId(organizationId)

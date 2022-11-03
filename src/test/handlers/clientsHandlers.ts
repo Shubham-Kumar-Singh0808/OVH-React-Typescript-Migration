@@ -23,7 +23,7 @@ export const clientsHandlers = [
     )
   }),
   // edit client api mock
-  rest.get(`${clientsApiConfig.editClient}:clientId`, (_req, res, ctx) => {
+  rest.get(`${clientsApiConfig.editClient}/{18}`, (_req, res, ctx) => {
     return res(
       ctx.json({
         status: 200,
@@ -53,6 +53,7 @@ export const clientsHandlers = [
   // update Client
   rest.put(clientsApiConfig.updateClient, (req, res, ctx) => {
     const parsedJson = JSON.parse(req.body as string)
+    console.log('@@@@', parsedJson)
     const filteredClient = mockClientsData.clients.find(
       (crrClient) => crrClient.name === parsedJson.name,
     )
@@ -75,6 +76,7 @@ export const clientsHandlers = [
   // isOrganizationExists
   rest.get(clientsApiConfig.clientOrg, (req, res, ctx) => {
     const organization = req.url.searchParams.get('organization')
+    console.log('$$$$', organization)
     const filteredOrganization = mockClientsData.clients.find(
       (currClient) => currClient.organization === organization,
     )
