@@ -635,11 +635,12 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
+              autoComplete="off"
               id="employeeOfficialBirthday"
-              data-testId="officialBirthdayInput"
-              className="form-control form-control-sm"
+              data-testid="officialBirthdayInput"
+              className="form-control form-control-sm sh-date-picker"
               maxDate={new Date()}
-              peekNextMonth
+              // peekNextMonth
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
@@ -691,10 +692,11 @@ const BasicInfoTab = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 id="employeeRealBirthday"
-                className="form-control form-control-sm"
+                className="form-control form-control-sm sh-date-picker"
                 maxDate={new Date()}
-                peekNextMonth
+                // peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -714,7 +716,7 @@ const BasicInfoTab = (): JSX.Element => {
                   onDateChangeHandler(date, { name: 'realBirthday' })
                   handleRealBday(date)
                 }}
-                data-testId="realBirthday"
+                data-testid="realBirthday"
               />
             </CCol>
           </CRow>
@@ -767,9 +769,10 @@ const BasicInfoTab = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 id="employeeAnniversary"
-                className="form-control form-control-sm"
-                peekNextMonth
+                className="form-control form-control-sm sh-date-picker"
+                // peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -778,7 +781,8 @@ const BasicInfoTab = (): JSX.Element => {
                 name="anniversary"
                 value={
                   (selectedAnniversary as string) ||
-                  (employeeBasicInformationEditData.anniversary as string)
+                  (employeeBasicInformationEditData.anniversary as string) ||
+                  ''
                 }
                 selected={
                   !anniversaryFlag && dateIsValid(newAnniversary)
@@ -789,7 +793,7 @@ const BasicInfoTab = (): JSX.Element => {
                   onDateChangeHandler(date, { name: 'anniversary' })
                   handleAnniversary(date)
                 }}
-                data-testId="anniversary"
+                data-testid="anniversary"
               />
               {dateErrorMessage && (
                 <p className="text-danger">
