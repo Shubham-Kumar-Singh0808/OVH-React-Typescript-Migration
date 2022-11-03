@@ -21,7 +21,6 @@ const LeaveSummaryTable = (): JSX.Element => {
       minimumFractionDigits: 2,
     })
   }
-  console.log(addZeroes(2))
 
   return (
     <>

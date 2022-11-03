@@ -58,12 +58,12 @@ const RoomList = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (selectRoomName) {
+    if (selectRoomName && selectLocationId) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [selectRoomName])
+  }, [selectRoomName, selectLocationId])
 
   const addBtnHandler = async () => {
     const prepareObj = {
@@ -115,7 +115,7 @@ const RoomList = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow>
+        <CRow className="mb-3 mt-3">
           <CCol sm={2} md={1} className="text-end">
             <CFormLabel className="mt-1">
               Location:{' '}
@@ -136,12 +136,12 @@ const RoomList = (): JSX.Element => {
                 setSelectLocationId(e.target.value)
               }}
             >
+              <option value={''}>Select Location</option>
               {locationList.map((location, index) => (
                 <option key={index} value={location.id}>
                   {location.locationName}
                 </option>
               ))}
-              <option value={''}>Select Location</option>
             </CFormSelect>
           </CCol>
           <CFormLabel
@@ -155,20 +155,21 @@ const RoomList = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              className="mb-2"
               data-testid="roomName"
               type="text"
               id="roomName"
               size="sm"
               name="roomName"
+              autoComplete="off"
               placeholder="Enter Name"
               value={selectRoomName}
               onChange={handledInputChange}
             />
-
             {roomNameExist && (
-              <p className={TextDanger} data-testid="nameAlreadyExist">
-                Name Already Exist
-              </p>
+              <span className={TextDanger} data-testid="nameAlreadyExist">
+                <b>Room name already exist</b>
+              </span>
             )}
           </CCol>
           {userAccess?.createaccess && (
