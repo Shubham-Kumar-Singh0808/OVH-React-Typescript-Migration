@@ -1,6 +1,8 @@
-import axios from 'axios'
 import { AllowedHttpMethods, ticketConfigurationApiConfig } from '../../apiList'
-import { getAuthenticatedRequestConfig } from '../../../../utils/apiUtils'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
 import {
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
@@ -16,7 +18,7 @@ const getTicketConfigurationDepartments = async (): Promise<
     url: ticketConfigurationApiConfig.getDepartments,
     method: AllowedHttpMethods.get,
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -28,7 +30,7 @@ const getTicketConfigurationCategories = async (
     method: AllowedHttpMethods.get,
     params: { deptId },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -40,7 +42,7 @@ const getTicketConfigurationSubCategories = async (
     method: AllowedHttpMethods.get,
     params: { categoryId },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -60,7 +62,21 @@ const getTicketConfigurationSubCategoryList = async (
       startIndex: prepareObject.startIndex,
     },
   })
-  const response = await axios(requestConfig)
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deleteSubCategory = async (
+  subCategoryId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketConfigurationApiConfig.deleteSubCategory,
+    method: AllowedHttpMethods.delete,
+    params: {
+      subCategoryId,
+    },
+  })
+  const response = await useAxios(requestConfig)
   return response.data
 }
 
@@ -69,6 +85,7 @@ const ticketConfigurationApi = {
   getTicketConfigurationCategories,
   getTicketConfigurationSubCategories,
   getTicketConfigurationSubCategoryList,
+  deleteSubCategory,
 }
 
 export default ticketConfigurationApi

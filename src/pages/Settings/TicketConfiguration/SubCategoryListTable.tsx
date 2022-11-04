@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CCol,
@@ -15,12 +15,19 @@ import {
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { SubCategoryListTableProps } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const SubCategoryListTable = (
   props: SubCategoryListTableProps,
 ): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteSubCategoryId, setToDeleteSubCategoryId] = useState(0)
+  const [toDeleteSubCategoryName, setToDeleteSubCategoryName] = useState('')
+  const dispatch = useAppDispatch()
+
   const subCategoryList = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.subCategories,
   )
@@ -44,6 +51,40 @@ const SubCategoryListTable = (
 
   const workFlowChecked = <CFormCheck checked disabled />
   const workFlowUnChecked = <CFormCheck disabled />
+
+  const handleShowDeleteModal = (
+    subCategoryId: number,
+    subCategoryName: string,
+  ) => {
+    setToDeleteSubCategoryId(subCategoryId)
+    setToDeleteSubCategoryName(subCategoryName)
+    setIsDeleteModalVisible(true)
+  }
+
+  const handleConfirmDeleteSubCategory = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteSubCategoryResultAction = await dispatch(
+      reduxServices.ticketConfiguration.deleteSubCategory(
+        toDeleteSubCategoryId,
+      ),
+    )
+
+    const toastElement = (
+      <OToast
+        toastMessage="Skill Detail deleted successfully"
+        toastColor={'success'}
+      />
+    )
+    if (
+      reduxServices.employeeSkill.deleteEmployeeSkill.fulfilled.match(
+        deleteSubCategoryResultAction,
+      )
+    ) {
+      dispatch(reduxServices.employeeSkill.getEmployeeSkills())
+      dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
+    }
+  }
+
   return (
     <>
       <CTable className="mt-4 ps-0 alignment" striped responsive align="middle">
@@ -99,6 +140,12 @@ const SubCategoryListTable = (
                       <CButton
                         color="danger btn-ovh me-1"
                         className="btn-ovh-employee-list"
+                        onClick={() =>
+                          handleShowDeleteModal(
+                            ticket.categoryId,
+                            ticket.subCategoryName,
+                          )
+                        }
                         // data-testid={`client-delete-btn${props.id}`}
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
@@ -143,6 +190,22 @@ const SubCategoryListTable = (
           </CCol>
         )}
       </CRow>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Sub-Category"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteSubCategory}
+      >
+        <>
+          `Do you really want to delete this{' '}
+          <strong>{toDeleteSubCategoryName}</strong> sub-category ?`
+        </>
+      </OModal>
     </>
   )
 }

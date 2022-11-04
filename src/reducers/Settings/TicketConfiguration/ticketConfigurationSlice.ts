@@ -93,6 +93,26 @@ const getTicketConfigurationSubCategoryList = createAsyncThunk<
   },
 )
 
+const deleteSubCategory = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'supportManagement/supportManagement/deleteSubCategory',
+  async (subCategoryId, thunkApi) => {
+    try {
+      return await ticketConfigurationApi.deleteSubCategory(subCategoryId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const ticketConfigurationSlice = createSlice({
   name: 'ticketConfiguration',
   initialState: initialTicketConfigurationState,
@@ -126,6 +146,9 @@ const ticketConfigurationSlice = createSlice({
             action.payload as TicketConfigurationSubCategories[]
         },
       )
+      .addCase(deleteSubCategory.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(getTicketConfigurationCategories.pending),
         (state) => {
@@ -139,6 +162,7 @@ const ticketConfigurationSlice = createSlice({
           getTicketConfigurationDepartments.pending,
           getTicketConfigurationSubCategories.pending,
           getTicketConfigurationSubCategoryList.pending,
+          deleteSubCategory.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -150,6 +174,7 @@ const ticketConfigurationSlice = createSlice({
           getTicketConfigurationCategories.rejected,
           getTicketConfigurationSubCategories.rejected,
           getTicketConfigurationSubCategoryList.rejected,
+          deleteSubCategory.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -187,6 +212,7 @@ const ticketConfigurationThunk = {
   getTicketConfigurationCategories,
   getTicketConfigurationSubCategories,
   getTicketConfigurationSubCategoryList,
+  deleteSubCategory,
 }
 
 const qualificationCategorySelectors = {
