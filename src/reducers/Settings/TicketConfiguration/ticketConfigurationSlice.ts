@@ -116,7 +116,11 @@ const deleteSubCategory = createAsyncThunk<
 const ticketConfigurationSlice = createSlice({
   name: 'ticketConfiguration',
   initialState: initialTicketConfigurationState,
-  reducers: {},
+  reducers: {
+    setSelectedDepartment: (state, action) => {
+      return { ...state, selectedDepartment: action.payload }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getTicketConfigurationDepartments.fulfilled, (state, action) => {
@@ -207,6 +211,9 @@ const subCategoryList = (
 const listSize = (state: RootState): number =>
   state.ticketConfiguration.listSize
 
+const selectedDepartment = (state: RootState): string =>
+  state.ticketConfiguration.selectedDepartment
+
 const ticketConfigurationThunk = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
@@ -223,6 +230,7 @@ const qualificationCategorySelectors = {
   subCategories,
   subCategoryList,
   listSize,
+  selectedDepartment,
 }
 
 export const ticketConfigurationService = {

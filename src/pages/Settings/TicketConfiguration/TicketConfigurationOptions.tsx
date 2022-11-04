@@ -13,7 +13,7 @@ const TicketConfigurationOptions = (): JSX.Element => {
   const [selectedDepartment, setSelectedDepartment] = useState<number>()
   const [selectedCategory, setSelectedCategory] = useState<number>()
   const [selectedSubCategory, setSelectedSubCategory] = useState<number>()
-
+  // const []
   const dispatch = useAppDispatch()
   const departments: TicketConfigurationDepartments[] = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.departments,
@@ -25,28 +25,28 @@ const TicketConfigurationOptions = (): JSX.Element => {
     reduxServices.ticketConfiguration.selectors.subCategories,
   )
 
-  let departmentDefault = selectedDepartment
-  let categoryDefault = selectedCategory
-  let subCategoryDefault = selectedSubCategory
+  const departmentDefault = selectedDepartment
+  const categoryDefault = selectedCategory
+  const subCategoryDefault = selectedSubCategory
 
   const onDepartmentChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event.target.value !== undefined) {
       setSelectedDepartment(event.target.value as unknown as number)
-      departmentDefault = event.target.value as unknown as number
+      // departmentDefault = event.target.value as unknown as number
     }
   }
 
   const onCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event.target.value !== undefined) {
       setSelectedCategory(event.target.value as unknown as number)
-      categoryDefault = event.target.value as unknown as number
+      // categoryDefault = event.target.value as unknown as number
     }
   }
 
   const onSubCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event.target.value !== undefined) {
       setSelectedSubCategory(event.target.value as unknown as number)
-      subCategoryDefault = event.target.value as unknown as number
+      // subCategoryDefault = event.target.value as unknown as number
     }
   }
 

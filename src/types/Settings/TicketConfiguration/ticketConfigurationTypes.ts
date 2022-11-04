@@ -38,6 +38,7 @@ export type TicketConfigurationState = {
   categories: TicketConfigurationCategories[]
   subCategories: TicketConfigurationSubCategories[]
   subCategoryList: TicketConfigurationSubCategoryList
+  selectedDepartment: string
   listSize: number
   isLoading: LoadingState
   error: ValidationError

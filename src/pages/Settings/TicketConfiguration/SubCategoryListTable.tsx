@@ -71,16 +71,15 @@ const SubCategoryListTable = (
 
     const toastElement = (
       <OToast
-        toastMessage="Skill Detail deleted successfully"
+        toastMessage="Sub-Category deleted successfully"
         toastColor={'success'}
       />
     )
     if (
-      reduxServices.employeeSkill.deleteEmployeeSkill.fulfilled.match(
+      reduxServices.ticketConfiguration.deleteSubCategory.fulfilled.match(
         deleteSubCategoryResultAction,
       )
     ) {
-      dispatch(reduxServices.employeeSkill.getEmployeeSkills())
       dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
     }
   }
@@ -142,7 +141,7 @@ const SubCategoryListTable = (
                         className="btn-ovh-employee-list"
                         onClick={() =>
                           handleShowDeleteModal(
-                            ticket.categoryId,
+                            ticket.subCategoryId,
                             ticket.subCategoryName,
                           )
                         }
