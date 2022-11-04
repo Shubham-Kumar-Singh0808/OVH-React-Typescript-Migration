@@ -38,7 +38,7 @@ const EmployeeHandbookTable = (
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToHandbookActions = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Handbook Settings',
+    (feature) => feature.name === 'Handbook',
   )
   const {
     paginationRange,

@@ -366,7 +366,7 @@ function AddUpdateEmployeeCertification({
                 ...dynamicFormLabelProps('technology', formLabel),
               }}
             >
-              Technology:
+              Technology :
               <span className={showIsRequired(addCertification.technology)}>
                 *
               </span>
@@ -394,7 +394,7 @@ function AddUpdateEmployeeCertification({
                 ...dynamicFormLabelProps('certificateType', formLabel),
               }}
             >
-              CertificateType:{' '}
+              CertificateType :
               <span
                 className={showIsRequired(addCertification.certificateType)}
               >
@@ -430,7 +430,7 @@ function AddUpdateEmployeeCertification({
                 ...dynamicFormLabelProps('certification', formLabel),
               }}
             >
-              Certification:
+              Certification :
               <span className={showIsRequired(addCertification.name)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
@@ -451,7 +451,7 @@ function AddUpdateEmployeeCertification({
                 ...dynamicFormLabelProps('registrationNumber', formLabel),
               }}
             >
-              Registration No:
+              Registration No :
               <span className={showIsRequired(addCertification.code)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
@@ -468,7 +468,7 @@ function AddUpdateEmployeeCertification({
           </CRow>
           <CRow className="mt-4 mb-4" data-testid="completedDateInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Completed Date:
+              Completed Date :
               <span
                 className={
                   addCertification?.completedDate || completedDate
@@ -534,7 +534,7 @@ function AddUpdateEmployeeCertification({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...dynamicFormLabelProps('percentage', formLabel)}>
-              Percentage:
+              Percentage :
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -551,7 +551,7 @@ function AddUpdateEmployeeCertification({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Description:
+              Description :
             </CFormLabel>
             {showEditor ? (
               <CCol sm={8}>

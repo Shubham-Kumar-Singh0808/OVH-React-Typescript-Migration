@@ -93,7 +93,8 @@ function AddNewHandbook({
       addNewPage.displayOrder &&
       addNewPage.pageName &&
       addNewPage.list &&
-      addNewPage.description?.length > 156
+      addNewPage.description?.length > 156 &&
+      addNewPage.list?.length > 0
     ) {
       setIsButtonEnabled(true)
     } else {
