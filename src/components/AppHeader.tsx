@@ -104,7 +104,7 @@ const AppHeader = (): JSX.Element => {
                   onKeyDown: handleSearchEmployeeOnEnter,
                 }}
                 getItemValue={(item) => item?.fullName}
-                items={employees?.slice(0, 10)}
+                items={employees?.slice(0, 10) || []}
                 wrapperStyle={{ position: 'relative' }}
                 renderMenu={(children) => (
                   <div
