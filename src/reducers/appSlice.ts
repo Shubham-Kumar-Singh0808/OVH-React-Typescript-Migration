@@ -23,7 +23,7 @@ const initialState: AppState = {
   toast: undefined,
   reRenderMenu: true,
   isSessionExpired: false,
-  persistCurrentPage: 0,
+  persistCurrentPage: 1,
 }
 
 const appSlice = createSlice({
