@@ -8,6 +8,7 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
+import AssignTemplateTable from './AssignTemplateTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -127,6 +128,7 @@ const AssignTemplate = (): JSX.Element => {
             </CCol>
           </CRow>
         </CForm>
+        <AssignTemplateTable />
       </OCard>
     </>
   )
