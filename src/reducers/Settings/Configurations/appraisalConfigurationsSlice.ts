@@ -48,7 +48,7 @@ const appraisalCycleSlice = createSlice({
         isAnyOf(getAllAppraisalCycleData.fulfilled),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.appraisalCycle = action.payload as getAppraisalCycle[]
+          state.appraisalCycle = action.payload
         },
       )
   },
