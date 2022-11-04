@@ -85,6 +85,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
         striped={striped || isViewingAnotherEmployee}
         bordered={bordered || isViewingAnotherEmployee}
         className={tableClassName}
+        align="middle"
       >
         {!isFieldDisabled || isViewingAnotherEmployee ? (
           <CTableHead color="primary">
