@@ -78,6 +78,7 @@ import eventListReducer from './reducers/ConferenceRoomBooking/EventList/eventLi
 import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/trackerListSlice'
 import addRoomList from './reducers/ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 import employeeProfileSearchReducer from './reducers/Dashboard/searchEmployeeSlice'
+import assignTemplatesReducer from './reducers/Settings/Configurations/assignTemplateSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -156,6 +157,7 @@ export const allReducers = {
   eventList: eventListReducer,
   roomList: addRoomList,
   dashboardEmployeeSearch: employeeProfileSearchReducer,
+  assignTemplate: assignTemplatesReducer,
   // add your slice reducers here
 }
 

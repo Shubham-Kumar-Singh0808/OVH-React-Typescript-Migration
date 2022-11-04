@@ -59,6 +59,7 @@ import {
   EventListApi,
   AddTrackerApi,
   RoomListApi,
+  assignTemplateApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -518,4 +519,11 @@ export const roomListApiConfig: RoomListApi = {
   addRoom: apiPrefix + '/meetingRequest/addRoom',
   deleteRoom: apiPrefix + '/meetingRequest/deleteRoom',
   updateRoom: apiPrefix + '/meetingRequest/updateRoom',
+}
+
+export const assignTemplateApiConfig: assignTemplateApi = {
+  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  designationdeptId: apiPrefix + '/kra/designation',
+  alreadyExistnewCycleId: apiPrefix + '/appraisal/isAlreadyExist',
+  getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
 }

@@ -432,3 +432,10 @@ export interface RoomListApi extends ApiBase {
   deleteRoom: string
   updateRoom: string
 }
+
+export interface assignTemplateApi extends ApiBase {
+  getEmpDepartments: string
+  designationdeptId: string
+  alreadyExistnewCycleId: string
+  getDesignationWiseKRAs: string
+}
