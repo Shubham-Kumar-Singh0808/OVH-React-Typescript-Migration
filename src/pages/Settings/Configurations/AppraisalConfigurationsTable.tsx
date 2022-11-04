@@ -120,7 +120,7 @@ const AppraisalConfigurationsTable = ({
                     {appraisalCycle.description ? (
                       <CLink
                         className="cursor-pointer text-decoration-none"
-                        data-testid="ticket-agenda-link"
+                        data-testid="description-modal-link"
                         onClick={() => handleAgendaModal(appraisalCycle)}
                       >
                         {parse(agendaLimit as string)}
