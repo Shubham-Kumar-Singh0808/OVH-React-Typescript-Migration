@@ -12,7 +12,7 @@ import { mockUserAccessToFeaturesData } from '../test/data/userAccessToFeaturesD
 const searchButton = 'search-employee-btn'
 const searchEmployeeString = 'Raju Sriramoju'
 const searchPlaceholderText = 'Search Employee'
-
+const mockSearchValue = jest.fn()
 describe('Dashboard AppHeader Component Testing', () => {
   describe('Dashboard AppHeader Component Testing', () => {
     const history = createMemoryHistory()
@@ -139,6 +139,14 @@ describe('Dashboard AppHeader Component Testing', () => {
             },
           }),
         )
+      })
+    })
+    test('Should be able to function autocomplete on Enter', async () => {
+      const searchInput = screen.getByPlaceholderText(searchPlaceholderText)
+      userEvent.type(searchInput, 'Sai')
+      fireEvent.keyDown(searchInput, { key: 'Enter', keyCode: 13 })
+      await waitFor(() => {
+        expect(render(toRender))
       })
     })
   })
