@@ -12,7 +12,6 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
 import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -146,15 +145,13 @@ const AppraisalConfigurationsTable = ({
                   <CTableDataCell>
                     {userEditAccess && (
                       <CTooltip content="Assign Template">
-                        <Link to={'/assignTemplate?cycle=32'}>
-                          <CButton
-                            size="sm"
-                            color="info"
-                            className="btn-ovh me-1 btn-sm"
-                          >
-                            <i className="fa fa-plus" aria-hidden="true"></i>
-                          </CButton>
-                        </Link>
+                        <CButton
+                          size="sm"
+                          color="info"
+                          className="btn-ovh me-1 btn-sm"
+                        >
+                          <i className="fa fa-plus" aria-hidden="true"></i>
+                        </CButton>
                       </CTooltip>
                     )}
                   </CTableDataCell>

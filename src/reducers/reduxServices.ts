@@ -68,7 +68,6 @@ import { addTrackerListService } from './Support/RaiseTicket/TrackerList/tracker
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
-import { assignTemplateService } from './Settings/Configurations/assignTemplateSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 
 export const reduxServices = {
@@ -143,5 +142,4 @@ export const reduxServices = {
   roomLists: roomListService,
   searchEmployee: employeeSearchService,
   appraisalConfigurations: appraisalCycleService,
-  assignTemplate: assignTemplateService,
 }

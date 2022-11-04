@@ -60,7 +60,6 @@ import {
   AddTrackerApi,
   AppraisalConfigurationsApi,
   RoomListApi,
-  assignTemplateApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -517,13 +516,6 @@ export const addTrackerApiConfig: AddTrackerApi = {
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
   getAppraisalCycle: apiPrefix + '/appraisal/cycle',
-}
-
-export const assignTemplateApiConfig: assignTemplateApi = {
-  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
-  designationdeptId: apiPrefix + '/kra/designation',
-  alreadyExistnewCycleId: apiPrefix + '/appraisal/isAlreadyExist',
-  getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
 }
 
 export const roomListApiConfig: RoomListApi = {

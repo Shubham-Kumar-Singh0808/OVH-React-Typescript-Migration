@@ -428,12 +428,7 @@ export interface EventListApi extends ApiBase {
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
 }
-export interface assignTemplateApi extends ApiBase {
-  getEmpDepartments: string
-  designationdeptId: string
-  alreadyExistnewCycleId: string
-  getDesignationWiseKRAs: string
-}
+
 export interface RoomListApi extends ApiBase {
   getAllMeetingRooms: string
   addRoom: string
