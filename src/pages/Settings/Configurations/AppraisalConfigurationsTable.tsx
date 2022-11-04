@@ -144,8 +144,7 @@ const AppraisalConfigurationsTable = ({
                         <CTooltip content="Assign Template">
                           <CButton
                             size="sm"
-                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                            color="info btn-ovh me-1"
+                            className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
                           >
                             <i className="fa fa-plus" aria-hidden="true"></i>
                           </CButton>
