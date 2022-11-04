@@ -131,28 +131,26 @@ const AppraisalConfigurationsTable = ({
                   </CTableDataCell>
                   <CTableDataCell>
                     {userEditAccess && (
-                      <CTooltip content="Edit">
-                        <CButton
-                          color="info btn-ovh me-1"
-                          className="btn-ovh me-1 btn-sm"
-                          data-testid="edit-template"
-                        >
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
-                    )}
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    {userEditAccess && (
-                      <CTooltip content="Assign Template">
-                        <CButton
-                          size="sm"
-                          color="info"
-                          className="btn-ovh me-1 btn-sm"
-                        >
-                          <i className="fa fa-plus" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
+                      <>
+                        <CTooltip content="Edit">
+                          <CButton
+                            size="sm"
+                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                            color="info btn-ovh me-1"
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                        <CTooltip content="Assign Template">
+                          <CButton
+                            size="sm"
+                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                            color="info btn-ovh me-1"
+                          >
+                            <i className="fa fa-plus" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      </>
                     )}
                   </CTableDataCell>
                 </CTableRow>
