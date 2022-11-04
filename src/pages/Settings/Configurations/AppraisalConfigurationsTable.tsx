@@ -26,9 +26,11 @@ const AppraisalConfigurationsTable = ({
 }: {
   userEditAccess: boolean
 }): JSX.Element => {
-  const [isAgendaModalVisible, setIsAgendaModalVisible] =
+  const [isAppraisalDescriptionVisible, setIsAppraisalDescriptionVisible] =
     useState<boolean>(false)
-  const [modalAgenda, setModalAgenda] = useState({} as getAppraisalCycle)
+  const [descriptionModal, setDescriptionModal] = useState(
+    {} as getAppraisalCycle,
+  )
   const dispatch = useAppDispatch()
 
   const appraisalCycleNames = useTypedSelector(
@@ -64,8 +66,8 @@ const AppraisalConfigurationsTable = ({
     setCurrentPage(1)
   }
   const handleAgendaModal = (appraisalCycle: getAppraisalCycle) => {
-    setIsAgendaModalVisible(true)
-    setModalAgenda(appraisalCycle)
+    setIsAppraisalDescriptionVisible(true)
+    setDescriptionModal(appraisalCycle)
   }
   return (
     <>
@@ -200,15 +202,15 @@ const AppraisalConfigurationsTable = ({
       <OModal
         modalSize="lg"
         alignment="center"
-        visible={isAgendaModalVisible}
-        setVisible={setIsAgendaModalVisible}
+        visible={isAppraisalDescriptionVisible}
+        setVisible={setIsAppraisalDescriptionVisible}
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
       >
         <>
-          <p>{modalAgenda.description}</p>
+          <p>{descriptionModal.description}</p>
         </>
       </OModal>
     </>
