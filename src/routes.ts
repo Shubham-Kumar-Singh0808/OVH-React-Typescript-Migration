@@ -201,6 +201,7 @@ const EditHoliday = React.lazy(
 const RoomList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
