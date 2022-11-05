@@ -34,6 +34,10 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   const searchString = useTypedSelector(
     reduxServices.searchEmployee.selectors.searchString,
   )
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+
   const {
     paginationRange,
     setPageSize,
@@ -43,15 +47,27 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
+
+  useEffect(() => {
     dispatch(
       reduxServices.employeeList.getEmployees({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (selectCurrentPage - 1),
+        endIndex: pageSize * selectCurrentPage,
         selectionStatus: selectedEmploymentStatus,
         searchStr: searchString,
       }),
     )
-  }, [currentPage, dispatch, pageSize, selectedEmploymentStatus, searchString])
+  }, [
+    selectCurrentPage,
+    dispatch,
+    pageSize,
+    selectedEmploymentStatus,
+    searchString,
+  ])
 
   return (
     <>
