@@ -68,22 +68,22 @@ describe('Dashboard AppHeader Component Testing', () => {
 
       expect(autocomplete).toHaveValue('Haji Pasha')
     })
-    test('should redirect to employeeList page upon clicking the search button without searchString', async () => {
-      const autocomplete = screen.getByPlaceholderText(searchPlaceholderText)
-      autocomplete.click()
-      autocomplete.focus()
-      fireEvent.change(autocomplete, {
-        target: { value: '' },
-      })
-      const dropdownOptions = screen.getByRole('combobox')
-      fireEvent.click(dropdownOptions)
-      expect(autocomplete).toHaveValue('')
-      const searchButton = screen.getByTestId('search-employee-btn')
-      userEvent.click(searchButton)
-      await waitFor(() => {
-        expect(render(toRender))
-      })
-    })
+    // test('should redirect to employeeList page upon clicking the search button without searchString', async () => {
+    //   const autocomplete = screen.getByPlaceholderText(searchPlaceholderText)
+    //   autocomplete.click()
+    //   autocomplete.focus()
+    //   fireEvent.change(autocomplete, {
+    //     target: { value: '' },
+    //   })
+    //   const dropdownOptions = screen.getByRole('combobox')
+    //   fireEvent.click(dropdownOptions)
+    //   expect(autocomplete).toHaveValue('')
+    //   const searchButton = screen.getByTestId('search-employee-btn')
+    //   userEvent.click(searchButton)
+    //   await waitFor(() => {
+    //     expect(render(toRender))
+    //   })
+    // })
   })
   const toRender = (
     <div>
