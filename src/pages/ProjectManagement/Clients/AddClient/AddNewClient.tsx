@@ -24,12 +24,16 @@ import { showIsRequired } from '../../../../utils/helper'
 
 const AddNewClient = (): JSX.Element => {
   const initialClientDetails = {} as AddClientDetails
-  const [addClient, setAddClient] = useState(initialClientDetails)
+  const [addClient, setAddClient] = useState({
+    ...initialClientDetails,
+    clientStatus: true,
+  })
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [phoneCode, setPhoneCode] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [emailError, setEmailError] = useState<boolean>(false)
+  const [isActive, setIsActive] = useState(true)
   const dispatch = useAppDispatch()
   const clientCountries = useTypedSelector(
     reduxServices.addClient.selectors.clientCountries,
@@ -87,6 +91,12 @@ const AddNewClient = (): JSX.Element => {
       const contactPerson = value.replace(contactNameRegexReplace, '')
       setAddClient((values) => {
         return { ...values, ...{ [name]: contactPerson } }
+      })
+    } else if (name === 'clientStatus') {
+      setIsActive(value === 'true')
+      const clientStatusValue = value === 'true'
+      setAddClient((values) => {
+        return { ...values, ...{ [name]: clientStatusValue } }
       })
     } else {
       setAddClient((values) => {
@@ -439,7 +449,7 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="activeClient-input"
                 label="Active"
                 value="true"
-                checked
+                checked={isActive}
                 onChange={handleInputChange}
                 inline
               />
@@ -458,6 +468,7 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="inActiveClient-input"
                 label="Inactive"
                 value="false"
+                checked={!isActive}
                 onChange={handleInputChange}
                 inline
               />
