@@ -187,6 +187,13 @@ const EventsList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
 )
 
+const ConfigurationList = React.lazy(
+  () =>
+    import(
+      './pages/Settings/Configuration/AddConfiguration/ConfigurationFilterOption'
+    ),
+)
+
 const FeedbackForms = React.lazy(
   () =>
     import(
@@ -450,6 +457,11 @@ const routes = [
     path: '/roomList',
     name: 'RoomList',
     component: RoomList,
+  },
+  {
+    path: '/appraisalCycle',
+    name: 'Add Configuration',
+    component: ConfigurationList,
   },
 ]
 
