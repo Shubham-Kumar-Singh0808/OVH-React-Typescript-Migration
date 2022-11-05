@@ -289,6 +289,7 @@ const EmployeeLeaveCategories = ({
                       {userAccess?.deleteaccess && (
                         <CButton
                           color="danger btn-ovh me-2"
+                          data-testid="del-btn"
                           onClick={() =>
                             handleShowDeleteModal(leaveCategory.id)
                           }
