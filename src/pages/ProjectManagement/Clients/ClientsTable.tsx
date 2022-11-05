@@ -55,6 +55,7 @@ const ClientsTable = ({
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const onDeleteBtnClick = (clientId: number, name: string) => {
