@@ -56,7 +56,7 @@ const TableActions = ({
               <CButton
                 data-testid="edotCertBtn"
                 color="info"
-                className="btn-ovh me-1"
+                className="btn-ovh me-1 btn-ovh-employee-list"
                 onClick={() =>
                   editCertificateButtonHandler(certificateItemId as number)
                 }
@@ -68,7 +68,7 @@ const TableActions = ({
               <CButton
                 data-testid="showAlertBtn"
                 color="danger"
-                className="btn-ovh me-1"
+                className="btn-ovh me-1 btn-ovh-employee-list"
                 onClick={() =>
                   handleShowDeleteModal(certificateItemId as number)
                 }

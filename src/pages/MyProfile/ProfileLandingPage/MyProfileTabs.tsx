@@ -59,7 +59,9 @@ const MyProfileTabs = (): JSX.Element => {
       const newTabResult = tabResult?.filter(
         (value) => Object.keys(value).length !== 0,
       )
-      setActiveTabsKey(newTabResult[0].id)
+      if (newTabResult) {
+        setActiveTabsKey(newTabResult[0]?.id)
+      }
     }
   }, [tabResult])
 

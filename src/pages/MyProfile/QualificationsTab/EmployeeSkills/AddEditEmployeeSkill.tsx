@@ -254,7 +254,7 @@ function AddEditEmployeeSkill({
             <CForm>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Category:
+                  Category :
                   <span
                     className={
                       employeeSkill?.categoryType ? 'text-white' : 'text-danger'
@@ -297,7 +297,7 @@ function AddEditEmployeeSkill({
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Skill:
+                  Skill :
                   <span
                     className={
                       employeeSkill?.skillType ? 'text-white' : 'text-danger'
@@ -343,7 +343,7 @@ function AddEditEmployeeSkill({
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Experience:
+                  Experience :
                 </CFormLabel>
                 <CCol sm={2}>
                   <CFormSelect
@@ -394,7 +394,7 @@ function AddEditEmployeeSkill({
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Competency:
+                  Competency :
                   <span
                     className={
                       employeeSkill?.competency ? 'text-white' : 'text-danger'
@@ -423,7 +423,7 @@ function AddEditEmployeeSkill({
               </CRow>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Comments:
+                  Comments :
                 </CFormLabel>
                 {showEditor ? (
                   <CCol sm={8}>

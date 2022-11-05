@@ -16,7 +16,7 @@ import { EmployeeListTableProps } from '../../../types/EmployeeDirectory/Employe
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const EmployeeListTable = ({
   paginationRange,
@@ -27,6 +27,8 @@ const EmployeeListTable = ({
   updateaccess,
   userEditAccess,
 }: EmployeeListTableProps): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const employees = useTypedSelector(
     reduxServices.employeeList.selectors.employees,
   )
@@ -39,6 +41,7 @@ const EmployeeListTable = ({
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   return (
