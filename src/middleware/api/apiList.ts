@@ -147,12 +147,12 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
   }
 
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
-  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
 }
 
 export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi =
   {
-    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
   }
 
 export const qualificationsApiConfig: EmployeeQualificationsApi = {
