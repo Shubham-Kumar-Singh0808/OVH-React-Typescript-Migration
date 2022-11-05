@@ -122,11 +122,6 @@ const AppHeader = (): JSX.Element => {
                   <div
                     data-testid="employee-options"
                     className="autocomplete-dropdown-item"
-                    // className={
-                    //   isHighlighted
-                    //     ? 'autocomplete-dropdown-item active'
-                    //     : 'autocomplete-dropdown-item'
-                    // }
                     key={item.id}
                   >
                     <CCol className="d-flex justify-content-left employee-wrapper">
