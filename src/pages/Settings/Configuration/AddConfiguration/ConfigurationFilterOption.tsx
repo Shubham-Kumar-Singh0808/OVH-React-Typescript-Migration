@@ -31,6 +31,8 @@ const ConfigurationFilterOption = (): JSX.Element => {
   const [addingDescription, setAddingDescription] = useState<string>('')
   const [servicePeriod, setServicePeriod] = useState<number | string>()
   const [level, setLevel] = useState<number | string>()
+  const [reviewPeriodFrom, setReviewPeriodFrom] = useState<Date | undefined>()
+  const [reviewPeriodTo, setReviewPeriodTo] = useState<Date | undefined>()
 
   const commonFormatDate = 'L'
 
@@ -164,15 +166,56 @@ const ConfigurationFilterOption = (): JSX.Element => {
               </CFormSelect>
             </CCol>
           </CRow>
-
-          <CRow className="mt-4 mb-4">
-            <CCol sm={3} md={1} className="text-end">
+          <CRow className="mt-3">
+            <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-2 text-decoration-none">
                 Review Period From:
-                {/* <span className={reviewPeriodTo ? TextWhite : TextDanger}>
+                <span className={reviewPeriodFrom ? TextWhite : TextDanger}>
                   *
-                </span> */}
+                </span>
               </CFormLabel>
+            </CCol>
+            <CCol sm={2} className="text-end pe-2 ms-3 sh-date-picker-column">
+              <ReactDatePicker
+                id="employeeRealBirthday"
+                data-testid="sh-date-picker"
+                className="form-control form-control-sm sh-date-picker"
+                maxDate={new Date()}
+                showMonthYearPicker
+                placeholderText="mm/yyyy"
+                dateFormat="MM/yyyy"
+                name="selectMonth"
+                selected={reviewPeriodFrom}
+                onChange={(date: Date) => {
+                  setReviewPeriodFrom(date)
+                }}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-3">
+            <CCol sm={3} md={3} className="text-end">
+              <CFormLabel className="mt-2 text-decoration-none">
+                Review Period To:
+                <span className={reviewPeriodTo ? TextWhite : TextDanger}>
+                  *
+                </span>
+              </CFormLabel>
+            </CCol>
+            <CCol sm={2} className="text-end pe-2 ms-3 sh-date-picker-column">
+              <ReactDatePicker
+                id="employeeRealBirthday"
+                data-testid="sh-date-picker"
+                className="form-control form-control-sm sh-date-picker"
+                maxDate={new Date()}
+                showMonthYearPicker
+                placeholderText="mm/yyyy"
+                dateFormat="MM/yyyy"
+                name="selectMonth"
+                selected={reviewPeriodTo}
+                onChange={(date: Date) => {
+                  setReviewPeriodTo(date)
+                }}
+              />
             </CCol>
           </CRow>
           <CRow className="mt-3">
