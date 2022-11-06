@@ -59,6 +59,8 @@ import {
   AddLocationListApi,
   EventListApi,
   AddTrackerApi,
+  AppraisalConfigurationsApi,
+  RoomListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -146,12 +148,12 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
   }
 
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
-  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
 }
 
 export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi =
   {
-    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
   }
 
 export const qualificationsApiConfig: EmployeeQualificationsApi = {
@@ -463,6 +465,7 @@ export const dashboardApiConfig: DashboardApi = {
   deleteHoliday: apiPrefix + '/Employee/deleteHoliday',
   getHolidayInformation: apiPrefix + '/Employee/holiday',
   updateHoliday: apiPrefix + '/Employee/editHoliday',
+  searchEmployee: apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
 }
 
 export const addLocationListApiConfig: AddLocationListApi = {
@@ -518,4 +521,15 @@ export const eventListApiConfig: EventListApi = {
 export const addTrackerApiConfig: AddTrackerApi = {
   addNewTracker: apiPrefix + '/supportManagement/addTracker',
   deleteTracker: apiPrefix + '/supportManagement/deleteTracker',
+}
+
+export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
+  getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+}
+
+export const roomListApiConfig: RoomListApi = {
+  getAllMeetingRooms: apiPrefix + '/meetingRequest/getAllMeetingRooms',
+  addRoom: apiPrefix + '/meetingRequest/addRoom',
+  deleteRoom: apiPrefix + '/meetingRequest/deleteRoom',
+  updateRoom: apiPrefix + '/meetingRequest/updateRoom',
 }

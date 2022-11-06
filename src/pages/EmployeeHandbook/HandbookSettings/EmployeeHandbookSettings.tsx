@@ -18,7 +18,12 @@ const EmployeeHandbookSettings = (): JSX.Element => {
   const listSize = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.listSize,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddNewPage = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Handbook',
+  )
   const {
     paginationRange,
     setPageSize,
@@ -57,14 +62,16 @@ const EmployeeHandbookSettings = (): JSX.Element => {
             <>
               <CRow className="justify-content-end">
                 <CCol className="text-end" md={4}>
-                  <CButton
-                    color="info"
-                    className="btn-ovh me-1 text-white"
-                    data-testid="addPage-btn"
-                    onClick={() => setToggle('addNewPageSection')}
-                  >
-                    <i className="fa fa-plus me-1"></i>Add Page
-                  </CButton>
+                  {userAccessToAddNewPage?.createaccess && (
+                    <CButton
+                      color="info"
+                      className="btn-ovh me-1 text-white"
+                      data-testid="addPage-btn"
+                      onClick={() => setToggle('addNewPageSection')}
+                    >
+                      <i className="fa fa-plus me-1"></i>Add Page
+                    </CButton>
+                  )}
                   <Link to={`/EmployeeHandbook`}>
                     <CButton
                       color="info"

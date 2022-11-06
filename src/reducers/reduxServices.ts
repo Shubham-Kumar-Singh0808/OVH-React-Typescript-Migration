@@ -67,6 +67,9 @@ import { employeeAllocationSliceService } from './ProjectManagement/EmployeeAllo
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
+import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
+import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
+import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -138,4 +141,7 @@ export const reduxServices = {
   employeeAllocationReport: employeeAllocationSliceService,
   addTrackerLists: addTrackerListService,
   eventList: eventListService,
+  roomLists: roomListService,
+  searchEmployee: employeeSearchService,
+  appraisalConfigurations: appraisalCycleService,
 }

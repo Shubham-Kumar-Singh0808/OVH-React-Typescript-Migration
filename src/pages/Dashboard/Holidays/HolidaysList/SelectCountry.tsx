@@ -5,16 +5,16 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { HolidaysListProps } from '../../../../types/Dashboard/Holidays/upcomingHolidaysTypes'
 
-const SelectCountry = ({
-  selectedCountry,
-  setSelectedCountry,
-}: HolidaysListProps): JSX.Element => {
+const SelectCountry = ({ selectedCountry }: HolidaysListProps): JSX.Element => {
   const countries = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
 
-  const role = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddHoliday = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Holiday Actions',
   )
 
   const dispatch = useAppDispatch()
@@ -40,7 +40,13 @@ const SelectCountry = ({
           data-testid="country-form-select"
           name="country"
           value={selectedCountry}
-          onChange={(e) => setSelectedCountry(e.target.value)}
+          onChange={(e) =>
+            dispatch(
+              reduxServices.holidays.actions.setSelectedEmployeeCountry(
+                e.target.value,
+              ),
+            )
+          }
         >
           <option value={''}>Select Country</option>
           {countries?.map((country, index) => (
@@ -60,7 +66,7 @@ const SelectCountry = ({
             <i className="fa fa-arrow-left me-1"></i>Back
           </CButton>
         </Link>
-        {(role === 'admin' || role === 'HR Manager') && (
+        {userAccessToAddHoliday?.createaccess && (
           <Link to={`/addHoliday`}>
             <CButton color="info" className="btn-ovh text-white">
               <i className="fa fa-plus me-1"></i>Add

@@ -14,6 +14,14 @@ const LeaveSummaryTable = (): JSX.Element => {
   const employeeLeaveSummary = useTypedSelector(
     reduxServices.employeeLeaveSummary.selectors.employeeLeaveSummary,
   )
+
+  function addZeroes(num: number) {
+    return num?.toLocaleString('en', {
+      useGrouping: false,
+      minimumFractionDigits: 2,
+    })
+  }
+
   return (
     <>
       <CTable striped responsive className="align-middle">
@@ -34,7 +42,7 @@ const LeaveSummaryTable = (): JSX.Element => {
           <CTableRow className="text-center">
             <CTableDataCell scope="row">Total Earned Leaves</CTableDataCell>
             <CTableDataCell>
-              {employeeLeaveSummary?.allCreditedLeaves}
+              {addZeroes(employeeLeaveSummary?.allCreditedLeaves)}
             </CTableDataCell>
             <CTableDataCell>
               {employeeLeaveSummary?.allTakenLeaves}
@@ -49,7 +57,7 @@ const LeaveSummaryTable = (): JSX.Element => {
               {employeeLeaveSummary?.allCancelAfterApprovalLeaves}
             </CTableDataCell>
             <CTableDataCell>
-              {employeeLeaveSummary?.allAvailableLeaves}
+              {addZeroes(employeeLeaveSummary?.allAvailableLeaves)}
             </CTableDataCell>
           </CTableRow>
           <CTableRow className="text-center">

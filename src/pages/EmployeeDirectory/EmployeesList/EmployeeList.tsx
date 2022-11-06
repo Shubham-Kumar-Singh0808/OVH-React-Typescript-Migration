@@ -1,4 +1,3 @@
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import EmployeeListTable from './EmployeeListTable'
 import ListOptions from './ListOptions'
@@ -8,6 +7,8 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -20,6 +21,22 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   const selectedEmploymentStatus = useTypedSelector(
     reduxServices.employeeList.selectors.selectedEmploymentStatus,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Employee',
+  )
+  const userAccessTo = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Employee Directory-Options',
+  )
+  const searchString = useTypedSelector(
+    reduxServices.searchEmployee.selectors.searchString,
+  )
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
 
   const {
     paginationRange,
@@ -30,14 +47,27 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
+
+  useEffect(() => {
     dispatch(
       reduxServices.employeeList.getEmployees({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (selectCurrentPage - 1),
+        endIndex: pageSize * selectCurrentPage,
         selectionStatus: selectedEmploymentStatus,
+        searchStr: searchString,
       }),
     )
-  }, [currentPage, dispatch, pageSize, selectedEmploymentStatus])
+  }, [
+    selectCurrentPage,
+    dispatch,
+    pageSize,
+    selectedEmploymentStatus,
+    searchString,
+  ])
 
   return (
     <>
@@ -49,7 +79,10 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
       >
         {isLoading !== ApiLoadingState.loading ? (
           <>
-            <ListOptions />
+            <ListOptions
+              userCreateAccess={userAccess?.createaccess as boolean}
+              userViewAccess={userAccessTo?.viewaccess as boolean}
+            />
             <EmployeeListTable
               paginationRange={paginationRange}
               setPageSize={setPageSize}
@@ -57,14 +90,13 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
               currentPage={currentPage}
               pageSize={pageSize}
               updateaccess={updateaccess}
+              userEditAccess={userAccess?.updateaccess as boolean}
             />
           </>
         ) : (
-          <CCol>
-            <CRow className="category-loading-spinner">
-              <CSpinner />
-            </CRow>
-          </CCol>
+          <>
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          </>
         )}
       </OCard>
     </>

@@ -187,7 +187,10 @@ input.capetalized {
   text-transform: capitalize;
 }
 .model-text {
-  color: $blue-employeeEmailTemplateText;
+  color: $blue;
+}
+.model-text:hover {
+  color: #245269;
 }
 
 .shift-info {
@@ -251,4 +254,11 @@ input.capetalized {
 .modal .modal-dialog .modal-content .modal-body.model-body-text-alinement {
   min-height: 90px;
   padding-top: 0px;
+}
+
+.template-body .model-text {
+  margin-bottom: 30px;
+}
+.template-body .template-content {
+  min-height: 50px;
 }

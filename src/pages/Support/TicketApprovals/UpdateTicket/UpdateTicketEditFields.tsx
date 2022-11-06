@@ -15,11 +15,11 @@ import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { GetTicketToEdit } from '../../../../types/Support/TicketApprovals/UpdateTicket/updateTicketTypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { commonDateFormat } from '../../../../utils/dateFormatUtils'
 import { deviceLocale } from '../../../../utils/helper'
 
 const UpdateTicketEditFields = ({
@@ -48,7 +48,7 @@ const UpdateTicketEditFields = ({
   const [dueDate, setDueDate] = useState<string>('')
   const [approveModalVisibility, setApproveModalVisibility] =
     useState<boolean>(false)
-  const [dueDateError, setDueDateError] = useState<boolean>(false)
+  const [dueDateError, setDueDateError] = useState(false)
 
   const ticketDetailsToEdit = useTypedSelector(
     reduxServices.updateTicket.selectors.ticketDetailsToEdit,
@@ -209,13 +209,9 @@ const UpdateTicketEditFields = ({
   }
 
   useEffect(() => {
-    const start = startDate
-      ? moment(startDate, commonDateFormat).format(commonDateFormat)
-      : moment(updateTicketDetails.startDate, commonDateFormat).format(
-          commonDateFormat,
-        )
-
-    const end = moment(dueDate, commonDateFormat).format(commonDateFormat)
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(startDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(dueDate, dateFormat).format(newDateFormatForIsBefore)
 
     setDueDateError(moment(end).isBefore(start))
   }, [startDate, dueDate])
@@ -400,6 +396,7 @@ const UpdateTicketEditFields = ({
           </CFormLabel>
           <CCol sm={3}>
             <ReactDatePicker
+              autoComplete="off"
               id="fromDate"
               data-testid="leaveApprovalFromDate"
               className="form-control form-control-sm sh-date-picker sh-leave-form-control"
@@ -429,6 +426,7 @@ const UpdateTicketEditFields = ({
           </CFormLabel>
           <CCol sm={3}>
             <ReactDatePicker
+              autoComplete="off"
               id="fromDate"
               data-testid="leaveApprovalFromDate"
               className="form-control form-control-sm sh-date-picker sh-leave-form-control"
@@ -591,6 +589,7 @@ const UpdateTicketEditFields = ({
           </CFormLabel>
           <CCol sm={3}>
             <input
+              className="sh-updateTicket-file"
               type="file"
               id="fileUpload"
               data-testid="fileUpload"

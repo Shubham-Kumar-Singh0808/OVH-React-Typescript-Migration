@@ -388,6 +388,7 @@ export interface DashboardApi extends ApiBase {
   deleteHoliday: string
   getHolidayInformation: string
   updateHoliday: string
+  searchEmployee: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
@@ -429,4 +430,14 @@ export interface EventListApi extends ApiBase {
   getFeedbackFormList: string
   downloadFeedbackForm: string
   uploadFeedbackForm: string
+}
+export interface AppraisalConfigurationsApi extends ApiBase {
+  getAppraisalCycle: string
+}
+
+export interface RoomListApi extends ApiBase {
+  getAllMeetingRooms: string
+  addRoom: string
+  deleteRoom: string
+  updateRoom: string
 }
