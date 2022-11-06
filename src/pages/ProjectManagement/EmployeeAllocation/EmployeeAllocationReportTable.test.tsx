@@ -76,5 +76,8 @@ describe('Employee allocation report Table Component Testing without data', () =
         expect(screen.getAllByRole('row')).toHaveLength(2)
       })
     })
+    test('should render no records found', () => {
+      expect(screen.getByText('No Records Found...')).toBeInTheDocument()
+    })
   })
 })
