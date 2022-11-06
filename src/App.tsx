@@ -4,8 +4,7 @@ import {
   BrowserRouter,
   Redirect,
   Route,
-  Switch,
-  useLocation,
+  Switch, 
 } from 'react-router-dom'
 import React, { Suspense, useCallback, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from './stateStore'
@@ -74,17 +73,9 @@ const App = (): JSX.Element => {
     }
   }, [authenticatedToken, dispatch, employeeId])
 
-  const ScrollToTop = () => {
-    const { pathname } = useLocation()
-    useEffect(() => {
-      window.scrollTo(0, 0)
-    }, [pathname])
-    return null
-  }
-
+ 
   return (
-    <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>
-      <ScrollToTop />
+    <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>      
       <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>
         <Switch>
           <Route
