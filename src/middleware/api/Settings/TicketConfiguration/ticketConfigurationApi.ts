@@ -54,12 +54,12 @@ const getTicketConfigurationSubCategoryList = async (
     method: AllowedHttpMethods.post,
     data: {
       departmentId: prepareObject.departmentId,
-      categoryId: prepareObject.categoryId,
-      subCategoryId: prepareObject.subCategoryId,
+      categoryId: prepareObject.categoryId ?? '',
+      subCategoryId: prepareObject.subCategoryId ?? '',
     },
     params: {
-      endIndex: prepareObject.endIndex,
-      startIndex: prepareObject.startIndex,
+      endIndex: prepareObject.endIndex ?? 20,
+      startIndex: prepareObject.startIndex ?? 0,
     },
   })
   const response = await useAxios(requestConfig)

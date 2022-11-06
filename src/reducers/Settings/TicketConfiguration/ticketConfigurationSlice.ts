@@ -120,6 +120,10 @@ const ticketConfigurationSlice = createSlice({
     setSelectedDepartment: (state, action) => {
       return { ...state, selectedDepartment: action.payload }
     },
+    clearSubCategoryList: (state) => {
+      state.subCategoryList.list = []
+      state.subCategoryList.size = 0
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -127,7 +131,7 @@ const ticketConfigurationSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         // state.categories = [] as TicketConfigurationCategories[]
         // state.subCategories = [] as TicketConfigurationSubCategories[]
-        state.departments = action.payload as TicketConfigurationDepartments[]
+        state.departments = action.payload
       })
       .addCase(
         getTicketConfigurationSubCategoryList.fulfilled,
@@ -135,6 +139,7 @@ const ticketConfigurationSlice = createSlice({
           state.isLoading = ApiLoadingState.succeeded
           state.subCategoryList =
             action.payload as TicketConfigurationSubCategoryList
+          state.listSize = action.payload?.size as number
         },
       )
       .addCase(getTicketConfigurationCategories.fulfilled, (state, action) => {
@@ -154,17 +159,7 @@ const ticketConfigurationSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
       })
       .addMatcher(
-        isAnyOf(getTicketConfigurationCategories.pending),
-        (state) => {
-          state.isLoading = ApiLoadingState.loading
-          //   state.subCategories = [] as TicketConfigurationSubCategories[]
-          //   state.categories = [] as TicketConfigurationCategories[]
-        },
-      )
-      .addMatcher(
         isAnyOf(
-          getTicketConfigurationDepartments.pending,
-          getTicketConfigurationSubCategories.pending,
           getTicketConfigurationSubCategoryList.pending,
           deleteSubCategory.pending,
         ),

@@ -6,14 +6,21 @@ import {
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
   TicketConfigurationSubCategories,
-  TicketConfigurationSubCategoryType,
 } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
-const TicketConfigurationOptions = (): JSX.Element => {
+const TicketConfigurationOptions = ({
+  setFilterByDepartment,
+  setFilterByCategory,
+  setFilterBySubCategory,
+}: {
+  setFilterByDepartment: (value: number) => void
+  setFilterByCategory: (value: number) => void
+  setFilterBySubCategory: (value: number) => void
+}): JSX.Element => {
   const [selectedDepartment, setSelectedDepartment] = useState<number>()
   const [selectedCategory, setSelectedCategory] = useState<number>()
   const [selectedSubCategory, setSelectedSubCategory] = useState<number>()
-  // const []
+
   const dispatch = useAppDispatch()
   const departments: TicketConfigurationDepartments[] = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.departments,
@@ -25,53 +32,20 @@ const TicketConfigurationOptions = (): JSX.Element => {
     reduxServices.ticketConfiguration.selectors.subCategories,
   )
 
-  const departmentDefault = selectedDepartment
-  const categoryDefault = selectedCategory
-  const subCategoryDefault = selectedSubCategory
-
-  const onDepartmentChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    if (event.target.value !== undefined) {
-      setSelectedDepartment(event.target.value as unknown as number)
-      // departmentDefault = event.target.value as unknown as number
-    }
-  }
-
-  const onCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    if (event.target.value !== undefined) {
-      setSelectedCategory(event.target.value as unknown as number)
-      // categoryDefault = event.target.value as unknown as number
-    }
-  }
-
-  const onSubCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    if (event.target.value !== undefined) {
-      setSelectedSubCategory(event.target.value as unknown as number)
-      // subCategoryDefault = event.target.value as unknown as number
-    }
-  }
-
-  const onViewHandler = async () => {
-    if (selectedDepartment) {
-      const prepareObject: TicketConfigurationSubCategoryType = {
-        departmentId: selectedDepartment,
-        categoryId: selectedCategory,
-        subCategoryId: selectedSubCategory,
-        endIndex: 20,
-        startIndex: 0,
-      }
-
-      await dispatch(
-        reduxServices.ticketConfiguration.getTicketConfigurationSubCategoryList(
-          prepareObject,
-        ),
-      )
-    }
+  const onViewHandler = () => {
+    setFilterByDepartment(selectedDepartment as number)
+    setFilterByCategory(selectedCategory as number)
+    setFilterBySubCategory(selectedSubCategory as number)
   }
 
   const handleClearButton = () => {
     setSelectedDepartment(0)
     setSelectedCategory(0)
     setSelectedSubCategory(0)
+    setFilterByDepartment(0)
+    setFilterByCategory(0)
+    setFilterBySubCategory(0)
+    dispatch(reduxServices.ticketConfiguration.actions.clearSubCategoryList())
   }
 
   useEffect(() => {
@@ -79,9 +53,6 @@ const TicketConfigurationOptions = (): JSX.Element => {
       dispatch(
         reduxServices.ticketConfiguration.getTicketConfigurationDepartments(),
       )
-  }, [dispatch])
-
-  useEffect(() => {
     if (selectedDepartment) {
       dispatch(
         reduxServices.ticketConfiguration.getTicketConfigurationCategories(
@@ -89,11 +60,6 @@ const TicketConfigurationOptions = (): JSX.Element => {
         ),
       )
     }
-    setSelectedCategory(undefined)
-    setSelectedSubCategory(undefined)
-  }, [selectedDepartment])
-
-  useEffect(() => {
     if (selectedCategory) {
       dispatch(
         reduxServices.ticketConfiguration.getTicketConfigurationSubCategories(
@@ -101,7 +67,7 @@ const TicketConfigurationOptions = (): JSX.Element => {
         ),
       )
     }
-  }, [selectedCategory])
+  }, [dispatch, selectedDepartment, selectedCategory, departments])
 
   return (
     <>
@@ -116,8 +82,8 @@ const TicketConfigurationOptions = (): JSX.Element => {
                 aria-label="departmentName"
                 name="departmentName"
                 id="departmentName"
-                onChange={onDepartmentChange}
-                value={departmentDefault}
+                onChange={(e) => setSelectedDepartment(+e.target.value)}
+                value={selectedDepartment}
               >
                 <option value="0">Select Department</option>
                 {departments &&
@@ -142,8 +108,8 @@ const TicketConfigurationOptions = (): JSX.Element => {
                 id="categoryName"
                 defaultValue={selectedCategory}
                 disabled={!selectedDepartment}
-                onChange={onCategoryChange}
-                value={categoryDefault}
+                onChange={(e) => setSelectedCategory(+e.target.value)}
+                value={selectedCategory}
               >
                 <option value="0">Select Category</option>
                 {categories &&
@@ -171,8 +137,8 @@ const TicketConfigurationOptions = (): JSX.Element => {
                 id="subCategoryName"
                 defaultValue={selectedSubCategory}
                 disabled={!selectedCategory}
-                onChange={onSubCategoryChange}
-                value={subCategoryDefault}
+                onChange={(e) => setSelectedSubCategory(+e.target.value)}
+                value={selectedSubCategory}
               >
                 <option value="0">Select Sub-Category</option>
                 {subCategories &&
