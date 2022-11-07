@@ -44,6 +44,10 @@ const EditClient = (): JSX.Element => {
     reduxServices.clients.selectors.clientCountries,
   )
 
+  const selectError = useTypedSelector(
+    reduxServices.clients.selectors.selectError,
+  )
+
   const formLabelProps = {
     htmlFor: 'inputNewClient',
     className: 'col-form-label category-label',
@@ -201,12 +205,7 @@ const EditClient = (): JSX.Element => {
       dispatch(
         reduxServices.app.actions.addToast(updateClientSuccessToastMessage),
       )
-    } else if (
-      reduxServices.clients.updateClient.rejected.match(
-        updateClientResultAction,
-      ) &&
-      updateClientResultAction.payload === 500
-    ) {
+    } else if (selectError === 500) {
       dispatch(reduxServices.app.actions.addToast(updateClientFailedToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }

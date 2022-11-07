@@ -25,6 +25,7 @@ const toRender = (
     <EditClient />
   </div>
 )
+
 describe('Edit Client Component Testing', () => {
   describe('Edit Client Component Testing without data', () => {
     beforeEach(() => {
@@ -100,6 +101,7 @@ describe('Edit Client Component Testing', () => {
 
       // Organization
       const organizationInput = screen.getByTestId(organizationId)
+      userEvent.clear(organizationInput)
       userEvent.type(organizationInput, 'Rooftop Digital')
 
       // Client Name
@@ -143,7 +145,7 @@ describe('Edit Client Component Testing', () => {
         preloadedState: {
           clients: {
             clientsList: mockClientsData,
-            isLoading: ApiLoadingState.succeeded,
+            // isLoading: ApiLoadingState.succeeded,
             // editClient: mockEditClient,
             clientCountries: mockGetClientCountries,
           },
@@ -218,36 +220,16 @@ describe('Edit Client Component Testing', () => {
     })
     afterEach(cleanup)
     test('update button should disable upon providing existing client name ', async () => {
-      server.use(
-        rest.put<Client, { message: string }>(
-          clientsApiConfig.updateClient,
-          (req, res, ctx) => {
-            const { name } = req.body
-            console.log('@@@@@@@@', req.body)
-            const filteredClient = mockClientsData.clients.find(
-              (currClient) => currClient.name === name,
-            )
-            if (filteredClient) {
-              return res(
-                ctx.status(500),
-                ctx.json({
-                  message: 'Client Name Already Exists',
-                }),
-              )
-            } else {
-              return res(ctx.status(200), ctx.json({}))
-            }
-          },
-        ),
-      )
       // Client Code
       const clientCodeInput = screen.getByTestId(clientCodeId)
+      userEvent.clear(clientCodeInput)
       userEvent.type(clientCodeInput, '888')
-      expect(clientCodeInput).toHaveValue(`000888`)
+      expect(clientCodeInput).toHaveValue(`888`)
 
       // Organization
       const organizationInput = screen.getByTestId(organizationId)
-      userEvent.type(organizationInput, 'ABS-CBN International test')
+      userEvent.clear(organizationInput)
+      userEvent.type(organizationInput, 'new test')
 
       // Client Name
       const clientNameInput = screen.getByTestId(clientNameId)

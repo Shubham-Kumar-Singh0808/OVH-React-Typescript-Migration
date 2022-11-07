@@ -13,6 +13,7 @@ export const clientsHandlers = [
       }),
     )
   }),
+
   // projectsUnderClient api mock
   rest.get(clientsApiConfig.getProjectsUnderClient, (_req, res, ctx) => {
     return res(
@@ -22,15 +23,22 @@ export const clientsHandlers = [
       }),
     )
   }),
+
   // edit client api mock
-  rest.get(`${clientsApiConfig.editClient}/{18}`, (_req, res, ctx) => {
-    return res(
-      ctx.json({
-        status: 200,
-        data: mockEditClient,
-      }),
-    )
+  rest.get(clientsApiConfig.editClient, (req, res, ctx) => {
+    const clientId = req.url.searchParams.get('clientId')
+    if (clientId) {
+      return res(
+        ctx.json({
+          status: 200,
+          data: mockEditClient,
+        }),
+      )
+    } else {
+      return res(ctx.status(500))
+    }
   }),
+
   // client countries api mock
   rest.get(clientsApiConfig.getClientCountries, (_req, res, ctx) => {
     return res(
@@ -40,18 +48,9 @@ export const clientsHandlers = [
       }),
     )
   }),
-  // is client organization api mock
-  // rest.get(clientsApiConfig.clientOrg, (_req, res, ctx) => {
-  //   return res(
-  //     ctx.status(200),
-  //     ctx.json({
-  //       status: 200,
-  //       data: true,
-  //     }),
-  //   )
-  // }),
+
   // update Client
-  rest.put(clientsApiConfig.updateClient, (req, res, ctx) => {
+  rest.post(clientsApiConfig.updateClient, (req, res, ctx) => {
     const parsedJson = JSON.parse(req.body as string)
     console.log('@@@@', parsedJson)
     const filteredClient = mockClientsData.clients.find(
@@ -69,10 +68,7 @@ export const clientsHandlers = [
       return res(ctx.status(500))
     }
   }),
-  // update Client rejected
-  rest.put(clientsApiConfig.updateClient, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({}))
-  }),
+
   // isOrganizationExists
   rest.get(clientsApiConfig.clientOrg, (req, res, ctx) => {
     const organization = req.url.searchParams.get('organization')
@@ -80,22 +76,39 @@ export const clientsHandlers = [
     const filteredOrganization = mockClientsData.clients.find(
       (currClient) => currClient.organization === organization,
     )
-    if (filteredOrganization) {
+    console.log('****', filteredOrganization)
+    if (filteredOrganization !== undefined) {
       return res(
-        ctx.delay(100),
+        ctx.status(200),
         ctx.json({
-          status: 200,
           data: true,
         }),
       )
     } else {
       return res(
-        ctx.delay(100),
+        ctx.status(200),
         ctx.json({
-          status: 200,
           data: false,
         }),
       )
+    }
+  }),
+  rest.put(clientsApiConfig.updateClient, (req, res, ctx) => {
+    // const { name } = req.body
+    console.log('@@@@@@@@', req.body)
+    // const filteredClient = mockClientsData.clients.find(
+    //   (currClient) => currClient.name === name,
+    // )
+    const filteredClient = true
+    if (filteredClient) {
+      return res(
+        ctx.status(500),
+        ctx.json({
+          message: 'Client Name Already Exists',
+        }),
+      )
+    } else {
+      return res(ctx.status(200), ctx.json({}))
     }
   }),
 ]
