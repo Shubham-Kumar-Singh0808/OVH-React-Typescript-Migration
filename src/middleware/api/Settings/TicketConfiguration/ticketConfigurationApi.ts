@@ -9,6 +9,8 @@ import {
   TicketConfigurationSubCategories,
   TicketConfigurationSubCategoryList,
   TicketConfigurationSubCategoryType,
+  TicketHistoryProps,
+  TicketHistoryResponse,
 } from '../../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
 const getTicketConfigurationDepartments = async (): Promise<
@@ -80,12 +82,29 @@ const deleteSubCategory = async (
   return response.data
 }
 
+const ticketHistory = async (
+  props: TicketHistoryProps,
+): Promise<TicketHistoryResponse> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketConfigurationApiConfig.ticketHistory,
+    method: AllowedHttpMethods.get,
+    params: {
+      filterName: props.filterName ?? 20,
+      id: props.id,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ticketConfigurationApi = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
   getTicketConfigurationSubCategories,
   getTicketConfigurationSubCategoryList,
   deleteSubCategory,
+  ticketHistory,
 }
 
 export default ticketConfigurationApi

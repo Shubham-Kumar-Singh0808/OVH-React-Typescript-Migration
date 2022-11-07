@@ -11,6 +11,8 @@ import {
   TicketConfigurationSubCategories,
   TicketConfigurationSubCategoryList,
   TicketConfigurationSubCategoryType,
+  TicketHistory,
+  TicketHistoryProps,
 } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
 const initialTicketConfigurationState = {} as TicketConfigurationState
@@ -113,6 +115,18 @@ const deleteSubCategory = createAsyncThunk<
   },
 )
 
+const ticketHistoryDetails = createAsyncThunk(
+  'supportManagement/supportManagement/ticketHistory',
+  async (props: TicketHistoryProps, thunkApi) => {
+    try {
+      return await ticketConfigurationApi.ticketHistory(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const ticketConfigurationSlice = createSlice({
   name: 'ticketConfiguration',
   initialState: initialTicketConfigurationState,
@@ -123,6 +137,12 @@ const ticketConfigurationSlice = createSlice({
     clearSubCategoryList: (state) => {
       state.subCategoryList.list = []
       state.subCategoryList.size = 0
+    },
+    toggle: (state, action) => {
+      state.toggle = action.payload
+    },
+    selectTicketId: (state, action) => {
+      state.selectedTicketId = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -147,6 +167,10 @@ const ticketConfigurationSlice = createSlice({
         // state.subCategories = [] as TicketConfigurationSubCategories[]
         state.categories = action.payload as TicketConfigurationCategories[]
       })
+      .addCase(ticketHistoryDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.ticketHistoryDetails = action.payload
+      })
       .addCase(
         getTicketConfigurationSubCategories.fulfilled,
         (state, action) => {
@@ -162,6 +186,7 @@ const ticketConfigurationSlice = createSlice({
         isAnyOf(
           getTicketConfigurationSubCategoryList.pending,
           deleteSubCategory.pending,
+          ticketHistoryDetails.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -174,6 +199,7 @@ const ticketConfigurationSlice = createSlice({
           getTicketConfigurationSubCategories.rejected,
           getTicketConfigurationSubCategoryList.rejected,
           deleteSubCategory.rejected,
+          ticketHistoryDetails.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -209,12 +235,21 @@ const listSize = (state: RootState): number =>
 const selectedDepartment = (state: RootState): string =>
   state.ticketConfiguration.selectedDepartment
 
+const ticketHistory = (state: RootState): TicketHistory[] =>
+  state.ticketConfiguration.ticketHistoryDetails.list
+
+const toggle = (state: RootState): string => state.ticketConfiguration.toggle
+
+const selectTicketId = (state: RootState): number =>
+  state.ticketConfiguration.selectedTicketId
+
 const ticketConfigurationThunk = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
   getTicketConfigurationSubCategories,
   getTicketConfigurationSubCategoryList,
   deleteSubCategory,
+  ticketHistoryDetails,
 }
 
 const qualificationCategorySelectors = {
@@ -226,6 +261,9 @@ const qualificationCategorySelectors = {
   subCategoryList,
   listSize,
   selectedDepartment,
+  ticketHistory,
+  toggle,
+  selectTicketId,
 }
 
 export const ticketConfigurationService = {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TicketConfigurationOptions from './TicketConfigurationOptions'
 import SubCategoryListTable from './SubCategoryListTable'
+import TicketHistoryDetails from './TicketHistory/TicketHistoryDetails'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
@@ -23,6 +24,10 @@ const TicketConfiguration = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.isLoading,
   )
+
+  // const toggleToTicketHistory = useTypedSelector(
+  //   reduxServices.ticketConfiguration.selectors.toggle,
+  // )
 
   const {
     paginationRange,
@@ -55,6 +60,8 @@ const TicketConfiguration = (): JSX.Element => {
   ])
   return (
     <>
+      {/* {toggleToTicketHistory === '' && (
+        <> */}
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Sub-Category List"
@@ -79,6 +86,9 @@ const TicketConfiguration = (): JSX.Element => {
         )}
       </OCard>
     </>
+    //   )}
+    //   {toggleToTicketHistory === 'ticketHistory' && <TicketHistoryDetails />}
+    // </>
   )
 }
 

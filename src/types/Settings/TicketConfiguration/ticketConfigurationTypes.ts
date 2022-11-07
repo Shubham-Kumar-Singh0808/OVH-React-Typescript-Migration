@@ -33,6 +33,11 @@ export type TicketConfigurationSubCategories = {
   levelOfHierarchy: string
 }
 
+export type TicketHistoryResponse = {
+  size: number
+  list: TicketHistory[]
+}
+
 export type TicketConfigurationState = {
   departments: TicketConfigurationDepartments[]
   categories: TicketConfigurationCategories[]
@@ -40,6 +45,9 @@ export type TicketConfigurationState = {
   subCategoryList: TicketConfigurationSubCategoryList
   selectedDepartment: string
   listSize: number
+  ticketHistoryDetails: TicketHistoryResponse
+  toggle: string
+  selectedTicketId: number
   isLoading: LoadingState
   error: ValidationError
 }
@@ -67,4 +75,58 @@ export type TicketConfigurationList = {
   departmentName: string
   departmentId: number
   levelOfHierarchy: number | string
+}
+
+export type TicketHistory = {
+  accessEndDate: null
+  accessStartDate: null
+  actualTime: null
+  additionalInfo: null
+  approvalStatus: null
+  approvedByManager: null
+  assignee: null
+  columnName: null
+  description: null
+  documentsPath: null
+  endDate: null
+  estimatedTime: string
+  id: null
+  levelOfHierarchy: string
+  modifiedBy: string
+  modifiedDate: string
+  oldAccessEndDate: null
+  oldAccessStartDate: null
+  oldactualTime: null
+  oldapprovalStatus: null
+  oldapprovedByManager: null
+  oldassignee: null
+  olddescription: null
+  olddocumentsPath: null
+  oldendDate: null
+  oldestimatedTime: string
+  oldlevelOfHierarchy: string
+  oldpercentageDone: null
+  oldpriority: null
+  oldstartDate: null
+  oldstatus: null
+  oldsubCategoryName: null
+  oldsubject: null
+  oldticketsSubCategoryName: string
+  oldtracker: null
+  oldworkFlow: string
+  percentageDone: null
+  persistType: string
+  priority: null
+  startDate: null
+  status: null
+  subCategoryName: string
+  subject: null
+  ticketsSubCategoryName: null
+  tracker: null
+  workFlow: string
+}
+
+export type TicketHistoryProps = {
+  filterName: string
+  id: number
 }

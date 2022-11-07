@@ -82,8 +82,19 @@ const SubCategoryListTable = (
         deleteSubCategoryResultAction,
       )
     ) {
-      dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
+      dispatch(reduxServices.app.actions.addToast(toastElement))
     }
+  }
+
+  const handleTicketHistoryClick = (id: number) => {
+    dispatch(reduxServices.ticketConfiguration.actions.toggle('ticketHistory'))
+    dispatch(
+      reduxServices.ticketConfiguration.ticketHistoryDetails({
+        filterName: 'sub_catagory',
+        id,
+      }),
+    )
+    dispatch(reduxServices.ticketConfiguration.actions.selectTicketId(id))
   }
 
   return (
@@ -143,6 +154,9 @@ const SubCategoryListTable = (
                               color="info btn-ovh me-1"
                               className="btn-ovh-employee-list"
                               data-testid="subCategoryTimelineBtn"
+                              onClick={() =>
+                                handleTicketHistoryClick(ticket.subCategoryId)
+                              }
                             >
                               <i
                                 className="fa fa-bar-chart"

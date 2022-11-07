@@ -1,0 +1,49 @@
+import React from 'react'
+import { CRow, CCol, CButton, CSpinner } from '@coreui/react-pro'
+import TicketHistoryTimeLine from './TicketHistoryTimeLine'
+import OCard from '../../../../components/ReusableComponent/OCard'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../stateStore'
+
+const TicketHistoryDetails = (): JSX.Element => {
+  const isLoading = useTypedSelector(
+    reduxServices.ticketConfiguration.selectors.isLoading,
+  )
+
+  return (
+    <>
+      <OCard
+        className="mb-4 myprofile-wrapper"
+        title="Ticket History Details"
+        CBodyClassName="ps-0 pe-0"
+        CFooterClassName="d-none"
+      >
+        <CRow className="justify-content-end">
+          <CCol className="text-end" md={4}>
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="toggle-back-button"
+              //   onClick={backButtonHandler}
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
+          </CCol>
+        </CRow>
+        {isLoading !== ApiLoadingState.loading ? (
+          <>
+            <TicketHistoryTimeLine />
+          </>
+        ) : (
+          <CCol>
+            <CRow className="category-loading-spinner">
+              <CSpinner />
+            </CRow>
+          </CCol>
+        )}
+      </OCard>
+    </>
+  )
+}
+export default TicketHistoryDetails
