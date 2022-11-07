@@ -24,7 +24,11 @@ import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { ActiveStatus } from '../../../../types/Settings/Configurations/addConfigurationTypes'
 
-const ConfigurationFilterOption = (): JSX.Element => {
+const AddConfiguration = ({
+  setToggle,
+}: {
+  setToggle: () => void
+}): JSX.Element => {
   const [selectReviewTitle, setSelectReviewTitle] = useState('')
   const [selectReviewType, setSelectReviewType] = useState('')
   const [reviewEndDate, setReviewEndDate] = useState<string>()
@@ -160,6 +164,7 @@ const ConfigurationFilterOption = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
+              onClick={setToggle}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -502,4 +507,4 @@ const ConfigurationFilterOption = (): JSX.Element => {
   )
 }
 
-export default ConfigurationFilterOption
+export default AddConfiguration
