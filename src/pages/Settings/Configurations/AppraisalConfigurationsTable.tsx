@@ -75,7 +75,7 @@ const AppraisalConfigurationsTable = ({
       <CTable
         striped
         responsive
-        className="text-start text-left align-middle alignment"
+        className="text-start text-left align-middle alignment mt-4"
       >
         <CTableHead>
           <CTableRow>
