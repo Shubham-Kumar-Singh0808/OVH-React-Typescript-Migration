@@ -190,7 +190,7 @@ const EventsList = React.lazy(
 const ConfigurationList = React.lazy(
   () =>
     import(
-      './pages/Settings/Configuration/AddConfiguration/ConfigurationFilterOption'
+      './pages/Settings/Configurations/AddConfiguration/ConfigurationFilterOption'
     ),
 )
 
