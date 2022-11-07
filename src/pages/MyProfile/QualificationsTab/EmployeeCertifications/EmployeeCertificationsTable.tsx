@@ -70,6 +70,7 @@ const EmployeeCertificationsTable = ({
         responsive
         striped={isViewingAnotherEmployee}
         bordered={isViewingAnotherEmployee}
+        align="middle"
       >
         {!isViewingAnotherEmployee ? (
           <CTableHead>

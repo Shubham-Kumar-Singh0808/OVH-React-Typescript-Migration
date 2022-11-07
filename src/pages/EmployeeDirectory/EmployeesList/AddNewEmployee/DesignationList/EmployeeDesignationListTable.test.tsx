@@ -66,24 +66,24 @@ describe('DesignationList Table Testing', () => {
       expect(screen.queryByRole('rowheader', { name: '21' })).toBeNull()
     })
     test('should render second page data only', () => {
-      userEvent.click(screen.getByText('Next >', { exact: true }))
+      userEvent.click(screen.getByText('Next ›', { exact: true }))
       expect(screen.getByRole('rowheader', { name: '40' })).toBeInTheDocument()
       expect(screen.queryByRole('rowheader', { name: '41' })).toBeNull()
     })
 
     test('should disable first and prev in pagination if first page', () => {
       expect(screen.getByText('« First')).toHaveAttribute('disabled')
-      expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
-      expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('‹ Prev')).toHaveAttribute('disabled')
+      expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
 
     test('should disable last and next in pagination if last page', () => {
-      userEvent.click(screen.getByText('Next >', { exact: true }))
+      userEvent.click(screen.getByText('Next ›', { exact: true }))
 
       expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('Next >')).toHaveAttribute('disabled')
+      expect(screen.getByText('‹ Prev')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('Next ›')).toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).toHaveAttribute('disabled')
     })
     it('should render Delete modal on clicking delete button from Actions', async () => {
