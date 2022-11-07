@@ -1,4 +1,5 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
+import { UserAccessToFeatures } from '../UserRolesConfiguration/userAccessToFeaturesTypes'
 
 export type EmployeeSaveLeaveCalenderSetting = {
   id: string
@@ -37,4 +38,5 @@ export type EmployeeLeaveCategoryProps = {
 
 export type EmployeeLeaveCategoriesProps = {
   setToggle: (value: string) => void
+  userAccess?: UserAccessToFeatures
 }

@@ -425,6 +425,9 @@ export interface EventListApi extends ApiBase {
   downloadFeedbackForm: string
   uploadFeedbackForm: string
 }
+export interface AppraisalConfigurationsApi extends ApiBase {
+  getAppraisalCycle: string
+}
 
 export interface RoomListApi extends ApiBase {
   getAllMeetingRooms: string
