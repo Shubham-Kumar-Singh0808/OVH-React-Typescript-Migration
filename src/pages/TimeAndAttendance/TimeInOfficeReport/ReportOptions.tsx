@@ -170,13 +170,14 @@ const ReportOptions = ({
           </CFormLabel>
           <CCol sm={2} className="time-in-datepicker-col">
             <ReactDatePicker
+              autoComplete="off"
+              className="form-control form-control-sm sh-date-picker"
               selected={startDate}
               onChange={(date: Date) => setStartDate(date)}
               dateFormat="MM/yyyy"
+              maxDate={new Date()}
               showMonthYearPicker
-              showFourColumnMonthYearPicker
               placeholderText="mm/yyyy"
-              todayButton="Today"
               data-testid="date-picker-input"
             />
           </CCol>
