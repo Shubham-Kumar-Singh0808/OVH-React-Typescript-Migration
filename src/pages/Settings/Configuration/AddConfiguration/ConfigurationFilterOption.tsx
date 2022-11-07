@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -21,6 +21,8 @@ import {
 import { deviceLocale } from '../../../../utils/helper'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import { dateFormat } from '../../../../constant/DateFormat'
+import { ActiveStatus } from '../../../../types/Settings/Configurations/addConfigurationTypes'
 
 const ConfigurationFilterOption = (): JSX.Element => {
   const [selectReviewTitle, setSelectReviewTitle] = useState('')
@@ -30,11 +32,18 @@ const ConfigurationFilterOption = (): JSX.Element => {
   const [isShowDescription, setIsShowDescription] = useState<boolean>(true)
   const [addingDescription, setAddingDescription] = useState<string>('')
   const [servicePeriod, setServicePeriod] = useState<number | string>()
-  const [level, setLevel] = useState<number | string>()
+  const [level, setLevel] = useState<number | string>(1)
   const [reviewPeriodFrom, setReviewPeriodFrom] = useState<Date | undefined>()
   const [reviewPeriodTo, setReviewPeriodTo] = useState<Date | undefined>()
+  const [isDateValidation, setIsDateValidation] = useState<boolean>(false)
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false)
+  const [selectActiveStatus, setSelectActiveStatus] = useState<string>('')
 
   const commonFormatDate = 'L'
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectActiveStatus(e.target.value)
+  }
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -91,10 +100,51 @@ const ConfigurationFilterOption = (): JSX.Element => {
     setServicePeriod('')
     setAddingDescription('')
     setIsShowDescription(false)
+    setReviewPeriodFrom(undefined)
+    setReviewPeriodTo(undefined)
+    setSelectActiveStatus('')
+    setLevel('')
     setTimeout(() => {
       setIsShowDescription(true)
     }, 0)
   }
+  useEffect(() => {
+    const startDate = moment(reviewStartDate, dateFormat).format(
+      commonFormatDate,
+    )
+    const endDate = moment(reviewEndDate, dateFormat).format(commonFormatDate)
+    if (startDate < endDate) {
+      setIsDateValidation(true)
+    } else {
+      setIsDateValidation(false)
+    }
+  }, [reviewStartDate, reviewEndDate])
+
+  useEffect(() => {
+    if (
+      selectReviewTitle?.length > 0 &&
+      selectReviewType &&
+      reviewEndDate &&
+      reviewStartDate &&
+      servicePeriod &&
+      reviewPeriodFrom &&
+      reviewPeriodTo &&
+      level
+    ) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [
+    selectReviewTitle,
+    selectReviewType,
+    reviewEndDate,
+    reviewStartDate,
+    reviewPeriodFrom,
+    reviewPeriodTo,
+    servicePeriod,
+    level,
+  ])
 
   return (
     <>
@@ -175,11 +225,11 @@ const ConfigurationFilterOption = (): JSX.Element => {
                 </span>
               </CFormLabel>
             </CCol>
-            <CCol sm={2} className="text-end pe-2 ms-3 sh-date-picker-column">
+            <CCol sm={3}>
               <ReactDatePicker
                 id="employeeRealBirthday"
                 data-testid="sh-date-picker"
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 maxDate={new Date()}
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
@@ -201,11 +251,11 @@ const ConfigurationFilterOption = (): JSX.Element => {
                 </span>
               </CFormLabel>
             </CCol>
-            <CCol sm={2} className="text-end pe-2 ms-3 sh-date-picker-column">
+            <CCol sm={3}>
               <ReactDatePicker
                 id="employeeRealBirthday"
                 data-testid="sh-date-picker"
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 maxDate={new Date()}
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
@@ -293,6 +343,17 @@ const ConfigurationFilterOption = (): JSX.Element => {
               />
             </CCol>
           </CRow>
+          {isDateValidation && (
+            <CRow className="mt-2">
+              <CCol sm={{ span: 6, offset: 2 }}>
+                <span className="text-danger">
+                  <b>
+                    Review End Date should be greater than Review Start Date
+                  </b>
+                </span>
+              </CCol>
+            </CRow>
+          )}
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
@@ -367,39 +428,31 @@ const ConfigurationFilterOption = (): JSX.Element => {
             >
               Active:
             </CFormLabel>
-            <CCol
-              className="mt-1"
-              sm={2}
-              md={1}
-              lg={1}
-              data-testid="activeStatus"
-            >
+            <CCol sm={2} md={1}>
               <CFormCheck
                 data-testid="active"
                 className="mt-1"
                 type="radio"
-                name="active"
-                id="active"
+                name="yes"
+                id="yes"
                 label="Yes"
-                value="false"
                 inline
+                onChange={onChangeHandler}
+                value={ActiveStatus.inactive}
+                checked={selectActiveStatus === ActiveStatus.inactive}
               />
             </CCol>
-            <CCol
-              className="mt-1"
-              sm={2}
-              md={1}
-              lg={1}
-              data-testid="activeStatus"
-            >
+            <CCol sm={2} md={1}>
               <CFormCheck
                 className="mt-1"
                 type="radio"
-                name="active"
-                id="active"
+                name="no"
+                id="no"
                 label="No"
-                value="false"
                 inline
+                onChange={onChangeHandler}
+                value={ActiveStatus.active}
+                checked={selectActiveStatus === ActiveStatus.active}
               />
             </CCol>
           </CRow>
@@ -429,6 +482,7 @@ const ConfigurationFilterOption = (): JSX.Element => {
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
+                disabled={!isButtonEnabled}
               >
                 Add
               </CButton>
