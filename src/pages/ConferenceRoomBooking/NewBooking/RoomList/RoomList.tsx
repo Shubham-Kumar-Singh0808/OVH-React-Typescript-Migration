@@ -157,7 +157,7 @@ const RoomList = (): JSX.Element => {
             <CFormInput
               className="mb-2"
               data-testid="roomName"
-              maxLength={32}
+              maxLength={40}
               type="text"
               id="roomName"
               size="sm"
