@@ -6,7 +6,6 @@ import ManagerTimeInOfficeReport from './ManagerTimeInOfficeReport'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { currentMonthDate } from '../../../utils/helper'
 
@@ -24,9 +23,6 @@ const TimeInOfficeReport = (): JSX.Element => {
   )
   const selectedView = useTypedSelector(
     reduxServices.timeInOfficeReport.selectors.selectedView,
-  )
-  const isLoading = useTypedSelector(
-    reduxServices.timeInOfficeReport.selectors.isLoading,
   )
   const listSize = useTypedSelector(
     reduxServices.timeInOfficeReport.selectors.managerReportSize,
@@ -113,10 +109,8 @@ const TimeInOfficeReport = (): JSX.Element => {
           setStartDate={setStartDate}
           viewButtonHandler={viewButtonHandler}
         />
-        {selectedView === 'Me' && isLoading === ApiLoadingState.succeeded && (
-          <EmployeeTimeInOfficeReport />
-        )}
-        {selectedView === 'All' && isLoading === ApiLoadingState.succeeded && (
+        {selectedView === 'Me' && <EmployeeTimeInOfficeReport />}
+        {selectedView === 'All' && (
           <ManagerTimeInOfficeReport
             paginationRange={paginationRange}
             setPageSize={setPageSize}

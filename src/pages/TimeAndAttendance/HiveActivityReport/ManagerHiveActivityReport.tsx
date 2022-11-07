@@ -17,6 +17,9 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { ManagerHiveActivityReportProps } from '../../../types/TimeAndAttendance/HiveActivityReport/hiveActivityReportTypes'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const ManagerHiveActivityReport = (
   props: ManagerHiveActivityReportProps,
@@ -29,6 +32,10 @@ const ManagerHiveActivityReport = (
   )
   const listSize = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerReportSize,
+  )
+
+  const isLoading = useTypedSelector(
+    reduxServices.hiveActivityReport.selectors.isLoading,
   )
 
   const {
@@ -66,31 +73,31 @@ const ManagerHiveActivityReport = (
 
   return (
     <>
-      {managerHiveActivityReport.list?.length ? (
-        <>
-          <CTable striped className="time-in-office-table">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell {...tableHeaderCellPropsName}>
-                  ID
-                </CTableHeaderCell>
-                <CTableHeaderCell {...tableHeaderCellPropsID}>
-                  Name
-                </CTableHeaderCell>
-                {Array.from({ length: 31 }, (_, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <CTableHeaderCell {...tableHeaderCellPropsDays}>
-                        {index + 1}
-                      </CTableHeaderCell>
-                    </React.Fragment>
-                  )
-                })}
-                <CTableHeaderCell className="text-center" scope="col">
-                  Total
-                </CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
+      <>
+        <CTable striped className="time-in-office-table">
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell {...tableHeaderCellPropsName}>
+                ID
+              </CTableHeaderCell>
+              <CTableHeaderCell {...tableHeaderCellPropsID}>
+                Name
+              </CTableHeaderCell>
+              {Array.from({ length: 31 }, (_, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <CTableHeaderCell {...tableHeaderCellPropsDays}>
+                      {index + 1}
+                    </CTableHeaderCell>
+                  </React.Fragment>
+                )
+              })}
+              <CTableHeaderCell className="text-center" scope="col">
+                Total
+              </CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          {isLoading !== ApiLoadingState.loading ? (
             <CTableBody>
               {managerHiveActivityReport.list.map(
                 (employeeRecord, employeeRecordIndex) => {
@@ -134,11 +141,19 @@ const ManagerHiveActivityReport = (
                 },
               )}
             </CTableBody>
-          </CTable>
+          ) : (
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          )}
+        </CTable>
+        {isLoading !== ApiLoadingState.loading && (
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {listSize}</strong>
+                <strong>
+                  {managerHiveActivityReport.list?.length
+                    ? `Total Records: ${listSize}`
+                    : `No Records found...`}
+                </strong>
               </p>
             </CCol>
             <CCol xs={3}>
@@ -163,14 +178,8 @@ const ManagerHiveActivityReport = (
               </CCol>
             )}
           </CRow>
-        </>
-      ) : (
-        <CCol>
-          <CRow className="mt-4">
-            <h5>No Records Found... </h5>
-          </CRow>
-        </CCol>
-      )}
+        )}
+      </>
       <OModal
         modalSize="lg"
         alignment="center"
