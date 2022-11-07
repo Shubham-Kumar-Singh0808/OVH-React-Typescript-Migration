@@ -72,7 +72,7 @@ const TimeInOfficeReport = (): JSX.Element => {
         ),
       )
     },
-    [employeeId, pageSize, currentPage, searchValue, dispatch],
+    [employeeId, pageSize, currentPage, searchValue, dispatch, selectedView],
   )
 
   useEffect(() => {

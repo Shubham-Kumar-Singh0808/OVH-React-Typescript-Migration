@@ -116,11 +116,9 @@ const ManagerTimeInOfficeReport = (
           </CRow>
         </>
       ) : (
-        <CCol>
-          <CRow className="category-no-data">
-            <h4 className="text-center">No data to display</h4>
-          </CRow>
-        </CCol>
+        <CRow className="mt-4">
+          <h5>No Records Found... </h5>
+        </CRow>
       )}
     </>
   )
