@@ -66,10 +66,12 @@ const AppraisalConfigurationsTable = ({
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
+
   const handleAgendaModal = (appraisalCycle: getAppraisalCycle) => {
     setIsAppraisalDescriptionVisible(true)
     setDescriptionModal(appraisalCycle)
   }
+
   return (
     <>
       <CTable
@@ -94,7 +96,7 @@ const AppraisalConfigurationsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {appraisalCycleNames.length > 0 &&
+          {appraisalCycleNames?.length > 0 &&
             appraisalCycleNames?.map((appraisalCycle, index) => {
               const agendaLimit =
                 appraisalCycle.description &&
