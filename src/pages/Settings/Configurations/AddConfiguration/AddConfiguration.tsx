@@ -22,7 +22,7 @@ import { deviceLocale } from '../../../../utils/helper'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../../constant/DateFormat'
-import { ActiveStatus } from '../../../../types/Settings/Configurations/addConfigurationTypes'
+import { ActiveStatus } from '../../../../types/Settings/Configurations/AddConfiguration/addConfigurationTypes'
 
 const AddConfiguration = ({
   setToggle,
@@ -462,7 +462,7 @@ const AddConfiguration = ({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className={TextLabelProps}>Description: </CFormLabel>
+            <CFormLabel className={TextLabelProps}>Description:</CFormLabel>
             {isShowDescription ? (
               <CCol sm={9}>
                 <CKEditor<{

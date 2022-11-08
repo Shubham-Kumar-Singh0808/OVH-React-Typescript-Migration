@@ -60,6 +60,7 @@ import {
   AddTrackerApi,
   AppraisalConfigurationsApi,
   RoomListApi,
+  AddConfigurationsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -517,6 +518,9 @@ export const addTrackerApiConfig: AddTrackerApi = {
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
   getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+}
+export const addConfigurationsApiConfig: AddConfigurationsApi = {
+  addAppraisalCycle: apiPrefix + '/appraisal/cycle',
 }
 
 export const roomListApiConfig: RoomListApi = {
