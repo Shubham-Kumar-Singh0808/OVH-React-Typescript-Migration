@@ -21,7 +21,6 @@ export type AddCycle = {
 }
 
 export type AddConfigurationSliceState = {
-  cycleRecords: AddCycle
   isLoading: ApiLoadingState
   error: ValidationError
 }

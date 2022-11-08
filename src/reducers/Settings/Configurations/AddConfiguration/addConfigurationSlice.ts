@@ -2,22 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import addConfigurationApi from '../../../../middleware/api/Settings/Configurations/AddConfiguration/addConfigurationApi'
-import { AppDispatch, RootState } from '../../../../stateStore'
 import { ValidationError } from '../../../../types/commonTypes'
 import {
   AddConfigurationSliceState,
   AddCycle,
 } from '../../../../types/Settings/Configurations/AddConfiguration/addConfigurationTypes'
 
-const addNewCycle = createAsyncThunk<
-  number | undefined,
-  AddCycle,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->(
+const addNewCycle = createAsyncThunk(
   'addConfiguration/addAppraisalCycle',
   async (newCycleDetails: AddCycle, thunkApi) => {
     try {
@@ -30,7 +21,6 @@ const addNewCycle = createAsyncThunk<
 )
 
 const initialAddCycleState: AddConfigurationSliceState = {
-  cycleRecords: {} as AddCycle,
   isLoading: ApiLoadingState.idle,
   error: null,
 }
@@ -58,17 +48,9 @@ const addConfigurationThunk = {
   addNewCycle,
 }
 
-const cycleRecords = (state: RootState): AddCycle =>
-  state.addConfiguration.cycleRecords
-
-const addConfigurationSelectors = {
-  cycleRecords,
-}
-
 export const addConfigurationService = {
   ...addConfigurationThunk,
   actions: addNewConfigurationSlice.actions,
-  selectors: addConfigurationSelectors,
 }
 
 export default addNewConfigurationSlice.reducer
