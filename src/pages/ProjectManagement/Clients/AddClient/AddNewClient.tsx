@@ -165,6 +165,34 @@ const AddNewClient = (): JSX.Element => {
     />
   )
 
+  const clientOrgAlreadyExistsToast = (
+    <OToast
+      toastMessage="Client organization already exists"
+      toastColor="danger"
+    />
+  )
+  const isOrgAlreadyExists = async (value: string) => {
+    if (value !== '' || undefined) {
+      const isOrgAlreadyExistsResultAction = await dispatch(
+        reduxServices.addClient.checkClientOrgExist(value),
+      )
+      if (
+        reduxServices.addClient.checkClientOrgExist.fulfilled.match(
+          isOrgAlreadyExistsResultAction,
+        ) &&
+        isOrgAlreadyExistsResultAction.payload === true
+      ) {
+        setAddClient((prevState) => {
+          return { ...prevState, ...{ organization: '' } }
+        })
+        dispatch(
+          reduxServices.app.actions.addToast(clientOrgAlreadyExistsToast),
+        )
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      }
+    }
+  }
+
   const handleAddNewClient = async () => {
     const prepareObject = {
       ...addClient,
@@ -253,6 +281,7 @@ const AddNewClient = (): JSX.Element => {
                 placeholder="Organization"
                 value={addClient.organization}
                 onChange={handleInputChange}
+                onBlur={(e) => isOrgAlreadyExists(e.target.value)}
               />
             </CCol>
           </CRow>

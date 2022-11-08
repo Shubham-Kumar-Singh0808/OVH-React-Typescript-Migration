@@ -29,6 +29,7 @@ import { employeeLeaveHistoryHandlers } from './employeeLeaveHistoryHandlers'
 import { employeeSearchHandler } from './employeeSearchHandler'
 import { employeeSkillHandlers } from './employeeSkillsHandlers'
 import { employeeCertificationHandlers } from './employeeCertificationsHandlers'
+import { addNewClientHandlers } from './addNewClientHandlers'
 import { addRoomListHandlers } from './addRoomListHandler'
 import { addLocationListHandlers } from './addLocationListHandlers'
 
@@ -66,6 +67,7 @@ export const handlers = [
   ...employeeSearchHandler,
   ...employeeSkillHandlers,
   ...employeeCertificationHandlers,
+  ...addNewClientHandlers,
   ...addRoomListHandlers,
   ...addLocationListHandlers,
   // add your handler here

@@ -26,6 +26,7 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './components/session-timeout';
 @import './components/inline-tabs-nav';
 @import './components/loading-spinner';
+@import './components/react-datepicker-styles';
 @import './pages/login';
 @import './pages/qualifications-tab';
 @import './components/richtexteditor';
@@ -68,3 +69,4 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './pages/employeedirectory/employeeslist/employees-list';
 @import './components/otoast';
 @import './pages/leaves/leavessummary/leavehistorytable';
+@import './pages/settings/configurations/addconfiguration';
