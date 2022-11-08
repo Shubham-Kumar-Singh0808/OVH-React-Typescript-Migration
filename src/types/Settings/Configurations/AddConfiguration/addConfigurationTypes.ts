@@ -1,4 +1,5 @@
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { ValidationError } from '../../../commonTypes'
 
 export enum ActiveStatus {
   'active' = 'Active',
@@ -22,4 +23,5 @@ export type AddCycle = {
 export type AddConfigurationSliceState = {
   cycleRecords: AddCycle
   isLoading: ApiLoadingState
+  error: ValidationError
 }

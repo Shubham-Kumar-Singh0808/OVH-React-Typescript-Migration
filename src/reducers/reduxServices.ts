@@ -69,6 +69,7 @@ import { eventListService } from './ConferenceRoomBooking/EventList/eventListSli
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -142,4 +143,5 @@ export const reduxServices = {
   roomLists: roomListService,
   searchEmployee: employeeSearchService,
   appraisalConfigurations: appraisalCycleService,
+  addConfigurations: addConfigurationService,
 }
