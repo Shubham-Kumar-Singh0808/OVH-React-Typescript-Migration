@@ -108,6 +108,7 @@ describe('Add Template Component Testing', () => {
         expect(screen.queryByTestId('error-msg')).not.toBeInTheDocument()
       })
     })
+    jest.retryTimes(3)
     test('should enable add button , when all mandatory fields are entered', async () => {
       const clientCode = screen.getByTestId(clientCodeElement)
       userEvent.type(clientCode, '000')
