@@ -30,7 +30,7 @@ const ManagerHiveActivityReport = (
   const managerHiveActivityReport = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerHiveActivityReport,
   )
-  const listSize = useTypedSelector(
+  const ManagerReportListSize = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerReportSize,
   )
 
@@ -46,7 +46,7 @@ const ManagerHiveActivityReport = (
     setCurrentPage,
   } = props
 
-  const handlePageSizeSelectChange = (
+  const handleHiveActivityPageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(event.target.value))
@@ -74,7 +74,11 @@ const ManagerHiveActivityReport = (
   return (
     <>
       <>
-        <CTable striped className="time-in-office-table">
+        <CTable
+          striped
+          responsive
+          className="time-in-office-table align-middle"
+        >
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell {...tableHeaderCellPropsName}>
@@ -151,21 +155,23 @@ const ManagerHiveActivityReport = (
               <p>
                 <strong>
                   {managerHiveActivityReport.list?.length
-                    ? `Total Records: ${listSize}`
+                    ? `Total Records: ${ManagerReportListSize}`
                     : `No Records found...`}
                 </strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {listSize > 20 && (
+              {ManagerReportListSize > 20 && (
                 <OPageSizeSelect
-                  handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  handlePageSizeSelectChange={
+                    handleHiveActivityPageSizeSelectChange
+                  }
                   options={[20, 40, 60, 80, 100]}
                   selectedPageSize={pageSize}
                 />
               )}
             </CCol>
-            {listSize > 20 && (
+            {ManagerReportListSize > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"

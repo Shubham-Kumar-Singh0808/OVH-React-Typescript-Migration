@@ -249,3 +249,6 @@ input.capetalized {
 .template-body .template-content {
   min-height: 50px;
 }
+.time-in-office-table > :not(caption) > * > * {
+  padding: 8px !important;
+}

@@ -24,7 +24,11 @@ const EmployeeTimeInOfficeReport = (): JSX.Element => {
 
   return (
     <>
-      <CTable striped className="time-in-office-table">
+      <CTable
+        striped
+        responsive
+        className="time-in-office-table text-center align-middle"
+      >
         <CTableHead>
           <CTableRow>
             {timeInOfficeEmployeeReport.dayList &&

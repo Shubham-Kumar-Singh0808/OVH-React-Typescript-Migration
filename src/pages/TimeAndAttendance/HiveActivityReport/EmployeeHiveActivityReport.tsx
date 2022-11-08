@@ -25,7 +25,7 @@ const EmployeeHiveActivityReport = (): JSX.Element => {
 
   return (
     <>
-      <CTable striped className="time-in-office-table">
+      <CTable striped responsive className="time-in-office-table align-middle">
         <CTableHead>
           <CTableRow>
             {Array.from({ length: 31 }, (_, index) => {
