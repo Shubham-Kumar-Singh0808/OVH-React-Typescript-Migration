@@ -47,6 +47,18 @@ const addNewClient = createAsyncThunk<
   },
 )
 
+const checkClientOrgExist = createAsyncThunk(
+  'addNewClient/checkClientOrgExist',
+  async (inputText: string, thunkApi) => {
+    try {
+      return await addNewClientApi.checkClientOrgExist(inputText)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialAddClientState: AddNewClientSliceState = {
   clientCountries: [],
   isLoading: ApiLoadingState.idle,
@@ -64,17 +76,28 @@ const addNewClientSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.clientCountries = action.payload as ClientCountry[]
       })
-      .addCase(addNewClient.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
       .addMatcher(
-        isAnyOf(getClientCountries.pending, addNewClient.pending),
+        isAnyOf(addNewClient.fulfilled, checkClientOrgExist.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getClientCountries.pending,
+          addNewClient.pending,
+          checkClientOrgExist.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
-        isAnyOf(getClientCountries.rejected, addNewClient.rejected),
+        isAnyOf(
+          getClientCountries.rejected,
+          addNewClient.rejected,
+          checkClientOrgExist.rejected,
+        ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
@@ -89,6 +112,7 @@ const clientCountries = (state: RootState): ClientCountry[] =>
 const addNewClientThunk = {
   getClientCountries,
   addNewClient,
+  checkClientOrgExist,
 }
 const addNewClientSelectors = {
   clientCountries,

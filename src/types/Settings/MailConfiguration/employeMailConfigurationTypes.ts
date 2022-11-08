@@ -4,11 +4,11 @@ export type EmployeeMailTemplate = {
   id: number
   templateName: string
   template: string
-  templateTypeId: number | string
-  templateType?: string
-  assetTypeId?: null | string
-  assetType?: string
-  email?: null | string
+  templateTypeId: number
+  templateType: string
+  assetTypeId: string
+  assetType: string
+  email: string
 }
 
 export type EmployeeMailTemplateType = {
@@ -23,6 +23,17 @@ export type EmployeeMailConfigurationState = {
   error: ValidationError
 }
 
+export type EditEmployeeMailTemplate = {
+  id: number
+  templateName: string
+  template: string
+  templateTypeId: number
+  templateType: string
+  assetTypeId: string | null
+  assetType: string
+  email: string | null
+}
+
 export type EmployeeGetEmailTemplateProps = {
   templateName: string | undefined
   templateTypeId: number | string | undefined
@@ -35,4 +46,15 @@ export type EmployeeGetEmailTemplateModelProps = {
 
 export type EmployeeEmailTemplateTableProps = {
   employeeTemplate: EmployeeMailTemplate
+  editEmployeeTemplate: EditEmployeeMailTemplate
+  editTemplateButtonHandler: (props: EditEmployeeMailTemplate) => void
+}
+
+export type EditTemplateProps = {
+  backButtonHandler: () => void
+  employeeTemplate: EmployeeMailTemplate
+  editEmployeeTemplate: EditEmployeeMailTemplate
+  setEditEmployeeTemplate: React.Dispatch<
+    React.SetStateAction<EditEmployeeMailTemplate>
+  >
 }

@@ -1,7 +1,7 @@
-import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
+import { CButton, CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
-import ReactDatePicker from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { useHistory } from 'react-router-dom'
@@ -43,7 +43,9 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
   }
 
   const onChangeLeaveTypeHandler = (
-    event: React.ChangeEvent<HTMLSelectElement>,
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
     setApplyLeave((prevState) => {
@@ -97,14 +99,14 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
       reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
         applyLeaveResultAction,
       ) &&
-      applyLeaveResultAction.payload === 302
+      applyLeaveResultAction.payload === 406
     ) {
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="danger"
             toastMessage="            
-            Leave already applied on mentioned date."
+            You are Under Notice,So you can't apply for a leave"
           />,
         ),
       )
@@ -120,6 +122,21 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
             toastColor="danger"
             toastMessage="            
             Leave Application Cannot Process."
+          />,
+        ),
+      )
+    } else if (
+      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
+        applyLeaveResultAction,
+      ) &&
+      applyLeaveResultAction.payload === 402
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            You don't have enough leave balance to apply."
           />,
         ),
       )
@@ -165,7 +182,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
     <>
       <CRow className="mt-1">
         <CCol sm={8}>
-          <CFormLabel className="col-sm-3 col-form-label">
+          <CFormLabel className="w-100 col-form-label">
             Leave Type:
             <span
               className={applyLeave.leaveCategoryName ? TextWhite : TextDanger}
@@ -174,21 +191,22 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
               *
             </span>
           </CFormLabel>
-          <CFormSelect
-            data-testid="leaveApply-form-select"
-            aria-label="leaveCategoryName"
-            name="leaveCategoryName"
-            id="leaveCategoryName"
-            value={applyLeave.leaveCategoryName}
-            onChange={onChangeLeaveTypeHandler}
-          >
-            <option value={''}>Select a Leave</option>
-            {employeeLeaveType?.map((countriesItem, index) => (
-              <option key={index} value={countriesItem.name}>
-                {countriesItem.name}
-              </option>
-            ))}
-          </CFormSelect>
+          {employeeLeaveType?.map((leaveTypeItem, index) => {
+            return (
+              <CFormCheck
+                className="me-4"
+                key={index}
+                inline
+                type="radio"
+                data-testid="leaveApply-form-select"
+                value={leaveTypeItem.name}
+                name="leaveCategoryName"
+                label={leaveTypeItem.name}
+                checked={leaveTypeItem.name === applyLeave.leaveCategoryName}
+                onChange={onChangeLeaveTypeHandler}
+              />
+            )
+          })}
         </CCol>
       </CRow>
       <CRow className="mt-3">
@@ -199,13 +217,13 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 From :
                 <span className={fromDate ? TextWhite : TextDanger}> *</span>
               </CFormLabel>
-              <ReactDatePicker
+              <DatePicker
                 id="fromDate"
                 data-testid="leaveApplyFromDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
@@ -229,12 +247,12 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 To:
                 <span className={toDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
-              <ReactDatePicker
+              <DatePicker
                 id="toDate"
                 data-testid="leaveApprovalFromDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                peekNextMonth
                 showMonthDropdown
+                autoComplete="off"
                 showYearDropdown
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
@@ -293,7 +311,7 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
             className="cursor-pointer sh-ovh-btn-new"
             color="primary me-1"
             data-testid="sh-view-button"
-            disabled={!isButtonEnabled}
+            disabled={!isButtonEnabled || dateError}
             onClick={handleApplyLeave}
           >
             Apply

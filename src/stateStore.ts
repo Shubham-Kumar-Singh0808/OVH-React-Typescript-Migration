@@ -70,7 +70,15 @@ import trainingAndEventsReducer from './reducers/Dashboard/trainingsAndEventsSli
 import provisionPeriodReducer from './reducers/Dashboard/provisionPeriodSlice'
 import achievementsReducer from './reducers/Dashboard/achievementsSlice'
 import updateTicketReducer from './reducers/Support/TicketApprovals/UpdateTicket/updateTicketSlice'
+import bookingListReducer from './reducers/ConferenceRoomBooking/BookingList/bookingListSlice'
+import leaveReportReducer from './reducers/Leaves/LeaveReports/leaveReportSlice'
+import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import eventListReducer from './reducers/ConferenceRoomBooking/EventList/eventListSlice'
+import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/trackerListSlice'
+import addRoomList from './reducers/ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import employeeProfileSearchReducer from './reducers/Dashboard/searchEmployeeSlice'
+import appraisalConfigurationsReducer from './reducers/Settings/Configurations/appraisalConfigurationsSlice'
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const allReducers = {
@@ -132,6 +140,7 @@ export const allReducers = {
   employeeLeaveSummary: leaveSummaryReducer,
   tickets: myTicketsReducer,
   ticketApprovals: ticketApprovalsReducer,
+  addTrackerLists: addTrackerListReducer,
   raiseNewTicket: createNewTicketReducer,
   upcomingEmployeeBirthday: UpcomingBirthdayReducer,
   employeesBirthdayList: birthdaysListReducer,
@@ -142,8 +151,15 @@ export const allReducers = {
   leaveApprovals: leaveApprovalsReducer,
   probationPeriod: provisionPeriodReducer,
   achievements: achievementsReducer,
+  addLocationList: addLocationListReducer,
   updateTicket: updateTicketReducer,
+  bookingList: bookingListReducer,
+  leaveReport: leaveReportReducer,
   eventTypeList: eventTypeListReducer,
+  eventList: eventListReducer,
+  roomList: addRoomList,
+  dashboardEmployeeSearch: employeeProfileSearchReducer,
+  appraisalConfigurations: appraisalConfigurationsReducer,
   // add your slice reducers here
 }
 

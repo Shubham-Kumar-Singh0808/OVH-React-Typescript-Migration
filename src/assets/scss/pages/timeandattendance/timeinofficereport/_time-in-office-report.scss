@@ -1,7 +1,7 @@
 .time-in-office-header {
-  color: $primary-base;
-  font-weight: 300 !important;
+  color: #124b7c;
   font-size: 14px !important;
+  font-weight: 400;
 }
 
 .radio-container {
@@ -10,6 +10,14 @@
 
 .color-for-time-hyphen {
   color: blue !important;
+}
+
+.color-for-time-red {
+  color: red !important;
+}
+
+.color-for-time-black {
+  color: black !important;
 }
 
 .color-for-time-total {
@@ -48,4 +56,24 @@
 
 .time-in-office-report-card {
   overflow: unset !important;
+}
+
+.react-datepicker__navigation--previous {
+  left: 2px;
+  top: 8px;
+}
+
+.react-datepicker__navigation--next {
+  right: 2px;
+  top: 8px;
+}
+
+.react-datepicker__month {
+  text-align: center;
+}
+
+.react-datepicker__month .react-datepicker__month-text, .react-datepicker__month .react-datepicker__quarter-text {
+  display: inline-block;
+  width: 4rem;
+  margin: 12px 2px 12px 2px;
 }

@@ -3,9 +3,19 @@ import React from 'react'
 import ListOfHolidays from './ListOfHolidays'
 import { render, screen } from '../../../../test/testUtils'
 import { mockLoggedInEmployeeData } from '../../../../test/data/myProfileData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ListOfHolidays />
+  </div>
+)
 
 describe('List Of Holidays Component Testing', () => {
-  render(<ListOfHolidays />, {
+  render(toRender, {
     preloadedState: {
       getLoggedInEmployeeData: {
         generalInformation: mockLoggedInEmployeeData,
@@ -19,6 +29,9 @@ describe('List Of Holidays Component Testing', () => {
           tenantKey: 'abc',
           token: 'test',
           designation: 'developer',
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     },

@@ -17,9 +17,18 @@ const mockBackButton = jest.fn()
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <TicketDetailsTable backButtonHandler={mockBackButton} />,
+  </div>
+)
+
 describe('Ticket Details Table Component Testing', () => {
   test('should render Ticket Details table component without crashing', async () => {
-    render(<TicketDetailsTable backButtonHandler={mockBackButton} />, {
+    render(toRender, {
       preloadedState: {
         ticketReport: {
           ticketsDetailsList: mockTicketDetailsData,
@@ -39,7 +48,7 @@ describe('Ticket Details Table Component Testing', () => {
 
 describe('Employee Ticket Details', () => {
   beforeEach(() => {
-    render(<TicketDetailsTable backButtonHandler={mockBackButton} />, {
+    render(toRender, {
       preloadedState: {
         ticketReport: {
           ticketsDetailsList: mockTicketDetailsData,

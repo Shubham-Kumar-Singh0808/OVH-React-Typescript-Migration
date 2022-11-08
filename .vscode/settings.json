@@ -5,13 +5,17 @@
     "deleteaccess",
     "deployqa",
     "Employeeemail",
+    "exportbutton",
     "formik",
     "headwrap",
     "infocheckbox",
+    "leavereport",
     "reduxjs",
     "sonarqube",
     "Statusvalue",
     "testid",
+    "Traker",
+    "typeofget",
     "updateaccess",
     "viewaccess"
   ]

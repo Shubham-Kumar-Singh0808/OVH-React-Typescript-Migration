@@ -41,6 +41,7 @@ import { employeeLeaveApplyServices } from './Leaves/ApplyLeave/employeeApplyLea
 import { scheduledInterviewsService } from './Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
+import { leaveReportService } from './Leaves/LeaveReports/leaveReportSlice'
 import { ticketReportService } from './Support/Report/ticketReportSlice'
 import { projectManagementService } from './ProjectManagement/Project/projectSlice'
 import { clientsService } from './ProjectManagement/Clients/clientsSlice'
@@ -61,7 +62,14 @@ import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
 import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
 import { employeeAchievementsService } from './Dashboard/achievementsSlice'
 import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
+import { bookingListService } from './ConferenceRoomBooking/BookingList/bookingListSlice'
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
+import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
+import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
+import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
+import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
+import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -107,6 +115,7 @@ export const reduxServices = {
   scheduledInterviews: scheduledInterviewsService,
   addNewMailTemplateType: mailTemplateTypeService,
   myAttendance: myAttendanceService,
+  leaveReport: leaveReportService,
   ticketReport: ticketReportService,
   projectManagement: projectManagementService,
   clients: clientsService,
@@ -127,5 +136,12 @@ export const reduxServices = {
   employeeProbationPeriod: provisionPeriodService,
   employeeAchievements: employeeAchievementsService,
   updateTicket: updateTicketService,
+  bookingList: bookingListService,
   eventTypeList: eventTypeListService,
+  addLocationList: addLocationListService,
+  addTrackerLists: addTrackerListService,
+  eventList: eventListService,
+  roomLists: roomListService,
+  searchEmployee: employeeSearchService,
+  appraisalConfigurations: appraisalCycleService,
 }

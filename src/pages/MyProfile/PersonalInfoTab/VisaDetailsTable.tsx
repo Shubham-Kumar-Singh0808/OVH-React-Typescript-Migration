@@ -83,7 +83,7 @@ const VisaDetailsTable = ({
 
   return (
     <>
-      <CTable striped>
+      <CTable striped align="middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>

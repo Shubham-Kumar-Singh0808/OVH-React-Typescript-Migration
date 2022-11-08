@@ -6,12 +6,11 @@ import {
   CCardHeader,
   CCol,
   CForm,
-  CFormInput,
   CFormLabel,
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -109,6 +108,12 @@ function AddEditVisaDetails({
           employeeVisaDetails?.countryId,
         ),
       )
+    }
+  }, [dispatch, employeeVisaDetails?.countryId])
+
+  useEffect(() => {
+    if (employeeVisaDetails?.countryId === '') {
+      dispatch(reduxServices.personalInformation.actions.clearVisaType())
     }
   }, [dispatch, employeeVisaDetails?.countryId])
 
@@ -260,7 +265,7 @@ function AddEditVisaDetails({
     return (
       <OToast
         toastColor="success"
-        toastMessage={`Your Visa Member have been ${action} successfully.`}
+        toastMessage={`Visa details ${action} successfully`}
       />
     )
   }
@@ -377,7 +382,7 @@ function AddEditVisaDetails({
         <CForm>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...formLabelProps}>
-              Country:
+              Country :
               <span
                 className={
                   employeeVisaDetails?.countryId ? TextWhite : TextDanger
@@ -407,7 +412,7 @@ function AddEditVisaDetails({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...visaTypeProps}>
-              Visa Type:{' '}
+              Visa Type :{' '}
               <span
                 className={
                   employeeVisaDetails?.visaTypeId ? TextWhite : TextDanger
@@ -435,7 +440,7 @@ function AddEditVisaDetails({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Date of Issue:
+              Date of Issue :
               <span
                 className={
                   employeeVisaDetails.dateOfIssue || dateOfIssue
@@ -466,7 +471,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText="dd/mm/yyyy"
                 dateFormat={dateFormat}
               />
             </CCol>
@@ -503,7 +508,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText="dd/mm/yyyy"
                 dateFormat={dateFormat}
               />
               {error && (
@@ -517,18 +522,19 @@ function AddEditVisaDetails({
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Upload VISA copy:
             </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                id="uploadedFile"
-                className="form-control"
+            <CCol>
+              <input
                 type="file"
+                className="mt-1"
+                data-testid="file-upload"
+                id="fileUpload"
                 name="file"
-                accept="image/*,"
-                onChange={(element: SyntheticEvent) =>
+                onChange={(element: React.SyntheticEvent) =>
                   onChangeFileEventHandler(
                     element.currentTarget as HTMLInputElement,
                   )
                 }
+                accept="image/*,"
               />
             </CCol>
             {selectedFile || getEditVisaDetails?.visaDetailsData ? (

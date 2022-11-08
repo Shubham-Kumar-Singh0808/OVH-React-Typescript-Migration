@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
 import FilterOptions from './FilterOptions'
 import EmployeeReportTable from './EmployeeReportTable'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -7,6 +6,8 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -87,11 +88,9 @@ const EmployeeReport = (): JSX.Element => {
             />
           </>
         ) : (
-          <CCol>
-            <CRow className="category-loading-spinner">
-              <CSpinner />
-            </CRow>
-          </CCol>
+          <>
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          </>
         )}
       </OCard>
     </>

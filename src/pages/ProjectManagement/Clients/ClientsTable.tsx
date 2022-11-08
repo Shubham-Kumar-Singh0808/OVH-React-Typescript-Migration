@@ -55,6 +55,7 @@ const ClientsTable = ({
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const onDeleteBtnClick = (clientId: number, name: string) => {
@@ -98,18 +99,28 @@ const ClientsTable = ({
   }
 
   const tableHeaderCellPropsOrganization = {
-    width: '16%',
+    width: '24%',
     scope: 'col',
   }
 
   const tableHeaderCellPropsAction = {
+    width: '10%',
+    scope: 'col',
+  }
+
+  const tableHeaderCellPropsClient = {
+    width: '22%',
+    scope: 'col',
+  }
+
+  const tableHeaderCellPropsContactPerson = {
     width: '16%',
     scope: 'col',
   }
 
   return (
     <>
-      <CTable responsive striped className="text-start mt-5">
+      <CTable responsive striped className="text-start mt-5 align-middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col"></CTableHeaderCell>
@@ -117,8 +128,12 @@ const ClientsTable = ({
             <CTableHeaderCell {...tableHeaderCellPropsOrganization}>
               Organization
             </CTableHeaderCell>
-            <CTableHeaderCell scope="col">Client</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Contact Person</CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderCellPropsClient}>
+              Client
+            </CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderCellPropsContactPerson}>
+              Contact Person
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Email ID</CTableHeaderCell>
             <CTableHeaderCell scope="col">Country</CTableHeaderCell>
             <CTableHeaderCell scope="col">F.P</CTableHeaderCell>
@@ -186,12 +201,13 @@ const ClientsTable = ({
       )}
       <OModal
         alignment="center"
+        modalTitle="Delete Client"
         visible={deleteClientModalVisibility}
         setVisible={setDeleteClientModalVisibility}
         closeButtonClass="d-none"
-        modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        modalBodyClass="mt-0"
         confirmButtonAction={handleConfirmDeleteClient}
       >
         <>

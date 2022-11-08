@@ -63,6 +63,9 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+const LeaveReports = React.lazy(
+  () => import('./pages/Leaves/LeaveReports/LeaveReport'),
+)
 
 const MailConfiguration = React.lazy(
   () => import('./pages/Settings/MailConfiguration/EmailConfigTemplate'),
@@ -167,11 +170,43 @@ const UpdateTicketUnderTicketList = React.lazy(
   () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
 )
 
+const BookingList = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/BookingList/BookingList'),
+)
 const EventTypeList = React.lazy(
   () =>
     import(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
+)
+const LocationList = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
+    ),
+)
+
+const EventsList = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
+)
+
+const FeedbackForms = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/EventList/FeedbackForms/FeedbackFormsList'
+    ),
+)
+const EditHoliday = React.lazy(
+  () =>
+    import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
+)
+
+const AppraisalConfigurations = React.lazy(
+  () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
+)
+
+const RoomList = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -225,6 +260,11 @@ const routes = [
     path: '/employeehandbook',
     name: 'Employee Handbook',
     component: EmployeeHandbook,
+  },
+  {
+    path: '/leaveReports',
+    name: 'Leave Reports',
+    component: LeaveReports,
   },
   {
     path: '/showemployeehandbook/:clickedpageName',
@@ -380,6 +420,7 @@ const routes = [
   {
     path: '/eventList',
     name: 'Event List',
+    component: EventsList,
   },
   {
     path: '/probationaryList',
@@ -387,9 +428,39 @@ const routes = [
     component: ProbationaryList,
   },
   {
+    path: '/meetingList',
+    name: 'Booking List',
+    component: BookingList,
+  },
+  {
     path: '/newEvent',
     name: 'Event Type List',
     component: EventTypeList,
+  },
+  {
+    path: '/newMeetingRequest',
+    name: 'Add LocationList',
+    component: LocationList,
+  },
+  {
+    path: '/trainingFeedBackForm/:eventId',
+    name: 'Feedback Forms',
+    component: FeedbackForms,
+  },
+  {
+    path: '/editHoliday/:holidayId',
+    name: 'Edit Holiday',
+    component: EditHoliday,
+  },
+  {
+    path: '/appraisalCycle',
+    name: 'Appraisal Configurations',
+    component: AppraisalConfigurations,
+  },
+  {
+    path: '/roomList',
+    name: 'RoomList',
+    component: RoomList,
   },
   {
     path: '/leaveApprovals',

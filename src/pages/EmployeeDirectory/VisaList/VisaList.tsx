@@ -1,4 +1,4 @@
-import { CCol, CRow, CSpinner } from '@coreui/react-pro'
+import { CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import VisaListExpandableTable from './VisaListExpandableTable'
 import VisaListOptions from './VisaListOptions'
@@ -7,6 +7,8 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const VisaList = (): JSX.Element => {
   const [filterByCountry, setFilterByCountry] = useState<string>('')
@@ -91,11 +93,9 @@ const VisaList = (): JSX.Element => {
               />
             </CCol>
           ) : (
-            <CCol>
-              <CRow className="category-loading-spinner">
-                <CSpinner />
-              </CRow>
-            </CCol>
+            <>
+              <OLoadingSpinner type={LoadingType.PAGE} />
+            </>
           )}
         </CRow>
       </OCard>

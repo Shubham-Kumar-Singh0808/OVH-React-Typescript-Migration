@@ -2,7 +2,6 @@ import {
   CButton,
   CCol,
   CRow,
-  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -10,24 +9,38 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useMemo } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
+import React, { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { HolidaysListProps } from '../../../../types/Dashboard/Holidays/upcomingHolidaysTypes'
 import { currentPageData } from '../../../../utils/paginationUtils'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import OModal from '../../../../components/ReusableComponent/OModal'
 
 const HolidaysListTable = ({
   selectedCountry,
 }: HolidaysListProps): JSX.Element => {
+  const [holidayId, setHolidayId] = useState(0)
+  const [toDeleteHoliday, setToDeleteHoliday] = useState('')
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const dispatch = useAppDispatch()
+
   const holidaysInfo = useTypedSelector(
     reduxServices.holidays.selectors.upcomingHolidays,
   )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToHolidays = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Holiday Actions',
+  )
+
   const isLoading = useTypedSelector(reduxServices.holidays.selectors.isLoading)
   const {
     paginationRange,
@@ -49,6 +62,35 @@ const HolidaysListTable = ({
     [holidaysInfo, currentPage, pageSize],
   )
 
+  const handleShowHolidayDeleteModal = (id: number, holidayName: string) => {
+    setHolidayId(id)
+
+    setToDeleteHoliday(holidayName)
+    setIsDeleteModalVisible(true)
+  }
+
+  const toastElement = (
+    <OToast toastColor="success" toastMessage="Holiday deleted successfully" />
+  )
+
+  const handleConfirmDeleteHoliday = async () => {
+    setIsDeleteModalVisible(false)
+
+    const deleteHolidayResultAction = await dispatch(
+      reduxServices.holidays.deleteHoliday(holidayId),
+    )
+    if (
+      reduxServices.holidays.deleteHoliday.fulfilled.match(
+        deleteHolidayResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(toastElement))
+      dispatch(
+        reduxServices.holidays.getAllUpcomingHolidaysList(selectedCountry),
+      )
+    }
+  }
+
   const getAllHolidays = selectedCountry ? (
     <CTableBody>
       {currentPageItems?.map((holiday, index) => (
@@ -58,20 +100,30 @@ const HolidaysListTable = ({
           <CTableDataCell>{holiday.name}</CTableDataCell>
           <CTableDataCell>{holiday.country}</CTableDataCell>
           <CTableDataCell>
-            <CButton
-              color="info"
-              className="btn-ovh me-2"
-              data-testid={`holiday-edit-btn${index}`}
-            >
-              <i className="fa fa-edit" aria-hidden="true"></i>
-            </CButton>
-            <CButton
-              color="danger"
-              size="sm"
-              data-testid={`holiday-delete-btn${index}`}
-            >
-              <CIcon className="text-white" icon={cilTrash} />
-            </CButton>
+            {userAccessToHolidays?.updateaccess && (
+              <Link to={`/editHoliday/${holiday.id}`}>
+                <CButton
+                  color="info"
+                  className="btn-ovh btn-ovh-employee-list me-1"
+                  data-testid={`holiday-edit-btn${index}`}
+                >
+                  <i className="fa fa-edit" aria-hidden="true"></i>
+                </CButton>
+              </Link>
+            )}
+            {userAccessToHolidays?.deleteaccess && (
+              <CButton
+                className="btn-ovh btn-ovh-employee-list"
+                color="danger"
+                size="sm"
+                data-testid={`holiday-delete-btn${index}`}
+                onClick={() =>
+                  handleShowHolidayDeleteModal(holiday.id, holiday.name)
+                }
+              >
+                <i className="fa fa-trash-o" aria-hidden="true"></i>
+              </CButton>
+            )}
           </CTableDataCell>
         </CTableRow>
       ))}
@@ -79,6 +131,8 @@ const HolidaysListTable = ({
   ) : (
     <></>
   )
+  const actionHeaderViewAccess =
+    userAccessToHolidays?.updateaccess || userAccessToHolidays?.deleteaccess
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (
@@ -90,15 +144,20 @@ const HolidaysListTable = ({
                 <CTableHeaderCell scope="col">Week</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Occasion</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                {actionHeaderViewAccess ? (
+                  <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                ) : (
+                  <></>
+                )}
               </CTableRow>
             </CTableHead>
             {getAllHolidays}
           </CTable>
+
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Number of Holidays:{holidaysInfo.length}</strong>
+                <strong>Total Number of Holidays: {holidaysInfo.length}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
@@ -122,13 +181,24 @@ const HolidaysListTable = ({
               </CCol>
             )}
           </CRow>
+          <OModal
+            alignment="center"
+            visible={isDeleteModalVisible}
+            setVisible={setIsDeleteModalVisible}
+            modalTitle="Delete Holiday"
+            confirmButtonText="Yes"
+            cancelButtonText="No"
+            closeButtonClass="d-none"
+            confirmButtonAction={handleConfirmDeleteHoliday}
+          >
+            <>
+              Do you really want to delete <strong>{toDeleteHoliday}</strong>{' '}
+              Holiday
+            </>
+          </OModal>
         </>
       ) : (
-        <CCol>
-          <CRow>
-            <CSpinner data-testid="designation-list-loader" />
-          </CRow>
-        </CCol>
+        <></>
       )}
     </>
   )

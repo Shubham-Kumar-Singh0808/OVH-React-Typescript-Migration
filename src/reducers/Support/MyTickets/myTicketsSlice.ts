@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import myTicketsApi from '../../../middleware/api/Support/MyTickets/myTicketsApi'
@@ -55,6 +55,7 @@ const initialMyTicketsState: MyTicketsSliceState = {
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
+  toggle: '',
 }
 
 const myTicketsSlice = createSlice({
@@ -67,6 +68,9 @@ const myTicketsSlice = createSlice({
     setPageSize: (state, action) => {
       state.pageSize = action.payload
     },
+    toggle: (state, action) => {
+      state.toggle = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -74,16 +78,16 @@ const myTicketsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.ticketList = action.payload
       })
-      .addCase(getTickets.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
       .addCase(ticketHistoryDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.ticketHistory = action.payload
       })
-      .addCase(ticketHistoryDetails.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
+      .addMatcher(
+        isAnyOf(ticketHistoryDetails.pending, getTickets.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 const isLoading = (state: RootState): LoadingState => state.tickets.isLoading
@@ -96,6 +100,8 @@ const allTicketsListSize = (state: RootState): number =>
 
 const ticketHistory = (state: RootState): TicketHistory[] =>
   state.tickets.ticketHistory.list
+
+const toggle = (state: RootState): string => state.tickets.toggle
 
 const pageFromState = (state: RootState): number => state.tickets.currentPage
 const pageSizeFromState = (state: RootState): number => state.tickets.pageSize
@@ -113,6 +119,7 @@ const myTicketsSelectors = {
   pageSizeFromState,
   ticketHistory,
   allTicketsListSize,
+  toggle,
 }
 
 export const myTicketsService = {

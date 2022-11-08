@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { CCol, CRow } from '@coreui/react-pro'
 import HolidaysListTable from './HolidaysListTable'
 import SelectCountry from './SelectCountry'
@@ -10,20 +10,28 @@ const ListOfHolidays = (): JSX.Element => {
   const loggedInEmployee = useTypedSelector(
     reduxServices.generalInformation.selectors.generalInformation,
   )
-  const employeeCountry = loggedInEmployee.country
-  const [selectedCountry, setSelectedCountry] = useState<string>(
-    employeeCountry as string,
+  const selectedCountry = useTypedSelector(
+    reduxServices.holidays.selectors.selectedCountry,
   )
+  const employeeCountry = loggedInEmployee?.country
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
+    if (employeeCountry && !selectedCountry) {
+      dispatch(
+        reduxServices.holidays.actions.setSelectedEmployeeCountry(
+          employeeCountry,
+        ),
+      )
+    }
     dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
     dispatch(
       reduxServices.generalInformation.getEmployeeGeneralInformation(
-        loggedInEmployee.country as string,
+        selectedCountry,
       ),
     )
-  }, [dispatch])
+  }, [dispatch, employeeCountry])
 
   return (
     <>
@@ -34,15 +42,11 @@ const ListOfHolidays = (): JSX.Element => {
       >
         <>
           <CRow className="mb-4">
-            <SelectCountry
-              selectedCountry={selectedCountry}
-              setSelectedCountry={setSelectedCountry}
-            />
+            <SelectCountry selectedCountry={selectedCountry} />
+          </CRow>
+          <CRow>
             <CCol xs={12} className="mt-4 mb-4 ps-0 pe-0">
-              <HolidaysListTable
-                selectedCountry={selectedCountry}
-                setSelectedCountry={setSelectedCountry}
-              />
+              <HolidaysListTable selectedCountry={selectedCountry} />
             </CCol>
           </CRow>
         </>

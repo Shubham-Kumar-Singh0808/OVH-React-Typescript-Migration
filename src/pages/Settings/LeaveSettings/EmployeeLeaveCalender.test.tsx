@@ -7,6 +7,11 @@ import React from 'react'
 import EmployeeLeaveCalender from './EmployeeLeaveCalender'
 import stateStore from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
+
+const userAccessToCalender = mockUserAccessToFeaturesData?.find(
+  (feature) => feature.name === 'Leave Settings',
+)
 
 const ReduxProvider = ({
   children,
@@ -22,7 +27,6 @@ const expectComponentToBeRendered = () => {
   expect(screen.getByText('Payroll Cutoff Date (Day):')).toBeInTheDocument()
   expect(screen.getByText('Number of Leaves/Year :')).toBeInTheDocument()
   expect(screen.getByText('Maximum Accrual/Year:')).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
   expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
 }
 describe('Leave Calender Testing', () => {
@@ -32,17 +36,16 @@ describe('Leave Calender Testing', () => {
         <EmployeeLeaveCalender />
       </ReduxProvider>,
     )
-    expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
   })
 
   it('should display the correct number of options', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <EmployeeLeaveCalender />
+        <EmployeeLeaveCalender userAccess={userAccessToCalender} />
       </ReduxProvider>,
     )
-    expect(screen.getAllByRole('option').length).toBe(44)
+    expect(screen.getAllByRole('option').length).toBe(42)
   })
 
   test('should render add new Leave calender form without crashing', () => {

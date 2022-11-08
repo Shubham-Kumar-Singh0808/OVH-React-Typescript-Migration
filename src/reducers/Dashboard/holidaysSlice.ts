@@ -5,6 +5,7 @@ import holidaysApi from '../../middleware/api/Dashboard/holidaysApi'
 import { AppDispatch, RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
+  EditHolidayDetails,
   Holidays,
   HolidaysSliceState,
   SaveHoliday,
@@ -56,6 +57,57 @@ const addHoliday = createAsyncThunk(
   },
 )
 
+const deleteHoliday = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('holidays/deleteHoliday', async (holidayId, thunkApi) => {
+  try {
+    return await holidaysApi.deleteHoliday(holidayId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+const getHolidayInformation = createAsyncThunk<
+  EditHolidayDetails | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('holidays/getHolidayInformation', async (holidayId: number, thunkApi) => {
+  try {
+    return await holidaysApi.getHolidayInformation(holidayId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+const updateHoliday = createAsyncThunk<
+  number | undefined,
+  EditHolidayDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('holidays/updateHoliday', async (holidayDetails, thunkApi) => {
+  try {
+    return await holidaysApi.updateHoliday(holidayDetails)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const initialHolidaysState: HolidaysSliceState = {
   isLoading: ApiLoadingState.idle,
   upcomingHolidays: [],
@@ -64,6 +116,8 @@ const initialHolidaysState: HolidaysSliceState = {
   pageSize: 20,
   error: null,
   addNewHoliday: {} as SaveHoliday,
+  editHoliday: {} as EditHolidayDetails,
+  selectedEmployeeCountry: '',
 }
 
 const holidaysSlice = createSlice({
@@ -73,12 +127,26 @@ const holidaysSlice = createSlice({
     clearHolidays: (state) => {
       state.upcomingHolidays = []
     },
+    setSelectedEmployeeCountry: (state, action) => {
+      state.selectedEmployeeCountry = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addHoliday.fulfilled, (state) => {
+      .addCase(getHolidayInformation.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.editHoliday = action.payload as EditHolidayDetails
       })
+      .addMatcher(
+        isAnyOf(
+          addHoliday.fulfilled,
+          deleteHoliday.fulfilled,
+          updateHoliday.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
       .addMatcher(
         isAnyOf(
           getUpcomingHolidays.fulfilled,
@@ -94,6 +162,9 @@ const holidaysSlice = createSlice({
           getUpcomingHolidays.pending,
           getAllUpcomingHolidaysList.pending,
           addHoliday.pending,
+          deleteHoliday.pending,
+          getHolidayInformation.pending,
+          updateHoliday.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -112,10 +183,18 @@ const holidaysPageFromState = (state: RootState): number =>
 const holidaysPageSizeFromState = (state: RootState): number =>
   state.holidays.pageSize
 
+const holidayInfo = (state: RootState): EditHolidayDetails =>
+  state.holidays.editHoliday
+const selectedCountry = (state: RootState): string =>
+  state.holidays.selectedEmployeeCountry
+
 const HolidaysThunk = {
   getUpcomingHolidays,
   getAllUpcomingHolidaysList,
   addHoliday,
+  deleteHoliday,
+  getHolidayInformation,
+  updateHoliday,
 }
 
 const holidaysSelectors = {
@@ -123,6 +202,8 @@ const holidaysSelectors = {
   isLoading,
   holidaysPageFromState,
   holidaysPageSizeFromState,
+  holidayInfo,
+  selectedCountry,
 }
 
 export const holidaysService = {

@@ -67,81 +67,75 @@ const ClientFilterOptions = ({
 
   return (
     <>
-      <CRow>
-        <CCol sm={7} className="d-md-flex justify-content-md-end mt-2">
-          <CFormCheck
-            type="radio"
-            name="clientStatus"
-            value={ClientStatus.all}
-            id="clientsAll"
-            data-testid="allClientsStatus"
-            label="All"
-            defaultChecked={selectedClientStatus === ClientStatus.all}
-            onChange={handleChangeSelectedClientStatus}
-            inline
-          />
-          <CFormCheck
-            type="radio"
-            name="clientStatus"
-            value={ClientStatus.active}
-            id="clientsActive"
-            data-testid="activeClientsStatus"
-            label="Active"
-            defaultChecked={selectedClientStatus === ClientStatus.active}
-            onChange={handleChangeSelectedClientStatus}
-            inline
-          />
-          <CFormCheck
-            type="radio"
-            name="clientStatus"
-            value={ClientStatus.inactive}
-            id="clientsInactive"
-            data-testid="inactiveClientsStatus"
-            label="Inactive"
-            defaultChecked={selectedClientStatus === ClientStatus.inactive}
-            onChange={handleChangeSelectedClientStatus}
-            inline
-          />
-        </CCol>
-        <CCol sm={3}>
-          <CRow>
-            <CCol sm={12}>
-              <CInputGroup className="global-search sh-client-search me-4">
-                <CFormInput
-                  placeholder="Search here"
-                  aria-label="Search here"
-                  aria-describedby="button-addon2"
-                  value={searchInput}
-                  onChange={(e) => {
-                    setSearchInput(e.target.value)
-                  }}
-                  onKeyDown={searchButtonHandlerOnKeyDown}
-                />
-                <CButton
-                  data-testid="search-button"
-                  type="button"
-                  color="info"
-                  id="button-addon2"
-                  onClick={searchButtonHandler}
-                  disabled={!searchInput}
-                >
-                  <i className="fa fa-search"></i>
-                </CButton>
-              </CInputGroup>
-            </CCol>
-          </CRow>
-        </CCol>
-        <CCol sm={2}>
-          <CRow>
-            <CCol sm={12} className="d-md-flex justify-content-md-end pe-0">
-              <Link to="/addClient">
-                <CButton color="info" className="text-white btn-ovh" size="sm">
-                  <i className="fa fa-plus me-1"></i>
-                  Add Client
-                </CButton>
-              </Link>
-            </CCol>
-          </CRow>
+      <CRow className="mt-1">
+        <CCol md={12} className="pe-0">
+          <div className="form-group pull-right ms-4">
+            <Link to="/addClient">
+              <CButton color="info" className="text-white btn-ovh" size="sm">
+                <i className="fa fa-plus me-1"></i>
+                Add Client
+              </CButton>
+            </Link>
+          </div>
+          <div className="col-sm-3 col-xs-12 pull-right me-2">
+            <CInputGroup className="global-search sh-client-search">
+              <CFormInput
+                placeholder="Search here"
+                aria-label="Search here"
+                aria-describedby="button-addon2"
+                value={searchInput}
+                onChange={(e) => {
+                  setSearchInput(e.target.value)
+                }}
+                onKeyDown={searchButtonHandlerOnKeyDown}
+              />
+              <CButton
+                data-testid="search-button"
+                type="button"
+                color="info"
+                id="button-addon2"
+                onClick={searchButtonHandler}
+                disabled={!searchInput}
+              >
+                <i className="fa fa-search"></i>
+              </CButton>
+            </CInputGroup>
+          </div>
+          <div className="form-group pull-right col-space mt-2">
+            <CFormCheck
+              type="radio"
+              name="clientStatus"
+              value={ClientStatus.all}
+              id="clientsAll"
+              data-testid="allClientsStatus"
+              label="All"
+              defaultChecked={selectedClientStatus === ClientStatus.all}
+              onChange={handleChangeSelectedClientStatus}
+              inline
+            />
+            <CFormCheck
+              type="radio"
+              name="clientStatus"
+              value={ClientStatus.active}
+              id="clientsActive"
+              data-testid="activeClientsStatus"
+              label="Active"
+              defaultChecked={selectedClientStatus === ClientStatus.active}
+              onChange={handleChangeSelectedClientStatus}
+              inline
+            />
+            <CFormCheck
+              type="radio"
+              name="clientStatus"
+              value={ClientStatus.inactive}
+              id="clientsInactive"
+              data-testid="inactiveClientsStatus"
+              label="Inactive"
+              defaultChecked={selectedClientStatus === ClientStatus.inactive}
+              onChange={handleChangeSelectedClientStatus}
+              inline
+            />
+          </div>
         </CCol>
       </CRow>
     </>
