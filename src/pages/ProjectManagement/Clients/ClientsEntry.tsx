@@ -1,4 +1,10 @@
-import { CTableRow, CTableDataCell, CButton, CLink } from '@coreui/react-pro'
+import {
+  CTableRow,
+  CTableDataCell,
+  CButton,
+  CLink,
+  CTooltip,
+} from '@coreui/react-pro'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ClientDetailsTable from './ClientDetailsTable'
@@ -71,28 +77,33 @@ const ClientsEntry = (props: {
           </CLink>
         </CTableDataCell>
         <CTableDataCell scope="row">
-          <>
+          <div className="buttons-clients">
             <Link to={`/clientInfo/${props.client.id}`}>
-              <CButton className="btn-ovh me-2 sh-eye-btn-color">
+              <CButton className="btn-ovh btn-ovh-employee-list me-1 sh-eye-btn-color">
                 <i className="fa fa-eye" aria-hidden="true"></i>
               </CButton>
             </Link>
             <Link to={`/editClient/${props.client.id}`}>
-              <CButton color="info" className="btn-ovh me-2">
+              <CButton
+                color="info btn-ovh me-1"
+                className="btn-ovh-employee-list"
+              >
                 <i className="fa fa-edit" aria-hidden="true"></i>
               </CButton>
             </Link>
-            <CButton
-              color="danger"
-              className="btn-ovh me-2"
-              data-testid={`client-delete-btn${props.id}`}
-              onClick={() => {
-                props.onDeleteBtnClick(props.id, props.client.name)
-              }}
-            >
-              <i className="fa fa-trash-o" aria-hidden="true"></i>
-            </CButton>
-          </>
+            <CTooltip content="Delete">
+              <CButton
+                color="danger btn-ovh me-1"
+                className="btn-ovh-employee-list"
+                data-testid={`client-delete-btn${props.id}`}
+                onClick={() => {
+                  props.onDeleteBtnClick(props.id, props.client.name)
+                }}
+              >
+                <i className="fa fa-trash-o" aria-hidden="true"></i>
+              </CButton>
+            </CTooltip>
+          </div>
         </CTableDataCell>
       </CTableRow>
       {props.isIconVisible && props.selectedClientId === props.id ? (

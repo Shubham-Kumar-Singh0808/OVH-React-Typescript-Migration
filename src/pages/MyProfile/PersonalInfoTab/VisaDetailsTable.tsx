@@ -83,7 +83,7 @@ const VisaDetailsTable = ({
 
   return (
     <>
-      <CTable striped>
+      <CTable striped responsive align="middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -115,13 +115,15 @@ const VisaDetailsTable = ({
               {!isViewingAnotherEmployee ? (
                 <CTableDataCell scope="row">
                   <CButton
-                    color="info btn-ovh me-2"
+                    color="info"
+                    className="btn-ovh me-1 btn-ovh-employee-list"
                     onClick={() => editVisaButtonHandler(visaItem.id)}
                   >
                     <i className="fa fa-pencil-square-o"></i>
                   </CButton>
                   <CButton
-                    color="danger btn-ovh me-2"
+                    color="danger"
+                    className="btn-ovh me-1 btn-ovh-employee-list"
                     onClick={() => handleShowDeleteModal(visaItem.id)}
                   >
                     <i className="fa fa-trash-o" aria-hidden="true"></i>

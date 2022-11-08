@@ -8,7 +8,7 @@ import {
   CInputGroup,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -46,9 +46,9 @@ const HiveReportOptions = ({
     reduxServices.hiveActivityReport.selectors.selectedView,
   )
 
-  const dateToUse = useMemo(() => {
-    return filterByDate ? filterByDate : new Date()
-  }, [filterByDate])
+  const monthDisplay = useTypedSelector(
+    reduxServices.hiveActivityReport.selectors.monthDisplay,
+  )
 
   const handleSelectMonthRadio = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -60,6 +60,7 @@ const HiveReportOptions = ({
           currentMonthDate,
         ),
       )
+      setStartDate(undefined)
     } else if (event.target.value === 'previousMonth') {
       setIsDatePickerVisible(false)
       dispatch(
@@ -67,6 +68,7 @@ const HiveReportOptions = ({
           previousMonthDate,
         ),
       )
+      setStartDate(undefined)
     } else if (event.target.value === 'otherMonth') {
       setIsDatePickerVisible(true)
     }
@@ -78,6 +80,7 @@ const HiveReportOptions = ({
         event.target.value,
       ),
     )
+    setStartDate(undefined)
   }
 
   const clearButtonHandler = () => {
@@ -191,6 +194,7 @@ const HiveReportOptions = ({
             </CCol>
             <CCol sm={2} className="text-end pe-2 ms-3 sh-date-picker-column">
               <ReactDatePicker
+                autoComplete="off"
                 id="employeeRealBirthday"
                 data-testid="sh-date-picker"
                 className="form-control form-control-sm sh-date-picker"
@@ -238,7 +242,7 @@ const HiveReportOptions = ({
       <CRow className="mt-4">
         <CCol sm={8}>
           <h5 className="sh-summary-text">
-            Hive Activity Summary for {moment(dateToUse).format('MMMM--YYYY')}
+            Hive Activity Summary for {monthDisplay}
           </h5>
         </CCol>
         {selectedView !== 'Me' && (

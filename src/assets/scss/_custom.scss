@@ -28,7 +28,7 @@ body {
   color: $white;
   padding: 6px 12px;
   border-radius: 2px;
-  border: 1px solid 2px;
+  border: 1px solid transparent;
   font-size: 12px;
   line-height: 1.42857;
   -webkit-transition: all 0.15s;
@@ -187,18 +187,45 @@ input.capetalized {
   text-transform: capitalize;
 }
 .model-text {
-  color:$blue-employeeEmailTemplateText;
+  color: $blue;
+}
+.model-text:hover {
+  color: #245269;
 }
 
 .shift-info {
   display: contents;
 }
 
-.mail-template-table th,.mail-template-table td {
+.mail-template-table th,
+.mail-template-table td {
   text-align: center;
-
 }
 
+.description-link li,
+.description-link div ul {
+  list-style: none;
+}
+.form-select-not-allowed {
+  cursor: not-allowed !important;
+}
+.label-default {
+  background-color: $badge-light;
+  color: #333;
+}
+.leavereport-exportbutton {
+  float: right;
+  margin-top: 36px;
+  font-size: 13px;
+}
+
+.custom-scroll {
+  height: 350px;
+  overflow: auto;
+}
+.hidden-block {
+  cursor: not-allowed;
+}
 .project-report {
   .btn-primary {
     background-color: #3f8bd1;
@@ -218,6 +245,22 @@ input.capetalized {
   }
 }
 
+.model-header-text {
+  padding: 1rem 0;
+  border-bottom: 1px solid $blue-light;
+  color: $blue-light;
+}
+.bookingList-model-table th,
+.bookingList-model-table td {
+  border-bottom: none;
+}
+.text-danger {
+  color: $text-danger !important;
+}
+.modal .modal-dialog .modal-content .modal-body.model-body-text-alinement {
+  min-height: 90px;
+  padding-top: 0px;
+}
 .label {
   font-weight: 400;
   border-radius: 0.1em;
@@ -258,4 +301,14 @@ input.capetalized {
 .input-xs {
   padding: 0px;
   height: 28px !important;
+}
+
+.template-body .model-text {
+  margin-bottom: 30px;
+}
+.template-body .template-content {
+  min-height: 50px;
+}
+.time-in-office-table > :not(caption) > * > * {
+  padding: 8px !important;
 }

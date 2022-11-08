@@ -16,7 +16,15 @@ const Clients = (): JSX.Element => {
   const selectedClientStatus = useTypedSelector(
     reduxServices.clients.selectors.selectedClientStatus,
   )
+  const selectClientCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
 
+  useEffect(() => {
+    if (selectClientCurrentPage) {
+      setCurrentPage(selectClientCurrentPage)
+    }
+  }, [selectClientCurrentPage])
   const {
     paginationRange,
     setPageSize,
@@ -28,12 +36,12 @@ const Clients = (): JSX.Element => {
   useEffect(() => {
     dispatch(
       reduxServices.clients.getClients({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (selectClientCurrentPage - 1),
+        endIndex: pageSize * selectClientCurrentPage,
         selectionStatus: selectedClientStatus,
       }),
     )
-  }, [currentPage, dispatch, pageSize, selectedClientStatus])
+  }, [selectClientCurrentPage, dispatch, pageSize, selectedClientStatus])
 
   return (
     <OCard

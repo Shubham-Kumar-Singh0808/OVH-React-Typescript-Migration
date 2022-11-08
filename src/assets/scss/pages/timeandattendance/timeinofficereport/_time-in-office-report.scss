@@ -1,7 +1,7 @@
 .time-in-office-header {
-  color: $primary-base;
-  font-weight: 300 !important;
+  color: #124b7c;
   font-size: 14px !important;
+  font-weight: 400;
 }
 
 .radio-container {
@@ -12,12 +12,16 @@
   color: blue !important;
 }
 
-.color-for-time-total {
-  color: green !important;
+.color-for-time-red {
+  color: red !important;
 }
 
-.time-in-office-table > :not(caption) > * > * {
-  padding: 0.5rem 0.1rem !important;
+.color-for-time-black {
+  color: black !important;
+}
+
+.color-for-time-total {
+  color: green !important;
 }
 
 .time-in-office-header {

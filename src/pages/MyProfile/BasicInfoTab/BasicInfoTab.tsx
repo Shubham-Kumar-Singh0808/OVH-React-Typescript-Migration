@@ -946,9 +946,9 @@ const BasicInfoTab = (): JSX.Element => {
             Upload RBT CV:
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput
+            <input
               id="uploadRBTCV"
-              className="form-control"
+              className="sh-updateTicket-file"
               type="file"
               name="file"
               accept=".doc, .docx, .pdf"

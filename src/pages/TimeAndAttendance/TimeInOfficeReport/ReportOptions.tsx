@@ -170,13 +170,14 @@ const ReportOptions = ({
           </CFormLabel>
           <CCol sm={2} className="time-in-datepicker-col">
             <ReactDatePicker
+              autoComplete="off"
+              className="form-control form-control-sm sh-date-picker"
               selected={startDate}
               onChange={(date: Date) => setStartDate(date)}
               dateFormat="MM/yyyy"
+              maxDate={new Date()}
               showMonthYearPicker
-              showFourColumnMonthYearPicker
               placeholderText="mm/yyyy"
-              todayButton="Today"
               data-testid="date-picker-input"
             />
           </CCol>
@@ -205,7 +206,7 @@ const ReportOptions = ({
       <CRow className="time-in-office-report-options">
         <CCol sm={9} className="time-in-office-header">
           <h5 className="time-in-office-header">
-            Time in Office for {monthDisplay}
+            Time in Office Report for {monthDisplay}
           </h5>
         </CCol>
         {selectedView !== 'Me' && (

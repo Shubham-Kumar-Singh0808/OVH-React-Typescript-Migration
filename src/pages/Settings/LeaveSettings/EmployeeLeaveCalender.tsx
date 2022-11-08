@@ -11,8 +11,13 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmployeeSaveLeaveCalenderSetting } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
+import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
-const EmployeeLeaveCalender = (): JSX.Element => {
+const EmployeeLeaveCalender = ({
+  userAccess,
+}: {
+  userAccess?: UserAccessToFeatures
+}): JSX.Element => {
   const initLeaveCalendar = {} as EmployeeSaveLeaveCalenderSetting
 
   const [employeeLeaveCalender, setEmployeeLeaveCalender] =
@@ -210,7 +215,6 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             value={employeeLeaveCalender?.probationPeriod}
             onChange={onChangeLeaveCalenderHandler}
           >
-            <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -266,7 +270,6 @@ const EmployeeLeaveCalender = (): JSX.Element => {
             value={employeeLeaveCalender?.payrollCutoffDate}
             onChange={onChangeLeaveCalenderHandler}
           >
-            <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -345,14 +348,16 @@ const EmployeeLeaveCalender = (): JSX.Element => {
       </CRow>
       <CRow>
         <CCol md={{ span: 6, offset: 3 }}>
-          <CButton
-            className="btn-ovh me-1"
-            color="success"
-            onClick={handleSaveLeaveCalender}
-            disabled={isSaveButtonDisable}
-          >
-            Save
-          </CButton>
+          {userAccess?.updateaccess && (
+            <CButton
+              className="btn-ovh me-1"
+              color="success"
+              onClick={handleSaveLeaveCalender}
+              disabled={isSaveButtonDisable}
+            >
+              Save
+            </CButton>
+          )}
           <CButton
             color="warning "
             className="btn-ovh"

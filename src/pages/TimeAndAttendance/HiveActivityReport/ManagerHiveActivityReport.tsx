@@ -17,6 +17,9 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { ManagerHiveActivityReportProps } from '../../../types/TimeAndAttendance/HiveActivityReport/hiveActivityReportTypes'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const ManagerHiveActivityReport = (
   props: ManagerHiveActivityReportProps,
@@ -27,8 +30,12 @@ const ManagerHiveActivityReport = (
   const managerHiveActivityReport = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerHiveActivityReport,
   )
-  const listSize = useTypedSelector(
+  const ManagerReportListSize = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerReportSize,
+  )
+
+  const isLoading = useTypedSelector(
+    reduxServices.hiveActivityReport.selectors.isLoading,
   )
 
   const {
@@ -39,7 +46,7 @@ const ManagerHiveActivityReport = (
     setCurrentPage,
   } = props
 
-  const handlePageSizeSelectChange = (
+  const handleHiveActivityPageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(event.target.value))
@@ -66,31 +73,35 @@ const ManagerHiveActivityReport = (
 
   return (
     <>
-      {managerHiveActivityReport.list?.length ? (
-        <>
-          <CTable striped className="time-in-office-table">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell {...tableHeaderCellPropsName}>
-                  ID
-                </CTableHeaderCell>
-                <CTableHeaderCell {...tableHeaderCellPropsID}>
-                  Name
-                </CTableHeaderCell>
-                {Array.from({ length: 31 }, (_, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <CTableHeaderCell {...tableHeaderCellPropsDays}>
-                        {index + 1}
-                      </CTableHeaderCell>
-                    </React.Fragment>
-                  )
-                })}
-                <CTableHeaderCell className="text-center" scope="col">
-                  Total
-                </CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
+      <>
+        <CTable
+          striped
+          responsive
+          className="time-in-office-table align-middle"
+        >
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell {...tableHeaderCellPropsName}>
+                ID
+              </CTableHeaderCell>
+              <CTableHeaderCell {...tableHeaderCellPropsID}>
+                Name
+              </CTableHeaderCell>
+              {Array.from({ length: 31 }, (_, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <CTableHeaderCell {...tableHeaderCellPropsDays}>
+                      {index + 1}
+                    </CTableHeaderCell>
+                  </React.Fragment>
+                )
+              })}
+              <CTableHeaderCell className="text-center" scope="col">
+                Total
+              </CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          {isLoading !== ApiLoadingState.loading ? (
             <CTableBody>
               {managerHiveActivityReport.list.map(
                 (employeeRecord, employeeRecordIndex) => {
@@ -134,23 +145,33 @@ const ManagerHiveActivityReport = (
                 },
               )}
             </CTableBody>
-          </CTable>
+          ) : (
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          )}
+        </CTable>
+        {isLoading !== ApiLoadingState.loading && (
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {listSize}</strong>
+                <strong>
+                  {managerHiveActivityReport.list?.length
+                    ? `Total Records: ${ManagerReportListSize}`
+                    : `No Records found...`}
+                </strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {listSize > 20 && (
+              {ManagerReportListSize > 20 && (
                 <OPageSizeSelect
-                  handlePageSizeSelectChange={handlePageSizeSelectChange}
+                  handlePageSizeSelectChange={
+                    handleHiveActivityPageSizeSelectChange
+                  }
                   options={[20, 40, 60, 80, 100]}
                   selectedPageSize={pageSize}
                 />
               )}
             </CCol>
-            {listSize > 20 && (
+            {ManagerReportListSize > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"
@@ -163,14 +184,8 @@ const ManagerHiveActivityReport = (
               </CCol>
             )}
           </CRow>
-        </>
-      ) : (
-        <CCol>
-          <CRow className="mt-4">
-            <h5>No Records Found... </h5>
-          </CRow>
-        </CCol>
-      )}
+        )}
+      </>
       <OModal
         modalSize="lg"
         alignment="center"

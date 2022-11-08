@@ -123,6 +123,8 @@ export type EmployeeFamilyDetailsTableProps = {
   striped?: boolean
   bordered?: boolean
   tableClassName?: string
+  userDeleteAccess?: boolean
+  userEditAccess?: boolean
 }
 export type EmployeeVisaDetailsTableProps = {
   editVisaButtonHandler: (id: number) => void

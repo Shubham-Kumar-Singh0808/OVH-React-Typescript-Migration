@@ -4,29 +4,48 @@ import userEvent from '@testing-library/user-event'
 import EmployeeHandbookTable from './EmployeeHandbookTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeHandbookList } from '../../../test/data/employeeHandbookSettingsData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <EmployeeHandbookTable
+      setCurrentPage={mockSetCurrentPage}
+      setPageSize={mockSetPageSize}
+      currentPage={1}
+      pageSize={20}
+      paginationRange={[1, 2, 3]}
+      editHandbookButtonHandler={jest.fn()}
+    />
+    ,
+  </div>
+)
+
+const expectPageSizeToBeRendered = (pageSize: number) => {
+  for (let i = 0; i < pageSize; i++) {
+    expect(
+      screen.getByText(mockEmployeeHandbookList[i].title),
+    ).toBeInTheDocument()
+  }
+}
 describe('Employee Handbook Settings', () => {
   beforeEach(() => {
-    render(
-      <EmployeeHandbookTable
-        setCurrentPage={mockSetCurrentPage}
-        setPageSize={mockSetPageSize}
-        currentPage={1}
-        pageSize={20}
-        paginationRange={[1, 2, 3]}
-      />,
-      {
-        preloadedState: {
-          employeeHandbookSettings: {
-            employeeHandbooks: mockEmployeeHandbookList,
-            listSize: 43,
-          },
+    render(toRender, {
+      preloadedState: {
+        employeeHandbookSettings: {
+          employeeHandbooks: mockEmployeeHandbookList,
+          listSize: 43,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
-    )
+    })
   })
   test('should render the correct headers', () => {
     expect(screen.getByRole('columnheader', { name: '#' })).toBeTruthy()
@@ -39,8 +58,8 @@ describe('Employee Handbook Settings', () => {
     expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
   })
   test('should render correct number of page records', () => {
-    // 21 including the heading
-    expect(screen.queryAllByRole('row')).toHaveLength(44)
+    // 45 including the heading
+    expect(screen.queryAllByRole('row')).toHaveLength(45)
   })
   test('should render delete button', () => {
     expect(screen.getByTestId('handbook-edit-btn0')).toHaveClass(
@@ -52,37 +71,34 @@ describe('Employee Handbook Settings', () => {
       'btn btn-danger btn-sm',
     )
   })
-  it('should render Delete modal on clicking delete button from Actions', async () => {
-    const deleteButtonElement = screen.getByTestId('handbook-delete-btn1')
-    userEvent.click(deleteButtonElement)
+  test('should render Personal info tab component with out crashing', async () => {
+    expectPageSizeToBeRendered(20)
     await waitFor(() => {
-      expect(screen.getByText('Delete Handbook')).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
+      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+
+      //   const pageSizeSelect = screen.getByRole('option', {
+      //     name: '40',
+      //   }) as HTMLOptionElement
+      //   expect(pageSizeSelect.selected).toBe(true)
+
+      expect(mockSetPageSize).toHaveBeenCalledTimes(1)
+      expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
     })
   })
-  jest.retryTimes(3)
+  it('should render Delete modal on clicking delete button from Actions', () => {
+    const deleteButtonElement = screen.getByTestId('handbook-delete-btn1')
+    userEvent.click(deleteButtonElement)
+    expect(screen.getByText('Delete Handbook')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
+  })
   it('should close the modal on clicking No button from the popup', async () => {
     const deleteButtonElement = screen.getByTestId('handbook-delete-btn4')
     userEvent.click(deleteButtonElement)
     const yesButtonElement = screen.getByRole('button', { name: 'Yes' })
     userEvent.click(yesButtonElement)
     await waitFor(() => {
-      expect(screen.getAllByRole('row')).toHaveLength(44)
+      expect(screen.getAllByRole('row')).toHaveLength(45)
     })
-  })
-})
-test('should render no data to display if table is empty', async () => {
-  render(
-    <EmployeeHandbookTable
-      setCurrentPage={mockSetCurrentPage}
-      setPageSize={mockSetPageSize}
-      currentPage={1}
-      pageSize={20}
-      paginationRange={[1, 2, 3]}
-    />,
-  )
-  await waitFor(() => {
-    expect(screen.queryByText('No data to display')).toBeInTheDocument()
   })
 })

@@ -14,8 +14,8 @@ describe('Add Employee Birthday Component', () => {
     render(
       <BirthDate
         onDateChangeHandler={jest.fn()}
-        dateValue={new Date()}
         dynamicFormLabelProps={jest.fn()}
+        dateValue={''}
       />,
     )
   })
@@ -24,8 +24,8 @@ describe('Add Employee Birthday Component', () => {
     screen.debug()
   })
 
-  test('should be able to see place holder "dd/mm/yy"', () => {
-    expect(screen.getByPlaceholderText('dd/mm/yy')).toBeInTheDocument()
+  test('should be able to see place holder "dd/mm/yyyy"', () => {
+    expect(screen.getByPlaceholderText('dd/mm/yyyy')).toBeInTheDocument()
   })
 
   test('should be able to render Birthday label', () => {
@@ -38,7 +38,7 @@ describe('Add Employee Birthday Component', () => {
   })
 
   test('should be able to select date"', () => {
-    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {

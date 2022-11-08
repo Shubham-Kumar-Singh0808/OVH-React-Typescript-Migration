@@ -1,0 +1,18 @@
+.ticket-from-date-col {
+    margin-right: 28px;
+  }
+  
+  .ticket-search-checkbox {
+    font-weight: bold;
+  }
+  .approval-status-select{
+    padding-right: 28px !important;
+  }
+
+  .sh-updateTicket-file{
+    width: 200px;
+    &:focus{
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: 2px;
+    }
+  }

@@ -1,5 +1,7 @@
 import moment from 'moment'
 import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { MyProfileTabList } from '../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
+import { UserAccessToFeatures } from '../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 export const listComposer = (
   list: never[],
@@ -45,3 +47,28 @@ const matcher =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
 export const isEmail = (value: string): boolean => !matcher.test(value)
+
+export const deviceLocale: string =
+  navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language
+
+export const mapTabsToFeatures = (
+  TabsLabels: MyProfileTabList[],
+  filteredTabs: UserAccessToFeatures[],
+): unknown => {
+  return TabsLabels.map((currTab) => {
+    const filteredFeatureTab = filteredTabs.find(
+      (currFeatureTab) =>
+        currFeatureTab.name === currTab.label &&
+        currFeatureTab.viewaccess === true,
+    )
+    if (filteredFeatureTab) {
+      return {
+        ...currTab,
+        ...filteredFeatureTab,
+      }
+    }
+    return {}
+  })
+}

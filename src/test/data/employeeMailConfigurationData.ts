@@ -10,9 +10,9 @@ export const mockEmailTemplate: EmployeeMailTemplate[] = [
     template: 'tyhu',
     templateTypeId: 5,
     templateType: 'Conference Room Booking',
-    assetTypeId: null,
+    assetTypeId: '6',
     assetType: 'N/A',
-    email: null,
+    email: 'vinesh1@gmail.com',
   },
   {
     id: 68,
@@ -20,9 +20,9 @@ export const mockEmailTemplate: EmployeeMailTemplate[] = [
     template: 'dmcod',
     templateTypeId: 5,
     templateType: 'Support Management',
-    assetTypeId: null,
+    assetTypeId: '7',
     assetType: 'N/A',
-    email: null,
+    email: 'vineshmerugu1@gmail.com',
   },
 ]
 

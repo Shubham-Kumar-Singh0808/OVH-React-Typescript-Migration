@@ -75,7 +75,7 @@ describe('Clients Table Component Testing without data', () => {
         expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
       })
     })
-    test('should render ', () => {
+    test('should render delete modal', () => {
       const deleteElement = screen.getAllByTestId('client-delete-btn18')
       expect(deleteElement[0]).toBeInTheDocument()
       userEvent.click(deleteElement[0])

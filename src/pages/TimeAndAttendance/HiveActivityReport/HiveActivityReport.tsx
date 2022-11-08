@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import moment from 'moment'
 import HiveReportOptions from './HiveReportOptions'
 import EmployeeHiveActivityReport from './EmployeeHiveActivityReport'
 import ManagerHiveActivityReport from './ManagerHiveActivityReport'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import hiveActivityReportApi from '../../../middleware/api/TimeAndAttendance/HiveActivityReport/hiveActivityReportApi'
-import { downloadFile } from '../../../utils/helper'
+import { currentMonthDate, downloadFile } from '../../../utils/helper'
 
 const HiveActivityReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [startDate, setStartDate] = useState<Date>()
   const [filterByDate, setFilterByDate] = useState<Date>()
+  const [isViewClicked, setIsViewClicked] = useState(false)
 
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
@@ -23,9 +24,6 @@ const HiveActivityReport = (): JSX.Element => {
   )
   const selectedView = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.selectedView,
-  )
-  const isLoading = useTypedSelector(
-    reduxServices.hiveActivityReport.selectors.isLoading,
   )
   const listSize = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerReportSize,
@@ -86,8 +84,45 @@ const HiveActivityReport = (): JSX.Element => {
     downloadFile(hiveActivityReportDownload, 'HiveReport.csv')
   }
 
+  const setMonthToDisplay = useCallback(
+    (dateValue) => {
+      const monthToDisplay =
+        dateValue === currentMonthDate
+          ? moment().format('MMMM-YYYY')
+          : moment().subtract(1, 'months').format('MMMM-YYYY')
+
+      dispatch(
+        reduxServices.hiveActivityReport.actions.setMonthDisplay(
+          monthToDisplay,
+        ),
+      )
+    },
+    [dateToUse],
+  )
+
+  useEffect(() => {
+    if (selectedDate) {
+      setMonthToDisplay(selectedDate)
+    }
+  }, [selectedDate, setMonthToDisplay])
+
+  useEffect(() => {
+    if (isViewClicked) {
+      setFilterByDate(startDate)
+      setMonthToDisplay(moment(startDate).format('MM/yyyy'))
+      dispatch(reduxServices.hiveActivityReport.actions.setSelectedDate(''))
+      dispatch(
+        reduxServices.hiveActivityReport.actions.setMonthDisplay(
+          moment(startDate).format('MMMM-YYYY'),
+        ),
+      )
+    }
+
+    setIsViewClicked(false)
+  }, [isViewClicked, setMonthToDisplay])
+
   const viewButtonHandler = () => {
-    setFilterByDate(startDate)
+    setIsViewClicked(true)
   }
 
   return (
@@ -106,10 +141,8 @@ const HiveActivityReport = (): JSX.Element => {
           handleExportHiveActivityReport={handleExportHiveActivityReport}
           handleSearchHiveActivityReport={handleSearchHiveActivityReport}
         />
-        {selectedView === 'Me' && isLoading === ApiLoadingState.succeeded && (
-          <EmployeeHiveActivityReport />
-        )}
-        {selectedView === 'All' && isLoading === ApiLoadingState.succeeded && (
+        {selectedView === 'Me' && <EmployeeHiveActivityReport />}
+        {selectedView === 'All' && (
           <ManagerHiveActivityReport
             paginationRange={paginationRange}
             setPageSize={setPageSize}

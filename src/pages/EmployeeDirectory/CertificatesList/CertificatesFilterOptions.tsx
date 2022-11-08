@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-// Todo: remove eslint and fix error
 import {
   CButton,
   CCol,
@@ -9,11 +7,13 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
+import { downloadFile } from '../../../utils/helper'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const CertificatesFilterOptions = ({
   selectTechnology,
@@ -26,6 +26,8 @@ const CertificatesFilterOptions = ({
   multiSearchValue,
   setIsAccordionItemShow,
 }: CertificatesFilterOptionsProps): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [searchInput, setSearchInput] = useState<string>('')
   const [selectCertificate, setSelectCertificate] = useState<string>('')
   const [isViewBtnEnabled, setIsViewBtnEnabled] = useState<boolean>(false)
@@ -38,14 +40,23 @@ const CertificatesFilterOptions = ({
     (state) => state.employeeCertificates.typeOfCertificate,
   )
 
+  const handleSearchButton = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setMultiSearchValue(searchInput)
+      setFilterByTechnology(selectTechnology)
+      setIsAccordionItemShow(true)
+    }
+  }
   const multiSearchButtonHandler = () => {
     setMultiSearchValue(searchInput)
+    setFilterByTechnology(selectTechnology)
     setIsAccordionItemShow(true)
   }
 
   const viewButtonHandler = () => {
     setFilterByTechnology(selectTechnology)
     setFilterByCertificate(selectCertificate)
+    setMultiSearchValue(searchInput)
     setIsAccordionItemShow(true)
   }
 
@@ -57,6 +68,9 @@ const CertificatesFilterOptions = ({
     setMultiSearchValue('')
     setSearchInput('')
     setIsAccordionItemShow(false)
+    dispatch(
+      reduxServices.employeeCertifications.actions.clearCertificateType([]),
+    )
   }
 
   useEffect(() => {
@@ -74,34 +88,8 @@ const CertificatesFilterOptions = ({
         selectedCertificate: filterByCertificate,
         multipleSearch: multiSearchValue,
       })
-    downloadFile(certificateListDownload)
+    downloadFile(certificateListDownload, 'CertificatesList.csv')
   }
-
-  const downloadFile = (excelDownload: Blob | undefined) => {
-    if (excelDownload) {
-      const url = window.URL.createObjectURL(
-        new Blob([excelDownload], {
-          type: excelDownload.type,
-        }),
-      )
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', 'CertificatesList.csv')
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
-    }
-  }
-
-  const sortedTechnologies = useMemo(() => {
-    if (getTechnologies) {
-      return getTechnologies
-        .slice()
-        .sort((technology1, technology2) =>
-          technology1.name.localeCompare(technology2.name),
-        )
-    }
-  }, [getTechnologies])
 
   return (
     <>
@@ -111,10 +99,11 @@ const CertificatesFilterOptions = ({
         </CCol>
         <CCol sm={2}>
           <CFormSelect
+            className="pe-2"
             aria-label="Default select example"
             size="sm"
             id="technology"
-            data-testid="form-select1"
+            data-testid="selectTechnology"
             name="technology"
             value={selectTechnology}
             onChange={(e) => {
@@ -122,11 +111,16 @@ const CertificatesFilterOptions = ({
             }}
           >
             <option value={''}>Select Technology</option>
-            {sortedTechnologies?.map((certificateItem, index) => (
-              <option key={index} value={certificateItem.name}>
-                {certificateItem.name}
-              </option>
-            ))}
+            {getTechnologies
+              ?.slice()
+              .sort((technology1, technology2) =>
+                technology1.name.localeCompare(technology2.name),
+              )
+              .map((certificateItem, index) => (
+                <option key={index} value={certificateItem.name}>
+                  {certificateItem.name}
+                </option>
+              ))}
           </CFormSelect>
         </CCol>
         <CCol sm={4}>
@@ -139,7 +133,7 @@ const CertificatesFilterOptions = ({
                 aria-label="Default select example"
                 size="sm"
                 id="certificate"
-                data-testid="form-select2"
+                data-testid="selectCertificate"
                 name="certificate"
                 value={selectCertificate}
                 onChange={(e) => {
@@ -202,6 +196,7 @@ const CertificatesFilterOptions = ({
         <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
           <CInputGroup className="global-search me-0">
             <CFormInput
+              data-testid="searchField"
               placeholder="Multiple Search"
               aria-label="Multiple Search"
               aria-describedby="button-addon2"
@@ -209,6 +204,7 @@ const CertificatesFilterOptions = ({
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
+              onKeyDown={handleSearchButton}
             />
             <CButton
               disabled={!searchInput}

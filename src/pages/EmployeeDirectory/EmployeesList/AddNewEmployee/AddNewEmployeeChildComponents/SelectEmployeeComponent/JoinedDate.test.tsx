@@ -14,7 +14,7 @@ describe('Add Employee JoinDate Component', () => {
     render(
       <JoinDate
         onDateChangeHandler={jest.fn()}
-        dateValue={new Date()}
+        dateValue={''}
         dynamicFormLabelProps={jest.fn()}
       />,
     )
@@ -24,8 +24,8 @@ describe('Add Employee JoinDate Component', () => {
     screen.debug()
   })
 
-  test('should be able to see place holder "dd/mm/yy"', () => {
-    expect(screen.getByPlaceholderText('dd/mm/yy')).toBeInTheDocument()
+  test('should be able to see place holder "dd/mm/yyyy"', () => {
+    expect(screen.getByPlaceholderText('dd/mm/yyyy')).toBeInTheDocument()
   })
 
   test('should be able to render JoinDate label', () => {
@@ -38,7 +38,7 @@ describe('Add Employee JoinDate Component', () => {
   })
 
   test('should be able to select date"', () => {
-    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {
