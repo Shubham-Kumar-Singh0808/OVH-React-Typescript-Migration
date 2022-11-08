@@ -11,5 +11,5 @@ export const mockCycleRecords: AddCycle = {
   name: 'New Cycle 2',
   servicePeriod: '1',
   toDate: '18/11/2022',
-  description: '',
+  description: 'test test test',
 }

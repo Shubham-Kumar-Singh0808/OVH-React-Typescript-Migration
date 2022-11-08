@@ -42,12 +42,24 @@ const AddConfiguration = ({
   const [isDateValidation, setIsDateValidation] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [selectActiveStatus, setSelectActiveStatus] = useState<string>('')
+  const [reviewDuration, setReviewDuration] = useState<string>('')
 
   const commonFormatDate = 'L'
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectActiveStatus(e.target.value)
   }
+
+  const endDate = moment(reviewEndDate)
+  const startDate = moment(reviewStartDate)
+  const remainingDays = endDate.diff(startDate, 'days')
+  useEffect(() => {
+    if (remainingDays > 0) {
+      setReviewDuration(String(remainingDays))
+    } else {
+      setReviewDuration(String(''))
+    }
+  }, [remainingDays])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -108,6 +120,7 @@ const AddConfiguration = ({
     setReviewPeriodTo(undefined)
     setSelectActiveStatus('')
     setLevel('')
+    setReviewDuration('')
     setTimeout(() => {
       setIsShowDescription(true)
     }, 0)
@@ -365,6 +378,7 @@ const AddConfiguration = ({
               className="col-sm-3 col-form-label text-end"
             >
               Review Duration (days):
+              <span className={reviewDuration ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -375,6 +389,8 @@ const AddConfiguration = ({
                 name="reviewDuration"
                 placeholder="Duration"
                 disabled={true}
+                value={reviewDuration}
+                // onChange={HandlerEvent}
               />
             </CCol>
           </CRow>
