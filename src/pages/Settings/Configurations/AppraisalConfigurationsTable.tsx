@@ -147,7 +147,7 @@ const AppraisalConfigurationsTable = ({
                         <CTooltip content="Assign Template">
                           <CButton
                             size="sm"
-                            className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
+                            className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer button"
                             disabled={appraisalCycle.cycleStartedFlag}
                           >
                             <i className="fa fa-plus" aria-hidden="true"></i>
