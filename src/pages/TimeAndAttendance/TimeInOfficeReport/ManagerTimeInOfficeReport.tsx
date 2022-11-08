@@ -24,7 +24,7 @@ const ManagerTimeInOfficeReport = (
   const timeInOfficeManagerReport = useTypedSelector(
     reduxServices.timeInOfficeReport.selectors.timeInOfficeManagerReport,
   )
-  const listSize = useTypedSelector(
+  const managerReportListSize = useTypedSelector(
     reduxServices.timeInOfficeReport.selectors.managerReportSize,
   )
   const isLoading = useTypedSelector(
@@ -39,7 +39,7 @@ const ManagerTimeInOfficeReport = (
     setCurrentPage,
   } = props
 
-  const handlePageSizeSelectChange = (
+  const handleManagerReportPageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(event.target.value))
@@ -48,7 +48,7 @@ const ManagerTimeInOfficeReport = (
 
   return (
     <>
-      <CTable striped className="time-in-office-table">
+      <CTable striped responsive className="time-in-office-table align-middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">ID</CTableHeaderCell>
@@ -94,29 +94,32 @@ const ManagerTimeInOfficeReport = (
           <OLoadingSpinner type={LoadingType.PAGE} />
         )}
       </CTable>
+
       {isLoading !== ApiLoadingState.loading && (
         <CRow>
-          <CCol xs={4}>
+          <CCol xs={3}>
             <p>
               <strong>
                 {timeInOfficeManagerReport.list?.length
-                  ? `Total Records: ${listSize}`
+                  ? `Total Records: ${managerReportListSize}`
                   : `No Records found...`}
               </strong>
             </p>
           </CCol>
           <CCol xs={3}>
-            {listSize > 20 && (
+            {managerReportListSize > 20 && (
               <OPageSizeSelect
-                handlePageSizeSelectChange={handlePageSizeSelectChange}
+                handlePageSizeSelectChange={
+                  handleManagerReportPageSizeSelectChange
+                }
                 options={[20, 40, 60, 80, 100]}
                 selectedPageSize={pageSize}
               />
             )}
           </CCol>
-          {listSize > 20 && (
+          {managerReportListSize > 20 && (
             <CCol
-              xs={5}
+              xs={6}
               className="d-grid gap-1 d-md-flex justify-content-md-end"
             >
               <OPagination

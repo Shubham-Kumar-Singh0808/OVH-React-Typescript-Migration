@@ -24,10 +24,6 @@
   color: green !important;
 }
 
-.time-in-office-table > :not(caption) > * > * {
-  padding: 0.5rem 0.1rem !important;
-}
-
 .time-in-office-header {
   display: flex;
   align-items: center;
@@ -56,24 +52,4 @@
 
 .time-in-office-report-card {
   overflow: unset !important;
-}
-
-.react-datepicker__navigation--previous {
-  left: 2px;
-  top: 8px;
-}
-
-.react-datepicker__navigation--next {
-  right: 2px;
-  top: 8px;
-}
-
-.react-datepicker__month {
-  text-align: center;
-}
-
-.react-datepicker__month .react-datepicker__month-text, .react-datepicker__month .react-datepicker__quarter-text {
-  display: inline-block;
-  width: 4rem;
-  margin: 12px 2px 12px 2px;
 }
