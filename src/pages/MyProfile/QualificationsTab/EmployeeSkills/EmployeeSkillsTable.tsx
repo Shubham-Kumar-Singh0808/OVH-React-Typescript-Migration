@@ -193,9 +193,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
                       )}
                     </CTableDataCell>
                   ) : (
-                    <>
-                      <CTableDataCell scope="row"></CTableDataCell>
-                    </>
+                    <></>
                   )}
                 </CTableRow>
               )

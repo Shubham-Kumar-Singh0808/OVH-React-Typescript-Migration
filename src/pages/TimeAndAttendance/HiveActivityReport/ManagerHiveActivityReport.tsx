@@ -74,7 +74,11 @@ const ManagerHiveActivityReport = (
   return (
     <>
       <>
-        <CTable striped className="time-in-office-table">
+        <CTable
+          striped
+          responsive
+          className="time-in-office-table align-middle"
+        >
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell {...tableHeaderCellPropsName}>
