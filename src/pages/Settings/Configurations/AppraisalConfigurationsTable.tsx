@@ -66,16 +66,18 @@ const AppraisalConfigurationsTable = ({
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
+
   const handleAgendaModal = (appraisalCycle: getAppraisalCycle) => {
     setIsAppraisalDescriptionVisible(true)
     setDescriptionModal(appraisalCycle)
   }
+
   return (
     <>
       <CTable
         striped
         responsive
-        className="text-start text-left align-middle alignment"
+        className="text-start text-left align-middle alignment mt-4"
       >
         <CTableHead>
           <CTableRow>
@@ -94,7 +96,7 @@ const AppraisalConfigurationsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {appraisalCycleNames.length > 0 &&
+          {appraisalCycleNames?.length > 0 &&
             appraisalCycleNames?.map((appraisalCycle, index) => {
               const agendaLimit =
                 appraisalCycle.description &&
@@ -147,7 +149,7 @@ const AppraisalConfigurationsTable = ({
                         <CTooltip content="Assign Template">
                           <CButton
                             size="sm"
-                            className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
+                            className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer button"
                             disabled={appraisalCycle.cycleStartedFlag}
                           >
                             <i className="fa fa-plus" aria-hidden="true"></i>
