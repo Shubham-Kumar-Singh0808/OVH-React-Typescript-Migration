@@ -290,7 +290,11 @@ const AllocateEmployee = (): JSX.Element => {
             <CFormLabel {...formLabelProps} className={formLabel}>
               Project Name:
               <span
-                className={projectsAutoCompleteTarget ? TextWhite : TextDanger}
+                className={
+                  projectsAutoCompleteTarget.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
               >
                 *
               </span>
