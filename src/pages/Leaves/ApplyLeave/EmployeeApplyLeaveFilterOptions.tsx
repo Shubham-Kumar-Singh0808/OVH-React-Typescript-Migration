@@ -1,7 +1,7 @@
 import { CButton, CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
-import ReactDatePicker from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { useHistory } from 'react-router-dom'
@@ -217,13 +217,13 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 From :
                 <span className={fromDate ? TextWhite : TextDanger}> *</span>
               </CFormLabel>
-              <ReactDatePicker
+              <DatePicker
                 id="fromDate"
                 data-testid="leaveApplyFromDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
@@ -247,12 +247,12 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
                 To:
                 <span className={toDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
-              <ReactDatePicker
+              <DatePicker
                 id="toDate"
                 data-testid="leaveApprovalFromDate"
                 className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                peekNextMonth
                 showMonthDropdown
+                autoComplete="off"
                 showYearDropdown
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"

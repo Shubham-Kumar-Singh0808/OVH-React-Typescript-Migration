@@ -68,6 +68,8 @@ import { addTrackerListService } from './Support/RaiseTicket/TrackerList/tracker
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
 import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
+import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
+import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -139,5 +141,7 @@ export const reduxServices = {
   addLocationList: addLocationListService,
   addTrackerLists: addTrackerListService,
   eventList: eventListService,
+  roomLists: roomListService,
   searchEmployee: employeeSearchService,
+  appraisalConfigurations: appraisalCycleService,
 }

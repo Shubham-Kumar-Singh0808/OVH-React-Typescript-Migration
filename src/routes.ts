@@ -201,6 +201,14 @@ const EditHoliday = React.lazy(
 const EmployeeAllocation = React.lazy(
   () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
 )
+
+const AppraisalConfigurations = React.lazy(
+  () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
+)
+
+const RoomList = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -449,6 +457,16 @@ const routes = [
     path: '/editHoliday/:holidayId',
     name: 'Edit Holiday',
     component: EditHoliday,
+  },
+  {
+    path: '/appraisalCycle',
+    name: 'Appraisal Configurations',
+    component: AppraisalConfigurations,
+  },
+  {
+    path: '/roomList',
+    name: 'RoomList',
+    component: RoomList,
   },
 ]
 

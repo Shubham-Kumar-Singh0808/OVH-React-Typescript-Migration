@@ -50,9 +50,9 @@ const EmployeeCertificationsTable = ({
   }, [dispatch, isViewingAnotherEmployee, selectedEmployeeId])
 
   const sortedCertificateDetails = useMemo(() => {
-    if (employeeCertificates) {
+    if (employeeCertificates.length > 0) {
       return employeeCertificates
-        .slice()
+        ?.slice()
         .sort((sortNode1, sortNode2) =>
           sortNode1.name.localeCompare(sortNode2.name),
         )
@@ -68,8 +68,9 @@ const EmployeeCertificationsTable = ({
     <>
       <CTable
         responsive
-        striped={isViewingAnotherEmployee}
+        striped
         bordered={isViewingAnotherEmployee}
+        align="middle"
       >
         {!isViewingAnotherEmployee ? (
           <CTableHead>

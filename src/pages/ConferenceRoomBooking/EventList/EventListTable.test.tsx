@@ -122,7 +122,7 @@ describe('EventList', () => {
         expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
       })
     })
-
+    jest.retryTimes(3)
     it('should close modal popup after clicking Yes option from the modal', async () => {
       const cancelButtonElement = screen.getByTestId('cancelEvent-btn1')
       userEvent.click(cancelButtonElement)

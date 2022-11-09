@@ -1,0 +1,38 @@
+
+.react-datepicker{
+    &-popper {
+        z-index: 5;
+    }
+    &__header{
+        background-color: #f2f2f2;
+        border-bottom: 0;
+      }
+    &__navigation{
+        &--previous {
+            left: 2px;
+            top: 8px;
+        }
+        &--next {
+            right: 2px;
+            top: 8px;
+        }
+    }
+    &__month {
+        text-align: center;
+        margin: 0.75rem;
+        .react-datepicker__month-text,.react-datepicker__quarter-text{
+            display: inline-block;
+            width: 3.5rem;
+            padding: 10px;
+            margin: 4px;
+            border-radius: 0;
+        }
+        .react-datepicker__month-text--keyboard-selected{
+            border-radius: 0;
+            &:hover{
+                background-color: #f0f0f0;
+                color: #000;
+              }
+          }
+    }
+}
