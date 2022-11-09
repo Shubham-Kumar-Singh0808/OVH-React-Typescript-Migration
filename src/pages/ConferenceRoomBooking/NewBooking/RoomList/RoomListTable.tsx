@@ -54,7 +54,7 @@ const RoomListTable = ({
         <CTable
           striped
           responsive
-          className="text-start text-left align-middle alignment mt-4"
+          className="text-start text-left align-middle alignment"
         >
           <CTableHead>
             <CTableRow>

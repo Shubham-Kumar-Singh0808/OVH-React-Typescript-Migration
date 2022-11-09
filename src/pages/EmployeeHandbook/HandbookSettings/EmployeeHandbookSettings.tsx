@@ -22,7 +22,7 @@ const EmployeeHandbookSettings = (): JSX.Element => {
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToAddNewPage = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Handbook Settings',
+    (feature) => feature.name === 'Handbook',
   )
   const {
     paginationRange,

@@ -1786,7 +1786,7 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
   },
   {
     featureId: 314,
-    name: 'Handbook Settings',
+    name: 'Handbook',
     viewaccess: true,
     createaccess: true,
     updateaccess: true,
