@@ -117,4 +117,11 @@ describe('Add Configuration Component Testing', () => {
     expect(datePickers[0]).toHaveValue('')
     expect(datePickers[1]).toHaveValue('')
   })
+
+  test('should render  Configuration  screen and back button without crashing', () => {
+    const backButton = screen.getByTestId('back-button')
+    expect(backButton).toBeInTheDocument()
+    userEvent.click(backButton)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
+  })
 })

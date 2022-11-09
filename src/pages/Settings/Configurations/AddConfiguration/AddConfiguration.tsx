@@ -13,6 +13,7 @@ import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import { useHistory } from 'react-router-dom'
 import {
   TextDanger,
   TextLabelProps,
@@ -21,8 +22,13 @@ import {
 import { deviceLocale } from '../../../../utils/helper'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { dateFormat } from '../../../../constant/DateFormat'
-import { ActiveStatus } from '../../../../types/Settings/Configurations/AddConfiguration/addConfigurationTypes'
+import {
+  ActiveStatus,
+  AddCycle,
+} from '../../../../types/Settings/Configurations/AddConfiguration/addConfigurationTypes'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddConfiguration = ({
   setToggle,
@@ -37,14 +43,18 @@ const AddConfiguration = ({
   const [addingDescription, setAddingDescription] = useState<string>('')
   const [servicePeriod, setServicePeriod] = useState<number | string>()
   const [level, setLevel] = useState<number | string>(1)
-  const [reviewPeriodFrom, setReviewPeriodFrom] = useState<Date | undefined>()
-  const [reviewPeriodTo, setReviewPeriodTo] = useState<Date | undefined>()
+  const [reviewPeriodFrom, setReviewPeriodFrom] = useState<string>()
+  const [reviewPeriodTo, setReviewPeriodTo] = useState<string>()
   const [isDateValidation, setIsDateValidation] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [selectActiveStatus, setSelectActiveStatus] = useState<string>('')
   const [reviewDuration, setReviewDuration] = useState<string>('')
 
-  const commonFormatDate = 'L'
+  const dispatch = useAppDispatch()
+
+  const history = useHistory()
+
+  const commonFormatDate = 'l'
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectActiveStatus(e.target.value)
@@ -116,8 +126,8 @@ const AddConfiguration = ({
     setServicePeriod('')
     setAddingDescription('')
     setIsShowDescription(false)
-    setReviewPeriodFrom(undefined)
-    setReviewPeriodTo(undefined)
+    setReviewPeriodFrom('')
+    setReviewPeriodTo('')
     setSelectActiveStatus('')
     setLevel('')
     setReviewDuration('')
@@ -126,11 +136,9 @@ const AddConfiguration = ({
     }, 0)
   }
   useEffect(() => {
-    const startDate = moment(reviewStartDate, dateFormat).format(
-      commonFormatDate,
-    )
-    const endDate = moment(reviewEndDate, dateFormat).format(commonFormatDate)
-    if (startDate < endDate) {
+    const startDate = new Date(moment(reviewStartDate).format(commonFormatDate))
+    const endDate = new Date(moment(reviewEndDate).format(commonFormatDate))
+    if (endDate.getTime() < startDate.getTime()) {
       setIsDateValidation(true)
     } else {
       setIsDateValidation(false)
@@ -162,6 +170,57 @@ const AddConfiguration = ({
     servicePeriod,
     level,
   ])
+
+  const successMessage = (
+    <OToast
+      toastMessage="Configuration Added Successfully."
+      toastColor="success"
+    />
+  )
+
+  const WarningMessage = (
+    <OToast
+      toastColor="danger"
+      toastMessage="Only one cycle activated at a time."
+    />
+  )
+
+  const handleAddNewCycle = async () => {
+    const prepareObject = {
+      active: selectActiveStatus,
+      appraisalDuration: Number(reviewDuration),
+      appraisalEndDate: reviewEndDate,
+      appraisalStartDate: reviewStartDate,
+      appraisalType: selectReviewType,
+      description: addingDescription.replace('/(<([^>]+)>)/gi', ''),
+      fromDate: reviewPeriodFrom,
+      level,
+      name: selectReviewTitle,
+      servicePeriod,
+      toDate: reviewPeriodTo,
+    } as AddCycle
+
+    const addCycleResultAction = await dispatch(
+      reduxServices.addConfigurations.addNewCycle(prepareObject),
+    )
+    if (
+      reduxServices.addConfigurations.addNewCycle.fulfilled.match(
+        addCycleResultAction,
+      )
+    ) {
+      dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
+      dispatch(reduxServices.app.actions.addToast(successMessage))
+      history.push('/appraisalCycle')
+    } else if (
+      reduxServices.addConfigurations.addNewCycle.rejected.match(
+        addCycleResultAction,
+      ) &&
+      addCycleResultAction.payload === 412
+    ) {
+      dispatch(reduxServices.app.actions.addToast(WarningMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
 
   return (
     <>
@@ -253,9 +312,9 @@ const AddConfiguration = ({
                 placeholderText="mm/yyyy"
                 dateFormat="MM/yyyy"
                 name="selectMonth"
-                selected={reviewPeriodFrom}
+                value={reviewPeriodFrom}
                 onChange={(date: Date) => {
-                  setReviewPeriodFrom(date)
+                  setReviewPeriodFrom(moment(date).format('MM/yyyy'))
                 }}
               />
             </CCol>
@@ -279,9 +338,10 @@ const AddConfiguration = ({
                 placeholderText="mm/yyyy"
                 dateFormat="MM/yyyy"
                 name="selectMonth"
-                selected={reviewPeriodTo}
+                value={reviewPeriodTo}
                 onChange={(date: Date) => {
-                  setReviewPeriodTo(date)
+                  // setReviewPeriodTo(date)
+                  setReviewPeriodTo(moment(date).format('MM/yyyy'))
                 }}
               />
             </CCol>
@@ -504,6 +564,7 @@ const AddConfiguration = ({
                 className="btn-ovh me-1 text-white"
                 color="success"
                 disabled={!isButtonEnabled}
+                onClick={handleAddNewCycle}
               >
                 Add
               </CButton>
