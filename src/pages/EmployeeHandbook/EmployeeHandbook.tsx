@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CButton,
-  CCol,
-  CFormInput,
-  CInputGroup,
-  CRow,
-  CSpinner,
-} from '@coreui/react-pro'
+import { CButton, CCol, CFormInput, CInputGroup, CRow } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import HandbookList from './HandbookList'
 import OCard from '../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
 import { ApiLoadingState } from '../../middleware/api/apiList'
+import OLoadingSpinner from '../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../types/Components/loadingScreenTypes'
 
 const EmployeeHandbook = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -22,13 +17,25 @@ const EmployeeHandbook = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.EmployeeHandbook.selectors.isLoading,
   )
-  const empRole = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToHandbookSettings = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Handbook',
   )
   const [inputText, setInputText] = useState('')
+  const [filterByInputText, setFilterByInputText] = useState('')
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const lowerCase = e.currentTarget.value.toLowerCase()
-    setInputText(lowerCase)
+    setFilterByInputText(lowerCase)
+    if (!lowerCase) {
+      setInputText('')
+    }
+    searchHandbook()
+  }
+
+  const searchHandbook = () => {
+    setInputText(filterByInputText)
   }
 
   useEffect(() => {
@@ -51,15 +58,20 @@ const EmployeeHandbook = (): JSX.Element => {
                 aria-label="Search Handbook"
                 onChange={inputHandler}
                 className="input-handbook"
+                data-testid="handbook-textInput"
               />
-              <CButton type="button" color="info" id="button-addon2">
+              <CButton
+                type="button"
+                color="info"
+                id="button-addon2"
+                data-testid="search-handbook"
+                onClick={searchHandbook}
+              >
                 <i className="fa fa-search"></i>
               </CButton>
             </CInputGroup>
           </CCol>
-          {(empRole === 'admin' ||
-            empRole === 'HR Manager' ||
-            empRole === 'HR') && (
+          {userAccessToHandbookSettings?.viewaccess && (
             <CCol className="text-end" md={4}>
               <Link to={`/handbooksettings`}>
                 <CButton
@@ -78,11 +90,9 @@ const EmployeeHandbook = (): JSX.Element => {
         {isLoading !== ApiLoadingState.loading ? (
           <HandbookList handbooks={handbooks} inputText={inputText} />
         ) : (
-          <CCol>
-            <CRow className="category-loading-spinner">
-              <CSpinner />
-            </CRow>
-          </CCol>
+          <>
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          </>
         )}
       </OCard>
     </>

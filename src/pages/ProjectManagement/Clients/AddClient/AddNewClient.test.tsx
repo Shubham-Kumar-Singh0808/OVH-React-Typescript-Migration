@@ -108,6 +108,7 @@ describe('Add Template Component Testing', () => {
         expect(screen.queryByTestId('error-msg')).not.toBeInTheDocument()
       })
     })
+    jest.retryTimes(3)
     test('should enable add button , when all mandatory fields are entered', async () => {
       const clientCode = screen.getByTestId(clientCodeElement)
       userEvent.type(clientCode, '000')
@@ -126,8 +127,8 @@ describe('Add Template Component Testing', () => {
       expect(clientEmail).toHaveValue('ajay.gupta@raybiztech.com')
 
       const contactPerson = screen.getByTestId(contactPersonElement)
-      userEvent.type(contactPerson, 'Ajay Gupta')
-      expect(contactPerson).toHaveValue('Ajay Gupta')
+      userEvent.type(contactPerson, 'Ajay Guptha')
+      expect(contactPerson).toHaveValue('Ajay Guptha')
 
       userEvent.selectOptions(screen.getByTestId(clientCountryElement), 'INDIA')
 
@@ -152,6 +153,53 @@ describe('Add Template Component Testing', () => {
 
       await waitFor(() => {
         expect(screen.getByRole('button', { name: 'Add' })).toBeEnabled()
+      })
+    })
+    test('should render error message when user tries to enter existing client code', async () => {
+      const clientCode = screen.getByTestId(clientCodeElement)
+      userEvent.type(clientCode, '000')
+      expect(clientCode).toHaveValue('000')
+
+      const clientName = screen.getByTestId(clientNameElement)
+      userEvent.type(clientName, 'Raybiztech2')
+      expect(clientName).toHaveValue('Raybiztech2')
+
+      const clientOrg = screen.getByTestId(clientOrgElement)
+      userEvent.type(clientOrg, 'Ray Business Technologies2')
+      expect(clientOrg).toHaveValue('Ray Business Technologies2')
+
+      const clientEmail = screen.getByTestId(clientEmailElement)
+      userEvent.type(clientEmail, 'ajay.gupta@raybiztech.com2')
+      expect(clientEmail).toHaveValue('ajay.gupta@raybiztech.com2')
+
+      const conctPerson = screen.getByTestId('contact-input')
+      userEvent.type(conctPerson, 'Ajay Gupta')
+      expect(conctPerson).toHaveValue('Ajay Gupta')
+
+      userEvent.selectOptions(screen.getByTestId(clientCountryElement), 'INDIA')
+
+      const clientAddress = screen.getByTestId(clientAddressElement)
+      userEvent.type(clientAddress, 'KavuriHills2')
+      expect(clientAddress).toHaveValue('KavuriHills2')
+
+      const clientStatus = screen.getByRole('radio', { name: 'Active' })
+      expect(clientStatus).toBeChecked()
+
+      const countryCode = screen.getByTestId(countryCodeElement)
+      userEvent.type(countryCode, '91')
+      expect(countryCode).toHaveValue('91')
+
+      const clientMobile = screen.getByTestId(clientMobileNumberElement)
+      userEvent.type(clientMobile, '8979872545')
+      expect(clientMobile).toHaveValue('8979872545')
+
+      const gstCode = screen.getByTestId(gstCodeElement)
+      userEvent.type(gstCode, '23441235324')
+      expect(gstCode).toHaveValue('23441235324')
+      const addClientButton = screen.getByRole('button', { name: 'Add' })
+      userEvent.click(addClientButton)
+      await waitFor(() => {
+        expect(addClientButton).toBeDisabled()
       })
     })
     test('should clear all the entered fields upon clicking clear button', async () => {

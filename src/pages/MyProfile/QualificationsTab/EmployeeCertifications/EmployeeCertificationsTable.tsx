@@ -14,6 +14,7 @@ import { EmployeeCertificationTableProps } from '../../../../types/MyProfile/Qua
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 import { localeDateFormat } from '../../../../utils/dateFormatUtils'
+import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 const EmployeeCertificationsTable = ({
   editCertificateButtonHandler,
@@ -28,9 +29,13 @@ const EmployeeCertificationsTable = ({
       isViewingAnotherEmployee,
     ),
   )
-
   const dispatch = useAppDispatch()
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToCertifications = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills-Certifications',
+  )
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
     if (isViewingAnotherEmployee) {
@@ -45,9 +50,9 @@ const EmployeeCertificationsTable = ({
   }, [dispatch, isViewingAnotherEmployee, selectedEmployeeId])
 
   const sortedCertificateDetails = useMemo(() => {
-    if (employeeCertificates) {
+    if (employeeCertificates.length > 0) {
       return employeeCertificates
-        .slice()
+        ?.slice()
         .sort((sortNode1, sortNode2) =>
           sortNode1.name.localeCompare(sortNode2.name),
         )
@@ -63,8 +68,9 @@ const EmployeeCertificationsTable = ({
     <>
       <CTable
         responsive
-        striped={isViewingAnotherEmployee}
+        striped
         bordered={isViewingAnotherEmployee}
+        align="middle"
       >
         {!isViewingAnotherEmployee ? (
           <CTableHead>
@@ -143,6 +149,7 @@ const EmployeeCertificationsTable = ({
                 setCertificateId={setCertificateId}
                 isDeleteModalVisible={isDeleteModalVisible}
                 setIsDeleteModalVisible={setIsDeleteModalVisible}
+                userAccess={userAccessToCertifications as UserAccessToFeatures}
               />
             </CTableRow>
           ))}

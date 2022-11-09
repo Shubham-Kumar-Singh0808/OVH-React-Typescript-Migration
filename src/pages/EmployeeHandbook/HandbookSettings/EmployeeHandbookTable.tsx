@@ -2,7 +2,6 @@ import {
   CButton,
   CCol,
   CRow,
-  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -19,6 +18,8 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeHandbookTable = (
   props: EmployeeHandbookTableProps,
@@ -33,7 +34,12 @@ const EmployeeHandbookTable = (
   const handbookListSize = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.listSize,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToHandbookActions = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Handbook',
+  )
   const {
     paginationRange,
     pageSize,
@@ -112,6 +118,10 @@ const EmployeeHandbookTable = (
     reduxServices.employeeHandbookSettings.selectors.isLoading,
   )
 
+  const actionHeaderViewAccess =
+    userAccessToHandbookActions?.updateaccess ||
+    userAccessToHandbookActions?.deleteaccess
+
   return (
     <>
       {employeeHandbooks?.length && isLoading !== ApiLoadingState.loading ? (
@@ -134,9 +144,13 @@ const EmployeeHandbookTable = (
                 <CTableHeaderCell {...tableHeaderCellPropCountry}>
                   Country
                 </CTableHeaderCell>
-                <CTableHeaderCell {...tableHeaderCellPropActions}>
-                  Actions
-                </CTableHeaderCell>
+                {actionHeaderViewAccess ? (
+                  <CTableHeaderCell {...tableHeaderCellPropActions}>
+                    Actions
+                  </CTableHeaderCell>
+                ) : (
+                  <></>
+                )}
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -174,36 +188,40 @@ const EmployeeHandbookTable = (
                       </ul>
                     </CTableDataCell>
                     <CTableDataCell className="align-items-end">
-                      <CButton
-                        size="sm"
-                        color="info"
-                        className="btn-ovh me-1"
-                        data-testid={`handbook-edit-btn${index}`}
-                        onClick={() => {
-                          props.editHandbookButtonHandler(
-                            employeeHandbook.id as number,
-                          )
-                        }}
-                      >
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                      <CButton
-                        size="sm"
-                        data-testid={`handbook-delete-btn${index}`}
-                        color="danger"
-                        className="btn-ovh me-1"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            employeeHandbook.id as number,
-                            employeeHandbook.title,
-                          )
-                        }
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      {userAccessToHandbookActions?.updateaccess && (
+                        <CButton
+                          size="sm"
+                          color="info"
+                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                          data-testid={`handbook-edit-btn${index}`}
+                          onClick={() => {
+                            props.editHandbookButtonHandler(
+                              employeeHandbook.id as number,
+                            )
+                          }}
+                        >
+                          <i
+                            className="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      )}
+                      {userAccessToHandbookActions?.deleteaccess && (
+                        <CButton
+                          size="sm"
+                          data-testid={`handbook-delete-btn${index}`}
+                          color="danger"
+                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                          onClick={() =>
+                            handleShowDeleteModal(
+                              employeeHandbook.id as number,
+                              employeeHandbook.title,
+                            )
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )
@@ -240,7 +258,7 @@ const EmployeeHandbookTable = (
           </CRow>
         </>
       ) : (
-        <CSpinner data-testid="handbookSettings-loader" />
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
       {!employeeHandbooks?.length && isLoading !== ApiLoadingState.loading && (
         <CCol>
@@ -254,6 +272,7 @@ const EmployeeHandbookTable = (
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Handbook"
         closeButtonClass="d-none"
+        modalBodyClass="mt-0"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteHandbook}

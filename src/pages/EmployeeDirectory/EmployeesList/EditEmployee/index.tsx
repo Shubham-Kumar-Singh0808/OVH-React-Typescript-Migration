@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
-import { CRow, CCol, CButton, CFormLabel, CSpinner } from '@coreui/react-pro'
+import { CRow, CCol, CButton, CFormLabel } from '@coreui/react-pro'
 import moment from 'moment'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -30,6 +30,8 @@ import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { EditEmployeeTypes } from '../../../../types/EmployeeDirectory/EmployeesList/EditEmployee'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { dateFormat } from '../../../../constant/DateFormat'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const EditEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -386,6 +388,16 @@ const EditEmployee = (): JSX.Element => {
           <OSelectList
             isRequired={false}
             dynamicFormLabelProps={dynamicFormLabelProps}
+            list={countryList}
+            setValue={onHandleCountryType}
+            value={editEmployee.country}
+            name="country"
+            label="Country"
+            placeHolder="Select Country"
+          />
+          <OSelectList
+            isRequired={false}
+            dynamicFormLabelProps={dynamicFormLabelProps}
             list={composedDepartmentList}
             setValue={onHandleDepartment}
             value={editEmployee.departmentName}
@@ -467,16 +479,6 @@ const EditEmployee = (): JSX.Element => {
             label="Job Type"
             placeHolder="Select Job Type"
           />
-          <OSelectList
-            isRequired={false}
-            dynamicFormLabelProps={dynamicFormLabelProps}
-            list={countryList}
-            setValue={onHandleCountryType}
-            value={editEmployee.country}
-            name="country"
-            label="Country"
-            placeHolder="Select Country"
-          />
           <Shift
             isRequired={true}
             dynamicFormLabelProps={dynamicFormLabelProps}
@@ -526,11 +528,9 @@ const EditEmployee = (): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <CCol data-testid="spinner">
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <>
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        </>
       )}
     </OCard>
   )

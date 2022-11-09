@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import EmployeeReporteesList from './EmployeeReporteesList'
+import EmployeeReportees from './EmployeeReportees'
 import { render, screen } from '../../../test/testUtils'
 
 describe('Employee Reportees Component Testing', () => {
-  render(<EmployeeReporteesList />, {
+  render(<EmployeeReportees />, {
     preloadedState: {},
   })
   test('should render Employee Reportees component with out crashing', () => {

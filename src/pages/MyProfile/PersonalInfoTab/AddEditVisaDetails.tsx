@@ -382,7 +382,7 @@ function AddEditVisaDetails({
         <CForm>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...formLabelProps}>
-              Country:
+              Country :
               <span
                 className={
                   employeeVisaDetails?.countryId ? TextWhite : TextDanger
@@ -412,7 +412,7 @@ function AddEditVisaDetails({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...visaTypeProps}>
-              Visa Type:{' '}
+              Visa Type :{' '}
               <span
                 className={
                   employeeVisaDetails?.visaTypeId ? TextWhite : TextDanger
@@ -440,7 +440,7 @@ function AddEditVisaDetails({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Date of Issue:
+              Date of Issue :
               <span
                 className={
                   employeeVisaDetails.dateOfIssue || dateOfIssue
@@ -471,7 +471,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText="dd/mm/yyyy"
                 dateFormat={dateFormat}
               />
             </CCol>
@@ -508,7 +508,7 @@ function AddEditVisaDetails({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText="dd/mm/yyyy"
                 dateFormat={dateFormat}
               />
               {error && (
@@ -522,9 +522,10 @@ function AddEditVisaDetails({
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Upload VISA copy:
             </CFormLabel>
-            <CCol sm={3}>
+            <CCol>
               <input
                 type="file"
+                className="mt-1"
                 data-testid="file-upload"
                 id="fileUpload"
                 name="file"

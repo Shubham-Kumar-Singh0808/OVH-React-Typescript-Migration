@@ -5,7 +5,6 @@ import MyTicketsTable from './MyTicketsTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
 
-const mockSetToggle = jest.fn()
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
@@ -15,12 +14,12 @@ const toRender = (
     <div id="overlay-root"></div>
     <div id="root"></div>
     <MyTicketsTable
-      setToggle={mockSetToggle}
       setCurrentPage={mockSetCurrentPage}
       setPageSize={mockSetPageSize}
       currentPage={1}
       pageSize={20}
       paginationRange={[1, 2, 3]}
+      userEditAccess={true}
     />
     ,
   </div>

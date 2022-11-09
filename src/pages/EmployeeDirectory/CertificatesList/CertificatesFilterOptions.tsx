@@ -10,9 +10,10 @@ import {
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CertificatesFilterOptionsProps } from '../../../types/EmployeeDirectory/CertificatesList/certificatesListTypes'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import certificatesApi from '../../../middleware/api/EmployeeDirectory/CertificatesList/certificatesListApi'
 import { downloadFile } from '../../../utils/helper'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const CertificatesFilterOptions = ({
   selectTechnology,
@@ -25,6 +26,8 @@ const CertificatesFilterOptions = ({
   multiSearchValue,
   setIsAccordionItemShow,
 }: CertificatesFilterOptionsProps): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [searchInput, setSearchInput] = useState<string>('')
   const [selectCertificate, setSelectCertificate] = useState<string>('')
   const [isViewBtnEnabled, setIsViewBtnEnabled] = useState<boolean>(false)
@@ -65,6 +68,9 @@ const CertificatesFilterOptions = ({
     setMultiSearchValue('')
     setSearchInput('')
     setIsAccordionItemShow(false)
+    dispatch(
+      reduxServices.employeeCertifications.actions.clearCertificateType([]),
+    )
   }
 
   useEffect(() => {

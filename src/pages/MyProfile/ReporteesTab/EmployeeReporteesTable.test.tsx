@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import EmployeeReportessTable from './EmployeeReportessTable'
+import EmployeeReporteesTable from './EmployeeReporteesTable'
 import {
   cleanup,
   render,
@@ -14,7 +14,7 @@ import { mockReporteesDetails } from '../../../test/data/employeeReporteesData'
 
 describe('Employee Reportees Table Component Testing', () => {
   beforeEach(() => {
-    render(<EmployeeReportessTable />, {
+    render(<EmployeeReporteesTable />, {
       preloadedState: {
         employeeReportees: {
           employeeReportees: mockReporteesDetails,
@@ -31,16 +31,16 @@ describe('Employee Reportees Table Component Testing', () => {
   })
   test('should render first page data only', async () => {
     await waitFor(() => {
-      userEvent.click(screen.getByText('Next >', { exact: true }))
+      userEvent.click(screen.getByText('Next ›', { exact: true }))
       expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('‹ Prev')).not.toHaveAttribute('disabled')
     })
   })
   test('should disable first and prev in pagination if first page', async () => {
     await waitFor(() => {
       expect(screen.getByText('« First')).toHaveAttribute('disabled')
-      expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
-      expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('‹ Prev')).toHaveAttribute('disabled')
+      expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
   })

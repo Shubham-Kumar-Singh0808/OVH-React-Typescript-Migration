@@ -10,6 +10,8 @@ describe('Email Configuration Template Component Testing with data', () => {
   beforeEach(() => {
     render(
       <EmailConfigTemplateTable
+        userDeleteAccess={true}
+        userEditAccess={true}
         employeeTemplate={{
           id: 5,
           templateName: 'testing',

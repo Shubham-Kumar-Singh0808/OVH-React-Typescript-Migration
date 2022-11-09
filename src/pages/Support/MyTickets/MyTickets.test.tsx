@@ -27,6 +27,7 @@ describe('MyTickets component with data', () => {
       preloadedState: {
         tickets: {
           ticketList: mockEmployeeTicketList,
+          toggle: '',
         },
       },
     })

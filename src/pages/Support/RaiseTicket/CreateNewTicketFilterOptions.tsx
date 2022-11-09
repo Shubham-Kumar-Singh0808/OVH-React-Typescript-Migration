@@ -350,7 +350,6 @@ const CreateNewTicketFilterOptions = ({
               id="fromDate"
               data-testid="dateOptionSelect"
               className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-              peekNextMonth
               showMonthDropdown
               showYearDropdown
               minDate={new Date()}
@@ -382,7 +381,6 @@ const CreateNewTicketFilterOptions = ({
               id="toDate"
               data-testid="dateOptionSelect"
               className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-              peekNextMonth
               showMonthDropdown
               showYearDropdown
               minDate={new Date()}

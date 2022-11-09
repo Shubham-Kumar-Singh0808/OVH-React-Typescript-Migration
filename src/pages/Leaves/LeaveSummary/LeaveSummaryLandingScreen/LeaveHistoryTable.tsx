@@ -112,7 +112,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
     <>
       {employeeLeaveHistoryDetails?.length ? (
         <>
-          <CTable striped align="middle" className="text-center">
+          <CTable striped className="text-center" align="middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
@@ -129,11 +129,15 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
             </CTableHead>
             <CTableBody>
               {employeeLeaveHistoryDetails.map((leaveHistory, index) => {
+                const removeTag = '/(<([^>]+)>)/gi'
+                const removeSpaces = leaveHistory.employeeComments?.replace(
+                  removeTag,
+                  '',
+                )
                 const employeeCommentsLimit =
-                  leaveHistory.employeeComments &&
-                  leaveHistory.employeeComments.length > 30
-                    ? `${leaveHistory.employeeComments.substring(0, 30)}...`
-                    : leaveHistory.employeeComments
+                  removeSpaces && removeSpaces.length > 30
+                    ? `${removeSpaces.substring(0, 30)}...`
+                    : removeSpaces
 
                 const mgrCommentsLimit =
                   leaveHistory.managerComments &&
@@ -151,9 +155,12 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                       {leaveHistory.leaveCategoryDTO.name}
                     </CTableDataCell>
                     {employeeCommentsLimit ? (
-                      <CTableDataCell>
+                      <CTableDataCell
+                        scope="row"
+                        className="sh-organization-link"
+                      >
                         <CLink
-                          className="cursor-pointer text-decoration-none text-primary"
+                          className="cursor-pointer text-primary centerAlignment-text"
                           data-testid={`emp-comments${index}`}
                           onClick={() =>
                             handleModal(leaveHistory.employeeComments)
@@ -167,9 +174,12 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     )}
 
                     {mgrCommentsLimit ? (
-                      <CTableDataCell>
+                      <CTableDataCell
+                        scope="row"
+                        className="sh-organization-link"
+                      >
                         <CLink
-                          className="cursor-pointer text-decoration-none text-primary"
+                          className="cursor-pointer text-primary"
                           data-testid={`mgr-comments${index}`}
                           onClick={() =>
                             handleModal(leaveHistory.managerComments)
@@ -181,7 +191,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     ) : (
                       <CTableDataCell>{`N/A`}</CTableDataCell>
                     )}
-                    <CTableDataCell>
+                    <CTableDataCell scope="row">
                       {leaveStatusLabelColor(leaveHistory.status)}
                     </CTableDataCell>
                     <CTableDataCell>{leaveHistory.approvedBy}</CTableDataCell>

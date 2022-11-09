@@ -8,16 +8,24 @@ import {
   CLink,
 } from '@coreui/react-pro'
 import React from 'react'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeHiveActivityReport = (): JSX.Element => {
   const employeeHiveActivityReport = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.employeeHiveActivityReport,
   )
+
+  const isLoading = useTypedSelector(
+    reduxServices.hiveActivityReport.selectors.isLoading,
+  )
+
   return (
     <>
-      <CTable striped className="time-in-office-table">
+      <CTable striped responsive className="time-in-office-table align-middle">
         <CTableHead>
           <CTableRow>
             {Array.from({ length: 31 }, (_, index) => {
@@ -36,36 +44,40 @@ const EmployeeHiveActivityReport = (): JSX.Element => {
             </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            {employeeHiveActivityReport.activityTimes
-              ?.slice()
-              .sort(
-                (activityItem1, activityItem2) =>
-                  activityItem1.dayofMonth - activityItem2.dayofMonth,
-              )
-              .map((activity, index) => {
-                return (
-                  <React.Fragment key={index}>
-                    {activity.hours === '-' ? (
-                      <CTableDataCell className="text-center cursor-pointer sh-hive-activity-data-cell">
-                        {activity.hours}
-                      </CTableDataCell>
-                    ) : (
-                      <CTableDataCell className="text-center">
-                        <CLink className="cursor-pointer sh-hive-activity-link">
-                          {activity.hours}
-                        </CLink>
-                      </CTableDataCell>
-                    )}
-                  </React.Fragment>
+        {isLoading !== ApiLoadingState.loading ? (
+          <CTableBody>
+            <CTableRow>
+              {employeeHiveActivityReport.activityTimes
+                ?.slice()
+                .sort(
+                  (activityItem1, activityItem2) =>
+                    activityItem1.dayofMonth - activityItem2.dayofMonth,
                 )
-              })}
-            <CTableDataCell className="text-center">
-              {employeeHiveActivityReport.totalHiveTime}
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
+                .map((activity, index) => {
+                  return (
+                    <React.Fragment key={index}>
+                      {activity.hours === '-' ? (
+                        <CTableDataCell className="text-center cursor-pointer sh-hive-activity-data-cell">
+                          {activity.hours}
+                        </CTableDataCell>
+                      ) : (
+                        <CTableDataCell className="text-center">
+                          <CLink className="cursor-pointer sh-hive-activity-link">
+                            {activity.hours}
+                          </CLink>
+                        </CTableDataCell>
+                      )}
+                    </React.Fragment>
+                  )
+                })}
+              <CTableDataCell className="text-center">
+                {employeeHiveActivityReport.totalHiveTime}
+              </CTableDataCell>
+            </CTableRow>
+          </CTableBody>
+        ) : (
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        )}
       </CTable>
     </>
   )
