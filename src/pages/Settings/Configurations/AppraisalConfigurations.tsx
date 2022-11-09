@@ -28,19 +28,16 @@ const AppraisalConfigurations = (): JSX.Element => {
         >
           {' '}
           {userAccess?.createaccess && (
-            <CRow className="mt-1">
-              <CCol md={12} className="pe-0">
-                <div className="form-group pull-right ms-4">
-                  <CButton
-                    color="info"
-                    className="text-white btn-ovh"
-                    size="sm"
-                    onClick={() => setToggle('addConfiguration')}
-                  >
-                    <i className="fa fa-plus me-1"></i>
-                    Add Configuration
-                  </CButton>
-                </div>
+            <CRow className="justify-content-end">
+              <CCol className="text-end" md={4}>
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1"
+                  onClick={() => setToggle('addConfiguration')}
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Add Configuration
+                </CButton>
               </CCol>
             </CRow>
           )}
