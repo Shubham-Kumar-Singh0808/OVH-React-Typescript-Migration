@@ -89,8 +89,8 @@ const EmployeeAllocationFilterOptions = ({
         Billingtype: billingStatus,
         EmployeeStatus: allocationStatus,
         dateSelection: Select,
-        departmentNames: selectDepartment?.map((currentItem) =>
-          currentItem.departmentName.toString(),
+        departmentNames: selectDepartment?.map((item) =>
+          item.departmentName.toString(),
         ),
         employeeName: '',
         endIndex: 20,
