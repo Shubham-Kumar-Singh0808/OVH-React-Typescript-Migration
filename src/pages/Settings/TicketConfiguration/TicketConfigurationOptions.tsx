@@ -154,7 +154,22 @@ const TicketConfigurationOptions = ({
             </CCol>
           </CRow>
         </CCol>
-        <CCol sm={3}>
+        <CCol sm={2}>
+          <CRow>
+            <CCol className="text-end mt-4">
+              <CButton
+                color="info"
+                className="btn-ovh me-1 mt-2"
+                size="sm"
+                // onClick={() => handleExportTicketApprovalList(prepareObject)}
+              >
+                <i className="fa fa-plus me-1"></i>
+                Click to Export
+              </CButton>
+            </CCol>
+          </CRow>
+        </CCol>
+        <CCol sm={1}>
           <CRow>
             <CCol className="text-end mt-4">
               <CButton color="info" className="btn-ovh me-1 mt-2">
