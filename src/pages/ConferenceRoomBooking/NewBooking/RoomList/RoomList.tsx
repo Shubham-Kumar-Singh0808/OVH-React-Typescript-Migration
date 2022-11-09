@@ -88,8 +88,8 @@ const RoomList = (): JSX.Element => {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setSelectRoomName(newValue)
     }
-    if (roomNameExists(value)) {
-      setRoomNameExist(value)
+    if (roomNameExists(value.trim())) {
+      setRoomNameExist(value.trim())
     } else {
       setRoomNameExist('')
     }
@@ -157,7 +157,6 @@ const RoomList = (): JSX.Element => {
             <CFormInput
               className="mb-2"
               data-testid="roomName"
-              maxLength={40}
               type="text"
               id="roomName"
               size="sm"
