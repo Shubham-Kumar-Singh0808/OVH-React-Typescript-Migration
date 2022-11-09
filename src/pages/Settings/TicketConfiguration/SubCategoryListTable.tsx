@@ -83,18 +83,30 @@ const SubCategoryListTable = (
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
+      // dispatch(
+      //   reduxServices.ticketConfiguration.getTicketConfigurationSubCategoryList(
+      //     {
+      //       startIndex: pageSize * (currentPage - 1),
+      //       endIndex: pageSize * currentPage,
+      //       departmentId: 0,
+      //       categoryId: 0,
+      //       subCategoryId: 0,
+      //     },
+      //   ),
+      // )
     }
   }
 
   const handleTicketHistoryClick = (id: number) => {
-    dispatch(reduxServices.ticketConfiguration.actions.toggle('ticketHistory'))
+    dispatch(
+      reduxServices.ticketConfiguration.actions.setToggle('ticketHistory'),
+    )
     dispatch(
       reduxServices.ticketConfiguration.ticketHistoryDetails({
         filterName: 'sub_catagory',
         id,
       }),
     )
-    dispatch(reduxServices.ticketConfiguration.actions.selectTicketId(id))
   }
 
   return (
@@ -107,7 +119,7 @@ const SubCategoryListTable = (
             responsive
             align="middle"
           >
-            <CTableHead>
+            <CTableHead className="text-center">
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Department Name</CTableHeaderCell>
@@ -119,7 +131,7 @@ const SubCategoryListTable = (
                 <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
-            <CTableBody>
+            <CTableBody className="text-center">
               {subCategoryList &&
                 subCategoryList?.list?.map((ticket, index) => {
                   return (
@@ -236,8 +248,8 @@ const SubCategoryListTable = (
         confirmButtonAction={handleConfirmDeleteSubCategory}
       >
         <>
-          `Do you really want to delete this{' '}
-          <strong>{toDeleteSubCategoryName}</strong> sub-category ?`
+          Do you really want to delete this{' '}
+          <strong>{toDeleteSubCategoryName}</strong> sub-category ?
         </>
       </OModal>
     </>

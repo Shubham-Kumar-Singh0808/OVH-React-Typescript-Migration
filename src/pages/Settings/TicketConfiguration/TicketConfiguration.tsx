@@ -25,9 +25,9 @@ const TicketConfiguration = (): JSX.Element => {
     reduxServices.ticketConfiguration.selectors.isLoading,
   )
 
-  // const toggleToTicketHistory = useTypedSelector(
-  //   reduxServices.ticketConfiguration.selectors.toggle,
-  // )
+  const toggleToTicketHistory = useTypedSelector(
+    reduxServices.ticketConfiguration.selectors.toggle,
+  )
 
   const {
     paginationRange,
@@ -60,35 +60,35 @@ const TicketConfiguration = (): JSX.Element => {
   ])
   return (
     <>
-      {/* {toggleToTicketHistory === '' && (
-        <> */}
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title="Sub-Category List"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <TicketConfigurationOptions
-          setFilterByDepartment={setFilterByDepartment}
-          setFilterByCategory={setFilterByCategory}
-          setFilterBySubCategory={setFilterBySubCategory}
-        />
-        {isLoading !== ApiLoadingState.loading ? (
-          <SubCategoryListTable
-            paginationRange={paginationRange}
-            setPageSize={setPageSize}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
-        ) : (
-          <OLoadingSpinner type={LoadingType.PAGE} />
-        )}
-      </OCard>
+      {toggleToTicketHistory === '' && (
+        <>
+          <OCard
+            className="mb-4 myprofile-wrapper"
+            title="Sub-Category List"
+            CBodyClassName="ps-0 pe-0"
+            CFooterClassName="d-none"
+          >
+            <TicketConfigurationOptions
+              setFilterByDepartment={setFilterByDepartment}
+              setFilterByCategory={setFilterByCategory}
+              setFilterBySubCategory={setFilterBySubCategory}
+            />
+            {isLoading !== ApiLoadingState.loading ? (
+              <SubCategoryListTable
+                paginationRange={paginationRange}
+                setPageSize={setPageSize}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={pageSize}
+              />
+            ) : (
+              <OLoadingSpinner type={LoadingType.PAGE} />
+            )}
+          </OCard>
+        </>
+      )}
+      {toggleToTicketHistory === 'ticketHistory' && <TicketHistoryDetails />}
     </>
-    //   )}
-    //   {toggleToTicketHistory === 'ticketHistory' && <TicketHistoryDetails />}
-    // </>
   )
 }
 

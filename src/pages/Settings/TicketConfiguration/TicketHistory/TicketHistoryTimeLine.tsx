@@ -21,7 +21,11 @@ const TicketHistoryTimeLine = (): JSX.Element => {
   const isPersistValue = (persistType: string) => {
     if (persistType === 'UPDATED') {
       return (
-        <CBadge className="rounded-pill" color="info" data-testid="update-btn">
+        <CBadge
+          className="rounded-pill"
+          color="info"
+          data-testid="th-update-btn"
+        >
           Updated
         </CBadge>
       )
@@ -30,7 +34,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
         <CBadge
           className="rounded-pill"
           color="success"
-          data-testid="created-btn"
+          data-testid="th-created-btn"
         >
           Created
         </CBadge>
@@ -55,7 +59,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
   return (
     <>
       <div className="sh-timeline-container">
-        {ticketHistory?.map((ticketDetails, index) => {
+        {ticketHistory?.list?.map((ticketDetails, index) => {
           return (
             <div key={index} className="sh-timeline-card">
               <div
@@ -128,7 +132,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                           <CFormLabel className="col-form-label p-0">
                             Hierarchy Level
                           </CFormLabel>
-                          {isTicketPrevValue(ticketDetails.oldlevelOfHierarchy)}
+                          {isTicketPrevValue(
+                            ticketDetails?.oldlevelOfHierarchy,
+                          )}
                           &nbsp;
                           {ticketDetails.levelOfHierarchy}
                         </div>

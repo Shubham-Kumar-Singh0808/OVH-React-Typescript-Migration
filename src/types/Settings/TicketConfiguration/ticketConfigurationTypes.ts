@@ -47,7 +47,6 @@ export type TicketConfigurationState = {
   listSize: number
   ticketHistoryDetails: TicketHistoryResponse
   toggle: string
-  selectedTicketId: number
   isLoading: LoadingState
   error: ValidationError
 }
@@ -123,7 +122,7 @@ export type TicketHistory = {
   subject: null
   ticketsSubCategoryName: null
   tracker: null
-  workFlow: string
+  workFlow: boolean | string
 }
 
 export type TicketHistoryProps = {

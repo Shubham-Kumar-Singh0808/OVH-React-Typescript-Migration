@@ -11,11 +11,28 @@ import {
   TicketConfigurationSubCategories,
   TicketConfigurationSubCategoryList,
   TicketConfigurationSubCategoryType,
-  TicketHistory,
   TicketHistoryProps,
+  TicketHistoryResponse,
 } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
-const initialTicketConfigurationState = {} as TicketConfigurationState
+const initialTicketConfigurationState: TicketConfigurationState = {
+  departments: [],
+  categories: [],
+  subCategories: [],
+  subCategoryList: {
+    size: 0,
+    list: [],
+  },
+  selectedDepartment: '',
+  listSize: 0,
+  ticketHistoryDetails: {
+    size: 0,
+    list: [],
+  },
+  toggle: '',
+  isLoading: ApiLoadingState.idle,
+  error: null,
+}
 
 const getTicketConfigurationDepartments = createAsyncThunk(
   'supportManagement/getDepartmentNameList',
@@ -129,7 +146,7 @@ const ticketHistoryDetails = createAsyncThunk(
 
 const ticketConfigurationSlice = createSlice({
   name: 'ticketConfiguration',
-  initialState: initialTicketConfigurationState,
+  initialState: { ...initialTicketConfigurationState, toggle: '' },
   reducers: {
     setSelectedDepartment: (state, action) => {
       return { ...state, selectedDepartment: action.payload }
@@ -138,11 +155,8 @@ const ticketConfigurationSlice = createSlice({
       state.subCategoryList.list = []
       state.subCategoryList.size = 0
     },
-    toggle: (state, action) => {
+    setToggle: (state, action) => {
       state.toggle = action.payload
-    },
-    selectTicketId: (state, action) => {
-      state.selectedTicketId = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -184,6 +198,9 @@ const ticketConfigurationSlice = createSlice({
       })
       .addMatcher(
         isAnyOf(
+          getTicketConfigurationDepartments.pending,
+          getTicketConfigurationCategories.pending,
+          getTicketConfigurationSubCategories.pending,
           getTicketConfigurationSubCategoryList.pending,
           deleteSubCategory.pending,
           ticketHistoryDetails.pending,
@@ -235,13 +252,10 @@ const listSize = (state: RootState): number =>
 const selectedDepartment = (state: RootState): string =>
   state.ticketConfiguration.selectedDepartment
 
-const ticketHistory = (state: RootState): TicketHistory[] =>
-  state.ticketConfiguration.ticketHistoryDetails.list
+const ticketHistory = (state: RootState): TicketHistoryResponse =>
+  state.ticketConfiguration.ticketHistoryDetails
 
 const toggle = (state: RootState): string => state.ticketConfiguration.toggle
-
-const selectTicketId = (state: RootState): number =>
-  state.ticketConfiguration.selectedTicketId
 
 const ticketConfigurationThunk = {
   getTicketConfigurationDepartments,
@@ -252,7 +266,7 @@ const ticketConfigurationThunk = {
   ticketHistoryDetails,
 }
 
-const qualificationCategorySelectors = {
+const ticketConfigurationSelectors = {
   isLoading,
   isError,
   departments,
@@ -263,13 +277,12 @@ const qualificationCategorySelectors = {
   selectedDepartment,
   ticketHistory,
   toggle,
-  selectTicketId,
 }
 
 export const ticketConfigurationService = {
   ...ticketConfigurationThunk,
   actions: ticketConfigurationSlice.actions,
-  selectors: qualificationCategorySelectors,
+  selectors: ticketConfigurationSelectors,
 }
 
 export default ticketConfigurationSlice.reducer
