@@ -20,6 +20,7 @@ const TicketConfigurationOptions = ({
   const [selectedDepartment, setSelectedDepartment] = useState<number>()
   const [selectedCategory, setSelectedCategory] = useState<number>()
   const [selectedSubCategory, setSelectedSubCategory] = useState<number>()
+  const [showExportButton, setShowExportButton] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
   const departments: TicketConfigurationDepartments[] = useTypedSelector(
@@ -36,6 +37,7 @@ const TicketConfigurationOptions = ({
     setFilterByDepartment(selectedDepartment as number)
     setFilterByCategory(selectedCategory as number)
     setFilterBySubCategory(selectedSubCategory as number)
+    setShowExportButton(true)
   }
 
   const handleClearButton = () => {
@@ -45,6 +47,7 @@ const TicketConfigurationOptions = ({
     setFilterByDepartment(0)
     setFilterByCategory(0)
     setFilterBySubCategory(0)
+    setShowExportButton(false)
     dispatch(reduxServices.ticketConfiguration.actions.clearSubCategoryList())
   }
 
@@ -154,21 +157,23 @@ const TicketConfigurationOptions = ({
             </CCol>
           </CRow>
         </CCol>
-        <CCol sm={2}>
-          <CRow>
-            <CCol className="text-end mt-4">
-              <CButton
-                color="info"
-                className="btn-ovh me-1 mt-2"
-                size="sm"
-                // onClick={() => handleExportTicketApprovalList(prepareObject)}
-              >
-                <i className="fa fa-plus me-1"></i>
-                Click to Export
-              </CButton>
-            </CCol>
-          </CRow>
-        </CCol>
+        {showExportButton && (
+          <CCol sm={2}>
+            <CRow>
+              <CCol className="text-end mt-4">
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1 mt-2"
+                  size="sm"
+                  // onClick={() => handleExportTicketApprovalList(prepareObject)}
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Click to Export
+                </CButton>
+              </CCol>
+            </CRow>
+          </CCol>
+        )}
         <CCol sm={1}>
           <CRow>
             <CCol className="text-end mt-4">
