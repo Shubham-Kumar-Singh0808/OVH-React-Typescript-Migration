@@ -101,10 +101,19 @@ const AllocateEmployee = (): JSX.Element => {
     setAddEmployeeName(selectedList)
   }
 
+  const autoCompleteOnChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setProjectsAutoCompleteTarget(e.target.value)
+    setSelectProject(undefined)
+  }
   const onHandleSelectProjectName = (projectName: string) => {
     setProjectsAutoCompleteTarget(projectName)
+  }
+
+  const onFocusOut = () => {
     const selectedProject = allProjectNames.find(
-      (value) => value.projectName === projectName,
+      (value) => value.projectName === projectsAutoCompleteTarget,
     )
     setSelectProject(selectedProject)
   }
@@ -241,6 +250,7 @@ const AllocateEmployee = (): JSX.Element => {
       setIsShowComment(true)
     }, 0)
   }
+
   return (
     <>
       <OCard
@@ -265,7 +275,7 @@ const AllocateEmployee = (): JSX.Element => {
                 data-testid="employee-option"
                 options={allEmployeeProfiles?.map((employee) => employee) || []}
                 displayValue="fullName"
-                placeholder="Employee Name"
+                placeholder={addEmployeeName?.length ? '' : 'Employee Name'}
                 selectedValues={addEmployeeName}
                 onSelect={(list: GetAllEmployeesNames[]) =>
                   handleMultiSelect(list)
@@ -290,6 +300,7 @@ const AllocateEmployee = (): JSX.Element => {
                 inputProps={{
                   className: 'form-control form-control-sm',
                   placeholder: 'Project Name',
+                  onBlur: onFocusOut,
                 }}
                 getItemValue={(item) => item.projectName}
                 items={allProjectNames ? allProjectNames : []}
@@ -325,7 +336,7 @@ const AllocateEmployee = (): JSX.Element => {
                     ?.toLowerCase()
                     .indexOf(itemValue.toLowerCase()) > -1
                 }
-                onChange={(e) => setProjectsAutoCompleteTarget(e.target.value)}
+                onChange={(e) => autoCompleteOnChangeHandler(e)}
                 onSelect={(selectedVal) =>
                   onHandleSelectProjectName(selectedVal)
                 }
@@ -422,7 +433,6 @@ const AllocateEmployee = (): JSX.Element => {
                 data-testid="allocateEmployeeAllocationDate"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 autoComplete="off"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -461,7 +471,6 @@ const AllocateEmployee = (): JSX.Element => {
                 data-testid="allocateEmployeeEndDate"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 autoComplete="off"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"

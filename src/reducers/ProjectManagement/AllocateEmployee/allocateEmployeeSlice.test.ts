@@ -76,5 +76,33 @@ describe('Achievements Slice', () => {
         error: null,
       })
     })
+
+    it('Should be able to set isLoading to "failed" if getAllProjectSearchData is rejected', () => {
+      const rejectedAction = {
+        type: allocateEmployeeService.getAllProjectSearchData.rejected.type,
+      }
+      const state = reducer(initialAllocateEmployeeState, rejectedAction)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        getAllEmployees: [],
+        getAllProjects: [],
+        allocateEmployee: {} as AllocateEmployeeToProject,
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if getAllEmployeesProfileData is rejected', () => {
+      const rejectedAction = {
+        type: allocateEmployeeService.getAllEmployeesProfileData.rejected.type,
+      }
+      const state = reducer(initialAllocateEmployeeState, rejectedAction)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        getAllEmployees: [],
+        getAllProjects: [],
+        allocateEmployee: {} as AllocateEmployeeToProject,
+      })
+    })
   })
 })

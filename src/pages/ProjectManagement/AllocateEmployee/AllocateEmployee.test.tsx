@@ -22,7 +22,7 @@ const employeeNames = 'Employee Name'
 const allocationValue = 'allocation-value'
 const allocateButton = 'save-btn'
 const clearButton = 'clear-btn'
-
+const mockSetTogglePage = jest.fn()
 describe('Allocate Employee without data', () => {
   beforeEach(() => {
     render(<AllocateEmployee />)
@@ -147,6 +147,13 @@ describe('should render allocate Employee Component with data', () => {
     const addBtn = screen.getByRole('button', { name: 'Allocate' })
     userEvent.click(addBtn)
     expect(addBtn).toBeInTheDocument()
+  })
+
+  test('should render  Configuration  screen and Allocate button without crashing', () => {
+    const allocateButton = screen.getByTestId('save-btn')
+    expect(allocateButton).toBeInTheDocument()
+    userEvent.click(allocateButton)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(0)
   })
 })
 

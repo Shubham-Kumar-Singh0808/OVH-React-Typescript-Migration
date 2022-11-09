@@ -72,6 +72,8 @@ const allocateEmployeeSlice = createSlice({
         isAnyOf(
           getAllEmployeesProfileData.pending,
           getAllProjectSearchData.pending,
+          getAllProjectSearchData.rejected,
+          getAllEmployeesProfileData.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
