@@ -44,7 +44,7 @@ const TicketConfiguration = (): JSX.Element => {
           {
             startIndex: pageSize * (currentPage - 1),
             endIndex: pageSize * currentPage,
-            departmentId: filterByDepartment as number,
+            departmentId: filterByDepartment,
             categoryId: filterByCategory as number,
             subCategoryId: filterBySubCategory as number,
           },

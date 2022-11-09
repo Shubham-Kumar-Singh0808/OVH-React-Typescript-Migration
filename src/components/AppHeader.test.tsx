@@ -12,7 +12,7 @@ import { mockUserAccessToFeaturesData } from '../test/data/userAccessToFeaturesD
 const searchButton = 'search-employee-btn'
 const searchEmployeeString = 'Raju Sriramoju'
 const searchPlaceholderText = 'Search Employee'
-const mockSearchValue = jest.fn()
+// const mockSearchValue = jest.fn()
 describe('Dashboard AppHeader Component Testing', () => {
   describe('Dashboard AppHeader Component Testing', () => {
     const history = createMemoryHistory()
@@ -113,6 +113,7 @@ describe('Dashboard AppHeader Component Testing', () => {
         },
       )
     })
+    jest.retryTimes(3)
     test('should redirect to employeeList page upon clicking the search button with searchString', async () => {
       const autocomplete = screen.getByPlaceholderText(searchPlaceholderText)
       autocomplete.click()

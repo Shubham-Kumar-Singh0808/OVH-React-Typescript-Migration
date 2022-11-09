@@ -15,24 +15,7 @@ import {
   TicketHistoryResponse,
 } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
-const initialTicketConfigurationState: TicketConfigurationState = {
-  departments: [],
-  categories: [],
-  subCategories: [],
-  subCategoryList: {
-    size: 0,
-    list: [],
-  },
-  selectedDepartment: '',
-  listSize: 0,
-  ticketHistoryDetails: {
-    size: 0,
-    list: [],
-  },
-  toggle: '',
-  isLoading: ApiLoadingState.idle,
-  error: null,
-}
+const initialTicketConfigurationState = {} as TicketConfigurationState
 
 const getTicketConfigurationDepartments = createAsyncThunk(
   'supportManagement/getDepartmentNameList',

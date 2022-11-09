@@ -179,7 +179,7 @@ const FamilyDetailsTable = ({
                     {userEditAccess && (
                       <CButton
                         color="info"
-                        className="btn-ovh me-2"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
                         data-testid="edit-family"
                         onClick={() => editButtonHandler?.(family.familyId)}
                       >
@@ -192,7 +192,7 @@ const FamilyDetailsTable = ({
                     {userDeleteAccess && (
                       <CButton
                         color="danger"
-                        className="btn-ovh me-2"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
                         data-testid="delete-family"
                         onClick={() => handleShowDeleteModal(family.familyId)}
                       >
@@ -201,9 +201,7 @@ const FamilyDetailsTable = ({
                     )}
                   </CTableDataCell>
                 ) : (
-                  <>
-                    <CTableDataCell scope="row"></CTableDataCell>
-                  </>
+                  <></>
                 )}
               </CTableRow>
             ))}

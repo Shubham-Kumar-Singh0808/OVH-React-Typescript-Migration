@@ -79,6 +79,7 @@ import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/tr
 import addRoomList from './reducers/ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 import employeeProfileSearchReducer from './reducers/Dashboard/searchEmployeeSlice'
 import ticketConfigurationReducer from './reducers/Settings/TicketConfiguration/ticketConfigurationSlice'
+import appraisalConfigurationsReducer from './reducers/Settings/Configurations/appraisalConfigurationsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -158,6 +159,7 @@ export const allReducers = {
   roomList: addRoomList,
   dashboardEmployeeSearch: employeeProfileSearchReducer,
   ticketConfiguration: ticketConfigurationReducer,
+  appraisalConfigurations: appraisalConfigurationsReducer,
   // add your slice reducers here
 }
 

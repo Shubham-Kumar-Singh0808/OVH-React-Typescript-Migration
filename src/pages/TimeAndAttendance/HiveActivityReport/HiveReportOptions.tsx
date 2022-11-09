@@ -194,6 +194,7 @@ const HiveReportOptions = ({
             </CCol>
             <CCol sm={2} className="text-end pe-2 ms-3 sh-date-picker-column">
               <ReactDatePicker
+                autoComplete="off"
                 id="employeeRealBirthday"
                 data-testid="sh-date-picker"
                 className="form-control form-control-sm sh-date-picker"

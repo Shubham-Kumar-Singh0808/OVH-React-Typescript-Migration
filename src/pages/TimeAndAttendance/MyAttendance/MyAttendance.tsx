@@ -95,8 +95,8 @@ const MyAttendance = (): JSX.Element => {
                   className="fc-today-button fc-button fc-button-primary"
                   title="This month"
                   disabled={
-                    moment(currentDate).format('MMMM') ===
-                    moment(new Date()).format('MMMM')
+                    moment(currentDate).format('MMMM YYYY') ===
+                    moment(new Date()).format('MMMM YYYY')
                   }
                   onClick={handleToday}
                   data-testid="today-button"
@@ -115,7 +115,7 @@ const MyAttendance = (): JSX.Element => {
                     .subtract(1, 'months')
                     .format('MMMM YYYY') && (
                   <button
-                    className="fc-prev-button fc-button fc-button-primary"
+                    className="fc-prev-button fc-button fc-button-primary me-2"
                     title="Previous month"
                     onClick={handlePrev}
                     data-testid="prev-button"

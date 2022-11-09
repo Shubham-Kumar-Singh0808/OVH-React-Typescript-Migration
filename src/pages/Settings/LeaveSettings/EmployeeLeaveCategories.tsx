@@ -27,6 +27,7 @@ import {
 
 const EmployeeLeaveCategories = ({
   setToggle,
+  userAccess,
 }: EmployeeLeaveCategoriesProps): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isEditButtonEnabled, setIsEditButtonEnabled] = useState(false)
@@ -176,14 +177,16 @@ const EmployeeLeaveCategories = ({
       <CCardBody>
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton
-              color="info btn-ovh me-1"
-              onClick={() => {
-                setToggle('addLeaveCategory')
-              }}
-            >
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
+            {userAccess?.createaccess && (
+              <CButton
+                color="info btn-ovh me-1"
+                onClick={() => {
+                  setToggle('addLeaveCategory')
+                }}
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            )}
           </CCol>
         </CRow>
         <CTable>
@@ -264,29 +267,35 @@ const EmployeeLeaveCategories = ({
                     </>
                   ) : (
                     <>
-                      <CButton
-                        color="info"
-                        data-testid={`sh-edit-btn${index}`}
-                        className="btn-ovh me-1"
-                        onClick={() => {
-                          editLeaveCategoryButtonHandler(
-                            leaveCategory.id,
-                            leaveCategory.name,
-                            leaveCategory.leaveType,
-                          )
-                        }}
-                      >
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                      <CButton
-                        color="danger btn-ovh me-2"
-                        onClick={() => handleShowDeleteModal(leaveCategory.id)}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      {userAccess?.updateaccess && (
+                        <CButton
+                          color="info"
+                          data-testid={`sh-edit-btn${index}`}
+                          className="btn-ovh me-1"
+                          onClick={() => {
+                            editLeaveCategoryButtonHandler(
+                              leaveCategory.id,
+                              leaveCategory.name,
+                              leaveCategory.leaveType,
+                            )
+                          }}
+                        >
+                          <i
+                            className="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      )}
+                      {userAccess?.deleteaccess && (
+                        <CButton
+                          color="danger btn-ovh me-2"
+                          onClick={() =>
+                            handleShowDeleteModal(leaveCategory.id)
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      )}
                     </>
                   )}
                 </CTableDataCell>
