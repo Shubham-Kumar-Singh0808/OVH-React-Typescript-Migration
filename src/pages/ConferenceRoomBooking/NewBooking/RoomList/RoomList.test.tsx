@@ -55,7 +55,7 @@ describe('RoomList without data', () => {
     userEvent.type(roomNameInput, 'Aurobindo')
     expect(roomNameInput).toHaveValue('Aurobindo')
   })
-
+  jest.retryTimes(3)
   test('should render  Room List screen and add button', async () => {
     const addBtnElement = screen.getByRole('button', { name: 'Add' })
     expect(addBtnElement).toBeInTheDocument()

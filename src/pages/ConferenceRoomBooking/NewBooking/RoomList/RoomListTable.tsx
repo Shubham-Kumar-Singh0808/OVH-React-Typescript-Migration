@@ -48,58 +48,62 @@ const RoomListTable = ({
     dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
 
+  const tableHeaderToggleCell = {
+    width: '9%',
+    scope: 'col',
+  }
   return (
     <>
-      <CCol className="custom-scroll">
-        <CTable
-          striped
-          responsive
-          className="text-start text-left align-middle alignment"
-        >
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell scope="col">#</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Location</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Room Name</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Status</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Action</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            {roomList &&
-              roomList?.length > 0 &&
-              roomList?.map((room, index) => {
-                return (
-                  <CTableRow key={index}>
-                    <CTableDataCell>{index + 1}</CTableDataCell>
-                    <CTableDataCell>{room.locationName}</CTableDataCell>
-                    <CTableDataCell>{room.roomName}</CTableDataCell>
-                    <CTableDataCell>
-                      <RoomListToggle index={index} room={room} />
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {userDeleteAccess && (
-                        <CTooltip content="Delete">
-                          <CButton
-                            data-testid={`btn-delete${index}`}
-                            size="sm"
-                            color="danger btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                            onClick={() =>
-                              deleteBtnHandler(room.id, room.roomName)
-                            }
-                          >
-                            <i className="fa fa-trash-o" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
-                      )}
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-          </CTableBody>
-        </CTable>
-      </CCol>
+      <CTable
+        striped
+        responsive
+        className="text-start text-left align-middle alignment"
+      >
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Location</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Room Name</CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderToggleCell}>
+              Status
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {roomList &&
+            roomList?.length > 0 &&
+            roomList?.map((room, index) => {
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell>{room.locationName}</CTableDataCell>
+                  <CTableDataCell>{room.roomName}</CTableDataCell>
+                  <CTableDataCell>
+                    <RoomListToggle index={index} room={room} />
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {userDeleteAccess && (
+                      <CTooltip content="Delete">
+                        <CButton
+                          data-testid={`btn-delete${index}`}
+                          size="sm"
+                          color="danger btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                          onClick={() =>
+                            deleteBtnHandler(room.id, room.roomName)
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    )}
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
+        </CTableBody>
+      </CTable>
       <CRow>
         <CCol xs={4}>
           <p>
