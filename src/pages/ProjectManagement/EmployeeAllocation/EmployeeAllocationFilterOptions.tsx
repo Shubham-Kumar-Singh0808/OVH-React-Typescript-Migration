@@ -214,11 +214,13 @@ const EmployeeAllocationFilterOptions = ({
     }
   }
 
-  const handleMultiSelect = (list: EmployeeDepartment[]) => {
+  const handleDepartmentMultiSelect = (list: EmployeeDepartment[]) => {
     setSelectDepartment(list)
   }
 
-  const handleOnRemoveSelectedOption = (selectedList: EmployeeDepartment[]) => {
+  const handleOnRemoveDepartmentSelectedOption = (
+    selectedList: EmployeeDepartment[],
+  ) => {
     setSelectDepartment(selectedList)
   }
 
@@ -328,9 +330,11 @@ const EmployeeAllocationFilterOptions = ({
             displayValue="departmentName"
             placeholder="Select"
             selectedValues={selectDepartment}
-            onSelect={(list: EmployeeDepartment[]) => handleMultiSelect(list)}
+            onSelect={(list: EmployeeDepartment[]) =>
+              handleDepartmentMultiSelect(list)
+            }
             onRemove={(selectedList: EmployeeDepartment[]) =>
-              handleOnRemoveSelectedOption(selectedList)
+              handleOnRemoveDepartmentSelectedOption(selectedList)
             }
           />
         </CCol>
