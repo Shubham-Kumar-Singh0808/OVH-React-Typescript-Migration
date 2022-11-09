@@ -14,8 +14,13 @@ import Multiselect from 'multiselect-react-dropdown'
 import EmployeeAllocationReportTable from './EmployeeAllocationReportTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { deviceLocale, showIsRequired } from '../../../utils/helper'
+import {
+  deviceLocale,
+  downloadFile,
+  showIsRequired,
+} from '../../../utils/helper'
 import { EmployeeDepartment } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import employeeAllocationReportApi from '../../../middleware/api/ProjectManagement/EmployeeAllocation/employeeAllocationApi'
 
 const EmployeeAllocationFilterOptions = ({
   Select,
@@ -43,7 +48,9 @@ const EmployeeAllocationFilterOptions = ({
   const getTechnologies = useTypedSelector(
     (state) => state.employeeCertificates.getAllTechnologies,
   )
-
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
   const departmentsList = useTypedSelector(
     reduxServices.newEmployee.employeeDepartmentsService.selectors
       .employeeDepartments,
@@ -252,6 +259,28 @@ const EmployeeAllocationFilterOptions = ({
       })
     : ''
 
+  const handleExportEmployeeAllocation = async () => {
+    const employeeEmployeeAllocationReportDownload =
+      await employeeAllocationReportApi.ExportEmployeeAllocationReportList({
+        id: employeeId,
+        startIndex: 0,
+        endIndex: 20,
+        empName: '',
+        technology: '',
+        isbillable: billingStatus,
+        isAllocated: '',
+        startdate: '',
+        lastdate: '',
+        departmentNames:
+          'Networking,Administrative,HR,Accounts,Designing,Development,Sales,Testing,Business Analyst,Presales,Marketing,Software Quality Assurance',
+        dateSelection: Select,
+      })
+    downloadFile(
+      employeeEmployeeAllocationReportDownload,
+      'EmployeeAllocationList.csv',
+    )
+  }
+
   return (
     <>
       <CRow className="employeeAllocation-form">
@@ -413,7 +442,11 @@ const EmployeeAllocationFilterOptions = ({
           <></>
         )}
         <CCol className="employee-allocation-export-btn">
-          <CButton color="info btn-ovh me-0" data-testid="export-btn">
+          <CButton
+            color="info btn-ovh me-0"
+            data-testid="export-btn"
+            onClick={handleExportEmployeeAllocation}
+          >
             <i className="fa fa-plus me-1"></i>Click to Export
           </CButton>
         </CCol>
