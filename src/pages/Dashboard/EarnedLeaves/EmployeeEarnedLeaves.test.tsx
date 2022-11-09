@@ -3,6 +3,7 @@ import React from 'react'
 import EmployeeEarnedLeaves from './EmployeeEarnedLeaves'
 import { render, screen } from '../../../test/testUtils'
 import { mockLeaveSummary } from '../../../test/data/leaveSummaryData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 describe('Earned Leaves Component Testing', () => {
   beforeEach(() => {
@@ -13,6 +14,9 @@ describe('Earned Leaves Component Testing', () => {
         },
         employeeLeaveSummary: {
           employeeLeaveSummary: mockLeaveSummary,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

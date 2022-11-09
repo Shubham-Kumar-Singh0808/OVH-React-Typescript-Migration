@@ -3,12 +3,16 @@ import React from 'react'
 import UpcomingEvents from './UpcomingEvents'
 import { render, screen } from '../../../test/testUtils'
 import { mockUpcomingEvents } from '../../../test/data/trainingsAndEventsData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 describe('Upcoming Events Component Testing', () => {
   render(<UpcomingEvents />, {
     preloadedState: {
       trainingsAndEvents: {
         upcomingEvents: mockUpcomingEvents,
+      },
+      userAccessToFeatures: {
+        userAccessToFeatures: mockUserAccessToFeaturesData,
       },
     },
   })

@@ -1,5 +1,6 @@
 import React from 'react'
 import Dashboard from './pages/Dashboard/Dashboard'
+import { mockUserAccessToFeaturesData } from './test/data/userAccessToFeaturesData'
 import { render, screen } from './test/testUtils'
 
 test('App should render without crashing', () => {
@@ -15,6 +16,9 @@ test('App should render without crashing', () => {
           token: 'testing',
           designation: 'Software Engineer',
         },
+      },
+      userAccessToFeatures: {
+        userAccessToFeatures: mockUserAccessToFeaturesData,
       },
     },
   })
