@@ -505,7 +505,7 @@ function AddUpdateEmployeeCertification({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4" data-testid="expiryDateInput">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
               Expiry Date :
             </CFormLabel>
             <CCol sm={3}>
@@ -533,7 +533,12 @@ function AddUpdateEmployeeCertification({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('percentage', formLabel)}>
+            <CFormLabel
+              {...dynamicFormLabelProps(
+                'percentage',
+                'col-sm-3 col-form-label text-end pe-18',
+              )}
+            >
               Percentage :
             </CFormLabel>
             <CCol sm={3}>
@@ -550,7 +555,7 @@ function AddUpdateEmployeeCertification({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
               Description :
             </CFormLabel>
             {showEditor ? (
