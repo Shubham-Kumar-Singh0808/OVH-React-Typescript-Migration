@@ -6,6 +6,9 @@ export type SubCategoryListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  filterByDepartment: number
+  filterByCategory: number
+  filterBySubCategory: number
 }
 
 export type TicketConfigurationDepartments = {
@@ -49,6 +52,7 @@ export type TicketConfigurationState = {
   toggle: string
   isLoading: LoadingState
   error: ValidationError
+  isLoadingFilterOptions: LoadingState
 }
 
 export type TicketConfigurationSubCategoryList = {

@@ -13,13 +13,17 @@ const TicketConfigurationOptions = ({
   setFilterByCategory,
   setFilterBySubCategory,
 }: {
-  setFilterByDepartment: (value: number) => void
-  setFilterByCategory: (value: number) => void
-  setFilterBySubCategory: (value: number) => void
+  setFilterByDepartment: (value: number | string) => void
+  setFilterByCategory: (value: number | string) => void
+  setFilterBySubCategory: (value: number | string) => void
 }): JSX.Element => {
-  const [selectedDepartment, setSelectedDepartment] = useState<number>()
-  const [selectedCategory, setSelectedCategory] = useState<number>()
-  const [selectedSubCategory, setSelectedSubCategory] = useState<number>()
+  const [selectedDepartment, setSelectedDepartment] = useState<
+    number | string
+  >()
+  const [selectedCategory, setSelectedCategory] = useState<number | string>()
+  const [selectedSubCategory, setSelectedSubCategory] = useState<
+    number | string
+  >()
   const [showExportButton, setShowExportButton] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
@@ -41,12 +45,12 @@ const TicketConfigurationOptions = ({
   }
 
   const handleClearButton = () => {
-    setSelectedDepartment(0)
-    setSelectedCategory(0)
-    setSelectedSubCategory(0)
-    setFilterByDepartment(0)
-    setFilterByCategory(0)
-    setFilterBySubCategory(0)
+    setSelectedDepartment('')
+    setSelectedCategory('')
+    setSelectedSubCategory('')
+    setFilterByDepartment('')
+    setFilterByCategory('')
+    setFilterBySubCategory('')
     setShowExportButton(false)
     dispatch(reduxServices.ticketConfiguration.actions.clearSubCategoryList())
   }
@@ -59,14 +63,14 @@ const TicketConfigurationOptions = ({
     if (selectedDepartment) {
       dispatch(
         reduxServices.ticketConfiguration.getTicketConfigurationCategories(
-          selectedDepartment,
+          selectedDepartment as number,
         ),
       )
     }
     if (selectedCategory) {
       dispatch(
         reduxServices.ticketConfiguration.getTicketConfigurationSubCategories(
-          selectedCategory,
+          selectedCategory as number,
         ),
       )
     }

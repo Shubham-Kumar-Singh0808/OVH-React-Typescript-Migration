@@ -83,17 +83,17 @@ const SubCategoryListTable = (
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
-      // dispatch(
-      //   reduxServices.ticketConfiguration.getTicketConfigurationSubCategoryList(
-      //     {
-      //       startIndex: pageSize * (currentPage - 1),
-      //       endIndex: pageSize * currentPage,
-      //       departmentId: 0,
-      //       categoryId: 0,
-      //       subCategoryId: 0,
-      //     },
-      //   ),
-      // )
+      dispatch(
+        reduxServices.ticketConfiguration.getTicketConfigurationSubCategoryList(
+          {
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+            departmentId: props.filterByDepartment,
+            categoryId: props.filterByCategory,
+            subCategoryId: props.filterBySubCategory,
+          },
+        ),
+      )
     }
   }
 
@@ -111,7 +111,7 @@ const SubCategoryListTable = (
 
   return (
     <>
-      {subCategoryList?.list && (
+      {subCategoryList?.size > 0 ? (
         <>
           <CTable
             className="mt-4 ps-0 alignment"
@@ -201,39 +201,45 @@ const SubCategoryListTable = (
                 })}
             </CTableBody>
           </CTable>
-          <CRow className="mt-3">
-            <CCol md={3} className="pull-left">
-              <strong>
-                {subCategoryList?.list?.length
-                  ? `Total Records: ${subCategoryList?.list?.length}`
-                  : `No Records Found...`}
-              </strong>
-            </CCol>
-            <CCol xs={3}>
-              {subCategoryListSize > 20 && (
-                <OPageSizeSelect
-                  handlePageSizeSelectChange={
-                    handleSubCategoryListPageSizeSelectChange
-                  }
-                  options={[20, 40, 60, 80]}
-                  selectedPageSize={pageSize}
-                />
-              )}
-            </CCol>
-            {subCategoryListSize > 20 && (
-              <CCol
-                xs={5}
-                className="d-grid gap-1 d-md-flex justify-content-md-end"
-              >
-                <OPagination
-                  currentPage={currentPage}
-                  pageSetter={setCurrentPage}
-                  paginationRange={paginationRange}
-                />
-              </CCol>
-            )}
-          </CRow>
         </>
+      ) : (
+        <> </>
+      )}
+      {subCategoryList?.size > 0 ? (
+        <CRow className="mt-3">
+          <CCol md={3} className="pull-left">
+            <strong>
+              {subCategoryList?.list?.length
+                ? `Total Records: ${subCategoryList.size}`
+                : `No Records Found...`}
+            </strong>
+          </CCol>
+          <CCol xs={3}>
+            {subCategoryListSize > 20 && (
+              <OPageSizeSelect
+                handlePageSizeSelectChange={
+                  handleSubCategoryListPageSizeSelectChange
+                }
+                options={[20, 40, 60, 80]}
+                selectedPageSize={pageSize}
+              />
+            )}
+          </CCol>
+          {subCategoryListSize > 20 && (
+            <CCol
+              xs={5}
+              className="d-grid gap-1 d-md-flex justify-content-md-end"
+            >
+              <OPagination
+                currentPage={currentPage}
+                pageSetter={setCurrentPage}
+                paginationRange={paginationRange}
+              />
+            </CCol>
+          )}
+        </CRow>
+      ) : (
+        <> </>
       )}
 
       <OModal

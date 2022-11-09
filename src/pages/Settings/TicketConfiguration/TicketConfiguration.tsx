@@ -13,9 +13,13 @@ import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 const TicketConfiguration = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const [filterByDepartment, setFilterByDepartment] = useState<number>()
-  const [filterByCategory, setFilterByCategory] = useState<number>()
-  const [filterBySubCategory, setFilterBySubCategory] = useState<number>()
+  const [filterByDepartment, setFilterByDepartment] = useState<
+    number | string
+  >()
+  const [filterByCategory, setFilterByCategory] = useState<number | string>()
+  const [filterBySubCategory, setFilterBySubCategory] = useState<
+    number | string
+  >()
 
   const subCategoryListSize = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.listSize,
@@ -44,7 +48,7 @@ const TicketConfiguration = (): JSX.Element => {
           {
             startIndex: pageSize * (currentPage - 1),
             endIndex: pageSize * currentPage,
-            departmentId: filterByDepartment,
+            departmentId: filterByDepartment as number,
             categoryId: filterByCategory as number,
             subCategoryId: filterBySubCategory as number,
           },
@@ -80,6 +84,9 @@ const TicketConfiguration = (): JSX.Element => {
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
                 pageSize={pageSize}
+                filterByDepartment={filterByDepartment as number}
+                filterByCategory={filterByCategory as number}
+                filterBySubCategory={filterBySubCategory as number}
               />
             ) : (
               <OLoadingSpinner type={LoadingType.PAGE} />

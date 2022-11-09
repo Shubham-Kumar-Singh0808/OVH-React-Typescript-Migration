@@ -145,7 +145,7 @@ const ticketConfigurationSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getTicketConfigurationDepartments.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
+        state.isLoadingFilterOptions = ApiLoadingState.succeeded
         // state.categories = [] as TicketConfigurationCategories[]
         // state.subCategories = [] as TicketConfigurationSubCategories[]
         state.departments = action.payload
@@ -160,7 +160,7 @@ const ticketConfigurationSlice = createSlice({
         },
       )
       .addCase(getTicketConfigurationCategories.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
+        state.isLoadingFilterOptions = ApiLoadingState.succeeded
         // state.subCategories = [] as TicketConfigurationSubCategories[]
         state.categories = action.payload as TicketConfigurationCategories[]
       })
@@ -171,7 +171,7 @@ const ticketConfigurationSlice = createSlice({
       .addCase(
         getTicketConfigurationSubCategories.fulfilled,
         (state, action) => {
-          state.isLoading = ApiLoadingState.succeeded
+          state.isLoadingFilterOptions = ApiLoadingState.succeeded
           state.subCategories =
             action.payload as TicketConfigurationSubCategories[]
         },
@@ -181,15 +181,22 @@ const ticketConfigurationSlice = createSlice({
       })
       .addMatcher(
         isAnyOf(
-          getTicketConfigurationDepartments.pending,
-          getTicketConfigurationCategories.pending,
-          getTicketConfigurationSubCategories.pending,
           getTicketConfigurationSubCategoryList.pending,
           deleteSubCategory.pending,
           ticketHistoryDetails.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getTicketConfigurationDepartments.pending,
+          getTicketConfigurationCategories.pending,
+          getTicketConfigurationSubCategories.pending,
+        ),
+        (state) => {
+          state.isLoadingFilterOptions = ApiLoadingState.loading
         },
       )
       .addMatcher(

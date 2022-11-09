@@ -29,6 +29,7 @@ describe('Ticket Configuration Slice', () => {
       },
       toggle: '',
       isLoading: ApiLoadingState.idle,
+      isLoadingFilterOptions: ApiLoadingState.idle,
       error: null,
     } as TicketConfigurationState
 
@@ -56,7 +57,8 @@ describe('Ticket Configuration Slice', () => {
           list: [],
         },
         toggle: '',
-        isLoading: ApiLoadingState.loading,
+        isLoading: ApiLoadingState.idle,
+        isLoadingFilterOptions: ApiLoadingState.loading,
         error: null,
       })
     })
@@ -85,7 +87,8 @@ describe('Ticket Configuration Slice', () => {
           list: [],
         },
         toggle: '',
-        isLoading: ApiLoadingState.succeeded,
+        isLoading: ApiLoadingState.idle,
+        isLoadingFilterOptions: ApiLoadingState.succeeded,
         error: null,
       })
     })
@@ -114,6 +117,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.failed,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: undefined,
       })
     })
@@ -142,7 +146,8 @@ describe('Ticket Configuration Slice', () => {
           list: [],
         },
         toggle: '',
-        isLoading: ApiLoadingState.loading,
+        isLoading: ApiLoadingState.idle,
+        isLoadingFilterOptions: ApiLoadingState.loading,
         error: null,
       })
     })
@@ -171,7 +176,8 @@ describe('Ticket Configuration Slice', () => {
           list: [],
         },
         toggle: '',
-        isLoading: ApiLoadingState.succeeded,
+        isLoading: ApiLoadingState.idle,
+        isLoadingFilterOptions: ApiLoadingState.succeeded,
         error: null,
       })
     })
@@ -200,6 +206,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.failed,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: undefined,
       })
     })
@@ -228,7 +235,8 @@ describe('Ticket Configuration Slice', () => {
           list: [],
         },
         toggle: '',
-        isLoading: ApiLoadingState.loading,
+        isLoading: ApiLoadingState.idle,
+        isLoadingFilterOptions: ApiLoadingState.loading,
         error: null,
       })
     })
@@ -257,7 +265,8 @@ describe('Ticket Configuration Slice', () => {
           list: [],
         },
         toggle: '',
-        isLoading: ApiLoadingState.succeeded,
+        isLoading: ApiLoadingState.idle,
+        isLoadingFilterOptions: ApiLoadingState.succeeded,
         error: null,
       })
     })
@@ -286,6 +295,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.failed,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: undefined,
       })
     })
@@ -315,6 +325,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.loading,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: null,
       })
     })
@@ -341,6 +352,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.succeeded,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: null,
       })
     })
@@ -369,6 +381,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.failed,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: undefined,
       })
     })
@@ -397,6 +410,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.loading,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: null,
       })
     })
@@ -424,6 +438,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.succeeded,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: null,
       })
     })
@@ -451,6 +466,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.failed,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: undefined,
       })
     })
@@ -479,6 +495,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.loading,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: null,
       })
     })
@@ -504,6 +521,7 @@ describe('Ticket Configuration Slice', () => {
         ticketHistoryDetails: mockTicketHistory,
         toggle: '',
         isLoading: ApiLoadingState.succeeded,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: null,
       })
     })
@@ -531,6 +549,7 @@ describe('Ticket Configuration Slice', () => {
         },
         toggle: '',
         isLoading: ApiLoadingState.failed,
+        isLoadingFilterOptions: ApiLoadingState.idle,
         error: undefined,
       })
     })
