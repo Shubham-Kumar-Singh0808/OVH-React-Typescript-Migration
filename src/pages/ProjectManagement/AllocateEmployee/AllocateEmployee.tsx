@@ -64,6 +64,7 @@ const AllocateEmployee = (): JSX.Element => {
   const [allocationEndDate, setAllocationEndDate] = useState<string>()
   const [isDateError, setIsDateError] = useState<boolean>(false)
   const [isAllocateButtonEnabled, setIsAllocateButtonEnabled] = useState(false)
+  const [isEnable, setIsEnable] = useState(false)
 
   const allEmployeeProfiles = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
@@ -107,8 +108,10 @@ const AllocateEmployee = (): JSX.Element => {
     setProjectsAutoCompleteTarget(e.target.value)
     setSelectProject(undefined)
   }
+
   const onHandleSelectProjectName = (projectName: string) => {
     setProjectsAutoCompleteTarget(projectName)
+    setIsEnable(true)
   }
 
   const onFocusOut = () => {
@@ -152,7 +155,8 @@ const AllocateEmployee = (): JSX.Element => {
       allocationDate &&
       allocationEndDate &&
       isBilLable &&
-      allocationValue
+      allocationValue &&
+      isEnable
     ) {
       setIsAllocateButtonEnabled(true)
     } else {
@@ -246,6 +250,7 @@ const AllocateEmployee = (): JSX.Element => {
     setAllocationDate('')
     setAddComment('')
     setIsShowComment(false)
+    setIsEnable(false)
     setTimeout(() => {
       setIsShowComment(true)
     }, 0)
@@ -289,15 +294,7 @@ const AllocateEmployee = (): JSX.Element => {
           <CRow className="mt-3">
             <CFormLabel {...formLabelProps} className={formLabel}>
               Project Name:
-              <span
-                className={
-                  projectsAutoCompleteTarget.replace(/^\s*/, '')
-                    ? TextWhite
-                    : TextDanger
-                }
-              >
-                *
-              </span>
+              <span className={isEnable ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <Autocomplete
@@ -498,16 +495,14 @@ const AllocateEmployee = (): JSX.Element => {
                 }
               />
             </CCol>
-          </CRow>
-          {isDateError && (
-            <CRow className="mt-2">
-              <CCol sm={{ span: 6, offset: 2 }}>
+            {isDateError && (
+              <CCol sm={6}>
                 <span className="text-danger">
                   <b>End date should be greater than Allocation date</b>
                 </span>
               </CCol>
-            </CRow>
-          )}
+            )}
+          </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>Comments: </CFormLabel>
             {isShowComment ? (
