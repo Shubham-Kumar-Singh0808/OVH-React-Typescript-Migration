@@ -36,7 +36,12 @@ const TicketConfigurationOptions = ({
   const subCategories: TicketConfigurationSubCategories[] = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.subCategories,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddSubCategory = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Ticket Configuration',
+  )
   const onViewHandler = () => {
     setFilterByDepartment(selectedDepartment as number)
     setFilterByCategory(selectedCategory as number)
@@ -89,6 +94,7 @@ const TicketConfigurationOptions = ({
                 aria-label="departmentName"
                 name="departmentName"
                 id="departmentName"
+                data-testid="dept-name"
                 onChange={(e) => setSelectedDepartment(+e.target.value)}
                 value={selectedDepartment}
               >
@@ -113,6 +119,7 @@ const TicketConfigurationOptions = ({
                 aria-label="categoryName"
                 name="categoryName"
                 id="categoryName"
+                data-testid="category-name"
                 defaultValue={selectedCategory}
                 disabled={!selectedDepartment}
                 onChange={(e) => setSelectedCategory(+e.target.value)}
@@ -142,6 +149,7 @@ const TicketConfigurationOptions = ({
                 aria-label="subCategoryName"
                 name="subCategoryName"
                 id="subCategoryName"
+                data-testid="sub-category-name"
                 defaultValue={selectedSubCategory}
                 disabled={!selectedCategory}
                 onChange={(e) => setSelectedSubCategory(+e.target.value)}
@@ -161,32 +169,29 @@ const TicketConfigurationOptions = ({
             </CCol>
           </CRow>
         </CCol>
-        {showExportButton && (
-          <CCol sm={2}>
+        <CCol sm={2}>
+          {showExportButton && (
             <CRow>
               <CCol className="text-end mt-4">
-                <CButton
-                  color="info"
-                  className="btn-ovh me-1 mt-2"
-                  size="sm"
-                  // onClick={() => handleExportTicketApprovalList(prepareObject)}
-                >
+                <CButton color="info" className="btn-ovh me-1 mt-2" size="sm">
                   <i className="fa fa-plus me-1"></i>
                   Click to Export
                 </CButton>
               </CCol>
             </CRow>
+          )}
+        </CCol>
+        {userAccessToAddSubCategory?.createaccess && (
+          <CCol sm={1}>
+            <CRow>
+              <CCol className="text-end mt-4">
+                <CButton color="info" className="btn-ovh me-1 mt-2">
+                  <i className="fa fa-plus  me-1"></i>Add
+                </CButton>
+              </CCol>
+            </CRow>
           </CCol>
         )}
-        <CCol sm={1}>
-          <CRow>
-            <CCol className="text-end mt-4">
-              <CButton color="info" className="btn-ovh me-1 mt-2">
-                <i className="fa fa-plus  me-1"></i>Add
-              </CButton>
-            </CCol>
-          </CRow>
-        </CCol>
       </CRow>
       <CRow className="text-center mt-1">
         <CCol sm={3}></CCol>

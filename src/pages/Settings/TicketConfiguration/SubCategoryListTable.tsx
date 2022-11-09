@@ -35,7 +35,13 @@ const SubCategoryListTable = (
   const subCategoryListSize = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.listSize,
   )
-
+  const totalRecordsCount = subCategoryList?.list?.length
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToTicketConfiguration = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Ticket Configuration',
+  )
   const {
     paginationRange,
     pageSize,
@@ -153,19 +159,25 @@ const SubCategoryListTable = (
                       </CTableDataCell>
                       <CTableDataCell scope="row">
                         <div className="buttons-subCategoryList">
-                          <CTooltip content="Edit">
-                            <CButton
-                              color="info btn-ovh me-1"
-                              className="btn-ovh-employee-list"
-                            >
-                              <i className="fa fa-edit" aria-hidden="true"></i>
-                            </CButton>
-                          </CTooltip>
+                          {userAccessToTicketConfiguration?.updateaccess && (
+                            <CTooltip content="Edit">
+                              <CButton
+                                color="info btn-ovh me-1"
+                                className="btn-ovh-employee-list"
+                                data-testid={`th-edit-btn${index}`}
+                              >
+                                <i
+                                  className="fa fa-edit"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
+                          )}
                           <CTooltip content="Ticket Timeline">
                             <CButton
                               color="info btn-ovh me-1"
                               className="btn-ovh-employee-list"
-                              data-testid="subCategoryTimelineBtn"
+                              data-testid={`th-timeline-btn${index}`}
                               onClick={() =>
                                 handleTicketHistoryClick(ticket.subCategoryId)
                               }
@@ -176,24 +188,26 @@ const SubCategoryListTable = (
                               ></i>
                             </CButton>
                           </CTooltip>
-                          <CTooltip content="Delete">
-                            <CButton
-                              color="danger btn-ovh me-1"
-                              className="btn-ovh-employee-list"
-                              onClick={() =>
-                                handleShowDeleteModal(
-                                  ticket.subCategoryId,
-                                  ticket.subCategoryName,
-                                )
-                              }
-                              // data-testid={`client-delete-btn${props.id}`}
-                            >
-                              <i
-                                className="fa fa-trash-o"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
-                          </CTooltip>
+                          {userAccessToTicketConfiguration?.deleteaccess && (
+                            <CTooltip content="Delete">
+                              <CButton
+                                color="danger btn-ovh me-1"
+                                className="btn-ovh-employee-list"
+                                onClick={() =>
+                                  handleShowDeleteModal(
+                                    ticket.subCategoryId,
+                                    ticket.subCategoryName,
+                                  )
+                                }
+                                data-testid={`th-delete-btn${index}`}
+                              >
+                                <i
+                                  className="fa fa-trash-o"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
+                          )}
                         </div>
                       </CTableDataCell>
                     </CTableRow>
@@ -209,7 +223,7 @@ const SubCategoryListTable = (
         <CRow className="mt-3">
           <CCol md={3} className="pull-left">
             <strong>
-              {subCategoryList?.list?.length
+              {totalRecordsCount
                 ? `Total Records: ${subCategoryList.size}`
                 : `No Records Found...`}
             </strong>
