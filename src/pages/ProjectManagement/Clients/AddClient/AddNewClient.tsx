@@ -100,7 +100,8 @@ const AddNewClient = (): JSX.Element => {
       })
     } else {
       setAddClient((values) => {
-        return { ...values, ...{ [name]: value } }
+        const trimFieldValue = value.trimStart()
+        return { ...values, ...{ [name]: trimFieldValue } }
       })
     }
   }
