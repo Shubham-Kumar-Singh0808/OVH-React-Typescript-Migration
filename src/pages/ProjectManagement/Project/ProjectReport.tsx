@@ -220,7 +220,7 @@ const ProjectReport = (): JSX.Element => {
             </CCol>
 
             <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-1">Price Model:</CFormLabel>
+              <CFormLabel className="mt-1">Pricing Model:</CFormLabel>
             </CCol>
             <CCol sm={2}>
               <SelectFilter

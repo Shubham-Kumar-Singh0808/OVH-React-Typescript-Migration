@@ -226,24 +226,6 @@ input.capetalized {
 .hidden-block {
   cursor: not-allowed;
 }
-.project-report {
-  .btn-primary {
-    background-color: #3f8bd1;
-    border-color: #3988cf;
-    color: #fff;
-  }
-
-  .btn-info {
-    background-color: #34b2e7;
-    border-color: #2db0e6;
-    color: #fff;
-  }
-
-  .btn-danger {
-    background-color: #d9534f;
-    border-color: #d43f3a;
-  }
-}
 
 .model-header-text {
   padding: 1rem 0;
@@ -260,47 +242,6 @@ input.capetalized {
 .modal .modal-dialog .modal-content .modal-body.model-body-text-alinement {
   min-height: 90px;
   padding-top: 0px;
-}
-.label {
-  font-weight: 400;
-  border-radius: 0.1em;
-  font-size: 85%;
-}
-
-.label-table {
-  display: inline-block;
-  padding-bottom: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  text-align: center !important;
-  width: 100% !important;
-  border-radius: 30px !important;
-}
-
-.label-gray {
-  background-color: #e3e8ee;
-  color: #333;
-}
-
-.label-green {
-  background-color: #8cc152;
-  color: #ffffff;
-}
-
-.label-orange {
-  background-color: #feab34;
-  color: #ffffff;
-}
-
-.label-danger {
-  background-color: #e9573f;
-  color: #ffffff;
-}
-
-.input-xs {
-  padding: 0px;
-  height: 28px !important;
 }
 
 .template-body .model-text {

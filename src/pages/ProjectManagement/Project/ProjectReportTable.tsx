@@ -5,7 +5,6 @@ import {
   CFormSelect,
   CLink,
   CRow,
-  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -15,12 +14,14 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { ProjectDetails } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 import { ProjectReportsTableProps } from '../../../types/ProjectManagement/Project/ProjectTypes'
 
@@ -307,7 +308,7 @@ const ProjectReportsTable = ({
     <>
       {projectReports != null && projectReports.length ? (
         <>
-          <CTable striped align="middle">
+          <CTable striped responsive className="ps-1 pe-1 align-middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell className="text-center"></CTableHeaderCell>
@@ -324,7 +325,12 @@ const ProjectReportsTable = ({
                 <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Status</CTableHeaderCell>
                 <CTableHeaderCell scope="col"></CTableHeaderCell>
-                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                <CTableHeaderCell
+                  scope="col"
+                  className="sh-project-report-actions"
+                >
+                  Action
+                </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -370,23 +376,23 @@ const ProjectReportsTable = ({
                       </CTableDataCell>
                       <CTableDataCell>
                         <CButton
-                          className="cursor-pointer"
-                          color="danger btn-sm me-1"
+                          className="btn-ovh-employee-list cursor-pointer"
+                          color="danger btn-ovh me-1"
                           data-testid="close-btn"
                           onClick={() =>
                             handleShowCloseModal(value.id, value.projectName)
                           }
                         >
                           <i
-                            className="fa fa-times text-white"
+                            className="fa fa-times text-white sh-fa-times"
                             aria-hidden="true"
                           ></i>
                         </CButton>
                       </CTableDataCell>
                       <CTableDataCell style={{ width: '120px' }}>
                         <CButton
-                          className="cursor-pointer"
-                          color="info btn-sm me-1"
+                          className="btn-ovh-employee-list cursor-pointer"
+                          color="info-light btn-ovh me-1"
                           data-testid="view-btn"
                         >
                           <i
@@ -396,8 +402,8 @@ const ProjectReportsTable = ({
                         </CButton>
                         <Link to={`/editproject/${value.id}`}>
                           <CButton
-                            className="cursor-pointer"
-                            color="primary btn-sm me-1"
+                            className="btn-ovh-employee-list cursor-pointer"
+                            color="primary btn-ovh me-1"
                             data-testid="edit-btn"
                           >
                             <i
@@ -407,8 +413,8 @@ const ProjectReportsTable = ({
                           </CButton>
                         </Link>
                         <CButton
-                          className="cursor-pointer"
-                          color="danger btn-sm me-1"
+                          className="btn-ovh-employee-list cursor-pointer"
+                          color="danger btn-ovh me-1"
                           data-testid="delete-btn"
                           disabled={value.count > 0}
                           onClick={() =>
@@ -426,8 +432,8 @@ const ProjectReportsTable = ({
                       selectedProject === value.id &&
                       (projectClients != null ? (
                         <CTableRow>
-                          <CTableDataCell colSpan={8}>
-                            <CTable responsive striped>
+                          <CTableDataCell colSpan={12}>
+                            <CTable striped className="ms-1">
                               <CTableHead color="info">
                                 <CTableRow>
                                   <CTableHeaderCell scope="col">
@@ -472,7 +478,7 @@ const ProjectReportsTable = ({
                                         </CLink>
                                       </CTableDataCell>
                                       <CTableDataCell>
-                                        {project.projectName}
+                                        {project.userName}
                                       </CTableDataCell>
                                       <CTableDataCell>
                                         {project.desigination}
@@ -614,8 +620,8 @@ const ProjectReportsTable = ({
                                           toAllocatedProject.data
                                             ?.employeeId ? (
                                           <CButton
-                                            className="cursor-pointer text-white"
-                                            color="success btn-sm me-1"
+                                            className="btn-ovh-employee-list cursor-pointer text-white"
+                                            color="success btn-ovh me-1"
                                             data-testid="update-project-btn"
                                             onClick={() =>
                                               handleUpdateProject(project)
@@ -628,8 +634,8 @@ const ProjectReportsTable = ({
                                           </CButton>
                                         ) : (
                                           <CButton
-                                            className="cursor-pointer"
-                                            color="primary btn-sm me-1"
+                                            className="btn-ovh-employee-list cursor-pointer"
+                                            color="primary btn-ovh me-1"
                                             data-testid="edit-sub-project-btn"
                                             onClick={() =>
                                               handleAllocationModal(
@@ -645,8 +651,8 @@ const ProjectReportsTable = ({
                                           </CButton>
                                         )}
                                         <CButton
-                                          className="cursor-pointer"
-                                          color="danger btn-sm me-1"
+                                          className="btn-ovh-employee-list cursor-pointer"
+                                          color="danger btn-ovh me-1"
                                           data-testid="delete-sub-btn"
                                           disabled={!project.isAllocated}
                                           onClick={() =>
@@ -670,11 +676,7 @@ const ProjectReportsTable = ({
                           </CTableDataCell>
                         </CTableRow>
                       ) : (
-                        <CCol data-testid="spinner">
-                          <CRow className="category-loading-spinner">
-                            <CSpinner />
-                          </CRow>
-                        </CCol>
+                        <OLoadingSpinner type={LoadingType.PAGE} />
                       ))}
                   </>
                 )
@@ -713,7 +715,7 @@ const ProjectReportsTable = ({
       ) : (
         <CCol data-testid="spinner">
           <CRow className="category-loading-spinner">
-            <CSpinner />
+            <OLoadingSpinner type={LoadingType.PAGE} />
           </CRow>
         </CCol>
       )}
