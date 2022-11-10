@@ -35,7 +35,7 @@ const SubCategoryListTable = (
   const subCategoryListSize = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.listSize,
   )
-  const totalRecordsCount = subCategoryList?.list?.length
+  const totalRecordsCount = subCategoryList?.list
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
