@@ -22,7 +22,7 @@ import {
 } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
 const ShiftListTable = ({
   employeeShifts,
@@ -45,6 +45,12 @@ const ShiftListTable = ({
 
   const [deleteShiftModalVisibility, setDeleteShiftModalVisibility] =
     useState<boolean>(false)
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessShiftConfigurationActions = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Shift',
+  )
   const dispatch = useAppDispatch()
 
   const editEmployeeShiftOnchangeHandler = (
@@ -320,7 +326,9 @@ const ShiftListTable = ({
                 )}
 
                 <CTableDataCell scope="row">
-                  {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
+                  {userAccessShiftConfigurationActions?.updateaccess &&
+                  isShiftDetailEdit &&
+                  employeeShift.id === selectShiftId ? (
                     <CButton
                       color="success"
                       data-testid={`sh-save-btn${index}`}
@@ -351,20 +359,21 @@ const ShiftListTable = ({
                       ></i>
                     </CButton>
                   )}
-
-                  <CButton
-                    color="danger"
-                    data-testid={`sh-delete-btn${index}`}
-                    className="btn-ovh me-1"
-                    onClick={() => {
-                      deleteShiftDetailButtonHandler(
-                        employeeShift.id,
-                        employeeShift.name,
-                      )
-                    }}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
+                  {userAccessShiftConfigurationActions?.deleteaccess && (
+                    <CButton
+                      color="danger"
+                      data-testid={`sh-delete-btn${index}`}
+                      className="btn-ovh me-1"
+                      onClick={() => {
+                        deleteShiftDetailButtonHandler(
+                          employeeShift.id,
+                          employeeShift.name,
+                        )
+                      }}
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  )}
                 </CTableDataCell>
               </CTableRow>
             )

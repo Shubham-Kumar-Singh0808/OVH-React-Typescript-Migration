@@ -27,7 +27,12 @@ const AddEmployeeDesignation = ({
   const designationList = useTypedSelector(
     reduxServices.employeeDesignation.selectors.employeeDesignations,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddDesignation = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Designation',
+  )
   const dispatch = useAppDispatch()
 
   const handleInputChange = (
@@ -183,16 +188,18 @@ const AddEmployeeDesignation = ({
             onChange={handleInputChange}
           />
         </CCol>
-        <CCol xs={2}>
-          <CButton
-            color="info btn-ovh me-1 text-white"
-            size="sm"
-            disabled={!isAddDesignationBtnEnabled}
-            onClick={handleAddEmployeeDesignation}
-          >
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
-        </CCol>
+        {userAccessToAddDesignation?.createaccess && (
+          <CCol xs={2}>
+            <CButton
+              color="info btn-ovh me-1 text-white"
+              size="sm"
+              disabled={!isAddDesignationBtnEnabled}
+              onClick={handleAddEmployeeDesignation}
+            >
+              <i className="fa fa-plus me-1"></i>Add
+            </CButton>
+          </CCol>
+        )}
       </CRow>
     </>
   )
