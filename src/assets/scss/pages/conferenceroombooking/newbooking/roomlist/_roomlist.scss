@@ -11,3 +11,8 @@
 .alignment > thead > tr > th {
   padding: 8px 3px;
 }
+.sh-form-switch {
+  .form-check-input.is-valid:focus {
+    box-shadow: none;
+  }
+}

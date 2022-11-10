@@ -198,6 +198,10 @@ const EditHoliday = React.lazy(
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
+const EmployeeAllocation = React.lazy(
+  () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
+)
+
 const AppraisalConfigurations = React.lazy(
   () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
 )
@@ -342,6 +346,11 @@ const routes = [
     path: '/addproject',
     name: 'Add Project',
     component: AddProject,
+  },
+  {
+    path: '/allocationEmployee',
+    name: 'Allocate Employee',
+    component: EmployeeAllocation,
   },
   {
     path: '/editproject/:projectId',
