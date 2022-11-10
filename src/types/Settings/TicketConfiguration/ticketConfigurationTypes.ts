@@ -6,9 +6,10 @@ export type SubCategoryListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
-  filterByDepartment: number
-  filterByCategory: number
-  filterBySubCategory: number
+  filterByDepartment: string
+  filterByCategory: string
+  filterBySubCategory: string
+  isTableView: boolean
 }
 
 export type TicketConfigurationDepartments = {
@@ -61,9 +62,9 @@ export type TicketConfigurationSubCategoryList = {
 }
 
 export type TicketConfigurationSubCategoryType = {
-  categoryId?: number
-  departmentId: number
-  subCategoryId?: number
+  categoryId?: string
+  departmentId: string
+  subCategoryId?: string
   endIndex: number
   startIndex: number
 }

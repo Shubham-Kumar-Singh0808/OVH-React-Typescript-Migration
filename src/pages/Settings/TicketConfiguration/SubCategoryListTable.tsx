@@ -35,7 +35,7 @@ const SubCategoryListTable = (
   const subCategoryListSize = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.listSize,
   )
-  const totalRecordsCount = subCategoryList?.list
+
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
@@ -115,9 +115,45 @@ const SubCategoryListTable = (
     )
   }
 
+  const paginationComponent =
+    subCategoryList?.size > 0 ? (
+      <CRow className="mt-3">
+        <CCol md={3} className="pull-left">
+          <strong>{`Total Records: ${subCategoryList.size}`}</strong>
+        </CCol>
+        <CCol xs={3}>
+          {subCategoryListSize > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={
+                handleSubCategoryListPageSizeSelectChange
+              }
+              options={[20, 40, 60, 80]}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {subCategoryListSize > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
+    ) : (
+      <CRow className="mt-3 ms-3">
+        <strong>No Records Found... </strong>
+      </CRow>
+    )
+
   return (
     <>
-      {subCategoryList?.size > 0 ? (
+      {props.isTableView && (
         <>
           <CTable
             className="mt-4 ps-0 alignment"
@@ -137,125 +173,91 @@ const SubCategoryListTable = (
                 <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
-            <CTableBody className="text-center">
-              {subCategoryList &&
-                subCategoryList?.list?.map((ticket, index) => {
-                  return (
-                    <CTableRow key={index}>
-                      <CTableDataCell>{index + 1}</CTableDataCell>
-                      <CTableDataCell>{ticket.departmentName}</CTableDataCell>
-                      <CTableDataCell>{ticket.categoryName}</CTableDataCell>
-                      <CTableDataCell>{ticket.subCategoryName}</CTableDataCell>
-                      <CTableDataCell>
-                        {ticket.estimatedTime || 0}
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        {ticket.workFlow === true
-                          ? workFlowChecked
-                          : workFlowUnChecked}
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        {ticket?.levelOfHierarchy || 'N/A'}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        <div className="buttons-subCategoryList">
-                          {userAccessToTicketConfiguration?.updateaccess && (
-                            <CTooltip content="Edit">
+            {subCategoryList?.size > 0 && (
+              <CTableBody className="text-center">
+                {subCategoryList &&
+                  subCategoryList?.list?.map((ticket, index) => {
+                    return (
+                      <CTableRow key={index}>
+                        <CTableDataCell>{index + 1}</CTableDataCell>
+                        <CTableDataCell>{ticket.departmentName}</CTableDataCell>
+                        <CTableDataCell>{ticket.categoryName}</CTableDataCell>
+                        <CTableDataCell>
+                          {ticket.subCategoryName}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          {ticket.estimatedTime || 0}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          {ticket.workFlow === true
+                            ? workFlowChecked
+                            : workFlowUnChecked}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          {ticket?.levelOfHierarchy || 'N/A'}
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          <div className="buttons-subCategoryList">
+                            {userAccessToTicketConfiguration?.updateaccess && (
+                              <CTooltip content="Edit">
+                                <CButton
+                                  color="info btn-ovh me-1"
+                                  className="btn-ovh-employee-list"
+                                  data-testid={`th-edit-btn${index}`}
+                                >
+                                  <i
+                                    className="fa fa-edit"
+                                    aria-hidden="true"
+                                  ></i>
+                                </CButton>
+                              </CTooltip>
+                            )}
+                            <CTooltip content="Ticket Timeline">
                               <CButton
                                 color="info btn-ovh me-1"
                                 className="btn-ovh-employee-list"
-                                data-testid={`th-edit-btn${index}`}
-                              >
-                                <i
-                                  className="fa fa-edit"
-                                  aria-hidden="true"
-                                ></i>
-                              </CButton>
-                            </CTooltip>
-                          )}
-                          <CTooltip content="Ticket Timeline">
-                            <CButton
-                              color="info btn-ovh me-1"
-                              className="btn-ovh-employee-list"
-                              data-testid={`th-timeline-btn${index}`}
-                              onClick={() =>
-                                handleTicketHistoryClick(ticket.subCategoryId)
-                              }
-                            >
-                              <i
-                                className="fa fa-bar-chart"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
-                          </CTooltip>
-                          {userAccessToTicketConfiguration?.deleteaccess && (
-                            <CTooltip content="Delete">
-                              <CButton
-                                color="danger btn-ovh me-1"
-                                className="btn-ovh-employee-list"
+                                data-testid={`th-timeline-btn${index}`}
                                 onClick={() =>
-                                  handleShowDeleteModal(
-                                    ticket.subCategoryId,
-                                    ticket.subCategoryName,
-                                  )
+                                  handleTicketHistoryClick(ticket.subCategoryId)
                                 }
-                                data-testid={`th-delete-btn${index}`}
                               >
                                 <i
-                                  className="fa fa-trash-o"
+                                  className="fa fa-bar-chart"
                                   aria-hidden="true"
                                 ></i>
                               </CButton>
                             </CTooltip>
-                          )}
-                        </div>
-                      </CTableDataCell>
-                    </CTableRow>
-                  )
-                })}
-            </CTableBody>
-          </CTable>
-        </>
-      ) : (
-        <> </>
-      )}
-      {subCategoryList?.size > 0 ? (
-        <CRow className="mt-3">
-          <CCol md={3} className="pull-left">
-            <strong>
-              {totalRecordsCount
-                ? `Total Records: ${subCategoryList.size}`
-                : `No Records Found...`}
-            </strong>
-          </CCol>
-          <CCol xs={3}>
-            {subCategoryListSize > 20 && (
-              <OPageSizeSelect
-                handlePageSizeSelectChange={
-                  handleSubCategoryListPageSizeSelectChange
-                }
-                options={[20, 40, 60, 80]}
-                selectedPageSize={pageSize}
-              />
+                            {userAccessToTicketConfiguration?.deleteaccess && (
+                              <CTooltip content="Delete">
+                                <CButton
+                                  color="danger btn-ovh me-1"
+                                  className="btn-ovh-employee-list"
+                                  onClick={() =>
+                                    handleShowDeleteModal(
+                                      ticket.subCategoryId,
+                                      ticket.subCategoryName,
+                                    )
+                                  }
+                                  data-testid={`th-delete-btn${index}`}
+                                >
+                                  <i
+                                    className="fa fa-trash-o"
+                                    aria-hidden="true"
+                                  ></i>
+                                </CButton>
+                              </CTooltip>
+                            )}
+                          </div>
+                        </CTableDataCell>
+                      </CTableRow>
+                    )
+                  })}
+              </CTableBody>
             )}
-          </CCol>
-          {subCategoryListSize > 20 && (
-            <CCol
-              xs={5}
-              className="d-grid gap-1 d-md-flex justify-content-md-end"
-            >
-              <OPagination
-                currentPage={currentPage}
-                pageSetter={setCurrentPage}
-                paginationRange={paginationRange}
-              />
-            </CCol>
-          )}
-        </CRow>
-      ) : (
-        <> </>
+          </CTable>
+          {paginationComponent}
+        </>
       )}
-
       <OModal
         alignment="center"
         visible={isDeleteModalVisible}

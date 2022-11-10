@@ -12,10 +12,12 @@ const TicketConfigurationOptions = ({
   setFilterByDepartment,
   setFilterByCategory,
   setFilterBySubCategory,
+  setIsTableView,
 }: {
   setFilterByDepartment: (value: number | string) => void
   setFilterByCategory: (value: number | string) => void
   setFilterBySubCategory: (value: number | string) => void
+  setIsTableView: (value: boolean) => void
 }): JSX.Element => {
   const [selectedDepartment, setSelectedDepartment] = useState<
     number | string
@@ -42,11 +44,17 @@ const TicketConfigurationOptions = ({
   const userAccessToAddSubCategory = userAccessToFeatures?.find(
     (feature) => feature.name === 'Ticket Configuration',
   )
+
+  const subCategoryList = useTypedSelector(
+    reduxServices.ticketConfiguration.selectors.subCategoryList,
+  )
+
   const onViewHandler = () => {
     setFilterByDepartment(selectedDepartment as number)
     setFilterByCategory(selectedCategory as number)
     setFilterBySubCategory(selectedSubCategory as number)
     setShowExportButton(true)
+    setIsTableView(true)
   }
   useEffect(() => {
     if (selectedDepartment) {
@@ -64,7 +72,10 @@ const TicketConfigurationOptions = ({
     setFilterByCategory('')
     setFilterBySubCategory('')
     setShowExportButton(false)
-    dispatch(reduxServices.ticketConfiguration.actions.clearSubCategoryList())
+    setIsTableView(false)
+    if (subCategoryList) {
+      dispatch(reduxServices.ticketConfiguration.actions.clearSubCategoryList())
+    }
   }
 
   useEffect(() => {
@@ -102,10 +113,14 @@ const TicketConfigurationOptions = ({
                 name="departmentName"
                 id="departmentName"
                 data-testid="dept-name"
-                onChange={(e) => setSelectedDepartment(+e.target.value)}
+                onChange={(e) => {
+                  setSelectedDepartment(e.target.value)
+                  setSelectedCategory('')
+                  setSelectedSubCategory('')
+                }}
                 value={selectedDepartment}
               >
-                <option value="0">Select Department</option>
+                <option value="">Select Department</option>
                 {departments &&
                   departments?.map((department) => (
                     <option key={department.id} value={department.id}>
@@ -129,10 +144,10 @@ const TicketConfigurationOptions = ({
                 data-testid="category-name"
                 defaultValue={selectedCategory}
                 disabled={!selectedDepartment}
-                onChange={(e) => setSelectedCategory(+e.target.value)}
+                onChange={(e) => setSelectedCategory(e.target.value)}
                 value={selectedCategory}
               >
-                <option value="0">Select Category</option>
+                <option value="">Select Category</option>
                 {categories &&
                   categories?.map((category) => (
                     <option
@@ -159,10 +174,10 @@ const TicketConfigurationOptions = ({
                 data-testid="sub-category-name"
                 defaultValue={selectedSubCategory}
                 disabled={!selectedCategory}
-                onChange={(e) => setSelectedSubCategory(+e.target.value)}
+                onChange={(e) => setSelectedSubCategory(e.target.value)}
                 value={selectedSubCategory}
               >
-                <option value="0">Select Sub-Category</option>
+                <option value="">Select Sub-Category</option>
                 {subCategories &&
                   subCategories?.map((subCategory) => (
                     <option

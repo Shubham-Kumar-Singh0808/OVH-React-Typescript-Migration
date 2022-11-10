@@ -20,6 +20,7 @@ const TicketConfiguration = (): JSX.Element => {
   const [filterBySubCategory, setFilterBySubCategory] = useState<
     number | string
   >()
+  const [isTableView, setIsTableView] = useState(false)
 
   const subCategoryListSize = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.listSize,
@@ -48,9 +49,9 @@ const TicketConfiguration = (): JSX.Element => {
           {
             startIndex: pageSize * (currentPage - 1),
             endIndex: pageSize * currentPage,
-            departmentId: filterByDepartment as number,
-            categoryId: filterByCategory as number,
-            subCategoryId: filterBySubCategory as number,
+            departmentId: (filterByDepartment as string) ?? '',
+            categoryId: (filterByCategory as string) ?? '',
+            subCategoryId: (filterBySubCategory as string) ?? '',
           },
         ),
       )
@@ -76,6 +77,7 @@ const TicketConfiguration = (): JSX.Element => {
               setFilterByDepartment={setFilterByDepartment}
               setFilterByCategory={setFilterByCategory}
               setFilterBySubCategory={setFilterBySubCategory}
+              setIsTableView={setIsTableView}
             />
             {isLoading !== ApiLoadingState.loading ? (
               <SubCategoryListTable
@@ -84,9 +86,10 @@ const TicketConfiguration = (): JSX.Element => {
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
                 pageSize={pageSize}
-                filterByDepartment={filterByDepartment as number}
-                filterByCategory={filterByCategory as number}
-                filterBySubCategory={filterBySubCategory as number}
+                filterByDepartment={filterByDepartment as string}
+                filterByCategory={filterByCategory as string}
+                filterBySubCategory={filterBySubCategory as string}
+                isTableView={isTableView}
               />
             ) : (
               <OLoadingSpinner type={LoadingType.PAGE} />
