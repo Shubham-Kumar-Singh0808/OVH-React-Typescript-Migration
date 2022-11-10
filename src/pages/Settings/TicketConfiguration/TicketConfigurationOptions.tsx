@@ -173,7 +173,12 @@ const TicketConfigurationOptions = ({
           {showExportButton && (
             <CRow>
               <CCol className="text-end mt-4">
-                <CButton color="info" className="btn-ovh me-1 mt-2" size="sm">
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1 mt-2"
+                  size="sm"
+                  data-testid="export-button"
+                >
                   <i className="fa fa-plus me-1"></i>
                   Click to Export
                 </CButton>
@@ -185,7 +190,11 @@ const TicketConfigurationOptions = ({
           <CCol sm={1}>
             <CRow>
               <CCol className="text-end mt-4">
-                <CButton color="info" className="btn-ovh me-1 mt-2">
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1 mt-2"
+                  data-testid="addSubCategory-btn"
+                >
                   <i className="fa fa-plus  me-1"></i>Add
                 </CButton>
               </CCol>
@@ -200,6 +209,7 @@ const TicketConfigurationOptions = ({
             color="success"
             onClick={onViewHandler}
             className="btn-ovh me-1 mt-2"
+            data-testid="view-button"
           >
             View
           </CButton>
@@ -207,6 +217,7 @@ const TicketConfigurationOptions = ({
             onClick={handleClearButton}
             color="warning"
             className="btn-ovh me-1 mt-2"
+            data-testid="clear-button"
           >
             Clear
           </CButton>

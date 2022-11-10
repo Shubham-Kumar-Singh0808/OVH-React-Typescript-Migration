@@ -2,6 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import SubCategoryListTable from './SubCategoryListTable'
+import TicketHistoryDetails from './TicketHistory/TicketHistoryDetails'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
@@ -87,47 +88,10 @@ describe('SubCategoryList Table', () => {
         'btn btn-info btn-ovh btn-ovh-employee-list me-1',
       )
     })
-    test('should render edit button in the Actions', () => {
-      expect(screen.getByTestId('th-edit-btn0')).toHaveClass(
-        'btn btn-danger btn-sm',
-      )
+    test('should render Ticket History Timeline Component upon clicking Timeline button from Actions', () => {
+      const timeLineBtn = screen.getByTestId('th-timeline-btn1')
+      userEvent.click(timeLineBtn)
+      expect(render(<TicketHistoryDetails />))
     })
-    test('should render delete button in the Actions', () => {
-      expect(screen.getByTestId('th-delete-btn0')).toHaveClass(
-        'btn btn-danger btn-sm',
-      )
-    })
-
-    // test('should render ticket history timeline upon button click', () => {
-    //   const editButtonEl = screen.getByTestId('holiday-edit-btn1')
-    //   userEvent.click(editButtonEl)
-    //   expect(history.location.pathname).toBe('/editHoliday/148')
-    // })
-
-    it('should render Delete modal popup on clicking delete button from Actions', async () => {
-      const deleteButtonEl = screen.getByTestId('th-delete-btn0')
-      userEvent.click(deleteButtonEl)
-      await waitFor(() => {
-        expect(screen.getByText('Delete Sub-Category')).toBeInTheDocument()
-        expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
-        expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
-      })
-    })
-    it('should close modal popup after clicking Yes option from the modal', () => {
-      const deleteButtonElement = screen.getByTestId('th-delete-btn2')
-      userEvent.click(deleteButtonElement)
-      const yesButtonEle = screen.getByRole('button', { name: 'Yes' })
-      userEvent.click(yesButtonEle)
-    })
-    // test('should render correct number of  page records', () => {
-    //   userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-    //   const pageSizeSelect = screen.getByRole('option', {
-    //     name: '40',
-    //   }) as HTMLOptionElement
-    //   expect(pageSizeSelect.selected).toBe(true)
-
-    //   // 41 including the heading
-    //   expect(screen.getAllByRole('row')).toHaveLength(41)
-    // })
   })
 })
