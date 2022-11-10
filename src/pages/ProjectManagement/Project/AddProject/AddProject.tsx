@@ -251,7 +251,6 @@ const AddProject = (): JSX.Element => {
     setProjectName('')
     onHandleDescription('')
     setProject(initProject)
-
     setShowEditor(false)
     setTimeout(() => {
       setShowEditor(true)
