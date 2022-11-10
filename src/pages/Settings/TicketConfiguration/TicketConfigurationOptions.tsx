@@ -54,7 +54,8 @@ const TicketConfigurationOptions = ({
     } else {
       setIsViewButtonEnabled(false)
     }
-  })
+  }, [selectedDepartment])
+
   const handleClearButton = () => {
     setSelectedDepartment('')
     setSelectedCategory('')
