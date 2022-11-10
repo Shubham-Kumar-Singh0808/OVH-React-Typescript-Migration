@@ -42,6 +42,9 @@ const AddConfiguration = ({
   const [reviewPeriodFrom, setReviewPeriodFrom] = useState<string>()
   const [reviewPeriodTo, setReviewPeriodTo] = useState<string>()
   const [isDateValidation, setIsDateValidation] = useState<boolean>(false)
+  const [isDateErrorValidation, setIsDateErrorValidation] =
+    useState<boolean>(false)
+
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [selectActiveStatus, setSelectActiveStatus] = useState<string>('')
   const [reviewDuration, setReviewDuration] = useState<string>('')
@@ -135,16 +138,28 @@ const AddConfiguration = ({
     }, 0)
   }
   useEffect(() => {
-    const startDate = new Date(
+    const startDatePeriod = new Date(
       moment(reviewPeriodFrom).format(commonFormatDate),
     )
-    const endDate = new Date(moment(reviewPeriodTo).format(commonFormatDate))
-    if (endDate.getTime() < startDate.getTime()) {
+    const endDatePeriod = new Date(
+      moment(reviewPeriodTo).format(commonFormatDate),
+    )
+    if (endDatePeriod.getTime() < startDatePeriod.getTime()) {
       setIsDateValidation(true)
     } else {
       setIsDateValidation(false)
     }
   }, [reviewPeriodFrom, reviewPeriodTo])
+
+  useEffect(() => {
+    const startDate = new Date(moment(reviewStartDate).format(commonFormatDate))
+    const endDate = new Date(moment(reviewEndDate).format(commonFormatDate))
+    if (endDate.getTime() < startDate.getTime()) {
+      setIsDateErrorValidation(true)
+    } else {
+      setIsDateErrorValidation(false)
+    }
+  }, [reviewStartDate, reviewEndDate])
 
   useEffect(() => {
     if (
@@ -395,6 +410,15 @@ const AddConfiguration = ({
                 }}
               />
             </CCol>
+            {isDateErrorValidation && (
+              <CCol sm={6}>
+                <span className="text-danger">
+                  <b>
+                    Review Period From should be greater than Review Period To
+                  </b>
+                </span>
+              </CCol>
+            )}
           </CRow>
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
