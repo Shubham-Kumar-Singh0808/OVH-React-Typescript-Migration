@@ -1,9 +1,9 @@
-import { getEmpDepartments } from '../../../../../types/Settings/Configurations/assignTemplateTypes'
+import { getEmpDepartments } from '../../../../types/Settings/Configurations/assignTemplateTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
-} from '../../../../../utils/apiUtils'
-import { AllowedHttpMethods, assignTemplateApiConfig } from '../../../apiList'
+} from '../../../../utils/apiUtils'
+import { AllowedHttpMethods, assignTemplateApiConfig } from '../../apiList'
 
 const getAllEmpDepartments = async (): Promise<getEmpDepartments[]> => {
   const requestConfig = getAuthenticatedRequestConfig({

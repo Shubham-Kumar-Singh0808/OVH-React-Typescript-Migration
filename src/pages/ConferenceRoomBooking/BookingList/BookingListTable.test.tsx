@@ -62,17 +62,17 @@ describe('Booking List Table Component Testing without data', () => {
     })
     test('should render first page data only', async () => {
       await waitFor(() => {
-        userEvent.click(screen.getByText('Next >', { exact: true }))
+        userEvent.click(screen.getByText('Next ›', { exact: true }))
 
         expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-        expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
+        expect(screen.getByText('‹ Prev')).not.toHaveAttribute('disabled')
       })
     })
     test('should disable first and prev in pagination if first page', async () => {
       await waitFor(() => {
         expect(screen.getByText('« First')).toHaveAttribute('disabled')
-        expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
-        expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
+        expect(screen.getByText('‹ Prev')).toHaveAttribute('disabled')
+        expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
         expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
       })
     })

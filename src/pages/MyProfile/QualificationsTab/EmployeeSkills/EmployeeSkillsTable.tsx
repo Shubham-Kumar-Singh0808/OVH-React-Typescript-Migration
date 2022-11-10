@@ -85,6 +85,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
         striped={striped || isViewingAnotherEmployee}
         bordered={bordered || isViewingAnotherEmployee}
         className={tableClassName}
+        align="middle"
       >
         {!isFieldDisabled || isViewingAnotherEmployee ? (
           <CTableHead color="primary">
@@ -166,7 +167,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
                       {userAccess?.updateaccess && (
                         <CButton
                           color="info"
-                          className="btn-ovh me-1"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
                           data-testid={`skill-edit-button${index}`}
                           onClick={() =>
                             editSkillButtonHandler?.(skillItem.skillId)
@@ -181,7 +182,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
                       {userAccess?.deleteaccess && (
                         <CButton
                           color="danger"
-                          className="btn-ovh me-1"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
                           data-testid={`skill-delete-button${index}`}
                           onClick={() =>
                             handleShowDeleteModal(skillItem.skillId)
@@ -192,9 +193,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
                       )}
                     </CTableDataCell>
                   ) : (
-                    <>
-                      <CTableDataCell scope="row"></CTableDataCell>
-                    </>
+                    <></>
                   )}
                 </CTableRow>
               )

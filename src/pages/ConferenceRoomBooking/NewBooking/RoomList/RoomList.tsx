@@ -88,8 +88,8 @@ const RoomList = (): JSX.Element => {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setSelectRoomName(newValue)
     }
-    if (roomNameExists(value)) {
-      setRoomNameExist(value)
+    if (roomNameExists(value.trim())) {
+      setRoomNameExist(value.trim())
     } else {
       setRoomNameExist('')
     }
@@ -137,7 +137,7 @@ const RoomList = (): JSX.Element => {
               }}
             >
               <option value={''}>Select Location</option>
-              {locationList.map((location, index) => (
+              {locationList?.map((location, index) => (
                 <option key={index} value={location.id}>
                   {location.locationName}
                 </option>

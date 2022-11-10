@@ -66,9 +66,11 @@ import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventType
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
-import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
 import { assignTemplateService } from './Settings/Configurations/assignTemplateSlice'
+import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
+import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
+import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -117,6 +119,7 @@ export const reduxServices = {
   leaveReport: leaveReportService,
   ticketReport: ticketReportService,
   projectManagement: projectManagementService,
+  allocateEmployee: allocateEmployeeService,
   clients: clientsService,
   addClient: addNewClientService,
   clientInformation: clientInformationService,
@@ -142,4 +145,5 @@ export const reduxServices = {
   roomLists: roomListService,
   searchEmployee: employeeSearchService,
   assignTemplate: assignTemplateService,
+  appraisalConfigurations: appraisalCycleService,
 }

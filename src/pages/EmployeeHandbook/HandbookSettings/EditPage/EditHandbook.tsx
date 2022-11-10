@@ -144,7 +144,7 @@ const EditHandbook = ({
       editPage.pageName &&
       editPage.list &&
       editPage.description?.length > 156 &&
-      (editPage.list?.length as number) > 0
+      editPage.list?.length > 0
     ) {
       setIsButtonEnabled(true)
     } else {

@@ -1,4 +1,5 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { ValidationError } from '../../commonTypes'
 
 export type Client = {
   id: number
@@ -93,6 +94,7 @@ export type ClientsSliceState = {
   isLoadingProjectDetails: ApiLoadingState
   editClient: Client
   clientCountries: ClientCountry[]
+  error: ValidationError
 }
 
 export type ClientCountry = {

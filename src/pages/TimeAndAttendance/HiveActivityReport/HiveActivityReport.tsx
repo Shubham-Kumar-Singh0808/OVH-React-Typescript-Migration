@@ -5,7 +5,6 @@ import EmployeeHiveActivityReport from './EmployeeHiveActivityReport'
 import ManagerHiveActivityReport from './ManagerHiveActivityReport'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import hiveActivityReportApi from '../../../middleware/api/TimeAndAttendance/HiveActivityReport/hiveActivityReportApi'
@@ -25,9 +24,6 @@ const HiveActivityReport = (): JSX.Element => {
   )
   const selectedView = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.selectedView,
-  )
-  const isLoading = useTypedSelector(
-    reduxServices.hiveActivityReport.selectors.isLoading,
   )
   const listSize = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerReportSize,
@@ -145,10 +141,8 @@ const HiveActivityReport = (): JSX.Element => {
           handleExportHiveActivityReport={handleExportHiveActivityReport}
           handleSearchHiveActivityReport={handleSearchHiveActivityReport}
         />
-        {selectedView === 'Me' && isLoading === ApiLoadingState.succeeded && (
-          <EmployeeHiveActivityReport />
-        )}
-        {selectedView === 'All' && isLoading === ApiLoadingState.succeeded && (
+        {selectedView === 'Me' && <EmployeeHiveActivityReport />}
+        {selectedView === 'All' && (
           <ManagerHiveActivityReport
             paginationRange={paginationRange}
             setPageSize={setPageSize}
