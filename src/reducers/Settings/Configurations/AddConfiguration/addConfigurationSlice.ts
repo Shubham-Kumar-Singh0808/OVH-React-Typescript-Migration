@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import addConfigurationApi from '../../../../middleware/api/Settings/Configurations/AddConfiguration/addConfigurationApi'
-import { ValidationError } from '../../../../types/commonTypes'
+import { RootState } from '../../../../stateStore'
+import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import {
   AddConfigurationSliceState,
   AddCycle,
@@ -44,13 +45,24 @@ const addNewConfigurationSlice = createSlice({
   },
 })
 
+const selectError = (state: RootState): ValidationError =>
+  state.addConfiguration.error
+
+const isLoading = (state: RootState): LoadingState => state.clients.isLoading
+
 const addConfigurationThunk = {
   addNewCycle,
+}
+
+const addConfigurationSelectors = {
+  selectError,
+  isLoading,
 }
 
 export const addConfigurationService = {
   ...addConfigurationThunk,
   actions: addNewConfigurationSlice.actions,
+  selectors: addConfigurationSelectors,
 }
 
 export default addNewConfigurationSlice.reducer
