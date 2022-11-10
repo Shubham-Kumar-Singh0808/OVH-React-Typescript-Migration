@@ -306,6 +306,12 @@ export interface LeaveReportsApi extends ApiBase {
   downloadLeaveReportList: string
 }
 
+export interface AllocateEmployeeApi extends ApiBase {
+  getAllEmployeeProfiles: string
+  getAllProjectSearch: string
+  allocateNewEmployee: string
+}
+
 export interface TicketReportApi extends ApiBase {
   getDepartmentNameList: string
   departmentCategoryList: string

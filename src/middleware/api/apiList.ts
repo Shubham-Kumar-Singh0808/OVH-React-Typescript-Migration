@@ -58,6 +58,7 @@ import {
   AddLocationListApi,
   EventListApi,
   AddTrackerApi,
+  AllocateEmployeeApi,
   AppraisalConfigurationsApi,
   RoomListApi,
   AddConfigurationsApi,
@@ -376,6 +377,13 @@ export const leaveReportsApiConfig: LeaveReportsApi = {
   financialYear: apiPrefix + '/leaveSetup/financialYear',
   downloadLeaveReportList: apiPrefix + '/leaveSetup/exportLeaveReport',
 }
+export const allocateEmployeeApiConfig: AllocateEmployeeApi = {
+  getAllEmployeeProfiles:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData?searchStr',
+  getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
+  allocateNewEmployee: apiPrefix + '/allocation-mgmt/allocation',
+}
+
 export const ticketReportApiConfig: TicketReportApi = {
   getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
   departmentCategoryList:
