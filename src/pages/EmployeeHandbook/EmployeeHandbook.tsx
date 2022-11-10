@@ -21,7 +21,7 @@ const EmployeeHandbook = (): JSX.Element => {
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToHandbookSettings = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Handbook Settings',
+    (feature) => feature.name === 'Handbook',
   )
   const [inputText, setInputText] = useState('')
   const [filterByInputText, setFilterByInputText] = useState('')
@@ -31,6 +31,7 @@ const EmployeeHandbook = (): JSX.Element => {
     if (!lowerCase) {
       setInputText('')
     }
+    searchHandbook()
   }
 
   const searchHandbook = () => {

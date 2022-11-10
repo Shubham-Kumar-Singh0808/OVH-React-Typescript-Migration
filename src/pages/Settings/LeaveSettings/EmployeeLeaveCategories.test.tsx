@@ -71,16 +71,4 @@ describe('Employee Leave Categories Testing', () => {
       expect(screen.getByText('No Records found')).toBeInTheDocument()
     })
   })
-  test('should enabled add Leave category button when input is not empty', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <EmployeeLeaveCategories
-          setToggle={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    expect(screen.getByRole('button')).not.toBeDisabled()
-  })
 })

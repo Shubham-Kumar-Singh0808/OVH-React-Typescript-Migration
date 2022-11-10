@@ -194,7 +194,7 @@ function AddEditFamilyDetails({
         <CForm>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...nameProps}>
-              Name:
+              Name :
               <span
                 className={
                   employeeFamily?.personName?.replace(/^\s*/, '')
@@ -219,7 +219,7 @@ function AddEditFamilyDetails({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...relationShipProps}>
-              Relationship:
+              Relationship :
               <span
                 className={
                   employeeFamily?.relationShip ? 'text-white' : 'text-danger'
@@ -252,7 +252,7 @@ function AddEditFamilyDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...contactNumberProps}>Contact Number:</CFormLabel>
+            <CFormLabel {...contactNumberProps}>Contact Number :</CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"

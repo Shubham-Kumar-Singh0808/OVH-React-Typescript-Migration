@@ -12,7 +12,7 @@ import { mockUserAccessToFeaturesData } from '../test/data/userAccessToFeaturesD
 const searchButton = 'search-employee-btn'
 const searchEmployeeString = 'Raju Sriramoju'
 const searchPlaceholderText = 'Search Employee'
-
+// const mockSearchValue = jest.fn()
 describe('Dashboard AppHeader Component Testing', () => {
   describe('Dashboard AppHeader Component Testing', () => {
     const history = createMemoryHistory()
@@ -113,6 +113,7 @@ describe('Dashboard AppHeader Component Testing', () => {
         },
       )
     })
+    jest.retryTimes(3)
     test('should redirect to employeeList page upon clicking the search button with searchString', async () => {
       const autocomplete = screen.getByPlaceholderText(searchPlaceholderText)
       autocomplete.click()
@@ -125,6 +126,26 @@ describe('Dashboard AppHeader Component Testing', () => {
       expect(autocomplete).toHaveValue(searchEmployeeString)
       const searchButtonElement = screen.getByTestId(searchButton)
       userEvent.click(searchButtonElement)
+      await waitFor(() => {
+        expect(
+          render(toRender, {
+            preloadedState: {
+              dashboardEmployeeSearch: {
+                employeeProfile: mockSearchEmployee,
+                searchString: searchEmployeeString,
+              },
+              userAccessToFeatures: {
+                userAccessToFeatures: mockUserAccessToFeaturesData,
+              },
+            },
+          }),
+        )
+      })
+    })
+    test('Should be able to function autocomplete on Enter', async () => {
+      const searchInput = screen.getByPlaceholderText(searchPlaceholderText)
+      userEvent.type(searchInput, 'Sai')
+      fireEvent.keyDown(searchInput, { key: 'Enter', keyCode: 13 })
       await waitFor(() => {
         expect(render(toRender))
       })

@@ -1,0 +1,18 @@
+.sh-form-switch {
+  .form-check-input {
+    width: 100%;
+    height: 21px;
+    border-radius: 30px;
+    border-color: whitesmoke;
+    background-color: #ccc;
+    cursor: pointer;
+  }
+}
+.alignment > thead > tr > th {
+  padding: 8px 3px;
+}
+.sh-form-switch {
+  .form-check-input.is-valid:focus {
+    box-shadow: none;
+  }
+}

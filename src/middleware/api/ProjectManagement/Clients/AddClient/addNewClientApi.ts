@@ -25,6 +25,18 @@ const addNewClient = async (
     method: AllowedHttpMethods.post,
     data: newClientDetails,
   })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const checkClientOrgExist = async (organization: string): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: addNewClientApiConfig.checkClientOrgExist,
+    method: AllowedHttpMethods.get,
+    params: {
+      organization,
+    },
+  })
   const responseVisa = await useAxios(requestConfig)
   return responseVisa.data
 }
@@ -32,6 +44,7 @@ const addNewClient = async (
 const addNewClientApi = {
   getClientCountries,
   addNewClient,
+  checkClientOrgExist,
 }
 
 export default addNewClientApi

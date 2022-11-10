@@ -342,7 +342,6 @@ const TicketApprovalsFilterOptions = ({
                   id="from-date"
                   data-testid="ticketsApprovalsFromDate"
                   className="form-control form-control-sm sh-date-picker"
-                  peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
@@ -380,7 +379,6 @@ const TicketApprovalsFilterOptions = ({
                   id="from-date"
                   data-testid="ticketsApprovalsToDate"
                   className="form-control form-control-sm sh-date-picker"
-                  peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"

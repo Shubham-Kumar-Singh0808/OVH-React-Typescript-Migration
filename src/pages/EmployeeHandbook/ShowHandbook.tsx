@@ -50,11 +50,13 @@ const ShowHandbook = (): JSX.Element => {
               </CCol>
             </CRow>
             <CRow className="mt-5">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: handbook.description as string,
-                }}
-              />
+              <span className="descriptionField">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: handbook.description as string,
+                  }}
+                />
+              </span>
             </CRow>
           </OCard>
         </>

@@ -58,6 +58,9 @@ import {
   AddLocationListApi,
   EventListApi,
   AddTrackerApi,
+  AllocateEmployeeApi,
+  AppraisalConfigurationsApi,
+  RoomListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -145,12 +148,12 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
   }
 
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
-  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
 }
 
 export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi =
   {
-    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
+    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
   }
 
 export const qualificationsApiConfig: EmployeeQualificationsApi = {
@@ -373,6 +376,13 @@ export const leaveReportsApiConfig: LeaveReportsApi = {
   financialYear: apiPrefix + '/leaveSetup/financialYear',
   downloadLeaveReportList: apiPrefix + '/leaveSetup/exportLeaveReport',
 }
+export const allocateEmployeeApiConfig: AllocateEmployeeApi = {
+  getAllEmployeeProfiles:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData?searchStr',
+  getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
+  allocateNewEmployee: apiPrefix + '/allocation-mgmt/allocation',
+}
+
 export const ticketReportApiConfig: TicketReportApi = {
   getDepartmentNameList: apiPrefix + '/supportManagement/getDepartmentNameList',
   departmentCategoryList:
@@ -405,6 +415,7 @@ export const clientsApiConfig: ClientsApi = {
 export const addNewClientApiConfig: AddNewClientApi = {
   getClientCountries: apiPrefix + '/project-mgmt/country',
   addNewClient: apiPrefix + '/project-mgmt/client',
+  checkClientOrgExist: apiPrefix + '/project-mgmt/clientOrg',
 }
 
 export const clientInformationApiConfig: ClientInformationApi = {
@@ -510,4 +521,15 @@ export const eventListApiConfig: EventListApi = {
 export const addTrackerApiConfig: AddTrackerApi = {
   addNewTracker: apiPrefix + '/supportManagement/addTracker',
   deleteTracker: apiPrefix + '/supportManagement/deleteTracker',
+}
+
+export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
+  getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+}
+
+export const roomListApiConfig: RoomListApi = {
+  getAllMeetingRooms: apiPrefix + '/meetingRequest/getAllMeetingRooms',
+  addRoom: apiPrefix + '/meetingRequest/addRoom',
+  deleteRoom: apiPrefix + '/meetingRequest/deleteRoom',
+  updateRoom: apiPrefix + '/meetingRequest/updateRoom',
 }

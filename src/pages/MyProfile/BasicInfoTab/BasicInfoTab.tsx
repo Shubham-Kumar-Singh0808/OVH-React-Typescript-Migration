@@ -828,9 +828,7 @@ const BasicInfoTab = (): JSX.Element => {
         <CRow className="mt-3 ">
           <CFormLabel
             {...dynamicFormLabelProps('employmentType', commonFormLabel)}
-          >
-            Employment Type:
-          </CFormLabel>
+          ></CFormLabel>
           <CCol sm={2}>
             <CFormLabel className="col-form-label text-end">
               {employeeBasicInformation.employmentTypeName}
