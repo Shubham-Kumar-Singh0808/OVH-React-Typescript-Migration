@@ -7,7 +7,8 @@
       }
       &.sidebar-narrow-unfoldable {
         &:hover {
-          width: 4rem;
+          --cui-sidebar-width: 4rem;
+          // width: 4rem;
         }
       }
     }

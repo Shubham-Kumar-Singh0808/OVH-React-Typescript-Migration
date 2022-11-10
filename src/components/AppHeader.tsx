@@ -86,7 +86,10 @@ const AppHeader = (): JSX.Element => {
       <CContainer fluid>
         <CHeaderToggler
           className="ps-1 me-auto"
-          onClick={() => dispatch(reduxServices.app.actions.toggleSidebar())}
+          // onClick={() => dispatch(reduxServices.app.actions.toggleSidebar())}
+          onClick={() =>
+            dispatch(reduxServices.app.actions.toggleSidebarUnfoldable())
+          }
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>

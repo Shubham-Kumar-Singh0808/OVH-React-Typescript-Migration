@@ -45,6 +45,9 @@ const appSlice = createSlice({
     setPersistCurrentPage: (state, action) => {
       return { ...state, persistCurrentPage: action.payload }
     },
+    toggleSidebarUnfoldable: (state) => {
+      state.sidebarUnfoldable = !state.sidebarUnfoldable
+    },
   },
 })
 
