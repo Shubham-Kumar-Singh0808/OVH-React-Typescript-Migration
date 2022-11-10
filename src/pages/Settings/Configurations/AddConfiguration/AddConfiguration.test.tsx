@@ -1,11 +1,15 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 import AddConfiguration from './AddConfiguration'
+import '@testing-library/jest-dom'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
+// eslint-disable-next-line import/order
+import { CKEditor } from 'ckeditor4-react'
 
 const mockSetTogglePage = jest.fn()
 const saveButton = 'save-btn'
 const clearButton = 'clear-btn'
+const reviewName = 'New Cycle 2'
 
 describe('Add Configuration Component Testing', () => {
   beforeEach(() => {
@@ -46,10 +50,10 @@ describe('Add Configuration Component Testing', () => {
     expect(screen.getByTestId(saveButton)).toBeDisabled()
   })
 
-  test('should render on every input of Configuration', async () => {
+  test('should render on  input of Configuration', async () => {
     const reviewTitle = screen.getByPlaceholderText('Name')
-    userEvent.type(reviewTitle, 'New Cycle 2')
-    expect(reviewTitle).toHaveValue('New Cycle 2')
+    userEvent.type(reviewTitle, reviewName)
+    expect(reviewTitle).toHaveValue(reviewName)
 
     const reviewType = screen.getByTestId('form-select1')
     userEvent.selectOptions(reviewType, ['Monthly'])
@@ -123,5 +127,68 @@ describe('Add Configuration Component Testing', () => {
     expect(backButton).toBeInTheDocument()
     userEvent.click(backButton)
     expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
+  })
+
+  test('pass comments to test input value', () => {
+    render(
+      <CKEditor
+        initData={
+          process.env.JEST_WORKER_ID !== undefined && <p>test test test</p>
+        }
+      />,
+    )
+  })
+
+  test('should render on every input of Configuration', () => {
+    const reviewTitle = screen.getByPlaceholderText('Name')
+    userEvent.type(reviewTitle, reviewName)
+
+    const reviewType = screen.getByTestId('form-select1')
+    userEvent.selectOptions(reviewType, ['Monthly'])
+
+    const level = screen.getByPlaceholderText('level')
+    userEvent.type(reviewTitle, '1')
+
+    const minimumServicePeriod = screen.getByPlaceholderText(
+      'Minimum Service Period',
+    )
+    userEvent.type(reviewTitle, '1')
+
+    userEvent.click(screen.getByTestId(saveButton))
+    expect(screen.getByTestId(saveButton)).not.toBeEnabled()
+    expect(reviewTitle).toHaveValue('New Cycle 211')
+    expect(reviewType).toHaveValue('Monthly')
+    expect(level).toHaveValue('1')
+    expect(minimumServicePeriod).toHaveValue('')
+
+    userEvent.click(screen.getByTestId(clearButton))
+    expect(screen.getByTestId(clearButton)).toBeEnabled()
+    expect(reviewTitle).toHaveValue('')
+    expect(reviewType).toHaveValue('')
+    expect(level).toHaveValue('')
+    expect(minimumServicePeriod).toHaveValue('')
+  })
+
+  test('should be able to click Add button element', () => {
+    const addButton = screen.getByRole('button', { name: 'Add' })
+    userEvent.click(addButton)
+    expect(addButton).toBeInTheDocument()
+  })
+
+  test('Radio button should be  "true" or "false"', () => {
+    const activeState = screen.getByRole('radio', {
+      name: 'Yes',
+    }) as HTMLInputElement
+
+    const inactiveState = screen.getByRole('radio', {
+      name: 'No',
+    }) as HTMLInputElement
+
+    expect(activeState.checked).toEqual(false)
+    expect(inactiveState.checked).toEqual(false)
+
+    fireEvent.click(inactiveState)
+
+    expect(activeState.checked).toEqual(false)
   })
 })
