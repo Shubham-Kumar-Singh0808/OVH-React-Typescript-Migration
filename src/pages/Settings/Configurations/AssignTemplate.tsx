@@ -8,18 +8,21 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
+import AssignTemplateTable from './AssignTemplateTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const AssignTemplate = (): JSX.Element => {
-  const [selectAppraisalTitle, setSelectAppraisalTitle] = useState('')
   const [selectDepartment, setSelectDepartment] = useState('')
+  const [selectDesignation, setSelectDesignation] = useState('')
+
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
+
   const dispatch = useAppDispatch()
 
   const designationId = useTypedSelector(
@@ -29,6 +32,7 @@ const AssignTemplate = (): JSX.Element => {
   useEffect(() => {
     // dispatch(reduxServices.assignTemplate.getDesignationDeptId())
   }, [dispatch])
+
   return (
     <>
       <OCard
@@ -36,41 +40,39 @@ const AssignTemplate = (): JSX.Element => {
         title="Assign Template"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
-      ></OCard>
-      <CRow className="justify-content-end">
-        <CCol className="text-end" md={4}>
-          <CButton
-            color="info"
-            className="btn-ovh me-1"
-            data-testid="back-button"
-          >
-            <i className="fa fa-arrow-left  me-1"></i>Back
-          </CButton>
-        </CCol>
-      </CRow>
-      <CForm>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
-            Appraisal Title:
-            <span className={selectAppraisalTitle ? TextWhite : TextDanger}>
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormInput
-              data-testid="appraisalTitle"
-              type="text"
-              id="appraisalTitle"
-              size="sm"
-              name="appraisalTitle"
-            />
+      >
+        <CRow className="justify-content-end">
+          <CCol className="text-end" md={4}>
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="back-button"
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
           </CCol>
+        </CRow>
+        <CForm>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Appraisal Title:
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                data-testid="appraisalTitle"
+                type="text"
+                id="appraisalTitle"
+                size="sm"
+                name="appraisalTitle"
+              />
+            </CCol>
+          </CRow>
 
           <CRow className="mt-4 mb-4">
-            <CCol sm={2} md={1} className="text-end">
+            <CCol sm={3} className="text-end">
               <CFormLabel className="mt-1">
                 Department:
                 <span className={selectDepartment ? TextWhite : TextDanger}>
@@ -99,8 +101,35 @@ const AssignTemplate = (): JSX.Element => {
               </CFormSelect>
             </CCol>
           </CRow>
-        </CRow>
-      </CForm>
+
+          <CRow className="mt-4 mb-4">
+            <CCol sm={3} className="text-end">
+              <CFormLabel className="mt-1">
+                Designation:
+                <span className={selectDesignation ? TextWhite : TextDanger}>
+                  *
+                </span>
+              </CFormLabel>
+            </CCol>
+            <CCol sm={3}>
+              <CFormSelect
+                aria-label="Default select example"
+                size="sm"
+                id="designation"
+                data-testid="form-select1"
+                name="designation"
+                value={selectDesignation}
+                onChange={(e) => {
+                  setSelectDesignation(e.target.value)
+                }}
+              >
+                <option value={''}>Select Designation</option>
+              </CFormSelect>
+            </CCol>
+          </CRow>
+        </CForm>
+        <AssignTemplateTable />
+      </OCard>
     </>
   )
 }

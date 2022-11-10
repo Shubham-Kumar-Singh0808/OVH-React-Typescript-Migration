@@ -23,10 +23,10 @@ const getAllEmpDepartmentNames = createAsyncThunk(
 )
 
 const getDesignationDeptId = createAsyncThunk(
-  'assignTemplate/designationId',
+  'assignTemplate/getDesignationId',
   async (deptId: number, thunkApi) => {
     try {
-      return await assignTemplateApi.designationId(deptId)
+      return await assignTemplateApi.getDesignationId(deptId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -35,10 +35,10 @@ const getDesignationDeptId = createAsyncThunk(
 )
 
 const getnewCycleId = createAsyncThunk(
-  'assignTemplate/cycleId',
+  'assignTemplate/getCycleId',
   async (newCycleID: number, thunkApi) => {
     try {
-      return await assignTemplateApi.cycleId(newCycleID)
+      return await assignTemplateApi.getCycleId(newCycleID)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -47,7 +47,7 @@ const getnewCycleId = createAsyncThunk(
 )
 
 const getDesignationWiseKRAs = createAsyncThunk(
-  'assignTemplate/designationWiseKRAs',
+  'assignTemplate/getDesignationWiseKRAs',
   async (
     {
       departmentId,
@@ -59,10 +59,22 @@ const getDesignationWiseKRAs = createAsyncThunk(
     thunkApi,
   ) => {
     try {
-      return await assignTemplateApi.designationWiseKRAs({
+      return await assignTemplateApi.getDesignationWiseKRAs({
         departmentId,
         designationId,
       })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getAppraiselUnderKra = createAsyncThunk(
+  'assignTemplate/getUnderKras',
+  async (_, thunkApi) => {
+    try {
+      return await assignTemplateApi.getUnderKras()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -111,6 +123,7 @@ const appraisalCycleThunk = {
   getDesignationDeptId,
   getnewCycleId,
   getDesignationWiseKRAs,
+  getAppraiselUnderKra,
 }
 
 const assignTemplateSelectors = {

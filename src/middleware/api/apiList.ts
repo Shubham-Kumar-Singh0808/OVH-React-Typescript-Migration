@@ -540,4 +540,5 @@ export const assignTemplateApiConfig: assignTemplateApi = {
   designationdeptId: apiPrefix + '/kra/designation',
   alreadyExistnewCycleId: apiPrefix + '/appraisal/isAlreadyExist',
   getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
+  getDesignationNumber: apiPrefix + '/appraisal/underKras',
 }

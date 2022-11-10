@@ -15,7 +15,7 @@ const getAllEmpDepartments = async (): Promise<getEmpDepartments[]> => {
   return response.data
 }
 
-const designationId = async (id: number): Promise<number> => {
+const getDesignationId = async (id: number): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: assignTemplateApiConfig.designationdeptId,
     method: AllowedHttpMethods.get,
@@ -27,7 +27,7 @@ const designationId = async (id: number): Promise<number> => {
   return response.data
 }
 
-const cycleId = async (newId: number): Promise<number> => {
+const getCycleId = async (newId: number): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: assignTemplateApiConfig.alreadyExistnewCycleId,
     method: AllowedHttpMethods.get,
@@ -39,7 +39,7 @@ const cycleId = async (newId: number): Promise<number> => {
   return response.data
 }
 
-const designationWiseKRAs = async ({
+const getDesignationWiseKRAs = async ({
   departmentId,
   designationId,
 }: {
@@ -58,11 +58,21 @@ const designationWiseKRAs = async ({
   return response.data
 }
 
+const getUnderKras = async (): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: assignTemplateApiConfig.getDesignationNumber,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const assignTemplateApi = {
   getAllEmpDepartments,
-  designationId,
-  cycleId,
-  designationWiseKRAs,
+  getDesignationId,
+  getCycleId,
+  getDesignationWiseKRAs,
+  getUnderKras,
 }
 
 export default assignTemplateApi

@@ -448,4 +448,5 @@ export interface assignTemplateApi extends ApiBase {
   designationdeptId: string
   alreadyExistnewCycleId: string
   getDesignationWiseKRAs: string
+  getDesignationNumber: string
 }

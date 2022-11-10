@@ -473,7 +473,7 @@ const routes = [
     component: RoomList,
   },
   {
-    path: '/assignTemplate?cycle=32',
+    path: '/assignTemplate/:cycleId',
     name: 'Assign Template',
     component: AssignTemplate,
   },
