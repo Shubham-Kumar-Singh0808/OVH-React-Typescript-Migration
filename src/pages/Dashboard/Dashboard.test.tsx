@@ -97,6 +97,9 @@ describe('Dashboard Sections Testing', () => {
               designation: 'HR Executive',
             },
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       })
     })
@@ -119,6 +122,9 @@ describe('Dashboard Sections Testing', () => {
               token: 'test',
               designation: 'Senior Manager, Human Resource',
             },
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })

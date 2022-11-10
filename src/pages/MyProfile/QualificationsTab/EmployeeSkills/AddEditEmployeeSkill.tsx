@@ -342,7 +342,7 @@ function AddEditEmployeeSkill({
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
-                <CFormLabel className="col-sm-3 col-form-label text-end">
+                <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
                   Experience :
                 </CFormLabel>
                 <CCol sm={2}>
@@ -422,7 +422,7 @@ function AddEditEmployeeSkill({
                 </CCol>
               </CRow>
               <CRow className="mt-4 mb-4">
-                <CFormLabel className="col-sm-3 col-form-label text-end">
+                <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
                   Comments :
                 </CFormLabel>
                 {showEditor ? (
