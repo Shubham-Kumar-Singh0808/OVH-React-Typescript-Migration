@@ -25,7 +25,7 @@ const TicketConfigurationOptions = ({
     number | string
   >()
   const [showExportButton, setShowExportButton] = useState<boolean>(false)
-
+  const [isViewButtonEnabled, setIsViewButtonEnabled] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const departments: TicketConfigurationDepartments[] = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.departments,
@@ -48,7 +48,13 @@ const TicketConfigurationOptions = ({
     setFilterBySubCategory(selectedSubCategory as number)
     setShowExportButton(true)
   }
-
+  useEffect(() => {
+    if (selectedDepartment) {
+      setIsViewButtonEnabled(true)
+    } else {
+      setIsViewButtonEnabled(false)
+    }
+  })
   const handleClearButton = () => {
     setSelectedDepartment('')
     setSelectedCategory('')
@@ -210,6 +216,7 @@ const TicketConfigurationOptions = ({
             onClick={onViewHandler}
             className="btn-ovh me-1 mt-2"
             data-testid="view-button"
+            disabled={!isViewButtonEnabled}
           >
             View
           </CButton>

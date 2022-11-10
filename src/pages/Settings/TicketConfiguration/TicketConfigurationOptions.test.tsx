@@ -87,4 +87,23 @@ describe('Ticket Configurations Filter Options Component Testing', () => {
     const exportBtnEl = screen.getByTestId(exportButtonElement)
     expect(exportBtnEl).toBeInTheDocument()
   })
+  test('should enable add button on the selection of filters', () => {
+    const deptNameEle = screen.getByTestId(selectDepartment)
+    userEvent.selectOptions(deptNameEle, ['Networking'])
+    expect(deptNameEle).toHaveValue('1')
+
+    const viewButtonEle = screen.getByTestId(viewButtonElement)
+    expect(viewButtonEle).toBeEnabled()
+  })
+  test('should disable add button upon clicking clear button', () => {
+    const deptNameElement = screen.getByTestId(selectDepartment)
+    userEvent.selectOptions(deptNameElement, ['Administrative'])
+    expect(deptNameElement).toHaveValue('2')
+
+    const viewButtonEle = screen.getByTestId(viewButtonElement)
+    const clearButtonEle = screen.getByTestId(clearButtonElement)
+    userEvent.click(clearButtonEle)
+    userEvent.selectOptions(deptNameElement, ['Select Department'])
+    expect(viewButtonEle).toBeDisabled()
+  })
 })
