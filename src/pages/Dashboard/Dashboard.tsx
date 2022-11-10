@@ -18,9 +18,6 @@ const Dashboard = (): JSX.Element => {
   const employeeID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-  const role = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
-  )
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
@@ -32,6 +29,18 @@ const Dashboard = (): JSX.Element => {
   )
   const userAccessToAchievements = userAccessToFeatures?.find(
     (feature) => feature.name === 'Upcoming Achievements',
+  )
+  const userAccessToUpcomingBirthdays = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Dashboard-Birthdays',
+  )
+  const userAccessToUpcomingHolidays = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Dashboard-Holidays',
+  )
+  const userAccessToJobOpenings = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Dashboard-Job Openings',
+  )
+  const userAccessToProbationaryEndDates = userAccessToFeatures?.find(
+    (feature) => feature.name === 'ProbationaryEndDates',
   )
   useEffect(() => {
     dispatch(
@@ -76,14 +85,16 @@ const Dashboard = (): JSX.Element => {
                   <TimeInOffice />
                 </CCol>
                 <CCol sm={12}>
-                  <OCard
-                    className="mb-4 myprofile-wrapper"
-                    title="Job Openings"
-                    CBodyClassName="ps-0 pe-0"
-                    footerPath="/jobvacancies"
-                  >
-                    <JobVacanciesTable />
-                  </OCard>
+                  {userAccessToJobOpenings?.viewaccess && (
+                    <OCard
+                      className="mb-4 myprofile-wrapper"
+                      title="Job Openings"
+                      CBodyClassName="ps-0 pe-0"
+                      footerPath="/jobvacancies"
+                    >
+                      <JobVacanciesTable />
+                    </OCard>
+                  )}
                 </CCol>
                 <CCol sm={12}>
                   {userAccessToAchievements?.viewaccess && (
@@ -125,29 +136,31 @@ const Dashboard = (): JSX.Element => {
                 )}
               </CCol>
               <CCol sm={12}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Upcoming Birthdays"
-                  CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                >
-                  <UpcomingBirthdays />
-                </OCard>
+                {userAccessToUpcomingBirthdays?.viewaccess && (
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Upcoming Birthdays"
+                    CBodyClassName="ps-0 pe-0"
+                    CFooterClassName="d-none"
+                  >
+                    <UpcomingBirthdays />
+                  </OCard>
+                )}
               </CCol>
               <CCol sm={12}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Upcoming Holidays"
-                  CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                >
-                  <UpcomingHolidays />
-                </OCard>
+                {userAccessToUpcomingHolidays?.viewaccess && (
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Upcoming Holidays"
+                    CBodyClassName="ps-0 pe-0"
+                    CFooterClassName="d-none"
+                  >
+                    <UpcomingHolidays />
+                  </OCard>
+                )}
               </CCol>
               <CCol sm={12}>
-                {(role === 'admin' ||
-                  role === 'HR Manager' ||
-                  role === 'HR') && (
+                {userAccessToProbationaryEndDates?.viewaccess && (
                   <OCard
                     className="mb-4 myprofile-wrapper"
                     title="Upcoming Probationary End Dates"

@@ -115,7 +115,8 @@ const EditClient = (): JSX.Element => {
       })
     } else {
       setClient((values) => {
-        return { ...values, ...{ [name]: value } }
+        const trimmedValue = value.trimStart()
+        return { ...values, ...{ [name]: trimmedValue } }
       })
     }
   }
