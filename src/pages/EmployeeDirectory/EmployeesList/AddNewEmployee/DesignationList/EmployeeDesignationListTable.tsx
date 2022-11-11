@@ -2,7 +2,6 @@ import {
   CButton,
   CCol,
   CRow,
-  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
