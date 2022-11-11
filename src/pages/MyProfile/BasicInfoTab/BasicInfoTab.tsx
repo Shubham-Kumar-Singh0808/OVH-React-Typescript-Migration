@@ -443,7 +443,7 @@ const BasicInfoTab = (): JSX.Element => {
 
   return (
     <>
-      {isLoading && <OLoadingSpinner type={LoadingType.COMPONENT} />}
+      {isLoading && <OLoadingSpinner type={LoadingType.PAGE} />}
 
       <CForm
         className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
