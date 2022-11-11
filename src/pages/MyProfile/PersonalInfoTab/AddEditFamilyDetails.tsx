@@ -207,6 +207,7 @@ function AddEditFamilyDetails({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                autoComplete="off"
                 type="text"
                 id="Name"
                 name="personName"

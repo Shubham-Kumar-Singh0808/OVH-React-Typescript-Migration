@@ -1,3 +1,4 @@
+import { allocateEmployeeHandlers } from './allocateEmployeeHandlers'
 import { attendanceReportHandlers } from './attendanceReportHandlers'
 import { birthdaysListHandlers } from './birthdaysListHandlers'
 import { categoryListHandlers } from './categoryListHandlers'
@@ -33,6 +34,7 @@ import { employeeCertificationHandlers } from './employeeCertificationsHandlers'
 import { addNewClientHandlers } from './addNewClientHandlers'
 import { addRoomListHandlers } from './addRoomListHandler'
 import { addLocationListHandlers } from './addLocationListHandlers'
+import { ticketConfigurationHandlers } from './ticketConfigurationHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -72,5 +74,6 @@ export const handlers = [
   ...addNewClientHandlers,
   ...addRoomListHandlers,
   ...addLocationListHandlers,
+  ...ticketConfigurationHandlers,
   // add your handler here
 ]

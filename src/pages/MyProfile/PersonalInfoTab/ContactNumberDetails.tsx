@@ -51,8 +51,8 @@ const ContactNumberDetails = (props: {
     useState(selectedUserEmergencyContactDetails)
 
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
-  const phoneValueRegexReplace = /[^0-9]/gi
-  const contactNameRegexReplace = /[^a-zA-Z\s]/gi
+  const phoneValueRegexReplace = /\D/gi
+  const contactNameRegexReplace = /[^a-z\s]/gi
   const onChangeEmergencyContactDetailsHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -210,6 +210,7 @@ const ContactNumberDetails = (props: {
           </CCol>
           <CCol sm={3}>
             <CFormInput
+              autoComplete="off"
               type="text"
               placeholder="98xxxxxxxx"
               size="sm"

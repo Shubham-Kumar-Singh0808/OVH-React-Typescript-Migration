@@ -18,10 +18,30 @@ const Dashboard = (): JSX.Element => {
   const employeeID = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-  const role = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
-
+  const userAccessToUpcomingTrainings = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Upcoming Trainings',
+  )
+  const userAccessToUpcomingEvents = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Upcoming Events',
+  )
+  const userAccessToAchievements = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Upcoming Achievements',
+  )
+  const userAccessToUpcomingBirthdays = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Dashboard-Birthdays',
+  )
+  const userAccessToUpcomingHolidays = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Dashboard-Holidays',
+  )
+  const userAccessToJobOpenings = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Dashboard-Job Openings',
+  )
+  const userAccessToProbationaryEndDates = userAccessToFeatures?.find(
+    (feature) => feature.name === 'ProbationaryEndDates',
+  )
   useEffect(() => {
     dispatch(
       reduxServices.jobOpenings.getAllJobVacancies({
@@ -65,72 +85,82 @@ const Dashboard = (): JSX.Element => {
                   <TimeInOffice />
                 </CCol>
                 <CCol sm={12}>
-                  <OCard
-                    className="mb-4 myprofile-wrapper"
-                    title="Job Openings"
-                    CBodyClassName="ps-0 pe-0"
-                    footerPath="/jobvacancies"
-                  >
-                    <JobVacanciesTable />
-                  </OCard>
+                  {userAccessToJobOpenings?.viewaccess && (
+                    <OCard
+                      className="mb-4 myprofile-wrapper"
+                      title="Job Openings"
+                      CBodyClassName="ps-0 pe-0"
+                      footerPath="/jobvacancies"
+                    >
+                      <JobVacanciesTable />
+                    </OCard>
+                  )}
                 </CCol>
                 <CCol sm={12}>
-                  <OCard
-                    className="mb-4 myprofile-wrapper"
-                    CBodyClassName="ps-0 pe-0"
-                    CHeaderClassName="d-none"
-                    CFooterClassName="d-none"
-                  >
-                    <Achievements />
-                  </OCard>
+                  {userAccessToAchievements?.viewaccess && (
+                    <OCard
+                      className="mb-4 myprofile-wrapper"
+                      CBodyClassName="ps-0 pe-0"
+                      CHeaderClassName="d-none"
+                      CFooterClassName="d-none"
+                    >
+                      <Achievements />
+                    </OCard>
+                  )}
                 </CCol>
               </CRow>
             </CCol>
             <CCol md={3}>
               <CCol sm={12}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Upcoming Trainings"
-                  CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                >
-                  <UpcomingTrainings />
-                </OCard>
+                {userAccessToUpcomingTrainings?.viewaccess && (
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Upcoming Trainings"
+                    CBodyClassName="ps-0 pe-0"
+                    CFooterClassName="d-none"
+                  >
+                    <UpcomingTrainings />
+                  </OCard>
+                )}
               </CCol>
               <CCol sm={12}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Upcoming Events"
-                  CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                >
-                  <UpcomingEvents />
-                </OCard>
+                {userAccessToUpcomingEvents?.viewaccess && (
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Upcoming Events"
+                    CBodyClassName="ps-0 pe-0"
+                    CFooterClassName="d-none"
+                  >
+                    <UpcomingEvents />
+                  </OCard>
+                )}
               </CCol>
               <CCol sm={12}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Upcoming Birthdays"
-                  CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                >
-                  <UpcomingBirthdays />
-                </OCard>
+                {userAccessToUpcomingBirthdays?.viewaccess && (
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Upcoming Birthdays"
+                    CBodyClassName="ps-0 pe-0"
+                    CFooterClassName="d-none"
+                  >
+                    <UpcomingBirthdays />
+                  </OCard>
+                )}
               </CCol>
               <CCol sm={12}>
-                <OCard
-                  className="mb-4 myprofile-wrapper"
-                  title="Upcoming Holidays"
-                  CBodyClassName="ps-0 pe-0"
-                  CFooterClassName="d-none"
-                >
-                  <UpcomingHolidays />
-                </OCard>
+                {userAccessToUpcomingHolidays?.viewaccess && (
+                  <OCard
+                    className="mb-4 myprofile-wrapper"
+                    title="Upcoming Holidays"
+                    CBodyClassName="ps-0 pe-0"
+                    CFooterClassName="d-none"
+                  >
+                    <UpcomingHolidays />
+                  </OCard>
+                )}
               </CCol>
               <CCol sm={12}>
-                {(role === 'admin' ||
-                  role === 'HR Manager' ||
-                  role === 'HR') && (
+                {userAccessToProbationaryEndDates?.viewaccess && (
                   <OCard
                     className="mb-4 myprofile-wrapper"
                     title="Upcoming Probationary End Dates"

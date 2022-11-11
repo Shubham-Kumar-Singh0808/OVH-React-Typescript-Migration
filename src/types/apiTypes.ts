@@ -306,6 +306,12 @@ export interface LeaveReportsApi extends ApiBase {
   downloadLeaveReportList: string
 }
 
+export interface AllocateEmployeeApi extends ApiBase {
+  getAllEmployeeProfiles: string
+  getAllProjectSearch: string
+  allocateNewEmployee: string
+}
+
 export interface TicketReportApi extends ApiBase {
   getDepartmentNameList: string
   departmentCategoryList: string
@@ -441,4 +447,13 @@ export interface RoomListApi extends ApiBase {
   addRoom: string
   deleteRoom: string
   updateRoom: string
+}
+
+export interface TicketConfigurationApi extends ApiBase {
+  getDepartments: string
+  getCategories: string
+  getSubCategories: string
+  getSubCategoryList: string
+  deleteSubCategory: string
+  ticketHistory: string
 }
