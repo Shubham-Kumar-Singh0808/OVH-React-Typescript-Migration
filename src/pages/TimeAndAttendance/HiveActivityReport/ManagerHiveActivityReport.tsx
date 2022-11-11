@@ -103,7 +103,7 @@ const ManagerHiveActivityReport = (
           </CTableHead>
           {isLoading !== ApiLoadingState.loading ? (
             <CTableBody>
-              {managerHiveActivityReport.list.map(
+              {managerHiveActivityReport.list?.map(
                 (employeeRecord, employeeRecordIndex) => {
                   const sortedActivityTimes = employeeRecord.activityTimes
                     ?.slice()

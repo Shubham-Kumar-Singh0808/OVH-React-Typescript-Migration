@@ -216,6 +216,10 @@ const EditConfiguration = React.lazy(
       './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
     ),
 )
+const TicketConfiguration = React.lazy(
+  () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -479,6 +483,11 @@ const routes = [
     path: '/editAppraisalCycle/:cycleId',
     name: 'Edit Configuration',
     component: EditConfiguration,
+  },
+  {
+    path: '/subCategoryList',
+    name: 'Ticket Configuration',
+    component: TicketConfiguration,
   },
 ]
 

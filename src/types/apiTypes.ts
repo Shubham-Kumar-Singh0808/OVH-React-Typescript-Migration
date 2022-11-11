@@ -443,3 +443,12 @@ export interface RoomListApi extends ApiBase {
   deleteRoom: string
   updateRoom: string
 }
+
+export interface TicketConfigurationApi extends ApiBase {
+  getDepartments: string
+  getCategories: string
+  getSubCategories: string
+  getSubCategoryList: string
+  deleteSubCategory: string
+  ticketHistory: string
+}
