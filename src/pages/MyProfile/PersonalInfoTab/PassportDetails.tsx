@@ -194,6 +194,7 @@ export const PassportDetails = (props: {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              autoComplete="off"
               type="text"
               placeholder="Passport Number"
               size="sm"
@@ -210,6 +211,7 @@ export const PassportDetails = (props: {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              autoComplete="off"
               type="text"
               size="sm"
               placeholder="Place"
@@ -228,15 +230,17 @@ export const PassportDetails = (props: {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
+              autoComplete="off"
               id="passportIssuedDate"
               className="form-control form-control-sm"
               maxDate={new Date()}
               data-testid="dateOfIssueInput"
-              peekNextMonth
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              placeholderText={dateFormat}
+              placeholderText={
+                dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+              }
               dateFormat={dateFormat}
               name="passportIssuedDate"
               disabled={!isPassportButtonEnabled}
@@ -263,15 +267,17 @@ export const PassportDetails = (props: {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
+              autoComplete="off"
               id="passportExpDate"
               className="form-control form-control-sm"
               minDate={new Date()}
-              peekNextMonth
               data-testid="expiryDateInput"
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              placeholderText={dateFormat}
+              placeholderText={
+                dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+              }
               dateFormat={dateFormat}
               name="passportExpDate"
               selected={
@@ -294,11 +300,11 @@ export const PassportDetails = (props: {
             Upload Passport Front Copy:
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput
+            <input
+              className="sh-updateTicket-file mt-1 cursor-pointer"
               type="file"
               name="file"
               accept="image/*,"
-              className="form-control form-control-sm"
               data-testid="frontUploadInput"
               id="exampleFormControlFile1"
               disabled={!isPassportPlaceOfIssueButtonEnabled}
@@ -323,13 +329,13 @@ export const PassportDetails = (props: {
             Upload Passport Back Copy:
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput
+            <input
+              id="exampleFormControlFile2"
+              className="sh-updateTicket-file mt-1 cursor-pointer"
               type="file"
               name="file2"
               accept="image/*,"
               data-testid="backUploadInput"
-              className="form-control form-control-sm"
-              id="exampleFormControlFile2"
               disabled={!isPassportPlaceOfIssueButtonEnabled}
               onChange={(file2: SyntheticEvent) =>
                 onChangeFileEventHandler(
