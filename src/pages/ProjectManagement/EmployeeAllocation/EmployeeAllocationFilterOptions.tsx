@@ -179,41 +179,6 @@ const EmployeeAllocationFilterOptions = ({
     )
   }
 
-  const handleSearchByEnter = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-  ) => {
-    if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
-          Billingtype: billingStatus,
-          EmployeeStatus: allocationStatus,
-          dateSelection: Select,
-          departmentNames: selectDepartment?.map((currentItem) =>
-            currentItem.departmentName.toString(),
-          ),
-          employeeName: searchInput,
-          endIndex: 20,
-          startdate: fromDate
-            ? new Date(fromDate).toLocaleDateString(deviceLocale, {
-                year: 'numeric',
-                month: 'numeric',
-                day: '2-digit',
-              })
-            : '',
-          enddate: toDate
-            ? new Date(toDate).toLocaleDateString(deviceLocale, {
-                year: 'numeric',
-                month: 'numeric',
-                day: '2-digit',
-              })
-            : '',
-          firstIndex: 0,
-          technology: selectTechnology,
-        }),
-      )
-    }
-  }
-
   const handleDepartmentMultiSelect = (list: EmployeeDepartment[]) => {
     setSelectDepartment(list)
   }
@@ -458,7 +423,6 @@ const EmployeeAllocationFilterOptions = ({
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
-              onKeyUp={handleSearchByEnter}
             />
             <CButton
               data-testid="multi-search-btn"
