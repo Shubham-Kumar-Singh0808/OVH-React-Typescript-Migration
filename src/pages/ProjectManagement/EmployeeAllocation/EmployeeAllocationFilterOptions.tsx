@@ -427,6 +427,7 @@ const EmployeeAllocationFilterOptions = ({
           <CButton
             className="cursor-pointer"
             color="success btn-ovh me-1"
+            data-testid="view-btn"
             onClick={handleViewButtonHandler}
             disabled={
               Select === 'Custom' && !(fromDate !== '' && toDate !== '')

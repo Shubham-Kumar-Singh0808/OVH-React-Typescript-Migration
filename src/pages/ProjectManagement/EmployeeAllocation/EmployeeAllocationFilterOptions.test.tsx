@@ -6,9 +6,11 @@ import EmployeeAllocationFilterOptions from './EmployeeAllocationFilterOptions'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeAllocationReport } from '../../../test/data/employeeAllocationReportData'
 import { mockAllTechnology } from '../../../test/data/certificateTypeData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const mockSetSelect = jest.fn()
 const mockSetTicketApprovalParams = jest.fn()
+const mockSetTogglePage = jest.fn()
 
 const toRender = (
   <div>
@@ -54,6 +56,7 @@ describe('Employee allocation Filter Options Component Testing with data', () =>
         employeeAllocationReport: {
           employeeAllocationReportType: mockEmployeeAllocationReport,
           getAllTechnologies: mockAllTechnology,
+          isLoading: ApiLoadingState.succeeded,
         },
       },
     })
@@ -118,5 +121,16 @@ describe('Employee allocation Filter Options Component Testing with data', () =>
       charCode: 13,
     })
     expect(mockSetTicketApprovalParams).toHaveBeenCalledTimes(0)
+  })
+  test('should be able to click View button element', () => {
+    const addBtn = screen.getByRole('button', { name: 'View' })
+    userEvent.click(addBtn)
+    expect(addBtn).toBeInTheDocument()
+  })
+  test('should render  Configuration  screen and Allocate button without crashing', () => {
+    const allocateButton = screen.getByTestId('view-btn')
+    expect(allocateButton).toBeInTheDocument()
+    userEvent.click(allocateButton)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(0)
   })
 })
