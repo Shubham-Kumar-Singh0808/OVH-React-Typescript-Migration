@@ -608,6 +608,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              autoComplete="off"
               id="employeeSkypeID"
               size="sm"
               type="text"
@@ -661,7 +662,7 @@ const BasicInfoTab = (): JSX.Element => {
           <CCol sm={3}>
             <input
               id="uploadRBTCV"
-              className="sh-updateTicket-file"
+              className="sh-updateTicket-file mt-1 cursor-pointer"
               type="file"
               name="file"
               accept=".doc, .docx, .pdf"
