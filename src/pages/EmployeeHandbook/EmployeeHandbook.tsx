@@ -11,6 +11,7 @@ import { LoadingType } from '../../types/Components/loadingScreenTypes'
 
 const EmployeeHandbook = (): JSX.Element => {
   const dispatch = useAppDispatch()
+
   const handbooks = useTypedSelector(
     reduxServices.EmployeeHandbook.selectors.handbookData,
   )
@@ -23,21 +24,12 @@ const EmployeeHandbook = (): JSX.Element => {
   const userAccessToHandbookSettings = userAccessToFeatures?.find(
     (feature) => feature.name === 'Handbook',
   )
-  const [inputText, setInputText] = useState('')
   const [filterByInputText, setFilterByInputText] = useState('')
+
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const lowerCase = e.currentTarget.value.toLowerCase()
     setFilterByInputText(lowerCase)
-    if (!lowerCase) {
-      setInputText('')
-    }
-    searchHandbook()
   }
-
-  const searchHandbook = () => {
-    setInputText(filterByInputText)
-  }
-
   useEffect(() => {
     dispatch(reduxServices.EmployeeHandbook.getHandbooks())
   }, [dispatch])
@@ -65,7 +57,8 @@ const EmployeeHandbook = (): JSX.Element => {
                 color="info"
                 id="button-addon2"
                 data-testid="search-handbook"
-                onClick={searchHandbook}
+                // onClick={searchHandbook}
+                disabled
               >
                 <i className="fa fa-search"></i>
               </CButton>
@@ -88,7 +81,7 @@ const EmployeeHandbook = (): JSX.Element => {
         </CRow>
 
         {isLoading !== ApiLoadingState.loading ? (
-          <HandbookList handbooks={handbooks} inputText={inputText} />
+          <HandbookList handbooks={handbooks} inputText={filterByInputText} />
         ) : (
           <>
             <OLoadingSpinner type={LoadingType.PAGE} />
