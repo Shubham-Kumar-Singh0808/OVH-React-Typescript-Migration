@@ -194,6 +194,7 @@ export const PassportDetails = (props: {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              autoComplete="off"
               type="text"
               placeholder="Passport Number"
               size="sm"
@@ -228,15 +229,17 @@ export const PassportDetails = (props: {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
+              autoComplete="off"
               id="passportIssuedDate"
               className="form-control form-control-sm"
               maxDate={new Date()}
               data-testid="dateOfIssueInput"
-              peekNextMonth
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              placeholderText={dateFormat}
+              placeholderText={
+                dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+              }
               dateFormat={dateFormat}
               name="passportIssuedDate"
               disabled={!isPassportButtonEnabled}
@@ -263,15 +266,17 @@ export const PassportDetails = (props: {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
+              autoComplete="off"
               id="passportExpDate"
               className="form-control form-control-sm"
               minDate={new Date()}
-              peekNextMonth
               data-testid="expiryDateInput"
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              placeholderText={dateFormat}
+              placeholderText={
+                dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+              }
               dateFormat={dateFormat}
               name="passportExpDate"
               selected={

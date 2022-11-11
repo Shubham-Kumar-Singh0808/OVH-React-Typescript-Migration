@@ -456,6 +456,7 @@ function AddUpdateEmployeeCertification({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                autoComplete="off"
                 type="text"
                 id="registrationNumber"
                 name="code"
@@ -481,6 +482,7 @@ function AddUpdateEmployeeCertification({
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="completedDate"
                 maxDate={new Date()}
@@ -495,11 +497,12 @@ function AddUpdateEmployeeCertification({
                 }
                 onChange={onChangeDateOfCompletionHandler}
                 id="completedDate"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText={
+                  dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+                }
                 dateFormat={dateFormat}
               />
             </CCol>
@@ -510,6 +513,7 @@ function AddUpdateEmployeeCertification({
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="expiryDate"
                 value={
@@ -523,11 +527,12 @@ function AddUpdateEmployeeCertification({
                 }
                 onChange={onChangeDateOfExpireHandler}
                 id="expiryDate"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText={
+                  dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+                }
                 dateFormat={dateFormat}
               />
             </CCol>

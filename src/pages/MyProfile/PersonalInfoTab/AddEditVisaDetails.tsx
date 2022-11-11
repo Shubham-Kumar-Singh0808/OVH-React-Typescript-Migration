@@ -453,6 +453,7 @@ function AddEditVisaDetails({
             </CFormLabel>
             <CCol sm={3} data-testid="dateOfIssuedInput">
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="dateOfIssue"
                 maxDate={new Date()}
@@ -467,7 +468,6 @@ function AddEditVisaDetails({
                 }
                 onChange={onChangeDateOfIssueHandler}
                 id="dateOfIssue"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -491,6 +491,7 @@ function AddEditVisaDetails({
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="dateOfExpire"
                 value={
@@ -504,7 +505,6 @@ function AddEditVisaDetails({
                 }
                 onChange={onChangeDateOfExpireHandler}
                 id="dateOfExpire"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
