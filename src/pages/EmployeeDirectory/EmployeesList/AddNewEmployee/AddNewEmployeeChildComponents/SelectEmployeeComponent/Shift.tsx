@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { EmployeeShiftDetails } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import { SelectShiftProps } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../utils/helper'
+import { reduxServices } from '../../../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../../../stateStore'
 
 const Shift = ({
   dynamicFormLabelProps,
@@ -16,10 +18,15 @@ const Shift = ({
 }: SelectShiftProps): JSX.Element => {
   const initShift = {} as EmployeeShiftDetails
   const [defaultValue, setDefaultValue] = useState(initShift)
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddShiftConfiguration = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Shift',
+  )
   const onHandleSelectManager = (e: { target: { value: string } }) => {
     const name = e.target.value
     const shift = list.find((schedule) => schedule.name === name)
-
     const selectedShift = {
       id: shift?.id,
       name: shift?.name,
@@ -88,14 +95,16 @@ const Shift = ({
         {!isAddDisable ? (
           <>
             <CCol sm={1}>
-              <CButton
-                data-testId="shiftButton"
-                color="info"
-                className="btn-ovh me-1"
-                onClick={() => setToggleShift(!toggleValue)}
-              >
-                <i className="fa fa-plus me-1"></i>Add
-              </CButton>
+              {userAccessToAddShiftConfiguration?.viewaccess && (
+                <CButton
+                  data-testId="shiftButton"
+                  color="info"
+                  className="btn-ovh me-1"
+                  onClick={() => setToggleShift(!toggleValue)}
+                >
+                  <i className="fa fa-plus me-1"></i>Add
+                </CButton>
+              )}
             </CCol>
             {defaultValue.name && (
               <div className="shift-info">

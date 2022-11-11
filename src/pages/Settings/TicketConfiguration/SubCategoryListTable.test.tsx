@@ -89,16 +89,6 @@ describe('SubCategoryList Table', () => {
         'btn btn-info btn-ovh btn-ovh-employee-list me-1',
       )
     })
-    // test('should render edit button in the Actions', () => {
-    //   expect(screen.getByTestId('th-edit-btn0')).toHaveClass(
-    //     'btn btn-danger btn-sm',
-    //   )
-    // })
-    // test('should render delete button in the Actions', () => {
-    //   expect(screen.getByTestId('th-delete-btn0')).toHaveClass(
-    //     'btn btn-danger btn-sm',
-    //   )
-    // })
     test('should render Ticket History Timeline Component upon clicking Timeline button from Actions', () => {
       const timeLineBtn = screen.getByTestId('th-timeline-btn1')
       userEvent.click(timeLineBtn)

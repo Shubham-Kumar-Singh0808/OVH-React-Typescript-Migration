@@ -149,14 +149,14 @@ const EditCertificateType = ({
         <CButton
           color="success"
           data-testid={`sh-save-btn`}
-          className="btn-ovh me-1"
+          className="btn-ovh-employee-list me-1"
           onClick={saveCertificateTypeHandler}
         >
           <i className="fa fa-floppy-o" aria-hidden="true"></i>
         </CButton>
         <CButton
           color="warning"
-          className="btn-ovh me-1"
+          className="btn-ovh-employee-list me-1"
           onClick={cancelCertificateTypeButtonHandler}
         >
           <i className="fa fa-times" aria-hidden="true"></i>

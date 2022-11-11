@@ -37,7 +37,12 @@ const ShiftConfiguration = ({
     })
   const [isAddBtnEnabled, setIsAddBtnEnabled] = useState<boolean>(false)
   const dispatch = useAppDispatch()
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddShift = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Shift',
+  )
   const onchangeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'name') {
@@ -331,15 +336,17 @@ const ShiftConfiguration = ({
               </CCol>
             </CRow>
             <CRow className="mt-4 mb-4">
-              <CCol sm={{ span: 6, offset: 3 }}>
-                <CButton
-                  disabled={!isAddBtnEnabled}
-                  color="info btn-ovh me-1"
-                  onClick={handleAddEmployeeTimeSlot}
-                >
-                  <i className="fa fa-plus me-1"></i>Add
-                </CButton>
-              </CCol>
+              {userAccessToAddShift?.createaccess && (
+                <CCol sm={{ span: 6, offset: 3 }}>
+                  <CButton
+                    disabled={!isAddBtnEnabled}
+                    color="info btn-ovh me-1"
+                    onClick={handleAddEmployeeTimeSlot}
+                  >
+                    <i className="fa fa-plus me-1"></i>Add
+                  </CButton>
+                </CCol>
+              )}
             </CRow>
           </CForm>
           <CCol xs={12} className="ps-0 pe-0">
