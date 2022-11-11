@@ -149,18 +149,14 @@ const AddEmployeeDesignation = ({
             aria-label="Default select example"
             size="sm"
             id="department"
-            data-testid="form-select"
+            data-testid="form-select-dept"
             name="department"
             value={selectedDepartmentId}
             onChange={handleInputChange}
           >
             <option value={''}>Select Department</option>
             {departments?.map((department, index) => (
-              <option
-                key={index}
-                value={department.departmentId}
-                data-testid="select-option"
-              >
+              <option key={index} value={department.departmentId}>
                 {department.departmentName}
               </option>
             ))}
@@ -182,6 +178,7 @@ const AddEmployeeDesignation = ({
           <CFormInput
             type="text"
             id="designationName"
+            data-testid="desg-input"
             name="designationName"
             maxLength={32}
             value={designationName}
@@ -193,6 +190,7 @@ const AddEmployeeDesignation = ({
             <CButton
               color="info btn-ovh me-1 text-white"
               size="sm"
+              data-testid="add-button"
               disabled={!isAddDesignationBtnEnabled}
               onClick={handleAddEmployeeDesignation}
             >

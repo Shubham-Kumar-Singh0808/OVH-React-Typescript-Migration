@@ -257,14 +257,17 @@ const CertificateTypeTable = (): JSX.Element => {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
         modalTitle="Delete Certificate Type"
+        modalBodyClass="mt-0"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
         confirmButtonAction={handleConfirmDeleteCertificateType}
       >
-        {`Do you really want to delete this ${toDeleteCertificate} Certificate ?`}
+        <>
+          Do you really want to delete this{' '}
+          <strong>{toDeleteCertificate}</strong> Certificate ?
+        </>
       </OModal>
     </>
   )

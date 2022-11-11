@@ -21,6 +21,8 @@ import { currentPageData } from '../../../../../utils/paginationUtils'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { usePagination } from '../../../../../middleware/hooks/usePagination'
 import { EmployeeDesignationListTableProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
+import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const EmployeeDesignationListTable = ({
   selectedDepartmentId,
@@ -216,23 +218,23 @@ const EmployeeDesignationListTable = ({
           </CRow>
         </>
       ) : (
-        <CCol>
-          <CRow>
-            <CSpinner data-testid="designation-list-loader" />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
       <OModal
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Designation"
+        modalBodyClass="mt-0"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete()}
       >
-        {`Do you really want to delete this ${deleteDesignationName} Designation ?`}
+        <>
+          Do you really want to delete this{' '}
+          <strong>{deleteDesignationName}</strong> Designation ?
+        </>
       </OModal>
     </>
   )
