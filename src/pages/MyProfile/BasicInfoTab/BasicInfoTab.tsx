@@ -438,6 +438,7 @@ const BasicInfoTab = (): JSX.Element => {
   }
 
   const commonFormLabel = 'col-sm-3 col-form-label text-end'
+  const formLabelWithPadding = 'col-sm-3 col-form-label text-end pe-18'
   const normalText = 'text-white'
   const dangerText = 'text-danger'
 
@@ -455,7 +456,9 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('employeeId', commonFormLabel)}>
+          <CFormLabel
+            {...dynamicFormLabelProps('employeeId', formLabelWithPadding)}
+          >
             Employee ID:
           </CFormLabel>
           <CCol sm={2}>
@@ -466,7 +469,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('employeeEmailId', commonFormLabel)}
+            {...dynamicFormLabelProps('employeeEmailId', formLabelWithPadding)}
           >
             Email ID:
           </CFormLabel>
@@ -478,7 +481,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('employeeFullName', commonFormLabel)}
+            {...dynamicFormLabelProps('employeeFullName', formLabelWithPadding)}
           >
             Full Name:
           </CFormLabel>
@@ -491,6 +494,7 @@ const BasicInfoTab = (): JSX.Element => {
         <BasicInfoInputFields
           dateFormat={dateFormat}
           commonFormLabel={commonFormLabel}
+          formLabelWithPadding={formLabelWithPadding}
           employeeBasicInformationEditData={employeeBasicInformationEditData}
           handleChange={handleChange}
           baseLocationShown={baseLocationShown}
@@ -522,7 +526,9 @@ const BasicInfoTab = (): JSX.Element => {
           handleAnniversary={handleAnniversary}
         />
         <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('department', commonFormLabel)}>
+          <CFormLabel
+            {...dynamicFormLabelProps('department', formLabelWithPadding)}
+          >
             Department:
           </CFormLabel>
           <CCol sm={2}>
@@ -533,7 +539,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('reportingManager', commonFormLabel)}
+            {...dynamicFormLabelProps('reportingManager', formLabelWithPadding)}
           >
             Reporting Manager:
           </CFormLabel>
@@ -545,7 +551,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('employmentType', commonFormLabel)}
+            {...dynamicFormLabelProps('employmentType', formLabelWithPadding)}
           >
             Employment Type:
           </CFormLabel>
@@ -556,7 +562,9 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('jobType', commonFormLabel)}>
+          <CFormLabel
+            {...dynamicFormLabelProps('jobType', formLabelWithPadding)}
+          >
             Job Type:
           </CFormLabel>
           <CCol sm={2}>
@@ -566,7 +574,9 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('country', commonFormLabel)}>
+          <CFormLabel
+            {...dynamicFormLabelProps('country', formLabelWithPadding)}
+          >
             Country:
           </CFormLabel>
           <CCol sm={2}>
@@ -604,7 +614,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('employeeSkypeID', commonFormLabel)}
+            {...dynamicFormLabelProps('employeeSkypeID', formLabelWithPadding)}
           >
             Skype ID:
           </CFormLabel>
@@ -625,7 +635,7 @@ const BasicInfoTab = (): JSX.Element => {
           <CFormLabel
             {...dynamicFormLabelProps(
               'employeeProfilePicture',
-              commonFormLabel,
+              formLabelWithPadding,
             )}
           >
             Profile Picture:
@@ -639,7 +649,9 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('aboutMe', commonFormLabel)}>
+          <CFormLabel
+            {...dynamicFormLabelProps('aboutMe', formLabelWithPadding)}
+          >
             About Me:
           </CFormLabel>
           <CCol sm={8}>
@@ -657,7 +669,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3">
           <CFormLabel
-            {...dynamicFormLabelProps('uploadRBTCV', commonFormLabel)}
+            {...dynamicFormLabelProps('uploadRBTCV', formLabelWithPadding)}
           >
             Upload RBT CV:
           </CFormLabel>
