@@ -7,6 +7,7 @@ import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   AppraisalCycleSliceState,
   getAppraisalCycle,
+  getCycle,
 } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
 const getAllAppraisalCycleData = createAsyncThunk(
@@ -20,8 +21,22 @@ const getAllAppraisalCycleData = createAsyncThunk(
     }
   },
 )
+
+const getCycleToEdit = createAsyncThunk(
+  'appraisalCycle/getCycleToEdit',
+  async (cycleId: number, thunkApi) => {
+    try {
+      return await appraisalConfigurationsApi.getCycleToEdit(cycleId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
   appraisalCycle: [],
+  editAppraisalCycle: {} as getCycle,
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
@@ -40,10 +55,16 @@ const appraisalCycleSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-
-      .addMatcher(isAnyOf(getAllAppraisalCycleData.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getCycleToEdit.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editAppraisalCycle = action.payload as getCycle
       })
+      .addMatcher(
+        isAnyOf(getAllAppraisalCycleData.pending, getCycleToEdit.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
       .addMatcher(
         isAnyOf(getAllAppraisalCycleData.fulfilled),
         (state, action) => {
@@ -60,6 +81,9 @@ const appraisalCycleNames = (state: RootState): getAppraisalCycle[] =>
 const isLoading = (state: RootState): LoadingState =>
   state.appraisalConfigurations.isLoading
 
+const getEditAppraisal = (state: RootState): getAppraisalCycle =>
+  state.appraisalConfigurations.editAppraisalCycle
+
 const pageFromState = (state: RootState): number =>
   state.appraisalConfigurations.currentPage
 const pageSizeFromState = (state: RootState): number =>
@@ -67,6 +91,7 @@ const pageSizeFromState = (state: RootState): number =>
 
 const appraisalCycleThunk = {
   getAllAppraisalCycle: getAllAppraisalCycleData,
+  getCycleToEdit,
 }
 
 const appraisalCycleSelectors = {
@@ -74,6 +99,7 @@ const appraisalCycleSelectors = {
   appraisalCycleNames,
   pageFromState,
   pageSizeFromState,
+  getEditAppraisal,
 }
 
 export const appraisalCycleService = {

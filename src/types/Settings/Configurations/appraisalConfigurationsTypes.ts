@@ -15,9 +15,25 @@ export type getAppraisalCycle = {
   appraisalEndDate: string
   servicePeriod: number
 }
+export type getCycle = {
+  active: boolean
+  appraisalDuration: string
+  appraisalEndDate: string
+  appraisalStartDate: string
+  appraisalType: string
+  cycleStartedFlag: boolean
+  description: string
+  fromDate: string
+  id: number
+  level: number
+  name: string
+  servicePeriod: number
+  toDate: string
+}
 
 export type AppraisalCycleSliceState = {
   appraisalCycle: getAppraisalCycle[]
+  editAppraisalCycle: getCycle
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number

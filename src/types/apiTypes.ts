@@ -434,6 +434,7 @@ export interface EventListApi extends ApiBase {
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
+  editAppraisalCycle: string
 }
 
 export interface RoomListApi extends ApiBase {
