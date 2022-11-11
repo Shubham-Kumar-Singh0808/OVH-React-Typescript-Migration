@@ -52,6 +52,7 @@ describe('MyTickets component with data', () => {
       expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
     })
   })
+  jest.retryTimes(3)
   test('should open modal when clicking on description link', async () => {
     const linkElement = screen.getByTestId('mgr-comments0')
     userEvent.click(linkElement)
