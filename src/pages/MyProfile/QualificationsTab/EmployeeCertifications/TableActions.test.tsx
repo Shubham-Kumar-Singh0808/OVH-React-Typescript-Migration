@@ -19,8 +19,6 @@ describe('Table Actions Component testing', () => {
         editCertificateButtonHandler={mockEditCertBtn}
         setCertificateId={jest.fn()}
         setIsDeleteModalVisible={jest.fn()}
-        certificateId={0}
-        isDeleteModalVisible={true}
         userAccess={userAccessToCertifications}
       />,
       {
@@ -43,13 +41,5 @@ describe('Table Actions Component testing', () => {
     const alerBtn = screen.getByTestId('showAlertBtn')
     expect(alerBtn).toBeTruthy()
     fireEvent.click(alerBtn)
-
-    expect(
-      screen.getByText('Do you really want to delete this ?'),
-    ).toBeInTheDocument()
-
-    const confrmBtn = screen.getByTestId('modalConfirmBtn')
-    expect(editBtn).toBeTruthy()
-    fireEvent.click(confrmBtn)
   })
 })
