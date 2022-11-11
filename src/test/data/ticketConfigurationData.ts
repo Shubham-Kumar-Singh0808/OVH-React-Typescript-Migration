@@ -400,7 +400,7 @@ export const mockTicketConfigurationSubCategoryList: TicketConfigurationSubCateg
       },
       {
         subCategoryId: 89,
-        subCategoryName: 'testing keyboard',
+        subCategoryName: 'testing keyboard2',
         estimatedTime: '1.00',
         workFlow: true,
         categoryId: 5,

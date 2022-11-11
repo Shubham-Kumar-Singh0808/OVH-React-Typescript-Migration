@@ -27,7 +27,7 @@ const TicketConfigurationOptions = ({
     number | string
   >()
   const [showExportButton, setShowExportButton] = useState<boolean>(false)
-  const [isViewButtonEnabled, setIsViewButtonEnabled] = useState<boolean>(false)
+  const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const departments: TicketConfigurationDepartments[] = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.departments,
@@ -58,9 +58,9 @@ const TicketConfigurationOptions = ({
   }
   useEffect(() => {
     if (selectedDepartment) {
-      setIsViewButtonEnabled(true)
+      setIsButtonEnabled(true)
     } else {
-      setIsViewButtonEnabled(false)
+      setIsButtonEnabled(false)
     }
   }, [selectedDepartment])
 
@@ -208,21 +208,22 @@ const TicketConfigurationOptions = ({
             </CRow>
           )}
         </CCol>
-        {userAccessToAddSubCategory?.createaccess && (
-          <CCol sm={1}>
-            <CRow>
-              <CCol className="text-end mt-4">
+        <CCol sm={1}>
+          <CRow>
+            <CCol className="text-end mt-4">
+              {userAccessToAddSubCategory?.createaccess && (
                 <CButton
                   color="info"
                   className="btn-ovh me-1 mt-2"
                   data-testid="addSubCategory-btn"
+                  disabled={!isButtonEnabled}
                 >
                   <i className="fa fa-plus  me-1"></i>Add
                 </CButton>
-              </CCol>
-            </CRow>
-          </CCol>
-        )}
+              )}
+            </CCol>
+          </CRow>
+        </CCol>
       </CRow>
       <CRow className="text-center mt-1">
         <CCol sm={3}></CCol>
@@ -232,7 +233,7 @@ const TicketConfigurationOptions = ({
             onClick={onViewHandler}
             className="btn-ovh me-1 mt-2"
             data-testid="view-button"
-            disabled={!isViewButtonEnabled}
+            disabled={!isButtonEnabled}
           >
             View
           </CButton>

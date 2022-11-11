@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import SubCategoryListTable from './SubCategoryListTable'
 import TicketHistoryDetails from './TicketHistory/TicketHistoryDetails'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import { render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import {
@@ -25,9 +25,10 @@ const toRender = (
       setCurrentPage={mockSetCurrentPage}
       pageSize={20}
       setPageSize={mockSetPageSize}
-      filterByDepartment={1}
-      filterByCategory={5}
-      filterBySubCategory={111}
+      filterByDepartment="Networking"
+      filterByCategory="Hardware"
+      filterBySubCategory=""
+      isTableView={true}
     />
   </div>
 )
@@ -44,7 +45,7 @@ describe('SubCategoryList Table', () => {
             categories: mockTicketConfigurationCategory,
             subCategories: mockTicketConfigurationCategory,
             listSize: 11,
-            isLoadingFilterOptions: ApiLoadingState.idle,
+            isLoadingFilterOptions: ApiLoadingState.succeeded,
           },
           userAccessToFeatures: {
             userAccessToFeatures: mockUserAccessToFeaturesData,
@@ -88,6 +89,16 @@ describe('SubCategoryList Table', () => {
         'btn btn-info btn-ovh btn-ovh-employee-list me-1',
       )
     })
+    // test('should render edit button in the Actions', () => {
+    //   expect(screen.getByTestId('th-edit-btn0')).toHaveClass(
+    //     'btn btn-danger btn-sm',
+    //   )
+    // })
+    // test('should render delete button in the Actions', () => {
+    //   expect(screen.getByTestId('th-delete-btn0')).toHaveClass(
+    //     'btn btn-danger btn-sm',
+    //   )
+    // })
     test('should render Ticket History Timeline Component upon clicking Timeline button from Actions', () => {
       const timeLineBtn = screen.getByTestId('th-timeline-btn1')
       userEvent.click(timeLineBtn)
