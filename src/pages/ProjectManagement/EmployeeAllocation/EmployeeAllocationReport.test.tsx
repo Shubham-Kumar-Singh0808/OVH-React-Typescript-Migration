@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import EmployeeAllocation from './EmployeeAllocation'
+import EmployeeAllocation from './EmployeeAllocationReport'
 import { render, screen } from '../../../test/testUtils'
 
 const toRender = (
