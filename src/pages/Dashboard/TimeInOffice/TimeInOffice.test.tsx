@@ -3,12 +3,16 @@ import React from 'react'
 import TimeInOffice from './TimeInOffice'
 import { render, screen } from '../../../test/testUtils'
 import { mockWeeklyTimeInOffice } from '../../../test/data/weeklyTimeInOfficeData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 describe('TimeInOffice Component Testing', () => {
   render(<TimeInOffice />, {
     preloadedState: {
       weeklyTimeInOffice: {
         timeInOffice: mockWeeklyTimeInOffice,
+      },
+      userAccessToFeatures: {
+        userAccessToFeatures: mockUserAccessToFeaturesData,
       },
     },
   })

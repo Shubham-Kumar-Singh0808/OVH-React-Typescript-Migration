@@ -206,6 +206,10 @@ const EditHoliday = React.lazy(
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
+const EmployeeAllocation = React.lazy(
+  () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
+)
+
 const AppraisalConfigurations = React.lazy(
   () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
 )
@@ -213,6 +217,11 @@ const AppraisalConfigurations = React.lazy(
 const RoomList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
+
+const TicketConfiguration = React.lazy(
+  () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -352,6 +361,11 @@ const routes = [
     component: AddProject,
   },
   {
+    path: '/allocationEmployee',
+    name: 'Allocate Employee',
+    component: EmployeeAllocation,
+  },
+  {
     path: '/editproject/:projectId',
     name: 'Edit Project',
     component: EditProject,
@@ -466,6 +480,11 @@ const routes = [
     path: '/roomList',
     name: 'RoomList',
     component: RoomList,
+  },
+  {
+    path: '/subCategoryList',
+    name: 'Ticket Configuration',
+    component: TicketConfiguration,
   },
   {
     path: '/projectreport',

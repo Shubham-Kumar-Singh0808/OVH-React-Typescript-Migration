@@ -66,6 +66,8 @@ import { addLocationListService } from './ConferenceRoomBooking/NewBooking/Locat
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
+import { ticketConfigurationService } from './Settings/TicketConfiguration/ticketConfigurationSlice'
+import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
@@ -118,6 +120,7 @@ export const reduxServices = {
   leaveReport: leaveReportService,
   ticketReport: ticketReportService,
   projectManagement: projectManagementService,
+  allocateEmployee: allocateEmployeeService,
   clients: clientsService,
   addClient: addNewClientService,
   clientInformation: clientInformationService,
@@ -142,6 +145,7 @@ export const reduxServices = {
   eventList: eventListService,
   roomLists: roomListService,
   searchEmployee: employeeSearchService,
+  ticketConfiguration: ticketConfigurationService,
   appraisalConfigurations: appraisalCycleService,
   projectReport: projectReportsService,
 }

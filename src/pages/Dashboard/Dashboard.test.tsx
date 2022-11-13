@@ -2,6 +2,7 @@ import React from 'react'
 import Dashboard from './Dashboard'
 import UpcomingProbationaryEndDates from './ProbationaryList/UpcomingProbationaryEndDates'
 import { render, screen } from '../../test/testUtils'
+import { mockUserAccessToFeaturesData } from '../../test/data/userAccessToFeaturesData'
 
 // const toRender = (
 //   <div>
@@ -26,6 +27,9 @@ describe('Dashboard Sections Testing', () => {
               token: 'test',
               designation: 'Software Developer',
             },
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })
@@ -93,6 +97,9 @@ describe('Dashboard Sections Testing', () => {
               designation: 'HR Executive',
             },
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       })
     })
@@ -115,6 +122,9 @@ describe('Dashboard Sections Testing', () => {
               token: 'test',
               designation: 'Senior Manager, Human Resource',
             },
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })

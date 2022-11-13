@@ -456,6 +456,7 @@ function AddUpdateEmployeeCertification({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                autoComplete="off"
                 type="text"
                 id="registrationNumber"
                 name="code"
@@ -481,6 +482,7 @@ function AddUpdateEmployeeCertification({
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="completedDate"
                 maxDate={new Date()}
@@ -495,21 +497,23 @@ function AddUpdateEmployeeCertification({
                 }
                 onChange={onChangeDateOfCompletionHandler}
                 id="completedDate"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText={
+                  dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+                }
                 dateFormat={dateFormat}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4" data-testid="expiryDateInput">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
               Expiry Date :
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="expiryDate"
                 value={
@@ -523,17 +527,23 @@ function AddUpdateEmployeeCertification({
                 }
                 onChange={onChangeDateOfExpireHandler}
                 id="expiryDate"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText={
+                  dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+                }
                 dateFormat={dateFormat}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('percentage', formLabel)}>
+            <CFormLabel
+              {...dynamicFormLabelProps(
+                'percentage',
+                'col-sm-3 col-form-label text-end pe-18',
+              )}
+            >
               Percentage :
             </CFormLabel>
             <CCol sm={3}>
@@ -550,7 +560,7 @@ function AddUpdateEmployeeCertification({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
               Description :
             </CFormLabel>
             {showEditor ? (

@@ -23,6 +23,12 @@ const AddNewCertificateType = ({
   const getAllTechnology = useTypedSelector(
     reduxServices.employeeCertifications.selectors.technologies,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddNewCertificateType = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Certificate Type',
+  )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -162,26 +168,28 @@ const AddNewCertificateType = ({
             />
           </CCol>
         </CRow>
-        <CRow className="mt-3 mb-3">
-          <CCol className="col-md-3 offset-md-3">
-            <CButton
-              color="success"
-              className="btn-ovh me-1"
-              size="sm"
-              disabled={!isAddButtonEnabled}
-              onClick={handleAddCertificateType}
-            >
-              Add
-            </CButton>
-            <CButton
-              color="warning "
-              className="btn-ovh"
-              onClick={handleClearInputFields}
-            >
-              Clear
-            </CButton>
-          </CCol>
-        </CRow>
+        {userAccessToAddNewCertificateType?.createaccess && (
+          <CRow className="mt-3 mb-3">
+            <CCol className="col-md-3 offset-md-3">
+              <CButton
+                color="success"
+                className="btn-ovh me-1"
+                size="sm"
+                disabled={!isAddButtonEnabled}
+                onClick={handleAddCertificateType}
+              >
+                Add
+              </CButton>
+              <CButton
+                color="warning "
+                className="btn-ovh"
+                onClick={handleClearInputFields}
+              >
+                Clear
+              </CButton>
+            </CCol>
+          </CRow>
+        )}
       </CForm>
     </>
   )
