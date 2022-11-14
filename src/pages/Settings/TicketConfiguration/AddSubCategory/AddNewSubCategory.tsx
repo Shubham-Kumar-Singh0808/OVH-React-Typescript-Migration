@@ -75,7 +75,6 @@ const AddNewSubCategory = (): JSX.Element => {
   const estimatedTimeRegexReplace = /\D/g
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    console.log(name, value)
     if (name === 'subCategoryName') {
       const subCategoryName = value.replace(/[^a-z\s]$/gi, '')
       setAddNewSubCategory((prevState) => {
@@ -135,7 +134,7 @@ const AddNewSubCategory = (): JSX.Element => {
       backButtonHandler()
     }
   }
-  console.log(isChecked)
+
   return (
     <>
       <OCard
@@ -198,7 +197,7 @@ const AddNewSubCategory = (): JSX.Element => {
                 aria-label="category"
                 name="category"
                 id="category"
-                data-testid="category"
+                data-testid="category-name"
                 defaultValue={selectCategory}
                 disabled={!selectDepartment}
                 onChange={(e) => setSelectCategory(e.target.value)}
@@ -243,6 +242,7 @@ const AddNewSubCategory = (): JSX.Element => {
                 size="sm"
                 type="text"
                 name="subCategoryName"
+                data-testid="sub-category-input"
                 placeholder="Enter Sub-Category Name"
                 maxLength={50}
                 autoComplete="off"
@@ -292,6 +292,7 @@ const AddNewSubCategory = (): JSX.Element => {
               <CFormCheck
                 className="form-select-not-allowed"
                 name="workFlow"
+                data-testid="ch-workFlow"
                 onChange={() => setIsChecked(!isChecked)}
                 checked={isChecked}
               />
@@ -323,6 +324,7 @@ const AddNewSubCategory = (): JSX.Element => {
               <CButton
                 color="success"
                 className="btn-ovh me-1"
+                data-testid="save-subCategory-btn"
                 size="sm"
                 disabled={!isButtonEnabled}
                 onClick={handleAddNewSubCategory}
@@ -332,6 +334,7 @@ const AddNewSubCategory = (): JSX.Element => {
               <CButton
                 color="warning "
                 className="btn-ovh"
+                data-testid="clear-subCategory-btn"
                 onClick={handleClearInputs}
               >
                 Clear

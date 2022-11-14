@@ -140,7 +140,7 @@ export type AddSubCategoryDetails = {
   categoryId?: string
   departmentId?: string
   estimatedTime?: string
-  levelOfHierarchy?: string
+  levelOfHierarchy?: string | number
   subCategoryName?: string
   workFlow?: boolean
 }
