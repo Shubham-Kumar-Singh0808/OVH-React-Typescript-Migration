@@ -62,6 +62,7 @@ import {
   AppraisalConfigurationsApi,
   RoomListApi,
   TicketConfigurationApi,
+  SubmitResignationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -542,4 +543,9 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   getSubCategoryList: apiPrefix + '/supportManagement/getSearchSubCategoryList',
   deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
   ticketHistory: apiPrefix + '/supportManagement/getAudit',
+}
+
+export const submitResignationApiConfig: SubmitResignationApi = {
+  getSeparationForm: apiPrefix + '/separationController/getSeparationForm',
+  submitResignation: apiPrefix + '/separationController/SubmitResignation',
 }

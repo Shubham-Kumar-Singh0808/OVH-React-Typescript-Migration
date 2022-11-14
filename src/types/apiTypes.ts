@@ -451,3 +451,8 @@ export interface TicketConfigurationApi extends ApiBase {
   deleteSubCategory: string
   ticketHistory: string
 }
+
+export interface SubmitResignationApi extends ApiBase {
+  getSeparationForm: string
+  submitResignation: string
+}

@@ -71,6 +71,7 @@ import { ticketConfigurationService } from './Settings/TicketConfiguration/ticke
 import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import { submitViewResignationServices } from './Separation/SubmitViewResignation/submitResignationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -146,4 +147,5 @@ export const reduxServices = {
   searchEmployee: employeeSearchService,
   ticketConfiguration: ticketConfigurationService,
   appraisalConfigurations: appraisalCycleService,
+  submitViewResignation: submitViewResignationServices,
 }
