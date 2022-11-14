@@ -13,7 +13,7 @@ const addNewCycle = createAsyncThunk(
   'addConfiguration/addAppraisalCycle',
   async (newCycleDetails: AddCycle, thunkApi) => {
     try {
-      return await addConfigurationApi.getAddAppraisalCycle(newCycleDetails)
+      return await addConfigurationApi.addAppraisalCycles(newCycleDetails)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

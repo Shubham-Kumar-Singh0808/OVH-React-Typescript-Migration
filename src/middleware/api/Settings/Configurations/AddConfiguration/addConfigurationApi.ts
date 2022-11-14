@@ -8,7 +8,7 @@ import {
   AllowedHttpMethods,
 } from '../../../apiList'
 
-const getAddAppraisalCycle = async (
+const addAppraisalCycles = async (
   newCycleRecords: AddCycle,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -21,7 +21,7 @@ const getAddAppraisalCycle = async (
 }
 
 const addConfigurationApi = {
-  getAddAppraisalCycle,
+  addAppraisalCycles,
 }
 
 export default addConfigurationApi

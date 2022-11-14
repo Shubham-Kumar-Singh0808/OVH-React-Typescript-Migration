@@ -15,7 +15,7 @@ const AddConfigurationOptions = (props: {
   setLevel: (value: number) => void
   servicePeriod: string | number | undefined
   setServicePeriod: (value: string) => void
-}) => {
+}): JSX.Element => {
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
