@@ -5,6 +5,7 @@ import {
   Redirect,
   Route,
   Switch,
+  useHistory,
   useLocation,
 } from 'react-router-dom'
 import React, { Suspense, useCallback, useEffect } from 'react'
@@ -30,8 +31,12 @@ const App = (): JSX.Element => {
   const authenticatedToken = useTypedSelector(
     reduxServices.authentication.selectors.selectToken,
   )
-  const dispatch = useAppDispatch()
 
+  const forbiddenError = useTypedSelector(
+    reduxServices.generalInformation.selectors.errorCode,
+  )
+  const dispatch = useAppDispatch()
+  const history = useHistory()
   const loadState = useCallback(() => {
     const employeeNameFromStorage = localStorage.getItem('employeeName')
     const employeeIdFromStorage = localStorage.getItem('employeeId')
@@ -71,8 +76,15 @@ const App = (): JSX.Element => {
       dispatch(
         reduxServices.userAccessToFeatures.getUserAccessToFeatures(employeeId),
       )
+      if (forbiddenError === 403) {
+        history.push('/forbiddenError')
+      }
     }
   }, [authenticatedToken, dispatch, employeeId])
+
+  // useEffect(() => {
+  // }, [forbiddenError])
+  console.log(forbiddenError)
 
   const ScrollToTop = () => {
     const { pathname } = useLocation()

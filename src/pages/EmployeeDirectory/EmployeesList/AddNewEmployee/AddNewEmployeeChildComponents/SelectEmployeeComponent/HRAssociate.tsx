@@ -17,6 +17,11 @@ const HRAssociate = ({
 }: HrDataProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
 
+  const onChangeHRAssociate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAutoCompleteTarget(e.target.value)
+    if (e.target.value === '') onSelectHRAssociate({} as GetHRAssociate)
+  }
+
   const onHandleSelectHRAssociate = (fullName: string) => {
     setAutoCompleteTarget(fullName)
     const managerName = hrDataList.find((data) => data.fullName === fullName)
@@ -104,7 +109,7 @@ const HRAssociate = ({
             shouldItemRender={(item, value) =>
               item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
             }
-            onChange={(e) => setAutoCompleteTarget(e.target.value)}
+            onChange={(e) => onChangeHRAssociate(e)}
             onSelect={(value) => onHandleSelectHRAssociate(value)}
           />
         </CCol>

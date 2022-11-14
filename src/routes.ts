@@ -214,6 +214,10 @@ const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
 
+const ErrorPage = React.lazy(
+  () => import('./components/ReusableComponent/OErrorComponent'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -477,6 +481,11 @@ const routes = [
     path: '/subCategoryList',
     name: 'Ticket Configuration',
     component: TicketConfiguration,
+  },
+  {
+    path: '/forbiddenError',
+    name: 'Error Page',
+    component: ErrorPage,
   },
 ]
 

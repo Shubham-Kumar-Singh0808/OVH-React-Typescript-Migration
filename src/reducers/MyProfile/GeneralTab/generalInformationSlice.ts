@@ -105,6 +105,9 @@ const selectLoggedInEmployeeData = (
 const generalInformation = (state: RootState): EmployeeGeneralInformation =>
   state.getLoggedInEmployeeData.generalInformation
 
+const errorCode = (state: RootState): ValidationError =>
+  state.getLoggedInEmployeeData.error
+
 export const getEmployeeGeneralInformationThunk = {
   getEmployeeGeneralInformation,
   getSelectedEmployeeInformation,
@@ -113,6 +116,7 @@ export const getEmployeeGeneralInformationThunk = {
 export const loggedInEmployeeSelectors = {
   selectLoggedInEmployeeData,
   generalInformation,
+  errorCode,
 }
 export const generalInformationService = {
   ...getEmployeeGeneralInformationThunk,
