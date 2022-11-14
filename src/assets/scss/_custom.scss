@@ -207,7 +207,8 @@ input.capetalized {
   list-style: none;
 }
 .form-select-not-allowed {
-  cursor: not-allowed !important;
+  cursor: not-allowed;
+  pointer-events: all !important;
 }
 .label-default {
   background-color: $badge-light;

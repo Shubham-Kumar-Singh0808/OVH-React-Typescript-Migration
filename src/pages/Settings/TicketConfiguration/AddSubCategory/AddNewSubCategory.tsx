@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CRow,
   CCol,
@@ -10,33 +10,132 @@ import {
   CFormCheck,
 } from '@coreui/react-pro'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
-import { TextWhite, TextDanger } from '../../../../constant/ClassName'
+import { AddSubCategoryDetails } from '../../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
+import { showIsRequired } from '../../../../utils/helper'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddNewSubCategory = (): JSX.Element => {
+  const initialSubCategoryDetails = {} as AddSubCategoryDetails
+  const [addNewSubCategory, setAddNewSubCategory] = useState({
+    ...initialSubCategoryDetails,
+    workFlow: false,
+  })
   const [selectDepartment, setSelectDepartment] = useState<number | string>()
   const [selectCategory, setSelectCategory] = useState<number | string>()
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [estimatedHours, setEstimatedHours] = useState('')
+  const [estimatedMins, setEstimatedMins] = useState('')
   const dispatch = useAppDispatch()
-  //   const isLoading = useTypedSelector(
-  //     reduxServices.ticketConfiguration.selectors.isLoading,
-  //   )
 
   const backButtonHandler = () => {
     dispatch(reduxServices.ticketConfiguration.actions.setToggle(''))
   }
-
   const getDepartments = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.departments,
   )
   const getCategories = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.categories,
   )
+  useEffect(() => {
+    if (!getDepartments)
+      dispatch(
+        reduxServices.ticketConfiguration.getTicketConfigurationDepartments(),
+      )
+    if (selectDepartment) {
+      dispatch(
+        reduxServices.ticketConfiguration.getTicketConfigurationCategories(
+          selectDepartment as number,
+        ),
+      )
+    }
+    if (selectCategory) {
+      dispatch(
+        reduxServices.ticketConfiguration.getTicketConfigurationSubCategories(
+          selectCategory as number,
+        ),
+      )
+    }
+  }, [dispatch, selectDepartment, selectCategory, getDepartments])
+
+  useEffect(() => {
+    if (
+      selectDepartment &&
+      selectCategory &&
+      addNewSubCategory.subCategoryName
+    ) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [selectDepartment, selectCategory, addNewSubCategory])
+
+  const estimatedTimeRegexReplace = /\D/g
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    console.log(name, value)
+    if (name === 'subCategoryName') {
+      const subCategoryName = value.replace(/[^a-z\s]$/gi, '')
+      setAddNewSubCategory((prevState) => {
+        return { ...prevState, ...{ [name]: subCategoryName } }
+      })
+    } else {
+      setAddNewSubCategory((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
+  }
+  const handleEstimatedTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    if (name === 'estimatedTimeHours') {
+      const hours = value.replace(estimatedTimeRegexReplace, '')
+      setEstimatedHours(hours)
+    } else if (name === 'estimatedTimeMins') {
+      const mins = value.replace(estimatedTimeRegexReplace, '')
+      setEstimatedMins(mins)
+    }
+  }
+  const handleClearInputs = () => {
+    setSelectDepartment('')
+    setSelectCategory('')
+    setAddNewSubCategory({
+      subCategoryName: '',
+      levelOfHierarchy: '',
+      workFlow: false,
+    })
+    setEstimatedHours('')
+    setEstimatedMins('')
+    setIsChecked(false)
+  }
+  const successToastMessage = (
+    <OToast
+      toastMessage="Sub-Category added successfully"
+      toastColor="success"
+    />
+  )
+  const handleAddNewSubCategory = async () => {
+    const prepareObject = {
+      ...addNewSubCategory,
+      departmentId: selectDepartment as string,
+      categoryId: selectCategory as string,
+      estimatedTime: `${estimatedHours || '0'}.${estimatedMins || '00'}`,
+      workFlow: isChecked,
+    }
+    const addSubCategoryResultAction = await dispatch(
+      reduxServices.ticketConfiguration.addSubCategory(prepareObject),
+    )
+    if (
+      reduxServices.ticketConfiguration.addSubCategory.fulfilled.match(
+        addSubCategoryResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      backButtonHandler()
+    }
+  }
+  console.log(isChecked)
   return (
     <>
       <OCard
@@ -60,7 +159,10 @@ const AddNewSubCategory = (): JSX.Element => {
         <CForm>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Department Name :<span>*</span>
+              Department Name :
+              <span className={showIsRequired(selectDepartment as string)}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -86,7 +188,10 @@ const AddNewSubCategory = (): JSX.Element => {
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Category Name :<span>*</span>
+              Category Name :
+              <span className={showIsRequired(selectCategory as string)}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -116,7 +221,6 @@ const AddNewSubCategory = (): JSX.Element => {
                 color="info"
                 className="btn-ovh"
                 data-testid="addCategory-btn"
-                disabled
               >
                 <i className="fa fa-plus me-1"></i>Add
               </CButton>
@@ -124,21 +228,31 @@ const AddNewSubCategory = (): JSX.Element => {
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Sub-Category Name:
-              <span>*</span>
+              Sub-Category Name :
+              <span
+                className={showIsRequired(
+                  addNewSubCategory.subCategoryName as string,
+                )}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 id="subCategory"
                 size="sm"
                 type="text"
-                name="subCategory"
+                name="subCategoryName"
                 placeholder="Enter Sub-Category Name"
+                maxLength={50}
+                autoComplete="off"
+                value={addNewSubCategory.subCategoryName}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
               Estimated Time :
             </CFormLabel>
             <CCol sm={1}>
@@ -149,7 +263,10 @@ const AddNewSubCategory = (): JSX.Element => {
                 name="estimatedTimeHours"
                 data-testid="tc-estimatedTimeHours"
                 placeholder="Hours"
-                maxLength={2}
+                maxLength={3}
+                autoComplete="off"
+                value={estimatedHours}
+                onChange={handleEstimatedTime}
               />
             </CCol>
             <CCol sm={1}>
@@ -160,38 +277,63 @@ const AddNewSubCategory = (): JSX.Element => {
                 name="estimatedTimeMins"
                 data-testid="tc-estimatedTimeMins"
                 placeholder="Min"
+                autoComplete="off"
                 maxLength={2}
+                value={estimatedMins}
+                onChange={handleEstimatedTime}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
               Work Flow :
             </CFormLabel>
             <CCol sm={1} className="mt-2">
-              <CFormCheck checked={!isChecked} />
-            </CCol>
-            <CFormLabel className="col-sm-1 col-form-label text-end">
-              Level:
-            </CFormLabel>
-            <CCol sm={1}>
-              <CFormInput
-                id="level"
-                size="sm"
-                type="text"
-                name="level"
-                data-testid="tc-level"
-                defaultValue={1}
-                maxLength={2}
+              <CFormCheck
+                className="form-select-not-allowed"
+                name="workFlow"
+                onChange={() => setIsChecked(!isChecked)}
+                checked={isChecked}
               />
             </CCol>
+            {isChecked && (
+              <>
+                <CFormLabel className="col-sm-1 col-form-label text-end pe-18">
+                  Level :
+                </CFormLabel>
+                <CCol sm={1}>
+                  <CFormInput
+                    id="level"
+                    size="sm"
+                    type="text"
+                    name="levelOfHierarchy"
+                    data-testid="tc-levelOfHierarchy"
+                    autoComplete="off"
+                    defaultValue={1}
+                    maxLength={2}
+                    onChange={handleInputChange}
+                    value={addNewSubCategory.levelOfHierarchy}
+                  />
+                </CCol>
+              </>
+            )}
           </CRow>
           <CRow className="mt-2 mb-2">
             <CCol className="col-md-3 offset-md-3">
-              <CButton color="success" className="btn-ovh me-1" size="sm">
+              <CButton
+                color="success"
+                className="btn-ovh me-1"
+                size="sm"
+                disabled={!isButtonEnabled}
+                onClick={handleAddNewSubCategory}
+              >
                 Add
               </CButton>
-              <CButton color="warning " className="btn-ovh">
+              <CButton
+                color="warning "
+                className="btn-ovh"
+                onClick={handleClearInputs}
+              >
                 Clear
               </CButton>
             </CCol>
