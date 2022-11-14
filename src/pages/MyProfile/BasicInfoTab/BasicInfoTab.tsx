@@ -1,23 +1,20 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-// todo: remove eslint and fix all errors
 import {
   CButton,
   CCol,
   CForm,
-  CFormCheck,
   CFormInput,
   CFormLabel,
-  CFormSelect,
   CRow,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
-import DatePicker from 'react-datepicker'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
 import validator from 'validator'
 import DownloadCVButton from './DownloadCVButton'
 import BasicInfoTabImageCropper from './BasicInfoTabImageCropper'
+import BasicInfoInputFields from './BasicInfoInputFields'
+import MaritalStatusAndAnniversary from './MaritalStatusAndAnniversary'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { employeeBasicInformationThunk } from '../../../reducers/MyProfile/BasicInfoTab/basicInformatiomSlice'
@@ -34,10 +31,6 @@ import {
 
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const deviceLocale: string =
-    navigator.languages && navigator.languages.length
-      ? navigator.languages[0]
-      : navigator.language
 
   const [dateFormat, setDateFormat] = useState<string>('')
 
@@ -55,6 +48,13 @@ const BasicInfoTab = (): JSX.Element => {
     reduxServices.authentication.selectors.selectToken,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-BasicInfo',
+  )
   const selectedUserBasicInformation = {
     id: employeeBasicInformation.id,
     baseLocation: employeeBasicInformation.baseLocation,
@@ -114,9 +114,11 @@ const BasicInfoTab = (): JSX.Element => {
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
   const [selectedProfilePicture, setSelectedProfilePicture] =
     useState<UploadImageInterface>()
-  const [officialBday, setOfficialBday] = useState<Date>()
-  const [realBday, setRealBday] = useState<Date>()
-  const [selectedAnniversary, setSelectedAnniversary] = useState<Date>()
+  const [officialBday, setOfficialBday] = useState<Date | string>()
+  const [realBday, setRealBday] = useState<Date | string>()
+  const [selectedAnniversary, setSelectedAnniversary] = useState<
+    Date | string
+  >()
   const [officialBdyFlag, setOfficialBdayFlag] = useState(false)
   const [realBdayFlag, setRealBdayFlag] = useState(false)
   const [anniversaryFlag, setAnniversaryFlag] = useState(false)
@@ -130,35 +132,21 @@ const BasicInfoTab = (): JSX.Element => {
   }, [])
 
   const commonFormatDate = 'DD/MM/YYYY'
-  const dateFormmatted = (date: string) => {
-    if (date) {
-      const tempDateFormat = reformatDate(date as string)
-      return tempDateFormat.toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    } else {
-      return ''
-    }
-  }
 
   let newOfficialBday = new Date()
   if (employeeBasicInformationEditData.officialBirthday) {
     const currentOfficialBday =
-      employeeBasicInformationEditData.officialBirthday as string
+      employeeBasicInformationEditData.officialBirthday
     newOfficialBday = reformatDate(currentOfficialBday)
   }
   let newRealBirthday = new Date()
   if (employeeBasicInformationEditData.realBirthday) {
-    const currentRealBirthday =
-      employeeBasicInformationEditData.realBirthday as string
+    const currentRealBirthday = employeeBasicInformationEditData.realBirthday
     newRealBirthday = reformatDate(currentRealBirthday)
   }
   let newAnniversary = new Date()
   if (employeeBasicInformationEditData.anniversary) {
-    const currentAnniversary =
-      employeeBasicInformationEditData.anniversary as string
+    const currentAnniversary = employeeBasicInformationEditData.anniversary
     newAnniversary = reformatDate(currentAnniversary)
   }
 
@@ -450,12 +438,13 @@ const BasicInfoTab = (): JSX.Element => {
   }
 
   const commonFormLabel = 'col-sm-3 col-form-label text-end'
+  const formLabelWithPadding = 'col-sm-3 col-form-label text-end pe-18'
   const normalText = 'text-white'
   const dangerText = 'text-danger'
 
   return (
     <>
-      {isLoading && <OLoadingSpinner type={LoadingType.COMPONENT} />}
+      {isLoading && <OLoadingSpinner type={LoadingType.PAGE} />}
 
       <CForm
         className="form-horizontal ng-pristine ng-valid-pattern ng-valid-email ng-valid ng-valid-required"
@@ -467,7 +456,9 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('employeeId', commonFormLabel)}>
+          <CFormLabel
+            {...dynamicFormLabelProps('employeeId', formLabelWithPadding)}
+          >
             Employee ID:
           </CFormLabel>
           <CCol sm={2}>
@@ -478,7 +469,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('employeeEmailId', commonFormLabel)}
+            {...dynamicFormLabelProps('employeeEmailId', formLabelWithPadding)}
           >
             Email ID:
           </CFormLabel>
@@ -490,7 +481,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('employeeFullName', commonFormLabel)}
+            {...dynamicFormLabelProps('employeeFullName', formLabelWithPadding)}
           >
             Full Name:
           </CFormLabel>
@@ -500,314 +491,44 @@ const BasicInfoTab = (): JSX.Element => {
             </CFormLabel>
           </CCol>
         </CRow>
+        <BasicInfoInputFields
+          dateFormat={dateFormat}
+          commonFormLabel={commonFormLabel}
+          formLabelWithPadding={formLabelWithPadding}
+          employeeBasicInformationEditData={employeeBasicInformationEditData}
+          handleChange={handleChange}
+          baseLocationShown={baseLocationShown}
+          setBaseLocationShown={setBaseLocationShown}
+          officialBday={officialBday}
+          officialBdyFlag={officialBdyFlag}
+          newOfficialBday={newOfficialBday}
+          dateIsValid={dateIsValid}
+          onDateChangeHandler={onDateChangeHandler}
+          handleOfficialBday={handleOfficialBday}
+          realBirthdayShown={realBirthdayShown}
+          setRealBirthdayShown={setRealBirthdayShown}
+          realBday={realBday}
+          realBdayFlag={realBdayFlag}
+          newRealBirthday={newRealBirthday}
+          handleRealBday={handleRealBday}
+        />
+        <MaritalStatusAndAnniversary
+          dateFormat={dateFormat}
+          commonFormLabel={commonFormLabel}
+          employeeBasicInformationEditData={employeeBasicInformationEditData}
+          handleChange={handleChange}
+          selectedAnniversary={selectedAnniversary}
+          dateErrorMessage={dateErrorMessage}
+          anniversaryFlag={anniversaryFlag}
+          newAnniversary={newAnniversary}
+          dateIsValid={dateIsValid}
+          onDateChangeHandler={onDateChangeHandler}
+          handleAnniversary={handleAnniversary}
+        />
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeeCurrentLocation',
-              commonFormLabel,
-            )}
+            {...dynamicFormLabelProps('department', formLabelWithPadding)}
           >
-            Current Location:
-            <span
-              className={
-                employeeBasicInformationEditData.curentLocation
-                  ? normalText
-                  : dangerText
-              }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormInput
-              id="employeeCurrentLocation"
-              size="sm"
-              type="text"
-              name="curentLocation"
-              placeholder="Enter Location"
-              value={employeeBasicInformationEditData.curentLocation}
-              onChange={handleChange}
-            />
-            <CFormCheck
-              className="mt-2"
-              id="trigger"
-              label="This is not the base location"
-              checked={baseLocationShown}
-              onChange={() => setBaseLocationShown(!baseLocationShown)}
-            />
-          </CCol>
-        </CRow>
-        {baseLocationShown && (
-          <CRow className="mt-3 ">
-            <CFormLabel
-              {...dynamicFormLabelProps(
-                'employeeBaseLocation',
-                commonFormLabel,
-              )}
-            >
-              Base Location:
-              <span
-                className={
-                  employeeBasicInformationEditData.baseLocation
-                    ? normalText
-                    : dangerText
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                id="employeeBaseLocation"
-                size="sm"
-                type="text"
-                name="baseLocation"
-                placeholder="Enter Location"
-                value={employeeBasicInformationEditData.baseLocation}
-                onChange={handleChange}
-              />
-            </CCol>
-          </CRow>
-        )}
-        <CRow className="mt-3 ">
-          <CFormLabel
-            {...dynamicFormLabelProps('employeeGender', commonFormLabel)}
-          >
-            Gender:
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              id="employeeGender"
-              size="sm"
-              aria-label="Gender"
-              name="gender"
-              value={employeeBasicInformationEditData.gender}
-              onChange={handleChange}
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </CFormSelect>
-          </CCol>
-        </CRow>
-        <CRow className="mt-3 ">
-          <CFormLabel
-            {...dynamicFormLabelProps('employeeBloodGroup', commonFormLabel)}
-          >
-            Blood group:
-            <span
-              className={
-                employeeBasicInformationEditData.bloodgroup
-                  ? normalText
-                  : dangerText
-              }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              id="employeeBloodGroup"
-              size="sm"
-              aria-label="bloodGroup"
-              name="bloodgroup"
-              value={employeeBasicInformationEditData.bloodgroup}
-              onChange={handleChange}
-            >
-              <option value={''}>Select blood group</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-            </CFormSelect>
-          </CCol>
-        </CRow>
-        <CRow className="mt-3 ">
-          <CFormLabel
-            {...dynamicFormLabelProps(
-              'employeeOfficialBirthday',
-              commonFormLabel,
-            )}
-          >
-            Official Birthday:
-            <span
-              className={
-                employeeBasicInformationEditData.officialBirthday
-                  ? normalText
-                  : dangerText
-              }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <DatePicker
-              id="employeeOfficialBirthday"
-              data-testId="officialBirthdayInput"
-              className="form-control form-control-sm"
-              maxDate={new Date()}
-              peekNextMonth
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              placeholderText={dateFormat}
-              dateFormat={dateFormat}
-              name="officialBirthday"
-              value={dateFormmatted(
-                employeeBasicInformationEditData.officialBirthday as string,
-              )}
-              selected={
-                !officialBdyFlag && dateIsValid(newOfficialBday)
-                  ? newOfficialBday
-                  : officialBday
-              }
-              onChange={(date: Date) => {
-                onDateChangeHandler(date, { name: 'officialBirthday' })
-                handleOfficialBday(date)
-              }}
-            />
-            <CFormCheck
-              className="mt-2"
-              id="trigger"
-              name="officialDateOfBirth"
-              label=" This is not a real birthday"
-              checked={realBirthdayShown}
-              onChange={() => setRealBirthdayShown(!realBirthdayShown)}
-            />
-          </CCol>
-        </CRow>
-        {realBirthdayShown && (
-          <CRow className="mt-3 ">
-            <CFormLabel
-              {...dynamicFormLabelProps(
-                'employeeRealBirthday',
-                commonFormLabel,
-              )}
-            >
-              Real Birthday:
-              <span
-                className={
-                  employeeBasicInformationEditData.realBirthday
-                    ? normalText
-                    : dangerText
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <DatePicker
-                id="employeeRealBirthday"
-                className="form-control form-control-sm"
-                maxDate={new Date()}
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText={dateFormat}
-                dateFormat={dateFormat}
-                name="realBirthday"
-                value={dateFormmatted(
-                  employeeBasicInformationEditData.realBirthday as string,
-                )}
-                selected={
-                  !realBdayFlag && dateIsValid(newRealBirthday)
-                    ? newRealBirthday
-                    : realBday
-                }
-                onChange={(date: Date) => {
-                  onDateChangeHandler(date, { name: 'realBirthday' })
-                  handleRealBday(date)
-                }}
-                data-testId="realBirthday"
-              />
-            </CCol>
-          </CRow>
-        )}
-        <CRow className="mt-3 ">
-          <CFormLabel
-            {...dynamicFormLabelProps('employeeMaritalStatus', commonFormLabel)}
-          >
-            Marital Status:
-            <span
-              className={
-                employeeBasicInformationEditData.maritalStatus
-                  ? normalText
-                  : dangerText
-              }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              id="employeeMaritalStatus"
-              size="sm"
-              aria-label="MaritalStatus"
-              name="maritalStatus"
-              value={employeeBasicInformationEditData.maritalStatus}
-              onChange={handleChange}
-            >
-              <option value={''}>Select Marital Status</option>
-              <option value="Single">Single</option>
-              <option value="Married">Married</option>
-            </CFormSelect>
-          </CCol>
-        </CRow>
-        {employeeBasicInformationEditData.maritalStatus === 'Married' && (
-          <CRow className="mt-3 ">
-            <CFormLabel
-              {...dynamicFormLabelProps('employeeAnniversary', commonFormLabel)}
-            >
-              Anniversary:
-              <span
-                className={
-                  employeeBasicInformationEditData.anniversary
-                    ? normalText
-                    : dangerText
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <DatePicker
-                id="employeeAnniversary"
-                className="form-control form-control-sm"
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText={dateFormat}
-                dateFormat={dateFormat}
-                name="anniversary"
-                value={dateFormmatted(
-                  employeeBasicInformationEditData.anniversary as string,
-                )}
-                selected={
-                  !anniversaryFlag && dateIsValid(newAnniversary)
-                    ? newAnniversary
-                    : selectedAnniversary
-                }
-                onChange={(date: Date) => {
-                  onDateChangeHandler(date, { name: 'anniversary' })
-                  handleAnniversary(date)
-                }}
-                data-testId="anniversary"
-              />
-              {dateErrorMessage && (
-                <p className="text-danger">
-                  Anniversary date should be greater than Real Birthday date....
-                </p>
-              )}
-            </CCol>
-          </CRow>
-        )}
-        <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('department', commonFormLabel)}>
             Department:
           </CFormLabel>
           <CCol sm={2}>
@@ -818,7 +539,7 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('reportingManager', commonFormLabel)}
+            {...dynamicFormLabelProps('reportingManager', formLabelWithPadding)}
           >
             Reporting Manager:
           </CFormLabel>
@@ -830,8 +551,10 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('employmentType', commonFormLabel)}
-          ></CFormLabel>
+            {...dynamicFormLabelProps('employmentType', formLabelWithPadding)}
+          >
+            Employment Type:
+          </CFormLabel>
           <CCol sm={2}>
             <CFormLabel className="col-form-label text-end">
               {employeeBasicInformation.employmentTypeName}
@@ -839,7 +562,9 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('jobType', commonFormLabel)}>
+          <CFormLabel
+            {...dynamicFormLabelProps('jobType', formLabelWithPadding)}
+          >
             Job Type:
           </CFormLabel>
           <CCol sm={2}>
@@ -849,7 +574,9 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('country', commonFormLabel)}>
+          <CFormLabel
+            {...dynamicFormLabelProps('country', formLabelWithPadding)}
+          >
             Country:
           </CFormLabel>
           <CCol sm={2}>
@@ -887,12 +614,13 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 ">
           <CFormLabel
-            {...dynamicFormLabelProps('employeeSkypeID', commonFormLabel)}
+            {...dynamicFormLabelProps('employeeSkypeID', formLabelWithPadding)}
           >
             Skype ID:
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              autoComplete="off"
               id="employeeSkypeID"
               size="sm"
               type="text"
@@ -907,7 +635,7 @@ const BasicInfoTab = (): JSX.Element => {
           <CFormLabel
             {...dynamicFormLabelProps(
               'employeeProfilePicture',
-              commonFormLabel,
+              formLabelWithPadding,
             )}
           >
             Profile Picture:
@@ -921,7 +649,9 @@ const BasicInfoTab = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-3 ">
-          <CFormLabel {...dynamicFormLabelProps('aboutMe', commonFormLabel)}>
+          <CFormLabel
+            {...dynamicFormLabelProps('aboutMe', formLabelWithPadding)}
+          >
             About Me:
           </CFormLabel>
           <CCol sm={8}>
@@ -939,14 +669,14 @@ const BasicInfoTab = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3">
           <CFormLabel
-            {...dynamicFormLabelProps('uploadRBTCV', commonFormLabel)}
+            {...dynamicFormLabelProps('uploadRBTCV', formLabelWithPadding)}
           >
             Upload RBT CV:
           </CFormLabel>
           <CCol sm={3}>
             <input
               id="uploadRBTCV"
-              className="sh-updateTicket-file"
+              className="sh-updateTicket-file mt-1 cursor-pointer"
               type="file"
               name="file"
               accept=".doc, .docx, .pdf"
@@ -973,18 +703,20 @@ const BasicInfoTab = (): JSX.Element => {
             )}
           </CCol>
         </CRow>
-        <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
-              className="mt-4 btn-ovh btn btn-success"
-              size="sm"
-              disabled={!saveButtonEnabled}
-              type="submit"
-            >
-              Save
-            </CButton>
-          </CCol>
-        </CRow>
+        {userAccess?.updateaccess && (
+          <CRow>
+            <CCol md={{ span: 6, offset: 3 }}>
+              <CButton
+                className="mt-3 btn-ovh btn btn-success"
+                size="sm"
+                disabled={!saveButtonEnabled}
+                type="submit"
+              >
+                Save
+              </CButton>
+            </CCol>
+          </CRow>
+        )}
       </CForm>
     </>
   )

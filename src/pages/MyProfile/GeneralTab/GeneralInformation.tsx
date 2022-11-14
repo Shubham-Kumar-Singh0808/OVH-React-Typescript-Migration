@@ -3,7 +3,6 @@ import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { useTypedSelector } from '../../../stateStore'
-import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
 const EmployeeGeneralInformation = (): JSX.Element => {
   const [isViewingAnotherEmployee] = useSelectedEmployee()
@@ -58,11 +57,7 @@ const EmployeeGeneralInformation = (): JSX.Element => {
               </>
             )}
             <dt>Date of Birth</dt>
-            <dd>
-              {localeDateFormat(
-                employeeGeneralInformation?.realBirthday as string,
-              )}
-            </dd>
+            <dd>{employeeGeneralInformation?.realBirthday}</dd>
             {employeeGeneralInformation?.maritalStatus && (
               <>
                 <dt>Marital Status</dt>

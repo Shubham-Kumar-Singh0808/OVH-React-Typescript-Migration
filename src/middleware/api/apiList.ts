@@ -62,6 +62,7 @@ import {
   AppraisalConfigurationsApi,
   RoomListApi,
   AddConfigurationsApi,
+  TicketConfigurationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -149,12 +150,12 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
   }
 
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
-  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
+  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
 }
 
 export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi =
   {
-    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
+    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
   }
 
 export const qualificationsApiConfig: EmployeeQualificationsApi = {
@@ -536,4 +537,13 @@ export const roomListApiConfig: RoomListApi = {
   addRoom: apiPrefix + '/meetingRequest/addRoom',
   deleteRoom: apiPrefix + '/meetingRequest/deleteRoom',
   updateRoom: apiPrefix + '/meetingRequest/updateRoom',
+}
+
+export const ticketConfigurationApiConfig: TicketConfigurationApi = {
+  getDepartments: apiPrefix + '/supportManagement/getDepartmentNameList',
+  getCategories: apiPrefix + '/supportManagement/departmentCategoryList',
+  getSubCategories: apiPrefix + '/supportManagement/subCategoryList',
+  getSubCategoryList: apiPrefix + '/supportManagement/getSearchSubCategoryList',
+  deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
+  ticketHistory: apiPrefix + '/supportManagement/getAudit',
 }
