@@ -43,6 +43,9 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+    setSubmitResignation({
+      employeeComments: '',
+    })
   }
 
   useEffect(() => {
@@ -98,6 +101,14 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
         withdrawComments: null,
       }),
     )
+    setPrimaryReason('')
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+    setSubmitResignation({
+      employeeComments: '',
+    })
   }
 
   return (
