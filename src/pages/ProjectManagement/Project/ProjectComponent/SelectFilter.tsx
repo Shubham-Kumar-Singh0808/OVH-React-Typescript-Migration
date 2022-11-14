@@ -21,7 +21,7 @@ export const SelectFilter = ({
   >
     {placeHolder != null && <option value={''}>{placeHolder}</option>}
     {list.map((opt, index) => (
-      <option key={index} value={opt.label}>
+      <option key={index} value={opt.label} className={opt.backgroundColor}>
         {opt.name}
       </option>
     ))}

@@ -116,3 +116,16 @@ export type ProjectDetails = {
   totalValue: null
   allocation: number | string
 }
+
+export type ExportListParams = {
+  employeeId: number
+  projectStatus: string
+  type: string
+  health: string
+  startdate: string
+  enddate: string
+  multiSearch: string
+  projectDatePeriod: string
+  intrnalOrNot: boolean
+  token?: string
+}

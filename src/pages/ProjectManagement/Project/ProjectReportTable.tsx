@@ -29,6 +29,7 @@ import {
   SubProjectType,
 } from '../../../types/ProjectManagement/Project/ProjectTypes'
 import { ProjectDetails as ProjectInfo } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const allocated = 'Allocated'
 const deAllocated = 'De-Allocated'
@@ -56,6 +57,8 @@ const ProjectReportsTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  isCloseBtnVisible,
+  userAccess,
 }: ProjectReportsTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShow, setIsShow] = useState(false)
@@ -78,6 +81,14 @@ const ProjectReportsTable = ({
 
   const projectReports = useTypedSelector(
     reduxServices.projectReport.selectors.projectReports,
+  )
+
+  const isProjectLoading = useTypedSelector(
+    reduxServices.projectReport.selectors.isProjectLoading,
+  )
+
+  const isClientProjectLoading = useTypedSelector(
+    reduxServices.projectReport.selectors.isClientProjectLoading,
   )
 
   const listSize = useTypedSelector(
@@ -287,7 +298,7 @@ const ProjectReportsTable = ({
 
   return (
     <>
-      {projectReports != null && projectReports.length ? (
+      {isProjectLoading !== ApiLoadingState.loading ? (
         <>
           <CTable striped responsive className="ps-1 pe-1 align-middle">
             <CTableHead>
@@ -361,19 +372,21 @@ const ProjectReportsTable = ({
                         </span>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <CButton
-                          className="btn-ovh-employee-list cursor-pointer"
-                          color="danger btn-ovh me-1"
-                          data-testid="close-btn"
-                          onClick={() =>
-                            handleShowCloseModal(value.id, value.projectName)
-                          }
-                        >
-                          <i
-                            className="fa fa-times text-white sh-fa-times"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        {isCloseBtnVisible && (
+                          <CButton
+                            className="btn-ovh-employee-list cursor-pointer"
+                            color="danger btn-ovh me-1"
+                            data-testid="close-btn"
+                            onClick={() =>
+                              handleShowCloseModal(value.id, value.projectName)
+                            }
+                          >
+                            <i
+                              className="fa fa-times text-white sh-fa-times"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        )}
                       </CTableDataCell>
                       <CTableDataCell style={{ width: '120px' }}>
                         <CButton
@@ -386,61 +399,58 @@ const ProjectReportsTable = ({
                             aria-hidden="true"
                           ></i>
                         </CButton>
-                        <Link to={`/editproject/${value.id}`}>
+                        {userAccess.updateaccess && (
+                          <Link to={`/editproject/${value.id}`}>
+                            <CButton
+                              className="btn-ovh-employee-list cursor-pointer"
+                              color="primary btn-ovh me-1"
+                              data-testid="edit-btn"
+                            >
+                              <i
+                                className="fa fa-edit text-white"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </Link>
+                        )}
+                        {userAccess.updateaccess && (
                           <CButton
                             className="btn-ovh-employee-list cursor-pointer"
-                            color="primary btn-ovh me-1"
-                            data-testid="edit-btn"
+                            color="danger btn-ovh me-1"
+                            data-testid="delete-btn"
+                            disabled={value.count > 0}
+                            onClick={() =>
+                              handleShowDeleteModal(value.id, value.projectName)
+                            }
                           >
                             <i
-                              className="fa fa-edit text-white"
+                              className="fa fa-trash-o text-white"
                               aria-hidden="true"
                             ></i>
                           </CButton>
-                        </Link>
-                        <CButton
-                          className="btn-ovh-employee-list cursor-pointer"
-                          color="danger btn-ovh me-1"
-                          data-testid="delete-btn"
-                          disabled={value.count > 0}
-                          onClick={() =>
-                            handleShowDeleteModal(value.id, value.projectName)
-                          }
-                        >
-                          <i
-                            className="fa fa-trash-o text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        )}
                       </CTableDataCell>
                     </CTableRow>
                     {isShow &&
                       selectedProject === value.id &&
-                      (projectClients != null ? (
-                        <CTableRow>
-                          <CTableDataCell colSpan={12} className="pe-0 ps-4">
-                            <ProjectDetailsTable
-                              toAllocatedProject={toAllocatedProject}
-                              handleOnChangeAllocation={
-                                handleOnChangeAllocation
-                              }
-                              getConditionValue={getConditionValue}
-                              handleOnChangeBillable={handleOnChangeBillable}
-                              handleOnChangeIsAllocated={
-                                handleOnChangeIsAllocated
-                              }
-                              handleUpdateProject={handleUpdateProject}
-                              handleAllocationModal={handleAllocationModal}
-                              handleShowDeallocationModal={
-                                handleShowDeallocationModal
-                              }
-                              handleCancelUpdate={handleCancelUpdate}
-                              allocated={allocated}
-                              deAllocated={deAllocated}
-                              value={value}
-                            />
-                          </CTableDataCell>
-                        </CTableRow>
+                      (projectClients != null &&
+                      isClientProjectLoading !== ApiLoadingState.loading ? (
+                        <ProjectDetailsTable
+                          toAllocatedProject={toAllocatedProject}
+                          handleOnChangeAllocation={handleOnChangeAllocation}
+                          getConditionValue={getConditionValue}
+                          handleOnChangeBillable={handleOnChangeBillable}
+                          handleOnChangeIsAllocated={handleOnChangeIsAllocated}
+                          handleUpdateProject={handleUpdateProject}
+                          handleAllocationModal={handleAllocationModal}
+                          handleShowDeallocationModal={
+                            handleShowDeallocationModal
+                          }
+                          handleCancelUpdate={handleCancelUpdate}
+                          allocated={allocated}
+                          deAllocated={deAllocated}
+                          value={value}
+                        />
                       ) : (
                         <OLoadingSpinner type={LoadingType.PAGE} />
                       ))}
@@ -451,8 +461,12 @@ const ProjectReportsTable = ({
           </CTable>
           <CRow>
             <CCol xs={4}>
-              <p>
-                <strong>Total Records: {listSize}</strong>
+              <p className="mt-4">
+                <strong>
+                  {projectReports?.length
+                    ? `Total Records: ${listSize}`
+                    : `No Records found...`}
+                </strong>
               </p>
             </CCol>
             <CCol xs={3}>
@@ -491,9 +505,11 @@ const ProjectReportsTable = ({
         setVisible={(value) =>
           setToCloseProject({ ...toCloseProject, isCloseModelVisible: value })
         }
-        modalHeaderClass="d-none"
+        modalTitle="Close Project"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonAction={handleConfirmCloseProject}
       >
         <p>
@@ -510,7 +526,9 @@ const ProjectReportsTable = ({
             isDeleteModelVisible: value,
           })
         }
-        modalHeaderClass="d-none"
+        modalTitle="Delete Project"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteProject}
@@ -529,7 +547,9 @@ const ProjectReportsTable = ({
             isDeallocatedModelVisible: value,
           })
         }
-        modalHeaderClass="d-none"
+        modalTitle="De-Allocate Employee"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={handleDeallocatedProject}

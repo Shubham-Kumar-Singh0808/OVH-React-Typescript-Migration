@@ -408,6 +408,7 @@ export const projectManagementConfig: ProjectManagementApi = {
   getDeleteProject: apiPrefix + '/project-mgmt/projectDelete',
   postDeallocateProject: apiPrefix + '/project-mgmt/deAllocateProject',
   postUpdateAllocateProject: apiPrefix + '/project-mgmt/updateAllocateProject',
+  exportProjectList: apiPrefix + '/project-mgmt/exportProjectList',
 }
 
 export const clientsApiConfig: ClientsApi = {

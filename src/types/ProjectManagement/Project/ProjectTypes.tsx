@@ -1,9 +1,11 @@
 import { ProjectDetails as ProjectInfo } from '../../MyProfile/ProjectsTab/employeeProjectTypes'
 import { LoadingState, ValidationError } from '../../commonTypes'
+import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 type List = {
   label: string
   name: string
+  backgroundColor?: string
 }
 
 export interface ProjectFilterProps {
@@ -91,6 +93,8 @@ export type ProjectReportsTableProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   updateaccess?: boolean
+  isCloseBtnVisible: boolean
+  userAccess: UserAccessToFeatures
 }
 
 export type ProjectsReportSliceState = {

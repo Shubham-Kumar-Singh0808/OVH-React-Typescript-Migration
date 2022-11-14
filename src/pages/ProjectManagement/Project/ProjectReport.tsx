@@ -19,6 +19,9 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { dateFormat } from '../../../constant/DateFormat'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
+import { downloadFile } from '../../../utils/helper'
+import AddProject from '../../../middleware/api/ProjectManagement/Project'
 
 const ProjectReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -29,6 +32,14 @@ const ProjectReport = (): JSX.Element => {
 
   const listSize = useTypedSelector(
     reduxServices.projectReport.selectors.listSize,
+  )
+
+  const projectReports = useTypedSelector(
+    reduxServices.projectReport.selectors.projectReports,
+  )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
 
   const initValue = {
@@ -43,6 +54,7 @@ const ProjectReport = (): JSX.Element => {
   }
   const [params, setParams] = useState<ProjectReportQueryParams>(initValue)
   const [isViewBtnEnable, setViewBtnEnable] = useState(true)
+  const [isCloseBtnVisible, setIsCloseBtnVisible] = useState(true)
 
   useEffect(() => {
     dispatch(reduxServices.projectReport.getFetchActiveProjectReports(params))
@@ -55,6 +67,10 @@ const ProjectReport = (): JSX.Element => {
     currentPage,
     pageSize,
   } = usePagination(listSize, 20)
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Projects',
+  )
 
   useEffect(() => {
     const payload =
@@ -105,11 +121,15 @@ const ProjectReport = (): JSX.Element => {
   ]
 
   const selectHealth = [
-    { label: 'All', name: 'All' },
-    { label: 'Gray', name: 'Project not yet started' },
-    { label: 'Green', name: 'Good' },
-    { label: 'Orange', name: 'Critical' },
-    { label: 'Red', name: 'Danger' },
+    { label: 'All', name: 'All', backgroundColor: '' },
+    {
+      label: 'Gray',
+      name: 'Project not yet started',
+      backgroundColor: 'opt-bg-gray',
+    },
+    { label: 'Green', name: 'Good', backgroundColor: 'opt-bg-green' },
+    { label: 'Orange', name: 'Critical', backgroundColor: 'opt-bg-orange' },
+    { label: 'Red', name: 'Danger', backgroundColor: 'opt-bg-danger' },
   ]
 
   const handleSelectDate = (value: string) => {
@@ -175,6 +195,11 @@ const ProjectReport = (): JSX.Element => {
     dispatch(
       reduxServices.projectReport.getFetchSearchAllocationReport(payload),
     )
+    if (params.projectStatus === 'CLOSED') {
+      setIsCloseBtnVisible(false)
+    } else {
+      setIsCloseBtnVisible(true)
+    }
   }
 
   const clearHandler = () => {
@@ -184,7 +209,34 @@ const ProjectReport = (): JSX.Element => {
       projectDatePeriod: '',
       multiSearch: '',
       projectStatus: 'ALL',
+      health: 'All',
+      type: 'All',
     })
+    const { endIndex, firstIndex } = params
+    dispatch(
+      reduxServices.projectReport.getFetchActiveProjectReports({
+        endIndex,
+        firstIndex,
+        health: 'All',
+        projectStatus: 'ALL',
+        type: 'All',
+      }),
+    )
+  }
+
+  const handleExportProjectList = async () => {
+    const projectListDownload = await AddProject.exportProjectList({
+      employeeId: Number(employeeId),
+      projectStatus: params.projectStatus,
+      type: params.type,
+      health: params.health,
+      startdate: params.startdate as string,
+      enddate: params.enddate as string,
+      multiSearch: params.multiSearch as string,
+      projectDatePeriod: params.projectDatePeriod as string,
+      intrnalOrNot: params.intrnalOrNot as boolean,
+    })
+    downloadFile(projectListDownload, 'ProjectList.csv')
   }
 
   return (
@@ -320,15 +372,22 @@ const ProjectReport = (): JSX.Element => {
                 Clear
               </CButton>
               <div className="d-md-flex justify-content-md-end pull-right">
-                <CButton color="info btn-ovh me-0">
-                  <i className="fa fa-plus me-1"></i>Click to Export
-                </CButton>
-                &nbsp; &nbsp; &nbsp;
-                <Link to="/addProject">
-                  <CButton color="info btn-ovh me-0" data-testid="addButton">
-                    <i className="fa fa-plus me-1"></i>Add Project
+                {projectReports?.length > 0 && (
+                  <CButton
+                    color="info btn-ovh me-0"
+                    onClick={handleExportProjectList}
+                  >
+                    <i className="fa fa-plus me-1"></i>Click to Export
                   </CButton>
-                </Link>
+                )}
+                &nbsp; &nbsp; &nbsp;
+                {userAccess?.createaccess && (
+                  <Link to="/addProject">
+                    <CButton color="info btn-ovh me-0" data-testid="addButton">
+                      <i className="fa fa-plus me-1"></i>Add Project
+                    </CButton>
+                  </Link>
+                )}
               </div>
             </CCol>
           </CRow>
@@ -384,6 +443,8 @@ const ProjectReport = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             pageSize={pageSize}
             setPageSize={setPageSize}
+            isCloseBtnVisible={isCloseBtnVisible}
+            userAccess={userAccess as UserAccessToFeatures}
           />
         </CRow>
       </>

@@ -19,7 +19,10 @@ import {
   ProjectDetails,
   ProjectReportQueryParams,
 } from '../../../types/ProjectManagement/Project/ProjectTypes'
-import { ProjectDetails as ProjectInfo } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import {
+  ExportListParams,
+  ProjectDetails as ProjectInfo,
+} from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
 const getProjectClients = async (): Promise<ProjectClients[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -180,6 +183,31 @@ const updateProjectReport = async (
   return response.data
 }
 
+const exportProjectList = async (
+  props: ExportListParams,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectManagementConfig.exportProjectList,
+    method: AllowedHttpMethods.get,
+    params: {
+      employeeId: props.employeeId,
+      projectStatus: props.projectStatus,
+      type: props.type,
+      health: props.health,
+      startdate: props.startdate ?? '',
+      enddate: props.enddate ?? '',
+      multiSearch: props.multiSearch ?? '',
+      projectDatePeriod: props.projectDatePeriod ?? '',
+      intrnalOrNot: props.intrnalOrNot,
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AddProject = {
   addProject,
   closeProjectReport,
@@ -195,6 +223,7 @@ const AddProject = {
   getActiveProjectReports,
   getSearchAllocationReport,
   getClientProjects,
+  exportProjectList,
 }
 
 export default AddProject

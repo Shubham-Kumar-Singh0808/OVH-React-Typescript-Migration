@@ -333,6 +333,7 @@ export interface ProjectManagementApi extends ApiBase {
   getDeleteProject: string
   postDeallocateProject: string
   postUpdateAllocateProject: string
+  exportProjectList: string
 }
 
 export interface ClientsApi extends ApiBase {

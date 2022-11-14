@@ -58,6 +58,10 @@
     background-color: #e9573f;
     color: #ffffff;
   }
+  .label-red {
+    background-color: #e9573f;
+    color: #ffffff;
+  }
   
   .input-xs {
     padding: 0px;
@@ -74,4 +78,22 @@
 
 .sh-project-report-status{
   min-width: 119px;
+}
+
+.opt-bg-gray {
+  background-color: #e3e8ee;
+}
+
+.opt-bg-green {
+  background-color: #8cc152;
+}
+
+.opt-bg-orange {
+  background-color: #feab34;
+
+}
+
+.opt-bg-danger {
+  background-color: #e9573f;
+
 }

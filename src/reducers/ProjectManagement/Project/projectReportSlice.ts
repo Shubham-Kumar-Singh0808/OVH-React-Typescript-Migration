@@ -159,6 +159,10 @@ const projectReportsSlice = createSlice({
       .addCase(getFetchProjectClients.fulfilled, (state, action) => {
         state.ClientProjects = action.payload
         state.isClientProjectLoading = ApiLoadingState.succeeded
+        state.isProjectLoading = ApiLoadingState.succeeded
+      })
+      .addCase(getFetchProjectClients.pending, (state) => {
+        state.isClientProjectLoading = ApiLoadingState.loading
       })
       .addMatcher(
         isAnyOf(
@@ -187,7 +191,6 @@ const projectReportsSlice = createSlice({
         isAnyOf(
           getFetchActiveProjectReports.pending,
           getFetchSearchAllocationReport.pending,
-          getFetchProjectClients.pending,
           closeProjectReport.pending,
           deleteProjectReport.pending,
           deallocateProjectReport.pending,
@@ -195,7 +198,6 @@ const projectReportsSlice = createSlice({
         ),
         (state) => {
           state.isProjectLoading = ApiLoadingState.loading
-          state.isClientProjectLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
