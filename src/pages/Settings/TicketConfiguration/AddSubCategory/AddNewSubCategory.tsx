@@ -135,6 +135,10 @@ const AddNewSubCategory = (): JSX.Element => {
     }
   }
 
+  const addCategoryButtonHandler = () => {
+    dispatch(reduxServices.ticketConfiguration.actions.setToggle('addCategory'))
+  }
+
   return (
     <>
       <OCard
@@ -220,6 +224,7 @@ const AddNewSubCategory = (): JSX.Element => {
                 color="info"
                 className="btn-ovh"
                 data-testid="addCategory-btn"
+                onClick={addCategoryButtonHandler}
               >
                 <i className="fa fa-plus me-1"></i>Add
               </CButton>
@@ -290,7 +295,6 @@ const AddNewSubCategory = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={1} className="mt-2">
               <CFormCheck
-                className="form-select-not-allowed"
                 name="workFlow"
                 data-testid="ch-workFlow"
                 onChange={() => setIsChecked(!isChecked)}
