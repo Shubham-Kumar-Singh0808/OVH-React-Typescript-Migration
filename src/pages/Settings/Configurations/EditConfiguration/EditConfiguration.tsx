@@ -204,6 +204,97 @@ const EditConfiguration = (): JSX.Element => {
               </CFormSelect>
             </CCol>
           </CRow>
+          <CRow className="mt-3">
+            <CCol sm={3} md={3} className="text-end">
+              <CFormLabel className="mt-2 text-decoration-none">
+                Review Period From:
+              </CFormLabel>
+            </CCol>
+            <CCol sm={3}>
+              <CFormInput
+                className="form-control form-control-not-allowed"
+                data-testid="reviewPeriodFrom"
+                id="reviewPeriodFrom"
+                size="sm"
+                name="reviewPeriodFrom"
+                value={cycle.fromDate}
+                disabled={true}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-3">
+            <CCol sm={3} md={3} className="text-end">
+              <CFormLabel className="mt-2 text-decoration-none">
+                Review Period To:
+              </CFormLabel>
+            </CCol>
+            <CCol sm={3}>
+              <CFormInput
+                className="form-control form-control-not-allowed"
+                data-testid="reviewPeriodTo"
+                id="reviewPeriodTo"
+                size="sm"
+                name="reviewPeriodTo"
+                value={cycle.toDate}
+                disabled={true}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-3">
+            <CCol sm={3} md={3} className="text-end">
+              <CFormLabel className="mt-2 text-decoration-none">
+                Review Start Date:
+              </CFormLabel>
+            </CCol>
+            <CCol sm={3}>
+              <CFormInput
+                className="form-control form-control-not-allowed"
+                data-testid="reviewStartDate"
+                id="reviewStartDate"
+                size="sm"
+                name="reviewStartDate"
+                value={cycle.appraisalStartDate}
+                disabled={true}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-3">
+            <CCol sm={3} md={3} className="text-end">
+              <CFormLabel className="mt-2 text-decoration-none">
+                Review End Date:
+              </CFormLabel>
+            </CCol>
+            <CCol sm={3}>
+              <CFormInput
+                className="form-control form-control-not-allowed"
+                data-testid="reviewEndDate"
+                id="reviewEndDate"
+                size="sm"
+                name="reviewEndDate"
+                value={cycle.appraisalEndDate}
+                disabled={true}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Review Duration (days):
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                className="form-control form-control-not-allowed"
+                data-testid="reviewDuration"
+                id="reviewDuration"
+                size="sm"
+                name="reviewDuration"
+                disabled={true}
+                value={cycle.appraisalDuration}
+              />
+            </CCol>
+          </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
