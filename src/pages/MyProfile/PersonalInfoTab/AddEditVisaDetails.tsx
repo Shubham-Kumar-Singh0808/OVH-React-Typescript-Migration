@@ -519,8 +519,8 @@ function AddEditVisaDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Upload VISA copy:
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+              Upload VISA copy :
             </CFormLabel>
             <CCol>
               <input

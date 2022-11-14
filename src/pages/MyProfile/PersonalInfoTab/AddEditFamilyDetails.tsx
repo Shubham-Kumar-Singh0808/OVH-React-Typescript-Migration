@@ -169,10 +169,6 @@ function AddEditFamilyDetails({
     className: classNameProps,
     htmlFor: 'Relationship',
   }
-  const contactNumberProps = {
-    className: classNameProps,
-    htmlFor: 'ContactNumber',
-  }
 
   return (
     <>
@@ -253,7 +249,9 @@ function AddEditFamilyDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...contactNumberProps}>Contact Number :</CFormLabel>
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+              Contact Number :
+            </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 type="text"
@@ -268,7 +266,7 @@ function AddEditFamilyDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
               Date of Birth :
             </CFormLabel>
             <CCol sm={3}>
