@@ -23,8 +23,11 @@ const getAllAppraisalCycle = async (): Promise<getAppraisalCycle[]> => {
 
 const getCycleToEdit = async (cycleId: number): Promise<getAppraisalCycle> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: `${appraisalConfigurationsApiConfig.editAppraisalCycle}/${cycleId}`,
+    url: appraisalConfigurationsApiConfig.editAppraisalCycle,
     method: AllowedHttpMethods.get,
+    params: {
+      cycleId,
+    },
   })
   const response = await useAxios(requestConfig)
   return response.data
