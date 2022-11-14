@@ -55,6 +55,7 @@ import {
   UpdateTicketApi,
   BookingListApi,
   EventTypeListApi,
+  EmployeeAllocationApi,
   AddLocationListApi,
   EventListApi,
   AddTrackerApi,
@@ -509,6 +510,14 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+}
+
+export const employeeAllocationApiConfig: EmployeeAllocationApi = {
+  getEmployeeAllocationReport: apiPrefix + '/project-mgmt/searchByEmployeeName',
+  projectUnderEmployees: apiPrefix + '/project-mgmt/projectUnderEmployees/',
+  updateEmployeeAllocateProject:
+    apiPrefix + '/project-mgmt/updateEmployeeAllocateProject',
+  downloadEmployeeAllocationList: apiPrefix + '/project-mgmt/exportFile',
 }
 
 export const eventListApiConfig: EventListApi = {

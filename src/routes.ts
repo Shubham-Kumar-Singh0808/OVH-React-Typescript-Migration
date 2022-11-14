@@ -176,6 +176,12 @@ const EventTypeList = React.lazy(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
 )
+const EmployeeAllocationReport = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/EmployeeAllocation/EmployeeAllocationReport'
+    ),
+)
 const LocationList = React.lazy(
   () =>
     import(
@@ -265,6 +271,11 @@ const routes = [
     path: '/employeehandbook',
     name: 'Employee Handbook',
     component: EmployeeHandbook,
+  },
+  {
+    path: '/Employeereport',
+    name: 'Employee Allocation Report',
+    component: EmployeeAllocationReport,
   },
   {
     path: '/leaveReports',

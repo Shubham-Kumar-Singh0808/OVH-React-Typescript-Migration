@@ -30,13 +30,17 @@ const EmployeeLeaveSettings = (): JSX.Element => {
             CBodyClassName="ps-0 pe-0"
             CFooterClassName="d-none"
           >
-            <EmployeeLeaveCalender
-              userAccess={userAccessCalender as UserAccessToFeatures}
-            />
-            <EmployeeLeaveCategories
-              setToggle={setToggle}
-              userAccess={userAccess as UserAccessToFeatures}
-            />
+            {userAccessCalender?.viewaccess && (
+              <EmployeeLeaveCalender
+                userAccess={userAccessCalender as UserAccessToFeatures}
+              />
+            )}
+            {userAccess?.viewaccess && (
+              <EmployeeLeaveCategories
+                setToggle={setToggle}
+                userAccess={userAccess as UserAccessToFeatures}
+              />
+            )}
           </OCard>
         </>
       )}
