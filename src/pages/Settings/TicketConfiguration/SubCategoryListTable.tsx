@@ -57,8 +57,23 @@ const SubCategoryListTable = (
     setCurrentPage(1)
   }
 
-  const workFlowChecked = <CFormCheck checked disabled />
-  const workFlowUnChecked = <CFormCheck disabled />
+  const workFlowChecked = (
+    <span className="hidden-block sh-tracker-checkbox">
+      <CFormCheck
+        className="form-check-input form-select-not-allowed"
+        checked
+        disabled
+      />
+    </span>
+  )
+  const workFlowUnChecked = (
+    <span className="hidden-block sh-tracker-checkbox">
+      <CFormCheck
+        className="form-check-input form-select-not-allowed"
+        disabled
+      />
+    </span>
+  )
 
   const handleShowDeleteModal = (
     subCategoryId: number,

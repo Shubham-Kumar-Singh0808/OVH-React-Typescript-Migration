@@ -207,7 +207,8 @@ input.capetalized {
   list-style: none;
 }
 .form-select-not-allowed {
-  cursor: not-allowed !important;
+  cursor: not-allowed;
+  pointer-events: all !important;
 }
 .Allocation-table th{
   background-color: #3f8bd1;

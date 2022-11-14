@@ -8,6 +8,7 @@ import {
   mockTicketConfigurationSubCategory,
   mockTicketConfigurationSubCategoryList,
   mockTicketHistory,
+  mockTicketHistoryData,
 } from '../../../test/data/ticketConfigurationData'
 import { TicketConfigurationState } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
@@ -27,6 +28,7 @@ describe('Ticket Configuration Slice', () => {
         size: 0,
         list: [],
       },
+      addSubCategoryDetails: {},
       toggle: '',
       isLoading: ApiLoadingState.idle,
       isLoadingFilterOptions: ApiLoadingState.idle,
@@ -56,6 +58,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.idle,
         isLoadingFilterOptions: ApiLoadingState.loading,
@@ -86,6 +89,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.idle,
         isLoadingFilterOptions: ApiLoadingState.succeeded,
@@ -115,6 +119,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.failed,
         isLoadingFilterOptions: ApiLoadingState.idle,
@@ -139,6 +144,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         selectedDepartment: '',
         listSize: 0,
         ticketHistoryDetails: {
@@ -169,6 +175,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         selectedDepartment: '',
         listSize: 0,
         ticketHistoryDetails: {
@@ -198,6 +205,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         selectedDepartment: '',
         listSize: 0,
         ticketHistoryDetails: {
@@ -234,6 +242,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.idle,
         isLoadingFilterOptions: ApiLoadingState.loading,
@@ -264,6 +273,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.idle,
         isLoadingFilterOptions: ApiLoadingState.succeeded,
@@ -293,6 +303,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.failed,
         isLoadingFilterOptions: ApiLoadingState.idle,
@@ -323,6 +334,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.loading,
         isLoadingFilterOptions: ApiLoadingState.idle,
@@ -350,6 +362,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.succeeded,
         isLoadingFilterOptions: ApiLoadingState.idle,
@@ -379,6 +392,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.failed,
         isLoadingFilterOptions: ApiLoadingState.idle,
@@ -408,6 +422,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.loading,
         isLoadingFilterOptions: ApiLoadingState.idle,
@@ -436,6 +451,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.succeeded,
         isLoadingFilterOptions: ApiLoadingState.idle,
@@ -464,6 +480,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.failed,
         isLoadingFilterOptions: ApiLoadingState.idle,
@@ -493,6 +510,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.loading,
         isLoadingFilterOptions: ApiLoadingState.idle,
@@ -516,6 +534,7 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
         selectedDepartment: '',
         listSize: 0,
         ticketHistoryDetails: mockTicketHistory,
@@ -547,6 +566,95 @@ describe('Ticket Configuration Slice', () => {
           size: 0,
           list: [],
         },
+        addSubCategoryDetails: {},
+        toggle: '',
+        isLoading: ApiLoadingState.failed,
+        isLoadingFilterOptions: ApiLoadingState.idle,
+        error: undefined,
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if addSubCategory is pending', () => {
+      const action = {
+        type: ticketConfigurationService.addSubCategory.pending.type,
+      }
+      const state = ticketConfigurationReducer(
+        initialTicketConfigurationState,
+        action,
+      )
+      expect(state).toEqual({
+        departments: [],
+        categories: [],
+        subCategories: [],
+        subCategoryList: {
+          size: 0,
+          list: [],
+        },
+        selectedDepartment: '',
+        listSize: 0,
+        ticketHistoryDetails: {
+          size: 0,
+          list: [],
+        },
+        addSubCategoryDetails: {},
+        toggle: '',
+        isLoading: ApiLoadingState.loading,
+        isLoadingFilterOptions: ApiLoadingState.idle,
+        error: null,
+      })
+    })
+    it('Should be able to set isLoading to "success" if addSubCategory is fulfilled', () => {
+      const action = {
+        type: ticketConfigurationService.addSubCategory.fulfilled.type,
+      }
+      const state = ticketConfigurationReducer(
+        initialTicketConfigurationState,
+        action,
+      )
+      expect(state).toEqual({
+        departments: [],
+        categories: [],
+        subCategories: [],
+        subCategoryList: {
+          size: 0,
+          list: [],
+        },
+        addSubCategoryDetails: {},
+        selectedDepartment: '',
+        listSize: 0,
+        ticketHistoryDetails: {
+          size: 0,
+          list: [],
+        },
+        toggle: '',
+        isLoading: ApiLoadingState.succeeded,
+        isLoadingFilterOptions: ApiLoadingState.idle,
+        error: null,
+      })
+    })
+    it('Should be able to set isLoading to "failed" if addSubCategory is rejected', () => {
+      const action = {
+        type: ticketConfigurationService.addSubCategory.rejected.type,
+      }
+      const state = ticketConfigurationReducer(
+        initialTicketConfigurationState,
+        action,
+      )
+      expect(state).toEqual({
+        departments: [],
+        categories: [],
+        subCategories: [],
+        subCategoryList: {
+          size: 0,
+          list: [],
+        },
+        selectedDepartment: '',
+        listSize: 0,
+        ticketHistoryDetails: {
+          size: 0,
+          list: [],
+        },
+        addSubCategoryDetails: {},
         toggle: '',
         isLoading: ApiLoadingState.failed,
         isLoadingFilterOptions: ApiLoadingState.idle,
