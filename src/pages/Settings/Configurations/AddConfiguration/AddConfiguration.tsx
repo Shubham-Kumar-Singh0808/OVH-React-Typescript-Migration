@@ -3,7 +3,6 @@ import {
   CButton,
   CCol,
   CForm,
-  CFormCheck,
   CFormInput,
   CFormLabel,
   CFormSelect,
@@ -13,6 +12,7 @@ import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import AddConfigurationOptions from './AddConfigurationOptions'
 import {
   TextDanger,
   TextLabelProps,
@@ -44,7 +44,6 @@ const AddConfiguration = ({
   const [isDateValidation, setIsDateValidation] = useState<boolean>(false)
   const [isDateErrorValidation, setIsDateErrorValidation] =
     useState<boolean>(false)
-
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [selectActiveStatus, setSelectActiveStatus] = useState<string>('')
   const [reviewDuration, setReviewDuration] = useState<string>('')
@@ -53,90 +52,14 @@ const AddConfiguration = ({
 
   const commonFormatDate = 'L'
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectActiveStatus(e.target.value)
-  }
-
   const errorMsgs = useTypedSelector(
     reduxServices.addConfigurations.selectors.selectError,
   )
 
-  const durationStartDate = moment(reviewPeriodFrom)
-  const durationEndDate = moment(reviewPeriodTo)
-  const remainingDays = durationEndDate.diff(durationStartDate, 'days')
-
-  useEffect(() => {
-    if (remainingDays > 0) {
-      setReviewDuration(String(remainingDays))
-    } else {
-      setReviewDuration(String(''))
-    }
-  }, [remainingDays])
-
-  const formLabelProps = {
-    htmlFor: 'inputNewHandbook',
-    className: 'col-form-label category-label',
-  }
-
-  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
-    return {
-      htmlFor,
-      className,
-    }
-  }
-
-  const formLabel = 'col-sm-3 col-form-label text-end'
-  const handledInputChange = (
-    event:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { name, value } = event.target
-    if (name === 'reviewTitle') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setSelectReviewTitle(newValue)
-    }
-  }
-
-  const handleText = (description: string) => {
-    setAddingDescription(description)
-  }
-
-  const HandleInputChange = (
-    event:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { name, value } = event.target
-    if (name === 'minimumServicePeriod') {
-      let targetValue = value.replace(/\D/g, '')
-      if (Number(targetValue) > 999) targetValue = '999'
-      setServicePeriod(targetValue)
-    }
-    if (name === 'level') {
-      let targetValue = value.replace(/\D/g, '')
-      if (Number(targetValue) > 9) targetValue = '9'
-      setLevel(targetValue)
-    }
-  }
-
-  const clearInputs = () => {
-    setSelectReviewTitle('')
-    setSelectReviewType('')
-    setReviewEndDate('')
-    setReviewStartDate('')
-    setServicePeriod('')
-    setAddingDescription('')
-    setIsShowDescription(false)
-    setReviewPeriodFrom('')
-    setReviewPeriodTo('')
-    setSelectActiveStatus('')
-    setLevel('')
-    setReviewDuration('')
-    setTimeout(() => {
-      setIsShowDescription(true)
-    }, 0)
-  }
+  const remainingDays = moment(reviewPeriodTo).diff(
+    moment(reviewPeriodFrom),
+    'days',
+  )
   useEffect(() => {
     const startDatePeriod = new Date(
       moment(reviewPeriodFrom).format(commonFormatDate),
@@ -186,6 +109,62 @@ const AddConfiguration = ({
     servicePeriod,
     level,
   ])
+
+  useEffect(() => {
+    if (remainingDays > 0) {
+      setReviewDuration(String(remainingDays))
+    } else {
+      setReviewDuration(String(''))
+    }
+  }, [remainingDays])
+
+  const formLabelProps = {
+    htmlFor: 'inputNewHandbook',
+    className: 'col-form-label category-label',
+  }
+
+  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
+    return {
+      htmlFor,
+      className,
+    }
+  }
+
+  const formLabel = 'col-sm-3 col-form-label text-end'
+
+  const handleText = (description: string) => {
+    setAddingDescription(description)
+  }
+
+  const handleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+    if (name === 'reviewTitle') {
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      setSelectReviewTitle(newValue)
+    }
+  }
+
+  const clearInputs = () => {
+    setSelectReviewTitle('')
+    setSelectReviewType('')
+    setReviewEndDate('')
+    setReviewStartDate('')
+    setServicePeriod('')
+    setAddingDescription('')
+    setIsShowDescription(false)
+    setReviewPeriodFrom('')
+    setReviewPeriodTo('')
+    setSelectActiveStatus('')
+    setLevel('')
+    setReviewDuration('')
+    setTimeout(() => {
+      setIsShowDescription(true)
+    }, 0)
+  }
 
   const successMessage = (
     <OToast
@@ -311,7 +290,7 @@ const AddConfiguration = ({
                 name="reviewTitle"
                 placeholder="Name"
                 value={selectReviewTitle}
-                onChange={handledInputChange}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
@@ -529,89 +508,14 @@ const AddConfiguration = ({
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-            >
-              Level:
-              <span className={level ? TextWhite : TextDanger}>*</span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                data-testid="level"
-                id="level"
-                size="sm"
-                name="level"
-                placeholder="level"
-                type="text"
-                autoComplete="off"
-                max={9}
-                value={level}
-                onChange={HandleInputChange}
-                maxLength={1}
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-            >
-              Minimum Service Period (days):
-              <span className={servicePeriod ? TextWhite : TextDanger}>*</span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                type="text"
-                data-testid="minimumServicePeriod"
-                id="minimumServicePeriod"
-                size="sm"
-                name="minimumServicePeriod"
-                placeholder="Minimum Service Period"
-                autoComplete="off"
-                max={999}
-                value={servicePeriod}
-                onChange={HandleInputChange}
-                maxLength={3}
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-            >
-              Active:
-            </CFormLabel>
-            <CCol sm={2} md={1}>
-              <CFormCheck
-                data-testid="active"
-                className="mt-1"
-                type="radio"
-                name="yes"
-                id="yes"
-                label="Yes"
-                inline
-                onChange={onChangeHandler}
-                value={'true'}
-                checked={selectActiveStatus === 'true'}
-              />
-            </CCol>
-            <CCol sm={2} md={1}>
-              <CFormCheck
-                className="mt-1"
-                type="radio"
-                name="no"
-                id="no"
-                label="No"
-                inline
-                onChange={onChangeHandler}
-                value={'false'}
-                checked={selectActiveStatus === 'false'}
-              />
-            </CCol>
-          </CRow>
+          <AddConfigurationOptions
+            selectActiveStatus={selectActiveStatus}
+            setSelectActiveStatus={setSelectActiveStatus}
+            level={level}
+            setLevel={setLevel}
+            servicePeriod={servicePeriod}
+            setServicePeriod={setServicePeriod}
+          />
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>Description:</CFormLabel>
             {isShowDescription ? (
