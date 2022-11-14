@@ -8,10 +8,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import EditCertificateType from './EditCertificateType'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
@@ -38,6 +37,12 @@ const CertificateTypeTable = (): JSX.Element => {
   )
   const pageSizeFromState = useTypedSelector(
     reduxServices.certificateType.selectors.pageSizeFromState,
+  )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddCertificateTypeActions = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Certificate Type',
   )
   const dispatch = useAppDispatch()
 
@@ -156,35 +161,44 @@ const CertificateTypeTable = (): JSX.Element => {
                         <CTableDataCell scope="row">
                           {!isEditCertificateType && (
                             <>
-                              <CButton
-                                data-testid={`btn-edit${index}`}
-                                color="info"
-                                size="sm"
-                                className="btn-ovh me-1"
-                                onClick={() => {
-                                  editCertificateTypeButtonHandler(
-                                    certificateTypeItem.id as number,
-                                  )
-                                }}
-                              >
-                                <i
-                                  className="fa fa-pencil-square-o"
-                                  aria-hidden="true"
-                                ></i>
-                              </CButton>
-                              <CButton
-                                data-testid={`btn-delete${index}`}
-                                color="danger"
-                                size="sm"
-                                onClick={() =>
-                                  handleShowDeleteModal(
-                                    certificateTypeItem.id as number,
-                                    certificateTypeItem.certificateType,
-                                  )
-                                }
-                              >
-                                <CIcon className="text-white" icon={cilTrash} />
-                              </CButton>
+                              {userAccessToAddCertificateTypeActions?.updateaccess && (
+                                <CButton
+                                  data-testid={`btn-edit${index}`}
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh me-1 btn-ovh-employee-list"
+                                  onClick={() => {
+                                    editCertificateTypeButtonHandler(
+                                      certificateTypeItem.id as number,
+                                    )
+                                  }}
+                                >
+                                  <i
+                                    className="fa fa-pencil-square-o"
+                                    aria-hidden="true"
+                                  ></i>
+                                </CButton>
+                              )}
+                              {userAccessToAddCertificateTypeActions?.deleteaccess && (
+                                <CTooltip content="Delete">
+                                  <CButton
+                                    color="danger btn-ovh me-1"
+                                    className="btn-ovh-employee-list"
+                                    onClick={() =>
+                                      handleShowDeleteModal(
+                                        certificateTypeItem.id as number,
+                                        certificateTypeItem.certificateType,
+                                      )
+                                    }
+                                    data-testid={`btn-delete${index}`}
+                                  >
+                                    <i
+                                      className="fa fa-trash-o"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </CButton>
+                                </CTooltip>
+                              )}
                             </>
                           )}
                         </CTableDataCell>
@@ -243,14 +257,17 @@ const CertificateTypeTable = (): JSX.Element => {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
         modalTitle="Delete Certificate Type"
+        modalBodyClass="mt-0"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
         confirmButtonAction={handleConfirmDeleteCertificateType}
       >
-        {`Do you really want to delete this ${toDeleteCertificate} Certificate ?`}
+        <>
+          Do you really want to delete this{' '}
+          <strong>{toDeleteCertificate}</strong> Certificate ?
+        </>
       </OModal>
     </>
   )

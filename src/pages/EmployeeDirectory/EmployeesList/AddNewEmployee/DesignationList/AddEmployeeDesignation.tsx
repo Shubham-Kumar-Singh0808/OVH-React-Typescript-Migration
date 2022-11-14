@@ -27,7 +27,12 @@ const AddEmployeeDesignation = ({
   const designationList = useTypedSelector(
     reduxServices.employeeDesignation.selectors.employeeDesignations,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddDesignation = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Designation',
+  )
   const dispatch = useAppDispatch()
 
   const handleInputChange = (
@@ -144,18 +149,14 @@ const AddEmployeeDesignation = ({
             aria-label="Default select example"
             size="sm"
             id="department"
-            data-testid="form-select"
+            data-testid="form-select-dept"
             name="department"
             value={selectedDepartmentId}
             onChange={handleInputChange}
           >
             <option value={''}>Select Department</option>
             {departments?.map((department, index) => (
-              <option
-                key={index}
-                value={department.departmentId}
-                data-testid="select-option"
-              >
+              <option key={index} value={department.departmentId}>
                 {department.departmentName}
               </option>
             ))}
@@ -177,22 +178,26 @@ const AddEmployeeDesignation = ({
           <CFormInput
             type="text"
             id="designationName"
+            data-testid="desg-input"
             name="designationName"
             maxLength={32}
             value={designationName}
             onChange={handleInputChange}
           />
         </CCol>
-        <CCol xs={2}>
-          <CButton
-            color="info btn-ovh me-1 text-white"
-            size="sm"
-            disabled={!isAddDesignationBtnEnabled}
-            onClick={handleAddEmployeeDesignation}
-          >
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
-        </CCol>
+        {userAccessToAddDesignation?.createaccess && (
+          <CCol xs={2}>
+            <CButton
+              color="info btn-ovh me-1 text-white"
+              size="sm"
+              data-testid="add-button"
+              disabled={!isAddDesignationBtnEnabled}
+              onClick={handleAddEmployeeDesignation}
+            >
+              <i className="fa fa-plus me-1"></i>Add
+            </CButton>
+          </CCol>
+        )}
       </CRow>
     </>
   )

@@ -5,6 +5,9 @@ import DesignationField from './Designation'
 import { screen, render } from '../../../../../../test/testUtils'
 import { listComposer } from '../../../../../../utils/helper'
 import { mockDesignationList } from '../../../../../../test/data/employeeDesignationListData'
+import { ApiLoadingState } from '../../../../../../middleware/api/apiList'
+import { mockAllDesignation } from '../../../../../../test/data/addEmployeeDesignationData'
+import { mockUserAccessToFeaturesData } from '../../../../../../test/data/userAccessToFeaturesData'
 
 const mockSetIsAccordionItemShow = jest.fn()
 
@@ -20,6 +23,7 @@ describe('Add Employee Designation Component', () => {
           toggleValue={false}
           dynamicFormLabelProps={jest.fn()}
           isAddDisable={true}
+          isRequired={false}
         />,
       )
     })
@@ -54,7 +58,19 @@ describe('Add Employee Designation Component', () => {
           toggleValue={false}
           dynamicFormLabelProps={jest.fn()}
           isAddDisable={false}
+          isRequired={false}
         />,
+        {
+          preloadedState: {
+            employeeDesignationList: {
+              isLoading: ApiLoadingState.succeeded,
+              employeeDesignations: mockAllDesignation,
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
+            },
+          },
+        },
       )
     })
 
@@ -80,6 +96,7 @@ describe('Add Employee Designation Component', () => {
           toggleValue={false}
           dynamicFormLabelProps={jest.fn()}
           isAddDisable={false}
+          isRequired={false}
         />,
       )
     })

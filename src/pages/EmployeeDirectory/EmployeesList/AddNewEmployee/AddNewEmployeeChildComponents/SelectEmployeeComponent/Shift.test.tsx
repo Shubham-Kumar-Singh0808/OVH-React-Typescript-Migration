@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event'
 import ShiftField from './Shift'
 import { screen, render } from '../../../../../../test/testUtils'
 import { mockShifts } from '../../../../../../test/data/employeeDesignationListData'
+import { mockEmployeeShifts } from '../../../../../../test/data/employeeShiftsData'
+import { mockUserAccessToFeaturesData } from '../../../../../../test/data/userAccessToFeaturesData'
 
 const mockSetIsAccordionItemShow = jest.fn()
 
@@ -19,6 +21,7 @@ describe('Add Employee Shift Component', () => {
           toggleValue={false}
           dynamicFormLabelProps={jest.fn()}
           isAddDisable={true}
+          isRequired={false}
         />,
       )
     })
@@ -45,7 +48,18 @@ describe('Add Employee Shift Component', () => {
           toggleValue={false}
           dynamicFormLabelProps={jest.fn()}
           isAddDisable={false}
+          isRequired={false}
         />,
+        {
+          preloadedState: {
+            shiftConfiguration: {
+              employeeShifts: mockEmployeeShifts,
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
+            },
+          },
+        },
       )
     })
 
@@ -65,6 +79,7 @@ describe('Add Employee Shift Component', () => {
           toggleValue={false}
           dynamicFormLabelProps={jest.fn()}
           isAddDisable={false}
+          isRequired={false}
         />,
       )
     })
