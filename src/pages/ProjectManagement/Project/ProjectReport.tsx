@@ -179,7 +179,12 @@ const ProjectReport = (): JSX.Element => {
 
   const clearHandler = () => {
     setViewBtnEnable(true)
-    setParams({ ...initValue, projectDatePeriod: '', multiSearch: '' })
+    setParams({
+      ...initValue,
+      projectDatePeriod: '',
+      multiSearch: '',
+      projectStatus: 'ALL',
+    })
   }
 
   return (

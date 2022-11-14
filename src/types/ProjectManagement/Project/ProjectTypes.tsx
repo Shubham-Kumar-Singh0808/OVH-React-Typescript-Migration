@@ -102,3 +102,33 @@ export type ProjectsReportSliceState = {
   listSize: number
   error: ValidationError
 }
+
+export type CloseProjectType = {
+  id?: number
+  projectName?: string
+  isCloseModelVisible: boolean
+}
+
+export type DeleteProjectType = {
+  id?: number
+  projectName?: string
+  isDeleteModelVisible: boolean
+}
+
+export type DeallocationProjectType = {
+  data?: ProjectInfo
+  projectId?: number
+  isDeallocatedModelVisible: boolean
+}
+
+export type AllocationProjectType = {
+  data?: ProjectInfo
+  projectId?: number
+  isAllocatedVisible: boolean
+}
+
+export type SubProjectType = {
+  allocation?: number
+  billable?: string
+  isAllocated?: boolean
+}

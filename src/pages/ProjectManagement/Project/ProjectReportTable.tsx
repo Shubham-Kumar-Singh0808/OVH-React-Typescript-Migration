@@ -1,9 +1,6 @@
 import {
   CButton,
   CCol,
-  CFormInput,
-  CFormSelect,
-  CLink,
   CRow,
   CTable,
   CTableBody,
@@ -14,6 +11,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import ProjectDetailsTable from './ProjectDetailsTable'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -22,38 +20,15 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
-import { ProjectDetails } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
-import { ProjectReportsTableProps } from '../../../types/ProjectManagement/Project/ProjectTypes'
-
-type CloseProjectType = {
-  id?: number
-  projectName?: string
-  isCloseModelVisible: boolean
-}
-
-type DeleteProjectType = {
-  id?: number
-  projectName?: string
-  isDeleteModelVisible: boolean
-}
-
-type DeallocationProjectType = {
-  data?: ProjectDetails
-  projectId?: number
-  isDeallocatedModelVisible: boolean
-}
-
-type AllocationProjectType = {
-  data?: ProjectDetails
-  projectId?: number
-  isAllocatedVisible: boolean
-}
-
-type SubProjectType = {
-  allocation?: number
-  billable?: string
-  isAllocated?: boolean
-}
+import {
+  AllocationProjectType,
+  CloseProjectType,
+  DeallocationProjectType,
+  DeleteProjectType,
+  ProjectReportsTableProps,
+  SubProjectType,
+} from '../../../types/ProjectManagement/Project/ProjectTypes'
+import { ProjectDetails as ProjectInfo } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 
 const allocated = 'Allocated'
 const deAllocated = 'De-Allocated'
@@ -121,7 +96,7 @@ const ProjectReportsTable = ({
   }
 
   const handleShowProject = (projectId: number) => {
-    setIsShow(!isShow)
+    setIsShow(true)
     setSelectedProject(projectId)
     dispatch(
       reduxServices.projectReport.getFetchProjectClients(projectId.toString()),
@@ -145,7 +120,7 @@ const ProjectReportsTable = ({
   }
 
   const handleShowDeallocationModal = (
-    data: ProjectDetails,
+    data: ProjectInfo,
     projectId: number,
   ) => {
     setToDeallocatedProject({
@@ -155,7 +130,7 @@ const ProjectReportsTable = ({
     })
   }
 
-  const handleAllocationModal = (data: ProjectDetails, projectId: number) => {
+  const handleAllocationModal = (data: ProjectInfo, projectId: number) => {
     setSubProject(undefined)
     setAllocatedProject({
       data,
@@ -252,7 +227,7 @@ const ProjectReportsTable = ({
             ...toDeallocatedProject.data,
             isAllocated: false,
           }
-        : ({} as ProjectDetails)
+        : ({} as ProjectInfo)
 
     const deallocateResponse = await dispatch(
       reduxServices.projectReport.deallocateProjectReport(payload),
@@ -275,7 +250,7 @@ const ProjectReportsTable = ({
     }
   }
 
-  const handleUpdateProject = async (project: ProjectDetails) => {
+  const handleUpdateProject = async (project: ProjectInfo) => {
     const payload = {
       ...project,
       ...subProject,
@@ -304,6 +279,12 @@ const ProjectReportsTable = ({
     }
   }
 
+  const handleCancelUpdate = () => {
+    setAllocatedProject({
+      isAllocatedVisible: false,
+    })
+  }
+
   return (
     <>
       {projectReports != null && projectReports.length ? (
@@ -323,7 +304,12 @@ const ProjectReportsTable = ({
                 </CTableHeaderCell>
                 <CTableHeaderCell scope="col">Start Date</CTableHeaderCell>
                 <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+                <CTableHeaderCell
+                  scope="col"
+                  className="sh-project-report-status"
+                >
+                  Status
+                </CTableHeaderCell>
                 <CTableHeaderCell scope="col"></CTableHeaderCell>
                 <CTableHeaderCell
                   scope="col"
@@ -333,11 +319,11 @@ const ProjectReportsTable = ({
                 </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
-            <CTableBody>
+            <CTableBody color="light">
               {projectReports?.map((value, index) => {
                 return (
-                  <>
-                    <CTableRow key={index}>
+                  <React.Fragment key={index}>
+                    <CTableRow>
                       <CTableDataCell className="text-center">
                         {isShow && selectedProject === value.id ? (
                           <i
@@ -432,253 +418,33 @@ const ProjectReportsTable = ({
                       selectedProject === value.id &&
                       (projectClients != null ? (
                         <CTableRow>
-                          <CTableDataCell colSpan={12}>
-                            <CTable striped className="ms-1">
-                              <CTableHead color="info">
-                                <CTableRow>
-                                  <CTableHeaderCell scope="col">
-                                    ID
-                                  </CTableHeaderCell>
-                                  <CTableHeaderCell scope="col">
-                                    Name
-                                  </CTableHeaderCell>
-                                  <CTableHeaderCell scope="col">
-                                    Designation
-                                  </CTableHeaderCell>
-                                  <CTableHeaderCell scope="col">
-                                    Department
-                                  </CTableHeaderCell>
-                                  <CTableHeaderCell scope="col">
-                                    Allocation
-                                  </CTableHeaderCell>
-                                  <CTableHeaderCell scope="col">
-                                    Allocated Date
-                                  </CTableHeaderCell>
-                                  <CTableHeaderCell scope="col">
-                                    End Date
-                                  </CTableHeaderCell>
-                                  <CTableHeaderCell scope="col">
-                                    Billable
-                                  </CTableHeaderCell>
-                                  <CTableHeaderCell scope="col">
-                                    Current Status
-                                  </CTableHeaderCell>
-                                  <CTableHeaderCell scope="col">
-                                    Actions
-                                  </CTableHeaderCell>
-                                </CTableRow>
-                              </CTableHead>
-                              <CTableBody>
-                                {projectClients?.map((project, i) => {
-                                  return (
-                                    <CTableRow col-span={7} key={i}>
-                                      <CTableDataCell>
-                                        <CLink className="text-decoration-none">
-                                          {project.employeeId}
-                                        </CLink>
-                                      </CTableDataCell>
-                                      <CTableDataCell>
-                                        {project.userName}
-                                      </CTableDataCell>
-                                      <CTableDataCell>
-                                        {project.desigination}
-                                      </CTableDataCell>
-                                      <CTableDataCell>
-                                        {project.department}
-                                      </CTableDataCell>
-                                      <CTableDataCell>
-                                        {toAllocatedProject.isAllocatedVisible &&
-                                        project.employeeId ===
-                                          toAllocatedProject.data
-                                            ?.employeeId ? (
-                                          <CFormInput
-                                            id={project.employeeId.toString()}
-                                            data-testid="allocation"
-                                            size="sm"
-                                            type="number"
-                                            name={project.employeeId.toString()}
-                                            className="input-xs"
-                                            defaultValue={project.allocation}
-                                            onChange={handleOnChangeAllocation}
-                                          />
-                                        ) : (
-                                          <span>{project.allocation}%</span>
-                                        )}
-                                      </CTableDataCell>
-                                      <CTableDataCell>
-                                        {project.startDate}
-                                      </CTableDataCell>
-                                      <CTableDataCell>
-                                        {project.endDate}
-                                      </CTableDataCell>
-                                      <CTableDataCell style={{ width: '84px' }}>
-                                        {toAllocatedProject.isAllocatedVisible &&
-                                        project.employeeId ===
-                                          toAllocatedProject.data
-                                            ?.employeeId ? (
-                                          <span>
-                                            <CFormSelect
-                                              id="billable"
-                                              size="sm"
-                                              aria-label="billable"
-                                              data-testid="formBillable"
-                                              className="input-xs"
-                                              name="billable"
-                                              defaultValue={getConditionValue(
-                                                project.billable,
-                                                'Yes',
-                                                'No',
-                                              )}
-                                              onChange={handleOnChangeBillable}
-                                            >
-                                              {[
-                                                { label: 'Yes', name: 'Yes' },
-                                                { label: 'No', name: 'No' },
-                                              ].map((item, billableIndex) => {
-                                                const {
-                                                  name: optionName,
-                                                  label,
-                                                } = item
-                                                return (
-                                                  <option
-                                                    key={billableIndex}
-                                                    value={label}
-                                                  >
-                                                    {optionName}
-                                                  </option>
-                                                )
-                                              })}
-                                            </CFormSelect>
-                                          </span>
-                                        ) : (
-                                          getConditionValue(
-                                            project.billable,
-                                            'Yes',
-                                            'No',
-                                          )
-                                        )}
-                                      </CTableDataCell>
-                                      <CTableDataCell
-                                        style={{ width: '137px' }}
-                                      >
-                                        {toAllocatedProject.isAllocatedVisible &&
-                                        project.employeeId ===
-                                          toAllocatedProject.data
-                                            ?.employeeId ? (
-                                          <span>
-                                            <CFormSelect
-                                              id="allocated"
-                                              size="sm"
-                                              aria-label="allocated"
-                                              data-testid="formallocated"
-                                              className="input-xs"
-                                              name="allocated"
-                                              defaultValue={getConditionValue(
-                                                project.isAllocated,
-                                                allocated,
-                                                deAllocated,
-                                              )}
-                                              onChange={
-                                                handleOnChangeIsAllocated
-                                              }
-                                            >
-                                              {[
-                                                {
-                                                  label: allocated,
-                                                  name: allocated,
-                                                },
-                                                {
-                                                  label: deAllocated,
-                                                  name: deAllocated,
-                                                },
-                                              ].map((item, arrayIndex) => {
-                                                const { name, label } = item
-                                                return (
-                                                  <option
-                                                    key={arrayIndex}
-                                                    value={label}
-                                                  >
-                                                    {name}
-                                                  </option>
-                                                )
-                                              })}
-                                            </CFormSelect>
-                                          </span>
-                                        ) : (
-                                          getConditionValue(
-                                            project.isAllocated,
-                                            allocated,
-                                            deAllocated,
-                                          )
-                                        )}
-                                      </CTableDataCell>
-                                      <CTableDataCell
-                                        style={{ width: '100px' }}
-                                      >
-                                        {toAllocatedProject.isAllocatedVisible &&
-                                        project.employeeId ===
-                                          toAllocatedProject.data
-                                            ?.employeeId ? (
-                                          <CButton
-                                            className="btn-ovh-employee-list cursor-pointer text-white"
-                                            color="success btn-ovh me-1"
-                                            data-testid="update-project-btn"
-                                            onClick={() =>
-                                              handleUpdateProject(project)
-                                            }
-                                          >
-                                            <i
-                                              className="fa fa-floppy-o"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </CButton>
-                                        ) : (
-                                          <CButton
-                                            className="btn-ovh-employee-list cursor-pointer"
-                                            color="primary btn-ovh me-1"
-                                            data-testid="edit-sub-project-btn"
-                                            onClick={() =>
-                                              handleAllocationModal(
-                                                project,
-                                                value.id,
-                                              )
-                                            }
-                                          >
-                                            <i
-                                              className="fa fa-edit text-white"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </CButton>
-                                        )}
-                                        <CButton
-                                          className="btn-ovh-employee-list cursor-pointer"
-                                          color="danger btn-ovh me-1"
-                                          data-testid="delete-sub-btn"
-                                          disabled={!project.isAllocated}
-                                          onClick={() =>
-                                            handleShowDeallocationModal(
-                                              project,
-                                              value.id,
-                                            )
-                                          }
-                                        >
-                                          <i
-                                            className="fa fa-trash-o text-white"
-                                            aria-hidden="true"
-                                          ></i>
-                                        </CButton>
-                                      </CTableDataCell>
-                                    </CTableRow>
-                                  )
-                                })}
-                              </CTableBody>
-                            </CTable>
+                          <CTableDataCell colSpan={12} className="pe-0 ps-4">
+                            <ProjectDetailsTable
+                              toAllocatedProject={toAllocatedProject}
+                              handleOnChangeAllocation={
+                                handleOnChangeAllocation
+                              }
+                              getConditionValue={getConditionValue}
+                              handleOnChangeBillable={handleOnChangeBillable}
+                              handleOnChangeIsAllocated={
+                                handleOnChangeIsAllocated
+                              }
+                              handleUpdateProject={handleUpdateProject}
+                              handleAllocationModal={handleAllocationModal}
+                              handleShowDeallocationModal={
+                                handleShowDeallocationModal
+                              }
+                              handleCancelUpdate={handleCancelUpdate}
+                              allocated={allocated}
+                              deAllocated={deAllocated}
+                              value={value}
+                            />
                           </CTableDataCell>
                         </CTableRow>
                       ) : (
                         <OLoadingSpinner type={LoadingType.PAGE} />
                       ))}
-                  </>
+                  </React.Fragment>
                 )
               })}
             </CTableBody>
