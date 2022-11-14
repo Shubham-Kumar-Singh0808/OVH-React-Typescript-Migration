@@ -34,12 +34,27 @@ const getCycleToEdit = createAsyncThunk(
   },
 )
 
+const updateAppraisalCycle = createAsyncThunk(
+  'appraisalCycle/updateAppraisalCycle',
+  async (updateCycleDetails: getCycle, thunkApi) => {
+    try {
+      return await appraisalConfigurationsApi.updateAppraisalCycle(
+        updateCycleDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
   appraisalCycle: [],
   editAppraisalCycle: {} as getCycle,
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
+  error: null,
 }
 
 const appraisalCycleSlice = createSlice({
@@ -59,8 +74,15 @@ const appraisalCycleSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.editAppraisalCycle = action.payload as getCycle
       })
+      .addCase(updateAppraisalCycle.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
-        isAnyOf(getAllAppraisalCycleData.pending, getCycleToEdit.pending),
+        isAnyOf(
+          getAllAppraisalCycleData.pending,
+          getCycleToEdit.pending,
+          updateAppraisalCycle.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
@@ -84,6 +106,9 @@ const isLoading = (state: RootState): LoadingState =>
 const getEditAppraisal = (state: RootState): getAppraisalCycle =>
   state.appraisalConfigurations.editAppraisalCycle
 
+const selectError = (state: RootState): ValidationError =>
+  state.appraisalConfigurations.error
+
 const pageFromState = (state: RootState): number =>
   state.appraisalConfigurations.currentPage
 const pageSizeFromState = (state: RootState): number =>
@@ -92,6 +117,7 @@ const pageSizeFromState = (state: RootState): number =>
 const appraisalCycleThunk = {
   getAllAppraisalCycle: getAllAppraisalCycleData,
   getCycleToEdit,
+  updateAppraisalCycle,
 }
 
 const appraisalCycleSelectors = {
@@ -100,6 +126,7 @@ const appraisalCycleSelectors = {
   pageFromState,
   pageSizeFromState,
   getEditAppraisal,
+  selectError,
 }
 
 export const appraisalCycleService = {

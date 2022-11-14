@@ -1,4 +1,5 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { ValidationError } from '../../SidebarMenu/sidebarMenuType'
 
 export type getAppraisalCycle = {
   id: number
@@ -22,7 +23,7 @@ export type getCycle = {
   appraisalStartDate: string
   appraisalType: string
   cycleStartedFlag: boolean
-  description: string
+  description: string | null
   fromDate: string
   id: number
   level: number
@@ -37,4 +38,5 @@ export type AppraisalCycleSliceState = {
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number
+  error: ValidationError
 }

@@ -9,7 +9,7 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -18,6 +18,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditConfiguration = (): JSX.Element => {
   const { cycleId } = useParams<{ cycleId: string }>()
@@ -141,6 +142,42 @@ const EditConfiguration = (): JSX.Element => {
       setIsUpdateButtonEnabled(false)
     }
   }, [cycle])
+  const history = useHistory()
+
+  const updateSuccessToastMessage = (
+    <OToast
+      toastMessage="Configuration has been updated"
+      toastColor="success"
+    />
+  )
+
+  const updateFailedToastMessage = (
+    <OToast toastMessage="Cycle name should be unique." toastColor="danger" />
+  )
+
+  const selectError = useTypedSelector(
+    reduxServices.appraisalConfigurations.selectors.selectError,
+  )
+
+  const updateAppraisalCycleAction = async () => {
+    const prepareObject = {
+      ...cycle,
+    }
+    const updateAppraisalCycleResultAction = await dispatch(
+      reduxServices.appraisalConfigurations.updateAppraisalCycle(prepareObject),
+    )
+    if (
+      reduxServices.appraisalConfigurations.updateAppraisalCycle.fulfilled.match(
+        updateAppraisalCycleResultAction,
+      )
+    ) {
+      history.push('/appraisalCycle')
+      dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+    } else if (selectError === 417) {
+      dispatch(reduxServices.app.actions.addToast(updateFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
 
   return (
     <>
@@ -405,6 +442,7 @@ const EditConfiguration = (): JSX.Element => {
                 className="btn-ovh me-1 text-white"
                 color="success"
                 disabled={!isUpdateButtonEnabled}
+                onClick={updateAppraisalCycleAction}
               >
                 Update
               </CButton>

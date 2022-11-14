@@ -1,4 +1,7 @@
-import { getAppraisalCycle } from '../../../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import {
+  getAppraisalCycle,
+  getCycle,
+} from '../../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -27,9 +30,23 @@ const getCycleToEdit = async (cycleId: number): Promise<getAppraisalCycle> => {
   return response.data
 }
 
+const updateAppraisalCycle = async (
+  updateCycleDetails: getCycle,
+): Promise<getCycle> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: appraisalConfigurationsApiConfig.updateAppraisalCycle,
+    method: AllowedHttpMethods.put,
+    data: updateCycleDetails,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const appraisalConfigurationsApi = {
   getAllAppraisalCycle,
   getCycleToEdit,
+  updateAppraisalCycle,
 }
 
 export default appraisalConfigurationsApi
