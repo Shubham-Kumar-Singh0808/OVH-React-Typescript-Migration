@@ -210,6 +210,17 @@ input.capetalized {
   cursor: not-allowed;
   pointer-events: all !important;
 }
+.Allocation-table th{
+  background-color: #3f8bd1;
+}
+.employee-allocation-export-btn{
+  position: relative;
+  
+}
+.employee-allocation-export-btn button{
+  position: absolute;
+  right: 12px;
+}
 .label-default {
   background-color: $badge-light;
   color: #333;
@@ -233,13 +244,14 @@ input.capetalized {
   border-bottom: 1px solid $blue-light;
   color: $blue-light;
 }
-.bookingList-model-table th,
-.bookingList-model-table td {
-  border-bottom: none;
+.bookingList-model-table th,.bookingList-model-table td {
+   border-bottom: none;
 }
+
 .text-danger {
   color: $text-danger !important;
 }
+
 .modal .modal-dialog .modal-content .modal-body.model-body-text-alinement {
   min-height: 90px;
   padding-top: 0px;
