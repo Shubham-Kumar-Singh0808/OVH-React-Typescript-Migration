@@ -147,19 +147,19 @@ describe('Add Configuration Component Testing', () => {
     userEvent.selectOptions(reviewType, ['Monthly'])
 
     const level = screen.getByPlaceholderText('level')
-    userEvent.type(reviewTitle, '1')
+    userEvent.type(level, '1')
 
     const minimumServicePeriod = screen.getByPlaceholderText(
       'Minimum Service Period',
     )
-    userEvent.type(reviewTitle, '1')
+    userEvent.type(minimumServicePeriod, '1')
 
     userEvent.click(screen.getByTestId(saveButton))
     expect(screen.getByTestId(saveButton)).not.toBeEnabled()
-    expect(reviewTitle).toHaveValue('New Cycle 211')
+    expect(reviewTitle).toHaveValue('New Cycle 2')
     expect(reviewType).toHaveValue('Monthly')
     expect(level).toHaveValue('1')
-    expect(minimumServicePeriod).toHaveValue('')
+    expect(minimumServicePeriod).toHaveValue('1')
 
     userEvent.click(screen.getByTestId(clearButton))
     expect(screen.getByTestId(clearButton)).toBeEnabled()
