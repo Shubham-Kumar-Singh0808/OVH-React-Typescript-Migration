@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import CertificateTypeTable from './CertificateTypeTable'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { mockCertificateType } from '../../../../test/data/certificateTypeData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 describe('CertificateType Table Testing', () => {
   beforeEach(() => {
@@ -11,6 +12,9 @@ describe('CertificateType Table Testing', () => {
       preloadedState: {
         certificateType: {
           certificateTypes: mockCertificateType,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
@@ -31,7 +35,7 @@ describe('CertificateType Table Testing', () => {
   })
   test('should render delete button', () => {
     expect(screen.getByTestId('btn-delete2')).toHaveClass(
-      'btn btn-danger btn-sm',
+      'btn btn-danger btn-ovh me-1 btn-ovh-employee-list',
     )
   })
   test('should render correct number of page records', async () => {

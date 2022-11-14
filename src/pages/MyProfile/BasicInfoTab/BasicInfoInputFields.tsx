@@ -14,6 +14,7 @@ import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/
 const BasicInfoInputFields = ({
   dateFormat,
   commonFormLabel,
+  formLabelWithPadding,
   employeeBasicInformationEditData,
   handleChange,
   baseLocationShown,
@@ -33,6 +34,7 @@ const BasicInfoInputFields = ({
 }: {
   dateFormat: string
   commonFormLabel: string
+  formLabelWithPadding: string
   employeeBasicInformationEditData: EmployeeGeneralInformation
   handleChange: (
     e:
@@ -133,7 +135,7 @@ const BasicInfoInputFields = ({
       )}
       <CRow className="mt-3 ">
         <CFormLabel
-          {...dynamicFormLabelProps('employeeGender', commonFormLabel)}
+          {...dynamicFormLabelProps('employeeGender', formLabelWithPadding)}
         >
           Gender:
         </CFormLabel>

@@ -241,6 +241,7 @@ const ContactNumberDetails = (props: {
           </CCol>
           <CCol sm={3}>
             <CFormInput
+              autoComplete="off"
               type="text"
               size="sm"
               data-testid="altNumberInput"

@@ -1,82 +1,89 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
-import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AddEmployeeDesignation from './AddEmployeeDesignation'
-import { ReduxProvider } from '../../../../../components/Helper'
-import stateStore from '../../../../../stateStore'
+import { cleanup, render, screen, waitFor } from '../../../../../test/testUtils'
+import { mockUserAccessToFeaturesData } from '../../../../../test/data/userAccessToFeaturesData'
+import {
+  mockAllDepartments,
+  mockAllDesignation,
+} from '../../../../../test/data/addEmployeeDesignationData'
+import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 
-const expectComponentToBeRendered = () => {
-  expect(screen.getByText('Department:')).toBeInTheDocument()
-  expect(screen.getByText('Designation:')).toBeInTheDocument()
-  expect(screen.getByRole('button')).toBeInTheDocument()
-  expect(screen.getByRole('button')).toBeDisabled()
-}
-
+const selectDepartment = 'form-select-dept'
+const addButtonElement = 'add-button'
+const designationTextInput = 'desg-input'
 describe('Add New Designation Testing', () => {
-  test('should render add new Designation form without crashing', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
+  describe('should render Add New Designation component without crashing', () => {
+    beforeEach(() => {
+      render(
         <AddEmployeeDesignation
-          selectedDepartmentId={0}
-          setSelectedDepartmentId={function (_value: number): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    expectComponentToBeRendered()
-  })
-
-  test('should correctly set default option', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddEmployeeDesignation
-          selectedDepartmentId={0}
+          selectedDepartmentId={1}
           setSelectedDepartmentId={jest.fn()}
-        />
-      </ReduxProvider>,
-    )
-    expect(
-      screen.getByRole('option', { name: 'Select Department' }).selected,
-    ).toBe(true)
-  })
-
-  test('should be in disabled mode when any of the mandatory field is not entered', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddEmployeeDesignation
-          selectedDepartmentId={0}
-          setSelectedDepartmentId={jest.fn()}
-        />
-      </ReduxProvider>,
-    )
-    userEvent.type(screen.getByRole('textbox'), 'testing')
-    await waitFor(() => {
-      expect(screen.getByRole('button')).toBeDisabled()
+        />,
+        {
+          preloadedState: {
+            employeeDesignationList: {
+              isLoading: ApiLoadingState.succeeded,
+              employeeDepartments: mockAllDepartments,
+              employeeDesignations: mockAllDesignation,
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
+            },
+          },
+        },
+      )
     })
-  })
+    afterEach(cleanup)
+    test('should render Departments filter', () => {
+      const departments = screen.getByTestId(selectDepartment)
+      expect(departments).toBeTruthy()
+    })
+    test('should enable add button after selecting form option', async () => {
+      const departmentNameElement = screen.getByTestId(selectDepartment)
+      userEvent.selectOptions(departmentNameElement, ['Networking'])
+      expect(departmentNameElement).toHaveValue('1')
 
-  test('should clear input and disable button after submitting and new designation should be added', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddEmployeeDesignation
-          selectedDepartmentId={0}
-          setSelectedDepartmentId={jest.fn()}
-        />
-      </ReduxProvider>,
-    )
+      const designationInputEl = screen.getByTestId(designationTextInput)
+      userEvent.type(designationInputEl, 'testing')
+      expect(designationInputEl).toHaveValue('testing')
 
-    expectComponentToBeRendered()
+      const addDesgButton = screen.getByTestId(addButtonElement)
+      await waitFor(() => {
+        expect(addDesgButton).toBeEnabled()
+      })
+    })
+    test('should disable add button if input field is empty', async () => {
+      const departmentSelect = screen.getByTestId(selectDepartment)
+      userEvent.selectOptions(departmentSelect, ['Networking'])
+      expect(departmentSelect).toHaveValue('1')
 
-    userEvent.type(screen.getByRole('textbox'), 'testing')
-    userEvent.click(screen.getByRole('button'))
-    await waitFor(() => {
-      userEvent.clear(screen.getByRole('textbox'))
-      expect(screen.getByRole('textbox')).toHaveValue('')
-      expect(screen.getByRole('button')).toBeDisabled()
+      const designationInput = screen.getByTestId(designationTextInput)
+      userEvent.type(designationInput, '')
+      expect(designationInput).toHaveValue('')
+
+      const addDesgButton = screen.getByTestId(addButtonElement)
+      await waitFor(() => {
+        expect(addDesgButton).toBeDisabled()
+      })
+    })
+    test('should clear input and disable button after submitting and new designation should be added', async () => {
+      const departmentElement = screen.getByTestId(selectDepartment)
+      userEvent.selectOptions(departmentElement, ['Networking'])
+      expect(departmentElement).toHaveValue('1')
+
+      const designationInput = screen.getByTestId(designationTextInput)
+      userEvent.type(designationInput, 'testing')
+      expect(designationInput).toHaveValue('testing')
+
+      const addDesgButton = screen.getByTestId(addButtonElement)
+      userEvent.click(addDesgButton)
+      userEvent.clear(designationInput)
+      await waitFor(() => {
+        expect(designationInput).toHaveValue('')
+        expect(addDesgButton).toBeDisabled()
+      })
     })
   })
 })
