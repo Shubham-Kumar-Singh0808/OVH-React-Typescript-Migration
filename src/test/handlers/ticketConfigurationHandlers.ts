@@ -1,6 +1,7 @@
 import { rest } from 'msw'
 import { ticketConfigurationApiConfig } from '../../middleware/api/apiList'
 import {
+  mockAddSubCategory,
   mockDepartments,
   mockTicketConfigurationCategory,
   mockTicketConfigurationSubCategory,
@@ -54,7 +55,7 @@ export const ticketConfigurationHandlers = [
       }),
     )
   }),
-
+  //delete subCategory api mock
   rest.delete(
     ticketConfigurationApiConfig.deleteSubCategory,
     (_req, res, ctx) => {
@@ -66,4 +67,13 @@ export const ticketConfigurationHandlers = [
       )
     },
   ),
+  // addNewSubCategory api mock
+  rest.post(ticketConfigurationApiConfig.addSubCategory, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: { mockAddSubCategory },
+      }),
+    )
+  }),
 ]
