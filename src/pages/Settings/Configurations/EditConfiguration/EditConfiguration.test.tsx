@@ -4,27 +4,25 @@ import '@testing-library/jest-dom'
 // eslint-disable-next-line import/order
 import { CKEditor } from 'ckeditor4-react'
 import EditConfiguration from './EditConfiguration'
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '../../../../test/testUtils'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { mockEditAppraisalCycle } from '../../../../test/data/editConfigurationData'
-import { mockAppraisalCycle } from '../../../../test/data/appraisalConfigurationsData'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 
 const mockSetTogglePage = jest.fn()
 const updateButton = 'updateBtn'
-
+const selectType = 'form-select1'
 describe('Edit Configuration Component Testing', () => {
   beforeEach(() => {
     render(<EditConfiguration />)
   })
+
   test('should be able to render  Edit Configuration  Title', () => {
     expect(screen.getByText('Edit Configuration')).toBeInTheDocument()
   })
+
+  test('should render edit Configuration', () => {
+    const backButton = screen.getByTestId('back-button')
+    expect(backButton).toBeTruthy()
+  })
+
   test('should render Configuration  component with out crashing', () => {
     expect(screen.getByText('Review Title:')).toBeInTheDocument()
     expect(screen.getByText('Review Type:')).toBeInTheDocument()
@@ -81,37 +79,75 @@ describe('Edit Configuration Component Testing', () => {
 
     expect(activeState.checked).toEqual(false)
   })
-})
 
-describe('Edit Client Component', () => {
-  beforeEach(() => {
-    render(<EditConfiguration />, {
-      preloadedState: {
-        appraisalConfigurations: {
-          appraisalCycle: mockAppraisalCycle,
-          editAppraisalCycle: mockEditAppraisalCycle,
-          isLoading: ApiLoadingState.idle,
-          currentPage: 1,
-          pageSize: 20,
-          error: null,
-        },
-      },
-    })
-  })
-  afterEach(cleanup)
   test('update button should disable upon providing existing client name ', async () => {
     const reviewTitleInput = screen.getByTestId('editReviewTitle')
     userEvent.clear(reviewTitleInput)
     userEvent.type(reviewTitleInput, 'Test review2')
-    expect(reviewTitleInput).toHaveValue(`Test review2`)
+    expect(reviewTitleInput).toHaveValue('Test review2')
 
-    const reviewTypeInput = screen.getByTestId('form-select1')
+    const reviewTypeInput = screen.getByTestId(selectType)
     userEvent.selectOptions(reviewTypeInput, 'Monthly')
+
+    const level = await screen.findByTestId('level')
+    userEvent.type(level, '1')
+
+    const minimumServicePeriod = screen.findByTestId('minimumServicePeriod')
+    userEvent.type(await minimumServicePeriod, '90')
 
     const updateBtnElement = screen.getByTestId(updateButton)
     userEvent.click(updateBtnElement)
     await waitFor(() => {
       expect(updateBtnElement).toBeDisabled()
     })
+  })
+
+  test('should render review Title Input field ', () => {
+    const reviewTitleInput = screen.findByTestId('editReviewTitle')
+    expect(reviewTitleInput).toBeTruthy()
+  })
+
+  test('should render review Type Input field ', () => {
+    const reviewTypeInput = screen.findByTestId(selectType)
+    expect(reviewTypeInput).toBeTruthy()
+  })
+
+  test('should render review Period From Input field ', () => {
+    const reviewPeriodFrom = screen.findByTestId('reviewPeriodFrom')
+    expect(reviewPeriodFrom).toBeTruthy()
+  })
+
+  test('should render review Period To Input field ', () => {
+    const reviewPeriodTo = screen.findByTestId('reviewPeriodTo')
+    expect(reviewPeriodTo).toBeTruthy()
+  })
+
+  test('should render review Start Date Input field ', () => {
+    const reviewStartDate = screen.findByTestId('reviewStartDate')
+    expect(reviewStartDate).toBeTruthy()
+  })
+
+  test('should render review End Date Input field ', () => {
+    const reviewEndDate = screen.findByTestId('reviewEndDate')
+    expect(reviewEndDate).toBeTruthy()
+  })
+
+  test('should render review Duration Input field ', () => {
+    const reviewDuration = screen.findByTestId('reviewDuration')
+    expect(reviewDuration).toBeTruthy()
+  })
+
+  test('should render level Input field ', () => {
+    const level = screen.findByTestId('level')
+    expect(level).toBeTruthy()
+  })
+
+  test('should render  minimum Service Period Input field ', () => {
+    const minimumServicePeriod = screen.findByTestId('minimumServicePeriod')
+    expect(minimumServicePeriod).toBeTruthy()
+  })
+  test('should render active Input field ', () => {
+    const active = screen.findByTestId('active')
+    expect(active).toBeTruthy()
   })
 })

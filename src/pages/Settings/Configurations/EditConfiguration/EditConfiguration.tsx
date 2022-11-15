@@ -76,7 +76,7 @@ const EditConfiguration = (): JSX.Element => {
       setCycle((values) => {
         return { ...values, ...{ [name]: activeStatus } }
       })
-    } else if (name === 'editReviewTitle') {
+    } else if (name === 'name') {
       const reviewTitle = value.replace(reviewTitleRegExpression, '')
       setCycle((values) => {
         return { ...values, ...{ [name]: reviewTitle } }
@@ -91,7 +91,7 @@ const EditConfiguration = (): JSX.Element => {
       setCycle((values) => {
         return { ...values, ...{ [name]: Number(levelValue) } }
       })
-    } else if (name === 'minimumServicePeriod') {
+    } else if (name === 'servicePeriod') {
       const servicePeriodDays = value.replace(levelValueRegExpression, '')
       setCycle((values) => {
         return { ...values, ...{ [name]: Number(servicePeriodDays) } }
@@ -212,7 +212,7 @@ const EditConfiguration = (): JSX.Element => {
                 id="editReviewTitle"
                 autoComplete="off"
                 size="sm"
-                name="editReviewTitle"
+                name="name"
                 placeholder="Name"
                 value={cycle.name}
                 onChange={onChangeInputHandler}
@@ -251,7 +251,7 @@ const EditConfiguration = (): JSX.Element => {
                 id="reviewPeriodFrom"
                 size="sm"
                 placeholder="mm/yyyy"
-                name="reviewPeriodFrom"
+                name="fromDate"
                 value={cycle.fromDate}
                 disabled={true}
               />
@@ -269,7 +269,7 @@ const EditConfiguration = (): JSX.Element => {
                 data-testid="reviewPeriodTo"
                 id="reviewPeriodTo"
                 size="sm"
-                name="reviewPeriodTo"
+                name="toDate"
                 placeholder="mm/yyyy"
                 value={cycle.toDate}
                 disabled={true}
@@ -289,7 +289,7 @@ const EditConfiguration = (): JSX.Element => {
                 id="reviewStartDate"
                 size="sm"
                 placeholder="dd/mm/yyyy"
-                name="reviewStartDate"
+                name="appraisalStartDate"
                 value={cycle.appraisalStartDate}
                 disabled={true}
               />
@@ -307,7 +307,7 @@ const EditConfiguration = (): JSX.Element => {
                 data-testid="reviewEndDate"
                 id="reviewEndDate"
                 size="sm"
-                name="reviewEndDate"
+                name="appraisalEndDate"
                 placeholder="dd/mm/yyyy"
                 value={cycle.appraisalEndDate}
                 disabled={true}
@@ -327,7 +327,7 @@ const EditConfiguration = (): JSX.Element => {
                 data-testid="reviewDuration"
                 id="reviewDuration"
                 size="sm"
-                name="reviewDuration"
+                name="appraisalDuration"
                 disabled={true}
                 value={cycle.appraisalDuration}
               />
@@ -351,7 +351,7 @@ const EditConfiguration = (): JSX.Element => {
                 type="text"
                 autoComplete="off"
                 maxLength={1}
-                value={cycle.level}
+                value={cycle.level || ''}
                 onChange={onChangeInputHandler}
               />
             </CCol>
@@ -372,11 +372,11 @@ const EditConfiguration = (): JSX.Element => {
                 data-testid="minimumServicePeriod"
                 id="minimumServicePeriod"
                 size="sm"
-                name="minimumServicePeriod"
+                name="servicePeriod"
                 placeholder="Minimum Service Period"
                 autoComplete="off"
                 maxLength={3}
-                value={cycle.servicePeriod}
+                value={cycle.servicePeriod || ''}
                 onChange={onChangeInputHandler}
               />
             </CCol>
