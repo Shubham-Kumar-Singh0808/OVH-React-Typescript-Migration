@@ -219,6 +219,7 @@ const EditConfiguration = (): JSX.Element => {
                 name="editReviewTitle"
                 placeholder="Name"
                 value={cycle.name}
+                onChange={inputHandler}
               />
             </CCol>
           </CRow>
@@ -351,6 +352,7 @@ const EditConfiguration = (): JSX.Element => {
                 autoComplete="off"
                 maxLength={1}
                 value={cycle.level}
+                onChange={inputHandler}
               />
             </CCol>
           </CRow>
@@ -375,6 +377,7 @@ const EditConfiguration = (): JSX.Element => {
                 autoComplete="off"
                 maxLength={3}
                 value={cycle.servicePeriod}
+                onChange={inputHandler}
               />
             </CCol>
           </CRow>
