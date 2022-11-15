@@ -1,5 +1,5 @@
 import { CForm, CRow, CFormLabel, CCol, CButton } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
@@ -14,12 +14,29 @@ const EmployeeViewFilterOptions = ({
   setToggle: (value: string) => void
 }): JSX.Element => {
   const [comments, setComments] = useState<string>('')
+  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false)
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const getResignationViewResponse = useTypedSelector(
     reduxServices.submitViewResignation.selectors.resignationView,
   )
   const handleDescription = (comments: string) => {
     setComments(comments)
+  }
+
+  useEffect(() => {
+    if (comments) {
+      setIsSubmitButtonEnabled(true)
+    } else {
+      setIsSubmitButtonEnabled(false)
+    }
+  }, [comments])
+
+  const handleClearDetails = () => {
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+    setComments('')
   }
   const dispatch = useAppDispatch()
   const successToastMessage = (
@@ -129,7 +146,7 @@ const EmployeeViewFilterOptions = ({
             <CButton
               className="btn-ovh me-1"
               color="success"
-              // disabled={!isSubmitButtonEnabled}
+              disabled={!isSubmitButtonEnabled}
               onClick={handleRevokeResignation}
             >
               Submit
@@ -137,8 +154,8 @@ const EmployeeViewFilterOptions = ({
             <CButton
               color="warning "
               className="btn-ovh"
-              // disabled={!isClearButtonEnabled}
-              // onClick={handleClearDetails}
+              disabled={!isSubmitButtonEnabled}
+              onClick={handleClearDetails}
             >
               Clear
             </CButton>
