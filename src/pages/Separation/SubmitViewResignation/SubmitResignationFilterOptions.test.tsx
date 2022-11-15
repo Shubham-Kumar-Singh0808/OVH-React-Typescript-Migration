@@ -6,10 +6,11 @@ import SubmitResignationFilterOptions from './SubmitResignationFilterOptions'
 import { mockSeparationFormResponse } from '../../../test/data/submitViewResignationData'
 import { render, screen } from '../../../test/testUtils'
 
+const mockSetToggle = jest.fn()
 describe('Submit view resignation filter options Component Testing', () => {
   describe('should render Submit view resignation filter options with data', () => {
     beforeEach(() => {
-      render(<SubmitResignationFilterOptions />, {
+      render(<SubmitResignationFilterOptions setToggle={mockSetToggle} />, {
         preloadedState: {
           submitViewResignation: {
             getSeparationFormResponse: mockSeparationFormResponse,

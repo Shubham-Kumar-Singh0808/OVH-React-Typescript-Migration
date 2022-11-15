@@ -1,4 +1,7 @@
-import { GetSeparationFormResponse } from '../../types/Separation/SubmitViewResignation/submitResignationTypes'
+import {
+  GetSeparationFormResponse,
+  ResignationView,
+} from '../../types/Separation/SubmitViewResignation/submitResignationTypes'
 
 export const mockSeparationFormResponse: GetSeparationFormResponse = {
   lookup: [
@@ -61,4 +64,47 @@ export const mockSeparationFormResponse: GetSeparationFormResponse = {
     certificate: null,
     seperationComments: '',
   },
+}
+
+export const mockResignationView: ResignationView = {
+  separationId: 21,
+  relievingDate: '12/03/2022',
+  resignationDate: null,
+  employeeId: null,
+  employeeName: null,
+  separationComments: null,
+  employeeComments: null,
+  managerComments: null,
+  withdrawComments: null,
+  primaryReasonId: null,
+  primaryReasonName: null,
+  reasonComments: null,
+  status: 'Resigned',
+  canberevoked: null,
+  isRevoked: null,
+  isprocessInitiated: null,
+  adminCcCss: null,
+  hrCcCss: null,
+  managerCcCss: null,
+  itCcCss: null,
+  finanaceCcCss: null,
+  showCommentsBox: null,
+  showEditButton: null,
+  certificateDTO: null,
+  relievingLetterPath: null,
+  managerName: null,
+  exitFeedbackFormPath: null,
+  separationExist: null,
+  showManagerClearance: null,
+  showTimeline: null,
+  isPIP: null,
+  pipAuditDTO: null,
+  contractExists: null,
+  contractStartDate: null,
+  contractEndDate: null,
+  personalEmailFlag: null,
+  initiatedDate: null,
+  empStatus: null,
+  certificate: null,
+  seperationComments: null,
 }
