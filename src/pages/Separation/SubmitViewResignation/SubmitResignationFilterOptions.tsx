@@ -14,6 +14,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { SubmitResignationTypes } from '../../../types/Separation/SubmitViewResignation/submitResignationTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const SubmitResignationFilterOptions = (): JSX.Element => {
   const [primaryReason, setPrimaryReason] = useState<string>('')
@@ -22,6 +23,7 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
     initialSubmitResignation,
   )
   const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false)
+  const [isClearButtonEnabled, setIsClearButtonEnabled] = useState(false)
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const getSeparation = useTypedSelector(
     reduxServices.submitViewResignation.selectors.separationForm,
@@ -56,8 +58,23 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
     }
   }, [primaryReason, submitResignation?.employeeComments])
 
-  const handleSubmitResignation = () => {
-    dispatch(
+  useEffect(() => {
+    if (primaryReason || submitResignation?.employeeComments) {
+      setIsClearButtonEnabled(true)
+    } else {
+      setIsClearButtonEnabled(false)
+    }
+  }, [primaryReason, submitResignation?.employeeComments])
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="Resignation applied successfully."
+      toastColor="success"
+    />
+  )
+
+  const handleSubmitResignation = async () => {
+    const submitResignationResultAction = await dispatch(
       reduxServices.submitViewResignation.submitResignation({
         adminCcCss: null,
         canberevoked: null,
@@ -101,6 +118,28 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
         withdrawComments: null,
       }),
     )
+    if (
+      reduxServices.submitViewResignation.submitResignation.fulfilled.match(
+        submitResignationResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    } else if (
+      reduxServices.submitViewResignation.submitResignation.rejected.match(
+        submitResignationResultAction,
+      ) &&
+      submitResignationResultAction.payload === 408
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            You can't resgin after 7 or You can't resgin on holidays"
+          />,
+        ),
+      )
+    }
     setPrimaryReason('')
     setShowEditor(false)
     setTimeout(() => {
@@ -203,6 +242,7 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
           <CButton
             color="warning "
             className="btn-ovh"
+            disabled={!isClearButtonEnabled}
             onClick={handleClearDetails}
           >
             Clear
