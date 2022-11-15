@@ -16,7 +16,6 @@ describe('Project Report Slice', () => {
       const state = reducer(initialProjectsState, action)
       expect(state).toEqual({
         isProjectLoading: ApiLoadingState.loading,
-        isClientProjectLoading: ApiLoadingState.loading,
         listSize: 0,
       })
     })
@@ -62,7 +61,6 @@ describe('Project Report Slice', () => {
       const state = reducer(initialProjectsState, action)
       expect(state).toEqual({
         isProjectLoading: ApiLoadingState.loading,
-        isClientProjectLoading: ApiLoadingState.loading,
         listSize: 0,
       })
     })
@@ -108,7 +106,6 @@ describe('Project Report Slice', () => {
       }
       const state = reducer(initialProjectsState, action)
       expect(state).toEqual({
-        isProjectLoading: ApiLoadingState.loading,
         isClientProjectLoading: ApiLoadingState.loading,
         listSize: 0,
       })
@@ -123,6 +120,7 @@ describe('Project Report Slice', () => {
       expect(state).toEqual({
         ClientProjects: mockProjectReportData.Projs,
         isClientProjectLoading: ApiLoadingState.succeeded,
+        isProjectLoading: ApiLoadingState.succeeded,
         listSize: 0,
       })
     })

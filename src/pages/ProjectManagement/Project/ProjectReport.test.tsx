@@ -3,38 +3,37 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import { Provider } from 'react-redux'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
 import ProjectReport from './ProjectReport'
 import { render, screen, waitFor } from '../../../test/testUtils'
-import stateStore from '../../../stateStore'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
-let history: any
+const history = createMemoryHistory()
 
 const deviceLocale: string =
   navigator.languages && navigator.languages.length
     ? navigator.languages[0]
     : navigator.language
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <Router history={history}>
+      <ProjectReport />
+    </Router>
+  </div>
+)
 
 describe('Project Report Testing', () => {
   beforeEach(() => {
-    history = createMemoryHistory()
-    render(
-      <Router history={history}>
-        <ReduxProvider reduxStore={stateStore}>
-          <ProjectReport />
-        </ReduxProvider>
-      </Router>,
-    )
+    render(toRender, {
+      preloadedState: {
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
+    })
   })
 
   test('should render "Project Report" title', () => {
@@ -77,7 +76,7 @@ describe('Project Report Testing', () => {
   })
 
   test('should render "Price Model" selector', () => {
-    expect(screen.getByText('Price Model:')).toBeInTheDocument()
+    expect(screen.getByText('Pricing Model:')).toBeInTheDocument()
 
     const dateSelector = screen.getByTestId('priceModel')
     userEvent.selectOptions(dateSelector, ['Support'])
@@ -132,8 +131,8 @@ describe('Project Report Testing', () => {
     const clearBtn = screen.getByTestId('clearButton')
     userEvent.click(clearBtn)
 
-    // Should have default value of INPROGRESS
-    expect(dateSelector).toHaveValue('INPROGRESS')
+    // Should have default value of ALL
+    expect(dateSelector).toHaveValue('ALL')
   })
 
   test('should be able to search via multi search', () => {
