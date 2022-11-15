@@ -8,20 +8,20 @@ import {
   AllowedHttpMethods,
 } from '../../../apiList'
 
-const addAppraisalCycles = async (
-  newCycleRecords: AddCycle,
+const addAppraisalCycle = async (
+  newCycleRecord: AddCycle,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: addConfigurationsApiConfig.addAppraisalCycle,
     method: AllowedHttpMethods.post,
-    data: newCycleRecords,
+    data: newCycleRecord,
   })
   const response = await useAxios(requestConfig)
   return response.data
 }
 
 const addConfigurationApi = {
-  addAppraisalCycles,
+  addAppraisalCycle,
 }
 
 export default addConfigurationApi
