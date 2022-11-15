@@ -99,6 +99,12 @@ const TicketConfigurationOptions = ({
     }
   }, [dispatch, selectedDepartment, selectedCategory, departments])
 
+  const addSubCategoryButtonHandler = () => {
+    dispatch(
+      reduxServices.ticketConfiguration.actions.setToggle('addSubCategory'),
+    )
+  }
+
   return (
     <>
       <CRow className="mt-3">
@@ -217,6 +223,7 @@ const TicketConfigurationOptions = ({
                   className="btn-ovh me-1 mt-2"
                   data-testid="addSubCategory-btn"
                   disabled={!isButtonEnabled}
+                  onClick={addSubCategoryButtonHandler}
                 >
                   <i className="fa fa-plus  me-1"></i>Add
                 </CButton>

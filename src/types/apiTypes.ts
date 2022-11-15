@@ -458,4 +458,5 @@ export interface TicketConfigurationApi extends ApiBase {
   getSubCategoryList: string
   deleteSubCategory: string
   ticketHistory: string
+  addSubCategory: string
 }

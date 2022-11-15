@@ -4,6 +4,7 @@ import {
   useAxios,
 } from '../../../../utils/apiUtils'
 import {
+  AddSubCategoryDetails,
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
   TicketConfigurationSubCategories,
@@ -98,6 +99,18 @@ const ticketHistory = async (
   return response.data
 }
 
+const addSubCategory = async (
+  newSubCategoryDetails: AddSubCategoryDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketConfigurationApiConfig.addSubCategory,
+    method: AllowedHttpMethods.post,
+    data: newSubCategoryDetails,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ticketConfigurationApi = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
@@ -105,6 +118,7 @@ const ticketConfigurationApi = {
   getTicketConfigurationSubCategoryList,
   deleteSubCategory,
   ticketHistory,
+  addSubCategory,
 }
 
 export default ticketConfigurationApi
