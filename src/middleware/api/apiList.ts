@@ -548,4 +548,5 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
 export const submitResignationApiConfig: SubmitResignationApi = {
   getSeparationForm: apiPrefix + '/separationController/getSeparationForm',
   submitResignation: apiPrefix + '/separationController/SubmitResignation',
+  getEmployeeResg: apiPrefix + '/separationController/getEmployeeResg',
 }

@@ -2,6 +2,7 @@ import {
   CButton,
   CCol,
   CForm,
+  CFormInput,
   CFormLabel,
   CFormSelect,
   CRow,
@@ -16,8 +17,13 @@ import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { SubmitResignationTypes } from '../../../types/Separation/SubmitViewResignation/submitResignationTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 
-const SubmitResignationFilterOptions = (): JSX.Element => {
+const SubmitResignationFilterOptions = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const [primaryReason, setPrimaryReason] = useState<string>('')
+  const [otherReason, setOtherReason] = useState<string>('')
   const initialSubmitResignation = {} as SubmitResignationTypes
   const [submitResignation, setSubmitResignation] = useState(
     initialSubmitResignation,
@@ -41,6 +47,7 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
 
   const handleClearDetails = () => {
     setPrimaryReason('')
+    setOtherReason('')
     setShowEditor(false)
     setTimeout(() => {
       setShowEditor(true)
@@ -59,16 +66,16 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
   }, [primaryReason, submitResignation?.employeeComments])
 
   useEffect(() => {
-    if (primaryReason || submitResignation?.employeeComments) {
+    if (primaryReason || submitResignation?.employeeComments || otherReason) {
       setIsClearButtonEnabled(true)
     } else {
       setIsClearButtonEnabled(false)
     }
-  }, [primaryReason, submitResignation?.employeeComments])
+  }, [primaryReason, submitResignation?.employeeComments, otherReason])
 
   const successToastMessage = (
     <OToast
-      toastMessage="Resignation applied successfully."
+      toastMessage="Resignation submitted Successfully."
       toastColor="success"
     />
   )
@@ -102,7 +109,7 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
         pipAuditDTO: null,
         primaryReasonId: primaryReason,
         primaryReasonName: null,
-        reasonComments: '',
+        reasonComments: otherReason,
         relievingDate: null,
         relievingLetterPath: null,
         resignationDate: getSeparation?.form?.resignationDate,
@@ -124,6 +131,7 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      setToggle('ResignView')
     } else if (
       reduxServices.submitViewResignation.submitResignation.rejected.match(
         submitResignationResultAction,
@@ -202,6 +210,28 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
           </CFormSelect>
         </CCol>
       </CRow>
+      {primaryReason === '4' && (
+        <CRow className="mt-3 mb-4">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
+            Others:
+            <span className={otherReason ? TextWhite : TextDanger}>*</span>
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormInput
+              autoComplete="off"
+              type="text"
+              id="otherReason"
+              name="otherReason"
+              placeholder="Enter reason"
+              data-testid="person-name"
+              value={otherReason}
+              onChange={(e) => {
+                setOtherReason(e.target.value)
+              }}
+            />
+          </CCol>
+        </CRow>
+      )}
       <CRow className="mt-4 mb-4">
         <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
           Comments :

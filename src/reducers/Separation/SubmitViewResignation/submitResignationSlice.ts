@@ -6,13 +6,14 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import getSeparationFormApi from '../../../middleware/api/Separation/SubmitViewResignation/submitResignationApi'
 import {
   GetSeparationFormResponse,
+  ResignationView,
   SubmitResignationSliceState,
   SubmitResignationTypes,
 } from '../../../types/Separation/SubmitViewResignation/submitResignationTypes'
 
 const initialSubmitResignationState: SubmitResignationSliceState = {
   getSeparationFormResponse: {} as GetSeparationFormResponse,
-
+  resignationView: {} as ResignationView,
   isLoading: ApiLoadingState.idle,
 }
 
@@ -40,6 +41,18 @@ const submitResignation = createAsyncThunk(
   },
 )
 
+const getEmployeeResgnationView = createAsyncThunk(
+  'SubmitResignation/getEmployeeResgnationView',
+  async (_, thunkApi) => {
+    try {
+      return await getSeparationFormApi.getEmployeeResgnationView()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const submitResignationSlice = createSlice({
   name: 'SubmitResignation',
   initialState: initialSubmitResignationState,
@@ -51,19 +64,28 @@ const submitResignationSlice = createSlice({
       state.getSeparationFormResponse =
         action.payload as GetSeparationFormResponse
     })
+    builder.addCase(getEmployeeResgnationView.fulfilled, (state, action) => {
+      state.isLoading = ApiLoadingState.succeeded
+      state.resignationView = action.payload
+    })
   },
 })
 
 const separationForm = (state: RootState): GetSeparationFormResponse =>
   state.submitViewResignation.getSeparationFormResponse
 
+const resignationView = (state: RootState): ResignationView =>
+  state.submitViewResignation.resignationView
+
 const submitResignationThunk = {
   getSeparationFormResponse,
   submitResignation,
+  getEmployeeResgnationView,
 }
 
 const submitViewResignationSelectors = {
   separationForm,
+  resignationView,
 }
 
 export const submitViewResignationServices = {
