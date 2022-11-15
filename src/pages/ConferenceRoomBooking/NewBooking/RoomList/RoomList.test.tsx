@@ -6,6 +6,7 @@ import { render, screen, waitFor } from '../../../../test/testUtils'
 import { mockRoomNames } from '../../../../test/data/addRoomListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
+import { mockLocationNames } from '../../../../test/data/addLocationListData'
 
 const roomName = 'Name of the Room:'
 
@@ -17,7 +18,7 @@ describe('RoomList without data', () => {
           meetingRooms: mockRoomNames,
         },
         addLocationList: {
-          meetingLocations: mockRoomNames,
+          meetingLocations: mockLocationNames,
         },
         userAccessToFeatures: {
           isLoading: ApiLoadingState.succeeded,
@@ -46,8 +47,8 @@ describe('RoomList without data', () => {
 
   test('should select Location Name', () => {
     const LocationSelector = screen.getByTestId('form-select1')
-    userEvent.selectOptions(LocationSelector, ['Raybiztech - 2'])
-    expect(LocationSelector).toHaveValue('5')
+    userEvent.selectOptions(LocationSelector, ['RayBusiness-1'])
+    expect(LocationSelector).toHaveValue('1')
   })
 
   test('should render on every input of RoomList', () => {

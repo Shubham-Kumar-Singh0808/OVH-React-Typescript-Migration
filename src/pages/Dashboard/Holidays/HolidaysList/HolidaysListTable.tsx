@@ -186,6 +186,7 @@ const HolidaysListTable = ({
             visible={isDeleteModalVisible}
             setVisible={setIsDeleteModalVisible}
             modalTitle="Delete Holiday"
+            modalBodyClass="mt-0"
             confirmButtonText="Yes"
             cancelButtonText="No"
             closeButtonClass="d-none"
@@ -193,7 +194,7 @@ const HolidaysListTable = ({
           >
             <>
               Do you really want to delete <strong>{toDeleteHoliday}</strong>{' '}
-              Holiday
+              Holiday ?
             </>
           </OModal>
         </>

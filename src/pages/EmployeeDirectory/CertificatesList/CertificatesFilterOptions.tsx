@@ -39,7 +39,12 @@ const CertificatesFilterOptions = ({
   const getCertificateByTechnology = useTypedSelector(
     (state) => state.employeeCertificates.typeOfCertificate,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddCertificateType = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Certificate Type',
+  )
   const handleSearchButton = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       setMultiSearchValue(searchInput)
@@ -155,14 +160,15 @@ const CertificatesFilterOptions = ({
             </CCol>
           </CRow>
         </CCol>
-
-        <CCol xs={5} className="d-md-flex justify-content-md-end">
-          <Link to={`/certificateTypeList`}>
-            <CButton color="info btn-ovh me-0">
-              <i className="fa fa-plus me-1"></i>Add Certificate Type
-            </CButton>
-          </Link>
-        </CCol>
+        {userAccessToAddCertificateType?.viewaccess && (
+          <CCol xs={5} className="d-md-flex justify-content-md-end">
+            <Link to={`/certificateTypeList`}>
+              <CButton color="info btn-ovh me-0">
+                <i className="fa fa-plus me-1"></i>Add Certificate Type
+              </CButton>
+            </Link>
+          </CCol>
+        )}
       </CRow>
       <CRow className="mt-5 mb-4">
         <CCol sm={{ span: 6, offset: 3 }}>

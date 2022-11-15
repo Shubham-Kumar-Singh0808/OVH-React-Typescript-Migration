@@ -1,5 +1,7 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import React from 'react'
+import { reduxServices } from '../../../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../../../stateStore'
 import { SelectDesignationProps } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { showIsRequired } from '../../../../../../utils/helper'
 
@@ -16,7 +18,12 @@ const Designation = ({
   const onChangeHandler = (e: { target: { value: string } }) => {
     setValue(e.target.value)
   }
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddDesignation = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Designation',
+  )
   return (
     <>
       <CRow className="mb-3">
@@ -53,14 +60,16 @@ const Designation = ({
         </CCol>
         {!isAddDisable && (
           <CCol sm={3}>
-            <CButton
-              data-testid="designationButton"
-              color="info"
-              className="btn-ovh me-1"
-              onClick={() => setToggleShift(!toggleValue)}
-            >
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
+            {userAccessToAddDesignation?.viewaccess && (
+              <CButton
+                data-testid="designationButton"
+                color="info"
+                className="btn-ovh me-1"
+                onClick={() => setToggleShift(!toggleValue)}
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            )}
           </CCol>
         )}
       </CRow>

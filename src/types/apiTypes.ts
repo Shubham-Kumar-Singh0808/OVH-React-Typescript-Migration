@@ -424,6 +424,12 @@ export interface EventTypeListApi extends ApiBase {
   updateEventType: string
   getLoggedEmployeeName: string
 }
+export interface EmployeeAllocationApi extends ApiBase {
+  getEmployeeAllocationReport: string
+  projectUnderEmployees: string
+  updateEmployeeAllocateProject: string
+  downloadEmployeeAllocationList: string
+}
 
 export interface EventListApi extends ApiBase {
   getAllEvents: string
@@ -441,4 +447,14 @@ export interface RoomListApi extends ApiBase {
   addRoom: string
   deleteRoom: string
   updateRoom: string
+}
+
+export interface TicketConfigurationApi extends ApiBase {
+  getDepartments: string
+  getCategories: string
+  getSubCategories: string
+  getSubCategoryList: string
+  deleteSubCategory: string
+  ticketHistory: string
+  addSubCategory: string
 }
