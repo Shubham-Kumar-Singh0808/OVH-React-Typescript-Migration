@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import ResignationViewList from './ResignationViewList'
+import EmployeeView from './EmployeeView'
 import OCard from '../../../components/ReusableComponent/OCard'
-import EmployeeView from '../SubmitViewResignation/EmployeeView'
 
 const ResignationView = (): JSX.Element => {
   const [toggle, setToggle] = useState('')

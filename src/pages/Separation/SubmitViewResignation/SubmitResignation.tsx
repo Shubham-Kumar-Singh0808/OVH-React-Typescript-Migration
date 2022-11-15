@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import SubmitResignationFilterOptions from './SubmitResignationFilterOptions'
+import ResignationView from './ResignationView'
 import OCard from '../../../components/ReusableComponent/OCard'
-import ResignationView from '../ResignationView/ResignationView'
 
 const SubmitResignation = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
