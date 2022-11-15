@@ -160,28 +160,28 @@ const SubmitResignationFilterOptions = ({
 
   return (
     <CForm>
-      <CRow className="mt-3 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
+      <CRow className="mt-1 mb-0 align-items-center">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           Employee ID:
         </CFormLabel>
         <CCol sm={3}>
-          <p>{getSeparation?.form?.employeeId}</p>
+          <p className="mb-0">{getSeparation?.form?.employeeId}</p>
         </CCol>
       </CRow>
-      <CRow className="mt-3 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
+      <CRow className="mt-1 mb-0 align-items-center">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           Employee Name:
         </CFormLabel>
         <CCol sm={3}>
-          <p>{getSeparation?.form?.employeeName}</p>
+          <p className="mb-0">{getSeparation?.form?.employeeName}</p>
         </CCol>
       </CRow>
-      <CRow className="mt-3 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
+      <CRow className="mt-1 mb-1 align-items-center">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           Resignation Date:
         </CFormLabel>
         <CCol sm={3}>
-          <p>{getSeparation?.form?.resignationDate}</p>
+          <p className="mb-0">{getSeparation?.form?.resignationDate}</p>
         </CCol>
       </CRow>
 

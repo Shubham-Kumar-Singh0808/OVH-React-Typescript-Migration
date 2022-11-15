@@ -11,24 +11,24 @@ const ResignationViewList = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.submitViewResignation.getEmployeeResgnationView())
   }, [dispatch])
-  console.log(getResignationViewResponse)
+
   return (
     <>
       <CForm>
-        <CRow className="mt-3 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+        <CRow className="mt-1 mb-0 align-items-center">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Status:
           </CFormLabel>
           <CCol sm={3}>
-            <p>{getResignationViewResponse?.status}</p>
+            <p className="mb-0">{getResignationViewResponse?.status}</p>
           </CCol>
         </CRow>
-        <CRow className="mt-3 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+        <CRow className="mt-1 mb-0 align-items-center">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Employee Name:
           </CFormLabel>
           <CCol sm={3}>
-            <p>{getResignationViewResponse?.relievingDate}</p>
+            <p className="mb-0">{getResignationViewResponse?.relievingDate}</p>
           </CCol>
         </CRow>
       </CForm>
