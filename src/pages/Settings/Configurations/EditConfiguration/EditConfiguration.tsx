@@ -61,7 +61,6 @@ const EditConfiguration = (): JSX.Element => {
     })
   }
 
-  const reviewTitleRegExpression = /-_[^a-z0-9\s]/gi
   const levelValueRegExpression = /\D/g
   const onChangeInputHandler = (
     event:
@@ -77,14 +76,11 @@ const EditConfiguration = (): JSX.Element => {
         return { ...values, ...{ [name]: activeStatus } }
       })
     } else if (name === 'name') {
-      const reviewTitle = value.replace(reviewTitleRegExpression, '')
+      const reviewTitle = value
+        .replace(/-_[^a-z0-9\s]/gi, '')
+        .replace(/^\s*/, '')
       setCycle((values) => {
         return { ...values, ...{ [name]: reviewTitle } }
-      })
-    } else if (name === 'editReviewType') {
-      const reviewType = value.replace(reviewTitleRegExpression, '')
-      setCycle((values) => {
-        return { ...values, ...{ [name]: reviewType } }
       })
     } else if (name === 'level') {
       const levelValue = value.replace(levelValueRegExpression, '')
