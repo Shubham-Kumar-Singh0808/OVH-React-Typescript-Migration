@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
@@ -42,7 +42,7 @@ const submitResignation = createAsyncThunk(
   },
 )
 
-const getEmployeeResgnationView = createAsyncThunk(
+const getEmployeeResignationView = createAsyncThunk(
   'SubmitResignation/getEmployeeResgnationView',
   async (_, thunkApi) => {
     try {
@@ -74,13 +74,22 @@ const submitResignationSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getSeparationFormResponse.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
-      state.getSeparationFormResponse =
-        action.payload as GetSeparationFormResponse
+      state.getSeparationFormResponse = action.payload
     })
-    builder.addCase(getEmployeeResgnationView.fulfilled, (state, action) => {
-      state.isLoading = ApiLoadingState.succeeded
-      state.resignationView = action.payload
-    })
+    builder
+      .addCase(getEmployeeResignationView.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.resignationView = action.payload
+      })
+      .addMatcher(
+        isAnyOf(
+          getSeparationFormResponse.pending,
+          getEmployeeResignationView.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
@@ -93,7 +102,7 @@ const resignationView = (state: RootState): ResignationView =>
 const submitResignationThunk = {
   getSeparationFormResponse,
   submitResignation,
-  getEmployeeResgnationView,
+  getEmployeeResignationView,
   revokeResignation,
 }
 

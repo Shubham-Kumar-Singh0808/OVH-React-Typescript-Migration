@@ -9,7 +9,7 @@ const ResignationViewList = (): JSX.Element => {
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(reduxServices.submitViewResignation.getEmployeeResgnationView())
+    dispatch(reduxServices.submitViewResignation.getEmployeeResignationView())
   }, [dispatch])
 
   return (
