@@ -456,4 +456,5 @@ export interface SubmitResignationApi extends ApiBase {
   getSeparationForm: string
   submitResignation: string
   getEmployeeResg: string
+  revokeResignation: string
 }

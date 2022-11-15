@@ -139,6 +139,49 @@ export type ResignationView = {
   seperationComments: null
 }
 
+export type RevokeResignation = {
+  adminCcCss: null
+  canberevoked: null
+  certificate: null
+  certificateDTO: null
+  contractEndDate: null
+  contractExists: null
+  contractStartDate: null
+  empStatus: null
+  employeeComments: null
+  employeeId: null
+  employeeName: null
+  exitFeedbackFormPath: null
+  finanaceCcCss: null
+  hrCcCss: null
+  initiatedDate: null
+  isPIP: null
+  isRevoked: null
+  isprocessInitiated: null
+  itCcCss: null
+  managerCcCss: null
+  managerComments: null
+  managerName: null
+  personalEmailFlag: null
+  pipAuditDTO: null
+  primaryReasonId: null
+  primaryReasonName: null
+  reasonComments: null
+  relievingDate: string
+  relievingLetterPath: null
+  resignationDate: null
+  separationComments: null
+  separationExist: null
+  separationId: number
+  seperationComments: null
+  showCommentsBox: null
+  showEditButton: null
+  showManagerClearance: null
+  showTimeline: null
+  status: string
+  withdrawComments: string
+}
+
 export type SubmitResignationSliceState = {
   getSeparationFormResponse: GetSeparationFormResponse
   resignationView: ResignationView

@@ -7,6 +7,7 @@ import getSeparationFormApi from '../../../middleware/api/Separation/SubmitViewR
 import {
   GetSeparationFormResponse,
   ResignationView,
+  RevokeResignation,
   SubmitResignationSliceState,
   SubmitResignationTypes,
 } from '../../../types/Separation/SubmitViewResignation/submitResignationTypes'
@@ -53,6 +54,18 @@ const getEmployeeResgnationView = createAsyncThunk(
   },
 )
 
+const revokeResignation = createAsyncThunk(
+  'SubmitResignation/revokeResignation',
+  async (revokeResignation: RevokeResignation, thunkApi) => {
+    try {
+      return await getSeparationFormApi.revokeResignation(revokeResignation)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const submitResignationSlice = createSlice({
   name: 'SubmitResignation',
   initialState: initialSubmitResignationState,
@@ -81,6 +94,7 @@ const submitResignationThunk = {
   getSeparationFormResponse,
   submitResignation,
   getEmployeeResgnationView,
+  revokeResignation,
 }
 
 const submitViewResignationSelectors = {

@@ -549,4 +549,5 @@ export const submitResignationApiConfig: SubmitResignationApi = {
   getSeparationForm: apiPrefix + '/separationController/getSeparationForm',
   submitResignation: apiPrefix + '/separationController/SubmitResignation',
   getEmployeeResg: apiPrefix + '/separationController/getEmployeeResg',
+  revokeResignation: apiPrefix + '/separationController/revokeResignation',
 }

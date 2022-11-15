@@ -6,6 +6,7 @@ import {
 import {
   GetSeparationFormResponse,
   ResignationView,
+  RevokeResignation,
   SubmitResignationTypes,
 } from '../../../../types/Separation/SubmitViewResignation/submitResignationTypes'
 
@@ -42,9 +43,22 @@ const getEmployeeResgnationView = async (): Promise<ResignationView> => {
   return response.data
 }
 
+const revokeResignation = async (
+  revokeResignation: RevokeResignation,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: submitResignationApiConfig.revokeResignation,
+    method: AllowedHttpMethods.post,
+    data: revokeResignation,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const getSeparationFormApi = {
   getSeparationFormResponse,
   submitResignation,
   getEmployeeResgnationView,
+  revokeResignation,
 }
 export default getSeparationFormApi
