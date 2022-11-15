@@ -95,11 +95,6 @@ const EditConfiguration = (): JSX.Element => {
       setCycle((values) => {
         return { ...values, ...{ [name]: Number(servicePeriodDays) } }
       })
-    } else {
-      setCycle((values) => {
-        const trimValue = value.trimStart()
-        return { ...values, ...{ [name]: trimValue } }
-      })
     }
   }
 
@@ -254,6 +249,7 @@ const EditConfiguration = (): JSX.Element => {
                 data-testid="reviewPeriodFrom"
                 id="reviewPeriodFrom"
                 size="sm"
+                placeholder="mm/yyyy"
                 name="reviewPeriodFrom"
                 value={cycle.fromDate}
                 disabled={true}
@@ -273,6 +269,7 @@ const EditConfiguration = (): JSX.Element => {
                 id="reviewPeriodTo"
                 size="sm"
                 name="reviewPeriodTo"
+                placeholder="mm/yyyy"
                 value={cycle.toDate}
                 disabled={true}
               />
@@ -290,6 +287,7 @@ const EditConfiguration = (): JSX.Element => {
                 data-testid="reviewStartDate"
                 id="reviewStartDate"
                 size="sm"
+                placeholder="dd/mm/yyyy"
                 name="reviewStartDate"
                 value={cycle.appraisalStartDate}
                 disabled={true}
@@ -309,6 +307,7 @@ const EditConfiguration = (): JSX.Element => {
                 id="reviewEndDate"
                 size="sm"
                 name="reviewEndDate"
+                placeholder="dd/mm/yyyy"
                 value={cycle.appraisalEndDate}
                 disabled={true}
               />
