@@ -52,6 +52,7 @@ const ProjectReport = (): JSX.Element => {
     intrnalOrNot: false,
     multiSearch: '',
   }
+
   const [params, setParams] = useState<ProjectReportQueryParams>(initValue)
   const [isViewBtnEnable, setViewBtnEnable] = useState(true)
   const [isCloseBtnVisible, setIsCloseBtnVisible] = useState(true)
