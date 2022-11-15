@@ -187,6 +187,7 @@ const SubmitResignationFilterOptions = (): JSX.Element => {
             aria-label="Default select example"
             name="primaryReason"
             id="primaryReason"
+            data-testid="select-primaryReason"
             value={primaryReason}
             onChange={(e) => {
               setPrimaryReason(e.target.value)
