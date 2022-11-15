@@ -19,6 +19,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { showIsRequired } from '../../../../utils/helper'
 
 const EditConfiguration = (): JSX.Element => {
   const { cycleId } = useParams<{ cycleId: string }>()
@@ -62,7 +63,7 @@ const EditConfiguration = (): JSX.Element => {
 
   const reviewTitleRegExpression = /-_[^a-z0-9\s]/gi
   const levelValueRegExpression = /\D/g
-  const inputHandler = (
+  const onChangeInputHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>
@@ -202,7 +203,7 @@ const EditConfiguration = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Review Title:
-              <span className={cycle.name ? TextWhite : TextDanger}>*</span>
+              <span className={showIsRequired(cycle.name)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -214,7 +215,7 @@ const EditConfiguration = (): JSX.Element => {
                 name="editReviewTitle"
                 placeholder="Name"
                 value={cycle.name}
-                onChange={inputHandler}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -351,7 +352,7 @@ const EditConfiguration = (): JSX.Element => {
                 autoComplete="off"
                 maxLength={1}
                 value={cycle.level}
-                onChange={inputHandler}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -376,7 +377,7 @@ const EditConfiguration = (): JSX.Element => {
                 autoComplete="off"
                 maxLength={3}
                 value={cycle.servicePeriod}
-                onChange={inputHandler}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -398,7 +399,7 @@ const EditConfiguration = (): JSX.Element => {
                 label="Yes"
                 inline
                 checked={isActive}
-                onChange={inputHandler}
+                onChange={onChangeInputHandler}
               />
             </CCol>
             <CCol sm={2} md={1}>
@@ -411,7 +412,7 @@ const EditConfiguration = (): JSX.Element => {
                 value="false"
                 inline
                 checked={!isActive}
-                onChange={inputHandler}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>

@@ -4,9 +4,19 @@ import '@testing-library/jest-dom'
 // eslint-disable-next-line import/order
 import { CKEditor } from 'ckeditor4-react'
 import EditConfiguration from './EditConfiguration'
-import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockEditAppraisalCycle } from '../../../../test/data/editConfigurationData'
+import { mockAppraisalCycle } from '../../../../test/data/appraisalConfigurationsData'
 
 const mockSetTogglePage = jest.fn()
+const updateButton = 'updateBtn'
 
 describe('Edit Configuration Component Testing', () => {
   beforeEach(() => {
@@ -30,44 +40,6 @@ describe('Edit Configuration Component Testing', () => {
     expect(screen.getByText('Active:')).toBeInTheDocument()
     expect(screen.getByText('Description:')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Update' })).toBeDisabled()
-  })
-
-  test('should render on Dates', async () => {
-    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
-    fireEvent.click(datePickers[0])
-
-    await waitFor(() =>
-      fireEvent.change(datePickers[0], {
-        target: { value: '10 Nov, 2022' },
-      }),
-    )
-    fireEvent.click(datePickers[1])
-    await waitFor(() =>
-      fireEvent.change(datePickers[1], {
-        target: { value: '18 Nov, 2022' },
-      }),
-    )
-    expect(datePickers[0]).toHaveValue('10 Nov, 2022')
-    expect(datePickers[1]).toHaveValue('18 Nov, 2022')
-  })
-
-  test('should render on Duration Dates', async () => {
-    const datePickers = screen.getAllByPlaceholderText('mm/yyyy')
-    fireEvent.click(datePickers[0])
-
-    await waitFor(() =>
-      fireEvent.change(datePickers[0], {
-        target: { value: 'Nov, 2022' },
-      }),
-    )
-    fireEvent.click(datePickers[1])
-    await waitFor(() =>
-      fireEvent.change(datePickers[1], {
-        target: { value: 'Oct, 2022' },
-      }),
-    )
-    expect(datePickers[0]).toHaveValue('Nov, 2022')
-    expect(datePickers[1]).toHaveValue('Oct, 2022')
   })
 
   test('should render  Configuration  screen and back button without crashing', () => {
@@ -108,5 +80,38 @@ describe('Edit Configuration Component Testing', () => {
     fireEvent.click(inactiveState)
 
     expect(activeState.checked).toEqual(false)
+  })
+})
+
+describe('Edit Client Component', () => {
+  beforeEach(() => {
+    render(<EditConfiguration />, {
+      preloadedState: {
+        appraisalConfigurations: {
+          appraisalCycle: mockAppraisalCycle,
+          editAppraisalCycle: mockEditAppraisalCycle,
+          isLoading: ApiLoadingState.idle,
+          currentPage: 1,
+          pageSize: 20,
+          error: null,
+        },
+      },
+    })
+  })
+  afterEach(cleanup)
+  test('update button should disable upon providing existing client name ', async () => {
+    const reviewTitleInput = screen.getByTestId('editReviewTitle')
+    userEvent.clear(reviewTitleInput)
+    userEvent.type(reviewTitleInput, 'Test review2')
+    expect(reviewTitleInput).toHaveValue(`Test review2`)
+
+    const reviewTypeInput = screen.getByTestId('form-select1')
+    userEvent.selectOptions(reviewTypeInput, 'Monthly')
+
+    const updateBtnElement = screen.getByTestId(updateButton)
+    userEvent.click(updateBtnElement)
+    await waitFor(() => {
+      expect(updateBtnElement).toBeDisabled()
+    })
   })
 })
