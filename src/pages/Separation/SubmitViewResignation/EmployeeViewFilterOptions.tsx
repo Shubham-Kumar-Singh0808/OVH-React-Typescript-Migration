@@ -41,7 +41,7 @@ const EmployeeViewFilterOptions = ({
   const dispatch = useAppDispatch()
   const successToastMessage = (
     <OToast
-      toastMessage="Resignation submitted Successfully."
+      toastMessage="Resignation Withdrawn Successfully"
       toastColor="success"
     />
   )
