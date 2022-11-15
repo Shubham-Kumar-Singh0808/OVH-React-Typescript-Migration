@@ -124,7 +124,7 @@ const ProjectDetailsTable = ({
                               size="sm"
                               type="number"
                               name={project.employeeId.toString()}
-                              className="input-xs"
+                              className="input-xs eventType-editInput ps-1"
                               defaultValue={project.allocation}
                               onChange={handleOnChangeAllocation}
                             />
@@ -146,7 +146,7 @@ const ProjectDetailsTable = ({
                               size="sm"
                               aria-label="billable"
                               data-testid="formBillable"
-                              className="input-xs"
+                              className="input-xs eventType-editInput"
                               name="billable"
                               defaultValue={getConditionValue(
                                 project.billable,
@@ -182,7 +182,7 @@ const ProjectDetailsTable = ({
                               size="sm"
                               aria-label="allocated"
                               data-testid="formallocated"
-                              className="input-xs"
+                              className="input-xs eventType-editInput"
                               name="allocated"
                               defaultValue={getConditionValue(
                                 project.isAllocated,
