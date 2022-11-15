@@ -21,6 +21,7 @@ const ResignationView = (): JSX.Element => {
                 <CButton
                   color="btn btn-danger pull-right"
                   className="btn-ovh me-1"
+                  data-testid="resignation-btn"
                   onClick={() => setToggle('EmployeeView')}
                 >
                   Withdraw Your Resignation
