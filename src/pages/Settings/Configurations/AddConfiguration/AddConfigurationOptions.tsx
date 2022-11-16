@@ -97,10 +97,10 @@ const AddConfigurationOptions = (props: {
         >
           Active:
         </CFormLabel>
-        <CCol sm={2} md={1}>
+        <CCol sm={3}>
           <CFormCheck
             data-testid="active"
-            className="mt-1"
+            className="mt-2 sh-hover-handSymbol"
             type="radio"
             name="yes"
             id="yes"
@@ -110,10 +110,8 @@ const AddConfigurationOptions = (props: {
             value={'true'}
             checked={props.selectActiveStatus === 'true'}
           />
-        </CCol>
-        <CCol sm={2} md={1}>
           <CFormCheck
-            className="mt-1"
+            className="mt-2 sh-hover-handSymbol"
             type="radio"
             name="no"
             id="no"
