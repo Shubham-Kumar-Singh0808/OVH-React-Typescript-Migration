@@ -82,8 +82,10 @@ import employeeProfileSearchReducer from './reducers/Dashboard/searchEmployeeSli
 import ticketConfigurationReducer from './reducers/Settings/TicketConfiguration/ticketConfigurationSlice'
 import assignTemplatesReducer from './reducers/Settings/Configurations/assignTemplateSlice'
 import appraisalConfigurationsReducer from './reducers/Settings/Configurations/appraisalConfigurationsSlice'
+import addConfigurationReducer from './reducers/Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
+import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -167,7 +169,9 @@ export const allReducers = {
   assignTemplate: assignTemplatesReducer,
   ticketConfiguration: ticketConfigurationReducer,
   appraisalConfigurations: appraisalConfigurationsReducer,
+  addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
+  leaveApprovals: leaveApprovalsReducer,
   // add your slice reducers here
 }
 

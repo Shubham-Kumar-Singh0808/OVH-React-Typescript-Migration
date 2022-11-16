@@ -449,7 +449,9 @@ export interface EventListApi extends ApiBase {
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
 }
-
+export interface AddConfigurationsApi extends ApiBase {
+  addAppraisalCycle: string
+}
 export interface RoomListApi extends ApiBase {
   getAllMeetingRooms: string
   addRoom: string
@@ -473,4 +475,13 @@ export interface TicketConfigurationApi extends ApiBase {
   deleteSubCategory: string
   ticketHistory: string
   addSubCategory: string
+}
+
+export interface LeaveApprovalsApi extends ApiBase {
+  getEmployees: string
+  getEmployeeLeaves: string
+  getSearchEmployees: string
+  checkProjectManagerExits: string
+  leaveApprove: string
+  leaveReject: string
 }

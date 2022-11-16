@@ -72,8 +72,10 @@ import { ticketConfigurationService } from './Settings/TicketConfiguration/ticke
 import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
+import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -151,5 +153,7 @@ export const reduxServices = {
   assignTemplate: assignTemplateService,
   ticketConfiguration: ticketConfigurationService,
   appraisalConfigurations: appraisalCycleService,
+  addConfigurations: addConfigurationService,
   projectReport: projectReportsService,
+  leaveApprovals: leaveApprovalsService,
 }
