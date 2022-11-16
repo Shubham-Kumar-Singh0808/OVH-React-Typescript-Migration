@@ -62,6 +62,7 @@ import {
   AllocateEmployeeApi,
   AppraisalConfigurationsApi,
   RoomListApi,
+  AddConfigurationsApi,
   TicketConfigurationApi,
   SubmitResignationApi,
 } from '../../types/apiTypes'
@@ -545,6 +546,9 @@ export const addTrackerApiConfig: AddTrackerApi = {
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
   getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+}
+export const addConfigurationsApiConfig: AddConfigurationsApi = {
+  addAppraisalCycle: apiPrefix + '/appraisal/cycle',
 }
 
 export const roomListApiConfig: RoomListApi = {

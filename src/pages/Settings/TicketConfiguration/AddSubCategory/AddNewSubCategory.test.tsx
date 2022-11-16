@@ -1,8 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
 import AddNewSubCategory from './AddNewSubCategory'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
@@ -106,7 +104,7 @@ describe('Add Sub-Category Component Testing', () => {
         userEvent.click(addSubCategoryButton)
       })
     })
-
+    jest.retryTimes(3)
     test('should clear all the input fields upon clicking clear button', async () => {
       const deptNameEle = screen.getByTestId(selectDepartment)
       userEvent.selectOptions(deptNameEle, ['Administrative'])

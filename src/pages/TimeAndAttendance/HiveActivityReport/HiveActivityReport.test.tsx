@@ -70,6 +70,7 @@ describe('Hive Activity Report Testing', () => {
     userEvent.click(screen.getByRole('button', { name: 'View' }))
     expect(screen.getByRole('button', { name: 'View' })).toBeEnabled()
   })
+  jest.retryTimes(3)
   test('search input testing', async () => {
     render(toRender, {
       preloadedState: {

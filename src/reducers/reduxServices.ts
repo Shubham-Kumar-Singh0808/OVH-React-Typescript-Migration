@@ -72,6 +72,7 @@ import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/al
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 import { submitViewResignationServices } from './Separation/SubmitViewResignation/submitResignationSlice'
+import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 
@@ -151,5 +152,6 @@ export const reduxServices = {
   ticketConfiguration: ticketConfigurationService,
   appraisalConfigurations: appraisalCycleService,
   submitViewResignation: submitViewResignationServices,
+  addConfigurations: addConfigurationService,
   projectReport: projectReportsService,
 }
