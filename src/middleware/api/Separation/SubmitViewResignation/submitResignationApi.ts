@@ -21,7 +21,7 @@ const getSeparationFormResponse =
     return response.data
   }
 
-const submitResignation = async (
+const getSubmitResignation = async (
   submitResignation: SubmitResignationTypes,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -43,7 +43,7 @@ const getEmployeeResignationView = async (): Promise<ResignationView> => {
   return response.data
 }
 
-const revokeResignation = async (
+const getRevokeResignation = async (
   revokeResignation: RevokeResignation,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -57,8 +57,8 @@ const revokeResignation = async (
 
 const getSeparationFormApi = {
   getSeparationFormResponse,
-  submitResignation,
+  getSubmitResignation,
   getEmployeeResignationView,
-  revokeResignation,
+  getRevokeResignation,
 }
 export default getSeparationFormApi

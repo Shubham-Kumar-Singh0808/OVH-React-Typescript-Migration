@@ -19,8 +19,8 @@ const EmployeeViewFilterOptions = ({
   const getResignationViewResponse = useTypedSelector(
     reduxServices.submitViewResignation.selectors.resignationView,
   )
-  const handleDescription = (comments: string) => {
-    setComments(comments)
+  const handleDescription = (employeeComments: string) => {
+    setComments(employeeComments)
   }
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const EmployeeViewFilterOptions = ({
   )
   const handleRevokeResignation = async () => {
     const submitRevokeResultAction = await dispatch(
-      reduxServices.submitViewResignation.revokeResignation({
+      reduxServices.submitViewResignation.getRevokeResignation({
         adminCcCss: null,
         canberevoked: null,
         certificate: null,
@@ -91,7 +91,7 @@ const EmployeeViewFilterOptions = ({
       }),
     )
     if (
-      reduxServices.submitViewResignation.revokeResignation.fulfilled.match(
+      reduxServices.submitViewResignation.getRevokeResignation.fulfilled.match(
         submitRevokeResultAction,
       )
     ) {

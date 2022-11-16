@@ -30,11 +30,11 @@ const getSeparationFormResponse = createAsyncThunk(
   },
 )
 
-const submitResignation = createAsyncThunk(
+const getSubmitResignation = createAsyncThunk(
   'SubmitResignation/submitResignation',
   async (submitResignation: SubmitResignationTypes, thunkApi) => {
     try {
-      return await getSeparationFormApi.submitResignation(submitResignation)
+      return await getSeparationFormApi.getSubmitResignation(submitResignation)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -54,11 +54,11 @@ const getEmployeeResignationView = createAsyncThunk(
   },
 )
 
-const revokeResignation = createAsyncThunk(
+const getRevokeResignation = createAsyncThunk(
   'SubmitResignation/revokeResignation',
   async (revokeResignation: RevokeResignation, thunkApi) => {
     try {
-      return await getSeparationFormApi.revokeResignation(revokeResignation)
+      return await getSeparationFormApi.getRevokeResignation(revokeResignation)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -101,9 +101,9 @@ const resignationView = (state: RootState): ResignationView =>
 
 const submitResignationThunk = {
   getSeparationFormResponse,
-  submitResignation,
+  getSubmitResignation,
   getEmployeeResignationView,
-  revokeResignation,
+  getRevokeResignation,
 }
 
 const submitViewResignationSelectors = {

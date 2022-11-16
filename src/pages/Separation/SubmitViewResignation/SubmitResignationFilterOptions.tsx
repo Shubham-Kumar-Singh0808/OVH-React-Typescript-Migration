@@ -82,7 +82,7 @@ const SubmitResignationFilterOptions = ({
 
   const handleSubmitResignation = async () => {
     const submitResignationResultAction = await dispatch(
-      reduxServices.submitViewResignation.submitResignation({
+      reduxServices.submitViewResignation.getSubmitResignation({
         adminCcCss: null,
         canberevoked: null,
         certificate: null,
@@ -126,14 +126,14 @@ const SubmitResignationFilterOptions = ({
       }),
     )
     if (
-      reduxServices.submitViewResignation.submitResignation.fulfilled.match(
+      reduxServices.submitViewResignation.getSubmitResignation.fulfilled.match(
         submitResignationResultAction,
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
       setToggle('ResignView')
     } else if (
-      reduxServices.submitViewResignation.submitResignation.rejected.match(
+      reduxServices.submitViewResignation.getSubmitResignation.rejected.match(
         submitResignationResultAction,
       ) &&
       submitResignationResultAction.payload === 408
