@@ -326,6 +326,14 @@ export interface ProjectManagementApi extends ApiBase {
   getAllPlatforms: string
   getAllDomains: string
   getAllManagers: string
+  getActiveProjectReports: string
+  getSearchAllocationReport: string
+  getClientProjects: string
+  getCloseProject: string
+  getDeleteProject: string
+  postDeallocateProject: string
+  postUpdateAllocateProject: string
+  exportProjectList: string
 }
 
 export interface ClientsApi extends ApiBase {
@@ -441,7 +449,9 @@ export interface EventListApi extends ApiBase {
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
 }
-
+export interface AddConfigurationsApi extends ApiBase {
+  addAppraisalCycle: string
+}
 export interface RoomListApi extends ApiBase {
   getAllMeetingRooms: string
   addRoom: string

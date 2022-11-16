@@ -60,7 +60,13 @@ const LeaveApprovalFilterOptions = ({
     } else {
       setIsViewBtnEnabled(false)
     }
-  }, [fromDate, toDate, selectEmployeeStatus, selectMember])
+  }, [
+    fromDate,
+    toDate,
+    selectEmployeeStatus,
+    selectMember,
+    autoCompleteTargetValue,
+  ])
 
   useEffect(() => {
     const tempFromDate = moment(fromDate, commonDateFormat).format(
