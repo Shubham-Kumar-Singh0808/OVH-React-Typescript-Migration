@@ -43,7 +43,6 @@ import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTem
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
 import { leaveReportService } from './Leaves/LeaveReports/leaveReportSlice'
 import { ticketReportService } from './Support/Report/ticketReportSlice'
-import { projectManagementService } from './ProjectManagement/Project/projectSlice'
 import { clientsService } from './ProjectManagement/Clients/clientsSlice'
 import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
 import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
@@ -73,6 +72,8 @@ import { ticketConfigurationService } from './Settings/TicketConfiguration/ticke
 import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
+import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -150,4 +151,5 @@ export const reduxServices = {
   assignTemplate: assignTemplateService,
   ticketConfiguration: ticketConfigurationService,
   appraisalConfigurations: appraisalCycleService,
+  projectReport: projectReportsService,
 }
