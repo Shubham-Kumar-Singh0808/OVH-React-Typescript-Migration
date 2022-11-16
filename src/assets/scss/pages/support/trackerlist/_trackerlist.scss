@@ -1,0 +1,12 @@
+.alignment > thead > tr > th {
+  padding: 8px 3px;
+}
+.sh-tracker-checkbox {
+  .form-check-input {
+    &:checked {
+      background-color: rgb(170, 170, 170);
+      border-color: rgba(118, 118, 118, 0.3);
+      color: -internal-light-dark(rgb(84, 84, 84), rgb(170, 170, 170));
+    }
+  }
+}

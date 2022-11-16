@@ -2,7 +2,6 @@ import {
   CButton,
   CCol,
   CRow,
-  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -11,8 +10,6 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import OModal from '../../../../../components/ReusableComponent/OModal'
@@ -23,6 +20,8 @@ import { currentPageData } from '../../../../../utils/paginationUtils'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { usePagination } from '../../../../../middleware/hooks/usePagination'
 import { EmployeeDesignationListTableProps } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/employeeDesignationListTypes'
+import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const EmployeeDesignationListTable = ({
   selectedDepartmentId,
@@ -38,6 +37,12 @@ const EmployeeDesignationListTable = ({
   )
   const pageSizeFromState = useTypedSelector(
     reduxServices.employeeDesignation.selectors.pageSizeFromState,
+  )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToDesignationListActions = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Designation',
   )
   const dispatch = useAppDispatch()
   const {
@@ -137,19 +142,22 @@ const EmployeeDesignationListTable = ({
           <CTableDataCell>{designation.departmentName}</CTableDataCell>
           <CTableDataCell>{designation.name}</CTableDataCell>
           <CTableDataCell>
-            <CButton
-              data-testid={`btn-delete${index}`}
-              color="danger"
-              size="sm"
-              onClick={() =>
-                handleShowDeleteModal(
-                  designation.id as number,
-                  designation.name,
-                )
-              }
-            >
-              <CIcon className="text-white" icon={cilTrash} />
-            </CButton>
+            {userAccessToDesignationListActions?.deleteaccess && (
+              <CButton
+                data-testid={`btn-delete${index}`}
+                color="danger"
+                size="sm"
+                className="btn-ovh me-1 btn-ovh-employee-list"
+                onClick={() =>
+                  handleShowDeleteModal(
+                    designation.id as number,
+                    designation.name,
+                  )
+                }
+              >
+                <i className="fa fa-trash-o" aria-hidden="true"></i>
+              </CButton>
+            )}
           </CTableDataCell>
         </CTableRow>
       ))}
@@ -171,9 +179,11 @@ const EmployeeDesignationListTable = ({
                 <CTableHeaderCell scope="col" className="w-30">
                   Designation Name
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="w-20">
-                  Action
-                </CTableHeaderCell>
+                {userAccessToDesignationListActions?.deleteaccess && (
+                  <CTableHeaderCell scope="col" className="w-20">
+                    Action
+                  </CTableHeaderCell>
+                )}
               </CTableRow>
             </CTableHead>
             {getAllDesignations}
@@ -207,23 +217,23 @@ const EmployeeDesignationListTable = ({
           </CRow>
         </>
       ) : (
-        <CCol>
-          <CRow>
-            <CSpinner data-testid="designation-list-loader" />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
       <OModal
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Designation"
+        modalBodyClass="mt-0"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete()}
       >
-        {`Do you really want to delete this ${deleteDesignationName} Designation ?`}
+        <>
+          Do you really want to delete this{' '}
+          <strong>{deleteDesignationName}</strong> Designation ?
+        </>
       </OModal>
     </>
   )

@@ -2,13 +2,20 @@ import '@testing-library/jest-dom'
 
 import React from 'react'
 import userEvent from '@testing-library/user-event'
+import { rest } from 'msw'
 import EditClient from './EditClient'
-import { cleanup, render, screen } from '../../../../test/testUtils'
+import { cleanup, render, screen, waitFor } from '../../../../test/testUtils'
 import {
   mockGetClientCountries,
   mockEditClient,
 } from '../../../../test/data/editClientData'
 import { mockClientsData } from '../../../../test/data/clientsData'
+import {
+  ApiLoadingState,
+  clientsApiConfig,
+} from '../../../../middleware/api/apiList'
+import { server } from '../../../../test/server'
+import { Client } from '../../../../types/ProjectManagement/Clients/clientsTypes'
 
 const toRender = (
   <div>
@@ -18,6 +25,7 @@ const toRender = (
     <EditClient />
   </div>
 )
+
 describe('Edit Client Component Testing', () => {
   describe('Edit Client Component Testing without data', () => {
     beforeEach(() => {
@@ -60,14 +68,85 @@ describe('Edit Client Component Testing', () => {
     })
   })
 
+  const clientCodeId = 'clientCodeInput'
+  const organizationId = 'organizationInput'
+  const clientNameId = 'clientNameInput'
+  const contactPersonId = 'contactInput'
+  const contactPersonEmailId = 'emailAddress'
+  const mobileNumberCodeId = 'mobileNumberCode'
+  const mobileNumberId = 'mobileNumberInput'
+  const gstCodeInputId = 'gstCodeInput'
+  const clientAddressId = 'clientAddressInput'
+  const updateBtnElementId = 'updateBtn'
+
   describe('Edit Client Component Testing with data', () => {
     beforeEach(() => {
       render(toRender, {
         preloadedState: {
           clients: {
             clientsList: mockClientsData,
-            isLoading: true,
+            isLoading: ApiLoadingState.succeeded,
             editClient: mockEditClient,
+            clientCountries: mockGetClientCountries,
+          },
+        },
+      })
+    })
+    afterEach(cleanup)
+    test('should be able to update the input fields ', () => {
+      // Client Code
+      const clientCodeInput = screen.getByTestId(clientCodeId)
+      userEvent.type(clientCodeInput, '121')
+      expect(clientCodeInput).toHaveValue(`${mockEditClient.clientCode}121`)
+
+      // Organization
+      const organizationInput = screen.getByTestId(organizationId)
+      userEvent.clear(organizationInput)
+      userEvent.type(organizationInput, 'Rooftop Digital')
+
+      // Client Name
+      const clientNameInput = screen.getByTestId(clientNameId)
+      userEvent.type(clientNameInput, 'AM Solutions')
+
+      // Client Contact Person
+      const contactPersonInput = screen.getByTestId(contactPersonId)
+      userEvent.type(contactPersonInput, 'test dev')
+
+      // Contact Person Email
+      const contactPersonEmail = screen.getByTestId(contactPersonEmailId)
+      userEvent.type(contactPersonEmail, 'com')
+
+      // Mobile Country code
+      const mobileNumberCode = screen.getByTestId(mobileNumberCodeId)
+      userEvent.type(mobileNumberCode, '2')
+
+      // Mobile Number
+      const mobileNumberInput = screen.getByTestId(mobileNumberId)
+      userEvent.type(mobileNumberInput, '246346356')
+
+      // GST Code
+      const gstCodeInput = screen.getByTestId(gstCodeInputId)
+      userEvent.type(gstCodeInput, 'GST657HT64')
+
+      // GST Code
+      const clientAddressInput = screen.getByTestId(clientAddressId)
+      userEvent.type(clientAddressInput, 'test location new')
+
+      // Update Button
+      const updateBtnElement = screen.getByTestId(updateBtnElementId)
+      userEvent.click(updateBtnElement)
+      expect(updateBtnElement).not.toBeDisabled()
+    })
+  })
+
+  describe('Edit Client Component', () => {
+    beforeEach(() => {
+      render(toRender, {
+        preloadedState: {
+          clients: {
+            clientsList: mockClientsData,
+            // isLoading: ApiLoadingState.succeeded,
+            // editClient: mockEditClient,
             clientCountries: mockGetClientCountries,
           },
         },
@@ -77,51 +156,115 @@ describe('Edit Client Component Testing', () => {
     test('should be able to select country', () => {
       const countrySelectElement = screen.getByTestId('countryInput')
       expect(countrySelectElement).toBeInTheDocument()
-      userEvent.selectOptions(countrySelectElement, ['USA'])
-      expect(countrySelectElement).toHaveValue('USA')
+      userEvent.selectOptions(countrySelectElement, ['AUSTRALIA'])
+      expect(countrySelectElement).toHaveValue('AUSTRALIA')
     })
-    test('should be able to update the input fields ', () => {
+    test('update button should disable upon providing existing organization name ', async () => {
       // Client Code
-      const clientCodeInput = screen.getByTestId('clientCodeInput')
-      userEvent.type(clientCodeInput, '121')
-      expect(clientCodeInput).toHaveValue(`${mockEditClient.clientCode}121`)
+      const clientCodeInput = screen.getByTestId(clientCodeId)
+      userEvent.type(clientCodeInput, '999')
+      expect(clientCodeInput).toHaveValue(`999`)
 
       // Organization
-      const organizationInput = screen.getByTestId('organizationInput')
-      userEvent.type(organizationInput, 'test')
+      const organizationInput = screen.getByTestId(organizationId)
+      userEvent.type(organizationInput, 'ABS-CBN International')
 
       // Client Name
-      const clientNameInput = screen.getByTestId('clientNameInput')
-      userEvent.type(clientNameInput, 'testing')
+      const clientNameInput = screen.getByTestId(clientNameId)
+      userEvent.type(clientNameInput, 'newTestClient')
 
       // Client Contact Person
-      const contactPersonInput = screen.getByTestId('contactInput')
+      const contactPersonInput = screen.getByTestId(contactPersonId)
       userEvent.type(contactPersonInput, 'test dev')
 
       // Contact Person Email
-      const contactPersonEmail = screen.getByTestId('emailAddress')
+      const contactPersonEmail = screen.getByTestId(contactPersonEmailId)
       userEvent.type(contactPersonEmail, 'com')
 
       // Mobile Country code
-      const mobileNumberCode = screen.getByTestId('mobileNumberCode')
+      const mobileNumberCode = screen.getByTestId(mobileNumberCodeId)
       userEvent.type(mobileNumberCode, '2')
 
       // Mobile Number
-      const mobileNumberInput = screen.getByTestId('mobileNumberInput')
+      const mobileNumberInput = screen.getByTestId(mobileNumberId)
       userEvent.type(mobileNumberInput, '246346356')
 
       // GST Code
-      const gstCodeInput = screen.getByTestId('gstCodeInput')
+      const gstCodeInput = screen.getByTestId(gstCodeInputId)
       userEvent.type(gstCodeInput, 'GST657HT64')
 
       // GST Code
-      const clientAddressInput = screen.getByTestId('clientAddressInput')
+      const clientAddressInput = screen.getByTestId(clientAddressId)
       userEvent.type(clientAddressInput, 'test location')
 
       // Update Button
-      const updateBtnElement = screen.getByTestId('updateBtn')
+      const updateBtnElement = screen.getByTestId(updateBtnElementId)
       userEvent.click(updateBtnElement)
-      expect(updateBtnElement).not.toBeDisabled()
+      await waitFor(() => {
+        expect(updateBtnElement).toBeDisabled()
+      })
+    })
+  })
+  describe('Edit Client Component', () => {
+    beforeEach(() => {
+      render(toRender, {
+        preloadedState: {
+          clients: {
+            clientsList: mockClientsData,
+            // isLoading: ApiLoadingState.succeeded,
+            editClient: mockEditClient,
+            clientCountries: mockGetClientCountries,
+          },
+        },
+      })
+    })
+    afterEach(cleanup)
+    test('update button should disable upon providing existing client name ', async () => {
+      // Client Code
+      const clientCodeInput = screen.getByTestId(clientCodeId)
+      userEvent.clear(clientCodeInput)
+      userEvent.type(clientCodeInput, '888')
+      expect(clientCodeInput).toHaveValue(`888`)
+
+      // Organization
+      const organizationInput = screen.getByTestId(organizationId)
+      userEvent.clear(organizationInput)
+      userEvent.type(organizationInput, 'new test')
+
+      // Client Name
+      const clientNameInput = screen.getByTestId(clientNameId)
+      userEvent.type(clientNameInput, 'Overseas Connect INC')
+
+      // Client Contact Person
+      const contactPersonInput = screen.getByTestId(contactPersonId)
+      userEvent.type(contactPersonInput, 'test dev')
+
+      // Contact Person Email
+      const contactPersonEmail = screen.getByTestId(contactPersonEmailId)
+      userEvent.type(contactPersonEmail, 'test@gmail.com')
+
+      // Mobile Country code
+      const mobileNumberCode = screen.getByTestId(mobileNumberCodeId)
+      userEvent.type(mobileNumberCode, '91')
+
+      // Mobile Number
+      const mobileNumberInput = screen.getByTestId(mobileNumberId)
+      userEvent.type(mobileNumberInput, '246346567')
+
+      // GST Code
+      const gstCodeInput = screen.getByTestId(gstCodeInputId)
+      userEvent.type(gstCodeInput, 'GST657HT73')
+
+      // GST Code
+      const clientAddressInput = screen.getByTestId(clientAddressId)
+      userEvent.type(clientAddressInput, 'test location')
+
+      // Update Button
+      const updateBtnElement = screen.getByTestId(updateBtnElementId)
+      userEvent.click(updateBtnElement)
+      await waitFor(() => {
+        expect(updateBtnElement).toBeDisabled()
+      })
     })
   })
 })

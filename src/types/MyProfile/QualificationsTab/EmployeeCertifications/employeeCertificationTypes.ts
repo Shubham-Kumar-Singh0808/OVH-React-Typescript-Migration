@@ -1,4 +1,5 @@
 import { LoadingState, ValidationError } from '../../../commonTypes'
+import { UserAccessToFeatures } from '../../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 export type EmployeeCertificationProps = {
   isEditCertificationDetails?: boolean
@@ -55,6 +56,7 @@ export type EditEmployeeCertificate = {
 }
 export type EmployeeCertificationTableProps = {
   editCertificateButtonHandler: (id: number) => void
+  userAccess?: UserAccessToFeatures
 }
 
 export type Technology = {
@@ -82,8 +84,7 @@ export type TableActionsType = {
   certificateItemId: string | number | undefined
   isViewingAnotherEmployee: boolean
   editCertificateButtonHandler: (id: number) => void
-  certificateId: number
   setCertificateId: (id: number) => void
-  isDeleteModalVisible: boolean
   setIsDeleteModalVisible: (value: boolean) => void
+  userAccess?: UserAccessToFeatures
 }

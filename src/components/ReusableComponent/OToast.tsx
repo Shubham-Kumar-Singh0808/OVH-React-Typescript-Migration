@@ -18,7 +18,7 @@ const OToast = ({
     >
       <div className="d-flex">
         <CToastBody>{toastMessage}</CToastBody>
-        <CToastClose className="me-2 m-auto" white />
+        <CToastClose className="me-3 m-auto" />
       </div>
     </CToast>
   )

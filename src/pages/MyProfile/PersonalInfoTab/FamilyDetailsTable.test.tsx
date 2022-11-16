@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event'
 import FamilyDetailsTable from './FamilyDetailsTable'
 import { render, screen } from '../../../test/testUtils'
 import { mockFamilyTableDetails } from '../../../test/data/familyTableData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 describe('Family Table component with data', () => {
   beforeEach(() => {
@@ -11,6 +13,10 @@ describe('Family Table component with data', () => {
       preloadedState: {
         personalInfoDetails: {
           employeeFamilyDetails: mockFamilyTableDetails,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
@@ -33,7 +39,7 @@ describe('Family Table component with data', () => {
     expect(screen.getByText('vinesh')).toBeInTheDocument()
     expect(screen.getByText('Brother')).toBeInTheDocument()
     expect(screen.getByText('970150987')).toBeInTheDocument()
-    expect(screen.getByText('03/23/2022')).toBeInTheDocument()
+    expect(screen.getByText('23/03/2022')).toBeInTheDocument()
   })
   test('should render with number of records  ', () => {
     expect(

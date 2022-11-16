@@ -63,6 +63,9 @@ const TimeInOfficeReport = React.lazy(
 const LeaveSettings = React.lazy(
   () => import('./pages/Settings/LeaveSettings/EmployeeLeaveSettings'),
 )
+const LeaveReports = React.lazy(
+  () => import('./pages/Leaves/LeaveReports/LeaveReport'),
+)
 
 const MailConfiguration = React.lazy(
   () => import('./pages/Settings/MailConfiguration/EmailConfigTemplate'),
@@ -109,11 +112,19 @@ const LeaveSummary = React.lazy(
     ),
 )
 const AddProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/AddProject/AddProject'
+    ),
 )
-
 const EditProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/EditProject/EditProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/EditProject/EditProject'
+    ),
+)
+const ProjectReport = React.lazy(
+  () => import('./pages/ProjectManagement/Project/ProjectReport'),
 )
 const EditClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/EditClient/EditClient'),
@@ -164,10 +175,19 @@ const UpdateTicketUnderTicketList = React.lazy(
   () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
 )
 
+const BookingList = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/BookingList/BookingList'),
+)
 const EventTypeList = React.lazy(
   () =>
     import(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
+    ),
+)
+const EmployeeAllocationReport = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/EmployeeAllocation/EmployeeAllocationReport'
     ),
 )
 const LocationList = React.lazy(
@@ -176,11 +196,37 @@ const LocationList = React.lazy(
       './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
     ),
 )
+
+const EventsList = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
+)
+
+const FeedbackForms = React.lazy(
+  () =>
+    import(
+      './pages/ConferenceRoomBooking/EventList/FeedbackForms/FeedbackFormsList'
+    ),
+)
 const EditHoliday = React.lazy(
   () =>
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
+const EmployeeAllocation = React.lazy(
+  () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
+)
+
+const AppraisalConfigurations = React.lazy(
+  () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
+)
+
+const RoomList = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
+)
+
+const TicketConfiguration = React.lazy(
+  () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
+)
 const NewEvent = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewEvent/NewEvent'),
 )
@@ -236,6 +282,16 @@ const routes = [
     path: '/employeehandbook',
     name: 'Employee Handbook',
     component: EmployeeHandbook,
+  },
+  {
+    path: '/Employeereport',
+    name: 'Employee Allocation Report',
+    component: EmployeeAllocationReport,
+  },
+  {
+    path: '/leaveReports',
+    name: 'Leave Reports',
+    component: LeaveReports,
   },
   {
     path: '/showemployeehandbook/:clickedpageName',
@@ -318,6 +374,11 @@ const routes = [
     component: AddProject,
   },
   {
+    path: '/allocationEmployee',
+    name: 'Allocate Employee',
+    component: EmployeeAllocation,
+  },
+  {
     path: '/editproject/:projectId',
     name: 'Edit Project',
     component: EditProject,
@@ -391,11 +452,17 @@ const routes = [
   {
     path: '/eventList',
     name: 'Event List',
+    component: EventsList,
   },
   {
     path: '/probationaryList',
     name: 'Upcoming Probationary End Dates',
     component: ProbationaryList,
+  },
+  {
+    path: '/meetingList',
+    name: 'Booking List',
+    component: BookingList,
   },
   {
     path: '/newEvent',
@@ -413,9 +480,34 @@ const routes = [
     component: LocationList,
   },
   {
+    path: '/trainingFeedBackForm/:eventId',
+    name: 'Feedback Forms',
+    component: FeedbackForms,
+  },
+  {
     path: '/editHoliday/:holidayId',
     name: 'Edit Holiday',
     component: EditHoliday,
+  },
+  {
+    path: '/appraisalCycle',
+    name: 'Appraisal Configurations',
+    component: AppraisalConfigurations,
+  },
+  {
+    path: '/roomList',
+    name: 'RoomList',
+    component: RoomList,
+  },
+  {
+    path: '/subCategoryList',
+    name: 'Ticket Configuration',
+    component: TicketConfiguration,
+  },
+  {
+    path: '/projectreport',
+    name: 'Project Report',
+    component: ProjectReport,
   },
 ]
 

@@ -11,9 +11,16 @@ import {
   mockTrackerList,
 } from '../../../test/data/ticketApprovalsData'
 
+const mockSetTogglePage = jest.fn()
+
 describe('Ticket Approvals Filter Options Component Testing', () => {
   beforeEach(() => {
-    render(<CreateNewTicketFilterOptions />)
+    render(
+      <CreateNewTicketFilterOptions
+        setToggle={mockSetTogglePage}
+        userViewAccess={true}
+      />,
+    )
   })
   test('should render tracker select field', () => {
     const trackerSelect = screen.findByTestId('trackerSelect')
@@ -55,16 +62,22 @@ describe('Ticket Approvals Filter Options Component Testing', () => {
 
 describe('Create New Ticket Filter Options Component Testing with data', () => {
   beforeEach(() => {
-    render(<CreateNewTicketFilterOptions />, {
-      preloadedState: {
-        ticketApprovals: {
-          trackerList: mockTrackerList,
-          departmentNameList: mockDepartmentNamesList,
-          departmentCategoryList: mockCategoryList,
-          subCategoryList: mockSubCategoryList,
+    render(
+      <CreateNewTicketFilterOptions
+        setToggle={mockSetTogglePage}
+        userViewAccess={true}
+      />,
+      {
+        preloadedState: {
+          ticketApprovals: {
+            trackerList: mockTrackerList,
+            departmentNameList: mockDepartmentNamesList,
+            departmentCategoryList: mockCategoryList,
+            subCategoryList: mockSubCategoryList,
+          },
         },
       },
-    })
+    )
   })
   screen.debug()
   test('should able to select values for options for respective select element', async () => {
@@ -123,27 +136,7 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     userEvent.selectOptions(selectPriority, ['Normal'])
     expect(screen.getByTestId('create-btn')).toBeDisabled()
   })
-  test('date error', async () => {
-    const datePickerElement = screen.getAllByPlaceholderText('dd/mm/yy')
-    fireEvent.click(datePickerElement[0])
 
-    await waitFor(() =>
-      fireEvent.change(datePickerElement[0], {
-        target: { value: '11 Oct, 2022' },
-      }),
-    )
-    fireEvent.click(datePickerElement[1])
-    await waitFor(() =>
-      fireEvent.change(datePickerElement[1], {
-        target: { value: '02 Oct, 2022' },
-      }),
-    )
-    expect(datePickerElement[0]).toHaveValue('10/11/2022')
-    expect(datePickerElement[1]).toHaveValue('10/02/2022')
-    await waitFor(() => {
-      expect(screen.getByTestId('errorMessage')).toBeInTheDocument()
-    })
-  })
   test('should upload file image', async () => {
     const fileToUpload = new File(['(⌐□_□)'], 'testFile.png', {
       type: 'image/png',
@@ -155,5 +148,10 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     })
 
     expect(uploader).toBeTruthy()
+  })
+  test('should be able to click Add button element', () => {
+    const toggleBtn = screen.getByRole('button', { name: 'Add' })
+    userEvent.click(toggleBtn)
+    expect(toggleBtn).toBeInTheDocument()
   })
 })

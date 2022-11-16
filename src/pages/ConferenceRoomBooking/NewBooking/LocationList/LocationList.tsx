@@ -86,6 +86,14 @@ const LocationList = (): JSX.Element => {
     }
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Meeting-Location',
+  )
+
   return (
     <>
       <OCard
@@ -121,6 +129,7 @@ const LocationList = (): JSX.Element => {
                 id="Name"
                 size="sm"
                 name="name"
+                autoComplete="off"
                 placeholder="Enter Location Name"
                 value={selectLocationName}
                 onChange={handledInputChange}
@@ -134,25 +143,29 @@ const LocationList = (): JSX.Element => {
                 </span>
               )}
             </CCol>
-            <CCol sm={3}>
-              <CButton
-                data-testid="designationButton"
-                color="info"
-                className="btn-ovh me-1"
-                onClick={addLocationNameButtonHandler}
-                disabled={
-                  isAddButtonEnabled
-                    ? isAddButtonEnabled && locationNameExist.length > 0
-                    : !isAddButtonEnabled
-                }
-              >
-                <i className="fa fa-plus me-1"></i>Add
-              </CButton>
-            </CCol>
+            {userAccess?.createaccess && (
+              <CCol sm={3}>
+                <CButton
+                  data-testid="designationButton"
+                  color="info"
+                  className="btn-ovh me-1"
+                  onClick={addLocationNameButtonHandler}
+                  disabled={
+                    isAddButtonEnabled
+                      ? isAddButtonEnabled && locationNameExist.length > 0
+                      : !isAddButtonEnabled
+                  }
+                >
+                  <i className="fa fa-plus me-1"></i>Add
+                </CButton>
+              </CCol>
+            )}
           </CRow>
         </CForm>
         {isLoading !== ApiLoadingState.loading ? (
-          <LocationListTable />
+          <LocationListTable
+            userDeleteAccess={userAccess?.deleteaccess as boolean}
+          />
         ) : (
           <>
             <CSpinner />

@@ -7,17 +7,28 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React from 'react'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeTimeInOfficeReport = (): JSX.Element => {
   const timeInOfficeEmployeeReport = useTypedSelector(
     reduxServices.timeInOfficeReport.selectors.timeInOfficeEmployeeReport,
   )
 
+  const isLoading = useTypedSelector(
+    reduxServices.timeInOfficeReport.selectors.isLoading,
+  )
+
   return (
     <>
-      <CTable striped className="time-in-office-table">
+      <CTable
+        striped
+        responsive
+        className="time-in-office-table text-center align-middle"
+      >
         <CTableHead>
           <CTableRow>
             {timeInOfficeEmployeeReport.dayList &&
@@ -32,23 +43,28 @@ const EmployeeTimeInOfficeReport = (): JSX.Element => {
             <CTableHeaderCell scope="col"></CTableHeaderCell>
           </CTableRow>
         </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            {timeInOfficeEmployeeReport.inOfficeDTOs.map((value, index) => {
-              return (
-                <CTableDataCell
-                  key={index}
-                  className={`color-for-time-${value.colorForTime}`}
-                >
-                  {value.spentHours}
-                </CTableDataCell>
-              )
-            })}
-            <CTableDataCell className="color-for-time-total">
-              {timeInOfficeEmployeeReport.totalTimeInOfficeHours}
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
+        {isLoading !== ApiLoadingState.loading ? (
+          <CTableBody>
+            <CTableRow>
+              {timeInOfficeEmployeeReport.inOfficeDTOs &&
+                timeInOfficeEmployeeReport.inOfficeDTOs.map((value, index) => {
+                  return (
+                    <CTableDataCell
+                      key={index}
+                      className={`color-for-time-${value.colorForTime}`}
+                    >
+                      {value.spentHours}
+                    </CTableDataCell>
+                  )
+                })}
+              <CTableDataCell className="color-for-time-total">
+                {timeInOfficeEmployeeReport.totalTimeInOfficeHours}
+              </CTableDataCell>
+            </CTableRow>
+          </CTableBody>
+        ) : (
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        )}
       </CTable>
     </>
   )

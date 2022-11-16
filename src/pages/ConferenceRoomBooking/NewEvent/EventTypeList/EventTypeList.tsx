@@ -115,6 +115,7 @@ const EventTypeList = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              autoComplete="off"
               className="mb-2"
               data-testid="eventType"
               type="text"

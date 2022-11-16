@@ -36,13 +36,13 @@ export const reformatDate = (date: string): Date => {
     : new Date()
 }
 
-const format1 = 'yyyy/MM/dd'
-const format2 = 'dd/MM/yyyy'
-const format3 = 'dd-MM-yyyy'
-const format4 = 'dd.MM.yyyy'
-const format5 = 'd. M. yyyy'
-const format6 = 'MM/dd/yyyy'
-const format7 = 'yyyy-MM-dd'
+const format1 = 'yyyy/mm/dd'
+const format2 = 'dd/mm/yyyy'
+const format3 = 'dd/mm/yyyy'
+const format4 = 'dd.mm.yyyy'
+const format5 = 'd. m. yyyy'
+const format6 = 'mm/dd/yyyy'
+const format7 = 'yyyy-mm-dd'
 const format8 = 'mm/dd/yyyy'
 export const dateFormatPerLocale = [
   { label: 'af-ZA', format: format1 },
@@ -96,7 +96,7 @@ export const dateFormatPerLocale = [
   { label: 'en-CA', format: format2 },
   { label: 'en-GB', format: format2 },
   { label: 'en-IE', format: format2 },
-  { label: 'en-IN', format: format3 },
+  { label: 'en-IN', format: 'dd/MM/yyyy' },
   { label: 'en-JM', format: format2 },
   { label: 'en-MY', format: 'd/M/yyyy' },
   { label: 'en-NZ', format: 'd/MM/yyyy' },

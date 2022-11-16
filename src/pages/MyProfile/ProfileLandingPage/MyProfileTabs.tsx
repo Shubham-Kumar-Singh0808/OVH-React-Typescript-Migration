@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// Todo: remove eslint and fix all the errors
 import {
   CNav,
   CNavItem,
@@ -13,7 +11,6 @@ import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
-import EmployeeReportees from '../ReporteesTab/EmployeeReportees'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import EmployeeReviews from '../ReviewsTab/EmployeeReviews'
 import TabsLabels from '../../../middleware/TabsLabels'
@@ -21,6 +18,9 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import EmployeeProjects from '../ProjectsTab/EmployeeProjects'
 import EmployeeAssets from '../MyAssetsTab/EmployeeAssets'
+import { mapTabsToFeatures } from '../../../utils/helper'
+import { MappedTabs } from '../../../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
+import EmployeeReportees from '../ReporteesTab/EmployeeReportees'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
@@ -30,10 +30,40 @@ const MyProfileTabs = (): JSX.Element => {
 
   const [activeTabsKey, setActiveTabsKey] = useState(1)
   const [activeTabsContent, setActiveTabsContent] = useState<JSX.Element>()
+  const [tabResult, setTabResult] = useState<MappedTabs[]>()
+
   const employeeRole = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeRole,
   )
+
   const { employeeId } = useParams<{ employeeId?: string }>()
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  useEffect(() => {
+    const filteredTabs = userAccessToFeatures.filter((feature) =>
+      TabsLabels.some(
+        (tab) =>
+          tab.label.toLowerCase() === feature.name?.toLowerCase() &&
+          feature.viewaccess === true,
+      ),
+    )
+    const mappedTabs = mapTabsToFeatures(TabsLabels, filteredTabs)
+    setTabResult(mappedTabs as MappedTabs[])
+  }, [userAccessToFeatures])
+
+  useEffect(() => {
+    if (tabResult) {
+      const newTabResult = tabResult?.filter(
+        (value) => Object.keys(value).length !== 0,
+      )
+      if (newTabResult) {
+        setActiveTabsKey(newTabResult[0]?.id)
+      }
+    }
+  }, [tabResult])
 
   const handleActiveTab = (tabKey: number) => {
     setActiveTabsKey(tabKey)
@@ -50,13 +80,13 @@ const MyProfileTabs = (): JSX.Element => {
   }, [dispatch, employeeId])
 
   useEffect(() => {
-    if (
-      employeeRole !== 'admin' &&
-      employeeRole !== 'HR' &&
-      activeTabsKey === 9
-    ) {
-      setActiveTabsKey(0)
-    }
+    // if (
+    //   employeeRole !== 'admin' &&
+    //   employeeRole !== 'HR' &&
+    //   activeTabsKey === 9
+    // ) {
+    //   setActiveTabsKey(0)
+    // }
     //Loading different components that comes in My Profile Tabs section
     //First add the item in 'TabsLabel.js' in 'middleware' folder
     //And add the key-value in below object
@@ -81,24 +111,27 @@ const MyProfileTabs = (): JSX.Element => {
   return (
     <>
       <CNav className="inline-tabs-nav" variant="tabs" role="tablist">
-        {TabsLabels.map((item, _i) => (
-          <CNavItem key={item.id}>
-            {employeeRole !== 'admin' &&
-            employeeRole !== 'HR' &&
-            item.id === 9 ? (
-              <></>
-            ) : (
+        {tabResult
+          ?.filter((value) => Object.keys(value).length !== 0)
+          .map((item, index) => (
+            <CNavItem key={index}>
+              {/* {employeeRole !== 'admin' &&
+              employeeRole !== 'HR' &&
+              item.id === 9 ? (
+                <></>
+              ) : ( */}
               <>
                 <CNavLink
+                  data-testid="profileNavLink"
                   active={activeTabsKey === item.id}
                   onClick={() => handleActiveTab(item.id)}
                 >
-                  {item.name}
+                  {item.tabName}
                 </CNavLink>
               </>
-            )}
-          </CNavItem>
-        ))}
+              {/* )} */}
+            </CNavItem>
+          ))}
       </CNav>
       <CTabContent className="inline-tabs-content">
         <CTabPane

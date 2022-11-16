@@ -41,8 +41,8 @@ import { employeeLeaveApplyServices } from './Leaves/ApplyLeave/employeeApplyLea
 import { scheduledInterviewsService } from './Recruitment/ScheduledInterviews/scheduledInterviewsSlice'
 import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
+import { leaveReportService } from './Leaves/LeaveReports/leaveReportSlice'
 import { ticketReportService } from './Support/Report/ticketReportSlice'
-import { projectManagementService } from './ProjectManagement/Project/projectSlice'
 import { clientsService } from './ProjectManagement/Clients/clientsSlice'
 import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
 import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
@@ -60,8 +60,20 @@ import { trainingsAndEventsService } from './Dashboard/trainingsAndEventsSlice'
 import { provisionPeriodService } from './Dashboard/provisionPeriodSlice'
 import { employeeAchievementsService } from './Dashboard/achievementsSlice'
 import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
+import { bookingListService } from './ConferenceRoomBooking/BookingList/bookingListSlice'
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import { employeeAllocationSliceService } from './ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
+import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
+import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
+import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
+import { ticketConfigurationService } from './Settings/TicketConfiguration/ticketConfigurationSlice'
+import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
+import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
+import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
+import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
+import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 import { newEventService } from './ConferenceRoomBooking/NewEvent/newEventSlice'
 
 export const reduxServices = {
@@ -108,8 +120,10 @@ export const reduxServices = {
   scheduledInterviews: scheduledInterviewsService,
   addNewMailTemplateType: mailTemplateTypeService,
   myAttendance: myAttendanceService,
+  leaveReport: leaveReportService,
   ticketReport: ticketReportService,
   projectManagement: projectManagementService,
+  allocateEmployee: allocateEmployeeService,
   clients: clientsService,
   addClient: addNewClientService,
   clientInformation: clientInformationService,
@@ -127,7 +141,17 @@ export const reduxServices = {
   employeeProbationPeriod: provisionPeriodService,
   employeeAchievements: employeeAchievementsService,
   updateTicket: updateTicketService,
+  bookingList: bookingListService,
   eventTypeList: eventTypeListService,
   addLocationList: addLocationListService,
+  employeeAllocationReport: employeeAllocationSliceService,
+  addTrackerLists: addTrackerListService,
+  eventList: eventListService,
+  roomLists: roomListService,
+  searchEmployee: employeeSearchService,
+  ticketConfiguration: ticketConfigurationService,
+  appraisalConfigurations: appraisalCycleService,
+  addConfigurations: addConfigurationService,
+  projectReport: projectReportsService,
   newEvent: newEventService,
 }

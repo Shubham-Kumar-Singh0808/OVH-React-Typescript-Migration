@@ -16,7 +16,11 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 
-const LocationListTable = (): JSX.Element => {
+const LocationListTable = ({
+  userDeleteAccess,
+}: {
+  userDeleteAccess: boolean
+}): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteLocationId, setDeleteLocationId] = useState(0)
   const [deleteLocationName, setDeleteLocationName] = useState('')
@@ -50,7 +54,11 @@ const LocationListTable = (): JSX.Element => {
   return (
     <>
       <CCol className="custom-scroll">
-        <CTable striped responsive className="mt-5">
+        <CTable
+          striped
+          responsive
+          className="text-start text-left align-middle alignment"
+        >
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -66,22 +74,24 @@ const LocationListTable = (): JSX.Element => {
                     <CTableDataCell>{index + 1}</CTableDataCell>
                     <CTableDataCell>{location.locationName}</CTableDataCell>
                     <CTableDataCell>
-                      <CTooltip content="Delete">
-                        <CButton
-                          data-testid={`btn-delete${index}`}
-                          size="sm"
-                          className="btn-ovh me-2 cursor-pointer"
-                          color="danger btn-ovh me-2"
-                          onClick={() =>
-                            deleteButtonHandler(
-                              location.id,
-                              location.locationName,
-                            )
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
+                      {userDeleteAccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            data-testid={`btn-delete${index}`}
+                            size="sm"
+                            color="danger btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              deleteButtonHandler(
+                                location.id,
+                                location.locationName,
+                              )
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )
@@ -100,12 +110,17 @@ const LocationListTable = (): JSX.Element => {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Location"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteLocation}
+        modalBodyClass="mt-0"
       >
-        {`Do you really want to delete this ${deleteLocationName} Location ?`}
+        <>
+          Do you really want to delete this{' '}
+          <strong>{deleteLocationName}</strong> Location ?
+        </>
       </OModal>
     </>
   )

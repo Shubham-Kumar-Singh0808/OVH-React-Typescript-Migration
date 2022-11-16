@@ -21,6 +21,7 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
   bordered = false,
   isFieldDisabled = false,
   tableClassName = '',
+  userAccess,
 }: EmployeeSkillInfo): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const dispatch = useAppDispatch()
@@ -84,11 +85,26 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
         striped={striped || isViewingAnotherEmployee}
         bordered={bordered || isViewingAnotherEmployee}
         className={tableClassName}
+        align="middle"
       >
         {!isFieldDisabled || isViewingAnotherEmployee ? (
           <CTableHead color="primary">
             <CTableRow>
               <CTableDataCell {...tableDataCellProps}>Skill Set</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell {...tableHeaderCellProps}>
+                Category
+              </CTableHeaderCell>
+              <CTableHeaderCell {...tableHeaderCellProps}>
+                Skill
+              </CTableHeaderCell>
+              <CTableHeaderCell {...tableHeaderCellProps}>
+                Competency
+              </CTableHeaderCell>
+              <CTableHeaderCell {...tableHeaderCellProps}>
+                Experience
+              </CTableHeaderCell>
             </CTableRow>
             {!isFieldDisabled ||
               (isViewingAnotherEmployee && (
@@ -124,55 +140,64 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
         )}
 
         <CTableBody>
-          {employeeSkillsData?.map((skillItem, index) => {
-            return (
-              <CTableRow key={index}>
-                {isFieldDisabled && !isViewingAnotherEmployee ? (
-                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                ) : (
-                  <></>
-                )}
-                <CTableDataCell scope="row">
-                  {skillItem.categoryType}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {skillItem.skillType}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {skillItem.competency}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {skillItem.expYear && `${skillItem.expYear}`} Year(`s)&nbsp;
-                  {skillItem.expMonth && `${skillItem.expMonth}`} month(`s)
-                </CTableDataCell>
-                {isFieldDisabled && !isViewingAnotherEmployee ? (
+          {employeeSkillsData.length > 0 &&
+            employeeSkillsData?.map((skillItem, index) => {
+              return (
+                <CTableRow key={index}>
+                  {isFieldDisabled && !isViewingAnotherEmployee ? (
+                    <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                  ) : (
+                    <></>
+                  )}
                   <CTableDataCell scope="row">
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1"
-                      onClick={() =>
-                        editSkillButtonHandler?.(skillItem.skillId)
-                      }
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh me-1"
-                      onClick={() => handleShowDeleteModal(skillItem.skillId)}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
+                    {skillItem.categoryType}
                   </CTableDataCell>
-                ) : (
-                  <></>
-                )}
-              </CTableRow>
-            )
-          })}
+                  <CTableDataCell scope="row">
+                    {skillItem.skillType}
+                  </CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {skillItem.competency}
+                  </CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {skillItem.expYear && `${skillItem.expYear}`} Year(`s)&nbsp;
+                    {skillItem.expMonth && `${skillItem.expMonth}`} month(`s)
+                  </CTableDataCell>
+                  {isFieldDisabled && !isViewingAnotherEmployee ? (
+                    <CTableDataCell scope="row">
+                      {userAccess?.updateaccess && (
+                        <CButton
+                          color="info"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          data-testid={`skill-edit-button${index}`}
+                          onClick={() =>
+                            editSkillButtonHandler?.(skillItem.skillId)
+                          }
+                        >
+                          <i
+                            className="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      )}
+                      {userAccess?.deleteaccess && (
+                        <CButton
+                          color="danger"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          data-testid={`skill-delete-button${index}`}
+                          onClick={() =>
+                            handleShowDeleteModal(skillItem.skillId)
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      )}
+                    </CTableDataCell>
+                  ) : (
+                    <></>
+                  )}
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
       {isFieldDisabled && (
@@ -186,7 +211,9 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
             alignment="center"
             visible={isDeleteModalVisible}
             setVisible={setIsDeleteModalVisible}
-            modalHeaderClass="d-none"
+            modalTitle="Delete Skill"
+            modalBodyClass="mt-0"
+            closeButtonClass="d-none"
             confirmButtonText="Yes"
             cancelButtonText="No"
             confirmButtonAction={handleConfirmDeleteVisaDetails}

@@ -10,8 +10,6 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { Link } from 'react-router-dom'
 import { HolidaysListProps } from '../../../../types/Dashboard/Holidays/upcomingHolidaysTypes'
 import { currentPageData } from '../../../../utils/paginationUtils'
@@ -21,8 +19,6 @@ import { usePagination } from '../../../../middleware/hooks/usePagination'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import OModal from '../../../../components/ReusableComponent/OModal'
 
@@ -37,6 +33,14 @@ const HolidaysListTable = ({
   const holidaysInfo = useTypedSelector(
     reduxServices.holidays.selectors.upcomingHolidays,
   )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToHolidays = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Holiday Actions',
+  )
+
   const isLoading = useTypedSelector(reduxServices.holidays.selectors.isLoading)
   const {
     paginationRange,
@@ -60,6 +64,7 @@ const HolidaysListTable = ({
 
   const handleShowHolidayDeleteModal = (id: number, holidayName: string) => {
     setHolidayId(id)
+
     setToDeleteHoliday(holidayName)
     setIsDeleteModalVisible(true)
   }
@@ -95,25 +100,30 @@ const HolidaysListTable = ({
           <CTableDataCell>{holiday.name}</CTableDataCell>
           <CTableDataCell>{holiday.country}</CTableDataCell>
           <CTableDataCell>
-            <Link to={`/editHoliday/${holiday.id}`}>
+            {userAccessToHolidays?.updateaccess && (
+              <Link to={`/editHoliday/${holiday.id}`}>
+                <CButton
+                  color="info"
+                  className="btn-ovh btn-ovh-employee-list me-1"
+                  data-testid={`holiday-edit-btn${index}`}
+                >
+                  <i className="fa fa-edit" aria-hidden="true"></i>
+                </CButton>
+              </Link>
+            )}
+            {userAccessToHolidays?.deleteaccess && (
               <CButton
-                color="info"
-                className="btn-ovh me-2"
-                data-testid={`holiday-edit-btn${index}`}
+                className="btn-ovh btn-ovh-employee-list"
+                color="danger"
+                size="sm"
+                data-testid={`holiday-delete-btn${index}`}
+                onClick={() =>
+                  handleShowHolidayDeleteModal(holiday.id, holiday.name)
+                }
               >
-                <i className="fa fa-edit" aria-hidden="true"></i>
+                <i className="fa fa-trash-o" aria-hidden="true"></i>
               </CButton>
-            </Link>
-            <CButton
-              color="danger"
-              size="sm"
-              data-testid={`holiday-delete-btn${index}`}
-              onClick={() =>
-                handleShowHolidayDeleteModal(holiday.id, holiday.name)
-              }
-            >
-              <CIcon className="text-white" icon={cilTrash} />
-            </CButton>
+            )}
           </CTableDataCell>
         </CTableRow>
       ))}
@@ -121,6 +131,8 @@ const HolidaysListTable = ({
   ) : (
     <></>
   )
+  const actionHeaderViewAccess =
+    userAccessToHolidays?.updateaccess || userAccessToHolidays?.deleteaccess
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (
@@ -132,7 +144,11 @@ const HolidaysListTable = ({
                 <CTableHeaderCell scope="col">Week</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Occasion</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                {actionHeaderViewAccess ? (
+                  <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                ) : (
+                  <></>
+                )}
               </CTableRow>
             </CTableHead>
             {getAllHolidays}
@@ -141,7 +157,7 @@ const HolidaysListTable = ({
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Number of Holidays:{holidaysInfo.length}</strong>
+                <strong>Total Number of Holidays: {holidaysInfo.length}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
@@ -170,6 +186,7 @@ const HolidaysListTable = ({
             visible={isDeleteModalVisible}
             setVisible={setIsDeleteModalVisible}
             modalTitle="Delete Holiday"
+            modalBodyClass="mt-0"
             confirmButtonText="Yes"
             cancelButtonText="No"
             closeButtonClass="d-none"
@@ -177,12 +194,12 @@ const HolidaysListTable = ({
           >
             <>
               Do you really want to delete <strong>{toDeleteHoliday}</strong>{' '}
-              Holiday
+              Holiday ?
             </>
           </OModal>
         </>
       ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
+        <></>
       )}
     </>
   )
