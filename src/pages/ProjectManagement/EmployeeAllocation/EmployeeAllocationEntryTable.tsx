@@ -41,6 +41,14 @@ const EmployeeAllocationEntryTable = (props: {
     reduxServices.employeeAllocationReport.selectors.employeeUnderProject,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Employee Allocation',
+  )
+
   const dispatch = useAppDispatch()
   const { Select, toDate, allocationStatus, billingStatus, fromDate, id } =
     props
@@ -189,7 +197,7 @@ const EmployeeAllocationEntryTable = (props: {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {projectUnderReport.length > 0 &&
+              {projectUnderReport?.length > 0 &&
                 projectUnderReport?.map((projectReport, KRAindex) => {
                   const billable = projectReport.billable ? 'yes' : 'No'
                   const allocated = projectReport.isAllocated
@@ -348,17 +356,19 @@ const EmployeeAllocationEntryTable = (props: {
                           </>
                         ) : (
                           <>
-                            <CButton
-                              color="info btn-ovh me-2"
-                              data-testid="edit-btn"
-                              onClick={() => {
-                                editProjectAllocationButtonHandler(
-                                  projectReport,
-                                )
-                              }}
-                            >
-                              <i className="fa fa-pencil-square-o"></i>
-                            </CButton>
+                            {userAccess?.updateaccess && (
+                              <CButton
+                                color="info btn-ovh me-2"
+                                data-testid="edit-btn"
+                                onClick={() => {
+                                  editProjectAllocationButtonHandler(
+                                    projectReport,
+                                  )
+                                }}
+                              >
+                                <i className="fa fa-pencil-square-o"></i>
+                              </CButton>
+                            )}
                           </>
                         )}
                       </CTableDataCell>
