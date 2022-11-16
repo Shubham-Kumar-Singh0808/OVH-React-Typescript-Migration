@@ -16,7 +16,7 @@ const ResignationViewList = (): JSX.Element => {
     <>
       <CForm>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-4 col-form-label text-end p-1">
             Status:
           </CFormLabel>
           <CCol sm={3}>
@@ -24,7 +24,7 @@ const ResignationViewList = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-4 col-form-label text-end p-1">
             As per company policy your relieving date:
           </CFormLabel>
           <CCol sm={3}>
