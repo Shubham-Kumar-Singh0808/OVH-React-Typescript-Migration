@@ -220,6 +220,10 @@ const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
 
+const LeaveApprovals = React.lazy(
+  () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -488,6 +492,11 @@ const routes = [
     path: '/subCategoryList',
     name: 'Ticket Configuration',
     component: TicketConfiguration,
+  },
+  {
+    path: '/leaveApprovals',
+    name: 'Leave Approvals',
+    component: LeaveApprovals,
   },
 ]
 

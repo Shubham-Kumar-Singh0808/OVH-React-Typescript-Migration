@@ -72,6 +72,7 @@ import { ticketConfigurationService } from './Settings/TicketConfiguration/ticke
 import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -148,4 +149,5 @@ export const reduxServices = {
   searchEmployee: employeeSearchService,
   ticketConfiguration: ticketConfigurationService,
   appraisalConfigurations: appraisalCycleService,
+  leaveApprovals: leaveApprovalsService,
 }
