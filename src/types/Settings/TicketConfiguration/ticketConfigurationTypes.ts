@@ -50,6 +50,7 @@ export type TicketConfigurationState = {
   selectedDepartment: string
   listSize: number
   ticketHistoryDetails: TicketHistoryResponse
+  addSubCategoryDetails: AddSubCategoryDetails
   toggle: string
   isLoading: LoadingState
   error: ValidationError
@@ -133,4 +134,13 @@ export type TicketHistory = {
 export type TicketHistoryProps = {
   filterName: string
   id: number
+}
+
+export type AddSubCategoryDetails = {
+  categoryId?: string
+  departmentId?: string
+  estimatedTime?: string
+  levelOfHierarchy?: string | number
+  subCategoryName?: string
+  workFlow?: boolean
 }

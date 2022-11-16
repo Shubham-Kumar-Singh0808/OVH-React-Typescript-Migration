@@ -1,4 +1,5 @@
 import {
+  AddSubCategoryDetails,
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
   TicketConfigurationSubCategories,
@@ -611,4 +612,13 @@ export const mockTicketHistory: TicketHistoryResponse = {
       oldAccessEndDate: null,
     },
   ],
+}
+
+export const mockAddSubCategory: AddSubCategoryDetails = {
+  categoryId: '11',
+  departmentId: '2',
+  estimatedTime: '1.00',
+  levelOfHierarchy: 1,
+  subCategoryName: 'Pencil',
+  workFlow: true,
 }
