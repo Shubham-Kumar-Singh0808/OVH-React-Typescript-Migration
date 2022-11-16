@@ -384,10 +384,10 @@ const EditConfiguration = (): JSX.Element => {
             >
               Active:
             </CFormLabel>
-            <CCol sm={2} md={1}>
+            <CCol sm={3}>
               <CFormCheck
                 data-testid="active"
-                className="mt-1"
+                className="mt-2 sh-hover-handSymbol"
                 type="radio"
                 name="activeState"
                 id="yes"
@@ -397,10 +397,8 @@ const EditConfiguration = (): JSX.Element => {
                 checked={isActive}
                 onChange={onChangeInputHandler}
               />
-            </CCol>
-            <CCol sm={2} md={1}>
               <CFormCheck
-                className="mt-1"
+                className="mt-2 sh-hover-handSymbol"
                 type="radio"
                 name="activeState"
                 id="no"
