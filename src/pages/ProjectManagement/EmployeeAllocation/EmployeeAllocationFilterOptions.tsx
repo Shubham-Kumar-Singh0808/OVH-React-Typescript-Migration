@@ -146,6 +146,7 @@ const EmployeeAllocationFilterOptions = ({
         technology: '',
       }),
     )
+    setIsIconVisible(false)
   }
 
   const handleSearch = () => {

@@ -139,20 +139,6 @@ const EmployeeAllocationEntryTable = (props: {
           />,
         ),
       )
-      dispatch(
-        reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
-          Billingtype: billingStatus,
-          EmployeeStatus: '',
-          dateSelection: Select,
-          departmentNames: [],
-          employeeName: '',
-          endIndex: 20,
-          enddate: '',
-          firstIndex: 0,
-          startdate: '',
-          technology: '',
-        }),
-      )
     }
   }
 
