@@ -85,6 +85,7 @@ import submitViewResignationReducer from './reducers/Separation/SubmitViewResign
 import addConfigurationReducer from './reducers/Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
+import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -170,6 +171,7 @@ export const allReducers = {
   submitViewResignation: submitViewResignationReducer,
   addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
+  leaveApprovals: leaveApprovalsReducer,
   // add your slice reducers here
 }
 

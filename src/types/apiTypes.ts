@@ -475,3 +475,12 @@ export interface SubmitResignationApi extends ApiBase {
   getEmployeeResg: string
   revokeResignation: string
 }
+
+export interface LeaveApprovalsApi extends ApiBase {
+  getEmployees: string
+  getEmployeeLeaves: string
+  getSearchEmployees: string
+  checkProjectManagerExits: string
+  leaveApprove: string
+  leaveReject: string
+}
