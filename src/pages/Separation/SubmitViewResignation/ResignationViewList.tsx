@@ -25,7 +25,7 @@ const ResignationViewList = (): JSX.Element => {
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-            Employee Name:
+            As per company policy your relieving date:
           </CFormLabel>
           <CCol sm={3}>
             <p className="mb-0">{getResignationViewResponse?.relievingDate}</p>

@@ -161,7 +161,7 @@ const SubmitResignationFilterOptions = ({
   return (
     <CForm>
       <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-18">
           Employee ID:
         </CFormLabel>
         <CCol sm={3}>
@@ -169,7 +169,7 @@ const SubmitResignationFilterOptions = ({
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-18">
           Employee Name:
         </CFormLabel>
         <CCol sm={3}>
@@ -177,7 +177,7 @@ const SubmitResignationFilterOptions = ({
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-1 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-18">
           Resignation Date:
         </CFormLabel>
         <CCol sm={3}>
