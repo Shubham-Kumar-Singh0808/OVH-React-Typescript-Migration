@@ -13,6 +13,7 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -147,13 +148,15 @@ const AppraisalConfigurationsTable = ({
                           </CButton>
                         </CTooltip>
                         <CTooltip content="Assign Template">
-                          <CButton
-                            size="sm"
-                            className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer button"
-                            disabled={appraisalCycle.cycleStartedFlag}
-                          >
-                            <i className="fa fa-plus" aria-hidden="true"></i>
-                          </CButton>
+                          <Link to={`/assignTemplate/${appraisalCycle.id}`}>
+                            <CButton
+                              size="sm"
+                              className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer button"
+                              disabled={appraisalCycle.cycleStartedFlag}
+                            >
+                              <i className="fa fa-plus" aria-hidden="true"></i>
+                            </CButton>
+                          </Link>
                         </CTooltip>
                       </>
                     )}

@@ -8,6 +8,7 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import AssignTemplateTable from './AssignTemplateTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
@@ -43,13 +44,15 @@ const AssignTemplate = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-button"
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
+            <Link to={`/appraisalCycle`}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
         <CForm>

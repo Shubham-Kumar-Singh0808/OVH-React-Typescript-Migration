@@ -220,7 +220,6 @@ const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
 
-
 const AssignTemplate = React.lazy(
   () => import('./pages/Settings/Configurations/AssignTemplate'),
 )
@@ -487,6 +486,16 @@ const routes = [
     path: '/roomList',
     name: 'RoomList',
     component: RoomList,
+  },
+  {
+    path: '/subCategoryList',
+    name: 'Ticket Configuration',
+    component: TicketConfiguration,
+  },
+  {
+    path: '/assignTemplate/:cycleId',
+    name: 'Assign Template',
+    component: AssignTemplate,
   },
 ]
 
