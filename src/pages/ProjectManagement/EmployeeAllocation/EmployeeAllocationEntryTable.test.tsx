@@ -49,4 +49,7 @@ describe('Employee Allocation Entry Table Component Testing', () => {
     userEvent.click(editButton[0])
     expect(editButton[0]).toBeInTheDocument()
   })
+  test('should render with number of records  ', () => {
+    expect(screen.getByText('No Records Found...')).toBeInTheDocument()
+  })
 })
