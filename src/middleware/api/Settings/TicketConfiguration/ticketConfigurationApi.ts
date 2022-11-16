@@ -4,7 +4,9 @@ import {
   useAxios,
 } from '../../../../utils/apiUtils'
 import {
+  AddCategory,
   AddSubCategoryDetails,
+  Category,
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
   TicketConfigurationSubCategories,
@@ -111,6 +113,55 @@ const addSubCategory = async (
   return response.data
 }
 
+const getAllCategory = async (): Promise<Category[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketConfigurationApiConfig.getAllCategory,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addCategory = async (
+  newCategoryDetails: AddCategory,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketConfigurationApiConfig.addCategory,
+    method: AllowedHttpMethods.post,
+    data: newCategoryDetails,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateCategory = async (
+  updateCategoryDetails: Category,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketConfigurationApiConfig.updateCategory,
+    method: AllowedHttpMethods.put,
+    data: updateCategoryDetails,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deleteCategory = async (
+  categoryId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketConfigurationApiConfig.deleteCategory,
+    method: AllowedHttpMethods.delete,
+    params: {
+      categoryId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ticketConfigurationApi = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
@@ -119,6 +170,10 @@ const ticketConfigurationApi = {
   deleteSubCategory,
   ticketHistory,
   addSubCategory,
+  getAllCategory,
+  addCategory,
+  updateCategory,
+  deleteCategory,
 }
 
 export default ticketConfigurationApi
