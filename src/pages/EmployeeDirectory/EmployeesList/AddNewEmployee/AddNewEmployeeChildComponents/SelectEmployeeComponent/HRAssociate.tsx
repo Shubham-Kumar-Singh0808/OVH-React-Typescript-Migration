@@ -17,11 +17,6 @@ const HRAssociate = ({
 }: HrDataProps): JSX.Element => {
   const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>()
 
-  const onChangeHRAssociate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAutoCompleteTarget(e.target.value)
-    if (e.target.value === '') onSelectHRAssociate({} as GetHRAssociate)
-  }
-
   const onHandleSelectHRAssociate = (fullName: string) => {
     setAutoCompleteTarget(fullName)
     const managerName = hrDataList.find((data) => data.fullName === fullName)
