@@ -34,7 +34,7 @@ const getDesignationId = createAsyncThunk(
   },
 )
 
-const getNewCycleId = createAsyncThunk(
+const getCycleId = createAsyncThunk(
   'assignTemplate/getCycleId',
   async (newCycleID: number, thunkApi) => {
     try {
@@ -104,8 +104,11 @@ const assignTemplateSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(getAllEmpDepartmentNames.fulfilled, getDesignationId.fulfilled),
-        (state) => {
+        (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
+          state.empDepartments = action.payload as getEmpDepartments[]
+          state.designationDeptIds =
+            action.payload as unknown as getDepartmentNames[]
         },
       )
   },
@@ -123,7 +126,7 @@ const isLoading = (state: RootState): LoadingState =>
 const appraisalCycleThunk = {
   getAllEmpDepartmentNames,
   getDesignationId,
-  getNewCycleId,
+  getCycleId,
   getDesignationWiseKRAs,
   getAppraisalUnderKra,
 }

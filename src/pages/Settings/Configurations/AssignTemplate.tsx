@@ -28,7 +28,7 @@ const AssignTemplate = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const departmentName = useTypedSelector(
-    reduxServices.assignTemplate.selectors.departmentID,
+    reduxServices.assignTemplate.selectors.empDepartmentNames,
   )
 
   const appraisalCycleName = useTypedSelector(
@@ -44,10 +44,11 @@ const AssignTemplate = (): JSX.Element => {
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(
-      reduxServices.assignTemplate.getDesignationId(Number(selectDepartment)),
-    )
-  }, [dispatch])
+    if (selectDepartment)
+      dispatch(
+        reduxServices.assignTemplate.getDesignationId(Number(selectDepartment)),
+      )
+  }, [dispatch, selectDepartment])
 
   return (
     <>
@@ -84,7 +85,7 @@ const AssignTemplate = (): JSX.Element => {
                 type="text"
                 id="appraisalTitle"
                 size="sm"
-                name="appraisalTitle"
+                name="name"
               />
             </CCol>
           </CRow>
@@ -144,11 +145,15 @@ const AssignTemplate = (): JSX.Element => {
                 }}
               >
                 <option value={''}>Select Department</option>
-                {departmentName.map((department, index) => (
-                  <option key={index} value={department.departmentId}>
-                    {department.departmentName}
-                  </option>
-                ))}
+                {departmentName &&
+                  departmentName?.map((department) => (
+                    <option
+                      key={department.departmentId}
+                      value={department.departmentId}
+                    >
+                      {department.departmentName}
+                    </option>
+                  ))}
               </CFormSelect>
             </CCol>
           </CRow>
