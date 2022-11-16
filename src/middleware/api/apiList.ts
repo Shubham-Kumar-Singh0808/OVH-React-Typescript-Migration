@@ -64,6 +64,7 @@ import {
   RoomListApi,
   AddConfigurationsApi,
   TicketConfigurationApi,
+  LeaveApprovalsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -565,4 +566,13 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
   ticketHistory: apiPrefix + '/supportManagement/getAudit',
   addSubCategory: apiPrefix + '/supportManagement/addSubCategory',
+}
+
+export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
+  getEmployees: apiPrefix + '/managerAppraisalController/getEmployees',
+  getEmployeeLeaves: apiPrefix + '/leave/bioAdminManager/employeeLeaves',
+  getSearchEmployees: apiPrefix + '/leave/bioAdminManager/searchEmployees',
+  checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
+  leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
+  leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
 }

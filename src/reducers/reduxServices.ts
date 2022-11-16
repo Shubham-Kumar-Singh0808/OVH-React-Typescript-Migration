@@ -74,6 +74,7 @@ import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roo
 import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
+import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -152,4 +153,5 @@ export const reduxServices = {
   appraisalConfigurations: appraisalCycleService,
   addConfigurations: addConfigurationService,
   projectReport: projectReportsService,
+  leaveApprovals: leaveApprovalsService,
 }

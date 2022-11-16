@@ -84,6 +84,7 @@ import appraisalConfigurationsReducer from './reducers/Settings/Configurations/a
 import addConfigurationReducer from './reducers/Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
+import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -168,6 +169,7 @@ export const allReducers = {
   appraisalConfigurations: appraisalConfigurationsReducer,
   addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
+  leaveApprovals: leaveApprovalsReducer,
   // add your slice reducers here
 }
 
