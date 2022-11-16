@@ -4,6 +4,7 @@ import ResignationView from './ResignationView'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const SubmitResignation = (): JSX.Element => {
+  const [primaryReason, setPrimaryReason] = useState<string>('')
   const [toggle, setToggle] = useState('')
   return (
     <>
@@ -15,7 +16,11 @@ const SubmitResignation = (): JSX.Element => {
             CBodyClassName="ps-0 pe-0"
             CFooterClassName="d-none"
           >
-            <SubmitResignationFilterOptions setToggle={setToggle} />
+            <SubmitResignationFilterOptions
+              setToggle={setToggle}
+              primaryReason={primaryReason}
+              setPrimaryReason={setPrimaryReason}
+            />
           </OCard>
         </>
       )}

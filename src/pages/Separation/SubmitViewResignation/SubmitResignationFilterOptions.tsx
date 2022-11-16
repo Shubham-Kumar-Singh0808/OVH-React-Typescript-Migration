@@ -19,10 +19,13 @@ import OToast from '../../../components/ReusableComponent/OToast'
 
 const SubmitResignationFilterOptions = ({
   setToggle,
+  primaryReason,
+  setPrimaryReason,
 }: {
   setToggle: (value: string) => void
+  primaryReason: string
+  setPrimaryReason: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
-  const [primaryReason, setPrimaryReason] = useState<string>('')
   const [otherReason, setOtherReason] = useState<string>('')
   const initialSubmitResignation = {} as SubmitResignationTypes
   const [submitResignation, setSubmitResignation] = useState(
@@ -215,7 +218,7 @@ const SubmitResignationFilterOptions = ({
               id="otherReason"
               name="otherReason"
               placeholder="Enter reason"
-              data-testid="person-name"
+              data-testid="other-reason"
               value={otherReason}
               onChange={(e) => {
                 setOtherReason(e.target.value)

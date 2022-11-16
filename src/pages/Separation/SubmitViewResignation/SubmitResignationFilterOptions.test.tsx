@@ -7,16 +7,24 @@ import { mockSeparationFormResponse } from '../../../test/data/submitViewResigna
 import { render, screen } from '../../../test/testUtils'
 
 const mockSetToggle = jest.fn()
+const mockSetPrimaryReason = jest.fn()
 describe('Submit view resignation filter options Component Testing', () => {
   describe('should render Submit view resignation filter options with data', () => {
     beforeEach(() => {
-      render(<SubmitResignationFilterOptions setToggle={mockSetToggle} />, {
-        preloadedState: {
-          submitViewResignation: {
-            getSeparationFormResponse: mockSeparationFormResponse,
+      render(
+        <SubmitResignationFilterOptions
+          setToggle={mockSetToggle}
+          primaryReason={'4'}
+          setPrimaryReason={mockSetPrimaryReason}
+        />,
+        {
+          preloadedState: {
+            submitViewResignation: {
+              getSeparationFormResponse: mockSeparationFormResponse,
+            },
           },
         },
-      })
+      )
     })
     screen.debug()
     test('should render with data ', () => {
@@ -26,7 +34,12 @@ describe('Submit view resignation filter options Component Testing', () => {
 
       const primaryReasonSelect = screen.getByTestId('select-primaryReason')
       userEvent.selectOptions(primaryReasonSelect, ['Relocation'])
-      expect(primaryReasonSelect).toHaveValue('2')
+      expect(primaryReasonSelect).toHaveValue('4')
+
+      const subject = screen.getByTestId('other-reason')
+      userEvent.type(subject, 'testing')
+      expect(subject).toHaveValue('testing')
+
       const submitBtnElement = screen.getByTestId('submit-btn')
       expect(submitBtnElement).toBeInTheDocument()
       userEvent.click(submitBtnElement)
