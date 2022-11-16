@@ -81,9 +81,11 @@ import addRoomList from './reducers/ConferenceRoomBooking/NewBooking/RoomList/ro
 import employeeProfileSearchReducer from './reducers/Dashboard/searchEmployeeSlice'
 import ticketConfigurationReducer from './reducers/Settings/TicketConfiguration/ticketConfigurationSlice'
 import appraisalConfigurationsReducer from './reducers/Settings/Configurations/appraisalConfigurationsSlice'
+import submitViewResignationReducer from './reducers/Separation/SubmitViewResignation/submitResignationSlice'
 import addConfigurationReducer from './reducers/Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
+import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -166,8 +168,10 @@ export const allReducers = {
   dashboardEmployeeSearch: employeeProfileSearchReducer,
   ticketConfiguration: ticketConfigurationReducer,
   appraisalConfigurations: appraisalConfigurationsReducer,
+  submitViewResignation: submitViewResignationReducer,
   addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
+  leaveApprovals: leaveApprovalsReducer,
   // add your slice reducers here
 }
 
