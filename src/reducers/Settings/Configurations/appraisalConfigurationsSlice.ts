@@ -48,7 +48,7 @@ const updateAppraisalCycle = createAsyncThunk(
   },
 )
 
-const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
+export const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
   appraisalCycle: [],
   editAppraisalCycle: {} as getCycle,
   isLoading: ApiLoadingState.idle,
@@ -91,7 +91,7 @@ const appraisalCycleSlice = createSlice({
         isAnyOf(getAllAppraisalCycleData.fulfilled),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.appraisalCycle = action.payload
+          state.appraisalCycle = action.payload as getAppraisalCycle[]
         },
       )
   },
