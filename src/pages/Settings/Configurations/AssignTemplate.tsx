@@ -18,6 +18,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 const AssignTemplate = (): JSX.Element => {
   const [selectDepartment, setSelectDepartment] = useState('')
   const [selectDesignation, setSelectDesignation] = useState('')
+  const [selectPreviousCycle, setSelectPreviousCycle] = useState('')
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -26,12 +27,26 @@ const AssignTemplate = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
 
-  const designationId = useTypedSelector(
+  const departmentName = useTypedSelector(
     reduxServices.assignTemplate.selectors.departmentID,
   )
 
+  const appraisalCycleName = useTypedSelector(
+    reduxServices.appraisalConfigurations.selectors.appraisalCycleNames,
+  )
+
   useEffect(() => {
-    // dispatch(reduxServices.assignTemplate.getDesignationDeptId())
+    dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(reduxServices.assignTemplate.getAllEmpDepartmentNames())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.assignTemplate.getDesignationId(Number(selectDepartment)),
+    )
   }, [dispatch])
 
   return (
@@ -73,7 +88,40 @@ const AssignTemplate = (): JSX.Element => {
               />
             </CCol>
           </CRow>
-
+          <CRow className="mt-4 mb-4">
+            <CCol sm={3} className="text-end">
+              <CFormLabel className="mt-1">Copy from previous cycle</CFormLabel>
+            </CCol>
+            <CCol sm={3}>
+              <CFormSelect
+                aria-label="Default select example"
+                size="sm"
+                id="previousCycle"
+                data-testid="form-select1"
+                name="previousCycle"
+                value={selectPreviousCycle}
+                onChange={(e) => {
+                  setSelectPreviousCycle(e.target.value)
+                }}
+              >
+                <option value={''}>Select Appraisal Title</option>
+                {appraisalCycleName.map((cycle, index) => (
+                  <option key={index} value={cycle.id}>
+                    {cycle.name}
+                  </option>
+                ))}
+              </CFormSelect>
+            </CCol>
+            <CCol sm={6}>
+              <CButton
+                data-testid="save-btn"
+                className="btn-ovh me-1 text-white"
+                color="success"
+              >
+                Copy
+              </CButton>
+            </CCol>
+          </CRow>
           <CRow className="mt-4 mb-4">
             <CCol sm={3} className="text-end">
               <CFormLabel className="mt-1">
@@ -96,7 +144,7 @@ const AssignTemplate = (): JSX.Element => {
                 }}
               >
                 <option value={''}>Select Department</option>
-                {designationId.map((department, index) => (
+                {departmentName.map((department, index) => (
                   <option key={index} value={department.departmentId}>
                     {department.departmentName}
                   </option>

@@ -7,7 +7,7 @@ export type getEmpDepartments = {
   allocationSupportFlag: boolean
 }
 
-export type getdesignationdeptId = {
+export type getDepartmentNames = {
   id: number
   name: string
   code: null
@@ -31,7 +31,7 @@ export type getDesignationWiseKRA = {
 
 export type AssignTemplateSliceState = {
   empDepartments: getEmpDepartments[]
-  designationdeptIds: getdesignationdeptId[]
+  designationDeptIds: getDepartmentNames[]
   designationWiseKRA: getDesignationWiseKRA[]
   isLoading: ApiLoadingState
 }

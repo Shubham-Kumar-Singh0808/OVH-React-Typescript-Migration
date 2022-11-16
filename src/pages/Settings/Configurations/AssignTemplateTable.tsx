@@ -19,11 +19,13 @@ const AssignTemplateTable = (): JSX.Element => {
         <CCol xs={12} sm={3}>
           <CInputGroup className="global-search me-0 sh-client-search">
             <CFormInput
+              className="form-control-not-allowed"
               placeholder="Multiple Search"
               aria-label="Multiple Search"
               aria-describedby="button-addon2"
               data-testid="searchField"
               value={searchInput}
+              disabled={true}
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
@@ -54,6 +56,17 @@ const AssignTemplateTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
       </CTable>
+      <CRow>
+        <CCol md={{ span: 6, offset: 3 }}>
+          <CButton
+            data-testid="save-btn"
+            className="btn-ovh me-1 text-white"
+            color="success"
+          >
+            Save
+          </CButton>
+        </CCol>
+      </CRow>
     </>
   )
 }

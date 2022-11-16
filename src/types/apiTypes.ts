@@ -459,8 +459,8 @@ export interface RoomListApi extends ApiBase {
 
 export interface assignTemplateApi extends ApiBase {
   getEmpDepartments: string
-  designationdeptId: string
-  alreadyExistnewCycleId: string
+  designationDeptId: string
+  alreadyExistNewCycleId: string
   getDesignationWiseKRAs: string
   getDesignationNumber: string
 }

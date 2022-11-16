@@ -6,7 +6,7 @@ import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   AssignTemplateSliceState,
-  getdesignationdeptId,
+  getDepartmentNames,
   getEmpDepartments,
 } from '../../../types/Settings/Configurations/assignTemplateTypes'
 
@@ -22,7 +22,7 @@ const getAllEmpDepartmentNames = createAsyncThunk(
   },
 )
 
-const getDesignationDeptId = createAsyncThunk(
+const getDesignationId = createAsyncThunk(
   'assignTemplate/getDesignationId',
   async (deptId: number, thunkApi) => {
     try {
@@ -34,7 +34,7 @@ const getDesignationDeptId = createAsyncThunk(
   },
 )
 
-const getnewCycleId = createAsyncThunk(
+const getNewCycleId = createAsyncThunk(
   'assignTemplate/getCycleId',
   async (newCycleID: number, thunkApi) => {
     try {
@@ -70,7 +70,7 @@ const getDesignationWiseKRAs = createAsyncThunk(
   },
 )
 
-const getAppraiselUnderKra = createAsyncThunk(
+const getAppraisalUnderKra = createAsyncThunk(
   'assignTemplate/getUnderKras',
   async (_, thunkApi) => {
     try {
@@ -84,7 +84,7 @@ const getAppraiselUnderKra = createAsyncThunk(
 
 const initialAssignTemplateSliceState: AssignTemplateSliceState = {
   empDepartments: [],
-  designationdeptIds: [],
+  designationDeptIds: [],
   designationWiseKRA: [],
   isLoading: ApiLoadingState.idle,
 }
@@ -96,14 +96,16 @@ const assignTemplateSlice = createSlice({
   extraReducers(builder) {
     builder
 
-      .addMatcher(isAnyOf(getAllEmpDepartmentNames.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
       .addMatcher(
-        isAnyOf(getAllEmpDepartmentNames.fulfilled),
-        (state, action) => {
+        isAnyOf(getAllEmpDepartmentNames.pending, getDesignationId.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(getAllEmpDepartmentNames.fulfilled, getDesignationId.fulfilled),
+        (state) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.empDepartments = action.payload as getEmpDepartments[]
         },
       )
   },
@@ -112,18 +114,18 @@ const assignTemplateSlice = createSlice({
 const empDepartmentNames = (state: RootState): getEmpDepartments[] =>
   state.assignTemplate.empDepartments
 
-const departmentID = (state: RootState): getdesignationdeptId[] =>
-  state.assignTemplate.designationdeptIds
+const departmentID = (state: RootState): getDepartmentNames[] =>
+  state.assignTemplate.designationDeptIds
 
 const isLoading = (state: RootState): LoadingState =>
   state.assignTemplate.isLoading
 
 const appraisalCycleThunk = {
   getAllEmpDepartmentNames,
-  getDesignationDeptId,
-  getnewCycleId,
+  getDesignationId,
+  getNewCycleId,
   getDesignationWiseKRAs,
-  getAppraiselUnderKra,
+  getAppraisalUnderKra,
 }
 
 const assignTemplateSelectors = {

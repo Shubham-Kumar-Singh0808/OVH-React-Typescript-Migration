@@ -556,8 +556,8 @@ export const roomListApiConfig: RoomListApi = {
 
 export const assignTemplateApiConfig: assignTemplateApi = {
   getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
-  designationdeptId: apiPrefix + '/kra/designation',
-  alreadyExistnewCycleId: apiPrefix + '/appraisal/isAlreadyExist',
+  designationDeptId: apiPrefix + '/kra/designation',
+  alreadyExistNewCycleId: apiPrefix + '/appraisal/isAlreadyExist',
   getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
   getDesignationNumber: apiPrefix + '/appraisal/underKras',
 }

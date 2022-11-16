@@ -1,4 +1,7 @@
-import { getEmpDepartments } from '../../../../types/Settings/Configurations/assignTemplateTypes'
+import {
+  getDepartmentNames,
+  getEmpDepartments,
+} from '../../../../types/Settings/Configurations/assignTemplateTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -15,9 +18,9 @@ const getAllEmpDepartments = async (): Promise<getEmpDepartments[]> => {
   return response.data
 }
 
-const getDesignationId = async (id: number): Promise<number> => {
+const getDesignationId = async (id: number): Promise<getDepartmentNames> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: assignTemplateApiConfig.designationdeptId,
+    url: assignTemplateApiConfig.designationDeptId,
     method: AllowedHttpMethods.get,
     params: {
       deptId: id,
@@ -29,7 +32,7 @@ const getDesignationId = async (id: number): Promise<number> => {
 
 const getCycleId = async (newId: number): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: assignTemplateApiConfig.alreadyExistnewCycleId,
+    url: assignTemplateApiConfig.alreadyExistNewCycleId,
     method: AllowedHttpMethods.get,
     params: {
       newCycleId: newId,
@@ -47,7 +50,7 @@ const getDesignationWiseKRAs = async ({
   designationId: number
 }): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: assignTemplateApiConfig.alreadyExistnewCycleId,
+    url: assignTemplateApiConfig.alreadyExistNewCycleId,
     method: AllowedHttpMethods.get,
     params: {
       departmentID: departmentId,
