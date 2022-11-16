@@ -76,9 +76,16 @@ const AddNewSubCategory = (): JSX.Element => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'subCategoryName') {
-      const subCategoryName = value.replace(/[^a-z\s]$/gi, '')
+      const subCategoryName = value
+        .replace(/^\s*/, '')
+        .replace(/[^a-z\s]/gi, '')
       setAddNewSubCategory((prevState) => {
         return { ...prevState, ...{ [name]: subCategoryName } }
+      })
+    } else if (name === 'levelOfHierarchy') {
+      const level = value.replace(estimatedTimeRegexReplace, '')
+      setAddNewSubCategory((prevState) => {
+        return { ...prevState, ...{ [name]: level } }
       })
     } else {
       setAddNewSubCategory((prevState) => {

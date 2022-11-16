@@ -552,4 +552,8 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
   ticketHistory: apiPrefix + '/supportManagement/getAudit',
   addSubCategory: apiPrefix + '/supportManagement/addSubCategory',
+  getAllCategory: apiPrefix + '/supportManagement/getAllCategoryList',
+  deleteCategory: apiPrefix + '/supportManagement/deleteCategory',
+  addCategory: apiPrefix + '/supportManagement/addCategory',
+  updateCategory: apiPrefix + '/supportManagement/updateCategory',
 }

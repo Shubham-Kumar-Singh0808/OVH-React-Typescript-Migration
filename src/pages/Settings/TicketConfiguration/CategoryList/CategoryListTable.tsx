@@ -1,6 +1,8 @@
 import {
   CButton,
   CCol,
+  CFormCheck,
+  CFormInput,
   CRow,
   CTable,
   CTableBody,
@@ -8,10 +10,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
-import React, { useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
@@ -20,174 +21,301 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { currentPageData } from '../../../../utils/paginationUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
+import { Category } from '../../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
+import { TextDanger } from '../../../../constant/ClassName'
 
 const CategoryListTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [
-    toDeleteQualificationCategoryName,
-    setToDeleteQualificationCategoryName,
-  ] = useState('')
-  const [toDeleteQualificationCategoryId, setToDeleteQualificationCategoryId] =
-    useState(0)
+  const [toDeleteTicketCategoryName, setToDeleteTicketCategoryName] =
+    useState('')
+  const [toDeleteTicketCategoryId, setToDeleteTicketCategoryId] = useState(0)
+  const [selectCategoryId, setSelectCategoryId] = useState<number>(0)
+  const [isCategoryDetailsEdit, setIsCategoryDetailsEdit] =
+    useState<boolean>(false)
+  const [isCategoryNameExist, setIsCategoryNameExist] = useState('')
+  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState<boolean>(false)
+  const [editCategory, setEditCategory] = useState<Category>({
+    categoryId: 0,
+    categoryName: '0',
+    departmentId: 0,
+    departmentName: '',
+    mealType: false,
+  })
+  const dispatch = useAppDispatch()
+  const ticketCategories = useTypedSelector(
+    reduxServices.ticketConfiguration.selectors.categoryList,
+  )
+  const categoryList = useTypedSelector(
+    reduxServices.ticketConfiguration.selectors.categoryList,
+  )
+  const pageFromState = useTypedSelector(
+    reduxServices.ticketConfiguration.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.ticketConfiguration.selectors.pageSizeFromState,
+  )
+  const tableHeaderCellPropsCategoryName = {
+    width: '50%',
+    scope: 'col',
+  }
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(ticketCategories?.length, pageSizeFromState, pageFromState)
 
-  //   const qualificationCategories = useTypedSelector(
-  //     reduxServices.employeeQualificationCategory.selectors
-  //       .qualificationCategories,
-  //   )
+  const handleCategoryPageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
 
-  //   const pageFromState = useTypedSelector(
-  //     reduxServices.employeeQualificationCategory.selectors.pageFromState,
-  //   )
-  //   const pageSizeFromState = useTypedSelector(
-  //     reduxServices.employeeQualificationCategory.selectors.pageSizeFromState,
-  //   )
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
 
-  //   const dispatch = useAppDispatch()
+  const handleShowCategoryDeleteModal = (
+    categoryName: string,
+    categoryId: number,
+  ) => {
+    setToDeleteTicketCategoryName(categoryName)
+    setToDeleteTicketCategoryId(categoryId)
+    setIsDeleteModalVisible(true)
+  }
 
-  //   const {
-  //     paginationRange,
-  //     setPageSize,
-  //     setCurrentPage,
-  //     currentPage,
-  //     pageSize,
-  //   } = usePagination(
-  //     qualificationCategories.length,
-  //     pageSizeFromState,
-  //     pageFromState,
-  //   )
+  const actionMapping = {
+    updated: 'updated',
+    deleted: 'deleted',
+  }
+  const getToastMessage = (action: string) => {
+    return (
+      <OToast
+        toastColor="success"
+        toastMessage={`Category ${action} successfully`}
+      />
+    )
+  }
+  const categoryNameAlreadyExists = (name: string) => {
+    return categoryList?.find((category) => {
+      return category.categoryName.toLowerCase() === name.toLowerCase()
+    })
+  }
+  const handleConfirmDelete = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteCategoryResultAction = await dispatch(
+      reduxServices.ticketConfiguration.deleteCategory(
+        toDeleteTicketCategoryId,
+      ),
+    )
+    if (
+      reduxServices.ticketConfiguration.deleteCategory.fulfilled.match(
+        deleteCategoryResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.deleted),
+        ),
+      )
+      dispatch(reduxServices.ticketConfiguration.getAllCategory())
+    }
+  }
 
-  //   const handlePageSizeSelectChange = (
-  //     event: React.ChangeEvent<HTMLSelectElement>,
-  //   ) => {
-  //     setPageSize(Number(event.target.value))
-  //     setCurrentPage(1)
-  //   }
+  const currentPageItems = useMemo(() => {
+    if (ticketCategories?.length || undefined) {
+      currentPageData(ticketCategories, currentPage, pageSize)
+    }
+  }, [ticketCategories, currentPage, pageSize])
 
-  //   const getItemNumber = (index: number) => {
-  //     return (currentPage - 1) * pageSize + index + 1
-  //   }
+  const updateCategoryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
+    setEditCategory((prevState) => {
+      return { ...prevState, ...{ [name]: newValue } }
+    })
+    if (categoryNameAlreadyExists(value)) {
+      setIsCategoryNameExist(value)
+    } else {
+      setIsCategoryNameExist('')
+    }
+  }
 
-  //   const handleShowDeleteModal = (
-  //     qualificationCategoryName: string,
-  //     qualificationCategoryId: number,
-  //   ) => {
-  //     setToDeleteQualificationCategoryName(qualificationCategoryName)
-  //     setToDeleteQualificationCategoryId(qualificationCategoryId)
-  //     setIsDeleteModalVisible(true)
-  //   }
+  const editCategoryButtonHandler = (editCategoryData: Category): void => {
+    setIsCategoryDetailsEdit(true)
+    setIsCategoryNameExist('')
+    setSelectCategoryId(editCategoryData.categoryId)
+    setEditCategory({
+      categoryId: editCategoryData.categoryId,
+      categoryName: editCategoryData.categoryName,
+      departmentId: editCategoryData.departmentId,
+      departmentName: editCategoryData.departmentName,
+      mealType: editCategoryData.mealType,
+    })
+  }
+  useEffect(() => {
+    if (editCategory.categoryName && !isCategoryNameExist) {
+      setIsSaveButtonEnabled(true)
+    } else {
+      setIsSaveButtonEnabled(false)
+    }
+  }, [editCategory.categoryName, isCategoryNameExist])
 
-  //   const deleteToastElement = (
-  //     <OToast
-  //       toastColor="success"
-  //       toastMessage="Qualification details deleted successfully."
-  //     />
-  //   )
-
-  //   const alreadyExistToastMessage = (
-  //     <OToast
-  //       toastColor="danger"
-  //       toastMessage="This qualification details are already used in qualification, So you cannot delete."
-  //     />
-  //   )
-  //   const handleConfirmDelete = async (id: number) => {
-  //     setIsDeleteModalVisible(false)
-
-  //     dispatch(reduxServices.category.actions.setCurrentPage(currentPage))
-  //     dispatch(reduxServices.category.actions.setPageSize(pageSize))
-  //     const deleteQualificationCategoryResultAction = await dispatch(
-  //       reduxServices.employeeQualificationCategory.deleteQualificationCategory(
-  //         id,
-  //       ),
-  //     )
-  //     if (
-  //       reduxServices.employeeQualificationCategory.deleteQualificationCategory.fulfilled.match(
-  //         deleteQualificationCategoryResultAction,
-  //       )
-  //     ) {
-  //       dispatch(
-  //         reduxServices.employeeQualificationCategory.getQualificationCategories(),
-  //       )
-  //       dispatch(reduxServices.app.actions.addToast(deleteToastElement))
-  //     } else if (
-  //       reduxServices.employeeQualificationCategory.deleteQualificationCategory.rejected.match(
-  //         deleteQualificationCategoryResultAction,
-  //       ) &&
-  //       deleteQualificationCategoryResultAction.payload === 500
-  //     ) {
-  //       dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
-  //     }
-  //   }
-  //   const currentPageItems = useMemo(
-  //     () => currentPageData(qualificationCategories, currentPage, pageSize),
-  //     [qualificationCategories, currentPage, pageSize],
-  //   )
+  const saveCategoryButtonHandler = async () => {
+    const updateCategoryResultAction = await dispatch(
+      reduxServices.ticketConfiguration.updateCategory(editCategory),
+    )
+    if (
+      reduxServices.ticketConfiguration.updateCategory.fulfilled.match(
+        updateCategoryResultAction,
+      )
+    ) {
+      await dispatch(reduxServices.ticketConfiguration.getAllCategory())
+      setIsCategoryDetailsEdit(false)
+      dispatch(
+        reduxServices.app.actions.addToast(
+          getToastMessage(actionMapping.updated),
+        ),
+      )
+    }
+  }
 
   return (
     <>
-      <CTable striped>
+      <CTable striped align="middle">
         <CTableHead>
           <CTableRow className="align-items-start">
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
             <CTableHeaderCell scope="col">Department Name</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Category Name</CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderCellPropsCategoryName}>
+              Category Name
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Meal Type</CTableHeaderCell>
             <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
-        {/* <CTableBody>
-          {currentPageItems.map((qualificationCategory, index) => {
+        <CTableBody>
+          {ticketCategories?.map((ticketCategory, index) => {
             return (
               <CTableRow key={index}>
                 <CTableHeaderCell scope="row">
                   {getItemNumber(index)}
                 </CTableHeaderCell>
+                <CTableDataCell>{ticketCategory.departmentName}</CTableDataCell>
+                {isCategoryDetailsEdit &&
+                ticketCategory.categoryId === selectCategoryId ? (
+                  <CTableDataCell scope="row">
+                    <CCol sm={12} className="d-flex">
+                      <CFormInput
+                        className="eventType-editInput"
+                        type="text"
+                        id="categoryName"
+                        data-testid="category-name"
+                        size="sm"
+                        name="categoryName"
+                        autoComplete="off"
+                        value={editCategory.categoryName}
+                        onChange={updateCategoryHandler}
+                      />
+                      <CCol sm={7} className="ms-2 mt-1">
+                        {isCategoryNameExist && (
+                          <p
+                            className={TextDanger}
+                            data-testid="categoryName-exist"
+                          >
+                            Category Name Already Exist
+                          </p>
+                        )}
+                      </CCol>
+                    </CCol>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>{ticketCategory.categoryName}</CTableDataCell>
+                )}
                 <CTableDataCell>
-                  {qualificationCategory.qualificationCategory}
+                  <span className="hidden-block sh-tracker-checkbox">
+                    <CFormCheck
+                      className="form-check-input form-select-not-allowed"
+                      name="mealType"
+                      checked={ticketCategory.mealType}
+                      disabled={true}
+                    />
+                  </span>
                 </CTableDataCell>
-                <CTableDataCell>
-                  {qualificationCategory.qualificationName}
-                </CTableDataCell>
-                <CTableDataCell>
-                  <CButton
-                    color="danger"
-                    size="sm"
-                    onClick={() =>
-                      handleShowDeleteModal(
-                        qualificationCategory.qualificationCategory,
-                        qualificationCategory.id as number,
-                      )
-                    }
-                  >
-                    <CIcon className="text-white" icon={cilTrash} />
-                  </CButton>
+                <CTableDataCell scope="row">
+                  {isCategoryDetailsEdit &&
+                  ticketCategory.categoryId === selectCategoryId ? (
+                    <CTooltip content="Save">
+                      <CButton
+                        color="success"
+                        data-testid={`sh-save-btn${index}`}
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        disabled={!isSaveButtonEnabled}
+                        onClick={saveCategoryButtonHandler}
+                      >
+                        <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  ) : (
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="info btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                        data-testid={`cl-edit-btn${index}`}
+                        onClick={() => {
+                          editCategoryButtonHandler({
+                            categoryId: ticketCategory.categoryId,
+                            categoryName: ticketCategory.categoryName,
+                            departmentId: ticketCategory.departmentId,
+                            departmentName: ticketCategory.departmentName,
+                            mealType: ticketCategory.mealType,
+                          })
+                        }}
+                      >
+                        <i className="fa fa-edit" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  )}
+                  <CTooltip content="Delete">
+                    <CButton
+                      color="danger btn-ovh me-1"
+                      className="btn-ovh-employee-list"
+                      onClick={() =>
+                        handleShowCategoryDeleteModal(
+                          ticketCategory.categoryName,
+                          ticketCategory.categoryId,
+                        )
+                      }
+                      data-testid={`cl-delete-btn${index}`}
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTooltip>
                 </CTableDataCell>
               </CTableRow>
             )
           })}
-        </CTableBody> */}
+        </CTableBody>
       </CTable>
-      {/* <CRow>
+      <CRow>
         <CCol xs={4}>
-          <p>
-            <strong>Total Records: {qualificationCategories.length}</strong>
-          </p>
+          <strong>
+            {ticketCategories?.length
+              ? `Total Records: ${ticketCategories.length}`
+              : `No Records Found`}
+          </strong>
         </CCol>
-        {!qualificationCategories.length && (
-          <CCol>
-            <CRow>
-              <h4 className="text-center">No data to display</h4>
-            </CRow>
-          </CCol>
-        )}
         <CCol xs={3}>
-          {qualificationCategories.length > 20 && (
+          {ticketCategories?.length > 20 && (
             <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              handlePageSizeSelectChange={handleCategoryPageSizeSelectChange}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {qualificationCategories.length > 20 && (
+        {ticketCategories?.length > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"
@@ -204,16 +332,18 @@ const CategoryListTable = (): JSX.Element => {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalTitle="Delete Qualification Category"
+        modalTitle="Delete Category"
+        modalBodyClass="mt-0"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
-        confirmButtonAction={() =>
-          handleConfirmDelete(toDeleteQualificationCategoryId)
-        }
+        confirmButtonAction={handleConfirmDelete}
       >
-        {`Are you sure you want to delete this ${toDeleteQualificationCategoryName} Category item?`}
-      </OModal> */}
+        <>
+          Do you really want to delete this{' '}
+          <strong>{toDeleteTicketCategoryName}</strong> Category ?
+        </>
+      </OModal>
     </>
   )
 }

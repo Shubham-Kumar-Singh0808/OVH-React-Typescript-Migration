@@ -133,7 +133,7 @@ const SubCategoryListTable = (
   const paginationComponent =
     subCategoryList?.size > 0 ? (
       <CRow className="mt-3">
-        <CCol md={3} className="pull-left">
+        <CCol xs={4}>
           <strong>{`Total Records: ${subCategoryList.size}`}</strong>
         </CCol>
         <CCol xs={3}>
