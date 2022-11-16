@@ -46,10 +46,24 @@ const updateAppraisalCycle = async (
   return response.data
 }
 
+const validateAppraisalCycle = async (
+  validateCycleDetails: getCycle,
+): Promise<getCycle> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: appraisalConfigurationsApiConfig.validateCycle,
+    method: AllowedHttpMethods.put,
+    data: validateCycleDetails,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const appraisalConfigurationsApi = {
   getAllAppraisalCycle,
   getCycleToEdit,
   updateAppraisalCycle,
+  validateAppraisalCycle,
 }
 
 export default appraisalConfigurationsApi

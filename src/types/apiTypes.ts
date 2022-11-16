@@ -450,6 +450,7 @@ export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
   editAppraisalCycle: string
   updateAppraisalCycle: string
+  validateCycle: string
 }
 export interface AddConfigurationsApi extends ApiBase {
   addAppraisalCycle: string

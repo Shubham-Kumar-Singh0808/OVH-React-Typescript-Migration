@@ -48,6 +48,20 @@ const updateAppraisalCycle = createAsyncThunk(
   },
 )
 
+const validateAppraisalCycle = createAsyncThunk(
+  'appraisalCycle/updateAppraisalCycle',
+  async (validateCycleDetails: getCycle, thunkApi) => {
+    try {
+      return await appraisalConfigurationsApi.validateAppraisalCycle(
+        validateCycleDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
   appraisalCycle: [],
   editAppraisalCycle: {} as getCycle,
@@ -74,17 +88,25 @@ const appraisalCycleSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.editAppraisalCycle = action.payload as getCycle
       })
-      .addCase(updateAppraisalCycle.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
       .addMatcher(
         isAnyOf(
           getAllAppraisalCycleData.pending,
           getCycleToEdit.pending,
           updateAppraisalCycle.pending,
+          validateAppraisalCycle.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getAllAppraisalCycleData.fulfilled,
+          updateAppraisalCycle.fulfilled,
+          validateAppraisalCycle.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
         },
       )
       .addMatcher(
@@ -118,6 +140,7 @@ const appraisalCycleThunk = {
   getAllAppraisalCycle: getAllAppraisalCycleData,
   getCycleToEdit,
   updateAppraisalCycle,
+  validateAppraisalCycle,
 }
 
 const appraisalCycleSelectors = {

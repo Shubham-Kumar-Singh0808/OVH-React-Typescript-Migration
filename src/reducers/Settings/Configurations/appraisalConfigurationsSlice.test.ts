@@ -122,4 +122,42 @@ describe('appraisal Configuration', () => {
       })
     })
   })
+
+  describe('validateAppraisalCycle test', () => {
+    it('Should be able to set isLoading to "loading" if validateAppraisalCycle is pending', () => {
+      const action = {
+        type: appraisalCycleService.validateAppraisalCycle.pending.type,
+      }
+      const state = appraisalConfigurationReducer(
+        initialAppraisalCycleSliceState,
+        action,
+      )
+      expect(state).toEqual({
+        appraisalCycle: [],
+        editAppraisalCycle: {} as getCycle,
+        isLoading: ApiLoadingState.loading,
+        currentPage: 1,
+        pageSize: 20,
+        error: null,
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if validateAppraisalCycle is fulfilled', () => {
+      const action = {
+        type: appraisalCycleService.validateAppraisalCycle.fulfilled.type,
+      }
+      const state = appraisalConfigurationReducer(
+        initialAppraisalCycleSliceState,
+        action,
+      )
+      expect(state).toEqual({
+        appraisalCycle: [],
+        editAppraisalCycle: {} as getCycle,
+        isLoading: ApiLoadingState.succeeded,
+        currentPage: 1,
+        pageSize: 20,
+        error: null,
+      })
+    })
+  })
 })

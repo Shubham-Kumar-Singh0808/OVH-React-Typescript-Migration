@@ -147,10 +147,6 @@ const EditConfiguration = (): JSX.Element => {
     <OToast toastMessage="Cycle name should be unique." toastColor="danger" />
   )
 
-  const selectError = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.selectError,
-  )
-
   const updateAppraisalCycleAction = async () => {
     const prepareObject = {
       ...cycle,
@@ -165,7 +161,11 @@ const EditConfiguration = (): JSX.Element => {
     ) {
       history.push('/appraisalCycle')
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
-    } else if (selectError === 417) {
+    } else if (
+      reduxServices.appraisalConfigurations.validateAppraisalCycle.fulfilled.match(
+        updateAppraisalCycleResultAction,
+      )
+    ) {
       dispatch(reduxServices.app.actions.addToast(updateFailedToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }

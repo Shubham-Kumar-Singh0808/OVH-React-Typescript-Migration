@@ -548,6 +548,7 @@ export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
   getAppraisalCycle: apiPrefix + '/appraisal/cycle',
   editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
   updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
+  validateCycle: apiPrefix + '/appraisal/validateCycle',
 }
 export const addConfigurationsApiConfig: AddConfigurationsApi = {
   addAppraisalCycle: apiPrefix + '/appraisal/cycle',
