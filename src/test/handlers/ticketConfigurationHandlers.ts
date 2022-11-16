@@ -2,6 +2,7 @@ import { rest } from 'msw'
 import { ticketConfigurationApiConfig } from '../../middleware/api/apiList'
 import {
   mockAddSubCategory,
+  mockCategoryList,
   mockDepartments,
   mockTicketConfigurationCategory,
   mockTicketConfigurationSubCategory,
@@ -75,5 +76,22 @@ export const ticketConfigurationHandlers = [
         data: { mockAddSubCategory },
       }),
     )
+  }),
+  //getCategoryList api mock
+  rest.get(ticketConfigurationApiConfig.getAllCategory, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: { mockCategoryList },
+      }),
+    )
+  }),
+  // addNewCategory api mock
+  rest.post(ticketConfigurationApiConfig.addCategory, (_req, res, ctx) => {
+    const addResponse = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(addResponse)
   }),
 ]

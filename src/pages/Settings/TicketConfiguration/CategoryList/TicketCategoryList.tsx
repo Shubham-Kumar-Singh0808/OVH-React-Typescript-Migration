@@ -9,7 +9,7 @@ import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSp
 import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 import OCard from '../../../../components/ReusableComponent/OCard'
 
-const CategoryList = (): JSX.Element => {
+const TicketCategoryList = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const isLoading = useTypedSelector(
@@ -30,34 +30,36 @@ const CategoryList = (): JSX.Element => {
 
   return (
     <>
-      {isLoading !== ApiLoadingState.loading ? (
-        <>
-          <OCard
-            className="mb-4 myprofile-wrapper"
-            title="Category List"
-            CBodyClassName="ps-0 pe-0"
-            CFooterClassName="d-none"
-          >
-            <CRow>
-              <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
-                <CButton color="info btn-ovh me-1" onClick={backButtonHandler}>
-                  <i className="fa fa-arrow-left  me-1"></i>Back
-                </CButton>
-              </CCol>
-              <CCol xs={12}>
-                <AddNewCategory />
-              </CCol>
-              <CCol xs={12}>
-                <CategoryListTable />
-              </CCol>
-            </CRow>
-          </OCard>
-        </>
-      ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
-      )}
+      <OCard
+        className="mb-4 myprofile-wrapper"
+        title="Category List"
+        CBodyClassName="ps-0 pe-0"
+        CFooterClassName="d-none"
+      >
+        <CRow>
+          <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
+            <CButton
+              color="info btn-ovh me-1"
+              data-testid="tc-toggle-back"
+              onClick={backButtonHandler}
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
+          </CCol>
+          <CCol xs={12}>
+            <AddNewCategory />
+          </CCol>
+          {isLoading !== ApiLoadingState.loading ? (
+            <CCol xs={12}>
+              <CategoryListTable />
+            </CCol>
+          ) : (
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          )}
+        </CRow>
+      </OCard>
     </>
   )
 }
 
-export default CategoryList
+export default TicketCategoryList

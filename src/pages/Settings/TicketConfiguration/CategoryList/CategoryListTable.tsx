@@ -12,13 +12,12 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { currentPageData } from '../../../../utils/paginationUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { Category } from '../../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
@@ -55,7 +54,11 @@ const CategoryListTable = (): JSX.Element => {
     reduxServices.ticketConfiguration.selectors.pageSizeFromState,
   )
   const tableHeaderCellPropsCategoryName = {
-    width: '50%',
+    width: '40%',
+    scope: 'col',
+  }
+  const tableHeaderCellPropsDepartmentName = {
+    width: '20%',
     scope: 'col',
   }
   const {
@@ -124,11 +127,11 @@ const CategoryListTable = (): JSX.Element => {
     }
   }
 
-  const currentPageItems = useMemo(() => {
-    if (ticketCategories?.length || undefined) {
-      currentPageData(ticketCategories, currentPage, pageSize)
-    }
-  }, [ticketCategories, currentPage, pageSize])
+  // const currentPageItems = useMemo(() => {
+  //   if (ticketCategories?.length || undefined) {
+  //     currentPageData(ticketCategories, currentPage, pageSize)
+  //   }
+  // }, [ticketCategories, currentPage, pageSize])
 
   const updateCategoryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -192,7 +195,9 @@ const CategoryListTable = (): JSX.Element => {
             <CTableHeaderCell {...tableHeaderCellPropsCategoryName}>
               Category Name
             </CTableHeaderCell>
-            <CTableHeaderCell scope="col">Meal Type</CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderCellPropsDepartmentName}>
+              Meal Type
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
@@ -212,7 +217,7 @@ const CategoryListTable = (): JSX.Element => {
                         className="eventType-editInput"
                         type="text"
                         id="categoryName"
-                        data-testid="category-name"
+                        data-testid="categoryName-input"
                         size="sm"
                         name="categoryName"
                         autoComplete="off"

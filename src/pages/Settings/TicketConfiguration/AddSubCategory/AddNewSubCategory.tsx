@@ -188,11 +188,16 @@ const AddNewSubCategory = (): JSX.Element => {
               >
                 <option value="">Select Department</option>
                 {getDepartments &&
-                  getDepartments?.map((department) => (
-                    <option key={department.id} value={department.id}>
-                      {department.name}
-                    </option>
-                  ))}
+                  getDepartments
+                    ?.slice()
+                    .sort((department1, department2) =>
+                      department1.name.localeCompare(department2.name),
+                    )
+                    ?.map((department) => (
+                      <option key={department.id} value={department.id}>
+                        {department.name}
+                      </option>
+                    ))}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -216,14 +221,19 @@ const AddNewSubCategory = (): JSX.Element => {
               >
                 <option value="">Select Category</option>
                 {getCategories &&
-                  getCategories?.map((category) => (
-                    <option
-                      key={category.categoryId}
-                      value={category.categoryId}
-                    >
-                      {category.categoryName}
-                    </option>
-                  ))}
+                  getCategories
+                    ?.slice()
+                    .sort((catg1, catg2) =>
+                      catg1.categoryName.localeCompare(catg2.categoryName),
+                    )
+                    ?.map((category) => (
+                      <option
+                        key={category.categoryId}
+                        value={category.categoryId}
+                      >
+                        {category.categoryName}
+                      </option>
+                    ))}
               </CFormSelect>
             </CCol>
             <CCol className="col-sm-3">

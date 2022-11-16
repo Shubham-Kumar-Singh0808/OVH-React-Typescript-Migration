@@ -3,7 +3,7 @@ import TicketConfigurationOptions from './TicketConfigurationOptions'
 import SubCategoryListTable from './SubCategoryListTable'
 import TicketHistoryDetails from './TicketHistory/TicketHistoryDetails'
 import AddNewSubCategory from './AddSubCategory/AddNewSubCategory'
-import CategoryList from './CategoryList/CategoryList'
+import TicketCategoryList from './CategoryList/TicketCategoryList'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
@@ -101,7 +101,7 @@ const TicketConfiguration = (): JSX.Element => {
       )}
       {toggle === 'ticketHistory' && <TicketHistoryDetails />}
       {toggle === 'addSubCategory' && <AddNewSubCategory />}
-      {toggle === 'addCategory' && <CategoryList />}
+      {toggle === 'addCategory' && <TicketCategoryList />}
     </>
   )
 }

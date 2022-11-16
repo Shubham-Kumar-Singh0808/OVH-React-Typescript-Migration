@@ -39,6 +39,13 @@ const AddNewCategory = (): JSX.Element => {
   const successToastMessage = (
     <OToast toastMessage="Category added successfully" toastColor="success" />
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToMealType = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Meal Type',
+  )
+
   useEffect(() => {
     if (!allDepartments)
       dispatch(
@@ -104,6 +111,7 @@ const AddNewCategory = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
       dispatch(reduxServices.ticketConfiguration.getAllCategory())
     }
+    handleClearInputs()
   }
   return (
     <>
@@ -128,11 +136,14 @@ const AddNewCategory = (): JSX.Element => {
             >
               <option value="">Select Department</option>
               {allDepartments &&
-                allDepartments?.map((department) => (
-                  <option key={department.id} value={department.id}>
-                    {department.name}
-                  </option>
-                ))}
+                allDepartments
+                  ?.slice()
+                  .sort((dep1, dep2) => dep1.name?.localeCompare(dep2.name))
+                  ?.map((department) => (
+                    <option key={department.id} value={department.id}>
+                      {department.name}
+                    </option>
+                  ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -149,7 +160,7 @@ const AddNewCategory = (): JSX.Element => {
             <CFormInput
               type="text"
               id="categoryName"
-              data-testid="category-name"
+              data-testid="category-name-input"
               size="sm"
               name="categoryName"
               placeholder="Enter Category Name"
@@ -158,7 +169,7 @@ const AddNewCategory = (): JSX.Element => {
               onChange={handledInputChange}
             />
           </CCol>
-          <CCol sm={3}>
+          <CCol sm={3} className="mt-2">
             {categoryNameExist && (
               <p className={TextDanger} data-testid="categoryName-exist">
                 Category Name Already Exist
@@ -166,25 +177,28 @@ const AddNewCategory = (): JSX.Element => {
             )}
           </CCol>
         </CRow>
-        <CRow className="mt-3 mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
-            Meal Type :
-          </CFormLabel>
-          <CCol sm={3} className="pt-2">
-            <CFormCheck
-              className="mt-4"
-              name="mealType"
-              data-testid="ch-mealType"
-              checked={isChecked}
-              onChange={(e) => setIsChecked(e.target.checked)}
-            />
-          </CCol>
-        </CRow>
+        {userAccessToMealType?.viewaccess && (
+          <CRow className="mt-3 mb-3">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+              Meal Type :
+            </CFormLabel>
+            <CCol sm={3} className="pt-2">
+              <CFormCheck
+                className="mt-4"
+                name="mealType"
+                data-testid="tc-ch-mealType"
+                checked={isChecked}
+                onChange={(e) => setIsChecked(e.target.checked)}
+              />
+            </CCol>
+          </CRow>
+        )}
         <CRow className="mt-3 mb-3">
           <CCol className="col-md-3 offset-md-3">
             <CButton
               color="success"
               className="btn-ovh me-1"
+              data-testid="tc-add-button"
               size="sm"
               disabled={!isAddCategoryButtonEnabled}
               onClick={handleAddNewCategory}
@@ -194,6 +208,7 @@ const AddNewCategory = (): JSX.Element => {
             <CButton
               color="warning "
               className="btn-ovh"
+              data-testid="tc-clear-button"
               onClick={handleClearInputs}
             >
               Clear
