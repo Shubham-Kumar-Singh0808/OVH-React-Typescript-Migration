@@ -296,6 +296,10 @@ const ProjectReportsTable = ({
     })
   }
 
+  const totalRecordsToDisplay = projectReports?.length
+    ? `Total Records: ${listSize}`
+    : `No Records found...`
+
   return (
     <>
       {isProjectLoading !== ApiLoadingState.loading ? (
@@ -461,12 +465,8 @@ const ProjectReportsTable = ({
           </CTable>
           <CRow>
             <CCol xs={4}>
-              <p className="mt-4">
-                <strong>
-                  {projectReports?.length
-                    ? `Total Records: ${listSize}`
-                    : `No Records found...`}
-                </strong>
+              <p className="mt-2">
+                <strong>{totalRecordsToDisplay}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
