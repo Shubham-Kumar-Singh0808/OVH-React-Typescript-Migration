@@ -6,7 +6,6 @@ import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
-import OToast from '../../../components/ReusableComponent/OToast'
 
 const EmployeeViewFilterOptions = ({
   setToggle,
@@ -39,12 +38,7 @@ const EmployeeViewFilterOptions = ({
     setComments('')
   }
   const dispatch = useAppDispatch()
-  const successToastMessage = (
-    <OToast
-      toastMessage="Resignation Withdrawn Successfully"
-      toastColor="success"
-    />
-  )
+
   const handleRevokeResignation = async () => {
     const submitRevokeResultAction = await dispatch(
       reduxServices.submitViewResignation.getRevokeResignation({
@@ -95,7 +89,6 @@ const EmployeeViewFilterOptions = ({
         submitRevokeResultAction,
       )
     ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
       setToggle('submitResignation')
     }
   }
