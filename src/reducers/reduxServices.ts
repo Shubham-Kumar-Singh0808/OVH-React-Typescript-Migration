@@ -43,7 +43,6 @@ import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTem
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
 import { leaveReportService } from './Leaves/LeaveReports/leaveReportSlice'
 import { ticketReportService } from './Support/Report/ticketReportSlice'
-import { projectManagementService } from './ProjectManagement/Project/projectSlice'
 import { clientsService } from './ProjectManagement/Clients/clientsSlice'
 import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
 import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
@@ -63,6 +62,7 @@ import { employeeAchievementsService } from './Dashboard/achievementsSlice'
 import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 import { bookingListService } from './ConferenceRoomBooking/BookingList/bookingListSlice'
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import { employeeAllocationSliceService } from './ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
@@ -71,6 +71,8 @@ import { ticketConfigurationService } from './Settings/TicketConfiguration/ticke
 import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
+import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -140,10 +142,12 @@ export const reduxServices = {
   bookingList: bookingListService,
   eventTypeList: eventTypeListService,
   addLocationList: addLocationListService,
+  employeeAllocationReport: employeeAllocationSliceService,
   addTrackerLists: addTrackerListService,
   eventList: eventListService,
   roomLists: roomListService,
   searchEmployee: employeeSearchService,
   ticketConfiguration: ticketConfigurationService,
   appraisalConfigurations: appraisalCycleService,
+  projectReport: projectReportsService,
 }

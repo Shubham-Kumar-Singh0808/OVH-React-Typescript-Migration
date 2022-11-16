@@ -43,6 +43,11 @@ const HRAssociate = ({
     if (shouldReset) setAutoCompleteTarget('')
   }, [shouldReset])
 
+  const onChangeHRAssociate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAutoCompleteTarget(e.target.value)
+    if (e.target.value === '') onSelectHRAssociate({} as GetHRAssociate)
+  }
+
   const itemsLayout = (
     id: string | number,
     fullName: string,

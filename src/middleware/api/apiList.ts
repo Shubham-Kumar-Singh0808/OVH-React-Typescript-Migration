@@ -55,6 +55,7 @@ import {
   UpdateTicketApi,
   BookingListApi,
   EventTypeListApi,
+  EmployeeAllocationApi,
   AddLocationListApi,
   EventListApi,
   AddTrackerApi,
@@ -400,6 +401,15 @@ export const projectManagementConfig: ProjectManagementApi = {
   getAllPlatforms: apiPrefix + '/project-mgmt/getAllPlatforms',
   getAllDomains: apiPrefix + '/project-mgmt/getAllDomains',
   getAllManagers: apiPrefix + '/project-mgmt/getAllManagers',
+  getActiveProjectReports:
+    apiPrefix + '/project-mgmt/activeProjectsForEmployee',
+  getSearchAllocationReport: apiPrefix + '/project-mgmt/searchAllocationReport',
+  getClientProjects: apiPrefix + '/allocation-mgmt/projects',
+  getCloseProject: apiPrefix + '/project-mgmt/closeProject',
+  getDeleteProject: apiPrefix + '/project-mgmt/projectDelete',
+  postDeallocateProject: apiPrefix + '/project-mgmt/deAllocateProject',
+  postUpdateAllocateProject: apiPrefix + '/project-mgmt/updateAllocateProject',
+  exportProjectList: apiPrefix + '/project-mgmt/exportProjectList',
 }
 
 export const clientsApiConfig: ClientsApi = {
@@ -510,6 +520,14 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
 }
 
+export const employeeAllocationApiConfig: EmployeeAllocationApi = {
+  getEmployeeAllocationReport: apiPrefix + '/project-mgmt/searchByEmployeeName',
+  projectUnderEmployees: apiPrefix + '/project-mgmt/projectUnderEmployees/',
+  updateEmployeeAllocateProject:
+    apiPrefix + '/project-mgmt/updateEmployeeAllocateProject',
+  downloadEmployeeAllocationList: apiPrefix + '/project-mgmt/exportFile',
+}
+
 export const eventListApiConfig: EventListApi = {
   getAllEvents: apiPrefix + '/meetingRequest/getAllEvents',
   cancelEvent: apiPrefix + '/meetingRequest/cancelEvent',
@@ -542,4 +560,5 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   getSubCategoryList: apiPrefix + '/supportManagement/getSearchSubCategoryList',
   deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
   ticketHistory: apiPrefix + '/supportManagement/getAudit',
+  addSubCategory: apiPrefix + '/supportManagement/addSubCategory',
 }

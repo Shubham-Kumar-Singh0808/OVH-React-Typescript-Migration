@@ -112,11 +112,19 @@ const LeaveSummary = React.lazy(
     ),
 )
 const AddProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/AddProject/AddProject'
+    ),
 )
-
 const EditProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/EditProject/EditProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/EditProject/EditProject'
+    ),
+)
+const ProjectReport = React.lazy(
+  () => import('./pages/ProjectManagement/Project/ProjectReport'),
 )
 const EditClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/EditClient/EditClient'),
@@ -174,6 +182,12 @@ const EventTypeList = React.lazy(
   () =>
     import(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
+    ),
+)
+const EmployeeAllocationReport = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/EmployeeAllocation/EmployeeAllocationReport'
     ),
 )
 const LocationList = React.lazy(
@@ -270,6 +284,11 @@ const routes = [
     path: '/employeehandbook',
     name: 'Employee Handbook',
     component: EmployeeHandbook,
+  },
+  {
+    path: '/Employeereport',
+    name: 'Employee Allocation Report',
+    component: EmployeeAllocationReport,
   },
   {
     path: '/leaveReports',
@@ -486,6 +505,11 @@ const routes = [
     path: '/forbiddenError',
     name: 'Error Page',
     component: ErrorPage,
+  },
+  {
+    path: '/projectreport',
+    name: 'Project Report',
+    component: ProjectReport,
   },
 ]
 
