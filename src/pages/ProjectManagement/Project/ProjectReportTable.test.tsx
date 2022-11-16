@@ -104,10 +104,10 @@ describe('Project Report Table Testing with sub table', () => {
       },
     })
   })
-
+  jest.retryTimes(3)
   test('Should be able open sub table when clicking plus button', async () => {
     const plusBtn = screen.getAllByTestId('plus-btn')
-    plusBtn[0].click()
+    userEvent.click(plusBtn[0])
     await waitFor(() => {
       expect(screen.getByText('ID')).toBeInTheDocument()
       expect(screen.getByText('Name')).toBeInTheDocument()
@@ -122,37 +122,36 @@ describe('Project Report Table Testing with sub table', () => {
 
   test('Should be able open sub table when clicking plus button', () => {
     const plusBtn = screen.getAllByTestId('plus-btn')
-    plusBtn[0].click()
-
+    userEvent.click(plusBtn[0])
     const minusBtn = screen.getAllByTestId('minus-btn')
-    minusBtn[0].click()
+    userEvent.click(minusBtn[0])
   })
 
   test('Should be able click close btn', () => {
     const closeBtn = screen.getAllByTestId('close-btn')
-    closeBtn[0].click()
+    userEvent.click(closeBtn[0])
 
     const modalConfirmBtn = screen.getByTestId('modalConfirmBtn')
-    modalConfirmBtn.click()
+    userEvent.click(modalConfirmBtn)
   })
 
   test('Should be able click delete btn', () => {
     const closeBtn = screen.getAllByTestId('delete-btn')
-    closeBtn[3].click()
+    userEvent.click(closeBtn[3])
 
     const modalConfirmBtn = screen.getByTestId('modalConfirmBtn')
-    modalConfirmBtn.click()
+    userEvent.click(modalConfirmBtn)
   })
 
   test('Should be able open sub table and click close btn', () => {
     const plusBtn = screen.getAllByTestId('plus-btn')
-    plusBtn[0].click()
+    userEvent.click(plusBtn[0])
 
     const closeBtn = screen.getAllByTestId('close-btn')
-    closeBtn[0].click()
+    userEvent.click(closeBtn[0])
 
     const modalConfirmBtn = screen.getByTestId('modalConfirmBtn')
-    modalConfirmBtn.click()
+    userEvent.click(modalConfirmBtn)
   })
   test('Should be able open sub table and click delete btn', async () => {
     const plusBtn = screen.getAllByTestId('plus-btn')
@@ -161,7 +160,7 @@ describe('Project Report Table Testing with sub table', () => {
       const closeBtn = screen.getByTestId('delete-sub-btn')
       userEvent.click(closeBtn)
       const modalConfirmBtn = screen.getByTestId('modalConfirmBtn')
-      modalConfirmBtn.click()
+      userEvent.click(modalConfirmBtn)
       expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
     })
   })
@@ -193,6 +192,6 @@ describe('Project Report Table Testing with sub table', () => {
 
     // Save update btn
     const updateBtn = screen.getByTestId('update-project-btn')
-    updateBtn.click()
+    userEvent.click(updateBtn)
   })
 })
