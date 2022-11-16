@@ -148,6 +148,7 @@ const EmployeeViewFilterOptions = ({
               color="success"
               disabled={!isSubmitButtonEnabled}
               onClick={handleRevokeResignation}
+              data-testid="submit-btn"
             >
               Submit
             </CButton>

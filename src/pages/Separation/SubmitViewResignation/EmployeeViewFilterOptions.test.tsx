@@ -22,11 +22,12 @@ describe('Employee view resignation filter options Component Testing', () => {
     test('should render with data ', () => {
       expect(screen.getByText('Resigned')).toBeInTheDocument()
       expect(screen.getByText('12/03/2022')).toBeInTheDocument()
-      const submitBtnElement = screen.getByRole('button', { name: 'Submit' })
-      const clearBtnElement = screen.getByRole('button', { name: 'Clear' })
-      expect(submitBtnElement).toBeDisabled()
-      expect(clearBtnElement).toBeDisabled()
+      const submitBtnElement = screen.getByTestId('submit-btn')
+      expect(submitBtnElement).toBeInTheDocument()
       userEvent.click(submitBtnElement)
+      expect(mockSetToggle).toHaveBeenCalledTimes(0)
+      const clearBtnElement = screen.getByRole('button', { name: 'Clear' })
+      expect(clearBtnElement).toBeDisabled()
       userEvent.click(clearBtnElement)
     })
     test('pass comments to test input value', () => {

@@ -265,6 +265,7 @@ const SubmitResignationFilterOptions = ({
           <CButton
             className="btn-ovh me-1"
             color="success"
+            data-testid="submit-btn"
             disabled={!isSubmitButtonEnabled}
             onClick={handleSubmitResignation}
           >
