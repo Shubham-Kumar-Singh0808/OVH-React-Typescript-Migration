@@ -49,6 +49,14 @@ const EmployeeAllocationFilterOptions = ({
       .employeeDepartments,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessAllocatonFeature = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Individual Employee Allocation',
+  )
+
   useEffect(() => {
     dispatch(reduxServices.employeeCertifications.getTechnologies())
   }, [dispatch])
@@ -285,25 +293,31 @@ const EmployeeAllocationFilterOptions = ({
             <option value="false">De-Allocated</option>
           </CFormSelect>
         </CCol>
-        <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Department:</CFormLabel>
-        </CCol>
-        <CCol sm={2}>
-          <Multiselect
-            className="ovh-multiselect"
-            data-testid="department-option"
-            options={departmentsList?.map((department) => department) || []}
-            displayValue="departmentName"
-            placeholder="Select"
-            selectedValues={selectDepartment}
-            onSelect={(list: EmployeeDepartment[]) =>
-              handleDepartmentMultiSelect(list)
-            }
-            onRemove={(selectedList: EmployeeDepartment[]) =>
-              handleOnRemoveDepartmentSelectedOption(selectedList)
-            }
-          />
-        </CCol>
+
+        {userAccessAllocatonFeature?.viewaccess && (
+          <>
+            <CCol sm={2} md={1} className="text-end">
+              <CFormLabel className="mt-1">Department:</CFormLabel>
+            </CCol>
+
+            <CCol sm={2}>
+              <Multiselect
+                className="ovh-multiselect"
+                data-testid="department-option"
+                options={departmentsList?.map((department) => department) || []}
+                displayValue="departmentName"
+                placeholder="Select"
+                selectedValues={selectDepartment}
+                onSelect={(list: EmployeeDepartment[]) =>
+                  handleDepartmentMultiSelect(list)
+                }
+                onRemove={(selectedList: EmployeeDepartment[]) =>
+                  handleOnRemoveDepartmentSelectedOption(selectedList)
+                }
+              />
+            </CCol>
+          </>
+        )}
         <CCol sm={2} md={1} className="text-end">
           <CFormLabel className="mt-1">Technology:</CFormLabel>
         </CCol>
