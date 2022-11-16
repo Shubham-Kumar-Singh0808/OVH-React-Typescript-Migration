@@ -148,14 +148,6 @@ const SubmitResignationFilterOptions = ({
         ),
       )
     }
-    setPrimaryReason('')
-    setShowEditor(false)
-    setTimeout(() => {
-      setShowEditor(true)
-    }, 100)
-    setSubmitResignation({
-      employeeComments: '',
-    })
   }
 
   return (
