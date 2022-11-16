@@ -64,6 +64,7 @@ import {
   RoomListApi,
   AddConfigurationsApi,
   TicketConfigurationApi,
+  SubmitResignationApi,
   LeaveApprovalsApi,
 } from '../../types/apiTypes'
 
@@ -569,6 +570,13 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
   ticketHistory: apiPrefix + '/supportManagement/getAudit',
   addSubCategory: apiPrefix + '/supportManagement/addSubCategory',
+}
+
+export const submitResignationApiConfig: SubmitResignationApi = {
+  getSeparationForm: apiPrefix + '/separationController/getSeparationForm',
+  submitResignation: apiPrefix + '/separationController/SubmitResignation',
+  getEmployeeResg: apiPrefix + '/separationController/getEmployeeResg',
+  revokeResignation: apiPrefix + '/separationController/revokeResignation',
 }
 
 export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
