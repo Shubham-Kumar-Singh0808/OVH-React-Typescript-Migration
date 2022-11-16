@@ -81,6 +81,7 @@ import addRoomList from './reducers/ConferenceRoomBooking/NewBooking/RoomList/ro
 import employeeProfileSearchReducer from './reducers/Dashboard/searchEmployeeSlice'
 import ticketConfigurationReducer from './reducers/Settings/TicketConfiguration/ticketConfigurationSlice'
 import appraisalConfigurationsReducer from './reducers/Settings/Configurations/appraisalConfigurationsSlice'
+import addConfigurationReducer from './reducers/Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
 
@@ -165,6 +166,7 @@ export const allReducers = {
   dashboardEmployeeSearch: employeeProfileSearchReducer,
   ticketConfiguration: ticketConfigurationReducer,
   appraisalConfigurations: appraisalConfigurationsReducer,
+  addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
   // add your slice reducers here
 }
