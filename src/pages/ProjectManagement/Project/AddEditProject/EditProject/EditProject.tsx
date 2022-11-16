@@ -13,26 +13,33 @@ import {
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import OCard from '../../../../components/ReusableComponent/OCard'
-import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
-import { GetList } from '../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OCard from '../../../../../components/ReusableComponent/OCard'
+import OAutoComplete from '../../../../../components/ReusableComponent/OAutoComplete'
+import { GetList } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { reduxServices } from '../../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import {
   GetAutoCompleteList,
   GetOnSelect,
   Project,
   ProjectClients,
-} from '../../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
-import OInputField from '../../../../components/ReusableComponent/OInputField'
-import OSelectList from '../../../../components/ReusableComponent/OSelectList'
-import { isEmail, listComposer, showIsRequired } from '../../../../utils/helper'
-import { dateFormat } from '../../../../constant/DateFormat'
-import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { healthList, priceModelList } from '../../../../constant/constantData'
-import OBackButton from '../../../../components/ReusableComponent/OBackButton'
-import { ClientOrganization } from '../ProjectComponent/ClientOrganization'
-import { ProjectName } from '../ProjectComponent/ProjectName'
+} from '../../../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
+import OInputField from '../../../../../components/ReusableComponent/OInputField'
+import OSelectList from '../../../../../components/ReusableComponent/OSelectList'
+import {
+  isEmail,
+  listComposer,
+  showIsRequired,
+} from '../../../../../utils/helper'
+import { dateFormat } from '../../../../../constant/DateFormat'
+import { ckeditorConfig } from '../../../../../utils/ckEditorUtils'
+import {
+  healthList,
+  priceModelList,
+} from '../../../../../constant/constantData'
+import OBackButton from '../../../../../components/ReusableComponent/OBackButton'
+import { ClientOrganization } from '../../ProjectComponent/ClientOrganization'
+import { ProjectName } from '../../ProjectComponent/ProjectName'
 
 interface TypesObject {
   [key: string]: string
@@ -357,7 +364,7 @@ const EditProject = (): JSX.Element => {
         newProjectResponse,
       )
     ) {
-      history.push('/employeeList')
+      history.push('/projectreport')
     }
   }
 
@@ -384,7 +391,7 @@ const EditProject = (): JSX.Element => {
       {Object.keys(project).length > 0 ? (
         <>
           <CRow className="justify-content-end">
-            <OBackButton destination="/" name="back" />
+            <OBackButton destination="/projectreport" name="back" />
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
               <ClientOrganization
                 list={clientOrganizationList}

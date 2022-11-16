@@ -100,7 +100,7 @@ export type ProjectDetails = {
   department: string
   desigination: string
   userName: string
-  isAllocated: true
+  isAllocated: boolean
   duration: null
   count: null
   rate: null
@@ -115,4 +115,17 @@ export type ProjectDetails = {
   hours: null
   totalValue: null
   allocation: number | string
+}
+
+export type ExportListParams = {
+  employeeId: number
+  projectStatus: string
+  type: string
+  health: string
+  startdate: string
+  enddate: string
+  multiSearch: string
+  projectDatePeriod: string
+  intrnalOrNot: boolean
+  token?: string
 }

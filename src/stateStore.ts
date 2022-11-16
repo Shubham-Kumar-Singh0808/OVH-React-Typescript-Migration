@@ -52,7 +52,6 @@ import scheduledInterviewsReducer from './reducers/Recruitment/ScheduledIntervie
 import addMailTemplateTypeReducer from './reducers/Settings/MailConfiguration/AddMailTemplateType/addMailTemplateTypeSlice'
 import myAttendanceReducer from './reducers/TimeAndAttendance/MyAttendance/myAttendanceSlice'
 import ticketReportReducer from './reducers/Support/Report/ticketReportSlice'
-import projectManagementReducer from './reducers/ProjectManagement/Project/projectSlice'
 import clientsReducer from './reducers/ProjectManagement/Clients/clientsSlice'
 import addClientReducer from './reducers/ProjectManagement/Clients/AddClient/addNewClientSlice'
 import clientInformationReducer from './reducers/ProjectManagement/Clients/ClientInformation/clientInformationSlice'
@@ -82,6 +81,8 @@ import addRoomList from './reducers/ConferenceRoomBooking/NewBooking/RoomList/ro
 import employeeProfileSearchReducer from './reducers/Dashboard/searchEmployeeSlice'
 import ticketConfigurationReducer from './reducers/Settings/TicketConfiguration/ticketConfigurationSlice'
 import appraisalConfigurationsReducer from './reducers/Settings/Configurations/appraisalConfigurationsSlice'
+import projectManagementReducer from './reducers/ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
+import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -164,6 +165,7 @@ export const allReducers = {
   dashboardEmployeeSearch: employeeProfileSearchReducer,
   ticketConfiguration: ticketConfigurationReducer,
   appraisalConfigurations: appraisalConfigurationsReducer,
+  projectReport: projectReportReducer,
   // add your slice reducers here
 }
 

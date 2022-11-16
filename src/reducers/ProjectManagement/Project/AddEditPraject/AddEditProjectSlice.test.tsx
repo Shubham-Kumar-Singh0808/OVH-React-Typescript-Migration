@@ -1,7 +1,7 @@
-import reducer, { projectManagementService } from './projectSlice'
-import { mockPlatform } from '../../../test/data/projectManagerData'
-import { ProjectsManagementSliceState } from '../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
+import reducer, { projectManagementService } from './AddEditProjectSlice'
+import { mockPlatform } from '../../../../test/data/projectManagerData'
+import { ProjectsManagementSliceState } from '../../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 describe('Project Slice', () => {
   describe('Reducer', () => {
