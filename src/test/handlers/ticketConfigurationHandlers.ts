@@ -94,4 +94,20 @@ export const ticketConfigurationHandlers = [
     })
     return res(addResponse)
   }),
+  // updateCategory api mock
+  rest.put(ticketConfigurationApiConfig.updateCategory, (_req, res, ctx) => {
+    const updateResponse = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(updateResponse)
+  }),
+  // deleteCategory api mock
+  rest.put(ticketConfigurationApiConfig.deleteCategory, (_req, res, ctx) => {
+    const deleteResponse = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(deleteResponse)
+  }),
 ]

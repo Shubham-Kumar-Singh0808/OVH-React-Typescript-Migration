@@ -259,7 +259,7 @@ const ticketConfigurationSlice = createSlice({
       })
       .addCase(getAllCategory.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.category = action.payload as Category[]
+        state.category = action.payload
       })
       .addCase(
         getTicketConfigurationSubCategories.fulfilled,

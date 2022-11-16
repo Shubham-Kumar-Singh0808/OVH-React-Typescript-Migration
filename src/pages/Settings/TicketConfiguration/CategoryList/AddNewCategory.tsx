@@ -1,5 +1,3 @@
-/* eslint-disable require-await */
-// Todo: remove eslint and fix error
 import {
   CButton,
   CCol,
