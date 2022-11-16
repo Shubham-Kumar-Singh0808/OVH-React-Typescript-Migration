@@ -1,39 +1,30 @@
-/* eslint-disable import/named */
-// Todo: remove eslint and fix error
 import '@testing-library/jest-dom'
 
-import { render, screen } from '@testing-library/react'
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ShiftConfiguration from './ShiftConfiguration'
-import stateStore from '../../../../../stateStore'
-
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+import { render, screen } from '../../../../../test/testUtils'
+import { mockUserAccessToFeaturesData } from '../../../../../test/data/userAccessToFeaturesData'
+import { mockEmployeeShifts } from '../../../../../test/data/employeeShiftsData'
 
 describe('Shift Configuration Component Testing', () => {
+  beforeEach(() => {
+    render(<ShiftConfiguration setToggleShift={jest.fn()} />, {
+      preloadedState: {
+        shiftConfiguration: {
+          employeeShifts: mockEmployeeShifts,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
+    })
+  })
   test('should render shift configuration component', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <ShiftConfiguration setToggleShift={jest.fn()} />
-      </ReduxProvider>,
-    )
     expect(screen.getByPlaceholderText('Shift Name')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument()
   })
   test('should create employee shift upon add button click', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <ShiftConfiguration setToggleShift={jest.fn()} />
-      </ReduxProvider>,
-    )
     userEvent.type(screen.getByPlaceholderText('Shift Name'), 'Canada Shift')
     userEvent.type(screen.getByTestId('sh-startTimeHour'), '45')
     userEvent.type(screen.getByTestId('sh-startTimeMinutes'), '45')

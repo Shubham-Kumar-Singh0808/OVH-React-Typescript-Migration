@@ -63,11 +63,13 @@ import { employeeAchievementsService } from './Dashboard/achievementsSlice'
 import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 import { bookingListService } from './ConferenceRoomBooking/BookingList/bookingListSlice'
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import { employeeAllocationSliceService } from './ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
 import { assignTemplateService } from './Settings/Configurations/assignTemplateSlice'
+import { ticketConfigurationService } from './Settings/TicketConfiguration/ticketConfigurationSlice'
 import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
@@ -140,10 +142,12 @@ export const reduxServices = {
   bookingList: bookingListService,
   eventTypeList: eventTypeListService,
   addLocationList: addLocationListService,
+  employeeAllocationReport: employeeAllocationSliceService,
   addTrackerLists: addTrackerListService,
   eventList: eventListService,
   roomLists: roomListService,
   searchEmployee: employeeSearchService,
   assignTemplate: assignTemplateService,
+  ticketConfiguration: ticketConfigurationService,
   appraisalConfigurations: appraisalCycleService,
 }

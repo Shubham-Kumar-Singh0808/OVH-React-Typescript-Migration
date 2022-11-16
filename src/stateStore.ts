@@ -74,11 +74,13 @@ import bookingListReducer from './reducers/ConferenceRoomBooking/BookingList/boo
 import leaveReportReducer from './reducers/Leaves/LeaveReports/leaveReportSlice'
 import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import employeeAllocationReportReducer from './reducers/ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import eventListReducer from './reducers/ConferenceRoomBooking/EventList/eventListSlice'
 import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/trackerListSlice'
 import allocateEmployeeReducer from './reducers/ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 import addRoomList from './reducers/ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
 import employeeProfileSearchReducer from './reducers/Dashboard/searchEmployeeSlice'
+import ticketConfigurationReducer from './reducers/Settings/TicketConfiguration/ticketConfigurationSlice'
 import assignTemplatesReducer from './reducers/Settings/Configurations/assignTemplateSlice'
 import appraisalConfigurationsReducer from './reducers/Settings/Configurations/appraisalConfigurationsSlice'
 
@@ -157,10 +159,12 @@ export const allReducers = {
   bookingList: bookingListReducer,
   leaveReport: leaveReportReducer,
   eventTypeList: eventTypeListReducer,
+  employeeAllocationReport: employeeAllocationReportReducer,
   eventList: eventListReducer,
   roomList: addRoomList,
   dashboardEmployeeSearch: employeeProfileSearchReducer,
   assignTemplate: assignTemplatesReducer,
+  ticketConfiguration: ticketConfigurationReducer,
   appraisalConfigurations: appraisalConfigurationsReducer,
   // add your slice reducers here
 }

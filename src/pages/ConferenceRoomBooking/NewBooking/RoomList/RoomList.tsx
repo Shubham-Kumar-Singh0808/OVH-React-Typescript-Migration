@@ -137,11 +137,12 @@ const RoomList = (): JSX.Element => {
               }}
             >
               <option value={''}>Select Location</option>
-              {locationList?.map((location, index) => (
-                <option key={index} value={location.id}>
-                  {location.locationName}
-                </option>
-              ))}
+              {locationList.length > 0 &&
+                locationList?.map((location, index) => (
+                  <option key={index} value={location.id}>
+                    {location.locationName}
+                  </option>
+                ))}
             </CFormSelect>
           </CCol>
           <CFormLabel

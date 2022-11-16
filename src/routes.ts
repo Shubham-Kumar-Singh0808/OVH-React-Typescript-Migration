@@ -176,6 +176,12 @@ const EventTypeList = React.lazy(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
 )
+const EmployeeAllocationReport = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/EmployeeAllocation/EmployeeAllocationReport'
+    ),
+)
 const LocationList = React.lazy(
   () =>
     import(
@@ -209,6 +215,11 @@ const AppraisalConfigurations = React.lazy(
 const RoomList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
+
+const TicketConfiguration = React.lazy(
+  () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
+)
+
 
 const AssignTemplate = React.lazy(
   () => import('./pages/Settings/Configurations/AssignTemplate'),
@@ -265,6 +276,11 @@ const routes = [
     path: '/employeehandbook',
     name: 'Employee Handbook',
     component: EmployeeHandbook,
+  },
+  {
+    path: '/Employeereport',
+    name: 'Employee Allocation Report',
+    component: EmployeeAllocationReport,
   },
   {
     path: '/leaveReports',
@@ -471,11 +487,6 @@ const routes = [
     path: '/roomList',
     name: 'RoomList',
     component: RoomList,
-  },
-  {
-    path: '/assignTemplate/:cycleId',
-    name: 'Assign Template',
-    component: AssignTemplate,
   },
 ]
 

@@ -4,10 +4,21 @@ import userEvent from '@testing-library/user-event'
 import EmployeeDesignationListTable from './EmployeeDesignationListTable'
 import { render, screen, waitFor } from '../../../../../test/testUtils'
 import { mockDesignationList } from '../../../../../test/data/employeeDesignationListData'
+import { ApiLoadingState } from '../../../../../middleware/api/apiList'
+import { mockAllDepartments } from '../../../../../test/data/addEmployeeDesignationData'
+import { mockUserAccessToFeaturesData } from '../../../../../test/data/userAccessToFeaturesData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <EmployeeDesignationListTable selectedDepartmentId={6} />
+  </div>
+)
 describe('DesignationList Table Testing', () => {
   beforeEach(() => {
-    render(<EmployeeDesignationListTable selectedDepartmentId={0} />)
+    render(toRender)
   })
   it('should render the "Designation Table"', () => {
     const table = screen.getByRole('table')
@@ -24,15 +35,19 @@ describe('DesignationList Table Testing', () => {
     expect(
       screen.getByRole('columnheader', { name: 'Designation Name' }),
     ).toBeTruthy()
-    expect(screen.getByRole('columnheader', { name: 'Action' })).toBeTruthy()
   })
 
   describe('DesignationList component with data', () => {
     beforeEach(() => {
-      render(<EmployeeDesignationListTable selectedDepartmentId={6} />, {
+      render(toRender, {
         preloadedState: {
           employeeDesignationList: {
+            isLoading: ApiLoadingState.succeeded,
+            employeeDepartments: mockAllDepartments,
             employeeDesignations: mockDesignationList,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })

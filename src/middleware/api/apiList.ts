@@ -55,6 +55,7 @@ import {
   UpdateTicketApi,
   BookingListApi,
   EventTypeListApi,
+  EmployeeAllocationApi,
   AddLocationListApi,
   EventListApi,
   AddTrackerApi,
@@ -62,6 +63,7 @@ import {
   AppraisalConfigurationsApi,
   RoomListApi,
   assignTemplateApi,
+  TicketConfigurationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -149,12 +151,12 @@ export const employeeQualificationCategoryApiConfig: EmployeeQualificationCatego
   }
 
 export const employeeGeneralInformationApi: EmployeeGeneralInformationApi = {
-  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
+  getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
 }
 
 export const employeeGeneralInformationApiConfig: EmployeeGeneralInformationApi =
   {
-    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployeeData',
+    getLoggedInEmployeeData: apiPrefix + '/jobapplicant/loggedInEmployee',
   }
 
 export const qualificationsApiConfig: EmployeeQualificationsApi = {
@@ -510,6 +512,14 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
 }
 
+export const employeeAllocationApiConfig: EmployeeAllocationApi = {
+  getEmployeeAllocationReport: apiPrefix + '/project-mgmt/searchByEmployeeName',
+  projectUnderEmployees: apiPrefix + '/project-mgmt/projectUnderEmployees/',
+  updateEmployeeAllocateProject:
+    apiPrefix + '/project-mgmt/updateEmployeeAllocateProject',
+  downloadEmployeeAllocationList: apiPrefix + '/project-mgmt/exportFile',
+}
+
 export const eventListApiConfig: EventListApi = {
   getAllEvents: apiPrefix + '/meetingRequest/getAllEvents',
   cancelEvent: apiPrefix + '/meetingRequest/cancelEvent',
@@ -541,4 +551,14 @@ export const assignTemplateApiConfig: assignTemplateApi = {
   alreadyExistnewCycleId: apiPrefix + '/appraisal/isAlreadyExist',
   getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
   getDesignationNumber: apiPrefix + '/appraisal/underKras',
+}
+
+export const ticketConfigurationApiConfig: TicketConfigurationApi = {
+  getDepartments: apiPrefix + '/supportManagement/getDepartmentNameList',
+  getCategories: apiPrefix + '/supportManagement/departmentCategoryList',
+  getSubCategories: apiPrefix + '/supportManagement/subCategoryList',
+  getSubCategoryList: apiPrefix + '/supportManagement/getSearchSubCategoryList',
+  deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
+  ticketHistory: apiPrefix + '/supportManagement/getAudit',
+  addSubCategory: apiPrefix + '/supportManagement/addSubCategory',
 }
