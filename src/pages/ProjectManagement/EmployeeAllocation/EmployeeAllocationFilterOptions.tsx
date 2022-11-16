@@ -341,6 +341,7 @@ const EmployeeAllocationFilterOptions = ({
                 placeholderText="dd/mm/yy"
                 name="fromDate"
                 maxDate={new Date()}
+                autoComplete="off"
                 id="fromDate"
                 peekNextMonth
                 showMonthDropdown
@@ -363,6 +364,7 @@ const EmployeeAllocationFilterOptions = ({
                 placeholderText="dd/mm/yy"
                 name="toDate"
                 id="toDate"
+                autoComplete="off"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
