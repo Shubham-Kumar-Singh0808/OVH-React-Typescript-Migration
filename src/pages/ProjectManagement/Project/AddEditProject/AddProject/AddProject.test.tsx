@@ -3,9 +3,14 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
 import AddProject from './AddProject'
-import { render, screen, waitFor, fireEvent } from '../../../../test/testUtils'
-import { mockProjectClient } from '../../../../test/data/projectClientData'
-import { mockReportingManager } from '../../../../test/data/reportingManagers'
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+} from '../../../../../test/testUtils'
+import { mockProjectClient } from '../../../../../test/data/projectClientData'
+import { mockReportingManager } from '../../../../../test/data/reportingManagers'
 
 const deviceLocale: string =
   navigator.languages && navigator.languages.length

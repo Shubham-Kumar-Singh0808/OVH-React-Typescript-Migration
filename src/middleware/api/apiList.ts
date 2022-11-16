@@ -62,7 +62,9 @@ import {
   AllocateEmployeeApi,
   AppraisalConfigurationsApi,
   RoomListApi,
+  AddConfigurationsApi,
   TicketConfigurationApi,
+  LeaveApprovalsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -401,6 +403,15 @@ export const projectManagementConfig: ProjectManagementApi = {
   getAllPlatforms: apiPrefix + '/project-mgmt/getAllPlatforms',
   getAllDomains: apiPrefix + '/project-mgmt/getAllDomains',
   getAllManagers: apiPrefix + '/project-mgmt/getAllManagers',
+  getActiveProjectReports:
+    apiPrefix + '/project-mgmt/activeProjectsForEmployee',
+  getSearchAllocationReport: apiPrefix + '/project-mgmt/searchAllocationReport',
+  getClientProjects: apiPrefix + '/allocation-mgmt/projects',
+  getCloseProject: apiPrefix + '/project-mgmt/closeProject',
+  getDeleteProject: apiPrefix + '/project-mgmt/projectDelete',
+  postDeallocateProject: apiPrefix + '/project-mgmt/deAllocateProject',
+  postUpdateAllocateProject: apiPrefix + '/project-mgmt/updateAllocateProject',
+  exportProjectList: apiPrefix + '/project-mgmt/exportProjectList',
 }
 
 export const clientsApiConfig: ClientsApi = {
@@ -538,6 +549,9 @@ export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
   editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
   updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
 }
+export const addConfigurationsApiConfig: AddConfigurationsApi = {
+  addAppraisalCycle: apiPrefix + '/appraisal/cycle',
+}
 
 export const roomListApiConfig: RoomListApi = {
   getAllMeetingRooms: apiPrefix + '/meetingRequest/getAllMeetingRooms',
@@ -554,4 +568,13 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
   ticketHistory: apiPrefix + '/supportManagement/getAudit',
   addSubCategory: apiPrefix + '/supportManagement/addSubCategory',
+}
+
+export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
+  getEmployees: apiPrefix + '/managerAppraisalController/getEmployees',
+  getEmployeeLeaves: apiPrefix + '/leave/bioAdminManager/employeeLeaves',
+  getSearchEmployees: apiPrefix + '/leave/bioAdminManager/searchEmployees',
+  checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
+  leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
+  leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
 }
