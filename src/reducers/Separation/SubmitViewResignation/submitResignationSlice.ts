@@ -46,7 +46,7 @@ const getEmployeeResignationView = createAsyncThunk(
   'SubmitResignation/getEmployeeResgnationView',
   async (_, thunkApi) => {
     try {
-      return await getSeparationFormApi.getEmployeeResgnationView()
+      return await getSeparationFormApi.getEmployeeResignationView()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
