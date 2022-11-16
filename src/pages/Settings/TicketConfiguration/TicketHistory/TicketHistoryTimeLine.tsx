@@ -82,7 +82,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                 </div>
                 <div className="sh-timeline-body">
                   <div className="sh-timeline-item mb-1">
-                    {ticketDetails.ticketsSubCategoryName ? (
+                    {ticketDetails.subCategoryName ? (
                       <>
                         <div className="mb-1">
                           <CFormLabel className="col-form-label p-0">
@@ -92,7 +92,7 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                             ticketDetails.oldticketsSubCategoryName,
                           )}
                           &nbsp;
-                          {ticketDetails.ticketsSubCategoryName}
+                          {ticketDetails.subCategoryName}
                         </div>
                       </>
                     ) : (

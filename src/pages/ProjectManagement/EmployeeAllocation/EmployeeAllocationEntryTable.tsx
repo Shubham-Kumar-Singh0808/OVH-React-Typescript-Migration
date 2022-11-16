@@ -41,6 +41,14 @@ const EmployeeAllocationEntryTable = (props: {
     reduxServices.employeeAllocationReport.selectors.employeeUnderProject,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Employee Allocation',
+  )
+
   const dispatch = useAppDispatch()
   const { Select, toDate, allocationStatus, billingStatus, fromDate, id } =
     props
@@ -175,181 +183,187 @@ const EmployeeAllocationEntryTable = (props: {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {projectUnderReport?.map((projectReport, KRAindex) => {
-                const billable = projectReport.billable ? 'yes' : 'No'
-                const allocated = projectReport.isAllocated
-                  ? 'Allocated'
-                  : 'De-Allocated'
-                return (
-                  <CTableRow key={KRAindex} col-span={7}>
-                    <CTableDataCell scope="row">
-                      <Link to={`#`} className="employee-name">
-                        {projectReport.projectName}
-                      </Link>
-                    </CTableDataCell>
-                    <CTableDataCell scope="row">
-                      {projectReport.managerName}
-                    </CTableDataCell>
-                    <CTableDataCell scope="row">
-                      {allocationStatusLabelColor(projectReport.status)}
-                    </CTableDataCell>
-                    {isProjectAllocationEdit &&
-                    projectReport.id === templateId ? (
+              {projectUnderReport?.length > 0 &&
+                projectUnderReport?.map((projectReport, KRAindex) => {
+                  const billable = projectReport.billable ? 'yes' : 'No'
+                  const allocated = projectReport.isAllocated
+                    ? 'Allocated'
+                    : 'De-Allocated'
+                  return (
+                    <CTableRow key={KRAindex} col-span={7}>
                       <CTableDataCell scope="row">
-                        <div className="edit-time-control">
-                          <DatePicker
-                            className="form-control form-control-sm sh-date-picker"
-                            placeholderText="dd/mm/yy"
-                            name="startdate"
-                            id="startdate"
-                            peekNextMonth
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select"
-                            value={editEmployeeAllocation?.startdate}
-                            onChange={(date: Date) =>
-                              onStartDateChangeHandler(date)
-                            }
-                          />
-                        </div>
+                        <Link to={`#`} className="employee-name">
+                          {projectReport.projectName}
+                        </Link>
                       </CTableDataCell>
-                    ) : (
                       <CTableDataCell scope="row">
-                        {projectReport.startdate}
+                        {projectReport.managerName}
                       </CTableDataCell>
-                    )}
-                    {isProjectAllocationEdit &&
-                    projectReport.id === templateId ? (
                       <CTableDataCell scope="row">
-                        <div className="edit-time-control">
-                          <DatePicker
-                            className="form-control form-control-sm sh-date-picker"
-                            placeholderText="dd/mm/yy"
-                            name="endDate"
-                            id="endDate"
-                            peekNextMonth
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select"
-                            value={editEmployeeAllocation?.enddate}
-                            onChange={(date: Date) =>
-                              onEndDateChangeHandler(date)
-                            }
-                          />
-                        </div>
+                        {allocationStatusLabelColor(projectReport.status)}
                       </CTableDataCell>
-                    ) : (
-                      <CTableDataCell scope="row">
-                        {projectReport.enddate}
-                      </CTableDataCell>
-                    )}
-                    {isProjectAllocationEdit &&
-                    projectReport.id === templateId ? (
-                      <CTableDataCell scope="row">
-                        <div className="edit-time-control">
-                          <CFormInput
-                            type="text"
-                            id="allocation"
-                            data-testid="template-input"
-                            name="allocation"
-                            value={editEmployeeAllocation.allocation}
-                            onChange={handleEditProjectAllocationHandler}
-                          />
-                        </div>
-                      </CTableDataCell>
-                    ) : (
-                      <CTableDataCell scope="row">
-                        {projectReport.allocation}%
-                      </CTableDataCell>
-                    )}
-                    {isProjectAllocationEdit &&
-                    projectReport.id === templateId ? (
-                      <CTableDataCell scope="row">
-                        <div className="edit-time-control">
-                          <CFormSelect
-                            aria-label="Default select example"
-                            size="sm"
-                            id="billable"
-                            data-testid="form-select2"
-                            name="billable"
-                            value={
-                              editEmployeeAllocation.billable as unknown as string
-                            }
-                            onChange={handleEditProjectAllocationHandler}
-                          >
-                            <option value="true">yes</option>
-                            <option value="false">No</option>
-                          </CFormSelect>
-                        </div>
-                      </CTableDataCell>
-                    ) : (
-                      <CTableDataCell scope="row">{billable}</CTableDataCell>
-                    )}
-                    {isProjectAllocationEdit &&
-                    projectReport.id === templateId ? (
-                      <CTableDataCell scope="row">
-                        <div className="edit-time-control">
-                          <CFormSelect
-                            aria-label="Default select example"
-                            size="sm"
-                            id="isAllocated"
-                            data-testid="form-select2"
-                            name="isAllocated"
-                            value={
-                              editEmployeeAllocation.isAllocated as unknown as string
-                            }
-                            onChange={handleEditProjectAllocationHandler}
-                          >
-                            <option value="true">Allocated</option>
-                            <option value="false">De-Allocated</option>
-                          </CFormSelect>
-                        </div>
-                      </CTableDataCell>
-                    ) : (
-                      <CTableDataCell scope="row">{allocated}</CTableDataCell>
-                    )}
-                    <CTableDataCell scope="row">
                       {isProjectAllocationEdit &&
                       projectReport.id === templateId ? (
-                        <>
-                          <CButton
-                            color="success"
-                            className="btn-ovh me-1"
-                            onClick={saveProjectAllocationHandler}
-                          >
-                            <i
-                              className="fa fa-floppy-o"
-                              aria-hidden="true"
-                            ></i>
-                          </CButton>
-                          <CButton
-                            color="warning"
-                            data-testid="cancel-btn"
-                            className="btn-ovh me-1"
-                            onClick={cancelProjectAllocationButtonHandler}
-                          >
-                            <i className="fa fa-times" aria-hidden="true"></i>
-                          </CButton>
-                        </>
+                        <CTableDataCell scope="row">
+                          <div className="edit-time-control">
+                            <DatePicker
+                              className="form-control form-control-sm sh-date-picker"
+                              placeholderText="dd/mm/yy"
+                              name="startdate"
+                              id="startdate"
+                              peekNextMonth
+                              showMonthDropdown
+                              showYearDropdown
+                              dropdownMode="select"
+                              value={editEmployeeAllocation?.startdate}
+                              onChange={(date: Date) =>
+                                onStartDateChangeHandler(date)
+                              }
+                            />
+                          </div>
+                        </CTableDataCell>
                       ) : (
-                        <>
-                          <CButton
-                            color="info btn-ovh me-2"
-                            data-testid="edit-btn"
-                            onClick={() => {
-                              editProjectAllocationButtonHandler(projectReport)
-                            }}
-                          >
-                            <i className="fa fa-pencil-square-o"></i>
-                          </CButton>
-                        </>
+                        <CTableDataCell scope="row">
+                          {projectReport.startdate}
+                        </CTableDataCell>
                       )}
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
+                      {isProjectAllocationEdit &&
+                      projectReport.id === templateId ? (
+                        <CTableDataCell scope="row">
+                          <div className="edit-time-control">
+                            <DatePicker
+                              className="form-control form-control-sm sh-date-picker"
+                              placeholderText="dd/mm/yy"
+                              name="endDate"
+                              id="endDate"
+                              peekNextMonth
+                              showMonthDropdown
+                              showYearDropdown
+                              dropdownMode="select"
+                              value={editEmployeeAllocation?.enddate}
+                              onChange={(date: Date) =>
+                                onEndDateChangeHandler(date)
+                              }
+                            />
+                          </div>
+                        </CTableDataCell>
+                      ) : (
+                        <CTableDataCell scope="row">
+                          {projectReport.enddate}
+                        </CTableDataCell>
+                      )}
+                      {isProjectAllocationEdit &&
+                      projectReport.id === templateId ? (
+                        <CTableDataCell scope="row">
+                          <div className="edit-time-control">
+                            <CFormInput
+                              type="text"
+                              id="allocation"
+                              data-testid="template-input"
+                              name="allocation"
+                              value={editEmployeeAllocation.allocation}
+                              onChange={handleEditProjectAllocationHandler}
+                            />
+                          </div>
+                        </CTableDataCell>
+                      ) : (
+                        <CTableDataCell scope="row">
+                          {projectReport.allocation}%
+                        </CTableDataCell>
+                      )}
+                      {isProjectAllocationEdit &&
+                      projectReport.id === templateId ? (
+                        <CTableDataCell scope="row">
+                          <div className="edit-time-control">
+                            <CFormSelect
+                              aria-label="Default select example"
+                              size="sm"
+                              id="billable"
+                              data-testid="form-select2"
+                              name="billable"
+                              value={
+                                editEmployeeAllocation.billable as unknown as string
+                              }
+                              onChange={handleEditProjectAllocationHandler}
+                            >
+                              <option value="true">yes</option>
+                              <option value="false">No</option>
+                            </CFormSelect>
+                          </div>
+                        </CTableDataCell>
+                      ) : (
+                        <CTableDataCell scope="row">{billable}</CTableDataCell>
+                      )}
+                      {isProjectAllocationEdit &&
+                      projectReport.id === templateId ? (
+                        <CTableDataCell scope="row">
+                          <div className="edit-time-control">
+                            <CFormSelect
+                              aria-label="Default select example"
+                              size="sm"
+                              id="isAllocated"
+                              data-testid="form-select2"
+                              name="isAllocated"
+                              value={
+                                editEmployeeAllocation.isAllocated as unknown as string
+                              }
+                              onChange={handleEditProjectAllocationHandler}
+                            >
+                              <option value="true">Allocated</option>
+                              <option value="false">De-Allocated</option>
+                            </CFormSelect>
+                          </div>
+                        </CTableDataCell>
+                      ) : (
+                        <CTableDataCell scope="row">{allocated}</CTableDataCell>
+                      )}
+                      <CTableDataCell scope="row">
+                        {isProjectAllocationEdit &&
+                        projectReport.id === templateId ? (
+                          <>
+                            <CButton
+                              color="success"
+                              className="btn-ovh me-1"
+                              onClick={saveProjectAllocationHandler}
+                            >
+                              <i
+                                className="fa fa-floppy-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                            <CButton
+                              color="warning"
+                              data-testid="cancel-btn"
+                              className="btn-ovh me-1"
+                              onClick={cancelProjectAllocationButtonHandler}
+                            >
+                              <i className="fa fa-times" aria-hidden="true"></i>
+                            </CButton>
+                          </>
+                        ) : (
+                          <>
+                            {userAccess?.updateaccess && (
+                              <CButton
+                                color="info btn-ovh me-2"
+                                data-testid="edit-btn"
+                                onClick={() => {
+                                  editProjectAllocationButtonHandler(
+                                    projectReport,
+                                  )
+                                }}
+                              >
+                                <i className="fa fa-pencil-square-o"></i>
+                              </CButton>
+                            )}
+                          </>
+                        )}
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
             </CTableBody>
           </CTable>
+          <p>No Records Found...</p>
         </CTableDataCell>
       </CTableRow>
     </>

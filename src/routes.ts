@@ -112,11 +112,19 @@ const LeaveSummary = React.lazy(
     ),
 )
 const AddProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/AddProject/AddProject'
+    ),
 )
-
 const EditProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/EditProject/EditProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/EditProject/EditProject'
+    ),
+)
+const ProjectReport = React.lazy(
+  () => import('./pages/ProjectManagement/Project/ProjectReport'),
 )
 const EditClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/EditClient/EditClient'),
@@ -218,6 +226,14 @@ const RoomList = React.lazy(
 
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
+)
+
+const SubmitResignation = React.lazy(
+  () => import('./pages/Separation/SubmitViewResignation/SubmitResignation'),
+)
+
+const LeaveApprovals = React.lazy(
+  () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
 )
 
 /**
@@ -488,6 +504,21 @@ const routes = [
     path: '/subCategoryList',
     name: 'Ticket Configuration',
     component: TicketConfiguration,
+  },
+  {
+    path: '/submitResignation',
+    name: 'Submit View Resignation',
+    component: SubmitResignation,
+  },
+  {
+    path: '/projectreport',
+    name: 'Project Report',
+    component: ProjectReport,
+  },
+  {
+    path: '/leaveApprovals',
+    name: 'Leave Approvals',
+    component: LeaveApprovals,
   },
 ]
 
