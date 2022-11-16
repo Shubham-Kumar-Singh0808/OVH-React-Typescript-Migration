@@ -126,13 +126,6 @@ const CategoryListTable = (): JSX.Element => {
       dispatch(reduxServices.ticketConfiguration.getAllCategory())
     }
   }
-
-  // const currentPageItems = useMemo(() => {
-  //   if (ticketCategories?.length || undefined) {
-  //     currentPageData(ticketCategories, currentPage, pageSize)
-  //   }
-  // }, [ticketCategories, currentPage, pageSize])
-
   const updateCategoryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
