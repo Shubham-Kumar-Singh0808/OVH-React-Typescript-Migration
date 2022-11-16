@@ -227,6 +227,11 @@ const RoomList = React.lazy(
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
+
+const SubmitResignation = React.lazy(
+  () => import('./pages/Separation/SubmitViewResignation/SubmitResignation'),
+)
+
 const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
 )
@@ -499,6 +504,11 @@ const routes = [
     path: '/subCategoryList',
     name: 'Ticket Configuration',
     component: TicketConfiguration,
+  },
+  {
+    path: '/submitResignation',
+    name: 'Submit View Resignation',
+    component: SubmitResignation,
   },
   {
     path: '/projectreport',
