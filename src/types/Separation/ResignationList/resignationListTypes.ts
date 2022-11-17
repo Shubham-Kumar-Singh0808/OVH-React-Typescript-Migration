@@ -54,7 +54,7 @@ export type GetResignationListProps = {
   endIndex: number
   from: string
   multiplesearch: string
-  startIndex: string
+  startIndex: string | number
   status: string
   to: string
 }

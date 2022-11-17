@@ -47,7 +47,7 @@ const resignationListSlice = createSlice({
         state.resignationList = action.payload
       })
       .addCase(getResignationList.pending, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
+        state.isLoading = ApiLoadingState.loading
       })
   },
 })

@@ -2,12 +2,27 @@ import { CRow, CCol, CFormLabel, CFormSelect, CButton } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
+import ResignationListTable from './ResignationListTable'
 import { deviceLocale, showIsRequired } from '../../../utils/helper'
+import { useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const ResignationListFilterOptions = (): JSX.Element => {
   const [dateError, setDateError] = useState<boolean>(false)
   const [fromDate, setFromDate] = useState<Date | string>()
   const [toDate, setToDate] = useState<Date | string>()
+
+  const listSize = useTypedSelector(
+    reduxServices.resignationList.selectors.resignationListSize,
+  )
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(listSize, 20)
   const commonFormatDate = 'l'
   const fromDateValue = fromDate
     ? new Date(fromDate).toLocaleDateString(deviceLocale, {
@@ -168,6 +183,13 @@ const ResignationListFilterOptions = (): JSX.Element => {
           </CButton>
         </CCol>
       </CRow>
+      <ResignationListTable
+        paginationRange={paginationRange}
+        setPageSize={setPageSize}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        pageSize={pageSize}
+      />
     </>
   )
 }
