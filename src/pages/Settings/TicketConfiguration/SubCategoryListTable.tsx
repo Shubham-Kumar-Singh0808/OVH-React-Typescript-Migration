@@ -133,7 +133,7 @@ const SubCategoryListTable = (
   const paginationComponent =
     subCategoryList?.size > 0 ? (
       <CRow className="mt-3">
-        <CCol md={3} className="pull-left">
+        <CCol xs={4}>
           <strong>{`Total Records: ${subCategoryList.size}`}</strong>
         </CCol>
         <CCol xs={3}>
@@ -218,7 +218,7 @@ const SubCategoryListTable = (
                                 <CButton
                                   color="info btn-ovh me-1"
                                   className="btn-ovh-employee-list"
-                                  data-testid={`th-edit-btn${index}`}
+                                  data-testid={`sc-edit-btn${index}`}
                                 >
                                   <i
                                     className="fa fa-edit"
@@ -231,7 +231,7 @@ const SubCategoryListTable = (
                               <CButton
                                 color="info btn-ovh me-1"
                                 className="btn-ovh-employee-list"
-                                data-testid={`th-timeline-btn${index}`}
+                                data-testid={`sc-timeline-btn${index}`}
                                 onClick={() =>
                                   handleTicketHistoryClick(ticket.subCategoryId)
                                 }
@@ -253,7 +253,7 @@ const SubCategoryListTable = (
                                       ticket.subCategoryName,
                                     )
                                   }
-                                  data-testid={`th-delete-btn${index}`}
+                                  data-testid={`sc-delete-btn${index}`}
                                 >
                                   <i
                                     className="fa fa-trash-o"

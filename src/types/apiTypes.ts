@@ -470,6 +470,10 @@ export interface TicketConfigurationApi extends ApiBase {
   deleteSubCategory: string
   ticketHistory: string
   addSubCategory: string
+  getAllCategory: string
+  addCategory: string
+  updateCategory: string
+  deleteCategory: string
 }
 
 export interface SubmitResignationApi extends ApiBase {
