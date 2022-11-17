@@ -1,10 +1,10 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 export type ResignationList = {
-  separationId: 257
+  separationId: number
   relievingDate: string
   resignationDate: string
-  employeeId: 2047
+  employeeId: number
   employeeName: string
   separationComments: null
   employeeComments: null

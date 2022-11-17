@@ -64,7 +64,7 @@ const ResignationListFilterOptions = ({
     dispatch(
       reduxServices.resignationList.getResignationList({
         dateSelection: Select,
-        empStatus: '',
+        empStatus: employeeStatus as string,
         endIndex: pageSize * currentPage,
         from: fromDate
           ? new Date(fromDate).toLocaleDateString(deviceLocale, {
@@ -75,7 +75,7 @@ const ResignationListFilterOptions = ({
           : '',
         multiplesearch: '',
         startIndex: pageSize * (currentPage - 1),
-        status: '',
+        status: status as string,
         to: toDate
           ? new Date(toDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
@@ -129,11 +129,13 @@ const ResignationListFilterOptions = ({
               All
             </option>
             <option value="All">All</option>
-            <option value="Resigned">Resigned</option>
-            <option value="Pending Approval">Pending Approval</option>
-            <option value="Under Notice">Under Notice</option>
-            <option value="Relieved">Relieved</option>
-            <option value="Absconding">Absconding</option>
+            <option value="SUBMITRESIGNATION">Resigned</option>
+            <option value="DISCUSSIONWITHREPORTINGMANAGER">
+              Pending Approval
+            </option>
+            <option value="UNDERNOTICE">Under Notice</option>
+            <option value="RELIEVED">Relieved</option>
+            <option value="ABSCOND">Absconding</option>
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={1} className="text-end">
@@ -143,9 +145,9 @@ const ResignationListFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="allocationStatus"
+            id="employeeStatus"
             data-testid="form-select3"
-            name="allocationStatus"
+            name="employeeStatus"
             value={employeeStatus}
             onChange={(e) => {
               setEmployeeStatus(e.target.value)
