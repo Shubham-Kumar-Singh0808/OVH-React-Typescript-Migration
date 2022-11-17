@@ -44,6 +44,25 @@ describe('appraisal Configuration', () => {
         error: null,
       })
     })
+
+    it('Should be able to set isLoading to "failed" if getAllAppraisalCycle is rejected', () => {
+      const action = {
+        type: appraisalCycleService.getAllAppraisalCycle.rejected.type,
+        payload: 500,
+      }
+      const state = appraisalConfigurationReducer(
+        initialAppraisalCycleSliceState,
+        action,
+      )
+      expect(state).toEqual({
+        appraisalCycle: [],
+        editAppraisalCycle: {} as getCycle,
+        isLoading: ApiLoadingState.failed,
+        currentPage: 1,
+        pageSize: 20,
+        error: 500,
+      })
+    })
   })
 
   describe('getCycleToEdit test', () => {
@@ -81,6 +100,25 @@ describe('appraisal Configuration', () => {
         currentPage: 1,
         pageSize: 20,
         error: null,
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if getAllAppraisalCycle is rejected', () => {
+      const action = {
+        type: appraisalCycleService.getCycleToEdit.rejected.type,
+        payload: 500,
+      }
+      const state = appraisalConfigurationReducer(
+        initialAppraisalCycleSliceState,
+        action,
+      )
+      expect(state).toEqual({
+        appraisalCycle: [],
+        editAppraisalCycle: {} as getCycle,
+        isLoading: ApiLoadingState.failed,
+        currentPage: 1,
+        pageSize: 20,
+        error: 500,
       })
     })
   })
@@ -121,6 +159,25 @@ describe('appraisal Configuration', () => {
         error: null,
       })
     })
+
+    it('Should be able to set isLoading to "failed" if updateAppraisalCycle is rejected', () => {
+      const action = {
+        type: appraisalCycleService.updateAppraisalCycle.rejected.type,
+        payload: 500,
+      }
+      const state = appraisalConfigurationReducer(
+        initialAppraisalCycleSliceState,
+        action,
+      )
+      expect(state).toEqual({
+        appraisalCycle: [],
+        editAppraisalCycle: {} as getCycle,
+        isLoading: ApiLoadingState.failed,
+        currentPage: 1,
+        pageSize: 20,
+        error: 500,
+      })
+    })
   })
 
   describe('validateAppraisalCycle test', () => {
@@ -157,6 +214,25 @@ describe('appraisal Configuration', () => {
         currentPage: 1,
         pageSize: 20,
         error: null,
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if validateAppraisalCycle is rejected', () => {
+      const action = {
+        type: appraisalCycleService.validateAppraisalCycle.rejected.type,
+        payload: 500,
+      }
+      const state = appraisalConfigurationReducer(
+        initialAppraisalCycleSliceState,
+        action,
+      )
+      expect(state).toEqual({
+        appraisalCycle: [],
+        editAppraisalCycle: {} as getCycle,
+        isLoading: ApiLoadingState.failed,
+        currentPage: 1,
+        pageSize: 20,
+        error: 500,
       })
     })
   })

@@ -113,7 +113,23 @@ const appraisalCycleSlice = createSlice({
         isAnyOf(getAllAppraisalCycleData.fulfilled),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.appraisalCycle = action.payload as getAppraisalCycle[]
+          state.appraisalCycle = action.payload
+        },
+      )
+      .addMatcher(isAnyOf(getCycleToEdit.fulfilled), (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editAppraisalCycle = action.payload
+      })
+      .addMatcher(
+        isAnyOf(
+          getCycleToEdit.rejected,
+          getAllAppraisalCycleData.rejected,
+          validateAppraisalCycle.rejected,
+          updateAppraisalCycle.rejected,
+        ),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.failed
+          state.error = action.payload as ValidationError
         },
       )
   },
