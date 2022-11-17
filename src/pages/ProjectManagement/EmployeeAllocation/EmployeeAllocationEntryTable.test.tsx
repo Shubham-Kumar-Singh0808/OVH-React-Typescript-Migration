@@ -43,7 +43,4 @@ describe('Employee Allocation Entry Table Component Testing', () => {
       expect(screen.getByText(project.projectName)).toBeInTheDocument()
     })
   })
-  test('should render with number of records  ', () => {
-    expect(screen.getByText('No Records Found...')).toBeInTheDocument()
-  })
 })
