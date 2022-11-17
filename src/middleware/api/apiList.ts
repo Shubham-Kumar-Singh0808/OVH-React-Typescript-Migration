@@ -566,6 +566,7 @@ export const assignTemplateApiConfig: assignTemplateApi = {
   getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
   getDesignationNumber: apiPrefix + '/appraisal/underKras',
   copyTheCycleData: apiPrefix + '/appraisal/copyTheCycleData',
+  kpisForIndividualKra: apiPrefix + '/kra/kpisForIndividualKra',
 }
 
 export const ticketConfigurationApiConfig: TicketConfigurationApi = {

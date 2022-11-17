@@ -34,4 +34,29 @@ export type AssignTemplateSliceState = {
   designationDeptIds: getDepartmentNames[]
   designationWiseKRA: getDesignationWiseKRA[]
   isLoading: ApiLoadingState
+  kpisForIndividualKra: IndividualKra[]
+}
+
+export type IndividualKra = {
+  id: number
+  name: string
+  description: string
+  frequencyId: number
+  frequency: string
+  target: string
+  kraDto: kraData
+}
+
+export type kraData = {
+  id: number
+  name: string
+  description: null
+  kpiLookps: null
+  count: 0
+  checkType: null
+  designationName: null
+  designationId: null
+  departmentName: null
+  departmentId: null
+  designationKraPercentage: null
 }

@@ -8,22 +8,27 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import AssignTemplateTable from './AssignTemplateTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { getAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
 const AssignTemplate = (): JSX.Element => {
   const [selectDepartment, setSelectDepartment] = useState<number>()
   const [selectDesignation, setSelectDesignation] = useState<number>()
   const [selectPreviousCycle, setSelectPreviousCycle] = useState('')
+  const { cycleId } = useParams<{ cycleId: string }>()
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
+
+  const initialCycle = {} as getAppraisalCycle
+  const [cycle, setCycle] = useState(initialCycle)
 
   const dispatch = useAppDispatch()
 
@@ -48,21 +53,8 @@ const AssignTemplate = (): JSX.Element => {
   }, [dispatch])
 
   useEffect(() => {
-    if (selectDepartment) {
-      dispatch(
-        reduxServices.assignTemplate.getDesignationId(Number(selectDepartment)),
-        // setSelectDesignation(0),
-      )
-    }
-    // if (selectDesignation) {
-    //   dispatch(
-    //     reduxServices.assignTemplate.getDesignationWiseKRAs(
-    //       selectDesignation,
-    //       selectDepartment,
-    //     ),
-    //   )
-    // }
-  }, [selectDepartment, selectDesignation])
+    dispatch(reduxServices.assignTemplate.getCycleId(Number(cycleId)))
+  }, [dispatch])
 
   return (
     <>
@@ -100,6 +92,8 @@ const AssignTemplate = (): JSX.Element => {
                 id="appraisalTitle"
                 size="sm"
                 name="name"
+                disabled={true}
+                value={cycle.name}
               />
             </CCol>
           </CRow>

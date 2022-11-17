@@ -1,6 +1,7 @@
 import {
   getDepartmentNames,
   getEmpDepartments,
+  IndividualKra,
 } from '../../../../types/Settings/Configurations/assignTemplateTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -89,6 +90,22 @@ const copyCycleData = async ({
   return response.data
 }
 
+const kpisForIndividualKra = async ({
+  kraId,
+}: {
+  kraId: number
+}): Promise<IndividualKra> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: assignTemplateApiConfig.kpisForIndividualKra,
+    method: AllowedHttpMethods.get,
+    params: {
+      kraId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const assignTemplateApi = {
   getAllEmpDepartments,
   getDesignationId,
@@ -96,6 +113,7 @@ const assignTemplateApi = {
   getDesignationWiseKRAs,
   getUnderKras,
   copyCycleData,
+  kpisForIndividualKra,
 }
 
 export default assignTemplateApi

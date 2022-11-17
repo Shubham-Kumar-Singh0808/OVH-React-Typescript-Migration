@@ -466,6 +466,7 @@ export interface assignTemplateApi extends ApiBase {
   getDesignationWiseKRAs: string
   getDesignationNumber: string
   copyTheCycleData: string
+  kpisForIndividualKra: string
 }
 
 export interface TicketConfigurationApi extends ApiBase {

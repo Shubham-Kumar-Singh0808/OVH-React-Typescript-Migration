@@ -9,6 +9,7 @@ import {
   getDepartmentNames,
   getDesignationWiseKRA,
   getEmpDepartments,
+  IndividualKra,
 } from '../../../types/Settings/Configurations/assignTemplateTypes'
 
 const getAllEmpDepartmentNames = createAsyncThunk(
@@ -107,10 +108,32 @@ const copyCycleData = createAsyncThunk(
   },
 )
 
+const kpiForIndividualKra = createAsyncThunk(
+  'assignTemplate/kpisForIndividualKra',
+  async (
+    {
+      kraId,
+    }: {
+      kraId: number
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await assignTemplateApi.kpisForIndividualKra({
+        kraId,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialAssignTemplateSliceState: AssignTemplateSliceState = {
   empDepartments: [],
   designationDeptIds: [],
   designationWiseKRA: [],
+  kpisForIndividualKra: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -126,6 +149,7 @@ const assignTemplateSlice = createSlice({
           getAllEmpDepartmentNames.pending,
           getDesignationId.pending,
           getDesignationWiseKRAs.pending,
+          kpiForIndividualKra.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -136,6 +160,7 @@ const assignTemplateSlice = createSlice({
           getAllEmpDepartmentNames.fulfilled,
           getDesignationId.fulfilled,
           getDesignationWiseKRAs.fulfilled,
+          kpiForIndividualKra.fulfilled,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -144,6 +169,8 @@ const assignTemplateSlice = createSlice({
             action.payload as unknown as getDepartmentNames[]
           state.designationWiseKRA =
             action.payload as unknown as getDesignationWiseKRA[]
+          state.kpisForIndividualKra =
+            action.payload as unknown as IndividualKra[]
         },
       )
   },
@@ -168,6 +195,7 @@ const appraisalCycleThunk = {
   getDesignationWiseKRAs,
   getAppraisalUnderKra,
   copyCycleData,
+  kpiForIndividualKra,
 }
 
 const assignTemplateSelectors = {

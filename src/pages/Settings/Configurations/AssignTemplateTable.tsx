@@ -9,10 +9,19 @@ import {
   CCol,
   CFormInput,
   CInputGroup,
+  CTableBody,
+  CTableDataCell,
+  CFormCheck,
 } from '@coreui/react-pro'
+import { useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const AssignTemplateTable = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
+  const designationName = useTypedSelector(
+    reduxServices.assignTemplate.selectors.designationID,
+  )
+
   return (
     <>
       <CRow className="gap-2 d-md-flex justify-content-md-end mt-3">
@@ -55,7 +64,37 @@ const AssignTemplateTable = (): JSX.Element => {
             <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
+        <CTableBody>
+          {designationName &&
+            designationName?.map((designationKRA, index) => {
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell>
+                    <CFormCheck
+                      className="form-check-input"
+                      name="checkType"
+                      checked={designationKRA.checkType as unknown as boolean}
+                    />
+                  </CTableDataCell>
+                  <CTableDataCell>{designationKRA.name}</CTableDataCell>
+                  <CTableDataCell>{designationKRA.description}</CTableDataCell>
+                  <CTableDataCell>{designationKRA.count}</CTableDataCell>
+                </CTableRow>
+              )
+            })}
+        </CTableBody>
       </CTable>
+      <CRow>
+        <CCol xs={4}>
+          <p>
+            <strong>Total Records: {designationName.length}</strong>
+          </p>
+        </CCol>
+      </CRow>
+      {designationName?.length !== 0 && (
+        <strong className="ml14">No Records Found...</strong>
+      )}
+
       <CRow>
         <CCol md={{ span: 6, offset: 3 }}>
           <CButton
