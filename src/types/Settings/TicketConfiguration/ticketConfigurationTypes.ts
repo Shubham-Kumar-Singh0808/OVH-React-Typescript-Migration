@@ -51,10 +51,13 @@ export type TicketConfigurationState = {
   listSize: number
   ticketHistoryDetails: TicketHistoryResponse
   addSubCategoryDetails: AddSubCategoryDetails
+  category: Category[]
   toggle: string
   isLoading: LoadingState
   error: ValidationError
   isLoadingFilterOptions: LoadingState
+  currentPage: number
+  pageSize: number
 }
 
 export type TicketConfigurationSubCategoryList = {
@@ -143,4 +146,18 @@ export type AddSubCategoryDetails = {
   levelOfHierarchy?: string | number
   subCategoryName?: string
   workFlow?: boolean
+}
+
+export type Category = {
+  categoryId: number
+  categoryName: string
+  departmentId: number
+  departmentName: string
+  mealType: boolean
+}
+
+export type AddCategory = {
+  categoryName?: string
+  departmentId?: string | number
+  mealType?: boolean
 }
