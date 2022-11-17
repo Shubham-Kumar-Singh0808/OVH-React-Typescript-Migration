@@ -86,6 +86,25 @@ const ResignationListFilterOptions = ({
       }),
     )
   }
+  const clearButtonHandler = () => {
+    setSelect('')
+    setStatus('')
+    setEmployeeStatus('')
+    setFromDate('')
+    setToDate('')
+    dispatch(
+      reduxServices.resignationList.getResignationList({
+        dateSelection: '',
+        empStatus: '',
+        endIndex: pageSize * currentPage,
+        from: '',
+        multiplesearch: '',
+        startIndex: pageSize * (currentPage - 1),
+        status: 'ALL',
+        to: '',
+      }),
+    )
+  }
   return (
     <>
       <CRow className="employeeAllocation-form">
@@ -128,7 +147,6 @@ const ResignationListFilterOptions = ({
             <option value="All" selected>
               All
             </option>
-            <option value="All">All</option>
             <option value="SUBMITRESIGNATION">Resigned</option>
             <option value="DISCUSSIONWITHREPORTINGMANAGER">
               Pending Approval
@@ -232,6 +250,7 @@ const ResignationListFilterOptions = ({
             disabled={false}
             data-testid="clear-btn"
             color="warning btn-ovh me-1"
+            onClick={clearButtonHandler}
           >
             Clear
           </CButton>
