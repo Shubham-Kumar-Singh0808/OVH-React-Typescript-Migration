@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import resignationListApi from '../../../middleware/api/Separation/SubmitViewResignation/ResignationList/resignationListApi'
+import resignationListApi from '../../../middleware/api/Separation/ResignationList/resignationListApi'
 import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {

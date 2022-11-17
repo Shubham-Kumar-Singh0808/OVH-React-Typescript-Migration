@@ -1,12 +1,12 @@
 import {
   GetResignationListProps,
   ResignationListResponse,
-} from '../../../../../types/Separation/ResignationList/resignationListTypes'
+} from '../../../../types/Separation/ResignationList/resignationListTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
-} from '../../../../../utils/apiUtils'
-import { AllowedHttpMethods, resignationListApiConfig } from '../../../apiList'
+} from '../../../../utils/apiUtils'
+import { AllowedHttpMethods, resignationListApiConfig } from '../../apiList'
 
 const getResignationList = async (
   props: GetResignationListProps,
