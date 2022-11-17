@@ -46,7 +46,7 @@ const ResignationListTable = ({
   useEffect(() => {
     dispatch(
       reduxServices.resignationList.getResignationList({
-        dateSelection: 0,
+        dateSelection: '',
         empStatus: '',
         endIndex: pageSize * currentPage,
         from: '',
