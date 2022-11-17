@@ -4,18 +4,26 @@ import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import ResignationListTable from './ResignationListTable'
 import { deviceLocale, showIsRequired } from '../../../utils/helper'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
-const ResignationListFilterOptions = (): JSX.Element => {
+const ResignationListFilterOptions = ({
+  Select,
+  setSelect,
+}: {
+  Select: string
+  setSelect: React.Dispatch<React.SetStateAction<string>>
+}): JSX.Element => {
   const [dateError, setDateError] = useState<boolean>(false)
   const [fromDate, setFromDate] = useState<Date | string>()
   const [toDate, setToDate] = useState<Date | string>()
-
+  const [status, setStatus] = useState<string>()
+  const [employeeStatus, setEmployeeStatus] = useState<string>()
   const listSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
   )
+  const dispatch = useAppDispatch()
   const {
     paginationRange,
     setPageSize,
@@ -52,6 +60,32 @@ const ResignationListFilterOptions = (): JSX.Element => {
       setDateError(false)
     }
   }, [fromDate, toDate])
+  const handleViewButtonHandler = () => {
+    dispatch(
+      reduxServices.resignationList.getResignationList({
+        dateSelection: Select,
+        empStatus: '',
+        endIndex: pageSize * currentPage,
+        from: fromDate
+          ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        multiplesearch: '',
+        startIndex: pageSize * (currentPage - 1),
+        status: '',
+        to: toDate
+          ? new Date(toDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+      }),
+    )
+  }
   return (
     <>
       <CRow className="employeeAllocation-form">
@@ -65,6 +99,10 @@ const ResignationListFilterOptions = (): JSX.Element => {
             id="Select"
             data-testid="form-select1"
             name="Select"
+            value={Select}
+            onChange={(e) => {
+              setSelect(e.target.value)
+            }}
           >
             <option value="Today">Select Month</option>
             <option value="Last Month">Last Month</option>
@@ -79,9 +117,13 @@ const ResignationListFilterOptions = (): JSX.Element => {
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="billingStatus"
+            id="status"
             data-testid="form-select2"
-            name="billingStatus"
+            name="status"
+            value={status}
+            onChange={(e) => {
+              setStatus(e.target.value)
+            }}
           >
             <option value="All" selected>
               All
@@ -104,72 +146,82 @@ const ResignationListFilterOptions = (): JSX.Element => {
             id="allocationStatus"
             data-testid="form-select3"
             name="allocationStatus"
+            value={employeeStatus}
+            onChange={(e) => {
+              setEmployeeStatus(e.target.value)
+            }}
           >
             <option value="">Employee Status</option>
             <option value="Active">Active</option>
             <option value="InActive">InActive</option>
           </CFormSelect>
         </CCol>
-        <>
-          <CCol sm={2} md={1} className="text-end">
-            <CFormLabel className="mt-1">
-              From:{' '}
-              <span className={showIsRequired(fromDate as string)}>*</span>
-            </CFormLabel>
-          </CCol>
-          <CCol sm={2}>
-            <DatePicker
-              className="form-control form-control-sm sh-date-picker"
-              data-testid="date-picker"
-              placeholderText="dd/mm/yy"
-              name="fromDate"
-              maxDate={new Date()}
-              autoComplete="off"
-              id="fromDate"
-              peekNextMonth
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              value={fromDateValue}
-              onChange={(date: Date) => setFromDate(date)}
-              selected={fromDate as Date}
-            />
-          </CCol>
-          <CCol sm={2} md={1} className="text-end">
-            <CFormLabel className="mt-1">
-              To:<span className={showIsRequired(toDate as string)}>*</span>
-            </CFormLabel>
-          </CCol>
-          <CCol sm={2}>
-            <DatePicker
-              className="form-control form-control-sm sh-date-picker"
-              data-testid="date-picker"
-              placeholderText="dd/mm/yy"
-              name="toDate"
-              id="toDate"
-              autoComplete="off"
-              peekNextMonth
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              value={toDateValue}
-              onChange={(date: Date) => setToDate(date)}
-              selected={toDate as Date}
-            />
-            {dateError && (
-              <span className="text-danger" data-testid="errorMessage">
-                To date should be greater than From date
-              </span>
-            )}
-          </CCol>
-        </>
+        {Select === 'Custom' ? (
+          <>
+            <CCol sm={2} md={1} className="text-end">
+              <CFormLabel className="mt-1">
+                From:{' '}
+                <span className={showIsRequired(fromDate as string)}>*</span>
+              </CFormLabel>
+            </CCol>
+            <CCol sm={2}>
+              <DatePicker
+                className="form-control form-control-sm sh-date-picker"
+                data-testid="date-picker"
+                placeholderText="dd/mm/yy"
+                name="fromDate"
+                maxDate={new Date()}
+                autoComplete="off"
+                id="fromDate"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                value={fromDateValue}
+                onChange={(date: Date) => setFromDate(date)}
+                selected={fromDate as Date}
+              />
+            </CCol>
+            <CCol sm={2} md={1} className="text-end">
+              <CFormLabel className="mt-1">
+                To:<span className={showIsRequired(toDate as string)}>*</span>
+              </CFormLabel>
+            </CCol>
+            <CCol sm={2}>
+              <DatePicker
+                className="form-control form-control-sm sh-date-picker"
+                data-testid="date-picker"
+                placeholderText="dd/mm/yy"
+                name="toDate"
+                id="toDate"
+                autoComplete="off"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                value={toDateValue}
+                onChange={(date: Date) => setToDate(date)}
+                selected={toDate as Date}
+              />
+              {dateError && (
+                <span className="text-danger" data-testid="errorMessage">
+                  To date should be greater than From date
+                </span>
+              )}
+            </CCol>
+          </>
+        ) : (
+          <></>
+        )}
       </CRow>
+
       <CRow className="mt-5 mb-4">
         <CCol sm={{ span: 6, offset: 3 }}>
           <CButton
             className="cursor-pointer"
             color="success btn-ovh me-1"
             data-testid="view-btn"
+            onClick={handleViewButtonHandler}
           >
             View
           </CButton>

@@ -49,7 +49,7 @@ export type ResignationListResponse = {
 }
 
 export type GetResignationListProps = {
-  dateSelection: number
+  dateSelection: number | string
   empStatus: string
   endIndex: number
   from: string

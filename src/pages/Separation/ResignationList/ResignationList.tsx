@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ResignationListFilterOptions from './ResignationListFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const ResignationList = (): JSX.Element => {
+  const [Select, setSelect] = useState<string>('')
   return (
     <>
       <OCard
@@ -11,7 +12,7 @@ const ResignationList = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <ResignationListFilterOptions />
+        <ResignationListFilterOptions Select={Select} setSelect={setSelect} />
       </OCard>
     </>
   )
