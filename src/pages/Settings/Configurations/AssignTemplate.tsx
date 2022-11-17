@@ -27,9 +27,6 @@ const AssignTemplate = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
 
-  const initialCycle = {} as getAppraisalCycle
-  const [cycle, setCycle] = useState(initialCycle)
-
   const dispatch = useAppDispatch()
 
   const departmentName = useTypedSelector(
@@ -46,15 +43,28 @@ const AssignTemplate = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(reduxServices.assignTemplate.getAllEmpDepartmentNames())
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(reduxServices.assignTemplate.getCycleId(Number(cycleId)))
   }, [dispatch])
+
+  useEffect(() => {
+    if (selectDepartment) {
+      dispatch(
+        reduxServices.assignTemplate.getDesignationId(Number(selectDepartment)),
+      )
+    }
+  }, [selectDepartment])
+
+  useEffect(() => {
+    if (selectDesignation) {
+      dispatch(
+        reduxServices.assignTemplate.getDesignationWiseKRAs({
+          departmentId: selectDepartment as number,
+          designationId: selectDesignation,
+        }),
+      )
+    }
+  }, [selectDepartment, selectDesignation])
 
   return (
     <>
@@ -87,13 +97,13 @@ const AssignTemplate = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                className="form-control form-control-not-allowed"
                 data-testid="appraisalTitle"
                 type="text"
                 id="appraisalTitle"
                 size="sm"
                 name="name"
                 disabled={true}
-                value={cycle.name}
               />
             </CCol>
           </CRow>

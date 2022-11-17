@@ -18,9 +18,12 @@ import { reduxServices } from '../../../reducers/reduxServices'
 
 const AssignTemplateTable = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
+  const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
+
   const designationName = useTypedSelector(
     reduxServices.assignTemplate.selectors.designationID,
   )
+  console.log(designationName)
 
   return (
     <>
@@ -91,9 +94,7 @@ const AssignTemplateTable = (): JSX.Element => {
           </p>
         </CCol>
       </CRow>
-      {designationName?.length !== 0 && (
-        <strong className="ml14">No Records Found...</strong>
-      )}
+      {designationName?.length !== 0 && <strong>No Records Found...</strong>}
 
       <CRow>
         <CCol md={{ span: 6, offset: 3 }}>
@@ -101,6 +102,7 @@ const AssignTemplateTable = (): JSX.Element => {
             data-testid="save-btn"
             className="btn-ovh me-1 text-white"
             color="success"
+            disabled={!isButtonEnabled}
           >
             Save
           </CButton>

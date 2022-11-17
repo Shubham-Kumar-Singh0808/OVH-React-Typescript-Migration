@@ -51,11 +51,11 @@ const getDesignationWiseKRAs = async ({
   designationId: number
 }): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: assignTemplateApiConfig.alreadyExistNewCycleId,
+    url: assignTemplateApiConfig.getDesignationWiseKRAs,
     method: AllowedHttpMethods.get,
     params: {
-      departmentID: departmentId,
-      designationID: designationId,
+      departmentId,
+      designationId,
     },
   })
   const response = await useAxios(requestConfig)
