@@ -565,6 +565,7 @@ export const assignTemplateApiConfig: assignTemplateApi = {
   alreadyExistNewCycleId: apiPrefix + '/appraisal/isAlreadyExist',
   getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
   getDesignationNumber: apiPrefix + '/appraisal/underKras',
+  copyTheCycleData: apiPrefix + '/appraisal/copyTheCycleData',
 }
 
 export const ticketConfigurationApiConfig: TicketConfigurationApi = {

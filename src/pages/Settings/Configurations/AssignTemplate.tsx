@@ -16,8 +16,8 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const AssignTemplate = (): JSX.Element => {
-  const [selectDepartment, setSelectDepartment] = useState('')
-  const [selectDesignation, setSelectDesignation] = useState('')
+  const [selectDepartment, setSelectDepartment] = useState<number>()
+  const [selectDesignation, setSelectDesignation] = useState<number>()
   const [selectPreviousCycle, setSelectPreviousCycle] = useState('')
 
   const formLabelProps = {
@@ -35,6 +35,10 @@ const AssignTemplate = (): JSX.Element => {
     reduxServices.appraisalConfigurations.selectors.appraisalCycleNames,
   )
 
+  const designationName = useTypedSelector(
+    reduxServices.assignTemplate.selectors.designationID,
+  )
+
   useEffect(() => {
     dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
   }, [dispatch])
@@ -44,11 +48,21 @@ const AssignTemplate = (): JSX.Element => {
   }, [dispatch])
 
   useEffect(() => {
-    if (selectDepartment)
+    if (selectDepartment) {
       dispatch(
         reduxServices.assignTemplate.getDesignationId(Number(selectDepartment)),
+        // setSelectDesignation(0),
       )
-  }, [dispatch, selectDepartment])
+    }
+    // if (selectDesignation) {
+    //   dispatch(
+    //     reduxServices.assignTemplate.getDesignationWiseKRAs(
+    //       selectDesignation,
+    //       selectDepartment,
+    //     ),
+    //   )
+    // }
+  }, [selectDepartment, selectDesignation])
 
   return (
     <>
@@ -141,7 +155,7 @@ const AssignTemplate = (): JSX.Element => {
                 name="department"
                 value={selectDepartment}
                 onChange={(e) => {
-                  setSelectDepartment(e.target.value)
+                  setSelectDepartment(Number(e.target.value))
                 }}
               >
                 <option value={''}>Select Department</option>
@@ -171,15 +185,23 @@ const AssignTemplate = (): JSX.Element => {
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"
+                className="form-control-not-allowed"
                 id="designation"
                 data-testid="form-select1"
                 name="designation"
+                defaultValue={selectDesignation}
+                disabled={!selectDepartment}
                 value={selectDesignation}
                 onChange={(e) => {
-                  setSelectDesignation(e.target.value)
+                  setSelectDesignation(Number(e.target.value))
                 }}
               >
                 <option value={''}>Select Designation</option>
+                {designationName.map((designation, index) => (
+                  <option key={index} value={designation.id}>
+                    {designation.name}
+                  </option>
+                ))}
               </CFormSelect>
             </CCol>
           </CRow>

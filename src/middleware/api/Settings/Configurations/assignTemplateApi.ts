@@ -70,12 +70,32 @@ const getUnderKras = async (): Promise<number> => {
   return response.data
 }
 
+const copyCycleData = async ({
+  newCycleId,
+  oldCycleId,
+}: {
+  newCycleId: number
+  oldCycleId: number
+}): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: assignTemplateApiConfig.copyTheCycleData,
+    method: AllowedHttpMethods.post,
+    params: {
+      newCycleId,
+      oldCycleId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const assignTemplateApi = {
   getAllEmpDepartments,
   getDesignationId,
   getCycleId,
   getDesignationWiseKRAs,
   getUnderKras,
+  copyCycleData,
 }
 
 export default assignTemplateApi

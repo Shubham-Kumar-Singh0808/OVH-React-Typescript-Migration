@@ -465,6 +465,7 @@ export interface assignTemplateApi extends ApiBase {
   alreadyExistNewCycleId: string
   getDesignationWiseKRAs: string
   getDesignationNumber: string
+  copyTheCycleData: string
 }
 
 export interface TicketConfigurationApi extends ApiBase {

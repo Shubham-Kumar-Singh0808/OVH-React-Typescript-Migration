@@ -7,6 +7,7 @@ import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   AssignTemplateSliceState,
   getDepartmentNames,
+  getDesignationWiseKRA,
   getEmpDepartments,
 } from '../../../types/Settings/Configurations/assignTemplateTypes'
 
@@ -82,6 +83,30 @@ const getAppraisalUnderKra = createAsyncThunk(
   },
 )
 
+const copyCycleData = createAsyncThunk(
+  'assignTemplate/copyCycleData',
+  async (
+    {
+      newCycleId,
+      oldCycleId,
+    }: {
+      newCycleId: number
+      oldCycleId: number
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await assignTemplateApi.copyCycleData({
+        newCycleId,
+        oldCycleId,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialAssignTemplateSliceState: AssignTemplateSliceState = {
   empDepartments: [],
   designationDeptIds: [],
@@ -97,18 +122,28 @@ const assignTemplateSlice = createSlice({
     builder
 
       .addMatcher(
-        isAnyOf(getAllEmpDepartmentNames.pending, getDesignationId.pending),
+        isAnyOf(
+          getAllEmpDepartmentNames.pending,
+          getDesignationId.pending,
+          getDesignationWiseKRAs.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
-        isAnyOf(getAllEmpDepartmentNames.fulfilled, getDesignationId.fulfilled),
+        isAnyOf(
+          getAllEmpDepartmentNames.fulfilled,
+          getDesignationId.fulfilled,
+          getDesignationWiseKRAs.fulfilled,
+        ),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
           state.empDepartments = action.payload as getEmpDepartments[]
           state.designationDeptIds =
             action.payload as unknown as getDepartmentNames[]
+          state.designationWiseKRA =
+            action.payload as unknown as getDesignationWiseKRA[]
         },
       )
   },
@@ -123,18 +158,23 @@ const departmentID = (state: RootState): getDepartmentNames[] =>
 const isLoading = (state: RootState): LoadingState =>
   state.assignTemplate.isLoading
 
+const designationID = (state: RootState): getDesignationWiseKRA[] =>
+  state.assignTemplate.designationWiseKRA
+
 const appraisalCycleThunk = {
   getAllEmpDepartmentNames,
   getDesignationId,
   getCycleId,
   getDesignationWiseKRAs,
   getAppraisalUnderKra,
+  copyCycleData,
 }
 
 const assignTemplateSelectors = {
   isLoading,
   empDepartmentNames,
   departmentID,
+  designationID,
 }
 
 export const assignTemplateService = {
