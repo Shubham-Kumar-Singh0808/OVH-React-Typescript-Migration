@@ -1,11 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import ResignationViewList from './ResignationViewList'
 import EmployeeView from './EmployeeView'
+import { useTypedSelector } from '../../../stateStore'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const ResignationView = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
+  const getSeparation = useTypedSelector(
+    reduxServices.submitViewResignation.selectors.separationForm,
+  )
+  useEffect(() => {
+    if (getSeparation?.form?.separationExist) {
+      setToggle('')
+    }
+  }, [getSeparation])
   return (
     <>
       {toggle === '' && (

@@ -76,6 +76,14 @@ const SubmitResignationFilterOptions = ({
     }
   }, [primaryReason, submitResignation?.employeeComments, otherReason])
 
+  useEffect(() => {
+    if (!otherReason) {
+      setIsSubmitButtonEnabled(true)
+    } else {
+      setIsSubmitButtonEnabled(false)
+    }
+  }, [otherReason])
+
   const successToastMessage = (
     <OToast
       toastMessage="Resignation submitted Successfully."
