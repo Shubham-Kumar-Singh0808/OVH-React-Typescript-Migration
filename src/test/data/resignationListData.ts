@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { ResignationListResponse } from '../../types/Separation/ResignationList/resignationListTypes'
 
 export const mockResignationList: ResignationListResponse = {

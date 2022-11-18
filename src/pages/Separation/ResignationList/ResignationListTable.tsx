@@ -39,7 +39,7 @@ const ResignationListTable = ({
   const getAllResignationList = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListDetails,
   )
-  const listSize = useTypedSelector(
+  const resignationListSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
   )
 
@@ -148,11 +148,11 @@ const ResignationListTable = ({
           <CRow>
             <CCol xs={4}>
               <p>
-                <strong>Total Records: {listSize}</strong>
+                <strong>Total Records: {resignationListSize}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {listSize > 20 && (
+              {resignationListSize > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
                   options={[20, 40, 60, 80]}
@@ -160,7 +160,7 @@ const ResignationListTable = ({
                 />
               )}
             </CCol>
-            {listSize > 20 && (
+            {resignationListSize > 20 && (
               <CCol
                 xs={5}
                 className="gap-1 d-grid d-md-flex justify-content-md-end"

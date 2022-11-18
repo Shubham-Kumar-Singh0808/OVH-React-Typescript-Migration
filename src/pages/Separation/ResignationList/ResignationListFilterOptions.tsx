@@ -29,8 +29,8 @@ const ResignationListFilterOptions = ({
   setSelect: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const [dateError, setDateError] = useState<boolean>(false)
-  const [fromDate, setFromDate] = useState<Date | string>()
-  const [toDate, setToDate] = useState<Date | string>()
+  const [selectFromDate, setSelectFromDate] = useState<Date | string>()
+  const [selectToDate, setSelectToDate] = useState<Date | string>()
   const [status, setStatus] = useState<string>()
   const [employeeStatus, setEmployeeStatus] = useState<string>()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -46,16 +46,16 @@ const ResignationListFilterOptions = ({
     pageSize,
   } = usePagination(listSize, 20)
   const commonFormatDate = 'l'
-  const fromDateValue = fromDate
-    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+  const fromDateValue = selectFromDate
+    ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
         year: 'numeric',
         month: 'numeric',
         day: '2-digit',
       })
     : ''
 
-  const toDateValue = toDate
-    ? new Date(toDate).toLocaleDateString(deviceLocale, {
+  const toDateValue = selectToDate
+    ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
         year: 'numeric',
         month: 'numeric',
         day: '2-digit',
@@ -63,25 +63,29 @@ const ResignationListFilterOptions = ({
     : ''
   useEffect(() => {
     const newFromDate = new Date(
-      moment(fromDate?.toString()).format(commonFormatDate),
+      moment(selectFromDate?.toString()).format(commonFormatDate),
     )
     const newToDate = new Date(
-      moment(toDate?.toString()).format(commonFormatDate),
+      moment(selectToDate?.toString()).format(commonFormatDate),
     )
-    if (fromDate && toDate && newToDate.getTime() < newFromDate.getTime()) {
+    if (
+      selectFromDate &&
+      selectToDate &&
+      newToDate.getTime() < newFromDate.getTime()
+    ) {
       setDateError(true)
     } else {
       setDateError(false)
     }
-  }, [fromDate, toDate])
+  }, [selectFromDate, selectToDate])
   const handleViewButtonHandler = () => {
     dispatch(
       reduxServices.resignationList.getResignationList({
         dateSelection: Select,
         empStatus: employeeStatus as string,
         endIndex: pageSize * currentPage,
-        from: fromDate
-          ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+        from: selectFromDate
+          ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
               day: '2-digit',
@@ -90,8 +94,8 @@ const ResignationListFilterOptions = ({
         multiplesearch: '',
         startIndex: pageSize * (currentPage - 1),
         status: status as string,
-        to: toDate
-          ? new Date(toDate).toLocaleDateString(deviceLocale, {
+        to: selectToDate
+          ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
               day: '2-digit',
@@ -118,8 +122,8 @@ const ResignationListFilterOptions = ({
     setSelect('')
     setStatus('')
     setEmployeeStatus('')
-    setFromDate('')
-    setToDate('')
+    setSelectFromDate('')
+    setSelectToDate('')
     dispatch(
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
@@ -239,7 +243,9 @@ const ResignationListFilterOptions = ({
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-1">
                 From:{' '}
-                <span className={showIsRequired(fromDate as string)}>*</span>
+                <span className={showIsRequired(selectFromDate as string)}>
+                  *
+                </span>
               </CFormLabel>
             </CCol>
             <CCol sm={2}>
@@ -256,13 +262,16 @@ const ResignationListFilterOptions = ({
                 showYearDropdown
                 dropdownMode="select"
                 value={fromDateValue}
-                onChange={(date: Date) => setFromDate(date)}
-                selected={fromDate as Date}
+                onChange={(date: Date) => setSelectFromDate(date)}
+                selected={selectFromDate as Date}
               />
             </CCol>
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-1">
-                To:<span className={showIsRequired(toDate as string)}>*</span>
+                To:
+                <span className={showIsRequired(selectToDate as string)}>
+                  *
+                </span>
               </CFormLabel>
             </CCol>
             <CCol sm={2}>
@@ -278,8 +287,8 @@ const ResignationListFilterOptions = ({
                 showYearDropdown
                 dropdownMode="select"
                 value={toDateValue}
-                onChange={(date: Date) => setToDate(date)}
-                selected={toDate as Date}
+                onChange={(date: Date) => setSelectToDate(date)}
+                selected={selectToDate as Date}
               />
               {dateError && (
                 <span className="text-danger" data-testid="errorMessage">
