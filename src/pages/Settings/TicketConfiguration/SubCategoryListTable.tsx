@@ -26,9 +26,6 @@ const SubCategoryListTable = (
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteSubCategoryId, setToDeleteSubCategoryId] = useState(0)
   const [toDeleteSubCategoryName, setToDeleteSubCategoryName] = useState('')
-  // const [selectSubCategoryId, setSelectSubCategoryId] = useState<number>(0)
-  // const [isSubCategoryDetailsEdit, setIsSubCategoryDetailsEdit] =
-  //   useState<boolean>(false)
   const dispatch = useAppDispatch()
 
   const subCategoryList = useTypedSelector(

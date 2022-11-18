@@ -163,7 +163,7 @@ const AddNewCategory = (): JSX.Element => {
               name="categoryName"
               placeholder="Enter Category Name"
               autoComplete="off"
-              value={addNewCategory.categoryName}
+              value={addNewCategory?.categoryName}
               onChange={handledInputChange}
             />
           </CCol>

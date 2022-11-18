@@ -133,7 +133,9 @@ const EditSubCategory = ({
   const updateSubCategory = async () => {
     const prepareObject = {
       ...editSubCategoryCopy,
-      estimatedTime: `${estimatedTimeHours}.${estimatedTimeMinutes}`,
+      estimatedTime: `${estimatedTimeHours || '0'}.${
+        estimatedTimeMinutes || '00'
+      }`,
       workFlow: isWorkFlowChecked,
     }
     const updateSubCategoryResultAction = await dispatch(
