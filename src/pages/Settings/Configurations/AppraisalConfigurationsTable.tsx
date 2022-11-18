@@ -19,7 +19,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import { getAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import { GetAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 
 const AppraisalConfigurationsTable = ({
@@ -30,7 +30,7 @@ const AppraisalConfigurationsTable = ({
   const [isAppraisalDescriptionVisible, setIsAppraisalDescriptionVisible] =
     useState<boolean>(false)
   const [descriptionModal, setDescriptionModal] = useState(
-    {} as getAppraisalCycle,
+    {} as GetAppraisalCycle,
   )
   const dispatch = useAppDispatch()
 
@@ -68,7 +68,7 @@ const AppraisalConfigurationsTable = ({
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
-  const handleAgendaModal = (appraisalCycle: getAppraisalCycle) => {
+  const handleAgendaModal = (appraisalCycle: GetAppraisalCycle) => {
     setIsAppraisalDescriptionVisible(true)
     setDescriptionModal(appraisalCycle)
   }

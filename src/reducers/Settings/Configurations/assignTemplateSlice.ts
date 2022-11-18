@@ -4,12 +4,13 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import assignTemplateApi from '../../../middleware/api/Settings/Configurations/assignTemplateApi'
 import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
+import { GetAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import {
   AssignTemplateSliceState,
-  getDepartmentNames,
-  getDesignationWiseKRA,
-  getEmpDepartments,
-  IndividualKra,
+  Designations,
+  DesignationWiseKRA,
+  EmpDepartments,
+  SearchKRAData,
 } from '../../../types/Settings/Configurations/assignTemplateTypes'
 
 const getAllEmpDepartmentNames = createAsyncThunk(
@@ -24,11 +25,11 @@ const getAllEmpDepartmentNames = createAsyncThunk(
   },
 )
 
-const getDesignationId = createAsyncThunk(
-  'assignTemplate/getDesignationId',
+const getDesignations = createAsyncThunk(
+  'assignTemplate/getDesignations',
   async (deptId: number, thunkApi) => {
     try {
-      return await assignTemplateApi.getDesignationId(deptId)
+      return await assignTemplateApi.getDesignations(deptId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -36,11 +37,11 @@ const getDesignationId = createAsyncThunk(
   },
 )
 
-const getCycleId = createAsyncThunk(
-  'assignTemplate/getCycleId',
+const alreadyExistingCycle = createAsyncThunk(
+  'assignTemplate/alreadyExistingCycle',
   async (newCycleID: number, thunkApi) => {
     try {
-      return await assignTemplateApi.getCycleId(newCycleID)
+      return await assignTemplateApi.isCycleAlreadyExist(newCycleID)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -64,6 +65,66 @@ const getDesignationWiseKRAs = createAsyncThunk(
       return await assignTemplateApi.getDesignationWiseKRAs({
         departmentId,
         designationId,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const searchKRAData = createAsyncThunk(
+  'assignTemplate/searchKRAData',
+  async (
+    {
+      departmentId,
+      designationId,
+      endIndex,
+      multipleSearch,
+      startIndex,
+    }: {
+      departmentId: number
+      designationId: number
+      endIndex: number
+      multipleSearch: string
+      startIndex: number
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await assignTemplateApi.searchKRAData({
+        departmentId,
+        designationId,
+        endIndex,
+        multipleSearch,
+        startIndex,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const designingMap = createAsyncThunk(
+  'assignTemplate/designingMaping',
+  async (
+    {
+      appraisalCycleDto,
+      designation,
+      kraLookups,
+    }: {
+      appraisalCycleDto: GetAppraisalCycle
+      designation: Designations
+      kraLookups: DesignationWiseKRA[]
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await assignTemplateApi.designingMaping({
+        appraisalCycleDto,
+        designation,
+        kraLookups,
       })
     } catch (error) {
       const err = error as AxiosError
@@ -110,18 +171,9 @@ const copyCycleData = createAsyncThunk(
 
 const kpiForIndividualKra = createAsyncThunk(
   'assignTemplate/kpisForIndividualKra',
-  async (
-    {
-      kraId,
-    }: {
-      kraId: number
-    },
-    thunkApi,
-  ) => {
+  async (kraId: number | string, thunkApi) => {
     try {
-      return await assignTemplateApi.kpisForIndividualKra({
-        kraId,
-      })
+      return await assignTemplateApi.kpisForIndividualKra(kraId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -135,6 +187,7 @@ const initialAssignTemplateSliceState: AssignTemplateSliceState = {
   designationWiseKRA: [],
   kpisForIndividualKra: [],
   isLoading: ApiLoadingState.idle,
+  kraList: { size: 0, list: [] },
 }
 
 const assignTemplateSlice = createSlice({
@@ -143,66 +196,74 @@ const assignTemplateSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-
+      .addCase(getAllEmpDepartmentNames.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.empDepartments = action.payload
+      })
+      .addCase(getDesignations.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.designationDeptIds = action.payload
+      })
+      .addCase(getDesignationWiseKRAs.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.designationWiseKRA = action.payload
+      })
+      .addCase(searchKRAData.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.kraList = action.payload
+      })
+      .addCase(kpiForIndividualKra.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.kpisForIndividualKra = action.payload
+      })
       .addMatcher(
         isAnyOf(
           getAllEmpDepartmentNames.pending,
-          getDesignationId.pending,
+          getDesignations.pending,
           getDesignationWiseKRAs.pending,
+          searchKRAData.pending,
           kpiForIndividualKra.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
-      .addMatcher(
-        isAnyOf(
-          getAllEmpDepartmentNames.fulfilled,
-          getDesignationId.fulfilled,
-          getDesignationWiseKRAs.fulfilled,
-          kpiForIndividualKra.fulfilled,
-        ),
-        (state, action) => {
-          state.isLoading = ApiLoadingState.succeeded
-          state.empDepartments = action.payload as getEmpDepartments[]
-          state.designationDeptIds =
-            action.payload as unknown as getDepartmentNames[]
-          state.designationWiseKRA =
-            action.payload as unknown as getDesignationWiseKRA[]
-          state.kpisForIndividualKra =
-            action.payload as unknown as IndividualKra[]
-        },
-      )
   },
 })
 
-const empDepartmentNames = (state: RootState): getEmpDepartments[] =>
+const empDepartments = (state: RootState): EmpDepartments[] =>
   state.assignTemplate.empDepartments
 
-const departmentID = (state: RootState): getDepartmentNames[] =>
+const empDesignations = (state: RootState): Designations[] =>
   state.assignTemplate.designationDeptIds
 
 const isLoading = (state: RootState): LoadingState =>
   state.assignTemplate.isLoading
 
-const designationID = (state: RootState): getDesignationWiseKRA[] =>
+const designationsWiseKRA = (state: RootState): DesignationWiseKRA[] =>
   state.assignTemplate.designationWiseKRA
+
+const kraList = (state: RootState): SearchKRAData =>
+  state.assignTemplate.kraList
 
 const appraisalCycleThunk = {
   getAllEmpDepartmentNames,
-  getDesignationId,
-  getCycleId,
+  getDesignations,
+  alreadyExistingCycle,
   getDesignationWiseKRAs,
   getAppraisalUnderKra,
   copyCycleData,
   kpiForIndividualKra,
+  searchKRAData,
+  designingMap,
 }
 
 const assignTemplateSelectors = {
   isLoading,
-  empDepartmentNames,
-  departmentID,
-  designationID,
+  empDepartments,
+  empDesignations,
+  designationsWiseKRA,
+  kraList,
 }
 
 export const assignTemplateService = {

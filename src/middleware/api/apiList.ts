@@ -62,7 +62,7 @@ import {
   AllocateEmployeeApi,
   AppraisalConfigurationsApi,
   RoomListApi,
-  assignTemplateApi,
+  AssignTemplateApi,
   AddConfigurationsApi,
   TicketConfigurationApi,
   LeaveApprovalsApi,
@@ -559,14 +559,16 @@ export const roomListApiConfig: RoomListApi = {
   updateRoom: apiPrefix + '/meetingRequest/updateRoom',
 }
 
-export const assignTemplateApiConfig: assignTemplateApi = {
+export const assignTemplateApiConfig: AssignTemplateApi = {
   getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
   designationDeptId: apiPrefix + '/kra/designation',
   alreadyExistNewCycleId: apiPrefix + '/appraisal/isAlreadyExist',
   getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
   getDesignationNumber: apiPrefix + '/appraisal/underKras',
   copyTheCycleData: apiPrefix + '/appraisal/copyTheCycleData',
+  searchKRAData: apiPrefix + '/kra/searchKRAData',
   kpisForIndividualKra: apiPrefix + '/kra/kpisForIndividualKra',
+  designingMaping: apiPrefix + '/kra/designingmaping',
 }
 
 export const ticketConfigurationApiConfig: TicketConfigurationApi = {

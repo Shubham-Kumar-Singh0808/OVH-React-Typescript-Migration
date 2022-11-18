@@ -459,7 +459,7 @@ export interface RoomListApi extends ApiBase {
   updateRoom: string
 }
 
-export interface assignTemplateApi extends ApiBase {
+export interface AssignTemplateApi extends ApiBase {
   getEmpDepartments: string
   designationDeptId: string
   alreadyExistNewCycleId: string
@@ -467,6 +467,8 @@ export interface assignTemplateApi extends ApiBase {
   getDesignationNumber: string
   copyTheCycleData: string
   kpisForIndividualKra: string
+  searchKRAData: string
+  designingMaping: string
 }
 
 export interface TicketConfigurationApi extends ApiBase {

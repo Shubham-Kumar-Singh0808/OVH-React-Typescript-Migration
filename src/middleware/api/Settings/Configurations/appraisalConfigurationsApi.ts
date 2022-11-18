@@ -1,4 +1,4 @@
-import { getAppraisalCycle } from '../../../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import { GetAppraisalCycle } from '../../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -8,7 +8,7 @@ import {
   appraisalConfigurationsApiConfig,
 } from '../../apiList'
 
-const getAllAppraisalCycle = async (): Promise<getAppraisalCycle[]> => {
+const getAllAppraisalCycle = async (): Promise<GetAppraisalCycle[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: appraisalConfigurationsApiConfig.getAppraisalCycle,
     method: AllowedHttpMethods.get,

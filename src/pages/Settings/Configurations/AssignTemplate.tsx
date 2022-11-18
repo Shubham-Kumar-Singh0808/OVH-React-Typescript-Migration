@@ -14,12 +14,13 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { getAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
 const AssignTemplate = (): JSX.Element => {
   const [selectDepartment, setSelectDepartment] = useState<number>()
   const [selectDesignation, setSelectDesignation] = useState<number>()
   const [selectPreviousCycle, setSelectPreviousCycle] = useState('')
+  const [isCopyBtnEnabled, setIsCopyBtnEnabled] = useState<boolean>(false)
+
   const { cycleId } = useParams<{ cycleId: string }>()
 
   const formLabelProps = {
@@ -29,28 +30,34 @@ const AssignTemplate = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
 
-  const departmentName = useTypedSelector(
-    reduxServices.assignTemplate.selectors.empDepartmentNames,
+  const departments = useTypedSelector(
+    reduxServices.assignTemplate.selectors.empDepartments,
   )
 
   const appraisalCycleName = useTypedSelector(
     reduxServices.appraisalConfigurations.selectors.appraisalCycleNames,
   )
 
-  const designationName = useTypedSelector(
-    reduxServices.assignTemplate.selectors.designationID,
+  const designations = useTypedSelector(
+    reduxServices.assignTemplate.selectors.empDesignations,
   )
 
   useEffect(() => {
     dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
+  }, [dispatch])
+
+  useEffect(() => {
     dispatch(reduxServices.assignTemplate.getAllEmpDepartmentNames())
-    dispatch(reduxServices.assignTemplate.getCycleId(Number(cycleId)))
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(reduxServices.assignTemplate.alreadyExistingCycle(Number(cycleId)))
   }, [dispatch])
 
   useEffect(() => {
     if (selectDepartment) {
       dispatch(
-        reduxServices.assignTemplate.getDesignationId(Number(selectDepartment)),
+        reduxServices.assignTemplate.getDesignations(Number(selectDepartment)),
       )
     }
   }, [selectDepartment])
@@ -65,6 +72,14 @@ const AssignTemplate = (): JSX.Element => {
       )
     }
   }, [selectDepartment, selectDesignation])
+
+  useEffect(() => {
+    if (selectPreviousCycle) {
+      setIsCopyBtnEnabled(true)
+    } else {
+      setIsCopyBtnEnabled(false)
+    }
+  }, [selectPreviousCycle])
 
   return (
     <>
@@ -136,6 +151,7 @@ const AssignTemplate = (): JSX.Element => {
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
+                disabled={!isCopyBtnEnabled}
               >
                 Copy
               </CButton>
@@ -163,8 +179,8 @@ const AssignTemplate = (): JSX.Element => {
                 }}
               >
                 <option value={''}>Select Department</option>
-                {departmentName &&
-                  departmentName?.map((department) => (
+                {departments &&
+                  departments?.map((department) => (
                     <option
                       key={department.departmentId}
                       value={department.departmentId}
@@ -201,7 +217,7 @@ const AssignTemplate = (): JSX.Element => {
                 }}
               >
                 <option value={''}>Select Designation</option>
-                {designationName.map((designation, index) => (
+                {designations.map((designation, index) => (
                   <option key={index} value={designation.id}>
                     {designation.name}
                   </option>
@@ -210,7 +226,10 @@ const AssignTemplate = (): JSX.Element => {
             </CCol>
           </CRow>
         </CForm>
-        <AssignTemplateTable />
+        <AssignTemplateTable
+          selectDepartment={selectDepartment as number}
+          selectDesignation={selectDesignation as number}
+        />
       </OCard>
     </>
   )

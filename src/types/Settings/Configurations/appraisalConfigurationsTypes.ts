@@ -1,6 +1,6 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
-export type getAppraisalCycle = {
+export type GetAppraisalCycle = {
   id: number
   name: string
   description: string | null
@@ -17,7 +17,7 @@ export type getAppraisalCycle = {
 }
 
 export type AppraisalCycleSliceState = {
-  appraisalCycle: getAppraisalCycle[]
+  appraisalCycle: GetAppraisalCycle[]
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number

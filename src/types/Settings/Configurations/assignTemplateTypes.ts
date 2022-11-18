@@ -1,13 +1,13 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
-export type getEmpDepartments = {
+export type EmpDepartments = {
   departmentId: number
   departmentName: string
   supportManagementFlag: boolean
   allocationSupportFlag: boolean
 }
 
-export type getDepartmentNames = {
+export type Designations = {
   id: number
   name: string
   code: null
@@ -15,7 +15,7 @@ export type getDepartmentNames = {
   departmentId: number
 }
 
-export type getDesignationWiseKRA = {
+export type DesignationWiseKRA = {
   id: number
   name: string
   description: string
@@ -30,24 +30,25 @@ export type getDesignationWiseKRA = {
 }
 
 export type AssignTemplateSliceState = {
-  empDepartments: getEmpDepartments[]
-  designationDeptIds: getDepartmentNames[]
-  designationWiseKRA: getDesignationWiseKRA[]
+  empDepartments: EmpDepartments[]
+  designationDeptIds: Designations[]
+  designationWiseKRA: DesignationWiseKRA[]
   isLoading: ApiLoadingState
-  kpisForIndividualKra: IndividualKra[]
+  kpisForIndividualKra: KpiForIndividualKra[]
+  kraList: SearchKRAData
 }
 
-export type IndividualKra = {
+export type KpiForIndividualKra = {
   id: number
   name: string
   description: string
   frequencyId: number
   frequency: string
   target: string
-  kraDto: kraData
+  kraDto: EmpKraList
 }
 
-export type kraData = {
+export type EmpKraList = {
   id: number
   name: string
   description: null
@@ -59,4 +60,14 @@ export type kraData = {
   departmentName: null
   departmentId: null
   designationKraPercentage: null
+}
+
+export type SearchKRAData = {
+  size: number
+  list: DesignationWiseKRA[]
+}
+
+export type AssignTemplateOptions = {
+  selectDepartment: number
+  selectDesignation: number
 }

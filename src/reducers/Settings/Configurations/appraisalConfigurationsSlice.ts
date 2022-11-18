@@ -6,7 +6,7 @@ import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   AppraisalCycleSliceState,
-  getAppraisalCycle,
+  GetAppraisalCycle,
 } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
 const getAllAppraisalCycleData = createAsyncThunk(
@@ -54,7 +54,7 @@ const appraisalCycleSlice = createSlice({
   },
 })
 
-const appraisalCycleNames = (state: RootState): getAppraisalCycle[] =>
+const appraisalCycleNames = (state: RootState): GetAppraisalCycle[] =>
   state.appraisalConfigurations.appraisalCycle
 
 const isLoading = (state: RootState): LoadingState =>
