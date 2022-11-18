@@ -33,7 +33,7 @@ const ResignationListFilterOptions = ({
   const [selectToDate, setSelectToDate] = useState<Date | string>()
   const [status, setStatus] = useState<string>()
   const [employeeStatus, setEmployeeStatus] = useState<string>()
-  const [searchInput, setSearchInput] = useState<string>('')
+  const [searchInputValue, setSearchInputValue] = useState<string>('')
   const listSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
   )
@@ -111,7 +111,7 @@ const ResignationListFilterOptions = ({
         empStatus: '',
         endIndex: pageSize * currentPage,
         from: '',
-        multiplesearch: searchInput,
+        multiplesearch: searchInputValue,
         startIndex: pageSize * (currentPage - 1),
         status: 'ALL',
         to: '',
@@ -330,9 +330,9 @@ const ResignationListFilterOptions = ({
               aria-label="Multiple Search"
               data-testid="search-input"
               aria-describedby="button-addon2"
-              value={searchInput}
+              value={searchInputValue}
               onChange={(e) => {
-                setSearchInput(e.target.value)
+                setSearchInputValue(e.target.value)
               }}
             />
             <CButton
