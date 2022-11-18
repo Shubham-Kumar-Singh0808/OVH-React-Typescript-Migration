@@ -13,7 +13,7 @@ const SubmitResignation = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (getSeparation.form.separationExist) {
+    if (getSeparation?.form?.separationExist) {
       setToggle('')
     }
   }, [getSeparation])
