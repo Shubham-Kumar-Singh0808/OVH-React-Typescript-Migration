@@ -104,7 +104,7 @@ const ResignationListFilterOptions = ({
       }),
     )
   }
-  const handleSearch = () => {
+  const handleSearchInput = () => {
     dispatch(
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
@@ -341,7 +341,7 @@ const ResignationListFilterOptions = ({
               type="button"
               color="info"
               id="button-addon2"
-              onClick={handleSearch}
+              onClick={handleSearchInput}
             >
               <i className="fa fa-search"></i>
             </CButton>
