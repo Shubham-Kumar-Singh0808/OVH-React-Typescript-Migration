@@ -11,6 +11,7 @@ import {
   mockTicketConfigurationCategory,
   mockTicketConfigurationSubCategoryList,
 } from '../../../test/data/ticketConfigurationData'
+import { TicketConfigurationList } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -29,6 +30,7 @@ const toRender = (
       filterByCategory="Hardware"
       filterBySubCategory=""
       isTableView={true}
+      editSubCategoryButtonHandler={jest.fn()}
     />
   </div>
 )
