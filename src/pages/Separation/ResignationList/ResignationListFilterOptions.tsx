@@ -149,7 +149,7 @@ const ResignationListFilterOptions = ({
   }
   return (
     <>
-      <CRow className="employeeAllocation-form">
+      <CRow className="employeeAllocation-form mt-4">
         <CCol sm={2} md={1} className="text-end">
           <CFormLabel className="mt-1">Select:</CFormLabel>
         </CCol>
@@ -218,6 +218,22 @@ const ResignationListFilterOptions = ({
             <option value="InActive">InActive</option>
           </CFormSelect>
         </CCol>
+      </CRow>
+      <CRow className="mb-3">
+        <CCol sm={{ span: 6, offset: 3 }}>
+          <CButton color="info btn-ovh me-3" data-testid="view-btn">
+            <i className="fa fa-eye"></i>View Chart
+          </CButton>
+          <CButton
+            color="info btn-ovh me-3"
+            data-testid="export-btn"
+            onClick={handleExportResignationListData}
+          >
+            <i className="fa fa-plus me-1"></i>Click to Export
+          </CButton>
+        </CCol>
+      </CRow>
+      <CRow>
         {Select === 'Custom' ? (
           <>
             <CCol sm={2} md={1} className="text-end">
@@ -276,21 +292,7 @@ const ResignationListFilterOptions = ({
           <></>
         )}
       </CRow>
-      <CRow className="mt-5 mb-4">
-        <CCol sm={{ span: 6, offset: 3 }}>
-          <CButton
-            color="info btn-ovh me-0"
-            data-testid="export-btn"
-            onClick={handleExportResignationListData}
-          >
-            <i className="fa fa-plus me-1"></i>Click to Export
-          </CButton>
-          <CButton color="info btn-ovh me-0" data-testid="view-btn">
-            <i className="fa fa-eye"></i>View Chart
-          </CButton>
-        </CCol>
-      </CRow>
-      <CRow className="mt-5 mb-4">
+      <CRow className="mt-4 mb-4">
         <CCol sm={{ span: 6, offset: 3 }}>
           <CButton
             className="cursor-pointer"
