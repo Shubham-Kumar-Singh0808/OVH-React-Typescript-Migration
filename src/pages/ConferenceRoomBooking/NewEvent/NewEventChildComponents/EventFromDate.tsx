@@ -18,16 +18,16 @@ const EventFromDate = ({
       </CFormLabel>
       <CCol sm={4}>
         <ReactDatePicker
+          autoComplete="off"
           id="fromDate"
           data-testid="dateOptionSelect"
           className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-          peekNextMonth
           showMonthDropdown
           showYearDropdown
           minDate={new Date()}
           dropdownMode="select"
-          dateFormat="dd/mm/yy"
-          placeholderText="DD/MM/YY"
+          dateFormat="dd/MM/yy"
+          placeholderText="dd/mm/yy"
           name="fromDate"
           value={fromDateValue}
           onChange={(date: Date) => fromDateChangeHandler(date)}

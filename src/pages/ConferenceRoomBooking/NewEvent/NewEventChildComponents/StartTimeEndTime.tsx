@@ -1,57 +1,118 @@
 import { CRow, CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { convertTime, showIsRequired } from '../../../../utils/helper'
 
-const StartTimeEndTime = (): JSX.Element => {
+const StartTimeEndTime = ({
+  onSelectStartAndEndTime,
+}: {
+  onSelectStartAndEndTime: (val1: string, val2: string) => void
+}): JSX.Element => {
+  const hoursList = [
+    { label: '00', value: '' },
+    { label: '01', value: '01' },
+    { label: '02', value: '02' },
+    { label: '03', value: '03' },
+    { label: '04', value: '04' },
+    { label: '05', value: '05' },
+    { label: '06', value: '06' },
+    { label: '07', value: '07' },
+    { label: '08', value: '08' },
+    { label: '09', value: '09' },
+    { label: '10', value: '10' },
+    { label: '11', value: '11' },
+    { label: '12', value: '12' },
+  ]
+
+  const minutesList = [
+    { label: '00', value: '' },
+    { label: '15', value: '15' },
+    { label: '30', value: '30' },
+    { label: '45', value: '45' },
+  ]
+
+  const [startTime, setStartTime] = useState({
+    hours: '',
+    minutes: '00',
+    meridian: 'AM',
+  })
+  const [endTime, setEndTime] = useState({
+    hours: '',
+    minutes: '00',
+    meridian: 'AM',
+  })
+
+  useEffect(() => {
+    if (startTime.hours && endTime.hours) {
+      const concatStartTime = `${startTime.hours}:${startTime.minutes} ${startTime.meridian}`
+      const concatEndTime = `${endTime.hours}:${endTime.minutes} ${endTime.meridian}`
+      const startTimeResult = convertTime(concatStartTime)
+      const endTimeResult = convertTime(concatEndTime)
+      console.log(startTimeResult)
+      onSelectStartAndEndTime(startTimeResult, endTimeResult)
+    } else {
+      onSelectStartAndEndTime('', '')
+    }
+  }, [startTime, endTime])
+
   return (
     <>
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           Start Time:
-          <span>*</span>
+          <span className={showIsRequired(startTime.hours)}>*</span>
         </CFormLabel>
         <CCol sm={4}>
           <CCol sm={12}>
             <CRow>
               <CCol sm={4}>
                 <CFormSelect
-                  aria-label="location"
-                  id="location"
-                  data-testid="locationSelect"
-                  name="location"
-                  // value={trackerValue}
-                  // onChange={(e) => {
-                  //   setTrackerValue(e.target.value)
-                  // }}
+                  aria-label="startTimeHours"
+                  id="startTimeHours"
+                  data-testid="startTimeHours"
+                  name="startTimeHours"
+                  value={startTime.hours}
+                  onChange={(e) => {
+                    setStartTime({ ...startTime, hours: e.target.value })
+                  }}
                 >
-                  <option value="">00</option>
+                  {hoursList.map((currOpt, index) => (
+                    <option key={index} value={currOpt.value}>
+                      {currOpt.label}
+                    </option>
+                  ))}
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
                 <CFormSelect
-                  aria-label="location"
-                  id="location"
-                  data-testid="locationSelect"
-                  name="location"
-                  // value={trackerValue}
-                  // onChange={(e) => {
-                  //   setTrackerValue(e.target.value)
-                  // }}
+                  aria-label="startTimeMin"
+                  id="startTimeMin"
+                  data-testid="startTimeMin"
+                  name="startTimeMin"
+                  value={startTime.minutes}
+                  onChange={(e) => {
+                    setStartTime({ ...startTime, minutes: e.target.value })
+                  }}
                 >
-                  <option value="">00</option>
+                  {minutesList.map((minItem, index) => (
+                    <option key={index} value={minItem.value}>
+                      {minItem.label}
+                    </option>
+                  ))}
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
                 <CFormSelect
-                  aria-label="location"
-                  id="location"
-                  data-testid="locationSelect"
-                  name="location"
-                  // value={trackerValue}
-                  // onChange={(e) => {
-                  //   setTrackerValue(e.target.value)
-                  // }}
+                  aria-label="startTimeMeridian"
+                  id="startTimeMeridian"
+                  data-testid="startTimeMeridian"
+                  name="startTimeMeridian"
+                  value={startTime.meridian}
+                  onChange={(e) => {
+                    setStartTime({ ...startTime, meridian: e.target.value })
+                  }}
                 >
-                  <option value="">00</option>
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
                 </CFormSelect>
               </CCol>
             </CRow>
@@ -61,51 +122,60 @@ const StartTimeEndTime = (): JSX.Element => {
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-2 col-form-label text-end">
           End Time:
-          <span>*</span>
+          <span className={showIsRequired(endTime.hours)}>*</span>
         </CFormLabel>
         <CCol sm={4}>
           <CCol sm={12}>
             <CRow>
               <CCol sm={4}>
                 <CFormSelect
-                  aria-label="location"
-                  id="location"
-                  data-testid="locationSelect"
-                  name="location"
-                  // value={trackerValue}
-                  // onChange={(e) => {
-                  //   setTrackerValue(e.target.value)
-                  // }}
+                  aria-label="endTimeHours"
+                  id="endTimeHours"
+                  data-testid="endTimeHours"
+                  name="endTimeHours"
+                  value={endTime.hours}
+                  onChange={(e) => {
+                    setEndTime({ ...endTime, hours: e.target.value })
+                  }}
                 >
-                  <option value="">00</option>
+                  {hoursList.map((currItem, index) => (
+                    <option key={index} value={currItem.value}>
+                      {currItem.label}
+                    </option>
+                  ))}
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
                 <CFormSelect
-                  aria-label="location"
-                  id="location"
-                  data-testid="locationSelect"
-                  name="location"
-                  // value={trackerValue}
-                  // onChange={(e) => {
-                  //   setTrackerValue(e.target.value)
-                  // }}
+                  aria-label="endTimeMin"
+                  id="endTimeMin"
+                  data-testid="endTimeMin"
+                  name="endTimeMin"
+                  value={endTime.minutes}
+                  onChange={(e) => {
+                    setEndTime({ ...endTime, minutes: e.target.value })
+                  }}
                 >
-                  <option value="">00</option>
+                  {minutesList.map((currMin, index) => (
+                    <option key={index} value={currMin.value}>
+                      {currMin.label}
+                    </option>
+                  ))}
                 </CFormSelect>
               </CCol>
               <CCol sm={4}>
                 <CFormSelect
-                  aria-label="location"
-                  id="location"
-                  data-testid="locationSelect"
-                  name="location"
-                  // value={trackerValue}
-                  // onChange={(e) => {
-                  //   setTrackerValue(e.target.value)
-                  // }}
+                  aria-label="endTimeMeridian"
+                  id="endTimeMeridian"
+                  data-testid="endTimeMeridian"
+                  name="endTimeMeridian"
+                  value={endTime.meridian}
+                  onChange={(e) => {
+                    setEndTime({ ...endTime, meridian: e.target.value })
+                  }}
                 >
-                  <option value="">00</option>
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
                 </CFormSelect>
               </CCol>
             </CRow>

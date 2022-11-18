@@ -6,7 +6,9 @@ import { RootState } from '../../../stateStore'
 import {
   InitialNewEventSliceState,
   LoggedEmployee,
+  ProjectMembers,
   RoomsByLocation,
+  UniqueAttendeeParams,
 } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { ValidationError } from '../../../types/SidebarMenu/sidebarMenuType'
 
@@ -46,17 +48,46 @@ const getAllEmployees = createAsyncThunk(
   },
 )
 
+const getProjectMembers = createAsyncThunk(
+  'newEventSlice/getProjectMembers',
+  async (projectName: string, thunkApi) => {
+    try {
+      return await newEventApi.getProjectMembers(projectName)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const uniqueAttendee = createAsyncThunk(
+  'newEventSlice/uniqueAttendee',
+  async (props: UniqueAttendeeParams, thunkApi) => {
+    try {
+      return await newEventApi.uniqueAttendee(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialNewEventState: InitialNewEventSliceState = {
   isLoading: ApiLoadingState.idle,
   loggedEmployee: {} as LoggedEmployee,
   roomsByLocation: [],
   allEmployeesProfiles: [],
+  projectMembers: [],
 }
 
 const newEventSlice = createSlice({
   name: 'newEvent',
   initialState: initialNewEventState,
-  reducers: {},
+  reducers: {
+    clearProjectMembers: (state) => {
+      state.projectMembers = []
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getLoggedEmployee.fulfilled, (state, action) => {
@@ -71,8 +102,20 @@ const newEventSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.allEmployeesProfiles = action.payload
       })
+      .addCase(getProjectMembers.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.projectMembers = action.payload
+      })
+      .addCase(uniqueAttendee.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
-        isAnyOf(getLoggedEmployee.pending, getRoomsByLocation.pending),
+        isAnyOf(
+          getLoggedEmployee.pending,
+          getRoomsByLocation.pending,
+          getProjectMembers.pending,
+          uniqueAttendee.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
@@ -92,10 +135,14 @@ const roomsByLocation = (state: RootState): RoomsByLocation[] =>
 const allEmployeesProfiles = (state: RootState): LoggedEmployee[] =>
   state.newEvent.allEmployeesProfiles
 
+const projectMembers = (state: RootState): ProjectMembers[] =>
+  state.newEvent.projectMembers
+
 const newEventThunk = {
   getLoggedEmployee,
   getRoomsByLocation,
   getAllEmployees,
+  getProjectMembers,
 }
 
 const newEventSelectors = {
@@ -103,6 +150,7 @@ const newEventSelectors = {
   loggedEmployee,
   roomsByLocation,
   allEmployeesProfiles,
+  projectMembers,
 }
 
 export const newEventService = {

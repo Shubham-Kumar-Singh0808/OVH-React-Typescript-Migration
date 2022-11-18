@@ -23,6 +23,7 @@ export type Author = {
 export type Availability = {
   id: number
   availability: string
+  name?: string
 }
 
 export type AddEvent = {
@@ -66,9 +67,123 @@ export type InitialNewEventSliceState = {
   loggedEmployee: LoggedEmployee
   roomsByLocation: RoomsByLocation[]
   allEmployeesProfiles: LoggedEmployee[]
+  projectMembers: ProjectMembers[]
 }
 
 export type EventTypeList = {
   id: number
   name: string
+}
+
+export type ProjectMembers = {
+  id: number
+  firstName: string
+  lastName: string
+  middleName: string
+  designation: string
+  role: string
+  manager: string
+  designationKrasDTO: null
+  employeeSubmitted: null
+  managerSubmitted: null
+  acknowledged: null
+  fullName: string
+  profilePicPath: null
+  thumbPicture: string
+  profilePicGeneratedPath: string
+  gender: string
+  dob: string
+  departmentName: string
+  employmentTypeName: string
+  jobTypeName: string
+  imageData: null
+  curentLocation: null
+  baseLocation: string
+  officialBirthday: string
+  realBirthday: null
+  maritalStatus: null
+  emergencyContactName: string
+  emergencyPhone: string
+  emergencyRelationShip: string
+  grade: string
+  aboutMe: string
+  homeNumber: null
+  workNumber: null
+  presentAddress: null
+  presentCity: null
+  presentZip: null
+  presentLandMark: null
+  permanentAddress: null
+  permanentCity: null
+  permanentZip: null
+  permanentLandMark: null
+  mobile: null
+  homeCode: null
+  workCode: null
+  skillList: null
+  userName: null
+  alternativeMobile: null
+  dateOfJoining: null
+  informationList: null
+  anniversary: null
+  bankInformationList: null
+  bioAttendanceDtoSet: null
+  dates: null
+  absentCount: number
+  statusName: null
+  emergencyContact: null
+  relievingDate: null
+  observationDTOList: null
+  skypeId: null
+  percent: null
+  passportNumber: null
+  passportExpDate: null
+  passportIssuedPlace: null
+  passportIssuedDate: null
+  token: null
+  underNoticeDate: null
+  candidateId: null
+  underNotice: null
+  emailId: null
+  empManager: null
+  bloodgroup: null
+  rbtCvPath: null
+  rbtCvName: null
+  timeSlotDTO: null
+  technology: null
+  hrAssociate: null
+  lateComingCount: null
+  passportFrontPagePath: null
+  passportBackPagePath: null
+  passportFrontPage: null
+  passportBackPage: null
+  projectManager: null
+  casualLeaveCount: number
+  lopLeaveCount: number
+  holidaysCount: number
+  contractExists: null
+  contractStartDate: null
+  contractEndDate: null
+  personalEmail: null
+  experience: null
+  companyExperience: null
+  updatedExperience: null
+  country: null
+  workStatus: null
+  comments: null
+  vendorId: null
+  vendorName: null
+  countryCodeWork: null
+  countryCodeMobile: null
+  countryCodeHome: null
+  countryCodeEmergency: null
+  countryCodeAlternative: null
+  address: null
+}
+
+export type UniqueAttendeeParams = {
+  attendeeId: number
+  attendeeName: string
+  endTime: string
+  startTime: string
 }

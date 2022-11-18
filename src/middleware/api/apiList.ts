@@ -526,6 +526,8 @@ export const newEventApiConfig: NewEventApi = {
   getRoomsOfLocation: apiPrefix + '/meetingRequest/getRoomsOfLocation',
   getAllProfileEmployeesData:
     apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllAttendees: apiPrefix + '/meetingRequest/getAllAttendies',
+  uniqueAttendee: apiPrefix + '/meetingRequest/uniqueAttendee',
 }
 
 export const employeeAllocationApiConfig: EmployeeAllocationApi = {

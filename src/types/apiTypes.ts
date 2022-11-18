@@ -435,6 +435,8 @@ export interface NewEventApi extends ApiBase {
   getLoggedEmployeeName: string
   getRoomsOfLocation: string
   getAllProfileEmployeesData: string
+  getAllAttendees: string
+  uniqueAttendee: string
 }
 export interface EmployeeAllocationApi extends ApiBase {
   getEmployeeAllocationReport: string
