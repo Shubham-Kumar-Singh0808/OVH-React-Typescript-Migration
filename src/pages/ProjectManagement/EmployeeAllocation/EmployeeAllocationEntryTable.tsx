@@ -363,7 +363,6 @@ const EmployeeAllocationEntryTable = (props: {
                 })}
             </CTableBody>
           </CTable>
-          <p>No Records Found...</p>
         </CTableDataCell>
       </CTableRow>
     </>
