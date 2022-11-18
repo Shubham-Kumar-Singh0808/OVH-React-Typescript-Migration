@@ -592,4 +592,6 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
 
 export const resignationListApiConfig: ResignationListApi = {
   resignationList: apiPrefix + '/separationController/resignationList',
+  exportResignationList:
+    apiPrefix + '/separationController/exportResignationList',
 }

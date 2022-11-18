@@ -86,25 +86,35 @@ const ResignationListTable = ({
           <CTableBody color="light">
             {isLoading !== ApiLoadingState.loading ? (
               getAllResignationList &&
-              getAllResignationList?.map((ticket, index) => {
+              getAllResignationList?.map((resignationItem, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                    <CTableDataCell>{ticket.employeeId}</CTableDataCell>
+                    <CTableDataCell>
+                      {resignationItem.employeeId}
+                    </CTableDataCell>
                     <CTableDataCell>
                       <Link
-                        to={`/employeeProfile/${ticket.employeeId}`}
+                        to={`/employeeProfile/${resignationItem.employeeId}`}
                         className="employee-name"
                       >
-                        {ticket.employeeName}
+                        {resignationItem.employeeName}
                       </Link>
                     </CTableDataCell>
-                    <CTableDataCell>{ticket.managerName}</CTableDataCell>
-                    <CTableDataCell>{ticket.resignationDate}</CTableDataCell>
-                    <CTableDataCell>{ticket.relievingDate}</CTableDataCell>
-                    <CTableDataCell>{ticket.primaryReasonName}</CTableDataCell>
-                    <CTableDataCell>{ticket.status}</CTableDataCell>
-                    <CTableDataCell>{ticket.empStatus}</CTableDataCell>
+                    <CTableDataCell>
+                      {resignationItem.managerName}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {resignationItem.resignationDate}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {resignationItem.relievingDate}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {resignationItem.primaryReasonName}
+                    </CTableDataCell>
+                    <CTableDataCell>{resignationItem.status}</CTableDataCell>
+                    <CTableDataCell>{resignationItem.empStatus}</CTableDataCell>
                     <CTableDataCell data-testid="action-cell">
                       <div className="sh-btn-group">
                         <CButton

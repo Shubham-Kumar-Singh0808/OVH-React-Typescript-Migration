@@ -1,12 +1,25 @@
-import { CRow, CCol, CFormLabel, CFormSelect, CButton } from '@coreui/react-pro'
+import {
+  CRow,
+  CCol,
+  CFormLabel,
+  CFormSelect,
+  CButton,
+  CFormInput,
+  CInputGroup,
+} from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import ResignationListTable from './ResignationListTable'
-import { deviceLocale, showIsRequired } from '../../../utils/helper'
+import {
+  deviceLocale,
+  downloadFile,
+  showIsRequired,
+} from '../../../utils/helper'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import resignationListApi from '../../../middleware/api/Separation/ResignationList/resignationListApi'
 
 const ResignationListFilterOptions = ({
   Select,
@@ -20,6 +33,7 @@ const ResignationListFilterOptions = ({
   const [toDate, setToDate] = useState<Date | string>()
   const [status, setStatus] = useState<string>()
   const [employeeStatus, setEmployeeStatus] = useState<string>()
+  const [searchInput, setSearchInput] = useState<string>('')
   const listSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
   )
@@ -86,6 +100,20 @@ const ResignationListFilterOptions = ({
       }),
     )
   }
+  const handleSearch = () => {
+    dispatch(
+      reduxServices.resignationList.getResignationList({
+        dateSelection: '',
+        empStatus: '',
+        endIndex: pageSize * currentPage,
+        from: '',
+        multiplesearch: searchInput,
+        startIndex: pageSize * (currentPage - 1),
+        status: 'ALL',
+        to: '',
+      }),
+    )
+  }
   const clearButtonHandler = () => {
     setSelect('')
     setStatus('')
@@ -104,6 +132,20 @@ const ResignationListFilterOptions = ({
         to: '',
       }),
     )
+  }
+
+  const handleExportResignationListData = async () => {
+    const resignationListDownload =
+      await resignationListApi.exportResignationListData({
+        status: 'ALL',
+        from: '',
+        to: '',
+        multiplesearch: '',
+        dateSelection: '',
+        empStatus: '',
+      })
+
+    downloadFile(resignationListDownload, 'ResignationListList.csv')
   }
   return (
     <>
@@ -234,7 +276,20 @@ const ResignationListFilterOptions = ({
           <></>
         )}
       </CRow>
-
+      <CRow className="mt-5 mb-4">
+        <CCol sm={{ span: 6, offset: 3 }}>
+          <CButton
+            color="info btn-ovh me-0"
+            data-testid="export-btn"
+            onClick={handleExportResignationListData}
+          >
+            <i className="fa fa-plus me-1"></i>Click to Export
+          </CButton>
+          <CButton color="info btn-ovh me-0" data-testid="view-btn">
+            <i className="fa fa-eye"></i>View Chart
+          </CButton>
+        </CCol>
+      </CRow>
       <CRow className="mt-5 mb-4">
         <CCol sm={{ span: 6, offset: 3 }}>
           <CButton
@@ -254,6 +309,32 @@ const ResignationListFilterOptions = ({
           >
             Clear
           </CButton>
+        </CCol>
+      </CRow>
+      <CRow className="gap-2 d-md-flex justify-content-md-end">
+        <CCol sm={3} md={4} lg={5} xl={4} xxl={3}>
+          <CInputGroup className="global-search me-0">
+            <CFormInput
+              placeholder="Multiple Search"
+              aria-label="Multiple Search"
+              data-testid="search-input"
+              aria-describedby="button-addon2"
+              value={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value)
+              }}
+            />
+            <CButton
+              data-testid="multi-search-btn"
+              className="cursor-pointer"
+              type="button"
+              color="info"
+              id="button-addon2"
+              onClick={handleSearch}
+            >
+              <i className="fa fa-search"></i>
+            </CButton>
+          </CInputGroup>
         </CCol>
       </CRow>
       <ResignationListTable

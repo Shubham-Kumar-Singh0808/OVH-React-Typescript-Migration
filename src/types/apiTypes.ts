@@ -491,4 +491,5 @@ export interface LeaveApprovalsApi extends ApiBase {
 
 export interface ResignationListApi extends ApiBase {
   resignationList: string
+  exportResignationList: string
 }

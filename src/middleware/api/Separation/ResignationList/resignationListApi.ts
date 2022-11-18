@@ -30,8 +30,30 @@ const getResignationList = async (
   return response.data
 }
 
+const exportResignationListData = async (
+  props: GetResignationListProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.exportResignationList,
+    method: AllowedHttpMethods.get,
+    params: {
+      dateSelection: props.dateSelection,
+      empStatus: props.empStatus,
+      from: props.from,
+      multiplesearch: props.multiplesearch,
+      status: props.status,
+      to: props.to,
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const resignationListApi = {
   getResignationList,
+  exportResignationListData,
 }
 
 export default resignationListApi

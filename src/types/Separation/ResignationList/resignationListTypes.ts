@@ -51,10 +51,10 @@ export type ResignationListResponse = {
 export type GetResignationListProps = {
   dateSelection: number | string
   empStatus: string
-  endIndex: number
+  endIndex?: number
   from: string
   multiplesearch: string
-  startIndex: string | number
+  startIndex?: string | number
   status: string
   to: string
 }
@@ -64,4 +64,15 @@ export type ResignationListSliceState = {
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number
+}
+
+export type ExportResignationListDataProps = {
+  dateSelection: number | string
+  empStatus: string
+  endIndex: number
+  from: string
+  multiplesearch: string
+  startIndex: string | number
+  status: string
+  to: string
 }
