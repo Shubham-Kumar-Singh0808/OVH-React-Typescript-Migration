@@ -165,7 +165,7 @@ const ResignationListFilterOptions = ({
               setSelect(e.target.value)
             }}
           >
-            <option value="Today">Select Month</option>
+            <option value="">Select Month</option>
             <option value="Last Month">Last Month</option>
             <option value="Current Month">Current Month</option>
             <option value="Custom">Custom</option>
