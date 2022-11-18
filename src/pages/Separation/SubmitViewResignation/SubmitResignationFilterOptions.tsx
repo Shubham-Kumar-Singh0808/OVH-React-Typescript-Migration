@@ -69,14 +69,6 @@ const SubmitResignationFilterOptions = ({
   }, [primaryReason, submitResignation?.employeeComments])
 
   useEffect(() => {
-    if (!otherReason) {
-      setIsSubmitButtonEnabled(true)
-    } else {
-      setIsSubmitButtonEnabled(false)
-    }
-  }, [otherReason])
-
-  useEffect(() => {
     if (primaryReason || submitResignation?.employeeComments || otherReason) {
       setIsClearButtonEnabled(true)
     } else {
