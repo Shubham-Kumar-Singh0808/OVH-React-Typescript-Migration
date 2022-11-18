@@ -70,9 +70,4 @@ describe('Resignation List Filter Options Component Testing with data', () => {
     userEvent.click(addBtn)
     expect(addBtn).toBeInTheDocument()
   })
-  test('should be able to click to export button element', () => {
-    const exportBtn = screen.getByRole('button', { name: 'Click to Export' })
-    userEvent.click(exportBtn)
-    expect(exportBtn).toBeInTheDocument()
-  })
 })
