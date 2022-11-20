@@ -1,4 +1,6 @@
 import {
+  AddEvent,
+  GetBookedEventsParams,
   LoggedEmployee,
   ProjectMembers,
   RoomsByLocation,
@@ -78,12 +80,53 @@ const uniqueAttendee = async (
   return response.data
 }
 
+const timeCheck = async (time: string): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: newEventApiConfig.timeChecking,
+    method: AllowedHttpMethods.get,
+    params: {
+      time,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getAllBookedDetailsForEvent = async (
+  props: GetBookedEventsParams,
+): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: newEventApiConfig.getAllBookedDetailsForEvent,
+    method: AllowedHttpMethods.get,
+    params: {
+      fromdate: props.fromdate,
+      roomid: props.roomid,
+      toDate: props.toDate,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addNewEvent = async (props: AddEvent): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: newEventApiConfig.addNewEvent,
+    method: AllowedHttpMethods.get,
+    data: props,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const newEventApi = {
   getLoggedEmployee,
   getRoomsByLocation,
   getAllEmployees,
   getProjectMembers,
   uniqueAttendee,
+  timeCheck,
+  getAllBookedDetailsForEvent,
+  addNewEvent,
 }
 
 export default newEventApi

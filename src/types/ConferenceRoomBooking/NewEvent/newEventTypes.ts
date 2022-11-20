@@ -1,4 +1,5 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { ValidationError } from '../../commonTypes'
 
 export type TrainerDetails = {
   designation: string
@@ -68,6 +69,7 @@ export type InitialNewEventSliceState = {
   roomsByLocation: RoomsByLocation[]
   allEmployeesProfiles: LoggedEmployee[]
   projectMembers: ProjectMembers[]
+  error: ValidationError
 }
 
 export type EventTypeList = {
@@ -186,4 +188,10 @@ export type UniqueAttendeeParams = {
   attendeeName: string
   endTime: string
   startTime: string
+}
+
+export type GetBookedEventsParams = {
+  fromdate: string
+  roomid: number
+  toDate: string
 }

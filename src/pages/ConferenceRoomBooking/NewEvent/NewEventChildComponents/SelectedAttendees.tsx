@@ -6,18 +6,21 @@ import {
   CTableBody,
   CTableRow,
   CTableDataCell,
+  CButton,
 } from '@coreui/react-pro'
 import React from 'react'
 import { Availability } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const SelectedAttendees = ({
   attendeesList,
+  deleteBtnHandler,
 }: {
   attendeesList: Availability[]
+  deleteBtnHandler: (value: number) => void
 }): JSX.Element => {
   return (
-    <CCol sm={3}>
-      <CTable>
+    <CCol sm={4}>
+      <CTable responsive striped className="align-middle">
         <CTableHead>
           <CTableHeaderCell>Attendees</CTableHeaderCell>
           <CTableHeaderCell>Availability</CTableHeaderCell>
@@ -29,6 +32,25 @@ const SelectedAttendees = ({
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{currAttendee.name}</CTableDataCell>
+                  <CTableDataCell>
+                    {currAttendee.availability === 'free' ? (
+                      <span className="sh-span-green">Available</span>
+                    ) : (
+                      <span className="sh-span-red">Not Available</span>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      color="danger btn-ovh me-1"
+                      className="btn-ovh-employee-list"
+                      onClick={() => deleteBtnHandler(currAttendee.id)}
+                    >
+                      <i
+                        className="fa fa-trash-o text-white"
+                        aria-hidden="true"
+                      ></i>
+                    </CButton>
+                  </CTableDataCell>
                 </CTableRow>
               )
             })}

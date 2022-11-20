@@ -21,7 +21,7 @@ import {
   StartTimeEndTime,
   Trainer,
 } from './NewEventChildComponents'
-import MembersUnderProject from './NewEventChildComponents/ProjectMembersSelection'
+import ProjectMembersSelection from './NewEventChildComponents/ProjectMembersSelection'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -165,7 +165,7 @@ const NewEvent = (): JSX.Element => {
       CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
     >
-      <CForm>
+      <CForm className="ms-4">
         <LocationAndRoom
           eventLocations={eventLocations}
           onHandleLocation={onHandleLocation}
@@ -242,7 +242,10 @@ const NewEvent = (): JSX.Element => {
         />
 
         {projectMembers?.length > 0 && (
-          <MembersUnderProject projectMembers={projectMembers} />
+          <ProjectMembersSelection
+            projectMembers={projectMembers}
+            addEvent={addEvent}
+          />
         )}
 
         <CRow className="mt-5 mb-4">

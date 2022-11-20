@@ -78,6 +78,7 @@ const initialNewEventState: InitialNewEventSliceState = {
   roomsByLocation: [],
   allEmployeesProfiles: [],
   projectMembers: [],
+  error: null,
 }
 
 const newEventSlice = createSlice({
@@ -109,6 +110,10 @@ const newEventSlice = createSlice({
       .addCase(uniqueAttendee.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
+      .addCase(uniqueAttendee.rejected, (state, action) => {
+        state.isLoading = ApiLoadingState.failed
+        state.error = action.payload as number
+      })
       .addMatcher(
         isAnyOf(
           getLoggedEmployee.pending,
@@ -138,11 +143,14 @@ const allEmployeesProfiles = (state: RootState): LoggedEmployee[] =>
 const projectMembers = (state: RootState): ProjectMembers[] =>
   state.newEvent.projectMembers
 
+const selectError = (state: RootState): number => state.newEvent.error as number
+
 const newEventThunk = {
   getLoggedEmployee,
   getRoomsByLocation,
   getAllEmployees,
   getProjectMembers,
+  uniqueAttendee,
 }
 
 const newEventSelectors = {
@@ -151,6 +159,7 @@ const newEventSelectors = {
   roomsByLocation,
   allEmployeesProfiles,
   projectMembers,
+  selectError,
 }
 
 export const newEventService = {

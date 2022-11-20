@@ -40,8 +40,8 @@ const SelectProject = ({
     )
     onSelectProject(selectedProject?.projectName as string)
     if (!selectedProject) {
-      onSelectProject('')
       dispatch(reduxServices.newEvent.actions.clearProjectMembers())
+      onSelectProject(projectAutoCompleteTarget as string)
     }
   }
 
