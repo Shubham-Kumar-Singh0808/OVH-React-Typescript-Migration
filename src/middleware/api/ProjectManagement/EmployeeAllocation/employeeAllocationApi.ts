@@ -83,10 +83,6 @@ const exportEmployeeAllocationData = async (
       isbillable: props.isbillable ?? '',
       isAllocated: props.isAllocated ?? '',
       startdate: props.startIndex ?? '',
-      lastdate: props.lastdate ?? '',
-      departmentNames: props.departmentNames ?? '',
-      dateSelection: props.dateSelection ?? '',
-      token: localStorage.getItem('token') ?? '',
     },
     responseType: 'blob',
   })
