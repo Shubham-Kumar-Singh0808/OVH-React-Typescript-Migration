@@ -123,12 +123,7 @@ const EditConfiguration = (): JSX.Element => {
   }, [getEditAppraisal])
 
   useEffect(() => {
-    if (
-      cycle.name &&
-      cycle.appraisalType &&
-      cycle.level &&
-      cycle.servicePeriod
-    ) {
+    if (cycle.name && cycle.level && cycle.servicePeriod) {
       setIsUpdateButtonEnabled(true)
     } else {
       setIsUpdateButtonEnabled(false)

@@ -86,9 +86,6 @@ describe('Edit Configuration Component Testing', () => {
     userEvent.type(reviewTitleInput, 'Test review2')
     expect(reviewTitleInput).toHaveValue('Test review2')
 
-    const reviewTypeInput = screen.getByTestId(selectType)
-    userEvent.selectOptions(reviewTypeInput, 'Monthly')
-
     const level = await screen.findByTestId('level')
     userEvent.type(level, '1')
 
@@ -98,7 +95,7 @@ describe('Edit Configuration Component Testing', () => {
     const updateBtnElement = screen.getByTestId(updateButton)
     userEvent.click(updateBtnElement)
     await waitFor(() => {
-      expect(updateBtnElement).toBeDisabled()
+      expect(updateBtnElement).toBeEnabled()
     })
   })
 
