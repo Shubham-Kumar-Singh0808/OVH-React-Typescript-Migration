@@ -103,7 +103,7 @@ describe('appraisal Configuration', () => {
       })
     })
 
-    it('Should be able to set isLoading to "failed" if getAllAppraisalCycle is rejected', () => {
+    it('Should be able to set isLoading to "failed" if getCycleToEdit is rejected', () => {
       const action = {
         type: appraisalCycleService.getCycleToEdit.rejected.type,
         payload: 500,
@@ -145,6 +145,7 @@ describe('appraisal Configuration', () => {
     it('Should be able to set isLoading to "success" if updateAppraisalCycle is fulfilled', () => {
       const action = {
         type: appraisalCycleService.updateAppraisalCycle.fulfilled.type,
+        payload: mockAppraisalCycle,
       }
       const state = appraisalConfigurationReducer(
         initialAppraisalCycleSliceState,
@@ -202,6 +203,7 @@ describe('appraisal Configuration', () => {
     it('Should be able to set isLoading to "success" if validateAppraisalCycle is fulfilled', () => {
       const action = {
         type: appraisalCycleService.validateAppraisalCycle.fulfilled.type,
+        payload: mockAppraisalCycle,
       }
       const state = appraisalConfigurationReducer(
         initialAppraisalCycleSliceState,
