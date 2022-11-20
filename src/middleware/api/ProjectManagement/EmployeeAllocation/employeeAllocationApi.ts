@@ -6,7 +6,6 @@ import {
   EmployeeAllocationReportType,
   ProjectUnderEmployees,
   ProjectUnderEmployeesProps,
-  EmployeeExportAllocationReport,
   UpdateEmployeeAllocationProject,
 } from '../../../../types/ProjectManagement/EmployeeAllocation/employeeAllocationTypes'
 
@@ -68,37 +67,10 @@ const updateEmployeeAllocationProject = async (
   return response.data
 }
 
-const exportEmployeeAllocationData = async (
-  props: EmployeeExportAllocationReport,
-): Promise<Blob | undefined> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: employeeAllocationApiConfig.downloadEmployeeAllocationList,
-    method: AllowedHttpMethods.get,
-    params: {
-      id: props.id ?? '',
-      startIndex: props.startIndex ?? '',
-      endIndex: props.endIndex ?? '',
-      empName: props.empName ?? '',
-      technology: props.technology ?? '',
-      isbillable: props.isbillable ?? '',
-      isAllocated: props.isAllocated ?? '',
-      startdate: props.startIndex ?? '',
-      lastdate: props.lastdate ?? '',
-      departmentNames: props.departmentNames ?? '',
-      dateSelection: props.dateSelection ?? '',
-      token: localStorage.getItem('token') ?? '',
-    },
-    responseType: 'blob',
-  })
-  const response = await axios(requestConfig)
-  return response.data
-}
-
 const employeeAllocationReportApi = {
   getEmployeeAllocationReport,
   projectUnderEmployeesReport,
   updateEmployeeAllocationProject,
-  exportEmployeeAllocationData,
 }
 
 export default employeeAllocationReportApi
