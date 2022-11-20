@@ -7,6 +7,12 @@ const SubmitResignation = (): JSX.Element => {
   const [primaryReason, setPrimaryReason] = useState<string>('')
   const [toggle, setToggle] = useState('')
 
+  useEffect(() => {
+    if (getSeparation?.form?.separationExist) {
+      setToggle('')
+    }
+  }, [getSeparation])
+
   return (
     <>
       {toggle === '' && (
