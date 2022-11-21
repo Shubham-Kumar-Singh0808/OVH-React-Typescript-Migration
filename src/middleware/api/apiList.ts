@@ -64,6 +64,8 @@ import {
   RoomListApi,
   AddConfigurationsApi,
   TicketConfigurationApi,
+  SubmitResignationApi,
+  LeaveApprovalsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -565,4 +567,25 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
   ticketHistory: apiPrefix + '/supportManagement/getAudit',
   addSubCategory: apiPrefix + '/supportManagement/addSubCategory',
+  getAllCategory: apiPrefix + '/supportManagement/getAllCategoryList',
+  deleteCategory: apiPrefix + '/supportManagement/deleteCategory',
+  addCategory: apiPrefix + '/supportManagement/addCategory',
+  updateCategory: apiPrefix + '/supportManagement/updateCategory',
+  updateSubCategory: apiPrefix + '/supportManagement/updateSubCategory',
+}
+
+export const submitResignationApiConfig: SubmitResignationApi = {
+  getSeparationForm: apiPrefix + '/separationController/getSeparationForm',
+  submitResignation: apiPrefix + '/separationController/SubmitResignation',
+  getEmployeeResg: apiPrefix + '/separationController/getEmployeeResg',
+  revokeResignation: apiPrefix + '/separationController/revokeResignation',
+}
+
+export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
+  getEmployees: apiPrefix + '/managerAppraisalController/getEmployees',
+  getEmployeeLeaves: apiPrefix + '/leave/bioAdminManager/employeeLeaves',
+  getSearchEmployees: apiPrefix + '/leave/bioAdminManager/searchEmployees',
+  checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
+  leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
+  leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
 }

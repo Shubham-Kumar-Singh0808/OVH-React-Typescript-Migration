@@ -5,9 +5,12 @@ import ticketConfigurationApi from '../../../middleware/api/Settings/TicketConfi
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  AddCategory,
   AddSubCategoryDetails,
+  Category,
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
+  TicketConfigurationList,
   TicketConfigurationState,
   TicketConfigurationSubCategories,
   TicketConfigurationSubCategoryList,
@@ -142,6 +145,92 @@ const addSubCategory = createAsyncThunk<
   },
 )
 
+const getAllCategory = createAsyncThunk(
+  'supportManagement/getAllCategory',
+  async (_, thunkApi) => {
+    try {
+      return await ticketConfigurationApi.getAllCategory()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const deleteCategory = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('supportManagement/deleteCategory', async (categoryId, thunkApi) => {
+  try {
+    return await ticketConfigurationApi.deleteCategory(categoryId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+const addCategory = createAsyncThunk<
+  number | undefined,
+  AddSubCategoryDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'supportManagement/addCategory',
+  async (newCategoryDetails: AddCategory, thunkApi) => {
+    try {
+      return await ticketConfigurationApi.addCategory(newCategoryDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateCategory = createAsyncThunk<
+  number | undefined,
+  Category,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'supportManagement/updateCategory',
+  async (updateCategoryDetails, thunkApi) => {
+    try {
+      return await ticketConfigurationApi.updateCategory(updateCategoryDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateSubCategory = createAsyncThunk<
+  number | undefined,
+  TicketConfigurationList,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('supportManagement/updateSubCategory', async (holidayDetails, thunkApi) => {
+  try {
+    return await ticketConfigurationApi.updateSubCategory(holidayDetails)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const ticketConfigurationSlice = createSlice({
   name: 'ticketConfiguration',
   initialState: { ...initialTicketConfigurationState, toggle: '' },
@@ -155,6 +244,12 @@ const ticketConfigurationSlice = createSlice({
     },
     setToggle: (state, action) => {
       state.toggle = action.payload
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -180,6 +275,10 @@ const ticketConfigurationSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.ticketHistoryDetails = action.payload
       })
+      .addCase(getAllCategory.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.category = action.payload
+      })
       .addCase(
         getTicketConfigurationSubCategories.fulfilled,
         (state, action) => {
@@ -189,7 +288,14 @@ const ticketConfigurationSlice = createSlice({
         },
       )
       .addMatcher(
-        isAnyOf(addSubCategory.fulfilled, deleteSubCategory.fulfilled),
+        isAnyOf(
+          addSubCategory.fulfilled,
+          updateSubCategory.fulfilled,
+          addCategory.fulfilled,
+          updateCategory.fulfilled,
+          deleteSubCategory.fulfilled,
+          deleteCategory.fulfilled,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },
@@ -201,6 +307,11 @@ const ticketConfigurationSlice = createSlice({
           deleteSubCategory.pending,
           ticketHistoryDetails.pending,
           addSubCategory.pending,
+          getAllCategory.pending,
+          addCategory.pending,
+          updateCategory.pending,
+          deleteSubCategory.pending,
+          updateSubCategory.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -225,6 +336,11 @@ const ticketConfigurationSlice = createSlice({
           deleteSubCategory.rejected,
           ticketHistoryDetails.rejected,
           addSubCategory.rejected,
+          getAllCategory.rejected,
+          addCategory.rejected,
+          updateCategory.rejected,
+          deleteSubCategory.rejected,
+          updateSubCategory.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -265,14 +381,27 @@ const ticketHistory = (state: RootState): TicketHistoryResponse =>
 
 const toggle = (state: RootState): string => state.ticketConfiguration.toggle
 
+const categoryList = (state: RootState): Category[] =>
+  state.ticketConfiguration.category
+
+const pageFromState = (state: RootState): number =>
+  state.ticketConfiguration.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.ticketConfiguration.pageSize
+
 const ticketConfigurationThunk = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
   getTicketConfigurationSubCategories,
   getTicketConfigurationSubCategoryList,
-  deleteSubCategory,
   ticketHistoryDetails,
   addSubCategory,
+  updateSubCategory,
+  deleteSubCategory,
+  getAllCategory,
+  addCategory,
+  updateCategory,
+  deleteCategory,
 }
 
 const ticketConfigurationSelectors = {
@@ -286,6 +415,9 @@ const ticketConfigurationSelectors = {
   selectedDepartment,
   ticketHistory,
   toggle,
+  categoryList,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const ticketConfigurationService = {

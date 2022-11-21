@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import SubCategoryListTable from './SubCategoryListTable'
 import TicketHistoryDetails from './TicketHistory/TicketHistoryDetails'
-import { render, screen } from '../../../test/testUtils'
+import { render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import {
@@ -11,6 +11,7 @@ import {
   mockTicketConfigurationCategory,
   mockTicketConfigurationSubCategoryList,
 } from '../../../test/data/ticketConfigurationData'
+import { TicketConfigurationList } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -29,6 +30,7 @@ const toRender = (
       filterByCategory="Hardware"
       filterBySubCategory=""
       isTableView={true}
+      editSubCategoryButtonHandler={jest.fn()}
     />
   </div>
 )
@@ -85,14 +87,55 @@ describe('SubCategoryList Table', () => {
     })
 
     test('should render timeline button in the Actions', () => {
-      expect(screen.getByTestId('th-timeline-btn0')).toHaveClass(
+      expect(screen.getByTestId('sc-timeline-btn0')).toHaveClass(
         'btn btn-info btn-ovh btn-ovh-employee-list me-1',
       )
     })
     test('should render Ticket History Timeline Component upon clicking Timeline button from Actions', () => {
-      const timeLineBtn = screen.getByTestId('th-timeline-btn1')
+      const timeLineBtn = screen.getByTestId('sc-timeline-btn1')
       userEvent.click(timeLineBtn)
       expect(render(<TicketHistoryDetails />))
     })
+    test('should render edit button in the Actions', () => {
+      expect(screen.getByTestId('sc-edit-btn0')).toHaveClass(
+        'btn btn-info btn-ovh me-1 btn-ovh-employee-list',
+      )
+    })
+    test('should render delete button in the Actions', () => {
+      expect(screen.getByTestId('sc-delete-btn0')).toHaveClass(
+        'btn btn-danger btn-ovh me-1 btn-ovh-employee-list',
+      )
+    })
+
+    test('should perform editButton click', () => {
+      const editButtonEl = screen.getByTestId('sc-edit-btn1')
+      userEvent.click(editButtonEl)
+    })
+
+    it('should render Delete modal popup on clicking delete button from Actions', async () => {
+      const deleteButtonEl = screen.getByTestId('sc-delete-btn0')
+      userEvent.click(deleteButtonEl)
+      await waitFor(() => {
+        expect(screen.getByText('Delete Sub-Category')).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
+      })
+    })
+    it('should close modal popup after clicking Yes option from the modal', () => {
+      const deleteButtonElement = screen.getByTestId('sc-delete-btn2')
+      userEvent.click(deleteButtonElement)
+      const yesButtonEle = screen.getByRole('button', { name: 'Yes' })
+      userEvent.click(yesButtonEle)
+    })
+    // test('should render correct number of  page records', () => {
+    //   userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+    //   const pageSizeSelect = screen.getByRole('option', {
+    //     name: '40',
+    //   }) as HTMLOptionElement
+    //   expect(pageSizeSelect.selected).toBe(true)
+
+    //   // 41 including the heading
+    //   expect(screen.getAllByRole('row')).toHaveLength(41)
+    // })
   })
 })

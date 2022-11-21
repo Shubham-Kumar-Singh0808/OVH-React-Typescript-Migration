@@ -128,11 +128,16 @@ const TicketConfigurationOptions = ({
               >
                 <option value="">Select Department</option>
                 {departments &&
-                  departments?.map((department) => (
-                    <option key={department.id} value={department.id}>
-                      {department.name}
-                    </option>
-                  ))}
+                  departments
+                    ?.slice()
+                    .sort((dept1, dept2) =>
+                      dept1.name?.localeCompare(dept2.name),
+                    )
+                    ?.map((department) => (
+                      <option key={department.id} value={department.id}>
+                        {department.name}
+                      </option>
+                    ))}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -155,14 +160,19 @@ const TicketConfigurationOptions = ({
               >
                 <option value="">Select Category</option>
                 {categories &&
-                  categories?.map((category) => (
-                    <option
-                      key={category.categoryId}
-                      value={category.categoryId}
-                    >
-                      {category.categoryName}
-                    </option>
-                  ))}
+                  categories
+                    ?.slice()
+                    .sort((cat1, cat2) =>
+                      cat1.categoryName?.localeCompare(cat2.categoryName),
+                    )
+                    ?.map((category) => (
+                      <option
+                        key={category.categoryId}
+                        value={category.categoryId}
+                      >
+                        {category.categoryName}
+                      </option>
+                    ))}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -185,14 +195,21 @@ const TicketConfigurationOptions = ({
               >
                 <option value="">Select Sub-Category</option>
                 {subCategories &&
-                  subCategories?.map((subCategory) => (
-                    <option
-                      key={subCategory.subCategoryId}
-                      value={subCategory.subCategoryId}
-                    >
-                      {subCategory.subCategoryName}
-                    </option>
-                  ))}
+                  subCategories
+                    ?.slice()
+                    .sort((subCat1, subCat2) =>
+                      subCat1.subCategoryName?.localeCompare(
+                        subCat2.subCategoryName,
+                      ),
+                    )
+                    ?.map((subCategory) => (
+                      <option
+                        key={subCategory.subCategoryId}
+                        value={subCategory.subCategoryId}
+                      >
+                        {subCategory.subCategoryName}
+                      </option>
+                    ))}
               </CFormSelect>
             </CCol>
           </CRow>

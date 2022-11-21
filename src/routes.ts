@@ -227,6 +227,15 @@ const RoomList = React.lazy(
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
+
+const SubmitResignation = React.lazy(
+  () => import('./pages/Separation/SubmitViewResignation/SubmitResignation'),
+)
+
+const LeaveApprovals = React.lazy(
+  () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -497,9 +506,19 @@ const routes = [
     component: TicketConfiguration,
   },
   {
+    path: '/submitResignation',
+    name: 'Submit View Resignation',
+    component: SubmitResignation,
+  },
+  {
     path: '/projectreport',
     name: 'Project Report',
     component: ProjectReport,
+  },
+  {
+    path: '/leaveApprovals',
+    name: 'Leave Approvals',
+    component: LeaveApprovals,
   },
 ]
 

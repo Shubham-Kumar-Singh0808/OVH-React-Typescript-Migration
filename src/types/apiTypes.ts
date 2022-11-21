@@ -467,4 +467,25 @@ export interface TicketConfigurationApi extends ApiBase {
   deleteSubCategory: string
   ticketHistory: string
   addSubCategory: string
+  updateSubCategory: string
+  getAllCategory: string
+  addCategory: string
+  updateCategory: string
+  deleteCategory: string
+}
+
+export interface SubmitResignationApi extends ApiBase {
+  getSeparationForm: string
+  submitResignation: string
+  getEmployeeResg: string
+  revokeResignation: string
+}
+
+export interface LeaveApprovalsApi extends ApiBase {
+  getEmployees: string
+  getEmployeeLeaves: string
+  getSearchEmployees: string
+  checkProjectManagerExits: string
+  leaveApprove: string
+  leaveReject: string
 }
