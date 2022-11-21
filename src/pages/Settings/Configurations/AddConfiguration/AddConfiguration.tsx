@@ -235,7 +235,12 @@ const AddConfiguration = ({
         addCycleResultAction,
       )
     ) {
-      dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
+      dispatch(
+        reduxServices.appraisalConfigurations.getAllAppraisalCycleData({
+          startIndex: pageSize * (appraisalCycleCurrentPage - 1),
+          endIndex: pageSize * appraisalCycleCurrentPage,
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(successMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
       setToggle()

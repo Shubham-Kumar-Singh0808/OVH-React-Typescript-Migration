@@ -7,13 +7,14 @@ import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   AppraisalCycleSliceState,
   getAppraisalCycle,
+  GetAppraisalCycleProps,
 } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
 const getAllAppraisalCycleData = createAsyncThunk(
   'appraisalConfigurations/getAllAppraisalCycle',
-  async (_, thunkApi) => {
+  async (props: GetAppraisalCycleProps, thunkApi) => {
     try {
-      return await appraisalConfigurationsApi.getAllAppraisalCycle()
+      return await appraisalConfigurationsApi.getAllAppraisalCycle(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -21,23 +22,14 @@ const getAllAppraisalCycleData = createAsyncThunk(
   },
 )
 const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
-  appraisalCycle: [],
   isLoading: ApiLoadingState.idle,
-  currentPage: 1,
-  pageSize: 20,
+  appraisalCycleList: { list: [], size: 0 },
 }
 
 const appraisalCycleSlice = createSlice({
   name: 'appraisalCycle',
   initialState: initialAppraisalCycleSliceState,
-  reducers: {
-    setCurrentPage: (state, action) => {
-      state.currentPage = action.payload
-    },
-    setPageSize: (state, action) => {
-      state.pageSize = action.payload
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
 
@@ -48,32 +40,29 @@ const appraisalCycleSlice = createSlice({
         isAnyOf(getAllAppraisalCycleData.fulfilled),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.appraisalCycle = action.payload
+          state.appraisalCycleList = action.payload
         },
       )
   },
 })
 
 const appraisalCycleNames = (state: RootState): getAppraisalCycle[] =>
-  state.appraisalConfigurations.appraisalCycle
+  state.appraisalConfigurations.appraisalCycleList.list
+
+const appraisalCycleListSize = (state: RootState): number =>
+  state.appraisalConfigurations.appraisalCycleList.size
 
 const isLoading = (state: RootState): LoadingState =>
   state.appraisalConfigurations.isLoading
 
-const pageFromState = (state: RootState): number =>
-  state.appraisalConfigurations.currentPage
-const pageSizeFromState = (state: RootState): number =>
-  state.appraisalConfigurations.pageSize
-
 const appraisalCycleThunk = {
-  getAllAppraisalCycle: getAllAppraisalCycleData,
+  getAllAppraisalCycleData,
 }
 
 const appraisalCycleSelectors = {
   isLoading,
   appraisalCycleNames,
-  pageFromState,
-  pageSizeFromState,
+  appraisalCycleListSize,
 }
 
 export const appraisalCycleService = {

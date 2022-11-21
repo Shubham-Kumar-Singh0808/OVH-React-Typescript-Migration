@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CCol,
@@ -17,13 +17,22 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
-import { usePagination } from '../../../middleware/hooks/usePagination'
 import { getAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 
 const AppraisalConfigurationsTable = ({
+  paginationRange,
+  pageSize,
+  setPageSize,
+  currentPage,
+  setCurrentPage,
   userEditAccess,
 }: {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
   userEditAccess: boolean
 }): JSX.Element => {
   const [isAppraisalDescriptionVisible, setIsAppraisalDescriptionVisible] =
@@ -36,29 +45,9 @@ const AppraisalConfigurationsTable = ({
   const appraisalCycleNames = useTypedSelector(
     reduxServices.appraisalConfigurations.selectors.appraisalCycleNames,
   )
-
-  useEffect(() => {
-    dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
-  }, [dispatch])
-
-  const pageFromState = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.pageFromState,
+  const appraisalCycleListSize = useTypedSelector(
+    reduxServices.appraisalConfigurations.selectors.appraisalCycleListSize,
   )
-  const pageSizeFromState = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.pageSizeFromState,
-  )
-  const {
-    paginationRange,
-    setCurrentPage,
-    setPageSize,
-    currentPage,
-    pageSize,
-  } = usePagination(
-    appraisalCycleNames.length,
-    pageSizeFromState,
-    pageFromState,
-  )
-
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -172,11 +161,11 @@ const AppraisalConfigurationsTable = ({
         <CRow>
           <CCol xs={4}>
             <p>
-              <strong>Total Records: {appraisalCycleNames.length}</strong>
+              <strong>Total Records: {appraisalCycleListSize}</strong>
             </p>
           </CCol>
           <CCol xs={3}>
-            {appraisalCycleNames.length > 20 && (
+            {appraisalCycleListSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
                 options={[20, 40, 60, 80]}
@@ -184,7 +173,7 @@ const AppraisalConfigurationsTable = ({
               />
             )}
           </CCol>
-          {appraisalCycleNames.length > 20 && (
+          {appraisalCycleListSize > 20 && (
             <CCol
               xs={5}
               className="gap-1 d-grid d-md-flex justify-content-md-end"

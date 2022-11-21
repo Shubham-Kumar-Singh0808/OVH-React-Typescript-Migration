@@ -15,7 +15,7 @@ describe('Appraisal Configurations Slice', () => {
 
     it('Should be able to set isLoading to "loading" if getAllAppraisalCycle  is pending', () => {
       const action = {
-        type: appraisalCycleService.getAllAppraisalCycle.pending.type,
+        type: appraisalCycleService.getAllAppraisalCycleData.pending.type,
       }
       const state = appraisalConfigurationReducer(initialState, action)
       expect(state).toEqual({
@@ -28,7 +28,7 @@ describe('Appraisal Configurations Slice', () => {
 
     it('Should be able to set isLoading to "succeeded" if getAllAppraisalCycle is fulfilled', () => {
       const action = {
-        type: appraisalCycleService.getAllAppraisalCycle.fulfilled.type,
+        type: appraisalCycleService.getAllAppraisalCycleData.fulfilled.type,
         payload: mockAppraisalCycle,
       }
       const state = appraisalConfigurationReducer(initialState, action)
@@ -42,7 +42,7 @@ describe('Appraisal Configurations Slice', () => {
 
     it('Should be able to set isLoading to "failed" if getAllAppraisalCycle is rejected', () => {
       const action = {
-        type: appraisalCycleService.getAllAppraisalCycle.rejected.type,
+        type: appraisalCycleService.getAllAppraisalCycleData.rejected.type,
       }
       const state = appraisalConfigurationReducer(initialState, action)
       expect(state).toEqual({

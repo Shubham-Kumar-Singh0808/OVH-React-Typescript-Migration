@@ -16,9 +16,17 @@ export type getAppraisalCycle = {
   servicePeriod: number
 }
 
+export type GetAppraisalCycleResponse = {
+  list: getAppraisalCycle[]
+  size: number
+}
+
+export type GetAppraisalCycleProps = {
+  endIndex: number
+  startIndex: number
+}
+
 export type AppraisalCycleSliceState = {
-  appraisalCycle: getAppraisalCycle[]
   isLoading: ApiLoadingState
-  currentPage: number
-  pageSize: number
+  appraisalCycleList: GetAppraisalCycleResponse
 }
