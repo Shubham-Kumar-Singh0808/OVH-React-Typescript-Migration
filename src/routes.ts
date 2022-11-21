@@ -236,6 +236,10 @@ const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
 )
 
+const PfPanDetails = React.lazy(
+  () => import('./pages/Finance/PanAndBankDetails/PanDetails'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -519,6 +523,11 @@ const routes = [
     path: '/leaveApprovals',
     name: 'Leave Approvals',
     component: LeaveApprovals,
+  },
+  {
+    path: '/myFinance',
+    name: 'P.F. & PAN Details',
+    component: PfPanDetails,
   },
 ]
 

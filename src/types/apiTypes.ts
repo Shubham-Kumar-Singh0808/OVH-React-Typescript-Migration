@@ -489,3 +489,7 @@ export interface LeaveApprovalsApi extends ApiBase {
   leaveApprove: string
   leaveReject: string
 }
+
+export interface PanDetailsApi extends ApiBase {
+  bankInformation: string
+}
