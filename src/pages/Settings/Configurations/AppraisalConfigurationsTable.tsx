@@ -98,11 +98,15 @@ const AppraisalConfigurationsTable = ({
         <CTableBody>
           {appraisalCycleNames?.length > 0 &&
             appraisalCycleNames?.map((appraisalCycle, index) => {
+              const removeSpaces = appraisalCycle.description
+                ?.replace(/\s+/g, ' ')
+                .trim()
+                .replace(/(<([^>]+)>)/gi, '')
+                .replace(/&nbsp;/g, '')
               const agendaLimit =
-                appraisalCycle.description &&
-                appraisalCycle.description.length > 30
-                  ? `${appraisalCycle.description.substring(0, 30)}...`
-                  : appraisalCycle.description
+                removeSpaces && removeSpaces.length > 15
+                  ? `${removeSpaces.substring(0, 15)}...`
+                  : removeSpaces
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
@@ -213,7 +217,11 @@ const AppraisalConfigurationsTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <p>{descriptionModal.description}</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: descriptionModal.description as string,
+            }}
+          />
         </>
       </OModal>
     </>
