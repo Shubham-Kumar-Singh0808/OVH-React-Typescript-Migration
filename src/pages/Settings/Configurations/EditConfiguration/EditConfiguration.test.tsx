@@ -14,10 +14,6 @@ describe('Edit Configuration Component Testing', () => {
     render(<EditConfiguration />)
   })
 
-  test('should be able to render  Edit Configuration  Title', () => {
-    expect(screen.getByText('Edit Configuration')).toBeInTheDocument()
-  })
-
   test('should render edit Configuration', () => {
     const backButton = screen.getByTestId('back-button')
     expect(backButton).toBeTruthy()
