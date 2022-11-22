@@ -176,7 +176,7 @@ const SubCategoryListTable = (
             responsive
             align="middle"
           >
-            <CTableHead className="text-center">
+            <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Department Name</CTableHeaderCell>
@@ -189,7 +189,7 @@ const SubCategoryListTable = (
               </CTableRow>
             </CTableHead>
             {subCategoryList?.size > 0 && (
-              <CTableBody className="text-center">
+              <CTableBody>
                 {subCategoryList &&
                   subCategoryList?.list?.map((ticket, index) => {
                     return (
@@ -219,6 +219,19 @@ const SubCategoryListTable = (
                                   color="info btn-ovh me-1"
                                   className="btn-ovh-employee-list"
                                   data-testid={`sc-edit-btn${index}`}
+                                  onClick={() =>
+                                    props.editSubCategoryButtonHandler({
+                                      subCategoryId: ticket.subCategoryId,
+                                      subCategoryName: ticket.subCategoryName,
+                                      estimatedTime: ticket.estimatedTime,
+                                      workFlow: ticket.workFlow,
+                                      categoryId: ticket.categoryId,
+                                      categoryName: ticket.categoryName,
+                                      departmentName: ticket.departmentName,
+                                      departmentId: ticket.departmentId,
+                                      levelOfHierarchy: ticket.levelOfHierarchy,
+                                    })
+                                  }
                                 >
                                   <i
                                     className="fa fa-edit"

@@ -10,6 +10,7 @@ import {
   Category,
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
+  TicketConfigurationList,
   TicketConfigurationState,
   TicketConfigurationSubCategories,
   TicketConfigurationSubCategoryList,
@@ -213,6 +214,23 @@ const updateCategory = createAsyncThunk<
   },
 )
 
+const updateSubCategory = createAsyncThunk<
+  number | undefined,
+  TicketConfigurationList,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('supportManagement/updateSubCategory', async (holidayDetails, thunkApi) => {
+  try {
+    return await ticketConfigurationApi.updateSubCategory(holidayDetails)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const ticketConfigurationSlice = createSlice({
   name: 'ticketConfiguration',
   initialState: { ...initialTicketConfigurationState, toggle: '' },
@@ -272,6 +290,7 @@ const ticketConfigurationSlice = createSlice({
       .addMatcher(
         isAnyOf(
           addSubCategory.fulfilled,
+          updateSubCategory.fulfilled,
           addCategory.fulfilled,
           updateCategory.fulfilled,
           deleteSubCategory.fulfilled,
@@ -292,6 +311,7 @@ const ticketConfigurationSlice = createSlice({
           addCategory.pending,
           updateCategory.pending,
           deleteSubCategory.pending,
+          updateSubCategory.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -320,6 +340,7 @@ const ticketConfigurationSlice = createSlice({
           addCategory.rejected,
           updateCategory.rejected,
           deleteSubCategory.rejected,
+          updateSubCategory.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -373,9 +394,10 @@ const ticketConfigurationThunk = {
   getTicketConfigurationCategories,
   getTicketConfigurationSubCategories,
   getTicketConfigurationSubCategoryList,
-  deleteSubCategory,
   ticketHistoryDetails,
   addSubCategory,
+  updateSubCategory,
+  deleteSubCategory,
   getAllCategory,
   addCategory,
   updateCategory,
