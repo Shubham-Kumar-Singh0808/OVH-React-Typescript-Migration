@@ -7,7 +7,7 @@ import {
   mockTicketConfigurationCategory,
   mockTicketConfigurationSubCategory,
   mockTicketConfigurationSubCategoryList,
-  mockTicketHistory,
+  mockTicketHistoryData,
 } from '../data/ticketConfigurationData'
 
 export const ticketConfigurationHandlers = [
@@ -52,7 +52,7 @@ export const ticketConfigurationHandlers = [
     return res(
       ctx.json({
         status: 200,
-        data: mockTicketHistory,
+        data: mockTicketHistoryData,
       }),
     )
   }),
