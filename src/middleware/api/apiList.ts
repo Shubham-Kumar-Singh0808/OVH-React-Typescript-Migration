@@ -67,6 +67,7 @@ import {
   SubmitResignationApi,
   LeaveApprovalsApi,
   PanDetailsApi,
+  BankDetailsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -593,4 +594,11 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
 
 export const panDetailsApiConfig: PanDetailsApi = {
   bankInformation: apiPrefix + '/Employee/bankInformation',
+  updateFinanceInformation: apiPrefix + '/Employee/updateFinanceInformation',
+  uploadEmployeeFinanceDetails:
+    apiPrefix + '/Employee/updateFinanceInformation',
+}
+
+export const bankDetailsApiConfig: BankDetailsApi = {
+  getBankNameLookup: apiPrefix + '/Employee/getBankNameLookup',
 }

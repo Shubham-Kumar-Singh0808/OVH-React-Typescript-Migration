@@ -492,4 +492,10 @@ export interface LeaveApprovalsApi extends ApiBase {
 
 export interface PanDetailsApi extends ApiBase {
   bankInformation: string
+  updateFinanceInformation: string
+  uploadEmployeeFinanceDetails: string
+}
+
+export interface BankDetailsApi extends ApiBase {
+  getBankNameLookup: string
 }

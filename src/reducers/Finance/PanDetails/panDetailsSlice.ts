@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import panDetailsApi from '../../../middleware/api/Finance/PanDetails/panDetailsApi'
@@ -6,7 +6,9 @@ import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   BankInformation,
+  Finance,
   PanDetailsSliceState,
+  UploadPanDetail,
 } from '../../../types/Finance/PanDetails/panDetailsTypes'
 
 const bankInformation = createAsyncThunk(
@@ -14,6 +16,30 @@ const bankInformation = createAsyncThunk(
   async (loggedInEmpId: number, thunkApi) => {
     try {
       return await panDetailsApi.bankInformation(loggedInEmpId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const uploadEmployeeFinanceDetails = createAsyncThunk(
+  'panDetails/uploadEmployeeFinanceDetails',
+  async (prepareObject: UploadPanDetail, thunkApi) => {
+    try {
+      return await panDetailsApi.uploadEmployeeFinanceDetails(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateFinanceInformation = createAsyncThunk(
+  'panDetails/updateFinanceInformation',
+  async (list: Finance, thunkApi) => {
+    try {
+      return await panDetailsApi.updateFinanceInformation(list)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -38,12 +64,37 @@ const panDetailsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.bankInfo = action.payload
       })
-      .addCase(bankInformation.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addCase(bankInformation.rejected, (state) => {
-        state.isLoading = ApiLoadingState.failed
-      })
+
+      .addMatcher(
+        isAnyOf(
+          uploadEmployeeFinanceDetails.fulfilled,
+          updateFinanceInformation.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+
+      .addMatcher(
+        isAnyOf(
+          bankInformation.pending,
+          uploadEmployeeFinanceDetails.pending,
+          updateFinanceInformation.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          bankInformation.rejected,
+          uploadEmployeeFinanceDetails.rejected,
+          updateFinanceInformation.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.failed
+        },
+      )
   },
 })
 
@@ -54,6 +105,8 @@ const bankDetails = (state: RootState): BankInformation =>
 
 const panDetailsThunk = {
   bankInformation,
+  updateFinanceInformation,
+  uploadEmployeeFinanceDetails,
 }
 
 const panDetailsSelectors = {
