@@ -47,6 +47,7 @@ describe('Skill List Table Testing', () => {
       expect(screen.getByText('No Records Found')).toBeInTheDocument()
     })
   })
+  jest.retryTimes(3)
   test('should render table with data without crashing', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
