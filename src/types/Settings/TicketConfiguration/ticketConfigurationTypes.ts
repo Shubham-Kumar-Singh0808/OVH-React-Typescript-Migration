@@ -54,7 +54,6 @@ export type TicketConfigurationState = {
   listSize: number
   ticketHistoryDetails: TicketHistoryResponse
   addSubCategoryDetails: AddSubCategoryDetails
-  editSubCategoryDetails: TicketConfigurationList
   category: Category[]
   toggle: string
   isLoading: LoadingState
