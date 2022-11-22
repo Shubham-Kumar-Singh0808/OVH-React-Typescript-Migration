@@ -8,7 +8,7 @@ import {
   mockTicketConfigurationCategory,
   mockTicketConfigurationSubCategory,
   mockTicketConfigurationSubCategoryList,
-  mockTicketHistory,
+  mockTicketHistoryData,
 } from '../../../test/data/ticketConfigurationData'
 import { TicketConfigurationState } from '../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 
@@ -571,7 +571,7 @@ describe('Ticket Configuration Slice', () => {
     it('Should be able to set isLoading to "success" if ticketHistoryDetails is fulfilled', () => {
       const action = {
         type: ticketConfigurationService.ticketHistoryDetails.fulfilled.type,
-        payload: mockTicketHistory,
+        payload: mockTicketHistoryData,
       }
       const state = ticketConfigurationReducer(
         initialTicketConfigurationState,
@@ -591,7 +591,7 @@ describe('Ticket Configuration Slice', () => {
         pageSize: 0,
         selectedDepartment: '',
         listSize: 0,
-        ticketHistoryDetails: mockTicketHistory,
+        ticketHistoryDetails: mockTicketHistoryData,
         toggle: '',
         isLoading: ApiLoadingState.succeeded,
         isLoadingFilterOptions: ApiLoadingState.idle,
