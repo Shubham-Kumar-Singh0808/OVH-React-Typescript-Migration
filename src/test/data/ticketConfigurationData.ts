@@ -12,8 +12,8 @@ export const mockTicketHistoryData: TicketHistoryResponse = {
   size: 4,
   list: [
     {
-      id: null,
-      ticketsSubCategoryName: null,
+      id: 1,
+      ticketsSubCategoryName: 'hagsda',
       subject: null,
       description: null,
       status: null,
@@ -60,8 +60,8 @@ export const mockTicketHistoryData: TicketHistoryResponse = {
       oldAccessEndDate: null,
     },
     {
-      id: null,
-      ticketsSubCategoryName: null,
+      id: 2,
+      ticketsSubCategoryName: 'dasdac',
       subject: null,
       description: null,
       status: null,
@@ -108,8 +108,8 @@ export const mockTicketHistoryData: TicketHistoryResponse = {
       oldAccessEndDate: null,
     },
     {
-      id: null,
-      ticketsSubCategoryName: null,
+      id: 3,
+      ticketsSubCategoryName: 'sdjfk',
       subject: null,
       description: null,
       status: null,
@@ -156,8 +156,8 @@ export const mockTicketHistoryData: TicketHistoryResponse = {
       oldAccessEndDate: null,
     },
     {
-      id: null,
-      ticketsSubCategoryName: null,
+      id: 4,
+      ticketsSubCategoryName: 'wueas',
       subject: null,
       description: null,
       status: null,
@@ -517,8 +517,8 @@ export const mockTicketHistory: TicketHistoryResponse = {
   size: 2,
   list: [
     {
-      id: null,
-      ticketsSubCategoryName: null,
+      id: 5,
+      ticketsSubCategoryName: 'sjdfw',
       subject: null,
       description: null,
       status: null,
@@ -565,8 +565,8 @@ export const mockTicketHistory: TicketHistoryResponse = {
       oldAccessEndDate: null,
     },
     {
-      id: null,
-      ticketsSubCategoryName: null,
+      id: 6,
+      ticketsSubCategoryName: 'weaas',
       subject: null,
       description: null,
       status: null,

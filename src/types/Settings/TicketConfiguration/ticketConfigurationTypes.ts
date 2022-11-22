@@ -102,7 +102,7 @@ export type TicketHistory = {
   documentsPath: null
   endDate: null
   estimatedTime: string
-  id: null
+  id: number
   levelOfHierarchy: string
   modifiedBy: string
   modifiedDate: string
@@ -133,7 +133,7 @@ export type TicketHistory = {
   status: null
   subCategoryName: string
   subject: null
-  ticketsSubCategoryName: null
+  ticketsSubCategoryName: string
   tracker: null
   workFlow: boolean | string
 }
