@@ -53,6 +53,12 @@ const CategoryListTable = (): JSX.Element => {
   const pageSizeFromState = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.pageSizeFromState,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToMealTypeCol = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Meal Type',
+  )
   const tableHeaderCellPropsCategoryName = {
     width: '40%',
     scope: 'col',
@@ -188,9 +194,11 @@ const CategoryListTable = (): JSX.Element => {
             <CTableHeaderCell {...tableHeaderCellPropsCategoryName}>
               Category Name
             </CTableHeaderCell>
-            <CTableHeaderCell {...tableHeaderCellPropsDepartmentName}>
-              Meal Type
-            </CTableHeaderCell>
+            {userAccessToMealTypeCol?.viewaccess && (
+              <CTableHeaderCell {...tableHeaderCellPropsDepartmentName}>
+                Meal Type
+              </CTableHeaderCell>
+            )}
             <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
@@ -232,16 +240,18 @@ const CategoryListTable = (): JSX.Element => {
                 ) : (
                   <CTableDataCell>{ticketCategory.categoryName}</CTableDataCell>
                 )}
-                <CTableDataCell>
-                  <span className="hidden-block sh-tracker-checkbox">
-                    <CFormCheck
-                      className="form-check-input form-select-not-allowed"
-                      name="mealType"
-                      checked={ticketCategory.mealType}
-                      disabled={true}
-                    />
-                  </span>
-                </CTableDataCell>
+                {userAccessToMealTypeCol?.viewaccess && (
+                  <CTableDataCell>
+                    <span className="hidden-block sh-tracker-checkbox">
+                      <CFormCheck
+                        className="form-check-input form-select-not-allowed"
+                        name="mealType"
+                        checked={ticketCategory.mealType}
+                        disabled={true}
+                      />
+                    </span>
+                  </CTableDataCell>
+                )}
                 <CTableDataCell scope="row">
                   {isCategoryDetailsEdit &&
                   ticketCategory.categoryId === selectCategoryId ? (
