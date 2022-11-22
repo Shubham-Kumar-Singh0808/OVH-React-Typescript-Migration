@@ -7,17 +7,12 @@ import {
   CFormSelect,
   CButton,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React from 'react'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
 const AddBankAccount = (): JSX.Element => {
-  const [accountNumber, setIsAccountNumber] = useState<string>('')
-  const [bankName, setBankName] = useState<string>('')
-  const [bankIfscCode, setBankIfscCode] = useState<string>('')
-
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
@@ -31,7 +26,7 @@ const AddBankAccount = (): JSX.Element => {
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title={'Add Bank Account Information'}
+        title="Edit Bank Account Information"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -53,7 +48,6 @@ const AddBankAccount = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Bank Account Number:
-              <span className={accountNumber ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -74,7 +68,6 @@ const AddBankAccount = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Name of the Bank:
-              <span className={bankName ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -100,7 +93,6 @@ const AddBankAccount = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               IFSC Code:
-              <span className={bankIfscCode ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -122,7 +114,7 @@ const AddBankAccount = (): JSX.Element => {
             color="info"
             className="btn-ovh me-1"
           >
-            <i className="fa fa-plus me-1"></i>Add
+            <i className="fa fa-plus me-1"></i>Update
           </CButton>
         </CCol>
       </OCard>
