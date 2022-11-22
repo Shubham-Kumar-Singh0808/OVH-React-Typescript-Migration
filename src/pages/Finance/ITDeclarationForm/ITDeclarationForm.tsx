@@ -1,5 +1,6 @@
 import React from 'react'
 import EmployeeDetails from './EmployeeDetails'
+import IncomeTaxAct from './IncomeTaxAct'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const ITDeclarationForm = (): JSX.Element => {
@@ -12,6 +13,7 @@ const ITDeclarationForm = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <EmployeeDetails />
+        <IncomeTaxAct />
       </OCard>
     </>
   )
