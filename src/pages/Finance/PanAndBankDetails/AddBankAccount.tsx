@@ -26,6 +26,21 @@ const AddBankAccount = (): JSX.Element => {
   const bankData = useTypedSelector(
     reduxServices.bankDetails.selectors.bankList,
   )
+  const onChangeHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target
+    if (name === 'number') {
+      const accountNumber = value.replace(/\D/g, '')
+      setIsAccountNumber(accountNumber)
+    } else if (name === 'code') {
+      const ifscCode = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      setBankIfscCode(ifscCode)
+    }
+  }
 
   return (
     <>
@@ -53,7 +68,11 @@ const AddBankAccount = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Bank Account Number:
-              <span className={accountNumber ? TextWhite : TextDanger}>*</span>
+              <span
+                className={accountNumber.length > 9 ? TextWhite : TextDanger}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -63,8 +82,10 @@ const AddBankAccount = (): JSX.Element => {
                 id="Number"
                 size="sm"
                 name="number"
+                maxLength={9}
                 autoComplete="off"
                 placeholder="Bank Account Number"
+                onChange={onChangeHandler}
               />
             </CCol>
           </CRow>

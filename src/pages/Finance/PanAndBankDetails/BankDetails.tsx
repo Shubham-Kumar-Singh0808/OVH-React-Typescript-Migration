@@ -90,7 +90,7 @@ const BankDetails = (): JSX.Element => {
         <CRow>
           <CCol xs={4}>
             <p>
-              <strong>Total Records: {bankDetail.bankinfo.length}</strong>
+              <strong>Total Records: </strong>
             </p>
           </CCol>
         </CRow>

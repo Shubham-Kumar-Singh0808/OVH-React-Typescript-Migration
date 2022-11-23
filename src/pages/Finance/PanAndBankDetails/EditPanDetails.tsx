@@ -119,7 +119,7 @@ const EditPanDetails = ({
               name="pfAccountNumber"
               autoComplete="off"
               hidden={!isChecked}
-              value={editPanDetail.finance?.pfAccountNumber || ''}
+              value={editPanDetail.finance?.pfAccountNumber}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -134,7 +134,7 @@ const EditPanDetails = ({
               id="uanNumber"
               size="sm"
               name="uaNumber"
-              value={editPanDetail.finance?.uaNumber || ''}
+              value={editPanDetail.finance?.uaNumber}
               onChange={onChangeInputHandler}
               autoComplete="off"
             />
@@ -152,7 +152,7 @@ const EditPanDetails = ({
               id="panCardNumber"
               size="sm"
               name="panCardAccountNumber"
-              value={editPanDetail.finance?.panCardAccountNumber || ''}
+              value={editPanDetail.finance?.panCardAccountNumber}
               onChange={onChangeInputHandler}
               autoComplete="off"
             />
@@ -170,7 +170,7 @@ const EditPanDetails = ({
               id="aadharNumber"
               size="sm"
               name="aadharCardNumber"
-              value={editPanDetail.finance?.aadharCardNumber || ''}
+              value={editPanDetail.finance?.aadharCardNumber}
               onChange={onChangeInputHandler}
               autoComplete="off"
             />
