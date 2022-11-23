@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import resignationListApi from '../../../middleware/api/Separation/ResignationList/resignationListApi'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   GetResignationListProps,
@@ -21,6 +21,23 @@ const getResignationList = createAsyncThunk(
     }
   },
 )
+
+const resignationIntitiateCC = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('resignationList/resignationIntitiateCC', async (separationId, thunkApi) => {
+  try {
+    return await resignationListApi.resignationIntitiateCC(separationId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
 
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
@@ -68,6 +85,7 @@ const pageSizeFromState = (state: RootState): number =>
 
 const resignationListThunk = {
   getResignationList,
+  resignationIntitiateCC,
 }
 
 const resignationListSelectors = {

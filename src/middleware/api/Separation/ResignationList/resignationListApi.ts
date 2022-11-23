@@ -51,9 +51,25 @@ const exportResignationListData = async (
   return response.data
 }
 
+const resignationIntitiateCC = async (
+  separationId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.resignationInitiateCC,
+    method: AllowedHttpMethods.put,
+    params: {
+      separationId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const resignationListApi = {
   getResignationList,
   exportResignationListData,
+  resignationIntitiateCC,
 }
 
 export default resignationListApi

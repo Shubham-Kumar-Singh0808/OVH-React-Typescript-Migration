@@ -9,11 +9,13 @@ import {
   CCol,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -32,6 +34,9 @@ const ResignationListTable = ({
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
+  const [isInitiateModalVisible, setIsInitiateModalVisible] = useState(false)
+  const [toInitiateSeparationId, setToInitiateSeparationId] = useState(0)
+
   const isLoading = useTypedSelector(
     reduxServices.resignationList.selectors.isLoading,
   )
@@ -62,6 +67,45 @@ const ResignationListTable = ({
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+  }
+  const handleShowInitiateResignationModal = (separationId: number) => {
+    setToInitiateSeparationId(separationId)
+    setIsInitiateModalVisible(true)
+  }
+
+  const handleConfirmInitiateResignation = async () => {
+    setIsInitiateModalVisible(false)
+    const initiateResignationResultAction = await dispatch(
+      reduxServices.resignationList.resignationIntitiateCC(
+        toInitiateSeparationId,
+      ),
+    )
+    if (
+      reduxServices.resignationList.resignationIntitiateCC.fulfilled.match(
+        initiateResignationResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.resignationList.getResignationList({
+          dateSelection: '',
+          empStatus: '',
+          endIndex: pageSize * currentPage,
+          from: '',
+          multiplesearch: '',
+          startIndex: pageSize * (currentPage - 1),
+          status: 'ALL',
+          to: '',
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Exit process initiated Successfully"
+          />,
+        ),
+      )
+    }
   }
   return (
     <>
@@ -127,13 +171,59 @@ const ResignationListTable = ({
                             aria-hidden="true"
                           ></i>
                         </CButton>
-                        <CButton
-                          color="info"
-                          size="sm"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-clock-o  text-white"></i>
-                        </CButton>
+                        {resignationItem.isprocessInitiated ? (
+                          <>
+                            <CButton
+                              color="info"
+                              size="sm"
+                              className="btn-ovh me-2"
+                            >
+                              <i className="fa fa-user text-white"></i>
+                            </CButton>
+                            <CButton
+                              color="info"
+                              size="sm"
+                              className="btn-ovh me-2"
+                            >
+                              <i className="fa fa-laptop text-white"></i>
+                            </CButton>
+                            <CButton
+                              color="info"
+                              size="sm"
+                              className="btn-ovh me-2"
+                            >
+                              <i className="fa fa-calculator text-white"></i>
+                            </CButton>
+                            <CButton
+                              color="info"
+                              size="sm"
+                              className="btn-ovh me-2"
+                            >
+                              <i className="fa fa-id-badge text-white"></i>
+                            </CButton>
+                            <CButton
+                              color="info"
+                              size="sm"
+                              className="btn-ovh me-2"
+                            >
+                              <i className="fa fa-user-circle text-white"></i>
+                            </CButton>
+                          </>
+                        ) : (
+                          <CButton
+                            color="info"
+                            size="sm"
+                            className="btn-ovh-employee-list"
+                            data-testid="initiate-btn"
+                            onClick={() =>
+                              handleShowInitiateResignationModal(
+                                resignationItem?.separationId,
+                              )
+                            }
+                          >
+                            <i className="fa fa-clock-o  text-white"></i>
+                          </CButton>
+                        )}
                       </div>
                     </CTableDataCell>
                   </CTableRow>
@@ -143,6 +233,18 @@ const ResignationListTable = ({
               <OLoadingSpinner type={LoadingType.PAGE} />
             )}
           </CTableBody>
+          <OModal
+            alignment="center"
+            visible={isInitiateModalVisible}
+            setVisible={setIsInitiateModalVisible}
+            modalTitle="initiate resignation"
+            modalHeaderClass="d-none"
+            confirmButtonText="Yes"
+            cancelButtonText="No"
+            confirmButtonAction={handleConfirmInitiateResignation}
+          >
+            {`Do you really want to initiate the separation process?`}
+          </OModal>
         </CTable>
         {getAllResignationList?.length ? (
           <CRow>

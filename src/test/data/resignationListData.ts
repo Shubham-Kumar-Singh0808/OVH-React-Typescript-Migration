@@ -20,7 +20,7 @@ export const mockResignationList: ResignationListResponse = {
       status: 'Resigned',
       canberevoked: null,
       isRevoked: null,
-      isprocessInitiated: false,
+      isprocessInitiated: true,
       adminCcCss: '',
       hrCcCss: '',
       managerCcCss: '',
