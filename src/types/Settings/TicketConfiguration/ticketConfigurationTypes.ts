@@ -10,6 +10,9 @@ export type SubCategoryListTableProps = {
   filterByCategory: string
   filterBySubCategory: string
   isTableView: boolean
+  editSubCategoryButtonHandler: (
+    editSubCategoryData: TicketConfigurationList,
+  ) => void
 }
 
 export type TicketConfigurationDepartments = {
@@ -76,7 +79,7 @@ export type TicketConfigurationSubCategoryType = {
 export type TicketConfigurationList = {
   subCategoryId: number
   subCategoryName: string
-  estimatedTime: number | string
+  estimatedTime: string
   workFlow: boolean
   categoryId: number
   categoryName: string
@@ -98,7 +101,7 @@ export type TicketHistory = {
   documentsPath: null
   endDate: null
   estimatedTime: string
-  id: null
+  id: number
   levelOfHierarchy: string
   modifiedBy: string
   modifiedDate: string
@@ -129,7 +132,7 @@ export type TicketHistory = {
   status: null
   subCategoryName: string
   subject: null
-  ticketsSubCategoryName: null
+  ticketsSubCategoryName: string
   tracker: null
   workFlow: boolean | string
 }
@@ -160,4 +163,10 @@ export type AddCategory = {
   categoryName?: string
   departmentId?: string | number
   mealType?: boolean
+}
+
+export type EditSubCategoryProps = {
+  subCategoryId?: number
+  isEditSubCategory?: boolean
+  editSubCategoryHandler?: (id: number) => void
 }

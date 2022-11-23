@@ -82,17 +82,6 @@ describe('CategoryList Table', () => {
       const yesButtonEle = screen.getByRole('button', { name: 'Yes' })
       userEvent.click(yesButtonEle)
     })
-    jest.retryTimes(3)
-    // test('should render CategoryName Input field upon clicking edit button', () => {
-    //   mockCategoryList.forEach(async (category, index) => {
-    //     const editButtonEl = screen.getByTestId(`cl-edit-btn${index}`)
-    //     const categoryNameElement = screen.getByTestId('categoryName-input')
-    //     userEvent.click(editButtonEl)
-    //     await waitFor(() => {
-    //       expect(categoryNameElement).toHaveValue('asda')
-    //     })
-    //   })
-    // })
     test('should render correct number of 40 page records', () => {
       userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
       const pageSizeSelect = screen.getByRole('option', {

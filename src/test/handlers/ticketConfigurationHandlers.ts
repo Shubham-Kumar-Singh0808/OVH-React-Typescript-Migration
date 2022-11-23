@@ -7,7 +7,7 @@ import {
   mockTicketConfigurationCategory,
   mockTicketConfigurationSubCategory,
   mockTicketConfigurationSubCategoryList,
-  mockTicketHistory,
+  mockTicketHistoryData,
 } from '../data/ticketConfigurationData'
 
 export const ticketConfigurationHandlers = [
@@ -52,7 +52,7 @@ export const ticketConfigurationHandlers = [
     return res(
       ctx.json({
         status: 200,
-        data: mockTicketHistory,
+        data: mockTicketHistoryData,
       }),
     )
   }),
@@ -103,11 +103,18 @@ export const ticketConfigurationHandlers = [
     return res(updateResponse)
   }),
   // deleteCategory api mock
-  rest.put(ticketConfigurationApiConfig.deleteCategory, (_req, res, ctx) => {
+  rest.delete(ticketConfigurationApiConfig.deleteCategory, (_req, res, ctx) => {
     const deleteResponse = ctx.json({
       status: 200,
       data: {},
     })
     return res(deleteResponse)
+  }),
+  rest.put(ticketConfigurationApiConfig.updateSubCategory, (_req, res, ctx) => {
+    const updateSubCategoryResponse = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(updateSubCategoryResponse)
   }),
 ]

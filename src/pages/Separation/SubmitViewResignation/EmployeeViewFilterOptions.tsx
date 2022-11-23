@@ -96,7 +96,7 @@ const EmployeeViewFilterOptions = ({
     <>
       <CForm>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-4 col-form-label text-end pt-1 pb-1 pe-18 ">
             Status:
           </CFormLabel>
           <CCol sm={3}>
@@ -104,7 +104,7 @@ const EmployeeViewFilterOptions = ({
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-4 col-form-label text-end pt-1 pb-1 pe-18">
             As per company policy your relieving date:
           </CFormLabel>
           <CCol sm={3}>
@@ -112,8 +112,8 @@ const EmployeeViewFilterOptions = ({
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
-            Comments :
+          <CFormLabel className="col-sm-4 col-form-label text-end">
+            Comments:
             <span className={comments ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           {showEditor ? (
@@ -134,7 +134,7 @@ const EmployeeViewFilterOptions = ({
           )}
         </CRow>
         <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
+          <CCol md={{ span: 8, offset: 4 }}>
             <CButton
               className="btn-ovh me-1"
               color="success"

@@ -572,6 +572,7 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   deleteCategory: apiPrefix + '/supportManagement/deleteCategory',
   addCategory: apiPrefix + '/supportManagement/addCategory',
   updateCategory: apiPrefix + '/supportManagement/updateCategory',
+  updateSubCategory: apiPrefix + '/supportManagement/updateSubCategory',
 }
 
 export const submitResignationApiConfig: SubmitResignationApi = {
