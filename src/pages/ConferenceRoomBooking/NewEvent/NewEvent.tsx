@@ -22,6 +22,7 @@ import {
   Trainer,
 } from './NewEventChildComponents'
 import ProjectMembersSelection from './NewEventChildComponents/ProjectMembersSelection'
+import SlotsBooked from './NewEventChildComponents/SlotsBooked'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -91,6 +92,11 @@ const NewEvent = (): JSX.Element => {
   const [description, setDescription] = useState('')
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
+  const [attendeesList, setAttendeesList] = useState<Availability[]>([])
+  const [isErrorShow, setIsErrorShow] = useState(false)
+  const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
+  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
+    useState<string>()
 
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
@@ -103,6 +109,87 @@ const NewEvent = (): JSX.Element => {
     if (addEvent.locationId)
       dispatch(reduxServices.newEvent.getRoomsByLocation(addEvent.locationId))
   }, [addEvent.locationId])
+
+  useEffect(() => {
+    if (addEvent.startTime === '' && addEvent.endTime === '') {
+      setIsProjectAndAttendeesEnable(true)
+    } else {
+      setIsProjectAndAttendeesEnable(false)
+    }
+  }, [addEvent.startTime, addEvent.endTime])
+
+  useEffect(() => {
+    if (addEvent.projectName)
+      dispatch(reduxServices.newEvent.getProjectMembers(addEvent.projectName))
+  }, [addEvent.projectName])
+
+  useEffect(() => {
+    if ((addEvent.roomId, addEvent.toDate)) {
+      dispatch(
+        reduxServices.newEvent.getAllBookedDetailsForEvent({
+          fromDate: addEvent.fromDate,
+          roomId: addEvent.roomId,
+          toDate: addEvent.toDate,
+        }),
+      )
+    }
+  }, [addEvent.roomId, addEvent.toDate])
+
+  const checkIsAttendeeExists = (attendeeId: number) => {
+    return attendeesList.some((attendee) => {
+      return attendee.id === attendeeId
+    })
+  }
+
+  const selectProjectMember = async (
+    attendeeId: number,
+    attendeeName: string,
+  ) => {
+    const newStartTime = addEvent.startTime.split(':')
+    const newEndTime = addEvent.endTime.split(':')
+    const prepareObj = {
+      attendeeId,
+      attendeeName,
+      startTime: `${addEvent.fromDate}/${newStartTime[0]}/${newStartTime[1]}`,
+      endTime: `${addEvent.fromDate}/${newEndTime[0]}/${newEndTime[1]}`,
+    }
+    const uniqueAttendanceResult = await dispatch(
+      reduxServices.newEvent.uniqueAttendee(prepareObj),
+    )
+    if (
+      reduxServices.newEvent.uniqueAttendee.rejected.match(
+        uniqueAttendanceResult,
+      ) &&
+      uniqueAttendanceResult.payload === 409
+    ) {
+      const attendeeObj = {
+        id: attendeeId,
+        availability: 'not available',
+        name: attendeeName,
+      }
+      if (!checkIsAttendeeExists(attendeeId)) {
+        setAttendeesList([attendeeObj, ...attendeesList])
+        setIsErrorShow(false)
+        setAttendeesAutoCompleteTarget('')
+      } else {
+        setIsErrorShow(true)
+      }
+    } else {
+      const attendeeObj2 = {
+        id: attendeeId,
+        availability: 'free',
+        name: attendeeName,
+      }
+      if (checkIsAttendeeExists(attendeeId)) {
+        setIsErrorShow(true)
+      } else {
+        setAttendeesList([attendeeObj2, ...attendeesList])
+        setIsErrorShow(false)
+        setAttendeesAutoCompleteTarget('')
+      }
+    }
+  }
+  // console.log(attendeesList)
 
   // onchange handlers
   const onHandleLocation = (value: string) => {
@@ -142,21 +229,16 @@ const NewEvent = (): JSX.Element => {
     setAddEvent({ ...addEvent, projectName: value })
   }
 
-  useEffect(() => {
-    if (addEvent.startTime === '' && addEvent.endTime === '') {
-      setIsProjectAndAttendeesEnable(true)
+  const onSelectAttendee = (attendeeId: number, attendeeName: string) => {
+    selectProjectMember(attendeeId, attendeeName)
+    if (checkIsAttendeeExists(attendeeId)) {
+      setIsAttendeeErrorShow(true)
     } else {
-      setIsProjectAndAttendeesEnable(false)
+      setIsAttendeeErrorShow(false)
     }
-  }, [addEvent.startTime, addEvent.endTime])
+  }
 
-  useEffect(() => {
-    if (addEvent.projectName)
-      dispatch(reduxServices.newEvent.getProjectMembers(addEvent.projectName))
-  }, [addEvent.projectName])
-
-  console.log(addEvent)
-  // console.log(description)
+  // console.log(addEvent)
 
   return (
     <OCard
@@ -165,110 +247,139 @@ const NewEvent = (): JSX.Element => {
       CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
     >
-      <CForm className="ms-4">
-        <LocationAndRoom
-          eventLocations={eventLocations}
-          onHandleLocation={onHandleLocation}
-          onHandleRoom={onHandleRoom}
-          locationRooms={locationRooms}
-          locationValue={addEvent.locationId}
-          roomValue={addEvent.roomId}
-        />
-        <ReservedBy
-          loggedEmployeeName={loggedEmployee.fullName}
-          allEmployeesProfiles={allEmployeesProfiles}
-          onSelectAuthor={onSelectAuthor}
-        />
-        <Trainer
-          allEmployeesProfiles={allEmployeesProfiles}
-          onSelectTrainer={onSelectTrainer}
-        />
-        <EventType
-          eventTypeList={eventTypeList}
-          eventTypeValue={addEvent.eventTypeId}
-          onHandleEventType={onHandleEventType}
-        />
-        <EventFromDate
-          fromDateValue={addEvent.fromDate}
-          fromDateChangeHandler={fromDateChangeHandler}
-        />
-        <EventEndDate
-          toDateValue={addEvent.toDate}
-          toDateChangeHandler={toDateChangeHandler}
-        />
-        <StartTimeEndTime onSelectStartAndEndTime={onSelectStartAndEndTime} />
-        <CRow className="mt-1 mb-3">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            Subject:
-            <span className={showIsRequired(addEvent.agenda)}>*</span>
-          </CFormLabel>
-          <CCol sm={5}>
-            <CFormTextarea
-              placeholder="Purpose"
-              aria-label="textarea"
-              value={addEvent.agenda}
-              onChange={(e) => {
-                setAddEvent({ ...addEvent, agenda: e.target.value })
-              }}
-            ></CFormTextarea>
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-3">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            Description:
-            <span className={showIsRequired(description)}>*</span>
-          </CFormLabel>
-          <CCol sm={6}>
-            <CKEditor<{
-              onChange: CKEditorEventHandler<'change'>
-            }>
-              initData={''}
-              config={ckeditorConfig}
-              debug={true}
-              onChange={({ editor }) => {
-                onHandleDescription(editor.getData().trim())
-              }}
+      <CRow>
+        <CCol sm={8}>
+          <CForm className="ms-4">
+            <LocationAndRoom
+              eventLocations={eventLocations}
+              onHandleLocation={onHandleLocation}
+              onHandleRoom={onHandleRoom}
+              locationRooms={locationRooms}
+              locationValue={addEvent.locationId}
+              roomValue={addEvent.roomId}
             />
-          </CCol>
-        </CRow>
-        <SelectProject
-          allProjects={allProjects}
-          onSelectProject={onSelectProject}
-          isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
-        />
-        <Attendees
-          allEmployeesProfiles={allEmployeesProfiles}
-          isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
-        />
+            <ReservedBy
+              loggedEmployeeName={loggedEmployee.fullName}
+              allEmployeesProfiles={allEmployeesProfiles}
+              onSelectAuthor={onSelectAuthor}
+            />
+            <Trainer
+              allEmployeesProfiles={allEmployeesProfiles}
+              onSelectTrainer={onSelectTrainer}
+            />
+            <EventType
+              eventTypeList={eventTypeList}
+              eventTypeValue={addEvent.eventTypeId}
+              onHandleEventType={onHandleEventType}
+            />
+            <EventFromDate
+              fromDateValue={addEvent.fromDate}
+              fromDateChangeHandler={fromDateChangeHandler}
+            />
+            <EventEndDate
+              toDateValue={addEvent.toDate}
+              toDateChangeHandler={toDateChangeHandler}
+            />
+            <StartTimeEndTime
+              onSelectStartAndEndTime={onSelectStartAndEndTime}
+            />
+            <CRow className="mt-1 mb-3">
+              <CFormLabel className="col-sm-3 col-form-label text-end">
+                Subject:
+                <span className={showIsRequired(addEvent.agenda)}>*</span>
+              </CFormLabel>
+              <CCol sm={7}>
+                <CFormTextarea
+                  placeholder="Purpose"
+                  aria-label="textarea"
+                  value={addEvent.agenda}
+                  onChange={(e) => {
+                    setAddEvent({ ...addEvent, agenda: e.target.value })
+                  }}
+                ></CFormTextarea>
+              </CCol>
+            </CRow>
+            <CRow className="mt-1 mb-3">
+              <CFormLabel className="col-sm-3 col-form-label text-end">
+                Description:
+                <span className={showIsRequired(description)}>*</span>
+              </CFormLabel>
+              <CCol sm={8}>
+                <CKEditor<{
+                  onChange: CKEditorEventHandler<'change'>
+                }>
+                  initData={''}
+                  config={ckeditorConfig}
+                  debug={true}
+                  onChange={({ editor }) => {
+                    onHandleDescription(editor.getData().trim())
+                  }}
+                />
+              </CCol>
+            </CRow>
+            <SelectProject
+              allProjects={allProjects}
+              onSelectProject={onSelectProject}
+              isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
+            />
+            <Attendees
+              allEmployeesProfiles={allEmployeesProfiles}
+              isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
+              onSelectAttendee={onSelectAttendee}
+              isErrorShow={isErrorShow}
+              isAttendeeErrorShow={isAttendeeErrorShow}
+              setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+              setIsErrorShow={setIsErrorShow}
+              attendeesAutoCompleteTarget={
+                attendeesAutoCompleteTarget as string
+              }
+              setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
+            />
 
-        {projectMembers?.length > 0 && (
-          <ProjectMembersSelection
-            projectMembers={projectMembers}
-            addEvent={addEvent}
-          />
+            {projectMembers?.length > 0 && (
+              <ProjectMembersSelection
+                addEvent={addEvent}
+                projectMembers={projectMembers}
+                attendeesList={attendeesList}
+                setAttendeesList={setAttendeesList}
+                selectProjectMember={selectProjectMember}
+                isErrorShow={isErrorShow}
+                setIsErrorShow={setIsErrorShow}
+                setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+                checkIsAttendeeExists={checkIsAttendeeExists}
+              />
+            )}
+
+            <CRow className="mt-5 mb-4">
+              <CCol md={{ span: 6, offset: 3 }}>
+                <>
+                  <CButton
+                    className="btn-ovh me-1"
+                    data-testid="confirmBtn"
+                    color="success"
+                  >
+                    Confirm
+                  </CButton>
+                  <CButton
+                    color="warning "
+                    data-testid="clearBtn"
+                    className="btn-ovh"
+                  >
+                    Clear
+                  </CButton>
+                </>
+              </CCol>
+            </CRow>
+          </CForm>
+        </CCol>
+        {addEvent.roomId && addEvent.toDate ? (
+          <CCol sm={4}>
+            <SlotsBooked />
+          </CCol>
+        ) : (
+          <></>
         )}
-
-        <CRow className="mt-5 mb-4">
-          <CCol md={{ span: 6, offset: 2 }}>
-            <>
-              <CButton
-                className="btn-ovh me-1"
-                data-testid="confirmBtn"
-                color="success"
-              >
-                Confirm
-              </CButton>
-              <CButton
-                color="warning "
-                data-testid="clearBtn"
-                className="btn-ovh"
-              >
-                Clear
-              </CButton>
-            </>
-          </CCol>
-        </CRow>
-      </CForm>
+      </CRow>
     </OCard>
   )
 }

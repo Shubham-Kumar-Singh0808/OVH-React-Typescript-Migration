@@ -30,11 +30,11 @@ const LocationAndRoom = ({
   return (
     <>
       <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-2 col-form-label text-end">
+        <CFormLabel className="col-sm-3 col-form-label text-end">
           Location:
           <span className={locationValue ? TextWhite : TextDanger}>*</span>
         </CFormLabel>
-        <CCol sm={4}>
+        <CCol sm={6}>
           <CFormSelect
             aria-label="location"
             id="location"
@@ -55,11 +55,11 @@ const LocationAndRoom = ({
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-2 col-form-label text-end">
+        <CFormLabel className="col-sm-3 col-form-label text-end">
           Room:
           <span className={roomValue ? TextWhite : TextDanger}>*</span>
         </CFormLabel>
-        <CCol sm={4}>
+        <CCol sm={6}>
           <CFormSelect
             className={otherPlaceShown ? 'form-select-not-allowed' : ''}
             aria-label="room"
@@ -90,7 +90,7 @@ const LocationAndRoom = ({
       </CRow>
       {otherPlaceShown && (
         <CRow className="mt-1 mb-3">
-          <CCol sm={{ span: 4, offset: 2 }}>
+          <CCol sm={{ span: 6, offset: 3 }}>
             <CFormInput
               type="text"
               data-testid="placeInput"

@@ -12,11 +12,11 @@ const EventEndDate = ({
 }): JSX.Element => {
   return (
     <CRow className="mt-1 mb-3">
-      <CFormLabel className="col-sm-2 col-form-label text-end">
+      <CFormLabel className="col-sm-3 col-form-label text-end">
         End Date:
         <span className={showIsRequired(toDateValue)}>*</span>
       </CFormLabel>
-      <CCol sm={4}>
+      <CCol sm={6}>
         <ReactDatePicker
           autoComplete="off"
           id="toDate"

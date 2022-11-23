@@ -40,13 +40,13 @@ const Trainer = ({
 
   return (
     <CRow className="mt-1 mb-3">
-      <CFormLabel className="col-sm-2 col-form-label text-end">
+      <CFormLabel className="col-sm-3 col-form-label text-end">
         Trainer:
         <span className={trainerAutoCompleteTarget ? TextWhite : TextDanger}>
           *
         </span>
       </CFormLabel>
-      <CCol sm={4}>
+      <CCol sm={6}>
         <Autocomplete
           inputProps={{
             className: 'form-control form-control-sm',

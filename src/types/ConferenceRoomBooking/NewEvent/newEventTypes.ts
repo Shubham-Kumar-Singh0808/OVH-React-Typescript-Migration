@@ -68,8 +68,9 @@ export type InitialNewEventSliceState = {
   loggedEmployee: LoggedEmployee
   roomsByLocation: RoomsByLocation[]
   allEmployeesProfiles: LoggedEmployee[]
-  projectMembers: ProjectMembers[]
+  projectMembers: ProjectMember[]
   error: ValidationError
+  allBookedDetailsForEvent: GetAllBookedDetailsForEvent[]
 }
 
 export type EventTypeList = {
@@ -77,7 +78,8 @@ export type EventTypeList = {
   name: string
 }
 
-export type ProjectMembers = {
+export type ProjectMember = {
+  availability?: string
   id: number
   firstName: string
   lastName: string
@@ -191,7 +193,12 @@ export type UniqueAttendeeParams = {
 }
 
 export type GetBookedEventsParams = {
-  fromdate: string
-  roomid: number
+  fromDate: string
+  roomId: number
   toDate: string
+}
+
+export type GetAllBookedDetailsForEvent = {
+  date: string
+  timings: string[]
 }

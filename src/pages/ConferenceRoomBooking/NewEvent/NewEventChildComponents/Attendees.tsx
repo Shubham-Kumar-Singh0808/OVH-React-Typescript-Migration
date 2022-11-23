@@ -1,5 +1,5 @@
 import { CRow, CFormLabel, CCol } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Autocomplete from 'react-autocomplete'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -9,14 +9,24 @@ import { LoggedEmployee } from '../../../../types/ConferenceRoomBooking/NewEvent
 const Attendees = ({
   allEmployeesProfiles,
   isProjectAndAttendeesEnable,
+  onSelectAttendee,
+  isAttendeeErrorShow,
+  setIsAttendeeErrorShow,
+  setIsErrorShow,
+  attendeesAutoCompleteTarget,
+  setAttendeesAutoCompleteTarget,
 }: {
   allEmployeesProfiles: LoggedEmployee[]
   isProjectAndAttendeesEnable: boolean
+  onSelectAttendee: (attendeeId: number, attendeeName: string) => void
+  isErrorShow: boolean
+  isAttendeeErrorShow: boolean
+  setIsAttendeeErrorShow: (value: boolean) => void
+  setIsErrorShow: (value: boolean) => void
+  attendeesAutoCompleteTarget: string
+  setAttendeesAutoCompleteTarget: (value: string) => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-
-  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
-    useState<string>()
 
   useEffect(() => {
     if (attendeesAutoCompleteTarget) {
@@ -28,25 +38,37 @@ const Attendees = ({
 
   const onHandleSelectTrainer = (fullName: string) => {
     setAttendeesAutoCompleteTarget(fullName)
-    // const attendee = allEmployeesProfiles.find(
-    //   (value) => value.fullName === fullName,
-    // )
   }
+
+  const onAttendeeFocusOut = () => {
+    const selectedProject = allEmployeesProfiles.find(
+      (value) => value.fullName === attendeesAutoCompleteTarget,
+    )
+    if (selectedProject) {
+      onSelectAttendee(
+        selectedProject?.id as number,
+        selectedProject?.fullName as string,
+      )
+      setIsErrorShow(false)
+    }
+  }
+
   return (
     <CRow className="mt-1 mb-3">
-      <CFormLabel className="col-sm-2 col-form-label text-end">
+      <CFormLabel className="col-sm-3 col-form-label text-end">
         Attendees:
         <span className={attendeesAutoCompleteTarget ? TextWhite : TextDanger}>
           *
         </span>
       </CFormLabel>
-      <CCol sm={4}>
+      <CCol sm={6}>
         <Autocomplete
           inputProps={{
             className: 'form-control form-control-sm',
             id: 'trainer-autocomplete',
             placeholder: 'Trainer',
             disabled: isProjectAndAttendeesEnable,
+            onBlur: onAttendeeFocusOut,
           }}
           getItemValue={(item) => item.fullName}
           items={allEmployeesProfiles}
@@ -81,9 +103,21 @@ const Attendees = ({
           shouldItemRender={(item, value) =>
             item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
           }
-          onChange={(e) => setAttendeesAutoCompleteTarget(e.target.value)}
+          onChange={(e) => {
+            setAttendeesAutoCompleteTarget(e.target.value)
+            setIsAttendeeErrorShow(false)
+          }}
           onSelect={(value) => onHandleSelectTrainer(value)}
         />
+        {isAttendeeErrorShow && (
+          <CRow className="mt-1">
+            <CCol>
+              <span className="sh-span-red">
+                The employee already added to Attendees
+              </span>
+            </CCol>
+          </CRow>
+        )}
       </CCol>
     </CRow>
   )

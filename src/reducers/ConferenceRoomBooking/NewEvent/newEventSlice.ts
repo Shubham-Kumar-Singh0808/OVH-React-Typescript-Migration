@@ -4,9 +4,11 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import newEventApi from '../../../middleware/api/ConferenceRoomBooking/NewEvent/newEventApi'
 import { RootState } from '../../../stateStore'
 import {
+  GetAllBookedDetailsForEvent,
+  GetBookedEventsParams,
   InitialNewEventSliceState,
   LoggedEmployee,
-  ProjectMembers,
+  ProjectMember,
   RoomsByLocation,
   UniqueAttendeeParams,
 } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
@@ -72,6 +74,18 @@ const uniqueAttendee = createAsyncThunk(
   },
 )
 
+const getAllBookedDetailsForEvent = createAsyncThunk(
+  'newEventSlice/getAllBookedDetailsForEvent',
+  async (props: GetBookedEventsParams, thunkApi) => {
+    try {
+      return await newEventApi.getAllBookedDetailsForEvent(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialNewEventState: InitialNewEventSliceState = {
   isLoading: ApiLoadingState.idle,
   loggedEmployee: {} as LoggedEmployee,
@@ -79,6 +93,7 @@ const initialNewEventState: InitialNewEventSliceState = {
   allEmployeesProfiles: [],
   projectMembers: [],
   error: null,
+  allBookedDetailsForEvent: [],
 }
 
 const newEventSlice = createSlice({
@@ -109,6 +124,11 @@ const newEventSlice = createSlice({
       })
       .addCase(uniqueAttendee.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.error = null
+      })
+      .addCase(getAllBookedDetailsForEvent.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.allBookedDetailsForEvent = action.payload
       })
       .addCase(uniqueAttendee.rejected, (state, action) => {
         state.isLoading = ApiLoadingState.failed
@@ -120,6 +140,7 @@ const newEventSlice = createSlice({
           getRoomsByLocation.pending,
           getProjectMembers.pending,
           uniqueAttendee.pending,
+          getAllBookedDetailsForEvent.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -140,10 +161,14 @@ const roomsByLocation = (state: RootState): RoomsByLocation[] =>
 const allEmployeesProfiles = (state: RootState): LoggedEmployee[] =>
   state.newEvent.allEmployeesProfiles
 
-const projectMembers = (state: RootState): ProjectMembers[] =>
+const projectMembers = (state: RootState): ProjectMember[] =>
   state.newEvent.projectMembers
 
 const selectError = (state: RootState): number => state.newEvent.error as number
+
+const allBookedDetailsForEvent = (
+  state: RootState,
+): GetAllBookedDetailsForEvent[] => state.newEvent.allBookedDetailsForEvent
 
 const newEventThunk = {
   getLoggedEmployee,
@@ -151,6 +176,7 @@ const newEventThunk = {
   getAllEmployees,
   getProjectMembers,
   uniqueAttendee,
+  getAllBookedDetailsForEvent,
 }
 
 const newEventSelectors = {
@@ -160,6 +186,7 @@ const newEventSelectors = {
   allEmployeesProfiles,
   projectMembers,
   selectError,
+  allBookedDetailsForEvent,
 }
 
 export const newEventService = {

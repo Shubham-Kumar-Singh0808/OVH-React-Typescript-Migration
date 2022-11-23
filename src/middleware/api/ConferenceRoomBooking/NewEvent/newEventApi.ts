@@ -1,8 +1,9 @@
 import {
   AddEvent,
+  GetAllBookedDetailsForEvent,
   GetBookedEventsParams,
   LoggedEmployee,
-  ProjectMembers,
+  ProjectMember,
   RoomsByLocation,
   UniqueAttendeeParams,
 } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
@@ -51,7 +52,7 @@ const getAllEmployees = async (
 
 const getProjectMembers = async (
   projectName: string,
-): Promise<ProjectMembers[]> => {
+): Promise<ProjectMember[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: newEventApiConfig.getAllAttendees,
     method: AllowedHttpMethods.get,
@@ -94,13 +95,13 @@ const timeCheck = async (time: string): Promise<boolean> => {
 
 const getAllBookedDetailsForEvent = async (
   props: GetBookedEventsParams,
-): Promise<boolean> => {
+): Promise<GetAllBookedDetailsForEvent[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: newEventApiConfig.getAllBookedDetailsForEvent,
     method: AllowedHttpMethods.get,
     params: {
-      fromdate: props.fromdate,
-      roomid: props.roomid,
+      fromdate: props.fromDate,
+      roomid: props.roomId,
       toDate: props.toDate,
     },
   })
