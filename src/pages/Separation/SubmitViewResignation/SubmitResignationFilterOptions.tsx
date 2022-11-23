@@ -143,6 +143,7 @@ const SubmitResignationFilterOptions = ({
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
       setToggle('ResignView')
+      dispatch(reduxServices.submitViewResignation.getSeparationFormResponse())
     } else if (
       reduxServices.submitViewResignation.getSubmitResignation.rejected.match(
         submitResignationResultAction,
