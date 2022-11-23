@@ -89,7 +89,8 @@ const EmployeeViewFilterOptions = ({
         submitRevokeResultAction,
       )
     ) {
-      setToggle('submitResignation')
+      setToggle('')
+      dispatch(reduxServices.submitViewResignation.getSeparationFormResponse())
     }
   }
 

@@ -13,8 +13,8 @@ const SubmitResignation = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (getSeparation?.form?.separationExist) {
-      setToggle('')
+    if (getSeparation?.form?.separationExist === true) {
+      setToggle('ResignView')
     }
   }, [getSeparation])
 
