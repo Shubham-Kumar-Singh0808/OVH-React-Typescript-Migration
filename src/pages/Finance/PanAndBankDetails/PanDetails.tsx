@@ -6,7 +6,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector, useAppDispatch } from '../../../stateStore'
 
-const PfAndPanDetails = (): JSX.Element => {
+const PanDetails = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
 
   const dispatch = useAppDispatch()
@@ -90,4 +90,4 @@ const PfAndPanDetails = (): JSX.Element => {
   )
 }
 
-export default PfAndPanDetails
+export default PanDetails
