@@ -14,13 +14,8 @@ import Multiselect from 'multiselect-react-dropdown'
 import EmployeeAllocationReportTable from './EmployeeAllocationReportTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  deviceLocale,
-  downloadFile,
-  showIsRequired,
-} from '../../../utils/helper'
+import { deviceLocale, showIsRequired } from '../../../utils/helper'
 import { EmployeeDepartment } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import employeeAllocationReportApi from '../../../middleware/api/ProjectManagement/EmployeeAllocation/employeeAllocationApi'
 
 const EmployeeAllocationFilterOptions = ({
   Select,
@@ -233,26 +228,6 @@ const EmployeeAllocationFilterOptions = ({
       })
     : ''
 
-  const handleExportEmployeeAllocationData = async () => {
-    const employeeAllocationDownload =
-      await employeeAllocationReportApi.exportEmployeeAllocationData({
-        id: 0,
-        startIndex: 0,
-        endIndex: 20,
-        empName: '',
-        technology: '',
-        isbillable: 'All',
-        isAllocated: '',
-        startdate: '',
-        lastdate: '',
-        departmentNames:
-          'Networking,Administrative,HR,Accounts,Designing,Development,Sales,Testing,Business Analyst,Presales,Marketing,Software Quality Assurance',
-        dateSelection: currentMonth,
-      })
-
-    downloadFile(employeeAllocationDownload, 'EmployeeAllocationList.csv')
-  }
-
   return (
     <>
       <CRow className="employeeAllocation-form">
@@ -424,11 +399,7 @@ const EmployeeAllocationFilterOptions = ({
           <></>
         )}
         <CCol className="employee-allocation-export-btn">
-          <CButton
-            color="info btn-ovh me-0"
-            data-testid="export-btn"
-            onClick={handleExportEmployeeAllocationData}
-          >
+          <CButton color="info btn-ovh me-0" data-testid="export-btn">
             <i className="fa fa-plus me-1"></i>Click to Export
           </CButton>
         </CCol>

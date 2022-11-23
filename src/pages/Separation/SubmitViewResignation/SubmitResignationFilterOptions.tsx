@@ -69,14 +69,6 @@ const SubmitResignationFilterOptions = ({
   }, [primaryReason, submitResignation?.employeeComments])
 
   useEffect(() => {
-    if (!otherReason) {
-      setIsSubmitButtonEnabled(true)
-    } else {
-      setIsSubmitButtonEnabled(false)
-    }
-  }, [otherReason])
-
-  useEffect(() => {
     if (primaryReason || submitResignation?.employeeComments || otherReason) {
       setIsClearButtonEnabled(true)
     } else {
@@ -142,7 +134,6 @@ const SubmitResignationFilterOptions = ({
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
-      dispatch(reduxServices.submitViewResignation.getSeparationFormResponse())
       setToggle('ResignView')
     } else if (
       reduxServices.submitViewResignation.getSubmitResignation.rejected.match(
