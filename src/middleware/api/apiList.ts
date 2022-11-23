@@ -66,6 +66,7 @@ import {
   TicketConfigurationApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
+  PaySlipsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -588,4 +589,9 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
   leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
+}
+
+export const paySlipsApiConfig: PaySlipsApi = {
+  getEmployeePayslipsForSelectedYear:
+    apiPrefix + '/payslip/getEmployeePayslipsForSelectedYear',
 }
