@@ -173,7 +173,7 @@ const ResignationListTable = ({
                     <CTableDataCell>{resignationItem.status}</CTableDataCell>
                     <CTableDataCell>{resignationItem.empStatus}</CTableDataCell>
                     <CTableDataCell data-testid="action-cell">
-                      <div className="sh-btn-group">
+                      <div className="sh-btn-group resign-btn">
                         {userAccessShowTimeLine?.viewaccess && (
                           <CButton
                             color="info"
@@ -227,9 +227,9 @@ const ResignationListTable = ({
                         ) : (
                           userAccess?.viewaccess && (
                             <CButton
-                              color="info"
+                              color="#34b2e7"
                               size="sm"
-                              className="btn-ovh-employee-list"
+                              className="resignation-initiate-btn"
                               data-testid="initiate-btn"
                               onClick={() =>
                                 handleShowInitiateResignationModal(
