@@ -12,7 +12,11 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
-const AddBankAccount = (): JSX.Element => {
+const EditBankAccount = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
@@ -36,6 +40,7 @@ const AddBankAccount = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
+              onClick={() => setToggle('')}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -108,18 +113,20 @@ const AddBankAccount = (): JSX.Element => {
             </CCol>
           </CRow>
         </CForm>
-        <CCol sm={2}>
-          <CButton
-            data-testid="designationButton"
-            color="info"
-            className="btn-ovh me-1"
-          >
-            <i className="fa fa-plus me-1"></i>Update
-          </CButton>
-        </CCol>
+        <CRow>
+          <CCol md={{ span: 6, offset: 3 }}>
+            <CButton
+              data-testid="update-btn"
+              className="btn-ovh me-1 text-white"
+              color="success"
+            >
+              Update
+            </CButton>
+          </CCol>
+        </CRow>
       </OCard>
     </>
   )
 }
 
-export default AddBankAccount
+export default EditBankAccount

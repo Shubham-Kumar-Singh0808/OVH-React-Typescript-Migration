@@ -13,7 +13,11 @@ import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
-const AddBankAccount = (): JSX.Element => {
+const AddBankAccount = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const [accountNumber, setIsAccountNumber] = useState<string>('')
   const [bankName, setBankName] = useState<string>('')
   const [bankIfscCode, setBankIfscCode] = useState<string>('')
@@ -56,6 +60,7 @@ const AddBankAccount = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
+              onClick={() => setToggle('')}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -68,11 +73,7 @@ const AddBankAccount = (): JSX.Element => {
               className="col-sm-3 col-form-label text-end"
             >
               Bank Account Number:
-              <span
-                className={accountNumber.length > 9 ? TextWhite : TextDanger}
-              >
-                *
-              </span>
+              <span className={accountNumber ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -104,6 +105,7 @@ const AddBankAccount = (): JSX.Element => {
                 id="bankName"
                 data-testid="form-select1"
                 name="bankName"
+                onChange={(e) => setBankName(e.target.value)}
               >
                 <option value={''}>Select</option>
                 {bankData.length > 0 &&
@@ -137,15 +139,17 @@ const AddBankAccount = (): JSX.Element => {
             </CCol>
           </CRow>
         </CForm>
-        <CCol sm={2}>
-          <CButton
-            data-testid="designationButton"
-            color="info"
-            className="btn-ovh me-1"
-          >
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
-        </CCol>
+        <CRow>
+          <CCol md={{ span: 6, offset: 3 }}>
+            <CButton
+              data-testid="save-btn"
+              className="btn-ovh me-1 text-white"
+              color="success"
+            >
+              Add
+            </CButton>
+          </CCol>
+        </CRow>
       </OCard>
     </>
   )
