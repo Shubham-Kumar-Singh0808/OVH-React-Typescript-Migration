@@ -9,11 +9,11 @@ import {
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import OCard from '../../../components/ReusableComponent/OCard'
-import OToast from '../../../components/ReusableComponent/OToast'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { BankInformation } from '../../../types/Finance/PanDetails/panDetailsTypes'
+import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { BankInformation } from '../../../../types/Finance/PanDetails/panDetailsTypes'
 
 const EditPanDetails = ({
   setToggle,

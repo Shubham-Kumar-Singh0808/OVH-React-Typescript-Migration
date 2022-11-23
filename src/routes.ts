@@ -237,7 +237,7 @@ const LeaveApprovals = React.lazy(
 )
 
 const PfPanDetails = React.lazy(
-  () => import('./pages/Finance/PanAndBankDetails/PanDetails'),
+  () => import('./pages/Finance/PanAndBankDetails/PanAndBankDetails'),
 )
 
 /**

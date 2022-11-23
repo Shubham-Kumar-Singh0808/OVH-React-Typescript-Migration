@@ -7,16 +7,21 @@ import {
   CFormSelect,
   CButton,
 } from '@coreui/react-pro'
-import React from 'react'
-import OCard from '../../../components/ReusableComponent/OCard'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import React, { useState } from 'react'
+import OCard from '../../../../components/ReusableComponent/OCard'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../stateStore'
 
-const EditBankAccount = ({
-  setToggle,
+const AddBankAccount = ({
+  backButtonHandler,
 }: {
-  setToggle: (value: string) => void
+  backButtonHandler: () => void
 }): JSX.Element => {
+  const [accountNumber, setIsAccountNumber] = useState<string>('')
+  const [bankName, setBankName] = useState<string>('')
+  const [bankIfscCode, setBankIfscCode] = useState<string>('')
+
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
@@ -25,12 +30,27 @@ const EditBankAccount = ({
   const bankData = useTypedSelector(
     reduxServices.bankDetails.selectors.bankList,
   )
+  const onChangeHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target
+    if (name === 'number') {
+      const accountNumber = value.replace(/\D/g, '')
+      setIsAccountNumber(accountNumber)
+    } else if (name === 'code') {
+      const ifscCode = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      setBankIfscCode(ifscCode)
+    }
+  }
 
   return (
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Edit Bank Account Information"
+        title={'Add Bank Account Information'}
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -40,7 +60,7 @@ const EditBankAccount = ({
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
-              onClick={() => setToggle('')}
+              onClick={backButtonHandler}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -53,6 +73,7 @@ const EditBankAccount = ({
               className="col-sm-3 col-form-label text-end"
             >
               Bank Account Number:
+              <span className={accountNumber ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -62,8 +83,10 @@ const EditBankAccount = ({
                 id="Number"
                 size="sm"
                 name="number"
+                maxLength={9}
                 autoComplete="off"
                 placeholder="Bank Account Number"
+                onChange={onChangeHandler}
               />
             </CCol>
           </CRow>
@@ -73,6 +96,7 @@ const EditBankAccount = ({
               className="col-sm-3 col-form-label text-end"
             >
               Name of the Bank:
+              <span className={bankName ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -81,6 +105,7 @@ const EditBankAccount = ({
                 id="bankName"
                 data-testid="form-select1"
                 name="bankName"
+                onChange={(e) => setBankName(e.target.value)}
               >
                 <option value={''}>Select</option>
                 {bankData.length > 0 &&
@@ -98,6 +123,7 @@ const EditBankAccount = ({
               className="col-sm-3 col-form-label text-end"
             >
               IFSC Code:
+              <span className={bankIfscCode ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -116,11 +142,11 @@ const EditBankAccount = ({
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
             <CButton
-              data-testid="update-btn"
+              data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
             >
-              Update
+              Add
             </CButton>
           </CCol>
         </CRow>
@@ -129,4 +155,4 @@ const EditBankAccount = ({
   )
 }
 
-export default EditBankAccount
+export default AddBankAccount
