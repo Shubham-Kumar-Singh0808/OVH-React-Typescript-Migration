@@ -49,6 +49,11 @@ const ResignationListTable = ({
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Initiate CC',
   )
+
+  const userAccessShowTimeLine = userAccessToFeatures?.find(
+    (feature) => feature.name === 'ShowTimeLine',
+  )
+
   const getAllResignationList = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListDetails,
   )
@@ -169,16 +174,18 @@ const ResignationListTable = ({
                     <CTableDataCell>{resignationItem.empStatus}</CTableDataCell>
                     <CTableDataCell data-testid="action-cell">
                       <div className="sh-btn-group">
-                        <CButton
-                          color="info"
-                          className="btn-ovh me-2"
-                          data-testid="history-btn"
-                        >
-                          <i
-                            className="fa fa-bar-chart text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        {userAccessShowTimeLine?.viewaccess && (
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-2"
+                            data-testid="history-btn"
+                          >
+                            <i
+                              className="fa fa-bar-chart text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        )}
                         {resignationItem.isprocessInitiated ? (
                           <>
                             <CButton
