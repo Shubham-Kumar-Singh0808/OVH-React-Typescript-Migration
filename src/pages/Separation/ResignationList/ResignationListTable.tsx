@@ -41,6 +41,14 @@ const ResignationListTable = ({
     reduxServices.resignationList.selectors.isLoading,
   )
   const dispatch = useAppDispatch()
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Initiate CC',
+  )
   const getAllResignationList = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListDetails,
   )
@@ -210,19 +218,21 @@ const ResignationListTable = ({
                             </CButton>
                           </>
                         ) : (
-                          <CButton
-                            color="info"
-                            size="sm"
-                            className="btn-ovh-employee-list"
-                            data-testid="initiate-btn"
-                            onClick={() =>
-                              handleShowInitiateResignationModal(
-                                resignationItem?.separationId,
-                              )
-                            }
-                          >
-                            <i className="fa fa-clock-o  text-white"></i>
-                          </CButton>
+                          userAccess?.viewaccess && (
+                            <CButton
+                              color="info"
+                              size="sm"
+                              className="btn-ovh-employee-list"
+                              data-testid="initiate-btn"
+                              onClick={() =>
+                                handleShowInitiateResignationModal(
+                                  resignationItem?.separationId,
+                                )
+                              }
+                            >
+                              <i className="fa fa-clock-o  text-white"></i>
+                            </CButton>
+                          )
                         )}
                       </div>
                     </CTableDataCell>
