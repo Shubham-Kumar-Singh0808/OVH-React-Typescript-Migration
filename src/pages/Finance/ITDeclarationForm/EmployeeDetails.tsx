@@ -1,22 +1,32 @@
 import { CRow, CCol, CFormLabel } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const EmployeeDetails = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const employeeInformation = useTypedSelector(
+    reduxServices.itDeclarationForm.selectors.employeeInformation,
+  )
+  useEffect(() => {
+    dispatch(reduxServices.itDeclarationForm.getEmployeeInfo())
+  }, [dispatch])
+
   return (
     <>
       <CCol>
-        <CRow className="mt-3 mb-3">
+        <CRow className="mt-3">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Employee Id:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
-            1983
+            {employeeInformation.employeeId}
           </CCol>
           <CFormLabel className="col-sm-3 col-form-label">
             Employee Name:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
-            Sai Kiran Banothu
+            {employeeInformation.fullName}
           </CCol>
         </CRow>
         <CRow>
@@ -24,13 +34,13 @@ const EmployeeDetails = (): JSX.Element => {
             PAN:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
-            EPHPB9210R
+            {employeeInformation.pan}
           </CCol>
           <CFormLabel className="col-sm-3 col-form-label">
             Designation:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
-            Software Engineer
+            {employeeInformation.designation}
           </CCol>
         </CRow>
       </CCol>

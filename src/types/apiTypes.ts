@@ -489,3 +489,9 @@ export interface LeaveApprovalsApi extends ApiBase {
   leaveApprove: string
   leaveReject: string
 }
+
+export interface ITDeclarationFormApi extends ApiBase {
+  getEmployeeInfo: string
+  getSectionsHavingInvests: string
+  getInvestsBySectionId: string
+}
