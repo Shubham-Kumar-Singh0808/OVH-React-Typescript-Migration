@@ -37,6 +37,7 @@ const EmployeeViewFilterOptions = ({
     }, 100)
     setComments('')
   }
+
   const dispatch = useAppDispatch()
 
   const handleRevokeResignation = async () => {

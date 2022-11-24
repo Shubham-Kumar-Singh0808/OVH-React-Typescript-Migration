@@ -13,6 +13,7 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -138,13 +139,15 @@ const AppraisalConfigurationsTable = ({
                     {userEditAccess && (
                       <>
                         <CTooltip content="Edit">
-                          <CButton
-                            size="sm"
-                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                            color="info btn-ovh me-1"
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
+                          <Link to={`/editAppraisalCycle/${appraisalCycle.id}`}>
+                            <CButton
+                              size="sm"
+                              className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                              color="info btn-ovh me-1"
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </Link>
                         </CTooltip>
                         <CTooltip content="Assign Template">
                           <CButton
