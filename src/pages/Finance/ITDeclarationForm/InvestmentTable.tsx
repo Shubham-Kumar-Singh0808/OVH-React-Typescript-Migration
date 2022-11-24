@@ -13,13 +13,9 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const InvestmentTable = (): JSX.Element => {
-  const dispatch = useAppDispatch()
   const investments = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.investments,
   )
-  useEffect(() => {
-    dispatch(reduxServices.itDeclarationForm.getInvestsBySectionId(1))
-  }, [dispatch])
 
   return (
     <>

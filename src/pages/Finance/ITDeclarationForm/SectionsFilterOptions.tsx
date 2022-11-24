@@ -10,12 +10,14 @@ import React, { useEffect, useState } from 'react'
 import MoreSections from './MoreSections'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { Sections } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
 const SectionsFilterOptions = (): JSX.Element => {
-  const [selectedSection, setSelectedSection] = useState<string>()
+  const [selectedSection, setSelectedSection] = useState<Sections>()
   const [showInvestment, setShowInvestment] = useState<boolean>(false)
   const [isMoreSectionsButtonEnabled, setIsMoreSectionsButtonEnabled] =
     useState<boolean>(false)
+  const [sectionList, setSectionList] = useState<Sections[]>([])
   const dispatch = useAppDispatch()
   const section = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.sections,
@@ -26,12 +28,12 @@ const SectionsFilterOptions = (): JSX.Element => {
   }, [dispatch])
 
   useEffect(() => {
-    if (selectedSection) {
+    if (selectedSection?.sectionId) {
       setIsMoreSectionsButtonEnabled(true)
     } else {
       setIsMoreSectionsButtonEnabled(false)
     }
-  }, [selectedSection])
+  }, [selectedSection?.sectionId])
 
   const formLabelProps = {
     htmlFor: 'inputSection',
@@ -40,6 +42,21 @@ const SectionsFilterOptions = (): JSX.Element => {
   const handleClearInputs = () => {
     setShowInvestment(false)
   }
+
+  const handleOnChangeSection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target
+    const filterSection = section.filter(
+      (currentSection) => currentSection.sectionId === Number(value),
+    )
+    console.log(filterSection)
+    setSelectedSection(filterSection[0])
+  }
+
+  const handleClickSection = () => {
+    setShowInvestment(true)
+    setSectionList([selectedSection as Sections, ...sectionList])
+  }
+
   return (
     <>
       <CRow className="mt-3 mb-3">
@@ -53,9 +70,9 @@ const SectionsFilterOptions = (): JSX.Element => {
             data-testid="form-select-section"
             name="sectionName"
             onChange={(e) => {
-              setSelectedSection(e.target.value)
+              handleOnChangeSection(e)
             }}
-            value={selectedSection}
+            value={selectedSection?.sectionId}
           >
             <option value={''}>Select section</option>
             {section?.map((sectionItem, index) => (
@@ -71,20 +88,22 @@ const SectionsFilterOptions = (): JSX.Element => {
             className="text-white btn-ovh"
             size="sm"
             disabled={!isMoreSectionsButtonEnabled}
-            onClick={() => setShowInvestment(true)}
+            onClick={handleClickSection}
           >
             <i className="fa fa-plus me-1"></i>
             More Sections
           </CButton>
         </CCol>
       </CRow>
-      {showInvestment && (
-        <CRow>
-          <CCol>
-            <MoreSections />
-          </CCol>
-        </CRow>
-      )}
+      {sectionList?.map((currentSec, index) => {
+        return (
+          <CRow key={index}>
+            <CCol>
+              <MoreSections sectionItem={currentSec} />
+            </CCol>
+          </CRow>
+        )
+      })}
       <CRow className="mt-3 mb-3">
         <CCol sm={12} className="mt-2">
           <CFormCheck name="agree" data-testid="ch-agree" />{' '}

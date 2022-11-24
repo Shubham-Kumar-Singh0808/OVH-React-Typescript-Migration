@@ -1,19 +1,30 @@
 import { CButton, CCol, CFormLabel, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InvestmentTable from './InvestmentTable'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useAppDispatch } from '../../../stateStore'
+import { Sections } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
-const MoreSections = (): JSX.Element => {
+const MoreSections = ({
+  sectionItem,
+}: {
+  sectionItem: Sections
+}): JSX.Element => {
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
   const dispatch = useAppDispatch()
-  const section = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.sections,
-  )
   const handleShowCategoryDeleteModal = () => {
     setIsCancelModalVisible(true)
   }
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.itDeclarationForm.getInvestsBySectionId(
+        sectionItem.sectionId,
+      ),
+    )
+  }, [dispatch, sectionItem.sectionId])
+
   return (
     <>
       <div className="block-session clearfix widget_gap">
@@ -30,7 +41,9 @@ const MoreSections = (): JSX.Element => {
           <CRow className="col-sm-4">
             <CFormLabel className="col-sm-3 txt-info"> Sections:</CFormLabel>
             <CCol className="col-sm-8">
-              <CFormLabel className="txt-info">80 C</CFormLabel>
+              <CFormLabel className="txt-info">
+                {sectionItem.sectionName}
+              </CFormLabel>
             </CCol>
           </CRow>
           <div className="col-sm-2 ps-2">
@@ -41,7 +54,8 @@ const MoreSections = (): JSX.Element => {
           </div>
           <div className="col-sm-6">
             <b className="pull-right txt-info">
-              Max Limit: <span className="txt-info">1,50,000</span>
+              Max Limit:{' '}
+              <span className="txt-info">{sectionItem.sectionLimit}</span>
             </b>
           </div>
         </CRow>
