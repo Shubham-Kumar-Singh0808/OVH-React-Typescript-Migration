@@ -66,6 +66,7 @@ import {
   TicketConfigurationApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
+  ResignationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -591,4 +592,12 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
   leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
+}
+
+export const resignationListApiConfig: ResignationListApi = {
+  resignationList: apiPrefix + '/separationController/resignationList',
+  exportResignationList:
+    apiPrefix + '/separationController/exportResignationList',
+  resignationInitiateCC: apiPrefix + '/separationController/IntitiateCC',
+  getSeparationTimeLine: apiPrefix + '/separationController/getSeparation',
 }

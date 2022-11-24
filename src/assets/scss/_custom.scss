@@ -270,3 +270,13 @@ input.capetalized {
 .pe-18{
   padding-right: 18px;
 }
+
+.resignation-initiate-btn{
+  background-color: $blue-btnBg;
+    border-color:$blue-btnBg;
+    color: $white;
+}
+.sh-btn-group.resign-btn button{
+ margin:2px;
+ padding:4px 8px;
+}

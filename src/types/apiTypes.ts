@@ -492,3 +492,10 @@ export interface LeaveApprovalsApi extends ApiBase {
   leaveApprove: string
   leaveReject: string
 }
+
+export interface ResignationListApi extends ApiBase {
+  resignationList: string
+  exportResignationList: string
+  resignationInitiateCC: string
+  getSeparationTimeLine: string
+}
