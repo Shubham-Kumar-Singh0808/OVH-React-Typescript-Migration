@@ -2,6 +2,7 @@ import {
   BankNameLookup,
   SaveData,
 } from '../../../../types/Finance/PanDetails/bankDetailsTypes'
+import { BankInfo } from '../../../../types/Finance/PanDetails/panDetailsTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -31,9 +32,21 @@ const saveBankInformation = async (
   return response.data
 }
 
+const updateBankInformation = async (info: BankInfo): Promise<BankInfo> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: bankDetailsApiConfig.updateBankInformation,
+    method: AllowedHttpMethods.post,
+    data: info,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const bankDetailsApi = {
   bankNameList,
   saveBankInformation,
+  updateBankInformation,
 }
 
 export default bankDetailsApi

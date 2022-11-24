@@ -9,6 +9,7 @@ import {
   BankNameLookup,
   SaveData,
 } from '../../../types/Finance/PanDetails/bankDetailsTypes'
+import { BankInfo } from '../../../types/Finance/PanDetails/panDetailsTypes'
 
 const bankNameList = createAsyncThunk(
   'bankDetails/bankNameList',
@@ -27,6 +28,18 @@ const saveBankInformation = createAsyncThunk(
   async (data: SaveData, thunkApi) => {
     try {
       return await bankDetailsApi.saveBankInformation(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateBankInformation = createAsyncThunk(
+  'bankDetails/updateBankInformation',
+  async (info: BankInfo, thunkApi) => {
+    try {
+      return await bankDetailsApi.updateBankInformation(info)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -62,6 +75,7 @@ const bankDetailsSlice = createSlice({
 const bankDetailsThunk = {
   bankNameList,
   saveBankInformation,
+  updateBankInformation,
 }
 
 const isLoading = (state: RootState): LoadingState => state.panDetails.isLoading
