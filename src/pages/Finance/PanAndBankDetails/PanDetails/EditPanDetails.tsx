@@ -46,6 +46,7 @@ const EditPanDetails = ({
   }
 
   const saveBtnHandler = async () => {
+    setIsEditPanData(false)
     if (uploadPanDetail) {
       const formData = new FormData()
       formData.append('file', uploadPanDetail, uploadPanDetail.name)
@@ -89,6 +90,7 @@ const EditPanDetails = ({
                   data-testid="attachment"
                   type="file"
                   name="attachment"
+                  // value={editPanData?.financeFilePath}
                   onChange={(element: SyntheticEvent) =>
                     onChangeAttachmentHandler(
                       element.currentTarget as HTMLInputElement,
