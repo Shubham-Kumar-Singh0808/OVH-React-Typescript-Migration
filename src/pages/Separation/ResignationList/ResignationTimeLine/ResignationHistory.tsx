@@ -3,8 +3,16 @@ import { CRow, CCol, CButton } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import ResignationTimeLine from './ResignationTimeLine'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { useTypedSelector } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const ResignationHistory = (): JSX.Element => {
+  const isLoading = useTypedSelector(
+    reduxServices.resignationList.selectors.isLoading,
+  )
   return (
     <>
       <OCard
@@ -22,7 +30,13 @@ const ResignationHistory = (): JSX.Element => {
             </Link>
           </CCol>
         </CRow>
-        <ResignationTimeLine />
+        {isLoading !== ApiLoadingState.loading ? (
+          <>
+            <ResignationTimeLine />
+          </>
+        ) : (
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        )}
       </OCard>
     </>
   )
