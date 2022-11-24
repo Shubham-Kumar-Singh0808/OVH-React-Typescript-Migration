@@ -23,14 +23,17 @@ const Payslips = (): JSX.Element => {
   const selectYear = useTypedSelector(
     reduxServices.paySlips.selectors.payslipsList,
   )
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
 
   console.log(selectYear)
 
   useEffect(() => {
     dispatch(
       reduxServices.paySlips.employeePaySlips({
-        empId: Number(selectYear),
-        year: Number(selectYear),
+        empId: Number(employeeId),
+        year: 2022,
       }),
     )
   }, [dispatch])
