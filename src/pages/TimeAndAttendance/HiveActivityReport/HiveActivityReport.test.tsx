@@ -5,14 +5,23 @@ import HiveActivityReport from './HiveActivityReport'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { mockSearchHiveTime } from '../../../test/data/hiveActivityEmployeeManagerReportData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <HiveActivityReport />
+  </div>
+)
+
 describe('Hive Activity Report Component Testing', () => {
   test('should render hive activity report component with out crashing', () => {
-    render(<HiveActivityReport />)
+    render(toRender)
     expect(screen.getByText('Hive Activity Report')).toBeInTheDocument()
   })
 
   test('click to export button should available upon clicking on all radio button ', async () => {
-    render(<HiveActivityReport />, {
+    render(toRender, {
       preloadedState: {
         authentication: {
           authenticatedUser: {
@@ -35,7 +44,7 @@ describe('Hive Activity Report Component Testing', () => {
 })
 describe('Hive Activity Report Testing', () => {
   test('should enable view button upon selection of date', async () => {
-    render(<HiveActivityReport />, {
+    render(toRender, {
       preloadedState: {
         authentication: {
           authenticatedUser: {
@@ -61,8 +70,9 @@ describe('Hive Activity Report Testing', () => {
     userEvent.click(screen.getByRole('button', { name: 'View' }))
     expect(screen.getByRole('button', { name: 'View' })).toBeEnabled()
   })
+  jest.retryTimes(3)
   test('search input testing', async () => {
-    render(<HiveActivityReport />, {
+    render(toRender, {
       preloadedState: {
         authentication: {
           authenticatedUser: {

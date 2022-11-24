@@ -15,6 +15,8 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 import { localeDateFormat } from '../../../../utils/dateFormatUtils'
 import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
+import OModal from '../../../../components/ReusableComponent/OModal'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EmployeeCertificationsTable = ({
   editCertificateButtonHandler,
@@ -49,6 +51,30 @@ const EmployeeCertificationsTable = ({
     }
   }, [dispatch, isViewingAnotherEmployee, selectedEmployeeId])
 
+  const toastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="Certificate deleted successfully"
+    />
+  )
+
+  const handleConfirmDeleteCertificate = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteCertificateResultAction = await dispatch(
+      reduxServices.employeeCertifications.deleteEmployeeCertificate(
+        certificateId,
+      ),
+    )
+    if (
+      reduxServices.employeeCertifications.deleteEmployeeCertificate.fulfilled.match(
+        deleteCertificateResultAction,
+      )
+    ) {
+      dispatch(reduxServices.employeeCertifications.getEmployeeCertificates())
+      dispatch(reduxServices.app.actions.addToast(toastElement))
+    }
+  }
+
   const sortedCertificateDetails = useMemo(() => {
     if (employeeCertificates.length > 0) {
       return employeeCertificates
@@ -68,8 +94,9 @@ const EmployeeCertificationsTable = ({
     <>
       <CTable
         responsive
-        striped={isViewingAnotherEmployee}
+        striped
         bordered={isViewingAnotherEmployee}
+        align="middle"
       >
         {!isViewingAnotherEmployee ? (
           <CTableHead>
@@ -144,9 +171,7 @@ const EmployeeCertificationsTable = ({
                 certificateItemId={certificateItem.id}
                 isViewingAnotherEmployee={isViewingAnotherEmployee}
                 editCertificateButtonHandler={editCertificateButtonHandler}
-                certificateId={certificateId}
                 setCertificateId={setCertificateId}
-                isDeleteModalVisible={isDeleteModalVisible}
                 setIsDeleteModalVisible={setIsDeleteModalVisible}
                 userAccess={userAccessToCertifications as UserAccessToFeatures}
               />
@@ -159,6 +184,19 @@ const EmployeeCertificationsTable = ({
           ? `Total Records: ${employeeCertificates.length}`
           : `No Records Found`}
       </strong>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Certificate"
+        modalBodyClass="mt-0"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={handleConfirmDeleteCertificate}
+      >
+        {`Do you really want to delete this ?`}
+      </OModal>
     </>
   )
 }

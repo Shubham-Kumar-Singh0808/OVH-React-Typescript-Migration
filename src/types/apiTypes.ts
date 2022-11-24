@@ -306,6 +306,12 @@ export interface LeaveReportsApi extends ApiBase {
   downloadLeaveReportList: string
 }
 
+export interface AllocateEmployeeApi extends ApiBase {
+  getAllEmployeeProfiles: string
+  getAllProjectSearch: string
+  allocateNewEmployee: string
+}
+
 export interface TicketReportApi extends ApiBase {
   getDepartmentNameList: string
   departmentCategoryList: string
@@ -320,6 +326,14 @@ export interface ProjectManagementApi extends ApiBase {
   getAllPlatforms: string
   getAllDomains: string
   getAllManagers: string
+  getActiveProjectReports: string
+  getSearchAllocationReport: string
+  getClientProjects: string
+  getCloseProject: string
+  getDeleteProject: string
+  postDeallocateProject: string
+  postUpdateAllocateProject: string
+  exportProjectList: string
 }
 
 export interface ClientsApi extends ApiBase {
@@ -336,6 +350,7 @@ export interface ClientsApi extends ApiBase {
 export interface AddNewClientApi extends ApiBase {
   getClientCountries: string
   addNewClient: string
+  checkClientOrgExist: string
 }
 
 export interface ClientInformationApi extends ApiBase {
@@ -417,6 +432,12 @@ export interface EventTypeListApi extends ApiBase {
   updateEventType: string
   getLoggedEmployeeName: string
 }
+export interface EmployeeAllocationApi extends ApiBase {
+  getEmployeeAllocationReport: string
+  projectUnderEmployees: string
+  updateEmployeeAllocateProject: string
+  downloadEmployeeAllocationList: string
+}
 
 export interface EventListApi extends ApiBase {
   getAllEvents: string
@@ -425,10 +446,49 @@ export interface EventListApi extends ApiBase {
   downloadFeedbackForm: string
   uploadFeedbackForm: string
 }
-
+export interface AppraisalConfigurationsApi extends ApiBase {
+  getAppraisalCycle: string
+  editAppraisalCycle: string
+  updateAppraisalCycle: string
+  validateCycle: string
+}
+export interface AddConfigurationsApi extends ApiBase {
+  addAppraisalCycle: string
+}
 export interface RoomListApi extends ApiBase {
   getAllMeetingRooms: string
   addRoom: string
   deleteRoom: string
   updateRoom: string
+}
+
+export interface TicketConfigurationApi extends ApiBase {
+  getDepartments: string
+  getCategories: string
+  getSubCategories: string
+  getSubCategoryList: string
+  deleteSubCategory: string
+  ticketHistory: string
+  addSubCategory: string
+  updateSubCategory: string
+  getAllCategory: string
+  addCategory: string
+  updateCategory: string
+  deleteCategory: string
+}
+
+export interface SubmitResignationApi extends ApiBase {
+  getSeparationForm: string
+  submitResignation: string
+  getEmployeeResg: string
+  revokeResignation: string
+}
+
+export interface LeaveApprovalsApi extends ApiBase {
+  getEmployees: string
+  getEmployeeLeaves: string
+  getSearchEmployees: string
+  checkProjectManagerExits: string
+  leaveApprove: string
+  leaveReject: string
 }

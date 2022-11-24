@@ -112,11 +112,19 @@ const LeaveSummary = React.lazy(
     ),
 )
 const AddProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/AddProject/AddProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/AddProject/AddProject'
+    ),
 )
-
 const EditProject = React.lazy(
-  () => import('./pages/ProjectManagement/Project/EditProject/EditProject'),
+  () =>
+    import(
+      './pages/ProjectManagement/Project/AddEditProject/EditProject/EditProject'
+    ),
+)
+const ProjectReport = React.lazy(
+  () => import('./pages/ProjectManagement/Project/ProjectReport'),
 )
 const EditClient = React.lazy(
   () => import('./pages/ProjectManagement/Clients/EditClient/EditClient'),
@@ -176,6 +184,12 @@ const EventTypeList = React.lazy(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
 )
+const EmployeeAllocationReport = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/EmployeeAllocation/EmployeeAllocationReport'
+    ),
+)
 const LocationList = React.lazy(
   () =>
     import(
@@ -198,9 +212,36 @@ const EditHoliday = React.lazy(
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
+const EmployeeAllocation = React.lazy(
+  () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
+)
+
+const AppraisalConfigurations = React.lazy(
+  () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
+)
+
 const RoomList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
+
+const EditConfiguration = React.lazy(
+  () =>
+    import(
+      './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
+    ),
+)
+const TicketConfiguration = React.lazy(
+  () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
+)
+
+const SubmitResignation = React.lazy(
+  () => import('./pages/Separation/SubmitViewResignation/SubmitResignation'),
+)
+
+const LeaveApprovals = React.lazy(
+  () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -253,6 +294,11 @@ const routes = [
     path: '/employeehandbook',
     name: 'Employee Handbook',
     component: EmployeeHandbook,
+  },
+  {
+    path: '/Employeereport',
+    name: 'Employee Allocation Report',
+    component: EmployeeAllocationReport,
   },
   {
     path: '/leaveReports',
@@ -338,6 +384,11 @@ const routes = [
     path: '/addproject',
     name: 'Add Project',
     component: AddProject,
+  },
+  {
+    path: '/allocationEmployee',
+    name: 'Allocate Employee',
+    component: EmployeeAllocation,
   },
   {
     path: '/editproject/:projectId',
@@ -446,9 +497,39 @@ const routes = [
     component: EditHoliday,
   },
   {
+    path: '/appraisalCycle',
+    name: 'Appraisal Configurations',
+    component: AppraisalConfigurations,
+  },
+  {
     path: '/roomList',
     name: 'RoomList',
     component: RoomList,
+  },
+  {
+    path: '/editAppraisalCycle/:cycleId',
+    name: 'Edit Configuration',
+    component: EditConfiguration,
+  },
+  {
+    path: '/subCategoryList',
+    name: 'Ticket Configuration',
+    component: TicketConfiguration,
+  },
+  {
+    path: '/submitResignation',
+    name: 'Submit View Resignation',
+    component: SubmitResignation,
+  },
+  {
+    path: '/projectreport',
+    name: 'Project Report',
+    component: ProjectReport,
+  },
+  {
+    path: '/leaveApprovals',
+    name: 'Leave Approvals',
+    component: LeaveApprovals,
   },
 ]
 

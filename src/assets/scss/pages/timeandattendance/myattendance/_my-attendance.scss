@@ -18,3 +18,12 @@ th.fc-day-sat,
 th.fc-day-sun {
   background-color: #5fa2dd !important;
 }
+
+.fc-daygrid-block-event .fc-event-time, .fc-daygrid-block-event .fc-event-title {
+  padding: 0px !important;
+}
+
+.fc-h-event .fc-event-title-container {
+  padding-left: 1px;
+  padding-top: 1px !important;
+}

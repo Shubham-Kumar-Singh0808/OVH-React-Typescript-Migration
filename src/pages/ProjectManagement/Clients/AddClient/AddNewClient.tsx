@@ -24,12 +24,16 @@ import { showIsRequired } from '../../../../utils/helper'
 
 const AddNewClient = (): JSX.Element => {
   const initialClientDetails = {} as AddClientDetails
-  const [addClient, setAddClient] = useState(initialClientDetails)
+  const [addClient, setAddClient] = useState({
+    ...initialClientDetails,
+    clientStatus: true,
+  })
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [phoneCode, setPhoneCode] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [emailError, setEmailError] = useState<boolean>(false)
+  const [isActive, setIsActive] = useState(true)
   const dispatch = useAppDispatch()
   const clientCountries = useTypedSelector(
     reduxServices.addClient.selectors.clientCountries,
@@ -88,9 +92,16 @@ const AddNewClient = (): JSX.Element => {
       setAddClient((values) => {
         return { ...values, ...{ [name]: contactPerson } }
       })
+    } else if (name === 'clientStatus') {
+      setIsActive(value === 'true')
+      const clientStatusValue = value === 'true'
+      setAddClient((values) => {
+        return { ...values, ...{ [name]: clientStatusValue } }
+      })
     } else {
       setAddClient((values) => {
-        return { ...values, ...{ [name]: value } }
+        const trimFieldValue = value.trimStart()
+        return { ...values, ...{ [name]: trimFieldValue } }
       })
     }
   }
@@ -154,6 +165,34 @@ const AddNewClient = (): JSX.Element => {
       toastMessage="Already a Client is existed with the given Code."
     />
   )
+
+  const clientOrgAlreadyExistsToast = (
+    <OToast
+      toastMessage="Client organization already exists"
+      toastColor="danger"
+    />
+  )
+  const isOrgAlreadyExists = async (value: string) => {
+    if (value !== '' || undefined) {
+      const isOrgAlreadyExistsResultAction = await dispatch(
+        reduxServices.addClient.checkClientOrgExist(value),
+      )
+      if (
+        reduxServices.addClient.checkClientOrgExist.fulfilled.match(
+          isOrgAlreadyExistsResultAction,
+        ) &&
+        isOrgAlreadyExistsResultAction.payload === true
+      ) {
+        setAddClient((prevState) => {
+          return { ...prevState, ...{ organization: '' } }
+        })
+        dispatch(
+          reduxServices.app.actions.addToast(clientOrgAlreadyExistsToast),
+        )
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      }
+    }
+  }
 
   const handleAddNewClient = async () => {
     const prepareObject = {
@@ -243,6 +282,7 @@ const AddNewClient = (): JSX.Element => {
                 placeholder="Organization"
                 value={addClient.organization}
                 onChange={handleInputChange}
+                onBlur={(e) => isOrgAlreadyExists(e.target.value)}
               />
             </CCol>
           </CRow>
@@ -439,7 +479,7 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="activeClient-input"
                 label="Active"
                 value="true"
-                checked
+                checked={isActive}
                 onChange={handleInputChange}
                 inline
               />
@@ -458,6 +498,7 @@ const AddNewClient = (): JSX.Element => {
                 data-testid="inActiveClient-input"
                 label="Inactive"
                 value="false"
+                checked={!isActive}
                 onChange={handleInputChange}
                 inline
               />

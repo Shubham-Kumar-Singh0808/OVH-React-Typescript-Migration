@@ -382,7 +382,7 @@ function AddEditVisaDetails({
         <CForm>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...formLabelProps}>
-              Country:
+              Country :
               <span
                 className={
                   employeeVisaDetails?.countryId ? TextWhite : TextDanger
@@ -412,7 +412,7 @@ function AddEditVisaDetails({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...visaTypeProps}>
-              Visa Type:{' '}
+              Visa Type :{' '}
               <span
                 className={
                   employeeVisaDetails?.visaTypeId ? TextWhite : TextDanger
@@ -440,7 +440,7 @@ function AddEditVisaDetails({
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Date of Issue:
+              Date of Issue :
               <span
                 className={
                   employeeVisaDetails.dateOfIssue || dateOfIssue
@@ -453,6 +453,7 @@ function AddEditVisaDetails({
             </CFormLabel>
             <CCol sm={3} data-testid="dateOfIssuedInput">
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="dateOfIssue"
                 maxDate={new Date()}
@@ -467,7 +468,6 @@ function AddEditVisaDetails({
                 }
                 onChange={onChangeDateOfIssueHandler}
                 id="dateOfIssue"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -491,6 +491,7 @@ function AddEditVisaDetails({
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="dateOfExpire"
                 value={
@@ -504,7 +505,6 @@ function AddEditVisaDetails({
                 }
                 onChange={onChangeDateOfExpireHandler}
                 id="dateOfExpire"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -519,8 +519,8 @@ function AddEditVisaDetails({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Upload VISA copy:
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+              Upload VISA copy :
             </CFormLabel>
             <CCol>
               <input

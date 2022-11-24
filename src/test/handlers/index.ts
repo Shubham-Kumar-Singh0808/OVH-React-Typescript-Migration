@@ -1,3 +1,4 @@
+import { allocateEmployeeHandlers } from './allocateEmployeeHandlers'
 import { attendanceReportHandlers } from './attendanceReportHandlers'
 import { birthdaysListHandlers } from './birthdaysListHandlers'
 import { categoryListHandlers } from './categoryListHandlers'
@@ -22,6 +23,7 @@ import { userAccessToFeaturesHandlers } from './userAccessToFeaturesHandlers'
 import { userRolesAndPermissionsHandlers } from './userRolesAndPermissionsHandlers'
 import { timeInOfficeHandlers } from './weeklyTimeInOfficeHandlers'
 import { eventTypeListHandlers } from './eventTypeListHandlers'
+import { employeeAllocationHandlers } from './EmployeeAllocationHandlers'
 import { trackerHandlers } from './addTrackerListHandlers'
 import { eventListHandlers } from './eventListHandlers'
 import { employeeHandbookHandlers } from './employeeHandbookHandlers'
@@ -29,8 +31,12 @@ import { employeeLeaveHistoryHandlers } from './employeeLeaveHistoryHandlers'
 import { employeeSearchHandler } from './employeeSearchHandler'
 import { employeeSkillHandlers } from './employeeSkillsHandlers'
 import { employeeCertificationHandlers } from './employeeCertificationsHandlers'
+import { addNewClientHandlers } from './addNewClientHandlers'
 import { addRoomListHandlers } from './addRoomListHandler'
 import { addLocationListHandlers } from './addLocationListHandlers'
+import { ticketConfigurationHandlers } from './ticketConfigurationHandlers'
+import { addNewDesignationHandler } from './addNewDesignationHandler'
+import { leaveApprovalsHandlers } from './leaveApprovalsHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -57,6 +63,7 @@ export const handlers = [
   ...employeeAchievementsHandlers,
   ...updateTicketHandlers,
   ...eventTypeListHandlers,
+  ...employeeAllocationHandlers,
   ...trackerHandlers,
   ...eventListHandlers,
   ...employeeHandbookSettingsHandlers,
@@ -66,7 +73,11 @@ export const handlers = [
   ...employeeSearchHandler,
   ...employeeSkillHandlers,
   ...employeeCertificationHandlers,
+  ...addNewClientHandlers,
   ...addRoomListHandlers,
   ...addLocationListHandlers,
+  ...ticketConfigurationHandlers,
+  ...addNewDesignationHandler,
+  ...leaveApprovalsHandlers,
   // add your handler here
 ]

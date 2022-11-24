@@ -10,6 +10,7 @@ import {
   mockTechnologies,
 } from '../../../test/data/employeeTechnologiesData'
 import { mockCertificateList } from '../../../test/data/certificateListData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const searchInputTestId = 'multi-search-btn'
 
@@ -18,25 +19,33 @@ const toRender = (
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root">
-      <ReduxProvider reduxStore={stateStore}>
-        <CertificatesFilterOptions
-          selectTechnology={'.Net'}
-          setSelectTechnology={jest.fn()}
-          setFilterByTechnology={jest.fn()}
-          setFilterByCertificate={jest.fn()}
-          setMultiSearchValue={jest.fn()}
-          filterByTechnology={'.Net'}
-          filterByCertificate={'MVC Certificate'}
-          multiSearchValue={'Java'}
-          setIsAccordionItemShow={jest.fn}
-        />
-      </ReduxProvider>
+      <CertificatesFilterOptions
+        selectTechnology={'.Net'}
+        setSelectTechnology={jest.fn()}
+        setFilterByTechnology={jest.fn()}
+        setFilterByCertificate={jest.fn()}
+        setMultiSearchValue={jest.fn()}
+        filterByTechnology={'.Net'}
+        filterByCertificate={'MVC Certificate'}
+        multiSearchValue={'Java'}
+        setIsAccordionItemShow={jest.fn}
+      />
     </div>
   </div>
 )
 describe('Certificates Filter Options Component Testing', () => {
   test('should render certificates filter options component with out crashing', () => {
-    render(toRender)
+    render(toRender, {
+      preloadedState: {
+        employeeCertificates: {
+          getAllTechnologies: mockTechnologies,
+          typeOfCertificate: mockCertificateByTechnology,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
+    })
     expect(screen.getByRole('button', { name: 'View' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
   })
@@ -144,6 +153,17 @@ describe('Certificates Filter Options Component Testing', () => {
             />
           </div>
         </div>,
+        {
+          preloadedState: {
+            employeeCertificates: {
+              getAllTechnologies: mockTechnologies,
+              typeOfCertificate: mockCertificateByTechnology,
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
+            },
+          },
+        },
       )
     })
     test('should render labels', () => {

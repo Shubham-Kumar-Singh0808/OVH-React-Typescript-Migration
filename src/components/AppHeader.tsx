@@ -73,6 +73,14 @@ const AppHeader = (): JSX.Element => {
     history.push(employeeListPath)
   }
 
+  const handleSearchEmployeeOnEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      handleSearchEmployee()
+    }
+  }
+
   return (
     <CHeader className="main-header mb-3">
       <CContainer fluid>
@@ -93,10 +101,10 @@ const AppHeader = (): JSX.Element => {
                   className: 'form-control form-control-sm',
                   id: 'employee-autocomplete',
                   placeholder: 'Search Employee',
-                  // onKeyDown: handleSearchEmployeeOnEnter,
+                  onKeyDown: handleSearchEmployeeOnEnter,
                 }}
                 getItemValue={(item) => item?.fullName}
-                items={employees?.slice(0, 10)}
+                items={employees && employees?.slice(0, 10)}
                 wrapperStyle={{ position: 'relative' }}
                 renderMenu={(children) => (
                   <div

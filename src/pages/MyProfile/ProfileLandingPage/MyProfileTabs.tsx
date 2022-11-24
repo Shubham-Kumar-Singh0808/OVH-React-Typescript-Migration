@@ -11,7 +11,6 @@ import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
 import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
-import EmployeeReportees from '../ReporteesTab/EmployeeReportees'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import EmployeeReviews from '../ReviewsTab/EmployeeReviews'
 import TabsLabels from '../../../middleware/TabsLabels'
@@ -21,6 +20,7 @@ import EmployeeProjects from '../ProjectsTab/EmployeeProjects'
 import EmployeeAssets from '../MyAssetsTab/EmployeeAssets'
 import { mapTabsToFeatures } from '../../../utils/helper'
 import { MappedTabs } from '../../../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
+import EmployeeReportees from '../ReporteesTab/EmployeeReportees'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
@@ -59,7 +59,9 @@ const MyProfileTabs = (): JSX.Element => {
       const newTabResult = tabResult?.filter(
         (value) => Object.keys(value).length !== 0,
       )
-      setActiveTabsKey(newTabResult[0].id)
+      if (newTabResult) {
+        setActiveTabsKey(newTabResult[0]?.id)
+      }
     }
   }, [tabResult])
 

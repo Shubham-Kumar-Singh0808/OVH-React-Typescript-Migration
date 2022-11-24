@@ -130,7 +130,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
             <CTableBody>
               {employeeLeaveHistoryDetails.map((leaveHistory, index) => {
                 const removeTag = '/(<([^>]+)>)/gi'
-                const removeSpaces = leaveHistory.employeeComments.replace(
+                const removeSpaces = leaveHistory.employeeComments?.replace(
                   removeTag,
                   '',
                 )
