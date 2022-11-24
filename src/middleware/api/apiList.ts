@@ -600,4 +600,7 @@ export const resignationListApiConfig: ResignationListApi = {
     apiPrefix + '/separationController/exportResignationList',
   resignationInitiateCC: apiPrefix + '/separationController/IntitiateCC',
   getSeparationTimeLine: apiPrefix + '/separationController/getSeparation',
+  clearanceCertificateComments:
+    apiPrefix + '/separationController/clearanceCertificateComments',
+  getClearanceDetails: apiPrefix + '/separationController/getClearanceDetails',
 }

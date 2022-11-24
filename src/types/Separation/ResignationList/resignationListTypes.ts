@@ -62,9 +62,12 @@ export type GetResignationListProps = {
 export type ResignationListSliceState = {
   resignationList: ResignationListResponse
   separationTimeLine: SeparationTimeLine
+  clearanceDetails: ClearanceDetails
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number
+  toggle: string
+  // setToggle: (value: string) => void
 }
 
 export type ExportResignationListDataProps = {
@@ -130,4 +133,31 @@ export type SeparationTimeLine = {
   empStatus: null
   certificate: null
   seperationComments: SeparationComments[]
+}
+
+export type submitClearenceCommentsProps = {
+  addedBy: string
+  comments: string
+  employeeId: number
+  employeeName: string
+  isDue: string
+  seperationId: number
+}
+
+export type ClearanceDetails = {
+  ccId: number
+  employeeId: number
+  employeeName: string
+  comments: string
+  isDue: false
+  createdDate: string
+  seperationId: null
+  seperationEmpId: number
+  seperationEmpName: string
+  addedBy: string
+}
+
+export type ClearanceDetailsProps = {
+  separationId: number
+  submittedBy: string
 }

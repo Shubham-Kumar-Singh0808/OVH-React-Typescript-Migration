@@ -54,6 +54,10 @@ const ResignationListTable = ({
     (feature) => feature.name === 'ShowTimeLine',
   )
 
+  const userAccessManagerClearence = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Manager Cleranace',
+  )
+
   const getAllResignationList = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListDetails,
   )
@@ -87,6 +91,10 @@ const ResignationListTable = ({
   }
 
   const resignationHistoryButtonHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+  }
+
+  const resignationClearenceManagerButtonHandler = (separationId: number) => {
     dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
   }
 
@@ -199,13 +207,22 @@ const ResignationListTable = ({
                         )}
                         {resignationItem.isprocessInitiated ? (
                           <>
-                            <CButton
-                              color="info"
-                              size="sm"
-                              className="btn-ovh me-2"
-                            >
-                              <i className="fa fa-user text-white"></i>
-                            </CButton>
+                            {userAccessManagerClearence?.viewaccess && (
+                              <Link to={`/ClearanceCertificateManager`}>
+                                <CButton
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh me-2"
+                                  onClick={() =>
+                                    resignationClearenceManagerButtonHandler(
+                                      resignationItem.separationId,
+                                    )
+                                  }
+                                >
+                                  <i className="fa fa-user text-white"></i>
+                                </CButton>
+                              </Link>
+                            )}
                             <CButton
                               color="info"
                               size="sm"
