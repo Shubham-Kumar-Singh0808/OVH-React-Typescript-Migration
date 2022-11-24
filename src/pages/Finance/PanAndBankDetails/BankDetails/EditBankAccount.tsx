@@ -85,7 +85,7 @@ const EditBankAccount = ({
                 <option value={''}>Select</option>
                 {bankData.length > 0 &&
                   bankData?.map((name, index) => (
-                    <option key={index} value={name.bankId}>
+                    <option key={index} value={name.bankName}>
                       {name.bankName}
                     </option>
                   ))}

@@ -7,7 +7,8 @@ import {
   CFormSelect,
   CButton,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
@@ -22,8 +23,10 @@ const AddBankAccount = ({
   const [accountNumber, setIsAccountNumber] = useState<string>('')
   const [bankName, setBankName] = useState<string>('')
   const [bankIfscCode, setBankIfscCode] = useState<string>('')
+  const [isAddBtnEnabled, setIsAddBtnEnabled] = useState(false)
 
   const dispatch = useAppDispatch()
+  const history = useHistory()
 
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
@@ -47,11 +50,22 @@ const AddBankAccount = ({
     if (name === 'number') {
       const accountNumber = value.replace(/\D/g, '')
       setIsAccountNumber(accountNumber)
-    } else if (name === 'code') {
+    } else if (name === 'bankIfscCode') {
       const ifscCode = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setBankIfscCode(ifscCode)
     }
   }
+  useEffect(() => {
+    if (accountNumber && bankName && bankIfscCode) {
+      setIsAddBtnEnabled(true)
+    } else {
+      setIsAddBtnEnabled(false)
+    }
+  }, [accountNumber, bankIfscCode, bankName])
+
+  useEffect(() => {
+    dispatch(reduxServices.bankDetails.bankNameList())
+  }, [dispatch])
 
   const successToast = (
     <OToast
@@ -75,7 +89,9 @@ const AddBankAccount = ({
         isAddBankAccount,
       )
     ) {
+      history.push('/myFinance')
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.panDetails.bankInformation(Number(empId)))
     }
   }
 
@@ -117,6 +133,7 @@ const AddBankAccount = ({
                 size="sm"
                 name="number"
                 maxLength={9}
+                value={accountNumber}
                 autoComplete="off"
                 placeholder="Bank Account Number"
                 onChange={onChangeHandler}
@@ -138,12 +155,13 @@ const AddBankAccount = ({
                 id="bankName"
                 data-testid="form-select1"
                 name="bankName"
+                value={bankName}
                 onChange={(e) => setBankName(e.target.value)}
               >
                 <option value={''}>Select</option>
                 {bankData.length > 0 &&
                   bankData?.map((name, index) => (
-                    <option key={index} value={name.bankId}>
+                    <option key={index} value={name.bankName}>
                       {name.bankName}
                     </option>
                   ))}
@@ -163,11 +181,13 @@ const AddBankAccount = ({
                 className="mb-2"
                 data-testid="ifsc-code"
                 type="text"
-                id="code"
+                id="bankIfscCode"
                 size="sm"
-                name="code"
+                name="bankIfscCode"
                 autoComplete="off"
                 placeholder="IFSC Code"
+                value={bankIfscCode}
+                onChange={onChangeHandler}
               />
             </CCol>
           </CRow>
@@ -179,6 +199,7 @@ const AddBankAccount = ({
               className="btn-ovh me-1 text-white"
               color="success"
               onClick={addButtonHandler}
+              disabled={!isAddBtnEnabled}
             >
               Add
             </CButton>
