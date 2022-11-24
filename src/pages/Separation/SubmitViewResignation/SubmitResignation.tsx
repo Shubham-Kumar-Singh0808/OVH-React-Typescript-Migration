@@ -38,5 +38,4 @@ const SubmitResignation = (): JSX.Element => {
     </>
   )
 }
-
 export default SubmitResignation
