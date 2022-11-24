@@ -76,6 +76,7 @@ import { addConfigurationService } from './Settings/Configurations/AddConfigurat
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
+import { resignationListService } from './Separation/ResignationList/resignationListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -156,4 +157,5 @@ export const reduxServices = {
   addConfigurations: addConfigurationService,
   projectReport: projectReportsService,
   leaveApprovals: leaveApprovalsService,
+  resignationList: resignationListService,
 }

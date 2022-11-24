@@ -30,12 +30,7 @@ describe('Ticket History Time line Component Testing', () => {
       expect(timeStamp).toBeTruthy()
       expect(screen.getByText('Dinesh Kota -')).toBeInTheDocument()
       expect(screen.getByText('30-Sep-2016 10:24:46 AM')).toBeInTheDocument()
-      expect(screen.getByText('Updated')).toBeInTheDocument()
-      expect(screen.getByText('Rejected')).toBeInTheDocument()
-    })
-    test('should render updated button with data ', () => {
-      const createdElement = screen.getAllByTestId('th-update-btn')
-      expect(createdElement[0]).toBeInTheDocument()
+      expect(screen.getByText('Created')).toBeInTheDocument()
     })
     test('should render updated button with data ', () => {
       const createdElement = screen.getAllByTestId('th-created-btn')

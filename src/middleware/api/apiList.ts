@@ -66,6 +66,7 @@ import {
   TicketConfigurationApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
+  ResignationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -547,6 +548,9 @@ export const addTrackerApiConfig: AddTrackerApi = {
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
   getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+  editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
+  updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
+  validateCycle: apiPrefix + '/appraisal/validateCycle',
 }
 export const addConfigurationsApiConfig: AddConfigurationsApi = {
   addAppraisalCycle: apiPrefix + '/appraisal/cycle',
@@ -571,6 +575,7 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   deleteCategory: apiPrefix + '/supportManagement/deleteCategory',
   addCategory: apiPrefix + '/supportManagement/addCategory',
   updateCategory: apiPrefix + '/supportManagement/updateCategory',
+  updateSubCategory: apiPrefix + '/supportManagement/updateSubCategory',
 }
 
 export const submitResignationApiConfig: SubmitResignationApi = {
@@ -587,4 +592,12 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
   leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
+}
+
+export const resignationListApiConfig: ResignationListApi = {
+  resignationList: apiPrefix + '/separationController/resignationList',
+  exportResignationList:
+    apiPrefix + '/separationController/exportResignationList',
+  resignationInitiateCC: apiPrefix + '/separationController/IntitiateCC',
+  getSeparationTimeLine: apiPrefix + '/separationController/getSeparation',
 }

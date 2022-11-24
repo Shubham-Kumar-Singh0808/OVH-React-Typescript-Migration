@@ -9,6 +9,7 @@ import {
   Category,
   TicketConfigurationCategories,
   TicketConfigurationDepartments,
+  TicketConfigurationList,
   TicketConfigurationSubCategories,
   TicketConfigurationSubCategoryList,
   TicketConfigurationSubCategoryType,
@@ -162,14 +163,28 @@ const deleteCategory = async (
   return response.data
 }
 
+const updateSubCategory = async (
+  subCategoryDetails: TicketConfigurationList,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ticketConfigurationApiConfig.updateSubCategory,
+    method: AllowedHttpMethods.put,
+    data: subCategoryDetails,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ticketConfigurationApi = {
   getTicketConfigurationDepartments,
   getTicketConfigurationCategories,
   getTicketConfigurationSubCategories,
   getTicketConfigurationSubCategoryList,
-  deleteSubCategory,
   ticketHistory,
   addSubCategory,
+  updateSubCategory,
+  deleteSubCategory,
   getAllCategory,
   addCategory,
   updateCategory,

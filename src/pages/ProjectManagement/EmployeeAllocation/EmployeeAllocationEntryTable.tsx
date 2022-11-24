@@ -323,7 +323,7 @@ const EmployeeAllocationEntryTable = (props: {
                           <>
                             <CButton
                               color="success"
-                              className="btn-ovh me-1"
+                              className="btn-ovh me-1 mb-1"
                               onClick={saveProjectAllocationHandler}
                             >
                               <i
@@ -334,7 +334,7 @@ const EmployeeAllocationEntryTable = (props: {
                             <CButton
                               color="warning"
                               data-testid="cancel-btn"
-                              className="btn-ovh me-1"
+                              className="btn-ovh me-1 mb-1"
                               onClick={cancelProjectAllocationButtonHandler}
                             >
                               <i className="fa fa-times" aria-hidden="true"></i>
@@ -363,7 +363,6 @@ const EmployeeAllocationEntryTable = (props: {
                 })}
             </CTableBody>
           </CTable>
-          <p>No Records Found...</p>
         </CTableDataCell>
       </CTableRow>
     </>

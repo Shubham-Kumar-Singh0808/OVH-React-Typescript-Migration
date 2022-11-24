@@ -15,6 +15,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { AddSubCategoryDetails } from '../../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 import { showIsRequired } from '../../../../utils/helper'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { TextDanger } from '../../../../constant/ClassName'
 
 const AddNewSubCategory = (): JSX.Element => {
   const initialSubCategoryDetails = {} as AddSubCategoryDetails
@@ -28,8 +29,11 @@ const AddNewSubCategory = (): JSX.Element => {
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [estimatedHours, setEstimatedHours] = useState('')
   const [estimatedMins, setEstimatedMins] = useState('')
+  const [isSubCategoryNameExist, setIsSubCategoryNameExist] = useState('')
   const dispatch = useAppDispatch()
-
+  const subCategoryList = useTypedSelector(
+    reduxServices.ticketConfiguration.selectors.subCategoryList,
+  )
   const backButtonHandler = () => {
     dispatch(reduxServices.ticketConfiguration.actions.setToggle(''))
   }
@@ -64,13 +68,22 @@ const AddNewSubCategory = (): JSX.Element => {
     if (
       selectDepartment &&
       selectCategory &&
-      addNewSubCategory.subCategoryName
+      addNewSubCategory.subCategoryName &&
+      !isSubCategoryNameExist
     ) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
   }, [selectDepartment, selectCategory, addNewSubCategory])
+
+  const validateSubCategoryName = (name: string) => {
+    return subCategoryList.list?.find((subCategoryItem) => {
+      return (
+        subCategoryItem.subCategoryName.toLowerCase() === name.toLowerCase()
+      )
+    })
+  }
 
   const estimatedTimeRegexReplace = /\D/g
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +104,11 @@ const AddNewSubCategory = (): JSX.Element => {
       setAddNewSubCategory((prevState) => {
         return { ...prevState, ...{ [name]: value } }
       })
+    }
+    if (validateSubCategoryName(value)) {
+      setIsSubCategoryNameExist(value)
+    } else {
+      setIsSubCategoryNameExist('')
     }
   }
   const handleEstimatedTime = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -271,6 +289,13 @@ const AddNewSubCategory = (): JSX.Element => {
                 value={addNewSubCategory.subCategoryName}
                 onChange={handleInputChange}
               />
+            </CCol>
+            <CCol sm={3} className="mt-2">
+              {isSubCategoryNameExist && (
+                <p className={TextDanger} data-testid="categoryName-exist">
+                  Sub-Category Name Already Exist
+                </p>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">

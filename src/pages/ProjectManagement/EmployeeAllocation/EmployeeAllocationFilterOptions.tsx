@@ -91,7 +91,7 @@ const EmployeeAllocationFilterOptions = ({
     )
   }, [dispatch])
 
-  const handleViewButtonHandler = () => {
+  const handleViewBtnHandler = () => {
     dispatch(
       reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
         Billingtype: billingStatus,
@@ -132,7 +132,7 @@ const EmployeeAllocationFilterOptions = ({
     }
   }, [getTechnologies])
 
-  const clearButtonHandler = () => {
+  const clearBtnHandler = () => {
     setSelect('Current Month')
     setBillingStatus('All')
     setSelectTechnology('')
@@ -157,7 +157,7 @@ const EmployeeAllocationFilterOptions = ({
     setIsIconVisible(false)
   }
 
-  const handleSearch = () => {
+  const handleSearchResult = () => {
     dispatch(
       reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
         Billingtype: billingStatus,
@@ -410,7 +410,7 @@ const EmployeeAllocationFilterOptions = ({
             className="cursor-pointer"
             color="success btn-ovh me-1"
             data-testid="view-btn"
-            onClick={handleViewButtonHandler}
+            onClick={handleViewBtnHandler}
             disabled={
               Select === 'Custom' && !(fromDate !== '' && toDate !== '')
             }
@@ -422,7 +422,7 @@ const EmployeeAllocationFilterOptions = ({
             disabled={false}
             data-testid="clear-btn"
             color="warning btn-ovh me-1"
-            onClick={clearButtonHandler}
+            onClick={clearBtnHandler}
           >
             Clear
           </CButton>
@@ -447,7 +447,7 @@ const EmployeeAllocationFilterOptions = ({
               type="button"
               color="info"
               id="button-addon2"
-              onClick={handleSearch}
+              onClick={handleSearchResult}
             >
               <i className="fa fa-search"></i>
             </CButton>
