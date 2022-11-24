@@ -6,6 +6,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 const SubmitResignation = (): JSX.Element => {
   const [primaryReason, setPrimaryReason] = useState<string>('')
   const [toggle, setToggle] = useState('')
+
   return (
     <>
       {toggle === '' && (

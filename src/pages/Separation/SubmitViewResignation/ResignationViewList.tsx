@@ -7,6 +7,7 @@ const ResignationViewList = (): JSX.Element => {
   const getResignationViewResponse = useTypedSelector(
     reduxServices.submitViewResignation.selectors.resignationView,
   )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.submitViewResignation.getEmployeeResignationView())

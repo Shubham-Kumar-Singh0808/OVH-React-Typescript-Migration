@@ -69,6 +69,7 @@ describe('SubmitResignation Slice', () => {
           .fulfilled,
         payload: mockResignationView,
       }
+
       const state = submitViewResignationReducer(
         initialSubmitResignationState,
         action,
