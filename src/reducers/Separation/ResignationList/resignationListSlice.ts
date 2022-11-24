@@ -8,6 +8,7 @@ import {
   GetResignationListProps,
   ResignationList,
   ResignationListSliceState,
+  SeparationTimeLine,
 } from '../../../types/Separation/ResignationList/resignationListTypes'
 
 const getResignationList = createAsyncThunk(
@@ -39,11 +40,32 @@ const resignationIntitiateCC = createAsyncThunk<
   }
 })
 
+const getSeparationTimeLine = createAsyncThunk<
+  SeparationTimeLine | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'resignationList/getSeparationTimeLine',
+  async (separationId: number, thunkApi) => {
+    try {
+      return await resignationListApi.getSeparationTimeLine(separationId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
+  separationTimeLine: {} as SeparationTimeLine,
 }
 
 const resignationListSlice = createSlice({
@@ -66,6 +88,13 @@ const resignationListSlice = createSlice({
       .addCase(getResignationList.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
+      .addCase(getSeparationTimeLine.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.separationTimeLine = action.payload as SeparationTimeLine
+      })
+      .addCase(getSeparationTimeLine.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
   },
 })
 
@@ -83,9 +112,13 @@ const pageFromState = (state: RootState): number =>
 const pageSizeFromState = (state: RootState): number =>
   state.resignationList.pageSize
 
+const resignationTimeLine = (state: RootState): SeparationTimeLine =>
+  state.resignationList.separationTimeLine
+
 const resignationListThunk = {
   getResignationList,
   resignationIntitiateCC,
+  getSeparationTimeLine,
 }
 
 const resignationListSelectors = {
@@ -94,6 +127,7 @@ const resignationListSelectors = {
   resignationListSize,
   pageFromState,
   pageSizeFromState,
+  resignationTimeLine,
 }
 
 export const resignationListService = {

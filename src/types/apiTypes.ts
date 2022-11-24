@@ -494,4 +494,5 @@ export interface ResignationListApi extends ApiBase {
   resignationList: string
   exportResignationList: string
   resignationInitiateCC: string
+  getSeparationTimeLine: string
 }

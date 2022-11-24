@@ -236,6 +236,13 @@ const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
 )
 
+const ResignationTimeLine = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/ResignationTimeLine/ResignationHistory'
+    ),
+)
+
 const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
 )
@@ -528,6 +535,11 @@ const routes = [
     path: '/resignationList',
     name: 'Resignation List',
     component: ResignationList,
+  },
+  {
+    path: '/managerComments',
+    name: 'Resignation Time Line',
+    component: ResignationTimeLine,
   },
 ]
 

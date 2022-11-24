@@ -1,5 +1,8 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { ResignationListResponse } from '../../types/Separation/ResignationList/resignationListTypes'
+import {
+  ResignationListResponse,
+  SeparationTimeLine,
+} from '../../types/Separation/ResignationList/resignationListTypes'
 
 export const mockResignationList: ResignationListResponse = {
   size: 22,
@@ -45,6 +48,71 @@ export const mockResignationList: ResignationListResponse = {
       empStatus: 'Active',
       certificate: null,
       seperationComments: null,
+    },
+  ],
+}
+
+export const mockResignationListHistory: SeparationTimeLine = {
+  separationId: 17,
+  relievingDate: '19/02/2023',
+  resignationDate: '21/11/2022',
+  employeeId: 1738,
+  employeeName: 'Mamatha Thunam',
+  separationComments: [
+    {
+      commentId: 32,
+      employeeId: 1738,
+      employeeName: 'Mamatha Thunam',
+      comments: 'test',
+      relievingDate: null,
+      createdDate: '21-Nov-2022 06:31 PM',
+      status: 'Resigned',
+      withdrawComments: '',
+    },
+  ],
+  employeeComments: 'test',
+  managerComments: null,
+  withdrawComments: null,
+  primaryReasonId: null,
+  primaryReasonName: 'Career growth',
+  reasonComments: '',
+  status: 'Resigned',
+  canberevoked: false,
+  isRevoked: false,
+  isprocessInitiated: null,
+  adminCcCss: null,
+  hrCcCss: null,
+  managerCcCss: null,
+  itCcCss: null,
+  finanaceCcCss: null,
+  showCommentsBox: false,
+  showEditButton: true,
+  certificateDTO: [],
+  relievingLetterPath: null,
+  managerName: null,
+  exitFeedbackFormPath: null,
+  separationExist: null,
+  showManagerClearance: null,
+  showTimeline: null,
+  isPIP: null,
+  pipAuditDTO: null,
+  contractExists: null,
+  contractStartDate: null,
+  contractEndDate: null,
+  personalEmailFlag: null,
+  initiatedDate: null,
+  empStatus: null,
+  certificate: null,
+  seperationComments: [
+    {
+      commentId: 32,
+      employeeId: 1738,
+      employeeName: 'Mamatha Thunam',
+      comments: 'test',
+      relievingDate: null,
+      createdDate: '21-Nov-2022 06:31 PM',
+      status: 'Resigned',
+      withdrawComments: '',
     },
   ],
 }

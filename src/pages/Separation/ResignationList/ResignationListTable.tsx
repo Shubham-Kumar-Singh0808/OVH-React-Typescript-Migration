@@ -86,6 +86,10 @@ const ResignationListTable = ({
     setIsInitiateModalVisible(true)
   }
 
+  const resignationHistoryButtonHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+  }
+
   const handleConfirmInitiateResignation = async () => {
     setIsInitiateModalVisible(false)
     const initiateResignationResultAction = await dispatch(
@@ -175,16 +179,23 @@ const ResignationListTable = ({
                     <CTableDataCell data-testid="action-cell">
                       <div className="sh-btn-group resign-btn">
                         {userAccessShowTimeLine?.viewaccess && (
-                          <CButton
-                            color="info"
-                            className="btn-ovh me-2"
-                            data-testid="history-btn"
-                          >
-                            <i
-                              className="fa fa-bar-chart text-white"
-                              aria-hidden="true"
-                            ></i>
-                          </CButton>
+                          <Link to={`/managerComments?`}>
+                            <CButton
+                              color="info"
+                              className="btn-ovh me-2"
+                              data-testid="history-btn"
+                              onClick={() =>
+                                resignationHistoryButtonHandler(
+                                  resignationItem.separationId,
+                                )
+                              }
+                            >
+                              <i
+                                className="fa fa-bar-chart text-white"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </Link>
                         )}
                         {resignationItem.isprocessInitiated ? (
                           <>

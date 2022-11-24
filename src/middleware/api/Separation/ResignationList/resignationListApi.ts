@@ -1,6 +1,7 @@
 import {
   GetResignationListProps,
   ResignationListResponse,
+  SeparationTimeLine,
 } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -66,10 +67,26 @@ const resignationIntitiateCC = async (
   return response.data
 }
 
+const getSeparationTimeLine = async (
+  separationId: number,
+): Promise<SeparationTimeLine> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.getSeparationTimeLine,
+    method: AllowedHttpMethods.get,
+    params: {
+      separationId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const resignationListApi = {
   getResignationList,
   exportResignationListData,
   resignationIntitiateCC,
+  getSeparationTimeLine,
 }
 
 export default resignationListApi
