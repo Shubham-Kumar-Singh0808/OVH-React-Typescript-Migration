@@ -10,6 +10,7 @@ export type BankInfo = {
   bankName: string
   bankAccountNumber: string
   employeeId: number
+  ifscCode: null
 }
 
 export type PanDetailsSliceState = {

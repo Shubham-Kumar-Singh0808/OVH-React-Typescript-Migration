@@ -70,6 +70,7 @@ const BankDetails = ({
                     <CTableDataCell>{index + 1}</CTableDataCell>
                     <CTableDataCell>{name.bankAccountNumber}</CTableDataCell>
                     <CTableDataCell>{name.bankName}</CTableDataCell>
+                    <CTableDataCell>{name.ifscCode}</CTableDataCell>
                     <CTableDataCell className="text-center">
                       <CTooltip content="Edit">
                         <CButton

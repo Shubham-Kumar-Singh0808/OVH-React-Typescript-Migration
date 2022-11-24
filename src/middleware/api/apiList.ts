@@ -66,8 +66,8 @@ import {
   TicketConfigurationApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
-  PanDetailsApi,
   BankDetailsApi,
+  PanDetailsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -596,7 +596,7 @@ export const panDetailsApiConfig: PanDetailsApi = {
   bankInformation: apiPrefix + '/Employee/bankInformation',
   updateFinanceInformation: apiPrefix + '/Employee/updateFinanceInformation',
   uploadEmployeeFinanceDetails:
-    apiPrefix + '/Employee/updateFinanceInformation',
+    apiPrefix + '/fileUpload/uploadEmployeeFinanceDetails',
 }
 
 export const bankDetailsApiConfig: BankDetailsApi = {

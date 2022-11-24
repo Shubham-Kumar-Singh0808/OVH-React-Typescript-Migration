@@ -4,7 +4,6 @@ import PanDetails from './PanDetails/PanDetails'
 import BankDetails from './BankDetails/BankDetails'
 import AddBankAccount from './BankDetails/AddBankAccount'
 import EditBankAccount from './BankDetails/EditBankAccount'
-import EditPanDetails from './PanDetails/EditPanDetails'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const PanAndBankDetails = (): JSX.Element => {
@@ -21,7 +20,7 @@ const PanAndBankDetails = (): JSX.Element => {
             CBodyClassName="ps-0 pe-0"
             CFooterClassName="d-none"
           >
-            <PanDetails setToggle={setToggle} />
+            <PanDetails />
             <CRow className="mt-3">
               <BankDetails setToggle={setToggle} />
             </CRow>
@@ -34,7 +33,6 @@ const PanAndBankDetails = (): JSX.Element => {
       {toggle === 'editBankAccount' && (
         <EditBankAccount backButtonHandler={() => setToggle('')} />
       )}
-      {toggle === 'editPanDetails' && <EditPanDetails setToggle={setToggle} />}
     </>
   )
 }

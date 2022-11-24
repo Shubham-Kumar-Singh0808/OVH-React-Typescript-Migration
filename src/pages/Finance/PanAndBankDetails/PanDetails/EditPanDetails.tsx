@@ -1,58 +1,30 @@
-import {
-  CButton,
-  CCol,
-  CFormCheck,
-  CFormInput,
-  CFormLabel,
-  CRow,
-  CTooltip,
-} from '@coreui/react-pro'
+import { CButton, CCol, CFormLabel, CRow, CTooltip } from '@coreui/react-pro'
 import React, { SyntheticEvent, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { BankInformation } from '../../../../types/Finance/PanDetails/panDetailsTypes'
+import { Finance } from '../../../../types/Finance/PanDetails/panDetailsTypes'
 
 const EditPanDetails = ({
-  setToggle,
+  isEditPanData,
+  setIsEditPanData,
+  editPanData,
+  financeId,
 }: {
-  setToggle: (value: string) => void
+  isEditPanData: boolean
+  setIsEditPanData: React.Dispatch<React.SetStateAction<boolean>>
+  financeId: number
+  editPanData: Finance
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const initialPanDetails = {} as BankInformation
-  const [editPanDetail, setEditPanDetail] = useState(initialPanDetails)
-  const { financeId } = useParams<{ financeId: string }>()
+  const bankDetail = useTypedSelector(
+    reduxServices.panDetails.selectors.bankDetails,
+  )
+
   const [uploadPanDetail, setUploadPanDetail] = useState<File | undefined>(
     undefined,
   )
-  const [isChecked, setIsChecked] = useState<boolean>(false)
-
-  const onChangeInputHandler = (
-    e:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target
-    if (name === 'aadharCardNumber') {
-      const aadharNumber = value.replace(/\D/g, '')
-      setEditPanDetail((prevState) => {
-        return { ...prevState, ...{ [name]: Number(aadharNumber) } }
-      })
-    } else
-      setEditPanDetail((prevState) => {
-        return { ...prevState, ...{ [name]: value } }
-      })
-  }
-
-  const onChangeAttachmentHandler = (element: HTMLInputElement) => {
-    const file = element.files
-    if (!file) return
-    setUploadPanDetail(file[0])
-  }
 
   const saveTheDataToastElement = (
     <OToast
@@ -63,6 +35,15 @@ const EditPanDetails = ({
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+  const onChangeAttachmentHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    if (!file) return
+    setUploadPanDetail(file[0])
+  }
+
+  const cancelButtonHandler = () => {
+    setIsEditPanData(false)
+  }
 
   const saveBtnHandler = async () => {
     if (uploadPanDetail) {
@@ -72,130 +53,60 @@ const EditPanDetails = ({
         financeId: Number(financeId),
         file: formData,
       }
-
-      const savePanDataResult = await dispatch(
-        reduxServices.panDetails.updateFinanceInformation(
-          editPanDetail.finance,
-        ),
+      dispatch(
+        reduxServices.panDetails.uploadEmployeeFinanceDetails(prepareObject),
       )
-      if (
-        reduxServices.panDetails.updateFinanceInformation.fulfilled.match(
-          savePanDataResult,
-        )
-      ) {
-        dispatch(reduxServices.app.actions.addToast(saveTheDataToastElement))
-        dispatch(
-          reduxServices.panDetails.uploadEmployeeFinanceDetails(prepareObject),
-        )
-        dispatch(reduxServices.panDetails.bankInformation(Number(employeeId)))
-      }
+    }
+
+    const savePanDataResult = await dispatch(
+      reduxServices.panDetails.updateFinanceInformation(editPanData),
+    )
+    if (
+      reduxServices.panDetails.updateFinanceInformation.fulfilled.match(
+        savePanDataResult,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(saveTheDataToastElement))
+      dispatch(reduxServices.panDetails.bankInformation(Number(employeeId)))
     }
   }
 
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title={'P.F. & PAN Details'}
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <CRow className="mt-2 mb-2">
-          <CFormLabel className="col-sm-2 col-form-label">
-            P.F. A/C No:
-          </CFormLabel>
-          <CCol sm={2}>
-            <CFormCheck
-              className="mt-2"
-              checked={isChecked}
-              onChange={(e) => setIsChecked(e.target.checked)}
-            />
-            <CFormInput
-              className="eventType-editInput"
-              data-testid="pfNumber"
-              type="text"
-              id="pfNumber"
-              size="sm"
-              name="pfAccountNumber"
-              autoComplete="off"
-              hidden={!isChecked}
-              value={editPanDetail.finance?.pfAccountNumber}
-              onChange={onChangeInputHandler}
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mt-2 mb-2">
-          <CFormLabel className="col-sm-2 col-form-label">UAN:</CFormLabel>
-          <CCol sm={2}>
-            <CFormInput
-              className="eventType-editInput"
-              data-testid="uanNumber"
-              type="text"
-              id="uanNumber"
-              size="sm"
-              name="uaNumber"
-              value={editPanDetail.finance?.uaNumber}
-              onChange={onChangeInputHandler}
-              autoComplete="off"
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mt-2 mb-2">
-          <CFormLabel className="col-sm-2 col-form-label">
-            Pan Card No:
-          </CFormLabel>
-          <CCol sm={2}>
-            <CFormInput
-              className="eventType-editInput"
-              data-testid="panCardNumber"
-              type="text"
-              id="panCardNumber"
-              size="sm"
-              name="panCardAccountNumber"
-              value={editPanDetail.finance?.panCardAccountNumber}
-              onChange={onChangeInputHandler}
-              autoComplete="off"
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mt-2 mb-2">
-          <CFormLabel className="col-sm-2 col-form-label">
-            Aadhar Card No:
-          </CFormLabel>
-          <CCol sm={2}>
-            <CFormInput
-              className="eventType-editInput"
-              data-testid="aadharNumber"
-              type="text"
-              id="aadharNumber"
-              size="sm"
-              name="aadharCardNumber"
-              value={editPanDetail.finance?.aadharCardNumber}
-              onChange={onChangeInputHandler}
-              autoComplete="off"
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mt-2 mb-2">
-          <CFormLabel className="col-sm-2 col-form-label">
-            Attachment:
-          </CFormLabel>
-          <CCol sm={2}>
-            <input
-              className="mt-1"
-              data-testid="attachment"
-              type="file"
-              name="attachment"
-              onChange={(element: SyntheticEvent) =>
-                onChangeAttachmentHandler(
-                  element.currentTarget as HTMLInputElement,
-                )
-              }
-            />
-          </CCol>
-        </CRow>
+      <CCol sm={5}>
         <CRow>
-          <CCol md={{ span: 8, offset: 2 }}>
+          <CFormLabel className="col-sm-4 col-form-label">
+            <b>Attachment</b>
+          </CFormLabel>
+          <CCol sm={1} className="sh-alignment">
+            :
+          </CCol>
+          {isEditPanData && bankDetail.finance?.financeId === financeId ? (
+            <CCol sm={2}>
+              <CCol sm={5}>
+                <input
+                  className="mt-1"
+                  data-testid="attachment"
+                  type="file"
+                  name="attachment"
+                  onChange={(element: SyntheticEvent) =>
+                    onChangeAttachmentHandler(
+                      element.currentTarget as HTMLInputElement,
+                    )
+                  }
+                />
+              </CCol>
+            </CCol>
+          ) : (
+            <CCol sm={5} className="sh-alignment">
+              {bankDetail.finance?.financeFileName || 'N/A'}
+            </CCol>
+          )}
+        </CRow>
+      </CCol>
+      <CRow>
+        {isEditPanData && bankDetail.finance?.financeId === financeId ? (
+          <CCol md={{ span: 20, offset: 2 }}>
             <CTooltip content="Save">
               <CButton
                 size="sm"
@@ -211,14 +122,16 @@ const EditPanDetails = ({
                 size="sm"
                 className="btn btn-warning btn-sm btn-ovh-employee-list cursor-pointer"
                 color="warning btn-ovh me-2"
-                onClick={() => setToggle('')}
+                onClick={cancelButtonHandler}
               >
                 <i className="fa fa-times" aria-hidden="true"></i>
               </CButton>
             </CTooltip>
           </CCol>
-        </CRow>
-      </OCard>
+        ) : (
+          ''
+        )}
+      </CRow>
     </>
   )
 }
