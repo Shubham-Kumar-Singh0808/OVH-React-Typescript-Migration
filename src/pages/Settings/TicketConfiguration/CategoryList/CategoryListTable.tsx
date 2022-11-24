@@ -59,6 +59,9 @@ const CategoryListTable = (): JSX.Element => {
   const userAccessToMealTypeCol = userAccessToFeatures?.find(
     (feature) => feature.name === 'Meal Type',
   )
+  const userAccessToCategoryActions = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Ticket Configuration',
+  )
   const tableHeaderCellPropsCategoryName = {
     width: '40%',
     scope: 'col',
@@ -267,40 +270,46 @@ const CategoryListTable = (): JSX.Element => {
                       </CButton>
                     </CTooltip>
                   ) : (
-                    <CTooltip content="Edit">
+                    <>
+                      {userAccessToCategoryActions?.updateaccess && (
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            data-testid={`cl-edit-btn${index}`}
+                            onClick={() => {
+                              editCategoryButtonHandler({
+                                categoryId: ticketCategory.categoryId,
+                                categoryName: ticketCategory.categoryName,
+                                departmentId: ticketCategory.departmentId,
+                                departmentName: ticketCategory.departmentName,
+                                mealType: ticketCategory.mealType,
+                              })
+                            }}
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
+                    </>
+                  )}
+                  {userAccessToCategoryActions?.deleteaccess && (
+                    <CTooltip content="Delete">
                       <CButton
-                        color="info btn-ovh me-1"
+                        color="danger btn-ovh me-1"
                         className="btn-ovh-employee-list"
-                        data-testid={`cl-edit-btn${index}`}
-                        onClick={() => {
-                          editCategoryButtonHandler({
-                            categoryId: ticketCategory.categoryId,
-                            categoryName: ticketCategory.categoryName,
-                            departmentId: ticketCategory.departmentId,
-                            departmentName: ticketCategory.departmentName,
-                            mealType: ticketCategory.mealType,
-                          })
-                        }}
+                        onClick={() =>
+                          handleShowCategoryDeleteModal(
+                            ticketCategory.categoryName,
+                            ticketCategory.categoryId,
+                          )
+                        }
+                        data-testid={`cl-delete-btn${index}`}
                       >
-                        <i className="fa fa-edit" aria-hidden="true"></i>
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </CButton>
                     </CTooltip>
                   )}
-                  <CTooltip content="Delete">
-                    <CButton
-                      color="danger btn-ovh me-1"
-                      className="btn-ovh-employee-list"
-                      onClick={() =>
-                        handleShowCategoryDeleteModal(
-                          ticketCategory.categoryName,
-                          ticketCategory.categoryId,
-                        )
-                      }
-                      data-testid={`cl-delete-btn${index}`}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
-                  </CTooltip>
                 </CTableDataCell>
               </CTableRow>
             )
