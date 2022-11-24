@@ -109,7 +109,7 @@ const ProjectMembersSelection = ({
           if (!checkIsAttendeeExists(member.id)) {
             newMember.push({
               id: member.id,
-              availability: 'not available',
+              availability: 'buzy',
               name: member.fullName,
             })
           }
@@ -144,7 +144,7 @@ const ProjectMembersSelection = ({
       <CRow className="mt-4 ms-5">
         <CCol sm={12}>
           <CRow>
-            <CCol sm={5}>
+            <CCol sm={5} md={4}>
               <CTable responsive striped className="align-middle">
                 <CTableHead>
                   <CTableRow>
@@ -192,7 +192,7 @@ const ProjectMembersSelection = ({
               )}
             </CCol>
 
-            <CCol sm={2} className="meeting-bulk-add">
+            <CCol sm={2} md={3} className="meeting-bulk-add">
               <CButton
                 color="info btn-ovh me-1"
                 className="btn-ovh"

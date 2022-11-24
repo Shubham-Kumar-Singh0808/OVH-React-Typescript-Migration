@@ -19,7 +19,7 @@ const SelectedAttendees = ({
   deleteBtnHandler: (value: number) => void
 }): JSX.Element => {
   return (
-    <CCol sm={5} className="fixed-height">
+    <CCol sm={5} md={4} className="fixed-height">
       <CTable responsive striped className="align-middle">
         <CTableHead>
           <CTableHeaderCell>Attendees</CTableHeaderCell>

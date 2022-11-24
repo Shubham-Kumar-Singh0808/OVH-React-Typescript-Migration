@@ -89,7 +89,7 @@ const NewEvent = (): JSX.Element => {
   } as AddEvent
 
   const [addEvent, setAddEvent] = useState(initEvent)
-  const [description, setDescription] = useState('')
+  const [descriptionValue, setDescriptionValue] = useState('')
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [attendeesList, setAttendeesList] = useState<Availability[]>([])
@@ -164,7 +164,7 @@ const NewEvent = (): JSX.Element => {
     ) {
       const attendeeObj = {
         id: attendeeId,
-        availability: 'not available',
+        availability: 'buzy',
         name: attendeeName,
       }
       if (!checkIsAttendeeExists(attendeeId)) {
@@ -223,7 +223,7 @@ const NewEvent = (): JSX.Element => {
     setAddEvent({ ...addEvent, startTime: val1, endTime: val2 })
   }
   const onHandleDescription = (value: string) => {
-    setDescription(value)
+    setDescriptionValue(value)
   }
   const onSelectProject = (value: string) => {
     setAddEvent({ ...addEvent, projectName: value })
@@ -238,7 +238,19 @@ const NewEvent = (): JSX.Element => {
     }
   }
 
-  // console.log(addEvent)
+  const handleConfirmBtn = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const newAttendeesList = attendeesList.map(({ name, ...rest }) => {
+      return rest
+    })
+    const prepareObj = {
+      ...addEvent,
+      authorName: loggedEmployee,
+      availability: newAttendeesList,
+      description: descriptionValue,
+    }
+    console.log(prepareObj)
+  }
 
   return (
     <OCard
@@ -302,7 +314,7 @@ const NewEvent = (): JSX.Element => {
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Description:
-                <span className={showIsRequired(description)}>*</span>
+                <span className={showIsRequired(descriptionValue)}>*</span>
               </CFormLabel>
               <CCol sm={8}>
                 <CKEditor<{
@@ -357,6 +369,7 @@ const NewEvent = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
+                    onClick={handleConfirmBtn}
                   >
                     Confirm
                   </CButton>
