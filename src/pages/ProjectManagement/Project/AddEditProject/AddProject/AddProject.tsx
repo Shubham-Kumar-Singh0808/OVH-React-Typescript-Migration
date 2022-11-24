@@ -412,9 +412,13 @@ const AddProject = (): JSX.Element => {
                   >
                     <option value={''}>Select</option>
                     {healthList.map((item, index) => {
-                      const { name: optionName, label } = item
+                      const { name: optionName, label, backgroundColor } = item
                       return (
-                        <option key={index} value={label}>
+                        <option
+                          key={index}
+                          value={label}
+                          className={backgroundColor}
+                        >
                           {optionName}
                         </option>
                       )

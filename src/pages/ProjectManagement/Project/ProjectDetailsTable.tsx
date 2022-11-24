@@ -64,7 +64,7 @@ const ProjectDetailsTable = ({
   return (
     <>
       <CTableRow>
-        <CTableDataCell colSpan={12} className="pe-0 ps-4">
+        <CTableDataCell colSpan={13} className="pe-4 ps-4">
           <CTable striped responsive className="sh-project-report-details">
             <CTableHead className="profile-tab-header">
               <CTableRow>

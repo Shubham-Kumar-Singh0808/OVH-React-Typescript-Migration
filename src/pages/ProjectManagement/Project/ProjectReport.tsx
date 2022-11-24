@@ -315,6 +315,7 @@ const ProjectReport = (): JSX.Element => {
               </CCol>
               <CCol sm={2}>
                 <DatePicker
+                  autoComplete="off"
                   id="startDate"
                   className="form-control form-control-sm sh-date-picker"
                   peekNextMonth
@@ -339,6 +340,7 @@ const ProjectReport = (): JSX.Element => {
               </CCol>
               <CCol sm={2}>
                 <DatePicker
+                  autoComplete="off"
                   id="endDate"
                   className="form-control form-control-sm sh-date-picker"
                   peekNextMonth
