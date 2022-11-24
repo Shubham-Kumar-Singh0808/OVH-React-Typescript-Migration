@@ -21,7 +21,7 @@ const EmployeeViewFilterOptions = ({
   const handleDescription = (employeeComments: string) => {
     setComments(employeeComments)
   }
-  const dispatch = useAppDispatch()
+
   useEffect(() => {
     if (comments) {
       setIsSubmitButtonEnabled(true)
@@ -37,6 +37,8 @@ const EmployeeViewFilterOptions = ({
     }, 100)
     setComments('')
   }
+  const dispatch = useAppDispatch()
+
   const handleRevokeResignation = async () => {
     const submitRevokeResultAction = await dispatch(
       reduxServices.submitViewResignation.getRevokeResignation({

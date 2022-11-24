@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import EmployeeViewFilterOptions from './EmployeeViewFilterOptions'
 import SubmitResignation from './SubmitResignation'
-import { useTypedSelector } from '../../../stateStore'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const EmployeeView = (): JSX.Element => {
@@ -10,7 +10,6 @@ const EmployeeView = (): JSX.Element => {
   const getSeparation = useTypedSelector(
     reduxServices.submitViewResignation.selectors.separationForm,
   )
-
   useEffect(() => {
     if (getSeparation?.form?.separationExist === false) {
       setToggle('submitResignation')

@@ -76,6 +76,14 @@ const SubmitResignationFilterOptions = ({
     }
   }, [primaryReason, submitResignation?.employeeComments, otherReason])
 
+  useEffect(() => {
+    if (!otherReason) {
+      setIsSubmitButtonEnabled(true)
+    } else {
+      setIsSubmitButtonEnabled(false)
+    }
+  }, [otherReason])
+
   const successToastMessage = (
     <OToast
       toastMessage="Resignation submitted Successfully."
@@ -135,6 +143,7 @@ const SubmitResignationFilterOptions = ({
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
       setToggle('ResignView')
+      dispatch(reduxServices.submitViewResignation.getSeparationFormResponse())
     } else if (
       reduxServices.submitViewResignation.getSubmitResignation.rejected.match(
         submitResignationResultAction,

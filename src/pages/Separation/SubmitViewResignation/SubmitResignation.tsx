@@ -11,13 +11,11 @@ const SubmitResignation = (): JSX.Element => {
   const getSeparation = useTypedSelector(
     reduxServices.submitViewResignation.selectors.separationForm,
   )
-
   useEffect(() => {
     if (getSeparation?.form?.separationExist === true) {
       setToggle('ResignView')
     }
   }, [getSeparation])
-
   return (
     <>
       {toggle === '' && (
