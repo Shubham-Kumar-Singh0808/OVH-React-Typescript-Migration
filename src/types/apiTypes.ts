@@ -498,4 +498,5 @@ export interface PanDetailsApi extends ApiBase {
 
 export interface BankDetailsApi extends ApiBase {
   getBankNameLookup: string
+  saveBankInformation: string
 }

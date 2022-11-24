@@ -9,3 +9,10 @@ export type BankDetailsSliceState = {
   isLoading: LoadingState
   error: ValidationError
 }
+
+export type SaveData = {
+  bankAccountNumber: string
+  bankName: string
+  employeeId: number | string
+  ifscCode: string
+}

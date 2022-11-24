@@ -9,9 +9,10 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const AddBankAccount = ({
   backButtonHandler,
@@ -22,6 +23,8 @@ const AddBankAccount = ({
   const [bankName, setBankName] = useState<string>('')
   const [bankIfscCode, setBankIfscCode] = useState<string>('')
 
+  const dispatch = useAppDispatch()
+
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
@@ -29,6 +32,10 @@ const AddBankAccount = ({
 
   const bankData = useTypedSelector(
     reduxServices.bankDetails.selectors.bankList,
+  )
+
+  const empId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const onChangeHandler = (
     e:
@@ -43,6 +50,32 @@ const AddBankAccount = ({
     } else if (name === 'code') {
       const ifscCode = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setBankIfscCode(ifscCode)
+    }
+  }
+
+  const successToast = (
+    <OToast
+      toastMessage="Your changes have been saved successfully."
+      toastColor="success"
+    />
+  )
+
+  const addButtonHandler = async () => {
+    const prepareObject = {
+      bankAccountNumber: accountNumber,
+      bankName,
+      employeeId: empId,
+      ifscCode: bankIfscCode,
+    }
+    const isAddBankAccount = await dispatch(
+      reduxServices.bankDetails.saveBankInformation(prepareObject),
+    )
+    if (
+      reduxServices.bankDetails.saveBankInformation.fulfilled.match(
+        isAddBankAccount,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToast))
     }
   }
 
@@ -145,6 +178,7 @@ const AddBankAccount = ({
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
+              onClick={addButtonHandler}
             >
               Add
             </CButton>

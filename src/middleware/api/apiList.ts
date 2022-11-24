@@ -601,4 +601,5 @@ export const panDetailsApiConfig: PanDetailsApi = {
 
 export const bankDetailsApiConfig: BankDetailsApi = {
   getBankNameLookup: apiPrefix + '/Employee/getBankNameLookup',
+  saveBankInformation: apiPrefix + '/Employee/saveBankInformation',
 }

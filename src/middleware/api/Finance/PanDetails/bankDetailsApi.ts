@@ -1,4 +1,7 @@
-import { BankNameLookup } from '../../../../types/Finance/PanDetails/bankDetailsTypes'
+import {
+  BankNameLookup,
+  SaveData,
+} from '../../../../types/Finance/PanDetails/bankDetailsTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -15,8 +18,22 @@ const bankNameList = async (): Promise<BankNameLookup[]> => {
   return response.data
 }
 
+const saveBankInformation = async (
+  data: SaveData,
+): Promise<number | string> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: bankDetailsApiConfig.saveBankInformation,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const bankDetailsApi = {
   bankNameList,
+  saveBankInformation,
 }
 
 export default bankDetailsApi
