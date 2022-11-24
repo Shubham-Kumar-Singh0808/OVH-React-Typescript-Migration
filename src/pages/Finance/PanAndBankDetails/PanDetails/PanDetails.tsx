@@ -31,7 +31,12 @@ const PanDetails = (): JSX.Element => {
   )
 
   useEffect(() => {
-    dispatch(reduxServices.panDetails.bankInformation(Number(employeeId)))
+    dispatch(
+      reduxServices.panDetails.bankInformation({
+        key: 'loggedInEmpId',
+        value: Number(employeeId),
+      }),
+    )
     dispatch(reduxServices.bankDetails.bankNameList())
   }, [dispatch])
 

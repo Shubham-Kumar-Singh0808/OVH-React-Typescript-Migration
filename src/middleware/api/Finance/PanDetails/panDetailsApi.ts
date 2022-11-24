@@ -9,14 +9,15 @@ import {
 } from '../../../../utils/apiUtils'
 import { AllowedHttpMethods, panDetailsApiConfig } from '../../apiList'
 
-const bankInformation = async (
-  loggedInEmpId: number,
-): Promise<BankInformation> => {
+const bankInformation = async (props: {
+  key: string
+  value: number
+}): Promise<BankInformation> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: panDetailsApiConfig.bankInformation,
     method: AllowedHttpMethods.get,
     params: {
-      loggedInEmpId,
+      [props.key]: props.value,
     },
   })
 

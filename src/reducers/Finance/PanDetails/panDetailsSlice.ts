@@ -13,9 +13,15 @@ import {
 
 const bankInformation = createAsyncThunk(
   'panDetails/bankInformation',
-  async (loggedInEmpId: number, thunkApi) => {
+  async (
+    props: {
+      key: string
+      value: number
+    },
+    thunkApi,
+  ) => {
     try {
-      return await panDetailsApi.bankInformation(loggedInEmpId)
+      return await panDetailsApi.bankInformation(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
