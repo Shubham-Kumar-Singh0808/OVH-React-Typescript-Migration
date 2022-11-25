@@ -149,7 +149,7 @@ export type ClearanceDetails = {
   employeeId: number
   employeeName: string
   comments: string
-  isDue: string
+  isDue: boolean
   createdDate: string
   seperationId: number
   seperationEmpId: number
@@ -169,7 +169,7 @@ export type UpdateClearanceDetails = {
   createdDate: string | Date
   employeeId: number
   employeeName: string
-  isDue: string
+  isDue: boolean
   seperationEmpId: number
   seperationEmpName: string
   seperationId: number

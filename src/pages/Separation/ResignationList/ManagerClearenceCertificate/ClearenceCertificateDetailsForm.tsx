@@ -7,15 +7,18 @@ import {
   CButton,
   CFormCheck,
   CFormTextarea,
+  CCardHeader,
+  CCardBody,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OCard from '../../../../components/ReusableComponent/OCard'
 
 const ClearenceCertificateDetailsForm = (): JSX.Element => {
   const [isMailTemplateEdit, setIsMailTemplateEdit] = useState<boolean>(false)
-  const [isActive, setIsActive] = useState<string>('false')
+  const [isActive, setIsActive] = useState<boolean>()
   const initialMailTemplateType = {} as UpdateClearanceDetails
   const [editTemplateTypeDetails, setEditTemplateTypeDetails] = useState(
     initialMailTemplateType,
@@ -36,6 +39,8 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
     setIsMailTemplateEdit(true)
     setTemplateId(updateClearanceDetails?.seperationId)
     setEditTemplateTypeDetails(updateClearanceDetails)
+    setIsActive(updateClearanceDetails?.isDue)
+    console.log(`${typeof updateClearanceDetails?.isDue} vinesh`)
   }
 
   const handleEditMailTemplateHandler = (
@@ -57,7 +62,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: managerClearenceDetails[0]?.employeeId,
         employeeName: managerClearenceDetails[0]?.employeeName,
-        isDue: isActive,
+        isDue: isActive as boolean,
         seperationEmpId: managerClearenceDetails[0]?.seperationEmpId,
         seperationEmpName: managerClearenceDetails[0]?.seperationEmpName,
         seperationId: managerClearenceDetails[0]?.seperationId,
@@ -68,6 +73,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
         updateCCDetailsResultAction,
       )
     ) {
+      setIsMailTemplateEdit(false)
       dispatch(
         reduxServices.resignationList.getClearanceDetails({
           separationId: getAllResignationHistory.separationId,
@@ -84,155 +90,178 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
   console.log(isActive)
   return (
     <>
-      <CForm>
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            {isMailTemplateEdit &&
-            managerClearenceDetails[0]?.seperationId === templateId ? (
-              <>
-                <CButton
-                  color="info"
-                  className="btn-ovh me-1"
-                  onClick={cancelMailTemplateTypeButtonHandler}
-                >
-                  <i className="fa fa-arrow-left  me-1"></i>Back
-                </CButton>
-              </>
-            ) : (
-              <>
-                <CButton
-                  color="info"
-                  className="btn-ovh me-1"
-                  onClick={() => {
-                    editTemplateTypeButtonHandler(managerClearenceDetails[0])
-                  }}
-                >
-                  <i className="fa fa-arrow-left  me-1"></i>Edit
-                </CButton>
-                <Link to={`/resignationList`}>
-                  <CButton color="info" className="btn-ovh me-1">
+      {/* <OCard
+        className="mb-4 myprofile-wrapper"
+        title="Clearance Certificate Details"
+        CBodyClassName="ps-0 pe-0"
+        CFooterClassName="d-none"
+      > */}
+      {isMailTemplateEdit &&
+      managerClearenceDetails[0]?.seperationId === templateId ? (
+        <>
+          <CCardHeader>
+            <h4 className="h4">Edit Clearance Certificate Details</h4>
+          </CCardHeader>
+        </>
+      ) : (
+        <>
+          <CCardHeader>
+            <h4 className="h4">Clearance Certificate Details</h4>
+          </CCardHeader>
+        </>
+      )}
+      <CCardBody>
+        <CForm>
+          <CRow className="justify-content-end">
+            <CCol className="text-end" md={4}>
+              {isMailTemplateEdit &&
+              managerClearenceDetails[0]?.seperationId === templateId ? (
+                <>
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-1"
+                    onClick={cancelMailTemplateTypeButtonHandler}
+                  >
                     <i className="fa fa-arrow-left  me-1"></i>Back
                   </CButton>
-                </Link>
-              </>
-            )}
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-4 col-form-label text-end p-1">
-            Employee ID:
-          </CFormLabel>
-          <CCol sm={3}>
-            <p className="mb-0">{managerClearenceDetails[0]?.employeeId}</p>
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-4 col-form-label text-end p-1">
-            Employee Name:
-          </CFormLabel>
-          <CCol sm={3}>
-            <p className="mb-0">{managerClearenceDetails[0]?.employeeName}</p>
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-4 col-form-label text-end p-1">
-            Submitted Employee Id:
-          </CFormLabel>
-          <CCol sm={3}>
-            <p className="mb-0">
-              {managerClearenceDetails[0]?.seperationEmpId}
-            </p>
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-4 col-form-label text-end p-1">
-            Submitted Employee Name:
-          </CFormLabel>
-          <CCol sm={3}>
-            <p className="mb-0">
-              {managerClearenceDetails[0]?.seperationEmpName}
-            </p>
-          </CCol>
-        </CRow>
+                </>
+              ) : (
+                <>
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-1"
+                    onClick={() => {
+                      editTemplateTypeButtonHandler(managerClearenceDetails[0])
+                    }}
+                  >
+                    <i className="fa fa-arrow-left  me-1"></i>Edit
+                  </CButton>
+                  <Link to={`/resignationList`}>
+                    <CButton color="info" className="btn-ovh me-1">
+                      <i className="fa fa-arrow-left  me-1"></i>Back
+                    </CButton>
+                  </Link>
+                </>
+              )}
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-4 col-form-label text-end p-1">
+              Employee ID:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{managerClearenceDetails[0]?.employeeId}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-4 col-form-label text-end p-1">
+              Employee Name:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{managerClearenceDetails[0]?.employeeName}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-4 col-form-label text-end p-1">
+              Submitted Employee Id:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">
+                {managerClearenceDetails[0]?.seperationEmpId}
+              </p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-4 col-form-label text-end p-1">
+              Submitted Employee Name:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">
+                {managerClearenceDetails[0]?.seperationEmpName}
+              </p>
+            </CCol>
+          </CRow>
 
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-4 col-form-label text-end p-1">
-            Due:
-          </CFormLabel>
-          {isMailTemplateEdit &&
-          managerClearenceDetails[0]?.seperationId === templateId ? (
-            <CCol sm={3}>
-              <CFormCheck
-                inline
-                type="radio"
-                name="Yes"
-                id="yes"
-                data-testId="yes"
-                value="true"
-                label="Yes"
-                defaultChecked
-                checked={isActive === 'true'}
-                onChange={(e) => setIsActive(e.target.value)}
-              />
-              <CFormCheck
-                inline
-                type="radio"
-                name="No"
-                id="No"
-                data-testId="workfromhome"
-                value="false"
-                label="No"
-                checked={isActive === 'false'}
-                onChange={(e) => setIsActive(e.target.value)}
-              />
-            </CCol>
-          ) : (
-            <CCol sm={3}>
-              <p className="mb-0">{due}</p>
-            </CCol>
-          )}
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-4 col-form-label text-end p-1">
-            Comments:
-          </CFormLabel>
-          {isMailTemplateEdit &&
-          managerClearenceDetails[0]?.seperationId === templateId ? (
-            <CCol sm={5}>
-              <CFormTextarea
-                aria-label="comments"
-                id="comments"
-                name="comments"
-                value={editTemplateTypeDetails?.comments}
-                onChange={handleEditMailTemplateHandler}
-              ></CFormTextarea>
-            </CCol>
-          ) : (
-            <CCol sm={3}>
-              <p className="mb-0">{managerClearenceDetails[0]?.comments}</p>
-            </CCol>
-          )}
-        </CRow>
-        {isMailTemplateEdit &&
-        managerClearenceDetails[0]?.seperationId === templateId ? (
-          <>
-            <CRow className="mt-5 mb-4">
-              <CCol md={{ span: 6, offset: 3 }}>
-                <CButton
-                  className="btn-ovh me-1"
-                  data-testid="confirmBtn"
-                  color="success"
-                  onClick={SubmitClearenceCertificateHandler}
-                >
-                  Update
-                </CButton>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-4 col-form-label text-end p-1">
+              Due:
+            </CFormLabel>
+            {isMailTemplateEdit &&
+            managerClearenceDetails[0]?.seperationId === templateId ? (
+              <CCol sm={3}>
+                <CFormCheck
+                  inline
+                  type="radio"
+                  name="Yes"
+                  id="yes"
+                  data-testId="yes"
+                  value="true"
+                  label="Yes"
+                  defaultChecked
+                  checked={isActive}
+                  onChange={(e) => setIsActive(e.target.value !== 'true')}
+                />
+                <CFormCheck
+                  inline
+                  type="radio"
+                  name="No"
+                  id="No"
+                  data-testId="workfromhome"
+                  value={'false'}
+                  label="No"
+                  checked={isActive}
+                  onChange={(e) => setIsActive(e.target.value !== 'false')}
+                />
               </CCol>
-            </CRow>
-          </>
-        ) : (
-          ''
-        )}
-      </CForm>
+            ) : (
+              <CCol sm={3}>
+                <p className="mb-0">{due}</p>
+              </CCol>
+            )}
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-4 col-form-label text-end p-1">
+              Comments:
+            </CFormLabel>
+            {isMailTemplateEdit &&
+            managerClearenceDetails[0]?.seperationId === templateId ? (
+              <CCol sm={5}>
+                <CFormTextarea
+                  aria-label="comments"
+                  id="comments"
+                  name="comments"
+                  value={editTemplateTypeDetails?.comments}
+                  onChange={handleEditMailTemplateHandler}
+                ></CFormTextarea>
+              </CCol>
+            ) : (
+              <CCol sm={3}>
+                <p className="mb-0">{managerClearenceDetails[0]?.comments}</p>
+              </CCol>
+            )}
+          </CRow>
+          {isMailTemplateEdit &&
+          managerClearenceDetails[0]?.seperationId === templateId ? (
+            <>
+              <CRow className="mt-5 mb-4">
+                <CCol md={{ span: 6, offset: 3 }}>
+                  <CButton
+                    className="btn-ovh me-1"
+                    data-testid="confirmBtn"
+                    color="success"
+                    onClick={SubmitClearenceCertificateHandler}
+                  >
+                    Update
+                  </CButton>
+                </CCol>
+              </CRow>
+            </>
+          ) : (
+            ''
+          )}
+        </CForm>
+      </CCardBody>
+      {/* </OCard> */}
     </>
   )
 }
