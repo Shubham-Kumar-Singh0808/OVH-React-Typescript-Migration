@@ -1,10 +1,26 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import dashboardApi from '../../middleware/api/Dashboard/dashboardApi'
+import earnedLeavesApi from '../../middleware/api/Dashboard/earnedLeavesApi'
 import { AppDispatch, RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
-import { EarnedLeavesSliceState } from '../../types/Dashboard/EarnedLeaves/earnedLeavesTypes'
+import {
+  EarnedLeavesSliceState,
+  LeaveSummary,
+} from '../../types/Dashboard/EarnedLeaves/earnedLeavesTypes'
+
+const getLeaveSummary = createAsyncThunk(
+  'earnedLeaves/getLeaveSummary',
+  async (_, thunkApi) => {
+    try {
+      return await earnedLeavesApi.getLeaveSummary()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 
 const getFinancialYear = createAsyncThunk<
   number | undefined,
@@ -27,6 +43,19 @@ const initialEarnedLeavesState: EarnedLeavesSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   financialYear: 0,
+  leaveSummary: {
+    allAvailableLeaves: 0,
+    allCancelAfterApprovalLeaves: 0,
+    allCreditedLeaves: 0,
+    allLOPPendingLeaves: 0,
+    allLOPTakenLeaves: 0,
+    allPendingLeaves: 0,
+    allScheduledLeaves: 0,
+    allTakenLeaves: 0,
+    calculatedCreditedLeaves: 0,
+    carryForwardedLeaves: 0,
+    leaveCategorySummaries: [],
+  },
 }
 
 const earnedLeavesSlice = createSlice({
@@ -40,14 +69,22 @@ const earnedLeavesSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.financialYear = action.payload as number
       })
-      .addCase(getFinancialYear.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getLeaveSummary.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.leaveSummary = action.payload
       })
+      .addMatcher(
+        isAnyOf(getFinancialYear.pending, getLeaveSummary.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
 const earnedLeavesThunk = {
   getFinancialYear,
+  getLeaveSummary,
 }
 
 const isLoading = (state: RootState): LoadingState =>
@@ -56,9 +93,13 @@ const isLoading = (state: RootState): LoadingState =>
 const financialYear = (state: RootState): number =>
   state.earnedLeaves.financialYear
 
+const employeeLeaveSummary = (state: RootState): LeaveSummary =>
+  state.earnedLeaves.leaveSummary
+
 const earnedLeavesSelectors = {
   isLoading,
   financialYear,
+  employeeLeaveSummary,
 }
 
 export const earnedLeavesService = {
