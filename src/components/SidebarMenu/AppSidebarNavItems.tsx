@@ -19,6 +19,7 @@ const AppSidebarNavItems = (): JSX.Element => {
   const getSidebarMenuItems = useTypedSelector(
     (state) => state.sidebarMenu.menuItems,
   )
+  const unfoldable = useTypedSelector((state) => state.app.sidebarUnfoldable)
   useEffect(() => {
     if (reRenderMenu) {
       dispatch(getSidebarMenu(employeeId))
@@ -33,7 +34,31 @@ const AppSidebarNavItems = (): JSX.Element => {
             <i className={iconClass}></i>
           </span>
         )}
-        {name}
+        <span className="nav-link-label">{name}</span>
+
+        {/* {unfoldable ? (
+          <>
+            <div className="posRelative">
+              <div className="iconWrap">
+                {iconClass && (
+                  <span className="nav-icon">
+                    <i className={iconClass}></i>
+                  </span>
+                )}
+              </div>
+              <div>{name}</div>
+            </div>
+          </>
+        ) : (
+          <>
+            {iconClass && (
+              <span className="nav-icon">
+                <i className={iconClass}></i>
+              </span>
+            )}
+            {name}
+          </>
+        )} */}
       </>
     )
   }

@@ -23,3 +23,13 @@
     color: $white;
   }
 }
+
+.sidebar-narrow-unfoldable{
+  .user-profile{
+    &-img {
+      margin: 12px auto 8px;
+      width: 36px;
+      height: 36px;
+    }
+  }
+}

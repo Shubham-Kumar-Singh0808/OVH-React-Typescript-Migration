@@ -8,7 +8,7 @@ const UserProfile = (): JSX.Element => {
   const employeeGeneralInformation = useTypedSelector(
     loggedInEmployeeSelectors.selectLoggedInEmployeeData,
   )
-
+  const unfoldable = useTypedSelector((state) => state.app.sidebarUnfoldable)
   return (
     <>
       <div className="user-profile-wrap">
@@ -21,18 +21,20 @@ const UserProfile = (): JSX.Element => {
             />
           </NavLink>
         </CNavItem>
-        <div className="user-profile-text">
-          <h4>
-            <span className="user-profile-name">
-              {employeeGeneralInformation?.fullName}
-            </span>
-          </h4>
-          <h5>
-            <span className="user-profile-designation">
-              {employeeGeneralInformation?.designation}
-            </span>
-          </h5>
-        </div>
+        {!unfoldable && (
+          <div className="user-profile-text">
+            <h4>
+              <span className="user-profile-name">
+                {employeeGeneralInformation?.fullName}
+              </span>
+            </h4>
+            <h5>
+              <span className="user-profile-designation">
+                {employeeGeneralInformation?.designation}
+              </span>
+            </h5>
+          </div>
+        )}
       </div>
     </>
   )

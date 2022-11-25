@@ -72,6 +72,16 @@
         font-size: 0.875em;
       }
     }
+    &.sidebar-narrow-unfoldable{
+      .nav-link{
+        position: relative;
+        &-label{
+          position: absolute;
+          top: 0;
+          left: 100px;
+        }
+      }
+    }
   }
   &-header {
     background-color: $primary-75;
