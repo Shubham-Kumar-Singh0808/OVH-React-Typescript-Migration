@@ -68,6 +68,7 @@ const EditPanDetails = ({
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(saveTheDataToastElement))
+      dispatch(reduxServices.app.actions.addToast(undefined))
       dispatch(
         reduxServices.panDetails.bankInformation({
           key: 'loggedInEmpId',

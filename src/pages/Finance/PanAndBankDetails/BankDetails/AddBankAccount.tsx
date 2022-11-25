@@ -91,6 +91,7 @@ const AddBankAccount = ({
     ) {
       history.push('/myFinance')
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
       dispatch(
         reduxServices.panDetails.bankInformation({
           key: 'loggedInEmpId',

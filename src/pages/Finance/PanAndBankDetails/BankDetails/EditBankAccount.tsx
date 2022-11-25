@@ -123,6 +123,7 @@ const EditBankAccount = ({
     ) {
       history.push('/myFinance')
       dispatch(reduxServices.app.actions.addToast(updateToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.bankDetails.updateBankInformation.rejected.match(
         updateBankAccountResultAction,

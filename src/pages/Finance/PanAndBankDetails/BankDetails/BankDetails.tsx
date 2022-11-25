@@ -14,8 +14,9 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const BankDetails = ({
   setToggle,
@@ -23,10 +24,30 @@ const BankDetails = ({
   setToggle: (value: string) => void
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-
+  const [deleteBankId, setDeleteBankId] = useState(0)
+  const dispatch = useAppDispatch()
   const bankDetail = useTypedSelector(
     reduxServices.panDetails.selectors.bankDetails,
   )
+
+  const deletedToast = (
+    <OToast
+      toastColor="success"
+      toastMessage=" Bank details deleted successfully."
+    />
+  )
+  const confirmBankDetail = async () => {
+    setIsDeleteModalVisible(false)
+    await dispatch(reduxServices.bankDetails.deleteBankAccount(deleteBankId))
+    dispatch(reduxServices.app.actions.addToast(deletedToast))
+    dispatch(reduxServices.app.actions.addToast(undefined))
+  }
+
+  const deleteBtnHandler = (id: number) => {
+    setIsDeleteModalVisible(true)
+    setDeleteBankId(id)
+  }
+
   return (
     <>
       <CCardHeader>
@@ -90,6 +111,7 @@ const BankDetails = ({
                           size="sm"
                           color="danger btn-ovh me-1"
                           className="btn-ovh-employee-list"
+                          onClick={() => deleteBtnHandler(name.bankId)}
                         >
                           <i className="fa fa-trash-o" aria-hidden="true"></i>
                         </CButton>
@@ -116,6 +138,7 @@ const BankDetails = ({
           cancelButtonText="No"
           closeButtonClass="d-none"
           modalBodyClass="mt-0"
+          confirmButtonAction={confirmBankDetail}
         >
           <>Do you really want to delete this </>
         </OModal>

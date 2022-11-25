@@ -43,10 +43,24 @@ const updateBankInformation = async (info: BankInfo): Promise<BankInfo> => {
   return response.data
 }
 
+const deleteBankAccount = async (id: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: bankDetailsApiConfig.deleteBankAccount,
+    method: AllowedHttpMethods.delete,
+    params: {
+      bankId: id,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const bankDetailsApi = {
   bankNameList,
   saveBankInformation,
   updateBankInformation,
+  deleteBankAccount,
 }
 
 export default bankDetailsApi
