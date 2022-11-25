@@ -1,22 +1,19 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import ClearenceCertificateDetailsForm from './ClearenceCertificateDetailsForm'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { useTypedSelector } from '../../../../stateStore'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const ClearenceCertificateDetails = (): JSX.Element => {
-  const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(
     reduxServices.resignationList.selectors.isLoading,
   )
-  const getAllResignationHistory = useTypedSelector(
-    reduxServices.resignationList.selectors.resignationTimeLine,
-  )
+
   return (
     <>
       <OCard

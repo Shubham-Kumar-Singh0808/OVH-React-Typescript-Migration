@@ -107,7 +107,7 @@ const commonParamsUtil = (props: ClearanceDetailsProps) => {
 
 const getClearanceDetails = async (
   props: ClearanceDetailsProps,
-): Promise<ClearanceDetails> => {
+): Promise<ClearanceDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: resignationListApiConfig.getClearanceDetails,
     method: AllowedHttpMethods.get,

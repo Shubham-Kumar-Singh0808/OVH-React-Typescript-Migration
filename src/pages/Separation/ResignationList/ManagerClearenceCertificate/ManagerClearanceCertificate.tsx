@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import ClearenceCertificateDetails from './ClearenceCertificateDetails'

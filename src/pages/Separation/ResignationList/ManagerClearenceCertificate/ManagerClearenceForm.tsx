@@ -7,7 +7,7 @@ import {
   CFormTextarea,
   CFormCheck,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
@@ -19,7 +19,11 @@ const ManagerClearenceForm = (): JSX.Element => {
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
 
+  const getAllResignationList = useTypedSelector(
+    reduxServices.resignationList.selectors.resignationListDetails,
+  )
   const dispatch = useAppDispatch()
+
   const SubmitClearenceCertificateHandler = async () => {
     const addTemplateTypeResultAction = await dispatch(
       reduxServices.resignationList.submitClearenceCertificate({

@@ -62,7 +62,7 @@ export type GetResignationListProps = {
 export type ResignationListSliceState = {
   resignationList: ResignationListResponse
   separationTimeLine: SeparationTimeLine
-  clearanceDetails: ClearanceDetails
+  clearanceDetails: ClearanceDetails[]
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number

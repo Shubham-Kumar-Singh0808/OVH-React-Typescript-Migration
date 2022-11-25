@@ -103,7 +103,7 @@ const initialResignationListState: ResignationListSliceState = {
   currentPage: 1,
   pageSize: 20,
   separationTimeLine: {} as SeparationTimeLine,
-  clearanceDetails: {} as ClearanceDetails,
+  clearanceDetails: [],
   toggle: '',
 }
 
@@ -164,7 +164,7 @@ const pageSizeFromState = (state: RootState): number =>
 const resignationTimeLine = (state: RootState): SeparationTimeLine =>
   state.resignationList.separationTimeLine
 
-const managerClearenceDetails = (state: RootState): ClearanceDetails =>
+const managerClearenceDetails = (state: RootState): ClearanceDetails[] =>
   state.resignationList.clearanceDetails
 
 const toggleValue = (state: RootState): string => state.resignationList.toggle

@@ -8,6 +8,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
     reduxServices.resignationList.selectors.managerClearenceDetails,
   )
   console.log(managerClearenceDetails)
+  const due = managerClearenceDetails[0]?.isDue ? 'Due' : 'No Due'
   return (
     <>
       <CForm>
@@ -16,7 +17,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
             Employee ID:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{managerClearenceDetails?.employeeId}</p>
+            <p className="mb-0">{managerClearenceDetails[0]?.employeeId}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -24,7 +25,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
             Employee Name:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{managerClearenceDetails?.employeeName}</p>
+            <p className="mb-0">{managerClearenceDetails[0]?.employeeName}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -32,7 +33,9 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
             Submitted Employee Id:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{managerClearenceDetails?.seperationEmpId}</p>
+            <p className="mb-0">
+              {managerClearenceDetails[0]?.seperationEmpId}
+            </p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -40,7 +43,9 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
             Submitted Employee Name:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{managerClearenceDetails?.seperationEmpId}</p>
+            <p className="mb-0">
+              {managerClearenceDetails[0]?.seperationEmpName}
+            </p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -48,7 +53,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
             Due:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{managerClearenceDetails?.isDue}</p>
+            <p className="mb-0">{due}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -56,7 +61,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
             Comments:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{managerClearenceDetails?.comments}</p>
+            <p className="mb-0">{managerClearenceDetails[0]?.comments}</p>
           </CCol>
         </CRow>
       </CForm>
