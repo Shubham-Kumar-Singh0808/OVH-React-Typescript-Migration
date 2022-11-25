@@ -6,6 +6,7 @@ import {
   ResignationListResponse,
   SeparationTimeLine,
   submitClearenceCommentsProps,
+  UpdateClearanceDetails,
 } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -117,6 +118,18 @@ const getClearanceDetails = async (
   return response.data
 }
 
+const updateCCDetails = async (
+  updateclearenceCertificate: UpdateClearanceDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.updateCCDetails,
+    method: AllowedHttpMethods.put,
+    data: updateclearenceCertificate,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const resignationListApi = {
   getResignationList,
   exportResignationListData,
@@ -124,6 +137,7 @@ const resignationListApi = {
   getSeparationTimeLine,
   submitClearenceCertificate,
   getClearanceDetails,
+  updateCCDetails,
 }
 
 export default resignationListApi

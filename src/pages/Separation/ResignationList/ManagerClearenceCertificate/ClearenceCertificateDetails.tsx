@@ -22,19 +22,6 @@ const ClearenceCertificateDetails = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton color="info" className="btn-ovh me-1">
-              <i className="fa fa-arrow-left  me-1"></i>Edit
-            </CButton>
-
-            <Link to={`/resignationList`}>
-              <CButton color="info" className="btn-ovh me-1">
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </Link>
-          </CCol>
-        </CRow>
         {isLoading !== ApiLoadingState.loading ? (
           <>
             <ClearenceCertificateDetailsForm />

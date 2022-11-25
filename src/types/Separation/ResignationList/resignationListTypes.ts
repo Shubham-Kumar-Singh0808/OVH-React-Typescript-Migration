@@ -149,9 +149,9 @@ export type ClearanceDetails = {
   employeeId: number
   employeeName: string
   comments: string
-  isDue: false
+  isDue: string
   createdDate: string
-  seperationId: null
+  seperationId: number
   seperationEmpId: number
   seperationEmpName: string
   addedBy: string
@@ -160,4 +160,17 @@ export type ClearanceDetails = {
 export type ClearanceDetailsProps = {
   separationId: number
   submittedBy: string
+}
+
+export type UpdateClearanceDetails = {
+  addedBy: string
+  ccId: number
+  comments: string
+  createdDate: string | Date
+  employeeId: number
+  employeeName: string
+  isDue: string
+  seperationEmpId: number
+  seperationEmpName: string
+  seperationId: number
 }

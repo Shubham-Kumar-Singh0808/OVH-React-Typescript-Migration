@@ -603,4 +603,5 @@ export const resignationListApiConfig: ResignationListApi = {
   clearanceCertificateComments:
     apiPrefix + '/separationController/clearanceCertificateComments',
   getClearanceDetails: apiPrefix + '/separationController/getClearanceDetails',
+  updateCCDetails: apiPrefix + '/separationController/updateCC',
 }

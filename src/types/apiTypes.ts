@@ -501,4 +501,5 @@ export interface ResignationListApi extends ApiBase {
   getSeparationTimeLine: string
   clearanceCertificateComments: string
   getClearanceDetails: string
+  updateCCDetails: string
 }

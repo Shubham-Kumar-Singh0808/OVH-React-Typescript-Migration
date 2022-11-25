@@ -12,6 +12,7 @@ import {
   ResignationListSliceState,
   SeparationTimeLine,
   submitClearenceCommentsProps,
+  UpdateClearanceDetails,
 } from '../../../types/Separation/ResignationList/resignationListTypes'
 
 const getResignationList = createAsyncThunk(
@@ -97,6 +98,28 @@ const getClearanceDetails = createAsyncThunk(
   },
 )
 
+const updateCCDetails = createAsyncThunk<
+  number | undefined,
+  UpdateClearanceDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'resignationList/updateCCDetails',
+  async (updateclearenceCertificate: UpdateClearanceDetails, thunkApi) => {
+    try {
+      return await resignationListApi.updateCCDetails(
+        updateclearenceCertificate,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -175,6 +198,7 @@ const resignationListThunk = {
   getSeparationTimeLine,
   submitClearenceCertificate,
   getClearanceDetails,
+  updateCCDetails,
 }
 
 const resignationListSelectors = {
