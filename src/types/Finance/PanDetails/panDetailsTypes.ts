@@ -1,7 +1,7 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type BankInformation = {
-  bankinfo: BankInfo[]
+  bankAccountInfo: BankInfo[]
   finance: Finance
 }
 
@@ -17,6 +17,7 @@ export type PanDetailsSliceState = {
   bankInfo: BankInformation
   isLoading: LoadingState
   error: ValidationError
+  editBankAccount: BankInfo
 }
 
 export type UploadPanDetail = {

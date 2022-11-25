@@ -63,8 +63,8 @@ const BankDetails = ({
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {bankDetail.bankinfo &&
-              bankDetail.bankinfo?.map((name, index) => {
+            {bankDetail.bankAccountInfo &&
+              bankDetail.bankAccountInfo?.map((name, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{index + 1}</CTableDataCell>

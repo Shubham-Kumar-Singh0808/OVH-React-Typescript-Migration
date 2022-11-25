@@ -5,6 +5,7 @@ import panDetailsApi from '../../../middleware/api/Finance/PanDetails/panDetails
 import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  BankInfo,
   BankInformation,
   Finance,
   PanDetailsSliceState,
@@ -56,6 +57,7 @@ const updateFinanceInformation = createAsyncThunk(
 const initialPanDetailsState: PanDetailsSliceState = {
   bankInfo: {} as BankInformation,
   isLoading: ApiLoadingState.idle,
+  editBankAccount: {} as BankInfo,
   error: 0,
 }
 
@@ -109,6 +111,9 @@ const isLoading = (state: RootState): LoadingState => state.panDetails.isLoading
 const bankDetails = (state: RootState): BankInformation =>
   state.panDetails.bankInfo
 
+const bankAccountDetails = (state: RootState): BankInfo =>
+  state.panDetails.editBankAccount
+
 const panDetailsThunk = {
   bankInformation,
   updateFinanceInformation,
@@ -118,6 +123,7 @@ const panDetailsThunk = {
 const panDetailsSelectors = {
   isLoading,
   bankDetails,
+  bankAccountDetails,
 }
 
 export const panDetailService = {

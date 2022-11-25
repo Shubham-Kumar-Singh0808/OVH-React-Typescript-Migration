@@ -45,7 +45,6 @@ const PanDetails = (): JSX.Element => {
     setFinanceId(panAndBankDetails.financeId)
     setEditPanData(panAndBankDetails)
   }
-  console.log(setEditPanData)
 
   const onChangeInputHandler = (
     e:
@@ -113,6 +112,7 @@ const PanDetails = (): JSX.Element => {
                 name="pfAccountNumber"
                 autoComplete="off"
                 value={editPanData.pfAccountNumber}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           ) : (
@@ -141,6 +141,7 @@ const PanDetails = (): JSX.Element => {
                 name="uaNumber"
                 autoComplete="off"
                 value={editPanData.uaNumber}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           ) : (
@@ -169,6 +170,7 @@ const PanDetails = (): JSX.Element => {
                 name="panCardAccountNumber"
                 autoComplete="off"
                 value={editPanData.panCardAccountNumber}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           ) : (

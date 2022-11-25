@@ -36,6 +36,21 @@ const EditBankAccount = ({
   const bankData = useTypedSelector(
     reduxServices.bankDetails.selectors.bankList,
   )
+  const getEditBankAccount = useTypedSelector(
+    reduxServices.panDetails.selectors.bankAccountDetails,
+  )
+
+  useEffect(() => {
+    if (getEditBankAccount != null) {
+      setEditBankInfo({
+        bankId: getEditBankAccount.bankId,
+        bankName: getEditBankAccount.bankName,
+        bankAccountNumber: getEditBankAccount.bankAccountNumber,
+        employeeId: getEditBankAccount.employeeId,
+        ifscCode: getEditBankAccount.ifscCode,
+      })
+    }
+  }, [getEditBankAccount])
 
   const onChangeInputHandler = (
     e:
