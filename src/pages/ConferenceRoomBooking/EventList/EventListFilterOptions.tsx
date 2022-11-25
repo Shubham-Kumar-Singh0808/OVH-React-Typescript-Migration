@@ -108,7 +108,7 @@ const EventListFilterOptions = ({
           <CCol sm={6}>
             <CRow>
               <CCol sm={4} md={4}>
-                <CFormLabel>
+                <CFormLabel className="mb0">
                   From :
                   {(eventFromDate == null || eventFromDate === '') && (
                     <span className="text-danger">*</span>
@@ -118,7 +118,7 @@ const EventListFilterOptions = ({
                   id="fromDate"
                   data-testid="eventList-FromDate"
                   autoComplete="off"
-                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                  className="form-control form-control-sm sh-date-picker"
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
@@ -133,7 +133,7 @@ const EventListFilterOptions = ({
                 />
               </CCol>
               <CCol sm={4} md={4}>
-                <CFormLabel>
+                <CFormLabel className="mb0">
                   To :
                   {(eventToDate == null || eventToDate === '') && (
                     <span className="text-danger">*</span>
@@ -143,7 +143,7 @@ const EventListFilterOptions = ({
                   id="toDate"
                   data-testid="eventList-FromDate"
                   autoComplete="off"
-                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                  className="form-control form-control-sm sh-date-picker"
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown

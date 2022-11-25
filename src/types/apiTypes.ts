@@ -448,6 +448,9 @@ export interface EventListApi extends ApiBase {
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
+  editAppraisalCycle: string
+  updateAppraisalCycle: string
+  validateCycle: string
 }
 export interface AddConfigurationsApi extends ApiBase {
   addAppraisalCycle: string
@@ -500,4 +503,11 @@ export interface BankDetailsApi extends ApiBase {
   getBankNameLookup: string
   saveBankInformation: string
   updateBankInformation: string
+}
+
+export interface ResignationListApi extends ApiBase {
+  resignationList: string
+  exportResignationList: string
+  resignationInitiateCC: string
+  getSeparationTimeLine: string
 }

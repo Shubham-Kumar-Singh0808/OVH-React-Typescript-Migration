@@ -33,7 +33,7 @@ export type SeparationForm = {
   relievingLetterPath: null
   managerName: null
   exitFeedbackFormPath: null
-  separationExist: false
+  separationExist: boolean
   showManagerClearance: null
   showTimeline: null
   isPIP: null

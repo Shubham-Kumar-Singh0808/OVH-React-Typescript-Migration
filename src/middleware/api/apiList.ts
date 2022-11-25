@@ -68,6 +68,7 @@ import {
   LeaveApprovalsApi,
   BankDetailsApi,
   PanDetailsApi,
+  ResignationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -549,6 +550,9 @@ export const addTrackerApiConfig: AddTrackerApi = {
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
   getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+  editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
+  updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
+  validateCycle: apiPrefix + '/appraisal/validateCycle',
 }
 export const addConfigurationsApiConfig: AddConfigurationsApi = {
   addAppraisalCycle: apiPrefix + '/appraisal/cycle',
@@ -603,4 +607,12 @@ export const bankDetailsApiConfig: BankDetailsApi = {
   getBankNameLookup: apiPrefix + '/Employee/getBankNameLookup',
   saveBankInformation: apiPrefix + '/Employee/saveBankInformation',
   updateBankInformation: apiPrefix + '/Employee/updateBankInformation',
+}
+
+export const resignationListApiConfig: ResignationListApi = {
+  resignationList: apiPrefix + '/separationController/resignationList',
+  exportResignationList:
+    apiPrefix + '/separationController/exportResignationList',
+  resignationInitiateCC: apiPrefix + '/separationController/IntitiateCC',
+  getSeparationTimeLine: apiPrefix + '/separationController/getSeparation',
 }
