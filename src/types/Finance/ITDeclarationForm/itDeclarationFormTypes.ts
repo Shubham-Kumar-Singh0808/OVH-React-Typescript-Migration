@@ -9,6 +9,12 @@ export type EmployeeDetails = {
   pan: string
 }
 
+export type Investment = {
+  id: number
+  investmentId: string
+  customAmount: string
+}
+
 export type Invest = {
   investmentId: number
   investmentName: string

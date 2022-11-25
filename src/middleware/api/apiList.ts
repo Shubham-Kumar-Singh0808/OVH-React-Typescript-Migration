@@ -595,5 +595,5 @@ export const itDeclarationFormApiConfig: ITDeclarationFormApi = {
   getEmployeeInfo: apiPrefix + '/itDeclaration/getEmployee',
   getSectionsHavingInvests:
     apiPrefix + '/itDeclaration/getSectionsHavingInvests',
-  getInvestsBySectionId: '/itDeclaration/getInvestsBySecId',
+  getInvestsBySectionId: apiPrefix + '/itDeclaration/getInvestsBySecId',
 }

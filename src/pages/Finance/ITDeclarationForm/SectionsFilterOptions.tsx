@@ -13,7 +13,9 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { Sections } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
 const SectionsFilterOptions = (): JSX.Element => {
-  const [selectedSection, setSelectedSection] = useState<Sections>()
+  const [selectedSection, setSelectedSection] = useState<Sections>(
+    {} as Sections,
+  )
   const [showInvestment, setShowInvestment] = useState<boolean>(false)
   const [isMoreSectionsButtonEnabled, setIsMoreSectionsButtonEnabled] =
     useState<boolean>(false)
@@ -54,8 +56,18 @@ const SectionsFilterOptions = (): JSX.Element => {
 
   const handleClickSection = () => {
     setShowInvestment(true)
-    setSectionList([selectedSection as Sections, ...sectionList])
+    setSectionList([selectedSection, ...sectionList])
   }
+
+  useEffect(() => {
+    if (selectedSection?.sectionId) {
+      dispatch(
+        reduxServices.itDeclarationForm.getInvestsBySectionId(
+          selectedSection.sectionId,
+        ),
+      )
+    }
+  }, [selectedSection?.sectionId])
 
   return (
     <>
@@ -95,15 +107,17 @@ const SectionsFilterOptions = (): JSX.Element => {
           </CButton>
         </CCol>
       </CRow>
-      {sectionList?.map((currentSec, index) => {
-        return (
-          <CRow key={index}>
-            <CCol>
-              <MoreSections sectionItem={currentSec} />
-            </CCol>
-          </CRow>
-        )
-      })}
+      {showInvestment &&
+        sectionList &&
+        sectionList?.map((currentSec, index) => {
+          return (
+            <CRow key={index}>
+              <CCol>
+                <MoreSections sectionItem={currentSec} />
+              </CCol>
+            </CRow>
+          )
+        })}
       <CRow className="mt-3 mb-3">
         <CCol sm={12} className="mt-2">
           <CFormCheck name="agree" data-testid="ch-agree" />{' '}

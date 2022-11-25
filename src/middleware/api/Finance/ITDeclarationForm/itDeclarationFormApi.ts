@@ -28,14 +28,12 @@ const getSectionsHavingInvests = async (): Promise<Sections[]> => {
   return response.data
 }
 
-const getInvestsBySectionId = async (
-  investmentId: number,
-): Promise<Invest[]> => {
+const getInvestsBySectionId = async (sectionId: number): Promise<Invest[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: itDeclarationFormApiConfig.getInvestsBySectionId,
     method: AllowedHttpMethods.get,
     params: {
-      investmentId,
+      sectionId,
     },
   })
   const response = await useAxios(requestConfig)

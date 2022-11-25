@@ -45,9 +45,9 @@ const getInvestsBySectionId = createAsyncThunk<
   }
 >(
   'itDeclarationForm/getInvestsBySectionId',
-  async (investmentId: number, thunkApi) => {
+  async (sectionId: number, thunkApi) => {
     try {
-      return await itDeclarationFormApi.getInvestsBySectionId(investmentId)
+      return await itDeclarationFormApi.getInvestsBySectionId(sectionId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -79,7 +79,10 @@ const itDeclarationFormSlice = createSlice({
       })
       .addCase(getInvestsBySectionId.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.investments = action.payload as Invest[]
+        state.investments = [
+          ...state.investments,
+          ...(action.payload as Invest[]),
+        ]
       })
       .addMatcher(
         isAnyOf(
