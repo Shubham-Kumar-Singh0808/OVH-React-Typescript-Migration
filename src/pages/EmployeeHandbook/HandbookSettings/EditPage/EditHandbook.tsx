@@ -229,6 +229,7 @@ const EditHandbook = ({
       updateHandbookResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
