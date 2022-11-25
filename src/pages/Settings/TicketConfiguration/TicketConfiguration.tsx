@@ -58,7 +58,7 @@ const TicketConfiguration = (): JSX.Element => {
         dispatch(reduxServices.ticketConfiguration.actions.setToggle('')),
       )
     }
-  }, [])
+  }, [ticketConfigurationSubCategory])
   const {
     paginationRange,
     setPageSize,

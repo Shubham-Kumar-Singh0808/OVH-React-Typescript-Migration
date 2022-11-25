@@ -37,6 +37,7 @@ const EmployeeViewFilterOptions = ({
     }, 100)
     setComments('')
   }
+
   const dispatch = useAppDispatch()
 
   const handleRevokeResignation = async () => {
@@ -89,7 +90,8 @@ const EmployeeViewFilterOptions = ({
         submitRevokeResultAction,
       )
     ) {
-      setToggle('submitResignation')
+      setToggle('')
+      dispatch(reduxServices.submitViewResignation.getSeparationFormResponse())
     }
   }
 

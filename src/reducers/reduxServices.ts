@@ -77,6 +77,7 @@ import { projectManagementService } from './ProjectManagement/Project/AddEditPra
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
 import { itDeclarationFormService } from './Finance/ITDeclarationForm/itDeclarationFormSlice'
+import { resignationListService } from './Separation/ResignationList/resignationListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -158,4 +159,5 @@ export const reduxServices = {
   projectReport: projectReportsService,
   leaveApprovals: leaveApprovalsService,
   itDeclarationForm: itDeclarationFormService,
+  resignationList: resignationListService,
 }

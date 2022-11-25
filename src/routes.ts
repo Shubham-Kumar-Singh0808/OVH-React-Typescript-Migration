@@ -224,6 +224,12 @@ const RoomList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
 
+const EditConfiguration = React.lazy(
+  () =>
+    import(
+      './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
+    ),
+)
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
@@ -238,6 +244,17 @@ const LeaveApprovals = React.lazy(
 
 const ITDeclarationForm = React.lazy(
   () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
+)
+
+const ResignationTimeLine = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/ResignationTimeLine/ResignationHistory'
+    ),
+)
+
+const ResignationList = React.lazy(
+  () => import('./pages/Separation/ResignationList/ResignationList'),
 )
 
 /**
@@ -505,6 +522,11 @@ const routes = [
     component: RoomList,
   },
   {
+    path: '/editAppraisalCycle/:cycleId',
+    name: 'Edit Configuration',
+    component: EditConfiguration,
+  },
+  {
     path: '/subCategoryList',
     name: 'Ticket Configuration',
     component: TicketConfiguration,
@@ -528,6 +550,16 @@ const routes = [
     path: '/itDeclarationForm',
     name: 'IT Declaration Form',
     component: ITDeclarationForm,
+  },
+  {
+    path: '/resignationList',
+    name: 'Resignation List',
+    component: ResignationList,
+  },
+  {
+    path: '/managerComments',
+    name: 'Resignation Time Line',
+    component: ResignationTimeLine,
   },
 ]
 

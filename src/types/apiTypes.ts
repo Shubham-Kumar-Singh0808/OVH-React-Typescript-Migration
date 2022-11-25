@@ -448,6 +448,9 @@ export interface EventListApi extends ApiBase {
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
+  editAppraisalCycle: string
+  updateAppraisalCycle: string
+  validateCycle: string
 }
 export interface AddConfigurationsApi extends ApiBase {
   addAppraisalCycle: string
@@ -494,4 +497,10 @@ export interface ITDeclarationFormApi extends ApiBase {
   getEmployeeInfo: string
   getSectionsHavingInvests: string
   getInvestsBySectionId: string
+}
+export interface ResignationListApi extends ApiBase {
+  resignationList: string
+  exportResignationList: string
+  resignationInitiateCC: string
+  getSeparationTimeLine: string
 }
