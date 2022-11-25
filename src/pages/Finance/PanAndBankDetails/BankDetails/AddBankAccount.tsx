@@ -137,7 +137,7 @@ const AddBankAccount = ({
                 id="Number"
                 size="sm"
                 name="number"
-                maxLength={9}
+                maxLength={20}
                 value={accountNumber}
                 autoComplete="off"
                 placeholder="Bank Account Number"
@@ -192,6 +192,7 @@ const AddBankAccount = ({
                 autoComplete="off"
                 placeholder="IFSC Code"
                 value={bankIfscCode}
+                maxLength={11}
                 onChange={onChangeHandler}
               />
             </CCol>

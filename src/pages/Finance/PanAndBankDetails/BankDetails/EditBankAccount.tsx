@@ -7,16 +7,27 @@ import {
   CFormSelect,
   CButton,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { BankInfo } from '../../../../types/Finance/PanDetails/panDetailsTypes'
+import { showIsRequired } from '../../../../utils/helper'
 
 const EditBankAccount = ({
   backButtonHandler,
 }: {
   backButtonHandler: () => void
 }): JSX.Element => {
+  const editBankAccount = {} as BankInfo
+  const [editBankInfo, setEditBankInfo] = useState(editBankAccount)
+  const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
+
+  const dispatch = useAppDispatch()
+  const history = useHistory()
+
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
@@ -25,6 +36,87 @@ const EditBankAccount = ({
   const bankData = useTypedSelector(
     reduxServices.bankDetails.selectors.bankList,
   )
+
+  const onChangeInputHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target
+    if (name === 'bankAccountNumber') {
+      const bankActNumber = value.replace(/\D/g, '')
+      setEditBankInfo((values) => {
+        return { ...values, ...{ [name]: bankActNumber } }
+      })
+    } else if (name === 'ifscCode') {
+      const code = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      setEditBankInfo((values) => {
+        return { ...values, ...{ [name]: code } }
+      })
+    } else
+      setEditBankInfo((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+  }
+
+  useEffect(() => {
+    if (
+      editBankInfo.bankAccountNumber &&
+      editBankInfo.bankName &&
+      editBankInfo.ifscCode
+    ) {
+      setIsUpdateBtnEnabled(true)
+    } else {
+      setIsUpdateBtnEnabled(false)
+    }
+  }, [editBankInfo])
+
+  const updateToastMessage = (
+    <OToast
+      toastMessage="  Your changes have been saved successfully.
+    "
+      toastColor="success"
+    />
+  )
+  const alreadyExistToast = (
+    <OToast
+      toastMessage="AccountNumber and BankName combination already exist"
+      toastColor="danger"
+    />
+  )
+
+  useEffect(() => {
+    reduxServices.panDetails.bankInformation({
+      key: 'bankId',
+      value: editBankInfo.bankId,
+    })
+  }, [dispatch])
+
+  const handleUpdateHandler = async () => {
+    const prepareObject = {
+      ...editBankInfo,
+    }
+    const updateBankAccountResultAction = await dispatch(
+      reduxServices.bankDetails.updateBankInformation(prepareObject),
+    )
+
+    if (
+      reduxServices.bankDetails.updateBankInformation.fulfilled.match(
+        updateBankAccountResultAction,
+      )
+    ) {
+      history.push('/myFinance')
+      dispatch(reduxServices.app.actions.addToast(updateToastMessage))
+    } else if (
+      reduxServices.bankDetails.updateBankInformation.rejected.match(
+        updateBankAccountResultAction,
+      ) &&
+      updateBankAccountResultAction.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToast))
+    }
+  }
 
   return (
     <>
@@ -53,6 +145,9 @@ const EditBankAccount = ({
               className="col-sm-3 col-form-label text-end"
             >
               Bank Account Number:
+              <span className={showIsRequired(editBankInfo?.bankAccountNumber)}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -61,9 +156,12 @@ const EditBankAccount = ({
                 type="text"
                 id="Number"
                 size="sm"
-                name="number"
+                name="bankAccountNumber"
                 autoComplete="off"
+                maxLength={20}
                 placeholder="Bank Account Number"
+                value={editBankInfo.bankAccountNumber}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -73,6 +171,7 @@ const EditBankAccount = ({
               className="col-sm-3 col-form-label text-end"
             >
               Name of the Bank:
+              <span className={showIsRequired(editBankInfo?.bankName)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -81,6 +180,8 @@ const EditBankAccount = ({
                 id="bankName"
                 data-testid="form-select1"
                 name="bankName"
+                value={editBankInfo.bankName}
+                onChange={onChangeInputHandler}
               >
                 <option value={''}>Select</option>
                 {bankData.length > 0 &&
@@ -98,6 +199,11 @@ const EditBankAccount = ({
               className="col-sm-3 col-form-label text-end"
             >
               IFSC Code:
+              <span
+                className={showIsRequired(editBankInfo?.ifscCode as string)}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -106,9 +212,12 @@ const EditBankAccount = ({
                 type="text"
                 id="code"
                 size="sm"
-                name="code"
+                name="ifscCode"
                 autoComplete="off"
                 placeholder="IFSC Code"
+                maxLength={11}
+                value={editBankInfo.ifscCode as string}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -119,6 +228,8 @@ const EditBankAccount = ({
               data-testid="update-btn"
               className="btn-ovh me-1 text-white"
               color="success"
+              disabled={!isUpdateBtnEnabled}
+              onClick={handleUpdateHandler}
             >
               Update
             </CButton>
@@ -128,5 +239,4 @@ const EditBankAccount = ({
     </>
   )
 }
-
 export default EditBankAccount
