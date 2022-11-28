@@ -114,7 +114,7 @@ const EmployeeViewFilterOptions = ({
             <p className="mb-0">{getResignationViewResponse?.relievingDate}</p>
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-4">
           <CFormLabel className="col-sm-4 col-form-label text-end">
             Comments:
             <span className={comments ? TextWhite : TextDanger}>*</span>
