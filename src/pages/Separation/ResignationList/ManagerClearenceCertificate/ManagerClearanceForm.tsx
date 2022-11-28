@@ -104,6 +104,13 @@ const ManagerClearanceForm = (): JSX.Element => {
         <CRow className="mt-1 mb-0 align-items-center">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Comments:
+            <span
+              className={
+                isActive === 'false' || textArea ? 'text-white' : 'text-danger'
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={5}>
             <CFormTextarea
@@ -124,6 +131,7 @@ const ManagerClearanceForm = (): JSX.Element => {
                 data-testid="confirmBtn"
                 color="success"
                 onClick={SubmitClearanceCertificateHandler}
+                disabled={isActive === 'true' && textArea === ''}
               >
                 Submit
               </CButton>
