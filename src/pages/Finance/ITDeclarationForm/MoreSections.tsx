@@ -6,11 +6,8 @@ import {
   CTable,
   CTableBody,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import InvestmentTable from './InvestmentTable'
-import OModal from '../../../components/ReusableComponent/OModal'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
 import {
   Investment,
   Sections,
@@ -18,13 +15,12 @@ import {
 
 const MoreSections = ({
   sectionItem,
+  handleShowRemoveSectionModal,
 }: {
   sectionItem: Sections
+  handleShowRemoveSectionModal: (investId: number, investName: string) => void
 }): JSX.Element => {
   const [counter, setCounter] = useState(0)
-  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
-  const [toCancelInvestment, setToCancelInvestment] = useState('')
-  const [toCancelInvestmentId, setToCancelInvestmentId] = useState(0)
   const [investmentList, setInvestmentList] = useState<Investment[]>([
     {
       id: counter,
@@ -33,16 +29,6 @@ const MoreSections = ({
     },
   ])
   const [showSubTotalAmount, setShowSubTotalAmount] = useState<number>(0)
-  const dispatch = useAppDispatch()
-
-  const handleShowRemoveSectionModal = (
-    investId: number,
-    investName: string,
-  ) => {
-    setIsCancelModalVisible(true)
-    setToCancelInvestment(investName)
-    setToCancelInvestmentId(investId)
-  }
 
   const handleClickInvestment = () => {
     setCounter(counter + 1)
@@ -55,7 +41,7 @@ const MoreSections = ({
       ...investmentList,
     ])
   }
-  console.log(investmentList)
+  // console.log(investmentList)
 
   return (
     <>
@@ -107,9 +93,6 @@ const MoreSections = ({
               <CTableBody>
                 <InvestmentTable
                   setShowSubTotalAmount={setShowSubTotalAmount}
-                  investmentList={investmentList}
-                  setInvestmentList={setInvestmentList}
-                  currentSec={currentSec}
                 />
               </CTableBody>
             </CTable>
@@ -121,22 +104,6 @@ const MoreSections = ({
           </p>
         </div>
       </div>
-      <OModal
-        alignment="center"
-        visible={isCancelModalVisible}
-        setVisible={setIsCancelModalVisible}
-        modalTitle="Remove Section"
-        modalBodyClass="mt-0"
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        closeButtonClass="d-none"
-        // confirmButtonAction={() => handleConfirmCancelInvestment}
-      >
-        <>
-          Do you really want to remove this{' '}
-          <strong>{toCancelInvestment}</strong>?
-        </>
-      </OModal>
     </>
   )
 }

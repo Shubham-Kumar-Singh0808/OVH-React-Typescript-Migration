@@ -3,26 +3,18 @@ import {
   CCol,
   CFormInput,
   CFormSelect,
-  CTable,
-  CTableBody,
   CTableDataCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { Investment } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
+import { useTypedSelector } from '../../../stateStore'
 
 const InvestmentTable = ({
   setShowSubTotalAmount,
-  investmentList,
-  setInvestmentList,
-  currentSec,
 }: {
   setShowSubTotalAmount: (value: number) => void
-  investmentList: Investment[]
-  setInvestmentList: React.Dispatch<React.SetStateAction<Investment[]>>
-  currentSec: Investment
+  //   currentSec: Investment
 }): JSX.Element => {
   const investments = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.investments,
@@ -32,18 +24,18 @@ const InvestmentTable = ({
     setShowSubTotalAmount(Number(e.target.value))
   }
 
-  const removeInvestmentsHandler = () => {
-    const removeInvestment = investments?.filter(
-      (selectedInvest) => selectedInvest.investmentId === currentSec.id,
-    )
-    console.log(removeInvestment)
-  }
+  // const removeInvestmentsHandler = () => {
+  //   const removeInvestment = investments?.filter(
+  //     (selectedInvest) => selectedInvest.investmentId === currentSec.id,
+  //   )
+  //   console.log(removeInvestment)
+  // }
 
   return (
     <>
       <CTableRow>
         <CTableDataCell scope="row">
-          <CCol className="mt-2">{currentSec}</CCol>
+          <CCol className="mt-2">*</CCol>
         </CTableDataCell>
         <CTableDataCell scope="row">
           <CCol sm={12}>
@@ -82,7 +74,7 @@ const InvestmentTable = ({
               data-testid={`df-remove-btn`}
               className="btn-ovh-employee-list me-1 text-white"
               size="sm"
-              onClick={removeInvestmentsHandler}
+              // onClick={removeInvestmentsHandler}
             >
               <i className="fa fa-minus" aria-hidden="true"></i>
             </CButton>

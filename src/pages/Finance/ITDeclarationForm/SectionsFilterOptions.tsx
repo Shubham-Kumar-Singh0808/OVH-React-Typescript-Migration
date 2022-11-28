@@ -11,6 +11,8 @@ import MoreSections from './MoreSections'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { Sections } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const SectionsFilterOptions = (): JSX.Element => {
   const [selectedSection, setSelectedSection] = useState<Sections>(
@@ -20,6 +22,10 @@ const SectionsFilterOptions = (): JSX.Element => {
   const [isMoreSectionsButtonEnabled, setIsMoreSectionsButtonEnabled] =
     useState<boolean>(false)
   const [sectionList, setSectionList] = useState<Sections[]>([])
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
+  const [toCancelInvestment, setToCancelInvestment] = useState('')
+  const [toCancelInvestmentId, setToCancelInvestmentId] = useState(0)
+
   const dispatch = useAppDispatch()
   const section = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.sections,
@@ -50,24 +56,50 @@ const SectionsFilterOptions = (): JSX.Element => {
     const filterSection = section.filter(
       (currentSection) => currentSection.sectionId === Number(value),
     )
-    console.log(filterSection)
     setSelectedSection(filterSection[0])
   }
-
+  const alreadyExistToastMessage = (
+    <OToast toastMessage="Section already exist" toastColor="danger" />
+  )
   const handleClickSection = () => {
-    setShowInvestment(true)
-    setSectionList([selectedSection, ...sectionList])
+    const isSectionExists = sectionList.find(
+      (currSection) => currSection.sectionId === selectedSection.sectionId,
+    )
+    console.log(isSectionExists)
+    if (isSectionExists === undefined) {
+      setShowInvestment(true)
+      setSectionList([selectedSection, ...sectionList])
+    } else {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
+    }
   }
 
   useEffect(() => {
     if (selectedSection?.sectionId) {
       dispatch(
         reduxServices.itDeclarationForm.getInvestsBySectionId(
-          selectedSection.sectionId,
+          selectedSection?.sectionId,
         ),
       )
     }
   }, [selectedSection?.sectionId])
+
+  const handleShowRemoveSectionModal = (
+    investId: number,
+    investName: string,
+  ) => {
+    setIsCancelModalVisible(true)
+    setToCancelInvestment(investName)
+    setToCancelInvestmentId(investId)
+  }
+
+  const handleConfirmCancelSection = () => {
+    setIsCancelModalVisible(false)
+    const newSectionList = sectionList.filter(
+      (section) => section.sectionId !== toCancelInvestmentId,
+    )
+    setSectionList(newSectionList)
+  }
 
   return (
     <>
@@ -108,14 +140,19 @@ const SectionsFilterOptions = (): JSX.Element => {
         </CCol>
       </CRow>
       {showInvestment &&
-        sectionList &&
+        sectionList.length > 0 &&
         sectionList?.map((currentSec, index) => {
           return (
-            <CRow key={index}>
-              <CCol>
-                <MoreSections sectionItem={currentSec} />
-              </CCol>
-            </CRow>
+            <>
+              <CRow key={index}>
+                <CCol>
+                  <MoreSections
+                    sectionItem={currentSec}
+                    handleShowRemoveSectionModal={handleShowRemoveSectionModal}
+                  />
+                </CCol>
+              </CRow>
+            </>
           )
         })}
       <CRow className="mt-3 mb-3">
@@ -158,6 +195,22 @@ const SectionsFilterOptions = (): JSX.Element => {
           </CButton>
         </CCol>
       </CRow>
+      <OModal
+        alignment="center"
+        visible={isCancelModalVisible}
+        setVisible={setIsCancelModalVisible}
+        modalTitle="Remove Section"
+        modalBodyClass="mt-0"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={handleConfirmCancelSection}
+      >
+        <>
+          Do you really want to remove this{' '}
+          <strong>{toCancelInvestment}</strong>?
+        </>
+      </OModal>
     </>
   )
 }
