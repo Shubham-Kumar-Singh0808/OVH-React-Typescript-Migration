@@ -12,9 +12,10 @@ import { useTypedSelector } from '../../../stateStore'
 
 const InvestmentTable = ({
   setShowSubTotalAmount,
+  handleClickRemoveInvestment,
 }: {
   setShowSubTotalAmount: (value: number) => void
-  //   currentSec: Investment
+  handleClickRemoveInvestment: () => void
 }): JSX.Element => {
   const investments = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.investments,
@@ -23,13 +24,6 @@ const InvestmentTable = ({
   const handleSubTotalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShowSubTotalAmount(Number(e.target.value))
   }
-
-  // const removeInvestmentsHandler = () => {
-  //   const removeInvestment = investments?.filter(
-  //     (selectedInvest) => selectedInvest.investmentId === currentSec.id,
-  //   )
-  //   console.log(removeInvestment)
-  // }
 
   return (
     <>
@@ -74,7 +68,7 @@ const InvestmentTable = ({
               data-testid={`df-remove-btn`}
               className="btn-ovh-employee-list me-1 text-white"
               size="sm"
-              // onClick={removeInvestmentsHandler}
+              onClick={handleClickRemoveInvestment}
             >
               <i className="fa fa-minus" aria-hidden="true"></i>
             </CButton>

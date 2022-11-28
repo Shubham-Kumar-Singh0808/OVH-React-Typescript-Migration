@@ -23,8 +23,8 @@ const SectionsFilterOptions = (): JSX.Element => {
     useState<boolean>(false)
   const [sectionList, setSectionList] = useState<Sections[]>([])
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
-  const [toCancelInvestment, setToCancelInvestment] = useState('')
-  const [toCancelInvestmentId, setToCancelInvestmentId] = useState(0)
+  const [toCancelSection, setToCancelSection] = useState('')
+  const [toCancelSectionId, setToCancelSectionId] = useState(0)
 
   const dispatch = useAppDispatch()
   const section = useTypedSelector(
@@ -61,16 +61,19 @@ const SectionsFilterOptions = (): JSX.Element => {
   const alreadyExistToastMessage = (
     <OToast toastMessage="Section already exist" toastColor="danger" />
   )
-  const handleClickSection = () => {
+  const handleClickSection = async () => {
     const isSectionExists = sectionList.find(
       (currSection) => currSection.sectionId === selectedSection.sectionId,
     )
-    console.log(isSectionExists)
+
     if (isSectionExists === undefined) {
       setShowInvestment(true)
-      setSectionList([selectedSection, ...sectionList])
+      setSectionList([...sectionList, selectedSection])
     } else {
-      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
+      await dispatch(
+        reduxServices.app.actions.addToast(alreadyExistToastMessage),
+      )
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -85,18 +88,18 @@ const SectionsFilterOptions = (): JSX.Element => {
   }, [selectedSection?.sectionId])
 
   const handleShowRemoveSectionModal = (
-    investId: number,
-    investName: string,
+    sectionId: number,
+    sectionName: string,
   ) => {
     setIsCancelModalVisible(true)
-    setToCancelInvestment(investName)
-    setToCancelInvestmentId(investId)
+    setToCancelSection(sectionName)
+    setToCancelSectionId(sectionId)
   }
 
   const handleConfirmCancelSection = () => {
     setIsCancelModalVisible(false)
     const newSectionList = sectionList.filter(
-      (section) => section.sectionId !== toCancelInvestmentId,
+      (section) => section.sectionId !== toCancelSectionId,
     )
     setSectionList(newSectionList)
   }
@@ -207,8 +210,7 @@ const SectionsFilterOptions = (): JSX.Element => {
         confirmButtonAction={handleConfirmCancelSection}
       >
         <>
-          Do you really want to remove this{' '}
-          <strong>{toCancelInvestment}</strong>?
+          Do you really want to remove this <strong>{toCancelSection}</strong>?
         </>
       </OModal>
     </>

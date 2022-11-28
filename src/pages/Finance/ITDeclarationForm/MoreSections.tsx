@@ -43,6 +43,13 @@ const MoreSections = ({
   }
   // console.log(investmentList)
 
+  const handleClickRemoveInvestment = () => {
+    const newInvestmentList = investmentList.filter(
+      (investment) => investment.investmentId,
+    )
+    setInvestmentList(newInvestmentList)
+  }
+
   return (
     <>
       <div className="block-session clearfix widget_gap">
@@ -93,6 +100,7 @@ const MoreSections = ({
               <CTableBody>
                 <InvestmentTable
                   setShowSubTotalAmount={setShowSubTotalAmount}
+                  handleClickRemoveInvestment={handleClickRemoveInvestment}
                 />
               </CTableBody>
             </CTable>
