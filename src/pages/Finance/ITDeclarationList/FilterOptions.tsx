@@ -7,10 +7,21 @@ import {
   CFormInput,
   CInputGroup,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const FilterOptions = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const cycles = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.cycles,
+  )
+
+  useEffect(() => {
+    dispatch(reduxServices.itDeclarationList.getCycles())
+  }, [dispatch])
+
   return (
     <>
       <CRow className="justify-content-end">
@@ -28,20 +39,17 @@ const FilterOptions = (): JSX.Element => {
               //   value={selectCategory}
             >
               <option value="">Select Category</option>
-              {/* {getCategories &&
-                  getCategories
-                    ?.slice()
-                    .sort((catg1, catg2) =>
-                      catg1.categoryName.localeCompare(catg2.categoryName),
-                    )
-                    ?.map((category) => (
-                      <option
-                        key={category.categoryId}
-                        value={category.categoryId}
-                      >
-                        {category.categoryName}
-                      </option>
-                    ))} */}
+              {cycles &&
+                cycles
+                  ?.slice()
+                  .sort((catg1, catg2) =>
+                    catg1.cycleName.localeCompare(catg2.cycleName),
+                  )
+                  ?.map((category) => (
+                    <option key={category.cycleId} value={category.cycleName}>
+                      {category.cycleName}
+                    </option>
+                  ))}
             </CFormSelect>
           </CCol>
           <CCol sm={4}>
