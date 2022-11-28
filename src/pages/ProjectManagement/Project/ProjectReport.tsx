@@ -397,6 +397,7 @@ const ProjectReport = (): JSX.Element => {
           <CRow>
             <div className="d-md-flex justify-content-md-end pull-right">
               <CFormCheck
+                className="ticket-search-checkbox"
                 inline
                 type="checkbox"
                 name="internalProject"
