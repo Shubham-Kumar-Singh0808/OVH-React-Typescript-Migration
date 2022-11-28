@@ -96,6 +96,12 @@ const ResignationListTable = ({
 
   const resignationClearenceManagerButtonHandler = (separationId: number) => {
     dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'Manager',
+      }),
+    )
   }
 
   const handleConfirmInitiateResignation = async () => {

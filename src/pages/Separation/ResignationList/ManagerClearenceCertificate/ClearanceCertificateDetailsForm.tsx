@@ -86,7 +86,6 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
     setIsMailTemplateEdit(false)
   }
   const due = managerClearenceDetails[0]?.isDue ? 'Due' : 'No Due'
-  console.log(isActive)
   return (
     <>
       <div className="card mb-4 myprofile-wrapper">

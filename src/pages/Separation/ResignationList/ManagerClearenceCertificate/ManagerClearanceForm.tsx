@@ -7,7 +7,7 @@ import {
   CFormTextarea,
   CFormCheck,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
@@ -18,6 +18,16 @@ const ManagerClearanceForm = (): JSX.Element => {
   const getAllResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
+
+  const managerClearenceDetails = useTypedSelector(
+    reduxServices.resignationList.selectors.managerClearanceDetails,
+  )
+
+  useEffect(() => {
+    if (!managerClearenceDetails) {
+      dispatch(reduxServices.resignationList.actions.toggle(''))
+    }
+  }, [managerClearenceDetails])
 
   const dispatch = useAppDispatch()
 
