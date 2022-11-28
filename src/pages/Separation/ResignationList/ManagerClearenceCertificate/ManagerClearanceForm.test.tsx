@@ -15,8 +15,8 @@ const toRender = (
   </div>
 )
 
-describe('Resignation History Time line Component Testing', () => {
-  describe('should render Resignation History Time line Component without data', () => {
+describe('ManagerClearanceForm Component Testing', () => {
+  describe('should render ManagerClearanceForm Component without data', () => {
     beforeEach(() => {
       render(toRender, {
         preloadedState: {
