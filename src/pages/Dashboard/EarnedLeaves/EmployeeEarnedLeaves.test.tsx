@@ -2,8 +2,8 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import EmployeeEarnedLeaves from './EmployeeEarnedLeaves'
 import { render, screen } from '../../../test/testUtils'
-import { mockLeaveSummary } from '../../../test/data/leaveSummaryData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
+import { mockLeaveSummary } from '../../../test/data/earnedLeavesData'
 
 describe('Earned Leaves Component Testing', () => {
   beforeEach(() => {
@@ -11,9 +11,7 @@ describe('Earned Leaves Component Testing', () => {
       preloadedState: {
         earnedLeaves: {
           financialYear: 2022,
-        },
-        employeeLeaveSummary: {
-          employeeLeaveSummary: mockLeaveSummary,
+          leaveSummary: mockLeaveSummary,
         },
         userAccessToFeatures: {
           userAccessToFeatures: mockUserAccessToFeaturesData,
