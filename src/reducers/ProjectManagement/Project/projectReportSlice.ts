@@ -194,7 +194,6 @@ const projectReportsSlice = createSlice({
           closeProjectReport.pending,
           deleteProjectReport.pending,
           deallocateProjectReport.pending,
-          updateProjectReport.pending,
         ),
         (state) => {
           state.isProjectLoading = ApiLoadingState.loading

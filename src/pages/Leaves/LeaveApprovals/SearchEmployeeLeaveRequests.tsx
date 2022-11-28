@@ -375,7 +375,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
         </CTable>
         {searchLeaves && isLoading !== ApiLoadingState.loading && (
           <CRow>
-            <CCol xs={4}>
+            <CCol xs={4} md={3}>
               <p>
                 <strong>
                   {searchLeaves?.length
@@ -396,6 +396,7 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
             {searchLeavesListSize > 20 && (
               <CCol
                 xs={5}
+                md={6}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"
               >
                 <OPagination
