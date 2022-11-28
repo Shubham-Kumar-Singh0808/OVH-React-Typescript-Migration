@@ -24,7 +24,7 @@ const ManagerClearanceForm = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (!managerClearanceDetails) {
+    if (managerClearanceDetails?.length > 0) {
       dispatch(reduxServices.resignationList.actions.toggle('ClearanceDetails'))
     }
   }, [managerClearanceDetails])

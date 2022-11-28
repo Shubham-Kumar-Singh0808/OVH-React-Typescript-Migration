@@ -15,31 +15,27 @@ import { UpdateClearanceDetails } from '../../../../types/Separation/Resignation
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-const ClearenceCertificateDetailsForm = (): JSX.Element => {
-  const [isMailTemplateEdit, setIsMailTemplateEdit] = useState<boolean>(false)
-  const [isActive, setIsActive] = useState<boolean>()
-  const initialMailTemplateType = {} as UpdateClearanceDetails
-  const [editTemplateTypeDetails, setEditTemplateTypeDetails] = useState(
-    initialMailTemplateType,
-  )
+const ClearanceCertificateDetailsForm = (): JSX.Element => {
+  const [isCCDetailsEdit, setIsCCDetailsEdit] = useState<boolean>(false)
+  const [isActive, setIsActive] = useState<string>('false')
+  const initialCCDetails = {} as UpdateClearanceDetails
+  const [editCCDetails, setEditCCDetails] = useState(initialCCDetails)
   const dispatch = useAppDispatch()
-  const [templateId, setTemplateId] = useState(0)
-  const managerClearenceDetails = useTypedSelector(
+  const [separationId, setSeparationId] = useState(0)
+  const managerClearanceDetails = useTypedSelector(
     reduxServices.resignationList.selectors.managerClearanceDetails,
   )
   const getAllResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
-  console.log(managerClearenceDetails)
 
-  const editTemplateTypeButtonHandler = (
+  const editCCDetailsButtonHandler = (
     updateClearanceDetails: UpdateClearanceDetails,
   ): void => {
-    setIsMailTemplateEdit(true)
-    setTemplateId(updateClearanceDetails?.seperationId)
-    setEditTemplateTypeDetails(updateClearanceDetails)
-    setIsActive(updateClearanceDetails?.isDue)
-    console.log(`${typeof updateClearanceDetails?.isDue} vinesh`)
+    setIsCCDetailsEdit(true)
+    setSeparationId(updateClearanceDetails?.seperationId)
+    setEditCCDetails(updateClearanceDetails)
+    setIsActive(updateClearanceDetails?.isDue as string)
   }
 
   const handleEditMailTemplateHandler = (
@@ -47,7 +43,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
 
-    setEditTemplateTypeDetails((values) => {
+    setEditCCDetails((values) => {
       return { ...values, ...{ [name]: value } }
     })
   }
@@ -56,15 +52,15 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
     const updateCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
         addedBy: 'Manager',
-        ccId: managerClearenceDetails[0].ccId,
-        comments: editTemplateTypeDetails?.comments,
+        ccId: managerClearanceDetails[0].ccId,
+        comments: editCCDetails?.comments,
         createdDate: new Date(),
-        employeeId: managerClearenceDetails[0]?.employeeId,
-        employeeName: managerClearenceDetails[0]?.employeeName,
-        isDue: isActive as boolean,
-        seperationEmpId: managerClearenceDetails[0]?.seperationEmpId,
-        seperationEmpName: managerClearenceDetails[0]?.seperationEmpName,
-        seperationId: managerClearenceDetails[0]?.seperationId,
+        employeeId: managerClearanceDetails[0]?.employeeId,
+        employeeName: managerClearanceDetails[0]?.employeeName,
+        isDue: isActive as string,
+        seperationEmpId: managerClearanceDetails[0]?.seperationEmpId,
+        seperationEmpName: managerClearanceDetails[0]?.seperationEmpName,
+        seperationId: managerClearanceDetails[0]?.seperationId,
       }),
     )
     if (
@@ -72,7 +68,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
         updateCCDetailsResultAction,
       )
     ) {
-      setIsMailTemplateEdit(false)
+      setIsCCDetailsEdit(false)
       dispatch(
         reduxServices.resignationList.getClearanceDetails({
           separationId: getAllResignationHistory.separationId,
@@ -83,14 +79,14 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
   }
 
   const cancelMailTemplateTypeButtonHandler = () => {
-    setIsMailTemplateEdit(false)
+    setIsCCDetailsEdit(false)
   }
-  const due = managerClearenceDetails[0]?.isDue ? 'Due' : 'No Due'
+  const due = managerClearanceDetails[0]?.isDue ? 'Due' : 'No Due'
   return (
     <>
       <div className="card mb-4 myprofile-wrapper">
-        {isMailTemplateEdit &&
-        managerClearenceDetails[0]?.seperationId === templateId ? (
+        {isCCDetailsEdit &&
+        managerClearanceDetails[0]?.seperationId === separationId ? (
           <>
             <CCardHeader>
               <h4 className="h4">Edit Clearance Certificate Details</h4>
@@ -107,8 +103,8 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
           <CForm>
             <CRow className="justify-content-end">
               <CCol className="text-end" md={4}>
-                {isMailTemplateEdit &&
-                managerClearenceDetails[0]?.seperationId === templateId ? (
+                {isCCDetailsEdit &&
+                managerClearanceDetails[0]?.seperationId === separationId ? (
                   <>
                     <CButton
                       color="info"
@@ -124,9 +120,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
                       color="info"
                       className="btn-ovh me-1"
                       onClick={() => {
-                        editTemplateTypeButtonHandler(
-                          managerClearenceDetails[0],
-                        )
+                        editCCDetailsButtonHandler(managerClearanceDetails[0])
                       }}
                     >
                       <i className="fa fa-arrow-left  me-1"></i>Edit
@@ -145,7 +139,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{managerClearenceDetails[0]?.employeeId}</p>
+                <p className="mb-0">{managerClearanceDetails[0]?.employeeId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -154,7 +148,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={3}>
                 <p className="mb-0">
-                  {managerClearenceDetails[0]?.employeeName}
+                  {managerClearanceDetails[0]?.employeeName}
                 </p>
               </CCol>
             </CRow>
@@ -164,7 +158,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={3}>
                 <p className="mb-0">
-                  {managerClearenceDetails[0]?.seperationEmpId}
+                  {managerClearanceDetails[0]?.seperationEmpId}
                 </p>
               </CCol>
             </CRow>
@@ -174,7 +168,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={3}>
                 <p className="mb-0">
-                  {managerClearenceDetails[0]?.seperationEmpName}
+                  {managerClearanceDetails[0]?.seperationEmpName}
                 </p>
               </CCol>
             </CRow>
@@ -183,8 +177,8 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
               <CFormLabel className="col-sm-3 col-form-label text-end p-1">
                 Due:
               </CFormLabel>
-              {isMailTemplateEdit &&
-              managerClearenceDetails[0]?.seperationId === templateId ? (
+              {isCCDetailsEdit &&
+              managerClearanceDetails[0]?.seperationId === separationId ? (
                 <CCol sm={3}>
                   <CFormCheck
                     inline
@@ -195,19 +189,19 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     defaultChecked
-                    checked={isActive}
-                    onChange={(e) => setIsActive(e.target.value !== 'true')}
+                    checked={isActive === 'true'}
+                    onChange={(e) => setIsActive(e.target.value)}
                   />
                   <CFormCheck
                     inline
                     type="radio"
                     name="No"
                     id="No"
-                    data-testId="workfromhome"
-                    value={'false'}
+                    data-testId="due-test"
+                    value="false"
                     label="No"
-                    checked={isActive}
-                    onChange={(e) => setIsActive(e.target.value !== 'false')}
+                    checked={isActive === 'false'}
+                    onChange={(e) => setIsActive(e.target.value)}
                   />
                 </CCol>
               ) : (
@@ -220,25 +214,25 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
               <CFormLabel className="col-sm-3 col-form-label text-end p-1">
                 Comments:
               </CFormLabel>
-              {isMailTemplateEdit &&
-              managerClearenceDetails[0]?.seperationId === templateId ? (
+              {isCCDetailsEdit &&
+              managerClearanceDetails[0]?.seperationId === separationId ? (
                 <CCol sm={5}>
                   <CFormTextarea
                     aria-label="comments"
                     id="comments"
                     name="comments"
-                    value={editTemplateTypeDetails?.comments}
+                    value={editCCDetails?.comments}
                     onChange={handleEditMailTemplateHandler}
                   ></CFormTextarea>
                 </CCol>
               ) : (
                 <CCol sm={3}>
-                  <p className="mb-0">{managerClearenceDetails[0]?.comments}</p>
+                  <p className="mb-0">{managerClearanceDetails[0]?.comments}</p>
                 </CCol>
               )}
             </CRow>
-            {isMailTemplateEdit &&
-            managerClearenceDetails[0]?.seperationId === templateId ? (
+            {isCCDetailsEdit &&
+            managerClearanceDetails[0]?.seperationId === separationId ? (
               <>
                 <CRow className="mt-3 mb-4">
                   <CCol md={{ span: 6, offset: 3 }}>
@@ -263,4 +257,4 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
   )
 }
 
-export default ClearenceCertificateDetailsForm
+export default ClearanceCertificateDetailsForm
