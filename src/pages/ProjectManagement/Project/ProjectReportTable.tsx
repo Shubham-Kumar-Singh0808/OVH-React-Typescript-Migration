@@ -268,13 +268,13 @@ const ProjectReportsTable = ({
       billable: subProject?.billable === 'Yes',
     }
 
-    const deallocateResponse = await dispatch(
+    const updateResponse = await dispatch(
       reduxServices.projectReport.updateProjectReport(payload),
     )
 
     if (
       reduxServices.projectReport.updateProjectReport.fulfilled.match(
-        deallocateResponse,
+        updateResponse,
       ) &&
       selectedProject != null
     ) {
