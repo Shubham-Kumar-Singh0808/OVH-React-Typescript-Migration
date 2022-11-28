@@ -135,7 +135,7 @@ export type SeparationTimeLine = {
   seperationComments: SeparationComments[]
 }
 
-export type submitClearenceCommentsProps = {
+export type submitClearanceCommentsProps = {
   addedBy: string
   comments: string
   employeeId: number

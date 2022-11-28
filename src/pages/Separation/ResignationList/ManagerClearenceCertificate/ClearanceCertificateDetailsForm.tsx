@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import OCard from '../../../../components/ReusableComponent/OCard'
 
 const ClearenceCertificateDetailsForm = (): JSX.Element => {
   const [isMailTemplateEdit, setIsMailTemplateEdit] = useState<boolean>(false)
@@ -26,7 +25,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [templateId, setTemplateId] = useState(0)
   const managerClearenceDetails = useTypedSelector(
-    reduxServices.resignationList.selectors.managerClearenceDetails,
+    reduxServices.resignationList.selectors.managerClearanceDetails,
   )
   const getAllResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
@@ -53,7 +52,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
     })
   }
 
-  const SubmitClearenceCertificateHandler = async () => {
+  const SubmitClearanceCertificateHandler = async () => {
     const updateCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
         addedBy: 'Manager',
@@ -249,7 +248,7 @@ const ClearenceCertificateDetailsForm = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
-                    onClick={SubmitClearenceCertificateHandler}
+                    onClick={SubmitClearanceCertificateHandler}
                   >
                     Update
                   </CButton>

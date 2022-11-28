@@ -11,7 +11,7 @@ import React, { useState } from 'react'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-const ManagerClearenceForm = (): JSX.Element => {
+const ManagerClearanceForm = (): JSX.Element => {
   const [isActive, setIsActive] = useState<string>('false')
   const [textArea, setTextArea] = useState<string>('')
 
@@ -19,14 +19,11 @@ const ManagerClearenceForm = (): JSX.Element => {
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
 
-  const getAllResignationList = useTypedSelector(
-    reduxServices.resignationList.selectors.resignationListDetails,
-  )
   const dispatch = useAppDispatch()
 
-  const SubmitClearenceCertificateHandler = async () => {
+  const SubmitClearanceCertificateHandler = async () => {
     const addTemplateTypeResultAction = await dispatch(
-      reduxServices.resignationList.submitClearenceCertificate({
+      reduxServices.resignationList.submitClearanceCertificate({
         addedBy: 'Manager',
         comments: textArea,
         employeeId: getAllResignationHistory?.employeeId,
@@ -36,7 +33,7 @@ const ManagerClearenceForm = (): JSX.Element => {
       }),
     )
     if (
-      reduxServices.resignationList.submitClearenceCertificate.fulfilled.match(
+      reduxServices.resignationList.submitClearanceCertificate.fulfilled.match(
         addTemplateTypeResultAction,
       )
     ) {
@@ -46,7 +43,7 @@ const ManagerClearenceForm = (): JSX.Element => {
           submittedBy: 'Manager',
         }),
       )
-      dispatch(reduxServices.resignationList.actions.toggle('ClearenceDetails'))
+      dispatch(reduxServices.resignationList.actions.toggle('ClearanceDetails'))
     }
   }
 
@@ -126,7 +123,7 @@ const ManagerClearenceForm = (): JSX.Element => {
                 className="btn-ovh me-1"
                 data-testid="confirmBtn"
                 color="success"
-                onClick={SubmitClearenceCertificateHandler}
+                onClick={SubmitClearanceCertificateHandler}
               >
                 Submit
               </CButton>
@@ -146,4 +143,4 @@ const ManagerClearenceForm = (): JSX.Element => {
   )
 }
 
-export default ManagerClearenceForm
+export default ManagerClearanceForm

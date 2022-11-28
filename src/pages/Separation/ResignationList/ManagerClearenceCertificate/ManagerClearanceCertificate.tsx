@@ -1,8 +1,8 @@
 import React from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
-import ManagerClearenceForm from './ManagerClearenceForm'
-import ClearenceCertificateDetailsForm from './ClearenceCertificateDetailsForm'
+import ManagerClearanceForm from './ManagerClearanceForm'
+import ClearanceCertificateDetailsForm from './ClearanceCertificateDetailsForm'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -30,11 +30,11 @@ const ManagerClearanceCertificate = (): JSX.Element => {
                 </Link>
               </CCol>
             </CRow>
-            <ManagerClearenceForm />
+            <ManagerClearanceForm />
           </OCard>
         </>
       )}
-      {toggle === 'ClearenceDetails' && <ClearenceCertificateDetailsForm />}
+      {toggle === 'ClearanceDetails' && <ClearanceCertificateDetailsForm />}
     </>
   )
 }

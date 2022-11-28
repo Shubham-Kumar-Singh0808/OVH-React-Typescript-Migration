@@ -5,7 +5,7 @@ import {
   GetResignationListProps,
   ResignationListResponse,
   SeparationTimeLine,
-  submitClearenceCommentsProps,
+  submitClearanceCommentsProps,
   UpdateClearanceDetails,
 } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import {
@@ -87,13 +87,13 @@ const getSeparationTimeLine = async (
   return response.data
 }
 
-const submitClearenceCertificate = async (
-  clearenceCertificate: submitClearenceCommentsProps,
+const submitClearanceCertificate = async (
+  clearanceCertificate: submitClearanceCommentsProps,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: resignationListApiConfig.clearanceCertificateComments,
     method: AllowedHttpMethods.post,
-    data: clearenceCertificate,
+    data: clearanceCertificate,
   })
   const response = await useAxios(requestConfig)
   return response.data
@@ -119,12 +119,12 @@ const getClearanceDetails = async (
 }
 
 const updateCCDetails = async (
-  updateclearenceCertificate: UpdateClearanceDetails,
+  updateClearanceCertificate: UpdateClearanceDetails,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: resignationListApiConfig.updateCCDetails,
     method: AllowedHttpMethods.put,
-    data: updateclearenceCertificate,
+    data: updateClearanceCertificate,
   })
   const response = await useAxios(requestConfig)
   return response.data
@@ -135,7 +135,7 @@ const resignationListApi = {
   exportResignationListData,
   resignationIntitiateCC,
   getSeparationTimeLine,
-  submitClearenceCertificate,
+  submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
 }

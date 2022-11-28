@@ -11,7 +11,7 @@ import {
   ResignationList,
   ResignationListSliceState,
   SeparationTimeLine,
-  submitClearenceCommentsProps,
+  submitClearanceCommentsProps,
   UpdateClearanceDetails,
 } from '../../../types/Separation/ResignationList/resignationListTypes'
 
@@ -64,19 +64,19 @@ const getSeparationTimeLine = createAsyncThunk<
   },
 )
 
-const submitClearenceCertificate = createAsyncThunk<
+const submitClearanceCertificate = createAsyncThunk<
   number | undefined,
-  submitClearenceCommentsProps,
+  submitClearanceCommentsProps,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
 >(
-  'resignationList/submitClearencecertificate',
-  async (clearenceCertificate: submitClearenceCommentsProps, thunkApi) => {
+  'resignationList/submitClearanceCertificate',
+  async (clearenceCertificate: submitClearanceCommentsProps, thunkApi) => {
     try {
-      return await resignationListApi.submitClearenceCertificate(
+      return await resignationListApi.submitClearanceCertificate(
         clearenceCertificate,
       )
     } catch (error) {
@@ -108,10 +108,10 @@ const updateCCDetails = createAsyncThunk<
   }
 >(
   'resignationList/updateCCDetails',
-  async (updateclearenceCertificate: UpdateClearanceDetails, thunkApi) => {
+  async (updateClearanceCertificate: UpdateClearanceDetails, thunkApi) => {
     try {
       return await resignationListApi.updateCCDetails(
-        updateclearenceCertificate,
+        updateClearanceCertificate,
       )
     } catch (error) {
       const err = error as AxiosError
@@ -187,7 +187,7 @@ const pageSizeFromState = (state: RootState): number =>
 const resignationTimeLine = (state: RootState): SeparationTimeLine =>
   state.resignationList.separationTimeLine
 
-const managerClearenceDetails = (state: RootState): ClearanceDetails[] =>
+const managerClearanceDetails = (state: RootState): ClearanceDetails[] =>
   state.resignationList.clearanceDetails
 
 const toggleValue = (state: RootState): string => state.resignationList.toggle
@@ -196,7 +196,7 @@ const resignationListThunk = {
   getResignationList,
   resignationIntitiateCC,
   getSeparationTimeLine,
-  submitClearenceCertificate,
+  submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
 }
@@ -208,7 +208,7 @@ const resignationListSelectors = {
   pageFromState,
   pageSizeFromState,
   resignationTimeLine,
-  managerClearenceDetails,
+  managerClearanceDetails,
   toggleValue,
 }
 
