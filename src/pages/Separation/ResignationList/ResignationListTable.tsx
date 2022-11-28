@@ -216,9 +216,9 @@ const ResignationListTable = ({
                             {userAccessManagerClearence?.viewaccess && (
                               <Link to={`/ClearanceCertificateManager`}>
                                 <CButton
-                                  color="info"
+                                  // color="info"
                                   size="sm"
-                                  className="btn-ovh me-2"
+                                  className={resignationItem.managerCcCss}
                                   onClick={() =>
                                     resignationClearenceManagerButtonHandler(
                                       resignationItem.separationId,
@@ -230,28 +230,28 @@ const ResignationListTable = ({
                               </Link>
                             )}
                             <CButton
-                              color="info"
+                              // color="info"
                               size="sm"
-                              className="btn-ovh me-2"
+                              className={resignationItem.managerCcCss}
                             >
                               <i className="fa fa-laptop text-white"></i>
                             </CButton>
                             <CButton
-                              color="info"
+                              // color="info"
                               size="sm"
-                              className="btn-ovh me-2"
+                              className={resignationItem.managerCcCss}
                             >
                               <i className="fa fa-calculator text-white"></i>
                             </CButton>
                             <CButton
-                              color="info"
+                              // color="info"
                               size="sm"
-                              className="btn-ovh me-2"
+                              className={resignationItem.managerCcCss}
                             >
                               <i className="fa fa-id-badge text-white"></i>
                             </CButton>
                             <CButton
-                              color="info"
+                              // color="info"
                               size="sm"
                               className="btn-ovh me-2"
                             >

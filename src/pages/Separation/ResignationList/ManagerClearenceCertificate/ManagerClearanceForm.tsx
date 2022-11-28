@@ -19,15 +19,15 @@ const ManagerClearanceForm = (): JSX.Element => {
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
 
-  const managerClearenceDetails = useTypedSelector(
+  const managerClearanceDetails = useTypedSelector(
     reduxServices.resignationList.selectors.managerClearanceDetails,
   )
 
   useEffect(() => {
-    if (!managerClearenceDetails) {
-      dispatch(reduxServices.resignationList.actions.toggle(''))
+    if (!managerClearanceDetails) {
+      dispatch(reduxServices.resignationList.actions.toggle('ClearanceDetails'))
     }
-  }, [managerClearenceDetails])
+  }, [managerClearanceDetails])
 
   const dispatch = useAppDispatch()
 
