@@ -55,7 +55,7 @@ const ManagerClearanceForm = (): JSX.Element => {
     <>
       <CForm>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
             Employee ID:
           </CFormLabel>
           <CCol sm={3}>
@@ -63,7 +63,7 @@ const ManagerClearanceForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
             Employee Name:
           </CFormLabel>
           <CCol sm={3}>
@@ -72,7 +72,7 @@ const ManagerClearanceForm = (): JSX.Element => {
         </CRow>
 
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
             Due:
           </CFormLabel>
           <CCol sm={3}>
@@ -102,7 +102,7 @@ const ManagerClearanceForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
             Comments:
             <span
               className={
@@ -112,7 +112,7 @@ const ManagerClearanceForm = (): JSX.Element => {
               *
             </span>
           </CFormLabel>
-          <CCol sm={5}>
+          <CCol sm={6} className="w-500">
             <CFormTextarea
               placeholder="Purpose"
               aria-label="textarea"
