@@ -1,0 +1,55 @@
+import React from 'react'
+import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
+import ManagerClearanceForm from './ManagerClearanceForm'
+import { fireEvent, render, screen } from '../../../../test/testUtils'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockResignationListHistory } from '../../../../test/data/resignationListData'
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ManagerClearanceForm />,
+  </div>
+)
+
+describe('Resignation History Time line Component Testing', () => {
+  describe('should render Resignation History Time line Component without data', () => {
+    beforeEach(() => {
+      render(toRender, {
+        preloadedState: {
+          resignationList: {
+            separationTimeLine: mockResignationListHistory,
+            isLoading: ApiLoadingState.succeeded,
+          },
+        },
+      })
+    })
+    screen.debug()
+    test('should render with data ', () => {
+      expect(
+        screen.getByText(mockResignationListHistory.employeeId),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(mockResignationListHistory.employeeName),
+      ).toBeInTheDocument()
+    })
+    test('user should enter the comments data ', () => {
+      const subject = screen.getByTestId('text-area')
+      userEvent.type(subject, 'testing')
+      expect(subject).toHaveValue('testing')
+
+      const selectDue = screen.getAllByTestId('due-test')
+      fireEvent.click(selectDue[0], 'true')
+      expect(selectDue).toBeTruthy()
+
+      const applyBtnElement = screen.getByRole('button', { name: 'Submit' })
+      expect(applyBtnElement).toBeEnabled()
+      userEvent.click(applyBtnElement)
+      userEvent.click(screen.getByTestId('clearBtn'))
+      userEvent.type(subject, '')
+    })
+  })
+})

@@ -93,7 +93,7 @@ const ManagerClearanceForm = (): JSX.Element => {
               type="radio"
               name="No"
               id="No"
-              data-testId="workfromhome"
+              data-testId="due-test"
               value="false"
               label="No"
               checked={isActive === 'false'}
@@ -118,6 +118,7 @@ const ManagerClearanceForm = (): JSX.Element => {
               aria-label="textarea"
               id="textArea"
               name="textArea"
+              data-testid="text-area"
               value={textArea}
               onChange={(e) => setTextArea(e.target.value)}
             ></CFormTextarea>

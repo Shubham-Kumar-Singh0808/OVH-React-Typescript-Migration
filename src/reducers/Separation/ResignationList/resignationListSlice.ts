@@ -74,10 +74,10 @@ const submitClearanceCertificate = createAsyncThunk<
   }
 >(
   'resignationList/submitClearanceCertificate',
-  async (clearenceCertificate: submitClearanceCommentsProps, thunkApi) => {
+  async (clearanceCertificate: submitClearanceCommentsProps, thunkApi) => {
     try {
       return await resignationListApi.submitClearanceCertificate(
-        clearenceCertificate,
+        clearanceCertificate,
       )
     } catch (error) {
       const err = error as AxiosError
