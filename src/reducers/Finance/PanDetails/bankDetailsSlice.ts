@@ -59,7 +59,7 @@ const deleteBankAccount = createAsyncThunk(
   },
 )
 
-const initialBankDetailsState: BankDetailsSliceState = {
+export const initialBankDetailsState: BankDetailsSliceState = {
   isLoading: ApiLoadingState.idle,
   error: 0,
   bankNameList: [],

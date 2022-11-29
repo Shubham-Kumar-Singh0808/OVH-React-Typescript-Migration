@@ -32,6 +32,6 @@ export type Finance = {
   uaNumber: string
   employeeId: number
   aadharCardNumber: string
-  financeFilePath: null
+  financeFilePath: null | string
   financeFileName: null
 }

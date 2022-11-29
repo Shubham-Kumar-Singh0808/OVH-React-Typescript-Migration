@@ -54,7 +54,7 @@ const updateFinanceInformation = createAsyncThunk(
   },
 )
 
-const initialPanDetailsState: PanDetailsSliceState = {
+export const initialPanDetailsState: PanDetailsSliceState = {
   bankInfo: {} as BankInformation,
   isLoading: ApiLoadingState.idle,
   editBankAccount: {} as BankInfo,
