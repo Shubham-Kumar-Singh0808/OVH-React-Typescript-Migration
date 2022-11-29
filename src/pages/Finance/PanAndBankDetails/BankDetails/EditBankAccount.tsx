@@ -24,6 +24,7 @@ const EditBankAccount = ({
   const editBankAccount = {} as BankInfo
   const [editBankInfo, setEditBankInfo] = useState(editBankAccount)
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
+  const [bankAccountNumberExist, setBankAccountNumberExist] = useState('')
 
   const dispatch = useAppDispatch()
   const history = useHistory()
@@ -124,12 +125,9 @@ const EditBankAccount = ({
       history.push('/myFinance')
       dispatch(reduxServices.app.actions.addToast(updateToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
-    } else if (
-      reduxServices.bankDetails.updateBankInformation.rejected.match(
-        updateBankAccountResultAction,
-      ) &&
-      updateBankAccountResultAction.payload === 409
-    ) {
+    } else if (editBankInfo.bankAccountNumber) {
+      setBankAccountNumberExist(editBankInfo.bankAccountNumber)
+    } else {
       dispatch(reduxServices.app.actions.addToast(alreadyExistToast))
     }
   }
@@ -244,7 +242,11 @@ const EditBankAccount = ({
               data-testid="update-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={!isUpdateBtnEnabled}
+              disabled={
+                isUpdateBtnEnabled
+                  ? isUpdateBtnEnabled && bankAccountNumberExist.length > 0
+                  : !isUpdateBtnEnabled
+              }
               onClick={handleUpdateHandler}
             >
               Update
