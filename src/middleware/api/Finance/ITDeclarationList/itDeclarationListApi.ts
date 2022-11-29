@@ -44,7 +44,7 @@ const exportITDeclarationList = async (
     method: AllowedHttpMethods.get,
     params: {
       cycleId: props.investmentCycle ?? '',
-      searchname: props.employeeName ?? '',
+      searchname: props.searchname ?? '',
       token: localStorage.getItem('token') ?? '',
     },
     responseType: 'blob',

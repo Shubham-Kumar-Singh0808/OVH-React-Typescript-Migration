@@ -7,8 +7,8 @@ import {
   CFormInput,
   CInputGroup,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { itDeclarationListApi } from '../../../middleware/api/Finance/ITDeclarationList/itDeclarationListApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -21,12 +21,14 @@ const FilterOptions = ({
   searchInput,
   setSearchInput,
 }: ITDeclarationListOptionsProps): JSX.Element => {
+  const [showExportButton, setShowExportButton] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const cycles = useTypedSelector(
     reduxServices.itDeclarationList.selectors.cycles,
   )
-  const searchEmployee = useTypedSelector(
-    reduxServices.itDeclarationList.selectors.searchEmployee,
+
+  const toastElement = (
+    <OToast toastColor="danger" toastMessage="Please Select Cycle" />
   )
   const handleSearch = () => {
     dispatch(
@@ -44,7 +46,7 @@ const FilterOptions = ({
     }
   }
 
-  const handleExportCertificatesData = async () => {
+  const handleExportITDeclarationList = async () => {
     const itDeclarationListDownload =
       await itDeclarationListApi.exportITDeclarationList({
         investmentCycle,
@@ -52,6 +54,24 @@ const FilterOptions = ({
       })
     downloadFile(itDeclarationListDownload, 'ITDeclarationList.csv')
   }
+
+  useEffect(() => {
+    if (investmentCycle === '' && investmentCycle !== undefined) {
+      setShowExportButton(false)
+      dispatch(reduxServices.app.actions.addToast(toastElement))
+    } else {
+      setShowExportButton(true)
+    }
+  }, [investmentCycle])
+
+  useEffect(() => {
+    if (cycles) {
+      const getActiveCycle = cycles?.filter(
+        (currentCycle) => currentCycle.active === true,
+      )
+      setInvestmentCycle(String(getActiveCycle[0].cycleId))
+    }
+  }, [cycles])
 
   return (
     <>
@@ -96,15 +116,16 @@ const FilterOptions = ({
             <CButton color="info btn-ovh me-1" className="text-white">
               <i className="fa fa-plus me-1"></i>Add Investment
             </CButton>
-
-            <CButton
-              color="info btn-ovh me-1"
-              className="text-white"
-              data-testid="export-button"
-              onClick={handleExportCertificatesData}
-            >
-              <i className="fa fa-plus me-1"></i>Click to Export
-            </CButton>
+            {showExportButton && (
+              <CButton
+                color="info btn-ovh me-1"
+                className="text-white"
+                data-testid="export-button"
+                onClick={handleExportITDeclarationList}
+              >
+                <i className="fa fa-plus me-1"></i>Click to Export
+              </CButton>
+            )}
           </CCol>
         </CRow>
         <CRow className="gap-2 d-md-flex justify-content-md-end mt-4">

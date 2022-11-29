@@ -8,9 +8,10 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { Cycle } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const ITDeclarationList = (): JSX.Element => {
-  const [investmentCycle, setInvestmentCycle] = useState<string>('3')
+  const [investmentCycle, setInvestmentCycle] = useState<string>()
   const [searchInput, setSearchInput] = useState<string>('')
   const dispatch = useAppDispatch()
 
