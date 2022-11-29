@@ -84,7 +84,7 @@ const EditPanDetails = ({
       )
     }
   }
-  console.log(bankDetail.finance?.financeFileName)
+
   return (
     <>
       <CCol sm={5}>
@@ -117,12 +117,7 @@ const EditPanDetails = ({
                 {bankDetail.finance?.financeFilePath || 'N/A'}
               </CCol>
               <CCol sm={5} className="sh-alignment">
-                <CLink
-                  className="cursor-pointer sh-hive-activity-link"
-                  // onClick={() =>
-                  //   handleDownloadFeedbackForm(feedbackForm.feedBackFormName)
-                  // }
-                >
+                <CLink className="cursor-pointer sh-hive-activity-link">
                   <i className="fa fa-paperclip me-1"></i>
                   Doc
                 </CLink>
@@ -137,6 +132,7 @@ const EditPanDetails = ({
             <CTooltip content="Save">
               <CButton
                 size="sm"
+                data-testid="save-btn"
                 className="btn btn-success btn-sm btn-ovh-employee-list cursor-pointer"
                 color="success btn-ovh me-2"
                 onClick={saveBtnHandler}

@@ -63,7 +63,9 @@ const PanDetails = (): JSX.Element => {
         return { ...values, ...{ [name]: value } }
       })
   }
-
+  // const checkboxHandler = () => {
+  //   setEditPanData('')
+  // }
   return (
     <>
       <CRow className="justify-content-end">
@@ -105,6 +107,7 @@ const PanDetails = (): JSX.Element => {
                 checked={isChecked}
                 onChange={(e) => setIsChecked(e.target.checked)}
                 data-testid="pfNumber"
+                // onClick={checkboxHandler}
               />
               <CFormInput
                 className="eventType-editInput ms-2"

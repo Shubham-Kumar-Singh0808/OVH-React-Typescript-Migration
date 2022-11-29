@@ -126,6 +126,7 @@ const AddBankAccount = ({
             <CFormLabel
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
+              data-testid="bankAccountNumber"
             >
               Bank Account Number:
               <span className={accountNumber ? TextWhite : TextDanger}>*</span>

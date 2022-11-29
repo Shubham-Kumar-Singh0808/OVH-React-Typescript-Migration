@@ -1,85 +1,75 @@
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import AddBankAccount from './AddBankAccount'
-import stateStore from '../../../../stateStore'
+import { render, screen, waitFor } from '../../../../test/testUtils'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockBankInformation } from '../../../../test/data/panDetailsData'
+import { BankInfo } from '../../../../types/Finance/PanDetails/panDetailsTypes'
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
-const expectComponentToBeRendered = () => {
-  expect(screen.getByText('Bank Account Number:')).toBeInTheDocument()
-  expect(screen.getByText('IFSC Code:')).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
-}
-describe('Add Bank Account Testing', () => {
-  test('should render Back button', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddBankAccount
-          backButtonHandler={function (): void {
-            // eslint-disable-next-line sonarjs/no-duplicate-string
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
-  })
-  it('should display the correct number of options', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddBankAccount
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    expect(screen.getAllByRole('option').length).toBe(1)
-  })
-  test('should correctly set default option', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddBankAccount
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    expect(screen.getByRole('option', { name: 'Select' }).selected).toBe(true)
-  })
-  test('should render add Bank Account without crashing', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddBankAccount
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    expectComponentToBeRendered()
+const accountNumber = 'Bank Account Number'
+const selectName = 'form-select1'
+const code = 'IFSC Code'
+const save = 'save-btn'
+describe('Add BankAccount without data', () => {
+  beforeEach(() => {
+    render(<AddBankAccount backButtonHandler={jest.fn()} />)
   })
 
-  it('should allow user to change Options', () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <AddBankAccount
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
+  test('should be able to render  Add BankAccount  Title', () => {
     expect(screen.getByText('Add Bank Account Information')).toBeInTheDocument()
+  })
+
+  test('should render  Add Bank Account  screen and back button without crashing', () => {
+    const backBtn = screen.getByRole('button', { name: 'Back' })
+    expect(backBtn).toBeInTheDocument()
+    userEvent.click(backBtn)
+  })
+
+  test('should render labels', () => {
+    expect(screen.getByText('Bank Account Number:')).toBeInTheDocument()
+    expect(screen.getByText('Name of the Bank:')).toBeInTheDocument()
+    expect(screen.getByText('IFSC Code:')).toBeInTheDocument()
+  })
+
+  test('should be able to click Add button element', () => {
+    const addBtn = screen.getByRole('button', { name: 'Add' })
+    userEvent.click(addBtn)
+    expect(addBtn).toBeInTheDocument()
+  })
+})
+
+describe('should render Add Bank Account Component with data', () => {
+  beforeEach(() => {
+    render(<AddBankAccount backButtonHandler={jest.fn()} />, {
+      preloadedState: {
+        panDetails: {
+          bankInfo: mockBankInformation.bankAccountInfo,
+          isLoading: ApiLoadingState.succeeded,
+          editBankAccount: {} as BankInfo,
+          error: 0,
+        },
+      },
+    })
+  })
+
+  test('Add button should be enabled ', async () => {
+    const bankActNo = screen.getByPlaceholderText(accountNumber)
+    userEvent.type(bankActNo, '134457921')
+    expect(bankActNo).toHaveValue('134457921')
+
+    const ifscCode = screen.getByPlaceholderText(code)
+    userEvent.type(ifscCode, 'ABCD1234')
+    expect(ifscCode).toHaveValue('ABCD1234')
+
+    const bankName = screen.getByTestId(selectName)
+    userEvent.selectOptions(bankName, [''])
+    expect(bankName).toHaveValue('')
+
+    const addBtn = screen.getByTestId(save)
+    userEvent.click(addBtn)
+    await waitFor(() => {
+      expect(addBtn).toBeDisabled()
+    })
   })
 })
