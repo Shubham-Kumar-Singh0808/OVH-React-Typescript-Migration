@@ -7,10 +7,14 @@ export const priceModelList: GetList[] = [
   { id: 4, name: 'T&M' },
 ]
 export const healthList = [
-  { label: 'Gray', name: 'Project not yet started' },
-  { label: 'Green', name: 'Good' },
-  { label: 'Orange', name: 'Critical' },
-  { label: 'Red', name: 'Danger' },
+  {
+    label: 'Gray',
+    name: 'Project not yet started',
+    backgroundColor: 'opt-bg-gray',
+  },
+  { label: 'Green', name: 'Good', backgroundColor: 'opt-bg-green' },
+  { label: 'Orange', name: 'Critical', backgroundColor: 'opt-bg-orange' },
+  { label: 'Red', name: 'Danger', backgroundColor: 'opt-bg-danger' },
 ]
 
 export const ticketStatusList = [

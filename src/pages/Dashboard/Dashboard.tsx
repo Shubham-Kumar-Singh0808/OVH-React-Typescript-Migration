@@ -57,7 +57,7 @@ const Dashboard = (): JSX.Element => {
     )
     dispatch(reduxServices.holidays.getUpcomingHolidays())
     dispatch(reduxServices.earnedLeaves.getFinancialYear())
-    dispatch(reduxServices.employeeLeaveSummary.getEmployeeLeaveSummary())
+    dispatch(reduxServices.earnedLeaves.getLeaveSummary())
     dispatch(reduxServices.weeklyTimeInOffice.getEmployeeTimeInOffice())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingTrainings())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingEvents())
