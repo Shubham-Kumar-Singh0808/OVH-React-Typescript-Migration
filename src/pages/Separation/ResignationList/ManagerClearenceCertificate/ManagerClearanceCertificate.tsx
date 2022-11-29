@@ -22,7 +22,7 @@ const ManagerClearanceCertificate = (): JSX.Element => {
   }, [managerClearanceDetails])
   return (
     <>
-      {toggle === 'clearanceCertificate' && (
+      {toggle === '' && (
         <>
           <OCard
             className="mb-4 myprofile-wrapper"

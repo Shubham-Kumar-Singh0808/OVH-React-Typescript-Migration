@@ -256,6 +256,13 @@ const ResignationManagerClearanceCertificate = React.lazy(
     ),
 )
 
+const ResignationHRClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/HRClearanceCertificate/HRClearanceCertificate'
+    ),
+)
+
 const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
 )
@@ -563,6 +570,11 @@ const routes = [
     path: '/ClearanceCertificateManager',
     name: 'Resignation Clearence CertificateManager',
     component: ResignationManagerClearanceCertificate,
+  },
+  {
+    path: '/ClearanceCertificateHR',
+    name: 'Resignation HR Clearence CertificateManager',
+    component: ResignationHRClearanceCertificate,
   },
 ]
 

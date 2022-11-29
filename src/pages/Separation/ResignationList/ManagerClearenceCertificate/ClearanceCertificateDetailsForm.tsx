@@ -221,15 +221,6 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
             <CRow className="mt-1 mb-0 align-items-center">
               <CFormLabel className="col-sm-3 col-form-label text-end p-1">
                 Comments:
-                <span
-                  className={
-                    isActiveValue === false || editCCDetails?.comments
-                      ? 'text-white'
-                      : 'text-danger'
-                  }
-                >
-                  *
-                </span>
               </CFormLabel>
               {isCCDetailsEdit &&
               managerClearanceDetails[0]?.seperationId === separationId ? (

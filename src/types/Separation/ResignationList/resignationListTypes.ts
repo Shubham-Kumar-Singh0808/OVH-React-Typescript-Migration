@@ -67,7 +67,7 @@ export type ResignationListSliceState = {
   currentPage: number
   pageSize: number
   toggle: string
-  // setToggle: (value: string) => void
+  checkExitFeedBackForm: CheckExitFeedBackForm
 }
 
 export type ExportResignationListDataProps = {
@@ -173,4 +173,28 @@ export type UpdateClearanceDetails = {
   seperationEmpId: number
   seperationEmpName: string
   seperationId: number
+}
+
+export type CheckExitFeedBackForm = {
+  exitFeedBackId: number
+  employeeId: number
+  separationId: number
+  primaryReasonId: number
+  primaryReasonName: string
+  otherCommnets: string
+  salary: string
+  opportunityForGrowth: string
+  recognitionOfwork: string
+  promotion: string
+  educationalBackground: string
+  personelPolicies: string
+  organisationCulture: string
+  roleClarity: string
+  superiorGuidance: string
+  expectations: string
+  expectationsFulfilled: string
+  likeAboutCompany: string
+  dislikeAboutCompany: string
+  joinLater: string
+  employeeName: string
 }

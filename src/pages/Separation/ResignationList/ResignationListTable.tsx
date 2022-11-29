@@ -105,6 +105,16 @@ const ResignationListTable = ({
     )
   }
 
+  const resignationHRClearanceButtonHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'HR',
+      }),
+    )
+  }
+
   const handleConfirmInitiateResignation = async () => {
     setIsInitiateModalVisible(false)
     const initiateResignationResultAction = await dispatch(
@@ -139,12 +149,9 @@ const ResignationListTable = ({
       )
     }
   }
-  console.log(location)
   useEffect(() => {
     if (location.pathname === '/resignationList') {
-      dispatch(
-        reduxServices.resignationList.actions.toggle('clearanceCertificate'),
-      )
+      dispatch(reduxServices.resignationList.actions.toggle(''))
     }
   }, [location.pathname])
   return (
@@ -255,12 +262,19 @@ const ResignationListTable = ({
                             >
                               <i className="fa fa-id-badge text-white"></i>
                             </CButton>
-                            <CButton
-                              size="sm"
-                              className={resignationItem.hrCcCss}
-                            >
-                              <i className="fa fa-user-circle text-white"></i>
-                            </CButton>
+                            <Link to={`/ClearanceCertificateHR`}>
+                              <CButton
+                                size="sm"
+                                className={resignationItem.hrCcCss}
+                                onClick={() =>
+                                  resignationHRClearanceButtonHandler(
+                                    resignationItem.separationId,
+                                  )
+                                }
+                              >
+                                <i className="fa fa-user-circle text-white"></i>
+                              </CButton>
+                            </Link>
                           </>
                         ) : (
                           userAccess?.viewaccess && (
