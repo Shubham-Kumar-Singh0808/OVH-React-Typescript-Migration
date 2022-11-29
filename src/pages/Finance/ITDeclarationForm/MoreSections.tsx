@@ -28,6 +28,7 @@ const MoreSections = ({
       customAmount: '',
     },
   ])
+  const [toCancelInvestmentId, setToCancelInvestmentId] = useState(0)
   const [showSubTotalAmount, setShowSubTotalAmount] = useState<number>(0)
 
   const handleClickInvestment = () => {
@@ -45,9 +46,10 @@ const MoreSections = ({
 
   const handleClickRemoveInvestment = () => {
     const newInvestmentList = investmentList.filter(
-      (investment) => investment.investmentId,
+      (investment) => investment.id !== toCancelInvestmentId,
     )
     setInvestmentList(newInvestmentList)
+    setCounter(counter - 1)
   }
 
   return (
