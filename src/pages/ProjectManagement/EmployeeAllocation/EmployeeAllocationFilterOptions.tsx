@@ -232,7 +232,7 @@ const EmployeeAllocationFilterOptions = ({
     <>
       <CRow className="employeeAllocation-form">
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Select:</CFormLabel>
+          <CFormLabel className="mt-2">Select:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -256,7 +256,7 @@ const EmployeeAllocationFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Employee Billing Status:</CFormLabel>
+          <CFormLabel>Employee Billing Status:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -277,7 +277,7 @@ const EmployeeAllocationFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Allocation Status:</CFormLabel>
+          <CFormLabel>Allocation Status:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -319,7 +319,7 @@ const EmployeeAllocationFilterOptions = ({
           </>
         )}
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Technology:</CFormLabel>
+          <CFormLabel className="mt-2">Technology:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect

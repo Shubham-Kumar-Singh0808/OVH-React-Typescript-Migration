@@ -187,6 +187,10 @@ const CategoryListTable = (): JSX.Element => {
     }
   }
 
+  const handleCancelUpdate = () => {
+    setIsCategoryDetailsEdit(false)
+  }
+
   return (
     <>
       <CTable striped align="middle">
@@ -258,17 +262,32 @@ const CategoryListTable = (): JSX.Element => {
                 <CTableDataCell scope="row">
                   {isCategoryDetailsEdit &&
                   ticketCategory.categoryId === selectCategoryId ? (
-                    <CTooltip content="Save">
-                      <CButton
-                        color="success"
-                        data-testid={`sh-save-btn${index}`}
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        disabled={!isSaveButtonEnabled}
-                        onClick={saveCategoryButtonHandler}
-                      >
-                        <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                      </CButton>
-                    </CTooltip>
+                    <>
+                      <CTooltip content="Save">
+                        <CButton
+                          color="success"
+                          data-testid={`sh-save-btn${index}`}
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          disabled={!isSaveButtonEnabled}
+                          onClick={saveCategoryButtonHandler}
+                        >
+                          <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                      <CTooltip content="Cancel">
+                        <CButton
+                          className="btn-ovh-employee-list cursor-pointer"
+                          color="danger btn-ovh me-1"
+                          data-testid="cl-cancel-btn"
+                          onClick={handleCancelUpdate}
+                        >
+                          <i
+                            className="fa fa-times text-white sh-fa-times"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </CTooltip>
+                    </>
                   ) : (
                     <>
                       {userAccessToCategoryActions?.updateaccess && (
@@ -291,24 +310,24 @@ const CategoryListTable = (): JSX.Element => {
                           </CButton>
                         </CTooltip>
                       )}
+                      {userAccessToCategoryActions?.deleteaccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            color="danger btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              handleShowCategoryDeleteModal(
+                                ticketCategory.categoryName,
+                                ticketCategory.categoryId,
+                              )
+                            }
+                            data-testid={`cl-delete-btn${index}`}
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                     </>
-                  )}
-                  {userAccessToCategoryActions?.deleteaccess && (
-                    <CTooltip content="Delete">
-                      <CButton
-                        color="danger btn-ovh me-1"
-                        className="btn-ovh-employee-list"
-                        onClick={() =>
-                          handleShowCategoryDeleteModal(
-                            ticketCategory.categoryName,
-                            ticketCategory.categoryId,
-                          )
-                        }
-                        data-testid={`cl-delete-btn${index}`}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
-                    </CTooltip>
                   )}
                 </CTableDataCell>
               </CTableRow>

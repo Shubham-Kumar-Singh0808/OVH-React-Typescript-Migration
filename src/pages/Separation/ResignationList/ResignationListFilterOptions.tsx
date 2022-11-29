@@ -31,7 +31,7 @@ const ResignationListFilterOptions = ({
   const [dateError, setDateError] = useState<boolean>(false)
   const [selectFromDate, setSelectFromDate] = useState<Date | string>()
   const [selectToDate, setSelectToDate] = useState<Date | string>()
-  const [status, setStatus] = useState<string>('ALL')
+  const [status, setStatus] = useState<string>('All')
   const [employeeStatus, setEmployeeStatus] = useState<string>()
   const [searchInputValue, setSearchInputValue] = useState<string>('')
   const listSize = useTypedSelector(
@@ -83,7 +83,7 @@ const ResignationListFilterOptions = ({
     dispatch(
       reduxServices.resignationList.getResignationList({
         dateSelection: Select,
-        empStatus: employeeStatus as string,
+        empStatus: (employeeStatus as string) || '',
         endIndex: pageSize * currentPage,
         from: selectFromDate
           ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
