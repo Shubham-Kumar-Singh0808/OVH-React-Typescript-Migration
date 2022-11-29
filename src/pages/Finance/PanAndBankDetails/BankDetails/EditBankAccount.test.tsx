@@ -73,7 +73,7 @@ describe('should render Edit Bank Account Component with data', () => {
     const updateButton = screen.getByTestId(update)
     userEvent.click(updateButton)
     await waitFor(() => {
-      expect(updateButton).toBeEnabled()
+      expect(updateButton).toBeDisabled()
     })
   })
 })

@@ -49,6 +49,7 @@ const BankDetails = ({
     setIsDeleteModalVisible(true)
     setDeleteBankId(id)
   }
+
   return (
     <>
       <CCardHeader>

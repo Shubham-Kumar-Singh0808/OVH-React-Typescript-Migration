@@ -8,7 +8,6 @@ import {
   CButton,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -27,7 +26,6 @@ const EditBankAccount = ({
   const [bankAccountNumberExist, setBankAccountNumberExist] = useState('')
 
   const dispatch = useAppDispatch()
-  const history = useHistory()
 
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
@@ -122,7 +120,7 @@ const EditBankAccount = ({
         updateBankAccountResultAction,
       )
     ) {
-      history.push('/myFinance')
+      backButtonHandler()
       dispatch(reduxServices.app.actions.addToast(updateToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (editBankInfo.bankAccountNumber) {
