@@ -36,7 +36,7 @@ const EditBankAccount = ({
     reduxServices.bankDetails.selectors.bankList,
   )
   const getEditBankAccount = useTypedSelector(
-    reduxServices.panDetails.selectors.bankAccountDetails,
+    reduxServices.panDetails.selectors.editBankAccountDetails,
   )
 
   useEffect(() => {

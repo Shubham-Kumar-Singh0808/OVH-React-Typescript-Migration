@@ -77,3 +77,14 @@ describe('should render Edit Bank Account Component with data', () => {
     })
   })
 })
+const mockSetToggle = jest.fn()
+
+describe('Edit Bank Account Component Testing', () => {
+  test('should render Edit Bank Account component with out crashing', () => {
+    render(<EditBankAccount backButtonHandler={mockSetToggle} />)
+    const backButtonElement = screen.getByTestId('back-button')
+    expect(backButtonElement).toBeInTheDocument()
+    userEvent.click(backButtonElement)
+    expect(mockSetToggle).toHaveBeenCalledTimes(1)
+  })
+})

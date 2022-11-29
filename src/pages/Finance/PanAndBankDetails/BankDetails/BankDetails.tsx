@@ -32,6 +32,10 @@ const BankDetails = ({
     reduxServices.panDetails.selectors.bankDetails,
   )
 
+  console.log(bankDetail.bankAccountInfo)
+  console.log(bankDetail.finance)
+  console.log(bankDetail)
+
   const deletedToast = (
     <OToast
       toastColor="success"

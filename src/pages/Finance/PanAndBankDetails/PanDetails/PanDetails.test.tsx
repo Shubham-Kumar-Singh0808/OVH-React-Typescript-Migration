@@ -32,6 +32,10 @@ describe('Pan Details Component Testing', () => {
       userEvent.click(editBtnElement)
     })
   })
+  test('should render  checkbox', () => {
+    const cb = screen.findByTestId('ch-All')
+    expect(cb).toBeTruthy()
+  })
 })
 
 describe('should render Pan Details Component without data', () => {

@@ -111,7 +111,7 @@ const isLoading = (state: RootState): LoadingState => state.panDetails.isLoading
 const bankDetails = (state: RootState): BankInformation =>
   state.panDetails.bankInfo
 
-const bankAccountDetails = (state: RootState): BankInfo =>
+const editBankAccountDetails = (state: RootState): BankInfo =>
   state.panDetails.editBankAccount
 
 const panDetailsThunk = {
@@ -123,7 +123,7 @@ const panDetailsThunk = {
 const panDetailsSelectors = {
   isLoading,
   bankDetails,
-  bankAccountDetails,
+  editBankAccountDetails,
 }
 
 export const panDetailService = {
