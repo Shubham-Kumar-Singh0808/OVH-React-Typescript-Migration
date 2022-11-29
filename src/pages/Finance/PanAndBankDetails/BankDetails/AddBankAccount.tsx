@@ -48,8 +48,8 @@ const AddBankAccount = ({
   ) => {
     const { name, value } = e.target
     if (name === 'number') {
-      const accountNumber = value.replace(/\D/g, '')
-      setIsAccountNumber(accountNumber)
+      const accountNum = value.replace(/\D/g, '')
+      setIsAccountNumber(accountNum)
     } else if (name === 'bankIfscCode') {
       const ifscCode = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setBankIfscCode(ifscCode)
