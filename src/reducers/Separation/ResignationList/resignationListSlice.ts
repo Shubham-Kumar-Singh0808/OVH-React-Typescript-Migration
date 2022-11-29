@@ -127,11 +127,11 @@ const initialResignationListState: ResignationListSliceState = {
   pageSize: 20,
   separationTimeLine: {} as SeparationTimeLine,
   clearanceDetails: [],
-  toggle: '',
+  toggle: 'clearanceCertificate',
 }
 
 const resignationListSlice = createSlice({
-  name: 'support',
+  name: 'resignationList',
   initialState: initialResignationListState,
   reducers: {
     setCurrentPage: (state, action) => {

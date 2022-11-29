@@ -7,29 +7,17 @@ import {
   CFormTextarea,
   CFormCheck,
 } from '@coreui/react-pro'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const ManagerClearanceForm = (): JSX.Element => {
   const [isActive, setIsActive] = useState<string>('false')
   const [textArea, setTextArea] = useState<string>('')
-
+  const dispatch = useAppDispatch()
   const getAllResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
-
-  const managerClearanceDetails = useTypedSelector(
-    reduxServices.resignationList.selectors.managerClearanceDetails,
-  )
-
-  useEffect(() => {
-    if (managerClearanceDetails?.length > 0) {
-      dispatch(reduxServices.resignationList.actions.toggle('ClearanceDetails'))
-    }
-  }, [managerClearanceDetails])
-
-  const dispatch = useAppDispatch()
 
   const SubmitClearanceCertificateHandler = async () => {
     const addTemplateTypeResultAction = await dispatch(

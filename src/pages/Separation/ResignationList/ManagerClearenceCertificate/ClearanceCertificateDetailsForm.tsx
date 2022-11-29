@@ -17,7 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const ClearanceCertificateDetailsForm = (): JSX.Element => {
   const [isCCDetailsEdit, setIsCCDetailsEdit] = useState<boolean>(false)
-  const [isActiveValue, setIsActiveValue] = useState<string>('false')
+  const [isActiveValue, setIsActiveValue] = useState<boolean>()
   const initialCCDetails = {} as UpdateClearanceDetails
   const [editCCDetails, setEditCCDetails] = useState(initialCCDetails)
   const dispatch = useAppDispatch()
@@ -35,17 +35,25 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
     setIsCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditCCDetails(updateClearanceDetails)
-    setIsActiveValue(updateClearanceDetails?.isDue as string)
   }
 
-  const handleEditMailTemplateHandler = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
+  const handleEditCCDetailsHandler = (
+    event:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-
-    setEditCCDetails((values) => {
-      return { ...values, ...{ [name]: value } }
-    })
+    if (name === 'activeState') {
+      setIsActiveValue(value === 'true')
+      const activeStatus = value === 'true'
+      setEditCCDetails((values) => {
+        return { ...values, ...{ [name]: activeStatus } }
+      })
+    } else {
+      setEditCCDetails((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
   }
 
   const SubmitClearanceCertificateHandler = async () => {
@@ -57,7 +65,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: managerClearanceDetails[0]?.employeeId,
         employeeName: managerClearanceDetails[0]?.employeeName,
-        isDue: isActiveValue,
+        isDue: isActiveValue as unknown as boolean,
         seperationEmpId: managerClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: managerClearanceDetails[0]?.seperationEmpName,
         seperationId: managerClearanceDetails[0]?.seperationId,
@@ -78,7 +86,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
     }
   }
 
-  const cancelMailTemplateTypeButtonHandler = () => {
+  const cancelMangerCCDetailsButtonHandler = () => {
     setIsCCDetailsEdit(false)
   }
   const due = managerClearanceDetails[0]?.isDue ? 'Due' : 'No Due'
@@ -109,7 +117,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                     <CButton
                       color="info"
                       className="btn-ovh me-1"
-                      onClick={cancelMailTemplateTypeButtonHandler}
+                      onClick={cancelMangerCCDetailsButtonHandler}
                     >
                       <i className="fa fa-arrow-left  me-1"></i>Back
                     </CButton>
@@ -181,27 +189,27 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
               managerClearanceDetails[0]?.seperationId === separationId ? (
                 <CCol sm={3}>
                   <CFormCheck
-                    inline
+                    data-testid="active"
+                    className="mt-2 sh-hover-handSymbol"
                     type="radio"
-                    name="Yes"
+                    name="activeState"
                     id="yes"
-                    data-testId="yes"
                     value="true"
                     label="Yes"
-                    defaultChecked
-                    checked={isActiveValue === 'true'}
-                    onChange={(e) => setIsActiveValue(e.target.value)}
+                    inline
+                    checked={isActiveValue as unknown as boolean}
+                    onChange={handleEditCCDetailsHandler}
                   />
                   <CFormCheck
-                    inline
+                    className="mt-2 sh-hover-handSymbol"
                     type="radio"
-                    name="No"
-                    id="No"
-                    data-testId="due-test"
-                    value="false"
+                    name="activeState"
+                    id="no"
                     label="No"
-                    checked={isActiveValue === 'false'}
-                    onChange={(e) => setIsActiveValue(e.target.value)}
+                    value="false"
+                    inline
+                    checked={!isActiveValue}
+                    onChange={handleEditCCDetailsHandler}
                   />
                 </CCol>
               ) : (
@@ -215,7 +223,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                 Comments:
                 <span
                   className={
-                    isActiveValue === 'false' || editCCDetails?.comments
+                    isActiveValue === false || editCCDetails?.comments
                       ? 'text-white'
                       : 'text-danger'
                   }
@@ -231,7 +239,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                     id="comments"
                     name="comments"
                     value={editCCDetails?.comments}
-                    onChange={handleEditMailTemplateHandler}
+                    onChange={handleEditCCDetailsHandler}
                   ></CFormTextarea>
                 </CCol>
               ) : (
@@ -253,8 +261,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                       color="success"
                       onClick={SubmitClearanceCertificateHandler}
                       disabled={
-                        isActiveValue === 'true' &&
-                        editCCDetails?.comments === ''
+                        isActiveValue === true && editCCDetails?.comments === ''
                       }
                     >
                       Update

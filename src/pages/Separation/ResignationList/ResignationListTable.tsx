@@ -10,7 +10,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -41,6 +41,7 @@ const ResignationListTable = ({
     reduxServices.resignationList.selectors.isLoading,
   )
   const dispatch = useAppDispatch()
+  const location = useLocation()
 
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
@@ -138,6 +139,14 @@ const ResignationListTable = ({
       )
     }
   }
+  console.log(location)
+  useEffect(() => {
+    if (location.pathname === '/resignationList') {
+      dispatch(
+        reduxServices.resignationList.actions.toggle('clearanceCertificate'),
+      )
+    }
+  }, [location.pathname])
   return (
     <>
       <>
