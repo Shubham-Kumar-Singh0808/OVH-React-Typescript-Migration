@@ -227,7 +227,9 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                 </CCol>
               ) : (
                 <CCol sm={3}>
-                  <p className="mb-0">{managerClearanceDetails[0]?.comments}</p>
+                  <p className="mb-0">
+                    {managerClearanceDetails[0]?.comments || 'N/A'}
+                  </p>
                 </CCol>
               )}
             </CRow>

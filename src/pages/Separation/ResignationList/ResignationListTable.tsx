@@ -94,7 +94,7 @@ const ResignationListTable = ({
     dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
   }
 
-  const resignationClearenceManagerButtonHandler = (separationId: number) => {
+  const resignationClearanceManagerButtonHandler = (separationId: number) => {
     dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
     dispatch(
       reduxServices.resignationList.getClearanceDetails({
@@ -220,7 +220,7 @@ const ResignationListTable = ({
                                   size="sm"
                                   className={resignationItem.managerCcCss}
                                   onClick={() =>
-                                    resignationClearenceManagerButtonHandler(
+                                    resignationClearanceManagerButtonHandler(
                                       resignationItem.separationId,
                                     )
                                   }
@@ -232,28 +232,28 @@ const ResignationListTable = ({
                             <CButton
                               // color="info"
                               size="sm"
-                              className={resignationItem.managerCcCss}
+                              className={resignationItem.itCcCss}
                             >
                               <i className="fa fa-laptop text-white"></i>
                             </CButton>
                             <CButton
                               // color="info"
                               size="sm"
-                              className={resignationItem.managerCcCss}
+                              className={resignationItem.finanaceCcCss}
                             >
                               <i className="fa fa-calculator text-white"></i>
                             </CButton>
                             <CButton
                               // color="info"
                               size="sm"
-                              className={resignationItem.managerCcCss}
+                              className={resignationItem.adminCcCss}
                             >
                               <i className="fa fa-id-badge text-white"></i>
                             </CButton>
                             <CButton
                               // color="info"
                               size="sm"
-                              className="btn-ovh me-2"
+                              className={resignationItem.hrCcCss}
                             >
                               <i className="fa fa-user-circle text-white"></i>
                             </CButton>
