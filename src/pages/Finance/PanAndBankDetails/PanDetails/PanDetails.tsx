@@ -89,7 +89,10 @@ const PanDetails = (): JSX.Element => {
       </CRow>
       <CCol sm={5}>
         <CRow>
-          <CFormLabel className="col-sm-4 col-form-label">
+          <CFormLabel
+            className="col-sm-4 col-form-label"
+            data-testid="pfNumber"
+          >
             <b>P.F. A/C No</b>
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
@@ -101,6 +104,7 @@ const PanDetails = (): JSX.Element => {
                 className="mt-2"
                 checked={isChecked}
                 onChange={(e) => setIsChecked(e.target.checked)}
+                data-testid="pfNumber"
               />
               <CFormInput
                 className="eventType-editInput ms-2"
@@ -124,7 +128,10 @@ const PanDetails = (): JSX.Element => {
       </CCol>
       <CCol sm={5}>
         <CRow>
-          <CFormLabel className="col-sm-4 col-form-label">
+          <CFormLabel
+            className="col-sm-4 col-form-label"
+            data-testid="uanNumber"
+          >
             <b>UAN</b>
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
@@ -153,7 +160,10 @@ const PanDetails = (): JSX.Element => {
       </CCol>
       <CCol sm={5}>
         <CRow>
-          <CFormLabel className="col-sm-4 col-form-label">
+          <CFormLabel
+            className="col-sm-4 col-form-label"
+            data-testid="panCardNumber"
+          >
             <b>Pan Card No</b>
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
@@ -182,7 +192,10 @@ const PanDetails = (): JSX.Element => {
       </CCol>
       <CCol sm={5}>
         <CRow>
-          <CFormLabel className="col-sm-4 col-form-label">
+          <CFormLabel
+            className="col-sm-4 col-form-label"
+            data-testid="aadharNumber"
+          >
             <b>Aadhar Card No</b>
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
