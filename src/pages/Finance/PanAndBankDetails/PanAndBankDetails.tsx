@@ -11,7 +11,6 @@ const PanAndBankDetails = (): JSX.Element => {
 
   return (
     <>
-      {' '}
       {toggle === '' && (
         <>
           <OCard

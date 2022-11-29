@@ -1,4 +1,11 @@
-import { CButton, CCol, CFormLabel, CRow, CTooltip } from '@coreui/react-pro'
+import {
+  CButton,
+  CCol,
+  CFormLabel,
+  CLink,
+  CRow,
+  CTooltip,
+} from '@coreui/react-pro'
 import React, { SyntheticEvent, useState } from 'react'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -77,7 +84,7 @@ const EditPanDetails = ({
       )
     }
   }
-
+  console.log(bankDetail.finance?.financeFileName)
   return (
     <>
       <CCol sm={5}>
@@ -96,7 +103,6 @@ const EditPanDetails = ({
                   data-testid="attachment"
                   type="file"
                   name="attachment"
-                  // value={editPanData?.financeFilePath}
                   onChange={(element: SyntheticEvent) =>
                     onChangeAttachmentHandler(
                       element.currentTarget as HTMLInputElement,
@@ -106,9 +112,22 @@ const EditPanDetails = ({
               </CCol>
             </CCol>
           ) : (
-            <CCol sm={5} className="sh-alignment">
-              {bankDetail.finance?.financeFileName || 'N/A'}
-            </CCol>
+            <>
+              <CCol sm={5} className="sh-alignment">
+                {bankDetail.finance?.financeFilePath || 'N/A'}
+              </CCol>
+              <CCol sm={5} className="sh-alignment">
+                <CLink
+                  className="cursor-pointer sh-hive-activity-link"
+                  // onClick={() =>
+                  //   handleDownloadFeedbackForm(feedbackForm.feedBackFormName)
+                  // }
+                >
+                  <i className="fa fa-paperclip me-1"></i>
+                  Doc
+                </CLink>
+              </CCol>
+            </>
           )}
         </CRow>
       </CCol>
