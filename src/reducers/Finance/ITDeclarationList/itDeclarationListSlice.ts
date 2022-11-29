@@ -40,7 +40,14 @@ const getITDeclarationForm = createAsyncThunk(
 const itDeclarationListSlice = createSlice({
   name: 'itDeclarationList',
   initialState: initialITDeclarationListState,
-  reducers: {},
+  reducers: {
+    setSearchEmployee: (state, action) => {
+      state.searchEmployee = action.payload as string
+    },
+    clearEmployees: (state) => {
+      state.itDeclarationForms = []
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCycles.fulfilled, (state, action) => {

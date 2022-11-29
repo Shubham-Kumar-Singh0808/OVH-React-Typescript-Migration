@@ -112,7 +112,7 @@ const ITDeclarationListTable = (
         </>
       ) : (
         <CRow className="mt-4">
-          <h5>No Records Found... </h5>
+          <strong>No Records Found... </strong>
         </CRow>
       )}
     </>

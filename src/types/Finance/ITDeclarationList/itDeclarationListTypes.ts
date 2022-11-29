@@ -51,6 +51,8 @@ export type ITDeclarationListApiProps = {
   endIndex?: number
   startIndex?: number
   searchEmployee?: string
+  searchname?: string
+  investmentCycle?: string | number
 }
 
 export type ITDeclarationListTableProps = {
@@ -59,6 +61,13 @@ export type ITDeclarationListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
+export type ITDeclarationListOptionsProps = {
+  investmentCycle: string | undefined
+  setInvestmentCycle: (value: string) => void
+  searchInput: string
+  setSearchInput: (value: string) => void
 }
 
 export type ITDeclarationListSliceState = {

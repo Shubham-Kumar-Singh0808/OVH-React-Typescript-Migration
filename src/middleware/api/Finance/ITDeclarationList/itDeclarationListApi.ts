@@ -25,7 +25,7 @@ const getITDeclarationForm = async (
     url: itDeclarationListApiConfig.getITDeclarationForm,
     method: AllowedHttpMethods.get,
     params: {
-      cycleId: props.cycleId ?? '',
+      cycleId: props.investmentCycle ?? '',
       endIndex: props.endIndex ?? 20,
       employeeName: props.employeeName ?? '',
       startIndex: props.startIndex ?? 0,
@@ -36,7 +36,26 @@ const getITDeclarationForm = async (
   return response.data
 }
 
+const exportITDeclarationList = async (
+  props: ITDeclarationListApiProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.exportITDeclarationList,
+    method: AllowedHttpMethods.get,
+    params: {
+      cycleId: props.investmentCycle ?? '',
+      searchname: props.employeeName ?? '',
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
   getITDeclarationForm,
+  exportITDeclarationList,
 }

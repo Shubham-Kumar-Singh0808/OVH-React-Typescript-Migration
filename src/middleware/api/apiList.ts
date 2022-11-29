@@ -607,4 +607,5 @@ export const resignationListApiConfig: ResignationListApi = {
 export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getCycles: apiPrefix + '/itDeclaration/getCycles',
   getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
+  exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
 }

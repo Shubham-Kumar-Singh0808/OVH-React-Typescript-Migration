@@ -9,18 +9,49 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { itDeclarationListApi } from '../../../middleware/api/Finance/ITDeclarationList/itDeclarationListApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ITDeclarationListOptionsProps } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import { downloadFile } from '../../../utils/helper'
 
-const FilterOptions = (): JSX.Element => {
+const FilterOptions = ({
+  investmentCycle,
+  setInvestmentCycle,
+  searchInput,
+  setSearchInput,
+}: ITDeclarationListOptionsProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const cycles = useTypedSelector(
     reduxServices.itDeclarationList.selectors.cycles,
   )
+  const searchEmployee = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.searchEmployee,
+  )
+  const handleSearch = () => {
+    dispatch(
+      reduxServices.itDeclarationList.actions.setSearchEmployee(searchInput),
+    )
+  }
 
-  useEffect(() => {
-    dispatch(reduxServices.itDeclarationList.getCycles())
-  }, [dispatch])
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.itDeclarationList.actions.setSearchEmployee(searchInput),
+      )
+    }
+  }
+
+  const handleExportCertificatesData = async () => {
+    const itDeclarationListDownload =
+      await itDeclarationListApi.exportITDeclarationList({
+        investmentCycle,
+        searchname: searchInput,
+      })
+    downloadFile(itDeclarationListDownload, 'ITDeclarationList.csv')
+  }
 
   return (
     <>
@@ -35,8 +66,8 @@ const FilterOptions = (): JSX.Element => {
               name="investmentCycle"
               id="cycle"
               data-testid="investment-cycle"
-              //   onChange={(e) => setSelectCategory(e.target.value)}
-              //   value={selectCategory}
+              onChange={(e) => setInvestmentCycle(e.target.value)}
+              value={investmentCycle}
             >
               <option value="">Select Category</option>
               {cycles &&
@@ -45,9 +76,9 @@ const FilterOptions = (): JSX.Element => {
                   .sort((catg1, catg2) =>
                     catg1.cycleName.localeCompare(catg2.cycleName),
                   )
-                  ?.map((category) => (
-                    <option key={category.cycleId} value={category.cycleName}>
-                      {category.cycleName}
+                  ?.map((cycle, index) => (
+                    <option key={index} value={cycle.cycleId}>
+                      {cycle.cycleName}
                     </option>
                   ))}
             </CFormSelect>
@@ -70,6 +101,7 @@ const FilterOptions = (): JSX.Element => {
               color="info btn-ovh me-1"
               className="text-white"
               data-testid="export-button"
+              onClick={handleExportCertificatesData}
             >
               <i className="fa fa-plus me-1"></i>Click to Export
             </CButton>
@@ -83,20 +115,20 @@ const FilterOptions = (): JSX.Element => {
                 placeholder="Search By Employee Name"
                 aria-label="Search"
                 aria-describedby="button-addon2"
-                // value={searchInput}
-                // onChange={(e) => {
-                //   setSearchInput(e.target.value)
-                // }}
-                // onKeyDown={handleSearchButton}
+                value={searchInput}
+                onChange={(e) => {
+                  setSearchInput(e.target.value)
+                }}
+                onKeyDown={handleSearchByEnter}
               />
               <CButton
-                disabled
+                disabled={!searchInput}
                 data-testid="multi-search-btn"
                 className="cursor-pointer"
                 type="button"
                 color="info"
                 id="button-addon2"
-                // onClick={multiSearchButtonHandler}
+                onClick={handleSearch}
               >
                 <i className="fa fa-search"></i>
               </CButton>

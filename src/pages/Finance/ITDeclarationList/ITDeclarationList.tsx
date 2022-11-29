@@ -1,12 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import FilterOptions from './FilterOptions'
 import ITDeclarationListTable from './ITDeclarationListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const ITDeclarationList = (): JSX.Element => {
+  const [investmentCycle, setInvestmentCycle] = useState<string>('3')
+  const [searchInput, setSearchInput] = useState<string>('')
   const dispatch = useAppDispatch()
 
   const isLoading = useTypedSelector(
@@ -37,11 +42,11 @@ const ITDeclarationList = (): JSX.Element => {
       reduxServices.itDeclarationList.getITDeclarationForm({
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
-        cycleId: 2,
-        searchEmployee,
+        investmentCycle,
+        employeeName: searchEmployee,
       }),
     )
-  }, [currentPage, dispatch, pageSize, searchEmployee])
+  }, [currentPage, dispatch, pageSize, searchEmployee, investmentCycle])
 
   return (
     <>
@@ -51,14 +56,25 @@ const ITDeclarationList = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <FilterOptions />
-        <ITDeclarationListTable
-          paginationRange={paginationRange}
-          setPageSize={setPageSize}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          pageSize={pageSize}
+        <FilterOptions
+          investmentCycle={investmentCycle}
+          setInvestmentCycle={setInvestmentCycle}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
         />
+        {isLoading !== ApiLoadingState.loading ? (
+          <ITDeclarationListTable
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        ) : (
+          <>
+            <OLoadingSpinner type={LoadingType.PAGE} />
+          </>
+        )}
       </OCard>
     </>
   )
