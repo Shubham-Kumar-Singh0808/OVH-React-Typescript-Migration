@@ -16,11 +16,13 @@ import {
 const MoreSections = ({
   sectionItem,
   handleShowRemoveSectionModal,
+  handleConfirmCancelSection,
 }: {
   sectionItem: Sections
   handleShowRemoveSectionModal: (investId: number, investName: string) => void
+  handleConfirmCancelSection: () => void
 }): JSX.Element => {
-  const [counter, setCounter] = useState(0)
+  const [counter, setCounter] = useState(1)
   const [investmentList, setInvestmentList] = useState<Investment[]>([
     {
       id: counter,
@@ -28,28 +30,29 @@ const MoreSections = ({
       customAmount: '',
     },
   ])
-  const [toCancelInvestmentId, setToCancelInvestmentId] = useState(0)
   const [showSubTotalAmount, setShowSubTotalAmount] = useState<number>(0)
 
   const handleClickInvestment = () => {
     setCounter(counter + 1)
     setInvestmentList([
+      ...investmentList,
       {
         id: counter + 1,
         investmentId: '',
         customAmount: '',
       },
-      ...investmentList,
     ])
   }
-  // console.log(investmentList)
 
-  const handleClickRemoveInvestment = () => {
+  const handleClickRemoveInvestment = (id: number) => {
     const newInvestmentList = investmentList.filter(
-      (investment) => investment.id !== toCancelInvestmentId,
+      (investment) => investment.id !== id,
     )
     setInvestmentList(newInvestmentList)
-    setCounter(counter - 1)
+    // if (newInvestmentList?.length === 0) {
+    //   handleConfirmCancelSection()
+    // }
+    console.log(newInvestmentList.length)
   }
 
   return (
@@ -96,18 +99,21 @@ const MoreSections = ({
             </b>
           </div>
         </CRow>
-        {investmentList?.map((currentSec, index) => {
-          return (
-            <CTable striped responsive key={index}>
-              <CTableBody>
-                <InvestmentTable
-                  setShowSubTotalAmount={setShowSubTotalAmount}
-                  handleClickRemoveInvestment={handleClickRemoveInvestment}
-                />
-              </CTableBody>
-            </CTable>
-          )
-        })}
+        <CTable striped responsive>
+          <CTableBody>
+            {investmentList?.map((currentSec, secIndex) => {
+              return (
+                <React.Fragment key={secIndex}>
+                  <InvestmentTable
+                    setShowSubTotalAmount={setShowSubTotalAmount}
+                    handleClickRemoveInvestment={handleClickRemoveInvestment}
+                    currentSec={currentSec}
+                  />
+                </React.Fragment>
+              )
+            })}
+          </CTableBody>
+        </CTable>
         <div className="clearfix">
           <p className="pull-right txt-subtotal">
             Sub Total: <span>{showSubTotalAmount}</span>

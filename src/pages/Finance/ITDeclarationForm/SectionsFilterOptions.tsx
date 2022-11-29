@@ -146,16 +146,15 @@ const SectionsFilterOptions = (): JSX.Element => {
         sectionList.length > 0 &&
         sectionList?.map((currentSec, index) => {
           return (
-            <>
-              <CRow key={index}>
-                <CCol>
-                  <MoreSections
-                    sectionItem={currentSec}
-                    handleShowRemoveSectionModal={handleShowRemoveSectionModal}
-                  />
-                </CCol>
-              </CRow>
-            </>
+            <CRow key={index}>
+              <CCol>
+                <MoreSections
+                  sectionItem={currentSec}
+                  handleShowRemoveSectionModal={handleShowRemoveSectionModal}
+                  handleConfirmCancelSection={handleConfirmCancelSection}
+                />
+              </CCol>
+            </CRow>
           )
         })}
       <CRow className="mt-3 mb-3">

@@ -9,13 +9,16 @@ import {
 import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { Investment } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
 const InvestmentTable = ({
   setShowSubTotalAmount,
   handleClickRemoveInvestment,
+  currentSec,
 }: {
   setShowSubTotalAmount: (value: number) => void
-  handleClickRemoveInvestment: () => void
+  handleClickRemoveInvestment: (id: number) => void
+  currentSec: Investment
 }): JSX.Element => {
   const investments = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.investments,
@@ -29,7 +32,7 @@ const InvestmentTable = ({
     <>
       <CTableRow>
         <CTableDataCell scope="row">
-          <CCol className="mt-2">*</CCol>
+          <CCol className="mt-2">{currentSec.id}</CCol>
         </CTableDataCell>
         <CTableDataCell scope="row">
           <CCol sm={12}>
@@ -68,7 +71,7 @@ const InvestmentTable = ({
               data-testid={`df-remove-btn`}
               className="btn-ovh-employee-list me-1 text-white"
               size="sm"
-              onClick={handleClickRemoveInvestment}
+              onClick={() => handleClickRemoveInvestment(currentSec.id)}
             >
               <i className="fa fa-minus" aria-hidden="true"></i>
             </CButton>
