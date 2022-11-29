@@ -23,6 +23,7 @@ export type FormSection = {
   sectionName: string
   formInvestmentDTO: FormInvestment[]
 }
+
 export type ITForm = {
   fromDate: string
   grandTotal: number
@@ -43,7 +44,27 @@ export type ITDeclarationFormListResponse = {
   itformlistsize: number
   itforms: ITForm[]
 }
+
+export type ITDeclarationListApiProps = {
+  cycleId?: number
+  employeeName?: string
+  endIndex?: number
+  startIndex?: number
+  searchEmployee?: string
+}
+
+export type ITDeclarationListTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
 export type ITDeclarationListSliceState = {
+  itDeclarationForms: ITForm[]
+  listSize: number
+  searchEmployee: string
   isLoading: LoadingState
   error: ValidationError
   cycles: Cycle[]

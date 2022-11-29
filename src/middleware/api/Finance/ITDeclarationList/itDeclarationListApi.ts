@@ -1,4 +1,8 @@
-import { Cycle } from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import {
+  Cycle,
+  ITDeclarationFormListResponse,
+  ITDeclarationListApiProps,
+} from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -14,6 +18,25 @@ const getCycles = async (): Promise<Cycle[]> => {
   return response.data
 }
 
+const getITDeclarationForm = async (
+  props: ITDeclarationListApiProps,
+): Promise<ITDeclarationFormListResponse> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.getITDeclarationForm,
+    method: AllowedHttpMethods.get,
+    params: {
+      cycleId: props.cycleId ?? '',
+      endIndex: props.endIndex ?? 20,
+      employeeName: props.employeeName ?? '',
+      startIndex: props.startIndex ?? 0,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
+  getITDeclarationForm,
 }
