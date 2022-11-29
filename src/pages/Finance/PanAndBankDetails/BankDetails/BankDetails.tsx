@@ -25,7 +25,9 @@ const BankDetails = ({
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteBankId, setDeleteBankId] = useState(0)
+
   const dispatch = useAppDispatch()
+
   const bankDetail = useTypedSelector(
     reduxServices.panDetails.selectors.bankDetails,
   )
@@ -125,7 +127,9 @@ const BankDetails = ({
         <CRow>
           <CCol xs={4}>
             <p>
-              <strong>Total Records: </strong>
+              <strong>
+                Total Records: {bankDetail?.bankAccountInfo?.length}
+              </strong>
             </p>
           </CCol>
         </CRow>
