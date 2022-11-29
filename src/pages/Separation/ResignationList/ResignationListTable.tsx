@@ -216,7 +216,6 @@ const ResignationListTable = ({
                             {userAccessManagerClearence?.viewaccess && (
                               <Link to={`/ClearanceCertificateManager`}>
                                 <CButton
-                                  // color="info"
                                   size="sm"
                                   className={resignationItem.managerCcCss}
                                   onClick={() =>
@@ -230,28 +229,24 @@ const ResignationListTable = ({
                               </Link>
                             )}
                             <CButton
-                              // color="info"
                               size="sm"
                               className={resignationItem.itCcCss}
                             >
                               <i className="fa fa-laptop text-white"></i>
                             </CButton>
                             <CButton
-                              // color="info"
                               size="sm"
                               className={resignationItem.finanaceCcCss}
                             >
                               <i className="fa fa-calculator text-white"></i>
                             </CButton>
                             <CButton
-                              // color="info"
                               size="sm"
                               className={resignationItem.adminCcCss}
                             >
                               <i className="fa fa-id-badge text-white"></i>
                             </CButton>
                             <CButton
-                              // color="info"
                               size="sm"
                               className={resignationItem.hrCcCss}
                             >

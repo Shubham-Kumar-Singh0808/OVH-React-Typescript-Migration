@@ -17,7 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const ClearanceCertificateDetailsForm = (): JSX.Element => {
   const [isCCDetailsEdit, setIsCCDetailsEdit] = useState<boolean>(false)
-  const [isActive, setIsActive] = useState<string>('false')
+  const [isActiveValue, setIsActiveValue] = useState<string>('false')
   const initialCCDetails = {} as UpdateClearanceDetails
   const [editCCDetails, setEditCCDetails] = useState(initialCCDetails)
   const dispatch = useAppDispatch()
@@ -35,7 +35,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
     setIsCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditCCDetails(updateClearanceDetails)
-    setIsActive(updateClearanceDetails?.isDue as string)
+    setIsActiveValue(updateClearanceDetails?.isDue as string)
   }
 
   const handleEditMailTemplateHandler = (
@@ -57,7 +57,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: managerClearanceDetails[0]?.employeeId,
         employeeName: managerClearanceDetails[0]?.employeeName,
-        isDue: isActive as string,
+        isDue: isActiveValue,
         seperationEmpId: managerClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: managerClearanceDetails[0]?.seperationEmpName,
         seperationId: managerClearanceDetails[0]?.seperationId,
@@ -189,8 +189,8 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     defaultChecked
-                    checked={isActive === 'true'}
-                    onChange={(e) => setIsActive(e.target.value)}
+                    checked={isActiveValue === 'true'}
+                    onChange={(e) => setIsActiveValue(e.target.value)}
                   />
                   <CFormCheck
                     inline
@@ -200,8 +200,8 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                     data-testId="due-test"
                     value="false"
                     label="No"
-                    checked={isActive === 'false'}
-                    onChange={(e) => setIsActive(e.target.value)}
+                    checked={isActiveValue === 'false'}
+                    onChange={(e) => setIsActiveValue(e.target.value)}
                   />
                 </CCol>
               ) : (
@@ -213,6 +213,15 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
             <CRow className="mt-1 mb-0 align-items-center">
               <CFormLabel className="col-sm-3 col-form-label text-end p-1">
                 Comments:
+                <span
+                  className={
+                    isActiveValue === 'false' || editCCDetails?.comments
+                      ? 'text-white'
+                      : 'text-danger'
+                  }
+                >
+                  *
+                </span>
               </CFormLabel>
               {isCCDetailsEdit &&
               managerClearanceDetails[0]?.seperationId === separationId ? (
@@ -243,6 +252,10 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                       data-testid="confirmBtn"
                       color="success"
                       onClick={SubmitClearanceCertificateHandler}
+                      disabled={
+                        isActiveValue === 'true' &&
+                        editCCDetails?.comments === ''
+                      }
                     >
                       Update
                     </CButton>
