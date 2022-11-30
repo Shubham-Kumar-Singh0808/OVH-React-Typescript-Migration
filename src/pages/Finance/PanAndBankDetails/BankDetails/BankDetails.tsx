@@ -65,6 +65,7 @@ const BankDetails = ({
             <CButton
               color="info"
               className="btn-ovh me-1"
+              data-testid="add-button"
               onClick={() => {
                 setToggle('addBankAccount')
               }}
@@ -104,6 +105,7 @@ const BankDetails = ({
                           size="sm"
                           className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                           color="info btn-ovh me-1"
+                          data-testid="edit-button"
                           onClick={() => {
                             setToggle('editBankAccount')
                           }}

@@ -46,6 +46,13 @@ const PanDetails = (): JSX.Element => {
     setEditPanData(panAndBankDetails)
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'PF,PAN&Bank Details',
+  )
+
   const onChangeInputHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -65,27 +72,29 @@ const PanDetails = (): JSX.Element => {
   }
   return (
     <>
-      <CRow className="justify-content-end">
-        {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-          ''
-        ) : (
-          <CCol className="text-end" md={4}>
-            <CTooltip content="Edit">
-              <CButton
-                size="sm"
-                className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                color="info btn-ovh me-1"
-                onClick={() => {
-                  editPanDetailsButtonHandler(bankDetail.finance)
-                }}
-              >
-                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                Edit
-              </CButton>
-            </CTooltip>
-          </CCol>
-        )}
-      </CRow>
+      {userAccess?.updateaccess && (
+        <CRow className="justify-content-end">
+          {isEditPanData && bankDetail.finance?.financeId === financeId ? (
+            ''
+          ) : (
+            <CCol className="text-end" md={4}>
+              <CTooltip content="Edit">
+                <CButton
+                  size="sm"
+                  className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                  color="info btn-ovh me-1"
+                  onClick={() => {
+                    editPanDetailsButtonHandler(bankDetail.finance)
+                  }}
+                >
+                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  Edit
+                </CButton>
+              </CTooltip>
+            </CCol>
+          )}
+        </CRow>
+      )}
       <CCol sm={5}>
         <CRow>
           <CFormLabel

@@ -7,6 +7,7 @@ import { cleanup, fireEvent, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockBankInformation } from '../../../../test/data/panDetailsData'
 import { BankInfo } from '../../../../types/Finance/PanDetails/panDetailsTypes'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 describe('Pan Details Component Testing', () => {
   describe('should render Pan Details Component without data', () => {
@@ -18,6 +19,9 @@ describe('Pan Details Component Testing', () => {
             isLoading: ApiLoadingState.succeeded,
             editBankAccount: {} as BankInfo,
             error: 0,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })
@@ -47,6 +51,9 @@ describe('should render Pan Details Component without data', () => {
           isLoading: ApiLoadingState.succeeded,
           editBankAccount: {} as BankInfo,
           error: 0,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

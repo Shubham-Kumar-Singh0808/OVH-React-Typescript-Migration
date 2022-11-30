@@ -60,3 +60,13 @@ describe('Bank Details Table with data', () => {
     expect(modalConfirmBtn).toBeInTheDocument()
   })
 })
+
+describe('Bank Details Component Testing', () => {
+  test('should render Bank Details component with out crashing', () => {
+    render(<BankDetails setToggle={mockSetTogglePage} />)
+    const addButtonElement = screen.getByTestId('add-button')
+    expect(addButtonElement).toBeInTheDocument()
+    userEvent.click(addButtonElement)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
+  })
+})
