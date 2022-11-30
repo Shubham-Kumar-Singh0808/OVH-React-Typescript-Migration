@@ -250,7 +250,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                   <CCol md={{ span: 6, offset: 3 }}>
                     <CButton
                       className="btn-ovh me-1"
-                      data-testid="confirmBtn"
+                      data-testid="update-btn"
                       color="success"
                       onClick={SubmitClearanceCertificateHandler}
                       disabled={

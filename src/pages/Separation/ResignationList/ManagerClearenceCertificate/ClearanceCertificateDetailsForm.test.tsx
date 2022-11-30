@@ -44,6 +44,7 @@ describe('ClearanceCertificateDetailsForm Component Testing', () => {
       expect(
         screen.getByText(mockClearanceDetails[0].comments),
       ).toBeInTheDocument()
+      expect(screen.getByText('test')).toBeInTheDocument()
     })
     test('should render  edit button without crashing', () => {
       const allocateButton = screen.getByTestId('edit-btn')

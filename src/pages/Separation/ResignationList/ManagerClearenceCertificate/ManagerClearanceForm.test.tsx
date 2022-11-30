@@ -14,7 +14,7 @@ const toRender = (
     <ManagerClearanceForm />,
   </div>
 )
-
+const mockSetToggle = jest.fn()
 describe('ManagerClearanceForm Component Testing', () => {
   describe('should render ManagerClearanceForm Component without data', () => {
     beforeEach(() => {
@@ -46,8 +46,10 @@ describe('ManagerClearanceForm Component Testing', () => {
       expect(selectDue).toBeTruthy()
 
       const submitBtnElement = screen.getByRole('button', { name: 'Submit' })
+      expect(submitBtnElement).toBeInTheDocument()
       expect(submitBtnElement).toBeEnabled()
       userEvent.click(submitBtnElement)
+      expect(mockSetToggle).toHaveBeenCalledTimes(0)
       userEvent.click(screen.getByTestId('clearBtn'))
       userEvent.type(subject, '')
     })
