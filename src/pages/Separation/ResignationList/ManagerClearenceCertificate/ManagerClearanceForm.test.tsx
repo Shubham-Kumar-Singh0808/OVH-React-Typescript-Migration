@@ -45,9 +45,9 @@ describe('ManagerClearanceForm Component Testing', () => {
       fireEvent.click(selectDue[0], 'true')
       expect(selectDue).toBeTruthy()
 
-      const applyBtnElement = screen.getByRole('button', { name: 'Submit' })
-      expect(applyBtnElement).toBeEnabled()
-      userEvent.click(applyBtnElement)
+      const submitBtnElement = screen.getByRole('button', { name: 'Submit' })
+      expect(submitBtnElement).toBeEnabled()
+      userEvent.click(submitBtnElement)
       userEvent.click(screen.getByTestId('clearBtn'))
       userEvent.type(subject, '')
     })
