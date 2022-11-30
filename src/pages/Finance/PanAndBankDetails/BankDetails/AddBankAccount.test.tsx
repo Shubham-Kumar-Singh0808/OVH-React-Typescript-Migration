@@ -44,7 +44,7 @@ describe('should render Add Bank Account Component with data', () => {
     render(<AddBankAccount backButtonHandler={jest.fn()} />, {
       preloadedState: {
         panDetails: {
-          bankInfo: mockBankInformation.bankAccountInfo,
+          bankInfo: mockBankInformation.bankinfo,
           isLoading: ApiLoadingState.succeeded,
           editBankAccount: {} as BankInfo,
           error: 0,

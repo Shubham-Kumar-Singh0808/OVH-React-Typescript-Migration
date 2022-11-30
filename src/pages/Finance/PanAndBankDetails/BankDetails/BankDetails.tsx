@@ -32,10 +32,9 @@ const BankDetails = ({
     reduxServices.panDetails.selectors.bankDetails,
   )
 
-  console.log(bankDetail.bankAccountInfo)
-  console.log(bankDetail.finance)
-  console.log(bankDetail)
-
+  const empId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
   const deletedToast = (
     <OToast
       toastColor="success"
@@ -47,6 +46,12 @@ const BankDetails = ({
     await dispatch(reduxServices.bankDetails.deleteBankAccount(deleteBankId))
     dispatch(reduxServices.app.actions.addToast(deletedToast))
     dispatch(reduxServices.app.actions.addToast(undefined))
+    dispatch(
+      reduxServices.panDetails.bankInformation({
+        key: 'loggedInEmpId',
+        value: Number(empId),
+      }),
+    )
   }
 
   const deleteBtnHandler = (id: number) => {
@@ -91,8 +96,8 @@ const BankDetails = ({
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {bankDetail.bankAccountInfo &&
-              bankDetail.bankAccountInfo?.map((name, index) => {
+            {bankDetail.bankinfo &&
+              bankDetail.bankinfo?.map((name, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{index + 1}</CTableDataCell>
@@ -133,9 +138,7 @@ const BankDetails = ({
         <CRow>
           <CCol xs={4}>
             <p>
-              <strong>
-                Total Records: {bankDetail?.bankAccountInfo?.length}
-              </strong>
+              <strong>Total Records: {bankDetail?.bankinfo?.length}</strong>
             </p>
           </CCol>
         </CRow>

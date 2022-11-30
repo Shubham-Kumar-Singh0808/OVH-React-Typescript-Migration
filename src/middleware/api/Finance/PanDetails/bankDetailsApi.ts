@@ -46,7 +46,7 @@ const updateBankInformation = async (info: BankInfo): Promise<BankInfo> => {
 const deleteBankAccount = async (id: number): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: bankDetailsApiConfig.deleteBankAccount,
-    method: AllowedHttpMethods.delete,
+    method: AllowedHttpMethods.get,
     params: {
       bankId: id,
     },

@@ -46,9 +46,7 @@ describe('Bank Details Table with data', () => {
   afterEach(cleanup)
   test('should render with number of records  ', () => {
     expect(
-      screen.getByText(
-        'Total Records: ' + mockBankInformation.bankAccountInfo.length,
-      ),
+      screen.getByText('Total Records: ' + mockBankInformation.bankinfo.length),
     ).toBeInTheDocument()
   })
   test('should be able to click delete button element', () => {

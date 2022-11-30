@@ -1,7 +1,7 @@
 import { BankInformation } from '../../types/Finance/PanDetails/panDetailsTypes'
 
 export const mockBankInformation: BankInformation = {
-  bankAccountInfo: [
+  bankinfo: [
     {
       bankId: 1248,
       bankName: 'HDFC',

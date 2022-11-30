@@ -1,7 +1,7 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type BankInformation = {
-  bankAccountInfo: BankInfo[]
+  bankinfo: BankInfo[]
   finance: Finance
 }
 
