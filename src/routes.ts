@@ -253,6 +253,10 @@ const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
 )
 
+const EmployeeProfile = React.lazy(
+  () => import('./pages/MyProfile/EmployeeProfileLandingPage/EmployeeProfile'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -551,6 +555,11 @@ const routes = [
     path: '/managerComments',
     name: 'Resignation Time Line',
     component: ResignationTimeLine,
+  },
+  {
+    path: '/Employeeprofile',
+    name: 'Employee Profile',
+    component: EmployeeProfile,
   },
 ]
 
