@@ -31,7 +31,9 @@ const EditBankAccount = ({
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
   }
-
+  const empId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
   const bankData = useTypedSelector(
     reduxServices.bankDetails.selectors.bankList,
   )
@@ -110,6 +112,8 @@ const EditBankAccount = ({
   const handleUpdateHandler = async () => {
     const prepareObject = {
       ...editBankInfo,
+      bankId: editBankInfo.bankId,
+      employeeId: Number(empId),
     }
     const updateBankAccountResultAction = await dispatch(
       reduxServices.bankDetails.updateBankInformation(prepareObject),
