@@ -14,11 +14,14 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import OCard from '../../../components/ReusableComponent/OCard'
+import payslipsApi from '../../../middleware/api/Finance/Payslips/payslipsApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { downloadFile } from '../../../utils/helper'
 
 const Payslips = (): JSX.Element => {
   const [selectYear, setSelectYear] = useState<string>('')
+
   const currentYear = new Date().getFullYear()
   const previousYears = currentYear - 4
   const years = []
@@ -46,6 +49,16 @@ const Payslips = (): JSX.Element => {
       )
     }
   }, [selectYear])
+
+  const handleDownloadPayslip = async () => {
+    const employeePayslipDownload = await payslipsApi.downloadPayslip({
+      empId: Number(employeeId),
+      month: paySlipsData[0].month,
+      year: Number(selectYear),
+    })
+
+    downloadFile(employeePayslipDownload, 'paySlip.csv')
+  }
 
   return (
     <>
@@ -108,6 +121,7 @@ const Payslips = (): JSX.Element => {
                           size="sm"
                           color="info"
                           className="btn-ovh-employee-list"
+                          onClick={handleDownloadPayslip}
                         >
                           <i className="glyphicon glyphicon-save"> </i>
                         </CButton>

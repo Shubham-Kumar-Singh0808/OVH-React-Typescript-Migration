@@ -25,8 +25,33 @@ const empPaySlips = async ({
   return response.data
 }
 
+const downloadPayslip = async ({
+  empId,
+  year,
+  month,
+}: {
+  empId: number
+  year: number
+  month: string
+}): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: paySlipsApiConfig.generatePayslipAndDownloadPayslip,
+    method: AllowedHttpMethods.get,
+    params: {
+      empId,
+      year,
+      month,
+    },
+    responseType: 'blob',
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const payslipsApi = {
   empPaySlips,
+  downloadPayslip,
 }
 
 export default payslipsApi

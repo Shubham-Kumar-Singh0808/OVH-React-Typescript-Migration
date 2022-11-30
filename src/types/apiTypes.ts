@@ -496,6 +496,7 @@ export interface LeaveApprovalsApi extends ApiBase {
 
 export interface PaySlipsApi extends ApiBase {
   getEmployeePayslipsForSelectedYear: string
+  generatePayslipAndDownloadPayslip: string
 }
 
 export interface ResignationListApi extends ApiBase {

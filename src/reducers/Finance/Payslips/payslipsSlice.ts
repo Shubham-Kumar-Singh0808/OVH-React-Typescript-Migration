@@ -30,6 +30,29 @@ const employeePaySlips = createAsyncThunk(
   },
 )
 
+const downloadPayslips = createAsyncThunk(
+  'PaySlips/downloadPayslip',
+  async (
+    {
+      empId,
+      year,
+      month,
+    }: {
+      empId: number
+      year: number
+      month: string
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await payslipsApi.downloadPayslip({ empId, year, month })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialPaySlipsState: PaySlipsState = {
   employeePaySlips: [],
   isLoading: ApiLoadingState.idle,
@@ -63,6 +86,7 @@ const payslipsList = (state: RootState): EmployeePayslips[] =>
 
 const paySlipsThunk = {
   employeePaySlips,
+  downloadPayslips,
 }
 
 const paySlipsSelectors = {

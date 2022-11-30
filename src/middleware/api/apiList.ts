@@ -599,6 +599,8 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
 export const paySlipsApiConfig: PaySlipsApi = {
   getEmployeePayslipsForSelectedYear:
     apiPrefix + '/payslip/getEmployeePayslipsForSelectedYear',
+  generatePayslipAndDownloadPayslip:
+    apiPrefix + '/payslip/payrolladmin/generatePayslipAndDownloadPayslip',
 }
 
 export const resignationListApiConfig: ResignationListApi = {

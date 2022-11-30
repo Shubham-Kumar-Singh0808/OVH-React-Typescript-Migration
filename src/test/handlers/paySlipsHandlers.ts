@@ -14,4 +14,15 @@ export const paySlipsHandlers = [
       )
     },
   ),
+  rest.get(
+    paySlipsApiConfig.generatePayslipAndDownloadPayslip,
+    (_req, res, ctx) => {
+      return res(
+        ctx.json({
+          status: 200,
+          data: {},
+        }),
+      )
+    },
+  ),
 ]
