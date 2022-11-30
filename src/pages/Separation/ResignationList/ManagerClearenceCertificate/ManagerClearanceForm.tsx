@@ -41,7 +41,6 @@ const ManagerClearanceForm = (): JSX.Element => {
           submittedBy: 'Manager',
         }),
       )
-      dispatch(reduxServices.resignationList.actions.toggle('ClearanceDetails'))
     }
   }
 
