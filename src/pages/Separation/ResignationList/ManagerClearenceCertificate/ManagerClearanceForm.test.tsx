@@ -60,8 +60,8 @@ describe('ManagerClearanceForm Component Testing', () => {
         name: 'No',
       }) as HTMLInputElement
 
-      expect(activeState.checked).toEqual(false)
       expect(inactiveState.checked).toEqual(true)
+      expect(activeState.checked).toEqual(false)
 
       fireEvent.click(inactiveState)
 
