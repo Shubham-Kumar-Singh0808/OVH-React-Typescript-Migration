@@ -25,7 +25,6 @@ const Payslips = (): JSX.Element => {
   for (let i = currentYear; i >= previousYears; i--) {
     years.push(i)
   }
-  console.log(years)
 
   const dispatch = useAppDispatch()
 

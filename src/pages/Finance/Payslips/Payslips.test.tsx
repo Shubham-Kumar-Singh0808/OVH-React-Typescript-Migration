@@ -1,12 +1,19 @@
 import '@testing-library/jest-dom'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import Payslips from './Payslips'
+import { render, screen } from '../../../test/testUtils'
 import { mockPaySlips } from '../../../test/data/paySlipsData'
-import { render, screen, cleanup } from '../../../test/testUtils'
 
-describe('Payslips without data', () => {
+describe('Family Table component with data', () => {
   beforeEach(() => {
-    render(<Payslips />)
+    render(<Payslips />, {
+      preloadedState: {
+        paySlips: {
+          employeePaySlips: mockPaySlips,
+        },
+      },
+    })
   })
   test('should render the "Payslips" table ', () => {
     const table = screen.getByRole('table')
@@ -19,22 +26,20 @@ describe('Payslips without data', () => {
     expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
     expect(screen.getAllByRole('columnheader')).toHaveLength(4)
   })
-})
-
-describe('Payslips Table with data', () => {
-  render(<Payslips />, {
-    preloadedState: {
-      paySlips: {
-        employeePaySlips: mockPaySlips,
-      },
-    },
-  })
-
-  afterEach(cleanup)
-  test('should render Payslips component with data', () => {
+  test('should render with data ', () => {
     expect(screen.getByText('April')).toBeInTheDocument()
     expect(screen.getByText('May')).toBeInTheDocument()
     expect(screen.getByText('June')).toBeInTheDocument()
-    expect(screen.getByText('August')).toBeInTheDocument()
+    expect(screen.getByText('July')).toBeInTheDocument()
+  })
+  test('should render with number of records  ', () => {
+    expect(
+      screen.getByText('Total Records: ' + mockPaySlips.length),
+    ).toBeInTheDocument()
+  })
+  test('should select year', () => {
+    const selectYear = screen.getByTestId('form-select1')
+    userEvent.selectOptions(selectYear, ['2022'])
+    expect(selectYear).toHaveValue('2022')
   })
 })
