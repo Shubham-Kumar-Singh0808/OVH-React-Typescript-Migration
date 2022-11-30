@@ -71,5 +71,16 @@ describe('ManagerClearanceForm Component Testing', () => {
       expect(inactiveState.checked).toEqual(false)
       expect(activeState.checked).toEqual(true)
     })
+
+    test('Radio button should be  "true" or "false"', () => {
+      const falseState = screen.getByRole('radio', {
+        name: 'No',
+      }) as HTMLInputElement
+
+      expect(falseState.checked).toEqual(true)
+      fireEvent.click(falseState)
+
+      expect(falseState.checked).toEqual(true)
+    })
   })
 })
