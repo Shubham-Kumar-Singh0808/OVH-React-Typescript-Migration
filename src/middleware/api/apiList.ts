@@ -67,6 +67,7 @@ import {
   SubmitResignationApi,
   LeaveApprovalsApi,
   PaySlipsApi,
+  ResignationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -489,6 +490,7 @@ export const dashboardApiConfig: DashboardApi = {
   getHolidayInformation: apiPrefix + '/Employee/holiday',
   updateHoliday: apiPrefix + '/Employee/editHoliday',
   searchEmployee: apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getLeaveSummary: apiPrefix + '/leave/leaveSummaryDashboard',
 }
 
 export const addLocationListApiConfig: AddLocationListApi = {
@@ -548,6 +550,9 @@ export const addTrackerApiConfig: AddTrackerApi = {
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
   getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+  editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
+  updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
+  validateCycle: apiPrefix + '/appraisal/validateCycle',
 }
 export const addConfigurationsApiConfig: AddConfigurationsApi = {
   addAppraisalCycle: apiPrefix + '/appraisal/cycle',
@@ -594,4 +599,12 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
 export const paySlipsApiConfig: PaySlipsApi = {
   getEmployeePayslipsForSelectedYear:
     apiPrefix + '/payslip/getEmployeePayslipsForSelectedYear',
+}
+
+export const resignationListApiConfig: ResignationListApi = {
+  resignationList: apiPrefix + '/separationController/resignationList',
+  exportResignationList:
+    apiPrefix + '/separationController/exportResignationList',
+  resignationInitiateCC: apiPrefix + '/separationController/IntitiateCC',
+  getSeparationTimeLine: apiPrefix + '/separationController/getSeparation',
 }

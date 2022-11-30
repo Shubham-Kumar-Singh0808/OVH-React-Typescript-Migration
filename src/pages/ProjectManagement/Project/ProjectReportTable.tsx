@@ -268,13 +268,13 @@ const ProjectReportsTable = ({
       billable: subProject?.billable === 'Yes',
     }
 
-    const deallocateResponse = await dispatch(
+    const updateResponse = await dispatch(
       reduxServices.projectReport.updateProjectReport(payload),
     )
 
     if (
       reduxServices.projectReport.updateProjectReport.fulfilled.match(
-        deallocateResponse,
+        updateResponse,
       ) &&
       selectedProject != null
     ) {
@@ -464,7 +464,7 @@ const ProjectReportsTable = ({
             </CTableBody>
           </CTable>
           <CRow>
-            <CCol xs={4}>
+            <CCol xs={4} md={3}>
               <p className="mt-2">
                 <strong>{totalRecordsToDisplay}</strong>
               </p>
@@ -473,7 +473,7 @@ const ProjectReportsTable = ({
               {listSize > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
-                  options={[20, 40, 60, 80]}
+                  options={[20, 40, 60, 80, 100]}
                   selectedPageSize={pageSize}
                 />
               )}
@@ -481,6 +481,7 @@ const ProjectReportsTable = ({
             {listSize > 20 && (
               <CCol
                 xs={5}
+                md={6}
                 className="gap-1 d-grid d-md-flex justify-content-md-end"
               >
                 <OPagination

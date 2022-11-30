@@ -404,6 +404,7 @@ export interface DashboardApi extends ApiBase {
   getHolidayInformation: string
   updateHoliday: string
   searchEmployee: string
+  getLeaveSummary: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
@@ -448,6 +449,9 @@ export interface EventListApi extends ApiBase {
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
+  editAppraisalCycle: string
+  updateAppraisalCycle: string
+  validateCycle: string
 }
 export interface AddConfigurationsApi extends ApiBase {
   addAppraisalCycle: string
@@ -492,4 +496,11 @@ export interface LeaveApprovalsApi extends ApiBase {
 
 export interface PaySlipsApi extends ApiBase {
   getEmployeePayslipsForSelectedYear: string
+}
+
+export interface ResignationListApi extends ApiBase {
+  resignationList: string
+  exportResignationList: string
+  resignationInitiateCC: string
+  getSeparationTimeLine: string
 }

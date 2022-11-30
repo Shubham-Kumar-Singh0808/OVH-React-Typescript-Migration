@@ -226,9 +226,10 @@ const EditHandbook = ({
       reduxServices.employeeHandbookSettings.updateEmployeeHandbook.rejected.match(
         updateHandbookResultAction,
       ) &&
-      updateHandbookResultAction.payload === 404
+      updateHandbookResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 

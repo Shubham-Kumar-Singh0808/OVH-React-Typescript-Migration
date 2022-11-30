@@ -8,7 +8,7 @@ const EmployeeEarnedLeaves = (): JSX.Element => {
   )
 
   const getLeaveSummary = useTypedSelector(
-    reduxServices.employeeLeaveSummary.selectors.employeeLeaveSummary,
+    reduxServices.earnedLeaves.selectors.employeeLeaveSummary,
   )
 
   const userAccessToFeatures = useTypedSelector(
@@ -16,6 +16,9 @@ const EmployeeEarnedLeaves = (): JSX.Element => {
   )
   const userAccessToEarnedLeaves = userAccessToFeatures?.find(
     (feature) => feature.name === 'Dashboard-Earned Leaves',
+  )
+  const userAccessToLeaveSummary = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Leave Summary',
   )
 
   return (
@@ -37,12 +40,14 @@ const EmployeeEarnedLeaves = (): JSX.Element => {
             </div>
           </div>
           <div className="panel-footer">
-            <p className="text-right mb0">
-              <a className="text-white" href="/employeeLeaveSummary">
-                More {''}
-                <i className="fa fa-angle-double-right fa-lg"></i>
-              </a>
-            </p>
+            {userAccessToLeaveSummary?.viewaccess && (
+              <p className="text-right mb0">
+                <a className="text-white" href="/employeeLeaveSummary">
+                  More {''}
+                  <i className="fa fa-angle-double-right fa-lg"></i>
+                </a>
+              </p>
+            )}
           </div>
         </div>
       )}
