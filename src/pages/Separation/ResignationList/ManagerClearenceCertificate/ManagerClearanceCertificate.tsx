@@ -6,10 +6,17 @@ import ClearanceCertificateDetailsForm from './ClearanceCertificateDetailsForm'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const ManagerClearanceCertificate = (): JSX.Element => {
   const toggle = useTypedSelector(
     reduxServices.resignationList.selectors.toggleValue,
+  )
+
+  const isLoading = useTypedSelector(
+    reduxServices.resignationList.selectors.isLoading,
   )
   const managerClearanceDetails = useTypedSelector(
     reduxServices.resignationList.selectors.managerClearanceDetails,
@@ -43,7 +50,11 @@ const ManagerClearanceCertificate = (): JSX.Element => {
           </OCard>
         </>
       )}
-      {toggle === 'clearanceDetails' && <ClearanceCertificateDetailsForm />}
+      {isLoading !== ApiLoadingState.loading ? (
+        toggle === 'clearanceDetails' && <ClearanceCertificateDetailsForm />
+      ) : (
+        <OLoadingSpinner type={LoadingType.PAGE} />
+      )}
     </>
   )
 }
