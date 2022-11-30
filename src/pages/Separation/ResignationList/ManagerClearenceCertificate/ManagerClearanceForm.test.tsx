@@ -64,8 +64,10 @@ describe('ManagerClearanceForm Component Testing', () => {
       expect(activeState.checked).toEqual(false)
 
       fireEvent.click(inactiveState)
+      fireEvent.click(activeState)
 
-      expect(activeState.checked).toEqual(false)
+      expect(inactiveState.checked).toEqual(false)
+      expect(activeState.checked).toEqual(true)
     })
   })
 })
