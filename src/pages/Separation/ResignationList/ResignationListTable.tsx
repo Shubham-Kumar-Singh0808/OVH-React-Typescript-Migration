@@ -55,10 +55,6 @@ const ResignationListTable = ({
     (feature) => feature.name === 'ShowTimeLine',
   )
 
-  const userAccessManagerClearence = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Manager Cleranace',
-  )
-
   const getAllResignationList = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListDetails,
   )
@@ -103,7 +99,6 @@ const ResignationListTable = ({
         submittedBy: 'Manager',
       }),
     )
-    // dispatch(reduxServices.resignationList.actions.toggle(''))
   }
 
   const handleConfirmInitiateResignation = async () => {
@@ -221,21 +216,21 @@ const ResignationListTable = ({
                         )}
                         {resignationItem.isprocessInitiated ? (
                           <>
-                            {userAccessManagerClearence?.viewaccess && (
-                              <Link to={`/ClearanceCertificateManager`}>
-                                <CButton
-                                  size="sm"
-                                  className={resignationItem.managerCcCss}
-                                  onClick={() =>
-                                    resignationClearanceManagerButtonHandler(
-                                      resignationItem.separationId,
-                                    )
-                                  }
-                                >
-                                  <i className="fa fa-user text-white"></i>
-                                </CButton>
-                              </Link>
-                            )}
+                            <Link to={`/ClearanceCertificateManager`}>
+                              <CButton
+                                size="sm"
+                                className={resignationItem.managerCcCss}
+                                data-testid="manager-test"
+                                onClick={() =>
+                                  resignationClearanceManagerButtonHandler(
+                                    resignationItem.separationId,
+                                  )
+                                }
+                              >
+                                <i className="fa fa-user text-white"></i>
+                              </CButton>
+                            </Link>
+
                             <CButton
                               size="sm"
                               className={resignationItem.itCcCss}
