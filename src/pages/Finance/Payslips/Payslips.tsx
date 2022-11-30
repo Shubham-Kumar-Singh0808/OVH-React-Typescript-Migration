@@ -119,11 +119,11 @@ const Payslips = (): JSX.Element => {
                         <CButton
                           data-testid={`btn-download${index}`}
                           size="sm"
-                          color="info"
+                          color="btn btn-info sh-btn-alignment"
                           className="btn-ovh-employee-list"
                           onClick={handleDownloadPayslip}
                         >
-                          <i className="glyphicon glyphicon-save"> </i>
+                          <i className="fa fa-download sh-button"> </i>
                         </CButton>
                       </CTooltip>
                     </CTableDataCell>
