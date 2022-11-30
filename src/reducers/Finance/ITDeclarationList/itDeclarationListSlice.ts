@@ -47,6 +47,9 @@ const itDeclarationListSlice = createSlice({
     clearEmployees: (state) => {
       state.itDeclarationForms = []
     },
+    clearSearch: (state) => {
+      state.searchEmployee = ''
+    },
   },
   extraReducers: (builder) => {
     builder

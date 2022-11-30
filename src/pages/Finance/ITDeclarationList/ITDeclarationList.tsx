@@ -8,11 +8,11 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
-import { Cycle } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const ITDeclarationList = (): JSX.Element => {
   const [investmentCycle, setInvestmentCycle] = useState<string>()
   const [searchInput, setSearchInput] = useState<string>('')
+  const itDeclarationListPath = '/itDeclarationList'
   const dispatch = useAppDispatch()
 
   const isLoading = useTypedSelector(
@@ -48,6 +48,13 @@ const ITDeclarationList = (): JSX.Element => {
       }),
     )
   }, [currentPage, dispatch, pageSize, searchEmployee, investmentCycle])
+
+  useEffect(() => {
+    if (window.location.pathname !== itDeclarationListPath) {
+      setSearchInput('')
+      dispatch(reduxServices.itDeclarationList.actions.clearSearch())
+    }
+  }, [window.location.pathname])
 
   return (
     <>
