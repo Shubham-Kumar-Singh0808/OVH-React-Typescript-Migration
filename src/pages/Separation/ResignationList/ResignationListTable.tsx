@@ -103,7 +103,7 @@ const ResignationListTable = ({
         submittedBy: 'Manager',
       }),
     )
-    dispatch(reduxServices.resignationList.actions.toggle(''))
+    // dispatch(reduxServices.resignationList.actions.toggle(''))
   }
 
   const handleConfirmInitiateResignation = async () => {
@@ -143,6 +143,7 @@ const ResignationListTable = ({
   useEffect(() => {
     if (location.pathname === '/resignationList') {
       dispatch(reduxServices.resignationList.actions.toggle(''))
+      dispatch(reduxServices.resignationList.actions.removeClearanceDetails())
     }
   }, [location.pathname])
   return (

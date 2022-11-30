@@ -29,7 +29,7 @@ const ManagerClearanceCertificate = (): JSX.Element => {
   }, [managerClearanceDetails])
   return (
     <>
-      {toggle === '' && (
+      {toggle === '' && isLoading === ApiLoadingState.succeeded && (
         <>
           <OCard
             className="mb-4 myprofile-wrapper"

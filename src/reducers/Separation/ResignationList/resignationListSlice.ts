@@ -165,6 +165,9 @@ const resignationListSlice = createSlice({
     toggle: (state, action) => {
       state.toggle = action.payload
     },
+    removeClearanceDetails: (state) => {
+      state.clearanceDetails = []
+    },
   },
   extraReducers: (builder) => {
     builder
