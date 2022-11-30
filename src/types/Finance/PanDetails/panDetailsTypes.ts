@@ -35,3 +35,9 @@ export type Finance = {
   financeFilePath: null | string
   financeFileName: null
 }
+
+export type DownloadPaySlips = {
+  fileName?: string
+  tenantKey?: string
+  token?: string
+}

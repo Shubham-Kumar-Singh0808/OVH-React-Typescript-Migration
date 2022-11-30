@@ -7,6 +7,7 @@ import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   BankInfo,
   BankInformation,
+  DownloadPaySlips,
   Finance,
   PanDetailsSliceState,
   UploadPanDetail,
@@ -47,6 +48,18 @@ const updateFinanceInformation = createAsyncThunk(
   async (list: Finance, thunkApi) => {
     try {
       return await panDetailsApi.updateFinanceInformation(list)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const downloadFinanceFile = createAsyncThunk(
+  'panDetails/downloadFinanceFile',
+  async (prepareObject: DownloadPaySlips, thunkApi) => {
+    try {
+      return await panDetailsApi.downloadFinanceFile(prepareObject)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -118,6 +131,7 @@ const panDetailsThunk = {
   bankInformation,
   updateFinanceInformation,
   uploadEmployeeFinanceDetails,
+  downloadFinanceFile,
 }
 
 const panDetailsSelectors = {

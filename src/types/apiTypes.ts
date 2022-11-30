@@ -498,6 +498,7 @@ export interface PanDetailsApi extends ApiBase {
   bankInformation: string
   updateFinanceInformation: string
   uploadEmployeeFinanceDetails: string
+  downloadFinanceFile: string
 }
 
 export interface BankDetailsApi extends ApiBase {

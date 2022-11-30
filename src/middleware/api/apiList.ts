@@ -602,6 +602,7 @@ export const panDetailsApiConfig: PanDetailsApi = {
   updateFinanceInformation: apiPrefix + '/Employee/updateFinanceInformation',
   uploadEmployeeFinanceDetails:
     apiPrefix + '/fileUpload/uploadEmployeeFinanceDetails',
+  downloadFinanceFile: apiPrefix + '/Employee/downloadFinanceFile',
 }
 
 export const bankDetailsApiConfig: BankDetailsApi = {

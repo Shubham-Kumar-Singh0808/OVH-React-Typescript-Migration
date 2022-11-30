@@ -88,7 +88,7 @@ const PanDetails = (): JSX.Element => {
                   }}
                 >
                   <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  Edit
+                  &nbsp; Edit
                 </CButton>
               </CTooltip>
             </CCol>

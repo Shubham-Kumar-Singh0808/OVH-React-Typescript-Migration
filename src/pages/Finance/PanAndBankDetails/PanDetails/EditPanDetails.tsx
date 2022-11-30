@@ -8,9 +8,11 @@ import {
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useState } from 'react'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import panDetailsApi from '../../../../middleware/api/Finance/PanDetails/panDetailsApi'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { Finance } from '../../../../types/Finance/PanDetails/panDetailsTypes'
+import { downloadFile } from '../../../../utils/helper'
 
 const EditPanDetails = ({
   isEditPanData,
@@ -84,6 +86,15 @@ const EditPanDetails = ({
       )
     }
   }
+  const handleFinanceData = async () => {
+    const employeeBankDetailsDownload = await panDetailsApi.downloadFinanceFile(
+      {
+        fileName: bankDetail.finance?.financeFilePath as string,
+      },
+    )
+
+    downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
+  }
 
   return (
     <>
@@ -116,8 +127,11 @@ const EditPanDetails = ({
               <CCol sm={5} className="sh-alignment">
                 {bankDetail.finance?.financeFilePath || 'N/A'}
               </CCol>
-              <CCol sm={5} className="sh-alignment">
-                <CLink className="cursor-pointer sh-hive-activity-link">
+              <CCol sm={5} className="sh-alignment offset-md-5">
+                <CLink
+                  className="cursor-pointer sh-hive-activity-link"
+                  onClick={handleFinanceData}
+                >
                   <i className="fa fa-paperclip me-1"></i>
                   Doc
                 </CLink>

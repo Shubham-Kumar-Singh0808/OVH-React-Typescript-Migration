@@ -1,5 +1,6 @@
 import {
   BankInformation,
+  DownloadPaySlips,
   Finance,
   UploadPanDetail,
 } from '../../../../types/Finance/PanDetails/panDetailsTypes'
@@ -54,10 +55,28 @@ const updateFinanceInformation = async (list: Finance): Promise<Finance> => {
   return response.data
 }
 
+const downloadFinanceFile = async (
+  prepareObject: DownloadPaySlips,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: panDetailsApiConfig.downloadFinanceFile,
+    method: AllowedHttpMethods.get,
+    params: {
+      fileName: prepareObject.fileName,
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('tenantKey') ?? '',
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const panDetailsApi = {
   bankInformation,
   updateFinanceInformation,
   uploadEmployeeFinanceDetails,
+  downloadFinanceFile,
 }
 
 export default panDetailsApi
