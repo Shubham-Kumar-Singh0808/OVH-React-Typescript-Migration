@@ -7,7 +7,8 @@ import {
   CFormInput,
   CInputGroup,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { itDeclarationListApi } from '../../../middleware/api/Finance/ITDeclarationList/itDeclarationListApi'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -21,12 +22,13 @@ const FilterOptions = ({
   searchInput,
   setSearchInput,
 }: ITDeclarationListOptionsProps): JSX.Element => {
-  const [showExportButton, setShowExportButton] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const cycles = useTypedSelector(
     reduxServices.itDeclarationList.selectors.cycles,
   )
-
+  const itDeclarationListForms = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.itDeclarationForms,
+  )
   const toastElement = (
     <OToast toastColor="danger" toastMessage="Please Select Cycle" />
   )
@@ -57,10 +59,7 @@ const FilterOptions = ({
 
   useEffect(() => {
     if (investmentCycle === '' && investmentCycle !== undefined) {
-      setShowExportButton(false)
       dispatch(reduxServices.app.actions.addToast(toastElement))
-    } else {
-      setShowExportButton(true)
     }
   }, [investmentCycle])
 
@@ -85,16 +84,16 @@ const FilterOptions = ({
               aria-label="cycle"
               name="investmentCycle"
               id="cycle"
-              data-testid="investment-cycle"
+              data-testid="select-investment-cycle"
               onChange={(e) => setInvestmentCycle(e.target.value)}
               value={investmentCycle}
             >
-              <option value="">Select Category</option>
+              <option value="">Select Cycle</option>
               {cycles &&
                 cycles
                   ?.slice()
-                  .sort((catg1, catg2) =>
-                    catg1.cycleName.localeCompare(catg2.cycleName),
+                  .sort((cyc1, cyc2) =>
+                    cyc1.cycleName.localeCompare(cyc2.cycleName),
                   )
                   ?.map((cycle, index) => (
                     <option key={index} value={cycle.cycleId}>
@@ -104,23 +103,35 @@ const FilterOptions = ({
             </CFormSelect>
           </CCol>
           <CCol sm={4}>
-            <CButton
-              color="info btn-ovh me-1"
-              className="text-white"
-              data-testid="add-investmentCycle-btn"
-            >
-              <i className="fa fa-plus me-1"></i>Add Investment Cycle
-            </CButton>
-          </CCol>
-          <CCol sm={5} className="text-end">
-            <CButton color="info btn-ovh me-1" className="text-white">
-              <i className="fa fa-plus me-1"></i>Add Investment
-            </CButton>
-            {showExportButton && (
+            {/* {userAccessToDeclarationList?.viewaccess === false && ( */}
+            <Link to={`/addCycle`}>
               <CButton
                 color="info btn-ovh me-1"
                 className="text-white"
-                data-testid="export-button"
+                data-testid="add-investmentCycle-btn"
+              >
+                <i className="fa fa-plus me-1"></i>Add Investment Cycle
+              </CButton>
+            </Link>
+          </CCol>
+          <CCol sm={5} className="text-end">
+            {/* {userAccessToDeclarationList?.viewaccess === false && ( */}
+            <Link to={`/addInvestment`}>
+              <CButton
+                color="info btn-ovh me-1"
+                className="text-white"
+                data-testid="add-investment-btn"
+              >
+                <i className="fa fa-plus me-1"></i>Add Investment
+              </CButton>
+            </Link>
+
+            {/* <CCol sm={2} className="text-end"> */}
+            {itDeclarationListForms?.length > 0 && (
+              <CButton
+                color="info btn-ovh me-1"
+                className="text-white"
+                data-testid="dl-export-button"
                 onClick={handleExportITDeclarationList}
               >
                 <i className="fa fa-plus me-1"></i>Click to Export
@@ -144,7 +155,7 @@ const FilterOptions = ({
               />
               <CButton
                 disabled={!searchInput}
-                data-testid="multi-search-btn"
+                data-testid="employee-search-btn"
                 className="cursor-pointer"
                 type="button"
                 color="info"
