@@ -121,26 +121,6 @@ const updateCCDetails = createAsyncThunk<
   },
 )
 
-const getCheckExitFeedBackForm = createAsyncThunk<
-  CheckExitFeedBackForm | undefined,
-  number,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->(
-  'resignationList/getCheckExitFeedBackForm',
-  async (separationId: number, thunkApi) => {
-    try {
-      return await resignationListApi.getCheckExitFeedBackForm(separationId)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -182,10 +162,6 @@ const resignationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.separationTimeLine = action.payload as SeparationTimeLine
       })
-      .addCase(getCheckExitFeedBackForm.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.checkExitFeedBackForm = action.payload as CheckExitFeedBackForm
-      })
       .addCase(getSeparationTimeLine.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
@@ -221,9 +197,6 @@ const managerClearanceDetails = (state: RootState): ClearanceDetails[] =>
 
 const toggleValue = (state: RootState): string => state.resignationList.toggle
 
-const exitFeedBackForm = (state: RootState): CheckExitFeedBackForm =>
-  state.resignationList.checkExitFeedBackForm
-
 const resignationListThunk = {
   getResignationList,
   resignationIntitiateCC,
@@ -231,7 +204,6 @@ const resignationListThunk = {
   submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
-  getCheckExitFeedBackForm,
 }
 
 const resignationListSelectors = {
@@ -243,7 +215,6 @@ const resignationListSelectors = {
   resignationTimeLine,
   managerClearanceDetails,
   toggleValue,
-  exitFeedBackForm,
 }
 
 export const resignationListService = {

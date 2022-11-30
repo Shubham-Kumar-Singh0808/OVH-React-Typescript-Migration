@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {
-  CheckExitFeedBackForm,
   ClearanceDetails,
   ClearanceDetailsProps,
   GetResignationListProps,
@@ -131,21 +130,6 @@ const updateCCDetails = async (
   return response.data
 }
 
-const getCheckExitFeedBackForm = async (
-  separationId: number,
-): Promise<CheckExitFeedBackForm> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: resignationListApiConfig.checkExitFeedBackForm,
-    method: AllowedHttpMethods.get,
-    params: {
-      separationId,
-    },
-  })
-
-  const response = await useAxios(requestConfig)
-  return response.data
-}
-
 const resignationListApi = {
   getResignationList,
   exportResignationListData,
@@ -154,7 +138,6 @@ const resignationListApi = {
   submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
-  getCheckExitFeedBackForm,
 }
 
 export default resignationListApi
