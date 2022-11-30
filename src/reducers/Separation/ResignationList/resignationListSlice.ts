@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import resignationListApi from '../../../middleware/api/Separation/ResignationList/resignationListApi'
@@ -155,23 +155,24 @@ const resignationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.resignationList = action.payload
       })
-      .addCase(getResignationList.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
       .addCase(getSeparationTimeLine.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.separationTimeLine = action.payload as SeparationTimeLine
-      })
-      .addCase(getSeparationTimeLine.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
       })
       .addCase(getClearanceDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.clearanceDetails = action.payload
       })
-      .addCase(getClearanceDetails.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
+      .addMatcher(
+        isAnyOf(
+          getResignationList.pending,
+          getSeparationTimeLine.pending,
+          getClearanceDetails.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
