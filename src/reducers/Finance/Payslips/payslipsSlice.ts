@@ -30,7 +30,7 @@ const employeePaySlips = createAsyncThunk(
   },
 )
 
-const initialPaySlipsState: PaySlipsState = {
+export const initialPaySlipsState: PaySlipsState = {
   employeePaySlips: [],
   isLoading: ApiLoadingState.idle,
   error: null,

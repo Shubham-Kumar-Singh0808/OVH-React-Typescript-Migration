@@ -3,40 +3,50 @@ import {
   CCol,
   CFormLabel,
   CFormSelect,
-  CButton,
   CTable,
-  CTableBody,
-  CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CButton,
+  CTableBody,
+  CTableDataCell,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const Payslips = (): JSX.Element => {
+  const [selectYear, setSelectYear] = useState<string>('')
+  const currentYear = new Date().getFullYear()
+  const previousYears = currentYear - 4
+  const years = []
+  for (let i = currentYear; i >= previousYears; i--) {
+    years.push(i)
+  }
+  console.log(years)
+
   const dispatch = useAppDispatch()
 
-  const selectYear = useTypedSelector(
+  const paySlipsData = useTypedSelector(
     reduxServices.paySlips.selectors.payslipsList,
   )
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
 
-  console.log(selectYear)
-
   useEffect(() => {
-    dispatch(
-      reduxServices.paySlips.employeePaySlips({
-        empId: Number(employeeId),
-        year: 2022,
-      }),
-    )
-  }, [dispatch])
+    if (selectYear) {
+      dispatch(
+        reduxServices.paySlips.employeePaySlips({
+          empId: Number(employeeId),
+          year: Number(selectYear),
+        }),
+      )
+    }
+  }, [selectYear])
 
   return (
     <>
@@ -57,12 +67,14 @@ const Payslips = (): JSX.Element => {
               id="Year"
               data-testid="form-select1"
               name="Year"
+              value={selectYear}
+              onChange={(e) => {
+                setSelectYear(e.target.value)
+              }}
             >
-              {selectYear.length > 0 &&
-                selectYear?.map((year, index) => (
-                  <option key={index} value={year.empId}>
-                    {year.year}
-                  </option>
+              {years.length > 0 &&
+                years?.map((year, index) => (
+                  <option key={index}>{year}</option>
                 ))}
             </CFormSelect>
           </CCol>
@@ -80,10 +92,11 @@ const Payslips = (): JSX.Element => {
               <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
+
           <CTableBody>
-            {selectYear &&
-              selectYear?.length > 0 &&
-              selectYear?.map((year, index) => {
+            {paySlipsData &&
+              paySlipsData?.length > 0 &&
+              paySlipsData?.map((year, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{index + 1}</CTableDataCell>
@@ -108,9 +121,11 @@ const Payslips = (): JSX.Element => {
         </CTable>
         <CRow>
           <CCol xs={4}>
-            <p>
-              <strong>Total Records: {selectYear.length}</strong>
-            </p>
+            <strong>
+              {paySlipsData?.length
+                ? `Total Records: ${paySlipsData.length}`
+                : `No Records Found...`}
+            </strong>
           </CCol>
         </CRow>
       </OCard>
