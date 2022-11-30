@@ -99,20 +99,16 @@ const submitClearanceCertificate = async (
   return response.data
 }
 
-const commonParamsUtil = (props: ClearanceDetailsProps) => {
-  return {
-    separationId: props.separationId ?? '',
-    submittedBy: props.submittedBy ?? '',
-  }
-}
-
 const getClearanceDetails = async (
   props: ClearanceDetailsProps,
 ): Promise<ClearanceDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: resignationListApiConfig.getClearanceDetails,
     method: AllowedHttpMethods.get,
-    params: commonParamsUtil(props),
+    params: {
+      separationId: props.separationId ?? '',
+      submittedBy: props.submittedBy ?? '',
+    },
   })
   const response = await axios(requestConfig)
   return response.data
