@@ -1,5 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
 import ClearanceCertificateDetailsForm from './ClearanceCertificateDetailsForm'
 import { render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
@@ -13,7 +14,7 @@ const toRender = (
     <ClearanceCertificateDetailsForm />,
   </div>
 )
-
+const mockSetTogglePage = jest.fn()
 describe('ClearanceCertificateDetailsForm Component Testing', () => {
   describe('should render ClearanceCertificateDetailsForm Component without data', () => {
     beforeEach(() => {
@@ -39,6 +40,20 @@ describe('ClearanceCertificateDetailsForm Component Testing', () => {
       ).toBeInTheDocument()
       expect(
         screen.getByText(mockClearanceDetails[0].seperationEmpName),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(mockClearanceDetails[0].comments),
+      ).toBeInTheDocument()
+    })
+    test('should render  edit button without crashing', () => {
+      const allocateButton = screen.getByTestId('edit-btn')
+      expect(allocateButton).toBeInTheDocument()
+      userEvent.click(allocateButton)
+      expect(mockSetTogglePage).toHaveBeenCalledTimes(0)
+    })
+    test('should render  ClearanceCertificateDetailsForm component with out crashing', () => {
+      expect(
+        screen.getByText('Clearance Certificate Details'),
       ).toBeInTheDocument()
     })
   })

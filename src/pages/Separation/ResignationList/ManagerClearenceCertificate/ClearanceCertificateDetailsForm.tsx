@@ -118,6 +118,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                       color="info"
                       className="btn-ovh me-1"
                       onClick={cancelMangerCCDetailsButtonHandler}
+                      data-testid="back-btn"
                     >
                       <i className="fa fa-arrow-left  me-1"></i>Back
                     </CButton>
@@ -127,6 +128,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                     <CButton
                       color="info"
                       className="btn-ovh me-1"
+                      data-testid="edit-btn"
                       onClick={() => {
                         editCCDetailsButtonHandler(managerClearanceDetails[0])
                       }}
