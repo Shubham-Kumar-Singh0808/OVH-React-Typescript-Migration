@@ -11,7 +11,14 @@ import {
   ITForm,
 } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
-const initialITDeclarationListState = {} as ITDeclarationListSliceState
+const initialITDeclarationListState: ITDeclarationListSliceState = {
+  itDeclarationForms: [],
+  listSize: 0,
+  searchEmployee: '',
+  isLoading: ApiLoadingState.idle,
+  error: null,
+  cycles: [],
+}
 
 const getCycles = createAsyncThunk(
   'itDeclarationList/getCycles',
@@ -66,6 +73,13 @@ const itDeclarationListSlice = createSlice({
         isAnyOf(getCycles.pending, getITDeclarationForm.pending),
         (state) => {
           state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(getCycles.rejected, getITDeclarationForm.rejected),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.failed
+          state.error = action.payload as ValidationError
         },
       )
   },

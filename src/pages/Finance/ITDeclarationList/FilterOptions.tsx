@@ -68,7 +68,7 @@ const FilterOptions = ({
       const getActiveCycle = cycles?.filter(
         (currentCycle) => currentCycle.active === true,
       )
-      setInvestmentCycle(String(getActiveCycle[0].cycleId))
+      setInvestmentCycle(String(getActiveCycle[0]?.cycleId))
     }
   }, [cycles])
 

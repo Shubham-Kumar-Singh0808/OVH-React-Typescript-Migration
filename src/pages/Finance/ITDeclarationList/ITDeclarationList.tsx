@@ -52,7 +52,7 @@ const ITDeclarationList = (): JSX.Element => {
   useEffect(() => {
     if (window.location.pathname !== itDeclarationListPath) {
       setSearchInput('')
-      dispatch(reduxServices.itDeclarationList.actions.clearSearch())
+      dispatch(reduxServices.itDeclarationList.actions.clearEmployees())
     }
   }, [window.location.pathname])
 
