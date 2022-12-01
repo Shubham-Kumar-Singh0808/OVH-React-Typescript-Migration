@@ -76,27 +76,19 @@ const AddBankAccount = ({
     const prepareObject = {
       bankAccountNumber: accountNumber,
       bankName,
-      employeeId: empId,
+      employeeId: Number(empId),
       ifscCode: bankIfscCode,
     }
-    const isAddBankAccount = await dispatch(
-      reduxServices.bankDetails.saveBankInformation(prepareObject),
+    await dispatch(reduxServices.bankDetails.saveBankInformation(prepareObject))
+    backButtonHandler()
+    dispatch(reduxServices.app.actions.addToast(successToast))
+    dispatch(reduxServices.app.actions.addToast(undefined))
+    dispatch(
+      reduxServices.panDetails.bankInformation({
+        key: 'loggedInEmpId',
+        value: Number(empId),
+      }),
     )
-    if (
-      reduxServices.bankDetails.saveBankInformation.fulfilled.match(
-        isAddBankAccount,
-      )
-    ) {
-      backButtonHandler()
-      dispatch(reduxServices.app.actions.addToast(successToast))
-      dispatch(reduxServices.app.actions.addToast(undefined))
-      dispatch(
-        reduxServices.panDetails.bankInformation({
-          key: 'loggedInEmpId',
-          value: Number(empId),
-        }),
-      )
-    }
   }
 
   return (

@@ -137,9 +137,11 @@ const BankDetails = ({
         </CTable>
         <CRow>
           <CCol xs={4}>
-            <p>
-              <strong>Total Records: {bankDetail?.bankinfo?.length}</strong>
-            </p>
+            <strong>
+              {bankDetail?.bankinfo?.length
+                ? `Total Records: ${bankDetail?.bankinfo?.length}`
+                : `No Records Found...`}
+            </strong>
           </CCol>
         </CRow>
         <OModal
