@@ -66,6 +66,7 @@ import {
   TicketConfigurationApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
+  PaySlipsApi,
   BankDetailsApi,
   PanDetailsApi,
   ResignationListApi,
@@ -596,6 +597,13 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
   leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
+}
+
+export const paySlipsApiConfig: PaySlipsApi = {
+  getEmployeePayslipsForSelectedYear:
+    apiPrefix + '/payslip/getEmployeePayslipsForSelectedYear',
+  generatePayslipAndDownloadPayslip:
+    apiPrefix + '/payslip/payrolladmin/generatePayslipAndDownloadPayslip',
 }
 
 export const panDetailsApiConfig: PanDetailsApi = {
