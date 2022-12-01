@@ -73,6 +73,12 @@ const EmployeeReportessTable = (): JSX.Element => {
     scope: 'col',
   }
 
+  const reporteesHandler = (reporteeId: string) => {
+    dispatch(
+      reduxServices.employeeProfileView.getEmployeeViewProfile(reporteeId),
+    )
+  }
+
   return (
     <>
       <CTable striped>
@@ -105,8 +111,11 @@ const EmployeeReportessTable = (): JSX.Element => {
                 </CTableDataCell>
                 <CTableDataCell scope="row">
                   <Link
-                    to={`/employeeProfile/${reportee.reporteeId}`}
+                    to={`/Employeeprofile/${reportee.reporteeId}`}
                     className="employee-name"
+                    onClick={() =>
+                      reporteesHandler(reportee.reporteeId as unknown as string)
+                    }
                   >
                     {reportee.reporteeName}
                   </Link>

@@ -31,25 +31,7 @@ const getEmployeeViewProfile = createAsyncThunk<
   },
 )
 
-const getSelectedEmployeeInformation = createAsyncThunk<
-  { generalInformation: EmployeeGeneralInformation } | undefined,
-  string,
-  { rejectValue: ValidationError }
->(
-  'getLoggedInEmployeeData/getSelectedEmployeeInformation',
-  async (employeeId: string, thunkApi) => {
-    try {
-      return await employeeGeneralInformationApi.getEmployeeGeneralInformation(
-        employeeId,
-      )
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-
-const employeeGeneralInformationSlice = createSlice({
+const employeeViewProfileSlice = createSlice({
   name: 'getLoggedInEmployeeData',
   initialState: initialGeneralInformationState,
   reducers: {
@@ -62,63 +44,46 @@ const employeeGeneralInformationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getEmployeeGeneralInformation.fulfilled, (state, action) => {
+      .addCase(getEmployeeViewProfile.fulfilled, (state, action) => {
         state.generalInformation = action.payload as EmployeeGeneralInformation
         state.isLoading = false
       })
-      .addCase(getSelectedEmployeeInformation.fulfilled, (state, action) => {
-        state.selectedEmployeeInformation =
-          action.payload as EmployeeGeneralInformation
-        state.isLoading = false
+
+      .addMatcher(isAnyOf(getEmployeeViewProfile.pending), (state) => {
+        state.isLoading = true
       })
-      .addMatcher(
-        isAnyOf(
-          getEmployeeGeneralInformation.pending,
-          getSelectedEmployeeInformation.pending,
-        ),
-        (state) => {
-          state.isLoading = true
-        },
-      )
-      .addMatcher(
-        isAnyOf(
-          getEmployeeGeneralInformation.rejected,
-          getSelectedEmployeeInformation.rejected,
-        ),
-        (state, action) => {
-          state.isLoading = false
-          state.error = action.payload as ValidationError
-        },
-      )
+      .addMatcher(isAnyOf(getEmployeeViewProfile.rejected), (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as ValidationError
+      })
   },
 })
 export const { setEmployeeGeneralInformation, clearError } =
-  employeeGeneralInformationSlice.actions
+  employeeViewProfileSlice.actions
 
 const selectLoggedInEmployeeData = (
   state: RootState,
   isViewingAnotherEmployee = false,
 ): EmployeeGeneralInformation =>
   isViewingAnotherEmployee
-    ? state.getLoggedInEmployeeData.selectedEmployeeInformation
-    : state.getLoggedInEmployeeData.generalInformation
+    ? state.employeeProfileView.selectedEmployeeInformation
+    : state.employeeProfileView.generalInformation
 
 const generalInformation = (state: RootState): EmployeeGeneralInformation =>
-  state.getLoggedInEmployeeData.generalInformation
+  state.employeeProfileView.generalInformation
 
 export const getEmployeeGeneralInformationThunk = {
-  getEmployeeGeneralInformation,
-  getSelectedEmployeeInformation,
+  getEmployeeViewProfile,
 }
 
 export const loggedInEmployeeSelectors = {
   selectLoggedInEmployeeData,
   generalInformation,
 }
-export const generalInformationService = {
+export const employeeProfileViewServices = {
   ...getEmployeeGeneralInformationThunk,
-  actions: employeeGeneralInformationSlice.actions,
+  actions: employeeViewProfileSlice.actions,
   selectors: loggedInEmployeeSelectors,
 }
 
-export default employeeGeneralInformationSlice.reducer
+export default employeeViewProfileSlice.reducer
