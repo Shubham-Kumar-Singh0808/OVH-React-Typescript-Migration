@@ -1,14 +1,19 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import resignationListApi from '../../../middleware/api/Separation/ResignationList/resignationListApi'
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  CheckExitFeedBackForm,
+  ClearanceDetails,
+  ClearanceDetailsProps,
   GetResignationListProps,
   ResignationList,
   ResignationListSliceState,
   SeparationTimeLine,
+  submitClearanceCommentsProps,
+  UpdateClearanceDetails,
 } from '../../../types/Separation/ResignationList/resignationListTypes'
 
 const getResignationList = createAsyncThunk(
@@ -60,16 +65,75 @@ const getSeparationTimeLine = createAsyncThunk<
   },
 )
 
+const submitClearanceCertificate = createAsyncThunk<
+  number | undefined,
+  submitClearanceCommentsProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'resignationList/submitClearanceCertificate',
+  async (clearanceCertificate: submitClearanceCommentsProps, thunkApi) => {
+    try {
+      return await resignationListApi.submitClearanceCertificate(
+        clearanceCertificate,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getClearanceDetails = createAsyncThunk(
+  'resignationList/getClearanceDetails',
+  async (props: ClearanceDetailsProps, thunkApi) => {
+    try {
+      return await resignationListApi.getClearanceDetails(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateCCDetails = createAsyncThunk<
+  number | undefined,
+  UpdateClearanceDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'resignationList/updateCCDetails',
+  async (updateClearanceCertificate: UpdateClearanceDetails, thunkApi) => {
+    try {
+      return await resignationListApi.updateCCDetails(
+        updateClearanceCertificate,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
   separationTimeLine: {} as SeparationTimeLine,
+  checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+  clearanceDetails: [],
+  toggle: '',
 }
 
 const resignationListSlice = createSlice({
-  name: 'support',
+  name: 'resignationList',
   initialState: initialResignationListState,
   reducers: {
     setCurrentPage: (state, action) => {
@@ -78,6 +142,12 @@ const resignationListSlice = createSlice({
     setPageSize: (state, action) => {
       state.pageSize = action.payload
     },
+    toggle: (state, action) => {
+      state.toggle = action.payload
+    },
+    removeClearanceDetails: (state) => {
+      state.clearanceDetails = []
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,16 +155,24 @@ const resignationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.resignationList = action.payload
       })
-      .addCase(getResignationList.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
       .addCase(getSeparationTimeLine.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.separationTimeLine = action.payload as SeparationTimeLine
       })
-      .addCase(getSeparationTimeLine.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getClearanceDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.clearanceDetails = action.payload
       })
+      .addMatcher(
+        isAnyOf(
+          getResignationList.pending,
+          getSeparationTimeLine.pending,
+          getClearanceDetails.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
@@ -115,10 +193,18 @@ const pageSizeFromState = (state: RootState): number =>
 const resignationTimeLine = (state: RootState): SeparationTimeLine =>
   state.resignationList.separationTimeLine
 
+const managerClearanceDetails = (state: RootState): ClearanceDetails[] =>
+  state.resignationList.clearanceDetails
+
+const toggleValue = (state: RootState): string => state.resignationList.toggle
+
 const resignationListThunk = {
   getResignationList,
   resignationIntitiateCC,
   getSeparationTimeLine,
+  submitClearanceCertificate,
+  getClearanceDetails,
+  updateCCDetails,
 }
 
 const resignationListSelectors = {
@@ -128,6 +214,8 @@ const resignationListSelectors = {
   pageFromState,
   pageSizeFromState,
   resignationTimeLine,
+  managerClearanceDetails,
+  toggleValue,
 }
 
 export const resignationListService = {

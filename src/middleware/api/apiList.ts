@@ -66,8 +66,12 @@ import {
   TicketConfigurationApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
+  PaySlipsApi,
+  BankDetailsApi,
+  PanDetailsApi,
   ResignationListApi,
   EmployeeAccountsApi,
+  ITDeclarationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -596,12 +600,47 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
 }
 
+export const paySlipsApiConfig: PaySlipsApi = {
+  getEmployeePayslipsForSelectedYear:
+    apiPrefix + '/payslip/getEmployeePayslipsForSelectedYear',
+  generatePayslipAndDownloadPayslip:
+    apiPrefix + '/payslip/payrolladmin/generatePayslipAndDownloadPayslip',
+}
+
+export const panDetailsApiConfig: PanDetailsApi = {
+  bankInformation: apiPrefix + '/Employee/bankInformation',
+  updateFinanceInformation: apiPrefix + '/Employee/updateFinanceInformation',
+  uploadEmployeeFinanceDetails:
+    apiPrefix + '/fileUpload/uploadEmployeeFinanceDetails',
+  downloadFinanceFile: apiPrefix + '/Employee/downloadFinanceFile',
+}
+
+export const bankDetailsApiConfig: BankDetailsApi = {
+  getBankNameLookup: apiPrefix + '/Employee/getBankNameLookup',
+  saveBankInformation: apiPrefix + '/Employee/saveBankInformation',
+  updateBankInformation: apiPrefix + '/Employee/updateBankInformation',
+  deleteBankAccount: apiPrefix + '/Employee/deleteBankAccount',
+  editBankInformation: apiPrefix + '/Employee/bankInformation',
+}
+
 export const resignationListApiConfig: ResignationListApi = {
   resignationList: apiPrefix + '/separationController/resignationList',
   exportResignationList:
     apiPrefix + '/separationController/exportResignationList',
   resignationInitiateCC: apiPrefix + '/separationController/IntitiateCC',
   getSeparationTimeLine: apiPrefix + '/separationController/getSeparation',
+  clearanceCertificateComments:
+    apiPrefix + '/separationController/clearanceCertificateComments',
+  getClearanceDetails: apiPrefix + '/separationController/getClearanceDetails',
+  updateCCDetails: apiPrefix + '/separationController/updateCC',
+  checkExitFeedBackForm:
+    apiPrefix + '/separationController/checkExitFeedBackForm',
+}
+
+export const itDeclarationListApiConfig: ITDeclarationListApi = {
+  getCycles: apiPrefix + '/itDeclaration/getCycles',
+  getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
+  exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {

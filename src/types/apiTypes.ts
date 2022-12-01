@@ -1,3 +1,4 @@
+import { StringifyOptions } from 'querystring'
 import { Method, ResponseType } from 'axios'
 
 export type AuthenticatedRequestConfig = {
@@ -494,11 +495,41 @@ export interface LeaveApprovalsApi extends ApiBase {
   leaveReject: string
 }
 
+export interface PaySlipsApi extends ApiBase {
+  getEmployeePayslipsForSelectedYear: string
+  generatePayslipAndDownloadPayslip: string
+}
+
+export interface PanDetailsApi extends ApiBase {
+  bankInformation: string
+  updateFinanceInformation: string
+  uploadEmployeeFinanceDetails: string
+  downloadFinanceFile: string
+}
+
+export interface BankDetailsApi extends ApiBase {
+  getBankNameLookup: string
+  saveBankInformation: string
+  updateBankInformation: string
+  deleteBankAccount: string
+  editBankInformation: string
+}
+
 export interface ResignationListApi extends ApiBase {
   resignationList: string
   exportResignationList: string
   resignationInitiateCC: string
   getSeparationTimeLine: string
+  clearanceCertificateComments: string
+  getClearanceDetails: string
+  updateCCDetails: string
+  checkExitFeedBackForm: string
+}
+
+export interface ITDeclarationListApi extends ApiBase {
+  getCycles: string
+  getITDeclarationForm: string
+  exportITDeclarationList: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {
