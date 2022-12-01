@@ -17,8 +17,10 @@ import { showIsRequired } from '../../../../utils/helper'
 
 const EditBankAccount = ({
   backButtonHandler,
+  selectBankId,
 }: {
   backButtonHandler: () => void
+  selectBankId: number
 }): JSX.Element => {
   const editBankAccount = {} as EditBankInformation
   const [editBankInfo, setEditBankInfo] = useState(editBankAccount)
@@ -99,10 +101,8 @@ const EditBankAccount = ({
   )
 
   useEffect(() => {
-    dispatch(
-      reduxServices.bankDetails.editBankInformation(getEditBankAccount.bankId),
-    )
-  }, [dispatch])
+    dispatch(reduxServices.bankDetails.editBankInformation(selectBankId))
+  }, [])
 
   const handleUpdateHandler = async () => {
     const prepareObject = {

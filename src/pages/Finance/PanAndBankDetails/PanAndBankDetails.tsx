@@ -8,6 +8,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 
 const PanAndBankDetails = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
+  const [selectBankId, setSelectBankId] = useState<number>()
 
   return (
     <>
@@ -21,7 +22,10 @@ const PanAndBankDetails = (): JSX.Element => {
           >
             <PanDetails />
             <CRow className="mt-3">
-              <BankDetails setToggle={setToggle} />
+              <BankDetails
+                setToggle={setToggle}
+                setSelectBankId={setSelectBankId}
+              />
             </CRow>
           </OCard>
         </>
@@ -30,7 +34,10 @@ const PanAndBankDetails = (): JSX.Element => {
         <AddBankAccount backButtonHandler={() => setToggle('')} />
       )}
       {toggle === 'editBankAccount' && (
-        <EditBankAccount backButtonHandler={() => setToggle('')} />
+        <EditBankAccount
+          backButtonHandler={() => setToggle('')}
+          selectBankId={selectBankId as number}
+        />
       )}
     </>
   )

@@ -13,7 +13,7 @@ const code = 'IFSC Code'
 const update = 'update-btn'
 describe('Edit BankAccount without data', () => {
   beforeEach(() => {
-    render(<EditBankAccount backButtonHandler={jest.fn()} />)
+    render(<EditBankAccount backButtonHandler={jest.fn()} selectBankId={2} />)
   })
 
   test('should be able to render  Edit BankAccount  Title', () => {
@@ -43,7 +43,7 @@ describe('Edit BankAccount without data', () => {
 
 describe('should render Edit Bank Account Component with data', () => {
   beforeEach(() => {
-    render(<EditBankAccount backButtonHandler={jest.fn()} />, {
+    render(<EditBankAccount backButtonHandler={jest.fn()} selectBankId={3} />, {
       preloadedState: {
         panDetails: {
           bankInfo: mockBankInformation,
@@ -81,7 +81,9 @@ const mockSetToggle = jest.fn()
 
 describe('Edit Bank Account Component Testing', () => {
   test('should render Edit Bank Account component with out crashing', () => {
-    render(<EditBankAccount backButtonHandler={mockSetToggle} />)
+    render(
+      <EditBankAccount backButtonHandler={mockSetToggle} selectBankId={4} />,
+    )
     const backButtonElement = screen.getByTestId('back-button')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)

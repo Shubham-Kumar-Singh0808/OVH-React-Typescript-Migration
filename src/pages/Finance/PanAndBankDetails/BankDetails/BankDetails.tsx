@@ -20,8 +20,10 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const BankDetails = ({
   setToggle,
+  setSelectBankId,
 }: {
   setToggle: (value: string) => void
+  setSelectBankId: (value: number) => void
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteBankId, setDeleteBankId] = useState(0)
@@ -57,6 +59,11 @@ const BankDetails = ({
   const deleteBtnHandler = (id: number) => {
     setIsDeleteModalVisible(true)
     setDeleteBankId(id)
+  }
+
+  const editBtnHandler = (bankId: number) => {
+    setSelectBankId(bankId)
+    setToggle('editBankAccount')
   }
 
   return (
@@ -111,9 +118,7 @@ const BankDetails = ({
                           className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                           color="info btn-ovh me-1"
                           data-testid="edit-button"
-                          onClick={() => {
-                            setToggle('editBankAccount')
-                          }}
+                          onClick={() => editBtnHandler(name.bankId)}
                         >
                           <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>

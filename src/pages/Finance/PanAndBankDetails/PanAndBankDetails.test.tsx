@@ -35,7 +35,9 @@ describe('Add Bank Account Component Testing', () => {
 
 describe('Edit Bank Account Component Testing', () => {
   test('should render Edit Bank Account component with out crashing', () => {
-    render(<EditBankAccount backButtonHandler={mockSetToggle} />)
+    render(
+      <EditBankAccount backButtonHandler={mockSetToggle} selectBankId={5} />,
+    )
     const backButtonElement = screen.getByTestId('back-button')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)

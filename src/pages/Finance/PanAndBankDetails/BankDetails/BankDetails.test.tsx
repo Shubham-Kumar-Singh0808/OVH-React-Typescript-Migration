@@ -9,10 +9,16 @@ import { mockBankInformation } from '../../../../test/data/panDetailsData'
 import { BankInfo } from '../../../../types/Finance/PanDetails/panDetailsTypes'
 
 const mockSetTogglePage = jest.fn()
+const setSelectBankId = jest.fn()
 
 describe('Bank Details without data', () => {
   beforeEach(() => {
-    render(<BankDetails setToggle={mockSetTogglePage} />)
+    render(
+      <BankDetails
+        setToggle={mockSetTogglePage}
+        setSelectBankId={setSelectBankId}
+      />,
+    )
   })
 
   test('should render the correct headers', () => {
@@ -32,16 +38,22 @@ describe('Bank Details without data', () => {
 
 describe('Bank Details Table with data', () => {
   beforeEach(() => {
-    render(<BankDetails setToggle={mockSetTogglePage} />, {
-      preloadedState: {
-        panDetails: {
-          bankInfo: mockBankInformation,
-          isLoading: ApiLoadingState.succeeded,
-          editBankAccount: {} as BankInfo,
-          error: 0,
+    render(
+      <BankDetails
+        setToggle={mockSetTogglePage}
+        setSelectBankId={setSelectBankId}
+      />,
+      {
+        preloadedState: {
+          panDetails: {
+            bankInfo: mockBankInformation,
+            isLoading: ApiLoadingState.succeeded,
+            editBankAccount: {} as BankInfo,
+            error: 0,
+          },
         },
       },
-    })
+    )
   })
   afterEach(cleanup)
   test('should render with number of records  ', () => {
@@ -61,7 +73,12 @@ describe('Bank Details Table with data', () => {
 
 describe('Bank Details Component Testing', () => {
   test('should render Bank Details component with out crashing', () => {
-    render(<BankDetails setToggle={mockSetTogglePage} />)
+    render(
+      <BankDetails
+        setToggle={mockSetTogglePage}
+        setSelectBankId={setSelectBankId}
+      />,
+    )
     const addButtonElement = screen.getByTestId('add-button')
     expect(addButtonElement).toBeInTheDocument()
     userEvent.click(addButtonElement)
