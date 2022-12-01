@@ -1,3 +1,4 @@
+import { StringifyOptions } from 'querystring'
 import { Method, ResponseType } from 'axios'
 
 export type AuthenticatedRequestConfig = {
@@ -514,6 +515,10 @@ export interface ResignationListApi extends ApiBase {
   exportResignationList: string
   resignationInitiateCC: string
   getSeparationTimeLine: string
+  clearanceCertificateComments: string
+  getClearanceDetails: string
+  updateCCDetails: string
+  checkExitFeedBackForm: string
 }
 
 export interface ITDeclarationListApi extends ApiBase {

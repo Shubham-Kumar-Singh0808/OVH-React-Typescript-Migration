@@ -10,7 +10,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -41,6 +41,7 @@ const ResignationListTable = ({
     reduxServices.resignationList.selectors.isLoading,
   )
   const dispatch = useAppDispatch()
+  const location = useLocation()
 
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
@@ -90,6 +91,16 @@ const ResignationListTable = ({
     dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
   }
 
+  const resignationClearanceManagerButtonHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'Manager',
+      }),
+    )
+  }
+
   const handleConfirmInitiateResignation = async () => {
     setIsInitiateModalVisible(false)
     const initiateResignationResultAction = await dispatch(
@@ -124,6 +135,12 @@ const ResignationListTable = ({
       )
     }
   }
+  useEffect(() => {
+    if (location.pathname === '/resignationList') {
+      dispatch(reduxServices.resignationList.actions.toggle(''))
+      dispatch(reduxServices.resignationList.actions.removeClearanceDetails())
+    }
+  }, [location.pathname])
   return (
     <>
       <>
@@ -199,41 +216,47 @@ const ResignationListTable = ({
                         )}
                         {resignationItem.isprocessInitiated ? (
                           <>
+                            <Link to={`/ClearanceCertificateManager`}>
+                              <CButton
+                                size="sm"
+                                className={resignationItem.managerCcCss}
+                                data-testid="manager-test"
+                                onClick={() =>
+                                  resignationClearanceManagerButtonHandler(
+                                    resignationItem.separationId,
+                                  )
+                                }
+                              >
+                                <i className="fa fa-user text-white"></i>
+                              </CButton>
+                            </Link>
+
                             <CButton
-                              color="info"
                               size="sm"
-                              className="btn-ovh me-2"
-                            >
-                              <i className="fa fa-user text-white"></i>
-                            </CButton>
-                            <CButton
-                              color="info"
-                              size="sm"
-                              className="btn-ovh me-2"
+                              className={resignationItem.itCcCss}
                             >
                               <i className="fa fa-laptop text-white"></i>
                             </CButton>
                             <CButton
-                              color="info"
                               size="sm"
-                              className="btn-ovh me-2"
+                              className={resignationItem.finanaceCcCss}
                             >
                               <i className="fa fa-calculator text-white"></i>
                             </CButton>
                             <CButton
-                              color="info"
                               size="sm"
-                              className="btn-ovh me-2"
+                              className={resignationItem.adminCcCss}
                             >
                               <i className="fa fa-id-badge text-white"></i>
                             </CButton>
-                            <CButton
-                              color="info"
-                              size="sm"
-                              className="btn-ovh me-2"
-                            >
-                              <i className="fa fa-user-circle text-white"></i>
-                            </CButton>
+                            <Link to={`/ClearanceCertificateHR`}>
+                              <CButton
+                                size="sm"
+                                className={resignationItem.hrCcCss}
+                              >
+                                <i className="fa fa-user-circle text-white"></i>
+                              </CButton>
+                            </Link>
                           </>
                         ) : (
                           userAccess?.viewaccess && (
