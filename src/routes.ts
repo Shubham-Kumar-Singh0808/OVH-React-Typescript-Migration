@@ -260,6 +260,18 @@ const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
 )
 
+const ITDeclarationList = React.lazy(
+  () => import('./pages/Finance/ITDeclarationList/ITDeclarationList'),
+)
+
+const AddInvestmentCycle = React.lazy(
+  () => import('./pages/Finance/AddInvestmentCycle/AddInvestmentCycle'),
+)
+
+const AddInvestment = React.lazy(
+  () => import('./pages/Finance/AddInvestment/AddInvestment'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -563,6 +575,21 @@ const routes = [
     path: '/ClearanceCertificateManager',
     name: 'Resignation Clearence CertificateManager',
     component: ResignationManagerClearanceCertificate,
+  },
+  {
+    path: '/itDeclarationList',
+    name: 'IT Declaration List',
+    component: ITDeclarationList,
+  },
+  {
+    path: '/addCycle',
+    name: 'Add Investment Cycle',
+    component: AddInvestmentCycle,
+  },
+  {
+    path: '/addInvestment',
+    name: 'Add Investment',
+    component: AddInvestment,
   },
 ]
 

@@ -505,3 +505,9 @@ export interface ResignationListApi extends ApiBase {
   updateCCDetails: string
   checkExitFeedBackForm: string
 }
+
+export interface ITDeclarationListApi extends ApiBase {
+  getCycles: string
+  getITDeclarationForm: string
+  exportITDeclarationList: string
+}

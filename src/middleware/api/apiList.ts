@@ -67,6 +67,7 @@ import {
   SubmitResignationApi,
   LeaveApprovalsApi,
   ResignationListApi,
+  ITDeclarationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -607,4 +608,10 @@ export const resignationListApiConfig: ResignationListApi = {
   updateCCDetails: apiPrefix + '/separationController/updateCC',
   checkExitFeedBackForm:
     apiPrefix + '/separationController/checkExitFeedBackForm',
+}
+
+export const itDeclarationListApiConfig: ITDeclarationListApi = {
+  getCycles: apiPrefix + '/itDeclaration/getCycles',
+  getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
+  exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
 }
