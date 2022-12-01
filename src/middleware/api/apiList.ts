@@ -66,6 +66,8 @@ import {
   TicketConfigurationApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
+  BankDetailsApi,
+  PanDetailsApi,
   ResignationListApi,
   ITDeclarationListApi,
 } from '../../types/apiTypes'
@@ -594,6 +596,22 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
   leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
+}
+
+export const panDetailsApiConfig: PanDetailsApi = {
+  bankInformation: apiPrefix + '/Employee/bankInformation',
+  updateFinanceInformation: apiPrefix + '/Employee/updateFinanceInformation',
+  uploadEmployeeFinanceDetails:
+    apiPrefix + '/fileUpload/uploadEmployeeFinanceDetails',
+  downloadFinanceFile: apiPrefix + '/Employee/downloadFinanceFile',
+}
+
+export const bankDetailsApiConfig: BankDetailsApi = {
+  getBankNameLookup: apiPrefix + '/Employee/getBankNameLookup',
+  saveBankInformation: apiPrefix + '/Employee/saveBankInformation',
+  updateBankInformation: apiPrefix + '/Employee/updateBankInformation',
+  deleteBankAccount: apiPrefix + '/Employee/deleteBankAccount',
+  editBankInformation: apiPrefix + '/Employee/bankInformation',
 }
 
 export const resignationListApiConfig: ResignationListApi = {
