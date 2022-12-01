@@ -4,6 +4,7 @@ import BankDetailsReducer, {
 } from './bankDetailsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockBankNameLookup } from '../../../test/data/bankDetailsData'
+import { EditBankInformation } from '../../../types/Finance/PanDetails/bankDetailsTypes'
 
 describe('Bank Detail Slice', () => {
   describe('bankNameList test', () => {
@@ -16,6 +17,7 @@ describe('Bank Detail Slice', () => {
         isLoading: ApiLoadingState.loading,
         error: 0,
         bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
       })
     })
 
@@ -29,6 +31,7 @@ describe('Bank Detail Slice', () => {
         error: 0,
         bankNameList: mockBankNameLookup,
         isLoading: ApiLoadingState.succeeded,
+        editBankAccount: {} as EditBankInformation,
       })
     })
 
@@ -41,6 +44,7 @@ describe('Bank Detail Slice', () => {
         isLoading: ApiLoadingState.failed,
         error: 0,
         bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
       })
     })
   })
@@ -55,6 +59,7 @@ describe('Bank Detail Slice', () => {
         isLoading: ApiLoadingState.loading,
         error: 0,
         bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
       })
     })
 
@@ -67,6 +72,7 @@ describe('Bank Detail Slice', () => {
         error: 0,
         bankNameList: [],
         isLoading: ApiLoadingState.succeeded,
+        editBankAccount: {} as EditBankInformation,
       })
     })
 
@@ -79,6 +85,7 @@ describe('Bank Detail Slice', () => {
         isLoading: ApiLoadingState.failed,
         error: 0,
         bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
       })
     })
   })
@@ -93,6 +100,7 @@ describe('Bank Detail Slice', () => {
         isLoading: ApiLoadingState.loading,
         error: 0,
         bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
       })
     })
 
@@ -105,6 +113,7 @@ describe('Bank Detail Slice', () => {
         error: 0,
         bankNameList: [],
         isLoading: ApiLoadingState.succeeded,
+        editBankAccount: {} as EditBankInformation,
       })
     })
 
@@ -117,6 +126,7 @@ describe('Bank Detail Slice', () => {
         isLoading: ApiLoadingState.failed,
         error: 0,
         bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
       })
     })
   })
@@ -131,6 +141,7 @@ describe('Bank Detail Slice', () => {
         isLoading: ApiLoadingState.loading,
         error: 0,
         bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
       })
     })
 
@@ -143,6 +154,7 @@ describe('Bank Detail Slice', () => {
         error: 0,
         bankNameList: [],
         isLoading: ApiLoadingState.succeeded,
+        editBankAccount: {} as EditBankInformation,
       })
     })
 
@@ -155,6 +167,48 @@ describe('Bank Detail Slice', () => {
         isLoading: ApiLoadingState.failed,
         error: 0,
         bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
+      })
+    })
+  })
+  // EditBank
+  describe('editBankInformation test', () => {
+    it('Should be able to set isLoading to "loading" if editBankInformation is pending', () => {
+      const action = {
+        type: bankDetailService.editBankInformation.pending.type,
+      }
+      const state = BankDetailsReducer(initialBankDetailsState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        error: 0,
+        bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if editBankInformation is fulfilled', () => {
+      const action = {
+        type: bankDetailService.editBankInformation.fulfilled.type,
+      }
+      const state = BankDetailsReducer(initialBankDetailsState, action)
+      expect(state).toEqual({
+        error: 0,
+        bankNameList: [],
+        isLoading: ApiLoadingState.succeeded,
+        editBankAccount: undefined,
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if editBankInformation is rejected', () => {
+      const action = {
+        type: bankDetailService.editBankInformation.rejected.type,
+      }
+      const state = BankDetailsReducer(initialBankDetailsState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.failed,
+        error: 0,
+        bankNameList: [],
+        editBankAccount: {} as EditBankInformation,
       })
     })
   })

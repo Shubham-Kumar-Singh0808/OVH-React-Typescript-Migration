@@ -3,10 +3,7 @@ import panDetailsReducer, {
   panDetailService,
 } from './panDetailsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import {
-  BankInfo,
-  BankInformation,
-} from '../../../types/Finance/PanDetails/panDetailsTypes'
+import { BankInformation } from '../../../types/Finance/PanDetails/panDetailsTypes'
 import { mockBankInformation } from '../../../test/data/panDetailsData'
 
 describe('Pan Detail Slice', () => {
@@ -20,7 +17,6 @@ describe('Pan Detail Slice', () => {
         error: 0,
         bankInfo: {} as BankInformation,
         isLoading: ApiLoadingState.loading,
-        editBankAccount: {} as BankInfo,
       })
     })
 
@@ -34,7 +30,6 @@ describe('Pan Detail Slice', () => {
         error: 0,
         bankInfo: mockBankInformation,
         isLoading: ApiLoadingState.succeeded,
-        editBankAccount: {} as BankInfo,
       })
     })
 
@@ -47,7 +42,6 @@ describe('Pan Detail Slice', () => {
         error: 0,
         bankInfo: {} as BankInformation,
         isLoading: ApiLoadingState.failed,
-        editBankAccount: {} as BankInfo,
       })
     })
   })
@@ -62,7 +56,6 @@ describe('Pan Detail Slice', () => {
         error: 0,
         bankInfo: {} as BankInformation,
         isLoading: ApiLoadingState.loading,
-        editBankAccount: {} as BankInfo,
       })
     })
 
@@ -75,7 +68,6 @@ describe('Pan Detail Slice', () => {
         error: 0,
         bankInfo: {} as BankInformation,
         isLoading: ApiLoadingState.succeeded,
-        editBankAccount: {} as BankInfo,
       })
     })
 
@@ -88,7 +80,6 @@ describe('Pan Detail Slice', () => {
         error: 0,
         bankInfo: {} as BankInformation,
         isLoading: ApiLoadingState.failed,
-        editBankAccount: {} as BankInfo,
       })
     })
   })
@@ -104,7 +95,6 @@ describe('Pan Detail Slice', () => {
         error: 0,
         bankInfo: {} as BankInformation,
         isLoading: ApiLoadingState.loading,
-        editBankAccount: {} as BankInfo,
       })
     })
 
@@ -117,7 +107,6 @@ describe('Pan Detail Slice', () => {
         error: 0,
         bankInfo: {} as BankInformation,
         isLoading: ApiLoadingState.succeeded,
-        editBankAccount: {} as BankInfo,
       })
     })
 
@@ -130,7 +119,6 @@ describe('Pan Detail Slice', () => {
         error: 0,
         bankInfo: {} as BankInformation,
         isLoading: ApiLoadingState.failed,
-        editBankAccount: {} as BankInfo,
       })
     })
   })

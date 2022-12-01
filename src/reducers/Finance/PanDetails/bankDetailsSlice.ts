@@ -26,15 +26,9 @@ const bankNameList = createAsyncThunk(
 
 const editBankInformation = createAsyncThunk(
   'bankDetails/editBankInformation',
-  async (
-    props: {
-      key: string
-      value: number
-    },
-    thunkApi,
-  ) => {
+  async (bankId: number, thunkApi) => {
     try {
-      return await bankDetailsApi.editBankInformation(props)
+      return await bankDetailsApi.editBankInformation(bankId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -101,7 +95,6 @@ const bankDetailsSlice = createSlice({
       })
       .addMatcher(
         isAnyOf(
-          bankNameList.fulfilled,
           updateBankInformation.fulfilled,
           deleteBankAccount.fulfilled,
           saveBankInformation.fulfilled,

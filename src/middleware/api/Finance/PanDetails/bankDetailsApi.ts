@@ -20,15 +20,14 @@ const bankNameList = async (): Promise<BankNameLookup[]> => {
   return response.data
 }
 
-const editBankInformation = async (props: {
-  key: string
-  value: number
-}): Promise<EditBankInformation> => {
+const editBankInformation = async (
+  bankId: number,
+): Promise<EditBankInformation> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: bankDetailsApiConfig.editBankInformation,
     method: AllowedHttpMethods.get,
     params: {
-      [props.key]: props.value,
+      bankId,
     },
   })
 

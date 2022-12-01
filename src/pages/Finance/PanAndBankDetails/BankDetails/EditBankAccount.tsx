@@ -12,7 +12,7 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { BankInfo } from '../../../../types/Finance/PanDetails/panDetailsTypes'
+import { EditBankInformation } from '../../../../types/Finance/PanDetails/bankDetailsTypes'
 import { showIsRequired } from '../../../../utils/helper'
 
 const EditBankAccount = ({
@@ -20,7 +20,7 @@ const EditBankAccount = ({
 }: {
   backButtonHandler: () => void
 }): JSX.Element => {
-  const editBankAccount = {} as BankInfo
+  const editBankAccount = {} as EditBankInformation
   const [editBankInfo, setEditBankInfo] = useState(editBankAccount)
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
   const [bankAccountNumberExist, setBankAccountNumberExist] = useState('')
@@ -45,13 +45,7 @@ const EditBankAccount = ({
 
   useEffect(() => {
     if (getEditBankAccount != null) {
-      setEditBankInfo({
-        bankId: getEditBankAccount.bankId,
-        bankName: getEditBankAccount.bankName,
-        bankAccountNumber: getEditBankAccount.bankAccountNumber,
-        employeeId: getEditBankAccount.employeeId,
-        ifscCode: getEditBankAccount.ifscCode,
-      })
+      setEditBankInfo(getEditBankAccount)
     }
   }, [getEditBankAccount])
 
@@ -106,10 +100,7 @@ const EditBankAccount = ({
 
   useEffect(() => {
     dispatch(
-      reduxServices.panDetails.bankInformation({
-        key: 'bankId',
-        value: editBankInfo.bankId,
-      }),
+      reduxServices.bankDetails.editBankInformation(getEditBankAccount.bankId),
     )
   }, [dispatch])
 
