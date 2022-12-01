@@ -88,6 +88,7 @@ import projectReportReducer from './reducers/ProjectManagement/Project/projectRe
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 import itDeclarationFormReducer from './reducers/Finance/ITDeclarationForm/itDeclarationFormSlice'
 import resignationListReducer from './reducers/Separation/ResignationList/resignationListSlice'
+import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDeclarationListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -176,6 +177,7 @@ export const allReducers = {
   leaveApprovals: leaveApprovalsReducer,
   itDeclarationForm: itDeclarationFormReducer,
   resignationList: resignationListReducer,
+  itDeclarationList: itDeclarationListReducer,
   // add your slice reducers here
 }
 

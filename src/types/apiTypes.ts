@@ -404,6 +404,7 @@ export interface DashboardApi extends ApiBase {
   getHolidayInformation: string
   updateHoliday: string
   searchEmployee: string
+  getLeaveSummary: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
@@ -503,4 +504,10 @@ export interface ResignationListApi extends ApiBase {
   exportResignationList: string
   resignationInitiateCC: string
   getSeparationTimeLine: string
+}
+
+export interface ITDeclarationListApi extends ApiBase {
+  getCycles: string
+  getITDeclarationForm: string
+  exportITDeclarationList: string
 }

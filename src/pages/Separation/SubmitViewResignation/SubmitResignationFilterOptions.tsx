@@ -166,7 +166,7 @@ const SubmitResignationFilterOptions = ({
     <CForm>
       <CRow className="mt-1 mb-0 align-items-center">
         <CFormLabel className="col-sm-3 col-form-label text-end pt-1 pb-1 pe-18">
-          Employee ID:
+          Employee ID :
         </CFormLabel>
         <CCol sm={3}>
           <p className="mb-0">{getSeparation?.form?.employeeId}</p>
@@ -174,7 +174,7 @@ const SubmitResignationFilterOptions = ({
       </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
         <CFormLabel className="col-sm-3 col-form-label text-end pt-1 pb-1 pe-18">
-          Employee Name:
+          Employee Name :
         </CFormLabel>
         <CCol sm={3}>
           <p className="mb-0">{getSeparation?.form?.employeeName}</p>
@@ -182,7 +182,7 @@ const SubmitResignationFilterOptions = ({
       </CRow>
       <CRow className="mt-1 mb-1 align-items-center">
         <CFormLabel className="col-sm-3 col-form-label text-end pt-1 pb-1 pe-18">
-          Resignation Date:
+          Resignation Date :
         </CFormLabel>
         <CCol sm={3}>
           <p className="mb-0">{getSeparation?.form?.resignationDate}</p>
@@ -191,7 +191,7 @@ const SubmitResignationFilterOptions = ({
 
       <CRow className="mt-3 mb-4">
         <CFormLabel className="col-sm-3 col-form-label text-end">
-          Primary Reason:
+          Primary Reason :
           <span className={primaryReason ? TextWhite : TextDanger}>*</span>
         </CFormLabel>
         <CCol sm={3}>
@@ -217,7 +217,7 @@ const SubmitResignationFilterOptions = ({
       {primaryReason === '4' && (
         <CRow className="mt-3 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">
-            Others:
+            Others :
             <span className={otherReason ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
@@ -237,8 +237,8 @@ const SubmitResignationFilterOptions = ({
         </CRow>
       )}
       <CRow className="mt-4 mb-4">
-        <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
-          Comments:
+        <CFormLabel className="col-sm-3 col-form-label text-end">
+          Comments :
           <span
             className={
               submitResignation?.employeeComments ? TextWhite : TextDanger
