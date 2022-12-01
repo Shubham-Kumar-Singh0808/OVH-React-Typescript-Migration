@@ -500,3 +500,7 @@ export interface ResignationListApi extends ApiBase {
   resignationInitiateCC: string
   getSeparationTimeLine: string
 }
+
+export interface EmployeeAccountsApi extends ApiBase {
+  financeDetails: string
+}

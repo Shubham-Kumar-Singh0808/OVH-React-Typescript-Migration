@@ -1,11 +1,37 @@
 import { CButton, CCol, CFormInput, CInputGroup, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import EmployeeAccountsTable from './EmployeeAccountsTable'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { usePagination } from '../../../middleware/hooks/usePagination'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const EmployeeAccounts = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
 
+  const dispatch = useAppDispatch()
+
+  const listSize = useTypedSelector(
+    reduxServices.employeeAccount.selectors.listSize,
+  )
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(listSize, 20)
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.employeeAccount.getFinanceDetails({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+        employeeName: '',
+      }),
+    )
+  }, [currentPage, dispatch, pageSize])
   return (
     <>
       <OCard
@@ -51,7 +77,13 @@ const EmployeeAccounts = (): JSX.Element => {
             </CInputGroup>
           </CCol>
         </CRow>
-        <EmployeeAccountsTable />
+        <EmployeeAccountsTable
+          paginationRange={paginationRange}
+          setPageSize={setPageSize}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pageSize={pageSize}
+        />
       </OCard>
     </>
   )

@@ -254,7 +254,7 @@ const ResignationList = React.lazy(
 )
 
 const EmployeeAccounts = React.lazy(
-  () => import('./pages/Finance/Employee Accounts/EmployeeAccounts'),
+  () => import('./pages/Finance/EmployeeAccounts/EmployeeAccounts'),
 )
 
 /**
