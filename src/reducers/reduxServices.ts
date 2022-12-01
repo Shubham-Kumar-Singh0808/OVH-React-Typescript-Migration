@@ -76,6 +76,7 @@ import { addConfigurationService } from './Settings/Configurations/AddConfigurat
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
+import { paySlipsService } from './Finance/Payslips/payslipsSlice'
 import { panDetailService } from './Finance/PanDetails/panDetailsSlice'
 import { bankDetailService } from './Finance/PanDetails/bankDetailsSlice'
 import { resignationListService } from './Separation/ResignationList/resignationListSlice'
@@ -160,6 +161,7 @@ export const reduxServices = {
   addConfigurations: addConfigurationService,
   projectReport: projectReportsService,
   leaveApprovals: leaveApprovalsService,
+  paySlips: paySlipsService,
   panDetails: panDetailService,
   bankDetails: bankDetailService,
   resignationList: resignationListService,

@@ -495,6 +495,11 @@ export interface LeaveApprovalsApi extends ApiBase {
   leaveReject: string
 }
 
+export interface PaySlipsApi extends ApiBase {
+  getEmployeePayslipsForSelectedYear: string
+  generatePayslipAndDownloadPayslip: string
+}
+
 export interface PanDetailsApi extends ApiBase {
   bankInformation: string
   updateFinanceInformation: string
