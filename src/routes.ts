@@ -244,6 +244,10 @@ const LeaveApprovals = React.lazy(
 
 const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
 
+const PfPanDetails = React.lazy(
+  () => import('./pages/Finance/PanAndBankDetails/PanAndBankDetails'),
+)
+
 const ResignationTimeLine = React.lazy(
   () =>
     import(
@@ -567,6 +571,11 @@ const routes = [
     path: '/payslip',
     name: 'Payslip',
     component: Payslip,
+  },
+  {
+    path: '/myFinance',
+    name: 'P.F. & PAN Details',
+    component: PfPanDetails,
   },
   {
     path: '/resignationList',

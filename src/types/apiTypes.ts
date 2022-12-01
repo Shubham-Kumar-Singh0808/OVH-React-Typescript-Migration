@@ -500,6 +500,21 @@ export interface PaySlipsApi extends ApiBase {
   generatePayslipAndDownloadPayslip: string
 }
 
+export interface PanDetailsApi extends ApiBase {
+  bankInformation: string
+  updateFinanceInformation: string
+  uploadEmployeeFinanceDetails: string
+  downloadFinanceFile: string
+}
+
+export interface BankDetailsApi extends ApiBase {
+  getBankNameLookup: string
+  saveBankInformation: string
+  updateBankInformation: string
+  deleteBankAccount: string
+  editBankInformation: string
+}
+
 export interface ResignationListApi extends ApiBase {
   resignationList: string
   exportResignationList: string

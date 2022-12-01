@@ -1,0 +1,93 @@
+import { BankInformation } from '../../types/Finance/PanDetails/panDetailsTypes'
+
+export const mockBankInformation: BankInformation = {
+  bankinfo: [
+    {
+      bankId: 1248,
+      bankName: 'HDFC',
+      bankAccountNumber: '134457921',
+      ifscCode: 'ABCD1234',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1247,
+      bankName: 'HDFC',
+      bankAccountNumber: '134457921',
+      ifscCode: 'ABCD1234',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1250,
+      bankName: 'ICICI',
+      bankAccountNumber: '123456789',
+      ifscCode: '123456789',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1251,
+      bankName: 'HDFC',
+      bankAccountNumber: '123456789',
+      ifscCode: '123456789',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1253,
+      bankName: 'SBI',
+      bankAccountNumber: '85274698123541541418',
+      ifscCode: 'SBI0001696',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1256,
+      bankName: 'SBI',
+      bankAccountNumber: '85274698123541541418',
+      ifscCode: 'SBI0001696',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1255,
+      bankName: 'SBI',
+      bankAccountNumber: '85274698123541541418',
+      ifscCode: 'SBI0001696',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1258,
+      bankName: 'SBI',
+      bankAccountNumber: '85274698123541541418',
+      ifscCode: 'SBI0001696',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1257,
+      bankName: 'SBI',
+      bankAccountNumber: '85274698123541541418',
+      ifscCode: 'SBI0001696',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1260,
+      bankName: 'SBI',
+      bankAccountNumber: '85276489123',
+      ifscCode: 'SBI0004568',
+      employeeId: 2041,
+    },
+    {
+      bankId: 1259,
+      bankName: 'SBI',
+      bankAccountNumber: '85274698123541541418',
+      ifscCode: 'SBI0001696',
+      employeeId: 2041,
+    },
+  ],
+  finance: {
+    financeId: 908,
+    pfAccountNumber: '123456987',
+    panCardAccountNumber: '123456789',
+    uaNumber: '123456789',
+    employeeId: 2041,
+    aadharCardNumber: '636188754099',
+    financeFilePath: '2041FinanceDoc.txt',
+    financeFileName: null,
+  },
+}
