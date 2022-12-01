@@ -514,3 +514,9 @@ export interface ResignationListApi extends ApiBase {
   resignationInitiateCC: string
   getSeparationTimeLine: string
 }
+
+export interface ITDeclarationListApi extends ApiBase {
+  getCycles: string
+  getITDeclarationForm: string
+  exportITDeclarationList: string
+}

@@ -69,6 +69,7 @@ import {
   BankDetailsApi,
   PanDetailsApi,
   ResignationListApi,
+  ITDeclarationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -618,4 +619,10 @@ export const resignationListApiConfig: ResignationListApi = {
     apiPrefix + '/separationController/exportResignationList',
   resignationInitiateCC: apiPrefix + '/separationController/IntitiateCC',
   getSeparationTimeLine: apiPrefix + '/separationController/getSeparation',
+}
+
+export const itDeclarationListApiConfig: ITDeclarationListApi = {
+  getCycles: apiPrefix + '/itDeclaration/getCycles',
+  getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
+  exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
 }
