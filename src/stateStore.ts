@@ -86,6 +86,9 @@ import addConfigurationReducer from './reducers/Settings/Configurations/AddConfi
 import projectManagementReducer from './reducers/ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
+import paySlipsReducer from './reducers/Finance/Payslips/payslipsSlice'
+import panDetailsReducer from './reducers/Finance/PanDetails/panDetailsSlice'
+import bankDetailsReducer from './reducers/Finance/PanDetails/bankDetailsSlice'
 import resignationListReducer from './reducers/Separation/ResignationList/resignationListSlice'
 import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDeclarationListSlice'
 
@@ -174,6 +177,9 @@ export const allReducers = {
   addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
   leaveApprovals: leaveApprovalsReducer,
+  paySlips: paySlipsReducer,
+  panDetails: panDetailsReducer,
+  bankDetails: bankDetailsReducer,
   resignationList: resignationListReducer,
   itDeclarationList: itDeclarationListReducer,
   // add your slice reducers here

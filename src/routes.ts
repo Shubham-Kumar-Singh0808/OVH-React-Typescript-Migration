@@ -242,10 +242,23 @@ const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
 )
 
+const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
+
+const PfPanDetails = React.lazy(
+  () => import('./pages/Finance/PanAndBankDetails/PanAndBankDetails'),
+)
+
 const ResignationTimeLine = React.lazy(
   () =>
     import(
       './pages/Separation/ResignationList/ResignationTimeLine/ResignationHistory'
+    ),
+)
+
+const ResignationManagerClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/ManagerClearenceCertificate/ManagerClearanceCertificate'
     ),
 )
 
@@ -555,6 +568,16 @@ const routes = [
     component: LeaveApprovals,
   },
   {
+    path: '/payslip',
+    name: 'Payslip',
+    component: Payslip,
+  },
+  {
+    path: '/myFinance',
+    name: 'P.F. & PAN Details',
+    component: PfPanDetails,
+  },
+  {
     path: '/resignationList',
     name: 'Resignation List',
     component: ResignationList,
@@ -563,6 +586,11 @@ const routes = [
     path: '/managerComments',
     name: 'Resignation Time Line',
     component: ResignationTimeLine,
+  },
+  {
+    path: '/ClearanceCertificateManager',
+    name: 'Resignation Clearence CertificateManager',
+    component: ResignationManagerClearanceCertificate,
   },
   {
     path: '/itDeclarationList',

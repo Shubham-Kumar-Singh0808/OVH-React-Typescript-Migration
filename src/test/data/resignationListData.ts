@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import {
+  ClearanceDetails,
   ResignationListResponse,
   SeparationTimeLine,
 } from '../../types/Separation/ResignationList/resignationListTypes'
@@ -116,3 +117,18 @@ export const mockResignationListHistory: SeparationTimeLine = {
     },
   ],
 }
+
+export const mockClearanceDetails: ClearanceDetails[] = [
+  {
+    ccId: 97,
+    employeeId: 1993,
+    employeeName: 'Hr H',
+    comments: 'test',
+    isDue: false,
+    createdDate: '28/11/2022',
+    seperationId: 0,
+    seperationEmpId: 1985,
+    seperationEmpName: 'Vinesh Merugu',
+    addedBy: 'Manager',
+  },
+]
