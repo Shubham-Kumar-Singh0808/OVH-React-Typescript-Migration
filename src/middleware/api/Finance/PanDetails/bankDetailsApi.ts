@@ -1,5 +1,6 @@
 import {
   BankNameLookup,
+  EditBankInformation,
   SaveData,
 } from '../../../../types/Finance/PanDetails/bankDetailsTypes'
 import { BankInfo } from '../../../../types/Finance/PanDetails/panDetailsTypes'
@@ -13,6 +14,22 @@ const bankNameList = async (): Promise<BankNameLookup[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: bankDetailsApiConfig.getBankNameLookup,
     method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const editBankInformation = async (props: {
+  key: string
+  value: number
+}): Promise<EditBankInformation> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: bankDetailsApiConfig.editBankInformation,
+    method: AllowedHttpMethods.get,
+    params: {
+      [props.key]: props.value,
+    },
   })
 
   const response = await useAxios(requestConfig)
@@ -61,6 +78,7 @@ const bankDetailsApi = {
   saveBankInformation,
   updateBankInformation,
   deleteBankAccount,
+  editBankInformation,
 }
 
 export default bankDetailsApi

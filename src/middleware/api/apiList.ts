@@ -611,6 +611,7 @@ export const bankDetailsApiConfig: BankDetailsApi = {
   saveBankInformation: apiPrefix + '/Employee/saveBankInformation',
   updateBankInformation: apiPrefix + '/Employee/updateBankInformation',
   deleteBankAccount: apiPrefix + '/Employee/deleteBankAccount',
+  editBankInformation: apiPrefix + '/Employee/bankInformation',
 }
 
 export const resignationListApiConfig: ResignationListApi = {

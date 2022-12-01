@@ -7,6 +7,7 @@ import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   BankDetailsSliceState,
   BankNameLookup,
+  EditBankInformation,
   SaveData,
 } from '../../../types/Finance/PanDetails/bankDetailsTypes'
 import { BankInfo } from '../../../types/Finance/PanDetails/panDetailsTypes'
@@ -16,6 +17,24 @@ const bankNameList = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await bankDetailsApi.bankNameList()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const editBankInformation = createAsyncThunk(
+  'bankDetails/editBankInformation',
+  async (
+    props: {
+      key: string
+      value: number
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await bankDetailsApi.editBankInformation(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -63,6 +82,7 @@ export const initialBankDetailsState: BankDetailsSliceState = {
   isLoading: ApiLoadingState.idle,
   error: 0,
   bankNameList: [],
+  editBankAccount: {} as EditBankInformation,
 }
 
 const bankDetailsSlice = createSlice({
@@ -75,11 +95,9 @@ const bankDetailsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.bankNameList = action.payload
       })
-      .addCase(bankNameList.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addCase(bankNameList.rejected, (state) => {
-        state.isLoading = ApiLoadingState.failed
+      .addCase(editBankInformation.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editBankAccount = action.payload
       })
       .addMatcher(
         isAnyOf(
@@ -98,6 +116,7 @@ const bankDetailsSlice = createSlice({
           updateBankInformation.pending,
           deleteBankAccount.pending,
           saveBankInformation.pending,
+          editBankInformation.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -109,6 +128,7 @@ const bankDetailsSlice = createSlice({
           updateBankInformation.rejected,
           deleteBankAccount.rejected,
           saveBankInformation.rejected,
+          editBankInformation.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -117,21 +137,26 @@ const bankDetailsSlice = createSlice({
   },
 })
 
-const bankDetailsThunk = {
-  bankNameList,
-  saveBankInformation,
-  updateBankInformation,
-  deleteBankAccount,
-}
-
 const isLoading = (state: RootState): LoadingState => state.panDetails.isLoading
 
 const bankList = (state: RootState): BankNameLookup[] =>
   state.bankDetails.bankNameList
 
+const editBankData = (state: RootState): EditBankInformation =>
+  state.bankDetails.editBankAccount
+
+const bankDetailsThunk = {
+  bankNameList,
+  saveBankInformation,
+  updateBankInformation,
+  deleteBankAccount,
+  editBankInformation,
+}
+
 const bankDetailsSelectors = {
   isLoading,
   bankList,
+  editBankData,
 }
 
 export const bankDetailService = {

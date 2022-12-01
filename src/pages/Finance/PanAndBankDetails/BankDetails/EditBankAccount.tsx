@@ -38,8 +38,10 @@ const EditBankAccount = ({
     reduxServices.bankDetails.selectors.bankList,
   )
   const getEditBankAccount = useTypedSelector(
-    reduxServices.panDetails.selectors.editBankAccountDetails,
+    reduxServices.bankDetails.selectors.editBankData,
   )
+
+  console.log(getEditBankAccount)
 
   useEffect(() => {
     if (getEditBankAccount != null) {
@@ -103,10 +105,12 @@ const EditBankAccount = ({
   )
 
   useEffect(() => {
-    reduxServices.panDetails.bankInformation({
-      key: 'bankId',
-      value: editBankInfo.bankId,
-    })
+    dispatch(
+      reduxServices.panDetails.bankInformation({
+        key: 'bankId',
+        value: editBankInfo.bankId,
+      }),
+    )
   }, [dispatch])
 
   const handleUpdateHandler = async () => {

@@ -506,6 +506,7 @@ export interface BankDetailsApi extends ApiBase {
   saveBankInformation: string
   updateBankInformation: string
   deleteBankAccount: string
+  editBankInformation: string
 }
 
 export interface ResignationListApi extends ApiBase {

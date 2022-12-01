@@ -17,7 +17,6 @@ export type PanDetailsSliceState = {
   bankInfo: BankInformation
   isLoading: LoadingState
   error: ValidationError
-  editBankAccount: BankInfo
 }
 
 export type UploadPanDetail = {
