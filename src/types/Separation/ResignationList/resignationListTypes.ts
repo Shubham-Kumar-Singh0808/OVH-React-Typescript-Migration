@@ -62,9 +62,12 @@ export type GetResignationListProps = {
 export type ResignationListSliceState = {
   resignationList: ResignationListResponse
   separationTimeLine: SeparationTimeLine
+  clearanceDetails: ClearanceDetails[]
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number
+  toggle: string
+  checkExitFeedBackForm: CheckExitFeedBackForm
 }
 
 export type ExportResignationListDataProps = {
@@ -130,4 +133,68 @@ export type SeparationTimeLine = {
   empStatus: null
   certificate: null
   seperationComments: SeparationComments[]
+}
+
+export type submitClearanceCommentsProps = {
+  addedBy: string
+  comments: string
+  employeeId: number
+  employeeName: string
+  isDue: string
+  seperationId: number
+}
+
+export type ClearanceDetails = {
+  ccId: number
+  employeeId: number
+  employeeName: string
+  comments: string
+  isDue: boolean
+  createdDate: string
+  seperationId: number
+  seperationEmpId: number
+  seperationEmpName: string
+  addedBy: string
+}
+
+export type ClearanceDetailsProps = {
+  separationId: number
+  submittedBy: string
+}
+
+export type UpdateClearanceDetails = {
+  addedBy: string
+  ccId: number
+  comments: string
+  createdDate: string | Date
+  employeeId: number
+  employeeName: string
+  isDue: boolean
+  seperationEmpId: number
+  seperationEmpName: string
+  seperationId: number
+}
+
+export type CheckExitFeedBackForm = {
+  exitFeedBackId: number
+  employeeId: number
+  separationId: number
+  primaryReasonId: number
+  primaryReasonName: string
+  otherCommnets: string
+  salary: string
+  opportunityForGrowth: string
+  recognitionOfwork: string
+  promotion: string
+  educationalBackground: string
+  personelPolicies: string
+  organisationCulture: string
+  roleClarity: string
+  superiorGuidance: string
+  expectations: string
+  expectationsFulfilled: string
+  likeAboutCompany: string
+  dislikeAboutCompany: string
+  joinLater: string
+  employeeName: string
 }
