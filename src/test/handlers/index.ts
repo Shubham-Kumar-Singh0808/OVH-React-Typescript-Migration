@@ -1,4 +1,3 @@
-import { allocateEmployeeHandlers } from './allocateEmployeeHandlers'
 import { attendanceReportHandlers } from './attendanceReportHandlers'
 import { birthdaysListHandlers } from './birthdaysListHandlers'
 import { categoryListHandlers } from './categoryListHandlers'
@@ -37,6 +36,7 @@ import { addLocationListHandlers } from './addLocationListHandlers'
 import { ticketConfigurationHandlers } from './ticketConfigurationHandlers'
 import { addNewDesignationHandler } from './addNewDesignationHandler'
 import { leaveApprovalsHandlers } from './leaveApprovalsHandlers'
+import { resignationHandlers } from './resignationLitHandler'
 
 export const handlers = [
   ...loginHandlers,
@@ -79,5 +79,6 @@ export const handlers = [
   ...ticketConfigurationHandlers,
   ...addNewDesignationHandler,
   ...leaveApprovalsHandlers,
+  ...resignationHandlers,
   // add your handler here
 ]

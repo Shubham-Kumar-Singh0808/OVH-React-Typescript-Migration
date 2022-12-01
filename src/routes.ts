@@ -249,6 +249,13 @@ const ResignationTimeLine = React.lazy(
     ),
 )
 
+const ResignationManagerClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/ManagerClearenceCertificate/ManagerClearanceCertificate'
+    ),
+)
+
 const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
 )
@@ -563,6 +570,11 @@ const routes = [
     path: '/managerComments',
     name: 'Resignation Time Line',
     component: ResignationTimeLine,
+  },
+  {
+    path: '/ClearanceCertificateManager',
+    name: 'Resignation Clearence CertificateManager',
+    component: ResignationManagerClearanceCertificate,
   },
   {
     path: '/itDeclarationList',

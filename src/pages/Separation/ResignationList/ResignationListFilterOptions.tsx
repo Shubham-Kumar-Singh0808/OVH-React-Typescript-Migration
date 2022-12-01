@@ -78,6 +78,7 @@ const ResignationListFilterOptions = ({
       setDateError(false)
     }
   }, [selectFromDate, selectToDate])
+
   const handleViewButtonHandler = () => {
     dispatch(
       reduxServices.resignationList.getResignationList({
@@ -93,7 +94,7 @@ const ResignationListFilterOptions = ({
           : '',
         multiplesearch: '',
         startIndex: pageSize * (currentPage - 1),
-        status: status as string,
+        status,
         to: selectToDate
           ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
