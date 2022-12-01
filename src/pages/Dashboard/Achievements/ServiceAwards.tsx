@@ -7,7 +7,12 @@ const ServiceAwards = (): JSX.Element => {
   const achievements = useTypedSelector(
     reduxServices.employeeAchievements.selectors.achievements,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAchieversList = userAccessToFeatures?.find(
+    (feature) => feature.name === `Achiever's List`,
+  )
   const serviceAwardFooterLink = (
     <CCardFooter>
       <CLink
@@ -48,7 +53,7 @@ const ServiceAwards = (): JSX.Element => {
             })}
           </CRow>
         </CCol>
-        {serviceAwardFooterLink}
+        {userAccessToAchieversList?.viewaccess && <>{serviceAwardFooterLink}</>}
       </CRow>
     </>
   )

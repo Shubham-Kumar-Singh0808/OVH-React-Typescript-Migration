@@ -27,6 +27,13 @@ const JobVacanciesTable = (): JSX.Element => {
     setIsJobDescriptionModalVisible(jobDescriptionLength)
     setDescription(jobDescription)
   }
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessToJobOpenings = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Job Openings',
+  )
 
   return (
     <>
@@ -78,6 +85,16 @@ const JobVacanciesTable = (): JSX.Element => {
           })}
         </CTableBody>
       </CTable>
+      <div className="panel-footer mbtrl0">
+        {userAccessToJobOpenings?.viewaccess && (
+          <p className="text-right mb0">
+            <a href="/jobvacancies">
+              More {''}
+              <i className="fa fa-angle-double-right fa-lg"></i>
+            </a>
+          </p>
+        )}
+      </div>
       <OModal
         modalSize="lg"
         alignment="center"

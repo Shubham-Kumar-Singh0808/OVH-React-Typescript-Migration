@@ -12,6 +12,14 @@ const UpcomingEvents = (): JSX.Element => {
     reduxServices.trainingsAndEvents.selectors.isLoading,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessToEventList = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Event List',
+  )
+
   return (
     <>
       {isLoading !== ApiLoadingState.loading && upcomingEvents?.length ? (
@@ -37,12 +45,14 @@ const UpcomingEvents = (): JSX.Element => {
           </div>
           {upcomingEvents?.length !== 0 && (
             <div className="panel-footer mbtrl0">
-              <p className="text-right mb0">
-                <a href="/eventList">
-                  More {''}
-                  <i className="fa fa-angle-double-right fa-lg"></i>
-                </a>
-              </p>
+              {userAccessToEventList?.viewaccess && (
+                <p className="text-right mb0">
+                  <a href="/eventList">
+                    More {''}
+                    <i className="fa fa-angle-double-right fa-lg"></i>
+                  </a>
+                </p>
+              )}
             </div>
           )}
         </>
