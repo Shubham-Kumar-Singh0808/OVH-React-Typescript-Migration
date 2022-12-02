@@ -70,6 +70,10 @@ const EmployeeAccountsTable = (
     reduxServices.authentication.selectors.selectEmployeeId,
   )
 
+  const totalRecords = financeData?.length
+    ? `Total Records: ${listSize}`
+    : `No Records found...`
+
   return (
     <>
       <CTable
@@ -165,8 +169,8 @@ const EmployeeAccountsTable = (
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <p>
-            <strong>Total Records: {listSize}</strong>
+          <p className="mt-2">
+            <strong>{totalRecords}</strong>
           </p>
         </CCol>
         <CCol xs={3}>
