@@ -101,6 +101,16 @@ const ResignationListTable = ({
     )
   }
 
+  const resignationHRClearanceHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'HR',
+      }),
+    )
+  }
+
   const handleConfirmInitiateResignation = async () => {
     setIsInitiateModalVisible(false)
     const initiateResignationResultAction = await dispatch(
@@ -253,6 +263,11 @@ const ResignationListTable = ({
                               <CButton
                                 size="sm"
                                 className={resignationItem.hrCcCss}
+                                onClick={() =>
+                                  resignationHRClearanceHandler(
+                                    resignationItem.separationId,
+                                  )
+                                }
                               >
                                 <i className="fa fa-user-circle text-white"></i>
                               </CButton>
