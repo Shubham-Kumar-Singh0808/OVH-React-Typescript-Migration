@@ -645,4 +645,5 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
+  exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }

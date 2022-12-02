@@ -52,3 +52,8 @@ export type EmployeeAccountExpandableTableProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
+
+export type DownloadFinanceList = {
+  employeeNameSearch?: string
+  token?: string
+}

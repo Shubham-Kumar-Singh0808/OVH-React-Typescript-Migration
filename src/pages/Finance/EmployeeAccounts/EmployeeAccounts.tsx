@@ -5,6 +5,8 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { downloadFile } from '../../../utils/helper'
+import employeeAccountsApi from '../../../middleware/api/Finance/EmployeeAccounts/employeeAccountsApi'
 
 const EmployeeAccounts = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
@@ -14,6 +16,10 @@ const EmployeeAccounts = (): JSX.Element => {
   const listSize = useTypedSelector(
     reduxServices.employeeAccount.selectors.listSize,
   )
+
+  useEffect(() => {
+    dispatch(reduxServices.bankDetails.bankNameList)
+  }, [dispatch])
 
   const {
     paginationRange,
@@ -32,6 +38,36 @@ const EmployeeAccounts = (): JSX.Element => {
       }),
     )
   }, [currentPage, dispatch, pageSize])
+
+  const handleExportEmployeeFinanceData = async () => {
+    const employeeFinanceList = await employeeAccountsApi.exportFinanceList({
+      employeeNameSearch: searchInput,
+    })
+    downloadFile(employeeFinanceList, 'FinanceList.csv')
+  }
+
+  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.employeeAccount.getFinanceDetails({
+          endIndex: 20,
+          employeeName: searchInput,
+          startIndex: 0,
+        }),
+      )
+    }
+  }
+
+  const multiSearchBtnHandler = () => {
+    dispatch(
+      reduxServices.employeeAccount.getFinanceDetails({
+        endIndex: 20,
+        employeeName: searchInput,
+        startIndex: 0,
+      }),
+    )
+  }
+
   return (
     <>
       <OCard
@@ -46,14 +82,19 @@ const EmployeeAccounts = (): JSX.Element => {
             className="gap-2 d-md-flex justify-content-end"
             data-testid="exportBtn"
           >
-            <CButton color="info" className="text-white" size="sm">
+            <CButton
+              color="info"
+              className="text-white"
+              size="sm"
+              onClick={handleExportEmployeeFinanceData}
+            >
               <i className="fa fa-plus me-1"></i>
               Click to Export
             </CButton>
           </CCol>
         </CRow>
         <CRow className="gap-2 d-md-flex justify-content-md-end">
-          <CCol sm={3} md={4}>
+          <CCol sm={6} md={4}>
             <CInputGroup className="global-search me-0">
               <CFormInput
                 data-testid="searchField"
@@ -64,13 +105,16 @@ const EmployeeAccounts = (): JSX.Element => {
                 onChange={(e) => {
                   setSearchInput(e.target.value)
                 }}
+                onKeyDown={handleSearchBtn}
               />
               <CButton
+                disabled={!searchInput}
                 data-testid="multi-search-btn"
                 className="cursor-pointer"
                 type="button"
                 color="info"
                 id="button-addon2"
+                onClick={multiSearchBtnHandler}
               >
                 <i className="fa fa-search"></i>
               </CButton>

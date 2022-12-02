@@ -10,12 +10,15 @@ import {
   CTableDataCell,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import EmployeeAccountsExpandTable from './EmployeeAccountsExpandTable'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { EmployeeAccountExpandableTableProps } from '../../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
+import panDetailsApi from '../../../middleware/api/Finance/PanDetails/panDetailsApi'
+import { downloadFile } from '../../../utils/helper'
 
 const EmployeeAccountsTable = (
   props: EmployeeAccountExpandableTableProps,
@@ -46,6 +49,20 @@ const EmployeeAccountsTable = (
 
   const handleExpandRow = () => {
     setIsIconVisible(true)
+  }
+
+  const bankDetail = useTypedSelector(
+    reduxServices.panDetails.selectors.bankDetails,
+  )
+
+  const handleFinanceData = async () => {
+    const employeeBankDetailsDownload = await panDetailsApi.downloadFinanceFile(
+      {
+        fileName: bankDetail.finance?.financeFilePath as string,
+      },
+    )
+
+    downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
   }
 
   return (
@@ -89,9 +106,9 @@ const EmployeeAccountsTable = (
                   </CTableDataCell>
                   <CTableDataCell scope="row">{data.employeeId}</CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
-                    <CLink className="cursor-pointer">
+                    <Link to={`/clientInfo`} className="cursor-pointer">
                       {data.employeeName}
-                    </CLink>
+                    </Link>
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     {data.financeDetails.pfAccountNumber}
@@ -106,8 +123,12 @@ const EmployeeAccountsTable = (
                     {data.financeDetails.aadharCardNumber}
                   </CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
-                    <CLink className="cursor-pointer">
-                      {data.financeDetails.financeFilePath}
+                    <CLink
+                      className="cursor-pointer sh-hive-activity-link"
+                      onClick={handleFinanceData}
+                    >
+                      <i className="fa fa-paperclip me-1"></i>
+                      {data.financeDetails.financeFileName || 'N/A'}
                     </CLink>
                   </CTableDataCell>
                 </CTableRow>

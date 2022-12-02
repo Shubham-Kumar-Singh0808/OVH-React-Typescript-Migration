@@ -5,6 +5,7 @@ import employeeAccountsApi from '../../../middleware/api/Finance/EmployeeAccount
 import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  DownloadFinanceList,
   EmployeeAccountApiProps,
   EmployeeAccountSliceState,
   FinanceDetails,
@@ -15,6 +16,18 @@ const getFinanceDetails = createAsyncThunk(
   async (props: EmployeeAccountApiProps, thunkApi) => {
     try {
       return await employeeAccountsApi.getFinanceDetails(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const exportFinanceList = createAsyncThunk(
+  'employeeAccounts/exportFinanceList',
+  async (props: DownloadFinanceList, thunkApi) => {
+    try {
+      return await employeeAccountsApi.exportFinanceList(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -58,6 +71,7 @@ const listSize = (state: RootState): number => state.employeeAccounts.listSize
 
 export const employeeAccountThunk = {
   getFinanceDetails,
+  exportFinanceList,
 }
 
 export const employeeAccountSelectors = {

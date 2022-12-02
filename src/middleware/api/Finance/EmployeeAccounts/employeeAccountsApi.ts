@@ -1,4 +1,5 @@
 import {
+  DownloadFinanceList,
   EmployeeAccountApiProps,
   GetFinanceDetailsResponse,
 } from '../../../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
@@ -25,8 +26,26 @@ const getFinanceDetails = async (
   return response.data
 }
 
+const exportFinanceList = async (
+  props: DownloadFinanceList,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: employeeAccountsApiConfig.exportFinanceList,
+    method: AllowedHttpMethods.get,
+    params: {
+      employeeNameSearch: props.employeeNameSearch,
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const employeeAccountsApi = {
   getFinanceDetails,
+  exportFinanceList,
 }
 
 export default employeeAccountsApi

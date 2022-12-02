@@ -534,4 +534,5 @@ export interface ITDeclarationListApi extends ApiBase {
 
 export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
+  exportFinanceList: string
 }
