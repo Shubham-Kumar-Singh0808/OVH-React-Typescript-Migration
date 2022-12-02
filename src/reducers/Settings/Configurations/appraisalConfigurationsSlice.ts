@@ -21,7 +21,7 @@ const getAllAppraisalCycleData = createAsyncThunk(
     }
   },
 )
-const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
+export const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
   isLoading: ApiLoadingState.idle,
   appraisalCycleList: { list: [], size: 0 },
 }
@@ -32,8 +32,10 @@ const appraisalCycleSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-
-      .addMatcher(isAnyOf(getAllAppraisalCycleData.pending), (state) => {
+      .addCase(getAllAppraisalCycleData.rejected, (state) => {
+        state.isLoading = ApiLoadingState.failed
+      })
+      .addCase(getAllAppraisalCycleData.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
       .addMatcher(

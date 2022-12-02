@@ -24,6 +24,7 @@ const addNewCycle = createAsyncThunk(
 const initialAddCycleState: AddConfigurationSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
+  listSize: 0,
 }
 
 const addNewConfigurationSlice = createSlice({
@@ -48,7 +49,10 @@ const addNewConfigurationSlice = createSlice({
 const selectError = (state: RootState): ValidationError =>
   state.addConfiguration.error
 
-const isLoading = (state: RootState): LoadingState => state.clients.isLoading
+const isLoading = (state: RootState): LoadingState =>
+  state.addConfiguration.isLoading
+
+const listSize = (state: RootState): number => state.addConfiguration.listSize
 
 const addConfigurationThunk = {
   addNewCycle,
@@ -57,6 +61,7 @@ const addConfigurationThunk = {
 const addConfigurationSelectors = {
   selectError,
   isLoading,
+  listSize,
 }
 
 export const addConfigurationService = {

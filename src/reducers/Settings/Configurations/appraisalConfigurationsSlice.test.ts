@@ -1,55 +1,52 @@
-import appraisalConfigurationReducer, {
+import AppraisalCycleReducer, {
+  initialAppraisalCycleSliceState,
   appraisalCycleService,
 } from './appraisalConfigurationsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockAppraisalCycle } from '../../../test/data/appraisalConfigurationsData'
 
-describe('Appraisal Configurations Slice', () => {
-  describe('Appraisal Configurations', () => {
-    const initialState = {
-      appraisalCycle: [],
-      isLoading: ApiLoadingState.idle,
-      currentPage: 1,
-      pageSize: 20,
-    }
-
-    it('Should be able to set isLoading to "loading" if getAllAppraisalCycle  is pending', () => {
+describe('Appraisal Cycle Slice', () => {
+  describe('getAllAppraisalCycleData test', () => {
+    it('Should be able to set isLoading to "loading" if getAllAppraisalCycleData is pending', () => {
       const action = {
         type: appraisalCycleService.getAllAppraisalCycleData.pending.type,
       }
-      const state = appraisalConfigurationReducer(initialState, action)
+      const state = AppraisalCycleReducer(
+        initialAppraisalCycleSliceState,
+        action,
+      )
       expect(state).toEqual({
-        appraisalCycle: [],
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
+        appraisalCycleList: { list: [], size: 0 },
       })
     })
 
-    it('Should be able to set isLoading to "succeeded" if getAllAppraisalCycle is fulfilled', () => {
+    it('Should be able to set isLoading to "success" if getAllAppraisalCycleData is rejected', () => {
       const action = {
         type: appraisalCycleService.getAllAppraisalCycleData.fulfilled.type,
         payload: mockAppraisalCycle,
       }
-      const state = appraisalConfigurationReducer(initialState, action)
+      const state = AppraisalCycleReducer(
+        initialAppraisalCycleSliceState,
+        action,
+      )
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
-        appraisalCycle: mockAppraisalCycle,
-        currentPage: 1,
-        pageSize: 20,
+        appraisalCycleList: mockAppraisalCycle,
       })
     })
 
-    it('Should be able to set isLoading to "failed" if getAllAppraisalCycle is rejected', () => {
+    it('Should be able to set isLoading to "failed" if getAllAppraisalCycleData is rejected', () => {
       const action = {
         type: appraisalCycleService.getAllAppraisalCycleData.rejected.type,
       }
-      const state = appraisalConfigurationReducer(initialState, action)
+      const state = AppraisalCycleReducer(
+        initialAppraisalCycleSliceState,
+        action,
+      )
       expect(state).toEqual({
-        isLoading: ApiLoadingState.idle,
-        appraisalCycle: [],
-        currentPage: 1,
-        pageSize: 20,
+        isLoading: ApiLoadingState.failed,
+        appraisalCycleList: { list: [], size: 0 },
       })
     })
   })

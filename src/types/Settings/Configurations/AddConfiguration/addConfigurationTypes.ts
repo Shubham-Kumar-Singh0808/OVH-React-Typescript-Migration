@@ -23,4 +23,5 @@ export type AddCycle = {
 export type AddConfigurationSliceState = {
   isLoading: ApiLoadingState
   error: ValidationError
+  listSize: number
 }

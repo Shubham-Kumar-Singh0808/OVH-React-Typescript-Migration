@@ -9,6 +9,7 @@ describe('Add Configurations Slice', () => {
     const initialState = {
       isLoading: ApiLoadingState.idle,
       error: null,
+      listSize: 0,
     }
 
     it('Should be able to set isLoading to "loading" if addNewCycle  is pending', () => {
@@ -19,6 +20,7 @@ describe('Add Configurations Slice', () => {
       expect(state).toEqual({
         error: null,
         isLoading: ApiLoadingState.loading,
+        listSize: 0,
       })
     })
 
@@ -31,6 +33,7 @@ describe('Add Configurations Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
         error: null,
+        listSize: 0,
       })
     })
 
@@ -42,6 +45,7 @@ describe('Add Configurations Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.failed,
         error: undefined,
+        listSize: 0,
       })
     })
   })

@@ -16,7 +16,15 @@ const toRender = (
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <AppraisalConfigurationsTable userEditAccess={true} />,
+    <AppraisalConfigurationsTable
+      userEditAccess={true}
+      setCurrentPage={mockSetCurrentPage}
+      setPageSize={mockSetPageSize}
+      currentPage={1}
+      pageSize={20}
+      paginationRange={[1, 2, 3]}
+    />
+    ,
   </div>
 )
 describe('Appraisal Configurations Table Component Testing', () => {
@@ -43,7 +51,16 @@ describe('Appraisal Configurations Table Component Testing', () => {
 
 describe('Appraisal Configurations Table without data', () => {
   beforeEach(() => {
-    render(<AppraisalConfigurationsTable userEditAccess={true} />)
+    render(
+      <AppraisalConfigurationsTable
+        userEditAccess={true}
+        setCurrentPage={mockSetCurrentPage}
+        setPageSize={mockSetPageSize}
+        currentPage={1}
+        pageSize={20}
+        paginationRange={[1, 2, 3]}
+      />,
+    )
   })
 
   test('should render the correct headers', () => {
@@ -84,18 +101,28 @@ describe('Appraisal Configurations Table without data', () => {
 
 describe('Appraisal Configurations Table with data', () => {
   beforeEach(() => {
-    render(<AppraisalConfigurationsTable userEditAccess={true} />, {
-      preloadedState: {
-        appraisalConfigurations: {
-          appraisalCycle: mockAppraisalCycle,
-          isLoading: ApiLoadingState.idle,
-        },
-        userAccessToFeatures: {
-          isLoading: ApiLoadingState.succeeded,
-          userAccessToFeatures: mockUserAccessToFeaturesData,
+    render(
+      <AppraisalConfigurationsTable
+        userEditAccess={true}
+        setCurrentPage={mockSetCurrentPage}
+        setPageSize={mockSetPageSize}
+        currentPage={1}
+        pageSize={20}
+        paginationRange={[1, 2, 3]}
+      />,
+      {
+        preloadedState: {
+          appraisalConfigurations: {
+            appraisalCycle: mockAppraisalCycle,
+            isLoading: ApiLoadingState.idle,
+          },
+          userAccessToFeatures: {
+            isLoading: ApiLoadingState.succeeded,
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       },
-    })
+    )
   })
   afterEach(cleanup)
   test('should render Appraisal Configurations component with data', () => {

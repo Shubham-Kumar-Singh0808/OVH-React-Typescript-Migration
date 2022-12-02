@@ -26,6 +26,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { dateFormat } from '../../../../constant/DateFormat'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const AddConfiguration = ({
   setToggle,
@@ -227,6 +228,11 @@ const AddConfiguration = ({
         : '',
     } as AddCycle
 
+    const listSize = useTypedSelector(
+      reduxServices.addConfigurations.selectors.listSize,
+    )
+    const { currentPage, pageSize } = usePagination(listSize, 20)
+
     const addCycleResultAction = await dispatch(
       reduxServices.addConfigurations.addNewCycle(prepareObject),
     )
@@ -237,8 +243,8 @@ const AddConfiguration = ({
     ) {
       dispatch(
         reduxServices.appraisalConfigurations.getAllAppraisalCycleData({
-          startIndex: pageSize * (appraisalCycleCurrentPage - 1),
-          endIndex: pageSize * appraisalCycleCurrentPage,
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
         }),
       )
       dispatch(reduxServices.app.actions.addToast(successMessage))
