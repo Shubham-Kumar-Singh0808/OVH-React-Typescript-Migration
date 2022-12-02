@@ -52,23 +52,16 @@ const EmployeeAccountsTable = (
     setIsIconVisible(true)
   }
 
-  const bankDetail = useTypedSelector(
-    reduxServices.panDetails.selectors.bankDetails,
-  )
-
-  const handleFinanceData = async () => {
+  const handleFinanceData = async (financeFilePath: string) => {
     const employeeBankDetailsDownload = await panDetailsApi.downloadFinanceFile(
       {
-        fileName: bankDetail.finance?.financeFilePath as string,
+        fileName: financeFilePath,
       },
     )
 
     downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
+    console.log(financeFilePath)
   }
-
-  const employeeId = useTypedSelector(
-    reduxServices.authentication.selectors.selectEmployeeId,
-  )
 
   const totalRecords = financeData?.length
     ? `Total Records: ${listSize}`
@@ -94,7 +87,7 @@ const EmployeeAccountsTable = (
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          {financeData.length > 0 &&
+          {financeData?.length > 0 &&
             financeData?.map((data, index) => {
               return (
                 <>
@@ -116,14 +109,14 @@ const EmployeeAccountsTable = (
                         )}
                       </CTableDataCell>
                       <CTableDataCell scope="row">
-                        {data.employeeId}
+                        {data.financeDetails.employeeId}
                       </CTableDataCell>
                       <CTableDataCell
                         scope="row"
                         className="sh-organization-link"
                       >
                         <Link
-                          to={`/employeeFinance/${employeeId}`}
+                          to={`/employeeFinance/${data.financeDetails.employeeId}`}
                           className="cursor-pointer"
                         >
                           {data.employeeName}
@@ -147,10 +140,17 @@ const EmployeeAccountsTable = (
                       >
                         <CLink
                           className="cursor-pointer sh-hive-activity-link"
-                          onClick={handleFinanceData}
+                          onClick={() =>
+                            handleFinanceData(
+                              String(data.financeDetails.financeFilePath),
+                            )
+                          }
                         >
-                          <i className="fa fa-paperclip me-1"></i>
-                          Doc
+                          {data.financeDetails.financeFilePath ? (
+                            <i className="fa fa-paperclip me-1">DOC</i>
+                          ) : (
+                            'N/A'
+                          )}
                         </CLink>
                       </CTableDataCell>
                     </CTableRow>

@@ -45,9 +45,21 @@ const EmployeeAccountsExpandTable = (): JSX.Element => {
             financeData?.map((data, index) => {
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
                   <CTableDataCell scope="row">
-                    {data.bankDetails}
+                    {data.bankDetails.map((item, index) => {
+                      return (
+                        <>
+                          <CTableDataCell>{index + 1}</CTableDataCell>
+                          <CTableDataCell key={index}>
+                            {item.bankName}
+                          </CTableDataCell>
+                          <CTableDataCell>
+                            {item.bankAccountNumber}
+                          </CTableDataCell>
+                          <CTableDataCell>{item.ifscCode}</CTableDataCell>
+                        </>
+                      )
+                    })}
                   </CTableDataCell>
                 </CTableRow>
               )
