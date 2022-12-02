@@ -1,9 +1,11 @@
 import AppraisalCycleReducer, {
   initialAppraisalCycleSliceState,
   appraisalCycleService,
+  initialAppraisalCycleSliceState,
 } from './appraisalConfigurationsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockAppraisalCycle } from '../../../test/data/appraisalConfigurationsData'
+import { getCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
 describe('Appraisal Cycle Slice', () => {
   describe('getAllAppraisalCycleData test', () => {
@@ -12,12 +14,17 @@ describe('Appraisal Cycle Slice', () => {
         type: appraisalCycleService.getAllAppraisalCycleData.pending.type,
       }
       const state = AppraisalCycleReducer(
-        initialAppraisalCycleSliceState,
+        
+        initialAppraisalCycleSliceAppraisalCycleSliceState,
+       
         action,
+      ,
       )
       expect(state).toEqual({
+        editAppraisalCycle: {} as getCycle,
         isLoading: ApiLoadingState.loading,
         appraisalCycleList: { list: [], size: 0 },
+        error: null,
       })
     })
 
@@ -27,10 +34,15 @@ describe('Appraisal Cycle Slice', () => {
         payload: mockAppraisalCycle,
       }
       const state = AppraisalCycleReducer(
-        initialAppraisalCycleSliceState,
+        
+        initialAppraisalCycleSliceAppraisalCycleSliceState,
+       
         action,
+      ,
       )
       expect(state).toEqual({
+        appraisalCycle: mockAppraisalCycle,
+        editAppraisalCycle: {} as getCycle,
         isLoading: ApiLoadingState.succeeded,
         appraisalCycleList: mockAppraisalCycle,
       })
@@ -40,10 +52,7 @@ describe('Appraisal Cycle Slice', () => {
       const action = {
         type: appraisalCycleService.getAllAppraisalCycleData.rejected.type,
       }
-      const state = AppraisalCycleReducer(
-        initialAppraisalCycleSliceState,
-        action,
-      )
+      const state = appraisalConfigurationReducer(initialState, action)
       expect(state).toEqual({
         isLoading: ApiLoadingState.failed,
         appraisalCycleList: { list: [], size: 0 },

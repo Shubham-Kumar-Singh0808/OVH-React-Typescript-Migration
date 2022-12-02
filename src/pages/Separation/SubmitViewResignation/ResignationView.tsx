@@ -6,6 +6,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 
 const ResignationView = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
+
   return (
     <>
       {toggle === '' && (

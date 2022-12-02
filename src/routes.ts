@@ -224,6 +224,12 @@ const RoomList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
 
+const EditConfiguration = React.lazy(
+  () =>
+    import(
+      './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
+    ),
+)
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
@@ -234,6 +240,42 @@ const SubmitResignation = React.lazy(
 
 const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
+)
+
+const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
+
+const PfPanDetails = React.lazy(
+  () => import('./pages/Finance/PanAndBankDetails/PanAndBankDetails'),
+)
+
+const ResignationTimeLine = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/ResignationTimeLine/ResignationHistory'
+    ),
+)
+
+const ResignationManagerClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/ManagerClearenceCertificate/ManagerClearanceCertificate'
+    ),
+)
+
+const ResignationList = React.lazy(
+  () => import('./pages/Separation/ResignationList/ResignationList'),
+)
+
+const ITDeclarationList = React.lazy(
+  () => import('./pages/Finance/ITDeclarationList/ITDeclarationList'),
+)
+
+const AddInvestmentCycle = React.lazy(
+  () => import('./pages/Finance/AddInvestmentCycle/AddInvestmentCycle'),
+)
+
+const AddInvestment = React.lazy(
+  () => import('./pages/Finance/AddInvestment/AddInvestment'),
 )
 
 /**
@@ -501,6 +543,11 @@ const routes = [
     component: RoomList,
   },
   {
+    path: '/editAppraisalCycle/:cycleId',
+    name: 'Edit Configuration',
+    component: EditConfiguration,
+  },
+  {
     path: '/subCategoryList',
     name: 'Ticket Configuration',
     component: TicketConfiguration,
@@ -519,6 +566,46 @@ const routes = [
     path: '/leaveApprovals',
     name: 'Leave Approvals',
     component: LeaveApprovals,
+  },
+  {
+    path: '/payslip',
+    name: 'Payslip',
+    component: Payslip,
+  },
+  {
+    path: '/myFinance',
+    name: 'P.F. & PAN Details',
+    component: PfPanDetails,
+  },
+  {
+    path: '/resignationList',
+    name: 'Resignation List',
+    component: ResignationList,
+  },
+  {
+    path: '/managerComments',
+    name: 'Resignation Time Line',
+    component: ResignationTimeLine,
+  },
+  {
+    path: '/ClearanceCertificateManager',
+    name: 'Resignation Clearence CertificateManager',
+    component: ResignationManagerClearanceCertificate,
+  },
+  {
+    path: '/itDeclarationList',
+    name: 'IT Declaration List',
+    component: ITDeclarationList,
+  },
+  {
+    path: '/addCycle',
+    name: 'Add Investment Cycle',
+    component: AddInvestmentCycle,
+  },
+  {
+    path: '/addInvestment',
+    name: 'Add Investment',
+    component: AddInvestment,
   },
 ]
 

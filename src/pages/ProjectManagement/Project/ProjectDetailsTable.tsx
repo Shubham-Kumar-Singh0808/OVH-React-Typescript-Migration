@@ -64,7 +64,7 @@ const ProjectDetailsTable = ({
   return (
     <>
       <CTableRow>
-        <CTableDataCell colSpan={12} className="pe-0 ps-4">
+        <CTableDataCell colSpan={13} className="pe-4 ps-4">
           <CTable striped responsive className="sh-project-report-details">
             <CTableHead className="profile-tab-header">
               <CTableRow>
@@ -117,7 +117,7 @@ const ProjectDetailsTable = ({
                         {toAllocatedProject.isAllocatedVisible &&
                         project.employeeId ===
                           toAllocatedProject?.data?.employeeId ? (
-                          <>
+                          <div className="d-flex">
                             <CFormInput
                               id={project.employeeId.toString()}
                               data-testid="allocation"
@@ -128,15 +128,16 @@ const ProjectDetailsTable = ({
                               defaultValue={project.allocation}
                               onChange={handleOnChangeAllocation}
                             />
+                            &nbsp;
                             <span>%</span>
-                          </>
+                          </div>
                         ) : (
                           <span>{project.allocation}%</span>
                         )}
                       </CTableDataCell>
                       <CTableDataCell>{project.startDate}</CTableDataCell>
                       <CTableDataCell>{project.endDate}</CTableDataCell>
-                      <CTableDataCell style={{ width: '84px' }}>
+                      <CTableDataCell style={{ width: '90px' }}>
                         {toAllocatedProject.isAllocatedVisible &&
                         project.employeeId ===
                           toAllocatedProject?.data?.employeeId ? (
@@ -172,7 +173,7 @@ const ProjectDetailsTable = ({
                           getConditionValue(project.billable, 'Yes', 'No')
                         )}
                       </CTableDataCell>
-                      <CTableDataCell style={{ width: '137px' }}>
+                      <CTableDataCell style={{ width: '150px' }}>
                         {toAllocatedProject.isAllocatedVisible &&
                         project.employeeId ===
                           toAllocatedProject?.data?.employeeId ? (
