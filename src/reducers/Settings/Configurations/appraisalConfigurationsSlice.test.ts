@@ -1,62 +1,76 @@
-import AppraisalCycleReducer, {
-  initialAppraisalCycleSliceState,
-  appraisalCycleService,
-  initialAppraisalCycleSliceState,
-} from './appraisalConfigurationsSlice'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { mockAppraisalCycle } from '../../../test/data/appraisalConfigurationsData'
-import { getCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import appraisalConfigurationsApi from '../../../middleware/api/Settings/Configurations/appraisalConfigurationsApi'
+import { RootState } from '../../../stateStore'
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
+import {
+  AppraisalCycleSliceState,
+  getAppraisalCycle,
+  GetAppraisalCycleProps,
+} from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
-describe('Appraisal Cycle Slice', () => {
-  describe('getAllAppraisalCycleData test', () => {
-    it('Should be able to set isLoading to "loading" if getAllAppraisalCycleData is pending', () => {
-      const action = {
-        type: appraisalCycleService.getAllAppraisalCycleData.pending.type,
-      }
-      const state = AppraisalCycleReducer(
-        
-        initialAppraisalCycleSliceAppraisalCycleSliceState,
-       
-        action,
-      ,
+const getAllAppraisalCycleData = createAsyncThunk(
+  'appraisalConfigurations/getAllAppraisalCycle',
+  async (props: GetAppraisalCycleProps, thunkApi) => {
+    try {
+      return await appraisalConfigurationsApi.getAllAppraisalCycle(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+export const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
+  isLoading: ApiLoadingState.idle,
+  appraisalCycleList: { list: [], size: 0 },
+}
+
+const appraisalCycleSlice = createSlice({
+  name: 'appraisalCycle',
+  initialState: initialAppraisalCycleSliceState,
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(getAllAppraisalCycleData.rejected, (state) => {
+        state.isLoading = ApiLoadingState.failed
+      })
+      .addCase(getAllAppraisalCycleData.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
+      .addMatcher(
+        isAnyOf(getAllAppraisalCycleData.fulfilled),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          state.appraisalCycleList = action.payload
+        },
       )
-      expect(state).toEqual({
-        editAppraisalCycle: {} as getCycle,
-        isLoading: ApiLoadingState.loading,
-        appraisalCycleList: { list: [], size: 0 },
-        error: null,
-      })
-    })
-
-    it('Should be able to set isLoading to "success" if getAllAppraisalCycleData is rejected', () => {
-      const action = {
-        type: appraisalCycleService.getAllAppraisalCycleData.fulfilled.type,
-        payload: mockAppraisalCycle,
-      }
-      const state = AppraisalCycleReducer(
-        
-        initialAppraisalCycleSliceAppraisalCycleSliceState,
-       
-        action,
-      ,
-      )
-      expect(state).toEqual({
-        appraisalCycle: mockAppraisalCycle,
-        editAppraisalCycle: {} as getCycle,
-        isLoading: ApiLoadingState.succeeded,
-        appraisalCycleList: mockAppraisalCycle,
-      })
-    })
-
-    it('Should be able to set isLoading to "failed" if getAllAppraisalCycleData is rejected', () => {
-      const action = {
-        type: appraisalCycleService.getAllAppraisalCycleData.rejected.type,
-      }
-      const state = appraisalConfigurationReducer(initialState, action)
-      expect(state).toEqual({
-        isLoading: ApiLoadingState.failed,
-        appraisalCycleList: { list: [], size: 0 },
-      })
-    })
-  })
+  },
 })
+
+const appraisalCycleNames = (state: RootState): getAppraisalCycle[] =>
+  state.appraisalConfigurations.appraisalCycleList.list
+
+const appraisalCycleListSize = (state: RootState): number =>
+  state.appraisalConfigurations.appraisalCycleList.size
+
+const isLoading = (state: RootState): LoadingState =>
+  state.appraisalConfigurations.isLoading
+
+const appraisalCycleThunk = {
+  getAllAppraisalCycleData,
+}
+
+const appraisalCycleSelectors = {
+  isLoading,
+  appraisalCycleNames,
+  appraisalCycleListSize,
+}
+
+export const appraisalCycleService = {
+  ...appraisalCycleThunk,
+  actions: appraisalCycleSlice.actions,
+  selectors: appraisalCycleSelectors,
+}
+
+export default appraisalCycleSlice.reducer
