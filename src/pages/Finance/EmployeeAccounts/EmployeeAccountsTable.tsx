@@ -128,7 +128,7 @@ const EmployeeAccountsTable = (
                       onClick={handleFinanceData}
                     >
                       <i className="fa fa-paperclip me-1"></i>
-                      {data.financeDetails.financeFileName || 'N/A'}
+                      Doc
                     </CLink>
                   </CTableDataCell>
                 </CTableRow>

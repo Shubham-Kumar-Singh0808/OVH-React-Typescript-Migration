@@ -3,20 +3,20 @@ import { ValidationError } from '../../commonTypes'
 
 export type FinanceInformation = {
   financeId: number
-  pfAccountNumber: string
+  pfAccountNumber: null | string
   panCardAccountNumber: string
-  uaNumber: null
+  uaNumber: null | string
   employeeId: number
-  aadharCardNumber: null
-  financeFilePath: null
-  financeFileName: null
+  aadharCardNumber: null | string
+  financeFilePath: null | string
+  financeFileName: null | string
 }
 
 export type BankDetails = {
   bankId: number
   bankName: string
   bankAccountNumber: string
-  ifscCode: null
+  ifscCode: null | string
   employeeId: number
 }
 

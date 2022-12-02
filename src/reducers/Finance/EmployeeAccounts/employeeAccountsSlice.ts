@@ -35,7 +35,7 @@ const exportFinanceList = createAsyncThunk(
   },
 )
 
-const initialEmployeeAccountsState: EmployeeAccountSliceState = {
+export const initialEmployeeAccountsState: EmployeeAccountSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   listSize: 0,
