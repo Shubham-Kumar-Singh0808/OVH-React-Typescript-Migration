@@ -23,6 +23,7 @@ const EmployeeAccountsExpandTable = (): JSX.Element => {
   const financeData = useTypedSelector(
     reduxServices.employeeAccount.selectors.financeInfo,
   )
+
   return (
     <>
       <CTable

@@ -28,6 +28,7 @@ const EmployeeAccountsTable = (
   const financeData = useTypedSelector(
     reduxServices.employeeAccount.selectors.financeInfo,
   )
+
   const listSize = useTypedSelector(
     reduxServices.employeeAccount.selectors.listSize,
   )
@@ -65,6 +66,10 @@ const EmployeeAccountsTable = (
     downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
   }
 
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+
   return (
     <>
       <CTable
@@ -84,63 +89,78 @@ const EmployeeAccountsTable = (
             <CTableHeaderCell scope="col">Attachment</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
-        <CTableBody>
+        <CTableBody color="light">
           {financeData.length > 0 &&
             financeData?.map((data, index) => {
               return (
-                <CTableRow key={index}>
-                  <CTableDataCell scope="row">
+                <>
+                  <React.Fragment key={index}>
+                    <CTableRow>
+                      <CTableDataCell scope="row">
+                        {isIconVisible ? (
+                          <i
+                            data-testid="minus-btn"
+                            className="fa fa-minus-circle cursor-pointer"
+                            onClick={() => setIsIconVisible(false)}
+                          />
+                        ) : (
+                          <i
+                            data-testid="plus-btn"
+                            className="fa fa-plus-circle cursor-pointer"
+                            onClick={() => handleExpandRow}
+                          />
+                        )}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {data.employeeId}
+                      </CTableDataCell>
+                      <CTableDataCell
+                        scope="row"
+                        className="sh-organization-link"
+                      >
+                        <Link
+                          to={`/employeeFinance/${employeeId}`}
+                          className="cursor-pointer"
+                        >
+                          {data.employeeName}
+                        </Link>
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {data.financeDetails.pfAccountNumber || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {data.financeDetails.uaNumber || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {data.financeDetails.panCardAccountNumber || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {data.financeDetails.aadharCardNumber || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell
+                        scope="row"
+                        className="sh-organization-link"
+                      >
+                        <CLink
+                          className="cursor-pointer sh-hive-activity-link"
+                          onClick={handleFinanceData}
+                        >
+                          <i className="fa fa-paperclip me-1"></i>
+                          Doc
+                        </CLink>
+                      </CTableDataCell>
+                    </CTableRow>
                     {isIconVisible ? (
-                      <i
-                        data-testid="expandIcon"
-                        className="fa fa-minus-circle cursor-pointer"
-                        onClick={() => setIsIconVisible(false)}
-                      />
+                      <CTableDataCell colSpan={10}>
+                        <EmployeeAccountsExpandTable />
+                      </CTableDataCell>
                     ) : (
-                      <i
-                        data-testid="collapseIcon"
-                        className="fa fa-plus-circle cursor-pointer"
-                        onClick={() => handleExpandRow}
-                      />
+                      <></>
                     )}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">{data.employeeId}</CTableDataCell>
-                  <CTableDataCell scope="row" className="sh-organization-link">
-                    <Link to={`/clientInfo`} className="cursor-pointer">
-                      {data.employeeName}
-                    </Link>
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {data.financeDetails.pfAccountNumber}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {data.financeDetails.uaNumber}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {data.financeDetails.panCardAccountNumber}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {data.financeDetails.aadharCardNumber}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row" className="sh-organization-link">
-                    <CLink
-                      className="cursor-pointer sh-hive-activity-link"
-                      onClick={handleFinanceData}
-                    >
-                      <i className="fa fa-paperclip me-1"></i>
-                      Doc
-                    </CLink>
-                  </CTableDataCell>
-                </CTableRow>
+                  </React.Fragment>
+                </>
               )
             })}
-          {isIconVisible ? (
-            <CTableDataCell colSpan={10}>
-              <EmployeeAccountsExpandTable />
-            </CTableDataCell>
-          ) : (
-            <></>
-          )}
         </CTableBody>
       </CTable>
       <CRow>

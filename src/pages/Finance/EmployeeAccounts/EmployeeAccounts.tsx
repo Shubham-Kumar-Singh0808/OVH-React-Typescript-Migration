@@ -79,7 +79,7 @@ const EmployeeAccounts = (): JSX.Element => {
         <CRow className="mt-2">
           <CCol
             lg={12}
-            className="gap-2 d-md-flex justify-content-end"
+            className="gap-2 d-md-flex justify-content-end mt-3 mb-3"
             data-testid="exportBtn"
           >
             <CButton
@@ -95,7 +95,7 @@ const EmployeeAccounts = (): JSX.Element => {
         </CRow>
         <CRow className="gap-2 d-md-flex justify-content-md-end">
           <CCol sm={6} md={4}>
-            <CInputGroup className="global-search me-0">
+            <CInputGroup className="global-search me-0 justify-content-md-end">
               <CFormInput
                 data-testid="searchField"
                 placeholder="Multiple Search"
