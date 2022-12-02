@@ -82,7 +82,7 @@ const EditHandbook = ({
       if (selectedHandbook.handCountry.length === empCountries.length) {
         setAllChecked(true)
       }
-      if (selectedHandbook.description.length > 156) {
+      if (selectedHandbook.description?.length > 156) {
         setError(false)
       } else {
         setError(true)
@@ -195,7 +195,7 @@ const EditHandbook = ({
     dispatch(reduxServices.employeeHandbookSettings.getTotalHandbookList())
   }, [dispatch])
   const handleDescription = (description: string) => {
-    if (description.length > 150) {
+    if (description?.length > 156) {
       setError(false)
     } else {
       setError(true)
