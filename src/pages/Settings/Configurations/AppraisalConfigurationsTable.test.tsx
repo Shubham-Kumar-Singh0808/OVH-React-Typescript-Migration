@@ -27,40 +27,10 @@ const toRender = (
     ,
   </div>
 )
-describe('Appraisal Configurations Table Component Testing', () => {
-  test('should render Appraisal Configurations table component without crashing', async () => {
-    render(toRender, {
-      preloadedState: {
-        appraisalConfigurations: {
-          appraisalCycle: mockAppraisalCycle,
-          isLoading: ApiLoadingState.succeeded,
-        },
-        userAccessToFeatures: {
-          userAccessToFeatures: mockUserAccessToFeaturesData,
-        },
-      },
-    })
-
-    await waitFor(() => {
-      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-      expect(mockSetPageSize).toHaveBeenCalledTimes(0)
-      expect(mockSetCurrentPage).toHaveBeenCalledTimes(0)
-    })
-  })
-})
 
 describe('Appraisal Configurations Table without data', () => {
   beforeEach(() => {
-    render(
-      <AppraisalConfigurationsTable
-        userEditAccess={true}
-        setCurrentPage={mockSetCurrentPage}
-        setPageSize={mockSetPageSize}
-        currentPage={1}
-        pageSize={20}
-        paginationRange={[1, 2, 3]}
-      />,
-    )
+    render(toRender)
   })
 
   test('should render the correct headers', () => {
@@ -125,24 +95,6 @@ describe('Appraisal Configurations Table with data', () => {
     )
   })
   afterEach(cleanup)
-  test('should render Appraisal Configurations component with data', () => {
-    expect(screen.getByText('May 2017')).toBeInTheDocument()
-    expect(screen.getByText('Appraisal Cycle 2016')).toBeInTheDocument()
-    expect(screen.getByText('August 2017')).toBeInTheDocument()
-    expect(screen.getByText('September 2017')).toBeInTheDocument()
-  })
-
-  test('should render with number of records  ', () => {
-    expect(
-      screen.getByText('Total Records: ' + mockAppraisalCycle.length),
-    ).toBeInTheDocument()
-  })
-
-  test('should render description modal', () => {
-    const description = screen.getAllByTestId('description-modal-link')
-    userEvent.click(description[0])
-    expect(description[0]).toBeInTheDocument()
-  })
 
   test('should render first page data only', () => {
     waitFor(() => {

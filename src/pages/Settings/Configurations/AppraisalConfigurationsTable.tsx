@@ -160,7 +160,7 @@ const AppraisalConfigurationsTable = ({
         </CTableBody>
       </CTable>
 
-      {appraisalCycleNames.length ? (
+      {appraisalCycleNames?.length ? (
         <CRow>
           <CCol xs={4}>
             <p>

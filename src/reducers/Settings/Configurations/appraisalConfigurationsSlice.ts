@@ -49,10 +49,10 @@ const appraisalCycleSlice = createSlice({
 })
 
 const appraisalCycleNames = (state: RootState): getAppraisalCycle[] =>
-  state.appraisalConfigurations.appraisalCycleList.list
+  state.appraisalConfigurations.appraisalCycleList?.list
 
 const appraisalCycleListSize = (state: RootState): number =>
-  state.appraisalConfigurations.appraisalCycleList.size
+  state.appraisalConfigurations.appraisalCycleList?.size
 
 const isLoading = (state: RootState): LoadingState =>
   state.appraisalConfigurations.isLoading
