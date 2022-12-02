@@ -1,17 +1,35 @@
 import { CCardHeader, CCol, CRow } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { useTypedSelector } from '../../../stateStore'
+import { EmployeeGeneralInformation } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 
-const EmployeeGeneralInformation = (): JSX.Element => {
+const EmployeeGeneralInformationView = (): JSX.Element => {
   const [isViewingAnotherEmployee] = useSelectedEmployee()
-  const employeeGeneralInformation = useTypedSelector((state) =>
+  const [employeeReporteeProfileViews, setEmployeeReporteeProfileView] =
+    useState<EmployeeGeneralInformation>()
+  const employeeProfileViews = useTypedSelector((state) =>
     reduxServices.generalInformation.selectors.selectLoggedInEmployeeData(
       state,
       isViewingAnotherEmployee,
     ),
   )
+
+  const employeeProfileInformation = useTypedSelector((state) =>
+    reduxServices.employeeProfileView.selectors.selectLoggedInEmployeeData(
+      state,
+      isViewingAnotherEmployee,
+    ),
+  )
+
+  useEffect(() => {
+    if (location.pathname === '/reporteesEmpProfile') {
+      setEmployeeReporteeProfileView(employeeProfileViews)
+    } else {
+      setEmployeeReporteeProfileView(employeeProfileInformation)
+    }
+  }, [])
 
   return (
     <>
@@ -24,23 +42,23 @@ const EmployeeGeneralInformation = (): JSX.Element => {
         </CCol>
         <CCol md={4}>
           <dl>
-            {employeeGeneralInformation?.baseLocation && (
+            {employeeReporteeProfileViews?.baseLocation && (
               <>
                 <dt>Base Location</dt>
-                <dd>{employeeGeneralInformation?.baseLocation}</dd>
+                <dd>{employeeReporteeProfileViews?.baseLocation}</dd>
               </>
             )}
-            {employeeGeneralInformation?.curentLocation && (
+            {employeeReporteeProfileViews?.curentLocation && (
               <>
                 <dt>Current Location</dt>
-                <dd>{employeeGeneralInformation?.curentLocation}</dd>
+                <dd>{employeeReporteeProfileViews?.curentLocation}</dd>
               </>
             )}
 
-            {employeeGeneralInformation?.address && (
+            {employeeReporteeProfileViews?.address && (
               <>
                 <dt>Current Address</dt>
-                <dd>{employeeGeneralInformation?.address}</dd>
+                <dd>{employeeReporteeProfileViews?.address}</dd>
               </>
             )}
           </dl>
@@ -49,25 +67,25 @@ const EmployeeGeneralInformation = (): JSX.Element => {
         <CCol md={5}>
           <dl>
             <dt>Gender</dt>
-            <dd>{employeeGeneralInformation?.gender}</dd>
-            {employeeGeneralInformation?.bloodgroup && (
+            <dd>{employeeReporteeProfileViews?.gender}</dd>
+            {employeeReporteeProfileViews?.bloodgroup && (
               <>
                 <dt>Blood Group</dt>
-                <dd>{employeeGeneralInformation?.bloodgroup}</dd>
+                <dd>{employeeReporteeProfileViews?.bloodgroup}</dd>
               </>
             )}
             <dt>Date of Birth</dt>
-            <dd>{employeeGeneralInformation?.realBirthday}</dd>
-            {employeeGeneralInformation?.maritalStatus && (
+            <dd>{employeeReporteeProfileViews?.realBirthday}</dd>
+            {employeeReporteeProfileViews?.maritalStatus && (
               <>
                 <dt>Marital Status</dt>
-                <dd>{employeeGeneralInformation?.maritalStatus}</dd>
+                <dd>{employeeReporteeProfileViews?.maritalStatus}</dd>
               </>
             )}
-            {employeeGeneralInformation?.emergencyContact && (
+            {employeeReporteeProfileViews?.emergencyContact && (
               <>
                 <dt>Emergency Contact</dt>
-                <dd>{employeeGeneralInformation?.emergencyContact}</dd>
+                <dd>{employeeReporteeProfileViews?.emergencyContact}</dd>
               </>
             )}
           </dl>
@@ -77,4 +95,4 @@ const EmployeeGeneralInformation = (): JSX.Element => {
   )
 }
 
-export default EmployeeGeneralInformation
+export default EmployeeGeneralInformationView

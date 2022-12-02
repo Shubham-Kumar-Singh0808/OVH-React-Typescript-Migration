@@ -7,24 +7,38 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import BasicInfoTab from '../BasicInfoTab/BasicInfoTab'
-import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfileHistory'
 import GeneralTab from '../GeneralTab/GeneralTab'
-import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
-import EmployeeReviews from '../ReviewsTab/EmployeeReviews'
 import TabsLabels from '../../../middleware/TabsLabels'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import EmployeeProjects from '../ProjectsTab/EmployeeProjects'
-import EmployeeAssets from '../MyAssetsTab/EmployeeAssets'
 import { mapTabsToFeatures } from '../../../utils/helper'
-import { MappedTabs } from '../../../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
-import EmployeeReportees from '../ReporteesTab/EmployeeReportees'
+import {
+  MappedTabs,
+  MyProfileTabList,
+} from '../../../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
+const reporteeTabsLabels: MyProfileTabList[] = [
+  {
+    id: 1,
+    tabName: 'General',
+    label: 'My Profile-General',
+  },
+  {
+    id: 4,
+    tabName: 'Qualification',
+    label: 'My Profile-Skills',
+  },
+  {
+    id: 6,
+    tabName: 'Projects',
+    label: 'My Profile-Projects',
+  },
+]
 const EmployeeViewProfileTabs = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -97,8 +111,8 @@ const EmployeeViewProfileTabs = (): JSX.Element => {
         // 3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
         4: <QualificationDetails />,
         // 5: <EmployeeReviews />,
-        // 6: <EmployeeProjects />,
-        7: <EmployeeReportees />,
+        6: <EmployeeProjects />,
+        // 7: <EmployeeReportees />,
         // 8: <EmployeeAssets />,
         // 9: <EmployeeProfileHistory />,
       }
@@ -111,7 +125,7 @@ const EmployeeViewProfileTabs = (): JSX.Element => {
   return (
     <>
       <CNav className="inline-tabs-nav" variant="tabs" role="tablist">
-        {tabResult
+        {reporteeTabsLabels
           ?.filter((value) => Object.keys(value).length !== 0)
           .map((item, index) => (
             <CNavItem key={index}>

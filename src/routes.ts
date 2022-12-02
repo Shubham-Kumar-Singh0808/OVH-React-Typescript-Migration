@@ -557,8 +557,8 @@ const routes = [
     component: ResignationTimeLine,
   },
   {
-    path: '/Employeeprofile/:employeeProfileId',
-    name: 'Employee Profile',
+    path: '/reporteesEmpProfile/:employeeProfileId',
+    name: 'Employee Profile View',
     component: EmployeeProfile,
   },
 ]

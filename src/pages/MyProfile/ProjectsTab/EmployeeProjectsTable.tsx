@@ -9,16 +9,21 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import EmployeeProjectsEntry from './EmployeeProjectsEntry'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const EmployeeProjectsTable = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { employeeProfileId } = useParams<{ employeeProfileId: string }>()
   const dispatch = useAppDispatch()
+  const location = useLocation()
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+
   const employeeProjects = useTypedSelector(
     reduxServices.employeeProjects.selectors.employeeProjects,
   )
@@ -29,6 +34,18 @@ const EmployeeProjectsTable = (): JSX.Element => {
       dispatch(reduxServices.employeeProjects.getEmployeeProjects(employeeId))
     }
   }, [dispatch, employeeId])
+  console.log(employeeProfileId + 'vinesh')
+  console.log(window.location.pathname)
+  useEffect(() => {
+    setIsLoading(true)
+    if (window.location.pathname === '/reporteesEmpProfile') {
+      dispatch(
+        reduxServices.employeeProjects.getEmployeeProjects(employeeProfileId),
+      )
+    } else if (employeeId) {
+      dispatch(reduxServices.employeeProjects.getEmployeeProjects(employeeId))
+    }
+  }, [])
 
   useEffect(() => {
     if (employeeProjects) setIsLoading(false)

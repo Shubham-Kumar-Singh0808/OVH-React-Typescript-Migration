@@ -8,6 +8,7 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmployeeFamilyDetailsTableProps } from '../../../types/MyProfile/PersonalInfoTab/personalInfoTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -34,15 +35,33 @@ const FamilyDetailsTable = ({
     reduxServices.personalInformation.selectors.familyDetails,
   )
 
+  const { employeeProfileId } = useParams<{ employeeProfileId: string }>()
+
   const dispatch = useAppDispatch()
 
+  // useEffect(() => {
+  //   dispatch(
+  //     reduxServices.personalInformation.getEmployeeFamilyDetails(
+  //       isViewingAnotherEmployee ? selectedEmployeeId : employeeId,
+  //     ),
+  //   )
+  // }, [dispatch, employeeId, isViewingAnotherEmployee, selectedEmployeeId])
+
   useEffect(() => {
-    dispatch(
-      reduxServices.personalInformation.getEmployeeFamilyDetails(
-        isViewingAnotherEmployee ? selectedEmployeeId : employeeId,
-      ),
-    )
-  }, [dispatch, employeeId, isViewingAnotherEmployee, selectedEmployeeId])
+    if (window.location.pathname === '/reporteesEmpProfile') {
+      dispatch(
+        reduxServices.personalInformation.getEmployeeFamilyDetails(
+          employeeProfileId,
+        ),
+      )
+    } else {
+      dispatch(
+        reduxServices.personalInformation.getEmployeeFamilyDetails(
+          isViewingAnotherEmployee ? selectedEmployeeId : employeeId,
+        ),
+      )
+    }
+  }, [])
 
   const handleShowDeleteModal = (familyId: number) => {
     setIsDeleteModalVisible(true)

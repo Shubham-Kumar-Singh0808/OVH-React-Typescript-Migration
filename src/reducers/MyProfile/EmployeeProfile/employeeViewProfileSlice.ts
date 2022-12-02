@@ -8,7 +8,6 @@ import {
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
 import { RootState } from '../../../stateStore'
 import { ValidationError } from '../../../types/commonTypes'
-import employeeGeneralInformationApi from '../../../middleware/api/MyProfile/GeneralTab/generalInformationApi'
 import employeeProfileViewInformationApi from '../../../middleware/api/MyProfile/EmployeeProfileView/employeeProfileApi'
 
 const initialGeneralInformationState = {} as EmployeeGeneralInformationState

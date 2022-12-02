@@ -111,7 +111,7 @@ const EmployeeReportessTable = (): JSX.Element => {
                 </CTableDataCell>
                 <CTableDataCell scope="row">
                   <Link
-                    to={`/Employeeprofile/:employeeProfileId${reportee.reporteeId}`}
+                    to={`/reporteesEmpProfile/${reportee.reporteeId}`}
                     className="employee-name"
                     onClick={() =>
                       reporteesHandler(reportee.reporteeId as unknown as string)

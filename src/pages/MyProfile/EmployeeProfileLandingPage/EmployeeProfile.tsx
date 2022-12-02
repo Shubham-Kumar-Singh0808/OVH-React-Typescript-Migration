@@ -5,15 +5,12 @@ import EmployeeViewProfileDetails from './EmployeeViewProfileDetails'
 import EmployeeViewProfileTabs from './EmployeeViewProfileTabs'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { useTypedSelector } from '../../../stateStore'
 
 const EmployeeProfile = (): JSX.Element => {
-  const [isViewingAnotherEmployee, employeeId] = useSelectedEmployee()
   const employeeProfileInformation = useTypedSelector((state) =>
     reduxServices.employeeProfileView.selectors.selectLoggedInEmployeeData(
       state,
-      isViewingAnotherEmployee,
     ),
   )
   console.log(employeeProfileInformation)
