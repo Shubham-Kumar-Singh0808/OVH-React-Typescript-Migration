@@ -71,6 +71,7 @@ import {
   PanDetailsApi,
   ResignationListApi,
   ITDeclarationListApi,
+  InvestmentCheckListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -640,4 +641,9 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getCycles: apiPrefix + '/itDeclaration/getCycles',
   getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
   exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
+}
+
+export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
+  getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
+  getSections: apiPrefix + '/itDeclaration/getSection',
 }

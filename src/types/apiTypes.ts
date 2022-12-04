@@ -531,3 +531,8 @@ export interface ITDeclarationListApi extends ApiBase {
   getITDeclarationForm: string
   exportITDeclarationList: string
 }
+
+export interface InvestmentCheckListApi extends ApiBase {
+  getInvestments: string
+  getSections: string
+}
