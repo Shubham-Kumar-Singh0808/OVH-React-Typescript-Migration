@@ -7,6 +7,7 @@ import {
   ResignationListResponse,
   SeparationTimeLine,
   submitClearanceCommentsProps,
+  SubmitExitFeedBackForm,
   UpdateClearanceDetails,
 } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import {
@@ -142,6 +143,56 @@ const getEmpDetails = async (
   return response.data
 }
 
+const saveExitFeedBackForm = async (
+  saveFeedBackForm: SubmitExitFeedBackForm,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.saveExitFeedBackForm,
+    method: AllowedHttpMethods.post,
+    data: saveFeedBackForm,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const uploadRelievingLetter = async (prepareObject: {
+  exitfeddbackformId: number
+  file: FormData
+}): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.uploadrelievingletter,
+    method: AllowedHttpMethods.post,
+    data: prepareObject.file,
+    params: {
+      exitfeddbackformId: prepareObject.exitfeddbackformId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const uploadExitfeedBackFile = async (prepareObject: {
+  exitfeddbackformId: number
+  file: FormData
+}): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.uploadExitfeedBackFile,
+    method: AllowedHttpMethods.post,
+    data: prepareObject.file,
+    params: {
+      exitfeddbackformId: prepareObject.exitfeddbackformId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const resignationListApi = {
   getResignationList,
   exportResignationListData,
@@ -151,6 +202,9 @@ const resignationListApi = {
   getClearanceDetails,
   updateCCDetails,
   getEmpDetails,
+  saveExitFeedBackForm,
+  uploadRelievingLetter,
+  uploadExitfeedBackFile,
 }
 
 export default resignationListApi

@@ -635,6 +635,10 @@ export const resignationListApiConfig: ResignationListApi = {
   checkExitFeedBackForm:
     apiPrefix + '/separationController/checkExitFeedBackForm',
   getEmpDetails: apiPrefix + '/separationController/getEmpDetails',
+  saveExitFeedBackForm:
+    apiPrefix + '/separationController/saveExitFeedBackForm',
+  uploadrelievingletter: apiPrefix + '/fileUpload/uploadrelievingletter',
+  uploadExitfeedBackFile: apiPrefix + '/fileUpload/uploadExitfeedBackFile',
 }
 
 export const itDeclarationListApiConfig: ITDeclarationListApi = {

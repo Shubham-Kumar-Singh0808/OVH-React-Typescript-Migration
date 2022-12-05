@@ -14,6 +14,7 @@ import {
   ResignationListSliceState,
   SeparationTimeLine,
   submitClearanceCommentsProps,
+  SubmitExitFeedBackForm,
   UpdateClearanceDetails,
 } from '../../../types/Separation/ResignationList/resignationListTypes'
 
@@ -139,6 +140,56 @@ const getEmpDetails = createAsyncThunk<
   }
 })
 
+const saveExitFeedBackForm = createAsyncThunk<
+  number | undefined,
+  SubmitExitFeedBackForm,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'resignationList/saveExitFeedBackForm',
+  async (saveFeedBackForm: SubmitExitFeedBackForm, thunkApi) => {
+    try {
+      return await resignationListApi.saveExitFeedBackForm(saveFeedBackForm)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const uploadRelievingLetter = createAsyncThunk(
+  'resignationList/uploadRelievingLetter',
+  async (
+    prepareObject: { exitfeddbackformId: number; file: FormData },
+    thunkApi,
+  ) => {
+    try {
+      return await resignationListApi.uploadRelievingLetter(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const uploadExitfeedBackFile = createAsyncThunk(
+  'resignationList/uploadExitfeedBackFile',
+  async (
+    prepareObject: { exitfeddbackformId: number; file: FormData },
+    thunkApi,
+  ) => {
+    try {
+      return await resignationListApi.uploadExitfeedBackFile(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -187,6 +238,9 @@ const resignationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getEmpDetailsType = action.payload as GetEmpDetailsType
       })
+      .addCase(saveExitFeedBackForm.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(
           getResignationList.pending,
@@ -234,6 +288,9 @@ const resignationListThunk = {
   getClearanceDetails,
   updateCCDetails,
   getEmpDetails,
+  saveExitFeedBackForm,
+  uploadRelievingLetter,
+  uploadExitfeedBackFile,
 }
 
 const resignationListSelectors = {

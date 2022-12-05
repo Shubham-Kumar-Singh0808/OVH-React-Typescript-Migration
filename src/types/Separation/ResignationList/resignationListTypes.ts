@@ -201,7 +201,7 @@ export type CheckExitFeedBackForm = {
 }
 
 export type GetEmpDetailsType = {
-  separationId: null
+  separationId: number
   relievingDate: null
   resignationDate: null
   employeeId: number
@@ -255,11 +255,11 @@ export type SubmitExitFeedBackForm = {
   opportunityForGrowth: string
   organisationCulture: string
   personelPolicies: string
-  primaryReasonId: 1
+  primaryReasonId: number
   promotion: string
   recognitionOfwork: string
   roleClarity: string
   salary: string
-  separationId: string
+  separationId: number
   superiorGuidance: string
 }

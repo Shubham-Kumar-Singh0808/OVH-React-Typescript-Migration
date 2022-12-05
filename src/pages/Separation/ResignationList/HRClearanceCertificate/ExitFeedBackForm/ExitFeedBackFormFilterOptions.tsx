@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { CButton, CCol, CForm, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
 import { SubmitExitFeedBackForm } from '../../../../../types/Separation/ResignationList/resignationListTypes'
@@ -8,6 +9,9 @@ import { SubmitExitFeedBackForm } from '../../../../../types/Separation/Resignat
 const ExitFeedBackFormFilterOptions = (): JSX.Element => {
   const initialExitFeedBackForm = {} as SubmitExitFeedBackForm
   const [exitFeedBackForm, setExitFeedBackForm] = useState(initialExitFeedBackForm)
+  const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
+  const [uploadRelieveLetter, setUploadRelieveLetter] = useState<File | undefined>(undefined)
+  const dispatch = useDispatch()
   const getExitFeedBackFormDetails = useTypedSelector(
     reduxServices.resignationList.selectors.getEmpFeedBackDetails,
   )
@@ -22,6 +26,18 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
         return { ...prevState, ...{ [name]: value } }
       })   
   }
+
+  const onChangeFileEventHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    if (!file) return
+    setUploadFile(file[0])
+  }
+  const onChangeUploadFileEventHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    if (!file) return
+    setUploadRelieveLetter(file[0])
+  }  
+
   return (
     <>
       <CForm>
@@ -294,11 +310,11 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="file"
               data-testid="file-upload"
               id="fileUpload"
-              // onChange={(element: React.SyntheticEvent) =>
-              //   onChangeFileEventHandler(
-              //     element.currentTarget as HTMLInputElement,
-              //   )
-              // }
+              onChange={(element: React.SyntheticEvent) =>
+                onChangeFileEventHandler(
+                  element.currentTarget as HTMLInputElement,
+                )
+              }
             />
           </CCol>
         </CRow>
@@ -312,11 +328,11 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="file"
               data-testid="file-upload"
               id="fileUpload"
-              // onChange={(element: React.SyntheticEvent) =>
-              //   onChangeFileEventHandler(
-              //     element.currentTarget as HTMLInputElement,
-              //   )
-              // }
+              onChange={(element: React.SyntheticEvent) =>
+                onChangeUploadFileEventHandler(
+                  element.currentTarget as HTMLInputElement,
+                )
+              }
             />
           </CCol>
         </CRow>
@@ -327,7 +343,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
                 className="btn-ovh me-1"
                 data-testid="create-btn"
                 color="success"
-                // onClick={handleApplyTicket}
+                // onClick={handleSubmitFeedBackForm}
                 // disabled={!isCreateButtonEnabled || dateError}
               >
                 Submit
