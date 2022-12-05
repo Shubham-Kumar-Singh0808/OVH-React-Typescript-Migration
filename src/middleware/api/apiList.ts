@@ -605,6 +605,8 @@ export const itDeclarationFormApiConfig: ITDeclarationFormApi = {
   getSectionsHavingInvests:
     apiPrefix + '/itDeclaration/getSectionsHavingInvests',
   getInvestsBySectionId: apiPrefix + '/itDeclaration/getInvestsBySecId',
+  addITDeclarationForm: apiPrefix + '/itDeclaration/addITDeclarationForm',
+  isITDeclarationFormExist: apiPrefix + '/itDeclaration/isItDeclareExist',
 }
 
 export const paySlipsApiConfig: PaySlipsApi = {

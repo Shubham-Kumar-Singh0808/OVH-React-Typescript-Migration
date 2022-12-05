@@ -9,6 +9,7 @@ import {
   Invest,
   ITDeclarationFormSliceState,
   Sections,
+  submitITDeclarationForm,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
 const getEmployeeInfo = createAsyncThunk(
@@ -55,12 +56,56 @@ const getInvestsBySectionId = createAsyncThunk<
   },
 )
 
+const addITDeclarationForm = createAsyncThunk(
+  'itDeclarationForm/addITDeclarationForm',
+  async (addDeclarationForm: submitITDeclarationForm, thunkApi) => {
+    try {
+      return await itDeclarationFormApi.addITDeclarationForm(addDeclarationForm)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const isITDeclarationFormExist = createAsyncThunk<
+  boolean | undefined,
+  void,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('itDeclarationForm/isITDeclarationFormExist', async (_, thunkApi) => {
+  try {
+    return await itDeclarationFormApi.isITDeclarationFormExist()
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   employeeDetails: {} as EmployeeDetails,
   sections: [],
   investments: [],
+  submitITDeclarationForm: {
+    designation: '',
+    employeeId: 0,
+    employeeName: '',
+    fromDate: '',
+    grandTotal: 0,
+    isAgree: false,
+    itDeclarationFormId: null,
+    organisationName: '',
+    panNumber: '',
+    toDate: '',
+    formSectionsDTOs: [],
+  },
+  itDeclarationFormId: 0,
+  itDeclarationFormExist: false,
 }
 
 const itDeclarationFormSlice = createSlice({
@@ -77,6 +122,14 @@ const itDeclarationFormSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.sections = action.payload
       })
+      .addCase(addITDeclarationForm.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.itDeclarationFormId = action.payload as number
+      })
+      .addCase(isITDeclarationFormExist.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.itDeclarationFormExist = action.payload as boolean
+      })
       .addCase(getInvestsBySectionId.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.investments = [
@@ -89,6 +142,8 @@ const itDeclarationFormSlice = createSlice({
           getEmployeeInfo.pending,
           getSectionsHavingInvests.pending,
           getInvestsBySectionId.pending,
+          addITDeclarationForm.pending,
+          isITDeclarationFormExist.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -99,6 +154,8 @@ const itDeclarationFormSlice = createSlice({
           getEmployeeInfo.rejected,
           getSectionsHavingInvests.rejected,
           getInvestsBySectionId.rejected,
+          addITDeclarationForm.rejected,
+          isITDeclarationFormExist.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -120,10 +177,15 @@ const isLoading = (state: RootState): LoadingState =>
 const investments = (state: RootState): Invest[] =>
   state.itDeclarationForm.investments
 
+const itDeclarationFormExists = (state: RootState): boolean =>
+  state.itDeclarationForm.itDeclarationFormExist
+
 const itDeclarationFormThunk = {
   getEmployeeInfo,
   getSectionsHavingInvests,
   getInvestsBySectionId,
+  addITDeclarationForm,
+  isITDeclarationFormExist,
 }
 
 const itDeclarationFormSelectors = {
@@ -131,6 +193,7 @@ const itDeclarationFormSelectors = {
   isLoading,
   sections,
   investments,
+  itDeclarationFormExists,
 }
 
 export const itDeclarationFormService = {

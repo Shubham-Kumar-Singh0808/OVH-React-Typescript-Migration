@@ -12,21 +12,24 @@ import { useTypedSelector } from '../../../stateStore'
 import { Investment } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
 const InvestmentTable = ({
-  setShowSubTotalAmount,
   handleClickRemoveInvestment,
   currentSec,
+  index,
+  onChangeCustomAmount,
 }: {
   setShowSubTotalAmount: (value: number) => void
   handleClickRemoveInvestment: (id: number) => void
   currentSec: Investment
+  index: number
+  onChangeCustomAmount: (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: number,
+  ) => void
 }): JSX.Element => {
   const investments = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.investments,
   )
-
-  const handleSubTotalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShowSubTotalAmount(Number(e.target.value))
-  }
 
   return (
     <>
@@ -43,8 +46,8 @@ const InvestmentTable = ({
               name="technologyId"
             >
               <option value="">Select Investment</option>
-              {investments?.map((invest, index) => (
-                <option key={index} value={invest.investmentId}>
+              {investments?.map((invest, investIndex) => (
+                <option key={investIndex} value={invest.investmentId}>
                   {invest.investmentName}
                 </option>
               ))}
@@ -60,7 +63,7 @@ const InvestmentTable = ({
               placeholder="Enter Savings Amount"
               name="customAmount"
               maxLength={12}
-              onChange={handleSubTotalChange}
+              onChange={(e) => onChangeCustomAmount(index, e, currentSec.id)}
             ></CFormInput>
           </CCol>
         </CTableDataCell>

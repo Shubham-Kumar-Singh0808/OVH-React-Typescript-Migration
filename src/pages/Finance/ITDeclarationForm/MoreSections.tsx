@@ -6,7 +6,7 @@ import {
   CTable,
   CTableBody,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InvestmentTable from './InvestmentTable'
 import {
   Investment,
@@ -17,10 +17,14 @@ const MoreSections = ({
   sectionItem,
   handleShowRemoveSectionModal,
   handleConfirmCancelSection,
+  setSectionList,
+  sectionList,
 }: {
   sectionItem: Sections
   handleShowRemoveSectionModal: (investId: number, investName: string) => void
   handleConfirmCancelSection: () => void
+  setSectionList: (value: Sections[]) => void
+  sectionList: Sections[]
 }): JSX.Element => {
   const [counter, setCounter] = useState(1)
   const [investmentList, setInvestmentList] = useState<Investment[]>([
@@ -49,11 +53,33 @@ const MoreSections = ({
       (investment) => investment.id !== id,
     )
     setInvestmentList(newInvestmentList)
-    // if (newInvestmentList?.length === 0) {
-    //   handleConfirmCancelSection()
-    // }
+    if (newInvestmentList?.length === 0) {
+      const newList = sectionList.filter(
+        (section) => section.sectionId !== sectionItem.sectionId,
+      )
+      console.log(newList)
+      setSectionList(newList)
+    }
     console.log(newInvestmentList.length)
   }
+
+  const onChangeCustomAmount = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newInvestmentList: Investment[] = JSON.parse(
+      JSON.stringify(investmentList),
+    )
+    newInvestmentList[index].customAmount = e.target.value
+    setInvestmentList(newInvestmentList)
+  }
+
+  useEffect(() => {
+    const total = investmentList.reduce((prev, current) => {
+      return prev + +current.customAmount
+    }, 0)
+    setShowSubTotalAmount(total)
+  }, [investmentList])
 
   return (
     <>
@@ -108,6 +134,8 @@ const MoreSections = ({
                     setShowSubTotalAmount={setShowSubTotalAmount}
                     handleClickRemoveInvestment={handleClickRemoveInvestment}
                     currentSec={currentSec}
+                    index={secIndex}
+                    onChangeCustomAmount={onChangeCustomAmount}
                   />
                 </React.Fragment>
               )

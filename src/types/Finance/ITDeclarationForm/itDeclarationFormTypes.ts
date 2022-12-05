@@ -32,10 +32,40 @@ export type Sections = {
   invests: Invest[]
 }
 
+export type FormInvestmentDTO = {
+  customAmount: string
+  investmentId: number
+}
+
+export type FormSectionsDTO = {
+  isOld: boolean
+  itSectionsId: null
+  sectionId: number
+  sectionName: string
+  formInvestmentDTO: FormInvestmentDTO[]
+}
+
+export type submitITDeclarationForm = {
+  designation: string
+  employeeId: number
+  employeeName: string
+  fromDate: string
+  grandTotal: number
+  isAgree: boolean
+  itDeclarationFormId: null
+  organisationName: string
+  panNumber: string
+  toDate: string
+  formSectionsDTOs: FormSectionsDTO[]
+}
+
 export type ITDeclarationFormSliceState = {
   employeeDetails: EmployeeDetails
   sections: Sections[]
   investments: Invest[]
+  submitITDeclarationForm: submitITDeclarationForm
+  itDeclarationFormId: number
+  itDeclarationFormExist: boolean
   isLoading: LoadingState
   error: ValidationError
 }

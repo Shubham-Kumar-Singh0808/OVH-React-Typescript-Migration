@@ -499,6 +499,8 @@ export interface ITDeclarationFormApi extends ApiBase {
   getEmployeeInfo: string
   getSectionsHavingInvests: string
   getInvestsBySectionId: string
+  addITDeclarationForm: string
+  isITDeclarationFormExist: string
 }
 export interface PaySlipsApi extends ApiBase {
   getEmployeePayslipsForSelectedYear: string

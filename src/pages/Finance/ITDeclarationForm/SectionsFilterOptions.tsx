@@ -1,11 +1,4 @@
-import {
-  CButton,
-  CCol,
-  CFormCheck,
-  CFormLabel,
-  CFormSelect,
-  CRow,
-} from '@coreui/react-pro'
+import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import MoreSections from './MoreSections'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -58,6 +51,7 @@ const SectionsFilterOptions = (): JSX.Element => {
     )
     setSelectedSection(filterSection[0])
   }
+
   const alreadyExistToastMessage = (
     <OToast toastMessage="Section already exist" toastColor="danger" />
   )
@@ -106,7 +100,7 @@ const SectionsFilterOptions = (): JSX.Element => {
 
   return (
     <>
-      <CRow className="mt-3 mb-3">
+      <CRow className="mt-4 mb-4">
         <CCol sm={1}>
           <CFormLabel {...formLabelProps}>Sections:</CFormLabel>
         </CCol>
@@ -152,51 +146,13 @@ const SectionsFilterOptions = (): JSX.Element => {
                   sectionItem={currentSec}
                   handleShowRemoveSectionModal={handleShowRemoveSectionModal}
                   handleConfirmCancelSection={handleConfirmCancelSection}
+                  setSectionList={setSectionList}
+                  sectionList={sectionList}
                 />
               </CCol>
             </CRow>
           )
         })}
-      <CRow className="mt-3 mb-3">
-        <CCol sm={12} className="mt-2">
-          <CFormCheck name="agree" data-testid="ch-agree" />{' '}
-          <span className="ps-2">
-            <strong>
-              I, declare that the above statement is true to the best of my
-              knowledge and belief. In the event of any change that may occur
-              during the year pertaining to the information given in the form, I
-              undertake to inform the same to the company. Income Tax liability
-              arising due to failure, if any, for not making / not intimating
-              payment / investment made or proposed to be made by me and / or
-              any wrong declaration would be my responsibility. I further
-              undertake to provide all documentary proofs of payment made by me
-              and if I fail to do so, the company can make full deduction of
-              income tax dues from salary.
-            </strong>
-          </span>
-        </CCol>
-      </CRow>
-      <CRow className="mt-2 mb-2">
-        <CCol className="col-md-3 offset-md-4">
-          <CButton
-            color="success"
-            className="btn-ovh me-1"
-            data-testid="df-submit-btn"
-            size="sm"
-            disabled
-          >
-            Submit
-          </CButton>
-          <CButton
-            color="warning "
-            className="btn-ovh"
-            data-testid="df-clear-btn"
-            onClick={handleClearInputs}
-          >
-            Clear
-          </CButton>
-        </CCol>
-      </CRow>
       <OModal
         alignment="center"
         visible={isCancelModalVisible}

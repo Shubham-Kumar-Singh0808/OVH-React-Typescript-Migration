@@ -2,6 +2,7 @@ import {
   EmployeeDetails,
   Invest,
   Sections,
+  submitITDeclarationForm,
 } from '../../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -40,10 +41,33 @@ const getInvestsBySectionId = async (sectionId: number): Promise<Invest[]> => {
   return response.data
 }
 
+const addITDeclarationForm = async (
+  submitDeclarationForm: submitITDeclarationForm,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationFormApiConfig.addITDeclarationForm,
+    method: AllowedHttpMethods.post,
+    data: submitDeclarationForm,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const isITDeclarationFormExist = async (): Promise<boolean | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationFormApiConfig.isITDeclarationFormExist,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const itDeclarationFormApi = {
   getEmployeeInfo,
   getSectionsHavingInvests,
   getInvestsBySectionId,
+  addITDeclarationForm,
+  isITDeclarationFormExist,
 }
 
 export default itDeclarationFormApi
