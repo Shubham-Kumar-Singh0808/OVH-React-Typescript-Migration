@@ -17,7 +17,7 @@ import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeAccountsExpandTable = (): JSX.Element => {
   const isLoading = useTypedSelector(
-    reduxServices.clients.selectors.isLoadingProjectDetails,
+    reduxServices.employeeAccount.selectors.isLoading,
   )
 
   const financeData = useTypedSelector(
@@ -33,35 +33,39 @@ const EmployeeAccountsExpandTable = (): JSX.Element => {
       >
         <CTableHead className="profile-tab-header">
           <CTableRow>
-            <CTableHeaderCell>#</CTableHeaderCell>
-            <CTableHeaderCell>Bank Name</CTableHeaderCell>
-            <CTableHeaderCell>Account Number</CTableHeaderCell>
-            <CTableHeaderCell>IFSC Code</CTableHeaderCell>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Bank Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Account Number</CTableHeaderCell>
+            <CTableHeaderCell scope="col">IFSC Code</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
           {isLoading !== ApiLoadingState.loading ? (
             financeData &&
-            financeData?.map((data, index) => {
+            financeData?.map((data) => {
               return (
-                <CTableRow key={index}>
-                  <CTableDataCell scope="row">
-                    {data.bankDetails.map((item, index) => {
-                      return (
-                        <>
-                          <CTableDataCell>{index + 1}</CTableDataCell>
-                          <CTableDataCell key={index}>
+                <>
+                  {data.bankDetails.map((item, index) => {
+                    return (
+                      <>
+                        <CTableRow>
+                          <CTableDataCell scope="row">
+                            {index + 1}
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
                             {item.bankName}
                           </CTableDataCell>
-                          <CTableDataCell>
+                          <CTableDataCell scope="row">
                             {item.bankAccountNumber}
                           </CTableDataCell>
-                          <CTableDataCell>{item.ifscCode}</CTableDataCell>
-                        </>
-                      )
-                    })}
-                  </CTableDataCell>
-                </CTableRow>
+                          <CTableDataCell scope="row">
+                            {item.ifscCode}
+                          </CTableDataCell>
+                        </CTableRow>
+                      </>
+                    )
+                  })}
+                </>
               )
             })
           ) : (

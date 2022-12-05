@@ -80,9 +80,8 @@ const PanDetails = (): JSX.Element => {
             <CCol className="text-end" md={4}>
               <CTooltip content="Edit">
                 <CButton
-                  size="sm"
-                  className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                  color="info btn-ovh me-1"
+                  className="btn-ovh me-1"
+                  color="info"
                   onClick={() => {
                     editPanDetailsButtonHandler(bankDetail.finance)
                   }}
@@ -91,6 +90,14 @@ const PanDetails = (): JSX.Element => {
                   &nbsp; Edit
                 </CButton>
               </CTooltip>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+                // onClick={() => {}}
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
             </CCol>
           )}
         </CRow>

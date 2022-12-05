@@ -24,6 +24,7 @@ const EmployeeAccountsTable = (
   props: EmployeeAccountExpandableTableProps,
 ): JSX.Element => {
   const [isIconVisible, setIsIconVisible] = useState(false)
+  const [selectEmpId, setSelectEmpId] = useState<number>()
 
   const financeData = useTypedSelector(
     reduxServices.employeeAccount.selectors.financeInfo,
@@ -48,9 +49,11 @@ const EmployeeAccountsTable = (
     setCurrentPage(1)
   }
 
-  const handleExpandRow = () => {
+  const handleExpandRow = (id: number) => {
     setIsIconVisible(true)
+    setSelectEmpId(id)
   }
+  console.log(selectEmpId)
 
   const handleFinanceData = async (financeFilePath: string) => {
     const employeeBankDetailsDownload = await panDetailsApi.downloadFinanceFile(
@@ -60,7 +63,6 @@ const EmployeeAccountsTable = (
     )
 
     downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
-    console.log(financeFilePath)
   }
 
   const totalRecords = financeData?.length
@@ -94,7 +96,7 @@ const EmployeeAccountsTable = (
                   <React.Fragment key={index}>
                     <CTableRow>
                       <CTableDataCell scope="row">
-                        {isIconVisible ? (
+                        {isIconVisible && selectEmpId === data.employeeId ? (
                           <i
                             data-testid="minus-btn"
                             className="fa fa-minus-circle cursor-pointer"
@@ -104,7 +106,7 @@ const EmployeeAccountsTable = (
                           <i
                             data-testid="plus-btn"
                             className="fa fa-plus-circle cursor-pointer"
-                            onClick={() => handleExpandRow}
+                            onClick={() => handleExpandRow(data.employeeId)}
                           />
                         )}
                       </CTableDataCell>
@@ -154,7 +156,7 @@ const EmployeeAccountsTable = (
                         </CLink>
                       </CTableDataCell>
                     </CTableRow>
-                    {isIconVisible ? (
+                    {isIconVisible && selectEmpId === data.employeeId ? (
                       <CTableDataCell colSpan={10}>
                         <EmployeeAccountsExpandTable />
                       </CTableDataCell>
