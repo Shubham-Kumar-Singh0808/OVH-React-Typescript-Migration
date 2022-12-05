@@ -524,6 +524,7 @@ export interface ResignationListApi extends ApiBase {
   getClearanceDetails: string
   updateCCDetails: string
   checkExitFeedBackForm: string
+  getEmpDetails: string
 }
 
 export interface ITDeclarationListApi extends ApiBase {

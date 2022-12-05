@@ -2,6 +2,7 @@ import axios from 'axios'
 import {
   ClearanceDetails,
   ClearanceDetailsProps,
+  GetEmpDetailsType,
   GetResignationListProps,
   ResignationListResponse,
   SeparationTimeLine,
@@ -126,6 +127,21 @@ const updateCCDetails = async (
   return response.data
 }
 
+const getEmpDetails = async (
+  separationId: number,
+): Promise<GetEmpDetailsType> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.getEmpDetails,
+    method: AllowedHttpMethods.get,
+    params: {
+      separationId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const resignationListApi = {
   getResignationList,
   exportResignationListData,
@@ -134,6 +150,7 @@ const resignationListApi = {
   submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
+  getEmpDetails,
 }
 
 export default resignationListApi

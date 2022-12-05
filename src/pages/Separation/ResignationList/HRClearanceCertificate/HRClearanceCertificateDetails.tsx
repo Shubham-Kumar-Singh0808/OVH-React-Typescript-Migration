@@ -90,6 +90,10 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
     setIsHrCCDetailsEdit(false)
   }
   const due = HrClearanceDetails[0]?.isDue ? 'Due' : 'No Due'
+
+  const exitDocumentHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getEmpDetails(separationId))
+  }
   return (
     <>
       <div className="card mb-4 myprofile-wrapper">
@@ -135,6 +139,20 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
                     >
                       <i className="fa fa-arrow-left  me-1"></i>Edit
                     </CButton>
+                    <Link to={`/ClearanceCertificateHR`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1"
+                        onClick={() =>
+                          exitDocumentHandler(
+                            HrClearanceDetails[0].seperationId,
+                          )
+                        }
+                      >
+                        <i className="fa fa-sign-out text-white"></i> Exit
+                        Documents
+                      </CButton>
+                    </Link>
                     <Link to={`/resignationList`}>
                       <CButton color="info" className="btn-ovh me-1">
                         <i className="fa fa-arrow-left  me-1"></i>Back

@@ -8,6 +8,7 @@ import {
   CheckExitFeedBackForm,
   ClearanceDetails,
   ClearanceDetailsProps,
+  GetEmpDetailsType,
   GetResignationListProps,
   ResignationList,
   ResignationListSliceState,
@@ -121,6 +122,23 @@ const updateCCDetails = createAsyncThunk<
   },
 )
 
+const getEmpDetails = createAsyncThunk<
+  GetEmpDetailsType | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('resignationList/getEmpDetails', async (separationId: number, thunkApi) => {
+  try {
+    return await resignationListApi.getEmpDetails(separationId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -130,6 +148,7 @@ const initialResignationListState: ResignationListSliceState = {
   checkExitFeedBackForm: {} as CheckExitFeedBackForm,
   clearanceDetails: [],
   toggle: '',
+  getEmpDetailsType: {} as GetEmpDetailsType,
 }
 
 const resignationListSlice = createSlice({
@@ -163,11 +182,17 @@ const resignationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.clearanceDetails = action.payload
       })
+
+      .addCase(getEmpDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getEmpDetailsType = action.payload as GetEmpDetailsType
+      })
       .addMatcher(
         isAnyOf(
           getResignationList.pending,
           getSeparationTimeLine.pending,
           getClearanceDetails.pending,
+          getEmpDetails.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -198,6 +223,9 @@ const managerClearanceDetails = (state: RootState): ClearanceDetails[] =>
 
 const toggleValue = (state: RootState): string => state.resignationList.toggle
 
+const getEmpFeedBackDetails = (state: RootState): GetEmpDetailsType =>
+  state.resignationList.getEmpDetailsType
+
 const resignationListThunk = {
   getResignationList,
   resignationIntitiateCC,
@@ -205,6 +233,7 @@ const resignationListThunk = {
   submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
+  getEmpDetails,
 }
 
 const resignationListSelectors = {
@@ -216,6 +245,7 @@ const resignationListSelectors = {
   resignationTimeLine,
   managerClearanceDetails,
   toggleValue,
+  getEmpFeedBackDetails,
 }
 
 export const resignationListService = {
