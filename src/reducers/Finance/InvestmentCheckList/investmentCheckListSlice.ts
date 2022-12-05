@@ -54,10 +54,7 @@ const investmentCheckListSlice = createSlice({
     builder
       .addCase(getInvestments.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.investments = [
-          ...state.investments,
-          ...(action.payload as Invest[]),
-        ]
+        state.investments = action.payload as Invest[]
       })
       .addCase(getSections.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded

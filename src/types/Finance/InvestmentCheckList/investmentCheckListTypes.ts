@@ -13,7 +13,7 @@ export type Invest = {
 export type Section = {
   sectionId: number
   sectionName: string
-  sectionLimit: number
+  sectionLimit: number | string
   invests: Invest[]
 }
 
