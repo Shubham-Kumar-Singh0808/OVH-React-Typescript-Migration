@@ -7,21 +7,22 @@ import EmployeeSkillsTable from '../QualificationsTab/EmployeeSkills/EmployeeSki
 import FamilyDetailsTable from '../PersonalInfoTab/FamilyDetailsTable'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { reduxServices } from '../../../reducers/reduxServices'
+import EmployeeProfileFamilyTable from '../EmployeeProfileLandingPage/EmployeeQualificationTab/EmployeeProfileFamilyTable'
 
 const GeneralTab = (): JSX.Element => {
   const [isViewingAnotherEmployee] = useSelectedEmployee()
 
   const { employeeProfileId } = useParams<{ employeeProfileId: string }>()
   const dispatch = useDispatch()
-  useEffect(() => {
-    if (window.location.pathname === '/reporteesEmpProfile') {
-      dispatch(
-        reduxServices.personalInformation.getEmployeeFamilyDetails(
-          employeeProfileId,
-        ),
-      )
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (window.location.pathname === '/reporteesEmpProfile') {
+  //     dispatch(
+  //       reduxServices.personalInformation.getEmployeeFamilyDetails(
+  //         employeeProfileId,
+  //       ),
+  //     )
+  //   }
+  // }, [])
 
   return (
     <>

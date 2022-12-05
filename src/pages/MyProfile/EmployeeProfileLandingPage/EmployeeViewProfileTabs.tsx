@@ -7,8 +7,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import EmployeeQualificationTab from './EmployeeQualificationTab/EmployeeQualificationTab'
 import GeneralTab from '../GeneralTab/GeneralTab'
-import QualificationDetails from '../QualificationsTab/QualificationDetails'
 import TabsLabels from '../../../middleware/TabsLabels'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -109,7 +109,7 @@ const EmployeeViewProfileTabs = (): JSX.Element => {
         1: <GeneralTab />,
         // 2: <BasicInfoTab />,
         // 3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
-        4: <QualificationDetails />,
+        4: <EmployeeQualificationTab />,
         // 5: <EmployeeReviews />,
         6: <EmployeeProjects />,
         // 7: <EmployeeReportees />,
