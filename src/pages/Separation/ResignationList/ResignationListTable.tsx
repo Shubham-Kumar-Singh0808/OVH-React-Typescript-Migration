@@ -111,6 +111,36 @@ const ResignationListTable = ({
     )
   }
 
+  const resignationITClearanceHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'IT',
+      }),
+    )
+  }
+
+  const resignationFinanceClearanceHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'Finance',
+      }),
+    )
+  }
+
+  const resignationAdminClearanceHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'Admin',
+      }),
+    )
+  }
+
   const handleConfirmInitiateResignation = async () => {
     setIsInitiateModalVisible(false)
     const initiateResignationResultAction = await dispatch(
@@ -240,25 +270,45 @@ const ResignationListTable = ({
                                 <i className="fa fa-user text-white"></i>
                               </CButton>
                             </Link>
-
-                            <CButton
-                              size="sm"
-                              className={resignationItem.itCcCss}
-                            >
-                              <i className="fa fa-laptop text-white"></i>
-                            </CButton>
-                            <CButton
-                              size="sm"
-                              className={resignationItem.finanaceCcCss}
-                            >
-                              <i className="fa fa-calculator text-white"></i>
-                            </CButton>
-                            <CButton
-                              size="sm"
-                              className={resignationItem.adminCcCss}
-                            >
-                              <i className="fa fa-id-badge text-white"></i>
-                            </CButton>
+                            <Link to={`/ClearanceCertificateManager`}>
+                              <CButton
+                                size="sm"
+                                className={resignationItem.itCcCss}
+                                onClick={() =>
+                                  resignationITClearanceHandler(
+                                    resignationItem.separationId,
+                                  )
+                                }
+                              >
+                                <i className="fa fa-laptop text-white"></i>
+                              </CButton>
+                            </Link>
+                            <Link to={`/ClearanceCertificateFinance`}>
+                              <CButton
+                                size="sm"
+                                className={resignationItem.finanaceCcCss}
+                                onClick={() =>
+                                  resignationFinanceClearanceHandler(
+                                    resignationItem.separationId,
+                                  )
+                                }
+                              >
+                                <i className="fa fa-calculator text-white"></i>
+                              </CButton>
+                            </Link>
+                            <Link to={`/ClearanceCertificateAdmin`}>
+                              <CButton
+                                size="sm"
+                                className={resignationItem.adminCcCss}
+                                onClick={() =>
+                                  resignationAdminClearanceHandler(
+                                    resignationItem.separationId,
+                                  )
+                                }
+                              >
+                                <i className="fa fa-id-badge text-white"></i>
+                              </CButton>
+                            </Link>
                             <Link to={`/ClearanceCertificateHR`}>
                               <CButton
                                 size="sm"

@@ -269,6 +269,27 @@ const ResignationHRClearanceCertificate = React.lazy(
     ),
 )
 
+const ResignationITClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/ITClearanceCertificate/ITClearanceCertificate'
+    ),
+)
+
+const ResignationFinanceClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/FinanaceClearanceCertificate/FinanceClearanceCertificate'
+    ),
+)
+
+const ResignationAdminClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/AdminClearanceCertificate/AdminClearanceCertificate'
+    ),
+)
+
 const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
 )
@@ -618,6 +639,22 @@ const routes = [
     path: '/ClearanceCertificateHR',
     name: 'HR  Clearance Certificate',
     component: ResignationHRClearanceCertificate,
+  },
+
+  {
+    path: '/ClearanceCertificateIT',
+    name: 'IT  Clearance Certificate',
+    component: ResignationITClearanceCertificate,
+  },
+  {
+    path: '/ClearanceCertificateFinance',
+    name: 'Finance  Clearance Certificate',
+    component: ResignationFinanceClearanceCertificate,
+  },
+  {
+    path: '/ClearanceCertificateAdmin',
+    name: 'Admin  Clearance Certificate',
+    component: ResignationAdminClearanceCertificate,
   },
 ]
 
