@@ -139,13 +139,13 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
                     >
                       <i className="fa fa-arrow-left  me-1"></i>Edit
                     </CButton>
-                    <Link to={`/ClearanceCertificateHR`}>
+                    <Link to={`/ExitFeedBackForm`}>
                       <CButton
                         color="info"
                         className="btn-ovh me-1"
                         onClick={() =>
                           exitDocumentHandler(
-                            HrClearanceDetails[0].seperationId,
+                            getAllResignationHistory.separationId,
                           )
                         }
                       >

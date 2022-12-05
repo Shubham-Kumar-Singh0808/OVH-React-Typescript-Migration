@@ -255,6 +255,13 @@ const ResignationTimeLine = React.lazy(
     ),
 )
 
+const ResignationFeedBackForm = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/HRClearanceCertificate/ExitFeedBackForm/ExitFeedBackForm'
+    ),
+)
+
 const ResignationManagerClearanceCertificate = React.lazy(
   () =>
     import(
@@ -655,6 +662,12 @@ const routes = [
     path: '/ClearanceCertificateAdmin',
     name: 'Admin  Clearance Certificate',
     component: ResignationAdminClearanceCertificate,
+  },
+
+  {
+    path: '/ExitFeedBackForm',
+    name: 'Resignation ExitFeedBackForm',
+    component: ResignationFeedBackForm,
   },
 ]
 
