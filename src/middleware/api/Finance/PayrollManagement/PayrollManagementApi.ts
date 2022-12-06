@@ -1,0 +1,52 @@
+import {
+  DownloadExcelFile,
+  GetPayRollProps,
+  GetPaySlipReportResponse,
+} from '../../../../types/Finance/PayrollManagement/PayrollManagementTypes'
+import {
+  getAuthenticatedRequestConfig,
+  useAxios,
+} from '../../../../utils/apiUtils'
+import { payrollManagementApiConfig, AllowedHttpMethods } from '../../apiList'
+
+const getCurrentPayslip = async (
+  props: GetPayRollProps,
+): Promise<GetPaySlipReportResponse> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: payrollManagementApiConfig.getCurrentPayslip,
+    method: AllowedHttpMethods.get,
+    params: {
+      endIndex: props.endIndex ?? 20,
+      startIndex: props.startIndex ?? 0,
+      month: props.month,
+      year: props.year,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const downloadExcelFile = async (
+  prepareObject: DownloadExcelFile,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: payrollManagementApiConfig.downloadExcelFile,
+    method: AllowedHttpMethods.get,
+    params: {
+      fileName: prepareObject.fileName,
+      token: prepareObject.token,
+      tenantKey: prepareObject.tenantKey,
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const PayrollManagementApi = {
+  getCurrentPayslip,
+  downloadExcelFile,
+}
+
+export default PayrollManagementApi

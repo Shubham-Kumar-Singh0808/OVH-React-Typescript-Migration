@@ -536,3 +536,8 @@ export interface InvestmentCheckListApi extends ApiBase {
   getInvestments: string
   getSections: string
 }
+
+export interface PayrollManagementApi extends ApiBase {
+  getCurrentPayslip: string
+  downloadExcelFile: string
+}

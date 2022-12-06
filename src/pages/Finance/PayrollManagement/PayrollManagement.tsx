@@ -1,15 +1,36 @@
 import { CRow, CCol, CFormLabel, CFormSelect } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { SyntheticEvent, useState } from 'react'
+import DownloadSampleExcelFile from './DownloadSampleExcelFile'
+import PayrollManagementTable from './PayrollManagementTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const PayrollManagement = (): JSX.Element => {
   const [selectMonth, setSelectMonth] = useState<string>('')
   const [selectYear, setSelectYear] = useState<string>('')
+  const [fileUploadErrorText, setFileUploadErrorText] = useState<string>('')
+
   const currentYear = new Date().getFullYear()
   const previousYears = currentYear - 4
   const years = []
   for (let i = currentYear; i >= previousYears; i--) {
     years.push(i)
+  }
+
+  const onChangeFileUploadHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    const acceptedFileTypes = ['xls', 'xlsx']
+    let extension = ''
+    if (!file) return
+    if (file && file[0] !== undefined) {
+      extension = file[0].name.split('.').pop() as string
+    }
+    if (!acceptedFileTypes.includes(extension)) {
+      setFileUploadErrorText(
+        'You chosen wrong file format.Please Choose either xls or xlsx',
+      )
+      return
+    }
+    setFileUploadErrorText('')
   }
   return (
     <>
@@ -84,6 +105,35 @@ const PayrollManagement = (): JSX.Element => {
             </CFormSelect>
           </CCol>
         </CRow>
+        <CRow className="mt-3 justify-content-end">
+          <CCol className="text-end" md={4}>
+            <DownloadSampleExcelFile className="text-decoration-none btn btn-download btn-ovh" />
+          </CCol>
+          <CRow className="mt-4 mb-4">
+            {fileUploadErrorText && (
+              <div id="error">
+                <strong className="mt-3 text-danger">
+                  {fileUploadErrorText}
+                </strong>
+              </div>
+            )}
+            <CCol sm={3}>
+              <input
+                className="mt-1"
+                data-testid="feedback-form"
+                type="file"
+                name="upload-form"
+                onChange={(element: SyntheticEvent) =>
+                  onChangeFileUploadHandler(
+                    element.currentTarget as HTMLInputElement,
+                  )
+                }
+              />
+              <span>Note: Please upload file either xls or xlsx format.</span>
+            </CCol>
+          </CRow>
+        </CRow>
+        <PayrollManagementTable />
       </OCard>
     </>
   )

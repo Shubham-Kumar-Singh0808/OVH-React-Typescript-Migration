@@ -72,6 +72,7 @@ import {
   ResignationListApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
+  PayrollManagementApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -646,4 +647,9 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
   getSections: apiPrefix + '/itDeclaration/getSection',
+}
+
+export const payrollManagementApiConfig: PayrollManagementApi = {
+  getCurrentPayslip: apiPrefix + '/payslip/payrolladmin/getCurrentPayslip',
+  downloadExcelFile: apiPrefix + '/payslip/payrolladmin/downloadExcelFile',
 }
