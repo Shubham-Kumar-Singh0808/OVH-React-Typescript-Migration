@@ -133,7 +133,10 @@ const PayrollManagement = (): JSX.Element => {
             </CCol>
           </CRow>
         </CRow>
-        <PayrollManagementTable />
+        <PayrollManagementTable
+          selectMonth={selectMonth}
+          selectYear={selectYear}
+        />
       </OCard>
     </>
   )

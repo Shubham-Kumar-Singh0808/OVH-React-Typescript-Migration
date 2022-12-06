@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -13,14 +13,32 @@ import {
 } from '@coreui/react-pro'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
-const PayrollManagementTable = (): JSX.Element => {
+const PayrollManagementTable = (props: {
+  selectMonth: string
+  selectYear: string
+}): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
 
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipInfo,
   )
+  console.log(renderingPayslipData)
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (props.selectMonth && props.selectYear)
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          endIndex: 20,
+          startIndex: 0,
+          month: props.selectMonth,
+          year: Number(props.selectYear),
+        }),
+      )
+  }, [dispatch, props.selectMonth, props.selectYear])
 
   return (
     <>
