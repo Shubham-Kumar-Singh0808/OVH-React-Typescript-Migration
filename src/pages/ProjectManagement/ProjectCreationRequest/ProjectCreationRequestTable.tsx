@@ -49,6 +49,10 @@ const ProjectCreationRequestTable = ({
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
   return (
     <>
       <CTable striped className="mt-3">
@@ -72,7 +76,9 @@ const ProjectCreationRequestTable = ({
             getAllProjectRequestList?.map((projectRequest, index) => {
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>
                     {projectRequest.projectName || 'N/A'}
                   </CTableDataCell>
