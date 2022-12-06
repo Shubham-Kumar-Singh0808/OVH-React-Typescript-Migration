@@ -6,6 +6,8 @@ import {
   CheckExitFeedBackForm,
   ResignationListSliceState,
   SeparationTimeLine,
+  GetEmpDetailsType,
+  SubmitExitFeedBackForm,
 } from '../../../types/Separation/ResignationList/resignationListTypes'
 import {
   mockClearanceDetails,
@@ -23,6 +25,8 @@ describe('Resign List Slice', () => {
       checkExitFeedBackForm: {} as CheckExitFeedBackForm,
       clearanceDetails: [],
       toggle: '',
+      getEmpDetailsType: {} as GetEmpDetailsType,
+      submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
     } as ResignationListSliceState
     it('Should be able to set isLoading to "loading" if getResignationList is pending', () => {
       const action = {
@@ -38,6 +42,8 @@ describe('Resign List Slice', () => {
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: [],
         toggle: '',
+        getEmpDetailsType: {} as GetEmpDetailsType,
+        submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
       })
     })
     it('Should be able to set isLoading to "success" if getResignationList is fulfilled', () => {
@@ -54,6 +60,8 @@ describe('Resign List Slice', () => {
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: [],
         toggle: '',
+        getEmpDetailsType: {} as GetEmpDetailsType,
+        submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
       })
     })
     it('Should be able to set isLoading to "loading" if getSeparationTimeLine is pending', () => {
@@ -70,6 +78,8 @@ describe('Resign List Slice', () => {
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: [],
         toggle: '',
+        getEmpDetailsType: {} as GetEmpDetailsType,
+        submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
       })
     })
     it('Should be able to set isLoading to "loading" if getClearanceDetails is pending', () => {
@@ -86,6 +96,8 @@ describe('Resign List Slice', () => {
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: [],
         toggle: '',
+        getEmpDetailsType: {} as GetEmpDetailsType,
+        submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
       })
     })
     it('Should be able to set isLoading to "success" if getSeparationTimeLine is fulfilled', () => {
@@ -103,6 +115,8 @@ describe('Resign List Slice', () => {
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: [],
         toggle: '',
+        getEmpDetailsType: {} as GetEmpDetailsType,
+        submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
       })
     })
     it('Should be able to set isLoading to "success" if getClearanceDetails is fulfilled', () => {
@@ -120,6 +134,8 @@ describe('Resign List Slice', () => {
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: mockClearanceDetails,
         toggle: '',
+        getEmpDetailsType: {} as GetEmpDetailsType,
+        submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
       })
     })
   })
