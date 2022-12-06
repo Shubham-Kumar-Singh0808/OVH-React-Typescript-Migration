@@ -54,8 +54,19 @@ const exportITDeclarationList = async (
   return response.data
 }
 
+const addCycle = async (addNewCycle: Cycle): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.addCycle,
+    method: AllowedHttpMethods.post,
+    data: addNewCycle,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
   getITDeclarationForm,
   exportITDeclarationList,
+  addCycle,
 }

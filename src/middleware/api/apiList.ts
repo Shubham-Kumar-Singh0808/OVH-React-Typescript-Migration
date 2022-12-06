@@ -641,6 +641,7 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getCycles: apiPrefix + '/itDeclaration/getCycles',
   getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
   exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
+  addCycle: apiPrefix + '/itDeclaration/addCycle',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {

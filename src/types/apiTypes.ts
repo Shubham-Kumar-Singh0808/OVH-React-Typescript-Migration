@@ -530,6 +530,7 @@ export interface ITDeclarationListApi extends ApiBase {
   getCycles: string
   getITDeclarationForm: string
   exportITDeclarationList: string
+  addCycle: string
 }
 
 export interface InvestmentCheckListApi extends ApiBase {

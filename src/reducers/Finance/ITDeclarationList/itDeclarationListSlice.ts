@@ -32,6 +32,18 @@ const getCycles = createAsyncThunk(
   },
 )
 
+const addCycle = createAsyncThunk(
+  'itDeclarationList/addCycle',
+  async (addNewCycle: Cycle, thunkApi) => {
+    try {
+      return await itDeclarationListApi.addCycle(addNewCycle)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const getITDeclarationForm = createAsyncThunk(
   'itDeclarationList/getITDeclarationForm',
   async (props: ITDeclarationListApiProps, thunkApi) => {
@@ -69,14 +81,25 @@ const itDeclarationListSlice = createSlice({
         state.itDeclarationForms = action.payload.itforms
         state.listSize = action.payload.itformlistsize
       })
+      .addCase(addCycle.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
-        isAnyOf(getCycles.pending, getITDeclarationForm.pending),
+        isAnyOf(
+          getCycles.pending,
+          getITDeclarationForm.pending,
+          addCycle.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
-        isAnyOf(getCycles.rejected, getITDeclarationForm.rejected),
+        isAnyOf(
+          getCycles.rejected,
+          getITDeclarationForm.rejected,
+          addCycle.rejected,
+        ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
@@ -97,6 +120,7 @@ const searchEmployee = (state: RootState): string =>
 const itDeclarationListThunk = {
   getCycles,
   getITDeclarationForm,
+  addCycle,
 }
 
 const itDeclarationListSelectors = {

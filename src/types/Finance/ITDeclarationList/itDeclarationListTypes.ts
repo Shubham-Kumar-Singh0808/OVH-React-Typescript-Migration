@@ -1,11 +1,11 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type Cycle = {
-  active: boolean
-  cycleId: number
+  active?: boolean
+  cycleId?: number
   cycleName: string
-  endDate: string
-  startDate: string
+  endDate?: string
+  startDate?: string | Date
 }
 
 export type FormInvestment = {
