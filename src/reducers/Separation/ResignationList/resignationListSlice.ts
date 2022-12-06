@@ -141,7 +141,7 @@ const getEmpDetails = createAsyncThunk<
 })
 
 const saveExitFeedBackForm = createAsyncThunk<
-  number | undefined,
+  number,
   SubmitExitFeedBackForm,
   {
     dispatch: AppDispatch
@@ -162,10 +162,7 @@ const saveExitFeedBackForm = createAsyncThunk<
 
 const uploadRelievingLetter = createAsyncThunk(
   'resignationList/uploadRelievingLetter',
-  async (
-    prepareObject: { exitfeddbackformId: number; file: FormData },
-    thunkApi,
-  ) => {
+  async (prepareObject: { exitformId: number; file: FormData }, thunkApi) => {
     try {
       return await resignationListApi.uploadRelievingLetter(prepareObject)
     } catch (error) {
@@ -200,6 +197,7 @@ const initialResignationListState: ResignationListSliceState = {
   clearanceDetails: [],
   toggle: '',
   getEmpDetailsType: {} as GetEmpDetailsType,
+  submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
 }
 
 const resignationListSlice = createSlice({
@@ -247,6 +245,7 @@ const resignationListSlice = createSlice({
           getSeparationTimeLine.pending,
           getClearanceDetails.pending,
           getEmpDetails.pending,
+          saveExitFeedBackForm.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading

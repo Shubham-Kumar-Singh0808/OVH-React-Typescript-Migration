@@ -1,19 +1,25 @@
 /* eslint-disable prettier/prettier */
 import { CButton, CCol, CForm, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
 import { SubmitExitFeedBackForm } from '../../../../../types/Separation/ResignationList/resignationListTypes'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
 const ExitFeedBackFormFilterOptions = (): JSX.Element => {
   const initialExitFeedBackForm = {} as SubmitExitFeedBackForm
   const [exitFeedBackForm, setExitFeedBackForm] = useState(initialExitFeedBackForm)
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const [uploadRelieveLetter, setUploadRelieveLetter] = useState<File | undefined>(undefined)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const history = useHistory()
   const getExitFeedBackFormDetails = useTypedSelector(
     reduxServices.resignationList.selectors.getEmpFeedBackDetails,
+  )
+
+  const getAllResignationHistory = useTypedSelector(
+    reduxServices.resignationList.selectors.resignationTimeLine,
   )
 
   const onChangeExitFeedBackHandler = (
@@ -36,9 +42,79 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
     const file = element.files
     if (!file) return
     setUploadRelieveLetter(file[0])
-  }  
+  }
 
-  return (
+
+  const handleSubmitExitFeedBackForm = async () => {
+    const createNewTicketResultAction = await dispatch(
+      reduxServices.resignationList.saveExitFeedBackForm({
+        educationalBackground: exitFeedBackForm?.educationalBackground,
+        employeeId: getExitFeedBackFormDetails?.employeeId,
+        employeeName: getExitFeedBackFormDetails.employeeName,
+        expectations: exitFeedBackForm?.expectations,
+        expectationsFulfilled: exitFeedBackForm?.expectationsFulfilled,
+        joinLater: exitFeedBackForm?.joinLater,
+        likeAboutCompany: exitFeedBackForm?.likeAboutCompany,
+        opportunityForGrowth: exitFeedBackForm?.opportunityForGrowth,
+        organisationCulture: exitFeedBackForm?.organisationCulture,
+        personelPolicies: exitFeedBackForm?.personelPolicies,
+        primaryReasonId: getExitFeedBackFormDetails?.primaryReasonId,
+        promotion: exitFeedBackForm?.promotion,
+        recognitionOfwork: exitFeedBackForm?.recognitionOfwork,
+        roleClarity: exitFeedBackForm?.roleClarity,
+        salary: exitFeedBackForm?.salary,
+        separationId: getAllResignationHistory?.separationId as number,
+        superiorGuidance: exitFeedBackForm?.superiorGuidance,
+        dislikeAboutCompany: exitFeedBackForm?.dislikeAboutCompany
+      }),
+    )
+    if (uploadFile) {
+      const formData = new FormData()
+      formData.append('file', uploadFile, uploadFile.name)
+      const ticketIdParams = createNewTicketResultAction.payload 
+      const uploadPrepareObject = {
+        exitformId: ticketIdParams as number,
+        file: formData,
+      }
+      dispatch(
+        reduxServices.resignationList.uploadRelievingLetter(
+          uploadPrepareObject,
+        ),
+      )
+    }
+    if (uploadRelieveLetter) {
+      const formData = new FormData()
+      formData.append('file', uploadRelieveLetter, uploadRelieveLetter.name)
+      const ticketIdParams = createNewTicketResultAction.payload 
+      const uploadPrepareObject = {
+        exitfeddbackformId: ticketIdParams as number,
+        file: formData,
+      }
+      dispatch(
+        reduxServices.resignationList.uploadExitfeedBackFile(
+          uploadPrepareObject,
+        ),
+      )    
+    }
+    history.push('/resignationList')
+    if (
+      reduxServices.resignationList.saveExitFeedBackForm.fulfilled.match(
+        createNewTicketResultAction,
+      )
+    ) {    
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Ticket created successfully"
+          />,
+        ),
+      )
+    }
+    
+  }
+  
+   return (
     <>
       <CForm>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -343,8 +419,8 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
                 className="btn-ovh me-1"
                 data-testid="create-btn"
                 color="success"
-                // onClick={handleSubmitFeedBackForm}
-                // disabled={!isCreateButtonEnabled || dateError}
+                onClick={handleSubmitExitFeedBackForm}
+               // disabled={!isCreateButtonEnabled || dateError}
               >
                 Submit
               </CButton>

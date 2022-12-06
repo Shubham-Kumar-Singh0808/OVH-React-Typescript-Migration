@@ -145,7 +145,7 @@ const getEmpDetails = async (
 
 const saveExitFeedBackForm = async (
   saveFeedBackForm: SubmitExitFeedBackForm,
-): Promise<number | undefined> => {
+): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: resignationListApiConfig.saveExitFeedBackForm,
     method: AllowedHttpMethods.post,
@@ -156,7 +156,7 @@ const saveExitFeedBackForm = async (
 }
 
 const uploadRelievingLetter = async (prepareObject: {
-  exitfeddbackformId: number
+  exitformId: number
   file: FormData
 }): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
@@ -164,7 +164,7 @@ const uploadRelievingLetter = async (prepareObject: {
     method: AllowedHttpMethods.post,
     data: prepareObject.file,
     params: {
-      exitfeddbackformId: prepareObject.exitfeddbackformId,
+      exitfeddbackformId: prepareObject.exitformId,
     },
     additionalHeaders: {
       'Content-Type': 'multipart/form-data',
