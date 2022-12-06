@@ -40,9 +40,6 @@ const SectionsFilterOptions = (): JSX.Element => {
     htmlFor: 'inputSection',
     className: 'col-form-label sections-label',
   }
-  const handleClearInputs = () => {
-    setShowInvestment(false)
-  }
 
   const handleOnChangeSection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target
@@ -97,6 +94,7 @@ const SectionsFilterOptions = (): JSX.Element => {
     )
     setSectionList(newSectionList)
   }
+  console.log(sectionList)
 
   return (
     <>
@@ -143,6 +141,7 @@ const SectionsFilterOptions = (): JSX.Element => {
             <CRow key={index}>
               <CCol>
                 <MoreSections
+                  index={index}
                   sectionItem={currentSec}
                   handleShowRemoveSectionModal={handleShowRemoveSectionModal}
                   handleConfirmCancelSection={handleConfirmCancelSection}

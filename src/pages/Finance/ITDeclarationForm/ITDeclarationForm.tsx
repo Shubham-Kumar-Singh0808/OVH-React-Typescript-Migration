@@ -16,7 +16,9 @@ const ITDeclarationForm = (): JSX.Element => {
   const itDeclarationFormExists = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.itDeclarationFormExists,
   )
-
+  const employeeDetails = useTypedSelector(
+    reduxServices.itDeclarationForm.selectors.employeeInformation,
+  )
   const warningToastMessage = (
     <OToast
       toastMessage="You had submitted IT Declaration Form so you cannot fill the form again."
@@ -32,6 +34,51 @@ const ITDeclarationForm = (): JSX.Element => {
     }
   }, [dispatch, itDeclarationFormExists])
 
+  const successToastMessage = (
+    <OToast
+      toastMessage="Declaration Form added successfully"
+      toastColor="success"
+    />
+  )
+
+  const handleAddDeclarationForm = async () => {
+    const prepareObject = {
+      designation: ' ',
+      employeeId: 0,
+      employeeName: ' ',
+      fromDate: '',
+      grandTotal: 500000,
+      isAgree: true,
+      itDeclarationFormId: null,
+      organisationName: '',
+      panNumber: '',
+      toDate: '',
+      formSectionsDTOs: [
+        {
+          isOld: true,
+          itSectionsId: null,
+          sectionId: 1,
+          sectionName: '80 C',
+          formInvestmentDTO: [
+            {
+              customAmount: '250000',
+              investmentId: 1,
+            },
+          ],
+        },
+      ],
+    }
+    const addDeclarationFormResultAction = await dispatch(
+      reduxServices.itDeclarationForm.addITDeclarationForm(prepareObject),
+    )
+    if (
+      reduxServices.itDeclarationForm.addITDeclarationForm.fulfilled.match(
+        addDeclarationFormResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    }
+  }
   return (
     <>
       <OCard

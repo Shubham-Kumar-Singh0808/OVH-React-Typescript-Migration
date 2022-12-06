@@ -2,18 +2,16 @@ import {
   CRow,
   CCol,
   CFormLabel,
-  CFormSelect,
   CFormInput,
   CCardHeader,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
-import SectionsFilterOptions from './SectionsFilterOptions'
-import OCard from '../../../components/ReusableComponent/OCard'
 
 const EmployeesJoinedAfterApril2018 = () => {
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
+
   return (
     <>
       <CCardHeader>

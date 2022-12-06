@@ -7,30 +7,37 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React from 'react'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
-import { Investment } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
+import {
+  Investment,
+  Sections,
+} from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
 const InvestmentTable = ({
   handleClickRemoveInvestment,
   currentSec,
-  index,
+  secIndex,
   onChangeCustomAmount,
+  onChangeInvestment,
+  index,
+  sectionList,
 }: {
   setShowSubTotalAmount: (value: number) => void
   handleClickRemoveInvestment: (id: number) => void
   currentSec: Investment
+  secIndex: number
+  sectionList: Sections[]
   index: number
   onChangeCustomAmount: (
-    index: number,
+    secIndex: number,
     e: React.ChangeEvent<HTMLInputElement>,
     id: number,
   ) => void
+  onChangeInvestment: (
+    secIndex: number,
+    e: React.ChangeEvent<HTMLSelectElement>,
+    id: number,
+  ) => void
 }): JSX.Element => {
-  const investments = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.investments,
-  )
-
   return (
     <>
       <CTableRow>
@@ -42,11 +49,12 @@ const InvestmentTable = ({
             <CFormSelect
               data-testid="form-select-investment"
               size="sm"
-              id="technologyId"
-              name="technologyId"
+              id="investment"
+              name="investmentName"
+              onChange={(e) => onChangeInvestment(secIndex, e, currentSec.id)}
             >
               <option value="">Select Investment</option>
-              {investments?.map((invest, investIndex) => (
+              {sectionList[index].invests?.map((invest, investIndex) => (
                 <option key={investIndex} value={invest.investmentId}>
                   {invest.investmentName}
                 </option>
@@ -63,7 +71,7 @@ const InvestmentTable = ({
               placeholder="Enter Savings Amount"
               name="customAmount"
               maxLength={12}
-              onChange={(e) => onChangeCustomAmount(index, e, currentSec.id)}
+              onChange={(e) => onChangeCustomAmount(secIndex, e, currentSec.id)}
             ></CFormInput>
           </CCol>
         </CTableDataCell>

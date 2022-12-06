@@ -12,21 +12,26 @@ import {
   Investment,
   Sections,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../stateStore'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const MoreSections = ({
   sectionItem,
   handleShowRemoveSectionModal,
-  handleConfirmCancelSection,
   setSectionList,
   sectionList,
+  index,
 }: {
   sectionItem: Sections
   handleShowRemoveSectionModal: (investId: number, investName: string) => void
   handleConfirmCancelSection: () => void
   setSectionList: (value: Sections[]) => void
   sectionList: Sections[]
+  index: number
 }): JSX.Element => {
   const [counter, setCounter] = useState(1)
+  const [isMoreInvestBtnEnable, setIsMoreInvestBtnEnable] = useState(false)
   const [investmentList, setInvestmentList] = useState<Investment[]>([
     {
       id: counter,
@@ -35,7 +40,7 @@ const MoreSections = ({
     },
   ])
   const [showSubTotalAmount, setShowSubTotalAmount] = useState<number>(0)
-
+  const dispatch = useAppDispatch()
   const handleClickInvestment = () => {
     setCounter(counter + 1)
     setInvestmentList([
@@ -73,6 +78,34 @@ const MoreSections = ({
     newInvestmentList[index].customAmount = e.target.value
     setInvestmentList(newInvestmentList)
   }
+  const alreadyExistToastMessage = (
+    <OToast
+      toastMessage="Please select different Investment"
+      toastColor="danger"
+    />
+  )
+  const onChangeInvestment = (
+    index: number,
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const newInvestmentCopy: Investment[] = JSON.parse(
+      JSON.stringify(investmentList),
+    )
+    newInvestmentCopy[index].investmentId = e.target.value
+    // const isInvestmentExists = investmentList.find(
+    //   (currInvestment) =>
+    //     currInvestment.investmentId === newInvestmentCopy[index].investmentId,
+    // )
+
+    // if (isInvestmentExists === undefined) {
+    //   setInvestmentList([...investmentList, newInvestmentCopy[index]])
+    // } else {
+    //   await dispatch(
+    //     reduxServices.app.actions.addToast(alreadyExistToastMessage),
+    //   )
+    //   dispatch(reduxServices.app.actions.addToast(undefined))
+    // }
+  }
 
   useEffect(() => {
     const total = investmentList.reduce((prev, current) => {
@@ -80,6 +113,10 @@ const MoreSections = ({
     }, 0)
     setShowSubTotalAmount(total)
   }, [investmentList])
+
+  useEffect(() => {
+    setIsMoreInvestBtnEnable(sectionList[index].invests.length <= 1)
+  }, [index])
 
   return (
     <>
@@ -113,6 +150,7 @@ const MoreSections = ({
               className="text-white btn-ovh"
               size="sm"
               onClick={handleClickInvestment}
+              disabled={isMoreInvestBtnEnable}
             >
               <i className="fa fa-plus me-1"></i>
               More Investments
@@ -134,8 +172,11 @@ const MoreSections = ({
                     setShowSubTotalAmount={setShowSubTotalAmount}
                     handleClickRemoveInvestment={handleClickRemoveInvestment}
                     currentSec={currentSec}
-                    index={secIndex}
+                    secIndex={secIndex}
                     onChangeCustomAmount={onChangeCustomAmount}
+                    onChangeInvestment={onChangeInvestment}
+                    index={index}
+                    sectionList={sectionList}
                   />
                 </React.Fragment>
               )
