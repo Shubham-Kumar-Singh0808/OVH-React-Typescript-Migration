@@ -282,6 +282,9 @@ const AddInvestment = React.lazy(
   () => import('./pages/Finance/AddInvestment/AddInvestment'),
 )
 
+const PayrollManagement = React.lazy(
+  () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -615,6 +618,11 @@ const routes = [
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
+  },
+  {
+    path: '/payslipUpload',
+    name: 'Payroll Management',
+    component: PayrollManagement,
   },
 ]
 
