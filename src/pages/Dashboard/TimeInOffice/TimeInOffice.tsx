@@ -13,6 +13,11 @@ const TimeInOffice = (): JSX.Element => {
   const userAccessToEarnedLeaves = userAccessToFeatures?.find(
     (feature) => feature.name === 'Dashboard-Time In Office',
   )
+
+  const userAccessToTimeInOfficeReport = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Time in Office Report',
+  )
+
   return (
     <>
       {userAccessToEarnedLeaves?.viewaccess && (
@@ -37,12 +42,14 @@ const TimeInOffice = (): JSX.Element => {
               })}
           </div>
           <div className="panel-footer">
-            <p className="text-right mb0">
-              <a className="text-white" href="/timeInOfficeReport">
-                More {''}
-                <i className="fa fa-angle-double-right fa-lg"></i>
-              </a>
-            </p>
+            {userAccessToTimeInOfficeReport?.viewaccess && (
+              <p className="text-right mb0">
+                <a className="text-white" href="/timeInOfficeReport">
+                  More {''}
+                  <i className="fa fa-angle-double-right fa-lg"></i>
+                </a>
+              </p>
+            )}
           </div>
         </div>
       )}
