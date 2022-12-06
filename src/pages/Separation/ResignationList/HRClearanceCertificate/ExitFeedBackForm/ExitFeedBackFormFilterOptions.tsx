@@ -196,7 +196,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="recognitionOfwork"
               name="recognitionOfwork"             
-              data-testid="person-name"
+              data-testid="recognition-work"
               value = {exitFeedBackForm?.recognitionOfwork}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -212,7 +212,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="promotion"
               name="promotion"             
-              data-testid="person-name"
+              data-testid="promotion-test"
               value = {exitFeedBackForm?.promotion}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -244,7 +244,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="personelPolicies"
               name="personelPolicies"              
-              data-testid="person-name"
+              data-testid="personal-policies"
               value = {exitFeedBackForm?.personelPolicies}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -260,7 +260,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="organisationCulture"
               name="organisationCulture"              
-              data-testid="person-name"
+              data-testid="culture-organization"
               value = {exitFeedBackForm?.organisationCulture}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -276,7 +276,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="roleClarity"
               name="roleClarity"            
-              data-testid="person-name"
+              data-testid="role-clarity"
               value = {exitFeedBackForm?.roleClarity}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -292,7 +292,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="superiorGuidance"
               name="superiorGuidance"            
-              data-testid="person-name"
+              data-testid="superior-name"
               value = {exitFeedBackForm?.superiorGuidance}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -308,7 +308,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="expectations"
               name="expectations"             
-              data-testid="person-name"
+              data-testid="join-company"
               value = {exitFeedBackForm?.expectations}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -324,7 +324,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="expectationsFulfilled"
               name="expectationsFulfilled"             
-              data-testid="person-name"
+              data-testid="expectations-test"
               value = {exitFeedBackForm?.expectationsFulfilled}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -345,7 +345,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="likeAboutCompany"
               name="likeAboutCompany"             
-              data-testid="person-name"
+              data-testid="like-test"
               value = {exitFeedBackForm?.likeAboutCompany}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -361,7 +361,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="dislikeAboutCompany"
               name="dislikeAboutCompany"
-              data-testid="person-name"
+              data-testid="dislike-test"
               value = {exitFeedBackForm?.dislikeAboutCompany}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -377,7 +377,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               type="text"
               id="joinLater"
               name="joinLater"
-              data-testid="person-name"
+              data-testid="join-later"
               value = {exitFeedBackForm?.joinLater}
               onChange = {onChangeExitFeedBackHandler}
             />
@@ -427,7 +427,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             <input
               className="sh-updateTicket-file"
               type="file"
-              data-testid="file-upload"
+              data-testid="relievingFile-upload"
               id="fileUpload"
               onChange={(element: React.SyntheticEvent) =>
                 onChangeUploadFileEventHandler(
