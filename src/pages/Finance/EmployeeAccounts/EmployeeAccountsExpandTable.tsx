@@ -9,11 +9,9 @@ import {
   CCol,
 } from '@coreui/react-pro'
 import React from 'react'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeAccountsExpandTable = (): JSX.Element => {
   const isLoading = useTypedSelector(
@@ -23,7 +21,7 @@ const EmployeeAccountsExpandTable = (): JSX.Element => {
   const financeData = useTypedSelector(
     reduxServices.employeeAccount.selectors.financeInfo,
   )
-
+  console.log(financeData)
   return (
     <>
       <CTable
@@ -40,37 +38,28 @@ const EmployeeAccountsExpandTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {isLoading !== ApiLoadingState.loading ? (
-            financeData &&
-            financeData?.map((data) => {
-              return (
-                <>
-                  {data.bankDetails.map((item, index) => {
-                    return (
-                      <>
-                        <CTableRow>
-                          <CTableDataCell scope="row">
-                            {index + 1}
-                          </CTableDataCell>
-                          <CTableDataCell scope="row">
-                            {item.bankName}
-                          </CTableDataCell>
-                          <CTableDataCell scope="row">
-                            {item.bankAccountNumber}
-                          </CTableDataCell>
-                          <CTableDataCell scope="row">
-                            {item.ifscCode}
-                          </CTableDataCell>
-                        </CTableRow>
-                      </>
-                    )
-                  })}
-                </>
-              )
-            })
-          ) : (
-            <OLoadingSpinner type={LoadingType.PAGE} />
-          )}
+          {financeData.map((person, index) => {
+            return (
+              <div key={index}>
+                {person.bankDetails?.map((item, index) => {
+                  return (
+                    <>
+                      <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {item.bankName}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {item.bankAccountNumber}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {item.ifscCode}
+                      </CTableDataCell>
+                    </>
+                  )
+                })}
+              </div>
+            )
+          })}
         </CTableBody>
       </CTable>
       {!financeData?.length && isLoading !== ApiLoadingState.loading && (

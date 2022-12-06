@@ -9,13 +9,13 @@ import {
   CLink,
   CTableDataCell,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import EmployeeAccountsExpandTable from './EmployeeAccountsExpandTable'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EmployeeAccountExpandableTableProps } from '../../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
 import panDetailsApi from '../../../middleware/api/Finance/PanDetails/panDetailsApi'
 import { downloadFile } from '../../../utils/helper'
@@ -23,6 +23,8 @@ import { downloadFile } from '../../../utils/helper'
 const EmployeeAccountsTable = (
   props: EmployeeAccountExpandableTableProps,
 ): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [selectEmpId, setSelectEmpId] = useState<number>()
 
@@ -33,6 +35,17 @@ const EmployeeAccountsTable = (
   const listSize = useTypedSelector(
     reduxServices.employeeAccount.selectors.listSize,
   )
+
+  const sortedEmpId = useMemo(() => {
+    if (financeData) {
+      return financeData
+        .slice()
+        .sort(
+          (sortNode1, sortNode2) => sortNode1.employeeId - sortNode2.employeeId,
+        )
+    }
+    return []
+  }, [financeData])
 
   const {
     paginationRange,
@@ -53,7 +66,6 @@ const EmployeeAccountsTable = (
     setIsIconVisible(true)
     setSelectEmpId(id)
   }
-  console.log(selectEmpId)
 
   const handleFinanceData = async (financeFilePath: string) => {
     const employeeBankDetailsDownload = await panDetailsApi.downloadFinanceFile(
@@ -68,6 +80,16 @@ const EmployeeAccountsTable = (
   const totalRecords = financeData?.length
     ? `Total Records: ${listSize}`
     : `No Records found...`
+
+  const handler = () => {
+    dispatch(reduxServices.bankDetails.bankNameList)
+    dispatch(
+      reduxServices.panDetails.bankInformation({
+        key: 'loggedInEmpId',
+        value: Number(financeData[0].employeeId),
+      }),
+    )
+  }
 
   return (
     <>
@@ -89,8 +111,8 @@ const EmployeeAccountsTable = (
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          {financeData?.length > 0 &&
-            financeData?.map((data, index) => {
+          {sortedEmpId?.length > 0 &&
+            sortedEmpId?.map((data, index) => {
               return (
                 <>
                   <React.Fragment key={index}>
@@ -120,6 +142,7 @@ const EmployeeAccountsTable = (
                         <Link
                           to={`/myFinance/${data.financeDetails.employeeId}`}
                           className="cursor-pointer"
+                          onClick={handler}
                         >
                           {data.employeeName}
                         </Link>
@@ -140,20 +163,26 @@ const EmployeeAccountsTable = (
                         scope="row"
                         className="sh-organization-link"
                       >
-                        <CLink
-                          className="cursor-pointer sh-hive-activity-link"
-                          onClick={() =>
-                            handleFinanceData(
-                              String(data.financeDetails.financeFilePath),
-                            )
-                          }
-                        >
-                          {data.financeDetails.financeFilePath ? (
-                            <i className="fa fa-paperclip me-1">DOC</i>
-                          ) : (
-                            'N/A'
-                          )}
-                        </CLink>
+                        {data.financeDetails.financeFilePath ? (
+                          <CLink
+                            className="cursor-pointer sh-hive-activity-link"
+                            onClick={() =>
+                              handleFinanceData(
+                                String(data.financeDetails.financeFilePath),
+                              )
+                            }
+                          >
+                            {data.financeDetails.financeFilePath ? (
+                              <i className="fa fa-paperclip me-1">DOC</i>
+                            ) : (
+                              'N/A'
+                            )}
+                          </CLink>
+                        ) : (
+                          <CTableDataCell scope="row">
+                            {data.financeDetails.financeFilePath || 'N/A'}
+                          </CTableDataCell>
+                        )}
                       </CTableDataCell>
                     </CTableRow>
                     {isIconVisible && selectEmpId === data.employeeId ? (

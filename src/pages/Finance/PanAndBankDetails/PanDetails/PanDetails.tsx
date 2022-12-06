@@ -8,6 +8,7 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import EditPanDetails from './EditPanDetails'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -70,6 +71,8 @@ const PanDetails = (): JSX.Element => {
         return { ...values, ...{ [name]: value } }
       })
   }
+  const history = useHistory()
+
   return (
     <>
       {userAccess?.updateaccess && (
@@ -94,7 +97,7 @@ const PanDetails = (): JSX.Element => {
                 color="info"
                 className="btn-ovh me-1"
                 data-testid="back-button"
-                // onClick={() => {}}
+                onClick={() => history.push('/financeList')}
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>

@@ -21,7 +21,7 @@ export type BankDetails = {
 }
 
 export type FinanceDetails = {
-  id: null
+  id: null | number
   employeeId: number
   employeeName: string
   financeDetails: FinanceInformation

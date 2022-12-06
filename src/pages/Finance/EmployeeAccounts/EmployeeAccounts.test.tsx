@@ -2,12 +2,13 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EmployeeAccounts from './EmployeeAccounts'
-import { render, screen } from '../../../test/testUtils'
+import { render, screen, waitFor } from '../../../test/testUtils'
 import { ReduxProvider } from '../../../components/Helper'
 import stateStore from '../../../stateStore'
 
 const mockHandleExport = jest.fn()
 const searchInputTestId = 'multi-search-btn'
+const mockSetMultiSearchValue = jest.fn()
 
 describe('Employee Accounts Table without data', () => {
   beforeEach(() => {
@@ -36,5 +37,14 @@ describe('Employee Accounts Table without data', () => {
     expect(screen.getByTestId(searchInputTestId)).not.toBeEnabled()
     userEvent.type(screen.getByPlaceholderText('Multiple Search'), 'Admin')
     expect(screen.getByTestId(searchInputTestId)).toBeEnabled()
+  })
+
+  test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', async () => {
+    const searchInput = screen.getByTestId('searchField')
+    userEvent.type(searchInput, 'Admin  Rbt')
+    userEvent.click(screen.getByTestId(searchInputTestId))
+    await waitFor(() => {
+      expect(mockSetMultiSearchValue).toBeCalledWith('Admin  Rbt')
+    })
   })
 })
