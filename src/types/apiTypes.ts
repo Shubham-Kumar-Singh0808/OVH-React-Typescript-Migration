@@ -536,3 +536,7 @@ export interface InvestmentCheckListApi extends ApiBase {
   getInvestments: string
   getSections: string
 }
+
+export interface ProjectCreationRequestApi extends ApiBase {
+  getAllProjectRequestList: string
+}
