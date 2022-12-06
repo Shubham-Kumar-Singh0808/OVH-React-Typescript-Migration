@@ -1,4 +1,7 @@
-import { GetFinanceDetailsResponse } from '../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
+import {
+  BankDetails,
+  GetFinanceDetailsResponse,
+} from '../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
 
 export const mockEmployeeAccount: GetFinanceDetailsResponse = {
   size: 790,
@@ -51,7 +54,7 @@ export const mockEmployeeAccount: GetFinanceDetailsResponse = {
         },
         {
           bankId: 1279,
-          bankName: 'KOTAK MAHINDRA',
+          bankName: 'KOTAK MAHIINDRA',
           bankAccountNumber: '9961577809',
           ifscCode: 'KOTAK24y832',
           employeeId: 1000,
@@ -541,3 +544,69 @@ export const mockEmployeeAccount: GetFinanceDetailsResponse = {
     },
   ],
 }
+
+export const mockBankDetails: BankDetails[] = [
+  {
+    bankId: 16,
+    bankName: 'HDFC',
+    bankAccountNumber: '05451140270802',
+    ifscCode: null,
+    employeeId: 1124,
+  },
+  {
+    bankId: 50,
+    bankName: 'HDFC',
+    bankAccountNumber: '05451140257636',
+    ifscCode: null,
+    employeeId: 1005,
+  },
+  {
+    bankId: 145,
+    bankName: 'HDFC',
+    bankAccountNumber: '05451140269041',
+    ifscCode: null,
+    employeeId: 1127,
+  },
+  {
+    bankId: 192,
+    bankName: 'HDFC',
+    bankAccountNumber: '05451140259432',
+    ifscCode: null,
+    employeeId: 1103,
+  },
+  {
+    bankId: 1068,
+    bankName: 'INDUSIND ',
+    bankAccountNumber: '100057787775',
+    ifscCode: null,
+    employeeId: 1103,
+  },
+  {
+    bankId: 1277,
+    bankName: 'SBI',
+    bankAccountNumber: '345357868567',
+    ifscCode: '645fgggghf',
+    employeeId: 1000,
+  },
+  {
+    bankId: 1279,
+    bankName: 'KOTAK MAHINDRA',
+    bankAccountNumber: '9961577809',
+    ifscCode: 'KOTAK24y832',
+    employeeId: 1000,
+  },
+  {
+    bankId: 1272,
+    bankName: 'SBI',
+    bankAccountNumber: '789456123',
+    ifscCode: 'SBI00012345',
+    employeeId: 1000,
+  },
+  {
+    bankId: 1276,
+    bankName: 'SBI',
+    bankAccountNumber: '2113126692435345',
+    ifscCode: '324df435fd',
+    employeeId: 1000,
+  },
+]

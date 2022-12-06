@@ -12,16 +12,17 @@ import React from 'react'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { BankDetails } from '../../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
 
-const EmployeeAccountsExpandTable = (): JSX.Element => {
+const EmployeeAccountsExpandTable = ({
+  bankDetails,
+}: {
+  bankDetails: BankDetails[]
+}): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.employeeAccount.selectors.isLoading,
   )
 
-  const financeData = useTypedSelector(
-    reduxServices.employeeAccount.selectors.financeInfo,
-  )
-  console.log(financeData)
   return (
     <>
       <CTable
@@ -38,31 +39,21 @@ const EmployeeAccountsExpandTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {financeData.map((person, index) => {
+          {bankDetails?.map((item, index) => {
             return (
-              <div key={index}>
-                {person.bankDetails?.map((item, index) => {
-                  return (
-                    <>
-                      <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {item.bankName}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {item.bankAccountNumber}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {item.ifscCode}
-                      </CTableDataCell>
-                    </>
-                  )
-                })}
-              </div>
+              <CTableRow key={index}>
+                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                <CTableDataCell scope="row">{item.bankName}</CTableDataCell>
+                <CTableDataCell scope="row">
+                  {item.bankAccountNumber}
+                </CTableDataCell>
+                <CTableDataCell scope="row">{item.ifscCode}</CTableDataCell>
+              </CTableRow>
             )
           })}
         </CTableBody>
       </CTable>
-      {!financeData?.length && isLoading !== ApiLoadingState.loading && (
+      {!bankDetails?.length && isLoading !== ApiLoadingState.loading && (
         <CCol className="text-start ms-4">
           <CRow>
             <h5>No Records Found... </h5>

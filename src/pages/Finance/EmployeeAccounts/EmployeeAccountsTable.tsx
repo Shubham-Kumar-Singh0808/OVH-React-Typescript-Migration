@@ -39,7 +39,7 @@ const EmployeeAccountsTable = (
   const sortedEmpId = useMemo(() => {
     if (financeData) {
       return financeData
-        .slice()
+        ?.slice()
         .sort(
           (sortNode1, sortNode2) => sortNode1.employeeId - sortNode2.employeeId,
         )
@@ -114,86 +114,86 @@ const EmployeeAccountsTable = (
           {sortedEmpId?.length > 0 &&
             sortedEmpId?.map((data, index) => {
               return (
-                <>
-                  <React.Fragment key={index}>
-                    <CTableRow>
-                      <CTableDataCell scope="row">
-                        {isIconVisible && selectEmpId === data.employeeId ? (
-                          <i
-                            data-testid="minus-btn"
-                            className="fa fa-minus-circle cursor-pointer"
-                            onClick={() => setIsIconVisible(false)}
-                          />
-                        ) : (
-                          <i
-                            data-testid="plus-btn"
-                            className="fa fa-plus-circle cursor-pointer"
-                            onClick={() => handleExpandRow(data.employeeId)}
-                          />
-                        )}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {data.financeDetails.employeeId}
-                      </CTableDataCell>
-                      <CTableDataCell
-                        scope="row"
-                        className="sh-organization-link"
+                <React.Fragment key={index}>
+                  <CTableRow>
+                    <CTableDataCell scope="row">
+                      {isIconVisible && selectEmpId === data.employeeId ? (
+                        <i
+                          data-testid="minus-btn"
+                          className="fa fa-minus-circle cursor-pointer"
+                          onClick={() => setIsIconVisible(false)}
+                        />
+                      ) : (
+                        <i
+                          data-testid="plus-btn"
+                          className="fa fa-plus-circle cursor-pointer"
+                          onClick={() => handleExpandRow(data.employeeId)}
+                        />
+                      )}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.financeDetails.employeeId}
+                    </CTableDataCell>
+                    <CTableDataCell
+                      scope="row"
+                      className="sh-organization-link"
+                    >
+                      <Link
+                        to={`/myFinance/${data.financeDetails.employeeId}`}
+                        className="cursor-pointer"
+                        onClick={handler}
                       >
-                        <Link
-                          to={`/myFinance/${data.financeDetails.employeeId}`}
-                          className="cursor-pointer"
-                          onClick={handler}
+                        {data.employeeName}
+                      </Link>
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.financeDetails.pfAccountNumber || 'N/A'}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.financeDetails.uaNumber || 'N/A'}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.financeDetails.panCardAccountNumber || 'N/A'}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.financeDetails.aadharCardNumber || 'N/A'}
+                    </CTableDataCell>
+                    <CTableDataCell
+                      scope="row"
+                      className="sh-organization-link"
+                    >
+                      {data.financeDetails.financeFilePath ? (
+                        <CLink
+                          className="cursor-pointer sh-hive-activity-link"
+                          onClick={() =>
+                            handleFinanceData(
+                              String(data.financeDetails.financeFilePath),
+                            )
+                          }
                         >
-                          {data.employeeName}
-                        </Link>
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {data.financeDetails.pfAccountNumber || 'N/A'}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {data.financeDetails.uaNumber || 'N/A'}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {data.financeDetails.panCardAccountNumber || 'N/A'}
-                      </CTableDataCell>
-                      <CTableDataCell scope="row">
-                        {data.financeDetails.aadharCardNumber || 'N/A'}
-                      </CTableDataCell>
-                      <CTableDataCell
-                        scope="row"
-                        className="sh-organization-link"
-                      >
-                        {data.financeDetails.financeFilePath ? (
-                          <CLink
-                            className="cursor-pointer sh-hive-activity-link"
-                            onClick={() =>
-                              handleFinanceData(
-                                String(data.financeDetails.financeFilePath),
-                              )
-                            }
-                          >
-                            {data.financeDetails.financeFilePath ? (
-                              <i className="fa fa-paperclip me-1">DOC</i>
-                            ) : (
-                              'N/A'
-                            )}
-                          </CLink>
-                        ) : (
-                          <CTableDataCell scope="row">
-                            {data.financeDetails.financeFilePath || 'N/A'}
-                          </CTableDataCell>
-                        )}
-                      </CTableDataCell>
-                    </CTableRow>
-                    {isIconVisible && selectEmpId === data.employeeId ? (
-                      <CTableDataCell colSpan={10}>
-                        <EmployeeAccountsExpandTable />
-                      </CTableDataCell>
-                    ) : (
-                      <></>
-                    )}
-                  </React.Fragment>
-                </>
+                          {data.financeDetails.financeFilePath ? (
+                            <i className="fa fa-paperclip me-1">DOC</i>
+                          ) : (
+                            'N/A'
+                          )}
+                        </CLink>
+                      ) : (
+                        <CTableDataCell scope="row">
+                          {data.financeDetails.financeFilePath || 'N/A'}
+                        </CTableDataCell>
+                      )}
+                    </CTableDataCell>
+                  </CTableRow>
+                  {isIconVisible && selectEmpId === data.employeeId ? (
+                    <CTableDataCell colSpan={10}>
+                      <EmployeeAccountsExpandTable
+                        bankDetails={data.bankDetails}
+                      />
+                    </CTableDataCell>
+                  ) : (
+                    <></>
+                  )}
+                </React.Fragment>
               )
             })}
         </CTableBody>

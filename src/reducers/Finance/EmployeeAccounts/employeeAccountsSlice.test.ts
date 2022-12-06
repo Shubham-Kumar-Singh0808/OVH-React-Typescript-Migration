@@ -3,6 +3,7 @@ import EmployeeAccountReducer, {
   employeeAccountService,
 } from './employeeAccountsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { mockEmployeeAccount } from '../../../test/data/employeeAccountData'
 
 describe('Employee Account Slice', () => {
   describe('getFinanceDetails test', () => {
@@ -16,6 +17,20 @@ describe('Employee Account Slice', () => {
         error: null,
         listSize: 0,
         financeData: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if getFinanceDetails is fulfilled', () => {
+      const action = {
+        type: employeeAccountService.getFinanceDetails.fulfilled.type,
+        payload: mockEmployeeAccount,
+      }
+      const state = EmployeeAccountReducer(initialEmployeeAccountsState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        error: null,
+        listSize: 790,
+        financeData: mockEmployeeAccount,
       })
     })
 
