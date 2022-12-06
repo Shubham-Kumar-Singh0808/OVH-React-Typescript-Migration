@@ -305,6 +305,10 @@ const ITDeclarationList = React.lazy(
   () => import('./pages/Finance/ITDeclarationList/ITDeclarationList'),
 )
 
+const InvestmentCheckList = React.lazy(
+  () => import('./pages/Finance/InvestmentCheckList/InvestmentCheckList'),
+)
+
 const AddInvestmentCycle = React.lazy(
   () => import('./pages/Finance/AddInvestmentCycle/AddInvestmentCycle'),
 )
@@ -668,6 +672,9 @@ const routes = [
     path: '/ExitFeedBackForm',
     name: 'Resignation ExitFeedBackForm',
     component: ResignationFeedBackForm,
+    path: '/investmentCheckList',
+    name: 'Investment CheckList',
+    component: InvestmentCheckList,
   },
 ]
 
