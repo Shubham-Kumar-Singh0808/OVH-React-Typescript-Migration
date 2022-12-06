@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { CButton, CCol, CForm, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
@@ -10,6 +10,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 const ExitFeedBackFormFilterOptions = (): JSX.Element => {
   const initialExitFeedBackForm = {} as SubmitExitFeedBackForm
   const [exitFeedBackForm, setExitFeedBackForm] = useState(initialExitFeedBackForm)
+  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false)
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const [uploadRelieveLetter, setUploadRelieveLetter] = useState<File | undefined>(undefined)
   const dispatch = useAppDispatch()
@@ -43,6 +44,17 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
     if (!file) return
     setUploadRelieveLetter(file[0])
   }
+
+  useEffect(() => {
+    if (
+      uploadFile &&
+      uploadRelieveLetter
+    ) {
+      setIsSubmitButtonEnabled(true)
+    } else {
+      setIsSubmitButtonEnabled(false)
+    }
+  }, [uploadFile, uploadRelieveLetter])
 
 
   const handleSubmitExitFeedBackForm = async () => {
@@ -113,39 +125,35 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
     }
     
   }
+  const clearBtnHandler = () =>{
+    setExitFeedBackForm({
+      dislikeAboutCompany: '',
+      educationalBackground: '',
+      employeeId: 0,
+      employeeName: '',
+      expectations: '',
+      expectationsFulfilled: '',
+      joinLater: '',
+      likeAboutCompany: '',
+      opportunityForGrowth: '',
+      organisationCulture: '',
+      personelPolicies: '',
+      primaryReasonId: 0,
+      promotion: '',
+      recognitionOfwork: '',
+      roleClarity: '',
+      salary: '',
+      separationId: 0,
+      superiorGuidance: '',
+    })  
+    setUploadFile(undefined)  
+    setUploadRelieveLetter(undefined)
+  }
   
    return (
     <>
-      <CForm>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-            Employee ID:
-          </CFormLabel>
-          <CCol sm={3}>
-            <p className="mb-0">{getExitFeedBackFormDetails.employeeId}</p>
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-            Employee Name:
-          </CFormLabel>
-          <CCol sm={3}>
-            <p className="mb-0">{getExitFeedBackFormDetails.employeeName}</p>
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-            Primary Reason:
-          </CFormLabel>
-          <CCol sm={3}>
-            <p className="mb-0">{getExitFeedBackFormDetails?.primaryReasonName}</p>
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-            View of the employee on :
-          </CFormLabel>
-        </CRow>
+      <CForm>   
+       
         <CRow className="mt-1 mb-0 align-items-center">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Salary :
@@ -219,8 +227,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
               autoComplete="off"
               type="text"
               id="educationalBackground"
-              name="educationalBackground"
-              placeholder="Name"
+              name="educationalBackground"             
               data-testid="educationalBackground-name"
               value = {exitFeedBackForm?.educationalBackground}
               onChange = {onChangeExitFeedBackHandler}
@@ -379,6 +386,15 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
           Upload Exit Feedback Form :
+          <span
+                className={
+                  uploadFile
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
+                *
+              </span>
           </CFormLabel>
           <CCol sm={3}>
             <input
@@ -397,6 +413,15 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
           Upload Relieving Letter :
+          <span
+                className={
+                  uploadRelieveLetter
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
+                *
+              </span>
           </CFormLabel>
           <CCol sm={3}>
             <input
@@ -420,7 +445,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
                 data-testid="create-btn"
                 color="success"
                 onClick={handleSubmitExitFeedBackForm}
-               // disabled={!isCreateButtonEnabled || dateError}
+               disabled={!isSubmitButtonEnabled}
               >
                 Submit
               </CButton>
@@ -428,7 +453,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
                 color="warning "
                 data-testid="clear-btn"
                 className="btn-ovh"
-                // onClick={clearBtnHandler}
+               onClick={clearBtnHandler}
               >
                 Clear
               </CButton>
