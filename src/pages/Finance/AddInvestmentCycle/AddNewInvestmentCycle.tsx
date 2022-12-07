@@ -9,11 +9,12 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import moment from 'moment'
 import { Cycle } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import { showIsRequired } from '../../../utils/helper'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const AddNewInvestmentCycle = (): JSX.Element => {
@@ -24,21 +25,15 @@ const AddNewInvestmentCycle = (): JSX.Element => {
   const initialCycleDetails = {} as Cycle
   const [addCycle, setAddCycle] = useState(initialCycleDetails)
   const [cycleStartDate, setCycleStartDate] = useState<Date>()
+  const [cycleEndDate, setCycleEndDate] = useState<string>()
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [isCycleNameExist, setIsCycleNameExist] = useState('')
   const dispatch = useAppDispatch()
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setAddCycle((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
-  }
-  const toastElement = (
-    <OToast
-      toastColor="success"
-      toastMessage="Finance Cycle added Successfully"
-    />
+  const getCycles = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.cycles,
   )
+
   useEffect(() => {
     if (addCycle.cycleName && cycleStartDate) {
       setIsButtonEnabled(true)
@@ -55,18 +50,53 @@ const AddNewInvestmentCycle = (): JSX.Element => {
     setIsChecked(false)
   }
 
-  //   const handleCycleEndDate = () => {
-  //   }
+  const onChangeStartDateHandler = (date: Date) => {
+    console.log(date)
+    const endDate = moment(date).add(11, 'months').format('MM/YYYY')
+    setCycleEndDate(endDate)
+    setCycleStartDate(date)
+  }
+
+  const validateCycleName = (name: string) => {
+    return getCycles?.find((cycle) => {
+      return cycle.cycleName.toLowerCase() === name.toLowerCase()
+    })
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setAddCycle((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
+    if (validateCycleName(value)) {
+      setIsCycleNameExist(value)
+    } else {
+      setIsCycleNameExist('')
+    }
+  }
+  const toastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="Finance Cycle added Successfully"
+    />
+  )
+  const alreadyExistToastElement = (
+    <OToast toastColor="danger" toastMessage="Cycle already Exist" />
+  )
+  useEffect(() => {
+    if (isCycleNameExist) {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastElement))
+    }
+  }, [isCycleNameExist])
 
   const handleAddNewInvestmentCycle = async () => {
     const prepareObject = {
       ...addCycle,
       cycleId: -1,
-      endDate: addCycle.endDate,
       active: isChecked,
-      //   startDate: cycleStartDate as Date,
+      endDate: cycleEndDate,
       ...{
-        startDate: cycleStartDate as Date,
+        startDate: moment(cycleStartDate).format('MM/YYYY'),
       },
     }
     const addCycleResultAction = await dispatch(
@@ -117,7 +147,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
               autoComplete="off"
               className="form-control form-control-sm sh-date-picker"
               selected={cycleStartDate}
-              onChange={(date: Date) => setCycleStartDate(date)}
+              onChange={(date: Date) => onChangeStartDateHandler(date)}
               dateFormat="MM/yyyy"
               maxDate={new Date()}
               showMonthYearPicker
@@ -140,10 +170,10 @@ const AddNewInvestmentCycle = (): JSX.Element => {
                 className="ps-2"
                 data-testid="cycle-name"
                 type="text"
-                name="cycleName"
+                name="cycleEndDate"
                 autoComplete="off"
                 maxLength={50}
-                //   value={'test'}
+                value={cycleEndDate}
               />
             </CCol>
           </CRow>
