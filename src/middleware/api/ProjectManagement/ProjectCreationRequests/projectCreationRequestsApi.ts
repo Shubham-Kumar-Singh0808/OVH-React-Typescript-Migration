@@ -1,6 +1,8 @@
 import {
   GetAllProjectRequestList,
   GetAllProjectRequestListProps,
+  GetProjectRequest,
+  ProjectRequestHistoryDetails,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -28,8 +30,36 @@ const getAllProjectRequestList = async (
   return response.data
 }
 
+const getProjectRequest = async (id: number): Promise<GetProjectRequest> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProjectCreationRequestApiConfig.getProjectRequest,
+    method: AllowedHttpMethods.get,
+    params: {
+      id,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const projectRequestHistoryDetails = async (
+  projectRequestId: number,
+): Promise<ProjectRequestHistoryDetails[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProjectCreationRequestApiConfig.getAuditForProjectRequest,
+    method: AllowedHttpMethods.get,
+    params: {
+      projectRequestId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const projectCreationRequestsApi = {
   getAllProjectRequestList,
+  getProjectRequest,
+  projectRequestHistoryDetails,
 }
 
 export default projectCreationRequestsApi

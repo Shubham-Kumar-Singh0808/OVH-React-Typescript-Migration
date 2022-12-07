@@ -72,7 +72,57 @@ export type GetAllProjectRequestListProps = {
 
 export type ProjectCreationRequestState = {
   getAllProjectRequestList: GetAllProjectRequestList
+  getProjectRequest: GetProjectRequest
+  projectRequestHistoryDetails: ProjectRequestHistoryDetails[]
   isLoading: LoadingState
   currentPage: number
   pageSize: number
+}
+export type GetProjectRequest = {
+  id: number
+  projectName: string
+  managerId: number
+  startdate: string
+  enddate: string
+  description: string
+  requiredResources: string
+  status: string
+  managerName: string
+  client: string
+  type: string
+  clientId: null
+  newClient: null
+  requestedBy: string
+  technology: string
+  address: null
+  personName: null
+  email: null
+  country: string
+  organization: null
+  intrnalOrNot: null
+  cc: string
+  bcc: string
+  chelist: CheckList[]
+  model: string
+  checkListExist: true
+  projectContactPerson: string
+  projectContactEmail: string
+  billingContactPerson: string
+  billingContactPersonEmail: string
+  projectRequestMilestoneDTO: ProjectRequestMilestoneDTO[]
+  platform: string
+  access: true
+  domain: string
+}
+
+export type ProjectRequestHistoryDetails = {
+  oldValue: null
+  newValue: null
+  modifiedDate: string
+  modifiedBy: number
+  persistType: string
+  referenceId: number
+  additionalInfo: null
+  employeeName: string
+  auditId: number
 }

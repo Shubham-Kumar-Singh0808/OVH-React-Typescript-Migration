@@ -2,11 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import projectCreationRequestsApi from '../../../middleware/api/ProjectManagement/ProjectCreationRequests/projectCreationRequestsApi'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   GetAllProjectRequestListProps,
+  GetProjectRequest,
   ProjectCreationRequestState,
+  ProjectRequestHistoryDetails,
   ProjectRequestList,
 } from '../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 
@@ -22,11 +24,52 @@ const getAllProjectRequestList = createAsyncThunk(
   },
 )
 
+const getProjectRequest = createAsyncThunk<
+  GetProjectRequest | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('projectCreationRequest/getProjectRequest', async (id: number, thunkApi) => {
+  try {
+    return await projectCreationRequestsApi.getProjectRequest(id)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+const projectRequestHistoryDetails = createAsyncThunk<
+  ProjectRequestHistoryDetails[] | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectCreationRequest/projectRequestHistoryDetails',
+  async (projectRequestId: number, thunkApi) => {
+    try {
+      return await projectCreationRequestsApi.projectRequestHistoryDetails(
+        projectRequestId,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialProjectCreationReuestState: ProjectCreationRequestState = {
   getAllProjectRequestList: {
     projectRequestListSize: 0,
     projectrequestList: [],
   },
+  getProjectRequest: {} as GetProjectRequest,
+  projectRequestHistoryDetails: [],
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
@@ -41,6 +84,15 @@ const projectCreationRequestSlice = createSlice({
       state.isLoading = ApiLoadingState.succeeded
       state.getAllProjectRequestList = action.payload
     })
+    builder.addCase(getProjectRequest.fulfilled, (state, action) => {
+      state.isLoading = ApiLoadingState.succeeded
+      state.getProjectRequest = action.payload as GetProjectRequest
+    })
+    builder.addCase(projectRequestHistoryDetails.fulfilled, (state, action) => {
+      state.isLoading = ApiLoadingState.succeeded
+      state.projectRequestHistoryDetails =
+        action.payload as ProjectRequestHistoryDetails[]
+    })
   },
 })
 
@@ -53,14 +105,26 @@ const allProjectCreationList = (state: RootState): ProjectRequestList[] =>
 const allProjectCreationListSize = (state: RootState): number =>
   state.projectCreationRequest.getAllProjectRequestList.projectRequestListSize
 
+const getProjectRequests = (state: RootState): GetProjectRequest =>
+  state.projectCreationRequest.getProjectRequest
+
+const projectHistoryDetails = (
+  state: RootState,
+): ProjectRequestHistoryDetails[] =>
+  state.projectCreationRequest.projectRequestHistoryDetails
+
 const projectCreationRequestThunk = {
   getAllProjectRequestList,
+  getProjectRequest,
+  projectRequestHistoryDetails,
 }
 
 const projectCreationRequestSelectors = {
   isLoading,
   allProjectCreationList,
   allProjectCreationListSize,
+  getProjectRequests,
+  projectHistoryDetails,
 }
 
 export const projectCreationRequestService = {

@@ -652,4 +652,7 @@ export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
 export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getAllProjectRequestList:
     apiPrefix + '/project-mgmt/getAllProjectRequestList',
+  getProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
+  getAuditForProjectRequest:
+    apiPrefix + '/project-mgmt/getAuditForProjectRequest',
 }
