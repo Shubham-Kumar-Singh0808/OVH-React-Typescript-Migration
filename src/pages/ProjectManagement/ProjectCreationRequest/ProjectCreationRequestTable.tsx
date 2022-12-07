@@ -12,7 +12,7 @@ import {
   CBadge,
 } from '@coreui/react-pro'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
@@ -25,13 +25,16 @@ const ProjectCreationRequestTable = ({
   setCurrentPage,
   pageSize,
   setPageSize,
+  setToggle,
 }: {
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
   const getAllProjectRequestList = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.allProjectCreationList,
   )
@@ -64,6 +67,17 @@ const ProjectCreationRequestTable = ({
       return <CBadge className="rounded-pill label-default">{status}</CBadge>
     }
     return <></>
+  }
+  const handleProjectRequestViewClick = (id: number) => {
+    dispatch(reduxServices.projectCreationRequest.getProjectRequest(id))
+    setToggle('projectView')
+  }
+
+  const handleProjectRequestHistoryClick = (id: number) => {
+    dispatch(
+      reduxServices.projectCreationRequest.projectRequestHistoryDetails(id),
+    )
+    setToggle('projectHistory')
   }
   return (
     <>
@@ -120,29 +134,35 @@ const ProjectCreationRequestTable = ({
                       color="info"
                       className="btn-ovh me-2"
                       data-testid="edit-btn"
+                      onClick={() =>
+                        handleProjectRequestViewClick(projectRequest.id)
+                      }
                     >
                       <i className="fa fa-eye  text-white"></i>
                     </CButton>
                     <CButton
-                      color="info"
+                      color="success"
                       className="btn-ovh me-2"
                       data-testid="edit-btn"
                     >
-                      <i className="fa fa-edit text-white"></i>
+                      <i className="fa fa-check-circle-o"></i>
                     </CButton>
                     <CButton
                       color="info"
                       className="btn-ovh me-2"
                       data-testid="edit-btn"
+                      onClick={() =>
+                        handleProjectRequestHistoryClick(projectRequest.id)
+                      }
                     >
                       <i className="fa fa-bar-chart text-white"></i>
                     </CButton>
                     <CButton
-                      color="info"
+                      color="danger"
                       className="btn-ovh me-2"
                       data-testid="edit-btn"
                     >
-                      <i className="glyphicon glyphicon-save"></i>
+                      <i className="fa fa-times text-white"></i>
                     </CButton>
                     <CButton
                       color="danger"

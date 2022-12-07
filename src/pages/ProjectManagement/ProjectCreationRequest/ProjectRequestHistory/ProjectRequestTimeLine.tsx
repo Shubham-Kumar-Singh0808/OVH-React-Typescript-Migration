@@ -22,7 +22,7 @@ const ProjectRequestTimeLine = (): JSX.Element => {
           color="success"
           data-testid="created-btn"
         >
-          Created
+          CREATED
         </CBadge>
       )
     } else if (persistType === 'CANCELLED') {

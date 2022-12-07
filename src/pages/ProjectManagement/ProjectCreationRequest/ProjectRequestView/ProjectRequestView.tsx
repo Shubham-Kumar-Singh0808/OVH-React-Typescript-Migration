@@ -3,7 +3,11 @@ import { CRow, CCol, CButton } from '@coreui/react-pro'
 import ProjectRequestViewDetails from './ProjectRequestViewDetails'
 import OCard from '../../../../components/ReusableComponent/OCard'
 
-const ProjectRequestView = (): JSX.Element => {
+const ProjectRequestView = ({
+  setToggle,
+}: {
+  setToggle: React.Dispatch<React.SetStateAction<string>>
+}): JSX.Element => {
   return (
     <>
       <OCard
@@ -18,6 +22,7 @@ const ProjectRequestView = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="toggle-back-button"
+              onClick={() => setToggle('')}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
