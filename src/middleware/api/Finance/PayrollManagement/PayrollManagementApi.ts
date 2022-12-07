@@ -1,7 +1,9 @@
 import {
+  CurrentPayslip,
   DownloadExcelFile,
   GetPayRollProps,
   GetPaySlipReportResponse,
+  PayRollManagementApiProps,
 } from '../../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -44,9 +46,42 @@ const downloadExcelFile = async (
   return response.data
 }
 
+const searchEmployee = async (
+  props: PayRollManagementApiProps,
+): Promise<CurrentPayslip[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: payrollManagementApiConfig.searchEmployee,
+    method: AllowedHttpMethods.get,
+    params: {
+      endIndex: props.endIndex ?? 20,
+      startIndex: props.startIndex ?? 0,
+      month: props.month,
+      searchStringCand: props.searchStringCand,
+      year: props.year,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deletePayslip = async (paySlipId: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: payrollManagementApiConfig.deletePayslip,
+    method: AllowedHttpMethods.delete,
+    params: {
+      paySlipId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const PayrollManagementApi = {
   getCurrentPayslip,
   downloadExcelFile,
+  searchEmployee,
+  deletePayslip,
 }
 
 export default PayrollManagementApi

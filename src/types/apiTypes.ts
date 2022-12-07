@@ -540,4 +540,6 @@ export interface InvestmentCheckListApi extends ApiBase {
 export interface PayrollManagementApi extends ApiBase {
   getCurrentPayslip: string
   downloadExcelFile: string
+  searchEmployee: string
+  deletePayslip: string
 }

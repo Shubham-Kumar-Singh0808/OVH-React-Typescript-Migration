@@ -1,12 +1,23 @@
-import { CRow, CCol, CFormLabel, CFormSelect } from '@coreui/react-pro'
+import {
+  CRow,
+  CCol,
+  CFormLabel,
+  CFormSelect,
+  CButton,
+  CFormInput,
+  CInputGroup,
+} from '@coreui/react-pro'
 import React, { SyntheticEvent, useState } from 'react'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../stateStore'
 
 const PayrollManagement = (): JSX.Element => {
   const [selectMonth, setSelectMonth] = useState<string>('')
   const [selectYear, setSelectYear] = useState<string>('')
+  const [searchInput, setSearchInput] = useState<string>('')
   const [fileUploadErrorText, setFileUploadErrorText] = useState<string>('')
 
   const currentYear = new Date().getFullYear()
@@ -32,6 +43,35 @@ const PayrollManagement = (): JSX.Element => {
     }
     setFileUploadErrorText('')
   }
+
+  const dispatch = useAppDispatch()
+
+  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.payrollManagement.searchEmployee({
+          endIndex: 20,
+          startIndex: 0,
+          month: selectMonth,
+          searchStringCand: searchInput,
+          year: Number(selectYear),
+        }),
+      )
+    }
+  }
+
+  const multiSearchBtnHandler = () => {
+    dispatch(
+      reduxServices.payrollManagement.searchEmployee({
+        endIndex: 20,
+        startIndex: 0,
+        month: selectMonth,
+        searchStringCand: searchInput,
+        year: Number(selectYear),
+      }),
+    )
+  }
+
   return (
     <>
       <OCard
@@ -107,6 +147,15 @@ const PayrollManagement = (): JSX.Element => {
         </CRow>
         <CRow className="mt-3 justify-content-end">
           <CCol className="text-end" md={4}>
+            <CButton
+              className="mt-1 ms-2 btn-ovh btn btn-success"
+              size="sm"
+              color="btn btn-info"
+              type="submit"
+            >
+              Preview
+            </CButton>
+            &nbsp; &nbsp; &nbsp;
             <DownloadSampleExcelFile className="text-decoration-none btn btn-download btn-ovh" />
           </CCol>
           <CRow className="mt-4 mb-4">
@@ -132,6 +181,34 @@ const PayrollManagement = (): JSX.Element => {
               <span>Note: Please upload file either xls or xlsx format.</span>
             </CCol>
           </CRow>
+        </CRow>
+        <CRow className="gap-2 d-md-flex justify-content-md-end">
+          <CCol sm={6} md={4}>
+            <CInputGroup className="global-search me-0 justify-content-md-end">
+              <CFormInput
+                data-testid="searchField"
+                placeholder="Search by Id/Name"
+                aria-label="Multiple Search"
+                aria-describedby="button-addon2"
+                value={searchInput}
+                onChange={(e) => {
+                  setSearchInput(e.target.value)
+                }}
+                onKeyDown={handleSearchBtn}
+              />
+              <CButton
+                disabled={!searchInput}
+                data-testid="multi-search-btn"
+                className="cursor-pointer"
+                type="button"
+                color="info"
+                id="button-addon2"
+                onClick={multiSearchBtnHandler}
+              >
+                Search
+              </CButton>
+            </CInputGroup>
+          </CCol>
         </CRow>
         <PayrollManagementTable
           selectMonth={selectMonth}

@@ -11,8 +11,8 @@ const DownloadSampleExcelFile = (props: DownloadExcelFile): JSX.Element => {
   const downloadExcelFileHandler = async () => {
     const prepareObject = {
       fileName: props.fileName,
-      token: props.token,
-      tenantKey: props.tenantKey,
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('tenantKey') ?? '',
     }
     const downloadExcel = await PayrollManagementApi.downloadExcelFile(
       prepareObject,

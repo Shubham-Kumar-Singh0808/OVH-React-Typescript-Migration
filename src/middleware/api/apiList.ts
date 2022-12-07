@@ -652,4 +652,6 @@ export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
 export const payrollManagementApiConfig: PayrollManagementApi = {
   getCurrentPayslip: apiPrefix + '/payslip/payrolladmin/getCurrentPayslip',
   downloadExcelFile: apiPrefix + '/payslip/payrolladmin/downloadExcelFile',
+  searchEmployee: apiPrefix + '/payslip/payrolladmin/searchEmployee',
+  deletePayslip: apiPrefix + '/payslip/payrolladmin/deletePayslip',
 }

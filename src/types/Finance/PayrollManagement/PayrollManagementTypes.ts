@@ -77,3 +77,11 @@ export type DownloadExcelFile = {
   token?: string
   className?: string
 }
+
+export type PayRollManagementApiProps = {
+  startIndex?: number
+  endIndex?: number
+  month: string
+  searchStringCand: number | string
+  year: number
+}

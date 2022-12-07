@@ -14,12 +14,14 @@ import {
 import OModal from '../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const PayrollManagementTable = (props: {
   selectMonth: string
   selectYear: string
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [deletePaySlipId, setDeletePaySlipId] = useState(0)
 
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipInfo,
@@ -39,6 +41,32 @@ const PayrollManagementTable = (props: {
         }),
       )
   }, [dispatch, props.selectMonth, props.selectYear])
+
+  const deletedToastElement = (
+    <OToast toastColor="success" toastMessage="Payslip Deleted Successfully" />
+  )
+
+  const confirmDeletePayslip = async () => {
+    setIsDeleteModalVisible(false)
+    await dispatch(
+      reduxServices.payrollManagement.deletePayslip(deletePaySlipId),
+    )
+
+    dispatch(
+      reduxServices.payrollManagement.getCurrentPayslip({
+        endIndex: 20,
+        startIndex: 0,
+        month: props.selectMonth,
+        year: Number(props.selectYear),
+      }),
+    )
+    dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+  }
+
+  const deleteButtonHandler = (id: number) => {
+    setIsDeleteModalVisible(true)
+    setDeletePaySlipId(id)
+  }
 
   return (
     <>
@@ -160,6 +188,7 @@ const PayrollManagementTable = (props: {
                           size="sm"
                           color="danger btn-ovh me-1"
                           className="btn-ovh-employee-list"
+                          onClick={() => deleteButtonHandler(item.paySlipId)}
                         >
                           <i className="fa fa-trash-o" aria-hidden="true"></i>
                         </CButton>
@@ -182,11 +211,12 @@ const PayrollManagementTable = (props: {
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalTitle="Delete Location"
+        modalTitle="Delete Payslip"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
         modalBodyClass="mt-0"
+        confirmButtonAction={confirmDeletePayslip}
       >
         <>Do you really want to delete this </>
       </OModal>
