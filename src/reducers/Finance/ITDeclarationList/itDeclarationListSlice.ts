@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { itDeclarationListApi } from '../../../middleware/api/Finance/ITDeclarationList/itDeclarationListApi'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   Cycle,
@@ -18,6 +18,8 @@ const initialITDeclarationListState: ITDeclarationListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   cycles: [],
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const getCycles = createAsyncThunk(
@@ -31,6 +33,23 @@ const getCycles = createAsyncThunk(
     }
   },
 )
+
+const deleteSection = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('itDeclarationList/deleteSection', async (secId, thunkApi) => {
+  try {
+    return await itDeclarationListApi.deleteSection(secId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
 
 const getITDeclarationForm = createAsyncThunk(
   'itDeclarationList/getITDeclarationForm',
@@ -57,6 +76,12 @@ const itDeclarationListSlice = createSlice({
     clearSearch: (state) => {
       state.searchEmployee = ''
     },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,14 +94,25 @@ const itDeclarationListSlice = createSlice({
         state.itDeclarationForms = action.payload.itforms
         state.listSize = action.payload.itformlistsize
       })
+      .addCase(deleteSection.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
-        isAnyOf(getCycles.pending, getITDeclarationForm.pending),
+        isAnyOf(
+          getCycles.pending,
+          getITDeclarationForm.pending,
+          deleteSection.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
-        isAnyOf(getCycles.rejected, getITDeclarationForm.rejected),
+        isAnyOf(
+          getCycles.rejected,
+          getITDeclarationForm.rejected,
+          deleteSection.rejected,
+        ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
@@ -93,10 +129,15 @@ const itDeclarationForms = (state: RootState): ITForm[] =>
 const listSize = (state: RootState): number => state.itDeclarationList.listSize
 const searchEmployee = (state: RootState): string =>
   state.itDeclarationList.searchEmployee
+const pageFromState = (state: RootState): number =>
+  state.itDeclarationList.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.itDeclarationList.pageSize
 
 const itDeclarationListThunk = {
   getCycles,
   getITDeclarationForm,
+  deleteSection,
 }
 
 const itDeclarationListSelectors = {
@@ -105,6 +146,8 @@ const itDeclarationListSelectors = {
   itDeclarationForms,
   listSize,
   searchEmployee,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const itDeclarationListService = {

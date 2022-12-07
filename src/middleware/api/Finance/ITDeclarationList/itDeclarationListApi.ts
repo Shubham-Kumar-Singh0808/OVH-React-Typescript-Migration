@@ -54,8 +54,21 @@ const exportITDeclarationList = async (
   return response.data
 }
 
+const deleteSection = async (id: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.deleteSection,
+    method: AllowedHttpMethods.delete,
+    params: {
+      sectionId: id,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
   getITDeclarationForm,
   exportITDeclarationList,
+  deleteSection,
 }

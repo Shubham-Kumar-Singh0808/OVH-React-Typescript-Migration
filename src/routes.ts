@@ -282,6 +282,10 @@ const AddInvestment = React.lazy(
   () => import('./pages/Finance/AddInvestment/AddInvestment'),
 )
 
+const AddSection = React.lazy(
+  () => import('./pages/Finance/AddInvestment/Add Section/SectionsList'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -615,6 +619,11 @@ const routes = [
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
+  },
+  {
+    path: '/addSection',
+    name: 'Add Section',
+    component: AddSection,
   },
 ]
 

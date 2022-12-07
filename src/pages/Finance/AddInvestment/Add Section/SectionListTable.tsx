@@ -1,0 +1,212 @@
+import {
+  CButton,
+  CCol,
+  CRow,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+} from '@coreui/react-pro'
+import React, { useMemo, useState } from 'react'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import OModal from '../../../../components/ReusableComponent/OModal'
+import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../../components/ReusableComponent/OPagination'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
+import { currentPageData } from '../../../../utils/paginationUtils'
+
+const SectionListTable = (): JSX.Element => {
+  const sections = useTypedSelector(
+    reduxServices.investmentCheckList.selectors.sections,
+  )
+  const pageFromState = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.pageSizeFromState,
+  )
+  const dispatch = useAppDispatch()
+  const isLoading = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.isLoading,
+  )
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(sections.length, pageSizeFromState, pageFromState)
+
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteSectionName, setToDeleteSectionName] = useState('')
+  const [sectionId, setSectionId] = useState(0)
+
+  const handleSectionsPageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const getSectionItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const handleShowSectionDeleteModal = (id: number, sectionName: string) => {
+    setSectionId(id)
+    setToDeleteSectionName(sectionName)
+    setIsDeleteModalVisible(true)
+  }
+
+  const toastElement = (
+    <OToast toastColor="success" toastMessage="Section Deleted Successfully" />
+  )
+
+  const handleConfirmDeleteSection = async () => {
+    setIsDeleteModalVisible(false)
+
+    const deleteSectionResultAction = await dispatch(
+      reduxServices.itDeclarationList.deleteSection(sectionId),
+    )
+    if (
+      reduxServices.itDeclarationList.deleteSection.fulfilled.match(
+        deleteSectionResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(toastElement))
+      dispatch(reduxServices.investmentCheckList.getSections())
+    }
+  }
+
+  const currentPageItems = useMemo(
+    () => currentPageData(sections, currentPage, pageSize),
+    [sections, currentPage, pageSize],
+  )
+
+  return (
+    <>
+      {isLoading !== ApiLoadingState.loading ? (
+        <>
+          <CTable striped>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col" className="w-10">
+                  #
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="w-20">
+                  Section
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="w-25">
+                  Limit
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="w-25">
+                  Action
+                </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              {currentPageItems.map((sectionItem, index) => {
+                return (
+                  <CTableRow key={index}>
+                    <CTableHeaderCell>
+                      {getSectionItemNumber(index)}
+                    </CTableHeaderCell>
+                    <CTableDataCell>{sectionItem.sectionName}</CTableDataCell>
+                    <CTableDataCell>{sectionItem.sectionLimit}</CTableDataCell>
+                    <CTableDataCell>
+                      <CButton
+                        size="sm"
+                        color="info"
+                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                        data-testid={`section-edit-btn${index}`}
+                      >
+                        <i
+                          className="fa fa-pencil-square-o"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+
+                      <CButton
+                        size="sm"
+                        data-testid={`section-delete-btn${index}`}
+                        color="danger"
+                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                        onClick={() =>
+                          handleShowSectionDeleteModal(
+                            sectionItem.sectionId,
+                            sectionItem.sectionName,
+                          )
+                        }
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTableDataCell>
+                  </CTableRow>
+                )
+              })}
+            </CTableBody>
+          </CTable>
+          <CRow>
+            <CCol xs={4}>
+              <strong>
+                {sections?.length
+                  ? `Total Records: ${sections.length}`
+                  : `No Records Found`}
+              </strong>
+            </CCol>
+            <CCol xs={3}>
+              {sections.length > 20 && (
+                <OPageSizeSelect
+                  handlePageSizeSelectChange={
+                    handleSectionsPageSizeSelectChange
+                  }
+                  selectedPageSize={pageSize}
+                />
+              )}
+            </CCol>
+            {sections.length > 20 && (
+              <CCol
+                xs={5}
+                className="d-grid gap-1 d-md-flex justify-content-md-end"
+              >
+                <OPagination
+                  currentPage={currentPage}
+                  pageSetter={setCurrentPage}
+                  paginationRange={paginationRange}
+                />
+              </CCol>
+            )}
+          </CRow>
+          <OModal
+            visible={isDeleteModalVisible}
+            setVisible={setIsDeleteModalVisible}
+            modalTitle="Delete Section"
+            modalBodyClass="mt-0"
+            confirmButtonText="Yes"
+            cancelButtonText="No"
+            closeButtonClass="d-none"
+            confirmButtonAction={handleConfirmDeleteSection}
+          >
+            <>
+              Do you really want to delete this{' '}
+              <strong>{toDeleteSectionName}</strong> section?
+            </>
+          </OModal>
+        </>
+      ) : (
+        <>
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        </>
+      )}
+    </>
+  )
+}
+
+export default SectionListTable
