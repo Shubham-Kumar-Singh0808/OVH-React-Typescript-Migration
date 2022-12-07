@@ -67,6 +67,7 @@ const initialPayrollManagementState: PayRollManagementSliceState = {
   currentPaySlipData: {} as GetPaySlipReportResponse,
   listSize: 0,
   paySlipInfo: [],
+  paySlipList: { list: [], size: 0 },
 }
 const payrollManagementSlice = createSlice({
   name: 'payrollManagement',
@@ -74,11 +75,7 @@ const payrollManagementSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getCurrentPayslip.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.paySlipInfo = action.payload.list
-        state.listSize = action.payload.size
-      })
+
       .addCase(getCurrentPayslip.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
@@ -86,19 +83,20 @@ const payrollManagementSlice = createSlice({
         state.isLoading = ApiLoadingState.failed
       })
       .addMatcher(
-        isAnyOf(
-          getCurrentPayslip.fulfilled,
-          deletePayslip.fulfilled,
-          searchEmployee.fulfilled,
-          downloadExcelFile.fulfilled,
-        ),
+        isAnyOf(getCurrentPayslip.fulfilled, searchEmployee.fulfilled),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          state.paySlipList = action.payload
+        },
+      )
+      .addMatcher(
+        isAnyOf(deletePayslip.fulfilled, downloadExcelFile.fulfilled),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },
       )
       .addMatcher(
         isAnyOf(
-          getCurrentPayslip.pending,
           deletePayslip.pending,
           searchEmployee.pending,
           downloadExcelFile.pending,
@@ -109,7 +107,6 @@ const payrollManagementSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          getCurrentPayslip.rejected,
           deletePayslip.rejected,
           searchEmployee.rejected,
           downloadExcelFile.rejected,
@@ -125,7 +122,10 @@ const isLoading = (state: RootState): LoadingState =>
   state.payrollManagement.isLoading
 
 const paySlipInfo = (state: RootState): CurrentPayslip[] =>
-  state.payrollManagement.paySlipInfo
+  state.payrollManagement.paySlipList.list
+
+const PaySlipsListSize = (state: RootState): number =>
+  state.payrollManagement.paySlipList.size
 
 export const payrollManagementThunk = {
   getCurrentPayslip,
@@ -137,6 +137,7 @@ export const payrollManagementThunk = {
 export const payrollManagementSelectors = {
   isLoading,
   paySlipInfo,
+  PaySlipsListSize,
 }
 
 export const payrollManagementService = {

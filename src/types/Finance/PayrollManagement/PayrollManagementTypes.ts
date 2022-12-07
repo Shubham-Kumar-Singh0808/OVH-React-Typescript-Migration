@@ -69,6 +69,7 @@ export type PayRollManagementSliceState = {
   error: ValidationError
   listSize: number
   paySlipInfo: CurrentPayslip[]
+  paySlipList: GetPaySlipsResponse
 }
 
 export type DownloadExcelFile = {
@@ -84,4 +85,9 @@ export type PayRollManagementApiProps = {
   month: string
   searchStringCand: number | string
   year: number
+}
+
+export type GetPaySlipsResponse = {
+  list: CurrentPayslip[]
+  size: number
 }

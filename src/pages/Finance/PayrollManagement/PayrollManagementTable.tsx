@@ -15,10 +15,17 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
 
 const PayrollManagementTable = (props: {
   selectMonth: string
   selectYear: string
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
@@ -26,7 +33,6 @@ const PayrollManagementTable = (props: {
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipInfo,
   )
-  console.log(renderingPayslipData)
 
   const dispatch = useAppDispatch()
 
@@ -34,8 +40,8 @@ const PayrollManagementTable = (props: {
     if (props.selectMonth && props.selectYear)
       dispatch(
         reduxServices.payrollManagement.getCurrentPayslip({
-          endIndex: 20,
-          startIndex: 0,
+          startIndex: props.pageSize * (props.currentPage - 1),
+          endIndex: props.pageSize * props.currentPage,
           month: props.selectMonth,
           year: Number(props.selectYear),
         }),
@@ -54,19 +60,32 @@ const PayrollManagementTable = (props: {
 
     dispatch(
       reduxServices.payrollManagement.getCurrentPayslip({
-        endIndex: 20,
-        startIndex: 0,
+        startIndex: props.pageSize * (props.currentPage - 1),
+        endIndex: props.pageSize * props.currentPage,
         month: props.selectMonth,
         year: Number(props.selectYear),
       }),
     )
     dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
+  console.log(renderingPayslipData)
 
   const deleteButtonHandler = (id: number) => {
     setIsDeleteModalVisible(true)
     setDeletePaySlipId(id)
   }
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    props.setPageSize(Number(event.target.value))
+    props.setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
+  }
+
+  const PaySlipsListSize = useTypedSelector(
+    reduxServices.payrollManagement.selectors.PaySlipsListSize,
+  )
 
   return (
     <>
@@ -131,7 +150,7 @@ const PayrollManagementTable = (props: {
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {renderingPayslipData.length > 0 &&
+            {renderingPayslipData?.length > 0 &&
               renderingPayslipData?.map((item, index) => {
                 return (
                   <CTableRow key={index}>
@@ -200,13 +219,42 @@ const PayrollManagementTable = (props: {
           </CTableBody>
         </CTable>
       </CCol>
-      <CRow>
-        <CCol xs={4}>
-          <p>
-            <strong>Total Records: {renderingPayslipData.length}</strong>
-          </p>
+      {renderingPayslipData?.length ? (
+        <CRow>
+          <CCol xs={4}>
+            <p>
+              <strong>Total Records: {PaySlipsListSize}</strong>
+            </p>
+          </CCol>
+          <CCol xs={3}>
+            {PaySlipsListSize > 20 && (
+              <OPageSizeSelect
+                handlePageSizeSelectChange={handlePageSizeSelectChange}
+                options={[20, 40, 60, 80]}
+                selectedPageSize={props.pageSize}
+              />
+            )}
+          </CCol>
+          {PaySlipsListSize > 20 && (
+            <CCol
+              xs={5}
+              className="gap-1 d-grid d-md-flex justify-content-md-end"
+            >
+              <OPagination
+                currentPage={props.currentPage}
+                pageSetter={props.setCurrentPage}
+                paginationRange={props.paginationRange}
+              />
+            </CCol>
+          )}
+        </CRow>
+      ) : (
+        <CCol>
+          <CRow className="mt-3 ms-3">
+            <h5>No Records Found... </h5>
+          </CRow>
         </CCol>
-      </CRow>
+      )}
       <OModal
         alignment="center"
         visible={isDeleteModalVisible}

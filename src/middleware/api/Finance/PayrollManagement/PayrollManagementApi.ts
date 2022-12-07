@@ -1,8 +1,7 @@
 import {
-  CurrentPayslip,
   DownloadExcelFile,
   GetPayRollProps,
-  GetPaySlipReportResponse,
+  GetPaySlipsResponse,
   PayRollManagementApiProps,
 } from '../../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 import {
@@ -13,7 +12,7 @@ import { payrollManagementApiConfig, AllowedHttpMethods } from '../../apiList'
 
 const getCurrentPayslip = async (
   props: GetPayRollProps,
-): Promise<GetPaySlipReportResponse> => {
+): Promise<GetPaySlipsResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: payrollManagementApiConfig.getCurrentPayslip,
     method: AllowedHttpMethods.get,
@@ -48,15 +47,15 @@ const downloadExcelFile = async (
 
 const searchEmployee = async (
   props: PayRollManagementApiProps,
-): Promise<CurrentPayslip[]> => {
+): Promise<GetPaySlipsResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: payrollManagementApiConfig.searchEmployee,
     method: AllowedHttpMethods.get,
     params: {
       endIndex: props.endIndex ?? 20,
-      startIndex: props.startIndex ?? 0,
       month: props.month,
       searchStringCand: props.searchStringCand,
+      startIndex: props.startIndex ?? 0,
       year: props.year,
     },
   })

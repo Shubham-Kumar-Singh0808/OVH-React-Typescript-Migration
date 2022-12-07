@@ -12,7 +12,8 @@ import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const PayrollManagement = (): JSX.Element => {
   const [selectMonth, setSelectMonth] = useState<string>('')
@@ -46,12 +47,24 @@ const PayrollManagement = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
 
+  const PaySlipsListSize = useTypedSelector(
+    reduxServices.payrollManagement.selectors.PaySlipsListSize,
+  )
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(PaySlipsListSize, 20)
+
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       dispatch(
         reduxServices.payrollManagement.searchEmployee({
-          endIndex: 20,
-          startIndex: 0,
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
           month: selectMonth,
           searchStringCand: searchInput,
           year: Number(selectYear),
@@ -60,11 +73,12 @@ const PayrollManagement = (): JSX.Element => {
     }
   }
 
-  const multiSearchBtnHandler = () => {
+  const multiSearchBtnHandler = (e: React.SyntheticEvent) => {
+    e.preventDefault()
     dispatch(
       reduxServices.payrollManagement.searchEmployee({
-        endIndex: 20,
-        startIndex: 0,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
         month: selectMonth,
         searchStringCand: searchInput,
         year: Number(selectYear),
@@ -213,6 +227,11 @@ const PayrollManagement = (): JSX.Element => {
         <PayrollManagementTable
           selectMonth={selectMonth}
           selectYear={selectYear}
+          paginationRange={paginationRange}
+          setPageSize={setPageSize}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pageSize={pageSize}
         />
       </OCard>
     </>
