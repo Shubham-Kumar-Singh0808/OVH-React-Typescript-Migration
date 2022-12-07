@@ -34,10 +34,10 @@ const ProjectCreationRequest = (): JSX.Element => {
 
   const handleSearch = () => {
     dispatch(
-      reduxServices.tickets.getTickets({
-        endIndex: 20,
+      reduxServices.projectCreationRequest.getAllProjectRequestList({
+        endIndex: pageSize * currentPage,
         multiSearch: searchInput,
-        startIndex: 0,
+        firstIndex: pageSize * (currentPage - 1),
       }),
     )
   }
@@ -47,10 +47,10 @@ const ProjectCreationRequest = (): JSX.Element => {
   ) => {
     if (event.key === 'Enter') {
       dispatch(
-        reduxServices.tickets.getTickets({
-          endIndex: 20,
+        reduxServices.projectCreationRequest.getAllProjectRequestList({
+          endIndex: pageSize * currentPage,
           multiSearch: searchInput,
-          startIndex: 0,
+          firstIndex: pageSize * (currentPage - 1),
         }),
       )
     }
@@ -65,6 +65,11 @@ const ProjectCreationRequest = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <CRow className="gap-2 d-md-flex justify-content-md-end mt-3">
+          <CCol sm={3}>
+            <CButton color="info btn-ovh me-1" className="text-white">
+              <i className="fa fa-plus"></i> Project Request
+            </CButton>
+          </CCol>
           <CCol xs={12} sm={3}>
             <CInputGroup className="global-search me-0 sh-client-search">
               <CFormInput

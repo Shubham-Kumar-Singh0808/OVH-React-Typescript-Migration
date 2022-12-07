@@ -9,6 +9,7 @@ import {
   CButton,
   CCol,
   CRow,
+  CBadge,
 } from '@coreui/react-pro'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
@@ -52,6 +53,17 @@ const ProjectCreationRequestTable = ({
 
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const projectRequestStatusLabelColor = (status: string): JSX.Element => {
+    if (status === 'Rejected') {
+      return <CBadge className="rounded-pill label-danger">{status}</CBadge>
+    } else if (status === 'Approved') {
+      return <CBadge className="rounded-pill label-success">{status}</CBadge>
+    } else if (status === 'Pending Approval') {
+      return <CBadge className="rounded-pill label-default">{status}</CBadge>
+    }
+    return <></>
   }
   return (
     <>
@@ -100,7 +112,9 @@ const ProjectCreationRequestTable = ({
                   <CTableDataCell>
                     {projectRequest.enddate || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell>{projectRequest.status}</CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequestStatusLabelColor(projectRequest.status)}
+                  </CTableDataCell>
                   <CTableDataCell>
                     <CButton
                       color="info"
