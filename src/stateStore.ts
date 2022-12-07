@@ -91,6 +91,7 @@ import panDetailsReducer from './reducers/Finance/PanDetails/panDetailsSlice'
 import bankDetailsReducer from './reducers/Finance/PanDetails/bankDetailsSlice'
 import resignationListReducer from './reducers/Separation/ResignationList/resignationListSlice'
 import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDeclarationListSlice'
+import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/investmentCheckListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -182,6 +183,7 @@ export const allReducers = {
   bankDetails: bankDetailsReducer,
   resignationList: resignationListReducer,
   itDeclarationList: itDeclarationListReducer,
+  investmentCheckList: investmentCheckListReducer,
   // add your slice reducers here
 }
 
