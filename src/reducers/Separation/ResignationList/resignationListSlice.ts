@@ -11,6 +11,8 @@ import {
   GetResignationListProps,
   ResignationList,
   ResignationListSliceState,
+  SeparationChart,
+  SeparationChartProps,
   SeparationTimeLine,
   submitClearanceCommentsProps,
   UpdateClearanceDetails,
@@ -121,6 +123,18 @@ const updateCCDetails = createAsyncThunk<
   },
 )
 
+const getSeparationChart = createAsyncThunk(
+  'resignationList/getSeparationChart',
+  async (props: SeparationChartProps, thunkApi) => {
+    try {
+      return await resignationListApi.getSeparationChart(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -128,6 +142,7 @@ const initialResignationListState: ResignationListSliceState = {
   pageSize: 20,
   separationTimeLine: {} as SeparationTimeLine,
   checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+  separationChart: {} as SeparationChart,
   clearanceDetails: [],
   toggle: '',
 }
@@ -163,6 +178,10 @@ const resignationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.clearanceDetails = action.payload
       })
+      .addCase(getSeparationChart.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.separationChart = action.payload
+      })
       .addMatcher(
         isAnyOf(
           getResignationList.pending,
@@ -196,6 +215,9 @@ const resignationTimeLine = (state: RootState): SeparationTimeLine =>
 const managerClearanceDetails = (state: RootState): ClearanceDetails[] =>
   state.resignationList.clearanceDetails
 
+const separationChartDetails = (state: RootState): SeparationChart =>
+  state.resignationList.separationChart
+
 const toggleValue = (state: RootState): string => state.resignationList.toggle
 
 const resignationListThunk = {
@@ -205,6 +227,7 @@ const resignationListThunk = {
   submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
+  getSeparationChart,
 }
 
 const resignationListSelectors = {
@@ -216,6 +239,7 @@ const resignationListSelectors = {
   resignationTimeLine,
   managerClearanceDetails,
   toggleValue,
+  separationChartDetails,
 }
 
 export const resignationListService = {
