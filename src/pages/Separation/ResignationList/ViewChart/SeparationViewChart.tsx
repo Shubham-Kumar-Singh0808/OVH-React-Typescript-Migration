@@ -50,6 +50,12 @@ const SeparationViewChart = (): JSX.Element => {
       }),
     )
   }
+
+  const clearBtnHandler = () => {
+    setSelect('')
+    setFromDate('')
+    setToDate('')
+  }
   return (
     <>
       <OCard
@@ -158,6 +164,7 @@ const SeparationViewChart = (): JSX.Element => {
                   color="warning "
                   data-testid="clear-btn"
                   className="btn-ovh"
+                  onClick={clearBtnHandler}
                 >
                   Clear
                 </CButton>
