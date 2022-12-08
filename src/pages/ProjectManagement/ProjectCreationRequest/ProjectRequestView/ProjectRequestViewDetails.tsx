@@ -160,7 +160,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           <CCol sm={3}>
             <div
               dangerouslySetInnerHTML={{
-                __html: projectViewDetails.requiredResources as string,
+                __html: projectViewDetails.requiredResources,
               }}
             />
           </CCol>
@@ -172,7 +172,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           <CCol sm={3}>
             <div
               dangerouslySetInnerHTML={{
-                __html: projectViewDetails.description as string,
+                __html: projectViewDetails.description,
               }}
             />
           </CCol>
@@ -182,7 +182,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Checklist::
           </CFormLabel>
           <CCol sm={10}>
-            <CTable striped responsive align="middle">
+            <CTable responsive align="middle">
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
