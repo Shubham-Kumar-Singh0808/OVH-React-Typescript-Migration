@@ -5,10 +5,12 @@ import { itDeclarationListApi } from '../../../middleware/api/Finance/ITDeclarat
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  AddSection,
   Cycle,
   ITDeclarationListApiProps,
   ITDeclarationListSliceState,
   ITForm,
+  UpdateSection,
 } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const initialITDeclarationListState: ITDeclarationListSliceState = {
@@ -20,6 +22,7 @@ const initialITDeclarationListState: ITDeclarationListSliceState = {
   cycles: [],
   currentPage: 1,
   pageSize: 20,
+  toggle: '',
 }
 
 const getCycles = createAsyncThunk(
@@ -27,6 +30,30 @@ const getCycles = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await itDeclarationListApi.getCycles()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const addSection = createAsyncThunk(
+  'itDeclarationList/addSection',
+  async (addNewSection: AddSection, thunkApi) => {
+    try {
+      return await itDeclarationListApi.addSection(addNewSection)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateSection = createAsyncThunk(
+  'itDeclarationList/updateSection',
+  async (editSection: UpdateSection, thunkApi) => {
+    try {
+      return await itDeclarationListApi.updateSection(editSection)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -82,6 +109,9 @@ const itDeclarationListSlice = createSlice({
     setPageSize: (state, action) => {
       state.pageSize = action.payload
     },
+    setToggle: (state, action) => {
+      state.toggle = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -94,14 +124,23 @@ const itDeclarationListSlice = createSlice({
         state.itDeclarationForms = action.payload.itforms
         state.listSize = action.payload.itformlistsize
       })
-      .addCase(deleteSection.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(
+          addSection.fulfilled,
+          deleteSection.fulfilled,
+          updateSection.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
       .addMatcher(
         isAnyOf(
           getCycles.pending,
           getITDeclarationForm.pending,
+          addSection.pending,
           deleteSection.pending,
+          updateSection.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -112,6 +151,8 @@ const itDeclarationListSlice = createSlice({
           getCycles.rejected,
           getITDeclarationForm.rejected,
           deleteSection.rejected,
+          addSection.rejected,
+          updateSection.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -133,11 +174,14 @@ const pageFromState = (state: RootState): number =>
   state.itDeclarationList.currentPage
 const pageSizeFromState = (state: RootState): number =>
   state.itDeclarationList.pageSize
+const toggle = (state: RootState): string => state.itDeclarationList.toggle
 
 const itDeclarationListThunk = {
   getCycles,
   getITDeclarationForm,
+  addSection,
   deleteSection,
+  updateSection,
 }
 
 const itDeclarationListSelectors = {
@@ -148,6 +192,7 @@ const itDeclarationListSelectors = {
   searchEmployee,
   pageFromState,
   pageSizeFromState,
+  toggle,
 }
 
 export const itDeclarationListService = {

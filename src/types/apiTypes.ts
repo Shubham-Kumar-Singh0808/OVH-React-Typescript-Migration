@@ -532,6 +532,7 @@ export interface ITDeclarationListApi extends ApiBase {
   exportITDeclarationList: string
   deleteSection: string
   addSection: string
+  updateSection: string
 }
 
 export interface InvestmentCheckListApi extends ApiBase {

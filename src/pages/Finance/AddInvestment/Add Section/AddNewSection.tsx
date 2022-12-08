@@ -7,13 +7,14 @@ import {
   CButton,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../../stateStore'
-import { addSection } from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { AddSection } from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import { showIsRequired } from '../../../../utils/helper'
 
 const AddNewSection = (): JSX.Element => {
-  const initialSectionDetails = {} as addSection
+  const initialSectionDetails = {} as AddSection
   const [addNewSection, setAddNewSection] = useState(initialSectionDetails)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const formLabelProps = {
@@ -21,6 +22,12 @@ const AddNewSection = (): JSX.Element => {
     className: 'col-form-label section-label',
   }
   const dispatch = useAppDispatch()
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddSection = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Section and Investment',
+  )
   useEffect(() => {
     if (addNewSection.sectionName && addNewSection.sectionLimit) {
       setIsAddButtonEnabled(true)
@@ -49,26 +56,24 @@ const AddNewSection = (): JSX.Element => {
       sectionLimit: '',
     })
   }
+  const successToastMessage = (
+    <OToast toastMessage="Section added Successfully" toastColor="success" />
+  )
 
-  const handleAddNewSection = () => {
-    const addHolidayResultAction = await dispatch(
-      reduxServices.itDeclarationList.(addNewSection),
+  const handleAddNewSection = async () => {
+    const addSectionResultAction = await dispatch(
+      reduxServices.itDeclarationList.addSection(addNewSection),
     )
 
     if (
-      reduxServices.holidays.addHoliday.fulfilled.match(addHolidayResultAction)
+      reduxServices.itDeclarationList.addSection.fulfilled.match(
+        addSectionResultAction,
+      )
     ) {
-      history.push('/holidaylist')
-      dispatch(reduxServices.app.actions.addToast(getSuccessToastMessage))
-    } else if (
-      reduxServices.holidays.addHoliday.rejected.match(
-        addHolidayResultAction,
-      ) &&
-      addHolidayResultAction.payload === 409
-    ) {
-      dispatch(reduxServices.app.actions.addToast(getWarningToastMessage))
-      handleClear()
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
+    dispatch(reduxServices.investmentCheckList.getSections())
+    handleClearInputs()
   }
 
   return (
@@ -111,7 +116,7 @@ const AddNewSection = (): JSX.Element => {
           <CCol sm={3}>
             <CFormInput
               className="ps-2"
-              data-testid="holiday-name"
+              data-testid="section-limit"
               type="text"
               name="sectionLimit"
               placeholder="Limit"
@@ -124,23 +129,27 @@ const AddNewSection = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
-              data-testid="add-btn"
-              className="btn-ovh me-1 text-white"
-              color="success"
-              //   onClick={handleAddHoliday}
-              disabled={!isAddButtonEnabled}
-            >
-              Add
-            </CButton>
-            <CButton
-              data-testid="clear-btn"
-              color="warning "
-              className="btn-ovh text-white"
-              onClick={handleClearInputs}
-            >
-              Clear
-            </CButton>
+            {userAccessToAddSection?.createaccess && (
+              <>
+                <CButton
+                  data-testid="as-add-btn"
+                  className="btn-ovh me-1 text-white"
+                  color="success"
+                  onClick={handleAddNewSection}
+                  disabled={!isAddButtonEnabled}
+                >
+                  Add
+                </CButton>
+                <CButton
+                  data-testid="as-clear-btn"
+                  color="warning "
+                  className="btn-ovh text-white"
+                  onClick={handleClearInputs}
+                >
+                  Clear
+                </CButton>
+              </>
+            )}
           </CCol>
         </CRow>
       </CForm>

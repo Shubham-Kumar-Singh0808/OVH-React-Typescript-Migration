@@ -643,6 +643,7 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
   deleteSection: apiPrefix + '/itDeclaration/deleteSection',
   addSection: apiPrefix + '/itDeclaration/addSection',
+  updateSection: apiPrefix + '/itDeclaration/editSection',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {

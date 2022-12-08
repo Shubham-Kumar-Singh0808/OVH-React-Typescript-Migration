@@ -20,9 +20,14 @@ import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
+import { UpdateSection } from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import { currentPageData } from '../../../../utils/paginationUtils'
 
-const SectionListTable = (): JSX.Element => {
+const SectionListTable = ({
+  editSectionButtonHandler,
+}: {
+  editSectionButtonHandler: (editSectionData: UpdateSection) => void
+}): JSX.Element => {
   const sections = useTypedSelector(
     reduxServices.investmentCheckList.selectors.sections,
   )
@@ -85,6 +90,13 @@ const SectionListTable = (): JSX.Element => {
     }
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToSectionActions = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Section and Investment',
+  )
+
   const currentPageItems = useMemo(
     () => currentPageData(sections, currentPage, pageSize),
     [sections, currentPage, pageSize],
@@ -121,32 +133,43 @@ const SectionListTable = (): JSX.Element => {
                     <CTableDataCell>{sectionItem.sectionName}</CTableDataCell>
                     <CTableDataCell>{sectionItem.sectionLimit}</CTableDataCell>
                     <CTableDataCell>
-                      <CButton
-                        size="sm"
-                        color="info"
-                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                        data-testid={`section-edit-btn${index}`}
-                      >
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-
-                      <CButton
-                        size="sm"
-                        data-testid={`section-delete-btn${index}`}
-                        color="danger"
-                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                        onClick={() =>
-                          handleShowSectionDeleteModal(
-                            sectionItem.sectionId,
-                            sectionItem.sectionName,
-                          )
-                        }
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      {userAccessToSectionActions?.updateaccess && (
+                        <CButton
+                          size="sm"
+                          color="info"
+                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                          data-testid={`section-edit-btn${index}`}
+                          onClick={() =>
+                            editSectionButtonHandler({
+                              sectionLimit: sectionItem.sectionLimit,
+                              sectionName: sectionItem.sectionName,
+                              invests: [],
+                              sectionId: sectionItem.sectionId,
+                            })
+                          }
+                        >
+                          <i
+                            className="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      )}
+                      {userAccessToSectionActions?.deleteaccess && (
+                        <CButton
+                          size="sm"
+                          data-testid={`section-delete-btn${index}`}
+                          color="danger"
+                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                          onClick={() =>
+                            handleShowSectionDeleteModal(
+                              sectionItem.sectionId,
+                              sectionItem.sectionName,
+                            )
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )
@@ -184,27 +207,25 @@ const SectionListTable = (): JSX.Element => {
               </CCol>
             )}
           </CRow>
-          <OModal
-            visible={isDeleteModalVisible}
-            setVisible={setIsDeleteModalVisible}
-            modalTitle="Delete Section"
-            modalBodyClass="mt-0"
-            confirmButtonText="Yes"
-            cancelButtonText="No"
-            closeButtonClass="d-none"
-            confirmButtonAction={handleConfirmDeleteSection}
-          >
-            <>
-              Do you really want to delete this{' '}
-              <strong>{toDeleteSectionName}</strong> section?
-            </>
-          </OModal>
         </>
       ) : (
-        <>
-          <OLoadingSpinner type={LoadingType.PAGE} />
-        </>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
+      <OModal
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Section"
+        modalBodyClass="mt-0"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={handleConfirmDeleteSection}
+      >
+        <>
+          Do you really want to delete this{' '}
+          <strong>{toDeleteSectionName}</strong> section?
+        </>
+      </OModal>
     </>
   )
 }

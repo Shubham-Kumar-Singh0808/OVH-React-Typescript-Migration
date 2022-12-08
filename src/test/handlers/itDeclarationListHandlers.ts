@@ -27,4 +27,29 @@ export const itDeclarationListHandlers = [
       )
     },
   ),
+  //addSection api mock
+  rest.post(itDeclarationListApiConfig.addSection, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: {},
+      }),
+    )
+  }),
+  //updateSection api mock
+  rest.put(itDeclarationListApiConfig.updateSection, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+      }),
+    )
+  }),
+  //delete api mock
+  rest.delete(itDeclarationListApiConfig.deleteSection, (_req, res, ctx) => {
+    const delRes = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(delRes)
+  }),
 ]
