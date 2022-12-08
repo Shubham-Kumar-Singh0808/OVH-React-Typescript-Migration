@@ -114,26 +114,14 @@ const ProjectCreationRequestTable = ({
                     {getItemNumber(index)}
                   </CTableDataCell>
                   <CTableDataCell className="project-width">
-                    {projectRequest.projectName || 'N/A'}
+                    {projectRequest.projectName}
                   </CTableDataCell>
-                  <CTableDataCell>
-                    {projectRequest.type || 'N/A'}
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    {projectRequest.model || 'N/A'}
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    {projectRequest.client || 'N/A'}
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    {projectRequest.managerName || 'N/A'}
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    {projectRequest.startdate || 'N/A'}
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    {projectRequest.enddate || 'N/A'}
-                  </CTableDataCell>
+                  <CTableDataCell>{projectRequest.type}</CTableDataCell>
+                  <CTableDataCell>{projectRequest.model}</CTableDataCell>
+                  <CTableDataCell>{projectRequest.client}</CTableDataCell>
+                  <CTableDataCell>{projectRequest.managerName}</CTableDataCell>
+                  <CTableDataCell>{projectRequest.startdate}</CTableDataCell>
+                  <CTableDataCell>{projectRequest.enddate}</CTableDataCell>
                   <CTableDataCell>
                     {projectRequestStatusLabelColor(projectRequest.status)}
                   </CTableDataCell>
@@ -141,7 +129,7 @@ const ProjectCreationRequestTable = ({
                     <CButton
                       color="info"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
+                      data-testid="view-btn"
                       onClick={() =>
                         handleProjectRequestViewClick(projectRequest.id)
                       }
@@ -158,7 +146,7 @@ const ProjectCreationRequestTable = ({
                     <CButton
                       color="info"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
+                      data-testid="history-btn"
                       onClick={() =>
                         handleProjectRequestHistoryClick(projectRequest.id)
                       }

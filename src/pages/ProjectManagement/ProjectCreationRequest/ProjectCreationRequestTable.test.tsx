@@ -8,6 +8,7 @@ import { mockProjectRequestList } from '../../../test/data/projectCreationReques
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
+const mockSetToggle = jest.fn()
 
 const toRender = (
   <div>
@@ -20,6 +21,7 @@ const toRender = (
       currentPage={1}
       pageSize={20}
       paginationRange={[1, 2, 3]}
+      setToggle={mockSetToggle}
     />
     ,
   </div>
@@ -71,5 +73,15 @@ describe('Employee ProjectCreationRequestTable Component Testing', () => {
   })
   test('should render table with data', () => {
     expect(screen.getByText('Approved')).toBeInTheDocument()
+  })
+  test('should click on view button  ', () => {
+    const viewElement = screen.getAllByTestId('view-btn')
+    userEvent.click(viewElement[0])
+    expect(mockSetToggle).toHaveBeenCalledTimes(1)
+  })
+  test('should click on history button  ', () => {
+    const historyElement = screen.getAllByTestId('history-btn')
+    userEvent.click(historyElement[0])
+    expect(mockSetToggle).toHaveBeenCalledTimes(1)
   })
 })

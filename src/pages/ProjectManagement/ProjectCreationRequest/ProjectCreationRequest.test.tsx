@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import ProjectCreationRequest from './ProjectCreationRequest'
 import { render, screen } from '../../../test/testUtils'
 
@@ -17,5 +18,9 @@ describe('ProjectCreationRequest Component Testing', () => {
     render(toRender)
 
     expect(screen.getByText('Project Request Report')).toBeInTheDocument()
+
+    const subject = screen.getByTestId('searchField')
+    userEvent.type(subject, 'testing')
+    expect(subject).toHaveValue('testing')
   })
 })

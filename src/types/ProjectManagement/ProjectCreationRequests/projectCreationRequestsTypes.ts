@@ -1,4 +1,4 @@
-import { LoadingState, ValidationError } from '../../commonTypes'
+import { LoadingState } from '../../commonTypes'
 
 export type CheckList = {
   id: number
