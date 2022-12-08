@@ -383,8 +383,8 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
+        <CRow className="mt-1 mb-0 align-items-center">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           Upload Exit Feedback Form :
           <span
                 className={
@@ -410,8 +410,8 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
+        <CRow className="mt-1 mb-0 align-items-center">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           Upload Relieving Letter :
           <span
                 className={
@@ -437,8 +437,8 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow>
-          <CCol md={{ span: 6, offset: 2 }}>
+        <CRow className='mt-3'>          
+          <CCol md={{ span: 6, offset: 3 }}>
             <>
               <CButton
                 className="btn-ovh me-1"
