@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import projectCreationRequestsApi from '../../../middleware/api/ProjectManagement/ProjectCreationRequests/projectCreationRequestsApi'
@@ -88,11 +88,22 @@ const projectCreationRequestSlice = createSlice({
       state.isLoading = ApiLoadingState.succeeded
       state.getProjectRequest = action.payload as GetProjectRequest
     })
-    builder.addCase(projectRequestHistoryDetails.fulfilled, (state, action) => {
-      state.isLoading = ApiLoadingState.succeeded
-      state.projectRequestHistoryDetails =
-        action.payload as ProjectRequestHistoryDetails[]
-    })
+    builder
+      .addCase(projectRequestHistoryDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.projectRequestHistoryDetails =
+          action.payload as ProjectRequestHistoryDetails[]
+      })
+      .addMatcher(
+        isAnyOf(
+          getAllProjectRequestList.pending,
+          getProjectRequest.pending,
+          projectRequestHistoryDetails.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
