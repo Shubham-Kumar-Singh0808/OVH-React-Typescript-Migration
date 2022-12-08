@@ -1,10 +1,10 @@
-import { CChart } from '@coreui/react-pro'
+// import { CChart } from '@coreui/react-pro'
 import React from 'react'
 
 const ResignationListViewChart = (): JSX.Element => {
   return (
     <>
-      <CChart
+      {/* <CChart
         type="doughnut"
         data={{
           labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
@@ -15,7 +15,7 @@ const ResignationListViewChart = (): JSX.Element => {
             },
           ],
         }}
-      />
+      /> */}
     </>
   )
 }

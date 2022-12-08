@@ -171,7 +171,7 @@ const SeparationViewChart = (): JSX.Element => {
               </CCol>
             </>
           )}
-          <CCol className="text-end" md={4}>
+          <CCol className="text-end">
             <Link to={`/resignationList`}>
               <CButton color="info" className="btn-ovh me-1">
                 <i className="fa fa-arrow-left  me-1"></i>Back
