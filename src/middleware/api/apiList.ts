@@ -634,8 +634,11 @@ export const resignationListApiConfig: ResignationListApi = {
     apiPrefix + '/separationController/clearanceCertificateComments',
   getClearanceDetails: apiPrefix + '/separationController/getClearanceDetails',
   updateCCDetails: apiPrefix + '/separationController/updateCC',
-  checkExitFeedBackForm:
-    apiPrefix + '/separationController/checkExitFeedBackForm',
+  getEmpDetails: apiPrefix + '/separationController/getEmpDetails',
+  saveExitFeedBackForm:
+    apiPrefix + '/separationController/saveExitFeedBackForm',
+  uploadRelievingLetter: apiPrefix + '/fileUpload/uploadrelievingletter',
+  uploadExitFeedBackFile: apiPrefix + '/fileUpload/uploadExitfeedBackFile',
 }
 
 export const itDeclarationListApiConfig: ITDeclarationListApi = {

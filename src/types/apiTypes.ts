@@ -523,7 +523,10 @@ export interface ResignationListApi extends ApiBase {
   clearanceCertificateComments: string
   getClearanceDetails: string
   updateCCDetails: string
-  checkExitFeedBackForm: string
+  getEmpDetails: string
+  saveExitFeedBackForm: string
+  uploadExitFeedBackFile: string
+  uploadRelievingLetter: string
 }
 
 export interface ITDeclarationListApi extends ApiBase {
