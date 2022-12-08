@@ -22,7 +22,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
     <>
       <CForm>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Status:
           </CFormLabel>
           <CCol sm={3}>
@@ -30,7 +30,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Client Organization:
           </CFormLabel>
           <CCol sm={3}>
@@ -38,7 +38,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Customer Contact:
           </CFormLabel>
           <CCol sm={3}>
@@ -46,7 +46,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Customer Email:
           </CFormLabel>
           <CCol sm={3}>
@@ -56,7 +56,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Billing Contact Name:
           </CFormLabel>
           <CCol sm={3}>
@@ -64,7 +64,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Billing Contact Email:
           </CFormLabel>
           <CCol sm={3}>
@@ -74,7 +74,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Project Name:
           </CFormLabel>
           <CCol sm={3}>
@@ -82,7 +82,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Requested by:
           </CFormLabel>
           <CCol sm={3}>
@@ -90,7 +90,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Pricing Model:
           </CFormLabel>
           <CCol sm={3}>
@@ -98,7 +98,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Project type:
           </CFormLabel>
           <CCol sm={3}>
@@ -106,7 +106,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Project Manager:
           </CFormLabel>
           <CCol sm={3}>
@@ -114,7 +114,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Platform:
           </CFormLabel>
           <CCol sm={3}>
@@ -122,7 +122,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Domain:
           </CFormLabel>
           <CCol sm={3}>
@@ -130,7 +130,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Start Date:
           </CFormLabel>
           <CCol sm={3}>
@@ -138,7 +138,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             End Date:
           </CFormLabel>
           <CCol sm={3}>
@@ -146,7 +146,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Technology:
           </CFormLabel>
           <CCol sm={3}>
@@ -154,31 +154,71 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Required Resources:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.requiredResources}</p>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: projectViewDetails.requiredResources as string,
+              }}
+            />
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Description:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.description}</p>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: projectViewDetails.description as string,
+              }}
+            />
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Checklist::
           </CFormLabel>
+          <CCol sm={10}>
+            <CTable striped responsive align="middle">
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col"> Checkpoint</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">
+                    PM Review(Yes/No/N/A)
+                  </CTableHeaderCell>
+                  <CTableHeaderCell scope="col">
+                    Remarks/Details
+                  </CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {projectViewDetails?.chelist?.map((item, index) => {
+                  return (
+                    <CTableRow key={index}>
+                      <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.name}</CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {item.answer || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {item.comments || 'N/A'}
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
+              </CTableBody>
+            </CTable>
+          </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Milestone:
           </CFormLabel>
-          <CCol sm={3}>
+          <CCol sm={10}>
             <CTable striped responsive align="middle">
               <CTableHead>
                 <CTableRow>

@@ -60,11 +60,19 @@ const ProjectCreationRequestTable = ({
 
   const projectRequestStatusLabelColor = (status: string): JSX.Element => {
     if (status === 'Rejected') {
-      return <CBadge className="rounded-pill label-danger">{status}</CBadge>
+      return (
+        <CBadge className="rounded-pill label-danger status-name">
+          {status}
+        </CBadge>
+      )
     } else if (status === 'Approved') {
-      return <CBadge className="rounded-pill label-success">{status}</CBadge>
+      return (
+        <CBadge className="rounded-pill label-success status-name">
+          {status}
+        </CBadge>
+      )
     } else if (status === 'Pending Approval') {
-      return <CBadge className="rounded-pill label-default">{status}</CBadge>
+      return <CBadge className="rounded-pill label-default ">{status}</CBadge>
     }
     return <></>
   }
@@ -105,7 +113,7 @@ const ProjectCreationRequestTable = ({
                   <CTableDataCell scope="row">
                     {getItemNumber(index)}
                   </CTableDataCell>
-                  <CTableDataCell>
+                  <CTableDataCell className="project-width">
                     {projectRequest.projectName || 'N/A'}
                   </CTableDataCell>
                   <CTableDataCell>
@@ -132,7 +140,7 @@ const ProjectCreationRequestTable = ({
                   <CTableDataCell>
                     <CButton
                       color="info"
-                      className="btn-ovh me-2"
+                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
                       onClick={() =>
                         handleProjectRequestViewClick(projectRequest.id)
@@ -142,14 +150,14 @@ const ProjectCreationRequestTable = ({
                     </CButton>
                     <CButton
                       color="success"
-                      className="btn-ovh me-2"
+                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
                     >
                       <i className="fa fa-check-circle-o"></i>
                     </CButton>
                     <CButton
                       color="info"
-                      className="btn-ovh me-2"
+                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
                       onClick={() =>
                         handleProjectRequestHistoryClick(projectRequest.id)
@@ -159,14 +167,14 @@ const ProjectCreationRequestTable = ({
                     </CButton>
                     <CButton
                       color="danger"
-                      className="btn-ovh me-2"
+                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
                     >
                       <i className="fa fa-times text-white"></i>
                     </CButton>
                     <CButton
                       color="danger"
-                      className="btn-ovh me-2"
+                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
