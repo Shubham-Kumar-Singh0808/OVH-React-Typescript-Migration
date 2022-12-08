@@ -75,7 +75,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
         recognitionOfwork: exitFeedBackForm?.recognitionOfwork,
         roleClarity: exitFeedBackForm?.roleClarity,
         salary: exitFeedBackForm?.salary,
-        separationId: getAllResignationHistory?.separationId as number,
+        separationId: getAllResignationHistory?.separationId,
         superiorGuidance: exitFeedBackForm?.superiorGuidance,
         dislikeAboutCompany: exitFeedBackForm?.dislikeAboutCompany
       }),

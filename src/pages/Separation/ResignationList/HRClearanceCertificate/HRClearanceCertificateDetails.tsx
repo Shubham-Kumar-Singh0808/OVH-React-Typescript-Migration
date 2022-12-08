@@ -91,8 +91,8 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
   }
   const due = HrClearanceDetails[0]?.isDue ? 'Due' : 'No Due'
 
-  const exitDocumentHandler = (separationId: number) => {
-    dispatch(reduxServices.resignationList.getEmpDetails(separationId))
+  const exitDocumentHandler = (HRseparationId: number) => {
+    dispatch(reduxServices.resignationList.getEmpDetails(HRseparationId))
   }
   return (
     <>

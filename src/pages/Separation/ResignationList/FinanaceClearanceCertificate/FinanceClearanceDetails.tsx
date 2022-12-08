@@ -26,7 +26,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
   )
   const dispatch = useAppDispatch()
   const [separationId, setSeparationId] = useState(0)
-  const FinanceClearanceDetails = useTypedSelector(
+  const FinanceCCDetails = useTypedSelector(
     reduxServices.resignationList.selectors.managerClearanceDetails,
   )
   const getAllResignationHistory = useTypedSelector(
@@ -64,15 +64,15 @@ const FinanceClearanceDetails = (): JSX.Element => {
     const updateCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
         addedBy: 'HR',
-        ccId: FinanceClearanceDetails[0].ccId,
+        ccId: FinanceCCDetails[0].ccId,
         comments: editFinanceCCDetails?.comments,
         createdDate: new Date(),
-        employeeId: FinanceClearanceDetails[0]?.employeeId,
-        employeeName: FinanceClearanceDetails[0]?.employeeName,
+        employeeId: FinanceCCDetails[0]?.employeeId,
+        employeeName: FinanceCCDetails[0]?.employeeName,
         isDue: isFinanceEditActiveValue as unknown as boolean,
-        seperationEmpId: FinanceClearanceDetails[0]?.seperationEmpId,
-        seperationEmpName: FinanceClearanceDetails[0]?.seperationEmpName,
-        seperationId: FinanceClearanceDetails[0]?.seperationId,
+        seperationEmpId: FinanceCCDetails[0]?.seperationEmpId,
+        seperationEmpName: FinanceCCDetails[0]?.seperationEmpName,
+        seperationId: FinanceCCDetails[0]?.seperationId,
       }),
     )
     if (
@@ -93,12 +93,12 @@ const FinanceClearanceDetails = (): JSX.Element => {
   const cancelFinanceCCDetailsButtonHandler = () => {
     setIsFinanceCCDetailsEdit(false)
   }
-  const due = FinanceClearanceDetails[0]?.isDue ? 'Due' : 'No Due'
+  const due = FinanceCCDetails[0]?.isDue ? 'Due' : 'No Due'
   return (
     <>
       <div className="card mb-4 myprofile-wrapper">
         {isFinanceCCDetailsEdit &&
-        FinanceClearanceDetails[0]?.seperationId === separationId ? (
+        FinanceCCDetails[0]?.seperationId === separationId ? (
           <>
             <CCardHeader>
               <h4 className="h4">Edit Clearance Certificate Details</h4>
@@ -116,7 +116,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
             <CRow className="justify-content-end">
               <CCol className="text-end" md={4}>
                 {isFinanceCCDetailsEdit &&
-                FinanceClearanceDetails[0]?.seperationId === separationId ? (
+                FinanceCCDetails[0]?.seperationId === separationId ? (
                   <>
                     <CButton
                       color="info"
@@ -134,9 +134,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                       className="btn-ovh me-1"
                       data-testid="edit-btn"
                       onClick={() => {
-                        editFinanceCCDetailsButtonHandler(
-                          FinanceClearanceDetails[0],
-                        )
+                        editFinanceCCDetailsButtonHandler(FinanceCCDetails[0])
                       }}
                     >
                       <i className="fa fa-arrow-left  me-1"></i>Edit
@@ -155,7 +153,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{FinanceClearanceDetails[0]?.employeeId}</p>
+                <p className="mb-0">{FinanceCCDetails[0]?.employeeId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -163,9 +161,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">
-                  {FinanceClearanceDetails[0]?.employeeName}
-                </p>
+                <p className="mb-0">{FinanceCCDetails[0]?.employeeName}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -173,9 +169,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Submitted Employee Id:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">
-                  {FinanceClearanceDetails[0]?.seperationEmpId}
-                </p>
+                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -183,9 +177,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Submitted Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">
-                  {FinanceClearanceDetails[0]?.seperationEmpName}
-                </p>
+                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpName}</p>
               </CCol>
             </CRow>
 
@@ -194,7 +186,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Due:
               </CFormLabel>
               {isFinanceCCDetailsEdit &&
-              FinanceClearanceDetails[0]?.seperationId === separationId ? (
+              FinanceCCDetails[0]?.seperationId === separationId ? (
                 <CCol sm={3}>
                   <CFormCheck
                     data-testid="active"
@@ -231,7 +223,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Comments:
               </CFormLabel>
               {isFinanceCCDetailsEdit &&
-              FinanceClearanceDetails[0]?.seperationId === separationId ? (
+              FinanceCCDetails[0]?.seperationId === separationId ? (
                 <CCol sm={5}>
                   <CFormTextarea
                     aria-label="comments"
@@ -244,13 +236,13 @@ const FinanceClearanceDetails = (): JSX.Element => {
               ) : (
                 <CCol sm={3}>
                   <p className="mb-0">
-                    {FinanceClearanceDetails[0]?.comments || 'N/A'}
+                    {FinanceCCDetails[0]?.comments || 'N/A'}
                   </p>
                 </CCol>
               )}
             </CRow>
             {isFinanceCCDetailsEdit &&
-            FinanceClearanceDetails[0]?.seperationId === separationId ? (
+            FinanceCCDetails[0]?.seperationId === separationId ? (
               <>
                 <CRow className="mt-3 mb-4">
                   <CCol md={{ span: 6, offset: 3 }}>
