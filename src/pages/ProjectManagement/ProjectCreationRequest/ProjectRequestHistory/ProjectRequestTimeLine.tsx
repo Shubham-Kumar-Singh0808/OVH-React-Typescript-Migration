@@ -44,7 +44,7 @@ const ProjectRequestTimeLine = (): JSX.Element => {
   return (
     <>
       <div className="sh-timeline-container">
-        {projectCreationRequestHistory.map((projectHistory, index) => {
+        {projectCreationRequestHistory?.map((projectHistory, index) => {
           return (
             <div key={index} className="sh-timeline-card">
               <div
