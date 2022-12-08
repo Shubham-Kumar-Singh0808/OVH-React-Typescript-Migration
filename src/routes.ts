@@ -282,6 +282,13 @@ const AddInvestment = React.lazy(
   () => import('./pages/Finance/AddInvestment/AddInvestment'),
 )
 
+const ProjectCreationRequest = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/ProjectCreationRequest/ProjectCreationRequest'
+    ),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -615,6 +622,12 @@ const routes = [
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
+  },
+
+  {
+    path: '/projectRequestList',
+    name: 'Project Creation Request',
+    component: ProjectCreationRequest,
   },
 ]
 

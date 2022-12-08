@@ -72,6 +72,7 @@ import {
   ResignationListApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
+  ProjectCreationRequestApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -646,4 +647,12 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
   getSections: apiPrefix + '/itDeclaration/getSection',
+}
+
+export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
+  getAllProjectRequestList:
+    apiPrefix + '/project-mgmt/getAllProjectRequestList',
+  getProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
+  getAuditForProjectRequest:
+    apiPrefix + '/project-mgmt/getAuditForProjectRequest',
 }
