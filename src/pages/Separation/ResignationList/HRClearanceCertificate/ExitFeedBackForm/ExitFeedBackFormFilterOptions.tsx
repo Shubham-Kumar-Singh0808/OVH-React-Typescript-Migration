@@ -83,9 +83,9 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
     if (uploadFile) {
       const formData = new FormData()
       formData.append('file', uploadFile, uploadFile.name)
-      const ticketIdParams = createNewTicketResultAction.payload 
+      const exitFormIdParams = createNewTicketResultAction.payload 
       const uploadPrepareObject = {
-        exitformId: ticketIdParams as number,
+        exitFormId: exitFormIdParams as number,
         file: formData,
       }
       dispatch(
@@ -97,13 +97,13 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
     if (uploadRelieveLetter) {
       const formData = new FormData()
       formData.append('file', uploadRelieveLetter, uploadRelieveLetter.name)
-      const ticketIdParams = createNewTicketResultAction.payload 
+      const exitFeedBackFormIdIdParams = createNewTicketResultAction.payload 
       const uploadPrepareObject = {
-        exitfeddbackformId: ticketIdParams as number,
+        exitFeedBackFormId: exitFeedBackFormIdIdParams as number,
         file: formData,
       }
       dispatch(
-        reduxServices.resignationList.uploadExitfeedBackFile(
+        reduxServices.resignationList.uploadExitFeedBackFile(
           uploadPrepareObject,
         ),
       )    

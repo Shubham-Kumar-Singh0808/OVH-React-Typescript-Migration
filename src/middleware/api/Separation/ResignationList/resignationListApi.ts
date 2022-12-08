@@ -156,15 +156,15 @@ const saveExitFeedBackForm = async (
 }
 
 const uploadRelievingLetter = async (prepareObject: {
-  exitformId: number
+  exitFormId: number
   file: FormData
 }): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: resignationListApiConfig.uploadrelievingletter,
+    url: resignationListApiConfig.uploadRelievingLetter,
     method: AllowedHttpMethods.post,
     data: prepareObject.file,
     params: {
-      exitfeddbackformId: prepareObject.exitformId,
+      exitfeddbackformId: prepareObject.exitFormId,
     },
     additionalHeaders: {
       'Content-Type': 'multipart/form-data',
@@ -174,16 +174,16 @@ const uploadRelievingLetter = async (prepareObject: {
   return response.data
 }
 
-const uploadExitfeedBackFile = async (prepareObject: {
-  exitfeddbackformId: number
+const uploadExitFeedBackFile = async (prepareObject: {
+  exitFeedBackFormId: number
   file: FormData
 }): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: resignationListApiConfig.uploadExitfeedBackFile,
+    url: resignationListApiConfig.uploadExitFeedBackFile,
     method: AllowedHttpMethods.post,
     data: prepareObject.file,
     params: {
-      exitfeddbackformId: prepareObject.exitfeddbackformId,
+      exitfeddbackformId: prepareObject.exitFeedBackFormId,
     },
     additionalHeaders: {
       'Content-Type': 'multipart/form-data',
@@ -204,7 +204,7 @@ const resignationListApi = {
   getEmpDetails,
   saveExitFeedBackForm,
   uploadRelievingLetter,
-  uploadExitfeedBackFile,
+  uploadExitFeedBackFile,
 }
 
 export default resignationListApi

@@ -162,7 +162,7 @@ const saveExitFeedBackForm = createAsyncThunk<
 
 const uploadRelievingLetter = createAsyncThunk(
   'resignationList/uploadRelievingLetter',
-  async (prepareObject: { exitformId: number; file: FormData }, thunkApi) => {
+  async (prepareObject: { exitFormId: number; file: FormData }, thunkApi) => {
     try {
       return await resignationListApi.uploadRelievingLetter(prepareObject)
     } catch (error) {
@@ -172,14 +172,14 @@ const uploadRelievingLetter = createAsyncThunk(
   },
 )
 
-const uploadExitfeedBackFile = createAsyncThunk(
+const uploadExitFeedBackFile = createAsyncThunk(
   'resignationList/uploadExitfeedBackFile',
   async (
-    prepareObject: { exitfeddbackformId: number; file: FormData },
+    prepareObject: { exitFeedBackFormId: number; file: FormData },
     thunkApi,
   ) => {
     try {
-      return await resignationListApi.uploadExitfeedBackFile(prepareObject)
+      return await resignationListApi.uploadExitFeedBackFile(prepareObject)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -289,7 +289,7 @@ const resignationListThunk = {
   getEmpDetails,
   saveExitFeedBackForm,
   uploadRelievingLetter,
-  uploadExitfeedBackFile,
+  uploadExitFeedBackFile,
 }
 
 const resignationListSelectors = {
