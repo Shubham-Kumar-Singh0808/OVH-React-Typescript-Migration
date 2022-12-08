@@ -6,6 +6,7 @@ import { cleanup, render, screen, waitFor } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockSections } from '../../../../test/data/investmentCheckListData'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
+import EditSection from '../Edit Section/EditSection'
 
 const toRender = (
   <div>
@@ -68,5 +69,21 @@ describe('Employee BirthdaysList Table Component Testing', () => {
     userEvent.click(deleteButtonElement)
     const yesButtonEle = screen.getByRole('button', { name: 'Yes' })
     userEvent.click(yesButtonEle)
+  })
+  test('should render edit section upon clicking edit button from the Actions', () => {
+    const editButtonEle = screen.getByTestId('section-edit-btn1')
+    userEvent.click(editButtonEle)
+    expect(
+      render(
+        <EditSection
+          editSection={{
+            invests: [],
+            sectionId: 0,
+            sectionLimit: '',
+            sectionName: '',
+          }}
+        />,
+      ),
+    ).toBeTruthy()
   })
 })

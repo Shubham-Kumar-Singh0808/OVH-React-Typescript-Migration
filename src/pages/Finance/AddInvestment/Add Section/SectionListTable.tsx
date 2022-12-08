@@ -106,7 +106,7 @@ const SectionListTable = ({
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CTable striped>
+          <CTable striped responsive>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col" className="w-10">
@@ -179,7 +179,7 @@ const SectionListTable = ({
           <CRow>
             <CCol xs={4}>
               <strong>
-                {sections?.length
+                {sections.length
                   ? `Total Records: ${sections.length}`
                   : `No Records Found`}
               </strong>
