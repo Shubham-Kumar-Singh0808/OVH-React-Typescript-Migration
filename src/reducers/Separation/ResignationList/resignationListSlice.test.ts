@@ -138,5 +138,43 @@ describe('Resign List Slice', () => {
         submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
       })
     })
+
+    it('Should be able to set isLoading to "loading" if getEmpDetails is pending', () => {
+      const action = {
+        type: resignationListService.getEmpDetails.pending.type,
+      }
+      const state = resignationListReducer(initialResignationListState, action)
+      expect(state).toEqual({
+        resignationList: { list: [], size: 0 },
+        isLoading: ApiLoadingState.loading,
+        currentPage: 1,
+        pageSize: 20,
+        separationTimeLine: {} as SeparationTimeLine,
+        checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+        clearanceDetails: [],
+        toggle: '',
+        getEmpDetailsType: {} as GetEmpDetailsType,
+        submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if saveExitFeedBackForm is pending', () => {
+      const action = {
+        type: resignationListService.saveExitFeedBackForm.pending.type,
+      }
+      const state = resignationListReducer(initialResignationListState, action)
+      expect(state).toEqual({
+        resignationList: { list: [], size: 0 },
+        isLoading: ApiLoadingState.loading,
+        currentPage: 1,
+        pageSize: 20,
+        separationTimeLine: {} as SeparationTimeLine,
+        checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+        clearanceDetails: [],
+        toggle: '',
+        getEmpDetailsType: {} as GetEmpDetailsType,
+        submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
+      })
+    })
   })
 })
