@@ -317,6 +317,10 @@ const AddInvestment = React.lazy(
   () => import('./pages/Finance/AddInvestment/AddInvestment'),
 )
 
+const AddSection = React.lazy(
+  () => import('./pages/Finance/AddInvestment/Add Section/SectionsList'),
+)
+
 const ProjectCreationRequest = React.lazy(
   () =>
     import(
@@ -685,7 +689,11 @@ const routes = [
     name: 'Investment CheckList',
     component: InvestmentCheckList,
   },
-
+  {
+    path: '/addSection',
+    name: 'Add Section',
+    component: AddSection,
+  },
   {
     path: '/projectRequestList',
     name: 'Project Creation Request',

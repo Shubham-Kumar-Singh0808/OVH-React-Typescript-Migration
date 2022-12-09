@@ -1,7 +1,9 @@
 import {
+  AddSection,
   Cycle,
   ITDeclarationFormListResponse,
   ITDeclarationListApiProps,
+  UpdateSection,
 } from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -54,8 +56,47 @@ const exportITDeclarationList = async (
   return response.data
 }
 
+const addSection = async (
+  addNewSection: AddSection,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.addSection,
+    method: AllowedHttpMethods.post,
+    data: addNewSection,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateSection = async (
+  editSection: UpdateSection,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.updateSection,
+    method: AllowedHttpMethods.put,
+    data: editSection,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deleteSection = async (id: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.deleteSection,
+    method: AllowedHttpMethods.delete,
+    params: {
+      sectionId: id,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
   getITDeclarationForm,
   exportITDeclarationList,
+  addSection,
+  deleteSection,
+  updateSection,
 }

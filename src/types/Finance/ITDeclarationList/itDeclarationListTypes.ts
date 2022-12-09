@@ -70,6 +70,27 @@ export type ITDeclarationListOptionsProps = {
   setSearchInput: (value: string) => void
 }
 
+export type AddSection = {
+  sectionLimit: string
+  sectionName: string
+}
+export type Invests = {
+  description: string
+  investmentId: number
+  investmentName: string
+  maxLimit: number
+  requiredDocs: string
+  sectionId: number
+  sectionName: string
+}
+
+export type UpdateSection = {
+  invests: Invests[]
+  sectionId: number
+  sectionLimit: string | number
+  sectionName: string
+}
+
 export type ITDeclarationListSliceState = {
   itDeclarationForms: ITForm[]
   listSize: number
@@ -77,4 +98,7 @@ export type ITDeclarationListSliceState = {
   isLoading: LoadingState
   error: ValidationError
   cycles: Cycle[]
+  currentPage: number
+  pageSize: number
+  toggle: string
 }

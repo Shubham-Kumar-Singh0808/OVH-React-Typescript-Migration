@@ -14,6 +14,15 @@ const AddInvestment = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
+            <Link to={`/addSection`}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="add-section-btn"
+              >
+                <i className="fa fa-plus me-1"></i>Add Section
+              </CButton>
+            </Link>
             <Link to={`/itDeclarationList`}>
               <CButton
                 color="info"
