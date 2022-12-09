@@ -7,16 +7,21 @@ import SectionsList from './SectionsList'
 import { render, screen } from '../../../../test/testUtils'
 
 const history = createMemoryHistory()
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <Router history={history}>
+      <SectionsList />
+    </Router>
+  </div>
+)
 describe('IT Declaration List Component Testing', () => {
   beforeEach(() => {
-    render(
-      <Router history={history}>
-        <SectionsList />
-      </Router>,
-      {
-        preloadedState: {},
-      },
-    )
+    render(toRender, {
+      preloadedState: {},
+    })
   })
   test('should render IT Declaration List Page Title', () => {
     expect(screen.getByText("Section's")).toBeInTheDocument()

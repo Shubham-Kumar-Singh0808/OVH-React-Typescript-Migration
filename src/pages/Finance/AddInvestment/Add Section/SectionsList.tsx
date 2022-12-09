@@ -8,6 +8,9 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import EditSection from '../Edit Section/EditSection'
 import { UpdateSection } from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const SectionsList = (): JSX.Element => {
   const [editSection, setEditSection] = useState<UpdateSection>({
@@ -19,6 +22,9 @@ const SectionsList = (): JSX.Element => {
 
   const toggle = useTypedSelector(
     reduxServices.itDeclarationList.selectors.toggle,
+  )
+  const isLoading = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.isLoading,
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -46,23 +52,29 @@ const SectionsList = (): JSX.Element => {
             CBodyClassName="ps-0 pe-0"
             CFooterClassName="d-none"
           >
-            <CRow className="justify-content-end">
-              <CCol className="text-end" md={4}>
-                <Link to={`/addInvestment`}>
-                  <CButton
-                    color="info"
-                    className="btn-ovh me-1"
-                    data-testid="back-btn"
-                  >
-                    <i className="fa fa-arrow-left  me-1"></i>Back
-                  </CButton>
-                </Link>
-              </CCol>
-            </CRow>
-            <AddNewSection />
-            <SectionListTable
-              editSectionButtonHandler={editSectionButtonHandler}
-            />
+            {isLoading !== ApiLoadingState.loading ? (
+              <>
+                <CRow className="justify-content-end">
+                  <CCol className="text-end" md={4}>
+                    <Link to={`/addInvestment`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1"
+                        data-testid="back-btn"
+                      >
+                        <i className="fa fa-arrow-left  me-1"></i>Back
+                      </CButton>
+                    </Link>
+                  </CCol>
+                </CRow>
+                <AddNewSection />
+                <SectionListTable
+                  editSectionButtonHandler={editSectionButtonHandler}
+                />
+              </>
+            ) : (
+              <OLoadingSpinner type={LoadingType.PAGE} />
+            )}
           </OCard>
         </>
       )}
