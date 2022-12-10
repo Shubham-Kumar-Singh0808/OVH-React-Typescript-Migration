@@ -116,12 +116,12 @@ const getInvestments = async (): Promise<Invest[]> => {
 }
 
 const addInvestment = async (
-  addInvestment: AddInvestmentData,
+  addInvestmentData: AddInvestmentData,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: itDeclarationListApiConfig.addInvestment,
     method: AllowedHttpMethods.post,
-    data: addInvestment,
+    data: addInvestmentData,
   })
   const response = await useAxios(requestConfig)
   return response.data

@@ -109,9 +109,9 @@ const getInvestments = createAsyncThunk(
 
 const addInvestment = createAsyncThunk(
   'itDeclarationList/addInvestment',
-  async (addInvestment: AddInvestmentData, thunkApi) => {
+  async (addInvestmentData: AddInvestmentData, thunkApi) => {
     try {
-      return await itDeclarationListApi.addInvestment(addInvestment)
+      return await itDeclarationListApi.addInvestment(addInvestmentData)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

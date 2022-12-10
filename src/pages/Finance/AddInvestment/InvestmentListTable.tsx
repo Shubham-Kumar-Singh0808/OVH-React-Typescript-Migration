@@ -20,9 +20,6 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { currentPageData } from '../../../utils/paginationUtils'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const InvestmentListTable = (): JSX.Element => {
   const [isDescModalVisible, setIsDescModalVisible] = useState(false)
@@ -50,9 +47,7 @@ const InvestmentListTable = (): JSX.Element => {
     useState(false)
   const [toDeleteInvestmentName, setToDeleteInvestmentName] = useState('')
   const [investmentId, setInvestmentId] = useState(0)
-  const isLoading = useTypedSelector(
-    reduxServices.itDeclarationList.selectors.isLoading,
-  )
+
   const handleSectionsPageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -110,162 +105,152 @@ const InvestmentListTable = (): JSX.Element => {
 
   return (
     <>
-      {isLoading !== ApiLoadingState.loading ? (
-        <>
-          <CTable striped responsive align="middle">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Section</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Investment</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-                <CTableHeaderCell scope="col">
-                  Required Documents
+      <CTable striped responsive align="middle">
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Section</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Investment</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Required Documents</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Limits</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {currentPageItems.map((investmentItem, index) => {
+            const removeTag = '/(<([^>]+)>)/gi'
+            const removeDescSpaces = investmentItem.description?.replace(
+              removeTag,
+              '',
+            )
+            const descriptionLimit =
+              removeDescSpaces && removeDescSpaces.length > 30
+                ? `${removeDescSpaces.substring(0, 30)}...`
+                : removeDescSpaces
+            const removeDocSpaces = investmentItem.requiredDocs?.replace(
+              removeTag,
+              '',
+            )
+            const reqDocumentsLimit =
+              removeDocSpaces && removeDocSpaces.length > 30
+                ? `${removeDocSpaces.substring(0, 30)}...`
+                : removeDocSpaces
+            return (
+              <CTableRow key={index}>
+                <CTableHeaderCell scope="row">
+                  {getInvestmentItemNumber(index)}
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col">Limits</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                <CTableDataCell scope="row">
+                  {investmentItem.sectionName}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {investmentItem.investmentName}
+                </CTableDataCell>
+                {descriptionLimit ? (
+                  <CTableDataCell
+                    scope="row"
+                    className="commentWidth sh-organization-link"
+                  >
+                    <CLink
+                      className="cursor-pointer text-primary centerAlignment-text"
+                      data-testid={`desc-comments${index}`}
+                      onClick={() =>
+                        handleDescriptionModal(investmentItem.description)
+                      }
+                    >
+                      {parse(descriptionLimit)}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>{`N/A`}</CTableDataCell>
+                )}
+                {reqDocumentsLimit ? (
+                  <CTableDataCell
+                    scope="row"
+                    className="commentWidth sh-organization-link"
+                  >
+                    <CLink
+                      className="cursor-pointer text-primary centerAlignment-text"
+                      data-testid={`req-docs-desc${index}`}
+                      onClick={() =>
+                        handleDescriptionModal(investmentItem.requiredDocs)
+                      }
+                    >
+                      {parse(reqDocumentsLimit)}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>{`N/A`}</CTableDataCell>
+                )}
+                <CTableDataCell scope="row">
+                  {investmentItem.maxLimit}
+                </CTableDataCell>
+                <CTableDataCell scope="row">
+                  {userAccessToSectionActions?.updateaccess && (
+                    <CButton
+                      size="sm"
+                      color="info"
+                      className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                      data-testid={`investment-edit-btn${index}`}
+                    >
+                      <i
+                        className="fa fa-pencil-square-o"
+                        aria-hidden="true"
+                      ></i>
+                    </CButton>
+                  )}
+                  {userAccessToSectionActions?.deleteaccess && (
+                    <CButton
+                      size="sm"
+                      data-testid={`investment-delete-btn${index}`}
+                      color="danger"
+                      className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                      onClick={() =>
+                        handleShowSectionDeleteModal(
+                          investmentItem.investmentId,
+                          investmentItem.investmentName,
+                        )
+                      }
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  )}
+                </CTableDataCell>
               </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {currentPageItems.map((investmentItem, index) => {
-                const removeTag = '/(<([^>]+)>)/gi'
-                const removeDescSpaces = investmentItem.description?.replace(
-                  removeTag,
-                  '',
-                )
-                const descriptionLimit =
-                  removeDescSpaces && removeDescSpaces.length > 30
-                    ? `${removeDescSpaces.substring(0, 30)}...`
-                    : removeDescSpaces
-                const removeDocSpaces = investmentItem.requiredDocs?.replace(
-                  removeTag,
-                  '',
-                )
-                const reqDocumentsLimit =
-                  removeDocSpaces && removeDocSpaces.length > 30
-                    ? `${removeDocSpaces.substring(0, 30)}...`
-                    : removeDocSpaces
-                return (
-                  <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">
-                      {getInvestmentItemNumber(index)}
-                    </CTableHeaderCell>
-                    <CTableDataCell scope="row">
-                      {investmentItem.sectionName}
-                    </CTableDataCell>
-                    <CTableDataCell scope="row">
-                      {investmentItem.investmentName}
-                    </CTableDataCell>
-                    {descriptionLimit ? (
-                      <CTableDataCell
-                        scope="row"
-                        className="commentWidth sh-organization-link"
-                      >
-                        <CLink
-                          className="cursor-pointer text-primary centerAlignment-text"
-                          data-testid={`desc-comments${index}`}
-                          onClick={() =>
-                            handleDescriptionModal(investmentItem.description)
-                          }
-                        >
-                          {parse(descriptionLimit)}
-                        </CLink>
-                      </CTableDataCell>
-                    ) : (
-                      <CTableDataCell>{`N/A`}</CTableDataCell>
-                    )}
-                    {reqDocumentsLimit ? (
-                      <CTableDataCell
-                        scope="row"
-                        className="commentWidth sh-organization-link"
-                      >
-                        <CLink
-                          className="cursor-pointer text-primary centerAlignment-text"
-                          data-testid={`req-docs-desc${index}`}
-                          onClick={() =>
-                            handleDescriptionModal(investmentItem.requiredDocs)
-                          }
-                        >
-                          {parse(reqDocumentsLimit)}
-                        </CLink>
-                      </CTableDataCell>
-                    ) : (
-                      <CTableDataCell>{`N/A`}</CTableDataCell>
-                    )}
-                    <CTableDataCell scope="row">
-                      {investmentItem.maxLimit}
-                    </CTableDataCell>
-                    <CTableDataCell scope="row">
-                      {userAccessToSectionActions?.updateaccess && (
-                        <CButton
-                          size="sm"
-                          color="info"
-                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                          data-testid={`investment-edit-btn${index}`}
-                        >
-                          <i
-                            className="fa fa-pencil-square-o"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
-                      )}
-                      {userAccessToSectionActions?.deleteaccess && (
-                        <CButton
-                          size="sm"
-                          data-testid={`investment-delete-btn${index}`}
-                          color="danger"
-                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                          onClick={() =>
-                            handleShowSectionDeleteModal(
-                              investmentItem.investmentId,
-                              investmentItem.investmentName,
-                            )
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      )}
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-            </CTableBody>
-          </CTable>
-          <CRow>
-            <CCol xs={4}>
-              <strong>
-                {investments.length
-                  ? `Total Records: ${investments.length}`
-                  : `No Records Found`}
-              </strong>
-            </CCol>
-            <CCol xs={3}>
-              {investments.length > 20 && (
-                <OPageSizeSelect
-                  handlePageSizeSelectChange={
-                    handleSectionsPageSizeSelectChange
-                  }
-                  selectedPageSize={pageSize}
-                />
-              )}
-            </CCol>
-            {investments.length > 20 && (
-              <CCol
-                xs={5}
-                className="d-grid gap-1 d-md-flex justify-content-md-end"
-              >
-                <OPagination
-                  currentPage={currentPage}
-                  pageSetter={setCurrentPage}
-                  paginationRange={paginationRange}
-                />
-              </CCol>
-            )}
-          </CRow>
-        </>
-      ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
-      )}
+            )
+          })}
+        </CTableBody>
+      </CTable>
+      <CRow>
+        <CCol xs={4}>
+          <strong>
+            {investments.length
+              ? `Total Records: ${investments.length}`
+              : `No Records Found`}
+          </strong>
+        </CCol>
+        <CCol xs={3}>
+          {investments.length > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handleSectionsPageSizeSelectChange}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {investments.length > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
       <OModal
         visible={isDeleteInvestmentModalVisible}
         setVisible={setIsDeleteInvestmentModalVisible}

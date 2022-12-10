@@ -5,11 +5,17 @@ import AddNewInvestment from './AddNewInvestment'
 import InvestmentListTable from './InvestmentListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const InvestmentList = (): JSX.Element => {
   const [selectedSectionId, setSelectedSectionId] = useState<string>()
   const dispatch = useAppDispatch()
+  const isLoading = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.isLoading,
+  )
   useEffect(() => {
     dispatch(reduxServices.itDeclarationList.getInvestments())
     dispatch(reduxServices.itDeclarationList.getSections())
@@ -49,7 +55,13 @@ const InvestmentList = (): JSX.Element => {
           selectedSectionId={selectedSectionId as string}
           setSelectedSectionId={setSelectedSectionId}
         />
-        <InvestmentListTable />
+        {isLoading !== ApiLoadingState.loading ? (
+          <>
+            <InvestmentListTable />
+          </>
+        ) : (
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        )}
       </OCard>
     </>
   )
