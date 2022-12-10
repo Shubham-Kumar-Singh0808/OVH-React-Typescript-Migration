@@ -148,6 +148,18 @@ const getITDeclarationForm = createAsyncThunk(
   },
 )
 
+const updateInvestment = createAsyncThunk(
+  'itDeclarationList/updateInvestment',
+  async (editInvestment: Investment, thunkApi) => {
+    try {
+      return await itDeclarationListApi.updateInvestment(editInvestment)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const itDeclarationListSlice = createSlice({
   name: 'itDeclarationList',
   initialState: initialITDeclarationListState,
@@ -197,6 +209,7 @@ const itDeclarationListSlice = createSlice({
           updateSection.fulfilled,
           addInvestment.fulfilled,
           deleteInvestment.fulfilled,
+          updateInvestment.fulfilled,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -213,6 +226,7 @@ const itDeclarationListSlice = createSlice({
           getInvestments.pending,
           addInvestment.pending,
           deleteInvestment.pending,
+          updateInvestment.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -229,6 +243,7 @@ const itDeclarationListSlice = createSlice({
           getInvestments.rejected,
           addInvestment.rejected,
           deleteInvestment.rejected,
+          updateInvestment.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -266,6 +281,7 @@ const itDeclarationListThunk = {
   addInvestment,
   deleteInvestment,
   getSections,
+  updateInvestment,
 }
 
 const itDeclarationListSelectors = {

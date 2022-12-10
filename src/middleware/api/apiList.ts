@@ -652,6 +652,7 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestments',
   addInvestment: apiPrefix + '/itDeclaration/addInvestment',
   deleteInvestment: apiPrefix + '/itDeclaration/deleteInvestment',
+  updateInvestment: apiPrefix + '/itDeclaration/updateInvestment',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {

@@ -6,6 +6,7 @@ import {
   AddInvestmentData,
   AddSection,
   Cycle,
+  Investment,
   ITDeclarationFormListResponse,
   ITDeclarationListApiProps,
   UpdateSection,
@@ -139,6 +140,18 @@ const deleteInvestment = async (id: number): Promise<number> => {
   return response.data
 }
 
+const updateInvestment = async (
+  editInvestment: Investment,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.updateInvestment,
+    method: AllowedHttpMethods.put,
+    data: editInvestment,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
   getITDeclarationForm,
@@ -150,4 +163,5 @@ export const itDeclarationListApi = {
   getInvestments,
   addInvestment,
   deleteInvestment,
+  updateInvestment,
 }

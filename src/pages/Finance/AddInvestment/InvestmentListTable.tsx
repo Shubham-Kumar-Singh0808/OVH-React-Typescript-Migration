@@ -20,8 +20,13 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { currentPageData } from '../../../utils/paginationUtils'
+import { Investment } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
-const InvestmentListTable = (): JSX.Element => {
+const InvestmentListTable = ({
+  editInvestmentButtonHandler,
+}: {
+  editInvestmentButtonHandler: (editInvestmentData: Investment) => void
+}): JSX.Element => {
   const [isDescModalVisible, setIsDescModalVisible] = useState(false)
   const [description, setDescription] = useState<string>('')
   const investments = useTypedSelector(
@@ -193,6 +198,17 @@ const InvestmentListTable = (): JSX.Element => {
                       color="info"
                       className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
                       data-testid={`investment-edit-btn${index}`}
+                      onClick={() =>
+                        editInvestmentButtonHandler({
+                          description: investmentItem.description,
+                          investmentId: investmentItem.investmentId,
+                          investmentName: investmentItem.investmentName,
+                          maxLimit: investmentItem.maxLimit,
+                          requiredDocs: investmentItem.requiredDocs,
+                          sectionName: investmentItem.sectionName,
+                          sectionId: investmentItem.sectionId,
+                        })
+                      }
                     >
                       <i
                         className="fa fa-pencil-square-o"

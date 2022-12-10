@@ -95,7 +95,7 @@ export type UpdateSection = {
 export type Investment = {
   investmentId: number
   investmentName: string
-  maxLimit: number
+  maxLimit: number | string
   description: string
   requiredDocs: string
   sectionId: number
