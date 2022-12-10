@@ -40,10 +40,15 @@ const AddNewInvestment = ({
     htmlFor: 'inputAddInvestment',
     className: 'col-form-label section-label',
   }
-  const dynamicFormLabelProps = (rows: string, className: string) => {
+  const dynamicFormLabelProps = (
+    rows: string,
+    className: string,
+    testid: string,
+  ) => {
     return {
       rows,
       className,
+      testid,
     }
   }
   const sections = useTypedSelector(
@@ -86,23 +91,18 @@ const AddNewInvestment = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    if (name === 'maxLimit') {
-      const maximumLimit = value.replace(/[\D]/gi, '')
-      setAddNewInvestment((prevState) => {
-        return { ...prevState, ...{ [name]: maximumLimit } }
-      })
-    }
     setAddNewInvestment((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
   }
+
   useEffect(() => {
-    if (selectedSectionId && addNewInvestment.investmentName) {
+    if (selectedSectionId && addNewInvestment?.investmentName) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-  }, [selectedSectionId, addNewInvestment.investmentName, requireDocuments])
+  }, [selectedSectionId, addNewInvestment.investmentName])
 
   const handleClear = () => {
     setSelectedSectionId('')
@@ -160,16 +160,14 @@ const AddNewInvestment = ({
             className="col-sm-3 col-form-label text-end"
           >
             Section :
-            <span className={showIsRequired(selectedSectionId) as string}>
-              *
-            </span>
+            <span className={showIsRequired(selectedSectionId)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
               aria-label="section"
               name="sectionName"
               id="section"
-              data-testid="select-name"
+              data-testid="select-section-name"
               onChange={(e) => setSelectedSectionId(e.target.value)}
               value={selectedSectionId}
             >
@@ -228,7 +226,9 @@ const AddNewInvestment = ({
               autoComplete="off"
               value={investmentMaxLimit}
               maxLength={16}
-              onChange={(e) => setInvestmentMaxLimit(e.target.value)}
+              onChange={(e) =>
+                setInvestmentMaxLimit(e.target.value.replace(/\D/g, ''))
+              }
             />
           </CCol>
         </CRow>
@@ -308,6 +308,7 @@ const AddNewInvestment = ({
                 {...dynamicFormLabelProps(
                   '2',
                   'investment-text-area documentWidth',
+                  'required-documents',
                 )}
                 onChange={(e) => setRequiredDocuments(e.target.value)}
               ></CFormTextarea>
@@ -319,7 +320,7 @@ const AddNewInvestment = ({
             <CCol md={{ span: 6, offset: 3 }}>
               <>
                 <CButton
-                  data-testid="as-add-btn"
+                  data-testid="addInv-add-btn"
                   className="btn-ovh me-1 text-white"
                   color="success"
                   onClick={handleAddNewInvestment}
@@ -328,7 +329,7 @@ const AddNewInvestment = ({
                   Add
                 </CButton>
                 <CButton
-                  data-testid="as-clear-btn"
+                  data-testid="addInv-clear-btn"
                   color="warning "
                   className="btn-ovh text-white"
                   onClick={handleClear}

@@ -163,7 +163,7 @@ const InvestmentListTable = (): JSX.Element => {
                       >
                         <CLink
                           className="cursor-pointer text-primary centerAlignment-text"
-                          data-testid={`emp-comments${index}`}
+                          data-testid={`desc-comments${index}`}
                           onClick={() =>
                             handleDescriptionModal(investmentItem.description)
                           }
@@ -181,7 +181,7 @@ const InvestmentListTable = (): JSX.Element => {
                       >
                         <CLink
                           className="cursor-pointer text-primary centerAlignment-text"
-                          data-testid={`emp-comments${index}`}
+                          data-testid={`req-docs-desc${index}`}
                           onClick={() =>
                             handleDescriptionModal(investmentItem.requiredDocs)
                           }
@@ -201,7 +201,7 @@ const InvestmentListTable = (): JSX.Element => {
                           size="sm"
                           color="info"
                           className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                          data-testid={`section-edit-btn${index}`}
+                          data-testid={`investment-edit-btn${index}`}
                         >
                           <i
                             className="fa fa-pencil-square-o"
@@ -212,7 +212,7 @@ const InvestmentListTable = (): JSX.Element => {
                       {userAccessToSectionActions?.deleteaccess && (
                         <CButton
                           size="sm"
-                          data-testid={`section-delete-btn${index}`}
+                          data-testid={`investment-delete-btn${index}`}
                           color="danger"
                           className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
                           onClick={() =>
