@@ -531,11 +531,15 @@ export interface ResignationListApi extends ApiBase {
 
 export interface ITDeclarationListApi extends ApiBase {
   getCycles: string
+  getSections: string
   getITDeclarationForm: string
   exportITDeclarationList: string
   deleteSection: string
   addSection: string
   updateSection: string
+  getInvestments: string
+  addInvestment: string
+  deleteInvestment: string
 }
 
 export interface InvestmentCheckListApi extends ApiBase {

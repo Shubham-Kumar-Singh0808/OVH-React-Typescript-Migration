@@ -1,4 +1,5 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
+import { Section } from '../InvestmentCheckList/investmentCheckListTypes'
 
 export type Cycle = {
   active: boolean
@@ -91,6 +92,24 @@ export type UpdateSection = {
   sectionName: string
 }
 
+export type Investment = {
+  investmentId: number
+  investmentName: string
+  maxLimit: number
+  description: string
+  requiredDocs: string
+  sectionId: number
+  sectionName: string
+}
+
+export type AddInvestmentData = {
+  description?: string
+  investmentName: string
+  maxLimit: string
+  requiredDocs: string
+  sectionId?: number | string
+}
+
 export type ITDeclarationListSliceState = {
   itDeclarationForms: ITForm[]
   listSize: number
@@ -98,6 +117,8 @@ export type ITDeclarationListSliceState = {
   isLoading: LoadingState
   error: ValidationError
   cycles: Cycle[]
+  sections: Section[]
+  investments: Investment[]
   currentPage: number
   pageSize: number
   toggle: string

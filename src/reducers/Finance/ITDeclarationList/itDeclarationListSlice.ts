@@ -4,9 +4,12 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { itDeclarationListApi } from '../../../middleware/api/Finance/ITDeclarationList/itDeclarationListApi'
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
+import { Section } from '../../../types/Finance/InvestmentCheckList/investmentCheckListTypes'
 import {
+  AddInvestmentData,
   AddSection,
   Cycle,
+  Investment,
   ITDeclarationListApiProps,
   ITDeclarationListSliceState,
   ITForm,
@@ -23,6 +26,8 @@ const initialITDeclarationListState: ITDeclarationListSliceState = {
   currentPage: 1,
   pageSize: 20,
   toggle: '',
+  investments: [],
+  sections: [],
 }
 
 const getCycles = createAsyncThunk(
@@ -30,6 +35,18 @@ const getCycles = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await itDeclarationListApi.getCycles()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getSections = createAsyncThunk(
+  'itDeclarationList/getSections',
+  async (_, thunkApi) => {
+    try {
+      return await itDeclarationListApi.getSections()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -78,6 +95,47 @@ const deleteSection = createAsyncThunk<
   }
 })
 
+const getInvestments = createAsyncThunk(
+  'itDeclarationList/getInvestments',
+  async (_, thunkApi) => {
+    try {
+      return await itDeclarationListApi.getInvestments()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const addInvestment = createAsyncThunk(
+  'itDeclarationList/addInvestment',
+  async (addInvestmentData: AddInvestmentData, thunkApi) => {
+    try {
+      return await itDeclarationListApi.addInvestment(addInvestmentData)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const deleteInvestment = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('itDeclarationList/deleteInvestment', async (investId, thunkApi) => {
+  try {
+    return await itDeclarationListApi.deleteInvestment(investId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const getITDeclarationForm = createAsyncThunk(
   'itDeclarationList/getITDeclarationForm',
   async (props: ITDeclarationListApiProps, thunkApi) => {
@@ -119,6 +177,14 @@ const itDeclarationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.cycles = action.payload
       })
+      .addCase(getSections.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.sections = action.payload
+      })
+      .addCase(getInvestments.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.investments = action.payload
+      })
       .addCase(getITDeclarationForm.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.itDeclarationForms = action.payload.itforms
@@ -129,6 +195,8 @@ const itDeclarationListSlice = createSlice({
           addSection.fulfilled,
           deleteSection.fulfilled,
           updateSection.fulfilled,
+          addInvestment.fulfilled,
+          deleteInvestment.fulfilled,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -137,10 +205,14 @@ const itDeclarationListSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getCycles.pending,
+          getSections.pending,
           getITDeclarationForm.pending,
           addSection.pending,
           deleteSection.pending,
           updateSection.pending,
+          getInvestments.pending,
+          addInvestment.pending,
+          deleteInvestment.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -149,10 +221,14 @@ const itDeclarationListSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getCycles.rejected,
+          getSections.rejected,
           getITDeclarationForm.rejected,
           deleteSection.rejected,
           addSection.rejected,
           updateSection.rejected,
+          getInvestments.rejected,
+          addInvestment.rejected,
+          deleteInvestment.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -165,6 +241,8 @@ const itDeclarationListSlice = createSlice({
 const isLoading = (state: RootState): LoadingState =>
   state.itDeclarationList.isLoading
 const cycles = (state: RootState): Cycle[] => state.itDeclarationList.cycles
+const sections = (state: RootState): Section[] =>
+  state.itDeclarationList.sections
 const itDeclarationForms = (state: RootState): ITForm[] =>
   state.itDeclarationList.itDeclarationForms
 const listSize = (state: RootState): number => state.itDeclarationList.listSize
@@ -175,6 +253,8 @@ const pageFromState = (state: RootState): number =>
 const pageSizeFromState = (state: RootState): number =>
   state.itDeclarationList.pageSize
 const toggle = (state: RootState): string => state.itDeclarationList.toggle
+const investments = (state: RootState): Investment[] =>
+  state.itDeclarationList.investments
 
 const itDeclarationListThunk = {
   getCycles,
@@ -182,6 +262,10 @@ const itDeclarationListThunk = {
   addSection,
   deleteSection,
   updateSection,
+  getInvestments,
+  addInvestment,
+  deleteInvestment,
+  getSections,
 }
 
 const itDeclarationListSelectors = {
@@ -193,6 +277,8 @@ const itDeclarationListSelectors = {
   pageFromState,
   pageSizeFromState,
   toggle,
+  investments,
+  sections,
 }
 
 export const itDeclarationListService = {
