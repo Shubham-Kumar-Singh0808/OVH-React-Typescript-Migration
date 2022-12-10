@@ -52,4 +52,20 @@ export const itDeclarationListHandlers = [
     })
     return res(delRes)
   }),
+  //addInvestment api mock
+  rest.post(itDeclarationListApiConfig.addInvestment, (_req, res, ctx) => {
+    const addInvRes = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(addInvRes)
+  }),
+  //deleteInvestment api mock
+  rest.delete(itDeclarationListApiConfig.deleteInvestment, (_req, res, ctx) => {
+    const delInvRes = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(delInvRes)
+  }),
 ]

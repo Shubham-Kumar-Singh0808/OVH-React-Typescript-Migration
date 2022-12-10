@@ -1,9 +1,20 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import AddNewInvestment from './AddNewInvestment'
+import InvestmentListTable from './InvestmentListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../stateStore'
 
-const AddInvestment = (): JSX.Element => {
+const InvestmentList = (): JSX.Element => {
+  const [selectedSectionId, setSelectedSectionId] = useState<string>()
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(reduxServices.itDeclarationList.getInvestments())
+    dispatch(reduxServices.itDeclarationList.getSections())
+  }, [dispatch])
+
   return (
     <>
       <OCard
@@ -34,9 +45,14 @@ const AddInvestment = (): JSX.Element => {
             </Link>
           </CCol>
         </CRow>
+        <AddNewInvestment
+          selectedSectionId={selectedSectionId as string}
+          setSelectedSectionId={setSelectedSectionId}
+        />
+        <InvestmentListTable />
       </OCard>
     </>
   )
 }
 
-export default AddInvestment
+export default InvestmentList

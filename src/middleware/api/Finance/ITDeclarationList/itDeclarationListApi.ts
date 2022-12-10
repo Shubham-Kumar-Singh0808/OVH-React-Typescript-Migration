@@ -1,4 +1,9 @@
 import {
+  Invest,
+  Section,
+} from '../../../../types/Finance/InvestmentCheckList/investmentCheckListTypes'
+import {
+  AddInvestmentData,
   AddSection,
   Cycle,
   ITDeclarationFormListResponse,
@@ -56,6 +61,15 @@ const exportITDeclarationList = async (
   return response.data
 }
 
+const getSections = async (): Promise<Section[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.getSections,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const addSection = async (
   addNewSection: AddSection,
 ): Promise<number | undefined> => {
@@ -92,11 +106,48 @@ const deleteSection = async (id: number): Promise<number> => {
   return response.data
 }
 
+const getInvestments = async (): Promise<Invest[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.getInvestments,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addInvestment = async (
+  addInvestment: AddInvestmentData,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.addInvestment,
+    method: AllowedHttpMethods.post,
+    data: addInvestment,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deleteInvestment = async (id: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.deleteInvestment,
+    method: AllowedHttpMethods.delete,
+    params: {
+      investmentId: id,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
   getITDeclarationForm,
   exportITDeclarationList,
+  getSections,
   addSection,
   deleteSection,
   updateSection,
+  getInvestments,
+  addInvestment,
+  deleteInvestment,
 }

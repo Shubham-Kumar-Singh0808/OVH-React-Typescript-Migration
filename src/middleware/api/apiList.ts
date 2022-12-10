@@ -643,11 +643,15 @@ export const resignationListApiConfig: ResignationListApi = {
 
 export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getCycles: apiPrefix + '/itDeclaration/getCycles',
+  getSections: apiPrefix + '/itDeclaration/getSection',
   getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
   exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
   deleteSection: apiPrefix + '/itDeclaration/deleteSection',
   addSection: apiPrefix + '/itDeclaration/addSection',
   updateSection: apiPrefix + '/itDeclaration/editSection',
+  getInvestments: apiPrefix + '/itDeclaration/getInvestments',
+  addInvestment: apiPrefix + '/itDeclaration/addInvestment',
+  deleteInvestment: apiPrefix + '/itDeclaration/deleteInvestment',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {

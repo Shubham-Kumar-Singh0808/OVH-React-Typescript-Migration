@@ -314,7 +314,7 @@ const AddInvestmentCycle = React.lazy(
 )
 
 const AddInvestment = React.lazy(
-  () => import('./pages/Finance/AddInvestment/AddInvestment'),
+  () => import('./pages/Finance/AddInvestment/InvestmentList'),
 )
 
 const AddSection = React.lazy(
