@@ -55,6 +55,26 @@ const ResignationListTable = ({
     (feature) => feature.name === 'ShowTimeLine',
   )
 
+  const userAccessManagerClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Manager Cleranace',
+  )
+
+  const userAccessITClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'IT Cleranace',
+  )
+
+  const userAccessHRClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'HR Cleranace',
+  )
+
+  const userAccessFinanceClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Finance Cleranace',
+  )
+
+  const userAccessAdminClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Admin Cleranace',
+  )
+
   const getAllResignationList = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListDetails,
   )
