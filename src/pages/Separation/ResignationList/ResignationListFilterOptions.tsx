@@ -38,6 +38,14 @@ const ResignationListFilterOptions = ({
   const listSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
   )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessSeparationChart = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Separation Chart',
+  )
   const dispatch = useAppDispatch()
   const {
     paginationRange,
@@ -245,7 +253,9 @@ const ResignationListFilterOptions = ({
             >
               <i className="fa fa-eye"></i>View Chart
             </CButton>
+            ,
           </Link>
+
           <CButton
             color="info btn-ovh me-3"
             data-testid="export-btn"

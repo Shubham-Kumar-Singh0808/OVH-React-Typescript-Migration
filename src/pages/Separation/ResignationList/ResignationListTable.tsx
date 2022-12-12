@@ -20,6 +20,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { ResignationList } from '../../../types/Separation/ResignationList/resignationListTypes'
 
 const ResignationListTable = ({
   paginationRange,
@@ -121,6 +122,46 @@ const ResignationListTable = ({
     )
   }
 
+  const resignationHRClearanceHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'HR',
+      }),
+    )
+  }
+
+  const resignationITClearanceHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'IT',
+      }),
+    )
+  }
+
+  const resignationFinanceClearanceHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'Finance',
+      }),
+    )
+  }
+
+  const resignationAdminClearanceHandler = (separationId: number) => {
+    dispatch(reduxServices.resignationList.getSeparationTimeLine(separationId))
+    dispatch(
+      reduxServices.resignationList.getClearanceDetails({
+        separationId,
+        submittedBy: 'Admin',
+      }),
+    )
+  }
+
   const handleConfirmInitiateResignation = async () => {
     setIsInitiateModalVisible(false)
     const initiateResignationResultAction = await dispatch(
@@ -161,6 +202,105 @@ const ResignationListTable = ({
       dispatch(reduxServices.resignationList.actions.removeClearanceDetails())
     }
   }, [location.pathname])
+
+  const resignationButtonHandler = (resignationItem: ResignationList) => {
+    return (
+      <>
+        {resignationItem.isprocessInitiated ? (
+          <>
+            {userAccessManagerClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateManager`}>
+                <CButton
+                  size="sm"
+                  className={resignationItem.managerCcCss}
+                  data-testid="manager-test"
+                  onClick={() =>
+                    resignationClearanceManagerButtonHandler(
+                      resignationItem.separationId,
+                    )
+                  }
+                >
+                  <i className="fa fa-user text-white"></i>
+                </CButton>
+              </Link>
+            )}
+            {userAccessITClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateManager`}>
+                <CButton
+                  size="sm"
+                  className={resignationItem.itCcCss}
+                  onClick={() =>
+                    resignationITClearanceHandler(resignationItem.separationId)
+                  }
+                >
+                  <i className="fa fa-laptop text-white"></i>
+                </CButton>
+              </Link>
+            )}
+            {userAccessFinanceClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateFinance`}>
+                <CButton
+                  size="sm"
+                  className={resignationItem.finanaceCcCss}
+                  onClick={() =>
+                    resignationFinanceClearanceHandler(
+                      resignationItem.separationId,
+                    )
+                  }
+                >
+                  <i className="fa fa-calculator text-white"></i>
+                </CButton>
+              </Link>
+            )}
+            {userAccessAdminClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateAdmin`}>
+                <CButton
+                  size="sm"
+                  className={resignationItem.adminCcCss}
+                  onClick={() =>
+                    resignationAdminClearanceHandler(
+                      resignationItem.separationId,
+                    )
+                  }
+                >
+                  <i className="fa fa-id-badge text-white"></i>
+                </CButton>
+              </Link>
+            )}
+            {userAccessHRClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateHR`}>
+                <CButton
+                  size="sm"
+                  className={resignationItem.hrCcCss}
+                  onClick={() =>
+                    resignationHRClearanceHandler(resignationItem.separationId)
+                  }
+                >
+                  <i className="fa fa-user-circle text-white"></i>
+                </CButton>
+              </Link>
+            )}
+          </>
+        ) : (
+          userAccess?.viewaccess && (
+            <CButton
+              color="#34b2e7"
+              size="sm"
+              className="resignation-initiate-btn"
+              data-testid="initiate-btn"
+              onClick={() =>
+                handleShowInitiateResignationModal(
+                  resignationItem?.separationId,
+                )
+              }
+            >
+              <i className="fa fa-clock-o  text-white"></i>
+            </CButton>
+          )
+        )}
+      </>
+    )
+  }
   return (
     <>
       <>
@@ -234,66 +374,10 @@ const ResignationListTable = ({
                             </CButton>
                           </Link>
                         )}
-                        {resignationItem.isprocessInitiated ? (
-                          <>
-                            <Link to={`/ClearanceCertificateManager`}>
-                              <CButton
-                                size="sm"
-                                className={resignationItem.managerCcCss}
-                                data-testid="manager-test"
-                                onClick={() =>
-                                  resignationClearanceManagerButtonHandler(
-                                    resignationItem.separationId,
-                                  )
-                                }
-                              >
-                                <i className="fa fa-user text-white"></i>
-                              </CButton>
-                            </Link>
-
-                            <CButton
-                              size="sm"
-                              className={resignationItem.itCcCss}
-                            >
-                              <i className="fa fa-laptop text-white"></i>
-                            </CButton>
-                            <CButton
-                              size="sm"
-                              className={resignationItem.finanaceCcCss}
-                            >
-                              <i className="fa fa-calculator text-white"></i>
-                            </CButton>
-                            <CButton
-                              size="sm"
-                              className={resignationItem.adminCcCss}
-                            >
-                              <i className="fa fa-id-badge text-white"></i>
-                            </CButton>
-                            <Link to={`/ClearanceCertificateHR`}>
-                              <CButton
-                                size="sm"
-                                className={resignationItem.hrCcCss}
-                              >
-                                <i className="fa fa-user-circle text-white"></i>
-                              </CButton>
-                            </Link>
-                          </>
+                        {resignationItem.status === 'Relieved' ? (
+                          <></>
                         ) : (
-                          userAccess?.viewaccess && (
-                            <CButton
-                              color="#34b2e7"
-                              size="sm"
-                              className="resignation-initiate-btn"
-                              data-testid="initiate-btn"
-                              onClick={() =>
-                                handleShowInitiateResignationModal(
-                                  resignationItem?.separationId,
-                                )
-                              }
-                            >
-                              <i className="fa fa-clock-o  text-white"></i>
-                            </CButton>
-                          )
+                          resignationButtonHandler(resignationItem)
                         )}
                       </div>
                     </CTableDataCell>

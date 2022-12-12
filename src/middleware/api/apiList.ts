@@ -72,6 +72,7 @@ import {
   ResignationListApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
+  ProjectCreationRequestApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -636,15 +637,35 @@ export const resignationListApiConfig: ResignationListApi = {
   checkExitFeedBackForm:
     apiPrefix + '/separationController/checkExitFeedBackForm',
   getSeparationChart: apiPrefix + '/separationController/getSeparationChart',
+  getEmpDetails: apiPrefix + '/separationController/getEmpDetails',
+  saveExitFeedBackForm:
+    apiPrefix + '/separationController/saveExitFeedBackForm',
+  uploadRelievingLetter: apiPrefix + '/fileUpload/uploadrelievingletter',
+  uploadExitFeedBackFile: apiPrefix + '/fileUpload/uploadExitfeedBackFile',
 }
 
 export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getCycles: apiPrefix + '/itDeclaration/getCycles',
+  getSections: apiPrefix + '/itDeclaration/getSection',
   getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
   exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
+  deleteSection: apiPrefix + '/itDeclaration/deleteSection',
+  addSection: apiPrefix + '/itDeclaration/addSection',
+  updateSection: apiPrefix + '/itDeclaration/editSection',
+  getInvestments: apiPrefix + '/itDeclaration/getInvestments',
+  addInvestment: apiPrefix + '/itDeclaration/addInvestment',
+  deleteInvestment: apiPrefix + '/itDeclaration/deleteInvestment',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
   getSections: apiPrefix + '/itDeclaration/getSection',
+}
+
+export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
+  getAllProjectRequestList:
+    apiPrefix + '/project-mgmt/getAllProjectRequestList',
+  getProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
+  getAuditForProjectRequest:
+    apiPrefix + '/project-mgmt/getAuditForProjectRequest',
 }
