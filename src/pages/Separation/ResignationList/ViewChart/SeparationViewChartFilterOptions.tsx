@@ -173,17 +173,13 @@ const SeparationViewChart = ({
                   setToDate(moment(date).format(commonDateFormat))
                 }
               />
+              {dateError && (
+                <span className="text-danger">
+                  To date should be greater than From date
+                </span>
+              )}
             </CCol>
-            {dateError && (
-              <CRow className="mt-2">
-                <CCol sm={{ span: 6, offset: 4 }}>
-                  <span className="text-danger">
-                    To date should be greater than From date
-                  </span>
-                </CCol>
-              </CRow>
-            )}
-            <CCol sm={2} md={1} className="text-end">
+            <CCol sm={2} md={1} className="text-end p-0">
               <CButton
                 color="info"
                 className="btn-ovh me-1"
@@ -205,7 +201,7 @@ const SeparationViewChart = ({
             </CCol>
           </>
         )}
-        <CCol className="text-end">
+        <CCol className="text-end p-0">
           <Link to={`/resignationList`}>
             <CButton color="info" className="btn-ovh me-1">
               <i className="fa fa-arrow-left  me-1"></i>Back
