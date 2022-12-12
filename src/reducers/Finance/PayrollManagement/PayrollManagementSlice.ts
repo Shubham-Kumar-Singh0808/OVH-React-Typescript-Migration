@@ -61,6 +61,18 @@ const deletePayslip = createAsyncThunk(
   },
 )
 
+const updatePayslip = createAsyncThunk(
+  'payrollManagement/updatePayslip',
+  async (data: CurrentPayslip, thunkApi) => {
+    try {
+      return await PayrollManagementApi.updatePayslip(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialPayrollManagementState: PayRollManagementSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -68,6 +80,7 @@ const initialPayrollManagementState: PayRollManagementSliceState = {
   listSize: 0,
   paySlipInfo: [],
   paySlipList: { list: [], size: 0 },
+  editPayslip: {} as CurrentPayslip,
 }
 const payrollManagementSlice = createSlice({
   name: 'payrollManagement',
@@ -89,6 +102,10 @@ const payrollManagementSlice = createSlice({
           state.paySlipList = action.payload
         },
       )
+      .addMatcher(isAnyOf(updatePayslip.fulfilled), (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editPayslip = action.payload
+      })
       .addMatcher(
         isAnyOf(deletePayslip.fulfilled, downloadExcelFile.fulfilled),
         (state) => {
@@ -100,6 +117,7 @@ const payrollManagementSlice = createSlice({
           deletePayslip.pending,
           searchEmployee.pending,
           downloadExcelFile.pending,
+          updatePayslip.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -110,6 +128,7 @@ const payrollManagementSlice = createSlice({
           deletePayslip.rejected,
           searchEmployee.rejected,
           downloadExcelFile.rejected,
+          updatePayslip.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -127,17 +146,22 @@ const paySlipInfo = (state: RootState): CurrentPayslip[] =>
 const PaySlipsListSize = (state: RootState): number =>
   state.payrollManagement.paySlipList.size
 
+const editPayslip = (state: RootState): CurrentPayslip =>
+  state.payrollManagement.editPayslip
+
 export const payrollManagementThunk = {
   getCurrentPayslip,
   downloadExcelFile,
   searchEmployee,
   deletePayslip,
+  updatePayslip,
 }
 
 export const payrollManagementSelectors = {
   isLoading,
   paySlipInfo,
   PaySlipsListSize,
+  editPayslip,
 }
 
 export const payrollManagementService = {

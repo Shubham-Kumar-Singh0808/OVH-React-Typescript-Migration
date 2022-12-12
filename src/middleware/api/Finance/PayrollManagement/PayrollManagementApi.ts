@@ -1,4 +1,5 @@
 import {
+  CurrentPayslip,
   DownloadExcelFile,
   GetPayRollProps,
   GetPaySlipsResponse,
@@ -76,11 +77,22 @@ const deletePayslip = async (paySlipId: number): Promise<number> => {
   return response.data
 }
 
+const updatePayslip = async (data: CurrentPayslip): Promise<CurrentPayslip> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: payrollManagementApiConfig.updatePayslip,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const PayrollManagementApi = {
   getCurrentPayslip,
   downloadExcelFile,
   searchEmployee,
   deletePayslip,
+  updatePayslip,
 }
 
 export default PayrollManagementApi

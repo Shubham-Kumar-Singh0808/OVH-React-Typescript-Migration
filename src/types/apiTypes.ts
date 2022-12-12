@@ -542,4 +542,5 @@ export interface PayrollManagementApi extends ApiBase {
   downloadExcelFile: string
   searchEmployee: string
   deletePayslip: string
+  updatePayslip: string
 }

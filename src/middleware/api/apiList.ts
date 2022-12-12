@@ -654,4 +654,5 @@ export const payrollManagementApiConfig: PayrollManagementApi = {
   downloadExcelFile: apiPrefix + '/payslip/payrolladmin/downloadExcelFile',
   searchEmployee: apiPrefix + '/payslip/payrolladmin/searchEmployee',
   deletePayslip: apiPrefix + '/payslip/payrolladmin/deletePayslip',
+  updatePayslip: apiPrefix + '/payslip/payrolladmin/updatePayslip',
 }

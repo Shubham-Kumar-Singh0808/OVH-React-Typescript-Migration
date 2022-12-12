@@ -17,6 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 
 const PayrollManagementTable = (props: {
   selectMonth: string
@@ -26,6 +27,8 @@ const PayrollManagementTable = (props: {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setToggle: (value: string) => void
+  setToEditPayslip: (value: CurrentPayslip) => void
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
@@ -68,7 +71,6 @@ const PayrollManagementTable = (props: {
     )
     dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
-  console.log(renderingPayslipData)
 
   const deleteButtonHandler = (id: number) => {
     setIsDeleteModalVisible(true)
@@ -86,6 +88,11 @@ const PayrollManagementTable = (props: {
   const PaySlipsListSize = useTypedSelector(
     reduxServices.payrollManagement.selectors.PaySlipsListSize,
   )
+
+  const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
+    props.setToggle('editBankAccount')
+    props.setToEditPayslip(payslipItem)
+  }
 
   return (
     <>
@@ -135,79 +142,89 @@ const PayrollManagementTable = (props: {
               <CTableHeaderCell scope="col">Arrears</CTableHeaderCell>
 
               <CTableHeaderCell scope="col">Incentive</CTableHeaderCell>
-
               <CTableHeaderCell scope="col">VP Payable </CTableHeaderCell>
-
               <CTableHeaderCell scope="col">N.Salary</CTableHeaderCell>
-
               <CTableHeaderCell scope="col">Remarks</CTableHeaderCell>
-
               <CTableHeaderCell scope="col">Month</CTableHeaderCell>
-
               <CTableHeaderCell scope="col">Year</CTableHeaderCell>
-
               <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
             {renderingPayslipData?.length > 0 &&
-              renderingPayslipData?.map((item, index) => {
+              renderingPayslipData?.map((payslipItem, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{index + 1}</CTableDataCell>
-                    <CTableDataCell>{item.employeeId}</CTableDataCell>
-                    <CTableDataCell>{item.name}</CTableDataCell>
-                    <CTableDataCell>{item.designation}</CTableDataCell>
-                    <CTableDataCell>{item.joiningDate}</CTableDataCell>
-                    <CTableDataCell>{item.accountNo}</CTableDataCell>
-                    <CTableDataCell>{item.grossSalary}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.employeeId}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.name}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.designation}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.joiningDate}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.accountNo}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.grossSalary}</CTableDataCell>
                     <CTableDataCell>
-                      {item.variablePayPercentage}
+                      {payslipItem.variablePayPercentage}
                     </CTableDataCell>
-                    <CTableDataCell>{item.variablePay}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.variablePay}</CTableDataCell>
                     <CTableDataCell>
-                      {item.grossSalAfterVariablepay}
+                      {payslipItem.grossSalAfterVariablepay}
                     </CTableDataCell>
-                    <CTableDataCell>{item.basicSalary}</CTableDataCell>
-                    <CTableDataCell>{item.houseRentAllowance}</CTableDataCell>
-                    <CTableDataCell>{item.transportAllowance}</CTableDataCell>
-                    <CTableDataCell>{item.otherAllowance}</CTableDataCell>
-                    <CTableDataCell>{item.absent}</CTableDataCell>
-                    <CTableDataCell>{item.lossOfPay}</CTableDataCell>
-                    <CTableDataCell>{item.medicliam}</CTableDataCell>
-                    <CTableDataCell>{item.esi}</CTableDataCell>
-                    <CTableDataCell>{item.epf}</CTableDataCell>
-                    <CTableDataCell>{item.gratuity}</CTableDataCell>
-                    <CTableDataCell>{item.advArrears}</CTableDataCell>
-                    <CTableDataCell>{item.erc}</CTableDataCell>
-                    <CTableDataCell>{item.taxDeductionScheme}</CTableDataCell>
-                    <CTableDataCell>{item.professionalTax}</CTableDataCell>
-                    <CTableDataCell>{item.mealsCard}</CTableDataCell>
-                    <CTableDataCell>{item.donation}</CTableDataCell>
-                    <CTableDataCell>{item.arrears}</CTableDataCell>
-                    <CTableDataCell>{item.incentive}</CTableDataCell>
-                    <CTableDataCell>{item.vpayable}</CTableDataCell>
-                    <CTableDataCell>{item.netSalary}</CTableDataCell>
-                    <CTableDataCell>{item.remarks}</CTableDataCell>
-                    <CTableDataCell>{item.month}</CTableDataCell>
-                    <CTableDataCell>{item.year}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.basicSalary}</CTableDataCell>
+                    <CTableDataCell>
+                      {payslipItem.houseRentAllowance}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {payslipItem.transportAllowance}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {payslipItem.otherAllowance}
+                    </CTableDataCell>
+                    <CTableDataCell>{payslipItem.absent}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.lossOfPay}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.medicliam}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.esi}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.epf}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.gratuity}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.advArrears}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.erc}</CTableDataCell>
+                    <CTableDataCell>
+                      {payslipItem.taxDeductionScheme}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {payslipItem.professionalTax}
+                    </CTableDataCell>
+                    <CTableDataCell>{payslipItem.mealsCard}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.donation}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.arrears}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.incentive}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.vpayable}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.netSalary}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.remarks}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.month}</CTableDataCell>
+                    <CTableDataCell>{payslipItem.year}</CTableDataCell>
                     <CTableDataCell>
                       <CTooltip content="Edit">
                         <CButton
                           size="sm"
                           className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                           color="info btn-ovh me-1"
+                          onClick={() => {
+                            editPaySlipHandler(payslipItem)
+                          }}
                         >
                           <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>
                       </CTooltip>
+
                       <CTooltip content="Delete">
                         <CButton
                           data-testid={`btn-delete${index}`}
                           size="sm"
                           color="danger btn-ovh me-1"
                           className="btn-ovh-employee-list"
-                          onClick={() => deleteButtonHandler(item.paySlipId)}
+                          onClick={() =>
+                            deleteButtonHandler(payslipItem.paySlipId)
+                          }
                         >
                           <i className="fa fa-trash-o" aria-hidden="true"></i>
                         </CButton>
