@@ -8,11 +8,13 @@ import {
   CheckExitFeedBackForm,
   ClearanceDetails,
   ClearanceDetailsProps,
+  GetEmpDetailsType,
   GetResignationListProps,
   ResignationList,
   ResignationListSliceState,
   SeparationTimeLine,
   submitClearanceCommentsProps,
+  SubmitExitFeedBackForm,
   UpdateClearanceDetails,
 } from '../../../types/Separation/ResignationList/resignationListTypes'
 
@@ -121,6 +123,70 @@ const updateCCDetails = createAsyncThunk<
   },
 )
 
+const getEmpDetails = createAsyncThunk<
+  GetEmpDetailsType | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('resignationList/getEmpDetails', async (separationId: number, thunkApi) => {
+  try {
+    return await resignationListApi.getEmpDetails(separationId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+const saveExitFeedBackForm = createAsyncThunk<
+  number,
+  SubmitExitFeedBackForm,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'resignationList/saveExitFeedBackForm',
+  async (saveFeedBackForm: SubmitExitFeedBackForm, thunkApi) => {
+    try {
+      return await resignationListApi.saveExitFeedBackForm(saveFeedBackForm)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const uploadRelievingLetter = createAsyncThunk(
+  'resignationList/uploadRelievingLetter',
+  async (prepareObject: { exitFormId: number; file: FormData }, thunkApi) => {
+    try {
+      return await resignationListApi.uploadRelievingLetter(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const uploadExitFeedBackFile = createAsyncThunk(
+  'resignationList/uploadExitfeedBackFile',
+  async (
+    prepareObject: { exitFeedBackFormId: number; file: FormData },
+    thunkApi,
+  ) => {
+    try {
+      return await resignationListApi.uploadExitFeedBackFile(prepareObject)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -130,6 +196,8 @@ const initialResignationListState: ResignationListSliceState = {
   checkExitFeedBackForm: {} as CheckExitFeedBackForm,
   clearanceDetails: [],
   toggle: '',
+  getEmpDetailsType: {} as GetEmpDetailsType,
+  submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
 }
 
 const resignationListSlice = createSlice({
@@ -163,11 +231,21 @@ const resignationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.clearanceDetails = action.payload
       })
+
+      .addCase(getEmpDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getEmpDetailsType = action.payload as GetEmpDetailsType
+      })
+      .addCase(saveExitFeedBackForm.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(
           getResignationList.pending,
           getSeparationTimeLine.pending,
           getClearanceDetails.pending,
+          getEmpDetails.pending,
+          saveExitFeedBackForm.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -198,6 +276,9 @@ const managerClearanceDetails = (state: RootState): ClearanceDetails[] =>
 
 const toggleValue = (state: RootState): string => state.resignationList.toggle
 
+const getEmpFeedBackDetails = (state: RootState): GetEmpDetailsType =>
+  state.resignationList.getEmpDetailsType
+
 const resignationListThunk = {
   getResignationList,
   resignationIntitiateCC,
@@ -205,6 +286,10 @@ const resignationListThunk = {
   submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
+  getEmpDetails,
+  saveExitFeedBackForm,
+  uploadRelievingLetter,
+  uploadExitFeedBackFile,
 }
 
 const resignationListSelectors = {
@@ -216,6 +301,7 @@ const resignationListSelectors = {
   resignationTimeLine,
   managerClearanceDetails,
   toggleValue,
+  getEmpFeedBackDetails,
 }
 
 export const resignationListService = {
