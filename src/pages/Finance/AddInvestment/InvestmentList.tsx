@@ -102,11 +102,7 @@ const InvestmentList = (): JSX.Element => {
         </>
       )}
       {toggle === 'editInvestmentPage' && (
-        <EditInvestment
-          editInvestment={editInvestment}
-          selectedSectionId={selectedSectionId as string}
-          setSelectedSectionId={setSelectedSectionId}
-        />
+        <EditInvestment editInvestment={editInvestment} />
       )}
     </>
   )

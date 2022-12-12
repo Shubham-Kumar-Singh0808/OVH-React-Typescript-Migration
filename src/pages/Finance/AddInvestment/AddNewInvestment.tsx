@@ -66,10 +66,13 @@ const AddNewInvestment = ({
   ) => {
     if (event.target.value === 'yes') {
       setIsDocumentsVisible(true)
+    } else if (event.target.value === 'no') {
+      setIsDocumentsVisible(false)
     } else {
       setIsDocumentsVisible(false)
     }
   }
+
   const successToastMessage = (
     <OToast toastMessage="Investment added Successfully" toastColor="success" />
   )
@@ -266,11 +269,12 @@ const AddNewInvestment = ({
           <CCol className="mt-1" sm={2} md={1} lg={1} data-testid="requiredDoc">
             <CFormCheck
               type="radio"
-              name="requireDocsYes"
+              name="requireDocs"
               id="requireDocsYes"
               data-testid="documentsReqYes"
               label="Yes"
               value="yes"
+              checked={isDocumentsVisible}
               onChange={handleSelectDocumentOption}
               inline
             />
@@ -284,11 +288,12 @@ const AddNewInvestment = ({
           >
             <CFormCheck
               type="radio"
-              name="requireDocsNo"
+              name="requireDocs"
               id="requireDocsNo"
               data-testid="documentsReqNo"
               label="No"
               value="no"
+              checked={!isDocumentsVisible}
               onChange={handleSelectDocumentOption}
               inline
             />

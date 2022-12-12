@@ -21,20 +21,19 @@ import { Investment } from '../../../../types/Finance/ITDeclarationList/itDeclar
 import OCard from '../../../../components/ReusableComponent/OCard'
 
 const EditInvestment = ({
-  selectedSectionId,
-  setSelectedSectionId,
   editInvestment,
 }: {
-  selectedSectionId: string
-  setSelectedSectionId: (value: string) => void
   editInvestment: Investment
 }): JSX.Element => {
   const [editInvestmentCopy, setEditInvestmentCopy] = useState(editInvestment)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
-  const [showEditor, setShowEditor] = useState<boolean>(true)
-  const [requireDocuments, setRequiredDocuments] = useState<string>('')
+  const [requireDocuments, setRequiredDocuments] = useState(
+    editInvestment.requiredDocs,
+  )
   const [isDocumentsVisible, setIsDocumentsVisible] = useState<boolean>(false)
-  const [investmentMaxLimit, setInvestmentMaxLimit] = useState<string>()
+  const [investmentMaxLimit, setInvestmentMaxLimit] = useState(
+    editInvestment.maxLimit,
+  )
   const dispatch = useAppDispatch()
   const formLabelProps = {
     htmlFor: 'inputUpdateInvestment',
@@ -53,11 +52,13 @@ const EditInvestment = ({
     reduxServices.itDeclarationList.selectors.investments,
   )
 
-  const handleSelectDocumentOption = (
+  const handleSelectDocumentOptions = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (event.target.value === 'yes') {
       setIsDocumentsVisible(true)
+    } else if (event.target.value === 'no') {
+      setIsDocumentsVisible(false)
     } else {
       setIsDocumentsVisible(false)
     }
@@ -87,12 +88,20 @@ const EditInvestment = ({
   }
 
   useEffect(() => {
-    if (selectedSectionId && editInvestmentCopy?.investmentName) {
+    if (editInvestmentCopy?.investmentName) {
       setIsUpdateButtonEnabled(true)
     } else {
       setIsUpdateButtonEnabled(false)
     }
-  }, [selectedSectionId, editInvestmentCopy.investmentName])
+  }, [editInvestmentCopy.investmentName])
+
+  useEffect(() => {
+    if (editInvestment?.requiredDocs) {
+      setIsDocumentsVisible(true)
+    } else {
+      setIsDocumentsVisible(false)
+    }
+  }, [editInvestment?.requiredDocs])
 
   const successToastMessage = (
     <OToast
@@ -111,8 +120,7 @@ const EditInvestment = ({
     console.log(filteredInvest)
     const prepareObject = {
       ...editInvestmentCopy,
-      investmentId: filteredInvest[0].investmentId,
-      sectionId: Number(selectedSectionId),
+      investmentId: editInvestment.investmentId,
       maxLimit: investmentMaxLimit as string,
       requiredDocs: requireDocuments,
     }
@@ -167,23 +175,22 @@ const EditInvestment = ({
               className="col-sm-3 col-form-label text-end"
             >
               Section :
-              <span className={showIsRequired(selectedSectionId)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
                 aria-label="section"
-                name="sectionName"
+                name="editInv-section-name"
                 id="section"
-                data-testid="select-section-name"
-                onChange={(e) => setSelectedSectionId(e.target.value)}
-                value={selectedSectionId}
+                data-testid="select-sectionName"
+                disabled
+                value={editInvestmentCopy.sectionId}
               >
                 <option value="">Select Section</option>
                 {sections &&
                   sections
                     ?.slice()
-                    .sort((sec1, sec2) =>
-                      sec1.sectionName.localeCompare(sec2.sectionName),
+                    .sort((section1, section2) =>
+                      section1.sectionName.localeCompare(section2.sectionName),
                     )
                     ?.map((sectionItem, index) => (
                       <option key={index} value={sectionItem.sectionId}>
@@ -199,14 +206,16 @@ const EditInvestment = ({
               className="col-sm-3 col-form-label text-end"
             >
               Investment Name:
-              <span className={showIsRequired(editInvestment?.investmentName)}>
+              <span
+                className={showIsRequired(editInvestmentCopy?.investmentName)}
+              >
                 *
               </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
                 className="ps-2"
-                data-testid="investment-name"
+                data-testid="editInv-investment-name"
                 type="text"
                 name="investmentName"
                 placeholder="Investment Name"
@@ -226,7 +235,7 @@ const EditInvestment = ({
             <CCol sm={3}>
               <CFormInput
                 className="ps-2"
-                data-testid="investment-limit"
+                data-testid="editInv-investment-limit"
                 type="text"
                 name="maxLimit"
                 placeholder="Maximum Investment"
@@ -246,22 +255,18 @@ const EditInvestment = ({
             >
               Description:
             </CFormLabel>
-            {showEditor ? (
-              <CCol sm={9}>
-                <CKEditor<{
-                  onChange: CKEditorEventHandler<'change'>
-                }>
-                  initData={editInvestment?.description}
-                  config={ckeditorConfig}
-                  debug={true}
-                  onChange={({ editor }) => {
-                    handleDescription(editor.getData().trim())
-                  }}
-                />
-              </CCol>
-            ) : (
-              ''
-            )}
+            <CCol sm={9}>
+              <CKEditor<{
+                onChange: CKEditorEventHandler<'change'>
+              }>
+                initData={editInvestment?.description}
+                config={ckeditorConfig}
+                debug={true}
+                onChange={({ editor }) => {
+                  handleDescription(editor.getData().trim())
+                }}
+              />
+            </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel
@@ -279,12 +284,13 @@ const EditInvestment = ({
             >
               <CFormCheck
                 type="radio"
-                name="requireDocsYes"
+                name="requireDocs"
                 id="requireDocsYes"
-                data-testid="documentsReqYes"
+                data-testid="editInv-documentsReqYes"
                 label="Yes"
                 value="yes"
-                onChange={handleSelectDocumentOption}
+                onChange={handleSelectDocumentOptions}
+                checked={isDocumentsVisible}
                 inline
               />
             </CCol>
@@ -297,12 +303,13 @@ const EditInvestment = ({
             >
               <CFormCheck
                 type="radio"
-                name="requireDocsNo"
-                id="requireDocsNo"
-                data-testid="documentsReqNo"
+                name="requireDocs"
+                id="requireDocs"
+                data-testid="editInv-documentsReqNo"
                 label="No"
                 value="no"
-                onChange={handleSelectDocumentOption}
+                onChange={handleSelectDocumentOptions}
+                checked={!isDocumentsVisible}
                 inline
               />
             </CCol>
@@ -316,23 +323,23 @@ const EditInvestment = ({
                 Documents:{' '}
                 <span className={showIsRequired(requireDocuments)}>*</span>
               </CFormLabel>
-              <CCol sm={9}>
+              <CCol sm={9} data-testid="editInv-reqDocs">
                 <CFormTextarea
                   {...dynamicFormLabelProps(
                     '2',
                     'investment-text-area documentWidth',
                   )}
+                  value={requireDocuments}
                   onChange={(e) => setRequiredDocuments(e.target.value)}
                 ></CFormTextarea>
               </CCol>
             </CRow>
           )}
-          {/* {userAccessToAddInvestment?.createaccess && ( */}
           <CRow className="mt-4 mb-4">
             <CCol md={{ span: 6, offset: 3 }}>
               <>
                 <CButton
-                  data-testid="addInv-add-btn"
+                  data-testid="editInv-update-btn"
                   className="btn-ovh me-1 text-white"
                   color="success"
                   onClick={handleUpdateInvestment}
