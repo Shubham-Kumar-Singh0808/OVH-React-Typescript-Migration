@@ -5,6 +5,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
   CheckExitFeedBackForm,
   ResignationListSliceState,
+  SeparationChart,
   SeparationTimeLine,
 } from '../../../types/Separation/ResignationList/resignationListTypes'
 import {
@@ -21,6 +22,7 @@ describe('Resign List Slice', () => {
       pageSize: 20,
       separationTimeLine: {} as SeparationTimeLine,
       checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+      separationChart: {} as SeparationChart,
       clearanceDetails: [],
       toggle: '',
     } as ResignationListSliceState
@@ -36,6 +38,7 @@ describe('Resign List Slice', () => {
         pageSize: 20,
         separationTimeLine: {} as SeparationTimeLine,
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+        separationChart: {} as SeparationChart,
         clearanceDetails: [],
         toggle: '',
       })
@@ -52,6 +55,7 @@ describe('Resign List Slice', () => {
         pageSize: 20,
         separationTimeLine: {} as SeparationTimeLine,
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+        separationChart: {} as SeparationChart,
         clearanceDetails: [],
         toggle: '',
       })
@@ -68,6 +72,7 @@ describe('Resign List Slice', () => {
         pageSize: 20,
         separationTimeLine: {},
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+        separationChart: {} as SeparationChart,
         clearanceDetails: [],
         toggle: '',
       })
@@ -83,11 +88,30 @@ describe('Resign List Slice', () => {
         currentPage: 1,
         pageSize: 20,
         separationTimeLine: {} as SeparationTimeLine,
+        separationChart: {} as SeparationChart,
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: [],
         toggle: '',
       })
     })
+    it('Should be able to set isLoading to "loading" if getSeparationChart is pending', () => {
+      const action = {
+        type: resignationListService.getSeparationChart.pending.type,
+      }
+      const state = resignationListReducer(initialResignationListState, action)
+      expect(state).toEqual({
+        resignationList: { list: [], size: 0 },
+        isLoading: ApiLoadingState.loading,
+        currentPage: 1,
+        pageSize: 20,
+        separationTimeLine: {} as SeparationTimeLine,
+        separationChart: {} as SeparationChart,
+        checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+        clearanceDetails: [],
+        toggle: '',
+      })
+    })
+
     it('Should be able to set isLoading to "success" if getSeparationTimeLine is fulfilled', () => {
       const action = {
         type: resignationListService.getSeparationTimeLine.fulfilled.type,
@@ -101,6 +125,7 @@ describe('Resign List Slice', () => {
         pageSize: 20,
         separationTimeLine: mockResignationListHistory,
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+        separationChart: {} as SeparationChart,
         clearanceDetails: [],
         toggle: '',
       })
@@ -118,7 +143,25 @@ describe('Resign List Slice', () => {
         pageSize: 20,
         separationTimeLine: {},
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+        separationChart: {} as SeparationChart,
         clearanceDetails: mockClearanceDetails,
+        toggle: '',
+      })
+    })
+    it('Should be able to set isLoading to "success" if getSeparationChart is fulfilled', () => {
+      const action = {
+        type: resignationListService.getSeparationChart.fulfilled.type,
+      }
+      const state = resignationListReducer(initialResignationListState, action)
+      expect(state).toEqual({
+        resignationList: { list: [], size: 0 },
+        isLoading: ApiLoadingState.succeeded,
+        currentPage: 1,
+        pageSize: 20,
+        separationTimeLine: {},
+        checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+        separationChart: undefined,
+        clearanceDetails: [],
         toggle: '',
       })
     })

@@ -187,6 +187,7 @@ const resignationListSlice = createSlice({
           getResignationList.pending,
           getSeparationTimeLine.pending,
           getClearanceDetails.pending,
+          getSeparationChart.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
