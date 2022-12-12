@@ -3,6 +3,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ReactDatePicker from 'react-datepicker'
+import ResignationListViewChart from './ResignationListViewChart'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import {
   deviceLocale,
@@ -23,7 +24,7 @@ const SeparationViewChart = (): JSX.Element => {
       dispatch(
         reduxServices.resignationList.getSeparationChart({
           dateSelection: select,
-          from: '',
+          from: select,
           to: '',
         }),
       )
@@ -179,6 +180,7 @@ const SeparationViewChart = (): JSX.Element => {
             </Link>
           </CCol>
         </CRow>
+        <ResignationListViewChart />
       </OCard>
     </>
   )
