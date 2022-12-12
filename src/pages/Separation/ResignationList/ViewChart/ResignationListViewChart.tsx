@@ -14,13 +14,15 @@ const ResignationListViewChart = (): JSX.Element => {
   )
   return (
     <>
-      <ReactFusioncharts
-        type="pie3d"
-        width="100%"
-        height="100%"
-        dataFormat="JSON"
-        dataSource={dataSource}
-      />
+      <div className="text-center">
+        <ReactFusioncharts
+          type="pie3d"
+          width="600"
+          height="400"
+          dataFormat="JSON"
+          dataSource={dataSource}
+        />
+      </div>
     </>
   )
 }
