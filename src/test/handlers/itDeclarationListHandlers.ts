@@ -68,4 +68,12 @@ export const itDeclarationListHandlers = [
     })
     return res(delInvRes)
   }),
+  //updateInvestment api mock
+  rest.put(itDeclarationListApiConfig.updateInvestment, (_req, res, ctx) => {
+    const updateInvRes = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(updateInvRes)
+  }),
 ]

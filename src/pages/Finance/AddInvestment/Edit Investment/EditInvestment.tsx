@@ -179,9 +179,9 @@ const EditInvestment = ({
             <CCol sm={3}>
               <CFormSelect
                 aria-label="section"
-                name="editInv-section-name"
+                name="sectionName"
                 id="section"
-                data-testid="select-sectionName"
+                data-testid="editInv-section-name"
                 disabled
                 value={editInvestmentCopy.sectionId}
               >

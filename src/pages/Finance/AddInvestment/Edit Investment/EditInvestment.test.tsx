@@ -11,18 +11,27 @@ import {
   mockInvestments,
 } from '../../../../test/data/investmentCheckListData'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
-import AddNewInvestment from '../AddNewInvestment'
+import InvestmentList from '../InvestmentList'
 
 const sectionNameInput = 'editInv-section-name'
 const investNameInput = 'editInv-investment-name'
 const reqDocumentsInput = 'editInv-reqDocs'
 const updateButtonElement = 'editInv-update-btn'
 const backButtonElement = 'editInv-back-btn'
-const clearButtonElement = 'addInv-clear-btn'
 const investLimitElement = 'editInv-investment-limit'
 const yesBtnElement = 'editInv-documentsReqYes'
-const noBtnElement = 'editInv-documentsReqNo'
+
 const history = createMemoryHistory()
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <Router history={history}>
+      <InvestmentList />
+    </Router>
+  </div>
+)
 describe('Add New Investment Component Testing', () => {
   beforeEach(() => {
     render(
@@ -33,7 +42,7 @@ describe('Add New Investment Component Testing', () => {
             investmentName: 'LIC',
             maxLimit: '0',
             description: 'testA',
-            requiredDocs: 'Document of Payment of LIC Premium',
+            requiredDocs: 'Test Documents',
             sectionId: 1,
             sectionName: '80 C',
           }}
@@ -55,7 +64,7 @@ describe('Add New Investment Component Testing', () => {
   })
   afterEach(cleanup)
   test('should render section name Input', () => {
-    expect(screen.getByTestId(sectionNameInput)).toBeTruthy()
+    expect(screen.getByTestId(sectionNameInput)).toBeDisabled()
   })
   test('should render investment name Input', () => {
     expect(screen.getByTestId(investNameInput)).toBeTruthy()
@@ -76,46 +85,39 @@ describe('Add New Investment Component Testing', () => {
   it('should redirect to addInvestment upon clicking back button from edit investment screen', () => {
     const backButtonEl = screen.getByTestId(backButtonElement)
     userEvent.click(backButtonEl)
-    expect(
-      render(
-        <AddNewInvestment
-          selectedSectionId={''}
-          setSelectedSectionId={jest.fn()}
-        />,
-      ),
-    )
+    expect(render(toRender))
   })
-  test('should enable add button, when all mandatory fields are entered', async () => {
+  test('should disable update button, when mandatory fields are not entered', async () => {
     const sectionNameElement = screen.getByTestId(sectionNameInput)
-    userEvent.selectOptions(sectionNameElement, ['Test'])
-    expect(sectionNameElement).toHaveValue('10')
+    expect(sectionNameElement).toHaveValue('1')
 
-    const investmentNameEl = screen.getByTestId(investNameInput)
-    userEvent.type(investmentNameEl, 'Test Investment Name1')
-    expect(investmentNameEl).toHaveValue('Test Investment Name1')
+    const investmentNameElement = screen.getByTestId(investNameInput)
+    expect(investmentNameElement).toHaveValue('LIC')
+    userEvent.clear(investmentNameElement)
+    expect(investmentNameElement).toHaveValue('')
 
     const maxLimit = screen.getByTestId(investLimitElement)
-    userEvent.type(maxLimit, '200000')
-    expect(maxLimit).toHaveValue('200000')
+    expect(maxLimit).toHaveValue('0')
 
     const updateButtonEl = screen.getByTestId(updateButtonElement)
     await waitFor(() => {
-      expect(updateButtonEl).toBeEnabled()
+      expect(updateButtonEl).toBeDisabled()
     })
   })
 
   test('should Update the details when user enters valid data and clicks on Update Button', async () => {
     const sectionNameElem = screen.getByTestId(sectionNameInput)
-    userEvent.selectOptions(sectionNameElem, ['Test'])
-    expect(sectionNameElem).toHaveValue('10')
+    userEvent.selectOptions(sectionNameElem, ['80 C'])
+    expect(sectionNameElem).toHaveValue('1')
 
     const investmentNameElem = screen.getByTestId(investNameInput)
-    userEvent.type(investmentNameElem, 'Test Investment Name22')
-    expect(investmentNameElem).toHaveValue('Test Investment Name22')
+    expect(investmentNameElem).toHaveValue('LIC')
+
+    const checkReqDocsYes = screen.getByTestId(yesBtnElement)
+    expect(checkReqDocsYes).toBeChecked()
 
     const maxLimitEle = screen.getByTestId(investLimitElement)
-    userEvent.type(maxLimitEle, '200000')
-    expect(maxLimitEle).toHaveValue('200000')
+    expect(maxLimitEle).toHaveValue('0')
 
     const updateButtonElem = screen.getByTestId(updateButtonElement)
     expect(updateButtonElem).toBeEnabled()
