@@ -32,7 +32,7 @@ const EmployeeAccountsTable = (
     reduxServices.employeeAccount.selectors.financeInfo,
   )
 
-  const listSize = useTypedSelector(
+  const FinanceDataListSize = useTypedSelector(
     reduxServices.employeeAccount.selectors.listSize,
   )
 
@@ -55,9 +55,7 @@ const EmployeeAccountsTable = (
     setCurrentPage,
   } = props
 
-  const handlePageSizeSelectChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
@@ -77,8 +75,8 @@ const EmployeeAccountsTable = (
     downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
   }
 
-  const totalRecords = financeData?.length
-    ? `Total Records: ${listSize}`
+  const totalNoOfRecords = financeData?.length
+    ? `Total Records: ${FinanceDataListSize}`
     : `No Records found...`
 
   const handler = () => {
@@ -113,6 +111,7 @@ const EmployeeAccountsTable = (
         <CTableBody color="light">
           {sortedEmpId?.length > 0 &&
             sortedEmpId?.map((data, index) => {
+              const document = data?.financeDetails?.financeFilePath
               return (
                 <React.Fragment key={index}>
                   <CTableRow>
@@ -171,7 +170,7 @@ const EmployeeAccountsTable = (
                             )
                           }
                         >
-                          {data.financeDetails.financeFilePath ? (
+                          {document ? (
                             <i className="fa fa-paperclip me-1">DOC</i>
                           ) : (
                             'N/A'
@@ -201,19 +200,19 @@ const EmployeeAccountsTable = (
       <CRow>
         <CCol xs={4}>
           <p className="mt-2">
-            <strong>{totalRecords}</strong>
+            <strong>{totalNoOfRecords}</strong>
           </p>
         </CCol>
         <CCol xs={3}>
-          {listSize > 20 && (
+          {FinanceDataListSize > 20 && (
             <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              handlePageSizeSelectChange={handlePageSize}
               options={[20, 40, 60, 80]}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {listSize > 20 && (
+        {FinanceDataListSize > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"
