@@ -1,19 +1,16 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import AchieverListFilterOptions from './AchieverListFilterOptions'
 import {
   cleanup,
   fireEvent,
-  getByTestId,
   render,
   screen,
   waitFor,
 } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { mockEventList } from '../../../test/data/eventListData'
 import {
   mockAchievementTypeList,
   mockAchieverList,

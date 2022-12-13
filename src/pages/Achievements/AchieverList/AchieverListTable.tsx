@@ -29,12 +29,6 @@ const removeTag = '/(<([^>]+)>)/gi'
 
 const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
   const dispatch = useAppDispatch()
-  // const ToggleTimelineAccess = useTypedSelector(
-  //   (state) =>
-  //     state.userAccessToFeatures.userAccessToFeatures?.filter(
-  //       (item) => item.featureId === 235,
-  //     )[0],
-  // )
   const achieverListState = useTypedSelector((state) => state.achieverList)
   const [isDescriptionModelVisible, setDescriptionModel] =
     useState<boolean>(false)
