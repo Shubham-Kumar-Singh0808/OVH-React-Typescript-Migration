@@ -5,7 +5,6 @@ export type CurrentPayslip = {
   paySlipId: number
   employeeId: number
   designation: string
-  joiningDate: string
   name: string
   accountNo: string
   grossSalary: string
@@ -71,6 +70,7 @@ export type PayRollManagementSliceState = {
   paySlipInfo: CurrentPayslip[]
   paySlipList: GetPaySlipsResponse
   editPayslip: CurrentPayslip
+  excelData: ReadExcelFile[]
 }
 
 export type DownloadExcelFile = {
@@ -91,4 +91,43 @@ export type PayRollManagementApiProps = {
 export type GetPaySlipsResponse = {
   list: CurrentPayslip[]
   size: number
+}
+
+export type ReadExcelFile = {
+  serialNo: 1.0
+  paySlipId: null
+  employeeId: 1987
+  designation: 'test'
+  joiningDate: '1/20/22'
+  name: 'Employee'
+  accountNo: 'test'
+  grossSalary: 20000
+  variablePayPercentage: 5
+  variablePay: 2000
+  grossSalAfterVariablepay: 18000
+  basicSalary: 10000
+  houseRentAllowance: 3000
+  transportAllowance: 0
+  otherAllowance: 0
+  absent: 0
+  lossOfPay: 0
+  medicliam: 0
+  esi: 0
+  epf: 0
+  gratuity: 200
+  erc: 0
+  taxDeductionScheme: 0
+  professionalTax: 200
+  arrears: 0
+  advArrears: 500
+  incentive: 0
+  vpayable: 0
+  netSalary: 20000
+  month: null
+  year: null
+  remarks: 'test'
+  status: null
+  mealsCard: 0
+  donation: 0
+  specificDesignation: null
 }

@@ -73,6 +73,65 @@ const updatePayslip = createAsyncThunk(
   },
 )
 
+const deleteCheckedPayslips = createAsyncThunk(
+  'payrollManagement/deleteCheckedPayslips',
+  async (paySlipId: number, thunkApi) => {
+    try {
+      return await PayrollManagementApi.deleteCheckedPayslips(paySlipId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const readExcelFile = createAsyncThunk(
+  'panDetails/readExcelFile',
+  async (file: FormData, thunkApi) => {
+    try {
+      return await PayrollManagementApi.readExcelFile(file)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+const saveExcelFile = createAsyncThunk(
+  'panDetails/saveExcelFile',
+  async (
+    {
+      month,
+      year,
+    }: {
+      month: string
+      year: number
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await PayrollManagementApi.saveExcelFile({
+        month,
+        year,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const clearDirectory = createAsyncThunk(
+  'panDetails/clearDirectory',
+  async (_, thunkApi) => {
+    try {
+      return await PayrollManagementApi.clearDirectory()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialPayrollManagementState: PayRollManagementSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -81,6 +140,7 @@ const initialPayrollManagementState: PayRollManagementSliceState = {
   paySlipInfo: [],
   paySlipList: { list: [], size: 0 },
   editPayslip: {} as CurrentPayslip,
+  excelData: [],
 }
 const payrollManagementSlice = createSlice({
   name: 'payrollManagement',
@@ -107,7 +167,11 @@ const payrollManagementSlice = createSlice({
         state.editPayslip = action.payload
       })
       .addMatcher(
-        isAnyOf(deletePayslip.fulfilled, downloadExcelFile.fulfilled),
+        isAnyOf(
+          deletePayslip.fulfilled,
+          downloadExcelFile.fulfilled,
+          deleteCheckedPayslips.fulfilled,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },
@@ -115,6 +179,7 @@ const payrollManagementSlice = createSlice({
       .addMatcher(
         isAnyOf(
           deletePayslip.pending,
+          deleteCheckedPayslips.pending,
           searchEmployee.pending,
           downloadExcelFile.pending,
           updatePayslip.pending,
@@ -129,6 +194,7 @@ const payrollManagementSlice = createSlice({
           searchEmployee.rejected,
           downloadExcelFile.rejected,
           updatePayslip.rejected,
+          deleteCheckedPayslips.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -155,6 +221,10 @@ export const payrollManagementThunk = {
   searchEmployee,
   deletePayslip,
   updatePayslip,
+  deleteCheckedPayslips,
+  readExcelFile,
+  saveExcelFile,
+  clearDirectory,
 }
 
 export const payrollManagementSelectors = {
