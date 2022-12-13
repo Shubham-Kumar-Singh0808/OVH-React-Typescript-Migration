@@ -118,9 +118,11 @@ describe('Resign List Slice', () => {
         pageSize: 20,
         separationTimeLine: {} as SeparationTimeLine,
         separationChart: {} as SeparationChart,
+        submitExitFeedBackForm: {},
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: [],
         toggle: '',
+        getEmpDetailsType: {} as GetEmpDetailsType,
       })
     })
 
@@ -176,6 +178,7 @@ describe('Resign List Slice', () => {
         currentPage: 1,
         pageSize: 20,
         separationTimeLine: {} as SeparationTimeLine,
+        separationChart: {},
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: [],
         toggle: '',
@@ -195,6 +198,7 @@ describe('Resign List Slice', () => {
         currentPage: 1,
         pageSize: 20,
         separationTimeLine: {} as SeparationTimeLine,
+        separationChart: {},
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         clearanceDetails: [],
         toggle: '',
@@ -213,6 +217,8 @@ describe('Resign List Slice', () => {
         currentPage: 1,
         pageSize: 20,
         separationTimeLine: {},
+        submitExitFeedBackForm: {},
+        getEmpDetailsType: {},
         checkExitFeedBackForm: {} as CheckExitFeedBackForm,
         separationChart: undefined,
         clearanceDetails: [],
