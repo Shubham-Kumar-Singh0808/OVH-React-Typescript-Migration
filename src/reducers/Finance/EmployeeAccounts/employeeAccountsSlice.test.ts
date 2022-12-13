@@ -30,7 +30,7 @@ describe('Employee Account Slice', () => {
         isLoading: ApiLoadingState.succeeded,
         error: null,
         listSize: 790,
-        financeData: mockEmployeeAccount,
+        financeData: mockEmployeeAccount?.list,
       })
     })
 
