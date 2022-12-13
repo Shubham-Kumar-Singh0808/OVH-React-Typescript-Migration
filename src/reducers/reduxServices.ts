@@ -82,6 +82,8 @@ import { bankDetailService } from './Finance/PanDetails/bankDetailsSlice'
 import { resignationListService } from './Separation/ResignationList/resignationListSlice'
 import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
 import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
+import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
+import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 
 export const reduxServices = {
   app: appService,
@@ -168,4 +170,6 @@ export const reduxServices = {
   resignationList: resignationListService,
   employeeAccount: employeeAccountService,
   itDeclarationList: itDeclarationListService,
+  investmentCheckList: investmentCheckListService,
+  projectCreationRequest: projectCreationRequestService,
 }
