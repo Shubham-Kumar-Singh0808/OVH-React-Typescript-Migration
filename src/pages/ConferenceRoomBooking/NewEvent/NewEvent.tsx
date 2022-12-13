@@ -10,6 +10,7 @@ import {
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
+import { useHistory } from 'react-router-dom'
 import {
   Attendees,
   EventEndDate,
@@ -34,9 +35,11 @@ import {
   TrainerDetails,
 } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { showIsRequired } from '../../../utils/helper'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const NewEvent = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const history = useHistory()
 
   const eventLocations = useTypedSelector(
     reduxServices.addLocationList.selectors.locationNames,
@@ -238,18 +241,43 @@ const NewEvent = (): JSX.Element => {
     }
   }
 
-  const handleConfirmBtn = () => {
+  const handleConfirmBtn = async () => {
+    const startTimeSplit = addEvent.startTime.split(':')
+    const endTimeSplit = addEvent.endTime.split(':')
+    const timeCheckResult = await dispatch(
+      reduxServices.newEvent.timeCheck(
+        `${addEvent.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
+      ),
+    )
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const newAttendeesList = attendeesList.map(({ name, ...rest }) => {
       return rest
     })
     const prepareObj = {
       ...addEvent,
+      conferenceType: 'Event',
       authorName: loggedEmployee,
       availability: newAttendeesList,
       description: descriptionValue,
+      startTime: `${addEvent.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
+      endTime: `${addEvent.fromDate}/${endTimeSplit[0]}/${endTimeSplit[1]}`,
     }
-    console.log(prepareObj)
+    if (timeCheckResult.payload === false) {
+      const addEventResult = await dispatch(
+        reduxServices.newEvent.addNewEvent(prepareObj),
+      )
+      if (reduxServices.newEvent.addNewEvent.fulfilled.match(addEventResult)) {
+        history.push('/eventList')
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="success"
+              toastMessage="Event Added Successfully"
+            />,
+          ),
+        )
+      }
+    }
   }
 
   return (

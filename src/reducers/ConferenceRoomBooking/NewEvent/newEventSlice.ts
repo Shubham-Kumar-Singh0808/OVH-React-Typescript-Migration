@@ -4,6 +4,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import newEventApi from '../../../middleware/api/ConferenceRoomBooking/NewEvent/newEventApi'
 import { RootState } from '../../../stateStore'
 import {
+  AddEvent,
   GetAllBookedDetailsForEvent,
   GetBookedEventsParams,
   InitialNewEventSliceState,
@@ -86,7 +87,31 @@ const getAllBookedDetailsForEvent = createAsyncThunk(
   },
 )
 
-const initialNewEventState: InitialNewEventSliceState = {
+const timeCheck = createAsyncThunk(
+  'newEventSlice/timeCheck',
+  async (time: string, thunkApi) => {
+    try {
+      return await newEventApi.timeCheck(time)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const addNewEvent = createAsyncThunk(
+  'newEventSlice/addNewEvent',
+  async (props: AddEvent, thunkApi) => {
+    try {
+      return await newEventApi.addNewEvent(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+export const initialNewEventState: InitialNewEventSliceState = {
   isLoading: ApiLoadingState.idle,
   loggedEmployee: {} as LoggedEmployee,
   roomsByLocation: [],
@@ -130,6 +155,9 @@ const newEventSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.allBookedDetailsForEvent = action.payload
       })
+      .addCase(addNewEvent.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addCase(uniqueAttendee.rejected, (state, action) => {
         state.isLoading = ApiLoadingState.failed
         state.error = action.payload as number
@@ -141,6 +169,7 @@ const newEventSlice = createSlice({
           getProjectMembers.pending,
           uniqueAttendee.pending,
           getAllBookedDetailsForEvent.pending,
+          addNewEvent.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -177,6 +206,8 @@ const newEventThunk = {
   getProjectMembers,
   uniqueAttendee,
   getAllBookedDetailsForEvent,
+  timeCheck,
+  addNewEvent,
 }
 
 const newEventSelectors = {
