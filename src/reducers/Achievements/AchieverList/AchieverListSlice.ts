@@ -108,7 +108,6 @@ const achieverListSlice = createSlice({
       getAchievementHistoryTimeline.fulfilled,
       (state, action) => {
         const data = JSON.parse(JSON.stringify(action.payload))
-        console.log(data)
         const sortedData = sortAchievementTimelineByDatesDescending(data.list)
         const toSendData = {
           size: data.size,

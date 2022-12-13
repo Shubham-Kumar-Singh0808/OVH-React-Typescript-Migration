@@ -99,8 +99,6 @@ const AchieverList = (): JSX.Element => {
     pageSize,
   } = usePagination(achieverListTotalSize, pageSizeFromState, pageFromState)
 
-  console.log(paginationRange)
-
   const dispatchAchieverList = (options: AchieverListQueryParameters) => {
     dispatch(reduxServices.achieverList.getAllAchieverList(options))
   }

@@ -55,8 +55,6 @@ const AchieverListFilterOptions = (
     (state) => state.commonAchievements.achievementTypeList,
   )
 
-  console.log(achieverFromDate)
-
   const fromDate = achieverFromDate
     ? moment(
         new Date(achieverFromDate).toLocaleDateString(deviceLocale, {

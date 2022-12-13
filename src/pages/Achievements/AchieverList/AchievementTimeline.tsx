@@ -104,12 +104,9 @@ const AchievementTimeline = (props: {
     if (parsingFor === 'MODAL') {
       return parse(removeSpaces)
     }
-    const finalContent =
-      removeSpaces && removeSpaces.length > 25
-        ? `${removeSpaces.substring(0, 25)} ...`
-        : removeSpaces
-    console.log(finalContent)
-    return finalContent
+    return removeSpaces && removeSpaces.length > 25
+      ? `${removeSpaces.substring(0, 25)} ...`
+      : removeSpaces
   }
 
   const descriptionContentJSX = (description: string | null) => {
