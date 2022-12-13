@@ -38,20 +38,6 @@ describe('Achiever List Slice', () => {
         pageSize: 20,
       })
     })
-    it('"isLoading" should be set to "succeeded" for "getAllAchieverList"', () => {
-      const action = {
-        type: achieverListService.getAllAchieverList.fulfilled.type,
-      }
-      const state = achieverListReducer(initialState, action)
-      expect(state).toEqual({
-        isLoading: ApiLoadingState.succeeded,
-        achieverList: mockAchieverList,
-        achieverListQueries: {},
-        achievementHistoryTimeline: { size: 0, list: [] },
-        currentPage: 1,
-        pageSize: 20,
-      })
-    })
 
     it('"isLoading" should be set to "loading" for "updateAchievementDashboardStatus"', () => {
       const action = {
@@ -93,21 +79,6 @@ describe('Achiever List Slice', () => {
         achieverList: mockAchieverList,
         achieverListQueries: {},
         achievementHistoryTimeline: { size: 0, list: [] },
-        currentPage: 1,
-        pageSize: 20,
-      })
-    })
-
-    it('"isLoading" should be set to "succeeded" for "getAchievementHistoryTimeline"', () => {
-      const action = {
-        type: achieverListService.getAchievementHistoryTimeline.fulfilled.type,
-      }
-      const state = achieverListReducer(achieverListState, action)
-      expect(state).toEqual({
-        isLoading: ApiLoadingState.succeeded,
-        achieverList: mockAchieverList,
-        achieverListQueries: {},
-        achievementHistoryTimeline: mockAchievementTimeline,
         currentPage: 1,
         pageSize: 20,
       })

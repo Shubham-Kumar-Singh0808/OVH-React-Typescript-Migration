@@ -21,16 +21,5 @@ describe('Common Achievement Slice', () => {
         achievementTypeList: { size: 0, list: [] },
       })
     })
-
-    it('"isLoading" should be set to "succeeded" for "getAllAchievementsType"', () => {
-      const action = {
-        type: commonAchievementsService.getAllAchievementsType.fulfilled.type,
-      }
-      const state = commonAchievementsReducer(initialState, action)
-      expect(state).toEqual({
-        isLoading: ApiLoadingState.succeeded,
-        achievementTypeList: mockAchievementTypeList,
-      })
-    })
   })
 })
