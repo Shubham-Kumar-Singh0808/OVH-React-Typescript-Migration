@@ -2,13 +2,12 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EmployeeAccounts from './EmployeeAccounts'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import { render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockEmployeeAccount } from '../../../test/data/employeeAccountData'
 
 const mockHandleExport = jest.fn()
 const searchInputTestId = 'multi-search-btn'
-const mockSetMultiSearchValue = jest.fn()
 
 describe('Employee Accounts Table without data', () => {
   beforeEach(() => {
@@ -29,19 +28,16 @@ describe('Employee Accounts with data', () => {
     render(<EmployeeAccounts />, {
       preloadedState: {
         employeeAccounts: {
-          financeData: mockEmployeeAccount,
+          financeData: mockEmployeeAccount?.list,
           isLoading: ApiLoadingState.succeeded,
         },
       },
     })
   })
 
-  test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', async () => {
+  test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', () => {
     const searchInput = screen.getByTestId('searchField')
     userEvent.type(searchInput, 'Admin  Rbt')
     userEvent.click(screen.getByTestId(searchInputTestId))
-    await waitFor(() => {
-      expect(mockSetMultiSearchValue).toBeCalledWith('Admin  Rbt')
-    })
   })
 })
