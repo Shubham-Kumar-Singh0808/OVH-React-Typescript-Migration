@@ -72,6 +72,8 @@ import {
   ResignationListApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
+  AchieverListApi,
+  CommonAchievementsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -646,4 +648,14 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
   getSections: apiPrefix + '/itDeclaration/getSection',
+}
+
+export const CommonAchievementsApiConfig: CommonAchievementsApi = {
+  getAllAchievementsType: apiPrefix + '/achievement/getAllAchievementType',
+}
+
+export const AchieverListApiConfig: AchieverListApi = {
+  getAchieverList: apiPrefix + '/achievement/getAllAchievement',
+  updateShowOnDashbord: apiPrefix + '/achievement/showOnDashBoard',
+  achievementHistoryTimeline: apiPrefix + '/achievement/getAchievementHistory',
 }

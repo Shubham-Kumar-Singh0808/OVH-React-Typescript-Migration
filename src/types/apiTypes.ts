@@ -536,3 +536,13 @@ export interface InvestmentCheckListApi extends ApiBase {
   getInvestments: string
   getSections: string
 }
+
+export interface CommonAchievementsApi extends ApiBase {
+  getAllAchievementsType: string
+}
+
+export interface AchieverListApi extends ApiBase {
+  getAchieverList: string
+  updateShowOnDashbord: string
+  achievementHistoryTimeline: string
+}
