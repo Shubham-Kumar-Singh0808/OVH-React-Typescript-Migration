@@ -94,6 +94,7 @@ import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDec
 import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/investmentCheckListSlice'
 import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
+import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 
 export const allReducers = {
   app: appReducer,
@@ -188,6 +189,7 @@ export const allReducers = {
   investmentCheckList: investmentCheckListReducer,
   achieverList: achieverListReducer,
   commonAchievements: commonAchievementsReducer,
+  projectCreationRequest: projectCreationRequestReducer,
   // add your slice reducers here
 }
 

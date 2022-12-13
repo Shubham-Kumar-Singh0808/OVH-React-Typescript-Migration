@@ -143,4 +143,7 @@ describe('Edit Configuration Component Testing', () => {
     const active = screen.findByTestId('active')
     expect(active).toBeTruthy()
   })
+  test('should be able to render  Edit Configuration  Title', () => {
+    expect(screen.getByText('Edit Configuration')).toBeInTheDocument()
+  })
 })

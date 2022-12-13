@@ -523,13 +523,23 @@ export interface ResignationListApi extends ApiBase {
   clearanceCertificateComments: string
   getClearanceDetails: string
   updateCCDetails: string
-  checkExitFeedBackForm: string
+  getEmpDetails: string
+  saveExitFeedBackForm: string
+  uploadExitFeedBackFile: string
+  uploadRelievingLetter: string
 }
 
 export interface ITDeclarationListApi extends ApiBase {
   getCycles: string
+  getSections: string
   getITDeclarationForm: string
   exportITDeclarationList: string
+  deleteSection: string
+  addSection: string
+  updateSection: string
+  getInvestments: string
+  addInvestment: string
+  deleteInvestment: string
 }
 
 export interface InvestmentCheckListApi extends ApiBase {
@@ -545,4 +555,10 @@ export interface AchieverListApi extends ApiBase {
   getAchieverList: string
   updateShowOnDashbord: string
   achievementHistoryTimeline: string
+}
+
+export interface ProjectCreationRequestApi extends ApiBase {
+  getAllProjectRequestList: string
+  getProjectRequest: string
+  getAuditForProjectRequest: string
 }
