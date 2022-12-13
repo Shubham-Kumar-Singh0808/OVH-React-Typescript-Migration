@@ -4,7 +4,7 @@ import commonAchievementsApi from '../../middleware/api/Achievements/CommonAchie
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import {
   AchievementType,
-  commonAchievementsInitialState,
+  initialCommonAchievementState,
   IncomingAchievementTypes,
 } from '../../types/Achievements/commonAchievementTypes'
 import { ValidationError } from '../../types/commonTypes'
@@ -17,7 +17,7 @@ const sortByAscendingOrder = (
   })
 }
 
-const initialState: commonAchievementsInitialState = {
+const initialState: initialCommonAchievementState = {
   achievementTypeList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
 }

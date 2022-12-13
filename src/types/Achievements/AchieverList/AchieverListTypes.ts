@@ -1,6 +1,5 @@
 import React from 'react'
 import { LoadingState } from '../../commonTypes'
-import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 export interface AchieverListUserTypes {
   id: number

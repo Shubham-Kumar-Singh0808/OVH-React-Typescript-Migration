@@ -9,6 +9,7 @@ import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const showOnDashboard = 'Show On Dashboard'
 const hideFromDashboard = 'Hide From Dashboard'
+type contentType = string | JSX.Element | null
 
 const AchievementTimeline = (props: {
   setAchievementTimeline: React.Dispatch<React.SetStateAction<boolean>>
@@ -24,6 +25,8 @@ const AchievementTimeline = (props: {
     e.preventDefault()
     props.setAchievementTimeline(false)
   }
+
+  const descriptionContentTernary = descriptionContent ? descriptionContent : ''
 
   const badgeAllocation = (label: string, index: number) => {
     if (label === 'UPDATED') {
@@ -48,7 +51,7 @@ const AchievementTimeline = (props: {
   const showDetailsInTimeline = (
     detail: string,
     verifyContent: string | null,
-    content: string | JSX.Element | null,
+    content: contentType,
   ) => {
     return (
       <>
@@ -72,6 +75,8 @@ const AchievementTimeline = (props: {
     oldContent: string | null | JSX.Element,
     newContent: string | null | JSX.Element,
   ) => {
+    const oldContentTernary = oldContent === null ? 'N/A' : oldContent
+    const newContentTernary = newContent === null ? 'N/A' : newContent
     return (
       <>
         {verifyContent !== null ? (
@@ -79,11 +84,11 @@ const AchievementTimeline = (props: {
             <label className=" p-0">
               <strong>{changeType} changed from &nbsp;</strong>
             </label>
-            {oldContent === null ? 'N/A' : oldContent}
+            {oldContentTernary}
             <label className=" p-0">
               <strong>&nbsp; to &nbsp;</strong>
             </label>
-            {newContent === null ? 'N/A' : newContent}
+            {newContentTernary}
           </div>
         ) : (
           <></>
@@ -258,9 +263,7 @@ const AchievementTimeline = (props: {
             modalFooterClass="d-none"
             modalHeaderClass="d-none"
           >
-            <p className="text-info">
-              {descriptionContent ? descriptionContent : ''}
-            </p>
+            <div>{descriptionContentTernary}</div>
           </OModal>
         </>
       ) : (

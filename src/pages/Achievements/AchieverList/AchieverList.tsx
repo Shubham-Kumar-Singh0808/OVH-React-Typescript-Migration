@@ -190,19 +190,21 @@ const AchieverList = (): JSX.Element => {
             clearButtonHandler={clearButtonHandler}
             filterHandler={filterHandler}
           />
-          {isLoading !== ApiLoadingState.loading ? (
-            <AchieverListTable
-              paginationRange={paginationRange}
-              setPageSize={setPageSize}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              pageSize={pageSize}
-              setAchievementTimeline={setAchievementTimeline}
-              ToggleTimelineAccess={ToggleTimelineAccess}
-            />
-          ) : (
-            <OLoadingSpinner type={LoadingType.PAGE} />
-          )}
+          <>
+            {isLoading !== ApiLoadingState.loading ? (
+              <AchieverListTable
+                paginationRange={paginationRange}
+                setPageSize={setPageSize}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={pageSize}
+                setAchievementTimeline={setAchievementTimeline}
+                ToggleTimelineAccess={ToggleTimelineAccess}
+              />
+            ) : (
+              <OLoadingSpinner type={LoadingType.PAGE} />
+            )}
+          </>
         </>
       )}
     </OCard>

@@ -2,12 +2,11 @@ import commonAchievementsReducer, {
   commonAchievementsService,
 } from './CommonAchievementsSlice'
 import { ApiLoadingState } from '../../middleware/api/apiList'
-import { commonAchievementsInitialState } from '../../types/Achievements/commonAchievementTypes'
-import { mockAchievementTypeList } from '../../test/data/AchieverListData'
+import { initialCommonAchievementState } from '../../types/Achievements/commonAchievementTypes'
 
 describe('Common Achievement Slice', () => {
   describe('Common Achievement Reducer', () => {
-    const initialState: commonAchievementsInitialState = {
+    const initialState: initialCommonAchievementState = {
       isLoading: ApiLoadingState.idle,
       achievementTypeList: { size: 0, list: [] },
     }

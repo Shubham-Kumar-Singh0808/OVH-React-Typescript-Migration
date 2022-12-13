@@ -212,15 +212,17 @@ const AchieverListFilterOptions = (
                     setAchieverToDate(moment(date).format(commonDateFormat))
                   }
                 />
-                {compareTheDates(achieverFromDate, achieverToDate) ? (
-                  <div data-testid="error-msg-date">
-                    <CFormText className={TextDanger}>
-                      To month should be greater than From month
-                    </CFormText>
-                  </div>
-                ) : (
-                  <></>
-                )}
+                <>
+                  {compareTheDates(achieverFromDate, achieverToDate) ? (
+                    <div data-testid="error-msg-date">
+                      <CFormText className={TextDanger}>
+                        To month should be greater than From month
+                      </CFormText>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </>
               </CCol>
             </CRow>
           </>
