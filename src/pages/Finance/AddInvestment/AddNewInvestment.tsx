@@ -40,15 +40,10 @@ const AddNewInvestment = ({
     htmlFor: 'inputAddInvestment',
     className: 'col-form-label section-label',
   }
-  const dynamicFormLabelProps = (
-    rows: string,
-    className: string,
-    testid: string,
-  ) => {
+  const dynamicFormLabelProps = (rows: string, className: string) => {
     return {
       rows,
       className,
-      testid,
     }
   }
   const sections = useTypedSelector(
@@ -308,12 +303,11 @@ const AddNewInvestment = ({
               Documents:{' '}
               <span className={showIsRequired(requireDocuments)}>*</span>
             </CFormLabel>
-            <CCol sm={9}>
+            <CCol sm={9} data-testid="required-documents">
               <CFormTextarea
                 {...dynamicFormLabelProps(
                   '2',
                   'investment-text-area documentWidth',
-                  'required-documents',
                 )}
                 onChange={(e) => setRequiredDocuments(e.target.value)}
               ></CFormTextarea>
