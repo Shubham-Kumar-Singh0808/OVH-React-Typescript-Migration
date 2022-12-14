@@ -255,10 +255,45 @@ const ResignationTimeLine = React.lazy(
     ),
 )
 
+const ResignationFeedBackForm = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/HRClearanceCertificate/ExitFeedBackForm/ExitFeedBackForm'
+    ),
+)
+
 const ResignationManagerClearanceCertificate = React.lazy(
   () =>
     import(
       './pages/Separation/ResignationList/ManagerClearenceCertificate/ManagerClearanceCertificate'
+    ),
+)
+
+const ResignationHRClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/HRClearanceCertificate/HRClearanceCertificate'
+    ),
+)
+
+const ResignationITClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/ITClearanceCertificate/ITClearanceCertificate'
+    ),
+)
+
+const ResignationFinanceClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/FinanaceClearanceCertificate/FinanceClearanceCertificate'
+    ),
+)
+
+const ResignationAdminClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/AdminClearanceCertificate/AdminClearanceCertificate'
     ),
 )
 
@@ -279,7 +314,18 @@ const AddInvestmentCycle = React.lazy(
 )
 
 const AddInvestment = React.lazy(
-  () => import('./pages/Finance/AddInvestment/AddInvestment'),
+  () => import('./pages/Finance/AddInvestment/InvestmentList'),
+)
+
+const AddSection = React.lazy(
+  () => import('./pages/Finance/AddInvestment/Add Section/SectionsList'),
+)
+
+const ProjectCreationRequest = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/ProjectCreationRequest/ProjectCreationRequest'
+    ),
 )
 
 /**
@@ -612,9 +658,46 @@ const routes = [
     component: AddInvestment,
   },
   {
+    path: '/ClearanceCertificateHR',
+    name: 'HR  Clearance Certificate',
+    component: ResignationHRClearanceCertificate,
+  },
+
+  {
+    path: '/ClearanceCertificateIT',
+    name: 'IT  Clearance Certificate',
+    component: ResignationITClearanceCertificate,
+  },
+  {
+    path: '/ClearanceCertificateFinance',
+    name: 'Finance  Clearance Certificate',
+    component: ResignationFinanceClearanceCertificate,
+  },
+  {
+    path: '/ClearanceCertificateAdmin',
+    name: 'Admin  Clearance Certificate',
+    component: ResignationAdminClearanceCertificate,
+  },
+
+  {
+    path: '/ExitFeedBackForm',
+    name: 'Resignation ExitFeedBackForm',
+    component: ResignationFeedBackForm,
+  },
+  {
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
+  },
+  {
+    path: '/addSection',
+    name: 'Add Section',
+    component: AddSection,
+  },
+  {
+    path: '/projectRequestList',
+    name: 'Project Creation Request',
+    component: ProjectCreationRequest,
   },
 ]
 
