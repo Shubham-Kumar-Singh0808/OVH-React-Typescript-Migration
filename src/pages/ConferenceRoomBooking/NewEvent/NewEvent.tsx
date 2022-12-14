@@ -249,7 +249,6 @@ const NewEvent = (): JSX.Element => {
       availability: newAttendeesList,
       description: descriptionValue,
     }
-    console.log(prepareObj)
   }
 
   return (

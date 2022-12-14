@@ -43,6 +43,7 @@ const SelectedAttendees = ({
                     <CButton
                       color="danger btn-ovh me-1"
                       className="btn-ovh-employee-list"
+                      data-testid="delete-btn"
                       onClick={() => deleteBtnHandler(currAttendee.id)}
                     >
                       <i

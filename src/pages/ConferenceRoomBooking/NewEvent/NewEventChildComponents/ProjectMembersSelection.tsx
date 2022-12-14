@@ -114,7 +114,7 @@ const ProjectMembersSelection = ({
             })
           }
         } else if (!checkIsAttendeeExists(member.id)) {
-          newMember.push({
+          newMember?.push({
             id: member.id,
             availability: 'free',
             name: member.fullName,
@@ -125,7 +125,7 @@ const ProjectMembersSelection = ({
     )
 
     const filteredMembers = Array.from(new Set(newResult))[0].filter(
-      (obj1) => !attendeesList.some((obj2) => obj1.id === obj2.id),
+      (obj1) => !attendeesList?.some((obj2) => obj1?.id === obj2?.id),
     )
     setAttendeesList([...filteredMembers, ...attendeesList])
     dispatch(
@@ -162,6 +162,7 @@ const ProjectMembersSelection = ({
                             <CButton
                               color="info btn-ovh me-1"
                               className="btn-ovh-employee-list"
+                              data-testid="project-member"
                               onClick={() => {
                                 selectProjectMember(
                                   currMember.id,
@@ -196,6 +197,7 @@ const ProjectMembersSelection = ({
               <CButton
                 color="info btn-ovh me-1"
                 className="btn-ovh"
+                data-testid="delete-btn"
                 onClick={() => setAddListModalVisible(true)}
               >
                 <i
@@ -207,6 +209,7 @@ const ProjectMembersSelection = ({
                 <CButton
                   color="danger btn-ovh me-1"
                   className="btn-ovh"
+                  data-testid="delete-button"
                   onClick={() => setDeleteListModalVisible(true)}
                 >
                   <i
