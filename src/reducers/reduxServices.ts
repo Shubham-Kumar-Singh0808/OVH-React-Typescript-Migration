@@ -75,6 +75,7 @@ import { submitViewResignationServices } from './Separation/SubmitViewResignatio
 import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
+import { newEventService } from './ConferenceRoomBooking/NewEvent/newEventSlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
 import { paySlipsService } from './Finance/Payslips/payslipsSlice'
 import { panDetailService } from './Finance/PanDetails/panDetailsSlice'
@@ -165,6 +166,7 @@ export const reduxServices = {
   submitViewResignation: submitViewResignationServices,
   addConfigurations: addConfigurationService,
   projectReport: projectReportsService,
+  newEvent: newEventService,
   leaveApprovals: leaveApprovalsService,
   paySlips: paySlipsService,
   panDetails: panDetailService,

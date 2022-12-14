@@ -61,6 +61,7 @@ const App = (): JSX.Element => {
       ),
     )
   })
+
   useEffect(() => {
     if (authenticatedToken) {
       dispatch(
@@ -77,6 +78,9 @@ const App = (): JSX.Element => {
   const ScrollToTop = () => {
     const { pathname } = useLocation()
     useEffect(() => {
+      if (pathname !== '/newEvent') {
+        dispatch(reduxServices.newEvent.actions.clearProjectMembers())
+      }
       window.scrollTo(0, 0)
     }, [pathname])
     return null

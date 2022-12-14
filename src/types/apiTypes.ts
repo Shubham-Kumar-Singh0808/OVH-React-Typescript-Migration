@@ -432,7 +432,16 @@ export interface EventTypeListApi extends ApiBase {
   addEventType: string
   deleteEventType: string
   updateEventType: string
+}
+export interface NewEventApi extends ApiBase {
   getLoggedEmployeeName: string
+  getRoomsOfLocation: string
+  getAllProfileEmployeesData: string
+  getAllAttendees: string
+  uniqueAttendee: string
+  timeChecking: string
+  getAllBookedDetailsForEvent: string
+  addNewEvent: string
 }
 export interface EmployeeAllocationApi extends ApiBase {
   getEmployeeAllocationReport: string

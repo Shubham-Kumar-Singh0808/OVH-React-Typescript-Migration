@@ -64,6 +64,7 @@ import {
   RoomListApi,
   AddConfigurationsApi,
   TicketConfigurationApi,
+  NewEventApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
   PaySlipsApi,
@@ -531,7 +532,19 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   addEventType: apiPrefix + '/meetingRequest/addEventType',
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+}
+
+export const newEventApiConfig: NewEventApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getRoomsOfLocation: apiPrefix + '/meetingRequest/getRoomsOfLocation',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllAttendees: apiPrefix + '/meetingRequest/getAllAttendies',
+  uniqueAttendee: apiPrefix + '/meetingRequest/uniqueAttendee',
+  timeChecking: apiPrefix + '/meetingRequest/timechecking',
+  getAllBookedDetailsForEvent:
+    apiPrefix + '/meetingRequest/getAllBookedDetailsForEvent',
+  addNewEvent: apiPrefix + '/meetingRequest/addNewEvent',
 }
 
 export const employeeAllocationApiConfig: EmployeeAllocationApi = {
