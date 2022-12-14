@@ -112,6 +112,11 @@ const EmployeeAccountsTable = (
           {sortedEmpId?.length > 0 &&
             sortedEmpId?.map((data, index) => {
               const document = data?.financeDetails?.financeFilePath
+              const attachment = document ? (
+                <i className="fa fa-paperclip me-1">DOC</i>
+              ) : (
+                'N/A'
+              )
               return (
                 <React.Fragment key={index}>
                   <CTableRow>
@@ -170,11 +175,7 @@ const EmployeeAccountsTable = (
                             )
                           }
                         >
-                          {document ? (
-                            <i className="fa fa-paperclip me-1">DOC</i>
-                          ) : (
-                            'N/A'
-                          )}
+                          {attachment}
                         </CLink>
                       ) : (
                         <CTableDataCell scope="row">
