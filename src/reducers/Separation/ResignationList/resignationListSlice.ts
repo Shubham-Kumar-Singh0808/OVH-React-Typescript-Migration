@@ -12,6 +12,8 @@ import {
   GetResignationListProps,
   ResignationList,
   ResignationListSliceState,
+  SeparationChart,
+  SeparationChartProps,
   SeparationTimeLine,
   submitClearanceCommentsProps,
   SubmitExitFeedBackForm,
@@ -123,6 +125,18 @@ const updateCCDetails = createAsyncThunk<
   },
 )
 
+const getSeparationChart = createAsyncThunk(
+  'resignationList/getSeparationChart',
+  async (props: SeparationChartProps, thunkApi) => {
+    try {
+      return await resignationListApi.getSeparationChart(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const getEmpDetails = createAsyncThunk<
   GetEmpDetailsType | undefined,
   number,
@@ -194,6 +208,7 @@ const initialResignationListState: ResignationListSliceState = {
   pageSize: 20,
   separationTimeLine: {} as SeparationTimeLine,
   checkExitFeedBackForm: {} as CheckExitFeedBackForm,
+  separationChart: {} as SeparationChart,
   clearanceDetails: [],
   toggle: '',
   getEmpDetailsType: {} as GetEmpDetailsType,
@@ -231,6 +246,10 @@ const resignationListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.clearanceDetails = action.payload
       })
+      .addCase(getSeparationChart.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.separationChart = action.payload
+      })
 
       .addCase(getEmpDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -244,6 +263,7 @@ const resignationListSlice = createSlice({
           getResignationList.pending,
           getSeparationTimeLine.pending,
           getClearanceDetails.pending,
+          getSeparationChart.pending,
           getEmpDetails.pending,
           saveExitFeedBackForm.pending,
         ),
@@ -274,6 +294,9 @@ const resignationTimeLine = (state: RootState): SeparationTimeLine =>
 const managerClearanceDetails = (state: RootState): ClearanceDetails[] =>
   state.resignationList.clearanceDetails
 
+const separationChartDetails = (state: RootState): SeparationChart =>
+  state.resignationList.separationChart
+
 const toggleValue = (state: RootState): string => state.resignationList.toggle
 
 const getEmpFeedBackDetails = (state: RootState): GetEmpDetailsType =>
@@ -286,6 +309,7 @@ const resignationListThunk = {
   submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
+  getSeparationChart,
   getEmpDetails,
   saveExitFeedBackForm,
   uploadRelievingLetter,
@@ -301,6 +325,7 @@ const resignationListSelectors = {
   resignationTimeLine,
   managerClearanceDetails,
   toggleValue,
+  separationChartDetails,
   getEmpFeedBackDetails,
 }
 

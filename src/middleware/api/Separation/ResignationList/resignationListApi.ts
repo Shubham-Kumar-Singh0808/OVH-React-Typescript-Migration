@@ -5,6 +5,8 @@ import {
   GetEmpDetailsType,
   GetResignationListProps,
   ResignationListResponse,
+  SeparationChart,
+  SeparationChartProps,
   SeparationTimeLine,
   submitClearanceCommentsProps,
   SubmitExitFeedBackForm,
@@ -128,6 +130,22 @@ const updateCCDetails = async (
   return response.data
 }
 
+const getSeparationChart = async (
+  props: SeparationChartProps,
+): Promise<SeparationChart> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.getSeparationChart,
+    method: AllowedHttpMethods.get,
+    params: {
+      dateSelection: props.dateSelection ?? '',
+      from: props.from ?? '',
+      to: props.to ?? '',
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
 const getEmpDetails = async (
   separationId: number,
 ): Promise<GetEmpDetailsType> => {
@@ -201,6 +219,7 @@ const resignationListApi = {
   submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
+  getSeparationChart,
   getEmpDetails,
   saveExitFeedBackForm,
   uploadRelievingLetter,
