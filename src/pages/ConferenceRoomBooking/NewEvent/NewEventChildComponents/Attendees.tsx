@@ -45,10 +45,7 @@ const Attendees = ({
       (value) => value.fullName === attendeesAutoCompleteTarget,
     )
     if (selectedProject) {
-      onSelectAttendee(
-        selectedProject?.id as number,
-        selectedProject?.fullName as string,
-      )
+      onSelectAttendee(selectedProject?.id, selectedProject?.fullName)
       setIsErrorShow(false)
     }
   }
