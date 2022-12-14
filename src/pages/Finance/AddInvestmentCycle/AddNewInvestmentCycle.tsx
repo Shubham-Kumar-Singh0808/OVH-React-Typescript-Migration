@@ -16,6 +16,7 @@ import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
+import OModal from '../../../components/ReusableComponent/OModal'
 
 const AddNewInvestmentCycle = (): JSX.Element => {
   const formLabelProps = {
@@ -28,6 +29,8 @@ const AddNewInvestmentCycle = (): JSX.Element => {
   const [cycleEndDate, setCycleEndDate] = useState<string>()
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [isActiveCycleModalVisible, setIsActiveCycleModalVisible] =
+    useState(false)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -51,7 +54,6 @@ const AddNewInvestmentCycle = (): JSX.Element => {
   }
 
   const onChangeStartDateHandler = (date: Date) => {
-    console.log(date)
     const endDate = moment(date).add(11, 'months').format('MM/YYYY')
     setCycleEndDate(endDate)
     setCycleStartDate(date)
@@ -92,10 +94,12 @@ const AddNewInvestmentCycle = (): JSX.Element => {
         startDate: moment(cycleStartDate).format('MM/YYYY'),
       },
     }
+
     const cycleExist = {
       cycleId: -1,
       cycleName: addCycle.cycleName,
     }
+
     const isCycleExistsResultAction = await dispatch(
       reduxServices.itDeclarationList.isCycleExist(cycleExist),
     )
@@ -228,6 +232,17 @@ const AddNewInvestmentCycle = (): JSX.Element => {
           </CCol>
         </CRow>
       </CForm>
+      <OModal
+        visible={isActiveCycleModalVisible}
+        setVisible={setIsActiveCycleModalVisible}
+        modalBodyClass="mt-0"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={handleAddNewInvestmentCycle}
+      >
+        <>Do you really want to activate this cycle ?</>
+      </OModal>
     </>
   )
 }
