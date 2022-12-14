@@ -81,15 +81,14 @@ const InvestmentCycleTable = (): JSX.Element => {
                       size="sm"
                       className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                       color="info btn-ovh me-1"
-                      data-testid="edit-button"
-                      //   onClick={() => editBtnHandler(name.bankId)}
+                      data-testid={`cycle-btn-edit${index}`}
                     >
                       <i className="fa fa-edit" aria-hidden="true"></i>
                     </CButton>
                   </CTooltip>
                   <CTooltip content="Delete">
                     <CButton
-                      //   data-testid={`btn-delete${index}`}
+                      data-testid={`cycle-btn-delete${index}`}
                       size="sm"
                       color="danger btn-ovh me-1"
                       className="btn-ovh-employee-list"

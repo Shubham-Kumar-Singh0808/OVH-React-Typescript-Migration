@@ -131,7 +131,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
           <CCol sm={3}>
             <CFormInput
               className="ps-2"
-              data-testid="cycle-name"
+              data-testid="addCycle-cycle-name"
               type="text"
               name="cycleName"
               placeholder="Cycle Name"
@@ -157,7 +157,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
               maxDate={new Date()}
               showMonthYearPicker
               placeholderText="mm/yyyy"
-              data-testid="date-picker-input"
+              data-testid="startDate-picker-input"
             />
           </CCol>
         </CRow>
@@ -173,7 +173,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
               <CFormInput
                 disabled
                 className="ps-2"
-                data-testid="cycle-name"
+                data-testid="endDate-input"
                 type="text"
                 name="cycleEndDate"
                 autoComplete="off"
@@ -202,7 +202,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CCol md={{ span: 6, offset: 3 }}>
             <CButton
-              data-testid="add-btn"
+              data-testid="ac-add-btn"
               className="btn-ovh me-1 text-white"
               color="success"
               onClick={handleAddNewInvestmentCycle}
@@ -211,7 +211,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
               Add
             </CButton>
             <CButton
-              data-testid="clear-btn"
+              data-testid="ac-clear-btn"
               color="warning "
               className="btn-ovh text-white"
               onClick={handleClearInputs}

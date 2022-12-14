@@ -59,7 +59,7 @@ describe('Add Section Component Testing', () => {
       expect(sectionLimitEl).toHaveValue('')
     })
   })
-
+  jest.retryTimes(3)
   test('should save the details when user enters valid data and clicks on Add Button', async () => {
     const sectionNameEle = screen.getByTestId(sectionNameInput)
     userEvent.type(sectionNameEle, 'Test')
