@@ -80,6 +80,7 @@ import { paySlipsService } from './Finance/Payslips/payslipsSlice'
 import { panDetailService } from './Finance/PanDetails/panDetailsSlice'
 import { bankDetailService } from './Finance/PanDetails/bankDetailsSlice'
 import { resignationListService } from './Separation/ResignationList/resignationListSlice'
+import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
 import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
 import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
 import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
@@ -169,6 +170,7 @@ export const reduxServices = {
   panDetails: panDetailService,
   bankDetails: bankDetailService,
   resignationList: resignationListService,
+  employeeAccount: employeeAccountService,
   itDeclarationList: itDeclarationListService,
   investmentCheckList: investmentCheckListService,
   achieverList: achieverListService,
