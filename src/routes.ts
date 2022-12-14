@@ -269,6 +269,11 @@ const ResignationManagerClearanceCertificate = React.lazy(
     ),
 )
 
+const SeparationViewChart = React.lazy(
+  () =>
+    import('./pages/Separation/ResignationList/ViewChart/SeparationViewChart'),
+)
+
 const ResignationHRClearanceCertificate = React.lazy(
   () =>
     import(
@@ -697,6 +702,11 @@ const routes = [
     path: '/achievementList',
     name: 'Achievements List',
     component: AchieverList,
+  },
+  {
+    path: '/separationChart',
+    name: 'Separation View Chart',
+    component: SeparationViewChart,
   },
   {
     path: '/addSection',
