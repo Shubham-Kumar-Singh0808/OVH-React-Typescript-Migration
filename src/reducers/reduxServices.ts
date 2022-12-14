@@ -83,6 +83,8 @@ import { resignationListService } from './Separation/ResignationList/resignation
 import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
 import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
 import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
+import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
+import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 
 export const reduxServices = {
@@ -171,5 +173,7 @@ export const reduxServices = {
   employeeAccount: employeeAccountService,
   itDeclarationList: itDeclarationListService,
   investmentCheckList: investmentCheckListService,
+  achieverList: achieverListService,
+  commonAchievements: commonAchievementsService,
   projectCreationRequest: projectCreationRequestService,
 }
