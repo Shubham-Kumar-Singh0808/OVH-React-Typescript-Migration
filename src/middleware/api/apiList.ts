@@ -70,6 +70,7 @@ import {
   BankDetailsApi,
   PanDetailsApi,
   ResignationListApi,
+  EmployeeAccountsApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
   ProjectCreationRequestApi,
@@ -668,4 +669,9 @@ export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
   getAuditForProjectRequest:
     apiPrefix + '/project-mgmt/getAuditForProjectRequest',
+}
+
+export const employeeAccountsApiConfig: EmployeeAccountsApi = {
+  financeDetails: apiPrefix + '/Employee/financeDetails',
+  exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }

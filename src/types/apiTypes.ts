@@ -554,3 +554,8 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getProjectRequest: string
   getAuditForProjectRequest: string
 }
+
+export interface EmployeeAccountsApi extends ApiBase {
+  financeDetails: string
+  exportFinanceList: string
+}

@@ -306,6 +306,10 @@ const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
 )
 
+const EmployeeAccounts = React.lazy(
+  () => import('./pages/Finance/EmployeeAccounts/EmployeeAccounts'),
+)
+
 const ITDeclarationList = React.lazy(
   () => import('./pages/Finance/ITDeclarationList/ITDeclarationList'),
 )
@@ -641,6 +645,11 @@ const routes = [
     path: '/managerComments',
     name: 'Resignation Time Line',
     component: ResignationTimeLine,
+  },
+  {
+    path: '/financeList',
+    name: 'Employee Accounts',
+    component: EmployeeAccounts,
   },
   {
     path: '/ClearanceCertificateManager',
