@@ -4,7 +4,7 @@ import {
   LoggedEmployee,
   ProjectMember,
 } from '../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
-import { GetAllProjects } from '../../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
+import { GetAllProjects } from '../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 
 export const mockTrainerDataList: LoggedEmployee[] = [
   {

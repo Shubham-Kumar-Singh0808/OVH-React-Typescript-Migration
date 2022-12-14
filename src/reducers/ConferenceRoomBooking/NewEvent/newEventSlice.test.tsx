@@ -13,7 +13,7 @@ describe('New Event  Slice', () => {
       }
       const state = newEventReducer(initialNewEventState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.loading,
+        isLoading: ApiLoadingState.idle,
         loggedEmployee: {} as LoggedEmployee,
         roomsByLocation: [],
         allEmployeesProfiles: [],
@@ -26,6 +26,86 @@ describe('New Event  Slice', () => {
     it('Should be able to set isLoading to "loading" if getLoggedEmployee is pending', () => {
       const action = {
         type: newEventService.getLoggedEmployee.pending.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: [],
+        allEmployeesProfiles: [],
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if getRoomsByLocation is pending', () => {
+      const action = {
+        type: newEventService.getRoomsByLocation.pending.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: [],
+        allEmployeesProfiles: [],
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if getProjectMembers is pending', () => {
+      const action = {
+        type: newEventService.getProjectMembers.pending.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: [],
+        allEmployeesProfiles: [],
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if uniqueAttendee is pending', () => {
+      const action = {
+        type: newEventService.uniqueAttendee.pending.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: [],
+        allEmployeesProfiles: [],
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if getAllBookedDetailsForEvent is pending', () => {
+      const action = {
+        type: newEventService.getAllBookedDetailsForEvent.pending.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: [],
+        allEmployeesProfiles: [],
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if addNewEvent is pending', () => {
+      const action = {
+        type: newEventService.addNewEvent.pending.type,
       }
       const state = newEventReducer(initialNewEventState, action)
       expect(state).toEqual({
