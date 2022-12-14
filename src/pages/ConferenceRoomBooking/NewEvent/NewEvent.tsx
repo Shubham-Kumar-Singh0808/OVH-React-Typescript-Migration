@@ -331,6 +331,7 @@ const NewEvent = (): JSX.Element => {
               <CCol sm={7}>
                 <CFormTextarea
                   placeholder="Purpose"
+                  data-testid="text-area"
                   aria-label="textarea"
                   value={addEvent.agenda}
                   onChange={(e) => {
