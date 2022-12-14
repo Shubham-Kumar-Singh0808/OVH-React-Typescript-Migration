@@ -74,6 +74,8 @@ import {
   EmployeeAccountsApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
+  AchieverListApi,
+  CommonAchievementsApi,
   ProjectCreationRequestApi,
 } from '../../types/apiTypes'
 
@@ -674,6 +676,16 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
   getSections: apiPrefix + '/itDeclaration/getSection',
+}
+
+export const CommonAchievementsApiConfig: CommonAchievementsApi = {
+  getAllAchievementsType: apiPrefix + '/achievement/getAllAchievementType',
+}
+
+export const AchieverListApiConfig: AchieverListApi = {
+  getAchieverList: apiPrefix + '/achievement/getAllAchievement',
+  updateShowOnDashbord: apiPrefix + '/achievement/showOnDashBoard',
+  achievementHistoryTimeline: apiPrefix + '/achievement/getAchievementHistory',
 }
 
 export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {

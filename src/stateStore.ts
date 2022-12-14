@@ -94,6 +94,8 @@ import resignationListReducer from './reducers/Separation/ResignationList/resign
 import employeeAccountsReducer from './reducers/Finance/EmployeeAccounts/employeeAccountsSlice'
 import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDeclarationListSlice'
 import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/investmentCheckListSlice'
+import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
+import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 
 export const allReducers = {
@@ -189,6 +191,8 @@ export const allReducers = {
   employeeAccounts: employeeAccountsReducer,
   itDeclarationList: itDeclarationListReducer,
   investmentCheckList: investmentCheckListReducer,
+  achieverList: achieverListReducer,
+  commonAchievements: commonAchievementsReducer,
   projectCreationRequest: projectCreationRequestReducer,
   // add your slice reducers here
 }

@@ -340,6 +340,10 @@ const ProjectCreationRequest = React.lazy(
     ),
 )
 
+const AchieverList = React.lazy(
+  () => import('./pages/Achievements/AchieverList/AchieverList'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -710,6 +714,11 @@ const routes = [
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
+  },
+  {
+    path: '/achievementList',
+    name: 'Achievements List',
+    component: AchieverList,
   },
   {
     path: '/separationChart',
