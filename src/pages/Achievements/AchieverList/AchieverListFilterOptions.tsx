@@ -18,6 +18,7 @@ import {
 } from '../../../types/Achievements/AchieverList/AchieverListTypes'
 import { commonDateFormat, deviceLocale } from '../../../utils/dateFormatUtils'
 import { TextDanger } from '../../../constant/ClassName'
+import { AchievementType } from '../../../types/Achievements/commonAchievementTypes'
 
 const selectMonthConst = 'Select Month'
 const achievementSelectConst = 'Select Achievement Type'
@@ -101,6 +102,19 @@ const AchieverListFilterOptions = (
     achieverToDate,
   ])
 
+  const datesErrorMessage = compareTheDates(
+    achieverFromDate,
+    achieverToDate,
+  ) ? (
+    <div data-testid="error-msg-date">
+      <CFormText className={TextDanger}>
+        To month should be greater than From month
+      </CFormText>
+    </div>
+  ) : (
+    <></>
+  )
+
   return (
     <CForm onSubmit={filterHandler}>
       <CContainer className="mt-4 ms-2">
@@ -147,15 +161,17 @@ const AchieverListFilterOptions = (
               >
                 {achievementSelectConst}
               </option>
-              {achievementTypes?.list.map((item, index) => (
-                <option
-                  key={index}
-                  value={item.typeName}
-                  data-testid="achievement-option-fetched"
-                >
-                  {item.typeName}
-                </option>
-              ))}
+              {achievementTypes?.list.map(
+                (item: AchievementType, index: number) => (
+                  <option
+                    key={index}
+                    value={item.typeName}
+                    data-testid="achievement-option-fetched"
+                  >
+                    {item.typeName}
+                  </option>
+                ),
+              )}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -212,17 +228,7 @@ const AchieverListFilterOptions = (
                     setAchieverToDate(moment(date).format(commonDateFormat))
                   }
                 />
-                <>
-                  {compareTheDates(achieverFromDate, achieverToDate) ? (
-                    <div data-testid="error-msg-date">
-                      <CFormText className={TextDanger}>
-                        To month should be greater than From month
-                      </CFormText>
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                </>
+                <>{datesErrorMessage}</>
               </CCol>
             </CRow>
           </>

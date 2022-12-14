@@ -13,6 +13,7 @@ import {
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { AchievementType } from '../../../types/Achievements/commonAchievementTypes'
 
 const selectMonthConst = 'Select Month'
 const achievementSelectConst = 'Select Achievement Type'
@@ -117,7 +118,7 @@ const AchieverList = (): JSX.Element => {
 
   const getAchievementTypeId = (): string | undefined => {
     return achievementTypes.list
-      .find((item) => item.typeName === currentAchievement)
+      .find((item: AchievementType) => item.typeName === currentAchievement)
       ?.id.toString()
   }
 
@@ -161,6 +162,21 @@ const AchieverList = (): JSX.Element => {
     getNewAchieverList(0, pageSize)
   }
 
+  const achieverListTableTernary =
+    isLoading !== ApiLoadingState.loading ? (
+      <AchieverListTable
+        paginationRange={paginationRange}
+        setPageSize={setPageSize}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        pageSize={pageSize}
+        setAchievementTimeline={setAchievementTimeline}
+        ToggleTimelineAccess={ToggleTimelineAccess}
+      />
+    ) : (
+      <OLoadingSpinner type={LoadingType.PAGE} />
+    )
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -190,21 +206,7 @@ const AchieverList = (): JSX.Element => {
             clearButtonHandler={clearButtonHandler}
             filterHandler={filterHandler}
           />
-          <>
-            {isLoading !== ApiLoadingState.loading ? (
-              <AchieverListTable
-                paginationRange={paginationRange}
-                setPageSize={setPageSize}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pageSize={pageSize}
-                setAchievementTimeline={setAchievementTimeline}
-                ToggleTimelineAccess={ToggleTimelineAccess}
-              />
-            ) : (
-              <OLoadingSpinner type={LoadingType.PAGE} />
-            )}
-          </>
+          <>{achieverListTableTernary}</>
         </>
       )}
     </OCard>

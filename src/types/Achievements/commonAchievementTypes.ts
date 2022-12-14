@@ -18,7 +18,7 @@ export interface IncomingAchievementTypes {
   list: AchievementType[]
 }
 
-export interface initialCommonAchievementState {
+export interface CommonAchievementInitialState {
   achievementTypeList: IncomingAchievementTypes
   isLoading: LoadingState
 }
