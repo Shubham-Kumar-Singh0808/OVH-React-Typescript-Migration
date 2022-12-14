@@ -523,6 +523,8 @@ export interface ResignationListApi extends ApiBase {
   clearanceCertificateComments: string
   getClearanceDetails: string
   updateCCDetails: string
+  checkExitFeedBackForm: string
+  getSeparationChart: string
   getEmpDetails: string
   saveExitFeedBackForm: string
   uploadExitFeedBackFile: string
@@ -551,4 +553,9 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getAllProjectRequestList: string
   getProjectRequest: string
   getAuditForProjectRequest: string
+}
+
+export interface EmployeeAccountsApi extends ApiBase {
+  financeDetails: string
+  exportFinanceList: string
 }

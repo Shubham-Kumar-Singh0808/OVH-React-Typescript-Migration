@@ -269,6 +269,11 @@ const ResignationManagerClearanceCertificate = React.lazy(
     ),
 )
 
+const SeparationViewChart = React.lazy(
+  () =>
+    import('./pages/Separation/ResignationList/ViewChart/SeparationViewChart'),
+)
+
 const ResignationHRClearanceCertificate = React.lazy(
   () =>
     import(
@@ -299,6 +304,10 @@ const ResignationAdminClearanceCertificate = React.lazy(
 
 const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
+)
+
+const EmployeeAccounts = React.lazy(
+  () => import('./pages/Finance/EmployeeAccounts/EmployeeAccounts'),
 )
 
 const ITDeclarationList = React.lazy(
@@ -638,6 +647,11 @@ const routes = [
     component: ResignationTimeLine,
   },
   {
+    path: '/financeList',
+    name: 'Employee Accounts',
+    component: EmployeeAccounts,
+  },
+  {
     path: '/ClearanceCertificateManager',
     name: 'Resignation Clearence CertificateManager',
     component: ResignationManagerClearanceCertificate,
@@ -688,6 +702,11 @@ const routes = [
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
+  },
+  {
+    path: '/separationChart',
+    name: 'Separation View Chart',
+    component: SeparationViewChart,
   },
   {
     path: '/addSection',
