@@ -13,7 +13,8 @@ export const mockAchievementTimeline: IncomingAchievementHistoryTimelineList = {
       employee: null,
       achievementType: null,
       timePeriod: null,
-      description: null,
+      description:
+        'Testing for the modal opening on the achievement timeline. Satisfied or not. Checking Checking Checking Checking CHecking Checking',
       startDate: null,
       endDate: null,
       showOnDashBoard: 'true',

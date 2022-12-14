@@ -14,9 +14,9 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { AchievementType } from '../../../types/Achievements/commonAchievementTypes'
+import { selectAchievementType } from '../AchievementConstants'
 
 const selectMonthConst = 'Select Month'
-const achievementSelectConst = 'Select Achievement Type'
 
 const getDateSelection = (selectedOpt: string) => {
   if (selectedOpt === SelectMonthOptions.currentMonth) {
@@ -49,7 +49,7 @@ const AchieverList = (): JSX.Element => {
   )
 
   const [currentAchievement, setAchievement] = useState<string>(
-    achievementSelectConst,
+    selectAchievementType,
   )
 
   const [currentSelectedOption, setSelectedOption] =
@@ -152,7 +152,7 @@ const AchieverList = (): JSX.Element => {
     dispatch(reduxServices.achieverList.actions.setFilterQueries({}))
     dispatchAchieverList({})
     setSelectedOption(selectMonthConst)
-    setAchievement(achievementSelectConst)
+    setAchievement(selectAchievementType)
     setAchieverFromDate('')
     setAchieverToDate('')
   }

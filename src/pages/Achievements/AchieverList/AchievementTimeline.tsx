@@ -119,6 +119,7 @@ const AchievementTimeline = (props: {
       <span
         className="text-info"
         role="button"
+        data-testid="desc-content"
         onClick={() => {
           showAchievementDescription(description)
         }}
@@ -263,7 +264,7 @@ const AchievementTimeline = (props: {
             modalFooterClass="d-none"
             modalHeaderClass="d-none"
           >
-            <div>{descriptionContentTernary}</div>
+            <div data-testid="model-content">{descriptionContentTernary}</div>
           </OModal>
         </>
       ) : (

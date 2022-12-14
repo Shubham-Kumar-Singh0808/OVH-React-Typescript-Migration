@@ -36,6 +36,8 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
     string | undefined | null | JSX.Element
   >('')
 
+  const descriptionContentTernary = descriptionContent ? descriptionContent : ''
+
   const {
     paginationRange,
     setPageSize,
@@ -238,9 +240,7 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
           modalFooterClass="d-none"
           modalHeaderClass="d-none"
         >
-          <div data-testid="modal-txt">
-            {descriptionContent ? descriptionContent : ''}
-          </div>
+          <div data-testid="modal-txt">{descriptionContentTernary}</div>
         </OModal>
       </>
     </>

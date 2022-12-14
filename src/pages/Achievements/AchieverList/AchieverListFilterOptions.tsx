@@ -19,9 +19,9 @@ import {
 import { commonDateFormat, deviceLocale } from '../../../utils/dateFormatUtils'
 import { TextDanger } from '../../../constant/ClassName'
 import { AchievementType } from '../../../types/Achievements/commonAchievementTypes'
+import { selectAchievementType } from '../AchievementConstants'
 
 const selectMonthConst = 'Select Month'
-const achievementSelectConst = 'Select Achievement Type'
 const selectList = [
   String(SelectMonthOptions.lastMonth),
   String(SelectMonthOptions.currentMonth),
@@ -79,7 +79,7 @@ const AchieverListFilterOptions = (
   useEffect(() => {
     if (
       currentSelectedOption !== selectMonthConst ||
-      currentAchievement !== achievementSelectConst
+      currentAchievement !== selectAchievementType
     ) {
       setViewButton(true)
       if (
@@ -156,10 +156,10 @@ const AchieverListFilterOptions = (
               onChange={achievementChangeHandler}
             >
               <option
-                value={achievementSelectConst}
+                value={selectAchievementType}
                 data-testid="achievement-option-default"
               >
-                {achievementSelectConst}
+                {selectAchievementType}
               </option>
               {achievementTypes?.list.map(
                 (item: AchievementType, index: number) => (
