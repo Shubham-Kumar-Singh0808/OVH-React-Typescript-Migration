@@ -59,9 +59,16 @@ const AddNewInvestmentCycle = (): JSX.Element => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setAddCycle((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'cycleName') {
+      const cycleNameValue = value.replace(/^\s*/, '')
+      setAddCycle((prevState) => {
+        return { ...prevState, ...{ [name]: cycleNameValue } }
+      })
+    } else {
+      setAddCycle((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   const toastElement = (
