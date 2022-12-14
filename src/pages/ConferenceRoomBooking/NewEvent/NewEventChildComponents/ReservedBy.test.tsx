@@ -7,8 +7,8 @@ import {
   selectedTrainerManager,
 } from '../../../../test/constants'
 
-describe('Trainer Component', () => {
-  describe('Empty value of  Trainer Component', () => {
+describe('ReservedBy Component', () => {
+  describe('Empty value of  ReservedBy Component', () => {
     beforeEach(() => {
       render(
         <ReservedBy
@@ -19,15 +19,15 @@ describe('Trainer Component', () => {
       )
     })
 
-    test('should be able to render ProjectManager Component Title', () => {
+    test('should be able to render ReservedBy Component Title', () => {
       expect(screen.getByText('Reserved by:')).toBeInTheDocument()
     })
 
-    test('should be able to render ProjectManager Component label', () => {
+    test('should be able to render ReservedBy Component label', () => {
       expect(screen.getByTestId('pmLabel')).toBeTruthy()
     })
 
-    test('should be able to render ProjectManager Component placeholder', () => {
+    test('should be able to render ReservedBy Component placeholder', () => {
       expect(screen.getByRole('combobox')).toBeInTheDocument()
     })
     test('should be able to enter in input field', () => {

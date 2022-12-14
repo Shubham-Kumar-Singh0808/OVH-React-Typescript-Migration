@@ -5,8 +5,8 @@ import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { selectedAttendees } from '../../../../test/constants'
 import { mockTrainerDataList } from '../../../../test/data/newEventData'
 
-describe('Trainer Component', () => {
-  describe('Empty value of  Trainer Component', () => {
+describe('Attendees Component', () => {
+  describe('Empty value of  Attendees Component', () => {
     beforeEach(() => {
       render(
         <Attendees
@@ -23,15 +23,15 @@ describe('Trainer Component', () => {
       )
     })
 
-    test('should be able to render ProjectManager Component Title', () => {
+    test('should be able to render Attendees Component Title', () => {
       expect(screen.getByText('Attendees:')).toBeInTheDocument()
     })
 
-    test('should be able to render ProjectManager Component label', () => {
+    test('should be able to render Attendees Component label', () => {
       expect(screen.getByTestId('pmLabel')).toBeTruthy()
     })
 
-    test('should be able to render ProjectManager Component placeholder', () => {
+    test('should be able to render Attendees Component placeholder', () => {
       expect(screen.getByRole('combobox')).toBeInTheDocument()
     })
 
@@ -54,7 +54,7 @@ describe('Trainer Component', () => {
     })
   })
 
-  describe('Should be able to reset ProjectManager Component value', () => {
+  describe('Should be able to reset Attendees Component value', () => {
     beforeEach(() => {
       render(
         <Attendees

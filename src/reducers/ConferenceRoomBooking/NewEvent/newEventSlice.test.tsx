@@ -118,5 +118,100 @@ describe('New Event  Slice', () => {
         allBookedDetailsForEvent: [],
       })
     })
+
+    it('Should be able to set isLoading to "loading" if getLoggedEmployee is fullfilled', () => {
+      const action = {
+        type: newEventService.getLoggedEmployee.fulfilled.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        loggedEmployee: undefined,
+        roomsByLocation: [],
+        allEmployeesProfiles: [],
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+    it('Should be able to set isLoading to "loading" if getRoomsByLocation is fullfilled', () => {
+      const action = {
+        type: newEventService.getRoomsByLocation.fulfilled.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: undefined,
+        allEmployeesProfiles: [],
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if getAllEmployees is fullfilled', () => {
+      const action = {
+        type: newEventService.getAllEmployees.fulfilled.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: [],
+        allEmployeesProfiles: undefined,
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if getProjectMembers is fullfilled', () => {
+      const action = {
+        type: newEventService.getProjectMembers.fulfilled.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: [],
+        allEmployeesProfiles: [],
+        projectMembers: undefined,
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if uniqueAttendee is fullfilled', () => {
+      const action = {
+        type: newEventService.uniqueAttendee.fulfilled.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: [],
+        allEmployeesProfiles: [],
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if getAllBookedDetailsForEvent is fullfilled', () => {
+      const action = {
+        type: newEventService.getAllBookedDetailsForEvent.fulfilled.type,
+      }
+      const state = newEventReducer(initialNewEventState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        loggedEmployee: {} as LoggedEmployee,
+        roomsByLocation: [],
+        allEmployeesProfiles: [],
+        projectMembers: [],
+        error: null,
+        allBookedDetailsForEvent: undefined,
+      })
+    })
   })
 })

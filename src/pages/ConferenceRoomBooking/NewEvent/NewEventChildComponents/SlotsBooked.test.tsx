@@ -13,7 +13,7 @@ const toRender = (
   </div>
 )
 
-describe('Booking List Filter Options Component Testing with data', () => {
+describe('SlotsBooked Component Testing with data', () => {
   beforeEach(() => {
     render(toRender, {
       preloadedState: {
