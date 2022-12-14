@@ -8,7 +8,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
-import AchievementTypeList from './AchievementTypeList'
+import AchievementTypeList from './AchievementTypeList/AchievementTypeList'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const AddAchiever = () => {
