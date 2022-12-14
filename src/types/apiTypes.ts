@@ -523,6 +523,8 @@ export interface ResignationListApi extends ApiBase {
   clearanceCertificateComments: string
   getClearanceDetails: string
   updateCCDetails: string
+  checkExitFeedBackForm: string
+  getSeparationChart: string
   getEmpDetails: string
   saveExitFeedBackForm: string
   uploadExitFeedBackFile: string

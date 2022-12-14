@@ -63,6 +63,7 @@ export type ResignationListSliceState = {
   resignationList: ResignationListResponse
   separationTimeLine: SeparationTimeLine
   clearanceDetails: ClearanceDetails[]
+  separationChart: SeparationChart
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number
@@ -201,6 +202,35 @@ export type CheckExitFeedBackForm = {
   employeeName: string
 }
 
+export type Chart = {
+  caption: string
+  subcaption: null
+  startingangle: string
+  showlabels: string
+  showlegend: string
+  enablemultislicing: string
+  slicingdistance: string
+  showpercentvalues: string
+  showpercentintooltip: string
+  plottooltext: string
+  theme: string
+}
+
+export type Data = {
+  label: string
+  value: string
+}
+
+export type SeparationChartProps = {
+  dateSelection: string
+  from: string
+  to: string
+}
+
+export type SeparationChart = {
+  chart: Chart
+  data: Data[]
+}
 export type GetEmpDetailsType = {
   separationId: number
   relievingDate: null
