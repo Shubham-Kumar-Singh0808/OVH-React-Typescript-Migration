@@ -61,8 +61,7 @@ const ResignationTimeLine = (): JSX.Element => {
               <span className="descriptionField">
                 <div
                   dangerouslySetInnerHTML={{
-                    __html:
-                      getAllResignationHistory?.employeeComments as string,
+                    __html: getAllResignationHistory?.employeeComments,
                   }}
                 />
               </span>
@@ -112,7 +111,7 @@ const ResignationTimeLine = (): JSX.Element => {
                             &nbsp;
                             <div
                               dangerouslySetInnerHTML={{
-                                __html: item?.comments as string,
+                                __html: item?.comments,
                               }}
                             />
                           </div>
