@@ -7,6 +7,7 @@ import { cleanup, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockBankInformation } from '../../../../test/data/panDetailsData'
 import { BankInfo } from '../../../../types/Finance/PanDetails/panDetailsTypes'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockSetTogglePage = jest.fn()
 const setSelectBankId = jest.fn()
@@ -18,6 +19,19 @@ describe('Bank Details without data', () => {
         setToggle={mockSetTogglePage}
         setSelectBankId={setSelectBankId}
       />,
+      {
+        preloadedState: {
+          panDetails: {
+            bankInfo: mockBankInformation,
+            isLoading: ApiLoadingState.succeeded,
+            editBankAccount: {} as BankInfo,
+            error: 0,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
+        },
+      },
     )
   })
 
@@ -51,10 +65,14 @@ describe('Bank Details Table with data', () => {
             editBankAccount: {} as BankInfo,
             error: 0,
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       },
     )
   })
+
   afterEach(cleanup)
   test('should render with number of records  ', () => {
     expect(
@@ -72,6 +90,28 @@ describe('Bank Details Table with data', () => {
 })
 
 describe('Bank Details Component Testing', () => {
+  beforeEach(() => {
+    render(
+      <BankDetails
+        setToggle={mockSetTogglePage}
+        setSelectBankId={setSelectBankId}
+      />,
+      {
+        preloadedState: {
+          panDetails: {
+            bankInfo: mockBankInformation,
+            isLoading: ApiLoadingState.succeeded,
+            editBankAccount: {} as BankInfo,
+            error: 0,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
+        },
+      },
+    )
+  })
+
   test('should render Bank Details component with out crashing', () => {
     render(
       <BankDetails
