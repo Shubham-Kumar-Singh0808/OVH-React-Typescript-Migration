@@ -113,7 +113,6 @@ const AppraisalConfigurationsTable = ({
               const removeSpaces = appraisalCycle.description
                 ?.replace(/\s+/g, ' ')
                 .trim()
-                .replace(/(<([^>]+)>)/gi, '')
                 .replace(/&nbsp;/g, '')
               const agendaLimit =
                 removeSpaces && removeSpaces.length > 15
