@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -73,6 +73,17 @@ const AppraisalConfigurationsTable = ({
     setDescriptionModal(appraisalCycle)
   }
 
+  const sortedAppraisalDates = useMemo(() => {
+    if (appraisalCycleNames) {
+      return appraisalCycleNames
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.toDate.localeCompare(sortNode2.fromDate),
+        )
+    }
+    return []
+  }, [appraisalCycleNames])
+
   return (
     <>
       <CTable
@@ -97,13 +108,16 @@ const AppraisalConfigurationsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {appraisalCycleNames?.length > 0 &&
-            appraisalCycleNames?.map((appraisalCycle, index) => {
+          {sortedAppraisalDates?.length > 0 &&
+            sortedAppraisalDates?.map((appraisalCycle, index) => {
+              const removeSpaces = appraisalCycle.description
+                ?.replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
               const agendaLimit =
-                appraisalCycle.description &&
-                appraisalCycle.description.length > 30
-                  ? `${appraisalCycle.description.substring(0, 30)}...`
-                  : appraisalCycle.description
+                removeSpaces && removeSpaces.length > 15
+                  ? `${removeSpaces.substring(0, 15)}...`
+                  : removeSpaces
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
@@ -216,7 +230,11 @@ const AppraisalConfigurationsTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <p>{descriptionModal.description}</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: descriptionModal.description as string,
+            }}
+          />
         </>
       </OModal>
     </>

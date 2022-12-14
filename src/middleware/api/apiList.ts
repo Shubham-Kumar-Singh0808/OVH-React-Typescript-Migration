@@ -70,6 +70,7 @@ import {
   BankDetailsApi,
   PanDetailsApi,
   ResignationListApi,
+  EmployeeAccountsApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
   ProjectCreationRequestApi,
@@ -634,6 +635,9 @@ export const resignationListApiConfig: ResignationListApi = {
     apiPrefix + '/separationController/clearanceCertificateComments',
   getClearanceDetails: apiPrefix + '/separationController/getClearanceDetails',
   updateCCDetails: apiPrefix + '/separationController/updateCC',
+  checkExitFeedBackForm:
+    apiPrefix + '/separationController/checkExitFeedBackForm',
+  getSeparationChart: apiPrefix + '/separationController/getSeparationChart',
   getEmpDetails: apiPrefix + '/separationController/getEmpDetails',
   saveExitFeedBackForm:
     apiPrefix + '/separationController/saveExitFeedBackForm',
@@ -666,4 +670,9 @@ export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
   getAuditForProjectRequest:
     apiPrefix + '/project-mgmt/getAuditForProjectRequest',
+}
+
+export const employeeAccountsApiConfig: EmployeeAccountsApi = {
+  financeDetails: apiPrefix + '/Employee/financeDetails',
+  exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }
