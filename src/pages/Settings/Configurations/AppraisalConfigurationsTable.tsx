@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -13,6 +13,7 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -72,6 +73,17 @@ const AppraisalConfigurationsTable = ({
     setDescriptionModal(appraisalCycle)
   }
 
+  const sortedAppraisalDates = useMemo(() => {
+    if (appraisalCycleNames) {
+      return appraisalCycleNames
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.toDate.localeCompare(sortNode2.fromDate),
+        )
+    }
+    return []
+  }, [appraisalCycleNames])
+
   return (
     <>
       <CTable
@@ -96,13 +108,16 @@ const AppraisalConfigurationsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {appraisalCycleNames?.length > 0 &&
-            appraisalCycleNames?.map((appraisalCycle, index) => {
+          {sortedAppraisalDates?.length > 0 &&
+            sortedAppraisalDates?.map((appraisalCycle, index) => {
+              const removeSpaces = appraisalCycle.description
+                ?.replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
               const agendaLimit =
-                appraisalCycle.description &&
-                appraisalCycle.description.length > 30
-                  ? `${appraisalCycle.description.substring(0, 30)}...`
-                  : appraisalCycle.description
+                removeSpaces && removeSpaces.length > 15
+                  ? `${removeSpaces.substring(0, 15)}...`
+                  : removeSpaces
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
@@ -138,13 +153,15 @@ const AppraisalConfigurationsTable = ({
                     {userEditAccess && (
                       <>
                         <CTooltip content="Edit">
-                          <CButton
-                            size="sm"
-                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                            color="info btn-ovh me-1"
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
+                          <Link to={`/editAppraisalCycle/${appraisalCycle.id}`}>
+                            <CButton
+                              size="sm"
+                              className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                              color="info btn-ovh me-1"
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </Link>
                         </CTooltip>
                         <CTooltip content="Assign Template">
                           <CButton
@@ -213,7 +230,11 @@ const AppraisalConfigurationsTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <p>{descriptionModal.description}</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: descriptionModal.description as string,
+            }}
+          />
         </>
       </OModal>
     </>

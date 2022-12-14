@@ -355,6 +355,7 @@ const CreateNewTicketFilterOptions = ({
               minDate={new Date()}
               dropdownMode="select"
               dateFormat="dd/mm/yy"
+              autoComplete="off"
               placeholderText="dd/mm/yy"
               name="fromDate"
               value={
@@ -385,6 +386,7 @@ const CreateNewTicketFilterOptions = ({
               showYearDropdown
               minDate={new Date()}
               dropdownMode="select"
+              autoComplete="off"
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yy"
               name="toDate"

@@ -1,3 +1,4 @@
+import { StringifyOptions } from 'querystring'
 import { Method, ResponseType } from 'axios'
 
 export type AuthenticatedRequestConfig = {
@@ -404,6 +405,7 @@ export interface DashboardApi extends ApiBase {
   getHolidayInformation: string
   updateHoliday: string
   searchEmployee: string
+  getLeaveSummary: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
@@ -457,6 +459,9 @@ export interface EventListApi extends ApiBase {
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
+  editAppraisalCycle: string
+  updateAppraisalCycle: string
+  validateCycle: string
 }
 export interface AddConfigurationsApi extends ApiBase {
   addAppraisalCycle: string
@@ -476,4 +481,90 @@ export interface TicketConfigurationApi extends ApiBase {
   deleteSubCategory: string
   ticketHistory: string
   addSubCategory: string
+  updateSubCategory: string
+  getAllCategory: string
+  addCategory: string
+  updateCategory: string
+  deleteCategory: string
+}
+
+export interface SubmitResignationApi extends ApiBase {
+  getSeparationForm: string
+  submitResignation: string
+  getEmployeeResg: string
+  revokeResignation: string
+}
+
+export interface LeaveApprovalsApi extends ApiBase {
+  getEmployees: string
+  getEmployeeLeaves: string
+  getSearchEmployees: string
+  checkProjectManagerExits: string
+  leaveApprove: string
+  leaveReject: string
+}
+
+export interface PaySlipsApi extends ApiBase {
+  getEmployeePayslipsForSelectedYear: string
+  generatePayslipAndDownloadPayslip: string
+}
+
+export interface PanDetailsApi extends ApiBase {
+  bankInformation: string
+  updateFinanceInformation: string
+  uploadEmployeeFinanceDetails: string
+  downloadFinanceFile: string
+}
+
+export interface BankDetailsApi extends ApiBase {
+  getBankNameLookup: string
+  saveBankInformation: string
+  updateBankInformation: string
+  deleteBankAccount: string
+  editBankInformation: string
+}
+
+export interface ResignationListApi extends ApiBase {
+  resignationList: string
+  exportResignationList: string
+  resignationInitiateCC: string
+  getSeparationTimeLine: string
+  clearanceCertificateComments: string
+  getClearanceDetails: string
+  updateCCDetails: string
+  checkExitFeedBackForm: string
+  getSeparationChart: string
+  getEmpDetails: string
+  saveExitFeedBackForm: string
+  uploadExitFeedBackFile: string
+  uploadRelievingLetter: string
+}
+
+export interface ITDeclarationListApi extends ApiBase {
+  getCycles: string
+  getSections: string
+  getITDeclarationForm: string
+  exportITDeclarationList: string
+  deleteSection: string
+  addSection: string
+  updateSection: string
+  getInvestments: string
+  addInvestment: string
+  deleteInvestment: string
+}
+
+export interface InvestmentCheckListApi extends ApiBase {
+  getInvestments: string
+  getSections: string
+}
+
+export interface ProjectCreationRequestApi extends ApiBase {
+  getAllProjectRequestList: string
+  getProjectRequest: string
+  getAuditForProjectRequest: string
+}
+
+export interface EmployeeAccountsApi extends ApiBase {
+  financeDetails: string
+  exportFinanceList: string
 }

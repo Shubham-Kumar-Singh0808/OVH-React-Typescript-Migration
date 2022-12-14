@@ -71,10 +71,20 @@ import { ticketConfigurationService } from './Settings/TicketConfiguration/ticke
 import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
 import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
 import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import { submitViewResignationServices } from './Separation/SubmitViewResignation/submitResignationSlice'
 import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 import { newEventService } from './ConferenceRoomBooking/NewEvent/newEventSlice'
+import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
+import { paySlipsService } from './Finance/Payslips/payslipsSlice'
+import { panDetailService } from './Finance/PanDetails/panDetailsSlice'
+import { bankDetailService } from './Finance/PanDetails/bankDetailsSlice'
+import { resignationListService } from './Separation/ResignationList/resignationListSlice'
+import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
+import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
+import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
+import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 
 export const reduxServices = {
   app: appService,
@@ -151,7 +161,17 @@ export const reduxServices = {
   searchEmployee: employeeSearchService,
   ticketConfiguration: ticketConfigurationService,
   appraisalConfigurations: appraisalCycleService,
+  submitViewResignation: submitViewResignationServices,
   addConfigurations: addConfigurationService,
   projectReport: projectReportsService,
   newEvent: newEventService,
+  leaveApprovals: leaveApprovalsService,
+  paySlips: paySlipsService,
+  panDetails: panDetailService,
+  bankDetails: bankDetailService,
+  resignationList: resignationListService,
+  employeeAccount: employeeAccountService,
+  itDeclarationList: itDeclarationListService,
+  investmentCheckList: investmentCheckListService,
+  projectCreationRequest: projectCreationRequestService,
 }

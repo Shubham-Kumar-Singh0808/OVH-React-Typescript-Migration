@@ -7,6 +7,12 @@ const SpecialAward = (): JSX.Element => {
   const achievements = useTypedSelector(
     reduxServices.employeeAchievements.selectors.achievements,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAchieversList = userAccessToFeatures?.find(
+    (feature) => feature.name === `Achiever's List`,
+  )
 
   const specialAwardFooterLink = (
     <CCardFooter>
@@ -39,13 +45,18 @@ const SpecialAward = (): JSX.Element => {
                     </span>
                   </h6>
                   <h6>{specialAward.employeeName}</h6>
-                  <p>{specialAward.startDate}</p>
+                  <p>
+                    {`${specialAward.startDate} to
+                    ${
+                      specialAward.endDate === null ? ' ' : specialAward.endDate
+                    }`}
+                  </p>
                 </CCol>
               )
             })}
           </CRow>
         </CCol>
-        {specialAwardFooterLink}
+        {userAccessToAchieversList?.viewaccess && <>{specialAwardFooterLink}</>}
       </CRow>
     </>
   )

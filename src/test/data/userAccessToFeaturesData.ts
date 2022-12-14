@@ -797,10 +797,10 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
   {
     featureId: 195,
     name: 'Ticket Configuration',
-    viewaccess: false,
-    createaccess: false,
-    updateaccess: false,
-    deleteaccess: false,
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
     childFeatures: null,
   },
   {
@@ -1049,7 +1049,7 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
   {
     featureId: 222,
     name: 'Meal Type',
-    viewaccess: false,
+    viewaccess: true,
     createaccess: false,
     updateaccess: false,
     deleteaccess: false,
@@ -1490,10 +1490,10 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
   {
     featureId: 272,
     name: 'Add Section and Investment',
-    viewaccess: false,
-    createaccess: false,
-    updateaccess: false,
-    deleteaccess: false,
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
     childFeatures: null,
   },
   {
@@ -1886,15 +1886,6 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
   {
     featureId: 325,
     name: 'Dashboard-Job Openings',
-    viewaccess: true,
-    createaccess: true,
-    updateaccess: true,
-    deleteaccess: true,
-    childFeatures: null,
-  },
-  {
-    featureId: 323,
-    name: 'Ticket Configuration',
     viewaccess: true,
     createaccess: true,
     updateaccess: true,
