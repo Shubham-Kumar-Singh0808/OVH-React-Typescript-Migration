@@ -167,7 +167,7 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                         data-testid={`user-access-${index}`}
                         style={{ width: '115px' }}
                       >
-                        <AchieverListToggle index={index} achieverItem={item} />
+                        <AchieverListToggle achieverItem={item} />
                         <div className="button-events">
                           <CButton
                             color="info"

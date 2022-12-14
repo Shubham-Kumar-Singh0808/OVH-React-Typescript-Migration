@@ -9,10 +9,8 @@ import {
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const AchieverListToggle = ({
-  index,
   achieverItem,
 }: {
-  index: number
   achieverItem: AchieverListUserTypes
 }): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -54,7 +52,7 @@ const AchieverListToggle = ({
     <>
       <CFormSwitch
         className="sh-form-switch w-100"
-        data-testid={`btn-toggle${index}`}
+        data-testid={`btn-toggle`}
         type="checkbox"
         name="showStatus"
         size="lg"

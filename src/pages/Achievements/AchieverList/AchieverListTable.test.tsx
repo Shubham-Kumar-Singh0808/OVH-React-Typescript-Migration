@@ -85,7 +85,7 @@ describe('Testing Achiever List Table', () => {
     test('should render toggle and timeline actions', () => {
       const element = screen.getByTestId('user-access-0')
       expect(element).toBeTruthy()
-      expect(screen.getByTestId('btn-toggle0')).toBeInTheDocument()
+      expect(screen.getAllByTestId('btn-toggle')[0]).toBeInTheDocument()
       const button = screen.getByTestId('timeline-btn-1')
       expect(button).toHaveClass('btn-ovh me-2')
     })
@@ -99,6 +99,11 @@ describe('Testing Achiever List Table', () => {
       expect(element).toBeInTheDocument()
       fireEvent.click(element)
       expect(screen.getByTestId('modal-txt')).toBeInTheDocument()
+    })
+    test('Should change on clicking toggle', () => {
+      const toggleBtn = screen.getAllByTestId('btn-toggle')
+      fireEvent.click(toggleBtn[0])
+      expect(toggleBtn).toBeTruthy()
     })
   })
 })
