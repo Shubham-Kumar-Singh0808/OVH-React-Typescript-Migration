@@ -1,6 +1,6 @@
+import ReactFusioncharts from 'react-fusioncharts'
 import FusionCharts from 'fusioncharts'
 import charts from 'fusioncharts/fusioncharts.charts'
-import ReactFusioncharts from 'react-fusioncharts'
 import { CRow, CCol, CButton, CFormLabel, CFormSelect } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
