@@ -345,7 +345,7 @@ const ResignationListFilterOptions = ({
         <CCol sm={3} md={4} lg={5} xl={4} xxl={3}>
           <CInputGroup className="global-search me-0">
             <CFormInput
-              placeholder="Multiple Search"
+              placeholder="Employee Name"
               aria-label="Multiple Search"
               data-testid="search-input"
               aria-describedby="button-addon2"
