@@ -1,3 +1,6 @@
+import { LoadingState } from '../../commonTypes'
+import { AchievementType } from '../commonAchievementTypes'
+
 export enum NewAchievementStatus {
   Active = 'active',
   Inactive = 'inactive',
@@ -11,7 +14,7 @@ export interface OutgoingNewAchievementType {
   timeperiodrequired: boolean
 }
 
-export interface AchievementTypeDetailsQueryParameters {
+export interface AchievementTypeIdQueryParameter {
   typeId: number
 }
 
@@ -28,4 +31,9 @@ export interface AddAchieverTypeEntriesProps {
   newSelectedTimeReqHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
   newUserSelectedDateReq: boolean
   newSelectedDateReqHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export interface AddAchieverInitialState {
+  isLoading: LoadingState
+  achievementTypeDetails: AchievementType | null
 }

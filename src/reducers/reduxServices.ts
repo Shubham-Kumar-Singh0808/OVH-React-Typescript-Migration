@@ -86,6 +86,7 @@ import { investmentCheckListService } from './Finance/InvestmentCheckList/invest
 import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
 import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
 
 export const reduxServices = {
   app: appService,
@@ -174,6 +175,7 @@ export const reduxServices = {
   itDeclarationList: itDeclarationListService,
   investmentCheckList: investmentCheckListService,
   achieverList: achieverListService,
+  addAchiever: addAchieverServices,
   commonAchievements: commonAchievementsService,
   projectCreationRequest: projectCreationRequestService,
 }

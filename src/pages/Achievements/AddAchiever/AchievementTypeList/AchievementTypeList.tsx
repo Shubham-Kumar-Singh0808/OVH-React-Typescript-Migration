@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import AchievementTypeListEntries from './AchievementTypeListEntries'
 import AchievementTypeTable from './AchievementTypeTable'
 import { NewAchievementStatus } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import { useAppDispatch } from '../../../../stateStore'
 
 const AchievementTypeList = ({
   backButtonHandler,
 }: {
   backButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
   const [userNewSelectedAchievementType, setNewSelectedAchievementType] =
     useState<string>('')
 

@@ -9,6 +9,7 @@ describe('Common Achievement Slice', () => {
     const initialState: CommonAchievementInitialState = {
       isLoading: ApiLoadingState.idle,
       achievementTypeList: { size: 0, list: [] },
+      dateSortedList: { size: 0, list: [] },
     }
     it('"isLoading" should be set to "loading" for "getAllAchievementsType"', () => {
       const action = {
@@ -18,6 +19,7 @@ describe('Common Achievement Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
         achievementTypeList: { size: 0, list: [] },
+        dateSortedList: { size: 0, list: [] },
       })
     })
   })

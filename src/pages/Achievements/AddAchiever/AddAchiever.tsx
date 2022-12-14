@@ -7,11 +7,14 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AchievementTypeList from './AchievementTypeList/AchievementTypeList'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { useAppDispatch } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const AddAchiever = (): JSX.Element => {
+  const dispatch = useAppDispatch()
   const [addAchievementTypeButton, setAddAchievementTypeButton] =
     useState<boolean>(false)
 
@@ -28,6 +31,10 @@ const AddAchiever = (): JSX.Element => {
     e.preventDefault()
     setAddAchievementTypeButton(false)
   }
+
+  useEffect(() => {
+    dispatch(reduxServices.commonAchievements.getAllAchievementsType())
+  }, [])
 
   return (
     <OCard
