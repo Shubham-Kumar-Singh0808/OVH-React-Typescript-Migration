@@ -14,6 +14,10 @@ const ResignationHistory = (): JSX.Element => {
     reduxServices.resignationList.selectors.isLoading,
   )
 
+  const getAllResignationHistory = useTypedSelector(
+    reduxServices.resignationList.selectors.resignationTimeLine,
+  )
+
   return (
     <>
       <OCard
@@ -24,9 +28,13 @@ const ResignationHistory = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton color="info" className="btn-ovh me-1">
-              <i className="fa fa-arrow-left  me-1"></i>Edit
-            </CButton>
+            {getAllResignationHistory.status === 'Relieved' ? (
+              ''
+            ) : (
+              <CButton color="info" className="btn-ovh me-1">
+                <i className="fa fa-arrow-left  me-1"></i>Edit
+              </CButton>
+            )}
 
             <Link to={`/resignationList`}>
               <CButton color="info" className="btn-ovh me-1">
