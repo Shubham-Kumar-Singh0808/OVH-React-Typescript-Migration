@@ -23,7 +23,7 @@ const EventType = ({
         <CFormSelect
           aria-label="location"
           id="location"
-          data-testid="locationSelect"
+          data-testid="'eventTypeSelect-test"
           name="location"
           value={eventTypeValue}
           onChange={(e) => {
