@@ -20,18 +20,10 @@ const InvestmentCheckListDetailsTable = (): JSX.Element => {
   const investments = useTypedSelector(
     reduxServices.investmentCheckList.selectors.investments,
   )
-  const tableHeaderCellPropsMaxLimit = {
-    width: '440px',
-    scope: 'col',
-  }
 
   return (
     <>
-      <CTable
-        responsive
-        striped
-        className="mt-2 text-start profile-tab-table-size"
-      >
+      <CTable responsive striped className="mt-0">
         <CTableHead className="profile-tab-header">
           <CTableRow>
             <CTableHeaderCell className="profile-tab-content" scope="col">
@@ -40,10 +32,7 @@ const InvestmentCheckListDetailsTable = (): JSX.Element => {
             <CTableHeaderCell className="profile-tab-content" scope="col">
               Investment
             </CTableHeaderCell>
-            <CTableHeaderCell
-              className="profile-tab-content"
-              {...tableHeaderCellPropsMaxLimit}
-            >
+            <CTableHeaderCell className="profile-tab-content">
               Max-Limit
             </CTableHeaderCell>
           </CTableRow>

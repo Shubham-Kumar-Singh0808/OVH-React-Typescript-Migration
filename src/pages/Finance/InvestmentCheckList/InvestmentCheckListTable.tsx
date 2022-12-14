@@ -17,22 +17,28 @@ const InvestmentCheckListTable = (): JSX.Element => {
   const sections = useTypedSelector(
     reduxServices.investmentCheckList.selectors.sections,
   )
+  const tableHeaderCellPropsIndex = {
+    width: '10%',
+    scope: 'col',
+  }
   const tableHeaderCellPropsSections = {
-    width: '45%',
+    width: '60%',
     scope: 'col',
   }
 
   const tableHeaderCellPropsMaxLimit = {
-    width: '45%',
+    width: '30%',
     scope: 'col',
   }
 
   return (
     <>
-      <CTable responsive striped className="text-start mt-3 align-middle">
+      <CTable responsive striped className="text-start mt-3">
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell {...tableHeaderCellPropsIndex}>
+              #
+            </CTableHeaderCell>
             <CTableHeaderCell {...tableHeaderCellPropsSections}>
               Sections
             </CTableHeaderCell>

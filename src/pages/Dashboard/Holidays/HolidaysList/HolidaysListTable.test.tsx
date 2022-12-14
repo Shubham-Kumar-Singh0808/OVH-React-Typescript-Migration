@@ -22,10 +22,7 @@ const toRender = (
     <div id="overlay-root"></div>
     <div id="root"></div>
     <Router history={history}>
-      <HolidaysListTable
-        selectedCountry="INDIA"
-        setSelectedCountry={jest.fn()}
-      />
+      <HolidaysListTable selectedCountry="INDIA" />
     </Router>
   </div>
 )
@@ -128,10 +125,7 @@ describe('HolidaysList', () => {
     beforeEach(() => {
       render(
         <Router history={history}>
-          <HolidaysListTable
-            selectedCountry="USA"
-            setSelectedCountry={jest.fn()}
-          />
+          <HolidaysListTable selectedCountry="USA" />
         </Router>,
         {
           preloadedState: {

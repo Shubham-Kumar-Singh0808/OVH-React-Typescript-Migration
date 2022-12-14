@@ -5,12 +5,6 @@ import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import InvestmentList from './InvestmentList'
 import { render, screen } from '../../../test/testUtils'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import {
-  mockSections,
-  mockInvestments,
-} from '../../../test/data/investmentCheckListData'
-import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const history = createMemoryHistory()
 const toRender = (
@@ -27,16 +21,7 @@ const addSectionButtonElement = 'add-section-btn'
 describe('IT Declaration List Component Testing', () => {
   beforeEach(() => {
     render(toRender, {
-      preloadedState: {
-        itDeclarationList: {
-          isLoading: ApiLoadingState.succeeded,
-          sections: mockSections,
-          investments: mockInvestments,
-        },
-        userAccessToFeatures: {
-          userAccessToFeatures: mockUserAccessToFeaturesData,
-        },
-      },
+      preloadedState: {},
     })
   })
   test('should render InvestmentList Page Title', () => {

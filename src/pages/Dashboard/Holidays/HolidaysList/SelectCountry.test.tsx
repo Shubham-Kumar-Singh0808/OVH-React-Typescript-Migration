@@ -13,7 +13,7 @@ describe('Select Country Component Testing', () => {
   beforeEach(() => {
     render(
       <Router history={history}>
-        <SelectCountry selectedCountry={''} setSelectedCountry={jest.fn()} />
+        <SelectCountry selectedCountry={''} />
       </Router>,
       {
         preloadedState: {
