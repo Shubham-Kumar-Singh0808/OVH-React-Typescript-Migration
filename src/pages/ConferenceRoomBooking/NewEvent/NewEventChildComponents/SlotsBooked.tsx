@@ -1,7 +1,6 @@
 import {
   CCol,
   CTable,
-  CTableHead,
   CTableHeaderCell,
   CTableBody,
   CTableRow,

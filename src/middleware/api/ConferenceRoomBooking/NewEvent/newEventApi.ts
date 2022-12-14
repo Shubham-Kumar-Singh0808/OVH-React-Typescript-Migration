@@ -112,7 +112,7 @@ const getAllBookedDetailsForEvent = async (
 const addNewEvent = async (props: AddEvent): Promise<undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: newEventApiConfig.addNewEvent,
-    method: AllowedHttpMethods.get,
+    method: AllowedHttpMethods.post,
     data: props,
   })
   const response = await useAxios(requestConfig)
