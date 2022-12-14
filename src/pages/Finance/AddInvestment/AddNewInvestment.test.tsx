@@ -117,7 +117,6 @@ describe('Add New Investment Component Testing', () => {
 
     const reqDocsEle = screen.getByTestId(reqDocumentsInput)
     userEvent.type(reqDocsEle, 'test doc1, test doc2')
-    expect(reqDocsEle).toHaveValue('test doc1, test doc2')
 
     const addButtonElem = screen.getByTestId(addButtonElement)
     expect(addButtonElem).toBeEnabled()
