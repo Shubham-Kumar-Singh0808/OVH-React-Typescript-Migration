@@ -70,8 +70,11 @@ import {
   BankDetailsApi,
   PanDetailsApi,
   ResignationListApi,
+  EmployeeAccountsApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
+  AchieverListApi,
+  CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
 } from '../../types/apiTypes'
@@ -635,6 +638,9 @@ export const resignationListApiConfig: ResignationListApi = {
     apiPrefix + '/separationController/clearanceCertificateComments',
   getClearanceDetails: apiPrefix + '/separationController/getClearanceDetails',
   updateCCDetails: apiPrefix + '/separationController/updateCC',
+  checkExitFeedBackForm:
+    apiPrefix + '/separationController/checkExitFeedBackForm',
+  getSeparationChart: apiPrefix + '/separationController/getSeparationChart',
   getEmpDetails: apiPrefix + '/separationController/getEmpDetails',
   saveExitFeedBackForm:
     apiPrefix + '/separationController/saveExitFeedBackForm',
@@ -660,6 +666,16 @@ export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getSections: apiPrefix + '/itDeclaration/getSection',
 }
 
+export const CommonAchievementsApiConfig: CommonAchievementsApi = {
+  getAllAchievementsType: apiPrefix + '/achievement/getAllAchievementType',
+}
+
+export const AchieverListApiConfig: AchieverListApi = {
+  getAchieverList: apiPrefix + '/achievement/getAllAchievement',
+  updateShowOnDashbord: apiPrefix + '/achievement/showOnDashBoard',
+  achievementHistoryTimeline: apiPrefix + '/achievement/getAchievementHistory',
+}
+
 export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getAllProjectRequestList:
     apiPrefix + '/project-mgmt/getAllProjectRequestList',
@@ -671,4 +687,9 @@ export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
 export const AddAchieverApiConfig: AddAchieverApi = {
   addAchievementType: '/achievement/addAchievementType',
   getAchievementTypeDetails: '/achievement/getAchievementTypeDetails',
+}
+
+export const employeeAccountsApiConfig: EmployeeAccountsApi = {
+  financeDetails: apiPrefix + '/Employee/financeDetails',
+  exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }

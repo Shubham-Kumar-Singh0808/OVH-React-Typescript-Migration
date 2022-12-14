@@ -523,6 +523,8 @@ export interface ResignationListApi extends ApiBase {
   clearanceCertificateComments: string
   getClearanceDetails: string
   updateCCDetails: string
+  checkExitFeedBackForm: string
+  getSeparationChart: string
   getEmpDetails: string
   saveExitFeedBackForm: string
   uploadExitFeedBackFile: string
@@ -547,6 +549,16 @@ export interface InvestmentCheckListApi extends ApiBase {
   getSections: string
 }
 
+export interface CommonAchievementsApi extends ApiBase {
+  getAllAchievementsType: string
+}
+
+export interface AchieverListApi extends ApiBase {
+  getAchieverList: string
+  updateShowOnDashbord: string
+  achievementHistoryTimeline: string
+}
+
 export interface ProjectCreationRequestApi extends ApiBase {
   getAllProjectRequestList: string
   getProjectRequest: string
@@ -554,6 +566,11 @@ export interface ProjectCreationRequestApi extends ApiBase {
 }
 
 export interface AddAchieverApi extends ApiBase {
-  addAchievementType: string,
-  getAchievementTypeDetails: string,
+  addAchievementType: string
+  getAchievementTypeDetails: string
+}
+
+export interface EmployeeAccountsApi extends ApiBase {
+  financeDetails: string
+  exportFinanceList: string
 }

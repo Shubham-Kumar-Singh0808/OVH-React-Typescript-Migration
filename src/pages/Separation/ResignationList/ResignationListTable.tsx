@@ -8,6 +8,7 @@ import {
   CButton,
   CCol,
   CRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -54,6 +55,26 @@ const ResignationListTable = ({
 
   const userAccessShowTimeLine = userAccessToFeatures?.find(
     (feature) => feature.name === 'ShowTimeLine',
+  )
+
+  const userAccessManagerClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Manager Cleranace',
+  )
+
+  const userAccessITClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'IT Cleranace',
+  )
+
+  const userAccessHRClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'HR Cleranace',
+  )
+
+  const userAccessFinanceClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Finance Cleranace',
+  )
+
+  const userAccessAdminClearance = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Admin Cleranace',
   )
 
   const getAllResignationList = useTypedSelector(
@@ -188,82 +209,110 @@ const ResignationListTable = ({
       <>
         {resignationItem.isprocessInitiated ? (
           <>
-            <Link to={`/ClearanceCertificateManager`}>
-              <CButton
-                size="sm"
-                className={resignationItem.managerCcCss}
-                data-testid="manager-test"
-                onClick={() =>
-                  resignationClearanceManagerButtonHandler(
-                    resignationItem.separationId,
-                  )
-                }
-              >
-                <i className="fa fa-user text-white"></i>
-              </CButton>
-            </Link>
-            <Link to={`/ClearanceCertificateManager`}>
-              <CButton
-                size="sm"
-                className={resignationItem.itCcCss}
-                onClick={() =>
-                  resignationITClearanceHandler(resignationItem.separationId)
-                }
-              >
-                <i className="fa fa-laptop text-white"></i>
-              </CButton>
-            </Link>
-            <Link to={`/ClearanceCertificateFinance`}>
-              <CButton
-                size="sm"
-                className={resignationItem.finanaceCcCss}
-                onClick={() =>
-                  resignationFinanceClearanceHandler(
-                    resignationItem.separationId,
-                  )
-                }
-              >
-                <i className="fa fa-calculator text-white"></i>
-              </CButton>
-            </Link>
-            <Link to={`/ClearanceCertificateAdmin`}>
-              <CButton
-                size="sm"
-                className={resignationItem.adminCcCss}
-                onClick={() =>
-                  resignationAdminClearanceHandler(resignationItem.separationId)
-                }
-              >
-                <i className="fa fa-id-badge text-white"></i>
-              </CButton>
-            </Link>
-            <Link to={`/ClearanceCertificateHR`}>
-              <CButton
-                size="sm"
-                className={resignationItem.hrCcCss}
-                onClick={() =>
-                  resignationHRClearanceHandler(resignationItem.separationId)
-                }
-              >
-                <i className="fa fa-user-circle text-white"></i>
-              </CButton>
-            </Link>
+            {userAccessManagerClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateManager`}>
+                <CTooltip content="Manager">
+                  <CButton
+                    size="sm"
+                    className={resignationItem.managerCcCss}
+                    data-testid="manager-test"
+                    onClick={() =>
+                      resignationClearanceManagerButtonHandler(
+                        resignationItem.separationId,
+                      )
+                    }
+                  >
+                    <i className="fa fa-user text-white"></i>
+                  </CButton>
+                </CTooltip>
+              </Link>
+            )}
+            {userAccessITClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateManager`}>
+                <CTooltip content="IT">
+                  <CButton
+                    size="sm"
+                    className={resignationItem.itCcCss}
+                    onClick={() =>
+                      resignationITClearanceHandler(
+                        resignationItem.separationId,
+                      )
+                    }
+                  >
+                    <i className="fa fa-laptop text-white"></i>
+                  </CButton>
+                </CTooltip>
+              </Link>
+            )}
+            {userAccessFinanceClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateFinance`}>
+                <CTooltip content="Finance">
+                  <CButton
+                    size="sm"
+                    className={resignationItem.finanaceCcCss}
+                    onClick={() =>
+                      resignationFinanceClearanceHandler(
+                        resignationItem.separationId,
+                      )
+                    }
+                  >
+                    <i className="fa fa-calculator text-white"></i>
+                  </CButton>
+                </CTooltip>
+              </Link>
+            )}
+            {userAccessAdminClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateAdmin`}>
+                <CTooltip content="Admin">
+                  <CButton
+                    size="sm"
+                    className={resignationItem.adminCcCss}
+                    onClick={() =>
+                      resignationAdminClearanceHandler(
+                        resignationItem.separationId,
+                      )
+                    }
+                  >
+                    <i className="fa fa-id-badge text-white"></i>
+                  </CButton>
+                </CTooltip>
+              </Link>
+            )}
+            {userAccessHRClearance?.viewaccess && (
+              <Link to={`/ClearanceCertificateHR`}>
+                <CTooltip content="HR">
+                  <CButton
+                    size="sm"
+                    className={resignationItem.hrCcCss}
+                    onClick={() =>
+                      resignationHRClearanceHandler(
+                        resignationItem.separationId,
+                      )
+                    }
+                  >
+                    <i className="fa fa-user-circle text-white"></i>
+                  </CButton>
+                </CTooltip>
+              </Link>
+            )}
           </>
         ) : (
           userAccess?.viewaccess && (
-            <CButton
-              color="#34b2e7"
-              size="sm"
-              className="resignation-initiate-btn"
-              data-testid="initiate-btn"
-              onClick={() =>
-                handleShowInitiateResignationModal(
-                  resignationItem?.separationId,
-                )
-              }
-            >
-              <i className="fa fa-clock-o  text-white"></i>
-            </CButton>
+            <CTooltip content="Initiate">
+              <CButton
+                color="#34b2e7"
+                size="sm"
+                className="resignation-initiate-btn"
+                data-testid="initiate-btn"
+                onClick={() =>
+                  handleShowInitiateResignationModal(
+                    resignationItem?.separationId,
+                  )
+                }
+              >
+                <i className="fa fa-clock-o  text-white"></i>
+              </CButton>
+            </CTooltip>
           )
         )}
       </>

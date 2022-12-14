@@ -90,8 +90,11 @@ import paySlipsReducer from './reducers/Finance/Payslips/payslipsSlice'
 import panDetailsReducer from './reducers/Finance/PanDetails/panDetailsSlice'
 import bankDetailsReducer from './reducers/Finance/PanDetails/bankDetailsSlice'
 import resignationListReducer from './reducers/Separation/ResignationList/resignationListSlice'
+import employeeAccountsReducer from './reducers/Finance/EmployeeAccounts/employeeAccountsSlice'
 import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDeclarationListSlice'
 import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/investmentCheckListSlice'
+import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
+import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 
 export const allReducers = {
@@ -183,8 +186,11 @@ export const allReducers = {
   panDetails: panDetailsReducer,
   bankDetails: bankDetailsReducer,
   resignationList: resignationListReducer,
+  employeeAccounts: employeeAccountsReducer,
   itDeclarationList: itDeclarationListReducer,
   investmentCheckList: investmentCheckListReducer,
+  achieverList: achieverListReducer,
+  commonAchievements: commonAchievementsReducer,
   projectCreationRequest: projectCreationRequestReducer,
   // add your slice reducers here
 }
