@@ -14,7 +14,7 @@ import { Cycle } from '../../../types/Finance/ITDeclarationList/itDeclarationLis
 import { showIsRequired } from '../../../utils/helper'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useAppDispatch } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const AddNewInvestmentCycle = (): JSX.Element => {
@@ -28,11 +28,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
   const [cycleEndDate, setCycleEndDate] = useState<string>()
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
-  const [isCycleNameExist, setIsCycleNameExist] = useState('')
   const dispatch = useAppDispatch()
-  const getCycles = useTypedSelector(
-    reduxServices.itDeclarationList.selectors.cycles,
-  )
 
   useEffect(() => {
     if (addCycle.cycleName && cycleStartDate) {
@@ -45,6 +41,10 @@ const AddNewInvestmentCycle = (): JSX.Element => {
   const handleClearInputs = () => {
     setAddCycle({
       cycleName: '',
+      active: false,
+      cycleId: 0,
+      endDate: '',
+      startDate: '',
     })
     setCycleStartDate(undefined)
     setIsChecked(false)
@@ -57,58 +57,63 @@ const AddNewInvestmentCycle = (): JSX.Element => {
     setCycleStartDate(date)
   }
 
-  const validateCycleName = (name: string) => {
-    return getCycles?.find((cycle) => {
-      return cycle.cycleName.toLowerCase() === name.toLowerCase()
-    })
-  }
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setAddCycle((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
-    if (validateCycleName(value)) {
-      setIsCycleNameExist(value)
-    } else {
-      setIsCycleNameExist('')
-    }
   }
+
   const toastElement = (
     <OToast
       toastColor="success"
       toastMessage="Finance Cycle added Successfully"
     />
   )
+
   const alreadyExistToastElement = (
     <OToast toastColor="danger" toastMessage="Cycle already Exist" />
   )
-  useEffect(() => {
-    if (isCycleNameExist) {
-      dispatch(reduxServices.app.actions.addToast(alreadyExistToastElement))
-    }
-  }, [isCycleNameExist])
 
   const handleAddNewInvestmentCycle = async () => {
     const prepareObject = {
       ...addCycle,
       cycleId: -1,
       active: isChecked,
-      endDate: cycleEndDate,
+      endDate: cycleEndDate as string,
       ...{
         startDate: moment(cycleStartDate).format('MM/YYYY'),
       },
     }
-    const addCycleResultAction = await dispatch(
-      reduxServices.itDeclarationList.addCycle(prepareObject),
+    const cycleExist = {
+      cycleId: -1,
+      cycleName: addCycle.cycleName,
+    }
+    const isCycleExistsResultAction = await dispatch(
+      reduxServices.itDeclarationList.isCycleExist(cycleExist),
     )
-
     if (
-      reduxServices.itDeclarationList.addCycle.fulfilled.match(
-        addCycleResultAction,
-      )
+      reduxServices.itDeclarationList.isCycleExist.fulfilled.match(
+        isCycleExistsResultAction,
+      ) &&
+      isCycleExistsResultAction.payload === false
     ) {
-      dispatch(reduxServices.app.actions.addToast(toastElement))
+      const addCycleResultAction = await dispatch(
+        reduxServices.itDeclarationList.addCycle(prepareObject),
+      )
+
+      if (
+        reduxServices.itDeclarationList.addCycle.fulfilled.match(
+          addCycleResultAction,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(toastElement))
+        dispatch(reduxServices.itDeclarationList.getCycles())
+        handleClearInputs()
+      }
+    } else {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastElement))
+      handleClearInputs()
     }
   }
 

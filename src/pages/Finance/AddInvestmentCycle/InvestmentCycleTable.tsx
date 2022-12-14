@@ -8,14 +8,48 @@ import {
   CTooltip,
   CButton,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const InvestmentCycleTable = (): JSX.Element => {
+  const [isDeleteCycleModalVisible, setIsDeleteCycleModalVisible] =
+    useState(false)
+  const [toDeleteInvestmentCycleName, setToDeleteInvestmentCycleName] =
+    useState('')
+  const [investmentCycleId, setInvestmentCycleId] = useState(0)
+
   const investmentCycles = useTypedSelector(
     reduxServices.itDeclarationList.selectors.cycles,
   )
+  const dispatch = useAppDispatch()
+  const handleShowCycleDeleteModal = (id: number, cycleName: string) => {
+    setInvestmentCycleId(id)
+    setToDeleteInvestmentCycleName(cycleName)
+    setIsDeleteCycleModalVisible(true)
+  }
+
+  const toastElement = (
+    <OToast toastColor="success" toastMessage="Cycle Deleted Successfully." />
+  )
+
+  const handleConfirmDeleteCycle = async () => {
+    setIsDeleteCycleModalVisible(false)
+
+    const deleteCycleResultAction = await dispatch(
+      reduxServices.itDeclarationList.deleteCycle(investmentCycleId),
+    )
+    if (
+      reduxServices.itDeclarationList.deleteCycle.fulfilled.match(
+        deleteCycleResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(toastElement))
+      dispatch(reduxServices.itDeclarationList.getCycles())
+    }
+  }
 
   return (
     <>
@@ -59,7 +93,12 @@ const InvestmentCycleTable = (): JSX.Element => {
                       size="sm"
                       color="danger btn-ovh me-1"
                       className="btn-ovh-employee-list"
-                      //   onClick={() => deleteBtnHandler(name.bankId)}
+                      onClick={() =>
+                        handleShowCycleDeleteModal(
+                          cycle.cycleId,
+                          cycle.cycleName,
+                        )
+                      }
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
@@ -70,6 +109,21 @@ const InvestmentCycleTable = (): JSX.Element => {
           })}
         </CTableBody>
       </CTable>
+      <OModal
+        visible={isDeleteCycleModalVisible}
+        setVisible={setIsDeleteCycleModalVisible}
+        modalTitle="Delete Investment Cycle"
+        modalBodyClass="mt-0"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={handleConfirmDeleteCycle}
+      >
+        <>
+          Do you really want to delete this{' '}
+          <strong>{toDeleteInvestmentCycleName}</strong> Cycle?
+        </>
+      </OModal>
     </>
   )
 }
