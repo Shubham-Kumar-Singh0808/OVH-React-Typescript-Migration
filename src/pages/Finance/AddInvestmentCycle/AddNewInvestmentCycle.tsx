@@ -204,7 +204,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
           <CCol sm={3} className="mt-2">
             <CFormCheck
               name="workFlow"
-              data-testid="ch-workFlow"
+              data-testid="ch-active"
               onChange={() => setIsChecked(!isChecked)}
               checked={isChecked}
             />

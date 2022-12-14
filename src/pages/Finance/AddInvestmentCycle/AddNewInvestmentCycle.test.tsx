@@ -8,6 +8,7 @@ const cycleNameInput = 'addCycle-cycle-name'
 const startDateInput = 'startDate-picker-input'
 const endDateInput = 'endDate-input'
 const addButtonElement = 'ac-add-btn'
+const activeCheckBox = 'ch-active'
 const clearButtonElement = 'ac-clear-btn'
 
 describe('Add Section Component Testing', () => {
@@ -38,15 +39,49 @@ describe('Add Section Component Testing', () => {
 
     await waitFor(() =>
       fireEvent.change(startDatePickerElement[0], {
-        target: { value: '02/2022' },
+        target: { value: '01/2022' },
       }),
     )
-    fireEvent.click(startDatePickerElement[0])
+    const endDateEl = screen.getByTestId(endDateInput)
+    expect(endDateEl).toHaveValue('12/2022')
+
+    const activeCheckBoxEl = screen.getByTestId(activeCheckBox)
+    userEvent.click(activeCheckBoxEl)
+    expect(activeCheckBoxEl).toBeChecked()
 
     const addButtonEl = screen.getByTestId(addButtonElement)
     await waitFor(() => {
       expect(addButtonEl).toBeEnabled()
       userEvent.click(addButtonEl)
+    })
+  })
+  test('should clear inputs upon clicking clear button', async () => {
+    const cycleNameEle = screen.getByTestId(cycleNameInput)
+    userEvent.type(cycleNameEle, 'Test')
+    expect(cycleNameEle).toHaveValue('Test')
+
+    const startDatePickerEle = screen.getAllByPlaceholderText('mm/yyyy')
+
+    fireEvent.click(startDatePickerEle[0])
+
+    await waitFor(() =>
+      fireEvent.change(startDatePickerEle[0], {
+        target: { value: '01/2022' },
+      }),
+    )
+    const endDateEle = screen.getByTestId(endDateInput)
+    expect(endDateEle).toHaveValue('12/2022')
+
+    const activeCheckBoxEle = screen.getByTestId(activeCheckBox)
+    userEvent.click(activeCheckBoxEle)
+    expect(activeCheckBoxEle).toBeChecked()
+
+    const clearButton = screen.getByTestId(clearButtonElement)
+    userEvent.click(clearButton)
+    await waitFor(() => {
+      expect(cycleNameEle).toHaveValue('')
+      expect(startDatePickerEle[0]).toHaveValue('')
+      expect(activeCheckBoxEle).not.toBeChecked()
     })
   })
 })
