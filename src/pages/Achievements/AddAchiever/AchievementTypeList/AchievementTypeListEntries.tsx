@@ -6,21 +6,47 @@ import {
   CFormLabel,
   CFormInput,
   CFormCheck,
+  CButton,
 } from '@coreui/react-pro'
-import React from 'react'
-import { TextDanger } from '../../../../constant/ClassName'
-import { AddAchieverTypeEntriesProps } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import React, { useEffect } from 'react'
 import AchievementEntryContainer from './AchievementEntryContainer'
+import { TextDanger } from '../../../../constant/ClassName'
+import {
+  AddAchieverTypeEntriesProps,
+  NewAchievementStatus,
+} from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import { newAchievementLabelClass } from '../../AchievementConstants'
 
-const AchievementTypeListEntries = (props: AddAchieverTypeEntriesProps) => {
-  const { userSelectedAchievementType, achievementTypeNameHandler } = props
+const AchievementTypeListEntries = (
+  props: AddAchieverTypeEntriesProps,
+): JSX.Element => {
+  const {
+    userNewSelectedAchievementType,
+    newAchievementTypeNameHandler,
+    newAchievementStatusHandler,
+    newUserSelectedStatus,
+    newUserSelectedOrder,
+    newSelectedOrderHandler,
+    newUserSelectedTimeReq,
+    newSelectedTimeReqHandler,
+    newUserSelectedDateReq,
+    newSelectedDateReqHandler,
+  } = props
+
+  //   useEffect(() => {
+  //     if (
+  //       userNewSelectedAchievementType === '' ||
+  //       newUserSelectedOrder === undefined
+  //     ) {}
+  //   }, [userNewSelectedAchievementType, newUserSelectedOrder])
+
   return (
     <CForm>
       <CContainer className="mt-4 ms-2">
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+        <AchievementEntryContainer>
+          <CFormLabel className={newAchievementLabelClass}>
             Achievement Type Name:{' '}
-            {userSelectedAchievementType === '' ? (
+            {userNewSelectedAchievementType === '' ? (
               <span className={TextDanger}>*</span>
             ) : (
               <></>
@@ -30,78 +56,103 @@ const AchievementTypeListEntries = (props: AddAchieverTypeEntriesProps) => {
             <CFormInput
               type="text"
               placeholder="Achievement Type Name"
-              onChange={achievementTypeNameHandler}
+              onChange={newAchievementTypeNameHandler}
             />
           </CCol>
-        </CRow>
-        <AchievementEntryContainer label={{'Achievement Type Name:'}{' '}
-            {userSelectedAchievementType === '' ? (
-              <span className={TextDanger}>*</span>
-            ) : (
-              <></>
-            )}}><CCol sm={3}>
-            <CFormInput
-              type="text"
-              placeholder="Achievement Type Name"
-              onChange={achievementTypeNameHandler}
-            />
-          </CCol></AchievementEntryContainer>
-        <CRow className="mt-4 mb-4 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
-            Status:{' '}
-            {userSelectedAchievementType === '' ? (
-              <span className={TextDanger}>*</span>
-            ) : (
-              <></>
-            )}
-          </CFormLabel>
-          <CCol sm={1}>
+        </AchievementEntryContainer>
+        <AchievementEntryContainer>
+          <CFormLabel className={newAchievementLabelClass}>Status: </CFormLabel>
+          <CCol sm={2} md={1}>
             <CFormCheck
               type="radio"
               label="Active"
+              value={NewAchievementStatus.Active}
               name="achievementStatus"
+              defaultChecked={
+                newUserSelectedStatus === NewAchievementStatus.Active
+              }
+              onChange={newAchievementStatusHandler}
               inline
             />
           </CCol>
-          <CCol sm={1}>
+          <CCol sm={2} md={1}>
             <CFormCheck
               type="radio"
               label="Inactive"
+              value={NewAchievementStatus.Inactive}
+              defaultChecked={
+                newUserSelectedStatus === NewAchievementStatus.Inactive
+              }
+              onChange={newAchievementStatusHandler}
               name="achievementStatus"
               inline
             />
           </CCol>
-        </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+        </AchievementEntryContainer>
+        <AchievementEntryContainer>
+          <CFormLabel className={newAchievementLabelClass}>
             Order:{' '}
-            {userSelectedAchievementType === '' ? (
+            {userNewSelectedAchievementType === '' ? (
               <span className={TextDanger}>*</span>
             ) : (
               <></>
             )}
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput type="number" onChange={achievementTypeNameHandler} />
+            <CFormInput
+              type="number"
+              value={newUserSelectedOrder}
+              onChange={newSelectedOrderHandler}
+            />
           </CCol>
-        </CRow>
-        <CRow className="mt-4 mb-4 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+        </AchievementEntryContainer>
+        <AchievementEntryContainer>
+          <CFormLabel className={newAchievementLabelClass}>
             Time Period Required:{' '}
           </CFormLabel>
           <CCol sm={3}>
-            <CFormCheck type="checkbox" />
+            <CFormCheck
+              type="checkbox"
+              valid={true}
+              checked={newUserSelectedTimeReq}
+              onChange={newSelectedTimeReqHandler}
+            />
           </CCol>
-        </CRow>
-        <CRow className="mt-4 mb-4 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+        </AchievementEntryContainer>
+        <AchievementEntryContainer>
+          <CFormLabel className={newAchievementLabelClass}>
             Date Required:{' '}
           </CFormLabel>
           <CCol sm={3}>
-            <CFormCheck type="checkbox" />
+            <CFormCheck
+              type="checkbox"
+              valid={true}
+              checked={newUserSelectedDateReq}
+              onChange={newSelectedDateReqHandler}
+            />
           </CCol>
-        </CRow>
+        </AchievementEntryContainer>
       </CContainer>
+      <CRow>
+        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
+        <CCol sm={4}>
+          <CButton
+            data-testid="view-btn-id"
+            type="submit"
+            className="btn-ovh me-1"
+            color="success"
+          >
+            Add
+          </CButton>
+          <CButton
+            data-testid="clear-btn-id"
+            color="warning"
+            className="btn-ovh me-1"
+          >
+            Clear
+          </CButton>
+        </CCol>
+      </CRow>
     </CForm>
   )
 }

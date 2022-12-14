@@ -552,3 +552,8 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getProjectRequest: string
   getAuditForProjectRequest: string
 }
+
+export interface AddAchieverApi extends ApiBase {
+  addAchievementType: string,
+  getAchievementTypeDetails: string,
+}

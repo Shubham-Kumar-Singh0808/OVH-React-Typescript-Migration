@@ -73,6 +73,7 @@ import {
   ITDeclarationListApi,
   InvestmentCheckListApi,
   ProjectCreationRequestApi,
+  AddAchieverApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -665,4 +666,9 @@ export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
   getAuditForProjectRequest:
     apiPrefix + '/project-mgmt/getAuditForProjectRequest',
+}
+
+export const AddAchieverApiConfig: AddAchieverApi = {
+  addAchievementType: '/achievement/addAchievementType',
+  getAchievementTypeDetails: '/achievement/getAchievementTypeDetails',
 }

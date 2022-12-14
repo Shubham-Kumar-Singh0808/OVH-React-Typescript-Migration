@@ -11,7 +11,7 @@ import React, { useState } from 'react'
 import AchievementTypeList from './AchievementTypeList/AchievementTypeList'
 import OCard from '../../../components/ReusableComponent/OCard'
 
-const AddAchiever = () => {
+const AddAchiever = (): JSX.Element => {
   const [addAchievementTypeButton, setAddAchievementTypeButton] =
     useState<boolean>(false)
 
@@ -20,6 +20,13 @@ const AddAchiever = () => {
   ) => {
     e.preventDefault()
     setAddAchievementTypeButton(true)
+  }
+
+  const closeAchievementTypeButtonHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault()
+    setAddAchievementTypeButton(false)
   }
 
   return (
@@ -32,7 +39,9 @@ const AddAchiever = () => {
       CFooterClassName="d-none"
     >
       {addAchievementTypeButton ? (
-        <AchievementTypeList />
+        <AchievementTypeList
+          backButtonHandler={closeAchievementTypeButtonHandler}
+        />
       ) : (
         <CForm>
           <CContainer>
