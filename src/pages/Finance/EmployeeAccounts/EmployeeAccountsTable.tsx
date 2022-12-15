@@ -72,7 +72,7 @@ const EmployeeAccountsTable = (
       },
     )
 
-    downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
+    downloadFile(employeeBankDetailsDownload, `${financeFilePath}`)
   }
 
   const totalNoOfRecords = financeData?.length

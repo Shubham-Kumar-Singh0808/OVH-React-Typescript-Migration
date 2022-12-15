@@ -17,6 +17,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import payslipsApi from '../../../middleware/api/Finance/Payslips/payslipsApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { EmployeePayslips } from '../../../types/Finance/Payslips/payslipsTypes'
 import { downloadFile } from '../../../utils/helper'
 
 const Payslips = (): JSX.Element => {
@@ -50,14 +51,16 @@ const Payslips = (): JSX.Element => {
     }
   }, [selectYear])
 
-  const handleDownloadPayslip = async () => {
+  const handleDownloadPayslip = async (data: EmployeePayslips) => {
     const employeePayslipDownload = await payslipsApi.downloadPayslip({
-      empId: Number(employeeId),
-      month: paySlipsData[0].month,
-      year: Number(selectYear),
+      empId: data.empId,
+      month: data.month,
+      year: Number(data.year),
     })
-
-    downloadFile(employeePayslipDownload, 'paySlip.csv')
+    downloadFile(
+      employeePayslipDownload,
+      `${data.empId}_${data.month}_${Number(data.year)}.pdf`,
+    )
   }
 
   return (
@@ -121,7 +124,7 @@ const Payslips = (): JSX.Element => {
                           size="sm"
                           color="btn btn-info sh-btn-alignment"
                           className="btn-ovh-employee-list"
-                          onClick={handleDownloadPayslip}
+                          onClick={() => handleDownloadPayslip(year)}
                         >
                           <i className="fa fa-download sh-button"> </i>
                         </CButton>

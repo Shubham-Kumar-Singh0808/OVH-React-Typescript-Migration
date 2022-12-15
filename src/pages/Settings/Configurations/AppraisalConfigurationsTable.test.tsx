@@ -87,7 +87,8 @@ describe('Appraisal Configurations Table with data', () => {
     render(<AppraisalConfigurationsTable userEditAccess={true} />, {
       preloadedState: {
         appraisalConfigurations: {
-          appraisalCycle: mockAppraisalCycle,
+          listSize: 40,
+          appraisalCycle: mockAppraisalCycle.list,
           isLoading: ApiLoadingState.idle,
         },
         userAccessToFeatures: {
@@ -105,10 +106,8 @@ describe('Appraisal Configurations Table with data', () => {
     expect(screen.getByText('September 2017')).toBeInTheDocument()
   })
 
-  test('should render with number of records  ', () => {
-    expect(
-      screen.getByText('Total Records: ' + mockAppraisalCycle.length),
-    ).toBeInTheDocument()
+  test('Should be able to see total of 6 records', () => {
+    expect(screen.getByText('Total Records: 40')).toBeInTheDocument()
   })
 
   test('should render description modal', () => {

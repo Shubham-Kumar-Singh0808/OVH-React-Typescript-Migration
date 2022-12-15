@@ -81,7 +81,7 @@ const AppraisalConfigurationsTable = ({
     return []
   }, [appraisalCycle])
 
-  const totalNoOfRecords = appraisalCycle?.length
+  const totalRecords = appraisalCycle?.length
     ? `Total Records: ${appraisalCycleListSize}`
     : `No Records found...`
   return (
@@ -183,7 +183,7 @@ const AppraisalConfigurationsTable = ({
       <CRow>
         <CCol xs={4}>
           <p className="mt-2">
-            <strong>{totalNoOfRecords}</strong>
+            <strong>{totalRecords}</strong>
           </p>
         </CCol>
         <CCol xs={3}>
