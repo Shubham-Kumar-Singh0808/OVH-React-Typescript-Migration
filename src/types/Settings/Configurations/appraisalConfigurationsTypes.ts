@@ -36,8 +36,6 @@ export type AppraisalCycleSliceState = {
   appraisalCycle: GetAppraisalCycle[]
   editAppraisalCycle: GetCycle
   isLoading: ApiLoadingState
-  currentPage: number
-  pageSize: number
   error: ValidationError
   listSize: number
 }

@@ -20,8 +20,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
         listSize: 0,
       })
@@ -37,13 +35,11 @@ describe('appraisal Configuration', () => {
         action,
       )
       expect(state).toEqual({
-        appraisalCycle: undefined,
+        appraisalCycle: mockAppraisalCycle.list,
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
-        listSize: undefined,
+        listSize: 42,
       })
     })
 
@@ -60,8 +56,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.failed,
-        currentPage: 1,
-        pageSize: 20,
         error: 500,
         listSize: 0,
       })
@@ -81,8 +75,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
         listSize: 0,
       })
@@ -101,8 +93,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: mockAppraisalCycle,
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
         listSize: 0,
       })
@@ -121,8 +111,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.failed,
-        currentPage: 1,
-        pageSize: 20,
         error: 500,
         listSize: 0,
       })
@@ -142,8 +130,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
         listSize: 0,
       })
@@ -162,8 +148,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
         listSize: 0,
       })
@@ -182,8 +166,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.failed,
-        currentPage: 1,
-        pageSize: 20,
         error: 500,
         listSize: 0,
       })
@@ -203,8 +185,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
         listSize: 0,
       })
@@ -223,8 +203,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
         listSize: 0,
       })
@@ -243,8 +221,6 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.failed,
-        currentPage: 1,
-        pageSize: 20,
         error: 500,
         listSize: 0,
       })

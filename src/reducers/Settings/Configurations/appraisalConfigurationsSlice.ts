@@ -67,8 +67,6 @@ export const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
   appraisalCycle: [],
   editAppraisalCycle: {} as GetCycle,
   isLoading: ApiLoadingState.idle,
-  currentPage: 1,
-  pageSize: 20,
   error: null,
   listSize: 0,
 }
@@ -76,14 +74,7 @@ export const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
 const appraisalCycleSlice = createSlice({
   name: 'appraisalCycle',
   initialState: initialAppraisalCycleSliceState,
-  reducers: {
-    setCurrentPage: (state, action) => {
-      state.currentPage = action.payload
-    },
-    setPageSize: (state, action) => {
-      state.pageSize = action.payload
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(getCycleToEdit.fulfilled, (state, action) => {
@@ -115,7 +106,6 @@ const appraisalCycleSlice = createSlice({
           state.isLoading = ApiLoadingState.succeeded
         },
       )
-
       .addMatcher(
         isAnyOf(
           getCycleToEdit.rejected,
