@@ -1,3 +1,5 @@
+import { LoadingState } from '../../commonTypes'
+
 export type AddProjectRequestDetails = {
   bcc: string
   billingContactPerson: string
@@ -41,4 +43,18 @@ export type ProjectRequestMilestoneDTO = {
   milestonePercentage: string
   title: string
   toDate: string
+}
+
+export type GetProjectRequestMailIds = {
+  id: number
+  cc: string
+  bcc: string
+  createdBy: null
+  createdDate: null
+}
+
+export type GetProjectRequestState = {
+  getProjectRequestMailIds: GetProjectRequestMailIds
+  chelist: Chelist[]
+  isLoading: LoadingState
 }

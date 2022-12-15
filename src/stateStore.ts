@@ -97,6 +97,7 @@ import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/i
 import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import addProjectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -194,6 +195,7 @@ export const allReducers = {
   achieverList: achieverListReducer,
   commonAchievements: commonAchievementsReducer,
   projectCreationRequest: projectCreationRequestReducer,
+  addProjectCreationRequest: addProjectCreationRequestReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

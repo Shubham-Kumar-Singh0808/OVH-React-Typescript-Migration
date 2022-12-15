@@ -77,6 +77,7 @@ import {
   AchieverListApi,
   CommonAchievementsApi,
   ProjectCreationRequestApi,
+  AddProjectCreationRequestApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -703,3 +704,10 @@ export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }
+
+export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
+  {
+    getCheckList: apiPrefix + '/project-mgmt/getCheckList',
+    getProjectRequestMailIds:
+      apiPrefix + '/project-mgmt/getProjectRequestMailIds',
+  }

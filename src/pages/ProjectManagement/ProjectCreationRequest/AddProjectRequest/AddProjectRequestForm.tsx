@@ -21,7 +21,7 @@ import {
   Chelist,
   ProjectRequestMilestoneDTO,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
-import { showIsRequired } from '../../../../utils/helper'
+import { listComposer, showIsRequired } from '../../../../utils/helper'
 import { dateFormat } from '../../../../../constant/DateFormat'
 import { ClientOrganization } from '../../Project/ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../Project/ProjectComponent/ProjectName'
@@ -36,6 +36,8 @@ const AddProjectRequestForm = (): JSX.Element => {
   const [customerEmail, setCustomerEmail] = useState<string>('')
   const [billingContactName, setBillingContactName] = useState<string>('')
   const [billingContactEmail, setBillingContactEmail] = useState<string>('')
+  const [platform, setPlatform] = useState<string>('')
+  const [domain, setDomain] = useState<string>('')
   const chelistDetails = {} as Chelist[]
   // const authorDetails = {} as Author
   const projectRequestMilestoneDTODetails = {} as ProjectRequestMilestoneDTO[]
@@ -70,8 +72,15 @@ const AddProjectRequestForm = (): JSX.Element => {
     reduxServices.projectManagement.selectors.projectClients,
   )
 
+  const platforms = useTypedSelector(
+    reduxServices.projectManagement.selectors.platForms,
+  )
+
   useEffect(() => {
     dispatch(reduxServices.projectManagement.getProjectClients())
+    dispatch(reduxServices.projectManagement.getAllDomains())
+    dispatch(reduxServices.projectManagement.getAllManagers())
+    dispatch(reduxServices.projectManagement.getAllPlatforms())
   }, [dispatch])
 
   const clientOrganizationList = projectClients
@@ -151,6 +160,10 @@ const AddProjectRequestForm = (): JSX.Element => {
       .reportingManagersList,
   )
 
+  const domainList = useTypedSelector(
+    reduxServices.projectManagement.selectors.domains,
+  )
+
   const projectManagers = reportingManagersList?.map((manager) => {
     return {
       id: manager.id,
@@ -191,7 +204,23 @@ const AddProjectRequestForm = (): JSX.Element => {
   const onHandleBillingContactEmail = (value: string) => {
     setProjectRequest({ ...projectRequest, billingContactPersonEmail: value })
   }
+  const handlePlatform = (value: string) => {
+    setProjectRequest({
+      ...projectRequest,
+      platform: value,
+    })
+  }
+
+  const handleDomain = (value: string) => {
+    setProjectRequest({
+      ...projectRequest,
+      domain: value,
+    })
+  }
   const classNameStyle = 'col-sm-3 col-form-label text-end'
+  const projectDomains = listComposer(domainList as [], 'id', 'name')
+
+  const projectPlatforms = listComposer(platforms as [], 'id', 'name')
   return (
     <>
       <CRow className="justify-content-end">
@@ -292,6 +321,26 @@ const AddProjectRequestForm = (): JSX.Element => {
             label={'Project Manager'}
             placeholder={'Project Manager'}
             name={'projectManager'}
+            dynamicFormLabelProps={dynamicFormLabelProps}
+          />
+          <OSelectList
+            isRequired={true}
+            list={projectPlatforms}
+            setValue={handlePlatform}
+            value={projectRequest.platform}
+            name="platform"
+            label="Platform"
+            placeHolder="Select Platform"
+            dynamicFormLabelProps={dynamicFormLabelProps}
+          />
+          <OSelectList
+            isRequired={true}
+            list={projectDomains}
+            setValue={handleDomain}
+            value={projectRequest.domain}
+            name="domain"
+            label="Domain"
+            placeHolder="Select Domain"
             dynamicFormLabelProps={dynamicFormLabelProps}
           />
           <CRow className="mb-3">
