@@ -16,6 +16,7 @@ import {
   NewAchievementStatus,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { newAchievementLabelClass } from '../../AchievementConstants'
+import { useTypedSelector } from '../../../../stateStore'
 
 const AchievementTypeListEntries = (
   props: AddAchieverTypeEntriesProps,
@@ -31,9 +32,14 @@ const AchievementTypeListEntries = (
     newSelectedTimeReqHandler,
     newUserSelectedDateReq,
     newSelectedDateReqHandler,
+    addButtonHandler,
+    achievementClearButtonHandler,
   } = props
 
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
+  const existingAchievementTypeList = useTypedSelector(
+    (state) => state.commonAchievements.dateSortedList,
+  )
 
   useEffect(() => {
     if (
@@ -46,8 +52,13 @@ const AchievementTypeListEntries = (
     }
   }, [userNewSelectedAchievementType, newUserSelectedOrder])
 
+  const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    achievementClearButtonHandler()
+  }
+
   return (
-    <CForm>
+    <CForm onSubmit={addButtonHandler}>
       <CContainer className="mt-4 ms-2">
         <AchievementEntryContainer>
           <CFormLabel className={newAchievementLabelClass}>
@@ -156,6 +167,7 @@ const AchievementTypeListEntries = (
             data-testid="clear-btn-id"
             color="warning"
             className="btn-ovh me-1"
+            onClick={clearButtonHandler}
           >
             Clear
           </CButton>

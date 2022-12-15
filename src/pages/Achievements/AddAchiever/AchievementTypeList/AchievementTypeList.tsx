@@ -2,8 +2,13 @@ import { CButton, CCol, CContainer, CRow } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import AchievementTypeListEntries from './AchievementTypeListEntries'
 import AchievementTypeTable from './AchievementTypeTable'
-import { NewAchievementStatus } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import {
+  NewAchievementStatus,
+  OutgoingNewAchievementType,
+} from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { useAppDispatch } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AchievementTypeList = ({
   backButtonHandler,
@@ -18,7 +23,9 @@ const AchievementTypeList = ({
     NewAchievementStatus.Active,
   )
 
-  const [newUserSelectedOrder, setNewUserSelectedOrder] = useState<number>()
+  const [newUserSelectedOrder, setNewUserSelectedOrder] = useState<
+    number | undefined
+  >(undefined)
 
   const [newUserSelectedTimeReq, setNewUserSelectedTimeReq] =
     useState<boolean>(false)
@@ -61,6 +68,59 @@ const AchievementTypeList = ({
     setNewUserSelectedDateReq(checked)
   }
 
+  const addAchievementClearButtonHandler = () => {
+    setNewSelectedAchievementType('')
+    setNewUserSelectedOrder(undefined)
+    setNewUserSelectedStatus(NewAchievementStatus.Active)
+    setNewUserSelectedTimeReq(false)
+    setNewUserSelectedDateReq(false)
+  }
+
+  const addAchievementButtonHandler = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ) => {
+    e.preventDefault()
+    if (newUserSelectedOrder === null || !newUserSelectedOrder) {
+      return
+    }
+    const achievementStatus =
+      newUserSelectedStatus === NewAchievementStatus.Active ? 'true' : 'false'
+    const newAchievementData: OutgoingNewAchievementType = {
+      typeName: userNewSelectedAchievementType,
+      order: newUserSelectedOrder.toString(),
+      status: achievementStatus,
+      timeperiodrequired: newUserSelectedTimeReq,
+      daterequired: newUserSelectedDateReq,
+    }
+
+    console.log(newAchievementData)
+
+    const successToast = (
+      <OToast
+        toastColor="success"
+        toastMessage="Achievement Type Added Successfully"
+      />
+    )
+
+    const errorToast = (
+      <OToast toastColor="danger" toastMessage="Error! Please try again" />
+    )
+
+    const result = await dispatch(
+      reduxServices.addAchiever.addAchievementTypeThunk(newAchievementData),
+    )
+
+    if (
+      reduxServices.addAchiever.addAchievementTypeThunk.fulfilled.match(result)
+    ) {
+      dispatch(reduxServices.commonAchievements.getAllAchievementsType())
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      addAchievementClearButtonHandler()
+    } else {
+      dispatch(reduxServices.app.actions.addToast(errorToast))
+    }
+  }
+
   return (
     <CContainer>
       <CRow className="mt-2 justify-content-end">
@@ -86,6 +146,8 @@ const AchievementTypeList = ({
         newSelectedTimeReqHandler={newSelectedTimeReqHandler}
         newUserSelectedDateReq={newUserSelectedDateReq}
         newSelectedDateReqHandler={newSelectedDateReqHandler}
+        addButtonHandler={addAchievementButtonHandler}
+        achievementClearButtonHandler={addAchievementClearButtonHandler}
       />
       <AchievementTypeTable />
     </CContainer>

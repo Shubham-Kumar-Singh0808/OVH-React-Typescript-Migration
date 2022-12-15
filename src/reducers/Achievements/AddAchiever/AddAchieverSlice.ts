@@ -29,9 +29,9 @@ const addAchievementTypeThunk = createAsyncThunk(
 
 const getAchievementTypeDetailsThunk = createAsyncThunk(
   'addAchiever/getAchievementTypeDetailsThunk',
-  async (typeId: number, thunkApi) => {
+  async (query: AchievementTypeIdQueryParameter, thunkApi) => {
     try {
-      const data = await AddAchieverApi.getAchievementTypeDetails(typeId)
+      const data = await AddAchieverApi.getAchievementTypeDetails(query)
       return thunkApi.fulfillWithValue(data)
     } catch (error) {
       const err = error as AxiosError

@@ -31,6 +31,8 @@ export interface AddAchieverTypeEntriesProps {
   newSelectedTimeReqHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
   newUserSelectedDateReq: boolean
   newSelectedDateReqHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  addButtonHandler: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
+  achievementClearButtonHandler: () => void
 }
 
 export interface AddAchieverInitialState {

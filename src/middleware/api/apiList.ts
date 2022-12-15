@@ -685,9 +685,10 @@ export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
 }
 
 export const AddAchieverApiConfig: AddAchieverApi = {
-  addAchievementType: '/achievement/addAchievementType',
-  getAchievementTypeDetails: '/achievement/getAchievementTypeDetails',
-  deleteAchievementType: '/achievement/deleteAchievementType',
+  addAchievementType: apiPrefix + '/achievement/addAchievementType',
+  getAchievementTypeDetails:
+    apiPrefix + '/achievement/getAchievementTypeDetails',
+  deleteAchievementType: apiPrefix + '/achievement/deleteAchievementType',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {

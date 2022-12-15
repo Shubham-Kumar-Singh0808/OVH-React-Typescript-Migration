@@ -20,15 +20,14 @@ import {
   NewAchievementStatus,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { AchievementType } from '../../../../types/Achievements/commonAchievementTypes'
+import { errorOrderMessage } from '../../AchievementConstants'
 
 const defaultAchievementTypeIdValue = -1
 const editAchievementIdDefaultValue = 0
 type EditedAchievementDetails = {
-  newStatus: null | string
-  newOrder: null | number
+  newStatus: undefined | string
+  newOrder: undefined | number
 }
-const errorOrderMessage = 'Order must be unique'
-const errorAchievementNameMessage = 'Achievement name must be unique'
 const AchievementTypeTable = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const achievementTypeDataList = useTypedSelector(
@@ -47,12 +46,9 @@ const AchievementTypeTable = (): JSX.Element => {
   )
 
   const [editedValues, setEditedValues] = useState<EditedAchievementDetails>({
-    newOrder: null,
-    newStatus: null,
+    newOrder: undefined,
+    newStatus: undefined,
   })
-
-  const [editedAchievementDetails, setEditedAchievementDetails] =
-    useState<AchievementType | null>(null)
 
   const setNewOrderHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedValues({ ...editedValues, newOrder: +e.target.value })
@@ -72,12 +68,18 @@ const AchievementTypeTable = (): JSX.Element => {
   const editButtonHandler = (
     e: React.MouseEvent<HTMLButtonElement>,
     id: number,
+    status: boolean,
+    order: number,
   ) => {
     e.preventDefault()
     setEditAchievementId(id)
+    const stringStatus = status
+      ? NewAchievementStatus.Active
+      : NewAchievementStatus.Inactive
+    setEditedValues({ newStatus: stringStatus, newOrder: order })
     const query: AchievementTypeIdQueryParameter = { typeId: id }
     setEditAchievementEnabled(true)
-    dispatch(reduxServices.addAchiever.getAchievementTypeDetailsThunk(id))
+    dispatch(reduxServices.addAchiever.getAchievementTypeDetailsThunk(query))
   }
 
   const closeEditButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -178,7 +180,7 @@ const AchievementTypeTable = (): JSX.Element => {
                   <div>
                     <CCol sm={3}>
                       <CFormInput
-                        value={item.order}
+                        value={editedValues.newOrder}
                         size="sm"
                         onChange={setNewOrderHandler}
                       />
@@ -220,7 +222,7 @@ const AchievementTypeTable = (): JSX.Element => {
                         data-testid={`timeline-btn-${index}`}
                         title="Edit"
                         onClick={(e) => {
-                          editButtonHandler(e, item.id)
+                          editButtonHandler(e, item.id, item.status, item.order)
                         }}
                       >
                         <i

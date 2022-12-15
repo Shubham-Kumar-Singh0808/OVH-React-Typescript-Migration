@@ -22,31 +22,17 @@ const addAchievementType = async (
   return response.data
 }
 
-// const getAchievementTypeDetails = async (
-//   typeId: number,
-// ): Promise<AchievementType> => {
-//   const requestConfig = getAuthenticatedRequestConfig({
-//     url: AddAchieverApiConfig.getAchievementTypeDetails,
-//     method: AllowedHttpMethods.get,
-//     params: {
-//       typeId,
-//     },
-//   })
-
-//   const response = await useAxios(requestConfig)
-//   return response.data
-// }
-
 const getAchievementTypeDetails = async (
-  typeId: number,
+  query: AchievementTypeIdQueryParameter,
 ): Promise<AchievementType> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: AddAchieverApiConfig.getAchievementTypeDetails,
     method: AllowedHttpMethods.get,
     params: {
-      typeId,
+      typeId: query.typeId,
     },
   })
+
   const response = await useAxios(requestConfig)
   return response.data
 }
