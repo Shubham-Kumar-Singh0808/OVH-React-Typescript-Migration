@@ -1,6 +1,6 @@
-import { getAppraisalCycle } from '../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import { GetAppraisalCycle } from '../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
-export const mockAppraisalCycle: getAppraisalCycle[] = [
+export const mockAppraisalCycle: GetAppraisalCycle[] = [
   {
     id: 1,
     name: 'Appraisal Cycle 2016',

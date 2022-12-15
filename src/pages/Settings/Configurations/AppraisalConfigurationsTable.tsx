@@ -19,7 +19,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import { getAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import { GetAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 
 const AppraisalConfigurationsTable = ({
@@ -30,35 +30,32 @@ const AppraisalConfigurationsTable = ({
   const [isAppraisalDescriptionVisible, setIsAppraisalDescriptionVisible] =
     useState<boolean>(false)
   const [descriptionModal, setDescriptionModal] = useState(
-    {} as getAppraisalCycle,
+    {} as GetAppraisalCycle,
   )
   const dispatch = useAppDispatch()
 
-  const appraisalCycleNames = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.appraisalCycleNames,
+  const appraisalCycle = useTypedSelector(
+    reduxServices.appraisalConfigurations.selectors.appraisalCycle,
   )
-
-  useEffect(() => {
-    dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
-  }, [dispatch])
-
-  const pageFromState = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.pageFromState,
-  )
-  const pageSizeFromState = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.pageSizeFromState,
+  const appraisalCycleListSize = useTypedSelector(
+    reduxServices.appraisalConfigurations.selectors.listSize,
   )
   const {
     paginationRange,
-    setCurrentPage,
     setPageSize,
+    setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(
-    appraisalCycleNames.length,
-    pageSizeFromState,
-    pageFromState,
-  )
+  } = usePagination(appraisalCycleListSize, 20)
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.appraisalConfigurations.getAppraisalCycle({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      }),
+    )
+  }, [currentPage, dispatch, pageSize])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -68,22 +65,25 @@ const AppraisalConfigurationsTable = ({
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
-  const handleAgendaModal = (appraisalCycle: getAppraisalCycle) => {
+  const handleAgendaModal = (appraisalCycle: GetAppraisalCycle) => {
     setIsAppraisalDescriptionVisible(true)
     setDescriptionModal(appraisalCycle)
   }
 
   const sortedAppraisalDates = useMemo(() => {
-    if (appraisalCycleNames) {
-      return appraisalCycleNames
+    if (appraisalCycle) {
+      return appraisalCycle
         .slice()
         .sort((sortNode1, sortNode2) =>
           sortNode1.toDate.localeCompare(sortNode2.fromDate),
         )
     }
     return []
-  }, [appraisalCycleNames])
+  }, [appraisalCycle])
 
+  const totalNoOfRecords = appraisalCycle?.length
+    ? `Total Records: ${appraisalCycleListSize}`
+    : `No Records found...`
   return (
     <>
       <CTable
@@ -180,45 +180,34 @@ const AppraisalConfigurationsTable = ({
             })}
         </CTableBody>
       </CTable>
-
-      {appraisalCycleNames.length ? (
-        <CRow>
-          <CCol xs={4}>
-            <p>
-              <strong>Total Records: {appraisalCycleNames.length}</strong>
-            </p>
-          </CCol>
-          <CCol xs={3}>
-            {appraisalCycleNames.length > 20 && (
-              <OPageSizeSelect
-                handlePageSizeSelectChange={handlePageSizeSelectChange}
-                options={[20, 40, 60, 80]}
-                selectedPageSize={pageSize}
-              />
-            )}
-          </CCol>
-          {appraisalCycleNames.length > 20 && (
-            <CCol
-              xs={5}
-              className="gap-1 d-grid d-md-flex justify-content-md-end"
-            >
-              <OPagination
-                currentPage={currentPage}
-                pageSetter={setCurrentPage}
-                paginationRange={paginationRange}
-              />
-            </CCol>
-          )}
-        </CRow>
-      ) : (
-        <CCol>
-          <CRow className="mt-3 ms-3">
-            <p>
-              <strong>No Records Found... </strong>
-            </p>
-          </CRow>
+      <CRow>
+        <CCol xs={4}>
+          <p className="mt-2">
+            <strong>{totalNoOfRecords}</strong>
+          </p>
         </CCol>
-      )}
+        <CCol xs={3}>
+          {appraisalCycleListSize > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              options={[20, 40, 60, 80]}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {appraisalCycleListSize > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
       <OModal
         modalSize="lg"
         alignment="center"

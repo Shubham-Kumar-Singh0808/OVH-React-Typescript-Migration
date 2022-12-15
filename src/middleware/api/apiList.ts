@@ -555,7 +555,7 @@ export const addTrackerApiConfig: AddTrackerApi = {
 }
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
-  getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+  getAppraisalCycle: apiPrefix + '/appraisal/getAllAppraisalCycles',
   editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
   updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
   validateCycle: apiPrefix + '/appraisal/validateCycle',
