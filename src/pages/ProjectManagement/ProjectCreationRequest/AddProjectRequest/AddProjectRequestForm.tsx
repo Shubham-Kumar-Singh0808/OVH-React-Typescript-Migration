@@ -5,6 +5,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   GetAutoCompleteList,
+  GetOnSelect,
   ProjectClients,
 } from '../../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
 import { ClientOrganization } from '../../Project/ProjectComponent/ClientOrganization'
@@ -27,14 +28,15 @@ const AddProjectRequestForm = (): JSX.Element => {
         name: mapClient.name == null ? '' : mapClient.name,
       } as GetAutoCompleteList
     })
-  return (
+
+   return (
     <>
       <CRow className="justify-content-end">
         <OBackButton destination={''} name={''} />
         <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
           <ClientOrganization
             list={clientOrganizationList}
-            // onSelectHandler={handleClientSelect}
+            onSelectHandler={handleClientSelect}
             // value={project.client}
           />
         </CCol>
