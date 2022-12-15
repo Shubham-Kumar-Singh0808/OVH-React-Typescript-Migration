@@ -13,5 +13,5 @@ export type ModalPropsType = {
   isCancelButtonDisabled?: boolean
   confirmButtonText?: string
   cancelButtonText?: string
-  confirmButtonAction?: () => Promise<void>
+  confirmButtonAction?: () => Promise<void> | void
 }
