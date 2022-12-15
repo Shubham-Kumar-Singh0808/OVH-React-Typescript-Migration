@@ -20,5 +20,6 @@
     "typeofget",
     "updateaccess",
     "viewaccess"
-  ]
+  ],
+  "java.configuration.updateBuildConfiguration": "disabled"
 }

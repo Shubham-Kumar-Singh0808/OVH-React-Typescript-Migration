@@ -75,6 +75,7 @@ import { submitViewResignationServices } from './Separation/SubmitViewResignatio
 import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
+import { newEventService } from './ConferenceRoomBooking/NewEvent/newEventSlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
 import { paySlipsService } from './Finance/Payslips/payslipsSlice'
 import { panDetailService } from './Finance/PanDetails/panDetailsSlice'
@@ -83,6 +84,8 @@ import { resignationListService } from './Separation/ResignationList/resignation
 import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
 import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
 import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
+import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
+import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 
 export const reduxServices = {
@@ -163,6 +166,7 @@ export const reduxServices = {
   submitViewResignation: submitViewResignationServices,
   addConfigurations: addConfigurationService,
   projectReport: projectReportsService,
+  newEvent: newEventService,
   leaveApprovals: leaveApprovalsService,
   paySlips: paySlipsService,
   panDetails: panDetailService,
@@ -171,5 +175,7 @@ export const reduxServices = {
   employeeAccount: employeeAccountService,
   itDeclarationList: itDeclarationListService,
   investmentCheckList: investmentCheckListService,
+  achieverList: achieverListService,
+  commonAchievements: commonAchievementsService,
   projectCreationRequest: projectCreationRequestService,
 }

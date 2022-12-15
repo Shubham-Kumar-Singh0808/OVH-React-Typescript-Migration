@@ -42,6 +42,18 @@ const getCycles = createAsyncThunk(
   },
 )
 
+const addCycle = createAsyncThunk(
+  'itDeclarationList/addCycle',
+  async (addNewCycle: Cycle, thunkApi) => {
+    try {
+      return await itDeclarationListApi.addCycle(addNewCycle)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const getSections = createAsyncThunk(
   'itDeclarationList/getSections',
   async (_, thunkApi) => {
@@ -136,11 +148,40 @@ const deleteInvestment = createAsyncThunk<
   }
 })
 
+const deleteCycle = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('itDeclarationList/deleteCycle', async (cycleId, thunkApi) => {
+  try {
+    return await itDeclarationListApi.deleteCycle(cycleId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const getITDeclarationForm = createAsyncThunk(
   'itDeclarationList/getITDeclarationForm',
   async (props: ITDeclarationListApiProps, thunkApi) => {
     try {
       return await itDeclarationListApi.getITDeclarationForm(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const isCycleExist = createAsyncThunk(
+  'itDeclarationList/isCycleExist',
+  async (props: { cycleId: number; cycleName: string }, thunkApi) => {
+    try {
+      return await itDeclarationListApi.isCycleExist(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -190,6 +231,9 @@ const itDeclarationListSlice = createSlice({
         state.itDeclarationForms = action.payload.itforms
         state.listSize = action.payload.itformlistsize
       })
+      .addCase(addCycle.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(
           addSection.fulfilled,
@@ -197,6 +241,8 @@ const itDeclarationListSlice = createSlice({
           updateSection.fulfilled,
           addInvestment.fulfilled,
           deleteInvestment.fulfilled,
+          deleteCycle.fulfilled,
+          isCycleExist.fulfilled,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -213,6 +259,9 @@ const itDeclarationListSlice = createSlice({
           getInvestments.pending,
           addInvestment.pending,
           deleteInvestment.pending,
+          addCycle.pending,
+          deleteCycle.pending,
+          isCycleExist.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -229,6 +278,9 @@ const itDeclarationListSlice = createSlice({
           getInvestments.rejected,
           addInvestment.rejected,
           deleteInvestment.rejected,
+          addCycle.rejected,
+          deleteCycle.rejected,
+          isCycleExist.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -266,6 +318,9 @@ const itDeclarationListThunk = {
   addInvestment,
   deleteInvestment,
   getSections,
+  addCycle,
+  deleteCycle,
+  isCycleExist,
 }
 
 const itDeclarationListSelectors = {

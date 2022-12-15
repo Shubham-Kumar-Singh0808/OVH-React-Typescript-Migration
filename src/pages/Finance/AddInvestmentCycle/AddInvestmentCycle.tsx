@@ -1,9 +1,17 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import AddNewInvestmentCycle from './AddNewInvestmentCycle'
+import InvestmentCycleTable from './InvestmentCycleTable'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { useAppDispatch } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const AddInvestmentCycle = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(reduxServices.itDeclarationList.getCycles())
+  }, [dispatch])
   return (
     <>
       <OCard
@@ -18,13 +26,15 @@ const AddInvestmentCycle = (): JSX.Element => {
               <CButton
                 color="info"
                 className="btn-ovh me-1"
-                data-testid="back-btn"
+                data-testid="addCycle-back-btn"
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
             </Link>
           </CCol>
         </CRow>
+        <AddNewInvestmentCycle />
+        <InvestmentCycleTable />
       </OCard>
     </>
   )
