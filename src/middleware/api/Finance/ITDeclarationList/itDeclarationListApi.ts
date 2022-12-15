@@ -62,6 +62,16 @@ const exportITDeclarationList = async (
   return response.data
 }
 
+const addCycle = async (addNewCycle: Cycle): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.addCycle,
+    method: AllowedHttpMethods.post,
+    data: addNewCycle,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const getSections = async (): Promise<Section[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: itDeclarationListApiConfig.getSections,
@@ -152,6 +162,54 @@ const updateInvestment = async (
   return response.data
 }
 
+const deleteCycle = async (id: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.deleteCycle,
+    method: AllowedHttpMethods.delete,
+    params: {
+      cycleId: id,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const isCycleExist = async (props: {
+  cycleId: number
+  cycleName: string
+}): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.isCycleExist,
+    method: AllowedHttpMethods.get,
+    params: {
+      cycleId: props.cycleId,
+      cycleName: props.cycleName,
+    },
+  })
+
+  const responseVisa = await useAxios(requestConfig)
+  return responseVisa.data
+}
+
+const isInvestmentExist = async (props: {
+  investmentId: number
+  investmentName: string
+  sectionId: number
+}): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.isInvestmentExist,
+    method: AllowedHttpMethods.get,
+    params: {
+      investmentId: props.investmentId,
+      investmentName: props.investmentName,
+      sectionId: props.sectionId,
+    },
+  })
+
+  const responseVisa = await useAxios(requestConfig)
+  return responseVisa.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
   getITDeclarationForm,
@@ -164,4 +222,8 @@ export const itDeclarationListApi = {
   addInvestment,
   deleteInvestment,
   updateInvestment,
+  addCycle,
+  deleteCycle,
+  isCycleExist,
+  isInvestmentExist,
 }

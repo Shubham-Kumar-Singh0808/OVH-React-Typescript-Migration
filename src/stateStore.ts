@@ -85,6 +85,7 @@ import submitViewResignationReducer from './reducers/Separation/SubmitViewResign
 import addConfigurationReducer from './reducers/Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import projectManagementReducer from './reducers/ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
+import newEventReducer from './reducers/ConferenceRoomBooking/NewEvent/newEventSlice'
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
 import paySlipsReducer from './reducers/Finance/Payslips/payslipsSlice'
 import panDetailsReducer from './reducers/Finance/PanDetails/panDetailsSlice'
@@ -182,6 +183,7 @@ export const allReducers = {
   addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
   leaveApprovals: leaveApprovalsReducer,
+  newEvent: newEventReducer,
   paySlips: paySlipsReducer,
   panDetails: panDetailsReducer,
   bankDetails: bankDetailsReducer,
@@ -194,7 +196,6 @@ export const allReducers = {
   projectCreationRequest: projectCreationRequestReducer,
   // add your slice reducers here
 }
-
 const stateStore = configureStore({
   reducer: allReducers,
   middleware: (getDefaultMiddleware) =>

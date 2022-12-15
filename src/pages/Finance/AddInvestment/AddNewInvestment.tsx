@@ -71,11 +71,14 @@ const AddNewInvestment = ({
   const successToastMessage = (
     <OToast toastMessage="Investment added Successfully" toastColor="success" />
   )
-  const WarningToastMessage = (
+  const warningToastMessage = (
     <OToast
       toastColor="danger"
       toastMessage="Total investment is exceeding section limit"
     />
+  )
+  const alreadyExistToastMessage = (
+    <OToast toastColor="danger" toastMessage="Investment already Exist" />
   )
   const handleDescription = (description: string) => {
     setAddNewInvestment((prevState) => {
@@ -125,27 +128,43 @@ const AddNewInvestment = ({
       maxLimit: investmentMaxLimit as string,
       requiredDocs: requireDocuments,
     }
-    const addNewInvestmentResultAction = await dispatch(
-      reduxServices.itDeclarationList.addInvestment(prepareObject),
+    const investmentExist = {
+      investmentId: -1,
+      investmentName: addNewInvestment.investmentName,
+      sectionId: Number(selectedSectionId),
+    }
+    const isInvestmentExistsResultAction = await dispatch(
+      reduxServices.itDeclarationList.isInvestmentExist(investmentExist),
     )
-
     if (
-      reduxServices.itDeclarationList.addInvestment.fulfilled.match(
-        addNewInvestmentResultAction,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
-      handleClear()
-      dispatch(reduxServices.itDeclarationList.getSections())
-      dispatch(reduxServices.itDeclarationList.getInvestments())
-    } else if (
-      reduxServices.itDeclarationList.addInvestment.rejected.match(
-        addNewInvestmentResultAction,
+      reduxServices.itDeclarationList.isCycleExist.fulfilled.match(
+        isInvestmentExistsResultAction,
       ) &&
-      addNewInvestmentResultAction.payload === 406
+      isInvestmentExistsResultAction.payload === true
     ) {
-      dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
-      setInvestmentMaxLimit('')
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
+    } else {
+      const addNewInvestmentResultAction = await dispatch(
+        reduxServices.itDeclarationList.addInvestment(prepareObject),
+      )
+      if (
+        reduxServices.itDeclarationList.addInvestment.fulfilled.match(
+          addNewInvestmentResultAction,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(successToastMessage))
+        handleClear()
+        dispatch(reduxServices.itDeclarationList.getSections())
+        dispatch(reduxServices.itDeclarationList.getInvestments())
+      } else if (
+        reduxServices.itDeclarationList.addInvestment.rejected.match(
+          addNewInvestmentResultAction,
+        ) &&
+        addNewInvestmentResultAction.payload === 406
+      ) {
+        dispatch(reduxServices.app.actions.addToast(warningToastMessage))
+        setInvestmentMaxLimit('')
+      }
     }
   }
 

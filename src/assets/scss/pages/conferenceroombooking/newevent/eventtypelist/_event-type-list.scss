@@ -12,3 +12,37 @@
         box-shadow: none;
     }
 }
+.meeting-bulk-add {
+    line-height: 22;
+}
+
+.sh-span-green{
+    color: green;
+    font-weight: 600;
+}
+.sh-span-red{
+    color: red;
+    font-weight: 600;
+}
+
+.fixed-height {
+    .table-responsive{
+    max-height: 450px;
+    overflow-y: auto;
+  }
+}
+
+.sh-slots-col{
+    float: right;
+    margin-right: 42px;
+    text-align: center;
+}
+
+.panel-title{
+    color: #124b7c !important;
+    font-size: 18px;
+    font-weight: 400;
+}
+.panel-time{
+    margin-bottom: 0px;
+}

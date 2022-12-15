@@ -6,7 +6,7 @@ import {
   AllocateEmployeeToProject,
   EmployeeAllocateSliceState,
   GetAllEmployeesNames,
-  GetAllProjectNames,
+  GetAllProjects,
 } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
@@ -85,7 +85,7 @@ const allocateEmployeeSlice = createSlice({
 const employeeNames = (state: RootState): GetAllEmployeesNames[] =>
   state.allocateEmployee.getAllEmployees
 
-const projectNames = (state: RootState): GetAllProjectNames[] =>
+const allProjects = (state: RootState): GetAllProjects[] =>
   state.allocateEmployee.getAllProjects
 
 const allocateEmployeeThunk = {
@@ -96,7 +96,7 @@ const allocateEmployeeThunk = {
 
 const allocateEmployeeSelectors = {
   employeeNames,
-  projectNames,
+  allProjects,
 }
 
 export const allocateEmployeeService = {

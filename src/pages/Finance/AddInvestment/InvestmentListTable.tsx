@@ -71,7 +71,10 @@ const InvestmentListTable = ({
   }
 
   const toastElement = (
-    <OToast toastColor="success" toastMessage="Section Deleted Successfully" />
+    <OToast
+      toastColor="success"
+      toastMessage="Investment Deleted Successfully."
+    />
   )
 
   const handleConfirmDeleteInvestment = async () => {

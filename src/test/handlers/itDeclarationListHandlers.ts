@@ -76,4 +76,28 @@ export const itDeclarationListHandlers = [
     })
     return res(updateInvRes)
   }),
+  //addCycle api mock
+  rest.post(itDeclarationListApiConfig.addCycle, (_req, res, ctx) => {
+    const addCycleRes = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(addCycleRes)
+  }),
+  //deleteCycle api mock
+  rest.delete(itDeclarationListApiConfig.deleteCycle, (_req, res, ctx) => {
+    const delCycleRes = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(delCycleRes)
+  }),
+  //checkCycleExist api mock
+  rest.get(itDeclarationListApiConfig.isCycleExist, (_req, res, ctx) => {
+    const getCycleRes = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(getCycleRes)
+  }),
 ]

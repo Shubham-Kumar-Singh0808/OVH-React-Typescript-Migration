@@ -552,5 +552,269 @@ describe('IT Declaration List Slice', () => {
         sections: [],
       })
     })
+    it('Should be able to set isLoading to "loading" if addCycle is pending', () => {
+      const action = {
+        type: itDeclarationListService.addCycle.pending.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "success" if `addCycle` is fulfilled', () => {
+      const action = {
+        type: itDeclarationListService.addCycle.fulfilled.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.succeeded,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "failed" if `addCycle` is rejected', () => {
+      const action = {
+        type: itDeclarationListService.addCycle.rejected.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.failed,
+        error: undefined,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "loading" if deleteCycle is pending', () => {
+      const action = {
+        type: itDeclarationListService.deleteCycle.pending.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "success" if `deleteCycle` is fulfilled', () => {
+      const action = {
+        type: itDeclarationListService.deleteCycle.fulfilled.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.succeeded,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "failed" if `deleteCycle` is rejected', () => {
+      const action = {
+        type: itDeclarationListService.deleteCycle.rejected.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.failed,
+        error: undefined,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "loading" if isCycleExist is pending', () => {
+      const action = {
+        type: itDeclarationListService.isCycleExist.pending.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "success" if `isCycleExist` is fulfilled', () => {
+      const action = {
+        type: itDeclarationListService.isCycleExist.fulfilled.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.succeeded,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "failed" if `isCycleExist` is rejected', () => {
+      const action = {
+        type: itDeclarationListService.isCycleExist.rejected.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.failed,
+        error: undefined,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "loading" if isInvestmentExist is pending', () => {
+      const action = {
+        type: itDeclarationListService.isInvestmentExist.pending.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "success" if `isInvestmentExist` is fulfilled', () => {
+      const action = {
+        type: itDeclarationListService.isInvestmentExist.fulfilled.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.succeeded,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "failed" if `isInvestmentExist` is rejected', () => {
+      const action = {
+        type: itDeclarationListService.isInvestmentExist.rejected.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.failed,
+        error: undefined,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
   })
 })

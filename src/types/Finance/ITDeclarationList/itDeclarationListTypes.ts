@@ -75,6 +75,7 @@ export type AddSection = {
   sectionLimit: string
   sectionName: string
 }
+
 export type Invests = {
   description: string
   investmentId: number
@@ -108,6 +109,7 @@ export type AddInvestmentData = {
   maxLimit: string
   requiredDocs: string
   sectionId?: number | string
+  investmentId?: number
 }
 
 export type ITDeclarationListSliceState = {

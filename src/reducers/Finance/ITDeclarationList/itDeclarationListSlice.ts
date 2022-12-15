@@ -42,6 +42,18 @@ const getCycles = createAsyncThunk(
   },
 )
 
+const addCycle = createAsyncThunk(
+  'itDeclarationList/addCycle',
+  async (addNewCycle: Cycle, thunkApi) => {
+    try {
+      return await itDeclarationListApi.addCycle(addNewCycle)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const getSections = createAsyncThunk(
   'itDeclarationList/getSections',
   async (_, thunkApi) => {
@@ -136,6 +148,23 @@ const deleteInvestment = createAsyncThunk<
   }
 })
 
+const deleteCycle = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('itDeclarationList/deleteCycle', async (cycleId, thunkApi) => {
+  try {
+    return await itDeclarationListApi.deleteCycle(cycleId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const getITDeclarationForm = createAsyncThunk(
   'itDeclarationList/getITDeclarationForm',
   async (props: ITDeclarationListApiProps, thunkApi) => {
@@ -153,6 +182,33 @@ const updateInvestment = createAsyncThunk(
   async (editInvestment: Investment, thunkApi) => {
     try {
       return await itDeclarationListApi.updateInvestment(editInvestment)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const isCycleExist = createAsyncThunk(
+  'itDeclarationList/isCycleExist',
+  async (props: { cycleId: number; cycleName: string }, thunkApi) => {
+    try {
+      return await itDeclarationListApi.isCycleExist(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const isInvestmentExist = createAsyncThunk(
+  'itDeclarationList/isInvestmentExist',
+  async (
+    props: { investmentId: number; investmentName: string; sectionId: number },
+    thunkApi,
+  ) => {
+    try {
+      return await itDeclarationListApi.isInvestmentExist(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -202,6 +258,9 @@ const itDeclarationListSlice = createSlice({
         state.itDeclarationForms = action.payload.itforms
         state.listSize = action.payload.itformlistsize
       })
+      .addCase(addCycle.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(
           addSection.fulfilled,
@@ -210,6 +269,9 @@ const itDeclarationListSlice = createSlice({
           addInvestment.fulfilled,
           deleteInvestment.fulfilled,
           updateInvestment.fulfilled,
+          isCycleExist.fulfilled,
+          deleteCycle.fulfilled,
+          isInvestmentExist.fulfilled,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -218,6 +280,7 @@ const itDeclarationListSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getCycles.pending,
+          deleteCycle.pending,
           getSections.pending,
           getITDeclarationForm.pending,
           addSection.pending,
@@ -227,6 +290,10 @@ const itDeclarationListSlice = createSlice({
           addInvestment.pending,
           deleteInvestment.pending,
           updateInvestment.pending,
+          isCycleExist.pending,
+          deleteCycle.pending,
+          isInvestmentExist.pending,
+          addCycle.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -243,7 +310,12 @@ const itDeclarationListSlice = createSlice({
           getInvestments.rejected,
           addInvestment.rejected,
           deleteInvestment.rejected,
+          isCycleExist.rejected,
           updateInvestment.rejected,
+          deleteCycle.rejected,
+          deleteCycle.rejected,
+          isInvestmentExist.rejected,
+          addCycle.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -281,7 +353,11 @@ const itDeclarationListThunk = {
   addInvestment,
   deleteInvestment,
   getSections,
+  deleteCycle,
   updateInvestment,
+  isCycleExist,
+  addCycle,
+  isInvestmentExist,
 }
 
 const itDeclarationListSelectors = {

@@ -56,7 +56,7 @@ describe('Select Country Component Testing', () => {
   })
 
   test('should redirect to /addHoliday Page when user clicks on Add Button from HolidaysList Page', async () => {
-    userEvent.click(screen.getByRole('button', { name: /Add/i }))
+    userEvent.click(screen.getByRole('button', { name: 'Add' }))
     await waitFor(() => {
       // check if a redirect happens after clicking Back button to Dashboard Page
       expect(history.location.pathname).toBe('/addHoliday')
