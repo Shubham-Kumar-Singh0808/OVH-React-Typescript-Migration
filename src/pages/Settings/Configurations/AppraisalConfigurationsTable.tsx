@@ -40,6 +40,14 @@ const AppraisalConfigurationsTable = ({
   const appraisalCycleListSize = useTypedSelector(
     reduxServices.appraisalConfigurations.selectors.listSize,
   )
+  const presentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+  useEffect(() => {
+    if (presentPage) {
+      setCurrentPage(presentPage)
+    }
+  }, [presentPage])
   const {
     paginationRange,
     setPageSize,
@@ -65,9 +73,9 @@ const AppraisalConfigurationsTable = ({
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
-  const handleAgendaModal = (appraisalCycle: GetAppraisalCycle) => {
+  const handleAgendaModal = (appraisalCycleInfo: GetAppraisalCycle) => {
     setIsAppraisalDescriptionVisible(true)
-    setDescriptionModal(appraisalCycle)
+    setDescriptionModal(appraisalCycleInfo)
   }
 
   const sortedAppraisalDates = useMemo(() => {
