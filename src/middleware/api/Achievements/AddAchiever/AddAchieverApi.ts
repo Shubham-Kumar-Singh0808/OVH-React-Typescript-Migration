@@ -2,6 +2,7 @@ import {
   AchievementTypeIdQueryParameter,
   OutgoingNewAchievementType,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import { AchievementType } from '../../../../types/Achievements/commonAchievementTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -21,17 +22,31 @@ const addAchievementType = async (
   return response.data
 }
 
+// const getAchievementTypeDetails = async (
+//   typeId: number,
+// ): Promise<AchievementType> => {
+//   const requestConfig = getAuthenticatedRequestConfig({
+//     url: AddAchieverApiConfig.getAchievementTypeDetails,
+//     method: AllowedHttpMethods.get,
+//     params: {
+//       typeId,
+//     },
+//   })
+
+//   const response = await useAxios(requestConfig)
+//   return response.data
+// }
+
 const getAchievementTypeDetails = async (
-  query: AchievementTypeIdQueryParameter,
-) => {
+  typeId: number,
+): Promise<AchievementType> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: AddAchieverApiConfig.getAchievementTypeDetails,
     method: AllowedHttpMethods.get,
     params: {
-      typeId: query.typeId.toString(),
+      typeId,
     },
   })
-
   const response = await useAxios(requestConfig)
   return response.data
 }

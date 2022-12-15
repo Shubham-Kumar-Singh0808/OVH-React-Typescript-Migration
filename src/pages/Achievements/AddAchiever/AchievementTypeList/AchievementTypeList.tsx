@@ -39,8 +39,13 @@ const AchievementTypeList = ({
   }
 
   const newSelectedOrderHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewUserSelectedOrder(+e.target.value)
+    const numberRegex = /^[0-9\b]+$/
+    if (numberRegex.test(e.target.value) && e.target.value.length <= 2) {
+      setNewUserSelectedOrder(+e.target.value)
+    }
   }
+
+  console.log(newUserSelectedOrder)
 
   const newSelectedTimeReqHandler = (
     e: React.ChangeEvent<HTMLInputElement>,

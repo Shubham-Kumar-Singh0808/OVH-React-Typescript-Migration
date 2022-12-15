@@ -8,7 +8,7 @@ import {
   CFormCheck,
   CButton,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AchievementEntryContainer from './AchievementEntryContainer'
 import { TextDanger } from '../../../../constant/ClassName'
 import {
@@ -33,12 +33,18 @@ const AchievementTypeListEntries = (
     newSelectedDateReqHandler,
   } = props
 
-  //   useEffect(() => {
-  //     if (
-  //       userNewSelectedAchievementType === '' ||
-  //       newUserSelectedOrder === undefined
-  //     ) {}
-  //   }, [userNewSelectedAchievementType, newUserSelectedOrder])
+  const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (
+      userNewSelectedAchievementType === '' ||
+      newUserSelectedOrder === undefined
+    ) {
+      setAddButtonEnabled(false)
+    } else {
+      setAddButtonEnabled(true)
+    }
+  }, [userNewSelectedAchievementType, newUserSelectedOrder])
 
   return (
     <CForm>
@@ -92,7 +98,7 @@ const AchievementTypeListEntries = (
         <AchievementEntryContainer>
           <CFormLabel className={newAchievementLabelClass}>
             Order:{' '}
-            {userNewSelectedAchievementType === '' ? (
+            {newUserSelectedOrder === undefined ? (
               <span className={TextDanger}>*</span>
             ) : (
               <></>
@@ -101,6 +107,7 @@ const AchievementTypeListEntries = (
           <CCol sm={3}>
             <CFormInput
               type="number"
+              max={99}
               value={newUserSelectedOrder}
               onChange={newSelectedOrderHandler}
             />
@@ -141,6 +148,7 @@ const AchievementTypeListEntries = (
             type="submit"
             className="btn-ovh me-1"
             color="success"
+            disabled={!isAddButtonEnabled}
           >
             Add
           </CButton>

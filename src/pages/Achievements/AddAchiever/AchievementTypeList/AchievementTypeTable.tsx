@@ -6,26 +6,89 @@ import {
   CTableHeaderCell,
   CTableRow,
   CButton,
+  CFormSelect,
+  CFormInput,
+  CCol,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { AchievementTypeIdQueryParameter } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import {
+  AchievementTypeIdQueryParameter,
+  NewAchievementStatus,
+} from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import { AchievementType } from '../../../../types/Achievements/commonAchievementTypes'
 
 const defaultAchievementTypeIdValue = -1
+const editAchievementIdDefaultValue = 0
+type EditedAchievementDetails = {
+  newStatus: null | string
+  newOrder: null | number
+}
+const errorOrderMessage = 'Order must be unique'
+const errorAchievementNameMessage = 'Achievement name must be unique'
 const AchievementTypeTable = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const achievementTypeDataList = useTypedSelector(
     (state) => state.commonAchievements.dateSortedList,
   )
+  const [editAchievementId, setEditAchievementId] = useState<number>(
+    editAchievementIdDefaultValue,
+  )
 
+  const [isEditAchievementEnabled, setEditAchievementEnabled] =
+    useState<boolean>(false)
   const [displayModalContent, setDisplayModalContent] = useState<boolean>(false)
   const [modalContent, setModalContent] = useState<string>('')
   const [selectedAchievementId, setSelectedAchievementId] = useState<number>(
     defaultAchievementTypeIdValue,
   )
+
+  const [editedValues, setEditedValues] = useState<EditedAchievementDetails>({
+    newOrder: null,
+    newStatus: null,
+  })
+
+  const [editedAchievementDetails, setEditedAchievementDetails] =
+    useState<AchievementType | null>(null)
+
+  const setNewOrderHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedValues({ ...editedValues, newOrder: +e.target.value })
+  }
+
+  const setNewStatusHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setEditedValues({ ...editedValues, newStatus: e.target.value })
+  }
+
+  const isOrderAlreadyExist = (newOrder: number) => {
+    const isPresent = achievementTypeDataList.list.filter(
+      (item) => item.order === newOrder,
+    )
+    return isPresent.length > 1
+  }
+
+  const editButtonHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: number,
+  ) => {
+    e.preventDefault()
+    setEditAchievementId(id)
+    const query: AchievementTypeIdQueryParameter = { typeId: id }
+    setEditAchievementEnabled(true)
+    dispatch(reduxServices.addAchiever.getAchievementTypeDetailsThunk(id))
+  }
+
+  const closeEditButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setEditAchievementId(editAchievementIdDefaultValue)
+    setEditAchievementEnabled(false)
+  }
+
+  // const editStatusHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+  // }
 
   const deleteToModalButtonHandler = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -43,6 +106,7 @@ const AchievementTypeTable = (): JSX.Element => {
     const query: AchievementTypeIdQueryParameter = {
       typeId: selectedAchievementId,
     }
+    console.log(query)
     const result = await dispatch(
       reduxServices.addAchiever.deleteAchievementTypeThunk(query),
     )
@@ -84,40 +148,100 @@ const AchievementTypeTable = (): JSX.Element => {
               <CTableDataCell>{index + 1}</CTableDataCell>
               <CTableDataCell>{item.typeName}</CTableDataCell>
               <CTableDataCell>
-                {item.status ? 'Active' : 'Inactive'}
+                {isEditAchievementEnabled && item.id === editAchievementId ? (
+                  <CFormSelect
+                    size="sm"
+                    value={
+                      item.status
+                        ? NewAchievementStatus.Active
+                        : NewAchievementStatus.Inactive
+                    }
+                    onChange={setNewStatusHandler}
+                  >
+                    <option value={NewAchievementStatus.Active}>
+                      {NewAchievementStatus.Active}
+                    </option>
+                    <option value={NewAchievementStatus.Inactive}>
+                      {NewAchievementStatus.Inactive}
+                    </option>
+                  </CFormSelect>
+                ) : (
+                  <div>
+                    {item.status
+                      ? NewAchievementStatus.Active
+                      : NewAchievementStatus.Inactive}
+                  </div>
+                )}
               </CTableDataCell>
-              <CTableDataCell>{item.order}</CTableDataCell>
+              <CTableDataCell>
+                {isEditAchievementEnabled && item.id === editAchievementId ? (
+                  <div>
+                    <CCol sm={3}>
+                      <CFormInput
+                        value={item.order}
+                        size="sm"
+                        onChange={setNewOrderHandler}
+                      />
+                    </CCol>
+                    <CCol sm={4}>
+                      {isOrderAlreadyExist(editedValues.newOrder!)
+                        ? errorOrderMessage
+                        : undefined}
+                    </CCol>
+                  </div>
+                ) : (
+                  <div>{item.order}</div>
+                )}
+              </CTableDataCell>
               <CTableDataCell scope="row">
                 <div
                   className="d-flex flex-row align-items-center"
                   data-testid={`user-access-${index}`}
                 >
-                  <div className="button-events">
-                    <CButton
-                      color="info"
-                      className="danger btn-ovh me-1"
-                      size="sm"
-                      data-testid={`timeline-btn-${index}`}
-                      title="Edit"
-                    >
-                      <i
-                        className="fa fa-edit text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      size="sm"
-                      className="btn-ovh me-2"
-                      data-testid={`timeline-btn-${index}`}
-                      title="Delete"
-                      onClick={(e) => {
-                        deleteToModalButtonHandler(e, item.id, item.typeName)
-                      }}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
-                  </div>
+                  {isEditAchievementEnabled && editAchievementId === item.id ? (
+                    <div className="button-events">
+                      <CButton color="success" className="btn-ovh me-1">
+                        <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                      </CButton>
+                      <CButton
+                        color="warning"
+                        className="btn-ovh"
+                        onClick={closeEditButtonHandler}
+                      >
+                        <i className="fa fa-times" aria-hidden="true"></i>
+                      </CButton>
+                    </div>
+                  ) : (
+                    <div className="button-events">
+                      <CButton
+                        color="info"
+                        className="danger btn-ovh me-1"
+                        size="sm"
+                        data-testid={`timeline-btn-${index}`}
+                        title="Edit"
+                        onClick={(e) => {
+                          editButtonHandler(e, item.id)
+                        }}
+                      >
+                        <i
+                          className="fa fa-edit text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                      <CButton
+                        color="danger"
+                        size="sm"
+                        className="btn-ovh me-2"
+                        data-testid={`timeline-btn-${index}`}
+                        title="Delete"
+                        onClick={(e) => {
+                          deleteToModalButtonHandler(e, item.id, item.typeName)
+                        }}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </div>
+                  )}
                 </div>
               </CTableDataCell>
             </CTableRow>
