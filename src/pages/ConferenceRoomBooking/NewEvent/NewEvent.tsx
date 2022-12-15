@@ -251,6 +251,7 @@ const NewEvent = (): JSX.Element => {
     )
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const newAttendeesList = attendeesList.map(({ name, ...rest }) => {
+      console.log(name)
       return rest
     })
     const prepareObj = {
