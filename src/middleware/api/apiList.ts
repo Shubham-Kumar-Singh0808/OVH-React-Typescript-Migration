@@ -64,6 +64,7 @@ import {
   RoomListApi,
   AddConfigurationsApi,
   TicketConfigurationApi,
+  NewEventApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
   PaySlipsApi,
@@ -531,7 +532,19 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   addEventType: apiPrefix + '/meetingRequest/addEventType',
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+}
+
+export const newEventApiConfig: NewEventApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getRoomsOfLocation: apiPrefix + '/meetingRequest/getRoomsOfLocation',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllAttendees: apiPrefix + '/meetingRequest/getAllAttendies',
+  uniqueAttendee: apiPrefix + '/meetingRequest/uniqueAttendee',
+  timeChecking: apiPrefix + '/meetingRequest/timechecking',
+  getAllBookedDetailsForEvent:
+    apiPrefix + '/meetingRequest/getAllBookedDetailsForEvent',
+  addNewEvent: apiPrefix + '/meetingRequest/addNewEvent',
 }
 
 export const employeeAllocationApiConfig: EmployeeAllocationApi = {
@@ -652,12 +665,15 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getSections: apiPrefix + '/itDeclaration/getSection',
   getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
   exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
+  addCycle: apiPrefix + '/itDeclaration/addCycle',
   deleteSection: apiPrefix + '/itDeclaration/deleteSection',
   addSection: apiPrefix + '/itDeclaration/addSection',
   updateSection: apiPrefix + '/itDeclaration/editSection',
   getInvestments: apiPrefix + '/itDeclaration/getInvestments',
   addInvestment: apiPrefix + '/itDeclaration/addInvestment',
   deleteInvestment: apiPrefix + '/itDeclaration/deleteInvestment',
+  deleteCycle: apiPrefix + '/itDeclaration/deleteCycle',
+  isCycleExist: apiPrefix + '/itDeclaration/isCycleExist',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {

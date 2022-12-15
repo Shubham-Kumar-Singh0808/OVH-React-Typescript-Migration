@@ -14,7 +14,7 @@ const SelectCountry = ({ selectedCountry }: HolidaysListProps): JSX.Element => {
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToAddHoliday = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Holiday Actions',
+    (feature) => feature.name === 'Holiday',
   )
 
   const dispatch = useAppDispatch()
