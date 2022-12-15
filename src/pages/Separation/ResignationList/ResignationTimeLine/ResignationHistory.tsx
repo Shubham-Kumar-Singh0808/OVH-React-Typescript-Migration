@@ -25,7 +25,7 @@ const ResignationHistory = (): JSX.Element => {
   const userAccessEditTimeLine = userAccessToFeatures?.find(
     (feature) => feature.name === 'Separation',
   )
-
+  console.log(userAccessEditTimeLine)
   return (
     <>
       <OCard
@@ -36,8 +36,7 @@ const ResignationHistory = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            {getAllResignationHistory.status === 'Relieved' &&
-            userAccessEditTimeLine?.updateaccess ? (
+            {getAllResignationHistory.status === 'Relieved' ? (
               ''
             ) : (
               <CButton color="info" className="btn-ovh me-1">
