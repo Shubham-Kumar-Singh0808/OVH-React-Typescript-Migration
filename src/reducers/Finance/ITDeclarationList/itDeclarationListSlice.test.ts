@@ -618,6 +618,138 @@ describe('IT Declaration List Slice', () => {
         sections: [],
       })
     })
+    it('Should be able to set isLoading to "loading" if isInvestmentExist is pending', () => {
+      const action = {
+        type: itDeclarationListService.isInvestmentExist.pending.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "success" if `isInvestmentExist` is fulfilled', () => {
+      const action = {
+        type: itDeclarationListService.isInvestmentExist.fulfilled.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.succeeded,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "failed" if `isInvestmentExist` is rejected', () => {
+      const action = {
+        type: itDeclarationListService.isInvestmentExist.rejected.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.failed,
+        error: undefined,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "loading" if updateInvestment is pending', () => {
+      const action = {
+        type: itDeclarationListService.updateInvestment.pending.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "success" if `updateInvestment` is fulfilled', () => {
+      const action = {
+        type: itDeclarationListService.updateInvestment.fulfilled.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.succeeded,
+        error: null,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
+    it('Should be able to set isLoading to "failed" if `updateInvestment` is rejected', () => {
+      const action = {
+        type: itDeclarationListService.updateInvestment.rejected.type,
+      }
+      const state = itDeclarationListReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        itDeclarationForms: [],
+        listSize: 0,
+        searchEmployee: '',
+        isLoading: ApiLoadingState.failed,
+        error: undefined,
+        cycles: [],
+        currentPage: 1,
+        pageSize: 20,
+        toggle: '',
+        investments: [],
+        sections: [],
+      })
+    })
     it('Should be able to set isLoading to "loading" if isCycleExist is pending', () => {
       const action = {
         type: itDeclarationListService.isCycleExist.pending.type,

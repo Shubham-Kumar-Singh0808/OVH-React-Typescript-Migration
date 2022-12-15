@@ -56,6 +56,9 @@ const EditSection = ({
   const successToastMessage = (
     <OToast toastMessage="Section Updated Successfully" toastColor="success" />
   )
+  const alreadyExistToastMessage = (
+    <OToast toastColor="danger" toastMessage="Section already exist" />
+  )
   const backButtonHandler = () => {
     dispatch(reduxServices.itDeclarationList.actions.setToggle(''))
   }
@@ -63,7 +66,7 @@ const EditSection = ({
     const filteredInvest = sections.filter(
       (currSection) => currSection.sectionId === editSection.sectionId,
     )
-    console.log(filteredInvest)
+
     const prepareObject = {
       ...editSectionCopy,
       invests: filteredInvest[0].invests,
@@ -71,16 +74,35 @@ const EditSection = ({
     const editResultAction = await dispatch(
       reduxServices.itDeclarationList.updateSection(prepareObject),
     )
-
-    if (
-      reduxServices.itDeclarationList.updateSection.fulfilled.match(
-        editResultAction,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    const sectionExist = {
+      sectionId: editSectionCopy.sectionId,
+      sectionName: editSectionCopy.sectionName,
     }
-    dispatch(reduxServices.investmentCheckList.getSections())
-    backButtonHandler()
+    const isSectionExistsResultAction = await dispatch(
+      reduxServices.itDeclarationList.isSectionExist(sectionExist),
+    )
+    if (
+      reduxServices.itDeclarationList.isSectionExist.fulfilled.match(
+        isSectionExistsResultAction,
+      ) &&
+      isSectionExistsResultAction.payload === true
+    ) {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
+      setEditSectionCopy({
+        ...editSectionCopy,
+        sectionName: '',
+      })
+    } else {
+      if (
+        reduxServices.itDeclarationList.updateSection.fulfilled.match(
+          editResultAction,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      }
+      dispatch(reduxServices.investmentCheckList.getSections())
+      backButtonHandler()
+    }
   }
 
   return (

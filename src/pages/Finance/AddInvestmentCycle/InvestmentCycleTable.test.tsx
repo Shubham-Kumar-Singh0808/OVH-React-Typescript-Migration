@@ -5,13 +5,14 @@ import InvestmentCycleTable from './InvestmentCycleTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockInvestmentCycles } from '../../../test/data/itDeclarationListData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <InvestmentCycleTable />
+    <InvestmentCycleTable editCycleButtonHandler={jest.fn()} />
   </div>
 )
 describe('Investment Cycle Table Component Testing', () => {
@@ -21,6 +22,9 @@ describe('Investment Cycle Table Component Testing', () => {
         itDeclarationList: {
           isLoading: ApiLoadingState.succeeded,
           cycles: mockInvestmentCycles,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

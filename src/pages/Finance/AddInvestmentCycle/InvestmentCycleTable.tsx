@@ -13,8 +13,13 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { Cycle } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
-const InvestmentCycleTable = (): JSX.Element => {
+const InvestmentCycleTable = ({
+  editCycleButtonHandler,
+}: {
+  editCycleButtonHandler: (editCycleData: Cycle) => void
+}): JSX.Element => {
   const [isDeleteCycleModalVisible, setIsDeleteCycleModalVisible] =
     useState(false)
   const [toDeleteInvestmentCycleName, setToDeleteInvestmentCycleName] =
@@ -23,6 +28,12 @@ const InvestmentCycleTable = (): JSX.Element => {
 
   const investmentCycles = useTypedSelector(
     reduxServices.itDeclarationList.selectors.cycles,
+  )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToCyleActions = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Section and Investment',
   )
   const dispatch = useAppDispatch()
   const handleShowCycleDeleteModal = (id: number, cycleName: string) => {
@@ -76,32 +87,45 @@ const InvestmentCycleTable = (): JSX.Element => {
                   {cycle.active === true ? 'Active' : 'Inactive'}
                 </CTableDataCell>
                 <CTableDataCell>
-                  <CTooltip content="Edit">
-                    <CButton
-                      size="sm"
-                      className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                      color="info btn-ovh me-1"
-                      data-testid={`cycle-btn-edit${index}`}
-                    >
-                      <i className="fa fa-edit" aria-hidden="true"></i>
-                    </CButton>
-                  </CTooltip>
-                  <CTooltip content="Delete">
-                    <CButton
-                      data-testid={`cycle-btn-delete${index}`}
-                      size="sm"
-                      color="danger btn-ovh me-1"
-                      className="btn-ovh-employee-list"
-                      onClick={() =>
-                        handleShowCycleDeleteModal(
-                          cycle.cycleId,
-                          cycle.cycleName,
-                        )
-                      }
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
-                  </CTooltip>
+                  {userAccessToCyleActions?.updateaccess && (
+                    <CTooltip content="Edit">
+                      <CButton
+                        size="sm"
+                        className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                        color="info btn-ovh me-1"
+                        data-testid={`cycle-btn-edit${index}`}
+                        onClick={() =>
+                          editCycleButtonHandler({
+                            active: cycle.active,
+                            cycleId: cycle.cycleId,
+                            cycleName: cycle.cycleName,
+                            endDate: cycle.endDate,
+                            startDate: cycle.startDate,
+                          })
+                        }
+                      >
+                        <i className="fa fa-edit" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  )}
+                  {userAccessToCyleActions?.deleteaccess && (
+                    <CTooltip content="Delete">
+                      <CButton
+                        data-testid={`cycle-btn-delete${index}`}
+                        size="sm"
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                        onClick={() =>
+                          handleShowCycleDeleteModal(
+                            cycle.cycleId,
+                            cycle.cycleName,
+                          )
+                        }
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  )}
                 </CTableDataCell>
               </CTableRow>
             )

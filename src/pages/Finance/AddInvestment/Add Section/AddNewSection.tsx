@@ -59,21 +59,39 @@ const AddNewSection = (): JSX.Element => {
   const successToastMessage = (
     <OToast toastMessage="Section added Successfully" toastColor="success" />
   )
-
+  const alreadyExistToastMessage = (
+    <OToast toastColor="danger" toastMessage="Section already exist" />
+  )
   const handleAddNewSection = async () => {
-    const addSectionResultAction = await dispatch(
-      reduxServices.itDeclarationList.addSection(addNewSection),
-    )
-
-    if (
-      reduxServices.itDeclarationList.addSection.fulfilled.match(
-        addSectionResultAction,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    const sectionExist = {
+      sectionId: -1,
+      sectionName: addNewSection.sectionName,
     }
-    dispatch(reduxServices.investmentCheckList.getSections())
-    handleClearInputs()
+    const isSectionExistsResultAction = await dispatch(
+      reduxServices.itDeclarationList.isSectionExist(sectionExist),
+    )
+    if (
+      reduxServices.itDeclarationList.isSectionExist.fulfilled.match(
+        isSectionExistsResultAction,
+      ) &&
+      isSectionExistsResultAction.payload === true
+    ) {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
+    } else {
+      const addSectionResultAction = await dispatch(
+        reduxServices.itDeclarationList.addSection(addNewSection),
+      )
+
+      if (
+        reduxServices.itDeclarationList.addSection.fulfilled.match(
+          addSectionResultAction,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      }
+      dispatch(reduxServices.investmentCheckList.getSections())
+      handleClearInputs()
+    }
   }
 
   return (

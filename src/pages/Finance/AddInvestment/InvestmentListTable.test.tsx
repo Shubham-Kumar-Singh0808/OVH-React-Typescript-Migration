@@ -15,10 +15,10 @@ const toRender = (
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <InvestmentListTable />
+    <InvestmentListTable editInvestmentButtonHandler={jest.fn()} />
   </div>
 )
-describe('Employee BirthdaysList Table Component Testing', () => {
+describe('InvestmentList Table Table Component Testing', () => {
   beforeEach(() => {
     render(toRender, {
       preloadedState: {

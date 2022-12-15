@@ -40,15 +40,10 @@ const AddNewInvestment = ({
     htmlFor: 'inputAddInvestment',
     className: 'col-form-label section-label',
   }
-  const dynamicFormLabelProps = (
-    rows: string,
-    className: string,
-    testid: string,
-  ) => {
+  const dynamicFormLabelProps = (rows: string, className: string) => {
     return {
       rows,
       className,
-      testid,
     }
   }
   const sections = useTypedSelector(
@@ -66,18 +61,24 @@ const AddNewInvestment = ({
   ) => {
     if (event.target.value === 'yes') {
       setIsDocumentsVisible(true)
+    } else if (event.target.value === 'no') {
+      setIsDocumentsVisible(false)
     } else {
       setIsDocumentsVisible(false)
     }
   }
+
   const successToastMessage = (
     <OToast toastMessage="Investment added Successfully" toastColor="success" />
   )
-  const WarningToastMessage = (
+  const warningToastMessage = (
     <OToast
       toastColor="danger"
       toastMessage="Total investment is exceeding section limit"
     />
+  )
+  const alreadyExistToastMessage = (
+    <OToast toastColor="danger" toastMessage="Investment already Exist" />
   )
   const handleDescription = (description: string) => {
     setAddNewInvestment((prevState) => {
@@ -91,6 +92,14 @@ const AddNewInvestment = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
+    if (name === 'investmentName') {
+      const investNameValue = value
+        .replace(/^\s*/, '')
+        .replace(/[^a-z\s]/gi, '')
+      setAddNewInvestment((prevState) => {
+        return { ...prevState, ...{ [name]: investNameValue } }
+      })
+    }
     setAddNewInvestment((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
@@ -127,27 +136,43 @@ const AddNewInvestment = ({
       maxLimit: investmentMaxLimit as string,
       requiredDocs: requireDocuments,
     }
-    const addNewInvestmentResultAction = await dispatch(
-      reduxServices.itDeclarationList.addInvestment(prepareObject),
+    const investmentExist = {
+      investmentId: -1,
+      investmentName: addNewInvestment.investmentName,
+      sectionId: Number(selectedSectionId),
+    }
+    const isInvestmentExistsResultAction = await dispatch(
+      reduxServices.itDeclarationList.isInvestmentExist(investmentExist),
     )
-
     if (
-      reduxServices.itDeclarationList.addInvestment.fulfilled.match(
-        addNewInvestmentResultAction,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
-      handleClear()
-      dispatch(reduxServices.itDeclarationList.getSections())
-      dispatch(reduxServices.itDeclarationList.getInvestments())
-    } else if (
-      reduxServices.itDeclarationList.addInvestment.rejected.match(
-        addNewInvestmentResultAction,
+      reduxServices.itDeclarationList.isInvestmentExist.fulfilled.match(
+        isInvestmentExistsResultAction,
       ) &&
-      addNewInvestmentResultAction.payload === 406
+      isInvestmentExistsResultAction.payload === true
     ) {
-      dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
-      setInvestmentMaxLimit('')
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
+    } else {
+      const addNewInvestmentResultAction = await dispatch(
+        reduxServices.itDeclarationList.addInvestment(prepareObject),
+      )
+      if (
+        reduxServices.itDeclarationList.addInvestment.fulfilled.match(
+          addNewInvestmentResultAction,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(successToastMessage))
+        handleClear()
+        dispatch(reduxServices.itDeclarationList.getSections())
+        dispatch(reduxServices.itDeclarationList.getInvestments())
+      } else if (
+        reduxServices.itDeclarationList.addInvestment.rejected.match(
+          addNewInvestmentResultAction,
+        ) &&
+        addNewInvestmentResultAction.payload === 406
+      ) {
+        dispatch(reduxServices.app.actions.addToast(warningToastMessage))
+        setInvestmentMaxLimit('')
+      }
     }
   }
 
@@ -266,11 +291,12 @@ const AddNewInvestment = ({
           <CCol className="mt-1" sm={2} md={1} lg={1} data-testid="requiredDoc">
             <CFormCheck
               type="radio"
-              name="requireDocsYes"
+              name="requireDocs"
               id="requireDocsYes"
               data-testid="documentsReqYes"
               label="Yes"
               value="yes"
+              checked={isDocumentsVisible}
               onChange={handleSelectDocumentOption}
               inline
             />
@@ -284,11 +310,12 @@ const AddNewInvestment = ({
           >
             <CFormCheck
               type="radio"
-              name="requireDocsNo"
+              name="requireDocs"
               id="requireDocsNo"
               data-testid="documentsReqNo"
               label="No"
               value="no"
+              checked={!isDocumentsVisible}
               onChange={handleSelectDocumentOption}
               inline
             />
@@ -303,12 +330,11 @@ const AddNewInvestment = ({
               Documents:{' '}
               <span className={showIsRequired(requireDocuments)}>*</span>
             </CFormLabel>
-            <CCol sm={9}>
+            <CCol sm={9} data-testid="required-documents">
               <CFormTextarea
                 {...dynamicFormLabelProps(
                   '2',
                   'investment-text-area documentWidth',
-                  'required-documents',
                 )}
                 onChange={(e) => setRequiredDocuments(e.target.value)}
               ></CFormTextarea>
