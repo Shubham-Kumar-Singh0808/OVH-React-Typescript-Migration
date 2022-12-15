@@ -24,7 +24,7 @@ describe('Appraisal Configurations Table Component Testing', () => {
     render(toRender, {
       preloadedState: {
         appraisalConfigurations: {
-          appraisalCycle: mockAppraisalCycle,
+          appraisalCycle: mockAppraisalCycle.list,
           isLoading: ApiLoadingState.succeeded,
         },
         userAccessToFeatures: {
