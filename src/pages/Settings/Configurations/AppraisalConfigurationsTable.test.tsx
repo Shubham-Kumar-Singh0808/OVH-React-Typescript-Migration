@@ -26,6 +26,7 @@ describe('Appraisal Configurations Table Component Testing', () => {
         appraisalConfigurations: {
           appraisalCycle: mockAppraisalCycle.list,
           isLoading: ApiLoadingState.succeeded,
+          listSize: 40,
         },
         userAccessToFeatures: {
           userAccessToFeatures: mockUserAccessToFeaturesData,
