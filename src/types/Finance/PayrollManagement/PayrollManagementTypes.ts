@@ -5,6 +5,7 @@ export type CurrentPayslip = {
   paySlipId: number
   employeeId: number
   designation: string
+  joiningDate: string
   name: string
   accountNo: string
   grossSalary: string
@@ -42,7 +43,7 @@ export type CurrentPayslip = {
   status: boolean
   pfAccountNumber: string
   panNumber: string
-  bankName: string
+  bankName: string | null
   dateOfBirth: string
   uaNumber: string
   mealsCard: string

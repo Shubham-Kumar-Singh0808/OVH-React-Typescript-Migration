@@ -26,6 +26,7 @@ const PayrollManagement = (): JSX.Element => {
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
+  const [isDeleteBtnEnabled, setIsDeleteBtnEnabled] = useState(false)
 
   const currentYear = new Date().getFullYear()
   const previousYears = currentYear - 4
@@ -227,6 +228,9 @@ const PayrollManagement = (): JSX.Element => {
                   onClick={multiSearchBtnHandler}
                 >
                   Search
+                </CButton>
+                <CButton color="danger btn-ovh" disabled={!isDeleteBtnEnabled}>
+                  <i className="fa fa-trash-o me-1"></i>Delete
                 </CButton>
               </CInputGroup>
             </CCol>

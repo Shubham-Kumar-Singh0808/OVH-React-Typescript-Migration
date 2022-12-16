@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCol,
+  CFormCheck,
   CRow,
   CTable,
   CTableBody,
@@ -32,6 +33,7 @@ const PayrollManagementTable = (props: {
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
+  const [isChecked, setIsChecked] = useState(false)
 
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipInfo,
@@ -104,6 +106,16 @@ const PayrollManagementTable = (props: {
         >
           <CTableHead>
             <CTableRow>
+              <CTableHeaderCell scope="col">
+                All
+                <CFormCheck
+                  className="form-check-input form-select-not-allowed"
+                  name="deleteCheckbox"
+                  checked={isChecked}
+                  onChange={(e) => setIsChecked(e.target.checked)}
+                  data-testid="ch-All"
+                />
+              </CTableHeaderCell>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">ID</CTableHeaderCell>
               <CTableHeaderCell scope="col">Name</CTableHeaderCell>
@@ -155,6 +167,14 @@ const PayrollManagementTable = (props: {
               renderingPayslipData?.map((payslipItem, index) => {
                 return (
                   <CTableRow key={index}>
+                    <CTableDataCell className="text-middle ms-2">
+                      <CFormCheck
+                        className="form-check-input form-select-not-allowed"
+                        name="deleteCheckbox"
+                        checked={isChecked}
+                        onChange={(e) => setIsChecked(e.target.checked)}
+                      />
+                    </CTableDataCell>
                     <CTableDataCell>{index + 1}</CTableDataCell>
                     <CTableDataCell>{payslipItem.employeeId}</CTableDataCell>
                     <CTableDataCell>{payslipItem.name}</CTableDataCell>
