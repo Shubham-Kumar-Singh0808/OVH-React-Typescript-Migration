@@ -94,8 +94,10 @@ const AddAchiever = (): JSX.Element => {
               </CCol>
               <CCol md={3}>
                 <CButton
+                  color="info"
                   data-testid="add-ach-btn"
                   size="sm"
+                  className="btn-ovh me-1"
                   onClick={addAchievementTypeButtonHandler}
                 >
                   {' '}
