@@ -2,6 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import InvestmentListTable from './InvestmentListTable'
+import EditInvestment from './EditInvestment/EditInvestment'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
@@ -62,8 +63,18 @@ describe('InvestmentList Table Table Component Testing', () => {
     expect(editButtonEl).toBeInTheDocument()
   })
   test('should render correct number of page records', () => {
-    // 16 including the heading
-    expect(screen.queryAllByRole('row')).toHaveLength(11)
+    // 21 including the heading
+    expect(screen.queryAllByRole('row')).toHaveLength(21)
+  })
+  test('should render correct number of 40 page records', () => {
+    userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+    const pageSizeSelect = screen.getByRole('option', {
+      name: '40',
+    }) as HTMLOptionElement
+    expect(pageSizeSelect.selected).toBe(true)
+
+    // 41 including the heading
+    expect(screen.getAllByRole('row')).toHaveLength(40)
   })
   it('should render Delete modal popup upon clicking delete button from Actions', async () => {
     const deleteButtonEl = screen.getByTestId('investment-delete-btn1')
@@ -97,5 +108,24 @@ describe('InvestmentList Table Table Component Testing', () => {
     await waitFor(() => {
       expect(requiredDocsDetails[0]).toBeInTheDocument()
     })
+  })
+  test('should render Edit Investment Page upon clicking Edit Action Button', () => {
+    const editButtonEle = screen.getByTestId('investment-edit-btn1')
+    userEvent.click(editButtonEle)
+    expect(
+      render(
+        <EditInvestment
+          editInvestment={{
+            investmentId: 1,
+            investmentName: 'LIC',
+            maxLimit: '0',
+            description: 'testA',
+            requiredDocs: 'Document of Payment of LIC Premium',
+            sectionId: 1,
+            sectionName: '80 C',
+          }}
+        />,
+      ),
+    )
   })
 })

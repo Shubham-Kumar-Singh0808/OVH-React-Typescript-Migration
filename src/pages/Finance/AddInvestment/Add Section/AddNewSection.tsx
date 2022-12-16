@@ -43,6 +43,11 @@ const AddNewSection = (): JSX.Element => {
       setAddNewSection((prevState) => {
         return { ...prevState, ...{ [name]: limit } }
       })
+    } else if (name === 'sectionName') {
+      const sectionNameValue = value.replace(/^\s*/, '')
+      setAddNewSection((prevState) => {
+        return { ...prevState, ...{ [name]: sectionNameValue } }
+      })
     } else {
       setAddNewSection((prevState) => {
         return { ...prevState, ...{ [name]: value } }
@@ -100,7 +105,7 @@ const AddNewSection = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Section :
             <span className={showIsRequired(addNewSection?.sectionName)}>
@@ -124,7 +129,7 @@ const AddNewSection = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Limit :
             <span className={showIsRequired(addNewSection?.sectionLimit)}>
@@ -146,7 +151,7 @@ const AddNewSection = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CCol md={{ span: 6, offset: 3 }}>
+          <CCol md={{ span: 4, offset: 2 }}>
             {userAccessToAddSection?.createaccess && (
               <>
                 <CButton

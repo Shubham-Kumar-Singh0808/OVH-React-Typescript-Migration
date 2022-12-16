@@ -46,6 +46,11 @@ const EditSection = ({
       setEditSectionCopy((prevState) => {
         return { ...prevState, ...{ [name]: secLimit } }
       })
+    } else if (name === 'sectionName') {
+      const sectionNameValue = value.replace(/^\s*/, '')
+      setEditSectionCopy((prevState) => {
+        return { ...prevState, ...{ [name]: sectionNameValue } }
+      })
     } else {
       setEditSectionCopy((prevState) => {
         return { ...prevState, ...{ [name]: value } }
@@ -132,7 +137,7 @@ const EditSection = ({
               className="col-sm-3 col-form-label text-end"
             >
               Section :
-              <span className={showIsRequired(editSection?.sectionName)}>
+              <span className={showIsRequired(editSectionCopy?.sectionName)}>
                 *
               </span>
             </CFormLabel>
