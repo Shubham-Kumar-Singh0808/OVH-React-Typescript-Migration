@@ -26,7 +26,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
   GetAllEmployeesNames,
-  GetAllProjectNames,
+  GetAllProjects,
 } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
@@ -48,7 +48,7 @@ const AllocateEmployee = (): JSX.Element => {
 
   const formLabel = 'col-sm-3 col-form-label text-end'
   const commonFormatDate = 'L'
-  const initialGetAllProjectNames = {} as GetAllProjectNames
+  const initialGetAllProjectNames = {} as GetAllProjects
 
   const [isBilLable, setIsBilLable] = useState('')
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
@@ -58,7 +58,7 @@ const AllocateEmployee = (): JSX.Element => {
   const [addComment, setAddComment] = useState<string>('')
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
-  const [selectProject, setSelectProject] = useState<GetAllProjectNames>()
+  const [selectProject, setSelectProject] = useState<GetAllProjects>()
   const [allocationValue, setAllocationValue] = useState<number | string>()
   const [allocationDate, setAllocationDate] = useState<string>()
   const [allocationEndDate, setAllocationEndDate] = useState<string>()
@@ -71,7 +71,7 @@ const AllocateEmployee = (): JSX.Element => {
   )
 
   const allProjectNames = useTypedSelector(
-    reduxServices.allocateEmployee.selectors.projectNames,
+    reduxServices.allocateEmployee.selectors.allProjects,
   )
 
   useEffect(() => {

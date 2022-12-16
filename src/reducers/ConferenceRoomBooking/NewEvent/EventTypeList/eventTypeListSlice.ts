@@ -4,6 +4,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import eventTypeListApi from '../../../../middleware/api/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListApi'
 import { RootState } from '../../../../stateStore'
 import { ValidationError } from '../../../../types/commonTypes'
+import { EventTypeList } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const getEventTypes = createAsyncThunk(
   'eventTypeList/getEventTypes',
@@ -60,10 +61,7 @@ const updateEventType = createAsyncThunk(
 )
 
 type initialEventTypeSliceState = {
-  eventTypes: {
-    id: number
-    name: string
-  }[]
+  eventTypes: EventTypeList[]
   isLoading: ApiLoadingState
 }
 

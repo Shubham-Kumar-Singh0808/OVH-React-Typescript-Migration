@@ -23,3 +23,8 @@ export const hRAssociatePlaceHolder = 'Type name here for auto fill'
 
 // Project Manager component
 export const selectedProjectManager = 'Omer Mohsin'
+
+export const selectedTrainerManager = 'Vinesh'
+export const selectedAttendees = 'Pramodh'
+
+export const selectedReservedBy = 'Admin'

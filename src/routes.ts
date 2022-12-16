@@ -233,6 +233,9 @@ const EditConfiguration = React.lazy(
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
+const NewEvent = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewEvent/NewEvent'),
+)
 
 const SubmitResignation = React.lazy(
   () => import('./pages/Separation/SubmitViewResignation/SubmitResignation'),
@@ -335,6 +338,10 @@ const ProjectCreationRequest = React.lazy(
     import(
       './pages/ProjectManagement/ProjectCreationRequest/ProjectCreationRequest'
     ),
+)
+
+const AchieverList = React.lazy(
+  () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
 
 /**
@@ -573,6 +580,11 @@ const routes = [
   },
   {
     path: '/newEvent',
+    name: 'New Event',
+    component: NewEvent,
+  },
+  {
+    path: '/addEventType',
     name: 'Event Type List',
     component: EventTypeList,
   },
@@ -702,6 +714,11 @@ const routes = [
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
+  },
+  {
+    path: '/achievementList',
+    name: 'Achievements List',
+    component: AchieverList,
   },
   {
     path: '/separationChart',

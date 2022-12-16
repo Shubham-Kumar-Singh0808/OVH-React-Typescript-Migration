@@ -1,15 +1,11 @@
+import { EventTypeList } from '../../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
 } from '../../../../../utils/apiUtils'
 import { AllowedHttpMethods, eventTypeListApiConfig } from '../../../apiList'
 
-const getAllEventTypes = async (): Promise<
-  {
-    id: number
-    name: string
-  }[]
-> => {
+const getAllEventTypes = async (): Promise<EventTypeList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: eventTypeListApiConfig.getAllEventTypes,
     method: AllowedHttpMethods.get,

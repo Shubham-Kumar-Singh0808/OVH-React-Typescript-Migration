@@ -93,7 +93,10 @@ const EditPanDetails = ({
       },
     )
 
-    downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
+    downloadFile(
+      employeeBankDetailsDownload,
+      `${bankDetail.finance?.financeFilePath}`,
+    )
   }
 
   return (

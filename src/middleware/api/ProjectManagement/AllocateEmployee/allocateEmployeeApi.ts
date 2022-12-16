@@ -6,7 +6,7 @@ import { allocateEmployeeApiConfig, AllowedHttpMethods } from '../../apiList'
 import {
   AllocateEmployeeToProject,
   GetAllEmployeesNames,
-  GetAllProjectNames,
+  GetAllProjects,
 } from '../../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 
 const getAllEmployeesProfileData = async (): Promise<
@@ -22,7 +22,7 @@ const getAllEmployeesProfileData = async (): Promise<
 }
 const getAllProjectSearchData = async (
   searchString: string,
-): Promise<GetAllProjectNames[]> => {
+): Promise<GetAllProjects[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: allocateEmployeeApiConfig.getAllProjectSearch,
     method: AllowedHttpMethods.get,

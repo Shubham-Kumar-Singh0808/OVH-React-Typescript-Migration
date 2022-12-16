@@ -9,7 +9,7 @@ import {
   CLink,
   CTableDataCell,
 } from '@coreui/react-pro'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import EmployeeAccountsExpandTable from './EmployeeAccountsExpandTable'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -47,6 +47,14 @@ const EmployeeAccountsTable = (
     return []
   }, [financeData])
 
+  const CurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+  useEffect(() => {
+    if (CurrentPage) {
+      setCurrentPage(CurrentPage)
+    }
+  }, [CurrentPage])
   const {
     paginationRange,
     pageSize,
@@ -58,6 +66,7 @@ const EmployeeAccountsTable = (
   const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const handleExpandRow = (id: number) => {
@@ -72,7 +81,7 @@ const EmployeeAccountsTable = (
       },
     )
 
-    downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
+    downloadFile(employeeBankDetailsDownload, `${financeFilePath}`)
   }
 
   const totalNoOfRecords = financeData?.length

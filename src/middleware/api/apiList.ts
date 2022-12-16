@@ -64,6 +64,7 @@ import {
   RoomListApi,
   AddConfigurationsApi,
   TicketConfigurationApi,
+  NewEventApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
   PaySlipsApi,
@@ -73,6 +74,8 @@ import {
   EmployeeAccountsApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
+  AchieverListApi,
+  CommonAchievementsApi,
   ProjectCreationRequestApi,
 } from '../../types/apiTypes'
 
@@ -529,7 +532,19 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   addEventType: apiPrefix + '/meetingRequest/addEventType',
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+}
+
+export const newEventApiConfig: NewEventApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getRoomsOfLocation: apiPrefix + '/meetingRequest/getRoomsOfLocation',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllAttendees: apiPrefix + '/meetingRequest/getAllAttendies',
+  uniqueAttendee: apiPrefix + '/meetingRequest/uniqueAttendee',
+  timeChecking: apiPrefix + '/meetingRequest/timechecking',
+  getAllBookedDetailsForEvent:
+    apiPrefix + '/meetingRequest/getAllBookedDetailsForEvent',
+  addNewEvent: apiPrefix + '/meetingRequest/addNewEvent',
 }
 
 export const employeeAllocationApiConfig: EmployeeAllocationApi = {
@@ -555,7 +570,7 @@ export const addTrackerApiConfig: AddTrackerApi = {
 }
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
-  getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+  getAppraisalCycle: apiPrefix + '/appraisal/getAllAppraisalCycles',
   editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
   updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
   validateCycle: apiPrefix + '/appraisal/validateCycle',
@@ -650,17 +665,30 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getSections: apiPrefix + '/itDeclaration/getSection',
   getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
   exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
+  addCycle: apiPrefix + '/itDeclaration/addCycle',
   deleteSection: apiPrefix + '/itDeclaration/deleteSection',
   addSection: apiPrefix + '/itDeclaration/addSection',
   updateSection: apiPrefix + '/itDeclaration/editSection',
   getInvestments: apiPrefix + '/itDeclaration/getInvestments',
   addInvestment: apiPrefix + '/itDeclaration/addInvestment',
   deleteInvestment: apiPrefix + '/itDeclaration/deleteInvestment',
+  deleteCycle: apiPrefix + '/itDeclaration/deleteCycle',
+  isCycleExist: apiPrefix + '/itDeclaration/isCycleExist',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
   getSections: apiPrefix + '/itDeclaration/getSection',
+}
+
+export const CommonAchievementsApiConfig: CommonAchievementsApi = {
+  getAllAchievementsType: apiPrefix + '/achievement/getAllAchievementType',
+}
+
+export const AchieverListApiConfig: AchieverListApi = {
+  getAchieverList: apiPrefix + '/achievement/getAllAchievement',
+  updateShowOnDashbord: apiPrefix + '/achievement/showOnDashBoard',
+  achievementHistoryTimeline: apiPrefix + '/achievement/getAchievementHistory',
 }
 
 export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {

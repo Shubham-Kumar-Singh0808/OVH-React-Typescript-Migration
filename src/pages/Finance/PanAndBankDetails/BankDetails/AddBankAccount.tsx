@@ -119,7 +119,11 @@ const AddBankAccount = ({
               data-testid="bankAccountNumber"
             >
               Bank Account Number:
-              <span className={accountNumber ? TextWhite : TextDanger}>*</span>
+              <span
+                className={accountNumber.length > 8 ? TextWhite : TextDanger}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -129,7 +133,7 @@ const AddBankAccount = ({
                 id="Number"
                 size="sm"
                 name="number"
-                maxLength={20}
+                maxLength={18}
                 value={accountNumber}
                 autoComplete="off"
                 placeholder="Bank Account Number"
