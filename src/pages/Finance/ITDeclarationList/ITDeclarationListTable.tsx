@@ -14,11 +14,18 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import { ITDeclarationListTableProps } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import {
+  ITDeclarationListTableProps,
+  ITForm,
+} from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
-const ITDeclarationListTable = (
-  props: ITDeclarationListTableProps,
-): JSX.Element => {
+const ITDeclarationListTable = ({
+  props,
+  viewDeclarationFormButtonHandler,
+}: {
+  viewDeclarationFormButtonHandler: (viewForm: ITForm[]) => void
+  props: ITDeclarationListTableProps
+}): JSX.Element => {
   const itDeclarationForms = useTypedSelector(
     reduxServices.itDeclarationList.selectors.itDeclarationForms,
   )

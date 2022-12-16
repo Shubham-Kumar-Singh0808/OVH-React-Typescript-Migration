@@ -9,6 +9,7 @@ import {
   AddInvestmentData,
   AddSection,
   Cycle,
+  EmployeeDetails,
   Investment,
   ITDeclarationListApiProps,
   ITDeclarationListSliceState,
@@ -28,7 +29,20 @@ const initialITDeclarationListState: ITDeclarationListSliceState = {
   toggle: '',
   investments: [],
   sections: [],
+  employeeDetails: {} as EmployeeDetails,
 }
+
+const getEmployeeDetails = createAsyncThunk(
+  'itDeclarationForm/getEmployeeDetails',
+  async (_, thunkApi) => {
+    try {
+      return await itDeclarationListApi.getEmployeeDetails()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 
 const getCycles = createAsyncThunk(
   'itDeclarationList/getCycles',
@@ -265,6 +279,10 @@ const itDeclarationListSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getEmployeeDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeeDetails = action.payload
+      })
       .addCase(getCycles.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.cycles = action.payload
@@ -305,6 +323,7 @@ const itDeclarationListSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
+          getEmployeeDetails.pending,
           getCycles.pending,
           getSections.pending,
           getITDeclarationForm.pending,
@@ -344,6 +363,7 @@ const itDeclarationListSlice = createSlice({
           isInvestmentExist.rejected,
           updateInvestment.rejected,
           isSectionExist.rejected,
+          getEmployeeDetails.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -355,6 +375,8 @@ const itDeclarationListSlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState =>
   state.itDeclarationList.isLoading
+const employeeInformation = (state: RootState): EmployeeDetails =>
+  state.itDeclarationList.employeeDetails
 const cycles = (state: RootState): Cycle[] => state.itDeclarationList.cycles
 const sections = (state: RootState): Section[] =>
   state.itDeclarationList.sections
@@ -388,6 +410,7 @@ const itDeclarationListThunk = {
   isInvestmentExist,
   updateInvestment,
   isSectionExist,
+  getEmployeeDetails,
 }
 
 const itDeclarationListSelectors = {
@@ -401,6 +424,7 @@ const itDeclarationListSelectors = {
   toggle,
   investments,
   sections,
+  employeeInformation,
 }
 
 export const itDeclarationListService = {

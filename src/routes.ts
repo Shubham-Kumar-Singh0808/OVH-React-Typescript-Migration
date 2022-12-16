@@ -340,6 +340,11 @@ const ProjectCreationRequest = React.lazy(
     ),
 )
 
+const ITDeclarationFormView = React.lazy(
+  () =>
+    import('./pages/Finance/ITDeclarationListFormView/ViewDeclarationListForm'),
+)
+
 const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
@@ -734,6 +739,11 @@ const routes = [
     path: '/projectRequestList',
     name: 'Project Creation Request',
     component: ProjectCreationRequest,
+  },
+  {
+    path: '/itDeclarationFormView',
+    name: 'IT Declaration Form View',
+    component: ITDeclarationFormView,
   },
 ]
 
