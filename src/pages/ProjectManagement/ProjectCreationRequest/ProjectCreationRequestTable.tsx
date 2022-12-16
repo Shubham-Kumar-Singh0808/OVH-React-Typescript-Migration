@@ -116,8 +116,14 @@ const ProjectCreationRequestTable = ({
                   <CTableDataCell className="project-width">
                     {projectRequest.projectName}
                   </CTableDataCell>
-                  <CTableDataCell>{projectRequest.type}</CTableDataCell>
-                  <CTableDataCell>{projectRequest.model}</CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.type.charAt(0).toUpperCase() +
+                      projectRequest.type.slice(1).toLowerCase()}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.model.charAt(0).toUpperCase() +
+                      projectRequest.model.slice(1).toLowerCase()}
+                  </CTableDataCell>
                   <CTableDataCell>{projectRequest.client}</CTableDataCell>
                   <CTableDataCell>{projectRequest.managerName}</CTableDataCell>
                   <CTableDataCell>{projectRequest.startdate}</CTableDataCell>

@@ -233,6 +233,9 @@ const EditConfiguration = React.lazy(
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
+const NewEvent = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewEvent/NewEvent'),
+)
 
 const SubmitResignation = React.lazy(
   () => import('./pages/Separation/SubmitViewResignation/SubmitResignation'),
@@ -581,6 +584,11 @@ const routes = [
   },
   {
     path: '/newEvent',
+    name: 'New Event',
+    component: NewEvent,
+  },
+  {
+    path: '/addEventType',
     name: 'Event Type List',
     component: EventTypeList,
   },

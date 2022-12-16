@@ -9,7 +9,7 @@ export type GetAllEmployeesNames = {
   designation: string
   fullName: string
 }
-export type GetAllProjectNames = {
+export type GetAllProjects = {
   id: number
   projectName: string
   managerId: number
@@ -72,7 +72,7 @@ export type AllocateEmployeeToProject = {
 
 export type EmployeeAllocateSliceState = {
   getAllEmployees: GetAllEmployeesNames[]
-  getAllProjects: GetAllProjectNames[]
+  getAllProjects: GetAllProjects[]
   allocateEmployee: AllocateEmployeeToProject
   isLoading: LoadingState
   error: ValidationError

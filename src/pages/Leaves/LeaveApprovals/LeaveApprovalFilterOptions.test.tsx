@@ -49,7 +49,7 @@ describe('Leave Approval Filter Options Component Testing', () => {
     expect(fromDatePicker).toBeTruthy()
   })
   test('should render to date picker', () => {
-    const toDatePicker = screen.findByTestId('leaveApprovalToDate')
+    const toDatePicker = screen.findByTestId('')
     expect(toDatePicker).toBeTruthy()
   })
 

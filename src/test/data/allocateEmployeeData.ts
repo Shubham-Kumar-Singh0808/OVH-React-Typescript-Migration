@@ -1,7 +1,7 @@
 import {
   AllocateEmployeeToProject,
   GetAllEmployeesNames,
-  GetAllProjectNames,
+  GetAllProjects,
 } from '../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 
 export const mockEmployeeNames: GetAllEmployeesNames[] = [
@@ -61,7 +61,7 @@ export const mockEmployeeNames: GetAllEmployeesNames[] = [
     fullName: 'Gaurav Yadav',
   },
 ]
-export const mockProjectNames: GetAllProjectNames[] = [
+export const mockProjectNames: GetAllProjects[] = [
   {
     id: 361,
     projectName: 'ovh',
