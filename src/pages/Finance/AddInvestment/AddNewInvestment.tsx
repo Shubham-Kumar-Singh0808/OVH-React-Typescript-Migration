@@ -93,9 +93,7 @@ const AddNewInvestment = ({
   ) => {
     const { name, value } = e.target
     if (name === 'investmentName') {
-      const investNameValue = value
-        .replace(/^\s*/, '')
-        .replace(/[^a-z\s]/gi, '')
+      const investNameValue = value.replace(/^\s*/, '')
       setAddNewInvestment((prevState) => {
         return { ...prevState, ...{ [name]: investNameValue } }
       })

@@ -71,14 +71,8 @@ const EditSection = ({
     const filteredInvest = sections.filter(
       (currSection) => currSection.sectionId === editSection.sectionId,
     )
+    console.log(filteredInvest)
 
-    const prepareObject = {
-      ...editSectionCopy,
-      invests: filteredInvest[0].invests,
-    }
-    const editResultAction = await dispatch(
-      reduxServices.itDeclarationList.updateSection(prepareObject),
-    )
     const sectionExist = {
       sectionId: editSectionCopy.sectionId,
       sectionName: editSectionCopy.sectionName,
@@ -98,15 +92,22 @@ const EditSection = ({
         sectionName: '',
       })
     } else {
+      const prepareObject = {
+        ...editSectionCopy,
+        invests: filteredInvest[0].invests,
+      }
+      const editResultAction = await dispatch(
+        reduxServices.itDeclarationList.updateSection(prepareObject),
+      )
       if (
         reduxServices.itDeclarationList.updateSection.fulfilled.match(
           editResultAction,
         )
       ) {
         dispatch(reduxServices.app.actions.addToast(successToastMessage))
+        dispatch(reduxServices.investmentCheckList.getSections())
+        backButtonHandler()
       }
-      dispatch(reduxServices.investmentCheckList.getSections())
-      backButtonHandler()
     }
   }
 
