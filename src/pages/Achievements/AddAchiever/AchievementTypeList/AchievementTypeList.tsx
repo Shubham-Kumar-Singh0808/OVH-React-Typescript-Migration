@@ -33,6 +33,7 @@ const AchievementTypeList = ({
     (state) => state.commonAchievements.dateSortedList.size,
   )
   const addAchieverState = useTypedSelector((state) => state.addAchiever)
+  const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
   const [userNewSelectedAchievementType, setNewSelectedAchievementType] =
     useState<string>(emptyString)
 
@@ -88,10 +89,7 @@ const AchievementTypeList = ({
     setNewUserSelectedDateReq(false)
   }
 
-  const addAchievementButtonHandler = async (
-    e: React.FormEvent<HTMLFormElement>,
-  ) => {
-    e.preventDefault()
+  const addAchievementButtonHandler = async () => {
     if (newUserSelectedOrder === null || !newUserSelectedOrder) {
       return
     }
@@ -120,7 +118,7 @@ const AchievementTypeList = ({
     ) {
       dispatch(reduxServices.commonAchievements.getAllAchievementsType())
       dispatch(reduxServices.app.actions.addToast(successToast))
-      addAchievementClearButtonHandler()
+      // addAchievementClearButtonHandler()
     } else {
       dispatch(reduxServices.app.actions.addToast(errorToast))
     }
@@ -162,11 +160,15 @@ const AchievementTypeList = ({
     }
   }
 
-  const tableScrollClassName = achievementTypesLength > 15
+  const scrollTernary = achievementTypesLength > 15 ? 'custom-scroll' : ''
+  const recordStringTernary =
+    achievementTypesLength > 0
+      ? `Total Records: ${achievementTypesLength}`
+      : 'No Records Found...'
 
   return (
     <CContainer>
-      <CRow className="mt-2 justify-content-end">
+      <CRow className="mt-2 justify-content-end text-end">
         <CCol xs={2} className="px-0">
           <CButton
             color="info"
@@ -181,6 +183,8 @@ const AchievementTypeList = ({
       {addAchieverState.isLoading !== ApiLoadingState.loading ? (
         <>
           <AchievementTypeListEntries
+            isAddButtonEnabled={isAddButtonEnabled}
+            setAddButtonEnabled={setAddButtonEnabled}
             userNewSelectedAchievementType={userNewSelectedAchievementType}
             newAchievementTypeNameHandler={newAchievementTypeNameHandler}
             newUserSelectedStatus={newUserSelectedStatus}
@@ -194,17 +198,13 @@ const AchievementTypeList = ({
             addButtonHandler={addAchievementButtonHandler}
             achievementClearButtonHandler={addAchievementClearButtonHandler}
           />
-          <CCol className={tableScrollClassName ? 'custom-scroll' : ''}>
+          <CCol className={scrollTernary}>
             <AchievementTypeTable
               executeSaveButtonHandler={editSaveButtonHandler}
             />
           </CCol>
           <CRow className="mt-3">
-            <strong data-testid="tot-rec-num">
-              {achievementTypesLength > 0
-                ? `Total Records: ${achievementTypesLength}`
-                : 'No Records Found...'}
-            </strong>
+            <strong data-testid="tot-rec-num">{recordStringTernary}</strong>
           </CRow>
         </>
       ) : (

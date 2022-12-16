@@ -173,6 +173,10 @@ const AchievementTypeTable = (
     setEditAchievementEnabled(false)
   }
 
+  const renderCurrentStatus = (value: boolean) => {
+    return value ? NewAchievementStatus.Active : NewAchievementStatus.Inactive
+  }
+
   const uniqueOrderTernary = errors.achievementError2 ? (
     <p data-testid="unique-order-err" className={TextDanger}>
       {errorOrderMessage}
@@ -220,11 +224,7 @@ const AchievementTypeTable = (
                     </option>
                   </CFormSelect>
                 ) : (
-                  <div>
-                    {item.status
-                      ? NewAchievementStatus.Active
-                      : NewAchievementStatus.Inactive}
-                  </div>
+                  <div>{renderCurrentStatus(item.status)}</div>
                 )}
               </CTableDataCell>
               <CTableDataCell>

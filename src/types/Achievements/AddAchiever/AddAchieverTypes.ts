@@ -25,6 +25,8 @@ export interface OutgoingUpdateAchievementType
 }
 
 export interface AddAchieverTypeEntriesProps {
+  isAddButtonEnabled: boolean
+  setAddButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>
   userNewSelectedAchievementType: string
   newAchievementTypeNameHandler: (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -37,7 +39,7 @@ export interface AddAchieverTypeEntriesProps {
   newSelectedTimeReqHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
   newUserSelectedDateReq: boolean
   newSelectedDateReqHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
-  addButtonHandler: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
+  addButtonHandler: () => Promise<void>
   achievementClearButtonHandler: () => void
 }
 

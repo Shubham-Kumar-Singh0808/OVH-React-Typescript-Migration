@@ -28,6 +28,8 @@ const AchievementTypeListEntries = (
   props: AddAchieverTypeEntriesProps,
 ): JSX.Element => {
   const {
+    isAddButtonEnabled,
+    setAddButtonEnabled,
     userNewSelectedAchievementType,
     newAchievementTypeNameHandler,
     newAchievementStatusHandler,
@@ -42,7 +44,6 @@ const AchievementTypeListEntries = (
     achievementClearButtonHandler,
   } = props
 
-  const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
   const [errors, setErrors] = useState<ErrorBooleans>({
     achievementError1: false,
     achievementError2: false,
@@ -100,6 +101,12 @@ const AchievementTypeListEntries = (
     achievementClearButtonHandler()
   }
 
+  const enabledAddButtonHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    addButtonHandler()
+    achievementClearButtonHandler()
+  }
+
   const errorMessageOrderTernary = errors.achievementError2 ? (
     <p data-testid="uni-order-error" className={TextDanger}>
       {errorOrderMessage}
@@ -113,7 +120,7 @@ const AchievementTypeListEntries = (
   ) : undefined
 
   return (
-    <CForm onSubmit={addButtonHandler}>
+    <CForm onSubmit={enabledAddButtonHandler}>
       <CContainer className="mt-4 ms-2">
         <AchievementEntryContainer>
           <CFormLabel

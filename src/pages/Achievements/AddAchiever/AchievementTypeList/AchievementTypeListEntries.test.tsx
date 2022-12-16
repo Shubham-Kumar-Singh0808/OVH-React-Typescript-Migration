@@ -23,11 +23,37 @@ const toRender = (
     <div id="overlay-root"></div>
     <div id="root"></div>
     <AchievementTypeListEntries
+      isAddButtonEnabled={false}
+      setAddButtonEnabled={jest.fn()}
       userNewSelectedAchievementType={emptyString}
       newAchievementTypeNameHandler={mockNewAchievementTypeNameHandler}
       newUserSelectedStatus={NewAchievementStatus.Active}
       newAchievementStatusHandler={mockNewAchievementStatusHandler}
       newUserSelectedOrder={emptyString}
+      newSelectedOrderHandler={mockNewSelectedOrderHandler}
+      newUserSelectedTimeReq={false}
+      newSelectedTimeReqHandler={mockNewSelectedTimeReqHandler}
+      newUserSelectedDateReq={false}
+      newSelectedDateReqHandler={mockNewSelectedDateReqHandler}
+      addButtonHandler={mockAddButtonHandler}
+      achievementClearButtonHandler={mockAchievementClearButtonHandler}
+    />
+  </div>
+)
+
+const confirmToRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <AchievementTypeListEntries
+      isAddButtonEnabled={true}
+      setAddButtonEnabled={jest.fn()}
+      userNewSelectedAchievementType={'achieve2'}
+      newAchievementTypeNameHandler={mockNewAchievementTypeNameHandler}
+      newUserSelectedStatus={NewAchievementStatus.Active}
+      newAchievementStatusHandler={mockNewAchievementStatusHandler}
+      newUserSelectedOrder={'44'}
       newSelectedOrderHandler={mockNewSelectedOrderHandler}
       newUserSelectedTimeReq={false}
       newSelectedTimeReqHandler={mockNewSelectedTimeReqHandler}
@@ -137,6 +163,26 @@ describe('Achievement Type List Entries', () => {
     test('"unique achievement" error', () => {
       const achievementName = screen.getByTestId(achievementNameInputId)
       userEvent.type(achievementName, 'achievement')
+    })
+  })
+
+  describe('add button', () => {
+    beforeEach(() => {
+      render(confirmToRender, {
+        preloadedState: {
+          commonAchievements: {
+            dateSortedList: mockAchievementTypeList,
+            isLoading: ApiLoadingState.succeeded,
+          },
+        },
+      })
+    })
+    afterEach(cleanup)
+    test('add button functionality working', () => {
+      expect(screen.getByTestId(addButtonId)).toBeEnabled()
+      userEvent.click(screen.getByTestId(addButtonId))
+      expect(mockAddButtonHandler).toHaveBeenCalledTimes(1)
+      expect(mockAchievementClearButtonHandler).toHaveBeenCalledTimes(1)
     })
   })
 })
