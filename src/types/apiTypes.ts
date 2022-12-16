@@ -568,6 +568,7 @@ export interface ProjectCreationRequestApi extends ApiBase {
 export interface AddAchieverApi extends ApiBase {
   addAchievementType: string
   getAchievementTypeDetails: string
+  updateAchievementTypeDetails: string
   deleteAchievementType: string
 }
 

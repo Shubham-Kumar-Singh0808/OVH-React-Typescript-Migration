@@ -6,8 +6,10 @@ import {
   AchievementTypeIdQueryParameter,
   AddAchieverInitialState,
   OutgoingNewAchievementType,
+  OutgoingUpdateAchievementType,
 } from '../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { AchievementType } from '../../../types/Achievements/commonAchievementTypes'
+import { ValidationError } from '../../../types/commonTypes'
 
 const initialState = {
   isLoading: ApiLoadingState.idle,
@@ -22,7 +24,7 @@ const addAchievementTypeThunk = createAsyncThunk(
       return thunkApi.fulfillWithValue(data)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status)
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -35,7 +37,19 @@ const getAchievementTypeDetailsThunk = createAsyncThunk(
       return thunkApi.fulfillWithValue(data)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status)
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateAchievementTypeDetailsThunk = createAsyncThunk(
+  'addAchiever/updateAchievementTypeDetailsThunk',
+  async (body: OutgoingUpdateAchievementType, thunkApi) => {
+    try {
+      return await AddAchieverApi.updateAchievementTypeDetails(body)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -47,7 +61,7 @@ const deleteAchievementTypeThunk = createAsyncThunk(
       return await AddAchieverApi.deleteAchievementType(query)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status)
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
@@ -57,10 +71,18 @@ const addAchieverSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(
+      getAchievementTypeDetailsThunk.fulfilled,
+      (state, action) => {
+        const data = JSON.parse(JSON.stringify(action.payload))
+        state.achievementTypeDetails = data as AchievementType
+      },
+    )
     builder.addMatcher(
       isAnyOf(
         addAchievementTypeThunk.pending,
         deleteAchievementTypeThunk.pending,
+        updateAchievementTypeDetailsThunk.pending,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -70,23 +92,19 @@ const addAchieverSlice = createSlice({
       isAnyOf(
         addAchievementTypeThunk.fulfilled,
         deleteAchievementTypeThunk.fulfilled,
+        updateAchievementTypeDetailsThunk.fulfilled,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.succeeded
       },
     )
-    // builder.addCase(
-    //   getAchievementTypeDetailsThunk.fulfilled,
-    //   (state, action) => {
-    //     state.achievementTypeDetails = action.payload.payload
-    //   },
-    // )
   },
 })
 
 const addAchieverThunks = {
   addAchievementTypeThunk,
   getAchievementTypeDetailsThunk,
+  updateAchievementTypeDetailsThunk,
   deleteAchievementTypeThunk,
 }
 

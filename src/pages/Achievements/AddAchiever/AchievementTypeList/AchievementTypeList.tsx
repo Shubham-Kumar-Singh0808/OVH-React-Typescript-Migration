@@ -5,10 +5,23 @@ import AchievementTypeTable from './AchievementTypeTable'
 import {
   NewAchievementStatus,
   OutgoingNewAchievementType,
+  OutgoingUpdateAchievementType,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
-import { useAppDispatch } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import {
+  EditedAchievementDetails,
+  emptyString,
+  orderRegexValue,
+} from '../../AchievementConstants'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
+
+const errorToast = (
+  <OToast toastColor="danger" toastMessage="Error! Please try again" />
+)
 
 const AchievementTypeList = ({
   backButtonHandler,
@@ -16,16 +29,19 @@ const AchievementTypeList = ({
   backButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
+  const achievementTypesLength = useTypedSelector(
+    (state) => state.commonAchievements.dateSortedList.size,
+  )
+  const addAchieverState = useTypedSelector((state) => state.addAchiever)
   const [userNewSelectedAchievementType, setNewSelectedAchievementType] =
-    useState<string>('')
+    useState<string>(emptyString)
 
   const [newUserSelectedStatus, setNewUserSelectedStatus] = useState<string>(
     NewAchievementStatus.Active,
   )
 
-  const [newUserSelectedOrder, setNewUserSelectedOrder] = useState<
-    number | undefined
-  >(undefined)
+  const [newUserSelectedOrder, setNewUserSelectedOrder] =
+    useState<string>(emptyString)
 
   const [newUserSelectedTimeReq, setNewUserSelectedTimeReq] =
     useState<boolean>(false)
@@ -46,13 +62,9 @@ const AchievementTypeList = ({
   }
 
   const newSelectedOrderHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const numberRegex = /^[0-9\b]+$/
-    if (numberRegex.test(e.target.value) && e.target.value.length <= 2) {
-      setNewUserSelectedOrder(+e.target.value)
-    }
+    const orderValue = e.target.value.replace(orderRegexValue, '')
+    setNewUserSelectedOrder(orderValue)
   }
-
-  console.log(newUserSelectedOrder)
 
   const newSelectedTimeReqHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -69,8 +81,8 @@ const AchievementTypeList = ({
   }
 
   const addAchievementClearButtonHandler = () => {
-    setNewSelectedAchievementType('')
-    setNewUserSelectedOrder(undefined)
+    setNewSelectedAchievementType(emptyString)
+    setNewUserSelectedOrder(emptyString)
     setNewUserSelectedStatus(NewAchievementStatus.Active)
     setNewUserSelectedTimeReq(false)
     setNewUserSelectedDateReq(false)
@@ -92,18 +104,11 @@ const AchievementTypeList = ({
       timeperiodrequired: newUserSelectedTimeReq,
       daterequired: newUserSelectedDateReq,
     }
-
-    console.log(newAchievementData)
-
     const successToast = (
       <OToast
         toastColor="success"
         toastMessage="Achievement Type Added Successfully"
       />
-    )
-
-    const errorToast = (
-      <OToast toastColor="danger" toastMessage="Error! Please try again" />
     )
 
     const result = await dispatch(
@@ -121,6 +126,44 @@ const AchievementTypeList = ({
     }
   }
 
+  const editSaveButtonHandler = async (
+    incomingData: EditedAchievementDetails,
+  ) => {
+    const existingData = addAchieverState.achievementTypeDetails
+    if (!existingData) {
+      return
+    }
+    const booleanStatus = incomingData.newStatus === NewAchievementStatus.Active
+    const newData: OutgoingUpdateAchievementType = {
+      ...existingData,
+      status: booleanStatus,
+      order: incomingData.newOrder,
+    }
+    const result = await dispatch(
+      reduxServices.addAchiever.updateAchievementTypeDetailsThunk(newData),
+    )
+
+    const successToast = (
+      <OToast
+        toastColor="success"
+        toastMessage="Achievement Type Updated Succesfully"
+      />
+    )
+
+    if (
+      reduxServices.addAchiever.updateAchievementTypeDetailsThunk.fulfilled.match(
+        result,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.commonAchievements.getAllAchievementsType())
+    } else {
+      dispatch(reduxServices.app.actions.addToast(errorToast))
+    }
+  }
+
+  const tableScrollClassName = achievementTypesLength > 15
+
   return (
     <CContainer>
       <CRow className="mt-2 justify-content-end">
@@ -135,21 +178,38 @@ const AchievementTypeList = ({
           </CButton>
         </CCol>
       </CRow>
-      <AchievementTypeListEntries
-        userNewSelectedAchievementType={userNewSelectedAchievementType}
-        newAchievementTypeNameHandler={newAchievementTypeNameHandler}
-        newUserSelectedStatus={newUserSelectedStatus}
-        newAchievementStatusHandler={newAchievementStatusHandler}
-        newUserSelectedOrder={newUserSelectedOrder}
-        newSelectedOrderHandler={newSelectedOrderHandler}
-        newUserSelectedTimeReq={newUserSelectedTimeReq}
-        newSelectedTimeReqHandler={newSelectedTimeReqHandler}
-        newUserSelectedDateReq={newUserSelectedDateReq}
-        newSelectedDateReqHandler={newSelectedDateReqHandler}
-        addButtonHandler={addAchievementButtonHandler}
-        achievementClearButtonHandler={addAchievementClearButtonHandler}
-      />
-      <AchievementTypeTable />
+      {addAchieverState.isLoading !== ApiLoadingState.loading ? (
+        <>
+          <AchievementTypeListEntries
+            userNewSelectedAchievementType={userNewSelectedAchievementType}
+            newAchievementTypeNameHandler={newAchievementTypeNameHandler}
+            newUserSelectedStatus={newUserSelectedStatus}
+            newAchievementStatusHandler={newAchievementStatusHandler}
+            newUserSelectedOrder={newUserSelectedOrder}
+            newSelectedOrderHandler={newSelectedOrderHandler}
+            newUserSelectedTimeReq={newUserSelectedTimeReq}
+            newSelectedTimeReqHandler={newSelectedTimeReqHandler}
+            newUserSelectedDateReq={newUserSelectedDateReq}
+            newSelectedDateReqHandler={newSelectedDateReqHandler}
+            addButtonHandler={addAchievementButtonHandler}
+            achievementClearButtonHandler={addAchievementClearButtonHandler}
+          />
+          <CCol className={tableScrollClassName ? 'custom-scroll' : ''}>
+            <AchievementTypeTable
+              executeSaveButtonHandler={editSaveButtonHandler}
+            />
+          </CCol>
+          <CRow className="mt-3">
+            <strong data-testid="tot-rec-num">
+              {achievementTypesLength > 0
+                ? `Total Records: ${achievementTypesLength}`
+                : 'No Records Found...'}
+            </strong>
+          </CRow>
+        </>
+      ) : (
+        <OLoadingSpinner type={LoadingType.PAGE} />
+      )}
     </CContainer>
   )
 }

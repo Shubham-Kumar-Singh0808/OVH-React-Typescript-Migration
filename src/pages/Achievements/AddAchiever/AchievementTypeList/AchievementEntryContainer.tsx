@@ -1,4 +1,4 @@
-import { CFormLabel, CRow } from '@coreui/react-pro'
+import { CRow } from '@coreui/react-pro'
 import React from 'react'
 
 const AchievementEntryContainer = ({

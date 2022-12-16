@@ -1,3 +1,4 @@
+import { EditedAchievementDetails } from '../../../pages/Achievements/AchievementConstants'
 import { LoadingState } from '../../commonTypes'
 import { AchievementType } from '../commonAchievementTypes'
 
@@ -18,6 +19,11 @@ export interface AchievementTypeIdQueryParameter {
   typeId: number
 }
 
+export interface OutgoingUpdateAchievementType
+  extends Omit<AchievementType, 'order'> {
+  order: string
+}
+
 export interface AddAchieverTypeEntriesProps {
   userNewSelectedAchievementType: string
   newAchievementTypeNameHandler: (
@@ -25,7 +31,7 @@ export interface AddAchieverTypeEntriesProps {
   ) => void
   newUserSelectedStatus: string
   newAchievementStatusHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
-  newUserSelectedOrder: number | undefined
+  newUserSelectedOrder: string
   newSelectedOrderHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
   newUserSelectedTimeReq: boolean
   newSelectedTimeReqHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -33,6 +39,12 @@ export interface AddAchieverTypeEntriesProps {
   newSelectedDateReqHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
   addButtonHandler: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
   achievementClearButtonHandler: () => void
+}
+
+export interface AddAchieverTypeTableProps {
+  executeSaveButtonHandler: (
+    incomingData: EditedAchievementDetails,
+  ) => Promise<void>
 }
 
 export interface AddAchieverInitialState {

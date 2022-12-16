@@ -1,6 +1,7 @@
 import {
   AchievementTypeIdQueryParameter,
   OutgoingNewAchievementType,
+  OutgoingUpdateAchievementType,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { AchievementType } from '../../../../types/Achievements/commonAchievementTypes'
 import {
@@ -37,6 +38,19 @@ const getAchievementTypeDetails = async (
   return response.data
 }
 
+const updateAchievementTypeDetails = async (
+  incomingBody: OutgoingUpdateAchievementType,
+): Promise<void> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: AddAchieverApiConfig.updateAchievementTypeDetails,
+    method: AllowedHttpMethods.put,
+    data: incomingBody,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const deleteAchievementType = async (
   query: AchievementTypeIdQueryParameter,
 ): Promise<void> => {
@@ -55,6 +69,7 @@ const deleteAchievementType = async (
 const AddAchieverApi = {
   addAchievementType,
   getAchievementTypeDetails,
+  updateAchievementTypeDetails,
   deleteAchievementType,
 }
 

@@ -15,7 +15,13 @@ import {
   AddAchieverTypeEntriesProps,
   NewAchievementStatus,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
-import { newAchievementLabelClass } from '../../AchievementConstants'
+import {
+  emptyString,
+  errorAchievementNameMessage,
+  ErrorBooleans,
+  errorOrderMessage,
+  newAchievementLabelClass,
+} from '../../AchievementConstants'
 import { useTypedSelector } from '../../../../stateStore'
 
 const AchievementTypeListEntries = (
@@ -37,14 +43,51 @@ const AchievementTypeListEntries = (
   } = props
 
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
+  const [errors, setErrors] = useState<ErrorBooleans>({
+    achievementError1: false,
+    achievementError2: false,
+  })
   const existingAchievementTypeList = useTypedSelector(
     (state) => state.commonAchievements.dateSortedList,
   )
 
+  const isAchievementNameExists = (enteredName: string) => {
+    const isPresent = existingAchievementTypeList.list.filter(
+      (item) => item.typeName.toLowerCase() === enteredName.toLowerCase(),
+    )
+    return isPresent.length > 0
+  }
+
+  const isAchievementOrderExists = (enteredOrder: string) => {
+    const isPresent = existingAchievementTypeList.list.filter(
+      (item) => item.order === +enteredOrder,
+    )
+    return isPresent.length > 0
+  }
+
+  useEffect(() => {
+    if (isAchievementOrderExists(newUserSelectedOrder)) {
+      setErrors({ ...errors, achievementError2: true })
+    } else {
+      setErrors({ ...errors, achievementError2: false })
+    }
+  }, [newUserSelectedOrder])
+
+  useEffect(() => {
+    if (isAchievementNameExists(userNewSelectedAchievementType)) {
+      setErrors({ ...errors, achievementError1: true })
+    } else {
+      setErrors({ ...errors, achievementError1: false })
+    }
+  }, [userNewSelectedAchievementType])
+
   useEffect(() => {
     if (
-      userNewSelectedAchievementType === '' ||
-      newUserSelectedOrder === undefined
+      userNewSelectedAchievementType === emptyString ||
+      isAchievementOrderExists(newUserSelectedOrder) ||
+      isAchievementNameExists(userNewSelectedAchievementType) ||
+      newUserSelectedOrder === emptyString ||
+      newUserSelectedOrder === '00'
     ) {
       setAddButtonEnabled(false)
     } else {
@@ -57,11 +100,26 @@ const AchievementTypeListEntries = (
     achievementClearButtonHandler()
   }
 
+  const errorMessageOrderTernary = errors.achievementError2 ? (
+    <p data-testid="uni-order-error" className={TextDanger}>
+      {errorOrderMessage}
+    </p>
+  ) : undefined
+
+  const errorMessageNameTernary = errors.achievementError1 ? (
+    <p data-testid="uni-name-error" className={TextDanger}>
+      {errorAchievementNameMessage}
+    </p>
+  ) : undefined
+
   return (
     <CForm onSubmit={addButtonHandler}>
       <CContainer className="mt-4 ms-2">
         <AchievementEntryContainer>
-          <CFormLabel className={newAchievementLabelClass}>
+          <CFormLabel
+            className={newAchievementLabelClass}
+            data-testid="ach-name"
+          >
             Achievement Type Name:{' '}
             {userNewSelectedAchievementType === '' ? (
               <span className={TextDanger}>*</span>
@@ -72,19 +130,28 @@ const AchievementTypeListEntries = (
           <CCol sm={3}>
             <CFormInput
               type="text"
+              data-testid="ach-name-input"
               placeholder="Achievement Type Name"
+              value={userNewSelectedAchievementType}
               onChange={newAchievementTypeNameHandler}
             />
           </CCol>
+          <CCol sm={4}>{errorMessageNameTernary}</CCol>
         </AchievementEntryContainer>
         <AchievementEntryContainer>
-          <CFormLabel className={newAchievementLabelClass}>Status: </CFormLabel>
+          <CFormLabel
+            data-testid="ach-status"
+            className={newAchievementLabelClass}
+          >
+            Status:{' '}
+          </CFormLabel>
           <CCol sm={2} md={1}>
             <CFormCheck
               type="radio"
               label="Active"
               value={NewAchievementStatus.Active}
-              name="achievementStatus"
+              name="achievementStatusActive"
+              data-testid="ach-status-input-active"
               defaultChecked={
                 newUserSelectedStatus === NewAchievementStatus.Active
               }
@@ -97,6 +164,7 @@ const AchievementTypeListEntries = (
               type="radio"
               label="Inactive"
               value={NewAchievementStatus.Inactive}
+              data-testid="ach-status-input-inactive"
               defaultChecked={
                 newUserSelectedStatus === NewAchievementStatus.Inactive
               }
@@ -107,9 +175,12 @@ const AchievementTypeListEntries = (
           </CCol>
         </AchievementEntryContainer>
         <AchievementEntryContainer>
-          <CFormLabel className={newAchievementLabelClass}>
+          <CFormLabel
+            data-testid="ach-order"
+            className={newAchievementLabelClass}
+          >
             Order:{' '}
-            {newUserSelectedOrder === undefined ? (
+            {newUserSelectedOrder === emptyString ? (
               <span className={TextDanger}>*</span>
             ) : (
               <></>
@@ -117,20 +188,28 @@ const AchievementTypeListEntries = (
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
-              type="number"
-              max={99}
+              type="text"
+              data-testid="ach-order-input"
+              maxLength={2}
               value={newUserSelectedOrder}
               onChange={newSelectedOrderHandler}
             />
           </CCol>
+          <CCol sm={2} data-testid="check">
+            {errorMessageOrderTernary}
+          </CCol>
         </AchievementEntryContainer>
         <AchievementEntryContainer>
-          <CFormLabel className={newAchievementLabelClass}>
+          <CFormLabel
+            data-testid="ach-time"
+            className={newAchievementLabelClass}
+          >
             Time Period Required:{' '}
           </CFormLabel>
           <CCol sm={3}>
             <CFormCheck
               type="checkbox"
+              data-testid="ach-time-check"
               valid={true}
               checked={newUserSelectedTimeReq}
               onChange={newSelectedTimeReqHandler}
@@ -138,12 +217,16 @@ const AchievementTypeListEntries = (
           </CCol>
         </AchievementEntryContainer>
         <AchievementEntryContainer>
-          <CFormLabel className={newAchievementLabelClass}>
+          <CFormLabel
+            data-testid="ach-date"
+            className={newAchievementLabelClass}
+          >
             Date Required:{' '}
           </CFormLabel>
           <CCol sm={3}>
             <CFormCheck
               type="checkbox"
+              data-testid="ach-date-check"
               valid={true}
               checked={newUserSelectedDateReq}
               onChange={newSelectedDateReqHandler}
@@ -155,7 +238,7 @@ const AchievementTypeListEntries = (
         <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
         <CCol sm={4}>
           <CButton
-            data-testid="view-btn-id"
+            data-testid="add-btn-id"
             type="submit"
             className="btn-ovh me-1"
             color="success"

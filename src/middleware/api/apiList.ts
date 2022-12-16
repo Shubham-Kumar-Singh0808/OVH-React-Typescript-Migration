@@ -688,6 +688,8 @@ export const AddAchieverApiConfig: AddAchieverApi = {
   addAchievementType: apiPrefix + '/achievement/addAchievementType',
   getAchievementTypeDetails:
     apiPrefix + '/achievement/getAchievementTypeDetails',
+  updateAchievementTypeDetails:
+    apiPrefix + '/achievement/updateAchievementType',
   deleteAchievementType: apiPrefix + '/achievement/deleteAchievementType',
 }
 
