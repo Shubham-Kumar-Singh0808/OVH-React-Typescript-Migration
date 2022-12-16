@@ -18,6 +18,14 @@ const ResignationHistory = (): JSX.Element => {
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessEditTimeLine = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Separation',
+  )
+  console.log(userAccessEditTimeLine)
   return (
     <>
       <OCard
@@ -35,7 +43,6 @@ const ResignationHistory = (): JSX.Element => {
                 <i className="fa fa-arrow-left  me-1"></i>Edit
               </CButton>
             )}
-
             <Link to={`/resignationList`}>
               <CButton color="info" className="btn-ovh me-1">
                 <i className="fa fa-arrow-left  me-1"></i>Back
