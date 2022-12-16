@@ -41,6 +41,7 @@ describe('Submit view resignation filter options Component Testing', () => {
       expect(subject).toHaveValue('testing')
 
       const submitBtnElement = screen.getByTestId('submit-btn')
+      expect(submitBtnElement).toBeDisabled()
       expect(submitBtnElement).toBeInTheDocument()
       userEvent.click(submitBtnElement)
       expect(mockSetToggle).toHaveBeenCalledTimes(0)
