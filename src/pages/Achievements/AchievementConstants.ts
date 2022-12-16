@@ -8,7 +8,7 @@ export type ErrorBooleans = {
   achievementError2: boolean
 }
 
-export const orderRegexValue = /[^1-9][0-9]/gi
+export const orderRegexValue = /[^1-9]\d/gi
 
 export type EditedAchievementDetails = {
   newStatus: string
