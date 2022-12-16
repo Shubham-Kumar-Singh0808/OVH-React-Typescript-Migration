@@ -2,9 +2,9 @@ import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
+// eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
-import OBackButton from '../../../../components/ReusableComponent/OBackButton'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { priceModelList } from '../../../../constant/constantData'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -15,17 +15,17 @@ import {
   GetOnSelect,
   ProjectClients,
 } from '../../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
-import { ckeditorConfig } from '../../../../../utils/ckEditorUtils'
 import {
   AddProjectRequestDetails,
   Chelist,
   ProjectRequestMilestoneDTO,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
 import { listComposer, showIsRequired } from '../../../../utils/helper'
-import { dateFormat } from '../../../../../constant/DateFormat'
 import { ClientOrganization } from '../../Project/ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../Project/ProjectComponent/ProjectName'
 import OInputField from '../../../../components/ReusableComponent/OInputField'
+import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const AddProjectRequestForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -36,9 +36,13 @@ const AddProjectRequestForm = (): JSX.Element => {
   const [customerEmail, setCustomerEmail] = useState<string>('')
   const [billingContactName, setBillingContactName] = useState<string>('')
   const [billingContactEmail, setBillingContactEmail] = useState<string>('')
-  const [platform, setPlatform] = useState<string>('')
-  const [domain, setDomain] = useState<string>('')
+  // const [platform, setPlatform] = useState<string>('')
+  // const [domain, setDomain] = useState<string>('')
   const chelistDetails = {} as Chelist[]
+  const [projectRequestMailIdCC, setProjectRequestMailIdCC] =
+    useState<string>('')
+  const [projectRequestMailIdBbc, setProjectRequestMailIdBbc] =
+    useState<string>('')
   // const authorDetails = {} as Author
   const projectRequestMilestoneDTODetails = {} as ProjectRequestMilestoneDTO[]
   const initProjectRequest = {
@@ -71,9 +75,13 @@ const AddProjectRequestForm = (): JSX.Element => {
   const projectClients = useTypedSelector(
     reduxServices.projectManagement.selectors.projectClients,
   )
-
+  console.log(setShowEditor)
   const platforms = useTypedSelector(
     reduxServices.projectManagement.selectors.platForms,
+  )
+
+  const projectRequestMailIds = useTypedSelector(
+    reduxServices.addProjectCreationRequest.selectors.projectRequestMailIds,
   )
 
   useEffect(() => {
@@ -81,6 +89,7 @@ const AddProjectRequestForm = (): JSX.Element => {
     dispatch(reduxServices.projectManagement.getAllDomains())
     dispatch(reduxServices.projectManagement.getAllManagers())
     dispatch(reduxServices.projectManagement.getAllPlatforms())
+    dispatch(reduxServices.addProjectCreationRequest.getProjectRequestMailIds())
   }, [dispatch])
 
   const clientOrganizationList = projectClients
@@ -217,6 +226,28 @@ const AddProjectRequestForm = (): JSX.Element => {
       domain: value,
     })
   }
+
+  const handleProjectRequestMailIdCC = (value: string) => {
+    setProjectRequest({
+      ...projectRequest,
+      cc: value,
+    })
+  }
+  const handleProjectRequestMailIdBbc = (value: string) => {
+    setProjectRequest({
+      ...projectRequest,
+      bcc: value,
+    })
+  }
+
+  useEffect(() => {
+    setProjectRequestMailIdCC(projectRequestMailIds.cc)
+  }, [projectRequestMailIds])
+
+  useEffect(() => {
+    setProjectRequestMailIdBbc(projectRequestMailIds.bcc)
+  }, [projectRequestMailIds])
+
   const classNameStyle = 'col-sm-3 col-form-label text-end'
   const projectDomains = listComposer(domainList as [], 'id', 'name')
 
@@ -224,7 +255,6 @@ const AddProjectRequestForm = (): JSX.Element => {
   return (
     <>
       <CRow className="justify-content-end">
-        <OBackButton destination={''} name={''} />
         <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
           <ClientOrganization
             list={clientOrganizationList}
@@ -465,6 +495,26 @@ const AddProjectRequestForm = (): JSX.Element => {
               </CCol>
             )}
           </CRow>
+          <OInputField
+            onChangeHandler={setProjectRequestMailIdCC}
+            onBlurHandler={handleProjectRequestMailIdCC}
+            value={projectRequestMailIdCC}
+            isRequired={false}
+            label="CC"
+            name="cc"
+            placeholder="Email Id"
+            dynamicFormLabelProps={dynamicFormLabelProps}
+          />
+          <OInputField
+            onChangeHandler={setProjectRequestMailIdBbc}
+            onBlurHandler={handleProjectRequestMailIdBbc}
+            value={projectRequestMailIdBbc}
+            isRequired={false}
+            label="CC"
+            name="bcc"
+            placeholder="Email Id"
+            dynamicFormLabelProps={dynamicFormLabelProps}
+          />
         </CCol>
       </CRow>
     </>

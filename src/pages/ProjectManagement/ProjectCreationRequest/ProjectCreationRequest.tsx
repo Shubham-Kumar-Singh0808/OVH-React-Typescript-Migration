@@ -3,6 +3,7 @@ import { CRow, CCol, CInputGroup, CFormInput, CButton } from '@coreui/react-pro'
 import ProjectCreationRequestTable from './ProjectCreationRequestTable'
 import ProjectRequestView from './ProjectRequestView/ProjectRequestView'
 import ProjectRequestHistoryDetails from './ProjectRequestHistory/ProjectRequestHistoryDetails'
+import AddProjectRequest from './AddProjectRequest/AddProjectRequest'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -80,7 +81,11 @@ const ProjectCreationRequest = (): JSX.Element => {
                 </CInputGroup>
               </CCol>
               <CCol sm={3} className="d-md-flex justify-content-end">
-                <CButton color="info btn-ovh me-1" className="text-white">
+                <CButton
+                  color="info btn-ovh me-1"
+                  className="text-white"
+                  onClick={() => setToggle('addProjectRequest')}
+                >
                   <i className="fa fa-plus"></i> Project Request
                 </CButton>
               </CCol>
@@ -99,6 +104,9 @@ const ProjectCreationRequest = (): JSX.Element => {
       {toggle === 'projectView' && <ProjectRequestView setToggle={setToggle} />}
       {toggle === 'projectHistory' && (
         <ProjectRequestHistoryDetails setToggle={setToggle} />
+      )}
+      {toggle === 'addProjectRequest' && (
+        <AddProjectRequest setToggle={setToggle} />
       )}
     </>
   )

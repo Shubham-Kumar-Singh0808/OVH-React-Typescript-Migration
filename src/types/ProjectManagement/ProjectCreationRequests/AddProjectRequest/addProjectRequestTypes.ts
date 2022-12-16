@@ -1,4 +1,5 @@
-import { LoadingState } from '../../commonTypes'
+import { LoadingState } from "../../../commonTypes"
+
 
 export type AddProjectRequestDetails = {
   bcc: string
