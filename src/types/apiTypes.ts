@@ -554,6 +554,10 @@ export interface ITDeclarationListApi extends ApiBase {
   deleteInvestment: string
   deleteCycle: string
   isCycleExist: string
+  isSectionExist: string
+  updateCycle: string
+  updateInvestment: string
+  isInvestmentExist: string
 }
 
 export interface InvestmentCheckListApi extends ApiBase {

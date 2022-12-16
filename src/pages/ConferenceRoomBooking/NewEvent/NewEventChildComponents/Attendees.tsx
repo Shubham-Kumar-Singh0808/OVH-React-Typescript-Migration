@@ -1,7 +1,6 @@
 import { CRow, CFormLabel, CCol } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import Autocomplete from 'react-autocomplete'
-import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
 import { LoggedEmployee } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
@@ -57,9 +56,6 @@ const Attendees = ({
         data-testid="pmLabel"
       >
         Attendees:
-        <span className={attendeesAutoCompleteTarget ? TextWhite : TextDanger}>
-          *
-        </span>
       </CFormLabel>
       <CCol sm={6}>
         <Autocomplete

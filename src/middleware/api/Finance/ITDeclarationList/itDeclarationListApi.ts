@@ -6,6 +6,7 @@ import {
   AddInvestmentData,
   AddSection,
   Cycle,
+  Investment,
   ITDeclarationFormListResponse,
   ITDeclarationListApiProps,
   UpdateSection,
@@ -161,6 +162,23 @@ const deleteCycle = async (id: number): Promise<number> => {
   return response.data
 }
 
+const isSectionExist = async (props: {
+  sectionId: number
+  sectionName: string
+}): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.isSectionExist,
+    method: AllowedHttpMethods.get,
+    params: {
+      sectionId: props.sectionId,
+      sectionName: props.sectionName,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const isCycleExist = async (props: {
   cycleId: number
   cycleName: string
@@ -178,6 +196,47 @@ const isCycleExist = async (props: {
   return responseVisa.data
 }
 
+const updateInvestment = async (
+  editInvestment: Investment,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.updateInvestment,
+    method: AllowedHttpMethods.put,
+    data: editInvestment,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const isInvestmentExist = async (props: {
+  investmentId: number
+  investmentName: string
+  sectionId: number
+}): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.isInvestmentExist,
+    method: AllowedHttpMethods.get,
+    params: {
+      investmentId: props.investmentId,
+      investmentName: props.investmentName,
+      sectionId: props.sectionId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateCycle = async (editCycle: Cycle): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.updateCycle,
+    method: AllowedHttpMethods.put,
+    data: editCycle,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
   getITDeclarationForm,
@@ -192,4 +251,8 @@ export const itDeclarationListApi = {
   addCycle,
   deleteCycle,
   isCycleExist,
+  updateCycle,
+  isInvestmentExist,
+  updateInvestment,
+  isSectionExist,
 }
