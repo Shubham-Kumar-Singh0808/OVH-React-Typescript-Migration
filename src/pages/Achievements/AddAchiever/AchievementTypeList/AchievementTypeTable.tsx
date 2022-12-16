@@ -77,8 +77,8 @@ const AchievementTypeTable = (
     const isPresent = achievementTypeDataList.list.filter(
       (item) => item.order === +newOrder,
     )
-    for (let i = 0; i < isPresent.length; i++) {
-      if (isPresent[i].id !== editAchievementId) {
+    for (const isItem of isPresent) {
+      if (isItem.id !== editAchievementId) {
         return true
       }
     }
