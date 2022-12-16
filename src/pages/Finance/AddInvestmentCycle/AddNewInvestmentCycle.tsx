@@ -14,7 +14,7 @@ import { Cycle } from '../../../types/Finance/ITDeclarationList/itDeclarationLis
 import { showIsRequired } from '../../../utils/helper'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 import OModal from '../../../components/ReusableComponent/OModal'
 
@@ -32,7 +32,12 @@ const AddNewInvestmentCycle = (): JSX.Element => {
   const [isActiveCycleModalVisible, setIsActiveCycleModalVisible] =
     useState(false)
   const dispatch = useAppDispatch()
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddCycle = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Section and Investment',
+  )
   useEffect(() => {
     if (addCycle.cycleName && cycleStartDate) {
       setIsButtonEnabled(true)
@@ -210,27 +215,29 @@ const AddNewInvestmentCycle = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
-          <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
-              data-testid="ac-add-btn"
-              className="btn-ovh me-1 text-white"
-              color="success"
-              onClick={handleAddNewInvestmentCycle}
-              disabled={!isButtonEnabled}
-            >
-              Add
-            </CButton>
-            <CButton
-              data-testid="ac-clear-btn"
-              color="warning "
-              className="btn-ovh text-white"
-              onClick={handleClearInputs}
-            >
-              Clear
-            </CButton>
-          </CCol>
-        </CRow>
+        {userAccessToAddCycle?.createaccess && (
+          <CRow className="mt-4 mb-4">
+            <CCol md={{ span: 6, offset: 3 }}>
+              <CButton
+                data-testid="ac-add-btn"
+                className="btn-ovh me-1 text-white"
+                color="success"
+                onClick={handleAddNewInvestmentCycle}
+                disabled={!isButtonEnabled}
+              >
+                Add
+              </CButton>
+              <CButton
+                data-testid="ac-clear-btn"
+                color="warning "
+                className="btn-ovh text-white"
+                onClick={handleClearInputs}
+              >
+                Clear
+              </CButton>
+            </CCol>
+          </CRow>
+        )}
       </CForm>
       <OModal
         visible={isActiveCycleModalVisible}

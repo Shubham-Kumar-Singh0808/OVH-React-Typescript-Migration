@@ -674,6 +674,10 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   deleteInvestment: apiPrefix + '/itDeclaration/deleteInvestment',
   deleteCycle: apiPrefix + '/itDeclaration/deleteCycle',
   isCycleExist: apiPrefix + '/itDeclaration/isCycleExist',
+  updateCycle: apiPrefix + '/itDeclaration/editCycle',
+  updateInvestment: apiPrefix + '/itDeclaration/updateInvestment',
+  isInvestmentExist: apiPrefix + '/itDeclaration/isInvestmentExist',
+  isSectionExist: apiPrefix + '/itDeclaration/isSectionExist',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
