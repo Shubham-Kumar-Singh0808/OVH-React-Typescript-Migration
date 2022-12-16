@@ -44,6 +44,20 @@ const ProjectCreationRequest = (): JSX.Element => {
     )
   }
 
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.projectCreationRequest.getAllProjectRequestList({
+          endIndex: pageSize * currentPage,
+          multiSearch: searchInput,
+          firstIndex: pageSize * (currentPage - 1),
+        }),
+      )
+    }
+  }
+
   return (
     <>
       {toggle === '' && (
@@ -66,6 +80,7 @@ const ProjectCreationRequest = (): JSX.Element => {
                     onChange={(e) => {
                       setSearchInput(e.target.value)
                     }}
+                    onKeyUp={handleSearchByEnter}
                   />
                   <CButton
                     data-testid="search-btn1"
