@@ -162,6 +162,7 @@ const AchievementTypeListEntries = (
               defaultChecked={
                 newUserSelectedStatus === NewAchievementStatus.Active
               }
+              checked={newUserSelectedStatus === NewAchievementStatus.Active}
               onChange={newAchievementStatusHandler}
               inline
             />
@@ -175,6 +176,7 @@ const AchievementTypeListEntries = (
               defaultChecked={
                 newUserSelectedStatus === NewAchievementStatus.Inactive
               }
+              checked={newUserSelectedStatus === NewAchievementStatus.Inactive}
               onChange={newAchievementStatusHandler}
               name="achievementStatus"
               inline
