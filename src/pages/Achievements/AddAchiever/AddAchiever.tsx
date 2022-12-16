@@ -5,7 +5,6 @@ import {
   CForm,
   CFormLabel,
   CFormSelect,
-  CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import AchievementTypeList from './AchievementTypeList/AchievementTypeList'

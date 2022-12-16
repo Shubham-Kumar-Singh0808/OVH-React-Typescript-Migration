@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AddAchiever from './AddAchiever'
-import { cleanup, fireEvent, render, screen } from '../../../test/testUtils'
+import { cleanup, render, screen } from '../../../test/testUtils'
 import { mockAchievementTypeList } from '../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
