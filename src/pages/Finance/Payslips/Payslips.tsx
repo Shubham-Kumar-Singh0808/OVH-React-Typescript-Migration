@@ -57,10 +57,7 @@ const Payslips = (): JSX.Element => {
       year: Number(selectYear),
     })
 
-    downloadFile(
-      employeePayslipDownload,
-      `${employeeId}_${paySlipsData[0].month}_${selectYear}.pdf`,
-    )
+    downloadFile(employeePayslipDownload, 'paySlip.csv')
   }
 
   return (
