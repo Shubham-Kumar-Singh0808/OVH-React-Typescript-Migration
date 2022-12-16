@@ -2,9 +2,10 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import addProjectCreationRequestApi from '../../../../middleware/api/ProjectManagement/ProjectCreationRequests/AddProjectCreationRequestApi'
-import { RootState } from '../../../../stateStore'
+import { AppDispatch, RootState } from '../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import {
+  AddProjectRequestDetails,
   Chelist,
   GetProjectRequestMailIds,
   GetProjectRequestState,
@@ -27,6 +28,28 @@ const getProjectRequestMailIds = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await addProjectCreationRequestApi.getProjectRequestMailIds()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const addProjectRequest = createAsyncThunk<
+  number | undefined,
+  AddProjectRequestDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'addProjectCreationRequest/addProjectRequest',
+  async (addProjectRequestDetails: AddProjectRequestDetails, thunkApi) => {
+    try {
+      return await addProjectCreationRequestApi.addProjectRequest(
+        addProjectRequestDetails,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -81,6 +104,7 @@ const addProjectCreationRequestSelectors = {
 const addProjectCreationRequestThunk = {
   getCheckList,
   getProjectRequestMailIds,
+  addProjectRequest,
 }
 
 export const addProjectCreationRequestService = {

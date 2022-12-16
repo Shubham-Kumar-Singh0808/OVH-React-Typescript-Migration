@@ -585,4 +585,5 @@ export interface EmployeeAccountsApi extends ApiBase {
 export interface AddProjectCreationRequestApi extends ApiBase {
   getCheckList: string
   getProjectRequestMailIds: string
+  addProjectRequest: string
 }

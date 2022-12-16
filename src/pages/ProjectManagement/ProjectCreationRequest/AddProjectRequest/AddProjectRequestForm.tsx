@@ -1,9 +1,10 @@
-import { CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
+import { CButton, CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import CheckList from './AddProjectRequestChildComponents/CheckList'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { priceModelList } from '../../../../constant/constantData'
@@ -90,6 +91,7 @@ const AddProjectRequestForm = (): JSX.Element => {
     dispatch(reduxServices.projectManagement.getAllManagers())
     dispatch(reduxServices.projectManagement.getAllPlatforms())
     dispatch(reduxServices.addProjectCreationRequest.getProjectRequestMailIds())
+    dispatch(reduxServices.addProjectCreationRequest.getCheckList())
   }, [dispatch])
 
   const clientOrganizationList = projectClients
@@ -252,6 +254,11 @@ const AddProjectRequestForm = (): JSX.Element => {
   const projectDomains = listComposer(domainList as [], 'id', 'name')
 
   const projectPlatforms = listComposer(platforms as [], 'id', 'name')
+  const handleSubmitProjectRequest = () => {
+    dispatch(
+      reduxServices.addProjectCreationRequest.addProjectRequest(projectRequest),
+    )
+  }
   return (
     <>
       <CRow className="justify-content-end">
@@ -515,7 +522,27 @@ const AddProjectRequestForm = (): JSX.Element => {
             placeholder="Email Id"
             dynamicFormLabelProps={dynamicFormLabelProps}
           />
+          <CheckList />
         </CCol>
+        <CRow className="mb-3 align-items-center">
+          <CCol sm={{ span: 6, offset: 3 }}>
+            <CButton
+              className="btn-ovh me-1"
+              color="success"
+              data-testid="add-project"
+              onClick={handleSubmitProjectRequest}
+            >
+              Add
+            </CButton>
+            <CButton
+              color="warning"
+              className="btn-ovh"
+              data-testid="clear-project"
+            >
+              Clear
+            </CButton>
+          </CCol>
+        </CRow>
       </CRow>
     </>
   )

@@ -710,4 +710,5 @@ export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
     getCheckList: apiPrefix + '/project-mgmt/getCheckList',
     getProjectRequestMailIds:
       apiPrefix + '/project-mgmt/getProjectRequestMailIds',
+    addProjectRequest: apiPrefix + '/project-mgmt/projectRequest',
   }

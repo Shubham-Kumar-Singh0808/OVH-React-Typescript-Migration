@@ -1,4 +1,5 @@
 import {
+  AddProjectRequestDetails,
   Chelist,
   GetProjectRequestMailIds,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
@@ -32,8 +33,21 @@ const getProjectRequestMailIds =
     return response.data
   }
 
+const addProjectRequest = async (
+  addProjectRequestDetails: AddProjectRequestDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: addProjectCreationRequestApiConfig.addProjectRequest,
+    method: AllowedHttpMethods.post,
+    data: addProjectRequestDetails,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const addProjectCreationRequestApi = {
   getCheckList,
   getProjectRequestMailIds,
+  addProjectRequest,
 }
 export default addProjectCreationRequestApi
