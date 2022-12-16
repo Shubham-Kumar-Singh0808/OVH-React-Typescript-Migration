@@ -75,14 +75,18 @@ import { submitViewResignationServices } from './Separation/SubmitViewResignatio
 import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
 import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
+import { newEventService } from './ConferenceRoomBooking/NewEvent/newEventSlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
 import { itDeclarationFormService } from './Finance/ITDeclarationForm/itDeclarationFormSlice'
 import { paySlipsService } from './Finance/Payslips/payslipsSlice'
 import { panDetailService } from './Finance/PanDetails/panDetailsSlice'
 import { bankDetailService } from './Finance/PanDetails/bankDetailsSlice'
 import { resignationListService } from './Separation/ResignationList/resignationListSlice'
+import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
 import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
 import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
+import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
+import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 
 export const reduxServices = {
@@ -163,13 +167,17 @@ export const reduxServices = {
   submitViewResignation: submitViewResignationServices,
   addConfigurations: addConfigurationService,
   projectReport: projectReportsService,
+  newEvent: newEventService,
   leaveApprovals: leaveApprovalsService,
   itDeclarationForm: itDeclarationFormService,
   paySlips: paySlipsService,
   panDetails: panDetailService,
   bankDetails: bankDetailService,
   resignationList: resignationListService,
+  employeeAccount: employeeAccountService,
   itDeclarationList: itDeclarationListService,
   investmentCheckList: investmentCheckListService,
+  achieverList: achieverListService,
+  commonAchievements: commonAchievementsService,
   projectCreationRequest: projectCreationRequestService,
 }

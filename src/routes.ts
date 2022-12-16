@@ -233,6 +233,9 @@ const EditConfiguration = React.lazy(
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
+const NewEvent = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewEvent/NewEvent'),
+)
 
 const SubmitResignation = React.lazy(
   () => import('./pages/Separation/SubmitViewResignation/SubmitResignation'),
@@ -273,6 +276,11 @@ const ResignationManagerClearanceCertificate = React.lazy(
     ),
 )
 
+const SeparationViewChart = React.lazy(
+  () =>
+    import('./pages/Separation/ResignationList/ViewChart/SeparationViewChart'),
+)
+
 const ResignationHRClearanceCertificate = React.lazy(
   () =>
     import(
@@ -305,6 +313,10 @@ const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
 )
 
+const EmployeeAccounts = React.lazy(
+  () => import('./pages/Finance/EmployeeAccounts/EmployeeAccounts'),
+)
+
 const ITDeclarationList = React.lazy(
   () => import('./pages/Finance/ITDeclarationList/ITDeclarationList'),
 )
@@ -330,6 +342,10 @@ const ProjectCreationRequest = React.lazy(
     import(
       './pages/ProjectManagement/ProjectCreationRequest/ProjectCreationRequest'
     ),
+)
+
+const AchieverList = React.lazy(
+  () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
 
 /**
@@ -568,6 +584,11 @@ const routes = [
   },
   {
     path: '/newEvent',
+    name: 'New Event',
+    component: NewEvent,
+  },
+  {
+    path: '/addEventType',
     name: 'Event Type List',
     component: EventTypeList,
   },
@@ -647,6 +668,11 @@ const routes = [
     component: ResignationTimeLine,
   },
   {
+    path: '/financeList',
+    name: 'Employee Accounts',
+    component: EmployeeAccounts,
+  },
+  {
     path: '/ClearanceCertificateManager',
     name: 'Resignation Clearence CertificateManager',
     component: ResignationManagerClearanceCertificate,
@@ -697,6 +723,16 @@ const routes = [
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
+  },
+  {
+    path: '/achievementList',
+    name: 'Achievements List',
+    component: AchieverList,
+  },
+  {
+    path: '/separationChart',
+    name: 'Separation View Chart',
+    component: SeparationViewChart,
   },
   {
     path: '/addSection',

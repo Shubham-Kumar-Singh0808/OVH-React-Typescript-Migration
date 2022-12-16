@@ -61,14 +61,6 @@ const SubmitResignationFilterOptions = ({
   }
 
   useEffect(() => {
-    if (primaryReason && submitResignation?.employeeComments) {
-      setIsSubmitButtonEnabled(true)
-    } else {
-      setIsSubmitButtonEnabled(false)
-    }
-  }, [primaryReason, submitResignation?.employeeComments])
-
-  useEffect(() => {
     if (primaryReason || submitResignation?.employeeComments || otherReason) {
       setIsClearButtonEnabled(true)
     } else {
@@ -77,12 +69,21 @@ const SubmitResignationFilterOptions = ({
   }, [primaryReason, submitResignation?.employeeComments, otherReason])
 
   useEffect(() => {
-    if (!otherReason) {
-      setIsSubmitButtonEnabled(true)
-    } else {
-      setIsSubmitButtonEnabled(false)
+    if (primaryReason === '4') {
+      if (primaryReason && submitResignation?.employeeComments && otherReason) {
+        setIsSubmitButtonEnabled(true)
+      } else {
+        setIsSubmitButtonEnabled(false)
+      }
     }
-  }, [otherReason])
+    if (primaryReason !== '4') {
+      if (primaryReason && submitResignation?.employeeComments) {
+        setIsSubmitButtonEnabled(true)
+      } else {
+        setIsSubmitButtonEnabled(false)
+      }
+    }
+  }, [primaryReason, submitResignation?.employeeComments, otherReason])
 
   const successToastMessage = (
     <OToast
