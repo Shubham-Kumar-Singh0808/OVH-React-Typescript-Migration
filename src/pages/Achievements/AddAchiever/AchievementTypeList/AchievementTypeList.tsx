@@ -30,7 +30,7 @@ const AchievementTypeList = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const achievementTypesLength = useTypedSelector(
-    (state) => state.commonAchievements.dateSortedList.size,
+    (state) => state.commonAchievements.dateSortedList?.size,
   )
   const addAchieverState = useTypedSelector((state) => state.addAchiever)
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)

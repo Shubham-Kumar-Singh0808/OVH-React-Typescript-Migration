@@ -53,17 +53,17 @@ const AchievementTypeListEntries = (
   )
 
   const isAchievementNameExists = (enteredName: string) => {
-    const isPresent = existingAchievementTypeList.list.filter(
+    const isPresent = existingAchievementTypeList?.list.filter(
       (item) => item.typeName.toLowerCase() === enteredName.toLowerCase(),
     )
-    return isPresent.length > 0
+    return isPresent?.length > 0
   }
 
   const isAchievementOrderExists = (enteredOrder: string) => {
-    const isPresent = existingAchievementTypeList.list.filter(
+    const isPresent = existingAchievementTypeList?.list.filter(
       (item) => item.order === +enteredOrder,
     )
-    return isPresent.length > 0
+    return isPresent?.length > 0
   }
 
   useEffect(() => {

@@ -204,7 +204,7 @@ const AchievementTypeTable = (
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {achievementTypeDataList.list.map((item, index) => (
+          {achievementTypeDataList?.list.map((item, index) => (
             <CTableRow key={index}>
               <CTableDataCell>{index + 1}</CTableDataCell>
               <CTableDataCell>{item.typeName}</CTableDataCell>
