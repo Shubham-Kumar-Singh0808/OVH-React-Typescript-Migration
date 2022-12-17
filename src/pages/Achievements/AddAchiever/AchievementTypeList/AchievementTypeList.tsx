@@ -90,9 +90,6 @@ const AchievementTypeList = ({
   }
 
   const addAchievementButtonHandler = async () => {
-    if (newUserSelectedOrder === null || !newUserSelectedOrder) {
-      return
-    }
     const achievementStatus =
       newUserSelectedStatus === NewAchievementStatus.Active ? 'true' : 'false'
     const newAchievementData: OutgoingNewAchievementType = {
