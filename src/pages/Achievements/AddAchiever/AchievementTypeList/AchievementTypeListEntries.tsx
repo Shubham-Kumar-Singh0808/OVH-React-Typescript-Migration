@@ -159,9 +159,6 @@ const AchievementTypeListEntries = (
               value={NewAchievementStatus.Active}
               name="achievementStatusActive"
               data-testid="ach-status-input-active"
-              defaultChecked={
-                newUserSelectedStatus === NewAchievementStatus.Active
-              }
               checked={newUserSelectedStatus === NewAchievementStatus.Active}
               onChange={newAchievementStatusHandler}
               inline
@@ -173,9 +170,6 @@ const AchievementTypeListEntries = (
               label="Inactive"
               value={NewAchievementStatus.Inactive}
               data-testid="ach-status-input-inactive"
-              defaultChecked={
-                newUserSelectedStatus === NewAchievementStatus.Inactive
-              }
               checked={newUserSelectedStatus === NewAchievementStatus.Inactive}
               onChange={newAchievementStatusHandler}
               name="achievementStatus"

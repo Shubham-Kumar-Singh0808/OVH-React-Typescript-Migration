@@ -42,5 +42,9 @@ describe('Achievement Type List Testing', () => {
       const tag = screen.getByTestId('tot-rec-num')
       expect(tag).toHaveTextContent('Total Records: 10')
     })
+    test('scroll functionality not enabled', () => {
+      const col = screen.getByTestId('scroll-col')
+      expect(col).not.toHaveClass('custom-scroll')
+    })
   })
 })

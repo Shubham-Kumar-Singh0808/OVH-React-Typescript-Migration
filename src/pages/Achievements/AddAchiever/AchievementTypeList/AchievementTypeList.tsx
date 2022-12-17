@@ -198,7 +198,7 @@ const AchievementTypeList = ({
             addButtonHandler={addAchievementButtonHandler}
             achievementClearButtonHandler={addAchievementClearButtonHandler}
           />
-          <CCol className={scrollTernary}>
+          <CCol data-testid="scroll-col" className={scrollTernary}>
             <AchievementTypeTable
               executeSaveButtonHandler={editSaveButtonHandler}
             />
