@@ -1,5 +1,7 @@
 import commonAchievementsReducer, {
   commonAchievementsService,
+  sortByAscendingOrder,
+  sortByDateCreated,
 } from './CommonAchievementsSlice'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import { CommonAchievementInitialState } from '../../types/Achievements/commonAchievementTypes'
@@ -18,8 +20,8 @@ describe('Common Achievement Slice', () => {
       const state = commonAchievementsReducer(initialState, action)
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
-        achievementTypeList: { size: 0, list: [] },
-        dateSortedList: { size: 0, list: [] },
+        achievementTypeList: { size: 0, list: sortByAscendingOrder([]) },
+        dateSortedList: { size: 0, list: sortByDateCreated([]) },
       })
     })
   })

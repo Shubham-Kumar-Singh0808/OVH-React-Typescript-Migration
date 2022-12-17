@@ -9,7 +9,7 @@ import {
 } from '../../types/Achievements/commonAchievementTypes'
 import { ValidationError } from '../../types/commonTypes'
 
-const sortByAscendingOrder = (
+export const sortByAscendingOrder = (
   incomingList: AchievementType[],
 ): AchievementType[] => {
   return incomingList.sort((a, b) => {
@@ -17,7 +17,7 @@ const sortByAscendingOrder = (
   })
 }
 
-const sortByDateCreated = (
+export const sortByDateCreated = (
   incomingList: AchievementType[],
 ): AchievementType[] => {
   return incomingList.sort((a, b) => {
