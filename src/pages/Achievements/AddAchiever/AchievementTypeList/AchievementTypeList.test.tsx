@@ -3,7 +3,13 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AchievementTypeList from './AchievementTypeList'
-import { cleanup, fireEvent, render, screen } from '../../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import { mockAchievementTypeList } from '../../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
@@ -56,7 +62,7 @@ describe('Achievement Type List Testing', () => {
       expect(achName).toHaveValue('')
       expect(screen.getByTestId('ach-order-input')).toHaveValue('')
     })
-    test('test add button', () => {
+    test('test add button', async () => {
       const addBtn = screen.getByTestId('add-btn-id')
       expect(addBtn).toBeDisabled()
       const achName = screen.getByTestId('ach-name-input')
@@ -65,11 +71,13 @@ describe('Achievement Type List Testing', () => {
       userEvent.type(achOrder, '99')
       expect(addBtn).toBeEnabled()
       userEvent.click(addBtn)
-      expect(
-        screen.findByText('Achievement Type Added Successfully'),
-      ).toBeTruthy()
+      await waitFor(() => {
+        expect(
+          screen.findByText('Achievement Type Added Successfully'),
+        ).toBeTruthy()
+      })
     })
-    test('test save changes button', () => {
+    test('test save changes button', async () => {
       const editBtn = screen.getByTestId('edit-btn-1')
       userEvent.click(editBtn)
       const saveBtn = screen.getByTestId('save-btn-1')
@@ -78,8 +86,13 @@ describe('Achievement Type List Testing', () => {
       userEvent.clear(order)
       userEvent.type(order, '5')
       userEvent.click(saveBtn)
+      await waitFor(() => {
+        expect(
+          screen.findByText('Achievement Type Updated Successfully'),
+        ).toBeTruthy()
+      })
     })
-    test('test delete button', () => {
+    test('test delete button', async () => {
       const editBtn = screen.getByTestId('del-btn-0')
       userEvent.click(editBtn)
       const modalContent = screen.getByTestId('confirm-modal-content')
@@ -89,6 +102,12 @@ describe('Achievement Type List Testing', () => {
       )
       const confirmModalButton = screen.getByTestId('modalConfirmBtn')
       userEvent.click(confirmModalButton)
+      expect(modalContent).not.toBeVisible()
+      await waitFor(() => {
+        expect(
+          screen.findByText('Achievement Type Deleted Successfully'),
+        ).toBeTruthy()
+      })
     })
   })
 })
