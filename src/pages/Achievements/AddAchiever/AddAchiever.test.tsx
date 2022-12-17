@@ -35,7 +35,7 @@ describe('Add Achiever Render', () => {
 
     test('labels are rendered', () => {
       const name = screen.getByTestId('ach-name-label')
-      expect(name).toHaveTextContent('Achievement Type Name')
+      expect(name).toHaveTextContent('Achievement Type')
     })
     test('details entered successfully', () => {
       const achOptions = screen.getAllByTestId('ach-name-opt')

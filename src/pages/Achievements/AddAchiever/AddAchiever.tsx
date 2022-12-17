@@ -65,7 +65,7 @@ const AddAchiever = (): JSX.Element => {
                 data-testid="ach-name-label"
                 className={newAchievementLabelClass}
               >
-                Achievement Type Name:{' '}
+                Achievement Type:{' '}
               </CFormLabel>
               <CCol md={3}>
                 <CFormSelect
