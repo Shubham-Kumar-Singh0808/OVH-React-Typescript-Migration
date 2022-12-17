@@ -7,6 +7,7 @@ describe('Add Achiever Slice', () => {
     const initialState: AddAchieverInitialState = {
       isLoading: ApiLoadingState.idle,
       achievementTypeDetails: null,
+      error: null,
     }
 
     it('isLoading is set to "loading" for addAchievementTypeThunk', () => {
@@ -17,6 +18,7 @@ describe('Add Achiever Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
         achievementTypeDetails: null,
+        error: null,
       })
     })
 
@@ -28,6 +30,7 @@ describe('Add Achiever Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
         achievementTypeDetails: null,
+        error: null,
       })
     })
 
@@ -39,6 +42,7 @@ describe('Add Achiever Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
         achievementTypeDetails: null,
+        error: null,
       })
     })
 
@@ -50,6 +54,7 @@ describe('Add Achiever Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
         achievementTypeDetails: null,
+        error: null,
       })
     })
 
@@ -62,6 +67,7 @@ describe('Add Achiever Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
         achievementTypeDetails: null,
+        error: null,
       })
     })
 
@@ -74,6 +80,7 @@ describe('Add Achiever Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
         achievementTypeDetails: null,
+        error: null,
       })
     })
 
@@ -83,6 +90,43 @@ describe('Add Achiever Slice', () => {
       }
       const state = addAchieverReducer(initialState, action)
       expect(state).toEqual(initialState)
+    })
+
+    it('"isLoading" set to failed for "addAchievementTypeThunk"', () => {
+      const action = {
+        type: addAchieverServices.addAchievementTypeThunk.rejected.type,
+      }
+      const state = addAchieverReducer(initialState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.failed,
+        achievementTypeDetails: null,
+        error: undefined,
+      })
+    })
+
+    it('"isLoading" set to failed for "updateAchievementTypeDetailsThunk"', () => {
+      const action = {
+        type: addAchieverServices.updateAchievementTypeDetailsThunk.rejected
+          .type,
+      }
+      const state = addAchieverReducer(initialState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.failed,
+        achievementTypeDetails: null,
+        error: undefined,
+      })
+    })
+
+    it('"isLoading" set to failed for "deleteAchievementTypeDetailsThunk"', () => {
+      const action = {
+        type: addAchieverServices.deleteAchievementTypeThunk.rejected.type,
+      }
+      const state = addAchieverReducer(initialState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.failed,
+        achievementTypeDetails: null,
+        error: undefined,
+      })
     })
   })
 })

@@ -14,14 +14,14 @@ import { ValidationError } from '../../../types/commonTypes'
 const initialState = {
   isLoading: ApiLoadingState.idle,
   achievementTypeDetails: null,
+  error: null,
 } as AddAchieverInitialState
 
 const addAchievementTypeThunk = createAsyncThunk(
   'addAchiever/addAchievementTypeThunk',
   async (outBody: OutgoingNewAchievementType, thunkApi) => {
     try {
-      const data = await AddAchieverApi.addAchievementType(outBody)
-      return thunkApi.fulfillWithValue(data)
+      return await AddAchieverApi.addAchievementType(outBody)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -96,6 +96,17 @@ const addAchieverSlice = createSlice({
       ),
       (state) => {
         state.isLoading = ApiLoadingState.succeeded
+      },
+    )
+    builder.addMatcher(
+      isAnyOf(
+        addAchievementTypeThunk.rejected,
+        deleteAchievementTypeThunk.rejected,
+        updateAchievementTypeDetailsThunk.rejected,
+      ),
+      (state, action) => {
+        state.isLoading = ApiLoadingState.failed
+        state.error = action.payload as ValidationError
       },
     )
   },

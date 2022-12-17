@@ -144,7 +144,7 @@ const AchievementTypeList = ({
     const successToast = (
       <OToast
         toastColor="success"
-        toastMessage="Achievement Type Updated Succesfully"
+        toastMessage="Achievement Type Updated Successfully"
       />
     )
 

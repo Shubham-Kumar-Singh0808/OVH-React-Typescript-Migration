@@ -1,5 +1,5 @@
 import { EditedAchievementDetails } from '../../../pages/Achievements/AchievementConstants'
-import { LoadingState } from '../../commonTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
 import { AchievementType } from '../commonAchievementTypes'
 
 export enum NewAchievementStatus {
@@ -52,4 +52,5 @@ export interface AddAchieverTypeTableProps {
 export interface AddAchieverInitialState {
   isLoading: LoadingState
   achievementTypeDetails: AchievementType | null
+  error: ValidationError
 }
