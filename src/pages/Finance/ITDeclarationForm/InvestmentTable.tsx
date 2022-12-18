@@ -51,7 +51,10 @@ const InvestmentTable = ({
               size="sm"
               id="investment"
               name="investmentName"
-              onChange={(e) => onChangeInvestment(secIndex, e, currentSec.id)}
+              value={currentSec.investmentId}
+              onChange={(e) =>
+                onChangeInvestment(secIndex, e, currentSec.id as number)
+              }
             >
               <option value="">Select Investment</option>
               {sectionList[index].invests?.map((invest, investIndex) => (
@@ -65,13 +68,16 @@ const InvestmentTable = ({
         <CTableDataCell scope="row">
           <CCol sm={12}>
             <CFormInput
+              autoComplete="off"
               type="text"
               id="savingAmount"
               size="sm"
               placeholder="Enter Savings Amount"
               name="customAmount"
               maxLength={12}
-              onChange={(e) => onChangeCustomAmount(secIndex, e, currentSec.id)}
+              onChange={(e) =>
+                onChangeCustomAmount(secIndex, e, currentSec.id as number)
+              }
             ></CFormInput>
           </CCol>
         </CTableDataCell>
@@ -82,7 +88,9 @@ const InvestmentTable = ({
               data-testid={`df-remove-btn`}
               className="btn-ovh-employee-list me-1 text-white"
               size="sm"
-              onClick={() => handleClickRemoveInvestment(currentSec.id)}
+              onClick={() =>
+                handleClickRemoveInvestment(currentSec.id as number)
+              }
             >
               <i className="fa fa-minus" aria-hidden="true"></i>
             </CButton>

@@ -6,7 +6,9 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   EmployeeDetails,
+  formSectionList,
   Invest,
+  Investment,
   ITDeclarationFormSliceState,
   Sections,
   submitITDeclarationForm,
@@ -106,12 +108,17 @@ const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   },
   itDeclarationFormId: 0,
   itDeclarationFormExist: false,
+  grandTotal: 0,
 }
 
 const itDeclarationFormSlice = createSlice({
   name: 'itDeclarationForm',
   initialState: initialITDeclarationFormState,
-  reducers: {},
+  reducers: {
+    setGrandTotal: (state, action) => {
+      state.grandTotal = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getEmployeeInfo.fulfilled, (state, action) => {
@@ -180,6 +187,9 @@ const investments = (state: RootState): Invest[] =>
 const itDeclarationFormExists = (state: RootState): boolean =>
   state.itDeclarationForm.itDeclarationFormExist
 
+const grandTotal = (state: RootState): number =>
+  state.itDeclarationForm.grandTotal
+
 const itDeclarationFormThunk = {
   getEmployeeInfo,
   getSectionsHavingInvests,
@@ -194,6 +204,7 @@ const itDeclarationFormSelectors = {
   sections,
   investments,
   itDeclarationFormExists,
+  grandTotal,
 }
 
 export const itDeclarationFormService = {

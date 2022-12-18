@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import InvestmentTable from './InvestmentTable'
 import {
+  formSectionList,
   Investment,
   Sections,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
@@ -22,6 +23,8 @@ const MoreSections = ({
   setSectionList,
   sectionList,
   index,
+  setFormSectionList,
+  formSectionList,
 }: {
   sectionItem: Sections
   handleShowRemoveSectionModal: (investId: number, investName: string) => void
@@ -29,6 +32,8 @@ const MoreSections = ({
   setSectionList: (value: Sections[]) => void
   sectionList: Sections[]
   index: number
+  setFormSectionList: (value: formSectionList[]) => void
+  formSectionList: formSectionList[]
 }): JSX.Element => {
   const [counter, setCounter] = useState(1)
   const [isMoreInvestBtnEnable, setIsMoreInvestBtnEnable] = useState(false)
@@ -40,7 +45,10 @@ const MoreSections = ({
     },
   ])
   const [showSubTotalAmount, setShowSubTotalAmount] = useState<number>(0)
+  const [reRender, setReRender] = useState<boolean>(false)
+
   const dispatch = useAppDispatch()
+
   const handleClickInvestment = () => {
     setCounter(counter + 1)
     setInvestmentList([
@@ -84,27 +92,30 @@ const MoreSections = ({
       toastColor="danger"
     />
   )
-  const onChangeInvestment = (
+  const onChangeInvestment = async (
     index: number,
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const newInvestmentCopy: Investment[] = JSON.parse(
       JSON.stringify(investmentList),
     )
-    newInvestmentCopy[index].investmentId = e.target.value
-    // const isInvestmentExists = investmentList.find(
-    //   (currInvestment) =>
-    //     currInvestment.investmentId === newInvestmentCopy[index].investmentId,
-    // )
+    const isInvestmentExists = newInvestmentCopy.find(
+      (currInvestment) => currInvestment.investmentId === e.target.value,
+    )
+    // console.log('*****NewInvestment****')
+    // console.log(isInvestmentExists)
 
-    // if (isInvestmentExists === undefined) {
-    //   setInvestmentList([...investmentList, newInvestmentCopy[index]])
-    // } else {
-    //   await dispatch(
-    //     reduxServices.app.actions.addToast(alreadyExistToastMessage),
-    //   )
-    //   dispatch(reduxServices.app.actions.addToast(undefined))
-    // }
+    newInvestmentCopy[index].investmentId = e.target.value
+    setInvestmentList(newInvestmentCopy)
+    if (isInvestmentExists !== undefined) {
+      await dispatch(
+        reduxServices.app.actions.addToast(alreadyExistToastMessage),
+      )
+      dispatch(reduxServices.app.actions.addToast(undefined))
+      newInvestmentCopy[index].investmentId = ''
+      await setInvestmentList(newInvestmentCopy)
+      setReRender(!reRender)
+    }
   }
 
   useEffect(() => {
@@ -116,8 +127,17 @@ const MoreSections = ({
 
   useEffect(() => {
     setIsMoreInvestBtnEnable(sectionList[index].invests.length <= 1)
-  }, [index])
-
+    const updatedList = formSectionList?.map((item, itemIndex) => {
+      if (itemIndex === index) {
+        return { ...item, formInvestmentDTO: investmentList }
+      } else {
+        return item
+      }
+    })
+    setFormSectionList(updatedList)
+  }, [index, investmentList])
+  // console.log('*****List****')
+  // console.log(investmentList)
   return (
     <>
       <div className="block-session clearfix widget_gap">

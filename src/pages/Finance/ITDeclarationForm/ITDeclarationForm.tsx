@@ -19,6 +19,10 @@ const ITDeclarationForm = (): JSX.Element => {
   const employeeDetails = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.employeeInformation,
   )
+  const grandTotal = useTypedSelector(
+    reduxServices.itDeclarationForm.selectors.grandTotal,
+  )
+
   const warningToastMessage = (
     <OToast
       toastMessage="You had submitted IT Declaration Form so you cannot fill the form again."
@@ -94,7 +98,7 @@ const ITDeclarationForm = (): JSX.Element => {
         <CRow className="mt-3 mb-3">
           <CCol sm={12}>
             <p className="pull-right">
-              <b className="txt-grandtotal ">Grand Total: </b>
+              <b className="txt-grandtotal ">Grand Total: {grandTotal}</b>
             </p>
           </CCol>
         </CRow>

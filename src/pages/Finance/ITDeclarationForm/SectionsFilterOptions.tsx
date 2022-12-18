@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react'
 import MoreSections from './MoreSections'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { Sections } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
+import {
+  formSectionList,
+  Sections,
+} from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 
@@ -15,11 +18,13 @@ const SectionsFilterOptions = (): JSX.Element => {
   const [isMoreSectionsButtonEnabled, setIsMoreSectionsButtonEnabled] =
     useState<boolean>(false)
   const [sectionList, setSectionList] = useState<Sections[]>([])
+  const [formSectionList, setFormSectionList] = useState<formSectionList[]>([])
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
   const [toCancelSection, setToCancelSection] = useState('')
   const [toCancelSectionId, setToCancelSectionId] = useState(0)
 
   const dispatch = useAppDispatch()
+
   const section = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.sections,
   )
@@ -94,7 +99,28 @@ const SectionsFilterOptions = (): JSX.Element => {
     )
     setSectionList(newSectionList)
   }
-  console.log(sectionList)
+
+  useEffect(() => {
+    setFormSectionList(
+      sectionList.map((item) => {
+        return { ...item, formInvestmentDTO: [] }
+      }),
+    )
+  }, [sectionList])
+  console.log(formSectionList)
+
+  useEffect(() => {
+    const grandTotalArray = formSectionList.map((list) =>
+      list.formInvestmentDTO.reduce((prev, current) => {
+        return prev + +current.customAmount
+      }, 0),
+    )
+    const grandTotal = grandTotalArray.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0,
+    )
+    dispatch(reduxServices.itDeclarationForm.actions.setGrandTotal(grandTotal))
+  }, [formSectionList])
 
   return (
     <>
@@ -147,6 +173,8 @@ const SectionsFilterOptions = (): JSX.Element => {
                   handleConfirmCancelSection={handleConfirmCancelSection}
                   setSectionList={setSectionList}
                   sectionList={sectionList}
+                  setFormSectionList={setFormSectionList}
+                  formSectionList={formSectionList}
                 />
               </CCol>
             </CRow>

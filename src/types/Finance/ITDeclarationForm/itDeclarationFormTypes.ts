@@ -10,7 +10,7 @@ export type EmployeeDetails = {
 }
 
 export type Investment = {
-  id: number
+  id?: number
   investmentId: string
   customAmount: string
 }
@@ -68,4 +68,13 @@ export type ITDeclarationFormSliceState = {
   itDeclarationFormExist: boolean
   isLoading: LoadingState
   error: ValidationError
+  grandTotal: number
+}
+
+export type formSectionList = {
+  formInvestmentDTO: Investment[]
+  sectionId: number
+  sectionName: string
+  sectionLimit: number
+  invests: Invest[]
 }
