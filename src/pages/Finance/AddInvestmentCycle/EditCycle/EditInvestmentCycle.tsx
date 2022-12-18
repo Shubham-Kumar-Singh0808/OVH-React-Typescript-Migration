@@ -83,12 +83,9 @@ const EditInvestmentCycle = ({
   const handleUpdateInvestmentCycle = async () => {
     const prepareObject = {
       ...editCycleCopy,
-      cycleId: 1,
       active: isCycleChecked,
       endDate: cycleEndDate,
-      ...{
-        startDate: moment(cycleStartDate).format('MM/YYYY'),
-      },
+      startDate: moment(cycleStartDate).format('MM/YYYY'),
     }
 
     const cycleExist = {
