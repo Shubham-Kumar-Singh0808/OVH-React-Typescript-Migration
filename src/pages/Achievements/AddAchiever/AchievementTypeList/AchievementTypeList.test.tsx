@@ -25,7 +25,6 @@ const toRender = (
 )
 
 const achievementNameInputId = 'ach-name-input'
-const achievementStatusActiveId = 'ach-status-input-active'
 const achievementStatusInactiveId = 'ach-status-input-inactive'
 const achievementOrderInputId = 'ach-order-input'
 const achievementTimeInputId = 'ach-time-check'
