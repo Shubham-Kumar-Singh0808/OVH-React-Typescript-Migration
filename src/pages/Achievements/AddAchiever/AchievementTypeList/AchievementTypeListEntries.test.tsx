@@ -162,7 +162,7 @@ describe('Achievement Type List Entries', () => {
     })
     test('"unique achievement" error', () => {
       const achievementName = screen.getByTestId(achievementNameInputId)
-      userEvent.type(achievementName, 'achievement')
+      userEvent.type(achievementName, '12Nov20221')
     })
   })
 
