@@ -19,13 +19,14 @@ import {
   ITForm,
 } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
-const ITDeclarationListTable = ({
-  props,
-  viewDeclarationFormButtonHandler,
-}: {
-  viewDeclarationFormButtonHandler: (viewForm: ITForm[]) => void
-  props: ITDeclarationListTableProps
-}): JSX.Element => {
+const ITDeclarationListTable = (
+  props: ITDeclarationListTableProps,
+  {
+    viewDeclarationFormButtonHandler,
+  }: {
+    viewDeclarationFormButtonHandler: (viewForm: ITForm[]) => void
+  },
+): JSX.Element => {
   const itDeclarationForms = useTypedSelector(
     reduxServices.itDeclarationList.selectors.itDeclarationForms,
   )
