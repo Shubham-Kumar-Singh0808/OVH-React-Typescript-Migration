@@ -21,4 +21,5 @@ export interface IncomingAchievementTypes {
 export interface CommonAchievementInitialState {
   achievementTypeList: IncomingAchievementTypes
   isLoading: LoadingState
+  dateSortedList: IncomingAchievementTypes
 }
