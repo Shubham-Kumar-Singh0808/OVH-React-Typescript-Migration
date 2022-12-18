@@ -24,6 +24,13 @@ const toRender = (
   </div>
 )
 
+const achievementNameInputId = 'ach-name-input'
+const achievementStatusActiveId = 'ach-status-input-active'
+const achievementStatusInactiveId = 'ach-status-input-inactive'
+const achievementOrderInputId = 'ach-order-input'
+const achievementTimeInputId = 'ach-time-check'
+const achievementDateInputId = 'ach-date-check'
+
 describe('Achievement Type List Testing', () => {
   describe('initial render', () => {
     beforeEach(() => {
@@ -63,14 +70,32 @@ describe('Achievement Type List Testing', () => {
       expect(screen.getByTestId('ach-order-input')).toHaveValue('')
     })
     test('test add button', async () => {
-      const addBtn = screen.getByTestId('add-btn-id')
-      expect(addBtn).toBeDisabled()
-      const achName = screen.getByTestId('ach-name-input')
-      const achOrder = screen.getByTestId('ach-order-input')
-      userEvent.type(achName, 'testing on')
-      userEvent.type(achOrder, '99')
-      expect(addBtn).toBeEnabled()
-      userEvent.click(addBtn)
+      const addButton = screen.getByTestId('add-btn-id')
+      expect(addButton).toBeDisabled()
+
+      const achievementName = screen.getByTestId(achievementNameInputId)
+
+      const achievementStatusInactive = screen.getByTestId(
+        achievementStatusInactiveId,
+      ) as HTMLInputElement
+
+      const achievementOrder = screen.getByTestId(achievementOrderInputId)
+      const achievementTime = screen.getByTestId(
+        achievementTimeInputId,
+      ) as HTMLInputElement
+
+      const achievementDate = screen.getByTestId(
+        achievementDateInputId,
+      ) as HTMLInputElement
+
+      userEvent.type(achievementName, 'testing this module')
+      userEvent.click(achievementStatusInactive)
+      userEvent.type(achievementOrder, '99')
+      userEvent.click(achievementTime)
+      userEvent.click(achievementDate)
+
+      expect(addButton).toBeEnabled()
+      userEvent.click(addButton)
       await waitFor(() => {
         expect(
           screen.findByText('Achievement Type Added Successfully'),

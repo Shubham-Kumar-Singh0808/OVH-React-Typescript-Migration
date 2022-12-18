@@ -146,7 +146,7 @@ describe('Achievement Type List Entries', () => {
       expect(mockNewSelectedTimeReqHandler).toHaveBeenCalledTimes(1)
 
       expect(achievementDate.checked).toEqual(false)
-      userEvent.click(achievementTime)
+      userEvent.click(achievementDate)
 
       userEvent.click(addButton)
     })
