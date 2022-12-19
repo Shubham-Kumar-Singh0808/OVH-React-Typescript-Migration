@@ -98,7 +98,12 @@ const EditPanDetails = ({
       `${bankDetail.finance?.financeFilePath}`,
     )
   }
-
+  const documentType = bankDetail.finance?.financeFilePath
+  const fileAttachment = documentType ? (
+    <i className="fa fa-paperclip me-1">DOC</i>
+  ) : (
+    'N/A'
+  )
   return (
     <>
       <CCol sm={5}>
@@ -113,10 +118,10 @@ const EditPanDetails = ({
             <CCol sm={2}>
               <CCol sm={5}>
                 <input
-                  className="mt-1"
+                  className="sh-updateTicket-file mt-1 cursor-pointer"
                   data-testid="attachment"
                   type="file"
-                  name="attachment"
+                  name="file"
                   onChange={(element: SyntheticEvent) =>
                     onChangeAttachmentHandler(
                       element.currentTarget as HTMLInputElement,
@@ -135,8 +140,7 @@ const EditPanDetails = ({
                   className="cursor-pointer sh-hive-activity-link"
                   onClick={handleFinanceData}
                 >
-                  <i className="fa fa-paperclip me-1"></i>
-                  Doc
+                  {fileAttachment}
                 </CLink>
               </CCol>
             </>

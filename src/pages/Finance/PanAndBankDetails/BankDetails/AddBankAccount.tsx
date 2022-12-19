@@ -19,7 +19,7 @@ const AddBankAccount = ({
 }: {
   backButtonHandler: () => void
 }): JSX.Element => {
-  const [accountNumber, setIsAccountNumber] = useState<string>('')
+  const [accountNumber, setAccountNumber] = useState<string>('')
   const [bankName, setBankName] = useState<string>('')
   const [bankIfscCode, setBankIfscCode] = useState<string>('')
   const [isAddBtnEnabled, setIsAddBtnEnabled] = useState(false)
@@ -47,7 +47,7 @@ const AddBankAccount = ({
     const { name, value } = e.target
     if (name === 'number') {
       const accountNum = value.replace(/\D/g, '')
-      setIsAccountNumber(accountNum)
+      setAccountNumber(accountNum)
     } else if (name === 'bankIfscCode') {
       const ifscCode = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setBankIfscCode(ifscCode)
