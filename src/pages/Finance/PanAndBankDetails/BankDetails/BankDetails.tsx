@@ -100,12 +100,8 @@ const BankDetails = ({
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">A/C No</CTableHeaderCell>
-              <CTableHeaderCell scope="col" className="text-middle">
-                Name
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col" className="text-center">
-                IFSC Code
-              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+              <CTableHeaderCell scope="col">IFSC Code</CTableHeaderCell>
               <CTableHeaderCell scope="col" className="text-center">
                 Actions
               </CTableHeaderCell>

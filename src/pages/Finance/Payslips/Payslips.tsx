@@ -97,7 +97,7 @@ const Payslips = (): JSX.Element => {
         <CTable
           striped
           responsive
-          className="text-start text-left align-middle alignment"
+          className="text-start text-left align-middle alignment sh-alignment"
         >
           <CTableHead>
             <CTableRow>
