@@ -152,7 +152,7 @@ const EmployeeAccountsTable = (
                       className="sh-organization-link"
                     >
                       <Link
-                        to={`/myFinance/${data.financeDetails.employeeId}`}
+                        to={`/employeeFinance/${data.financeDetails.employeeId}`}
                         className="cursor-pointer"
                         onClick={() => handler(data.employeeId)}
                       >

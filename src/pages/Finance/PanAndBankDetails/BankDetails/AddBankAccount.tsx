@@ -35,6 +35,10 @@ const AddBankAccount = ({
     reduxServices.bankDetails.selectors.bankList,
   )
 
+  const bankDetails = useTypedSelector(
+    reduxServices.panDetails.selectors.bankDetails,
+  )
+
   const empId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -71,6 +75,12 @@ const AddBankAccount = ({
       toastColor="success"
     />
   )
+  const alreadyExistToast = (
+    <OToast
+      toastMessage="AccountNumber and BankName combination already exist"
+      toastColor="danger"
+    />
+  )
 
   const addButtonHandler = async () => {
     const prepareObject = {
@@ -79,16 +89,31 @@ const AddBankAccount = ({
       employeeId: Number(empId),
       ifscCode: bankIfscCode,
     }
-    await dispatch(reduxServices.bankDetails.saveBankInformation(prepareObject))
-    backButtonHandler()
-    dispatch(reduxServices.app.actions.addToast(successToast))
-    dispatch(reduxServices.app.actions.addToast(undefined))
-    dispatch(
+
+    await dispatch(
       reduxServices.panDetails.bankInformation({
         key: 'loggedInEmpId',
         value: Number(empId),
       }),
     )
+    if (bankDetails) {
+      const result = bankDetails.bankinfo?.find(
+        (currObj) =>
+          currObj.bankName === bankName &&
+          currObj.bankAccountNumber === accountNumber,
+      )
+      if (result === undefined) {
+        await dispatch(
+          reduxServices.bankDetails.saveBankInformation(prepareObject),
+        )
+        backButtonHandler()
+        dispatch(reduxServices.app.actions.addToast(successToast))
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      } else {
+        dispatch(reduxServices.app.actions.addToast(alreadyExistToast))
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      }
+    }
   }
 
   return (

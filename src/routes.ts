@@ -649,6 +649,11 @@ const routes = [
     component: PfPanDetails,
   },
   {
+    path: '/employeeFinance/:employeeId',
+    name: 'P.F. & PAN Details',
+    component: PfPanDetails,
+  },
+  {
     path: '/resignationList',
     name: 'Resignation List',
     component: ResignationList,
