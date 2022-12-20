@@ -102,7 +102,7 @@ const EditPanDetails = ({
   const fileAttachment = documentType ? (
     <i className="fa fa-paperclip me-1">DOC</i>
   ) : (
-    'N/A'
+    ''
   )
   return (
     <>
