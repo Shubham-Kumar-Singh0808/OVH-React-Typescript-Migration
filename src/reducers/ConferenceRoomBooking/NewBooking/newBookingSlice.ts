@@ -52,12 +52,17 @@ const initialNewBookingListState: newBookingSliceState = {
   loggedEmployeeName: {} as NewBookingLoggedEmployeeName,
   allEmployeesProfiles: [],
   isLoading: ApiLoadingState.idle,
+  toggle: '',
 }
 
 const newBookingSlice = createSlice({
   name: 'addLocationList',
   initialState: initialNewBookingListState,
-  reducers: {},
+  reducers: {
+    toggle: (state, action) => {
+      state.toggle = action.payload
+    },
+  },
   extraReducers(builder) {
     builder
 
@@ -78,6 +83,8 @@ const newBookingSlice = createSlice({
 const LoggedEmployeeName = (state: RootState): NewBookingLoggedEmployeeName =>
   state.newBooking.loggedEmployeeName
 
+const toggle = (state: RootState): string => state.newBooking.toggle
+
 const allEmployeesProfiles = (
   state: RootState,
 ): NewBookingLoggedEmployeeName[] => state.newBooking.allEmployeesProfiles
@@ -91,6 +98,7 @@ const newBookingThunk = {
 const newBookingSelectors = {
   LoggedEmployeeName,
   allEmployeesProfiles,
+  toggle,
 }
 
 export const newBookingService = {

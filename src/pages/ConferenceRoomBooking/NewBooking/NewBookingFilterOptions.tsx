@@ -7,9 +7,10 @@ import {
   CButton,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import LocationAndRoom from './NewBookingChildComponents/LocationAndRoom'
 import NewRoomReservedBy from './NewBookingChildComponents/NewRoomReservedBy'
 import ProjectMembersSelection from './NewBookingChildComponents/ProjectMembersSelection'
+import NewBookingLocation from './NewBookingChildComponents/NewBookingLocation'
+import NewBookingRoom from './NewBookingChildComponents/NewBookingRoom'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { AddRoom } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
@@ -24,7 +25,11 @@ import {
 import { showIsRequired } from '../../../utils/helper'
 import OToast from '../../../components/ReusableComponent/OToast'
 
-const NewBookingFilterOptions = (): JSX.Element => {
+const NewBookingFilterOptions = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const authorDetails = {} as Author
   const employeesAvailability = {} as Availability[]
   const dateFormat = 'DD/MM/YYYY'
@@ -51,6 +56,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
   const [isErrorShow, setIsErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+  const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false)
   const loggedEmployee = useTypedSelector(
     reduxServices.newEvent.selectors.loggedEmployee,
   )
@@ -253,14 +259,49 @@ const NewBookingFilterOptions = (): JSX.Element => {
     })
   }
 
+  useEffect(() => {
+    if (
+      newRoomBooking?.roomId &&
+      newRoomBooking?.startTime &&
+      newRoomBooking?.endTime &&
+      newRoomBooking?.agenda?.replace(/^\s*/, '')
+    ) {
+      setIsConfirmButtonEnabled(true)
+    } else {
+      setIsConfirmButtonEnabled(false)
+    }
+  }, [newRoomBooking])
+
   return (
     <>
-      <LocationAndRoom
-        onHandleLocation={onHandleLocation}
-        onHandleRoom={onHandleRoom}
-        locationValue={newRoomBooking.locationId}
-        roomValue={newRoomBooking.roomId}
-      />
+      <CRow className="mt-1 mb-3">
+        <NewBookingLocation
+          onHandleLocation={onHandleLocation}
+          locationValue={newRoomBooking.locationId}
+        />
+        <CCol className="col-sm-3">
+          <CButton
+            color="info btn-ovh me-1"
+            onClick={() => setToggle('addLocation')}
+          >
+            <i className="fa fa-plus me-1"></i>Add
+          </CButton>
+        </CCol>
+      </CRow>
+      <CRow className="mt-1 mb-3">
+        <NewBookingRoom
+          onHandleRoom={onHandleRoom}
+          roomValue={newRoomBooking.roomId}
+        />
+        <CCol className="col-sm-3">
+          <CButton
+            color="info btn-ovh me-1"
+            onClick={() => setToggle('addRoom')}
+          >
+            <i className="fa fa-plus me-1"></i>Add
+          </CButton>
+        </CCol>
+      </CRow>
       <NewRoomReservedBy
         loggedEmployeeName={loggedEmployee.fullName}
         allEmployeesProfiles={allEmployeesProfiles}
@@ -274,9 +315,15 @@ const NewBookingFilterOptions = (): JSX.Element => {
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-3 col-form-label text-end">
           Agenda:
-          <span className={showIsRequired(newRoomBooking.agenda)}>*</span>
+          <span
+            className={showIsRequired(
+              newRoomBooking.agenda.replace(/^\s*/, ''),
+            )}
+          >
+            *
+          </span>
         </CFormLabel>
-        <CCol sm={7}>
+        <CCol sm={6}>
           <CFormTextarea
             placeholder="Purpose"
             data-testid="text-area"
@@ -325,6 +372,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
               data-testid="confirmBtn"
               color="success"
               onClick={handleConfirmBtn}
+              disabled={!isConfirmButtonEnabled}
             >
               Confirm
             </CButton>

@@ -28,6 +28,7 @@ export type newBookingSliceState = {
   loggedEmployeeName: NewBookingLoggedEmployeeName
   isLoading: ApiLoadingState
   allEmployeesProfiles: NewBookingLoggedEmployeeName[]
+  toggle: ''
 }
 
 export type AddRoom = {
