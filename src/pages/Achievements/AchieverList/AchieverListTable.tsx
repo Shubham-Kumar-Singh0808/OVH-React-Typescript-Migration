@@ -222,7 +222,7 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
           {achieverListState.achieverList.size > 20 && (
             <CCol
               xs={5}
-              className="d-grid gap-1 d-md-flex justify-content-md-end"
+              className="col-6 d-grid d-md-flex justify-content-md-end"
             >
               <OPagination
                 currentPage={currentPage}

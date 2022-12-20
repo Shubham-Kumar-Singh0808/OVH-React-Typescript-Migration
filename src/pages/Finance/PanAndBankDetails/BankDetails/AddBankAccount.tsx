@@ -19,7 +19,7 @@ const AddBankAccount = ({
 }: {
   backButtonHandler: () => void
 }): JSX.Element => {
-  const [accountNumber, setIsAccountNumber] = useState<string>('')
+  const [accountNumber, setAccountNumber] = useState<string>('')
   const [bankName, setBankName] = useState<string>('')
   const [bankIfscCode, setBankIfscCode] = useState<string>('')
   const [isAddBtnEnabled, setIsAddBtnEnabled] = useState(false)
@@ -35,6 +35,10 @@ const AddBankAccount = ({
     reduxServices.bankDetails.selectors.bankList,
   )
 
+  const bankDetails = useTypedSelector(
+    reduxServices.panDetails.selectors.bankDetails,
+  )
+
   const empId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -47,7 +51,7 @@ const AddBankAccount = ({
     const { name, value } = e.target
     if (name === 'number') {
       const accountNum = value.replace(/\D/g, '')
-      setIsAccountNumber(accountNum)
+      setAccountNumber(accountNum)
     } else if (name === 'bankIfscCode') {
       const ifscCode = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setBankIfscCode(ifscCode)
@@ -71,6 +75,12 @@ const AddBankAccount = ({
       toastColor="success"
     />
   )
+  const alreadyExistToast = (
+    <OToast
+      toastMessage="AccountNumber and BankName combination already exist"
+      toastColor="danger"
+    />
+  )
 
   const addButtonHandler = async () => {
     const prepareObject = {
@@ -79,16 +89,31 @@ const AddBankAccount = ({
       employeeId: Number(empId),
       ifscCode: bankIfscCode,
     }
-    await dispatch(reduxServices.bankDetails.saveBankInformation(prepareObject))
-    backButtonHandler()
-    dispatch(reduxServices.app.actions.addToast(successToast))
-    dispatch(reduxServices.app.actions.addToast(undefined))
-    dispatch(
+
+    await dispatch(
       reduxServices.panDetails.bankInformation({
         key: 'loggedInEmpId',
         value: Number(empId),
       }),
     )
+    if (bankDetails) {
+      const result = bankDetails.bankinfo?.find(
+        (currObj) =>
+          currObj.bankName === bankName &&
+          currObj.bankAccountNumber === accountNumber,
+      )
+      if (result === undefined) {
+        await dispatch(
+          reduxServices.bankDetails.saveBankInformation(prepareObject),
+        )
+        backButtonHandler()
+        dispatch(reduxServices.app.actions.addToast(successToast))
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      } else {
+        dispatch(reduxServices.app.actions.addToast(alreadyExistToast))
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      }
+    }
   }
 
   return (
@@ -119,7 +144,11 @@ const AddBankAccount = ({
               data-testid="bankAccountNumber"
             >
               Bank Account Number:
-              <span className={accountNumber ? TextWhite : TextDanger}>*</span>
+              <span
+                className={accountNumber.length > 8 ? TextWhite : TextDanger}
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -129,7 +158,7 @@ const AddBankAccount = ({
                 id="Number"
                 size="sm"
                 name="number"
-                maxLength={20}
+                maxLength={18}
                 value={accountNumber}
                 autoComplete="off"
                 placeholder="Bank Account Number"

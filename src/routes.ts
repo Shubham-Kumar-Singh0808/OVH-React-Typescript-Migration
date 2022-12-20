@@ -340,6 +340,10 @@ const ProjectCreationRequest = React.lazy(
     ),
 )
 
+const AddAchiever = React.lazy(
+  () => import('./pages/Achievements/AddAchiever/AddAchiever'),
+)
+
 const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
@@ -649,6 +653,11 @@ const routes = [
     component: PfPanDetails,
   },
   {
+    path: '/employeeFinance/:employeeId',
+    name: 'P.F. & PAN Details',
+    component: PfPanDetails,
+  },
+  {
     path: '/resignationList',
     name: 'Resignation List',
     component: ResignationList,
@@ -734,6 +743,11 @@ const routes = [
     path: '/projectRequestList',
     name: 'Project Creation Request',
     component: ProjectCreationRequest,
+  },
+  {
+    path: '/addAchievement',
+    name: 'Add Achiever',
+    component: AddAchiever,
   },
 ]
 
