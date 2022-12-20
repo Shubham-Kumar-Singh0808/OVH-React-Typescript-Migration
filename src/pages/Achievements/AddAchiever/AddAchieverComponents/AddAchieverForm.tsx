@@ -59,7 +59,6 @@ const getMonthAndYear = (date: string) => {
   return fullDate.filter((_, index) => index !== 1)
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const {
