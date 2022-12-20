@@ -78,6 +78,7 @@ import {
   CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
+  ProjectDetailsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -717,4 +718,8 @@ export const AddAchieverApiConfig: AddAchieverApi = {
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const projectViewApiConfig: ProjectDetailsApi = {
+  getProjects: apiPrefix + '/allocation-mgmt/projects',
 }
